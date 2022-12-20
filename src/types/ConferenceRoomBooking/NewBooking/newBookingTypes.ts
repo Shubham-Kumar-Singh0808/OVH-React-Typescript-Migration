@@ -1,13 +1,13 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 export type NewBookingLoggedEmployeeName = {
-  id: 1985
-  profilePicPath: '../profilepics/Default_Male.jpg'
-  firstName: 'Vinesh'
-  lastName: 'Merugu'
-  emailId: 'test@raybiztech.com'
-  designation: 'Associate Software Engineer'
-  fullName: 'Vinesh Merugu'
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
 }
 export type Author = {
   designation: string

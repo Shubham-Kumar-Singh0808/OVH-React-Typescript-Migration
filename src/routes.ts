@@ -596,11 +596,11 @@ const routes = [
     name: 'Event Type List',
     component: EventTypeList,
   },
-  {
-    path: '/newMeetingRequest',
-    name: 'Add LocationList',
-    component: LocationList,
-  },
+  // {
+  //   path: '/newMeetingRequest',
+  //   name: 'Add LocationList',
+  //   component: LocationList,
+  // },
   {
     path: '/trainingFeedBackForm/:eventId',
     name: 'Feedback Forms',

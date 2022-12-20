@@ -6,13 +6,11 @@ import { useTypedSelector } from '../../../../stateStore'
 const LocationAndRoom = ({
   onHandleLocation,
   onHandleRoom,
-  //   locationRooms,
   locationValue,
   roomValue,
 }: {
   onHandleLocation: (value: string) => void
   onHandleRoom: (value: string) => void
-  //   locationRooms: RoomsByLocation[]
   locationValue: number
   roomValue: number
 }): JSX.Element => {
@@ -25,7 +23,7 @@ const LocationAndRoom = ({
   return (
     <>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CFormLabel className="col-sm-3 col-form-label text-end">
           Location:
           <span className={locationValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
@@ -50,7 +48,7 @@ const LocationAndRoom = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
+        <CFormLabel className="col-sm-3 col-form-label text-end">
           Room:
           <span className={roomValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CRow,
   CFormLabel,
@@ -6,27 +6,25 @@ import {
   CFormTextarea,
   CButton,
 } from '@coreui/react-pro'
-import NewRoomReservedBy from './NewBookingChildComponets/NewRoomReservedBy'
-import StartTimeEndTime from './NewBookingChildComponets/StartTimeEndTime'
-import SelectProject from './NewBookingChildComponets/SelectProject'
-import Attendees from './NewBookingChildComponets/Attendees'
-import LocationAndRoom from './NewBookingChildComponets/LocationAndRoom'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import moment from 'moment'
+import LocationAndRoom from './NewBookingChildComponents/LocationAndRoom'
+import NewRoomReservedBy from './NewBookingChildComponents/NewRoomReservedBy'
+import ProjectMembersSelection from './NewBookingChildComponents/ProjectMembersSelection'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { AddRoom } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import { Availability } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { Author } from '../../../types/Dashboard/TrainingsAndEvents/trainingsAndEventsTypes'
 import {
-  AddRoom,
-  Availability,
-  GetAllProjectNames,
-} from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+  Attendees,
+  EventFromDate,
+  SelectProject,
+  StartTimeEndTime,
+} from '../NewEvent/NewEventChildComponents'
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const NewBookingFilterOptions = (): JSX.Element => {
-  const [selectProject, setSelectProject] = useState<GetAllProjectNames>()
-  const [fromDate, setFromDate] = useState<string>(
-    new Date() as unknown as string,
-  )
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
   const initEvent = {
@@ -36,15 +34,44 @@ const NewBookingFilterOptions = (): JSX.Element => {
     conferenceType: 'Meeting',
     employeeIds: [],
     endTime: '',
-    fromDate: 'new Date()',
+    fromDate: moment(new Date()).format('DD/MM/YYYY'),
     locationId: 1,
     projectName: '',
     roomId: 0,
     startTime: '',
   } as AddRoom
-  console.log(selectProject)
-  const [newRoomBooking, setNewRoomBooking] = useState(initEvent)
   const dispatch = useAppDispatch()
+
+  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
+    useState(true)
+  const [newRoomBooking, setNewRoomBooking] = useState(initEvent)
+  const [attendeesList, setAttendeesList] = useState<Availability[]>([])
+  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+  const [isErrorShow, setIsErrorShow] = useState(false)
+  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
+    useState<string>()
+  const loggedEmployee = useTypedSelector(
+    reduxServices.newEvent.selectors.loggedEmployee,
+  )
+  const allEmployeesProfiles = useTypedSelector(
+    reduxServices.newEvent.selectors.allEmployeesProfiles,
+  )
+
+  const allProjects = useTypedSelector(
+    reduxServices.allocateEmployee.selectors.allProjects,
+  )
+
+  const projectMembers = useTypedSelector(
+    reduxServices.newEvent.selectors.projectMembers,
+  )
+  useEffect(() => {
+    if (newRoomBooking.startTime === '' && newRoomBooking.endTime === '') {
+      setIsProjectAndAttendeesEnable(true)
+    } else {
+      setIsProjectAndAttendeesEnable(false)
+    }
+  }, [newRoomBooking.startTime, newRoomBooking.endTime])
+
   useEffect(() => {
     dispatch(reduxServices.bookingList.getAllMeetingLocations())
     if (newRoomBooking.locationId) {
@@ -56,74 +83,151 @@ const NewBookingFilterOptions = (): JSX.Element => {
     }
   }, [dispatch, location])
 
-  const loggedEmployee = useTypedSelector(
-    reduxServices.newBooking.selectors.LoggedEmployeeName,
-  )
-
-  const allEmployeesProfiles = useTypedSelector(
-    reduxServices.newBooking.selectors.allEmployeesProfiles,
-  )
-
-  const onSelectAuthor = (value: Author) => {
-    setNewRoomBooking({ ...newRoomBooking, authorName: value })
-  }
-
   useEffect(() => {
-    dispatch(reduxServices.newBooking.getLoggedEmployeeName())
+    dispatch(reduxServices.newEvent.getLoggedEmployee())
   }, [dispatch])
 
-  const onChangeHandler = (
-    e:
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target
-
-    setNewRoomBooking((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
+  useEffect(() => {
+    if (newRoomBooking.projectName)
+      dispatch(
+        reduxServices.newEvent.getProjectMembers(newRoomBooking.projectName),
+      )
+  }, [newRoomBooking.projectName])
 
   const onHandleLocation = (value: string) => {
     setNewRoomBooking({ ...newRoomBooking, locationId: Number(value) })
   }
-
   const onHandleRoom = (value: string) => {
     setNewRoomBooking({ ...newRoomBooking, roomId: Number(value) })
   }
-  const onHandleStartTime = (value: string) => {
-    setNewRoomBooking({ ...newRoomBooking, startTime: value })
+  const onSelectAuthor = (value: Author) => {
+    setNewRoomBooking({ ...newRoomBooking, authorName: value })
   }
-  const onHandleEndTime = (value: string) => {
-    setNewRoomBooking({ ...newRoomBooking, endTime: value })
+  const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setNewRoomBooking({ ...newRoomBooking, startTime: val1, endTime: val2 })
   }
 
-  const handleConfirmBooking = async () => {
-    const newEmployeeResponse = await dispatch(
-      reduxServices.newBooking.confirmNewMeetingAppointment(newRoomBooking),
-    )
-    if (
-      reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
-        newEmployeeResponse,
-      )
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="danger"
-            toastMessage="            
-            Leave already applied on mentioned date."
-          />,
-        ),
-      )
+  const onSelectProject = (value: string) => {
+    setNewRoomBooking({ ...newRoomBooking, projectName: value })
+  }
+
+  const checkIsAttendeeExists = (attendeeId: number) => {
+    return attendeesList.some((attendee) => {
+      return attendee.id === attendeeId
+    })
+  }
+  const onSelectAttendee = (attendeeId: number, attendeeName: string) => {
+    selectProjectMember(attendeeId, attendeeName)
+    if (checkIsAttendeeExists(attendeeId)) {
+      setIsAttendeeErrorShow(true)
+    } else {
+      setIsAttendeeErrorShow(false)
     }
   }
+
+  const fromDateChangeHandler = (value: Date) => {
+    setNewRoomBooking({
+      ...newRoomBooking,
+      fromDate: moment(value).format('DD/MM/YYYY'),
+    })
+  }
+
+  const selectProjectMember = async (
+    attendeeId: number,
+    attendeeName: string,
+  ) => {
+    const newStartTime = newRoomBooking.startTime.split(':')
+    const newEndTime = newRoomBooking.endTime.split(':')
+    const prepareObj = {
+      attendeeId,
+      attendeeName,
+      startTime: `${newRoomBooking.fromDate}/${newStartTime[0]}/${newStartTime[1]}`,
+      endTime: `${newRoomBooking.fromDate}/${newEndTime[0]}/${newEndTime[1]}`,
+    }
+    const uniqueAttendanceResult = await dispatch(
+      reduxServices.newEvent.uniqueAttendee(prepareObj),
+    )
+    if (
+      reduxServices.newEvent.uniqueAttendee.rejected.match(
+        uniqueAttendanceResult,
+      ) &&
+      uniqueAttendanceResult.payload === 409
+    ) {
+      const attendeeObj = {
+        id: attendeeId,
+        availability: 'buzy',
+        name: attendeeName,
+      }
+      if (!checkIsAttendeeExists(attendeeId)) {
+        setAttendeesList([attendeeObj, ...attendeesList])
+        setIsErrorShow(false)
+        setAttendeesAutoCompleteTarget('')
+      } else {
+        setIsErrorShow(true)
+      }
+    } else {
+      const attendeeObj2 = {
+        id: attendeeId,
+        availability: 'free',
+        name: attendeeName,
+      }
+      if (checkIsAttendeeExists(attendeeId)) {
+        setIsErrorShow(true)
+      } else {
+        setAttendeesList([attendeeObj2, ...attendeesList])
+        setIsErrorShow(false)
+        setAttendeesAutoCompleteTarget('')
+      }
+    }
+  }
+
+  const handleConfirmBtn = async () => {
+    const startTimeSplit = newRoomBooking.startTime.split(':')
+    const endTimeSplit = newRoomBooking.endTime.split(':')
+    const timeCheckResult = await dispatch(
+      reduxServices.newEvent.timeCheck(
+        `${newRoomBooking.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      ),
+    )
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
+      console.log(name)
+      return rest
+    })
+    const prepareObj = {
+      ...newRoomBooking,
+      conferenceType: 'Meeting',
+      authorName: loggedEmployee,
+      availability: newAttendeesList,
+      startTime: `${newRoomBooking.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      endTime: `${newRoomBooking.fromDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
+    }
+    if (timeCheckResult.payload === false) {
+      const addEventResult = await dispatch(
+        reduxServices.newBooking.confirmNewMeetingAppointment(prepareObj),
+      )
+      if (
+        reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
+          addEventResult,
+        )
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Event Added Successfully"
+            />,
+          ),
+        )
+      }
+    }
+  }
+
   return (
     <>
       <LocationAndRoom
         onHandleLocation={onHandleLocation}
         onHandleRoom={onHandleRoom}
-        // locationRooms={locationRooms}
         locationValue={newRoomBooking.locationId}
         roomValue={newRoomBooking.roomId}
       />
@@ -131,45 +235,66 @@ const NewBookingFilterOptions = (): JSX.Element => {
         loggedEmployeeName={loggedEmployee.fullName}
         allEmployeesProfiles={allEmployeesProfiles}
         onSelectAuthor={onSelectAuthor}
-        fromDate={fromDate}
-        setFromDate={setFromDate}
       />
-      <StartTimeEndTime
-        onHandleStartTime={onHandleStartTime}
-        onHandleEndTime={onHandleEndTime}
-        startTimeValue={newRoomBooking.startTime}
-        endTimeValue={newRoomBooking.endTime}
+      <EventFromDate
+        fromDateValue={newRoomBooking.fromDate}
+        fromDateChangeHandler={fromDateChangeHandler}
       />
+      <StartTimeEndTime onSelectStartAndEndTime={onSelectStartAndEndTime} />
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
-          Subject:
-          <span className={showIsRequired(newRoomBooking?.agenda)}>*</span>
+        <CFormLabel className="col-sm-3 col-form-label text-end">
+          Agenda:
+          <span className={showIsRequired(newRoomBooking.agenda)}>*</span>
         </CFormLabel>
-        <CCol sm={5}>
+        <CCol sm={7}>
           <CFormTextarea
             placeholder="Purpose"
+            data-testid="text-area"
             aria-label="textarea"
-            id="agenda"
-            name="agenda"
             value={newRoomBooking.agenda}
-            onChange={onChangeHandler}
+            onChange={(e) => {
+              setNewRoomBooking({ ...newRoomBooking, agenda: e.target.value })
+            }}
           ></CFormTextarea>
         </CCol>
       </CRow>
-      <SelectProject setSelectProject={setSelectProject} />
-      <Attendees
-        loggedEmployeeName={loggedEmployee.fullName}
-        allEmployeesProfiles={allEmployeesProfiles}
-        onSelectAuthor={onSelectAuthor}
+      <SelectProject
+        allProjects={allProjects}
+        onSelectProject={onSelectProject}
+        isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
       />
+      <Attendees
+        allEmployeesProfiles={allEmployeesProfiles}
+        isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+        onSelectAttendee={onSelectAttendee}
+        isErrorShow={isErrorShow}
+        isAttendeeErrorShow={isAttendeeErrorShow}
+        setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+        setIsErrorShow={setIsErrorShow}
+        attendeesAutoCompleteTarget={attendeesAutoCompleteTarget as string}
+        setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
+      />
+      {projectMembers?.length > 0 && (
+        <ProjectMembersSelection
+          newRoomBooking={newRoomBooking}
+          projectMembers={projectMembers}
+          attendeesList={attendeesList}
+          setAttendeesList={setAttendeesList}
+          selectProjectMember={selectProjectMember}
+          isErrorShow={isErrorShow}
+          setIsErrorShow={setIsErrorShow}
+          setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+          checkIsAttendeeExists={checkIsAttendeeExists}
+        />
+      )}
       <CRow className="mt-5 mb-4">
-        <CCol md={{ span: 6, offset: 2 }}>
+        <CCol md={{ span: 6, offset: 3 }}>
           <>
             <CButton
               className="btn-ovh me-1"
               data-testid="confirmBtn"
               color="success"
-              onClick={handleConfirmBooking}
+              onClick={handleConfirmBtn}
             >
               Confirm
             </CButton>
