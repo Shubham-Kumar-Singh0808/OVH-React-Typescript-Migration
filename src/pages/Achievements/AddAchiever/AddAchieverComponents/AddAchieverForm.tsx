@@ -107,7 +107,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     newAchieverDetails.endDate,
   ) ? (
     <div data-testid="error-msg-date">
-      <CFormText className={TextDanger}>{fromToDateError}</CFormText>
+      <CFormText data-testid="error-date" className={TextDanger}>
+        {fromToDateError}
+      </CFormText>
     </div>
   ) : (
     <></>
@@ -179,7 +181,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
       if (
         showTimePeriod &&
         (newAchieverDetails.timePeriod === emptyString ||
-          newAchieverDetails.timePeriod === '0')
+          newAchieverDetails.timePeriod === '0' ||
+          newAchieverDetails.timePeriod.trim().length === 0 ||
+          !Number(newAchieverDetails.timePeriod))
       ) {
         setAddButton(false)
       }
@@ -316,7 +320,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               Time Period (year&apos;s):
               {(newAchieverDetails.timePeriod === null ||
                 newAchieverDetails.timePeriod === emptyString ||
-                newAchieverDetails.timePeriod === '0') && (
+                newAchieverDetails.timePeriod === '0' ||
+                newAchieverDetails.timePeriod.trim().length === 0 ||
+                !Number(newAchieverDetails.timePeriod)) && (
                 <span className={TextDanger}>*</span>
               )}
             </CFormLabel>

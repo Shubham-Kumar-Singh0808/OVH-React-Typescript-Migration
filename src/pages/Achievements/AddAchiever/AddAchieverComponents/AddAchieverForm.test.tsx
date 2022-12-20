@@ -110,6 +110,24 @@ describe('add achiever form', () => {
       userEvent.click(addNewAchievementButton)
       expect(mocksetAddButton).toHaveBeenCalledTimes(1)
     })
+    test('date error rendered', async () => {
+      const achievementName = screen.getByTestId(achSelectId)
+      expect(screen.getAllByTestId('ach-name-opt')).toHaveLength(11)
+      userEvent.selectOptions(achievementName, 'Test Achievement 1')
+
+      const dates = screen.getAllByPlaceholderText('MM-YYYY')
+      fireEvent.click(dates[0])
+      await waitFor(() =>
+        fireEvent.change(dates[0], { target: { value: '02-2022' } }),
+      )
+
+      fireEvent.click(dates[1])
+      await waitFor(() =>
+        fireEvent.change(dates[1], { target: { value: '01-2022' } }),
+      )
+
+      expect(screen.findByTestId('error-date')).toBeTruthy()
+    })
     test('clear button is working', () => {
       const clearButton = screen.getByTestId(clearButtonId)
       const achievementName = screen.getByTestId(achSelectId)

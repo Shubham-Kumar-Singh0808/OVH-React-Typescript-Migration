@@ -9,6 +9,7 @@ import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
 import AchieverImage from './AchieverImage'
+import { fireEvent } from '../../../../test/testUtils'
 import stateStore from '../../../../stateStore'
 
 const ReduxProvider = ({
@@ -45,6 +46,22 @@ describe('Basic Info Image Upload Crop Testing', () => {
     it('should not show any errors', () => {
       const error = getById(component.container, 'error')
       expect(error).toBeFalsy()
+    })
+    test('test uploading image', () => {
+      const { getByAltText } = render(
+        <AchieverImage file={'undefined'} empId={0} onUploadImage={() => {}} />,
+      )
+      const inputEl = getByAltText('User Profile')
+      const file = new File(['(⌐□_□)'], 'chucknorris.png', {
+        type: 'image/png',
+      })
+
+      // i have to do this because `input.files =[file]` is not allowed
+      Object.defineProperty(inputEl, 'files', {
+        value: [file],
+      })
+
+      fireEvent.change(inputEl)
     })
   })
 })

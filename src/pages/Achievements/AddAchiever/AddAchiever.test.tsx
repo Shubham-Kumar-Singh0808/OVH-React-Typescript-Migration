@@ -29,6 +29,8 @@ const addButtonId = 'add-ach-btn'
 const achievementTypeId = 'ach-name-sel'
 const addAchieverButton = 'add-achiever-btn'
 const achievementType = 'Test Achievement 2'
+const testEmpName = 'Pradeep Namburu'
+const empPlaceholder = 'Employee Name'
 
 describe('Add Achiever Render', () => {
   describe('Initial render', () => {
@@ -69,8 +71,8 @@ describe('Add Achiever Render', () => {
       userEvent.selectOptions(achievementName, achievementType)
       expect(achievementName).toHaveValue(achievementType)
 
-      const empName = screen.getByPlaceholderText('Employee Name')
-      userEvent.type(empName, 'Pradeep Namburu')
+      const empName = screen.getByPlaceholderText(empPlaceholder)
+      userEvent.type(empName, testEmpName)
 
       const timePeriod = screen.getByTestId('timep-inp')
       userEvent.type(timePeriod, '4')
@@ -110,12 +112,26 @@ describe('Add Achiever Render', () => {
         screen.findByText('To month should be greater than From month'),
       ).toBeTruthy()
     })
+    test('add button click', async () => {
+      const achievementName = screen.getByTestId(achievementTypeId)
+      const btn = screen.getByTestId(addAchieverButton)
+      userEvent.type(achievementName, '12Nov2022')
+
+      const empName = screen.getByPlaceholderText(empPlaceholder)
+      userEvent.type(empName, testEmpName)
+      await waitFor(() => expect(empName).toHaveValue(testEmpName))
+
+      userEvent.click(btn)
+      await waitFor(() => {
+        expect(screen.findByText('Achievement Added Successfully')).toBeTruthy()
+      })
+    })
     test('clear button is functioning', () => {
       userEvent.click(screen.getByTestId('clear-btn'))
       expect(screen.getByTestId(achievementTypeId)).toHaveValue(
         selectAchievementType,
       )
-      expect(screen.getByPlaceholderText('Employee Name')).toHaveValue(
+      expect(screen.getByPlaceholderText(empPlaceholder)).toHaveValue(
         emptyString,
       )
       expect(screen.getByTestId('add-achiever-btn')).toBeDisabled()
