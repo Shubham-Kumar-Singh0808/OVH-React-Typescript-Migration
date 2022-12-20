@@ -296,6 +296,10 @@ const ProjectReportsTable = ({
     })
   }
 
+  const handleViewModel = (projectId: number) => {
+    dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+  }
+
   const totalRecordsToDisplay = projectReports?.length
     ? `Total Records: ${listSize}`
     : `No Records found...`
@@ -397,6 +401,7 @@ const ProjectReportsTable = ({
                           className="btn-ovh-employee-list cursor-pointer"
                           color="info-light btn-ovh me-1"
                           data-testid="view-btn"
+                          onClick={() => handleViewModel(value.id)}
                         >
                           <i
                             className="fa fa-eye text-white"
