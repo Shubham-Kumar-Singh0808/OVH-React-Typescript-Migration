@@ -4,13 +4,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddAchieverForm from './AddAchieverForm'
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
@@ -39,27 +33,6 @@ const toRender = (
     <AddAchieverForm
       addAchievementTypeButtonHandler={mockaddAchievementTypeButtonHandler}
       newAchieverDetails={initialNewAchieverState}
-      setNewAchieverDetails={mocksetNewAchieverDetails}
-      isAddButtonEnabled={false}
-      setAddButton={mocksetAddButton}
-      clearInfoButtonHandler={mockclearInfoButtonHandler}
-      addButtonHandler={mockaddButtonHandler}
-    />
-  </div>
-)
-
-const toRender1 = (
-  <div>
-    <div id="backdrop-root"></div>
-    <div id="overlay-root"></div>
-    <div id="root"></div>
-    <AddAchieverForm
-      addAchievementTypeButtonHandler={mockaddAchievementTypeButtonHandler}
-      newAchieverDetails={{
-        ...initialNewAchieverState,
-        achievementName: 'Test Achievement 2',
-        employeeName: 'Pradeep Namburu',
-      }}
       setNewAchieverDetails={mocksetNewAchieverDetails}
       isAddButtonEnabled={false}
       setAddButton={mocksetAddButton}
