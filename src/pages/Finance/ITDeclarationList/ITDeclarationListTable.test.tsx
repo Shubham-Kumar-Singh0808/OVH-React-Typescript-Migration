@@ -1,8 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
 import ITDeclarationListTable from './ITDeclarationListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -12,14 +10,8 @@ import {
 } from '../../../test/data/itDeclarationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import ITDeclarationFormViewTable from '../ITDeclarationListFormView/ITDeclarationFormViewTable'
 
-const expectPageSizeToBeRendered = (pageSize: number) => {
-  for (let i = 0; i < pageSize; i++) {
-    expect(
-      screen.getByText(mockDeclarationList.itforms[i].employeeName),
-    ).toBeInTheDocument()
-  }
-}
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 const toRender = (
@@ -33,9 +25,7 @@ const toRender = (
       setCurrentPage={mockSetCurrentPage}
       pageSize={1}
       setPageSize={mockSetPageSize}
-      viewDeclarationFormButtonHandler={function (viewForm: ITForm[]): void {
-        throw new Error('Function not implemented.')
-      }}
+      viewDeclarationFormButtonHandler={jest.fn()}
     />
   </div>
 )
@@ -82,5 +72,12 @@ describe('Employee BirthdaysList Table Component Testing', () => {
   test('should render correct number of page records', () => {
     // 16 including the heading
     expect(screen.queryAllByRole('row')).toHaveLength(16)
+  })
+  test('should render View IT DeclarationForm upon clicking view button', () => {
+    const viewButtonEle = screen.getByTestId('viewItDeclarationForm-btn1')
+    userEvent.click(viewButtonEle)
+    expect(
+      render(<ITDeclarationFormViewTable viewDeclarationForm={[]} />),
+    ).toBeTruthy()
   })
 })

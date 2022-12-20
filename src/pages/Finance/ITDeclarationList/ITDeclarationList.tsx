@@ -83,7 +83,6 @@ const ITDeclarationList = (): JSX.Element => {
         'viewITDeclarationForm',
       ),
     )
-    console.log(viewForm)
     setViewDeclarationForm([
       {
         cycleId: viewForm[0].cycleId,

@@ -6,7 +6,6 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
-  EmployeeDetails,
   Investment,
   ITDeclarationFormListResponse,
   ITDeclarationListApiProps,
@@ -23,16 +22,6 @@ const getCycles = async (): Promise<Cycle[]> => {
     url: itDeclarationListApiConfig.getCycles,
     method: AllowedHttpMethods.get,
   })
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
-const getEmployeeDetails = async (): Promise<EmployeeDetails> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: itDeclarationListApiConfig.getEmployeeDetails,
-    method: AllowedHttpMethods.get,
-  })
-
   const response = await useAxios(requestConfig)
   return response.data
 }
@@ -266,5 +255,4 @@ export const itDeclarationListApi = {
   isInvestmentExist,
   updateInvestment,
   isSectionExist,
-  getEmployeeDetails,
 }

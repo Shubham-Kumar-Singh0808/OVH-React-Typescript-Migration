@@ -16,15 +16,6 @@ export type FormInvestment = {
   customAmount: number
 }
 
-export type EmployeeDetails = {
-  activeCyle: string
-  designation: string
-  employeeId: number
-  fullName: string
-  joinDate: string
-  pan: string
-}
-
 export type FormSection = {
   isOld: boolean
   itSectionsId: number
@@ -126,7 +117,6 @@ export type ITDeclarationListSliceState = {
   itDeclarationForms: ITForm[]
   listSize: number
   searchEmployee: string
-  employeeDetails: EmployeeDetails
   isLoading: LoadingState
   error: ValidationError
   cycles: Cycle[]
