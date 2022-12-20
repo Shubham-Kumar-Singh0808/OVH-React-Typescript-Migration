@@ -92,7 +92,12 @@ const PayrollManagementTable = (props: {
   )
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToggle('editBankAccount')
+    props.setToggle('editPaySlip')
+    props.setToEditPayslip(payslipItem)
+  }
+
+  const viewPaySlipHandler = (payslipItem: CurrentPayslip): void => {
+    props.setToggle('viewPaySlip')
     props.setToEditPayslip(payslipItem)
   }
 
@@ -255,6 +260,9 @@ const PayrollManagementTable = (props: {
                           size="sm"
                           color="info"
                           className="btn-ovh-employee-list"
+                          onClick={() => {
+                            viewPaySlipHandler(payslipItem)
+                          }}
                         >
                           <i className="fa fa-search-plus  text-white"></i>
                         </CButton>

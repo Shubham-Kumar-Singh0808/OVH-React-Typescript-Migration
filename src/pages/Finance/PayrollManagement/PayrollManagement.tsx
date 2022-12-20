@@ -11,6 +11,7 @@ import React, { SyntheticEvent, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
+import ViewPaySlip from './ViewPaySlip/ViewPaySlip'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -26,7 +27,6 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
-  const [isDeleteBtnEnabled, setIsDeleteBtnEnabled] = useState(false)
 
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
@@ -229,7 +229,7 @@ const PayrollManagement = (): JSX.Element => {
                 >
                   Search
                 </CButton>
-                <CButton color="danger btn-ovh" disabled={!isDeleteBtnEnabled}>
+                <CButton color="danger btn-ovh">
                   <i className="fa fa-trash-o me-1"></i>Delete
                 </CButton>
               </CInputGroup>
@@ -248,9 +248,10 @@ const PayrollManagement = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'editBankAccount' && (
+      {toggle === 'editPaySlip' && (
         <EditPaySlip toEditPayslip={toEditPayslip} />
       )}
+      {toggle === 'viewPaySlip' && <ViewPaySlip />}
     </>
   )
 }
