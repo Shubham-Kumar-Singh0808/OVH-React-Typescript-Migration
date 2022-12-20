@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EditBankInformation } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
@@ -154,7 +155,13 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
-              <span className={showIsRequired(editBankInfo?.bankAccountNumber)}>
+              <span
+                className={
+                  editBankInfo?.bankAccountNumber?.length > 8
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -167,7 +174,7 @@ const EditBankAccount = ({
                 size="sm"
                 name="bankAccountNumber"
                 autoComplete="off"
-                maxLength={20}
+                maxLength={18}
                 placeholder="Bank Account Number"
                 value={editBankInfo.bankAccountNumber}
                 onChange={onChangeInputHandler}
