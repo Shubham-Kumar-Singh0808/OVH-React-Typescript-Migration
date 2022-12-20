@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { CRow } from '@coreui/react-pro'
 import PanDetails from './PanDetails/PanDetails'
 import BankDetails from './BankDetails/BankDetails'
 import AddBankAccount from './BankDetails/AddBankAccount'
@@ -21,12 +20,12 @@ const PanAndBankDetails = (): JSX.Element => {
             CFooterClassName="d-none"
           >
             <PanDetails />
-            <CRow className="mt-3">
+            <>
               <BankDetails
                 setToggle={setToggle}
                 setSelectBankId={setSelectBankId}
               />
-            </CRow>
+            </>
           </OCard>
         </>
       )}

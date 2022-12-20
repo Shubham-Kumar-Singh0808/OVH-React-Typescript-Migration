@@ -206,6 +206,13 @@ const CreateNewTicketFilterOptions = ({
     setUploadFile(file[0])
   }
 
+  useEffect(() => {
+    if (categoryId === 0 && subCategoryIdValue === 0) {
+      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
+    }
+  }, [dispatch, categoryId])
+
   return (
     <>
       <CForm>
