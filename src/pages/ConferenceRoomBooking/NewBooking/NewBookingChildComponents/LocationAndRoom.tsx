@@ -39,11 +39,13 @@ const LocationAndRoom = ({
             }}
           >
             <option value={''}>Select Location</option>
-            {meetingLocation?.map((location, locationIndex) => (
-              <option key={locationIndex} value={location.id}>
-                {location.locationName}
-              </option>
-            ))}
+            {meetingLocation &&
+              meetingLocation?.length > 0 &&
+              meetingLocation?.map((location, locationIndex) => (
+                <option key={locationIndex} value={location.id}>
+                  {location.locationName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
       </CRow>

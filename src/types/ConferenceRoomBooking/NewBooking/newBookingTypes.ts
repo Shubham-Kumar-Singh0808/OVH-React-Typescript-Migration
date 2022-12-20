@@ -28,8 +28,6 @@ export type newBookingSliceState = {
   loggedEmployeeName: NewBookingLoggedEmployeeName
   isLoading: ApiLoadingState
   allEmployeesProfiles: NewBookingLoggedEmployeeName[]
-  getAllProjects: GetAllProjectNames[]
-  getAllAttendies: GetAllAttendies[]
 }
 
 export type AddRoom = {
@@ -95,7 +93,7 @@ export type GetAllProjectNames = {
   hiveProjectFlag: null
   allocation: null
 }
-export type GetAllAttendies = {
+export type GetAllAttendees = {
   id: number
   firstName: string
   lastName: string

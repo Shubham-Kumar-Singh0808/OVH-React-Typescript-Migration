@@ -1,7 +1,5 @@
 import {
   NewBookingLoggedEmployeeName,
-  GetAllProjectNames,
-  GetAllAttendies,
   ConfirmNewMeetingAppointment,
 } from '../../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import {
@@ -34,39 +32,13 @@ const getAllEmployees = async (
   return response.data
 }
 
-const getAllProjectSearchData = async (
-  searchString: string,
-): Promise<GetAllProjectNames[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: newBookingApiConfig.getAllProjectSearch,
-    method: AllowedHttpMethods.get,
-    params: { searchStr: searchString },
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
-const getAllAttendiesData = async (
-  projectName: string,
-): Promise<GetAllAttendies[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: newBookingApiConfig.getAllProjectSearch,
-    method: AllowedHttpMethods.get,
-    params: { searchStr: projectName },
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const confirmNewMeetingAppointment = async (
-  newMeetingAppoinment: ConfirmNewMeetingAppointment,
+  newMeetingAppointment: ConfirmNewMeetingAppointment,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: newBookingApiConfig.confirmNewMeetingAppointment,
     method: AllowedHttpMethods.post,
-    data: newMeetingAppoinment,
+    data: newMeetingAppointment,
   })
   const response = await useAxios(requestConfig)
   return response.data
@@ -75,8 +47,6 @@ const confirmNewMeetingAppointment = async (
 const newBookingApi = {
   getLoggedEmployeeName,
   getAllEmployees,
-  getAllProjectSearchData,
-  getAllAttendiesData,
   confirmNewMeetingAppointment,
 }
 

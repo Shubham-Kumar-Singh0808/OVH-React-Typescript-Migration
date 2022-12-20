@@ -27,14 +27,15 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const NewBookingFilterOptions = (): JSX.Element => {
   const authorDetails = {} as Author
   const employeesAvailability = {} as Availability[]
-  const initEvent = {
+  const dateFormat = 'DD/MM/YYYY'
+  const initNewBooking = {
     agenda: '',
     authorName: authorDetails,
     availability: employeesAvailability,
     conferenceType: 'Meeting',
     employeeIds: [],
     endTime: '',
-    fromDate: moment(new Date()).format('DD/MM/YYYY'),
+    fromDate: moment(new Date()).format(dateFormat),
     locationId: 1,
     projectName: '',
     roomId: 0,
@@ -44,7 +45,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
 
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
-  const [newRoomBooking, setNewRoomBooking] = useState(initEvent)
+  const [newRoomBooking, setNewRoomBooking] = useState(initNewBooking)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -81,7 +82,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
         ),
       )
     }
-  }, [dispatch, location])
+  }, [dispatch, newRoomBooking])
 
   useEffect(() => {
     dispatch(reduxServices.newEvent.getLoggedEmployee())
@@ -128,7 +129,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
   const fromDateChangeHandler = (value: Date) => {
     setNewRoomBooking({
       ...newRoomBooking,
-      fromDate: moment(value).format('DD/MM/YYYY'),
+      fromDate: moment(value).format(dateFormat),
     })
   }
 
@@ -215,12 +216,41 @@ const NewBookingFilterOptions = (): JSX.Element => {
           reduxServices.app.actions.addToast(
             <OToast
               toastColor="success"
-              toastMessage="Event Added Successfully"
+              toastMessage="Room Booked Successfully"
             />,
           ),
         )
+        setNewRoomBooking({
+          agenda: '',
+          authorName: authorDetails,
+          availability: employeesAvailability,
+          conferenceType: 'Meeting',
+          employeeIds: [],
+          endTime: '',
+          fromDate: moment(new Date()).format(dateFormat),
+          locationId: 1,
+          projectName: '',
+          roomId: 0,
+          startTime: '',
+        })
       }
     }
+  }
+
+  const ClearButtonHandler = () => {
+    setNewRoomBooking({
+      agenda: '',
+      authorName: authorDetails,
+      availability: employeesAvailability,
+      conferenceType: 'Meeting',
+      employeeIds: [],
+      endTime: '',
+      fromDate: moment(new Date()).format(dateFormat),
+      locationId: 1,
+      projectName: '',
+      roomId: 0,
+      startTime: '',
+    })
   }
 
   return (
@@ -302,6 +332,7 @@ const NewBookingFilterOptions = (): JSX.Element => {
               color="warning "
               data-testid="clearBtn"
               className="btn-ovh"
+              onClick={ClearButtonHandler}
             >
               Clear
             </CButton>

@@ -724,7 +724,6 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProfileEmployeesData:
     apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
-  getAllAttendies: apiPrefix + '/meetingRequest/getAllAttendies/',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
 }
