@@ -19,6 +19,8 @@ import AchieverImage from './AchieverImage'
 import {
   base64Extension,
   emptyString,
+  fromToDateError,
+  getDateForamatted,
   newAchievementLabelClass,
   orderRegexValue,
   selectAchievementType,
@@ -32,10 +34,7 @@ import {
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
-import {
-  commonDateFormat,
-  deviceLocale,
-} from '../../../../utils/dateFormatUtils'
+import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
@@ -100,37 +99,16 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const showTimePeriod =
     achievementTypeDetails && achievementTypeDetails.timeperiodrequired
 
-  const fromDate = newAchieverDetails.startDate
-    ? moment(
-        new Date(newAchieverDetails.startDate).toLocaleDateString(
-          deviceLocale,
-          {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          },
-        ),
-      ).format('MM-YYYY')
-    : ''
+  const fromDate = getDateForamatted(newAchieverDetails.startDate)
 
-  const toDate = newAchieverDetails.endDate
-    ? moment(
-        new Date(newAchieverDetails.endDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
-      ).format('MM-YYYY')
-    : ''
+  const toDate = getDateForamatted(newAchieverDetails.endDate)
 
   const datesErrorMessage = compareTheDates(
     newAchieverDetails.startDate,
     newAchieverDetails.endDate,
   ) ? (
     <div data-testid="error-msg-date">
-      <CFormText className={TextDanger}>
-        To month should be greater than From month
-      </CFormText>
+      <CFormText className={TextDanger}>{fromToDateError}</CFormText>
     </div>
   ) : (
     <></>

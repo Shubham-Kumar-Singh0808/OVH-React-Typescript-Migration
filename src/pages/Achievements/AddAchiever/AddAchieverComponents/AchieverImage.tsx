@@ -3,64 +3,64 @@ import { Cropper } from 'react-cropper'
 import { AchieverImageCrop } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 
 const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
-  const [image, setImage] = useState<string | undefined>()
-  const [imageUploaded, setImageUploaded] = useState<boolean>(false)
+  const [imageBase, setimageBase] = useState<string | undefined>()
+  const [isImageUploaded, setisImageUploaded] = useState<boolean>(false)
   const [cropper, setCropper] = useState<Cropper>()
-  const [fileTypeError, setFileTypeError] = useState<string>('')
-  const { onUploadImage } = props
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files
-    const acceptedFileTypes = ['png', 'jpeg', 'jpg', 'PNG', 'JPEG', 'JPG']
+  const [fileError, setFileError] = useState<string>('')
+  const { onUploadImage, empId, file } = props
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const targetFile = e.target.files
+    const acceptedImageFileTypes = ['png', 'jpeg', 'jpg', 'PNG', 'JPEG', 'JPG']
     let extension = '' as string
-    if (!file) return
-    if (file) {
-      extension = file[0].name.split('.').pop() as string
+    if (!targetFile) return
+    if (targetFile) {
+      extension = targetFile[0].name.split('.').pop() as string
     }
-    if (!acceptedFileTypes.includes(extension)) {
-      setFileTypeError(
+    if (!acceptedImageFileTypes.includes(extension)) {
+      setFileError(
         'Wrong file format chosen. Please choose either png, jpeg, or jpg.',
       )
-      setImage(undefined)
-      setImageUploaded(false)
+      setimageBase(undefined)
+      setisImageUploaded(false)
       setCropper(undefined)
       return
     }
     const reader = new FileReader()
     reader.onload = () => {
-      setImage(reader.result as string)
-      setImageUploaded(true)
-      setFileTypeError('')
+      setimageBase(reader.result as string)
+      setisImageUploaded(true)
+      setFileError('')
     }
-    reader.readAsDataURL(file[0])
+    reader.readAsDataURL(targetFile[0])
   }
 
   const getCropData = useCallback(() => {
     if (typeof cropper !== 'undefined' && typeof cropper !== null) {
       cropper.getCroppedCanvas().toBlob(() => {
-        const prepareFile = image
+        const prepareFile = imageBase
         setTimeout(() => {
           onUploadImage(prepareFile)
         }, 500)
       }, 'image/jpeg')
     }
-  }, [cropper, props.empId, onUploadImage])
+  }, [cropper, empId, onUploadImage])
 
   useEffect(() => {
     if (typeof cropper !== 'undefined')
       setTimeout(() => {
         getCropData()
       }, 500)
-  }, [cropper, getCropData, image])
+  }, [cropper, getCropData, imageBase])
 
   return (
     <div>
-      {imageUploaded ? (
+      {isImageUploaded ? (
         <div className="mt-2 basic-info-box">
           <div id="uploadedImage" className="basic-info-img-preview" />
         </div>
       ) : (
         <div id="profilePicture" className="mt-2 profile-avatar">
-          <img className="basic-info-img" src={props.file} alt="User Profile" />
+          <img className="basic-info-img" src={file} alt="User Profile" />
         </div>
       )}
       <div className="mt-2">
@@ -68,15 +68,15 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
           type="file"
           className="sh-updateTicket-file cursor-pointer"
           id="fileUpload"
-          onChange={onChange}
+          onChange={changeHandler}
           accept=".png, .jpg, .jpeg"
         />
-        {fileTypeError && (
+        {fileError && (
           <div>
-            <strong className="mt-3 text-danger">{fileTypeError}</strong>
+            <strong className="mt-3 text-danger">{fileError}</strong>
           </div>
         )}
-        {imageUploaded && (
+        {isImageUploaded && (
           <span
             onMouseLeave={getCropData}
             className="mt-2 basic-info-cropper-span"
@@ -87,7 +87,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
               className="basic-info-cropper-span"
               aspectRatio={1}
               preview=".basic-info-img-preview"
-              src={image}
+              src={imageBase}
               viewMode={1}
               minCropBoxHeight={30}
               minCropBoxWidth={30}

@@ -4,20 +4,12 @@ import AddAchieverForm from './AddAchieverComponents/AddAchieverForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { emptyString, selectAchievementType } from '../AchievementConstants'
+import { initialNewAchieverState } from '../AchievementConstants'
 import {
   NewAchieverInformation,
   OutgoingNewAchiever,
 } from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-
-const initialNewAchieverState: NewAchieverInformation = {
-  achievementName: selectAchievementType,
-  employeeName: emptyString,
-  endDate: emptyString,
-  startDate: emptyString,
-  timePeriod: emptyString,
-}
 
 const AddAchiever = (): JSX.Element => {
   const dispatch = useAppDispatch()

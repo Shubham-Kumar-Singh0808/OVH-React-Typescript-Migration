@@ -61,6 +61,8 @@ describe('Add Achiever Render', () => {
       const addBtn = screen.getByTestId(addButtonId)
       expect(addBtn).toBeEnabled()
       userEvent.click(addBtn)
+      const backButton = screen.getByTestId('back-btn')
+      userEvent.click(backButton)
     })
     test('new achiever input possible', async () => {
       const achievementName = screen.getByTestId(achievementTypeId)
