@@ -77,6 +77,7 @@ import {
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
+  AddAchieverApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -701,6 +702,15 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
   getAuditForProjectRequest:
     apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+}
+
+export const AddAchieverApiConfig: AddAchieverApi = {
+  addAchievementType: apiPrefix + '/achievement/addAchievementType',
+  getAchievementTypeDetails:
+    apiPrefix + '/achievement/getAchievementTypeDetails',
+  updateAchievementTypeDetails:
+    apiPrefix + '/achievement/updateAchievementType',
+  deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
