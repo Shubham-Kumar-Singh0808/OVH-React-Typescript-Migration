@@ -88,16 +88,6 @@ const EmployeeAccountsTable = (
     ? `Total Records: ${FinanceDataListSize}`
     : `No Records found...`
 
-  const handler = (id: number) => {
-    dispatch(reduxServices.bankDetails.bankNameList)
-    dispatch(
-      reduxServices.panDetails.bankInformation({
-        key: 'loggedInEmpId',
-        value: id,
-      }),
-    )
-  }
-
   return (
     <>
       <CTable
@@ -154,7 +144,6 @@ const EmployeeAccountsTable = (
                       <Link
                         to={`/employeeFinance/${data.financeDetails.employeeId}`}
                         className="cursor-pointer"
-                        onClick={() => handler(data.employeeId)}
                       >
                         {data.employeeName}
                       </Link>

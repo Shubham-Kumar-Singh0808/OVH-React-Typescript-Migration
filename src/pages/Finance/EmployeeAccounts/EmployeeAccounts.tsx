@@ -17,10 +17,6 @@ const EmployeeAccounts = (): JSX.Element => {
     reduxServices.employeeAccount.selectors.listSize,
   )
 
-  useEffect(() => {
-    dispatch(reduxServices.bankDetails.bankNameList)
-  }, [dispatch])
-
   const {
     paginationRange,
     setPageSize,
@@ -30,6 +26,7 @@ const EmployeeAccounts = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    dispatch(reduxServices.bankDetails.bankNameList())
     dispatch(
       reduxServices.employeeAccount.getFinanceDetails({
         startIndex: pageSize * (currentPage - 1),
