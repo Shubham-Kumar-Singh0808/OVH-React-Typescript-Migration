@@ -17,6 +17,16 @@ const EmployeeAccounts = (): JSX.Element => {
     reduxServices.employeeAccount.selectors.listSize,
   )
 
+  const CurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  useEffect(() => {
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
+    }
+  }, [CurrentPage])
+
   const {
     paginationRange,
     setPageSize,
@@ -29,12 +39,12 @@ const EmployeeAccounts = (): JSX.Element => {
     dispatch(reduxServices.bankDetails.bankNameList())
     dispatch(
       reduxServices.employeeAccount.getFinanceDetails({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (CurrentPage - 1),
+        endIndex: pageSize * CurrentPage,
         employeeName: '',
       }),
     )
-  }, [currentPage, dispatch, pageSize])
+  }, [CurrentPage, dispatch, pageSize])
 
   const handleExportEmployeeFinanceData = async () => {
     const employeeFinanceList = await employeeAccountsApi.exportFinanceList({
