@@ -64,15 +64,21 @@ import {
   RoomListApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
   PaySlipsApi,
   BankDetailsApi,
   PanDetailsApi,
   ResignationListApi,
+  EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
   PayrollManagementApi,
+  AchieverListApi,
+  CommonAchievementsApi,
+  ProjectCreationRequestApi,
+  AddAchieverApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -528,7 +534,19 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+}
+
+export const newEventApiConfig: NewEventApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
+  timeChecking: apiPrefix + '/meetingRequest/timechecking',
+  getAllBookedDetailsForEvent:
+    apiPrefix + '/meetingRequest/getAllBookedDetailsForEvent',
+  addNewEvent: apiPrefix + '/meetingRequest/addNewEvent',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {
@@ -554,7 +572,7 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
   validateCycle: apiPrefix + '/appraisal/validateCycle',
@@ -636,12 +654,32 @@ export const resignationListApiConfig: ResignationListApi = {
   updateCCDetails: apiPrefix + '/separationController/updateCC',
   checkExitFeedBackForm:
     apiPrefix + '/separationController/checkExitFeedBackForm',
+  getSeparationChart: apiPrefix + '/separationController/getSeparationChart',
+  getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
+  saveExitFeedBackForm:
+    apiPrefix + '/separationController/saveExitFeedBackForm',
+  uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
+  uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getSections: apiPrefix + '/itDeclaration/getSection',
   getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
   exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  addCycle: apiPrefix + '/itDeclaration/addCycle',
+  deleteSection: apiPrefix + '/itDeclaration/deleteSection',
+  addSection: apiPrefix + '/itDeclaration/addSection',
+  updateSection: apiPrefix + '/itDeclaration/editSection',
+  getInvestments: apiPrefix + '/itDeclaration/getInvestments',
+  addInvestment: apiPrefix + '/itDeclaration/addInvestment',
+  deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
+  deleteCycle: apiPrefix + '/itDeclaration/deleteCycle',
+  isCycleExist: apiPrefix + '/itDeclaration/isCycleExist',
+  updateCycle: apiPrefix + '/itDeclaration/editCycle',
+  updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
+  isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
+  isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
@@ -660,4 +698,36 @@ export const payrollManagementApiConfig: PayrollManagementApi = {
   readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
   saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
   clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
+}
+
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
+}
+
+export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
+  getAllProjectRequestList:
+    apiPrefix + '/project-mgmt/getAllProjectRequestList',
+  getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  getAuditForProjectRequest:
+    apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+}
+
+export const AddAchieverApiConfig: AddAchieverApi = {
+  addAchievementType: apiPrefix + '/achievement/addAchievementType',
+  getAchievementTypeDetails:
+    apiPrefix + '/achievement/getAchievementTypeDetails',
+  updateAchievementTypeDetails:
+    apiPrefix + '/achievement/updateAchievementType',
+  deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
+}
+
+export const employeeAccountsApiConfig: EmployeeAccountsApi = {
+  financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }

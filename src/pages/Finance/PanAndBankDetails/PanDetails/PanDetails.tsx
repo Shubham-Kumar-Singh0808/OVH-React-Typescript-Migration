@@ -8,6 +8,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -70,6 +71,8 @@ const PanDetails = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
   }
+  const history = useHistory()
+
   return (
     <>
       {userAccess?.updateaccess && (
@@ -80,9 +83,8 @@ const PanDetails = (): JSX.Element => {
             <CCol className="text-end" md={4}>
               <CTooltip content="Edit">
                 <CButton
-                  size="sm"
-                  className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                  color="info btn-ovh me-1"
+                  className="btn-ovh me-1"
+                  color="info"
                   onClick={() => {
                     editPanDetailsButtonHandler(bankDetail.finance)
                   }}
@@ -91,6 +93,14 @@ const PanDetails = (): JSX.Element => {
                   &nbsp; Edit
                 </CButton>
               </CTooltip>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={() => history.push('/financeList')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
             </CCol>
           )}
         </CRow>
@@ -107,15 +117,15 @@ const PanDetails = (): JSX.Element => {
             :
           </CCol>
           {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            <CCol sm={5} className="d-flex">
+            <CCol sm={5} className="d-flex sh-checkbox">
               <CFormCheck
-                className="mt-2"
+                className="mt-2 sh-checkbox"
                 checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.checked)}
                 data-testid="ch-All"
               />
               <CFormInput
-                className="eventType-editInput ms-2"
+                className="eventType-editInput ms-2 "
                 data-testid="pfNumber"
                 type="text"
                 id="pfNumber"

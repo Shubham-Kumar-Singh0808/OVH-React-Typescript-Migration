@@ -432,7 +432,16 @@ export interface EventTypeListApi extends ApiBase {
   addEventType: string
   deleteEventType: string
   updateEventType: string
+}
+export interface NewEventApi extends ApiBase {
   getLoggedEmployeeName: string
+  getRoomsOfLocation: string
+  getAllProfileEmployeesData: string
+  getAllAttendees: string
+  uniqueAttendee: string
+  timeChecking: string
+  getAllBookedDetailsForEvent: string
+  addNewEvent: string
 }
 export interface EmployeeAllocationApi extends ApiBase {
   getEmployeeAllocationReport: string
@@ -524,12 +533,31 @@ export interface ResignationListApi extends ApiBase {
   getClearanceDetails: string
   updateCCDetails: string
   checkExitFeedBackForm: string
+  getSeparationChart: string
+  getEmpDetails: string
+  saveExitFeedBackForm: string
+  uploadExitFeedBackFile: string
+  uploadRelievingLetter: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {
   getCycles: string
+  getSections: string
   getITDeclarationForm: string
   exportITDeclarationList: string
+  addCycle: string
+  deleteSection: string
+  addSection: string
+  updateSection: string
+  getInvestments: string
+  addInvestment: string
+  deleteInvestment: string
+  deleteCycle: string
+  isCycleExist: string
+  isSectionExist: string
+  updateCycle: string
+  updateInvestment: string
+  isInvestmentExist: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {
@@ -547,4 +575,32 @@ export interface PayrollManagementApi extends ApiBase {
   readExcelFile: string
   saveExcelFile: string
   clearDirectory: string
+}
+
+export interface CommonAchievementsApi extends ApiBase {
+  getAllAchievementsType: string
+}
+
+export interface AchieverListApi extends ApiBase {
+  getAchieverList: string
+  updateShowOnDashbord: string
+  achievementHistoryTimeline: string
+}
+
+export interface ProjectCreationRequestApi extends ApiBase {
+  getAllProjectRequestList: string
+  getProjectRequest: string
+  getAuditForProjectRequest: string
+}
+
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string
+  getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
+  deleteAchievementType: string
+}
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
 }

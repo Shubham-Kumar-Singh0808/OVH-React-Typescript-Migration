@@ -4,13 +4,13 @@ import appraisalConfigurationReducer, {
 } from './appraisalConfigurationsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockAppraisalCycle } from '../../../test/data/appraisalConfigurationsData'
-import { getCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
 describe('appraisal Configuration', () => {
   describe('getAllAppraisalCycle test', () => {
     it('Should be able to set isLoading to "loading" if getAllAppraisalCycle is pending', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.pending.type,
+        type: appraisalCycleService.getAppraisalCycle.pending.type,
       }
       const state = appraisalConfigurationReducer(
         initialAppraisalCycleSliceState,
@@ -18,17 +18,16 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
     it('Should be able to set isLoading to "success" if getAllAppraisalCycle is fulfilled', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.fulfilled.type,
+        type: appraisalCycleService.getAppraisalCycle.fulfilled.type,
         payload: mockAppraisalCycle,
       }
       const state = appraisalConfigurationReducer(
@@ -36,18 +35,17 @@ describe('appraisal Configuration', () => {
         action,
       )
       expect(state).toEqual({
-        appraisalCycle: mockAppraisalCycle,
-        editAppraisalCycle: {} as getCycle,
+        appraisalCycle: mockAppraisalCycle.list,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 42,
       })
     })
 
     it('Should be able to set isLoading to "failed" if getAllAppraisalCycle is rejected', () => {
       const action = {
-        type: appraisalCycleService.getAllAppraisalCycle.rejected.type,
+        type: appraisalCycleService.getAppraisalCycle.rejected.type,
         payload: 500,
       }
       const state = appraisalConfigurationReducer(
@@ -56,11 +54,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
+        listSize: 0,
       })
     })
   })
@@ -76,11 +73,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -97,9 +93,8 @@ describe('appraisal Configuration', () => {
         appraisalCycle: [],
         editAppraisalCycle: mockAppraisalCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -114,11 +109,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
+        listSize: 0,
       })
     })
   })
@@ -134,11 +128,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -153,11 +146,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -172,11 +164,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
+        listSize: 0,
       })
     })
   })
@@ -192,11 +183,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -211,11 +201,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
         error: null,
+        listSize: 0,
       })
     })
 
@@ -230,11 +219,10 @@ describe('appraisal Configuration', () => {
       )
       expect(state).toEqual({
         appraisalCycle: [],
-        editAppraisalCycle: {} as getCycle,
+        editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.failed,
-        currentPage: 1,
-        pageSize: 20,
         error: 500,
+        listSize: 0,
       })
     })
   })

@@ -93,7 +93,7 @@ const EditBankAccount = ({
       toastColor="success"
     />
   )
-  const alreadyExistToast = (
+  const alreadyExistErrorToast = (
     <OToast
       toastMessage="AccountNumber and BankName combination already exist"
       toastColor="danger"
@@ -125,7 +125,7 @@ const EditBankAccount = ({
     } else if (editBankInfo.bankAccountNumber) {
       setBankAccountNumberExist(editBankInfo.bankAccountNumber)
     } else {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
+      dispatch(reduxServices.app.actions.addToast(alreadyExistErrorToast))
     }
   }
 

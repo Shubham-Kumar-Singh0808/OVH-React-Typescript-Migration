@@ -37,6 +37,8 @@ import { ticketConfigurationHandlers } from './ticketConfigurationHandlers'
 import { addNewDesignationHandler } from './addNewDesignationHandler'
 import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
 import { resignationHandlers } from './resignationLitHandler'
+import { itDeclarationListHandlers } from './itDeclarationListHandlers'
+import { addAchieverHandlers } from './addAchieverHandler'
 
 export const handlers = [
   ...loginHandlers,
@@ -80,5 +82,7 @@ export const handlers = [
   ...addNewDesignationHandler,
   ...leaveApprovalsHandlers,
   ...resignationHandlers,
+  ...itDeclarationListHandlers,
+  ...addAchieverHandlers,
   // add your handler here
 ]

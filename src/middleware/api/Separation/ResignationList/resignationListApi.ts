@@ -2,10 +2,14 @@ import axios from 'axios'
 import {
   ClearanceDetails,
   ClearanceDetailsProps,
+  GetEmpDetailsType,
   GetResignationListProps,
   ResignationListResponse,
+  SeparationChart,
+  SeparationChartProps,
   SeparationTimeLine,
   submitClearanceCommentsProps,
+  SubmitExitFeedBackForm,
   UpdateClearanceDetails,
 } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import {
@@ -126,6 +130,87 @@ const updateCCDetails = async (
   return response.data
 }
 
+const getSeparationChart = async (
+  props: SeparationChartProps,
+): Promise<SeparationChart> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.getSeparationChart,
+    method: AllowedHttpMethods.get,
+    params: {
+      dateSelection: props.dateSelection ?? '',
+      from: props.from ?? '',
+      to: props.to ?? '',
+    },
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
+
+const getEmpDetails = async (
+  separationId: number,
+): Promise<GetEmpDetailsType> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.getEmpDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      separationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const saveExitFeedBackForm = async (
+  saveFeedBackForm: SubmitExitFeedBackForm,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.saveExitFeedBackForm,
+    method: AllowedHttpMethods.post,
+    data: saveFeedBackForm,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadRelievingLetter = async (prepareObject: {
+  exitFormId: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.uploadRelievingLetter,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      exitfeddbackformId: prepareObject.exitFormId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadExitFeedBackFile = async (prepareObject: {
+  exitFeedBackFormId: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.uploadExitFeedBackFile,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      exitfeddbackformId: prepareObject.exitFeedBackFormId,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -134,6 +219,11 @@ const resignationListApi = {
   submitClearanceCertificate,
   getClearanceDetails,
   updateCCDetails,
+  getSeparationChart,
+  getEmpDetails,
+  saveExitFeedBackForm,
+  uploadRelievingLetter,
+  uploadExitFeedBackFile,
 }
 
 export default resignationListApi

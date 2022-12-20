@@ -1,6 +1,8 @@
 import {
-  getAppraisalCycle,
-  getCycle,
+  AppraisalCycleApiProps,
+  GetAppraisalCycle,
+  GetAppraisalCycleResponse,
+  GetCycle,
 } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -11,17 +13,23 @@ import {
   appraisalConfigurationsApiConfig,
 } from '../../apiList'
 
-const getAllAppraisalCycle = async (): Promise<getAppraisalCycle[]> => {
+const getAppraisalCycle = async (
+  props: AppraisalCycleApiProps,
+): Promise<GetAppraisalCycleResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: appraisalConfigurationsApiConfig.getAppraisalCycle,
     method: AllowedHttpMethods.get,
+    params: {
+      endIndex: props.endIndex ?? 20,
+      startIndex: props.startIndex ?? 0,
+    },
   })
 
   const response = await useAxios(requestConfig)
   return response.data
 }
 
-const getCycleToEdit = async (cycleId: number): Promise<getAppraisalCycle> => {
+const getCycleToEdit = async (cycleId: number): Promise<GetAppraisalCycle> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: appraisalConfigurationsApiConfig.editAppraisalCycle,
     method: AllowedHttpMethods.get,
@@ -34,8 +42,8 @@ const getCycleToEdit = async (cycleId: number): Promise<getAppraisalCycle> => {
 }
 
 const updateAppraisalCycle = async (
-  updateCycleDetails: getCycle,
-): Promise<getCycle> => {
+  updateCycleDetails: GetCycle,
+): Promise<GetCycle> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: appraisalConfigurationsApiConfig.updateAppraisalCycle,
     method: AllowedHttpMethods.put,
@@ -47,8 +55,8 @@ const updateAppraisalCycle = async (
 }
 
 const validateAppraisalCycle = async (
-  validateCycleDetails: getCycle,
-): Promise<getCycle> => {
+  validateCycleDetails: GetCycle,
+): Promise<GetCycle> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: appraisalConfigurationsApiConfig.validateCycle,
     method: AllowedHttpMethods.put,
@@ -60,7 +68,7 @@ const validateAppraisalCycle = async (
 }
 
 const appraisalConfigurationsApi = {
-  getAllAppraisalCycle,
+  getAppraisalCycle,
   getCycleToEdit,
   updateAppraisalCycle,
   validateAppraisalCycle,

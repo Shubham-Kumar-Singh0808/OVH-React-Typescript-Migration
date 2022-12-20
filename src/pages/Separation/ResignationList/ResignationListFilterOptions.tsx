@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
+import { Link } from 'react-router-dom'
 import ResignationListTable from './ResignationListTable'
 import {
   deviceLocale,
@@ -37,6 +38,7 @@ const ResignationListFilterOptions = ({
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
+
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -152,6 +154,16 @@ const ResignationListFilterOptions = ({
 
     downloadFile(resignationListDownload, 'ResignationListList.csv')
   }
+
+  const viewChartHandler = () => {
+    dispatch(
+      reduxServices.resignationList.getSeparationChart({
+        dateSelection: '',
+        from: '',
+        to: '',
+      }),
+    )
+  }
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
@@ -226,9 +238,15 @@ const ResignationListFilterOptions = ({
       </CRow>
       <CRow className="mb-3">
         <CCol sm={{ span: 6, offset: 3 }}>
-          <CButton color="info btn-ovh me-3" data-testid="view-btn">
-            <i className="fa fa-eye"></i>View Chart
-          </CButton>
+          <Link to={`/separationChart`}>
+            <CButton
+              color="info btn-ovh me-3"
+              data-testid="view-btn"
+              onClick={viewChartHandler}
+            >
+              <i className="fa fa-eye"></i>View Chart
+            </CButton>
+          </Link>
           <CButton
             color="info btn-ovh me-3"
             data-testid="export-btn"
@@ -327,7 +345,7 @@ const ResignationListFilterOptions = ({
         <CCol sm={3} md={4} lg={5} xl={4} xxl={3}>
           <CInputGroup className="global-search me-0">
             <CFormInput
-              placeholder="Multiple Search"
+              placeholder="Employee Name"
               aria-label="Multiple Search"
               data-testid="search-input"
               aria-describedby="button-addon2"

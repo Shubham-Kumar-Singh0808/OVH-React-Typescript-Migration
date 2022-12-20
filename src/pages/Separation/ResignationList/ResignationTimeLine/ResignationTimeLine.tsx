@@ -57,7 +57,15 @@ const ResignationTimeLine = (): JSX.Element => {
             Employee Comments:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{getAllResignationHistory?.employeeComments}</p>
+            <p className="mb-0">
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: getAllResignationHistory?.employeeComments,
+                  }}
+                />
+              </span>
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -95,13 +103,21 @@ const ResignationTimeLine = (): JSX.Element => {
                           &nbsp;
                           {item.status}
                         </div>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            Comments:
-                          </CFormLabel>
-                          &nbsp;
-                          {item.comments}
-                        </div>
+                        {item.comments ? (
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              Comments:
+                            </CFormLabel>
+                            &nbsp;
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: item?.comments,
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          ''
+                        )}
                       </>
                     </div>
                   </div>

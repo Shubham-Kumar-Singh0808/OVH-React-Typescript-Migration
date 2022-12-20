@@ -63,11 +63,14 @@ export type ResignationListSliceState = {
   resignationList: ResignationListResponse
   separationTimeLine: SeparationTimeLine
   clearanceDetails: ClearanceDetails[]
+  separationChart: SeparationChart
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
   toggle: string
   checkExitFeedBackForm: CheckExitFeedBackForm
+  getEmpDetailsType: GetEmpDetailsType
+  submitExitFeedBackForm: SubmitExitFeedBackForm
 }
 
 export type ExportResignationListDataProps = {
@@ -197,4 +200,97 @@ export type CheckExitFeedBackForm = {
   dislikeAboutCompany: string
   joinLater: string
   employeeName: string
+}
+
+export type Chart = {
+  caption: string
+  subcaption: null
+  startingangle: string
+  showlabels: string
+  showlegend: string
+  enablemultislicing: string
+  slicingdistance: string
+  showpercentvalues: string
+  showpercentintooltip: string
+  plottooltext: string
+  theme: string
+}
+
+export type Data = {
+  label: string
+  value: string
+}
+
+export type SeparationChartProps = {
+  dateSelection: string
+  from: string
+  to: string
+}
+
+export type SeparationChart = {
+  chart: Chart
+  data: Data[]
+}
+export type GetEmpDetailsType = {
+  separationId: number
+  relievingDate: null
+  resignationDate: null
+  employeeId: number
+  employeeName: string
+  separationComments: null
+  employeeComments: null
+  managerComments: null
+  withdrawComments: null
+  primaryReasonId: number
+  primaryReasonName: string
+  reasonComments: null
+  status: null
+  canberevoked: null
+  isRevoked: null
+  isprocessInitiated: null
+  adminCcCss: null
+  hrCcCss: null
+  managerCcCss: null
+  itCcCss: null
+  finanaceCcCss: null
+  showCommentsBox: null
+  showEditButton: null
+  certificateDTO: null
+  relievingLetterPath: null
+  managerName: null
+  exitFeedbackFormPath: null
+  separationExist: null
+  showManagerClearance: null
+  showTimeline: null
+  isPIP: null
+  pipAuditDTO: null
+  contractExists: null
+  contractStartDate: null
+  contractEndDate: null
+  personalEmailFlag: null
+  initiatedDate: null
+  empStatus: null
+  certificate: null
+  seperationComments: null
+}
+
+export type SubmitExitFeedBackForm = {
+  dislikeAboutCompany: string
+  educationalBackground: string
+  employeeId: number
+  employeeName: string
+  expectations: string
+  expectationsFulfilled: string
+  joinLater: string
+  likeAboutCompany: string
+  opportunityForGrowth: string
+  organisationCulture: string
+  personelPolicies: string
+  primaryReasonId: number
+  promotion: string
+  recognitionOfwork: string
+  roleClarity: string
+  salary: string
+  separationId: number
+  superiorGuidance: string
 }

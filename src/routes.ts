@@ -233,6 +233,9 @@ const EditConfiguration = React.lazy(
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
+const NewEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
+)
 
 const SubmitResignation = React.lazy(
   () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
@@ -255,6 +258,13 @@ const ResignationTimeLine = React.lazy(
     ),
 )
 
+const ResignationFeedBackForm = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
+    ),
+)
+
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
@@ -262,8 +272,45 @@ const ResignationManagerClearanceCertificate = React.lazy(
     ),
 )
 
+const SeparationViewChart = React.lazy(
+  () =>
+    import('./pages/Separation/ResignationList/ViewChart/SeparationViewChart'),
+)
+
+const ResignationHRClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/HRClearanceCertificate/HRClearanceCertificate'
+    ),
+)
+
+const ResignationITClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/ITClearanceCertificate/ITClearanceCertificate'
+    ),
+)
+
+const ResignationFinanceClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/FinanaceClearanceCertificate/FinanceClearanceCertificate'
+    ),
+)
+
+const ResignationAdminClearanceCertificate = React.lazy(
+  () =>
+    import(
+      './pages/Separation/ResignationList/AdminClearanceCertificate/AdminClearanceCertificate'
+    ),
+)
+
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
+)
+
+const EmployeeAccounts = React.lazy(
+  () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
 )
 
 const ITDeclarationList = React.lazy(
@@ -279,7 +326,26 @@ const AddInvestmentCycle = React.lazy(
 )
 
 const AddInvestment = React.lazy(
-  () => import('./pages/Finance/AddInvestment/AddInvestment'),
+  () => import('./pages/Finance/AddInvestment/InvestmentList'),
+)
+
+const AddSection = React.lazy(
+  () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
+)
+
+const ProjectCreationRequest = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
+    ),
+)
+
+const AddAchiever = React.lazy(
+  () => import('./pages/Achievements/AddAchiever/AddAchiever'),
+)
+
+const AchieverList = React.lazy(
+  () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 
 const PayrollManagement = React.lazy(
@@ -521,6 +587,11 @@ const routes = [
   },
   {
     path: '/newEvent',
+    name: 'New Event',
+    component: NewEvent,
+  },
+  {
+    path: '/addEventType',
     name: 'Event Type List',
     component: EventTypeList,
   },
@@ -585,6 +656,11 @@ const routes = [
     component: PfPanDetails,
   },
   {
+    path: '/employeeFinance/:employeeId',
+    name: 'P.F. & PAN Details',
+    component: PfPanDetails,
+  },
+  {
     path: '/resignationList',
     name: 'Resignation List',
     component: ResignationList,
@@ -593,6 +669,11 @@ const routes = [
     path: '/managerComments',
     name: 'Resignation Time Line',
     component: ResignationTimeLine,
+  },
+  {
+    path: '/financeList',
+    name: 'Employee Accounts',
+    component: EmployeeAccounts,
   },
   {
     path: '/ClearanceCertificateManager',
@@ -615,6 +696,33 @@ const routes = [
     component: AddInvestment,
   },
   {
+    path: '/ClearanceCertificateHR',
+    name: 'HR  Clearance Certificate',
+    component: ResignationHRClearanceCertificate,
+  },
+
+  {
+    path: '/ClearanceCertificateIT',
+    name: 'IT  Clearance Certificate',
+    component: ResignationITClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateFinance',
+    name: 'Finance  Clearance Certificate',
+    component: ResignationFinanceClearanceCertificate,
+  },
+  {
+    path: '/ClearanceCertificateAdmin',
+    name: 'Admin  Clearance Certificate',
+    component: ResignationAdminClearanceCertificate,
+  },
+
+  {
+    path: '/ExitFeedBackForm',
+    name: 'Resignation ExitFeedBackForm',
+    component: ResignationFeedBackForm,
+  },
+  {
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
@@ -623,6 +731,31 @@ const routes = [
     path: '/payslipUpload',
     name: 'Payroll Management',
     component: PayrollManagement,
+  },
+  {
+    path: '/achievementList',
+    name: 'Achievements List',
+    component: AchieverList,
+  },
+  {
+    path: '/separationChart',
+    name: 'Separation View Chart',
+    component: SeparationViewChart,
+  },
+  {
+    path: '/addSection',
+    name: 'Add Section',
+    component: AddSection,
+  },
+  {
+    path: '/projectRequestList',
+    name: 'Project Creation Request',
+    component: ProjectCreationRequest,
+  },
+  {
+    path: '/addAchievement',
+    name: 'Add Achiever',
+    component: AddAchiever,
   },
 ]
 
