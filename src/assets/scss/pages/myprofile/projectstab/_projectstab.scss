@@ -15,18 +15,18 @@
 
 &-label{
         display: inline;
-        padding: 0.2em 0.4em 0.3em 0.2em;
+        padding: 0.4em 1.2rem 0.4em 1.2rem;
         font-size: 85%;
         line-height: 1;
         color: #fff;
         text-align: center;
         white-space: nowrap;
-        border-radius: 0.65em;
+        border-radius: 1rem;
         display:block
 }
 
 &-label-success{
-    background-color: #5cb85c;
+    background-color: $success-base;
 }
 &-label-warning{
    background-color:  #dd5a37

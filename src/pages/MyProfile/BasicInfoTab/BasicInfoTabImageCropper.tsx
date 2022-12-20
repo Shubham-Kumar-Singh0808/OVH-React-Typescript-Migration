@@ -74,6 +74,7 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
       <div className="mt-2">
         <input
           type="file"
+          className="sh-updateTicket-file cursor-pointer"
           id="fileUpload"
           onChange={onChange}
           accept=".png, .jpg, .jpeg"

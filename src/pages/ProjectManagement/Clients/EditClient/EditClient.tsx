@@ -44,6 +44,10 @@ const EditClient = (): JSX.Element => {
     reduxServices.clients.selectors.clientCountries,
   )
 
+  const selectError = useTypedSelector(
+    reduxServices.clients.selectors.selectError,
+  )
+
   const formLabelProps = {
     htmlFor: 'inputNewClient',
     className: 'col-form-label category-label',
@@ -111,7 +115,8 @@ const EditClient = (): JSX.Element => {
       })
     } else {
       setClient((values) => {
-        return { ...values, ...{ [name]: value } }
+        const trimmedValue = value.trimStart()
+        return { ...values, ...{ [name]: trimmedValue } }
       })
     }
   }
@@ -172,10 +177,19 @@ const EditClient = (): JSX.Element => {
   }, [selectedClient])
 
   const updateClientSuccessToastMessage = (
-    <OToast toastMessage="Client updated Successfully." toastColor="success" />
+    <OToast toastMessage="Client Updated Successfully." toastColor="success" />
+  )
+  const updateClientFailedToast = (
+    <OToast toastMessage="Client Updation Failed." toastColor="danger" />
+  )
+  const clientOrgExistsToast = (
+    <OToast
+      toastMessage="Client organization already exists"
+      toastColor="danger"
+    />
   )
 
-  const handleEditClient = async () => {
+  const updateClientAction = async () => {
     const prepareObject = {
       ...client,
       phone: `${phoneCode}-${phoneNumber}`,
@@ -192,6 +206,33 @@ const EditClient = (): JSX.Element => {
       dispatch(
         reduxServices.app.actions.addToast(updateClientSuccessToastMessage),
       )
+    } else if (selectError === 500) {
+      dispatch(reduxServices.app.actions.addToast(updateClientFailedToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
+  const handleEditClient = async () => {
+    if (client.organization !== selectedClient.organization) {
+      const isOrgExistsResultAction = await dispatch(
+        reduxServices.clients.isOrganizationExists(client.organization),
+      )
+      if (
+        reduxServices.clients.isOrganizationExists.fulfilled.match(
+          isOrgExistsResultAction,
+        ) &&
+        isOrgExistsResultAction.payload === true
+      ) {
+        setClient((prevState) => {
+          return { ...prevState, ...{ organization: '' } }
+        })
+        dispatch(reduxServices.app.actions.addToast(clientOrgExistsToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      } else {
+        updateClientAction()
+      }
+    } else {
+      updateClientAction()
     }
   }
 
@@ -256,7 +297,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="organizationInput"
                 name="organization"
                 placeholder="Organization"
-                maxLength={50}
                 value={client.organization}
                 onChange={onChangeInputHandler}
               />
@@ -277,7 +317,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="clientNameInput"
                 name="name"
                 placeholder="Client Name"
-                maxLength={50}
                 value={client.name}
                 onChange={onChangeInputHandler}
               />
@@ -298,7 +337,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="contactInput"
                 name="personName"
                 placeholder="Contact Person"
-                maxLength={50}
                 value={client.personName}
                 onChange={onChangeInputHandler}
               />
@@ -318,7 +356,6 @@ const EditClient = (): JSX.Element => {
                 type="email"
                 name="email"
                 placeholder="Contact Person Email"
-                maxLength={50}
                 value={client.email}
                 onChange={onChangeInputHandler}
               />
@@ -402,7 +439,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="gstCodeInput"
                 name="gstCode"
                 placeholder="GST Code"
-                maxLength={32}
                 value={client.gstCode as string}
                 onChange={onChangeInputHandler}
               />
@@ -424,7 +460,6 @@ const EditClient = (): JSX.Element => {
                 data-testid="clientAddressInput"
                 name="address"
                 placeholder="Address"
-                maxLength={100}
                 value={client.address}
                 onChange={onChangeInputHandler}
               />

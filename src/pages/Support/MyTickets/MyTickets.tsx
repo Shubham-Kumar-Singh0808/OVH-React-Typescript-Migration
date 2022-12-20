@@ -11,11 +11,14 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const MyTickets = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
-  const [toggle, setToggle] = useState('')
   const dispatch = useAppDispatch()
+
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
   )
+
+  const toggle = useTypedSelector(reduxServices.tickets.selectors.toggle)
+
   const {
     paginationRange,
     setPageSize,
@@ -32,6 +35,7 @@ const MyTickets = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
       }),
     )
+    dispatch(reduxServices.ticketApprovals.actions.setRoutePath(''))
   }, [dispatch, pageSize, currentPage])
 
   const handleSearch = () => {
@@ -64,6 +68,13 @@ const MyTickets = (): JSX.Element => {
     })
     downloadFile(myTicketListDownload, 'TicketList.csv')
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Tickets',
+  )
 
   return (
     <>
@@ -88,8 +99,8 @@ const MyTickets = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="gap-2 d-md-flex justify-content-md-end mt-3">
-              <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
-                <CInputGroup className="global-search me-0">
+              <CCol xs={12} sm={3}>
+                <CInputGroup className="global-search me-0 sh-client-search">
                   <CFormInput
                     placeholder="Multiple Search"
                     aria-label="Multiple Search"
@@ -116,20 +127,18 @@ const MyTickets = (): JSX.Element => {
             </CRow>
             <CCol className="col-xs-12">
               <MyTicketsTable
-                setToggle={setToggle}
                 paginationRange={paginationRange}
                 setPageSize={setPageSize}
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
+                userEditAccess={userAccess?.updateaccess as boolean}
               />
             </CCol>
           </OCard>
         </>
       )}
-      {toggle === 'ticketHistory' && (
-        <TicketHistoryDetails backButtonHandler={() => setToggle('')} />
-      )}
+      {toggle === 'ticketHistory' && <TicketHistoryDetails />}
     </>
   )
 }

@@ -82,7 +82,7 @@ const EditHandbook = ({
       if (selectedHandbook.handCountry.length === empCountries.length) {
         setAllChecked(true)
       }
-      if (selectedHandbook.description.length > 150) {
+      if (selectedHandbook.description?.length > 156) {
         setError(false)
       } else {
         setError(true)
@@ -91,15 +91,14 @@ const EditHandbook = ({
   }, [totalHandbookList])
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList =
-      empCountries.length > 0 && empCountries?.map((item) => item.id)
+    const newList = empCountries?.map((item) => item.id)
     const { checked } = e.target
     setAllChecked(e.target.checked)
     if (checked) {
       setEditPage((prevState) => {
         return {
           ...prevState,
-          ...{ newList },
+          ...{ list: newList },
         }
       })
     } else {
@@ -144,7 +143,8 @@ const EditHandbook = ({
       editPage.displayOrder &&
       editPage.pageName &&
       editPage.list &&
-      editPage.description?.length > 150
+      editPage.description?.length > 156 &&
+      editPage.list?.length > 0
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -195,7 +195,7 @@ const EditHandbook = ({
     dispatch(reduxServices.employeeHandbookSettings.getTotalHandbookList())
   }, [dispatch])
   const handleDescription = (description: string) => {
-    if (description.length > 150) {
+    if (description?.length > 156) {
       setError(false)
     } else {
       setError(true)
@@ -226,9 +226,10 @@ const EditHandbook = ({
       reduxServices.employeeHandbookSettings.updateEmployeeHandbook.rejected.match(
         updateHandbookResultAction,
       ) &&
-      updateHandbookResultAction.payload === 404
+      updateHandbookResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -275,7 +276,15 @@ const EditHandbook = ({
               className="col-sm-3 col-form-label text-end"
             >
               Title:
-              <span className={editPage.title ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  editPage.title?.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -283,7 +292,6 @@ const EditHandbook = ({
                 type="text"
                 name="title"
                 value={editPage.title}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -294,7 +302,15 @@ const EditHandbook = ({
               className="col-sm-3 col-form-label text-end"
             >
               Page Name:
-              <span className={editPage.pageName ? TextWhite : TextDanger}>
+              <span
+                className={
+                  editPage.pageName
+                    ?.replace(/^\s*/, '')
+                    .replace(/[^a-z\s]/gi, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -304,7 +320,6 @@ const EditHandbook = ({
                 type="text"
                 name="pageName"
                 value={editPage.pageName}
-                maxLength={50}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -328,7 +343,7 @@ const EditHandbook = ({
                 max={99}
                 id="displayOrder"
                 name="displayOrder"
-                value={editPage.displayOrder}
+                value={editPage.displayOrder || ''}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -344,12 +359,19 @@ const EditHandbook = ({
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
+              id="check-country"
             >
               Country:
-              <span className={editPage.list ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  (editPage.list?.length as number) > 0 ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
-            <CCol sm={3}>
-              <CRow>
+            <CCol sm={4}>
+              <CRow className="mt-2">
                 <CCol sm={3}>
                   <CFormCheck
                     data-testid="ch-All-countries"
@@ -369,7 +391,7 @@ const EditHandbook = ({
                         <CFormCheck
                           data-testid={`ch-countries${index}`}
                           className="mt-1"
-                          id="trigger"
+                          id={country.name}
                           label={country.name}
                           checked={
                             editPage.list == null

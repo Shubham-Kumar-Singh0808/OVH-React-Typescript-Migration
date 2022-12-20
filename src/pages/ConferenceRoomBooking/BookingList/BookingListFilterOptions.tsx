@@ -2,6 +2,7 @@ import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
@@ -69,7 +70,10 @@ const BookingListFilterOptions = ({
     <>
       <CRow className="mb-5">
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Location:</CFormLabel>
+          <CFormLabel className="mt-1">
+            Location :
+            <span className={location ? TextWhite : TextDanger}>*</span>
+          </CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -84,15 +88,17 @@ const BookingListFilterOptions = ({
             }}
           >
             <option value={''}>Select Location</option>
-            {meetingLocation?.map((locationItem, index) => (
-              <option key={index} value={locationItem.id}>
-                {locationItem.locationName}
-              </option>
-            ))}
+            {meetingLocation &&
+              meetingLocation?.length > 0 &&
+              meetingLocation?.map((locationItem, index) => (
+                <option key={index} value={locationItem.id}>
+                  {locationItem.locationName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Room:</CFormLabel>
+          <CFormLabel className="mt-1">Room :</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -115,7 +121,7 @@ const BookingListFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={2} className="text-end">
-          <CFormLabel className="mt-1">Meeting Status:</CFormLabel>
+          <CFormLabel className="mt-1">Meeting Status :</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -138,7 +144,7 @@ const BookingListFilterOptions = ({
       </CRow>
       <CRow>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Select:</CFormLabel>
+          <CFormLabel className="mt-1">Select :</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -159,10 +165,11 @@ const BookingListFilterOptions = ({
         {selectDateOptions === 'Custom' && (
           <>
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">Date:</CFormLabel>
+              <CFormLabel className="mt-1">Date :</CFormLabel>
             </CCol>
             <CCol sm={2}>
               <ReactDatePicker
+                autoComplete="off"
                 id="date"
                 data-testid="date"
                 className="form-control form-control-sm sh-date-picker"
@@ -170,7 +177,7 @@ const BookingListFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="date"
                 value={
                   selectDate

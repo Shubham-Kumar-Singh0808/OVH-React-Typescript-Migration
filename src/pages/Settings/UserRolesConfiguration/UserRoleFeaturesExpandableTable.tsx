@@ -54,6 +54,10 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
       reduxServices.userRolesAndPermissions.selectors.userFeaturesUnderRole,
     )
 
+    const employeeId = useTypedSelector(
+      reduxServices.authentication.selectors.selectEmployeeId,
+    )
+
     // on every selected role change doFetchFeaturesUnderRole will dispatch
     useEffect(() => {
       if (selectedRoleId) {
@@ -137,6 +141,11 @@ const UserRoleFeaturesExpandableTable: React.FC<UserRoleFeaturesExpandableTableP
           ),
         )
         dispatch(reduxServices.app.actions.setReRenderMenu(true))
+        dispatch(
+          reduxServices.userAccessToFeatures.getUserAccessToFeatures(
+            employeeId,
+          ),
+        )
       }
     }
     return (

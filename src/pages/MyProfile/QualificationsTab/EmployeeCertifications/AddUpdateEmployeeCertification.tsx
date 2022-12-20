@@ -366,7 +366,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('technology', formLabel),
               }}
             >
-              Technology:
+              Technology :
               <span className={showIsRequired(addCertification.technology)}>
                 *
               </span>
@@ -394,7 +394,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('certificateType', formLabel),
               }}
             >
-              CertificateType:{' '}
+              CertificateType :
               <span
                 className={showIsRequired(addCertification.certificateType)}
               >
@@ -430,7 +430,7 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('certification', formLabel),
               }}
             >
-              Certification:
+              Certification :
               <span className={showIsRequired(addCertification.name)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
@@ -451,11 +451,12 @@ function AddUpdateEmployeeCertification({
                 ...dynamicFormLabelProps('registrationNumber', formLabel),
               }}
             >
-              Registration No:
+              Registration No :
               <span className={showIsRequired(addCertification.code)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
+                autoComplete="off"
                 type="text"
                 id="registrationNumber"
                 name="code"
@@ -468,7 +469,7 @@ function AddUpdateEmployeeCertification({
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="completedDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Completed Date:
+              Completed Date :
               <span
                 className={
                   addCertification?.completedDate || completedDate
@@ -481,6 +482,7 @@ function AddUpdateEmployeeCertification({
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="completedDate"
                 maxDate={new Date()}
@@ -495,21 +497,23 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfCompletionHandler}
                 id="completedDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="expiryDateInput">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Expiry Date :
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
+                autoComplete="off"
                 className="form-control"
                 name="expiryDate"
                 value={
@@ -523,18 +527,24 @@ function AddUpdateEmployeeCertification({
                 }
                 onChange={onChangeDateOfExpireHandler}
                 id="expiryDate"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText={dateFormat}
+                placeholderText={
+                  dateFormat === 'dd/MM/yyyy' ? 'dd/mm/yyyy' : dateFormat
+                }
                 dateFormat={dateFormat}
               />
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...dynamicFormLabelProps('percentage', formLabel)}>
-              Percentage:
+            <CFormLabel
+              {...dynamicFormLabelProps(
+                'percentage',
+                'col-sm-3 col-form-label text-end pe-18',
+              )}
+            >
+              Percentage :
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -550,8 +560,8 @@ function AddUpdateEmployeeCertification({
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Description:
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Description :
             </CFormLabel>
             {showEditor ? (
               <CCol sm={8}>

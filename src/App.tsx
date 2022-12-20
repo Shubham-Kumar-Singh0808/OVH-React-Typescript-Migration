@@ -1,6 +1,12 @@
 import './assets/scss/style.scss'
 
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom'
 import React, { Suspense, useCallback, useEffect } from 'react'
 import { useAppDispatch, useTypedSelector } from './stateStore'
 import ProtectRoute from './components/ProtectRoutes'
@@ -55,6 +61,7 @@ const App = (): JSX.Element => {
       ),
     )
   })
+
   useEffect(() => {
     if (authenticatedToken) {
       dispatch(
@@ -68,8 +75,20 @@ const App = (): JSX.Element => {
     }
   }, [authenticatedToken, dispatch, employeeId])
 
+  const ScrollToTop = () => {
+    const { pathname } = useLocation()
+    useEffect(() => {
+      if (pathname !== '/newEvent') {
+        dispatch(reduxServices.newEvent.actions.clearProjectMembers())
+      }
+      window.scrollTo(0, 0)
+    }, [pathname])
+    return null
+  }
+
   return (
     <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASE || ''}>
+      <ScrollToTop />
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
         <Switch>
           <Route

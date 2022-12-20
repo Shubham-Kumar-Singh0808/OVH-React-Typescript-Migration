@@ -22,7 +22,7 @@ import {
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ShiftListTable = ({
   employeeShifts,
@@ -45,6 +45,12 @@ const ShiftListTable = ({
 
   const [deleteShiftModalVisibility, setDeleteShiftModalVisibility] =
     useState<boolean>(false)
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessShiftConfigurationActions = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Shift',
+  )
   const dispatch = useAppDispatch()
 
   const editEmployeeShiftOnchangeHandler = (
@@ -229,7 +235,7 @@ const ShiftListTable = ({
                 </CTableDataCell>
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center sh-edit-shift">
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="startTimeHour"
@@ -265,7 +271,7 @@ const ShiftListTable = ({
                 )}
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center sh-edit-shift">
                       <div className="edit-time-control sh-left">
                         <CFormInput
                           id="endTimeHour"
@@ -300,7 +306,7 @@ const ShiftListTable = ({
 
                 {isShiftDetailEdit && employeeShift.id === selectShiftId ? (
                   <CTableDataCell scope="row">
-                    <div className="edit-time-control">
+                    <div className="edit-time-control sh-div-grace-time">
                       <CFormInput
                         id="graceTime"
                         data-testid={`sh-graceTime-input${index}`}
@@ -324,47 +330,52 @@ const ShiftListTable = ({
                     <CButton
                       color="success"
                       data-testid={`sh-save-btn${index}`}
-                      className="btn-ovh me-1"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                       onClick={saveShiftDetailsButtonHandler}
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
                   ) : (
+                    userAccessShiftConfigurationActions?.updateaccess && (
+                      <>
+                        <CButton
+                          color="info"
+                          data-testid={`sh-edit-btn${index}`}
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          onClick={() => {
+                            editShiftDetailsButtonHandler(
+                              employeeShift.id,
+                              employeeShift.startTimeHour,
+                              employeeShift.startTimeMinutes,
+                              employeeShift.endTimeHour,
+                              employeeShift.endTimeMinutes,
+                              employeeShift.graceTime,
+                            )
+                          }}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
+                    )
+                  )}
+                  {userAccessShiftConfigurationActions?.deleteaccess && (
                     <CButton
-                      color="info"
-                      data-testid={`sh-edit-btn${index}`}
-                      className="btn-ovh me-1"
+                      color="danger"
+                      data-testid={`sh-delete-btn${index}`}
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                       onClick={() => {
-                        editShiftDetailsButtonHandler(
+                        deleteShiftDetailButtonHandler(
                           employeeShift.id,
-                          employeeShift.startTimeHour,
-                          employeeShift.startTimeMinutes,
-                          employeeShift.endTimeHour,
-                          employeeShift.endTimeMinutes,
-                          employeeShift.graceTime,
+                          employeeShift.name,
                         )
                       }}
                     >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
                   )}
-
-                  <CButton
-                    color="danger"
-                    data-testid={`sh-delete-btn${index}`}
-                    className="btn-ovh me-1"
-                    onClick={() => {
-                      deleteShiftDetailButtonHandler(
-                        employeeShift.id,
-                        employeeShift.name,
-                      )
-                    }}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
                 </CTableDataCell>
               </CTableRow>
             )
@@ -382,14 +393,16 @@ const ShiftListTable = ({
         alignment="center"
         visible={deleteShiftModalVisibility}
         setVisible={setDeleteShiftModalVisibility}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Shift"
+        modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteShiftButtonHandler}
       >
         <p>
           Are you sure you want to delete this
-          <strong>{` ${selectShiftName}`}</strong> Role ?
+          <strong>{` ${selectShiftName}`}</strong> shift ?
         </p>
       </OModal>
     </>

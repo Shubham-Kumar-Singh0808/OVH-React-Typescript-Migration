@@ -46,11 +46,15 @@ a {
 }
 
 .handbook-search {
-  width: 50%;
+  // width: 50%;
   margin-left: 44px;
 }
 
 .input-handbook {
   border-bottom-left-radius: 2% !important    ;
   border-top-left-radius: 2% !important;
+}
+
+.no-records {
+  margin-left: 42px;
 }

@@ -6,6 +6,7 @@ import LocationList from './LocationList'
 import { render, screen } from '../../../../test/testUtils'
 import { mockLocationNames } from '../../../../test/data/addLocationListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('Add Location List without data', () => {
   beforeEach(() => {
@@ -14,6 +15,10 @@ describe('Add Location List without data', () => {
         addLocationList: {
           meetingLocations: mockLocationNames,
           isLoading: ApiLoadingState.succeeded,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -41,7 +46,17 @@ describe('Add Location List without data', () => {
 
 describe('Add Location List without data', () => {
   beforeEach(() => {
-    render(<LocationList />)
+    render(<LocationList />, {
+      preloadedState: {
+        addLocationList: {
+          meetingLocations: mockLocationNames,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
   })
   test('should be able to render  Location List  Title', () => {
     expect(screen.getByText('Location List')).toBeInTheDocument()

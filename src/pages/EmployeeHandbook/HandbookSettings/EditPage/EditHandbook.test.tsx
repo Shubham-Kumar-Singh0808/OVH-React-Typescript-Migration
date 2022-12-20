@@ -180,7 +180,7 @@ describe('Edit Page Component Testing', () => {
       expect(allCountries).toBeChecked()
       await waitFor(() => {
         fireEvent.click(allCountries)
-        expect(allCountries).not.toBeChecked()
+        expect(allCountries).toBeChecked()
       })
     })
 
@@ -290,7 +290,7 @@ describe('Edit Page Component Testing', () => {
       const displayOrderInput = screen.getByTestId(displayOrder)
       expect(displayOrderInput).toHaveValue('6')
       userEvent.clear(displayOrderInput)
-      expect(displayOrderInput).toHaveValue('0')
+      expect(displayOrderInput).toHaveValue('')
       userEvent.type(displayOrderInput, '5')
       expect(displayOrderInput).toHaveValue('5')
       await waitFor(() => {

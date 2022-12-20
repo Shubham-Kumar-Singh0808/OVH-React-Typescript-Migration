@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import CertificateTypeTable from './CertificateTypeTable'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockCertificateType } from '../../../../test/data/certificateTypeData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('CertificateType Table Testing', () => {
   beforeEach(() => {
@@ -11,6 +12,9 @@ describe('CertificateType Table Testing', () => {
       preloadedState: {
         certificateType: {
           certificateTypes: mockCertificateType,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -31,7 +35,7 @@ describe('CertificateType Table Testing', () => {
   })
   test('should render delete button', () => {
     expect(screen.getByTestId('btn-delete2')).toHaveClass(
-      'btn btn-danger btn-sm',
+      'btn btn-danger btn-ovh me-1 btn-ovh-employee-list',
     )
   })
   test('should render correct number of page records', async () => {
@@ -53,17 +57,17 @@ describe('CertificateType Table Testing', () => {
 
   test('should disable first and prev in pagination if first page', () => {
     expect(screen.getByText('« First')).toHaveAttribute('disabled')
-    expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-    expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+    expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+    expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
     expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
   })
 
   test('should disable last and next in pagination if last page', () => {
-    userEvent.click(screen.getByText('Next >', { exact: true }))
+    userEvent.click(screen.getByText('Next ›', { exact: true }))
 
     expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-    expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
-    expect(screen.getByText('Next >')).toHaveAttribute('disabled')
+    expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
+    expect(screen.getByText('Next ›')).toHaveAttribute('disabled')
     expect(screen.getByText('Last »')).toHaveAttribute('disabled')
   })
   jest.retryTimes(3)

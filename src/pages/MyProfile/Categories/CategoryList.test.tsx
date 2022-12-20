@@ -143,7 +143,7 @@ describe('Category List Table Testing', () => {
     )
 
     await waitFor(() => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
       expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
       expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
     })
@@ -164,8 +164,8 @@ describe('Category List Table Testing', () => {
 
     await waitFor(() => {
       expect(screen.getByText('« First')).toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
@@ -184,11 +184,11 @@ describe('Category List Table Testing', () => {
     )
 
     await waitFor(() => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
 
       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).toHaveAttribute('disabled')
     })
   })

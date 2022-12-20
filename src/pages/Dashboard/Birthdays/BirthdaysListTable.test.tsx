@@ -43,7 +43,7 @@ describe('Employee BirthdaysList Table Component Testing', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
   })
-  test('should render Back button in the EmployeesList Page', () => {
+  test('should render Back button in the Birthdays Page', () => {
     expect(screen.getByTestId('back-btn')).toBeTruthy()
   })
   test('should render the correct headers', () => {

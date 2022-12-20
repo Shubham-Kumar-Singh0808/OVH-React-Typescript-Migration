@@ -1,5 +1,7 @@
 import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { MyProfileTabList } from '../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+import { UserAccessToFeatures } from '../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export const listComposer = (
   list: never[],
@@ -50,3 +52,37 @@ export const deviceLocale: string =
   navigator.languages && navigator.languages.length
     ? navigator.languages[0]
     : navigator.language
+
+export const mapTabsToFeatures = (
+  TabsLabels: MyProfileTabList[],
+  filteredTabs: UserAccessToFeatures[],
+): unknown => {
+  return TabsLabels.map((currTab) => {
+    const filteredFeatureTab = filteredTabs.find(
+      (currFeatureTab) =>
+        currFeatureTab.name === currTab.label &&
+        currFeatureTab.viewaccess === true,
+    )
+    if (filteredFeatureTab) {
+      return {
+        ...currTab,
+        ...filteredFeatureTab,
+      }
+    }
+    return {}
+  })
+}
+
+// Utilized in New Event Child Components for formatting time
+export const convertTime = (timeString: string): string => {
+  const [time, modifier] = timeString.split(' ')
+  /*eslint prefer-const: ["error", {"destructuring": "all"}]*/
+  let [hours, minutes] = time.split(':')
+  if (hours === '12') {
+    hours = '00'
+  }
+  if (modifier === 'PM') {
+    hours = String(parseInt(hours, 10) + 12)
+  }
+  return `${hours}:${minutes}`
+}

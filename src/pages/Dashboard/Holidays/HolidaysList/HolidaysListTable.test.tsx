@@ -12,7 +12,9 @@ import {
 import { mockCountries } from '../../../../test/data/handbookTotalListData'
 import { mockLoggedInEmployeeData } from '../../../../test/data/myProfileData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
+const deleteButton = 'holiday-delete-btn1'
 const history = createMemoryHistory()
 const toRender = (
   <div>
@@ -27,6 +29,7 @@ const toRender = (
     </Router>
   </div>
 )
+
 describe('HolidaysList', () => {
   describe('Employee Holidays Table Component Testing', () => {
     beforeEach(() => {
@@ -53,10 +56,13 @@ describe('HolidaysList', () => {
               designation: 'developer',
             },
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
-    afterEach(cleanup)
+    // afterEach(cleanup)
     test('should render the "Holidays List" table ', () => {
       const table = screen.getByRole('table')
       expect(table).toBeTruthy()
@@ -76,11 +82,11 @@ describe('HolidaysList', () => {
 
     test('should render edit button in the Actions', () => {
       expect(screen.getByTestId('holiday-edit-btn0')).toHaveClass(
-        'btn btn-info btn-ovh me-2',
+        'btn btn-info btn-ovh btn-ovh-employee-list me-1',
       )
     })
     test('should render delete button in the Actions', () => {
-      expect(screen.getByTestId('holiday-delete-btn0')).toHaveClass(
+      expect(screen.getByTestId('holiday-delete-btn1')).toHaveClass(
         'btn btn-danger btn-sm',
       )
     })
@@ -91,7 +97,7 @@ describe('HolidaysList', () => {
       expect(history.location.pathname).toBe('/editHoliday/148')
     })
     it('should render Delete modal popup on clicking delete button from Actions', async () => {
-      const deleteButtonEl = screen.getByTestId('holiday-delete-btn1')
+      const deleteButtonEl = screen.getByTestId(deleteButton)
       userEvent.click(deleteButtonEl)
       await waitFor(() => {
         expect(screen.getByText('Delete Holiday')).toBeInTheDocument()
@@ -100,19 +106,19 @@ describe('HolidaysList', () => {
       })
     })
     it('should close modal popup after clicking Yes option from the modal', () => {
-      const deleteButtonElement = screen.getByTestId('holiday-delete-btn1')
+      const deleteButtonElement = screen.getByTestId(deleteButton)
       userEvent.click(deleteButtonElement)
       const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
       userEvent.click(yesButtonEle)
     })
-    test('should render correct number of 40 page records', () => {
+    test('should render correct number of  page records', () => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
       const pageSizeSelect = screen.getByRole('option', {
         name: '40',
       }) as HTMLOptionElement
       expect(pageSizeSelect.selected).toBe(true)
 
-      // 42 including the heading
+      // 41 including the heading
       expect(screen.getAllByRole('row')).toHaveLength(41)
     })
   })
@@ -150,6 +156,9 @@ describe('HolidaysList', () => {
                 designation: 'developer',
               },
             },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
+            },
           },
         },
       )
@@ -160,7 +169,7 @@ describe('HolidaysList', () => {
       if (mockUpcomingUSAHolidays.length === 0)
         await waitFor(() => {
           expect(
-            screen.queryByText('Total Number of Holidays:0'),
+            screen.queryByText('Total Number of Holidays: 0'),
           ).toBeInTheDocument()
         })
     })

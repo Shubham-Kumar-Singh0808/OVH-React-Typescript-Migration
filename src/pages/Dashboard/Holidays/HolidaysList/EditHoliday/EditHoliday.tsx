@@ -68,6 +68,9 @@ const EditHoliday = (): JSX.Element => {
     setEditHoliday((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
+    if (name === 'country') {
+      dispatch(reduxServices.holidays.actions.setSelectedEmployeeCountry(value))
+    }
   }
 
   const getUpdateToastMessage = (
@@ -135,6 +138,8 @@ const EditHoliday = (): JSX.Element => {
             <CCol sm={3}>
               <CFormInput
                 data-testid="holiday-name"
+                autoComplete="off"
+                placeholder="Holiday Name"
                 type="text"
                 name="name"
                 value={editHoliday.name}

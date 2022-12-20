@@ -12,9 +12,17 @@ const UpcomingEvents = (): JSX.Element => {
     reduxServices.trainingsAndEvents.selectors.isLoading,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessToEventList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Event List',
+  )
+
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
+      {isLoading !== ApiLoadingState.loading && upcomingEvents?.length ? (
         <>
           <div className="holidays-panel-body ps-0 pe-0">
             <ul className="holidays-list-group recent-comments mb0">
@@ -35,9 +43,21 @@ const UpcomingEvents = (): JSX.Element => {
               })}
             </ul>
           </div>
+          {upcomingEvents?.length !== 0 && (
+            <div className="panel-footer mbtrl0">
+              {userAccessToEventList?.viewaccess && (
+                <p className="text-right mb0">
+                  <a href="/eventList">
+                    More {''}
+                    <i className="fa fa-angle-double-right fa-lg"></i>
+                  </a>
+                </p>
+              )}
+            </div>
+          )}
         </>
       ) : (
-        <strong className="text-center">No Records Found...</strong>
+        <strong className="ml14">No Records Found...</strong>
       )}
     </>
   )

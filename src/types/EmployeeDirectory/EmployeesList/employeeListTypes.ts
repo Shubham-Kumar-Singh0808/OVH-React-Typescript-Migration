@@ -67,4 +67,5 @@ export type EmployeeListTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   updateaccess?: boolean
+  userEditAccess?: boolean
 }

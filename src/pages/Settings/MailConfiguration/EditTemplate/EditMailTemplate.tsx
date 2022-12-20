@@ -20,7 +20,7 @@ import {
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { showIsRequired } from '../../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 
 const EditMailTemplate = ({
   backButtonHandler,
@@ -29,6 +29,7 @@ const EditMailTemplate = ({
   setEditEmployeeTemplate,
 }: EditTemplateProps): JSX.Element => {
   const [showAssetType, setShowAssetType] = useState<boolean>(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (Number(editEmployeeTemplate.templateTypeId) === 11) {
@@ -36,7 +37,14 @@ const EditMailTemplate = ({
     } else {
       setShowAssetType(false)
     }
-  })
+    if (!showAssetType) {
+      if (editEmployeeTemplate.template?.replace(/^\s*/, '')) {
+        setIsUpdateButtonEnabled(true)
+      } else {
+        setIsUpdateButtonEnabled(false)
+      }
+    }
+  }, [editEmployeeTemplate.template])
 
   const handleDescription = (template: string) => {
     setEditEmployeeTemplate((prevState: EditEmployeeMailTemplate) => {
@@ -103,7 +111,7 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Type:
+              Type :
             </CFormLabel>
             <CCol sm={4}>
               <CFormSelect
@@ -128,7 +136,7 @@ const EditMailTemplate = ({
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Asset Type:
+                  Asset Type :
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormSelect
@@ -149,7 +157,7 @@ const EditMailTemplate = ({
                   {...formLabelProps}
                   className="col-sm-2 col-form-label text-end"
                 >
-                  Email:
+                  Email :
                 </CFormLabel>
                 <CCol sm={4}>
                   <CFormInput
@@ -172,7 +180,7 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Title:
+              Title :
             </CFormLabel>
             <CCol sm={4}>
               <CFormInput
@@ -191,8 +199,14 @@ const EditMailTemplate = ({
               {...formLabelProps}
               className="col-sm-2 col-form-label text-end"
             >
-              Template:{' '}
-              <span className={showIsRequired(editEmployeeTemplate.template)}>
+              Template :
+              <span
+                className={
+                  editEmployeeTemplate.template?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -220,6 +234,7 @@ const EditMailTemplate = ({
                 color="success"
                 onClick={handleUpdateMailTemplate}
                 data-testid="btn-update"
+                disabled={!isUpdateButtonEnabled}
               >
                 Update
               </CButton>

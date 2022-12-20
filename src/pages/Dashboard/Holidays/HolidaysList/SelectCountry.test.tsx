@@ -6,13 +6,14 @@ import { Router } from 'react-router-dom'
 import SelectCountry from './SelectCountry'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockCountries } from '../../../../test/data/handbookTotalListData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 describe('Select Country Component Testing', () => {
   const history = createMemoryHistory()
   beforeEach(() => {
     render(
       <Router history={history}>
-        <SelectCountry selectedCountry={''} setSelectedCountry={jest.fn()} />
+        <SelectCountry selectedCountry={''} />
       </Router>,
       {
         preloadedState: {
@@ -29,6 +30,9 @@ describe('Select Country Component Testing', () => {
               token: 'test',
               designation: 'developer',
             },
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },
@@ -52,7 +56,7 @@ describe('Select Country Component Testing', () => {
   })
 
   test('should redirect to /addHoliday Page when user clicks on Add Button from HolidaysList Page', async () => {
-    userEvent.click(screen.getByRole('button', { name: /Add/i }))
+    userEvent.click(screen.getByRole('button', { name: 'Add' }))
     await waitFor(() => {
       // check if a redirect happens after clicking Back button to Dashboard Page
       expect(history.location.pathname).toBe('/addHoliday')

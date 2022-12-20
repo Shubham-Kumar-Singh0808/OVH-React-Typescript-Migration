@@ -20,28 +20,33 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <AttendanceReportTable
+      setPageSize={mockSetPageSize}
+      setCurrentPage={mockSetCurrentPage}
+      currentPage={1}
+      pageSize={20}
+      paginationRange={[1, 2, 3]}
+      isBiometric={'WithoutBiometric'}
+    />
+  </div>
+)
 describe('Attendance Report Table Component Testing', () => {
   jest.retryTimes(3)
   test('should render AttendanceReport Table component with out crashing', async () => {
-    render(
-      <AttendanceReportTable
-        setPageSize={mockSetPageSize}
-        setCurrentPage={mockSetCurrentPage}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-        isBiometric={'WithoutBiometric'}
-      />,
-      {
-        preloadedState: {
-          employeeAttendanceReport: {
-            size: 214,
-            days: mockDays,
-            employeeAttendanceReport: mockAttendanceReport,
-          },
+    render(toRender, {
+      preloadedState: {
+        employeeAttendanceReport: {
+          size: 214,
+          days: mockDays,
+          employeeAttendanceReport: mockAttendanceReport,
         },
       },
-    )
+    })
     mockAttendanceReport.forEach((currentReport) =>
       expect(screen.getByText(currentReport.fullName)).toBeInTheDocument(),
     )

@@ -117,6 +117,7 @@ const initialHolidaysState: HolidaysSliceState = {
   error: null,
   addNewHoliday: {} as SaveHoliday,
   editHoliday: {} as EditHolidayDetails,
+  selectedEmployeeCountry: '',
 }
 
 const holidaysSlice = createSlice({
@@ -125,6 +126,9 @@ const holidaysSlice = createSlice({
   reducers: {
     clearHolidays: (state) => {
       state.upcomingHolidays = []
+    },
+    setSelectedEmployeeCountry: (state, action) => {
+      state.selectedEmployeeCountry = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -181,6 +185,8 @@ const holidaysPageSizeFromState = (state: RootState): number =>
 
 const holidayInfo = (state: RootState): EditHolidayDetails =>
   state.holidays.editHoliday
+const selectedCountry = (state: RootState): string =>
+  state.holidays.selectedEmployeeCountry
 
 const HolidaysThunk = {
   getUpcomingHolidays,
@@ -197,6 +203,7 @@ const holidaysSelectors = {
   holidaysPageFromState,
   holidaysPageSizeFromState,
   holidayInfo,
+  selectedCountry,
 }
 
 export const holidaysService = {

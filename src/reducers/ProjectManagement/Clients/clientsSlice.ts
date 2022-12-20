@@ -97,7 +97,19 @@ const getClientCountries = createAsyncThunk(
   },
 )
 
-const initialClientsSliceState: ClientsSliceState = {
+const isOrganizationExists = createAsyncThunk(
+  'clients/isOrganizationExists',
+  async (inputText: string, thunkApi) => {
+    try {
+      return await clientsApi.isOrganizationExists(inputText)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+export const initialClientsSliceState: ClientsSliceState = {
   selectedClientStatus: ClientStatus.active,
   clientsList: { clients: [], totalClients: 0 },
   projectsUnderClient: [],
@@ -105,6 +117,7 @@ const initialClientsSliceState: ClientsSliceState = {
   isLoadingProjectDetails: ApiLoadingState.idle,
   editClient: {} as Client,
   clientCountries: [],
+  error: null,
 }
 
 const clientsSlice = createSlice({
@@ -127,6 +140,10 @@ const clientsSlice = createSlice({
       .addCase(deleteClient.rejected, (state) => {
         state.isLoading = ApiLoadingState.failed
       })
+      .addCase(updateClient.rejected, (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as ValidationError
+      })
       .addCase(getClientToEdit.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.editClient = action.payload
@@ -143,7 +160,11 @@ const clientsSlice = createSlice({
         },
       )
       .addMatcher(
-        isAnyOf(updateClient.fulfilled, deleteClient.fulfilled),
+        isAnyOf(
+          updateClient.fulfilled,
+          deleteClient.fulfilled,
+          isOrganizationExists.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -155,6 +176,7 @@ const clientsSlice = createSlice({
           deleteClient.pending,
           getClientToEdit.pending,
           getClientCountries.pending,
+          isOrganizationExists.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -185,6 +207,8 @@ const getClient = (state: RootState): Client => state.clients.editClient
 const clientCountries = (state: RootState): ClientCountry[] =>
   state.clients.clientCountries
 
+const selectError = (state: RootState): ValidationError => state.clients.error
+
 const clientsThunk = {
   getClients,
   getProjectsUnderClient,
@@ -193,6 +217,7 @@ const clientsThunk = {
   getClientToEdit,
   updateClient,
   getClientCountries,
+  isOrganizationExists,
 }
 
 const clientsSelectors = {
@@ -204,6 +229,7 @@ const clientsSelectors = {
   isLoadingProjectDetails,
   getClient,
   clientCountries,
+  selectError,
 }
 
 export const clientsService = {

@@ -1,3 +1,4 @@
+import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -306,6 +307,12 @@ export interface LeaveReportsApi extends ApiBase {
   downloadLeaveReportList: string
 }
 
+export interface AllocateEmployeeApi extends ApiBase {
+  getAllEmployeeProfiles: string
+  getAllProjectSearch: string
+  allocateNewEmployee: string
+}
+
 export interface TicketReportApi extends ApiBase {
   getDepartmentNameList: string
   departmentCategoryList: string
@@ -320,6 +327,14 @@ export interface ProjectManagementApi extends ApiBase {
   getAllPlatforms: string
   getAllDomains: string
   getAllManagers: string
+  getActiveProjectReports: string
+  getSearchAllocationReport: string
+  getClientProjects: string
+  getCloseProject: string
+  getDeleteProject: string
+  postDeallocateProject: string
+  postUpdateAllocateProject: string
+  exportProjectList: string
 }
 
 export interface ClientsApi extends ApiBase {
@@ -330,11 +345,13 @@ export interface ClientsApi extends ApiBase {
   editClient: string
   updateClient: string
   getClientCountries: string
+  clientOrg: string
 }
 
 export interface AddNewClientApi extends ApiBase {
   getClientCountries: string
   addNewClient: string
+  checkClientOrgExist: string
 }
 
 export interface ClientInformationApi extends ApiBase {
@@ -362,6 +379,10 @@ export interface TicketApprovalsApi extends ApiBase {
   exportTicketApprovalList: string
   rejectManagerTicket: string
 }
+export interface AddTrackerApi extends ApiBase {
+  addNewTracker: string
+  deleteTracker: string
+}
 
 export interface RaiseNewTicketApi extends ApiBase {
   createNewTicket: string
@@ -383,6 +404,8 @@ export interface DashboardApi extends ApiBase {
   deleteHoliday: string
   getHolidayInformation: string
   updateHoliday: string
+  searchEmployee: string
+  getLeaveSummary: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -409,7 +432,165 @@ export interface EventTypeListApi extends ApiBase {
   addEventType: string
   deleteEventType: string
   updateEventType: string
+}
+export interface NewEventApi extends ApiBase {
   getLoggedEmployeeName: string
+  getRoomsOfLocation: string
+  getAllProfileEmployeesData: string
+  getAllAttendees: string
+  uniqueAttendee: string
+  timeChecking: string
+  getAllBookedDetailsForEvent: string
+  addNewEvent: string
+}
+export interface EmployeeAllocationApi extends ApiBase {
+  getEmployeeAllocationReport: string
+  projectUnderEmployees: string
+  updateEmployeeAllocateProject: string
+  downloadEmployeeAllocationList: string
+}
+
+export interface EventListApi extends ApiBase {
+  getAllEvents: string
+  cancelEvent: string
+  getFeedbackFormList: string
+  downloadFeedbackForm: string
+  uploadFeedbackForm: string
+}
+export interface AppraisalConfigurationsApi extends ApiBase {
+  getAppraisalCycle: string
+  editAppraisalCycle: string
+  updateAppraisalCycle: string
+  validateCycle: string
+}
+export interface AddConfigurationsApi extends ApiBase {
+  addAppraisalCycle: string
+}
+export interface RoomListApi extends ApiBase {
+  getAllMeetingRooms: string
+  addRoom: string
+  deleteRoom: string
+  updateRoom: string
+}
+
+export interface TicketConfigurationApi extends ApiBase {
+  getDepartments: string
+  getCategories: string
+  getSubCategories: string
+  getSubCategoryList: string
+  deleteSubCategory: string
+  ticketHistory: string
+  addSubCategory: string
+  updateSubCategory: string
+  getAllCategory: string
+  addCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
+
+export interface SubmitResignationApi extends ApiBase {
+  getSeparationForm: string
+  submitResignation: string
+  getEmployeeResg: string
+  revokeResignation: string
+}
+
+export interface LeaveApprovalsApi extends ApiBase {
+  getEmployees: string
+  getEmployeeLeaves: string
+  getSearchEmployees: string
+  checkProjectManagerExits: string
+  leaveApprove: string
+  leaveReject: string
+}
+
+export interface PaySlipsApi extends ApiBase {
+  getEmployeePayslipsForSelectedYear: string
+  generatePayslipAndDownloadPayslip: string
+}
+
+export interface PanDetailsApi extends ApiBase {
+  bankInformation: string
+  updateFinanceInformation: string
+  uploadEmployeeFinanceDetails: string
+  downloadFinanceFile: string
+}
+
+export interface BankDetailsApi extends ApiBase {
+  getBankNameLookup: string
+  saveBankInformation: string
+  updateBankInformation: string
+  deleteBankAccount: string
+  editBankInformation: string
+}
+
+export interface ResignationListApi extends ApiBase {
+  resignationList: string
+  exportResignationList: string
+  resignationInitiateCC: string
+  getSeparationTimeLine: string
+  clearanceCertificateComments: string
+  getClearanceDetails: string
+  updateCCDetails: string
+  checkExitFeedBackForm: string
+  getSeparationChart: string
+  getEmpDetails: string
+  saveExitFeedBackForm: string
+  uploadExitFeedBackFile: string
+  uploadRelievingLetter: string
+}
+
+export interface ITDeclarationListApi extends ApiBase {
+  getCycles: string
+  getSections: string
+  getITDeclarationForm: string
+  exportITDeclarationList: string
+  addCycle: string
+  deleteSection: string
+  addSection: string
+  updateSection: string
+  getInvestments: string
+  addInvestment: string
+  deleteInvestment: string
+  deleteCycle: string
+  isCycleExist: string
+  isSectionExist: string
+  updateCycle: string
+  updateInvestment: string
+  isInvestmentExist: string
+}
+
+export interface InvestmentCheckListApi extends ApiBase {
+  getInvestments: string
+  getSections: string
+}
+
+export interface CommonAchievementsApi extends ApiBase {
+  getAllAchievementsType: string
+}
+
+export interface AchieverListApi extends ApiBase {
+  getAchieverList: string
+  updateShowOnDashbord: string
+  achievementHistoryTimeline: string
+}
+
+export interface ProjectCreationRequestApi extends ApiBase {
+  getAllProjectRequestList: string
+  getProjectRequest: string
+  getAuditForProjectRequest: string
+}
+
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string
+  getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
+  deleteAchievementType: string
+}
+
+export interface EmployeeAccountsApi extends ApiBase {
+  financeDetails: string
+  exportFinanceList: string
 }
 
 export interface NewBookingApi extends ApiBase {

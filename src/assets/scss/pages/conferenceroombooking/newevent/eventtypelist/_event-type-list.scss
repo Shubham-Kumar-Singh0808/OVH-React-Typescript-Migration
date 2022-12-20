@@ -1,0 +1,48 @@
+.eventType-editInput{
+    border-radius: 0px;
+    height: 28px !important;
+    min-height: 28px;
+    width: 91%;
+    font-weight: 500;
+    &:focus-visible {
+        outline-offset: 0px;
+        outline: -webkit-focus-ring-color auto 1px;
+    }
+    &:focus{
+        box-shadow: none;
+    }
+}
+.meeting-bulk-add {
+    line-height: 22;
+}
+
+.sh-span-green{
+    color: green;
+    font-weight: 600;
+}
+.sh-span-red{
+    color: red;
+    font-weight: 600;
+}
+
+.fixed-height {
+    .table-responsive{
+    max-height: 450px;
+    overflow-y: auto;
+  }
+}
+
+.sh-slots-col{
+    float: right;
+    margin-right: 42px;
+    text-align: center;
+}
+
+.panel-title{
+    color: #124b7c !important;
+    font-size: 18px;
+    font-weight: 400;
+}
+.panel-time{
+    margin-bottom: 0px;
+}

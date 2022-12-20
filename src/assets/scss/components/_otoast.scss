@@ -1,0 +1,11 @@
+.toaster{
+    .btn-close{
+        width: 0px;
+        height: 8px;
+        opacity: 0.3;
+        padding: 0.3em 0.3em;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}

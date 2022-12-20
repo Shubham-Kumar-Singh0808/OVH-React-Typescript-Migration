@@ -4,10 +4,21 @@ import userEvent from '@testing-library/user-event'
 import EmployeeDesignationListTable from './EmployeeDesignationListTable'
 import { render, screen, waitFor } from '../../../../../test/testUtils'
 import { mockDesignationList } from '../../../../../test/data/employeeDesignationListData'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
+import { mockAllDepartments } from '../../../../../test/data/addEmployeeDesignationData'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeeDesignationListTable selectedDepartmentId={6} />
+  </div>
+)
 describe('DesignationList Table Testing', () => {
   beforeEach(() => {
-    render(<EmployeeDesignationListTable selectedDepartmentId={0} />)
+    render(toRender)
   })
   it('should render the "Designation Table"', () => {
     const table = screen.getByRole('table')
@@ -24,15 +35,19 @@ describe('DesignationList Table Testing', () => {
     expect(
       screen.getByRole('columnheader', { name: 'Designation Name' }),
     ).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy()
   })
 
   describe('DesignationList component with data', () => {
     beforeEach(() => {
-      render(<EmployeeDesignationListTable selectedDepartmentId={6} />, {
+      render(toRender, {
         preloadedState: {
           employeeDesignationList: {
+            isLoading: ApiLoadingState.succeeded,
+            employeeDepartments: mockAllDepartments,
             employeeDesignations: mockDesignationList,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -66,24 +81,24 @@ describe('DesignationList Table Testing', () => {
       expect(screen.queryByRole('rowheader', { name: '21' })).toBeNull()
     })
     test('should render second page data only', () => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
       expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
       expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
     })
 
     test('should disable first and prev in pagination if first page', () => {
       expect(screen.getByText('« First')).toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
 
     test('should disable last and next in pagination if last page', () => {
-      userEvent.click(screen.getByText('Next >', { exact: true }))
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
 
       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Next >')).toHaveAttribute('disabled')
+      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Next ›')).toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).toHaveAttribute('disabled')
     })
     it('should render Delete modal on clicking delete button from Actions', async () => {

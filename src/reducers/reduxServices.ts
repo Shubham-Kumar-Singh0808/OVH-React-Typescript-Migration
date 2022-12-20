@@ -43,7 +43,6 @@ import { mailTemplateTypeService } from './Settings/MailConfiguration/AddMailTem
 import { myAttendanceService } from './TimeAndAttendance/MyAttendance/myAttendanceSlice'
 import { leaveReportService } from './Leaves/LeaveReports/leaveReportSlice'
 import { ticketReportService } from './Support/Report/ticketReportSlice'
-import { projectManagementService } from './ProjectManagement/Project/projectSlice'
 import { clientsService } from './ProjectManagement/Clients/clientsSlice'
 import { addNewClientService } from './ProjectManagement/Clients/AddClient/addNewClientSlice'
 import { clientInformationService } from './ProjectManagement/Clients/ClientInformation/clientInformationSlice'
@@ -63,8 +62,33 @@ import { employeeAchievementsService } from './Dashboard/achievementsSlice'
 import { updateTicketService } from './Support/TicketApprovals/UpdateTicket/updateTicketSlice'
 import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingListSlice'
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import { newBookingService } from './ConferenceRoomBooking/NewBooking/newBookingSlice'
+import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
+import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
+import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
+import { ticketConfigurationService } from './Settings/TicketConfiguration/ticketConfigurationSlice'
+import { allocateEmployeeService } from './ProjectManagement/AllocateEmployee/allocateEmployeeSlice'
+import { appraisalCycleService } from './Settings/Configurations/appraisalConfigurationsSlice'
+import { roomListService } from './ConferenceRoomBooking/NewBooking/RoomList/roomListSlice'
+import { submitViewResignationServices } from './Separation/SubmitViewResignation/submitResignationSlice'
+import { addConfigurationService } from './Settings/Configurations/AddConfiguration/addConfigurationSlice'
+import { projectManagementService } from './ProjectManagement/Project/AddEditPraject/AddEditProjectSlice'
+import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
+import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
+import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { paySlipsService } from './Finance/Payslips/payslipsSlice'
+import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
+import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
+import { resignationListService } from './Separation/ResignationList/resignationListSlice'
+import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
+import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
+import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
+import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
+import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 
 export const reduxServices = {
   app: appService,
@@ -113,6 +137,7 @@ export const reduxServices = {
   leaveReport: leaveReportService,
   ticketReport: ticketReportService,
   projectManagement: projectManagementService,
+  allocateEmployee: allocateEmployeeService,
   clients: clientsService,
   addClient: addNewClientService,
   clientInformation: clientInformationService,
@@ -134,4 +159,27 @@ export const reduxServices = {
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
   newBooking: newBookingService,
+  employeeAllocationReport: employeeAllocationSliceService,
+  addTrackerLists: addTrackerListService,
+  eventList: eventListService,
+  roomLists: roomListService,
+  searchEmployee: employeeSearchService,
+  ticketConfiguration: ticketConfigurationService,
+  appraisalConfigurations: appraisalCycleService,
+  submitViewResignation: submitViewResignationServices,
+  addConfigurations: addConfigurationService,
+  projectReport: projectReportsService,
+  newEvent: newEventService,
+  leaveApprovals: leaveApprovalsService,
+  paySlips: paySlipsService,
+  panDetails: panDetailService,
+  bankDetails: bankDetailService,
+  resignationList: resignationListService,
+  employeeAccount: employeeAccountService,
+  itDeclarationList: itDeclarationListService,
+  investmentCheckList: investmentCheckListService,
+  achieverList: achieverListService,
+  addAchiever: addAchieverServices,
+  commonAchievements: commonAchievementsService,
+  projectCreationRequest: projectCreationRequestService,
 }

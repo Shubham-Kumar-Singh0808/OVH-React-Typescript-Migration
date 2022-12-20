@@ -2,9 +2,14 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import TableActions from './TableActions'
 import { fireEvent, render, screen } from '../../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import { mockEmployeeCertifications } from '../../../../test/data/employeeCertificationData'
+import { EmployeeCertification } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
 const mockEditCertBtn = jest.fn()
-
+const userAccessToCertifications = mockUserAccessToFeaturesData?.find(
+  (feature) => feature.name === 'My Profile-Skills-Certifications',
+)
 describe('Table Actions Component testing', () => {
   test('should render actions without crashing', () => {
     render(
@@ -14,9 +19,19 @@ describe('Table Actions Component testing', () => {
         editCertificateButtonHandler={mockEditCertBtn}
         setCertificateId={jest.fn()}
         setIsDeleteModalVisible={jest.fn()}
-        certificateId={0}
-        isDeleteModalVisible={true}
+        userAccess={userAccessToCertifications}
       />,
+      {
+        preloadedState: {
+          employeeCertificates: {
+            certificationDetails:
+              mockEmployeeCertifications as EmployeeCertification[],
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+        },
+      },
     )
 
     const editBtn = screen.getByTestId('edotCertBtn')
@@ -26,13 +41,5 @@ describe('Table Actions Component testing', () => {
     const alerBtn = screen.getByTestId('showAlertBtn')
     expect(alerBtn).toBeTruthy()
     fireEvent.click(alerBtn)
-
-    expect(
-      screen.getByText('Do you really want to delete this ?'),
-    ).toBeInTheDocument()
-
-    const confrmBtn = screen.getByTestId('modalConfirmBtn')
-    expect(editBtn).toBeTruthy()
-    fireEvent.click(confrmBtn)
   })
 })

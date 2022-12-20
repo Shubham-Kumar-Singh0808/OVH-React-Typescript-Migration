@@ -7,6 +7,7 @@ import {
   CFormInput,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import EventTypeListTable from './EventTypeListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextDanger } from '../../../../constant/ClassName'
@@ -96,13 +97,15 @@ const EventTypeList = (): JSX.Element => {
     >
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="back-button"
-          >
-            <i className="fa fa-arrow-left  me-1"></i>Back
-          </CButton>
+          <Link to={'/newEvent'}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
+          </Link>
         </CCol>
       </CRow>
       <CForm>
@@ -112,6 +115,7 @@ const EventTypeList = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              autoComplete="off"
               className="mb-2"
               data-testid="eventType"
               type="text"

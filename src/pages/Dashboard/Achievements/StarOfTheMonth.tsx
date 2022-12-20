@@ -7,7 +7,12 @@ const StarOfTheMonth = (): JSX.Element => {
   const achievements = useTypedSelector(
     reduxServices.employeeAchievements.selectors.achievements,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchieversList = userAccessToFeatures?.find(
+    (feature) => feature.name === `Achiever's List`,
+  )
   const starOfTheMonthFooterLink = (
     <CCardFooter>
       <CLink
@@ -16,7 +21,8 @@ const StarOfTheMonth = (): JSX.Element => {
         rel="noopener norefferer"
         target="_self"
       >
-        View more
+        More
+        {''} <i className="fa fa-angle-double-right fa-lg"></i>
       </CLink>
     </CCardFooter>
   )
@@ -47,7 +53,9 @@ const StarOfTheMonth = (): JSX.Element => {
             })}
           </CRow>
         </CCol>
-        {starOfTheMonthFooterLink}
+        {userAccessToAchieversList?.viewaccess && (
+          <>{starOfTheMonthFooterLink}</>
+        )}
       </CRow>
     </>
   )
