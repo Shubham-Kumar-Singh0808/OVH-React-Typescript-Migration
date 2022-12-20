@@ -541,6 +541,7 @@ export interface ResignationListApi extends ApiBase {
 }
 
 export interface ITDeclarationListApi extends ApiBase {
+  getEmployeeDetails: string
   getCycles: string
   getSections: string
   getITDeclarationForm: string

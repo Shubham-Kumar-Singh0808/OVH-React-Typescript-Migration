@@ -62,6 +62,7 @@ export type ITDeclarationListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
 }
 
 export type ITDeclarationListOptionsProps = {
