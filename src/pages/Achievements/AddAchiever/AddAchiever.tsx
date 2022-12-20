@@ -46,15 +46,15 @@ const AddAchiever = (): JSX.Element => {
   }
 
   const addNewAchieverHandler = async (finalData: OutgoingNewAchiever) => {
-    const result = await dispatch(
-      reduxServices.addAchiever.addAchievementThunk(finalData),
-    )
-
     const successToast = (
       <OToast
         toastColor="success"
         toastMessage="Achievement Added Successfully"
       />
+    )
+
+    const result = await dispatch(
+      reduxServices.addAchiever.addAchievementThunk(finalData),
     )
 
     if (reduxServices.addAchiever.addAchievementThunk.fulfilled.match(result)) {

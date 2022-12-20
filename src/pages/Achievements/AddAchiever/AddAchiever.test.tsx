@@ -89,7 +89,6 @@ describe('Add Achiever Render', () => {
       userEvent.click(screen.getByTestId(addAchieverButton))
       await waitFor(() => {
         expect(screen.findByText('Achievement Added Successfully')).toBeTruthy()
-        //expect(achievementName).toHaveValue(selectAchievementType)
       })
     })
     test('date error message displayed', async () => {

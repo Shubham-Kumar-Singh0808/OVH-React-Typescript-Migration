@@ -42,7 +42,9 @@ const FilterEmployeeName = ({
         className={newAchievementLabelClass}
       >
         Employee Name:
-        {(employeeName === undefined || employeeName === emptyString) && (
+        {(employeeName === undefined ||
+          employeeName === emptyString ||
+          employeeName.trim().length === 0) && (
           <span className="text-danger">*</span>
         )}
       </CFormLabel>

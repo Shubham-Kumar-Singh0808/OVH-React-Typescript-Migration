@@ -4,7 +4,13 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddAchieverForm from './AddAchieverForm'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
@@ -75,19 +81,34 @@ describe('add achiever form', () => {
       expect(screen.getByTestId('ach-desc')).toBeVisible()
       expect(screen.getByTestId('ach-pic')).toBeVisible()
     })
-    test('input is possible', () => {
+    test('input is possible', async () => {
       const achievementName = screen.getByTestId(achSelectId)
       expect(screen.getAllByTestId('ach-name-opt')).toHaveLength(11)
-      userEvent.selectOptions(achievementName, 'Test Achievement')
+      userEvent.selectOptions(achievementName, 'Test Achievement 1')
       expect(mocksetNewAchieverDetails).toHaveBeenCalledTimes(2)
 
       const empName = screen.getByPlaceholderText('Employee Name')
       userEvent.type(empName, 'Pradeep')
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
 
-      expect(mocksetAddButton).toHaveBeenCalledTimes(1)
+      const dates = screen.getAllByPlaceholderText('MM-YYYY')
+      fireEvent.click(dates[0])
+      await waitFor(() =>
+        fireEvent.change(dates[0], { target: { value: '02-2022' } }),
+      )
+      expect(mocksetNewAchieverDetails).toHaveBeenCalled()
+      expect(dates[0]).toHaveValue('')
+
+      fireEvent.click(dates[1])
+      await waitFor(() =>
+        fireEvent.change(dates[1], { target: { value: '12-2022' } }),
+      )
+      expect(mocksetNewAchieverDetails).toHaveBeenCalled()
+      expect(dates[1]).toHaveValue('')
+
       const addNewAchievementButton = screen.getByTestId(addButtonId)
       userEvent.click(addNewAchievementButton)
+      expect(mocksetAddButton).toHaveBeenCalledTimes(1)
     })
     test('clear button is working', () => {
       const clearButton = screen.getByTestId(clearButtonId)
@@ -123,6 +144,7 @@ describe('add achiever form', () => {
           }
         />,
       )
+      expect(mocksetNewAchieverDetails).toHaveBeenCalled()
     })
   })
 })
