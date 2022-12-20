@@ -117,15 +117,15 @@ const PanDetails = (): JSX.Element => {
             :
           </CCol>
           {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            <CCol sm={5} className="d-flex">
+            <CCol sm={5} className="d-flex sh-checkbox">
               <CFormCheck
-                className="mt-2"
+                className="mt-2 sh-checkbox"
                 checked={isChecked}
                 onChange={(e) => setIsChecked(e.target.checked)}
                 data-testid="ch-All"
               />
               <CFormInput
-                className="eventType-editInput ms-2"
+                className="eventType-editInput ms-2 "
                 data-testid="pfNumber"
                 type="text"
                 id="pfNumber"

@@ -70,7 +70,11 @@ const SubmitResignationFilterOptions = ({
 
   useEffect(() => {
     if (primaryReason === '4') {
-      if (primaryReason && submitResignation?.employeeComments && otherReason) {
+      if (
+        primaryReason &&
+        submitResignation?.employeeComments &&
+        otherReason.replace(/^\s*/, '')
+      ) {
         setIsSubmitButtonEnabled(true)
       } else {
         setIsSubmitButtonEnabled(false)
@@ -219,7 +223,13 @@ const SubmitResignationFilterOptions = ({
         <CRow className="mt-3 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Others :
-            <span className={otherReason ? TextWhite : TextDanger}>*</span>
+            <span
+              className={
+                otherReason.replace(/^\s*/, '') ? TextWhite : TextDanger
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput

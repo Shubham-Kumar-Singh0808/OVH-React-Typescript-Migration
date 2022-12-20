@@ -581,6 +581,13 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAuditForProjectRequest: string
 }
 
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string
+  getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
+  deleteAchievementType: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
