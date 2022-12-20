@@ -25,6 +25,7 @@ const EditBankAccount = ({
   const editBankAccount = {} as EditBankInformation
   const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
+  const [bankAccountNumberExist, setBankAccountNumberExist] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -103,40 +104,28 @@ const EditBankAccount = ({
     dispatch(reduxServices.bankDetails.editBankInformation(selectBankId))
   }, [])
 
-  const bankInformation = useTypedSelector(
-    reduxServices.panDetails.selectors.bankDetails,
-  )
-
   const handleUpdateHandler = async () => {
     const prepareObject = {
       ...editBankInfo,
       bankId: editBankInfo.bankId,
       employeeId: Number(empId),
     }
-
-    await dispatch(
-      reduxServices.panDetails.bankInformation({
-        key: 'loggedInEmpId',
-        value: Number(empId),
-      }),
+    const updateBankAccountResultAction = await dispatch(
+      reduxServices.bankDetails.updateBankInformation(prepareObject),
     )
-    if (bankInformation) {
-      const errorResult = bankInformation.bankinfo?.find(
-        (currItem) =>
-          currItem.bankName === editBankInfo.bankName &&
-          currItem.bankAccountNumber === editBankInfo.bankAccountNumber,
+
+    if (
+      reduxServices.bankDetails.updateBankInformation.fulfilled.match(
+        updateBankAccountResultAction,
       )
-      if (errorResult === undefined) {
-        await dispatch(
-          reduxServices.bankDetails.updateBankInformation(prepareObject),
-        )
-        backButtonHandler()
-        dispatch(reduxServices.app.actions.addToast(updateToastMessage))
-        dispatch(reduxServices.app.actions.addToast(undefined))
-      } else {
-        dispatch(reduxServices.app.actions.addToast(alreadyExistErrorToast))
-        dispatch(reduxServices.app.actions.addToast(undefined))
-      }
+    ) {
+      backButtonHandler()
+      dispatch(reduxServices.app.actions.addToast(updateToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (editBankInfo.bankAccountNumber) {
+      setBankAccountNumberExist(editBankInfo.bankAccountNumber)
+    } else {
+      dispatch(reduxServices.app.actions.addToast(alreadyExistErrorToast))
     }
   }
 
@@ -250,7 +239,11 @@ const EditBankAccount = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isUpdateBtnEnabled}
+              disabled={
+                isUpdateBtnEnabled
+                  ? isUpdateBtnEnabled && bankAccountNumberExist.length > 0
+                  : !isUpdateBtnEnabled
+              }
               onClick={handleUpdateHandler}
             >
               Update
