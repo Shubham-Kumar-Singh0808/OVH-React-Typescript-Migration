@@ -554,6 +554,10 @@ export interface ITDeclarationListApi extends ApiBase {
   deleteInvestment: string
   deleteCycle: string
   isCycleExist: string
+  isSectionExist: string
+  updateCycle: string
+  updateInvestment: string
+  isInvestmentExist: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {
@@ -575,6 +579,13 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+}
+
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string
+  getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
+  deleteAchievementType: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

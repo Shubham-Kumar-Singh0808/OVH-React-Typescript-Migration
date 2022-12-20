@@ -3,6 +3,7 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import AddNewInvestmentCycle from './AddNewInvestmentCycle'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const cycleNameInput = 'addCycle-cycle-name'
 const startDateInput = 'startDate-picker-input'
@@ -14,7 +15,11 @@ const clearButtonElement = 'ac-clear-btn'
 describe('Add Section Component Testing', () => {
   beforeEach(() => {
     render(<AddNewInvestmentCycle />, {
-      preloadedState: {},
+      preloadedState: {
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
     })
   })
   test('should render cycle name Input', () => {

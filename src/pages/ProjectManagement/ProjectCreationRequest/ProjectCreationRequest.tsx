@@ -72,7 +72,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               <CCol xs={12} sm={3}>
                 <CInputGroup className="global-search me-0 sh-client-search">
                   <CFormInput
-                    placeholder="Multiple Search"
+                    placeholder="Search By Name"
                     aria-label="Multiple Search"
                     aria-describedby="button-addon2"
                     data-testid="searchField"

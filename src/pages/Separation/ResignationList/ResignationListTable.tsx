@@ -374,21 +374,23 @@ const ResignationListTable = ({
                       <div className="sh-btn-group resign-btn">
                         {userAccessShowTimeLine?.viewaccess && (
                           <Link to={`/managerComments?`}>
-                            <CButton
-                              color="info"
-                              className="btn-ovh me-2"
-                              data-testid="history-btn"
-                              onClick={() =>
-                                resignationHistoryButtonHandler(
-                                  resignationItem.separationId,
-                                )
-                              }
-                            >
-                              <i
-                                className="fa fa-bar-chart text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Timeline">
+                              <CButton
+                                color="info"
+                                className="btn-ovh me-2"
+                                data-testid="history-btn"
+                                onClick={() =>
+                                  resignationHistoryButtonHandler(
+                                    resignationItem.separationId,
+                                  )
+                                }
+                              >
+                                <i
+                                  className="fa fa-bar-chart text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </Link>
                         )}
                         {resignationItem.status === 'Relieved' ? (
