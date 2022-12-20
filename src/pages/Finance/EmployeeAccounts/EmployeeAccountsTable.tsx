@@ -9,20 +9,24 @@ import {
   CLink,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import EmployeeAccountsExpandTable from './EmployeeAccountsExpandTable'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetailsApi'
 import { downloadFile } from '../../../utils/helper'
+import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 
-const EmployeeAccountsTable = (
-  props: EmployeeAccountExpandableTableProps,
-): JSX.Element => {
+const EmployeeAccountsTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+}: EmployeeAccountExpandableTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [isIconVisible, setIsIconVisible] = useState(false)
@@ -46,22 +50,6 @@ const EmployeeAccountsTable = (
     }
     return []
   }, [financeData])
-
-  const CurrentPage = useTypedSelector(
-    reduxServices.app.selectors.selectCurrentPage,
-  )
-  useEffect(() => {
-    if (CurrentPage) {
-      setCurrentPage(CurrentPage)
-    }
-  }, [CurrentPage])
-  const {
-    paginationRange,
-    pageSize,
-    setPageSize,
-    currentPage,
-    setCurrentPage,
-  } = props
 
   const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
@@ -217,7 +205,7 @@ const EmployeeAccountsTable = (
           {FinanceDataListSize > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSize}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
