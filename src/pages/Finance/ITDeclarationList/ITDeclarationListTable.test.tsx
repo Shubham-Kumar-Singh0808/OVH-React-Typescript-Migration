@@ -11,6 +11,7 @@ import {
   mockInvestmentCycles,
 } from '../../../test/data/itDeclarationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
@@ -32,6 +33,9 @@ const toRender = (
       setCurrentPage={mockSetCurrentPage}
       pageSize={1}
       setPageSize={mockSetPageSize}
+      viewDeclarationFormButtonHandler={function (viewForm: ITForm[]): void {
+        throw new Error('Function not implemented.')
+      }}
     />
   </div>
 )

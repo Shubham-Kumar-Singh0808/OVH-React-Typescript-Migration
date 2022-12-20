@@ -14,18 +14,10 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import {
-  ITDeclarationListTableProps,
-  ITForm,
-} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { ITDeclarationListTableProps } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const ITDeclarationListTable = (
   props: ITDeclarationListTableProps,
-  {
-    viewDeclarationFormButtonHandler,
-  }: {
-    viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
-  },
 ): JSX.Element => {
   const itDeclarationForms = useTypedSelector(
     reduxServices.itDeclarationList.selectors.itDeclarationForms,
@@ -79,6 +71,26 @@ const ITDeclarationListTable = (
                       <CButton
                         className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                         data-testid={`viewItDeclarationForm-btn${index}`}
+                        onClick={() =>
+                          props.viewDeclarationFormButtonHandler([
+                            {
+                              cycleId: itDeclaration.cycleId,
+                              designation: itDeclaration.designation,
+                              employeeId: itDeclaration.employeeId,
+                              employeeName: itDeclaration.employeeName,
+                              filePath: itDeclaration.filePath,
+                              formSectionsDTOs: itDeclaration.formSectionsDTOs,
+                              fromDate: itDeclaration.fromDate,
+                              grandTotal: itDeclaration.grandTotal,
+                              isAgree: itDeclaration.isAgree,
+                              itDeclarationFormId:
+                                itDeclaration.itDeclarationFormId,
+                              organisationName: itDeclaration.organisationName,
+                              panNumber: itDeclaration.panNumber,
+                              toDate: itDeclaration.toDate,
+                            },
+                          ])
+                        }
                       >
                         <i className="fa fa-eye" aria-hidden="true"></i>
                       </CButton>

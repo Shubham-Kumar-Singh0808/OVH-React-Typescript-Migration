@@ -138,7 +138,7 @@ const ITDeclarationList = (): JSX.Element => {
           </OCard>
         </>
       )}
-      {toggle === 'editSections' && (
+      {toggle === 'viewITDeclarationForm' && (
         <ITDeclarationFormViewTable viewDeclarationForm={viewDeclarationForm} />
       )}
     </>
