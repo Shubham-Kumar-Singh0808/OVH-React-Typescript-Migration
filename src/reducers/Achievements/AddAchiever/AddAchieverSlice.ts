@@ -6,6 +6,7 @@ import {
   AchievementTypeIdQueryParameter,
   AddAchieverInitialState,
   OutgoingNewAchievementType,
+  OutgoingNewAchiever,
   OutgoingUpdateAchievementType,
 } from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
@@ -14,6 +15,7 @@ import { ValidationError } from '../../../types/commonTypes'
 const initialState = {
   isLoading: ApiLoadingState.idle,
   achievementTypeDetails: null,
+  activeEmployeeList: [],
   error: null,
 } as AddAchieverInitialState
 
@@ -66,6 +68,30 @@ const deleteAchievementTypeThunk = createAsyncThunk(
   },
 )
 
+const getActiveEmployeeListThunk = createAsyncThunk(
+  'addAchiever/getActiveEmployeeListThunk',
+  async (_, thunkApi) => {
+    try {
+      return await AddAchieverApi.getActiveEmployeeList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addAchievementThunk = createAsyncThunk(
+  'addAchiever/addAchievementThunk',
+  async (outBody: OutgoingNewAchiever, thunkApi) => {
+    try {
+      return await AddAchieverApi.addAchievement(outBody)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const addAchieverSlice = createSlice({
   name: 'addAchiever',
   initialState,
@@ -78,11 +104,16 @@ const addAchieverSlice = createSlice({
         state.achievementTypeDetails = data as AchievementType
       },
     )
+    builder.addCase(getActiveEmployeeListThunk.fulfilled, (state, action) => {
+      state.activeEmployeeList = action.payload
+    })
     builder.addMatcher(
       isAnyOf(
         addAchievementTypeThunk.pending,
         deleteAchievementTypeThunk.pending,
         updateAchievementTypeDetailsThunk.pending,
+        getActiveEmployeeListThunk.pending,
+        addAchievementThunk.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -93,6 +124,8 @@ const addAchieverSlice = createSlice({
         addAchievementTypeThunk.fulfilled,
         deleteAchievementTypeThunk.fulfilled,
         updateAchievementTypeDetailsThunk.fulfilled,
+        getActiveEmployeeListThunk.fulfilled,
+        addAchievementThunk.fulfilled,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -117,6 +150,8 @@ const addAchieverThunks = {
   getAchievementTypeDetailsThunk,
   updateAchievementTypeDetailsThunk,
   deleteAchievementTypeThunk,
+  getActiveEmployeeListThunk,
+  addAchievementThunk,
 }
 
 export const addAchieverServices = {
