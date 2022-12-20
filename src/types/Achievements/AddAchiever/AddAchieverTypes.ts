@@ -37,7 +37,7 @@ export interface OutgoingNewAchiever {
 export interface NewAchieverInformation
   extends Omit<
     OutgoingNewAchiever,
-    'achievementTypeId' | 'employeeId' | 'description'
+    'achievementTypeId' | 'employeeId' | 'description' | 'croppedImageData'
   > {
   achievementName: string
   employeeName: string
@@ -112,9 +112,21 @@ export interface IncomingActiveEmployee {
   allocation: null
 }
 
+export interface IncomingEmployeeImageData {
+  id: number
+  imageData: string
+}
+
+export type AchieverImageCrop = {
+  file: string | undefined
+  empId: number
+  onUploadImage: (croppedImageData: string | undefined) => void
+}
+
 export interface AddAchieverInitialState {
   isLoading: LoadingState
   achievementTypeDetails: AchievementType | null
   activeEmployeeList: IncomingActiveEmployee[]
   error: ValidationError
+  employeeData: IncomingEmployeeImageData
 }

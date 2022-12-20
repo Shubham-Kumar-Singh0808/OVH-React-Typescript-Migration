@@ -588,6 +588,7 @@ export interface AddAchieverApi extends ApiBase {
   deleteAchievementType: string
   getActiveEmployeeList: string
   addAchievement: string
+  getImageData: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

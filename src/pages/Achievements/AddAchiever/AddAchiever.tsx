@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-// eslint-disable-next-line import/named
 import AchievementTypeList from './AchievementTypeList/AchievementTypeList'
 import AddAchieverForm from './AddAchieverComponents/AddAchieverForm'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { AchievementType } from '../../../types/Achievements/commonAchievementTypes'
 import { emptyString, selectAchievementType } from '../AchievementConstants'
 import {
   NewAchieverInformation,
@@ -15,7 +13,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 
 const initialNewAchieverState: NewAchieverInformation = {
   achievementName: selectAchievementType,
-  croppedImageData: emptyString,
   employeeName: emptyString,
   endDate: emptyString,
   startDate: emptyString,
@@ -26,14 +23,6 @@ const AddAchiever = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [addAchievementTypeButton, setAddAchievementTypeButton] =
     useState<boolean>(false)
-
-  const achievementTypes = useTypedSelector(
-    (state) => state.commonAchievements.achievementTypeList,
-  )
-
-  const allActiveEmployees = useTypedSelector(
-    (state) => state.addAchiever.activeEmployeeList,
-  )
 
   const [isAddNewAchieverButtonEnabled, setAddButton] = useState<boolean>(false)
 
@@ -59,10 +48,9 @@ const AddAchiever = (): JSX.Element => {
     dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
   }, [])
 
-  console.log(allActiveEmployees)
-
   const clearNewAchieverButtonHandler = () => {
     setNewAchieverDetails(initialNewAchieverState)
+    dispatch(reduxServices.addAchiever.actions.clearEmployeeData())
   }
 
   const addNewAchieverHandler = async (finalData: OutgoingNewAchiever) => {
@@ -79,7 +67,6 @@ const AddAchiever = (): JSX.Element => {
 
     if (reduxServices.addAchiever.addAchievementThunk.fulfilled.match(result)) {
       dispatch(reduxServices.app.actions.addToast(successToast))
-      clearNewAchieverButtonHandler()
     }
   }
 

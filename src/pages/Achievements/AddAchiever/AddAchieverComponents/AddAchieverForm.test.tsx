@@ -4,7 +4,13 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddAchieverForm from './AddAchieverForm'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
@@ -19,7 +25,6 @@ const mockaddButtonHandler = jest.fn()
 
 const initialNewAchieverState: NewAchieverInformation = {
   achievementName: selectAchievementType,
-  croppedImageData: emptyString,
   employeeName: emptyString,
   endDate: emptyString,
   startDate: emptyString,
@@ -67,6 +72,8 @@ const toRender1 = (
 const addButtonId = 'add-achiever-btn'
 const clearButtonId = 'clear-btn'
 
+const achSelectId = 'ach-name-sel'
+
 describe('add achiever form', () => {
   describe('initial render', () => {
     beforeEach(() => {
@@ -84,6 +91,7 @@ describe('add achiever form', () => {
       })
     })
     afterEach(cleanup)
+    screen.debug()
     test('buttons are rendered', () => {
       expect(screen.getByTestId(addButtonId)).toBeDisabled()
       expect(screen.getByTestId(clearButtonId)).toBeEnabled()
@@ -95,7 +103,7 @@ describe('add achiever form', () => {
       expect(screen.getByTestId('ach-pic')).toBeVisible()
     })
     test('input is possible', () => {
-      const achievementName = screen.getByTestId('ach-name-sel')
+      const achievementName = screen.getByTestId(achSelectId)
       expect(screen.getAllByTestId('ach-name-opt')).toHaveLength(11)
       userEvent.selectOptions(achievementName, 'Test Achievement')
       expect(mocksetNewAchieverDetails).toHaveBeenCalledTimes(2)
@@ -103,6 +111,22 @@ describe('add achiever form', () => {
       const empName = screen.getByPlaceholderText('Employee Name')
       userEvent.type(empName, 'Pradeep')
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
+
+      expect(mocksetAddButton).toHaveBeenCalledTimes(1)
+      const addNewAchievementButton = screen.getByTestId(addButtonId)
+      userEvent.click(addNewAchievementButton)
+    })
+    test('clear button is working', () => {
+      const clearButton = screen.getByTestId(clearButtonId)
+      const achievementName = screen.getByTestId(achSelectId)
+      const empName = screen.getByPlaceholderText('Employee Name')
+      userEvent.selectOptions(achievementName, 'Test Achievement 2')
+      userEvent.type(empName, 'Pradeep')
+      expect(clearButton).toBeEnabled()
+      userEvent.click(clearButton)
+      expect(mockclearInfoButtonHandler).toHaveBeenCalledTimes(1)
+      expect(achievementName).toHaveValue(selectAchievementType)
+      expect(empName).toHaveValue(emptyString)
     })
     test('pass description to test input value', () => {
       render(

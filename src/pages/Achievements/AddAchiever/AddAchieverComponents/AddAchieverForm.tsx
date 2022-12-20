@@ -11,14 +11,14 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
-import { SyntheticEvent } from 'react-draft-wysiwyg'
 import FilterEmployeeName from './FilterEmployeeName'
+import AchieverImage from './AchieverImage'
 import {
+  base64Extension,
   emptyString,
-  imageValue,
   newAchievementLabelClass,
   orderRegexValue,
   selectAchievementType,
@@ -37,7 +37,6 @@ import {
   deviceLocale,
 } from '../../../../utils/dateFormatUtils'
 import { TextDanger } from '../../../../constant/ClassName'
-import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
@@ -61,7 +60,8 @@ const getMonthAndYear = (date: string) => {
   return fullDate.filter((_, index) => index !== 1)
 }
 
-const AddAchieverForm = (props: AddAchieverFormProps) => {
+// eslint-disable-next-line sonarjs/cognitive-complexity
+const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const {
     addAchievementTypeButtonHandler,
@@ -76,6 +76,10 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
     (state) => state.commonAchievements.achievementTypeList,
   )
 
+  const selectedEmployee = useTypedSelector(
+    (state) => state.addAchiever.employeeData,
+  )
+
   const allActiveEmployees = useTypedSelector(
     (state) => state.addAchiever.activeEmployeeList,
   )
@@ -84,6 +88,8 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
 
   const [achievementDescription, setAchievementDescription] =
     useState<string>(emptyString)
+
+  const [imageDescription, setImageDescription] = useState<string>()
 
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeFilterName, setEmployeeFilterName] = useState<string>()
@@ -152,44 +158,26 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
     setNewAchieverDetails({ ...newAchieverDetails, timePeriod: value })
   }
 
-  const pictureHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    const acceptedFileTypes = ['.jpg', '.jpeg', '.png']
-    if (!file) return
-    const extension = file[0].name.split('.').pop() as string
-    if (file[0].size > 2048000) {
-      const excessToast = (
-        <OToast
-          toastMessage="File size exceeded. Please upload a file less than 2MB."
-          toastColor="danger"
-        />
-      )
-      dispatch(reduxServices.app.actions.addToast(excessToast))
-      return
-    }
-    if (!acceptedFileTypes.includes(extension)) {
-      const wrongFileToast = (
-        <OToast
-          toastMessage="Wrong File Chosen. Please choose either jpg, jpeg or png"
-          toastColor="danger"
-        />
-      )
-      dispatch(reduxServices.app.actions.addToast(wrongFileToast))
-      return
-    }
-
-    console.log(file)
-  }
-
   const onSelectEmployee = (value: string) => {
-    console.log(value)
     setNewAchieverDetails({ ...newAchieverDetails, employeeName: value })
+    const empId = getEmployeeId(allActiveEmployees, value)
+    if (empId === -1) {
+      return
+    }
+    dispatch(reduxServices.addAchiever.getImageDataThunk(empId))
   }
 
   const descriptionHandler = (value: string) => {
-    console.log(value)
     setAchievementDescription(value)
   }
+
+  //For image that is being uploaded only. Not for Api fetched image
+  const croppedImageDataHandler = useCallback(
+    (imageData: string | undefined) => {
+      setImageDescription(imageData)
+    },
+    [],
+  )
 
   useEffect(() => {
     if (
@@ -211,7 +199,11 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
       ) {
         setAddButton(false)
       }
-      if (showTimePeriod && newAchieverDetails.timePeriod === emptyString) {
+      if (
+        showTimePeriod &&
+        (newAchieverDetails.timePeriod === emptyString ||
+          newAchieverDetails.timePeriod === '0')
+      ) {
         setAddButton(false)
       }
     }
@@ -229,18 +221,24 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
     }
   }, [newAchieverDetails.employeeName])
 
-  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const clearLocalDetails = () => {
     clearInfoButtonHandler()
     setShowEditor(false)
     setAchievementDescription(emptyString)
     setAchievementTypeDetails(undefined)
     setEmployeeFilterName(undefined)
+    setImageDescription(undefined)
     setTimeout(() => {
       setShowEditor(true)
     }, 50)
   }
 
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    clearLocalDetails()
+  }
+
+  //Final data for api
   const submitNewAchievementHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -257,22 +255,25 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
       toMonth = '0' + toMonth
     }
 
+    const image = imageDescription
+      ? imageDescription
+      : base64Extension + selectedEmployee.imageData
+
     const finalData: OutgoingNewAchiever = {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       achievementTypeId: achievementTypeDetails!.id,
       startDate: fromMonth + '/' + fromYear,
       endDate: toMonth + '/' + toYear,
       timePeriod: newAchieverDetails.timePeriod,
-      //croppedImageData: newAchieverDetails.croppedImageData,
-      croppedImageData: imageValue,
+      croppedImageData: image,
       employeeId: getEmployeeId(
         allActiveEmployees,
         newAchieverDetails.employeeName,
       ),
       description: achievementDescription,
     }
-    console.log(finalData)
     addButtonHandler(finalData)
+    clearLocalDetails()
   }
 
   return (
@@ -337,7 +338,8 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
             >
               Time Period (year&apos;s):
               {(newAchieverDetails.timePeriod === null ||
-                newAchieverDetails.timePeriod === emptyString) && (
+                newAchieverDetails.timePeriod === emptyString ||
+                newAchieverDetails.timePeriod === '0') && (
                 <span className={TextDanger}>*</span>
               )}
             </CFormLabel>
@@ -370,6 +372,7 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
                 dateFormat="MMMM yyyy"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
+                data-testid="startDate"
                 placeholderText="MM-YYYY"
                 peekNextMonth
                 showMonthYearPicker
@@ -448,12 +451,10 @@ const AddAchieverForm = (props: AddAchieverFormProps) => {
             Picture:
           </CFormLabel>
           <CCol sm={12} md={3}>
-            <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              onChange={(e: SyntheticEvent) =>
-                pictureHandler(e.currentTarget as HTMLInputElement)
-              }
+            <AchieverImage
+              file={`${base64Extension}${selectedEmployee?.imageData}`}
+              empId={selectedEmployee?.id}
+              onUploadImage={croppedImageDataHandler}
             />
           </CCol>
         </AchievementEntryContainer>

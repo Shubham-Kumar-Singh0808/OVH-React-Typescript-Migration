@@ -1,6 +1,7 @@
 import {
   AchievementTypeIdQueryParameter,
   IncomingActiveEmployee,
+  IncomingEmployeeImageData,
   OutgoingNewAchievementType,
   OutgoingNewAchiever,
   OutgoingUpdateAchievementType,
@@ -78,11 +79,28 @@ const getActiveEmployeeList = async (): Promise<IncomingActiveEmployee[]> => {
   return response.data
 }
 
-const addAchievement = async (outBody: OutgoingNewAchiever) => {
+const addAchievement = async (
+  outBody: OutgoingNewAchiever,
+): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AddAchieverApiConfig.addAchievement,
     method: AllowedHttpMethods.post,
     data: outBody,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getImageData = async (
+  empId: number,
+): Promise<IncomingEmployeeImageData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddAchieverApiConfig.getImageData,
+    method: AllowedHttpMethods.get,
+    params: {
+      id: empId,
+    },
   })
 
   const response = await useAxios(requestConfig)
@@ -96,6 +114,7 @@ const AddAchieverApi = {
   deleteAchievementType,
   getActiveEmployeeList,
   addAchievement,
+  getImageData,
 }
 
 export default AddAchieverApi

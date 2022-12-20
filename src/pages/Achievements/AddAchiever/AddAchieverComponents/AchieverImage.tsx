@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { Cropper } from 'react-cropper'
-import { ImageCropperProps } from '../../../types/MyProfile/BasicInfoTab/basicInformationTypes'
+import { AchieverImageCrop } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 
-const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
+const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
   const [image, setImage] = useState<string | undefined>()
   const [imageUploaded, setImageUploaded] = useState<boolean>(false)
   const [cropper, setCropper] = useState<Cropper>()
@@ -36,16 +36,8 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
 
   const getCropData = useCallback(() => {
     if (typeof cropper !== 'undefined' && typeof cropper !== null) {
-      cropper.getCroppedCanvas().toBlob((blob: unknown | Blob) => {
-        const imageFile = new File([blob as Blob], 'profilePicture', {
-          type: 'image/jpeg',
-        })
-        const formData = new FormData()
-        formData.append('file', imageFile)
-        const prepareFile = {
-          data: formData,
-          empId: props.empId,
-        }
+      cropper.getCroppedCanvas().toBlob(() => {
+        const prepareFile = image
         setTimeout(() => {
           onUploadImage(prepareFile)
         }, 500)
@@ -117,4 +109,4 @@ const BasicInfoTabImageCropper = (props: ImageCropperProps): JSX.Element => {
   )
 }
 
-export default BasicInfoTabImageCropper
+export default AchieverImage

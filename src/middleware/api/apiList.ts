@@ -713,6 +713,7 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
   getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
   addAchievement: apiPrefix + '/achievement/addAchievement',
+  getImageData: apiPrefix + '/achievement/getImageData',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
