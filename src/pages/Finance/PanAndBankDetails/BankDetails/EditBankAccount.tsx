@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { EditBankInformation } from '../../../../types/Finance/PanDetails/bankDetailsTypes'
@@ -42,8 +43,6 @@ const EditBankAccount = ({
   const getEditBankAccount = useTypedSelector(
     reduxServices.bankDetails.selectors.editBankData,
   )
-
-  console.log(getEditBankAccount)
 
   useEffect(() => {
     if (getEditBankAccount != null) {
@@ -93,7 +92,7 @@ const EditBankAccount = ({
       toastColor="success"
     />
   )
-  const alreadyExistErrorToast = (
+  const alreadyExistToast = (
     <OToast
       toastMessage="AccountNumber and BankName combination already exist"
       toastColor="danger"
@@ -125,7 +124,7 @@ const EditBankAccount = ({
     } else if (editBankInfo.bankAccountNumber) {
       setBankAccountNumberExist(editBankInfo.bankAccountNumber)
     } else {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistErrorToast))
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToast))
     }
   }
 
@@ -156,7 +155,13 @@ const EditBankAccount = ({
               className="col-sm-3 col-form-label text-end"
             >
               Bank Account Number:
-              <span className={showIsRequired(editBankInfo?.bankAccountNumber)}>
+              <span
+                className={
+                  editBankInfo?.bankAccountNumber?.length > 8
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -169,7 +174,7 @@ const EditBankAccount = ({
                 size="sm"
                 name="bankAccountNumber"
                 autoComplete="off"
-                maxLength={20}
+                maxLength={18}
                 placeholder="Bank Account Number"
                 value={editBankInfo.bankAccountNumber}
                 onChange={onChangeInputHandler}

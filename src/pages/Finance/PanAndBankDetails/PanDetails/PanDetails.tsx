@@ -8,7 +8,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -16,6 +16,8 @@ import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
 
 const PanDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const { employeeId } = useParams<{ employeeId: string }>()
+  const location = useLocation()
 
   const [isEditPanData, setIsEditPanData] = useState<boolean>(false)
   const [financeId, setFinanceId] = useState(0)
@@ -27,19 +29,28 @@ const PanDetails = (): JSX.Element => {
     reduxServices.panDetails.selectors.bankDetails,
   )
 
-  const employeeId = useTypedSelector(
+  const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
-
   useEffect(() => {
-    dispatch(
-      reduxServices.panDetails.bankInformation({
-        key: 'loggedInEmpId',
-        value: Number(employeeId),
-      }),
-    )
-    dispatch(reduxServices.bankDetails.bankNameList())
-  }, [dispatch])
+    if (location.pathname === '/myFinance') {
+      dispatch(
+        reduxServices.panDetails.bankInformation({
+          key: 'loggedInEmpId',
+          value: Number(empId),
+        }),
+      )
+      dispatch(reduxServices.bankDetails.bankNameList())
+    } else if (location.pathname === `/employeeFinance/${employeeId}`) {
+      dispatch(
+        reduxServices.panDetails.bankInformation({
+          key: 'loggedInEmpId',
+          value: Number(employeeId),
+        }),
+      )
+      dispatch(reduxServices.bankDetails.bankNameList())
+    }
+  }, [dispatch, location.pathname])
 
   const editPanDetailsButtonHandler = (panAndBankDetails: Finance): void => {
     setIsEditPanData(true)
