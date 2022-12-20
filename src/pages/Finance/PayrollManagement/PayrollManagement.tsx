@@ -11,7 +11,6 @@ import React, { SyntheticEvent, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
-import ViewPaySlip from './ViewPaySlip/ViewPaySlip'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -251,7 +250,6 @@ const PayrollManagement = (): JSX.Element => {
       {toggle === 'editPaySlip' && (
         <EditPaySlip toEditPayslip={toEditPayslip} />
       )}
-      {toggle === 'viewPaySlip' && <ViewPaySlip />}
     </>
   )
 }

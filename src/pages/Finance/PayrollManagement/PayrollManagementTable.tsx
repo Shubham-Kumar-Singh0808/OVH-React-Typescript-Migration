@@ -12,6 +12,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
+import ViewPaySlip from './ViewPaySlip/ViewPaySlip'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -92,12 +93,6 @@ const PayrollManagementTable = (props: {
   )
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToggle('editPaySlip')
-    props.setToEditPayslip(payslipItem)
-  }
-
-  const viewPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToggle('viewPaySlip')
     props.setToEditPayslip(payslipItem)
   }
 
@@ -260,9 +255,6 @@ const PayrollManagementTable = (props: {
                           size="sm"
                           color="info"
                           className="btn-ovh-employee-list"
-                          onClick={() => {
-                            viewPaySlipHandler(payslipItem)
-                          }}
                         >
                           <i className="fa fa-search-plus  text-white"></i>
                         </CButton>
@@ -322,6 +314,17 @@ const PayrollManagementTable = (props: {
         confirmButtonAction={confirmDeletePayslip}
       >
         <>Do you really want to delete this </>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        closeButtonClass="d-none"
+        modalBodyClass="mt-0"
+      >
+        <>
+          <ViewPaySlip />
+        </>
       </OModal>
     </>
   )
