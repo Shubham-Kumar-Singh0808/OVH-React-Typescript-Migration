@@ -41,11 +41,7 @@ const PanDetails = (): JSX.Element => {
         }),
       )
       dispatch(reduxServices.bankDetails.bankNameList())
-    }
-  }, [location.pathname])
-
-  useEffect(() => {
-    if (location.pathname === `/employeeFinance/${employeeId}`) {
+    } else if (location.pathname === `/employeeFinance/${employeeId}`) {
       dispatch(
         reduxServices.panDetails.bankInformation({
           key: 'loggedInEmpId',
