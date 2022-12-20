@@ -249,6 +249,16 @@ const PayrollManagementTable = (props: {
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
+                      <CTooltip content="View">
+                        <CButton
+                          data-testid={`btn-view${index}`}
+                          size="sm"
+                          color="info"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-search-plus  text-white"></i>
+                        </CButton>
+                      </CTooltip>
                     </CTableDataCell>
                   </CTableRow>
                 )
