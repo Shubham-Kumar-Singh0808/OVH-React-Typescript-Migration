@@ -8,7 +8,6 @@ import {
   CForm,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import ProjectMembersSelection from './NewBookingChildComponents/ProjectMembersSelection'
 import NewBookingLocation from './NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from './NewBookingChildComponents/NewBookingRoom'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -25,6 +24,7 @@ import {
 } from '../NewEvent/NewEventChildComponents'
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
+import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
 
 const NewBookingFilterOptions = ({
   setToggle,
@@ -364,7 +364,7 @@ const NewBookingFilterOptions = ({
             />
             {projectMembers?.length > 0 && (
               <ProjectMembersSelection
-                newRoomBooking={newRoomBooking}
+                addEvent={newRoomBooking}
                 projectMembers={projectMembers}
                 attendeesList={attendeesList}
                 setAttendeesList={setAttendeesList}
