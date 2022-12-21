@@ -23,12 +23,12 @@ const getProjectDetails = async (
   return response.data
 }
 
-const getProject = async (projectId: number): Promise<ProjectDetail> => {
+const getProject = async (projectid: number): Promise<ProjectDetail> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectViewApiConfig.getProject,
     method: AllowedHttpMethods.get,
     params: {
-      projectId,
+      projectid,
     },
   })
 

@@ -4,47 +4,57 @@ import { MyProfileTabList } from '../types/MyProfile/ProfileLandingPage/myProfil
 const ProjectViewTabLabel: MyProfileTabList[] = [
   {
     id: 1,
-    tabName: 'General',
+    tabName: 'People',
     label: 'My Profile-General',
   },
   {
     id: 2,
-    tabName: 'Basic Info',
+    tabName: 'Change Request',
     label: 'My Profile-BasicInfo',
   },
   {
     id: 3,
-    tabName: 'Personal Info',
+    tabName: 'Milestone',
     label: 'My Profile-PersonalInfo',
   },
   {
     id: 4,
-    tabName: 'Qualification',
+    tabName: 'Invoices',
     label: 'My Profile-Skills',
   },
   {
     id: 5,
-    tabName: 'Reviews',
+    tabName: 'Status',
     label: 'My Profile-Observations',
   },
   {
     id: 6,
-    tabName: 'Projects',
+    tabName: 'Notes',
     label: 'My Profile-Projects',
   },
   {
     id: 7,
-    tabName: 'Reportees',
+    tabName: 'Proposals',
     label: 'My Profile-Reporties',
   },
   {
     id: 8,
-    tabName: 'Assets',
+    tabName: 'TimeSheet',
     label: 'My Profile-Infra',
   },
   {
     id: 9,
-    tabName: 'Profile History',
+    tabName: 'Project Tailoring',
+    label: 'My Profile',
+  },
+  {
+    id: 10,
+    tabName: 'Project Metrics',
+    label: 'My Profile',
+  },
+  {
+    id: 11,
+    tabName: 'Project Timeline',
     label: 'My Profile-EmployeeHistory',
   },
 ]

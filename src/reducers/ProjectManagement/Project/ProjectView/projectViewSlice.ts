@@ -35,9 +35,9 @@ const getProject = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
->('Projects/getProject', async (projectId: number, thunkApi) => {
+>('Projects/getProject', async (projectid: number, thunkApi) => {
   try {
-    return await projectDetailsApi.getProject(projectId)
+    return await projectDetailsApi.getProject(projectid)
   } catch (error) {
     const err = error as AxiosError
     return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -69,8 +69,11 @@ const projectDetailsSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.resignationList.isLoading
 
-const resignationListDetails = (state: RootState): ProjectViewDetails[] =>
+const projectViewDetails = (state: RootState): ProjectViewDetails[] =>
   state.projectViewDetails.projectViewDetails
+
+const projectDetail = (state: RootState): ProjectDetail =>
+  state.projectViewDetails.projectDetail
 
 const projectViewThunk = {
   getProjectDetails,
@@ -78,7 +81,8 @@ const projectViewThunk = {
 }
 const projectsViewSelectors = {
   isLoading,
-  resignationListDetails,
+  projectViewDetails,
+  projectDetail,
 }
 
 export const projectViewService = {

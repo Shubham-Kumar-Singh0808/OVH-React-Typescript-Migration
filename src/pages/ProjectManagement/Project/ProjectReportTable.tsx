@@ -298,6 +298,7 @@ const ProjectReportsTable = ({
 
   const handleViewModel = (projectId: number) => {
     dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+    dispatch(reduxServices.projectViewDetails.getProject(projectId))
   }
 
   const totalRecordsToDisplay = projectReports?.length
@@ -397,17 +398,19 @@ const ProjectReportsTable = ({
                         )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="info-light btn-ovh me-1"
-                          data-testid="view-btn"
-                          onClick={() => handleViewModel(value.id)}
-                        >
-                          <i
-                            className="fa fa-eye text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <Link to={`/viewProject/${value.id}`}>
+                          <CButton
+                            className="btn-ovh-employee-list cursor-pointer"
+                            color="info-light btn-ovh me-1"
+                            data-testid="view-btn"
+                            onClick={() => handleViewModel(value.id)}
+                          >
+                            <i
+                              className="fa fa-eye text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </Link>
                         {userAccess.updateaccess && (
                           <Link to={`/editproject/${value.id}`}>
                             <CButton

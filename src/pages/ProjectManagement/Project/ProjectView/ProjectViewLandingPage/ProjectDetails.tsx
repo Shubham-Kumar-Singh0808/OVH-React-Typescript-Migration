@@ -1,6 +1,11 @@
 import React from 'react'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../../stateStore'
 
 const ProjectDetails = (): JSX.Element => {
+  const getProjectDetail = useTypedSelector(
+    reduxServices.projectViewDetails.selectors.projectDetail,
+  )
   return (
     <>
       <div className="col-sm-3">
@@ -9,49 +14,49 @@ const ProjectDetails = (): JSX.Element => {
       <div className="col-sm-3">
         <dl>
           <dt>Start Date</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.startdate}</dd>
         </dl>
         <dl>
           <dt>End Date</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.enddate}</dd>
         </dl>
         <dl>
           <dt>Status</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.status}</dd>
         </dl>
         <dl>
           <dt>customer contact Name</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.projectContactPerson}</dd>
         </dl>
         <dl>
           <dt>Platform</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.platform}</dd>
         </dl>
       </div>
       <div className="col-sm-3">
         <dl>
           <dt>Project Manager</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.managerName}</dd>
         </dl>
         <dl>
           <dt>Pricing Model</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.type}</dd>
         </dl>
         <dl>
           <dt>Client</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.client}</dd>
         </dl>
         <dl>
           <dt>Billing Contact Name</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.projectContactPerson}</dd>
         </dl>
         <dl>
           <dt>Billing Contact Email</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.billingContactPersonEmail}</dd>
         </dl>
         <dl>
           <dt>Domain</dt>
-          <dd></dd>
+          <dd>{getProjectDetail.domain}</dd>
         </dl>
       </div>
     </>
