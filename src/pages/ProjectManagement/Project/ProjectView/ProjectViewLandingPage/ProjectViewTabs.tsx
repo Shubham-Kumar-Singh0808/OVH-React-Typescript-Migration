@@ -11,6 +11,7 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 import { MappedTabs } from '../../../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 import { mapTabsToFeatures } from '../../../../../utils/helper'
+import PeopleTab from '../People/PeopleTab'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -52,7 +53,7 @@ const ProjectViewTabs = (): JSX.Element => {
   useEffect(() => {
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
-        1: <h1>Timeline</h1>,
+        1: <PeopleTab />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
     }

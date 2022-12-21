@@ -5,7 +5,7 @@ export type ProjectViewDetails = {
   empFirstName: string
   empLastName: string
   projectName: string
-  projectId: 317
+  projectId: number
   startDate: string
   endDate: string
   comments: string
@@ -27,6 +27,7 @@ export type ProjectViewDetails = {
   hours: null
   totalValue: null
   allocation: string
+  billable: boolean
 }
 
 export type ProjectDetail = {
@@ -83,4 +84,34 @@ export type ProjectViewDetailsState = {
   projectViewDetails: ProjectViewDetails[]
   projectDetail: ProjectDetail
   isLoading: LoadingState
+}
+
+export type UpdateProjectViewDetails = {
+  allocation: string
+  amount: null
+  billable: boolean
+  comments: string
+  count: null
+  department: string
+  desigination: string
+  duration: null
+  empFirstName: string
+  empLastName: string
+  empName: null
+  employeeId: number
+  endDate: string
+  holidays: null
+  hours: null
+  isAllocated: true
+  leaves: null
+  monthWorkingDays: null
+  projectId: number
+  projectName: string
+  rate: null
+  role: null
+  startDate: string
+  status: null
+  totalDays: null
+  totalValue: null
+  userName: string
 }
