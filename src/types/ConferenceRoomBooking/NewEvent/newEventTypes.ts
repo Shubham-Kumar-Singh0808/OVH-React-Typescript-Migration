@@ -32,17 +32,17 @@ export type AddEvent = {
   authorName: Author
   availability: Availability[]
   conferenceType: string
-  description: string
+  description?: string
   endTime: string
-  eventLocation: string
-  eventTypeId: number
+  eventLocation?: string
+  eventTypeId?: number
   fromDate: string
   locationId: number
   projectName: string
   roomId: number
   startTime: string
-  toDate: string
-  trainerName: TrainerDetails
+  toDate?: string
+  trainerName?: TrainerDetails
 }
 
 export type LoggedEmployee = {

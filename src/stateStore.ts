@@ -73,6 +73,7 @@ import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/boo
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import newBookingReducer from './reducers/ConferenceRoomBooking/NewBooking/newBookingSlice'
 import employeeAllocationReportReducer from './reducers/ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
@@ -98,6 +99,7 @@ import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/i
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -174,6 +176,7 @@ export const allReducers = {
   bookingList: bookingListReducer,
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
+  newBooking: newBookingReducer,
   employeeAllocationReport: employeeAllocationReportReducer,
   eventList: eventListReducer,
   roomList: addRoomList,
@@ -195,6 +198,7 @@ export const allReducers = {
   investmentCheckList: investmentCheckListReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
+  addAchiever: addAchieverReducer,
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }

@@ -141,7 +141,7 @@ const AchievementTimeline = (props: {
         <>
           <CContainer>
             <CRow className="mt-2 justify-content-end">
-              <CCol xs={2} className="px-0">
+              <CCol xs={2} className="px-0 text-end">
                 <CButton
                   color="info"
                   data-testid="back-btn"

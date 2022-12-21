@@ -64,6 +64,7 @@ import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingL
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { newBookingService } from './ConferenceRoomBooking/NewBooking/newBookingSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
@@ -88,6 +89,7 @@ import { investmentCheckListService } from './Finance/InvestmentCheckList/invest
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 
 export const reduxServices = {
   app: appService,
@@ -157,6 +159,7 @@ export const reduxServices = {
   bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  newBooking: newBookingService,
   employeeAllocationReport: employeeAllocationSliceService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
@@ -178,6 +181,7 @@ export const reduxServices = {
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
   achieverList: achieverListService,
+  addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
 }
