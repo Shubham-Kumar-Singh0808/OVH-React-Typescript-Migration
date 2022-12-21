@@ -8,6 +8,7 @@ import { queryByAttribute, render } from '@testing-library/react'
 import { EnhancedStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import AchieverImage from './AchieverImage'
 import { fireEvent } from '../../../../test/testUtils'
 import stateStore from '../../../../stateStore'
@@ -62,6 +63,16 @@ describe('Basic Info Image Upload Crop Testing', () => {
       })
 
       fireEvent.change(inputEl)
+    })
+    test('image upload', async () => {
+      const { findByTestId } = render(
+        <AchieverImage file={'undefined'} empId={0} onUploadImage={() => {}} />,
+      )
+      const fileInput = await findByTestId('img-up')
+
+      const file = new File([new Blob()], 'image.png', { type: 'image/png' })
+
+      userEvent.upload(fileInput, file)
     })
   })
 })

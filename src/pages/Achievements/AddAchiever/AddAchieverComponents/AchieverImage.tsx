@@ -68,6 +68,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
           type="file"
           className="sh-updateTicket-file cursor-pointer"
           id="fileUpload"
+          data-testid="img-up"
           onChange={changeHandler}
           accept=".png, .jpg, .jpeg"
         />
