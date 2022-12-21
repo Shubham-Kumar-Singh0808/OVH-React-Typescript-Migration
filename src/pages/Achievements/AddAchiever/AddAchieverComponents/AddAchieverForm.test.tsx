@@ -109,6 +109,7 @@ describe('add achiever form', () => {
       const addNewAchievementButton = screen.getByTestId(addButtonId)
       userEvent.click(addNewAchievementButton)
       expect(mocksetAddButton).toHaveBeenCalledTimes(1)
+      expect(achievementName).toHaveValue(selectAchievementType)
     })
     test('date error rendered', async () => {
       const achievementName = screen.getByTestId(achSelectId)
