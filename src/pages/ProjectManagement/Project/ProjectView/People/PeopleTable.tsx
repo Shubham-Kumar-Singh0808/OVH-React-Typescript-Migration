@@ -8,7 +8,6 @@ import {
   CFormInput,
   CFormSelect,
   CLink,
-  CRow,
   CTableBody,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
@@ -75,6 +74,9 @@ const PeopleTable = (): JSX.Element => {
       )
     }
   }
+  const cancelProjectAllocationButtonHandler = () => {
+    setIsProjectAllocationEdit(false)
+  }
   return (
     <>
       <CTableRow>
@@ -114,9 +116,13 @@ const PeopleTable = (): JSX.Element => {
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            {getProjectDetail?.length > 0 ? (
-              <CTableBody>
-                {getProjectDetail?.map((project, i) => {
+            <CTableBody>
+              {getProjectDetail?.length > 0 &&
+                getProjectDetail?.map((project, i) => {
+                  const billable = project.billable ? 'yes' : 'No'
+                  const allocated = project.isAllocated
+                    ? 'Allocated'
+                    : 'De-Allocated'
                   return (
                     <CTableRow col-span={7} key={i}>
                       <CTableDataCell>
@@ -169,9 +175,7 @@ const PeopleTable = (): JSX.Element => {
                           </div>
                         </CTableDataCell>
                       ) : (
-                        <CTableDataCell>
-                          {project.billable ? 'Yes' : 'No'}
-                        </CTableDataCell>
+                        <CTableDataCell>{billable}</CTableDataCell>
                       )}
                       {isProjectAllocationEdit &&
                       project.employeeId === templateId ? (
@@ -194,9 +198,7 @@ const PeopleTable = (): JSX.Element => {
                           </div>
                         </CTableDataCell>
                       ) : (
-                        <CTableDataCell>
-                          {project.isAllocated ? 'Allocated' : 'De-Allocated'}
-                        </CTableDataCell>
+                        <CTableDataCell>{allocated}</CTableDataCell>
                       )}
                       <CTableDataCell
                         style={{ width: '150px' }}
@@ -219,7 +221,7 @@ const PeopleTable = (): JSX.Element => {
                               color="warning"
                               data-testid="cancel-btn"
                               className="btn-ovh me-1 mb-1"
-                              //   onClick={cancelProjectAllocationButtonHandler}
+                              onClick={cancelProjectAllocationButtonHandler}
                             >
                               <i className="fa fa-times" aria-hidden="true"></i>
                             </CButton>
@@ -241,12 +243,7 @@ const PeopleTable = (): JSX.Element => {
                     </CTableRow>
                   )
                 })}
-              </CTableBody>
-            ) : (
-              <CRow className="mt-4">
-                <h5>No Records Found... </h5>
-              </CRow>
-            )}
+            </CTableBody>
           </CTable>
         </CTableDataCell>
       </CTableRow>

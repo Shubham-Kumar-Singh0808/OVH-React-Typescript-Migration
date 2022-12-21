@@ -599,3 +599,7 @@ export interface ProjectDetailsApi extends ApiBase {
   getProject: string
   updateProjectDetails: string
 }
+
+export interface ProjectTimeLineApi extends ApiBase {
+  getProjectHistory: string
+}

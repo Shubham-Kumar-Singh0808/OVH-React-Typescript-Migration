@@ -79,6 +79,7 @@ import {
   ProjectCreationRequestApi,
   AddAchieverApi,
   ProjectDetailsApi,
+  ProjectTimeLineApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -724,4 +725,7 @@ export const projectViewApiConfig: ProjectDetailsApi = {
   getProjects: apiPrefix + '/allocation-mgmt/projects',
   getProject: apiPrefix + '/project-mgmt/project',
   updateProjectDetails: apiPrefix + '/project-mgmt/updateAllocateProject',
+}
+export const projectTimeLineApiConfig: ProjectTimeLineApi = {
+  getProjectHistory: apiPrefix + '/project-mgmt/getProjectHistory',
 }
