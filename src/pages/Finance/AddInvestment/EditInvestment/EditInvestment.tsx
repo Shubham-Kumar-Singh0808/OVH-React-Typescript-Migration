@@ -85,12 +85,18 @@ const EditInvestment = ({
   }
 
   useEffect(() => {
-    if (editInvestmentCopy?.investmentName) {
+    if (editInvestmentCopy?.investmentName && !isDocumentsVisible) {
+      setIsUpdateButtonEnabled(true)
+    } else if (
+      editInvestmentCopy?.investmentName &&
+      isDocumentsVisible &&
+      requireDocuments
+    ) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [editInvestmentCopy.investmentName])
+  }, [editInvestmentCopy.investmentName, isDocumentsVisible, requireDocuments])
 
   useEffect(() => {
     if (editInvestment?.requiredDocs) {
