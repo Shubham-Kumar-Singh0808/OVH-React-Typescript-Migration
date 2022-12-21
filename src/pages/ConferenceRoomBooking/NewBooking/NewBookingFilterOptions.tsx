@@ -7,7 +7,6 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import NewRoomReservedBy from './NewBookingChildComponents/NewRoomReservedBy'
 import ProjectMembersSelection from './NewBookingChildComponents/ProjectMembersSelection'
 import NewBookingLocation from './NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from './NewBookingChildComponents/NewBookingRoom'
@@ -19,6 +18,7 @@ import { Author } from '../../../types/Dashboard/TrainingsAndEvents/trainingsAnd
 import {
   Attendees,
   EventFromDate,
+  ReservedBy,
   SelectProject,
   StartTimeEndTime,
 } from '../NewEvent/NewEventChildComponents'
@@ -282,6 +282,7 @@ const NewBookingFilterOptions = ({
         <CCol className="col-sm-3">
           <CButton
             color="info btn-ovh me-1"
+            data-testid="locationAdd-btn"
             onClick={() => setToggle('addLocation')}
           >
             <i className="fa fa-plus me-1"></i>Add
@@ -297,12 +298,13 @@ const NewBookingFilterOptions = ({
           <CButton
             color="info btn-ovh me-1"
             onClick={() => setToggle('addRoom')}
+            data-testid="roomAdd-btn"
           >
             <i className="fa fa-plus me-1"></i>Add
           </CButton>
         </CCol>
       </CRow>
-      <NewRoomReservedBy
+      <ReservedBy
         loggedEmployeeName={loggedEmployee.fullName}
         allEmployeesProfiles={allEmployeesProfiles}
         onSelectAuthor={onSelectAuthor}

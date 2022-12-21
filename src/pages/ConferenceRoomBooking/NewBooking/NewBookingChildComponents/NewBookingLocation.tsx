@@ -23,7 +23,7 @@ const NewBookingLocation = ({
         <CFormSelect
           aria-label="location"
           id="location"
-          data-testid="locationSelect"
+          data-testid="location-select"
           name="locationId"
           value={locationValue}
           onChange={(e) => {
