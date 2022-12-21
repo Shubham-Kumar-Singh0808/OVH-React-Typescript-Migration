@@ -98,6 +98,7 @@ import achieverListReducer from './reducers/Achievements/AchieverList/AchieverLi
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
+import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -196,6 +197,7 @@ export const allReducers = {
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  myKRAs: MyKRAsReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

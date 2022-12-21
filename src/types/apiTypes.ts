@@ -596,3 +596,8 @@ export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
 }
+
+export interface MyKRAsApi extends ApiBase {
+  getKRAForIndividualEmployee: string
+  getKPIsForIndividualEmployee: string
+}

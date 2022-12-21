@@ -78,6 +78,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  MyKRAsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -720,4 +721,9 @@ export const AddAchieverApiConfig: AddAchieverApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const myKRAsApiConfig: MyKRAsApi = {
+  getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
+  getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
 }

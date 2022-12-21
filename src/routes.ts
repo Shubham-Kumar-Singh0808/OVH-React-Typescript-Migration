@@ -348,6 +348,8 @@ const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 
+const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -748,6 +750,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/myKRAs',
+    name: 'My KRAs',
+    component: myKRAs,
   },
 ]
 
