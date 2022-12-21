@@ -12,8 +12,9 @@ import {
   CTableBody,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { UpdateProjectViewDetails } from '../../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 
 const PeopleTable = (): JSX.Element => {
@@ -27,7 +28,7 @@ const PeopleTable = (): JSX.Element => {
   const [editEmployeeAllocation, setEditEmployeeAllocation] = useState(
     initialEmployeeAllocation,
   )
-
+  const dispatch = useAppDispatch()
   const handleEditProjectAllocationHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -37,6 +38,42 @@ const PeopleTable = (): JSX.Element => {
     setEditEmployeeAllocation((values) => {
       return { ...values, ...{ [name]: value } }
     })
+  }
+
+  const editProjectAllocationButtonHandler = (
+    projectReport: UpdateProjectViewDetails,
+  ): void => {
+    setIsProjectAllocationEdit(true)
+    setTemplateId(projectReport.employeeId)
+    setEditEmployeeAllocation(projectReport)
+  }
+
+  const saveProjectAllocationHandler = async () => {
+    const saveProjectAllocationResultAction = await dispatch(
+      reduxServices.projectViewDetails.updateEmployeeAllocationProject(
+        editEmployeeAllocation,
+      ),
+    )
+    if (
+      reduxServices.projectViewDetails.updateEmployeeAllocationProject.fulfilled.match(
+        saveProjectAllocationResultAction,
+      )
+    ) {
+      setIsProjectAllocationEdit(false)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Project Allocation has been modified."
+          />,
+        ),
+      )
+      dispatch(
+        reduxServices.projectViewDetails.getProjectDetails(
+          editEmployeeAllocation.projectId,
+        ),
+      )
+    }
   }
   return (
     <>
@@ -171,7 +208,7 @@ const PeopleTable = (): JSX.Element => {
                             <CButton
                               color="success"
                               className="btn-ovh me-1 mb-1"
-                              //   onClick={saveProjectAllocationHandler}
+                              onClick={saveProjectAllocationHandler}
                             >
                               <i
                                 className="fa fa-floppy-o"
@@ -192,6 +229,9 @@ const PeopleTable = (): JSX.Element => {
                             <CButton
                               color="info btn-ovh me-2"
                               data-testid="edit-btn"
+                              onClick={() => {
+                                editProjectAllocationButtonHandler(project)
+                              }}
                             >
                               <i className="fa fa-pencil-square-o"></i>
                             </CButton>

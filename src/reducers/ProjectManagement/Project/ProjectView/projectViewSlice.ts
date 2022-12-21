@@ -8,6 +8,7 @@ import {
   ProjectDetail,
   ProjectViewDetails,
   ProjectViewDetailsState,
+  UpdateProjectViewDetails,
 } from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 
 const getProjectDetails = createAsyncThunk<
@@ -44,6 +45,28 @@ const getProject = createAsyncThunk<
   }
 })
 
+const updateEmployeeAllocationProject = createAsyncThunk<
+  number | undefined,
+  UpdateProjectViewDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'employeeAllocation/updateEmployeeAllocationProject',
+  async (updateEmployeeAllocation: UpdateProjectViewDetails, thunkApi) => {
+    try {
+      return await projectDetailsApi.updateEmployeeAllocationProject(
+        updateEmployeeAllocation,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectDetailsState: ProjectViewDetailsState = {
   projectViewDetails: [],
   isLoading: ApiLoadingState.idle,
@@ -78,6 +101,7 @@ const projectDetail = (state: RootState): ProjectDetail =>
 const projectViewThunk = {
   getProjectDetails,
   getProject,
+  updateEmployeeAllocationProject,
 }
 const projectsViewSelectors = {
   isLoading,

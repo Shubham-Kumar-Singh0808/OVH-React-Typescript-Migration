@@ -597,4 +597,5 @@ export interface EmployeeAccountsApi extends ApiBase {
 export interface ProjectDetailsApi extends ApiBase {
   getProjects: string
   getProject: string
+  updateProjectDetails: string
 }

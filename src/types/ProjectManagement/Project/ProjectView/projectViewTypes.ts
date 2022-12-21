@@ -11,7 +11,7 @@ export type ProjectViewDetails = {
   comments: string
   department: string
   desigination: string
-  userName: boolean
+  userName: string
   isAllocated: true
   duration: null
   count: null

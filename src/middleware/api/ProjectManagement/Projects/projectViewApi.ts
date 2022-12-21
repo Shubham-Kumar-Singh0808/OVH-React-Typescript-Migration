@@ -1,6 +1,7 @@
 import {
   ProjectDetail,
   ProjectViewDetails,
+  UpdateProjectViewDetails,
 } from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -36,9 +37,22 @@ const getProject = async (projectid: number): Promise<ProjectDetail> => {
   return response.data
 }
 
+const updateEmployeeAllocationProject = async (
+  updateEmployeeAllocation: UpdateProjectViewDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectViewApiConfig.updateProjectDetails,
+    method: AllowedHttpMethods.post,
+    data: updateEmployeeAllocation,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectDetailsApi = {
   getProjectDetails,
   getProject,
+  updateEmployeeAllocationProject,
 }
 
 export default projectDetailsApi
