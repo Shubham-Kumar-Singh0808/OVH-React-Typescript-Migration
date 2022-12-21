@@ -209,12 +209,12 @@ const NewBookingFilterOptions = ({
       endTime: `${newRoomBooking.fromDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
     }
     if (timeCheckResult.payload === false) {
-      const addEventResult = await dispatch(
+      const addBookingResult = await dispatch(
         reduxServices.newBooking.confirmNewMeetingAppointment(prepareObj),
       )
       if (
         reduxServices.newBooking.confirmNewMeetingAppointment.fulfilled.match(
-          addEventResult,
+          addBookingResult,
         )
       ) {
         dispatch(
@@ -238,6 +238,21 @@ const NewBookingFilterOptions = ({
           roomId: 0,
           startTime: '',
         })
+      } else if (
+        reduxServices.newBooking.confirmNewMeetingAppointment.rejected.match(
+          addBookingResult,
+        ) &&
+        addBookingResult.payload === 409
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you are late this room is already reserved..!"
+            />,
+          ),
+        )
       }
     }
   }
