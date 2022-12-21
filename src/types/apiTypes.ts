@@ -589,6 +589,13 @@ export interface AddAchieverApi extends ApiBase {
   deleteAchievementType: string
 }
 
+export interface NomineeListApi extends ApiBase {
+  getAllCycles: string
+  getNominations: string
+  getNominationDetails: string
+  reviewNominee: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
