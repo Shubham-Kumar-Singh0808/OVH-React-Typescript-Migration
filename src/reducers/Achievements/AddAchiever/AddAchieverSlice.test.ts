@@ -1,14 +1,25 @@
 import addAchieverReducer, { addAchieverServices } from './AddAchieverSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AddAchieverInitialState } from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import {
+  AddAchieverInitialState,
+  IncomingEmployeeImageData,
+} from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { emptyString } from '../../../pages/Achievements/AchievementConstants'
+
+const initialEmployeeData: IncomingEmployeeImageData = {
+  imageData: emptyString,
+  id: -1,
+}
 
 describe('Add Achiever Slice', () => {
   describe('render', () => {
-    const initialState: AddAchieverInitialState = {
+    const initialState = {
       isLoading: ApiLoadingState.idle,
       achievementTypeDetails: null,
+      activeEmployeeList: [],
       error: null,
-    }
+      employeeData: initialEmployeeData,
+    } as AddAchieverInitialState
 
     it('isLoading is set to "loading" for addAchievementTypeThunk', () => {
       const action = {
@@ -19,6 +30,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -31,6 +44,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -43,6 +58,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -55,6 +72,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -68,6 +87,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.loading,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -81,6 +102,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.succeeded,
         achievementTypeDetails: null,
         error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -92,6 +115,62 @@ describe('Add Achiever Slice', () => {
       expect(state).toEqual(initialState)
     })
 
+    it('"isLoading" state to succeeded for "getAchievementTypeDetailsThunk"', () => {
+      const action = {
+        type: addAchieverServices.getAchievementTypeDetailsThunk.fulfilled.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.idle,
+        achievementTypeDetails: undefined,
+        error: null,
+        activeEmployeeList: [],
+        employeeData: initialEmployeeData,
+      })
+    })
+
+    it('"isLoading" should be set to "loading" for "getActiveEmployeeListThunk"', () => {
+      const action = {
+        type: addAchieverServices.getActiveEmployeeListThunk.pending.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        achievementTypeDetails: null,
+        error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
+      })
+    })
+
+    it('"isLoading" should be set to "succeeded" for "getActiveEmployeeListThunk"', () => {
+      const action = {
+        type: addAchieverServices.getActiveEmployeeListThunk.fulfilled.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        achievementTypeDetails: null,
+        error: null,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: undefined,
+      })
+    })
+
+    it('data fetched for "getImageDataThunk"', () => {
+      const action = {
+        type: addAchieverServices.getImageDataThunk.fulfilled.type,
+      }
+      const state = addAchieverReducer(initialState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.idle,
+        achievementTypeDetails: null,
+        error: null,
+        employeeData: undefined,
+        activeEmployeeList: [],
+      })
+    })
+
     it('"isLoading" set to failed for "addAchievementTypeThunk"', () => {
       const action = {
         type: addAchieverServices.addAchievementTypeThunk.rejected.type,
@@ -101,6 +180,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.failed,
         achievementTypeDetails: null,
         error: undefined,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -114,6 +195,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.failed,
         achievementTypeDetails: null,
         error: undefined,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
 
@@ -126,6 +209,8 @@ describe('Add Achiever Slice', () => {
         isLoading: ApiLoadingState.failed,
         achievementTypeDetails: null,
         error: undefined,
+        employeeData: initialEmployeeData,
+        activeEmployeeList: [],
       })
     })
   })
