@@ -1,7 +1,6 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import { GetAllProjects } from '../../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
@@ -52,9 +51,6 @@ const SelectProject = ({
         data-testid="pmLabel"
       >
         Project:
-        <span className={projectAutoCompleteTarget ? TextWhite : TextDanger}>
-          *
-        </span>
       </CFormLabel>
       <CCol sm={6}>
         <Autocomplete

@@ -21,7 +21,11 @@ const InvestmentCheckListDetailsTable = (): JSX.Element => {
     reduxServices.investmentCheckList.selectors.investments,
   )
   const tableHeaderCellPropsMaxLimit = {
-    width: '440px',
+    width: '467px',
+    scope: 'col',
+  }
+  const tableHeaderCellPropsInvestment = {
+    width: '477px',
     scope: 'col',
   }
 
@@ -30,14 +34,18 @@ const InvestmentCheckListDetailsTable = (): JSX.Element => {
       <CTable
         responsive
         striped
-        className="mt-2 text-start profile-tab-table-size"
+        className="mt-0 text-start profile-tab-table-size w-100"
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
               #
             </CTableHeaderCell>
-            <CTableHeaderCell className="profile-tab-content" scope="col">
+            <CTableHeaderCell
+              className="profile-tab-content"
+              {...tableHeaderCellPropsInvestment}
+              scope="col"
+            >
               Investment
             </CTableHeaderCell>
             <CTableHeaderCell

@@ -541,6 +541,7 @@ export interface ResignationListApi extends ApiBase {
 }
 
 export interface ITDeclarationListApi extends ApiBase {
+  getEmployeeDetails: string
   getCycles: string
   getSections: string
   getITDeclarationForm: string
@@ -579,6 +580,13 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+}
+
+export interface AddAchieverApi extends ApiBase {
+  addAchievementType: string
+  getAchievementTypeDetails: string
+  updateAchievementTypeDetails: string
+  deleteAchievementType: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

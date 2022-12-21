@@ -44,6 +44,20 @@ const ProjectCreationRequest = (): JSX.Element => {
     )
   }
 
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: searchInput,
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+    }
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -58,7 +72,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               <CCol xs={12} sm={3}>
                 <CInputGroup className="global-search me-0 sh-client-search">
                   <CFormInput
-                    placeholder="Multiple Search"
+                    placeholder="Search By Name"
                     aria-label="Multiple Search"
                     aria-describedby="button-addon2"
                     data-testid="searchField"
@@ -66,6 +80,7 @@ const ProjectCreationRequest = (): JSX.Element => {
                     onChange={(e) => {
                       setSearchInput(e.target.value)
                     }}
+                    onKeyUp={handleSearchByEnter}
                   />
                   <CButton
                     data-testid="search-btn1"

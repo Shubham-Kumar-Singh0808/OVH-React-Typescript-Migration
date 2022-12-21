@@ -32,6 +32,7 @@ const EmployeeAccountsExpandTable = ({
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
+            <CTableHeaderCell scope="col"></CTableHeaderCell>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Bank Name</CTableHeaderCell>
             <CTableHeaderCell scope="col">Account Number</CTableHeaderCell>
@@ -42,6 +43,7 @@ const EmployeeAccountsExpandTable = ({
           {bankDetails?.map((item, index) => {
             return (
               <CTableRow key={index}>
+                <CTableDataCell scope="row"></CTableDataCell>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row">{item.bankName}</CTableDataCell>
                 <CTableDataCell scope="row">
