@@ -722,4 +722,5 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
 
 export const projectViewApiConfig: ProjectDetailsApi = {
   getProjects: apiPrefix + '/allocation-mgmt/projects',
+  getProject: apiPrefix + '/project-mgmt/project',
 }

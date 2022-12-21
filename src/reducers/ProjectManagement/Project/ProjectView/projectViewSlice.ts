@@ -5,6 +5,7 @@ import projectDetailsApi from '../../../../middleware/api/ProjectManagement/Proj
 import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
+  ProjectDetail,
   ProjectViewDetails,
   ProjectViewDetailsState,
 } from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
@@ -26,9 +27,27 @@ const getProjectDetails = createAsyncThunk<
   }
 })
 
+const getProject = createAsyncThunk<
+  ProjectDetail | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('Projects/getProject', async (projectId: number, thunkApi) => {
+  try {
+    return await projectDetailsApi.getProject(projectId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialProjectDetailsState: ProjectViewDetailsState = {
   projectViewDetails: [],
   isLoading: ApiLoadingState.idle,
+  projectDetail: {} as ProjectDetail,
 }
 
 const projectDetailsSlice = createSlice({
@@ -39,6 +58,10 @@ const projectDetailsSlice = createSlice({
     builder.addCase(getProjectDetails.fulfilled, (state, action) => {
       state.isLoading = ApiLoadingState.succeeded
       state.projectViewDetails = action.payload as ProjectViewDetails[]
+    })
+    builder.addCase(getProject.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.projectDetail = action.payload as ProjectDetail
     })
   },
 })
@@ -51,6 +74,7 @@ const resignationListDetails = (state: RootState): ProjectViewDetails[] =>
 
 const projectViewThunk = {
   getProjectDetails,
+  getProject,
 }
 const projectsViewSelectors = {
   isLoading,

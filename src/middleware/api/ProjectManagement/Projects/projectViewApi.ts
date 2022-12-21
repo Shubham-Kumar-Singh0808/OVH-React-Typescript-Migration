@@ -1,4 +1,7 @@
-import { ProjectViewDetails } from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
+import {
+  ProjectDetail,
+  ProjectViewDetails,
+} from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -20,8 +23,22 @@ const getProjectDetails = async (
   return response.data
 }
 
+const getProject = async (projectId: number): Promise<ProjectDetail> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectViewApiConfig.getProject,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectDetailsApi = {
   getProjectDetails,
+  getProject,
 }
 
 export default projectDetailsApi
