@@ -5,6 +5,7 @@ import {
   CCol,
   CFormTextarea,
   CButton,
+  CForm,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import ProjectMembersSelection from './NewBookingChildComponents/ProjectMembersSelection'
@@ -274,119 +275,132 @@ const NewBookingFilterOptions = ({
 
   return (
     <>
-      <CRow className="mt-1 mb-3">
-        <NewBookingLocation
-          onHandleLocation={onHandleLocation}
-          locationValue={newRoomBooking.locationId}
-        />
-        <CCol className="col-sm-3">
-          <CButton
-            color="info btn-ovh me-1"
-            data-testid="locationAdd-btn"
-            onClick={() => setToggle('addLocation')}
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="mt-1 mb-3">
-        <NewBookingRoom
-          onHandleRoom={onHandleRoom}
-          roomValue={newRoomBooking.roomId}
-        />
-        <CCol className="col-sm-3">
-          <CButton
-            color="info btn-ovh me-1"
-            onClick={() => setToggle('addRoom')}
-            data-testid="roomAdd-btn"
-          >
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
-      </CRow>
-      <ReservedBy
-        loggedEmployeeName={loggedEmployee.fullName}
-        allEmployeesProfiles={allEmployeesProfiles}
-        onSelectAuthor={onSelectAuthor}
-      />
-      <EventFromDate
-        fromDateValue={newRoomBooking.fromDate}
-        fromDateChangeHandler={fromDateChangeHandler}
-      />
-      <StartTimeEndTime onSelectStartAndEndTime={onSelectStartAndEndTime} />
-      <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
-          Agenda:
-          <span
-            className={showIsRequired(
-              newRoomBooking.agenda.replace(/^\s*/, ''),
+      <CRow>
+        <CCol sm={8}>
+          <CForm className="ms-4">
+            <CRow className="mt-1 mb-3">
+              <NewBookingLocation
+                onHandleLocation={onHandleLocation}
+                locationValue={newRoomBooking.locationId}
+              />
+              <CCol className="col-sm-3">
+                <CButton
+                  color="info btn-ovh me-1"
+                  data-testid="locationAdd-btn"
+                  onClick={() => setToggle('addLocation')}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-3">
+              <NewBookingRoom
+                onHandleRoom={onHandleRoom}
+                roomValue={newRoomBooking.roomId}
+              />
+              <CCol className="col-sm-3">
+                <CButton
+                  color="info btn-ovh me-1"
+                  onClick={() => setToggle('addRoom')}
+                  data-testid="roomAdd-btn"
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              </CCol>
+            </CRow>
+            <ReservedBy
+              loggedEmployeeName={loggedEmployee.fullName}
+              allEmployeesProfiles={allEmployeesProfiles}
+              onSelectAuthor={onSelectAuthor}
+            />
+            <EventFromDate
+              fromDateValue={newRoomBooking.fromDate}
+              fromDateChangeHandler={fromDateChangeHandler}
+            />
+            <StartTimeEndTime
+              onSelectStartAndEndTime={onSelectStartAndEndTime}
+            />
+            <CRow className="mt-1 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                Agenda:
+                <span
+                  className={showIsRequired(
+                    newRoomBooking.agenda.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={6}>
+                <CFormTextarea
+                  placeholder="Purpose"
+                  data-testid="text-area"
+                  aria-label="textarea"
+                  value={newRoomBooking.agenda}
+                  onChange={(e) => {
+                    setNewRoomBooking({
+                      ...newRoomBooking,
+                      agenda: e.target.value,
+                    })
+                  }}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+            <SelectProject
+              allProjects={allProjects}
+              onSelectProject={onSelectProject}
+              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+            />
+            <Attendees
+              allEmployeesProfiles={allEmployeesProfiles}
+              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+              onSelectAttendee={onSelectAttendee}
+              isErrorShow={isErrorShow}
+              isAttendeeErrorShow={isAttendeeErrorShow}
+              setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+              setIsErrorShow={setIsErrorShow}
+              attendeesAutoCompleteTarget={
+                attendeesAutoCompleteTarget as string
+              }
+              setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
+            />
+            {projectMembers?.length > 0 && (
+              <ProjectMembersSelection
+                newRoomBooking={newRoomBooking}
+                projectMembers={projectMembers}
+                attendeesList={attendeesList}
+                setAttendeesList={setAttendeesList}
+                selectProjectMember={selectProjectMember}
+                isErrorShow={isErrorShow}
+                setIsErrorShow={setIsErrorShow}
+                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                checkIsAttendeeExists={checkIsAttendeeExists}
+              />
             )}
-          >
-            *
-          </span>
-        </CFormLabel>
-        <CCol sm={6}>
-          <CFormTextarea
-            placeholder="Purpose"
-            data-testid="text-area"
-            aria-label="textarea"
-            value={newRoomBooking.agenda}
-            onChange={(e) => {
-              setNewRoomBooking({ ...newRoomBooking, agenda: e.target.value })
-            }}
-          ></CFormTextarea>
-        </CCol>
-      </CRow>
-      <SelectProject
-        allProjects={allProjects}
-        onSelectProject={onSelectProject}
-        isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-      />
-      <Attendees
-        allEmployeesProfiles={allEmployeesProfiles}
-        isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-        onSelectAttendee={onSelectAttendee}
-        isErrorShow={isErrorShow}
-        isAttendeeErrorShow={isAttendeeErrorShow}
-        setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-        setIsErrorShow={setIsErrorShow}
-        attendeesAutoCompleteTarget={attendeesAutoCompleteTarget as string}
-        setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
-      />
-      {projectMembers?.length > 0 && (
-        <ProjectMembersSelection
-          newRoomBooking={newRoomBooking}
-          projectMembers={projectMembers}
-          attendeesList={attendeesList}
-          setAttendeesList={setAttendeesList}
-          selectProjectMember={selectProjectMember}
-          isErrorShow={isErrorShow}
-          setIsErrorShow={setIsErrorShow}
-          setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-          checkIsAttendeeExists={checkIsAttendeeExists}
-        />
-      )}
-      <CRow className="mt-5 mb-4">
-        <CCol md={{ span: 6, offset: 3 }}>
-          <>
-            <CButton
-              className="btn-ovh me-1"
-              data-testid="confirmBtn"
-              color="success"
-              onClick={handleConfirmBtn}
-              disabled={!isConfirmButtonEnabled}
-            >
-              Confirm
-            </CButton>
-            <CButton
-              color="warning "
-              data-testid="clearBtn"
-              className="btn-ovh"
-              onClick={ClearButtonHandler}
-            >
-              Clear
-            </CButton>
-          </>
+            <CRow className="mt-5 mb-4">
+              <CCol md={{ span: 6, offset: 3 }}>
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    data-testid="confirmBtn"
+                    color="success"
+                    onClick={handleConfirmBtn}
+                    disabled={!isConfirmButtonEnabled}
+                  >
+                    Confirm
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    data-testid="clearBtn"
+                    className="btn-ovh"
+                    onClick={ClearButtonHandler}
+                  >
+                    Clear
+                  </CButton>
+                </>
+              </CCol>
+            </CRow>
+          </CForm>
         </CCol>
       </CRow>
     </>

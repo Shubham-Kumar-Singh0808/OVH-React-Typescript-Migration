@@ -19,7 +19,7 @@ const NewBookingLocation = ({
         Location:
         <span className={locationValue ? TextWhite : TextDanger}>*</span>
       </CFormLabel>
-      <CCol sm={4}>
+      <CCol sm={6}>
         <CFormSelect
           aria-label="location"
           id="location"
