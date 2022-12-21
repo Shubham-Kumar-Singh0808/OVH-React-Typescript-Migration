@@ -33,11 +33,7 @@ const initialNewBookingListState: newBookingSliceState = {
 const newBookingSlice = createSlice({
   name: 'addLocationList',
   initialState: initialNewBookingListState,
-  reducers: {
-    toggle: (state, action) => {
-      state.toggle = action.payload
-    },
-  },
+  reducers: {},
 })
 
 const newBookingThunk = {

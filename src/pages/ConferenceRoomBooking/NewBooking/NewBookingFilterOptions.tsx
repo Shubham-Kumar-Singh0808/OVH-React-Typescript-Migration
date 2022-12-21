@@ -152,29 +152,27 @@ const NewBookingFilterOptions = ({
       startTime: `${newRoomBooking.fromDate}/${newStartTime[0]}/${newStartTime[1]}`,
       endTime: `${newRoomBooking.fromDate}/${newEndTime[0]}/${newEndTime[1]}`,
     }
-    const uniqueAttendanceResult = await dispatch(
+    const attendanceResult = await dispatch(
       reduxServices.newEvent.uniqueAttendee(prepareObj),
     )
     if (
-      reduxServices.newEvent.uniqueAttendee.rejected.match(
-        uniqueAttendanceResult,
-      ) &&
-      uniqueAttendanceResult.payload === 409
+      reduxServices.newEvent.uniqueAttendee.rejected.match(attendanceResult) &&
+      attendanceResult.payload === 409
     ) {
-      const attendeeObj = {
+      const attendeesObj = {
         id: attendeeId,
         availability: 'buzy',
         name: attendeeName,
       }
       if (!checkIsAttendeeExists(attendeeId)) {
-        setAttendeesList([attendeeObj, ...attendeesList])
+        setAttendeesList([attendeesObj, ...attendeesList])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       } else {
         setIsErrorShow(true)
       }
     } else {
-      const attendeeObj2 = {
+      const attendeesObj2 = {
         id: attendeeId,
         availability: 'free',
         name: attendeeName,
@@ -182,7 +180,7 @@ const NewBookingFilterOptions = ({
       if (checkIsAttendeeExists(attendeeId)) {
         setIsErrorShow(true)
       } else {
-        setAttendeesList([attendeeObj2, ...attendeesList])
+        setAttendeesList([attendeesObj2, ...attendeesList])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       }

@@ -191,13 +191,6 @@ const EmployeeAllocationReport = React.lazy(
       './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
-// const LocationList = React.lazy(
-//   () =>
-//     import(
-//       './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
-//     ),
-// )
-
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
@@ -223,10 +216,6 @@ const EmployeeAllocation = React.lazy(
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
-
-// const RoomList = React.lazy(
-//   () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
-// )
 
 const EditConfiguration = React.lazy(
   () =>
