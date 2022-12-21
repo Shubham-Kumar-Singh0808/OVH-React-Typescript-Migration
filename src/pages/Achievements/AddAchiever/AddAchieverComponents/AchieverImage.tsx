@@ -73,7 +73,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
           accept=".png, .jpg, .jpeg"
         />
         {fileError && (
-          <div>
+          <div data-testid="err">
             <strong className="mt-3 text-danger">{fileError}</strong>
           </div>
         )}

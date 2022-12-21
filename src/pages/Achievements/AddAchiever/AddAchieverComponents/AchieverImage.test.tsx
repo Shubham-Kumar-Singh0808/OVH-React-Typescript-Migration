@@ -74,5 +74,19 @@ describe('Basic Info Image Upload Crop Testing', () => {
 
       userEvent.upload(fileInput, file)
     })
+    test('wrong file upload', async () => {
+      const { findByTestId } = render(
+        <AchieverImage file={'undefined'} empId={0} onUploadImage={() => {}} />,
+      )
+      const fileInput = await findByTestId('img-up')
+
+      const file = new File([new Blob()], 'app.json', {
+        type: 'application/json',
+      })
+
+      userEvent.upload(fileInput, file)
+      const err = await findByTestId('err')
+      expect(err).toBeInTheDocument()
+    })
   })
 })
