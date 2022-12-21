@@ -163,7 +163,9 @@ const EditSection = ({
             >
               Limit :
               <span
-                className={showIsRequired(editSection?.sectionLimit as string)}
+                className={showIsRequired(
+                  editSectionCopy?.sectionLimit as string,
+                )}
               >
                 *
               </span>

@@ -111,6 +111,17 @@ const InvestmentListTable = ({
     setDescription(investmentDescription)
   }
 
+  const sortedSectionName = useMemo(() => {
+    if (currentPageItems) {
+      return currentPageItems
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.sectionName.localeCompare(sortNode2.sectionName),
+        )
+    }
+    return []
+  }, [currentPageItems])
+
   return (
     <>
       <CTable striped responsive align="middle">
@@ -126,7 +137,7 @@ const InvestmentListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.map((investmentItem, index) => {
+          {sortedSectionName.map((investmentItem, index) => {
             const removeTag = '/(<([^>]+)>)/gi'
             const removeDescSpaces = investmentItem.description?.replace(
               removeTag,
@@ -192,7 +203,7 @@ const InvestmentListTable = ({
                   <CTableDataCell>{`N/A`}</CTableDataCell>
                 )}
                 <CTableDataCell scope="row">
-                  {investmentItem.maxLimit}
+                  {investmentItem.maxLimit || '0'}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   {userAccessToSectionActions?.updateaccess && (
