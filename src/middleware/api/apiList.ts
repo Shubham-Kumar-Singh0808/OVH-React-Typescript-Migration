@@ -78,6 +78,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  InitiateCycleApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -717,4 +718,11 @@ export const AddAchieverApiConfig: AddAchieverApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const initiateCycleApiConfig: InitiateCycleApi = {
+  getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
+  getallcycles: apiPrefix + '/nominationController/getallcycles',
+  getAllQuestions: apiPrefix + '/nominationController/getAllQuestions',
+  initiateCycle: apiPrefix + '/nominationController/initiateCycle',
 }

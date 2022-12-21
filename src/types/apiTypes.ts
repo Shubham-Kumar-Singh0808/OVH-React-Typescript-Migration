@@ -593,3 +593,10 @@ export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
 }
+
+export interface InitiateCycleApi extends ApiBase {
+  getActiveCycleData: string
+  getallcycles: string
+  getAllQuestions: string
+  initiateCycle: string
+}

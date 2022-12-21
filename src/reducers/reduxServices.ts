@@ -88,6 +88,7 @@ import { achieverListService } from './Achievements/AchieverList/AchieverListSli
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
+import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 
 export const reduxServices = {
   app: appService,
@@ -180,4 +181,5 @@ export const reduxServices = {
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   projectCreationRequest: projectCreationRequestService,
+  initiateCycle: initiateCycleService,
 }
