@@ -9,7 +9,7 @@ import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessTo
 import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 const roomName = 'Name of the Room:'
-
+const mockSetToggle = jest.fn()
 describe('RoomList without data', () => {
   beforeEach(() => {
     render(<RoomList setToggle={jest.fn()} />, {
@@ -58,5 +58,11 @@ describe('RoomList without data', () => {
     await waitFor(() => {
       expect(screen.getByPlaceholderText('Enter Name')).toHaveValue('')
     })
+  })
+  test('should render click on back button ', () => {
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })
