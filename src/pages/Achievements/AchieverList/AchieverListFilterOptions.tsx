@@ -150,9 +150,7 @@ const AchieverListFilterOptions = (
           <CCol sm={8}>
             <CRow>
               <CCol sm={4} lg={4} className="text-end">
-                <CFormLabel className="mt-1">
-                  Select Achievement Type:
-                </CFormLabel>
+                <CFormLabel className="mt-1">Achievement Type:</CFormLabel>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
