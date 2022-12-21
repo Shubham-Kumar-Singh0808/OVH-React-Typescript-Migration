@@ -12,7 +12,7 @@ const roomName = 'Name of the Room:'
 
 describe('RoomList without data', () => {
   beforeEach(() => {
-    render(<RoomList />, {
+    render(<RoomList setToggle={jest.fn()} />, {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,
@@ -37,12 +37,6 @@ describe('RoomList without data', () => {
 
   test('should render RoomList component with out crashing', () => {
     expect(screen.getByText(roomName)).toBeInTheDocument()
-  })
-
-  test('should render  Room List screen and back button without crashing', () => {
-    const backBtnElement = screen.getByRole('button', { name: 'Back' })
-    expect(backBtnElement).toBeInTheDocument()
-    userEvent.click(backBtnElement)
   })
 
   test('should select Location Name', () => {
