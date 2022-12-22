@@ -1,5 +1,6 @@
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
+import parse from 'html-react-parser'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 
@@ -40,6 +41,17 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
     } else {
       return ''
     }
+  }
+
+  const isProjectPrevValue = (oldValue: string): JSX.Element => {
+    return oldValue ? (
+      <>
+        &nbsp;Changed from&nbsp;{parse(oldValue)}&nbsp;
+        <strong>to</strong>
+      </>
+    ) : (
+      <></>
+    )
   }
   return (
     <>
@@ -85,14 +97,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Allocation(%)
                             </CFormLabel>
-                            {history.oldAllocation ? (
-                              <>
-                                &nbsp;Changed from {history.oldAllocation}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldAllocation)}
                             &nbsp;
                             {history.allocation}
                           </div>
@@ -107,15 +112,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Billable
                             </CFormLabel>
-                            {projectOldBillable ? (
-                              <>
-                                &nbsp;Changed from
-                                {projectOldBillable}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(projectOldBillable as string)}
                             &nbsp;
                             {projectBillable}
                           </div>
@@ -130,14 +127,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Current Status
                             </CFormLabel>
-                            {history.oldStatus ? (
-                              <>
-                                &nbsp;Changed from {history.oldStatus}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldStatus)}
                             &nbsp;
                             {history.status}
                           </div>
@@ -152,14 +142,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Allocation Start Date
                             </CFormLabel>
-                            {history.oldStartDate ? (
-                              <>
-                                &nbsp;Changed from {history.oldStartDate}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldStartDate as string)}
                             &nbsp;
                             {history.startdate}
                           </div>
@@ -174,14 +157,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Allocation End Date
                             </CFormLabel>
-                            {history.oldEndDate ? (
-                              <>
-                                &nbsp;Changed from {history.oldEndDate}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldEndDate as string)}
                             &nbsp;
                             {history.enddate}
                           </div>
@@ -196,13 +172,8 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Project Name
                             </CFormLabel>
-                            {history.oldProjectName ? (
-                              <>
-                                &nbsp;Changed from {history.oldProjectName}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
+                            {isProjectPrevValue(
+                              history.oldProjectName as string,
                             )}
                             &nbsp;
                             {history.projectName}
@@ -218,14 +189,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Client
                             </CFormLabel>
-                            {history.oldProjectName ? (
-                              <>
-                                &nbsp;Changed from {history.oldProjectName}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldClient as string)}
                             &nbsp;
                             {history.client}
                           </div>
@@ -240,14 +204,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Status
                             </CFormLabel>
-                            {history.oldStatus ? (
-                              <>
-                                &nbsp;Changed from {history.oldStatus}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldStatus as string)}
                             &nbsp;
                             {history.status}
                           </div>
@@ -262,14 +219,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Pricing Model
                             </CFormLabel>
-                            {history.oldType ? (
-                              <>
-                                &nbsp;Changed from {history.oldType}
-                                <strong> to</strong>
-                              </>
-                            ) : (
-                              <></>
-                            )}
+                            {isProjectPrevValue(history.oldType as string)}
                             &nbsp;
                             {history.type}
                           </div>

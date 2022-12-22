@@ -6,50 +6,50 @@ export type ProjectHistoryResponse = {
 }
 
 export type ProjectHistory = {
-  id: null
-  projectName: null
-  oldProjectName: null
-  startdate: null
-  oldStartDate: null
-  enddate: null
-  description: null
-  oldDescription: null
-  status: null
-  oldStatus: null
-  managerName: null
-  oldManagerName: null
-  count: null
-  allocation: null
-  oldAllocation: null
-  isAllocated: null
-  oldIsAllocated: null
+  id: number
+  projectName: string
+  oldProjectName: string
+  startdate: string
+  oldStartDate: string
+  enddate: string
+  description: string
+  oldDescription: string
+  status: string
+  oldStatus: string
+  managerName: string
+  oldManagerName: string
+  count: string
+  allocation: string
+  oldAllocation: string
+  isAllocated: string
+  oldIsAllocated: string
   employeeId: null
-  health: null
-  oldHealth: null
-  client: null
-  oldClient: null
-  type: null
-  oldType: null
-  fromDate: null
-  oldFromDate: null
-  toDate: null
+  health: string
+  oldHealth: string
+  client: string
+  oldClient: string
+  type: string
+  oldType: string
+  fromDate: string
+  oldFromDate: string
+  toDate: string
   oldToDate: null
-  commnets: null
-  oldComments: null
-  billable: true
-  oldBillable: false
+  commnets: string
+  oldComments: string
+  billable: boolean
+  oldBillable: boolean
   modifiedDate: string
   modifiedBy: string
   persistType: string
   projectDetailsFlag: null
-  employeeName: null
-  oldEmployeeName: null
-  columnName: null
-  oldvalue: null
-  newValue: null
+  employeeName: string
+  oldEmployeeName: string
+  columnName: string
+  oldvalue: string
+  newValue: string
   additionalInfo: string
-  allocatedEmpNames: null
-  oldEndDate: null
+  allocatedEmpNames: string
+  oldEndDate: string
 }
 
 export type ProjectHistoryDetailsSliceState = {
