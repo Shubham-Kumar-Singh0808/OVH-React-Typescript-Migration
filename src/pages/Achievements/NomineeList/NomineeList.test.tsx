@@ -33,6 +33,7 @@ describe('Nominee List', () => {
       })
     })
     afterEach(cleanup)
+    screen.debug()
     test('export button is shown', () => {
       expect(screen.getByTestId('export-btn')).toBeVisible()
     })

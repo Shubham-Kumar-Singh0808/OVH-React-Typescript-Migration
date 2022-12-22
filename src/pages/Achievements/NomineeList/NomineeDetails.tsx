@@ -114,7 +114,8 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
     if (
       nomineeDescription === emptyString ||
       nomineeRating === selectRating ||
-      nomineeStatus === String(nomineeSelectionStatus.selectStatus)
+      nomineeStatus === String(nomineeSelectionStatus.selectStatus) ||
+      nomineeDescription.trim().length === 0
     ) {
       setAddButtonEnabled(false)
     } else if (
@@ -258,7 +259,8 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
             <CContainer className="mt-3">
               <CFormLabel data-testid="comments-label">
                 Comments:{' '}
-                {nomineeDescription === emptyString && (
+                {(nomineeDescription === emptyString ||
+                  nomineeDescription.trim().length === 0) && (
                   <span className={TextDanger}>*</span>
                 )}
               </CFormLabel>
