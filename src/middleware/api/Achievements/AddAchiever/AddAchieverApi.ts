@@ -1,6 +1,9 @@
 import {
   AchievementTypeIdQueryParameter,
+  IncomingActiveEmployee,
+  IncomingEmployeeImageData,
   OutgoingNewAchievementType,
+  OutgoingNewAchiever,
   OutgoingUpdateAchievementType,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
@@ -66,11 +69,52 @@ const deleteAchievementType = async (
   return response.data
 }
 
+const getActiveEmployeeList = async (): Promise<IncomingActiveEmployee[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddAchieverApiConfig.getActiveEmployeeList,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addAchievement = async (
+  outBody: OutgoingNewAchiever,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddAchieverApiConfig.addAchievement,
+    method: AllowedHttpMethods.post,
+    data: outBody,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getImageData = async (
+  empId: number,
+): Promise<IncomingEmployeeImageData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddAchieverApiConfig.getImageData,
+    method: AllowedHttpMethods.get,
+    params: {
+      id: empId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddAchieverApi = {
   addAchievementType,
   getAchievementTypeDetails,
   updateAchievementTypeDetails,
   deleteAchievementType,
+  getActiveEmployeeList,
+  addAchievement,
+  getImageData,
 }
 
 export default AddAchieverApi

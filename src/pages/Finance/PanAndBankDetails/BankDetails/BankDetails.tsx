@@ -66,37 +66,42 @@ const BankDetails = ({
     setToggle('editBankAccount')
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'PF,PAN&Bank Details',
+  )
+
   return (
     <>
       <CCardHeader>
         <h4 className="h4">Bank Details</h4>
       </CCardHeader>
       <CCardBody>
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="add-button"
-              onClick={() => {
-                setToggle('addBankAccount')
-              }}
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </CCol>
-        </CRow>
+        {userAccess?.createaccess && (
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="add-button"
+                onClick={() => {
+                  setToggle('addBankAccount')
+                }}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
         <CTable striped responsive className="mt-5 align-middle alignment">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">A/C No</CTableHeaderCell>
-              <CTableHeaderCell scope="col" className="text-middle">
-                Name
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col" className="text-center">
-                IFSC Code
-              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+              <CTableHeaderCell scope="col">IFSC Code</CTableHeaderCell>
               <CTableHeaderCell scope="col" className="text-center">
                 Actions
               </CTableHeaderCell>
@@ -112,28 +117,32 @@ const BankDetails = ({
                     <CTableDataCell>{name.bankName}</CTableDataCell>
                     <CTableDataCell>{name.ifscCode}</CTableDataCell>
                     <CTableDataCell className="text-center">
-                      <CTooltip content="Edit">
-                        <CButton
-                          size="sm"
-                          className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                          color="info btn-ovh me-1"
-                          data-testid="edit-button"
-                          onClick={() => editBtnHandler(name.bankId)}
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                          onClick={() => deleteBtnHandler(name.bankId)}
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            size="sm"
+                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="info btn-ovh me-1"
+                            data-testid="edit-button"
+                            onClick={() => editBtnHandler(name.bankId)}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                      {userAccess?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() => deleteBtnHandler(name.bankId)}
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

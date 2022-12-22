@@ -1,6 +1,6 @@
-import { getCycle } from '../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetCycle } from '../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
-export const mockEditAppraisalCycle: getCycle = {
+export const mockEditAppraisalCycle: GetCycle = {
   active: false,
   appraisalDuration: '8',
   appraisalEndDate: '10/2024',

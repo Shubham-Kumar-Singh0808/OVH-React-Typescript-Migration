@@ -16,13 +16,17 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 import panDetailsApi from '../../../middleware/api/Finance/PanDetails/panDetailsApi'
 import { downloadFile } from '../../../utils/helper'
+import { EmployeeAccountExpandableTableProps } from '../../../types/Finance/EmployeeAccounts/employeeAccountsTypes'
 
-const EmployeeAccountsTable = (
-  props: EmployeeAccountExpandableTableProps,
-): JSX.Element => {
+const EmployeeAccountsTable = ({
+  paginationRange,
+  pageSize,
+  setPageSize,
+  currentPage,
+  setCurrentPage,
+}: EmployeeAccountExpandableTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [isIconVisible, setIsIconVisible] = useState(false)
@@ -47,17 +51,10 @@ const EmployeeAccountsTable = (
     return []
   }, [financeData])
 
-  const {
-    paginationRange,
-    pageSize,
-    setPageSize,
-    currentPage,
-    setCurrentPage,
-  } = props
-
   const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const handleExpandRow = (id: number) => {
@@ -72,7 +69,7 @@ const EmployeeAccountsTable = (
       },
     )
 
-    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    downloadFile(employeeBankDetailsDownload, `${financeFilePath}`)
   }
 
   const totalNoOfRecords = financeData?.length
@@ -143,7 +140,7 @@ const EmployeeAccountsTable = (
                       className="sh-organization-link"
                     >
                       <Link
-                        to={`/myFinance/${data.financeDetails.employeeId}`}
+                        to={`/employeeFinance/${data.financeDetails.employeeId}`}
                         className="cursor-pointer"
                         onClick={() => handler(data.employeeId)}
                       >
@@ -208,7 +205,7 @@ const EmployeeAccountsTable = (
           {FinanceDataListSize > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSize}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}

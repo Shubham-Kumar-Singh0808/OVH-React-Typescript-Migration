@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  NewBookingApi,
   EventListApi,
   AddTrackerApi,
   AllocateEmployeeApi,
@@ -571,7 +572,7 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
   validateCycle: apiPrefix + '/appraisal/validateCycle',
@@ -679,6 +680,7 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
+  getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
@@ -711,9 +713,21 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   updateAchievementTypeDetails:
     apiPrefix + '/achievement/updateAchievementType',
   deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  addAchievement: apiPrefix + '/achievement/addAchievement',
+  getImageData: apiPrefix + '/achievement/getImageData',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  confirmNewMeetingAppointment:
+    apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
 }

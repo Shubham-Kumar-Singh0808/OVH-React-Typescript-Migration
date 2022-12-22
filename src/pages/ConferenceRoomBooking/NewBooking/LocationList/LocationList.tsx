@@ -16,7 +16,11 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
-const LocationList = (): JSX.Element => {
+const LocationList = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [selectLocationName, setSelectLocationName] = useState('')
   const [locationNameExist, setLocationNameExist] = useState('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
@@ -108,6 +112,7 @@ const LocationList = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
