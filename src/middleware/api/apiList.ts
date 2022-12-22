@@ -80,6 +80,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  NomineeListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -726,6 +727,15 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
   addAchievement: apiPrefix + '/achievement/addAchievement',
   getImageData: apiPrefix + '/achievement/getImageData',
+}
+
+export const NomineeListApiConfig: NomineeListApi = {
+  getAllCycles: apiPrefix + '/nominationController/getallcycles',
+  getNominations: apiPrefix + '/nominationController/getNominations',
+  getNominationDetails:
+    apiPrefix + '/nominationController/getNominationDetails',
+  reviewNominee: apiPrefix + '/nominationController/reviewNominee',
+  exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
