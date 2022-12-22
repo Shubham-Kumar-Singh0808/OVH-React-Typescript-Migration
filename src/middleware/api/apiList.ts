@@ -721,6 +721,7 @@ export const NomineeListApiConfig: NomineeListApi = {
   getNominationDetails:
     apiPrefix + '/nominationController/getNominationDetails',
   reviewNominee: apiPrefix + '/nominationController/reviewNominee',
+  exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {

@@ -7,13 +7,12 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
+import NomineeListApi from '../../../middleware/api/Achievements/NomineeList/NomineeListApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { NomineeCycleType } from '../../../types/Achievements/commonAchievementTypes'
 import { NomineeFilterCycleProps } from '../../../types/Achievements/NomineeList/NomineeListTypes'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { downloadFile } from '../../../utils/helper'
 import { notFoundNumber, selectCycle } from '../AchievementConstants'
 
 const getCycleId = (cycleList: NomineeCycleType[], itemName: string) => {
@@ -34,7 +33,25 @@ const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
   const cycleChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentCycle(e.target.value)
   }
-  const isLoading = useTypedSelector((state) => state.nomineeList.isLoading)
+
+  const exportCurrentCycleNomineeList = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
+    const csvFile = await NomineeListApi.exportNomineeList(
+      getCycleId(nomineeCycles.list, currentCycle),
+    )
+    downloadFile(csvFile, 'exportNomineesList.csv')
+  }
+
+  const handleExportLeaveReportData = async () => {
+    const employeeLeaveReportDataDownload =
+      await NomineeListApi.exportNomineeList(
+        getCycleId(nomineeCycles.list, currentCycle),
+      )
+
+    downloadFile(employeeLeaveReportDataDownload, 'LeaveReportList.csv')
+  }
 
   console.log(currentCycle)
 
@@ -48,39 +65,45 @@ const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
 
   return (
     <>
-      {isLoading === ApiLoadingState.loading ? (
-        <OLoadingSpinner type={LoadingType.PAGE} />
-      ) : (
-        <>
-          <CContainer className="mt-4 ms-1 mb-4">
-            <CRow>
-              <CCol sm={2} md={1} className="text-end">
-                <CFormLabel className="mt-1">Cycle:</CFormLabel>
-              </CCol>
-              <CCol xs={12} md={3}>
-                <CFormSelect
-                  size="sm"
-                  data-testid="cycle-sel"
-                  value={currentCycle}
-                  onChange={cycleChangeHandler}
+      <CContainer className="mt-4 ms-1 mb-4">
+        <CRow>
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel className="mt-1">Cycle:</CFormLabel>
+          </CCol>
+          <CCol xs={12} md={3}>
+            <CFormSelect
+              size="sm"
+              data-testid="cycle-sel"
+              value={currentCycle}
+              onChange={cycleChangeHandler}
+            >
+              <option data-testid="cycle-opt" value={selectCycle}>
+                {selectCycle}
+              </option>
+              {nomineeCycles.list.map((item, index) => (
+                <option
+                  data-testid="cycle-opt"
+                  key={index}
+                  value={item.cycleName}
                 >
-                  <option value={selectCycle}>{selectCycle}</option>
-                  {nomineeCycles.list.map((item, index) => (
-                    <option key={index} value={item.cycleName}>
-                      {item.cycleName}
-                    </option>
-                  ))}
-                </CFormSelect>
-              </CCol>
-              <CCol xs={12} md={8} className="px-0 text-end">
-                <CButton size="sm" color="info" className="btn-ovh me-1">
-                  + Click To Export
-                </CButton>
-              </CCol>
-            </CRow>
-          </CContainer>
-        </>
-      )}
+                  {item.cycleName}
+                </option>
+              ))}
+            </CFormSelect>
+          </CCol>
+          <CCol xs={12} md={8} className="px-0 text-end">
+            <CButton
+              size="sm"
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="export-btn"
+              onClick={handleExportLeaveReportData}
+            >
+              + Click To Export
+            </CButton>
+          </CCol>
+        </CRow>
+      </CContainer>
     </>
   )
 }

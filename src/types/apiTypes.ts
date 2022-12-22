@@ -594,6 +594,7 @@ export interface NomineeListApi extends ApiBase {
   getNominations: string
   getNominationDetails: string
   reviewNominee: string
+  exportNomineeList: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

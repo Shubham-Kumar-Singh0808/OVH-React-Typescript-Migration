@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import { Axios, AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 import NomineeListApi from '../../../middleware/api/Achievements/NomineeList/NomineeListApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   IncomingNomineeDetails,
   NomineeListInitialState,
 } from '../../../types/Achievements/NomineeList/NomineeListTypes'
+import { ValidationError } from '../../../types/commonTypes'
 
 const initialState: NomineeListInitialState = {
   isLoading: ApiLoadingState.idle,
@@ -114,6 +115,18 @@ const nomineeListSlice = createSlice({
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
+        getAllCyclesThunk.rejected,
+        getNominationsThunk.rejected,
+        getNominationDetailsThunk.rejected,
+        reviewNomineeThunk.rejected,
+      ),
+      (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as ValidationError
       },
     )
   },

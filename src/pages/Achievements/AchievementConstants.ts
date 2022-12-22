@@ -23,48 +23,48 @@ export interface RatingType {
 
 export const NomineeRatingList: RatingType[] = [
   {
-    ratingNumber: 10,
-    ratingString: '10 - Excellent+',
-  },
-  {
-    ratingNumber: 9,
-    ratingString: '9 - Excellent',
-  },
-  {
-    ratingNumber: 8,
-    ratingString: '8 - Excellent-',
-  },
-  {
-    ratingNumber: 7,
-    ratingString: '7 - Very Good+',
-  },
-  {
-    ratingNumber: 6,
-    ratingString: '6 - Very Good',
-  },
-  {
-    ratingNumber: 5,
-    ratingString: '6 - Very Good-',
-  },
-  {
-    ratingNumber: 4,
-    ratingString: '4 - Good+',
-  },
-  {
-    ratingNumber: 3,
-    ratingString: '3 - Good',
-  },
-  {
-    ratingNumber: 2,
-    ratingString: '2 - Good-',
+    ratingNumber: 0,
+    ratingString: '0 - Unsatisfactory',
   },
   {
     ratingNumber: 1,
     ratingString: '1 - Oppotunity For Development',
   },
   {
-    ratingNumber: 0,
-    ratingString: '0 - Unsatisfactory',
+    ratingNumber: 2,
+    ratingString: '2 - Good-',
+  },
+  {
+    ratingNumber: 3,
+    ratingString: '3 - Good',
+  },
+  {
+    ratingNumber: 4,
+    ratingString: '4 - Good+',
+  },
+  {
+    ratingNumber: 5,
+    ratingString: '6 - Very Good-',
+  },
+  {
+    ratingNumber: 6,
+    ratingString: '6 - Very Good',
+  },
+  {
+    ratingNumber: 7,
+    ratingString: '7 - Very Good+',
+  },
+  {
+    ratingNumber: 8,
+    ratingString: '8 - Excellent-',
+  },
+  {
+    ratingNumber: 9,
+    ratingString: '9 - Excellent',
+  },
+  {
+    ratingNumber: 10,
+    ratingString: '10 - Excellent+',
   },
 ]
 

@@ -38,10 +38,15 @@ describe('Nominee List Cycle Filter', () => {
       })
     })
     afterEach(cleanup)
-    test('recall of value', () => {
+    test('initial label and button is rendered', () => {
       const cycleSelect = screen.getByTestId('cycle-sel')
+      expect(screen.getAllByTestId('cycle-opt')).toHaveLength(7)
       expect(cycleSelect).toHaveValue(selectCycle)
-      //expect(mockSetCurrentCycle).toHaveBeenCalled()
+      expect(screen.getByTestId('export-btn')).toBeEnabled()
+    })
+    test('export button is working', () => {
+      const button = screen.getByTestId('export-btn')
+      userEvent.click(button)
     })
   })
 })

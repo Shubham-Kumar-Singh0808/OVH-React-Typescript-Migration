@@ -33,8 +33,8 @@ describe('Nominee List', () => {
       })
     })
     afterEach(cleanup)
-    test('Heading is shown', () => {
-      expect(screen.getByRole('table')).toBeVisible()
+    test('export button is shown', () => {
+      expect(screen.getByTestId('export-btn')).toBeVisible()
     })
   })
 })

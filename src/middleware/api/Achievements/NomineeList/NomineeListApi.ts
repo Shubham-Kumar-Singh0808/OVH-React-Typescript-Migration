@@ -53,11 +53,26 @@ const reviewNominee = async (outBody: IncomingNomineeDetails) => {
   return response.data
 }
 
+const exportNomineeList = async (cycleId: number) => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: NomineeListApiConfig.exportNomineeList,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycle: cycleId,
+      token: localStorage.getItem('token') ?? '',
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const NomineeListApi = {
   getAllCycles,
   getNominations,
   getNominationDetails,
   reviewNominee,
+  exportNomineeList,
 }
 
 export default NomineeListApi
