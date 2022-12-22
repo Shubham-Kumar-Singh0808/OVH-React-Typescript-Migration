@@ -44,17 +44,6 @@ const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
     downloadFile(csvFile, 'exportNomineesList.csv')
   }
 
-  const handleExportLeaveReportData = async () => {
-    const employeeLeaveReportDataDownload =
-      await NomineeListApi.exportNomineeList(
-        getCycleId(nomineeCycles.list, currentCycle),
-      )
-
-    downloadFile(employeeLeaveReportDataDownload, 'LeaveReportList.csv')
-  }
-
-  console.log(currentCycle)
-
   useEffect(() => {
     dispatch(
       reduxServices.nomineeList.getNominationsThunk(
@@ -97,7 +86,7 @@ const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
               color="info"
               className="btn-ovh me-1"
               data-testid="export-btn"
-              onClick={handleExportLeaveReportData}
+              onClick={exportCurrentCycleNomineeList}
             >
               + Click To Export
             </CButton>
