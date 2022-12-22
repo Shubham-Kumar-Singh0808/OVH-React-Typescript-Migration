@@ -7,6 +7,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import ProjectViewTabLabel from '../../../../../middleware/ProjectViewTabLables'
+import ChangeRequest from '../ChangeRequest/ChangeRequest'
 import PeopleTab from '../People/PeopleTab'
 import ProjectHistoryDetails from '../ProjectTimeLine/ProjectHistoryDetails'
 
@@ -25,7 +26,7 @@ const ProjectViewTabs = (): JSX.Element => {
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
         1: <PeopleTab />,
-        2: <h6>change Request</h6>,
+        2: <ChangeRequest />,
         3: <h5>Milestone</h5>,
         4: <h6>Invoices</h6>,
         5: <h6>status</h6>,

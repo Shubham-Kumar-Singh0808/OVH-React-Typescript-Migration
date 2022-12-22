@@ -300,6 +300,13 @@ const ProjectReportsTable = ({
     dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
     dispatch(reduxServices.projectViewDetails.getProject(projectId))
     dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
+    dispatch(
+      reduxServices.projectChangeRequest.getProjectChangeRequestList({
+        endIndex: 20,
+        startIndex: 0,
+        projectid: projectId,
+      }),
+    )
   }
 
   const totalRecordsToDisplay = projectReports?.length

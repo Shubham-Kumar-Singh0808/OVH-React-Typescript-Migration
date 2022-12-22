@@ -17,6 +17,8 @@ export type ChangeRequest = {
 export type ChangeRequestSliceState = {
   changeRequestList: ChangeRequestList
   isLoading: ApiLoadingState
+  currentPage: number
+  pageSize: number
 }
 
 export type ChangeRequestProps = {

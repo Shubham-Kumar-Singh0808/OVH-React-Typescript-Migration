@@ -100,6 +100,7 @@ import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectC
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
 import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
+import projectChangeRequestReducer from './reducers/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -200,6 +201,7 @@ export const allReducers = {
   projectCreationRequest: projectCreationRequestReducer,
   projectViewDetails: projectViewDetailsReducer,
   projectTimeLine: projectTimeLineReducer,
+  projectChangeRequest: projectChangeRequestReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
