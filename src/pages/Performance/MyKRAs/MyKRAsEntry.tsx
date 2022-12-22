@@ -1,5 +1,5 @@
-import { CTableRow, CTableDataCell, CCol, CRow } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import { CTableRow, CTableDataCell } from '@coreui/react-pro'
+import React from 'react'
 import KRAsDetailsTable from './KRAsDetailsTable'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'

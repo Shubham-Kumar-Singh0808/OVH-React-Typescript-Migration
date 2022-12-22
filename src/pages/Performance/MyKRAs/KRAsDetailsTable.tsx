@@ -44,24 +44,22 @@ const KRAsDetailsTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {/* {isLoading !== ApiLoadingState.loading ? (
-            investments &&
-            investments?.map((invest, index) => {
+          {isLoading !== ApiLoadingState.loading ? (
+            kpis &&
+            kpis?.map((kpi, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {invest.investmentName}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    {invest.maxLimit?.toLocaleString()}
-                  </CTableDataCell>
+                  <CTableDataCell scope="row">{kpi.name}</CTableDataCell>
+                  <CTableDataCell scope="row">{kpi.description}</CTableDataCell>
+                  <CTableDataCell scope="row">{kpi.frequency}</CTableDataCell>
+                  <CTableDataCell scope="row">{kpi.target}</CTableDataCell>
                 </CTableRow>
               )
             })
           ) : (
             <OLoadingSpinner type={LoadingType.PAGE} />
-          )} */}
+          )}
         </CTableBody>
       </CTable>
     </>
