@@ -19,7 +19,7 @@ const EmployeeDetails = (): JSX.Element => {
           <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Employee Id:
           </CFormLabel>
-          <CCol sm={3} className="mt-2">
+          <CCol sm={3} className="mt-2" data-testid="emp-id">
             {employeeInformation.employeeId}
           </CCol>
           <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">

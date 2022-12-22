@@ -57,7 +57,7 @@ const InvestmentTable = ({
               }
             >
               <option value="">Select Investment</option>
-              {sectionList[index].invests?.map((invest, investIndex) => (
+              {sectionList[index]?.invests.map((invest, investIndex) => (
                 <option key={investIndex} value={invest.investmentId}>
                   {invest.investmentName}
                 </option>
@@ -74,7 +74,9 @@ const InvestmentTable = ({
               size="sm"
               placeholder="Enter Savings Amount"
               name="customAmount"
+              data-testid="custom-amount"
               maxLength={12}
+              value={currentSec.customAmount}
               onChange={(e) =>
                 onChangeCustomAmount(secIndex, e, currentSec.id as number)
               }
@@ -85,7 +87,7 @@ const InvestmentTable = ({
           <CCol className="mt-1">
             <CButton
               color="info"
-              data-testid={`df-remove-btn`}
+              data-testid={`df-remove-btn${index}`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
               onClick={() =>
@@ -100,7 +102,7 @@ const InvestmentTable = ({
           <CCol className="mt-1">
             <CButton
               color="info"
-              data-testid={`df-query-btn`}
+              data-testid={`df-query-btn${index}`}
               className="btn btn-primary bigfont text-white"
               size="sm"
             >

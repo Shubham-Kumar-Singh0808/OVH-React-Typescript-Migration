@@ -9,7 +9,6 @@ import {
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { showIsRequired } from '../../../utils/helper'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 const SectionsFilterOptions = (): JSX.Element => {

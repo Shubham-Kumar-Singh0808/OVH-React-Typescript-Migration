@@ -102,8 +102,6 @@ const MoreSections = ({
     const isInvestmentExists = newInvestmentCopy.find(
       (currInvestment) => currInvestment.investmentId === e.target.value,
     )
-    // console.log('*****NewInvestment****')
-    // console.log(isInvestmentExists)
 
     newInvestmentCopy[index].investmentId = e.target.value
     setInvestmentList(newInvestmentCopy)
@@ -126,7 +124,7 @@ const MoreSections = ({
   }, [investmentList])
 
   useEffect(() => {
-    setIsMoreInvestBtnEnable(sectionList[index].invests.length <= 1)
+    setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {
         return { ...item, formInvestmentDTO: investmentList }
@@ -136,8 +134,7 @@ const MoreSections = ({
     })
     setFormSectionList(updatedList)
   }, [index, investmentList])
-  // console.log('*****List****')
-  // console.log(investmentList)
+
   return (
     <>
       <div className="block-session clearfix widget_gap">

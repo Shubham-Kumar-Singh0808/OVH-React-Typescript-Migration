@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
 import EmployeeDetails from './EmployeeDetails'
 import IncomeTaxAct from './IncomeTaxAct'
-import SectionsFilterOptions from './SectionsFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -85,7 +84,6 @@ const ITDeclarationForm = (): JSX.Element => {
               color="warning "
               className="btn-ovh"
               data-testid="df-clear-btn"
-              // onClick={handleClearInputs}
             >
               Clear
             </CButton>
