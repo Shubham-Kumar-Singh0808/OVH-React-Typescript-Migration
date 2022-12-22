@@ -13,11 +13,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import {
-  GetQuestion,
-  NominationCycleDto,
-  TotalResponse,
-} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { TotalResponse } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
 const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -25,8 +21,6 @@ const InitiateCycle = (): JSX.Element => {
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
-  const result = {} as TotalResponse
-  const res = {} as GetQuestion[]
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getActiveCycleData())
@@ -65,9 +59,6 @@ const InitiateCycle = (): JSX.Element => {
       toastMessage="Add at least one question to Initiate Cycle"
       toastColor="danger"
     />
-  )
-  const allQuestions = useTypedSelector(
-    reduxServices.initiateCycle.selectors.allQuestions,
   )
   const addBtnHandler = async () => {
     const prepareObject = {

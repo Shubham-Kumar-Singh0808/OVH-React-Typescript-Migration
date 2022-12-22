@@ -13,7 +13,7 @@ export type NominationCycleDto = {
 }
 
 export type GetActiveCycleData = {
-  id: null
+  id: null | number
   nominationCycleDto: NominationCycleDto
   nominationQuestionDto: GetQuestion[]
   checkQuestion: null

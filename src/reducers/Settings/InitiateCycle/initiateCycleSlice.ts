@@ -59,7 +59,7 @@ const initiateCycle = createAsyncThunk(
   },
 )
 
-const initialCycleState: InitiateCycleSliceState = {
+export const initialCycleState: InitiateCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   activeCycleData: {} as GetActiveCycleData,
