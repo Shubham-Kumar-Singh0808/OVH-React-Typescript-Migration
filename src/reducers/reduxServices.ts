@@ -91,6 +91,7 @@ import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice
 import { projectViewService } from './ProjectManagement/Project/ProjectView/projectViewSlice'
 import { projectTimeLineService } from './ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
 import { changeRequestService } from './ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import { mileStoneService } from './ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
 
 export const reduxServices = {
   app: appService,
@@ -186,4 +187,5 @@ export const reduxServices = {
   projectViewDetails: projectViewService,
   projectTimeLine: projectTimeLineService,
   projectChangeRequest: changeRequestService,
+  projectMileStone: mileStoneService,
 }

@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import ProjectViewTabLabel from '../../../../../middleware/ProjectViewTabLables'
 import ChangeRequest from '../ChangeRequest/ChangeRequest'
+import MileStone from '../MileStone/MileStone'
 import PeopleTab from '../People/PeopleTab'
 import ProjectHistoryDetails from '../ProjectTimeLine/ProjectHistoryDetails'
 
@@ -27,7 +28,7 @@ const ProjectViewTabs = (): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
         1: <PeopleTab />,
         2: <ChangeRequest />,
-        3: <h5>Milestone</h5>,
+        3: <MileStone />,
         4: <h6>Invoices</h6>,
         5: <h6>status</h6>,
         6: <h6>Notes</h6>,

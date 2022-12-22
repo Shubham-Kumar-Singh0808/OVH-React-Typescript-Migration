@@ -236,6 +236,11 @@ const PeopleTable = (): JSX.Element => {
               )
             })}
         </CTableBody>
+        <strong>
+          {getProjectDetail?.length
+            ? `Total Records: ${getProjectDetail?.length}`
+            : `No Records found`}
+        </strong>
       </CTable>
     </>
   )

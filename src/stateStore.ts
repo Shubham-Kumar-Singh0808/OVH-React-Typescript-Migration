@@ -101,6 +101,7 @@ import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverS
 import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
 import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
 import projectChangeRequestReducer from './reducers/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import projectMileStoneReducer from './reducers/ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -202,6 +203,7 @@ export const allReducers = {
   projectViewDetails: projectViewDetailsReducer,
   projectTimeLine: projectTimeLineReducer,
   projectChangeRequest: projectChangeRequestReducer,
+  projectMileStone: projectMileStoneReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

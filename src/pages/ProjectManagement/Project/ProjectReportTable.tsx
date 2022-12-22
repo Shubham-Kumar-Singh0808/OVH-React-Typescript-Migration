@@ -307,6 +307,13 @@ const ProjectReportsTable = ({
         projectid: projectId,
       }),
     )
+    dispatch(
+      reduxServices.projectMileStone.getProjectMileStone({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: projectId,
+      }),
+    )
   }
 
   const totalRecordsToDisplay = projectReports?.length
