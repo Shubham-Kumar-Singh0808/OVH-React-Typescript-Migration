@@ -184,19 +184,13 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+
 const EmployeeAllocationReport = React.lazy(
   () =>
     import(
       './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
-const LocationList = React.lazy(
-  () =>
-    import(
-      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
-    ),
-)
-
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
@@ -212,16 +206,15 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const NewBookingRoom = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/NewBooking'),
+)
 const EmployeeAllocation = React.lazy(
   () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
 )
 
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
-)
-
-const RoomList = React.lazy(
-  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 
 const EditConfiguration = React.lazy(
@@ -595,11 +588,11 @@ const routes = [
     name: 'Event Type List',
     component: EventTypeList,
   },
-  {
-    path: '/newMeetingRequest',
-    name: 'Add LocationList',
-    component: LocationList,
-  },
+  // {
+  //   path: '/newMeetingRequest',
+  //   name: 'Add LocationList',
+  //   component: LocationList,
+  // },
   {
     path: '/trainingFeedBackForm/:eventId',
     name: 'Feedback Forms',
@@ -611,15 +604,20 @@ const routes = [
     component: EditHoliday,
   },
   {
+    path: '/newMeetingRequest',
+    name: 'New Booking',
+    component: NewBookingRoom,
+  },
+  {
     path: '/appraisalCycle',
     name: 'Appraisal Configurations',
     component: AppraisalConfigurations,
   },
-  {
-    path: '/roomList',
-    name: 'RoomList',
-    component: RoomList,
-  },
+  // {
+  //   path: '/roomList',
+  //   name: 'RoomList',
+  //   component: RoomList,
+  // },
   {
     path: '/editAppraisalCycle/:cycleId',
     name: 'Edit Configuration',

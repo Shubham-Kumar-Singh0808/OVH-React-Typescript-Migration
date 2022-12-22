@@ -14,7 +14,11 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
-const RoomList = (): JSX.Element => {
+const RoomList = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [selectLocationId, setSelectLocationId] = useState<string>('')
   const [selectRoomName, setSelectRoomName] = useState('')
 
@@ -29,7 +33,6 @@ const RoomList = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
-
   const locationList = useTypedSelector(
     reduxServices.addLocationList.selectors.locationNames,
   )
@@ -110,6 +113,7 @@ const RoomList = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
