@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
 import EmployeeDetails from './EmployeeDetails'
 import IncomeTaxAct from './IncomeTaxAct'
-import EmployeesJoinedAfterApril2018 from './EmployeesJoinedAfterApril2018'
 import SectionsFilterOptions from './SectionsFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -16,13 +15,9 @@ const ITDeclarationForm = (): JSX.Element => {
   const itDeclarationFormExists = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
   )
-  const employeeDetails = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.employeeInformation,
-  )
   const grandTotal = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
-
   const warningToastMessage = (
     <OToast
       toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
@@ -38,51 +33,6 @@ const ITDeclarationForm = (): JSX.Element => {
     }
   }, [dispatch, itDeclarationFormExists])
 
-  const successToastMessage = (
-    <OToast
-      toastMessage="Declaration Form added successfully"
-      toastColor="success"
-    />
-  )
-
-  const handleAddDeclarationForm = async () => {
-    const prepareObject = {
-      designation: ' ',
-      employeeId: 0,
-      employeeName: ' ',
-      fromDate: '',
-      grandTotal: 500000,
-      isAgree: true,
-      itDeclarationFormId: null,
-      organisationName: '',
-      panNumber: '',
-      toDate: '',
-      formSectionsDTOs: [
-        {
-          isOld: true,
-          itSectionsId: null,
-          sectionId: 1,
-          sectionName: '80 C',
-          formInvestmentDTO: [
-            {
-              customAmount: '250000',
-              investmentId: 1,
-            },
-          ],
-        },
-      ],
-    }
-    const addDeclarationFormResultAction = await dispatch(
-      reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
-    )
-    if (
-      reduxServices.itDeclarationForm.addITDeclarationForm.fulfilled.match(
-        addDeclarationFormResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-    }
-  }
   return (
     <>
       <OCard
@@ -93,8 +43,6 @@ const ITDeclarationForm = (): JSX.Element => {
       >
         <EmployeeDetails />
         <IncomeTaxAct />
-        <EmployeesJoinedAfterApril2018 />
-        <SectionsFilterOptions />
         <CRow className="mt-3 mb-3">
           <CCol sm={12}>
             <p className="pull-right">

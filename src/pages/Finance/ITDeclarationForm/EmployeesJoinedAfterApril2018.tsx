@@ -8,7 +8,7 @@ import {
 import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
-const EmployeesJoinedAfterApril2018 = () => {
+const EmployeesJoinedAfterApril2018 = (): JSX.Element => {
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(new Date())
 
@@ -52,7 +52,8 @@ const EmployeesJoinedAfterApril2018 = () => {
                 dateFormat="dd/mm/yy"
                 placeholderText="n/a"
                 name="fromDate"
-                onChange={(date: Date) => setEndDate(date)}
+                selected={startDate}
+                onChange={(date: Date) => setStartDate(date)}
               />
             </CCol>
           </CRow>
@@ -75,8 +76,8 @@ const EmployeesJoinedAfterApril2018 = () => {
                 dateFormat="dd/mm/yy"
                 placeholderText="n/a"
                 name="toDate"
-                // value={}
-                onChange={(date: Date) => setStartDate(date)}
+                selected={endDate}
+                onChange={(date: Date) => setEndDate(date)}
               />
             </CCol>
           </CRow>
@@ -92,7 +93,6 @@ const EmployeesJoinedAfterApril2018 = () => {
             type="file"
             name="upload-form"
             accept=".doc, .docx, .pdf"
-            // onChange={}
           />
         </CCol>
       </CRow>

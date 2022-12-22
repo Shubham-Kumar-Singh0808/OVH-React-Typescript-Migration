@@ -151,6 +151,7 @@ const SectionsFilterOptions = (): JSX.Element => {
           <CButton
             color="info"
             className="text-white btn-ovh"
+            data-testid="btn-moreSections"
             size="sm"
             disabled={!isMoreSectionsButtonEnabled}
             onClick={handleClickSection}

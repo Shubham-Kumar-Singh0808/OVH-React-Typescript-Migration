@@ -6,9 +6,7 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   EmployeeDetails,
-  formSectionList,
   Invest,
-  Investment,
   ITDeclarationFormSliceState,
   Sections,
   submitITDeclarationForm,

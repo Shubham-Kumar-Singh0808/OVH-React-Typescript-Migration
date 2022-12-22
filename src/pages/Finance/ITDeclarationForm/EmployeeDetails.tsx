@@ -16,13 +16,13 @@ const EmployeeDetails = (): JSX.Element => {
     <>
       <CCol>
         <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Employee Id:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
             {employeeInformation.employeeId}
           </CCol>
-          <CFormLabel className="col-sm-3 col-form-label">
+          <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Employee Name:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
@@ -30,13 +30,13 @@ const EmployeeDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow>
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             PAN:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
             {employeeInformation.pan}
           </CCol>
-          <CFormLabel className="col-sm-3 col-form-label">
+          <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Designation:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
