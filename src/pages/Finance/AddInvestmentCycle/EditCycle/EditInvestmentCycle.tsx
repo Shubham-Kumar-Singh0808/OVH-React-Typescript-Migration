@@ -85,7 +85,7 @@ const EditInvestmentCycle = ({
       ...editCycleCopy,
       active: isCycleChecked,
       endDate: cycleEndDate,
-      startDate: moment(cycleStartDate).format('MM/YYYY'),
+      startDate: cycleStartDate,
     }
 
     const cycleExist = {
