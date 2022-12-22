@@ -19,7 +19,7 @@ const getProjectChangeRequestList = async (
     method: AllowedHttpMethods.get,
     params: {
       endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
+      firstIndex: props.firstIndex ?? 0,
       projectid: props.projectid,
     },
   })

@@ -58,7 +58,7 @@ const ChangeRequestTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody color="light">
           {isLoading !== ApiLoadingState.loading ? (
-            changeRequestList &&
+            changeRequestList.length > 0 &&
             changeRequestList?.map((item, index) => {
               return (
                 <CTableRow key={index}>

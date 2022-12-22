@@ -302,8 +302,8 @@ const ProjectReportsTable = ({
     dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
     dispatch(
       reduxServices.projectChangeRequest.getProjectChangeRequestList({
-        endIndex: 20,
-        startIndex: 0,
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
         projectid: projectId,
       }),
     )

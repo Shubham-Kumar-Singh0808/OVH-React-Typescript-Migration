@@ -48,7 +48,7 @@ const projectChangeRequest = (state: RootState): ChangeRequest[] =>
   state.projectChangeRequest.changeRequestList.list
 
 const projectChangeRequestSize = (state: RootState): number =>
-  state.tickets.ticketList.size
+  state.projectChangeRequest.changeRequestList.size
 
 const myTicketsThunk = {
   getProjectChangeRequestList,
