@@ -1,9 +1,10 @@
-import { CTableRow, CTableDataCell } from '@coreui/react-pro'
-import React from 'react'
+import { CTableRow, CTableDataCell, CLink } from '@coreui/react-pro'
+import React, { useState } from 'react'
 import KRAsDetailsTable from './KRAsDetailsTable'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { KRAs } from '../../../types/Performance/MyKRAs/myKRAsTypes'
+import OModal from '../../../components/ReusableComponent/OModal'
 
 const MyKRAsEntry = (props: {
   id: number
@@ -13,6 +14,8 @@ const MyKRAsEntry = (props: {
   isIconVisible: boolean
   setIsIconVisible: (value: boolean) => void
 }): JSX.Element => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [kraDescription, setKraDescription] = useState<string>('')
   const dispatch = useAppDispatch()
 
   const handleExpandRow = (
@@ -21,6 +24,11 @@ const MyKRAsEntry = (props: {
     props.setSelectedPersonId(id as number)
     dispatch(reduxServices.myKRAs.getKPIsForIndividualEmployee(id as number))
     props.setIsIconVisible(true)
+  }
+
+  const handleKRADescriptionModal = (descKRA: string) => {
+    setIsModalVisible(true)
+    setKraDescription(descKRA)
   }
 
   return (
@@ -41,12 +49,30 @@ const MyKRAsEntry = (props: {
             />
           )}
         </CTableDataCell>
-        <CTableDataCell scope="row">{props.employeeKRA.name}</CTableDataCell>
-        <CTableDataCell scope="row">
-          {props.employeeKRA.description !== null
-            ? props.employeeKRA.description
-            : 'N/A'}
+        <CTableDataCell scope="row" className="commentWidth">
+          <CLink
+            className="cursor-pointer text-primary centerAlignment-text"
+            data-testid="kra-Name"
+            onClick={() => handleKRADescriptionModal(props.employeeKRA.name)}
+          >
+            {props.employeeKRA.name}
+          </CLink>
         </CTableDataCell>
+        {props.employeeKRA.description ? (
+          <CTableDataCell scope="row" className="commentWidth">
+            <CLink
+              className="cursor-pointer text-primary centerAlignment-text"
+              data-testid="kra-Name"
+              onClick={() =>
+                handleKRADescriptionModal(props.employeeKRA.description)
+              }
+            >
+              {props.employeeKRA.description}
+            </CLink>
+          </CTableDataCell>
+        ) : (
+          <CTableDataCell scope="row">N/A</CTableDataCell>
+        )}
         <CTableDataCell scope="row">
           {`${props.employeeKRA.designationKraPercentage}%`}
         </CTableDataCell>
@@ -59,6 +85,22 @@ const MyKRAsEntry = (props: {
       ) : (
         <></>
       )}
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setIsModalVisible}
+      >
+        <p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: kraDescription,
+            }}
+          />
+        </p>
+      </OModal>
     </>
   )
 }
