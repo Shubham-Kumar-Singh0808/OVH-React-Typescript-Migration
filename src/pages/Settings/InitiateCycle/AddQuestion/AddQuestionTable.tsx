@@ -100,26 +100,28 @@ const AddQuestionTable = ({
         </CTableHead>
         <CTableBody>
           {allQuestionsList?.list &&
-            allQuestionsList?.list?.map((item, index) => {
-              const removingSpaces = item.question
+            allQuestionsList?.list?.map((currentItem, index) => {
+              const removingSpacesOfText = currentItem.question
                 ?.replace(/\s+/g, ' ')
                 .trim()
                 .replace(/&nbsp;/g, '')
-              const questionLimit =
-                removingSpaces && removingSpaces.length > 30
-                  ? `${removingSpaces.substring(0, 30)}...`
-                  : removingSpaces
+              const limitOfQuestion =
+                removingSpacesOfText && removingSpacesOfText.length > 30
+                  ? `${removingSpacesOfText.substring(0, 30)}...`
+                  : removingSpacesOfText
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
-                    {item.question ? (
+                    {currentItem.question ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid="question-link"
-                        onClick={() => handleDescriptionModal(item.question)}
+                        onClick={() =>
+                          handleDescriptionModal(currentItem.question)
+                        }
                       >
-                        {parse(questionLimit)}
+                        {parse(limitOfQuestion)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -133,7 +135,10 @@ const AddQuestionTable = ({
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
                         onClick={() =>
-                          deleteQuestionBtnHandler(item.id, item.question)
+                          deleteQuestionBtnHandler(
+                            currentItem.id,
+                            currentItem.question,
+                          )
                         }
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
