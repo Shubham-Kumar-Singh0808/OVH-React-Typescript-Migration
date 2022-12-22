@@ -1,6 +1,10 @@
-import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
-// eslint-disable-next-line import/named
-import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import {
+  CRow,
+  CCol,
+  CButton,
+  CFormLabel,
+  CFormTextarea,
+} from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AddQuestionTable from './AddQuestionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -8,11 +12,9 @@ import { TextLabelProps } from '../../../../constant/ClassName'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
-  const [isShowQuestion, setIsShowQuestion] = useState<boolean>(true)
   const [addQuestion, setAddQuestion] = useState<string>('')
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
 
@@ -22,16 +24,8 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
     dispatch(reduxServices.initiateCycle.getAllQuestions())
   }, [dispatch])
 
-  const handleText = (question: string) => {
-    setAddQuestion(question)
-  }
-
   const clearData = () => {
     setAddQuestion('')
-    setIsShowQuestion(false)
-    setTimeout(() => {
-      setIsShowQuestion(true)
-    }, 0)
   }
 
   useEffect(() => {
@@ -106,23 +100,17 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
               *
             </span>
           </CFormLabel>
-          {isShowQuestion ? (
-            <CCol sm={9}>
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={addQuestion}
-                data-testid="allocateEmployeeComment"
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleText(editor.getData().trim())
-                }}
-              />
-            </CCol>
-          ) : (
-            ''
-          )}
+          <CCol sm={7} className="w-500">
+            <CFormTextarea
+              data-testid="text-area"
+              aria-label="textarea"
+              id="Name"
+              name="question"
+              placeholder="Question ?"
+              value={addQuestion}
+              onChange={(e) => setAddQuestion(e.target.value)}
+            />
+          </CCol>
         </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>

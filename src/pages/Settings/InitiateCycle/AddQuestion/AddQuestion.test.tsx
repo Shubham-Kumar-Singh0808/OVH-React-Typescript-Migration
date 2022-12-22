@@ -58,4 +58,9 @@ describe('Add Question without data', () => {
     userEvent.click(backButtonElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
   })
+  test('should render clear inputs', () => {
+    userEvent.click(screen.getByRole('button', { name: 'Add' }))
+    const clearInputName = screen.getByPlaceholderText('Question ?')
+    expect(clearInputName).toHaveValue('')
+  })
 })
