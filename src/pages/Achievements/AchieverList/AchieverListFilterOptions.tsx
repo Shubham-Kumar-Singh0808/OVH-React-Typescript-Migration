@@ -242,7 +242,7 @@ const AchieverListFilterOptions = (
         )}
       </CContainer>
       <CRow className="mt-4">
-        <CFormLabel className="col-form-label category-label col-sm-4 col-form-label text-end"></CFormLabel>
+        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
           <CButton
             data-testid="view-btn-id"
