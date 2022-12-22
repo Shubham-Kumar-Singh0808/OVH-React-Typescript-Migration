@@ -587,6 +587,9 @@ export interface AddAchieverApi extends ApiBase {
   getAchievementTypeDetails: string
   updateAchievementTypeDetails: string
   deleteAchievementType: string
+  getActiveEmployeeList: string
+  addAchievement: string
+  getImageData: string
 }
 
 export interface NomineeListApi extends ApiBase {
@@ -600,4 +603,11 @@ export interface NomineeListApi extends ApiBase {
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
+}
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+  getAllProfileEmployeesData: string
+  getAllProjectSearch: string
+  confirmNewMeetingAppointment: string
 }

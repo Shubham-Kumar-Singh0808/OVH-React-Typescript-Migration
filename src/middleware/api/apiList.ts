@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  NewBookingApi,
   EventListApi,
   AddTrackerApi,
   AllocateEmployeeApi,
@@ -713,6 +714,9 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   updateAchievementTypeDetails:
     apiPrefix + '/achievement/updateAchievementType',
   deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  addAchievement: apiPrefix + '/achievement/addAchievement',
+  getImageData: apiPrefix + '/achievement/getImageData',
 }
 
 export const NomineeListApiConfig: NomineeListApi = {
@@ -727,4 +731,13 @@ export const NomineeListApiConfig: NomineeListApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  confirmNewMeetingAppointment:
+    apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
 }
