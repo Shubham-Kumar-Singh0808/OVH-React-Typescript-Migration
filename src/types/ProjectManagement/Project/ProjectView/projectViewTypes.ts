@@ -115,3 +115,7 @@ export type UpdateProjectViewDetails = {
   totalValue: null
   userName: string
 }
+export type ProjectTabList = {
+  id: number
+  tabName: string
+}
