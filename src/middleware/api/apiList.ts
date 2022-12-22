@@ -729,6 +729,8 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
   getallcycles: apiPrefix + '/nominationController/getallcycles',
   getAllQuestions: apiPrefix + '/nominationController/getAllQuestions',
   initiateCycle: apiPrefix + '/nominationController/initiateCycle',
+  deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
+  addQuestion: apiPrefix + '/nominationController/addQuestion',
 }
 
 export const newBookingApiConfig: NewBookingApi = {

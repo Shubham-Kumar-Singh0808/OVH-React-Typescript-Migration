@@ -59,6 +59,39 @@ const initiateCycle = createAsyncThunk(
   },
 )
 
+const deleteQuestion = createAsyncThunk(
+  'initiateCycle/deleteQuestion',
+  async (questionId: number, thunkApi) => {
+    try {
+      return await initiateCycleApi.deleteQuestion(questionId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addQuestion = createAsyncThunk(
+  'initiateCycle/addQuestion',
+  async (
+    {
+      question,
+    }: {
+      question: string
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await initiateCycleApi.addQuestion({
+        question,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialCycleState: InitiateCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -128,6 +161,8 @@ const initiateCycleThunk = {
   getAllCycles,
   getAllQuestions,
   initiateCycle,
+  deleteQuestion,
+  addQuestion,
 }
 
 const initiateCycleSelectors = {

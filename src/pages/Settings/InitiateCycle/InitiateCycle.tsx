@@ -6,8 +6,9 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
+import AddQuestion from './AddQuestion/AddQuestion'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -16,6 +17,8 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { TotalResponse } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
 const InitiateCycle = (): JSX.Element => {
+  const [toggle, setToggle] = useState<string>('')
+
   const dispatch = useAppDispatch()
 
   const activeCycle = useTypedSelector(
@@ -93,97 +96,111 @@ const InitiateCycle = (): JSX.Element => {
   }
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title={'Initiate Cycle'}
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton color="info" className="btn-ovh me-1">
-              <i className="fa fa-plus me-1"></i>
-              Add Cycle
-            </CButton>
-            &nbsp;
-            <CButton color="info" className="text-white btn-ovh" size="sm">
-              Add Question
-            </CButton>
-          </CCol>
-        </CRow>
-        <CForm>
-          <CRow className="mt-3 mb-3">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Cycle Name:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control-not-allowed"
-                data-testid="cycleName"
-                type="text"
-                id="Name"
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title={'Initiate Cycle'}
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <CButton color="info" className="btn-ovh me-1">
+                <i className="fa fa-plus me-1"></i>
+                Add Cycle
+              </CButton>
+              &nbsp;
+              <CButton
+                color="info"
+                className="text-white btn-ovh"
                 size="sm"
-                name="cycleName"
-                value={activeCycle?.nominationCycleDto?.cycleName}
-                disabled
-              />
+                onClick={() => setToggle('addQuestion')}
+              >
+                Add Question
+              </CButton>
             </CCol>
           </CRow>
-          <CRow className="mt-3 mb-3">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              From Month :
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control-not-allowed"
-                data-testid="fromMonth"
-                type="text"
-                id="fromMonth"
-                size="sm"
-                name="fromMonth"
-                disabled
-                value={activeCycle?.nominationCycleDto?.fromMonth}
-              />
+          <CForm>
+            <CRow className="mt-3 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                Cycle Name:
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control-not-allowed"
+                  data-testid="cycleName"
+                  type="text"
+                  id="Name"
+                  size="sm"
+                  name="cycleName"
+                  value={activeCycle?.nominationCycleDto?.cycleName}
+                  disabled
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                From Month :
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control-not-allowed"
+                  data-testid="fromMonth"
+                  type="text"
+                  id="fromMonth"
+                  size="sm"
+                  name="fromMonth"
+                  disabled
+                  value={activeCycle?.nominationCycleDto?.fromMonth}
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
+                To Month :
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control-not-allowed"
+                  data-testid="toMonth"
+                  type="text"
+                  id="toMonth"
+                  size="sm"
+                  name="toMonth"
+                  disabled
+                  value={activeCycle?.nominationCycleDto?.toMonth}
+                />
+              </CCol>
+            </CRow>
+          </CForm>
+          <InitiateCycleTable
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                data-testid="save-btn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+                onClick={addBtnHandler}
+              >
+                Add
+              </CButton>
             </CCol>
           </CRow>
-          <CRow className="mt-3 mb-3">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              To Month :
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control-not-allowed"
-                data-testid="toMonth"
-                type="text"
-                id="toMonth"
-                size="sm"
-                name="toMonth"
-                disabled
-                value={activeCycle?.nominationCycleDto?.toMonth}
-              />
-            </CCol>
-          </CRow>
-        </CForm>
-        <InitiateCycleTable
-          paginationRange={paginationRange}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          pageSize={pageSize}
+        </OCard>
+      )}
+      {toggle === 'addQuestion' && (
+        <AddQuestion
+          setToggle={() => {
+            setToggle('')
+          }}
         />
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              data-testid="save-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              onClick={addBtnHandler}
-            >
-              Add
-            </CButton>
-          </CCol>
-        </CRow>
-      </OCard>
+      )}
     </>
   )
 }

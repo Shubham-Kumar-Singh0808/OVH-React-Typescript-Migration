@@ -602,6 +602,8 @@ export interface InitiateCycleApi extends ApiBase {
   getallcycles: string
   getAllQuestions: string
   initiateCycle: string
+  deleteQuestion: string
+  addQuestion: string
 }
 
 export interface NewBookingApi extends ApiBase {

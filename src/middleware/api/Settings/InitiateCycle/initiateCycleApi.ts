@@ -2,6 +2,7 @@ import {
   GetActiveCycleData,
   GetAllCycles,
   GetAllQuestions,
+  GetQuestion,
   TotalResponse,
 } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import {
@@ -51,11 +52,43 @@ const initiateCycle = async (data: TotalResponse): Promise<TotalResponse> => {
   return response.data
 }
 
+const deleteQuestion = async (questionId: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.deleteQuestion,
+    method: AllowedHttpMethods.delete,
+    params: {
+      questionId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addQuestion = async ({
+  question,
+}: {
+  question: string
+}): Promise<GetQuestion[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.addQuestion,
+    method: AllowedHttpMethods.post,
+    data: {
+      question,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const initiateCycleApi = {
   getActiveCycleData,
   getAllCycles,
   getAllQuestions,
   initiateCycle,
+  deleteQuestion,
+  addQuestion,
 }
 
 export default initiateCycleApi
