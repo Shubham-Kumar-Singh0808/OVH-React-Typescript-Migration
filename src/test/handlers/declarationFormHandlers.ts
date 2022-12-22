@@ -1,7 +1,10 @@
 import { rest } from 'msw'
 import { itDeclarationFormApiConfig } from '../../middleware/api/apiList'
-import { mockInvestments, mockSections } from '../data/investmentCheckListData'
-import { mockEmployeeInformation } from '../data/itDeclarationFormData'
+import { mockInvestments } from '../data/investmentCheckListData'
+import {
+  mockEmployeeInformation,
+  mockSections,
+} from '../data/itDeclarationFormData'
 
 export const declarationFormHandlers = [
   // getEmployeeInfo api mock

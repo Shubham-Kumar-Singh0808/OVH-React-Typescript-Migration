@@ -4,7 +4,7 @@ import MoreSections from './MoreSections'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  formSectionList,
+  itDeclarationFormSectionList,
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -19,7 +19,9 @@ const SectionsFilterOptions = (): JSX.Element => {
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
   const [sectionList, setSectionList] = useState<Sections[]>([])
-  const [formSectionList, setFormSectionList] = useState<formSectionList[]>([])
+  const [formSectionList, setFormSectionList] = useState<
+    itDeclarationFormSectionList[]
+  >([])
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toCancelSection, setToCancelSection] = useState('')
   const [toCancelSectionId, setToCancelSectionId] = useState(0)
@@ -58,7 +60,7 @@ const SectionsFilterOptions = (): JSX.Element => {
   const alreadyExistToastMessage = (
     <OToast toastMessage="Section already exist" toastColor="danger" />
   )
-  const handleClickSection = async () => {
+  const handleClickSection = () => {
     const isSectionExists = sectionList.find(
       (currSection) => currSection.sectionId === selectedSection.sectionId,
     )
@@ -67,9 +69,7 @@ const SectionsFilterOptions = (): JSX.Element => {
       setShowInvestment(true)
       setSectionList([...sectionList, selectedSection])
     } else {
-      await dispatch(
-        reduxServices.app.actions.addToast(alreadyExistToastMessage),
-      )
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
@@ -96,7 +96,7 @@ const SectionsFilterOptions = (): JSX.Element => {
   const handleConfirmCancelSection = () => {
     setIsCancelModalVisible(false)
     const newSectionList = sectionList.filter(
-      (section) => section.sectionId !== toCancelSectionId,
+      (itSection) => itSection.sectionId !== toCancelSectionId,
     )
     setSectionList(newSectionList)
   }
@@ -108,7 +108,6 @@ const SectionsFilterOptions = (): JSX.Element => {
       }),
     )
   }, [sectionList])
-  console.log(formSectionList)
 
   useEffect(() => {
     const grandTotalArray = formSectionList.map((list) =>

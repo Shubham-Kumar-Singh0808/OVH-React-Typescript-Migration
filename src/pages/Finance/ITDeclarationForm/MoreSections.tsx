@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
 import {
-  formSectionList,
+  itDeclarationFormSectionList,
   Investment,
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
@@ -32,8 +32,8 @@ const MoreSections = ({
   setSectionList: (value: Sections[]) => void
   sectionList: Sections[]
   index: number
-  setFormSectionList: (value: formSectionList[]) => void
-  formSectionList: formSectionList[]
+  setFormSectionList: (value: itDeclarationFormSectionList[]) => void
+  formSectionList: itDeclarationFormSectionList[]
 }): JSX.Element => {
   const [counter, setCounter] = useState(1)
   const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(false)
@@ -77,13 +77,13 @@ const MoreSections = ({
   }
 
   const onChangeCustomAmount = (
-    index: number,
+    customAmtIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const newInvestmentList: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
-    newInvestmentList[index].customAmount = e.target.value
+    newInvestmentList[customAmtIndex].customAmount = e.target.value
     setInvestmentList(newInvestmentList)
   }
   const alreadyExistToastMessage = (
@@ -92,8 +92,8 @@ const MoreSections = ({
       toastColor="danger"
     />
   )
-  const onChangeInvestment = async (
-    index: number,
+  const onChangeInvestment = (
+    investIndex: number,
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const newInvestmentCopy: Investment[] = JSON.parse(
@@ -103,15 +103,13 @@ const MoreSections = ({
       (currInvestment) => currInvestment.investmentId === e.target.value,
     )
 
-    newInvestmentCopy[index].investmentId = e.target.value
+    newInvestmentCopy[investIndex].investmentId = e.target.value
     setInvestmentList(newInvestmentCopy)
     if (isInvestmentExists !== undefined) {
-      await dispatch(
-        reduxServices.app.actions.addToast(alreadyExistToastMessage),
-      )
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
-      newInvestmentCopy[index].investmentId = ''
-      await setInvestmentList(newInvestmentCopy)
+      newInvestmentCopy[investIndex].investmentId = ''
+      setInvestmentList(newInvestmentCopy)
       setReRender(!reRender)
     }
   }

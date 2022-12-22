@@ -56,18 +56,6 @@ const getInvestsBySectionId = createAsyncThunk<
   },
 )
 
-const addITDeclarationForm = createAsyncThunk(
-  'itDeclarationForm/addITDeclarationForm',
-  async (addDeclarationForm: submitITDeclarationForm, thunkApi) => {
-    try {
-      return await itDeclarationFormApi.addITDeclarationForm(addDeclarationForm)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
 const isITDeclarationFormExist = createAsyncThunk<
   boolean | undefined,
   void,
@@ -127,10 +115,6 @@ const itDeclarationFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.sections = action.payload
       })
-      .addCase(addITDeclarationForm.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.itDeclarationFormId = action.payload as number
-      })
       .addCase(isITDeclarationFormExist.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.itDeclarationFormExist = action.payload as boolean
@@ -147,7 +131,6 @@ const itDeclarationFormSlice = createSlice({
           getEmployeeInfo.pending,
           getSectionsHavingInvests.pending,
           getInvestsBySectionId.pending,
-          addITDeclarationForm.pending,
           isITDeclarationFormExist.pending,
         ),
         (state) => {
@@ -159,7 +142,6 @@ const itDeclarationFormSlice = createSlice({
           getEmployeeInfo.rejected,
           getSectionsHavingInvests.rejected,
           getInvestsBySectionId.rejected,
-          addITDeclarationForm.rejected,
           isITDeclarationFormExist.rejected,
         ),
         (state, action) => {
@@ -192,7 +174,6 @@ const itDeclarationFormThunk = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
-  addITDeclarationForm,
   isITDeclarationFormExist,
 }
 

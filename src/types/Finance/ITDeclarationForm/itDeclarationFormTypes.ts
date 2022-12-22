@@ -71,7 +71,7 @@ export type ITDeclarationFormSliceState = {
   grandTotal: number
 }
 
-export type formSectionList = {
+export type itDeclarationFormSectionList = {
   formInvestmentDTO: Investment[]
   sectionId: number
   sectionName: string
