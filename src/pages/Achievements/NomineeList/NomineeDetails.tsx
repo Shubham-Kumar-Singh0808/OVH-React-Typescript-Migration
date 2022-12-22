@@ -180,13 +180,13 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
             <div className="d-inline-flex flex-row flex-wrap">
               <NomineeDetailsBasicInfoContainer>
                 <CFormLabel data-testid="empName-label" className="text-info">
-                  Employee Name:
+                  Employee Name:&nbsp;
                 </CFormLabel>
                 <p data-testid="empName-val">{nomineeDetails.employeeName}</p>
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
                 <CFormLabel data-testid="achType-label" className="text-info">
-                  Achievement Type:{' '}
+                  Achievement Type:&nbsp;
                 </CFormLabel>
                 <p data-testid="achName-val">
                   {nomineeDetails.achievementType}
@@ -194,13 +194,13 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
                 <CFormLabel className="text-info" data-testid="cycle-label">
-                  Cycle:{' '}
+                  Cycle:&nbsp;
                 </CFormLabel>
                 <p data-testid="cycle-val">{nomineeDetails.cycleName}</p>
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
                 <CFormLabel className="text-info" data-testid="fromMonth-label">
-                  From Month:
+                  From Month:&nbsp;
                 </CFormLabel>
                 <p data-testid="fromMonth-val">{nomineeDetails.fromMonth}</p>
               </NomineeDetailsBasicInfoContainer>
@@ -208,7 +208,7 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
             <div className="d-flex flex-row flex-wrap">
               <NomineeDetailsBasicInfoContainer>
                 <CFormLabel className="text-info" data-testid="toMonth-label">
-                  To Month:
+                  To Month:&nbsp;
                 </CFormLabel>
                 <p data-testid="toMonth-val">{nomineeDetails.toMonth}</p>
               </NomineeDetailsBasicInfoContainer>
@@ -217,15 +217,20 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
           <CContainer className="mt-2">
             {nomineeDetails.nominationQuestionDataDtosId?.map((item, index) => (
               <CRow key={index} className="mt-2">
-                <CFormLabel>{`${index + 1}. ${item.questions}`}</CFormLabel>
-                <div>{parse(item.feedBack)}</div>
+                <CFormLabel data-testid="inc-question">{`${index + 1}. ${
+                  item.questions
+                }`}</CFormLabel>
+                <div data-testid="inc-answers">{parse(item.feedBack)}</div>
               </CRow>
             ))}
           </CContainer>
           <CForm onSubmit={reviewNomineeAddButtonHandler}>
             <CContainer className="mt-3">
               <CRow className="align-items-center">
-                <CFormLabel className="col-sm-1 col-form-label">
+                <CFormLabel
+                  data-testid="rating-label"
+                  className="col-sm-1 col-form-label"
+                >
                   Rating:{' '}
                   {nomineeRating === selectRating && (
                     <span className={TextDanger}>*</span>
@@ -234,19 +239,24 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
                 <CCol md={3}>
                   <CFormSelect
                     size="sm"
+                    data-testid="rating-select"
                     value={nomineeRating}
                     onChange={ratingChangeHandler}
                   >
-                    <option value={selectRating}>{selectRating}</option>
+                    <option data-testid="rating-options" value={selectRating}>
+                      {selectRating}
+                    </option>
                     {NomineeRatingList.map((item, index) => (
-                      <option key={index}>{item.ratingString}</option>
+                      <option data-testid="rating-options" key={index}>
+                        {item.ratingString}
+                      </option>
                     ))}
                   </CFormSelect>
                 </CCol>
               </CRow>
             </CContainer>
             <CContainer className="mt-3">
-              <CFormLabel>
+              <CFormLabel data-testid="comments-label">
                 Comments:{' '}
                 {nomineeDescription === emptyString && (
                   <span className={TextDanger}>*</span>
@@ -265,7 +275,10 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
             </CContainer>
             <CContainer className="mt-3">
               <CRow className="align-items-center">
-                <CFormLabel className="col-sm-1 col-form-label">
+                <CFormLabel
+                  data-testid="status-label"
+                  className="col-sm-1 col-form-label"
+                >
                   Status:{' '}
                   {nomineeStatus ===
                     String(nomineeSelectionStatus.selectStatus) && (
@@ -275,16 +288,26 @@ const NomineeDetails = (props: NomineeListDetailsProps) => {
                 <CCol md={3}>
                   <CFormSelect
                     size="sm"
+                    data-testid="status-select"
                     value={nomineeStatus}
                     onChange={statusChangeHandler}
                   >
-                    <option value={nomineeSelectionStatus.selectStatus}>
+                    <option
+                      data-testid="status-options"
+                      value={nomineeSelectionStatus.selectStatus}
+                    >
                       {nomineeSelectionStatus.selectStatus}
                     </option>
-                    <option value={nomineeSelectionStatus.selected}>
+                    <option
+                      data-testid="status-options"
+                      value={nomineeSelectionStatus.selected}
+                    >
                       {nomineeSelectionStatus.selected}
                     </option>
-                    <option value={nomineeSelectionStatus.notSelected}>
+                    <option
+                      data-testid="status-options"
+                      value={nomineeSelectionStatus.notSelected}
+                    >
                       {nomineeSelectionStatus.notSelected}
                     </option>
                   </CFormSelect>

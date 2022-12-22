@@ -28,11 +28,11 @@ export const NomineeRatingList: RatingType[] = [
   },
   {
     ratingNumber: 9,
-    ratingString: '10 - Excellent',
+    ratingString: '9 - Excellent',
   },
   {
     ratingNumber: 8,
-    ratingString: '10 - Excellent-',
+    ratingString: '8 - Excellent-',
   },
   {
     ratingNumber: 7,

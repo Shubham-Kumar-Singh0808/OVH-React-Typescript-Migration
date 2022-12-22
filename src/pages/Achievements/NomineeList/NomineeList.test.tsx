@@ -2,29 +2,24 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import NomineeListCycleFilter from './NomineeListCycleFilter'
+import NomineeList from './NomineeList'
 import { cleanup, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { selectCycle } from '../AchievementConstants'
 import {
   mockNominationList,
   mockNomineeCycleList,
 } from '../../../test/data/NomineeListData'
 
-const mockSetCurrentCycle = jest.fn()
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <NomineeListCycleFilter
-      currentCycle={selectCycle}
-      setCurrentCycle={mockSetCurrentCycle}
-    />
+    <NomineeList />
   </div>
 )
 
-describe('Nominee List Cycle Filter', () => {
+describe('Nominee List', () => {
   describe('initial render', () => {
     beforeEach(() => {
       render(toRender, {
@@ -38,10 +33,8 @@ describe('Nominee List Cycle Filter', () => {
       })
     })
     afterEach(cleanup)
-    test('recall of value', () => {
-      const cycleSelect = screen.getByTestId('cycle-sel')
-      expect(cycleSelect).toHaveValue(selectCycle)
-      //expect(mockSetCurrentCycle).toHaveBeenCalled()
+    test('Heading is shown', () => {
+      expect(screen.getByRole('table')).toBeVisible()
     })
   })
 })

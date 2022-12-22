@@ -14,7 +14,6 @@ const NomineeList = () => {
   const nomineeCycles = useTypedSelector(
     (state) => state.nomineeList.cyclesList,
   )
-  const isLoading = useTypedSelector((state) => state.nomineeList.isLoading)
 
   useEffect(() => {
     dispatch(reduxServices.nomineeList.getAllCyclesThunk())
