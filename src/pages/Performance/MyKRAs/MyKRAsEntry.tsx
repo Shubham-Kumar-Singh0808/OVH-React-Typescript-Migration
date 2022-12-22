@@ -1,5 +1,6 @@
 import { CTableRow, CTableDataCell, CLink } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import parse from 'html-react-parser'
 import KRAsDetailsTable from './KRAsDetailsTable'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -55,7 +56,7 @@ const MyKRAsEntry = (props: {
             data-testid="kra-Name"
             onClick={() => handleKRADescriptionModal(props.employeeKRA.name)}
           >
-            {props.employeeKRA.name}
+            {parse(props.employeeKRA.name)}
           </CLink>
         </CTableDataCell>
         {props.employeeKRA.description ? (
@@ -67,7 +68,7 @@ const MyKRAsEntry = (props: {
                 handleKRADescriptionModal(props.employeeKRA.description)
               }
             >
-              {props.employeeKRA.description}
+              {parse(props.employeeKRA.description)}
             </CLink>
           </CTableDataCell>
         ) : (
