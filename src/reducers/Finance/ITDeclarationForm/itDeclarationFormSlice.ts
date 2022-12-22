@@ -9,7 +9,6 @@ import {
   Invest,
   ITDeclarationFormSliceState,
   Sections,
-  submitITDeclarationForm,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const getEmployeeInfo = createAsyncThunk(
