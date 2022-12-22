@@ -85,8 +85,6 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
     reRenderEditor()
   }, [nomineeDetails.finalComments])
 
-  console.log(nomineeStatus)
-
   const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setViewNomination(false)
@@ -100,8 +98,6 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
     setNomineeStatus(String(e.target.value))
   }
 
-  console.log(nomineeRating)
-  console.log(nomineeDescription)
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setNomineeRating(selectRating)
