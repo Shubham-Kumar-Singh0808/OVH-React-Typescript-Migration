@@ -11,13 +11,14 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { InitiateCycleTableProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { currentPageData } from '../../../utils/paginationUtils'
 
 const InitiateCycleTable = ({
   paginationRange,
@@ -54,6 +55,13 @@ const InitiateCycleTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
+  const getPageNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+  const currentTotalPageRecords = useMemo(
+    () => currentPageData(allQuestions?.list, currentPage, pageSize),
+    [allQuestions?.list, currentPage, pageSize],
+  )
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
@@ -67,8 +75,8 @@ const InitiateCycleTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {allQuestions?.list &&
-            allQuestions?.list?.map((item, index) => {
+          {currentTotalPageRecords &&
+            currentTotalPageRecords?.map((item, index) => {
               const removingSpaces = item.question
                 ?.replace(/\s+/g, ' ')
                 .trim()
@@ -79,7 +87,7 @@ const InitiateCycleTable = ({
                   : removingSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{getPageNumber(index)}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {item.question ? (
                       <CLink

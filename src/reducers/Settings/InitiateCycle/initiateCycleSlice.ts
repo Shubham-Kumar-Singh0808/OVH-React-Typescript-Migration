@@ -99,12 +99,21 @@ export const initialCycleState: InitiateCycleSliceState = {
   allCycles: { size: 0, list: [] },
   allQuestions: { size: 0, list: [] },
   listSize: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const initiateCycleSlice = createSlice({
   name: 'initiateCycle',
   initialState: initialCycleState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -156,6 +165,12 @@ const allQuestions = (state: RootState): GetAllQuestions =>
 
 const listSize = (state: RootState): number => state.initiateCycle.listSize
 
+const pageFromState = (state: RootState): number =>
+  state.initiateCycle.currentPage
+
+const pageSizeFromState = (state: RootState): number =>
+  state.initiateCycle.pageSize
+
 const initiateCycleThunk = {
   getActiveCycleData,
   getAllCycles,
@@ -170,6 +185,8 @@ const initiateCycleSelectors = {
   activeCycleData,
   listSize,
   allQuestions,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const initiateCycleService = {

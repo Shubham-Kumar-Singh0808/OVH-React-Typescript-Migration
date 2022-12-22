@@ -25,10 +25,20 @@ const InitiateCycle = (): JSX.Element => {
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
 
+  const endIndexPage = useTypedSelector(
+    reduxServices.initiateCycle.selectors.pageFromState,
+  )
+
+  const startIndexPage = useTypedSelector(
+    reduxServices.initiateCycle.selectors.pageSizeFromState,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getActiveCycleData())
     dispatch(reduxServices.initiateCycle.getAllCycles())
     dispatch(reduxServices.initiateCycle.getAllQuestions())
+    dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
+    dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
   }, [dispatch])
 
   const listSize = useTypedSelector(
@@ -51,7 +61,7 @@ const InitiateCycle = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(listSize, 20)
+  } = usePagination(listSize, startIndexPage, endIndexPage)
 
   const successToast = (
     <OToast toastMessage="Cycle initiated successfully" toastColor="success" />

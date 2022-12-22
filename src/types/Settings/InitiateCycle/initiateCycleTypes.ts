@@ -31,6 +31,8 @@ export type InitiateCycleSliceState = {
   allCycles: GetAllCycles
   allQuestions: GetAllQuestions
   listSize: number
+  currentPage: number
+  pageSize: number
 }
 
 export type GetQuestion = {
