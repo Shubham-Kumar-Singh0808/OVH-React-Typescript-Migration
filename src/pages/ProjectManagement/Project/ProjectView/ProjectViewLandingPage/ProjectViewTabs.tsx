@@ -12,6 +12,7 @@ import { useTypedSelector } from '../../../../../stateStore'
 import { MappedTabs } from '../../../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 import { mapTabsToFeatures } from '../../../../../utils/helper'
 import PeopleTab from '../People/PeopleTab'
+import ProjectHistoryDetails from '../ProjectTimeLine/ProjectHistoryDetails'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -54,6 +55,7 @@ const ProjectViewTabs = (): JSX.Element => {
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
         1: <PeopleTab />,
+        2: <ProjectHistoryDetails />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
     }

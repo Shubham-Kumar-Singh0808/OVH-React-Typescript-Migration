@@ -1,3 +1,5 @@
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
+
 export type ProjectHistoryResponse = {
   size: number
   list: ProjectHistory[]
@@ -48,4 +50,9 @@ export type ProjectHistory = {
   additionalInfo: string
   allocatedEmpNames: null
   oldEndDate: null
+}
+
+export type ProjectHistoryDetailsSliceState = {
+  projectHistoryResponse: ProjectHistoryResponse
+  isLoading: ApiLoadingState
 }

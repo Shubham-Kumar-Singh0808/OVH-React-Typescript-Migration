@@ -299,6 +299,7 @@ const ProjectReportsTable = ({
   const handleViewModel = (projectId: number) => {
     dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
     dispatch(reduxServices.projectViewDetails.getProject(projectId))
+    dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
   }
 
   const totalRecordsToDisplay = projectReports?.length

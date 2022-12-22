@@ -2,12 +2,12 @@ import {
   ProjectDetail,
   ProjectViewDetails,
   UpdateProjectViewDetails,
-} from '../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
+} from '../../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
-} from '../../../../utils/apiUtils'
-import { projectViewApiConfig, AllowedHttpMethods } from '../../apiList'
+} from '../../../../../utils/apiUtils'
+import { projectViewApiConfig, AllowedHttpMethods } from '../../../apiList'
 
 const getProjectDetails = async (
   projectId: number,

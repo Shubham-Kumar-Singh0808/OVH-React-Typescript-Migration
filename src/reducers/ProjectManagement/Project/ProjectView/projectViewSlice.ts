@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import projectDetailsApi from '../../../../middleware/api/ProjectManagement/Projects/projectViewApi'
+import projectDetailsApi from '../../../../middleware/api/ProjectManagement/Projects/ProjectView/projectViewApi'
 import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {

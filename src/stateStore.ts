@@ -99,6 +99,7 @@ import commonAchievementsReducer from './reducers/Achievements/CommonAchievement
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
+import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -198,6 +199,7 @@ export const allReducers = {
   addAchiever: addAchieverReducer,
   projectCreationRequest: projectCreationRequestReducer,
   projectViewDetails: projectViewDetailsReducer,
+  projectTimeLine: projectTimeLineReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
