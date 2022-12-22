@@ -15,7 +15,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { NomineeListTableProps } from '../../../types/Achievements/NomineeList/NomineeListTypes'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
-const NomineeListTable = (props: NomineeListTableProps) => {
+const NomineeListTable = (props: NomineeListTableProps): JSX.Element => {
   const { setViewNomination } = props
   const dispatch = useAppDispatch()
   const nominationList = useTypedSelector(

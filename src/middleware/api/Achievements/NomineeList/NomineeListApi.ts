@@ -1,5 +1,8 @@
 import { NomineeCycleListType } from '../../../../types/Achievements/commonAchievementTypes'
-import { IncomingNomineeDetails } from '../../../../types/Achievements/NomineeList/NomineeListTypes'
+import {
+  IncomingNomineeDetails,
+  NominationsListTypes,
+} from '../../../../types/Achievements/NomineeList/NomineeListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -16,7 +19,9 @@ const getAllCycles = async (): Promise<NomineeCycleListType> => {
   return response.data
 }
 
-const getNominations = async (cycleId: number) => {
+const getNominations = async (
+  cycleId: number,
+): Promise<NominationsListTypes[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: NomineeListApiConfig.getNominations,
     method: AllowedHttpMethods.get,
@@ -29,7 +34,9 @@ const getNominations = async (cycleId: number) => {
   return response.data
 }
 
-const getNominationDetails = async (nominationId: number) => {
+const getNominationDetails = async (
+  nominationId: number,
+): Promise<IncomingNomineeDetails> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: NomineeListApiConfig.getNominationDetails,
     method: AllowedHttpMethods.get,
@@ -42,7 +49,9 @@ const getNominationDetails = async (nominationId: number) => {
   return response.data
 }
 
-const reviewNominee = async (outBody: IncomingNomineeDetails) => {
+const reviewNominee = async (
+  outBody: IncomingNomineeDetails,
+): Promise<void> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: NomineeListApiConfig.reviewNominee,
     method: AllowedHttpMethods.put,
@@ -53,7 +62,9 @@ const reviewNominee = async (outBody: IncomingNomineeDetails) => {
   return response.data
 }
 
-const exportNomineeList = async (cycleId: number) => {
+const exportNomineeList = async (
+  cycleId: number,
+): Promise<Blob | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: NomineeListApiConfig.exportNomineeList,
     method: AllowedHttpMethods.get,
@@ -61,6 +72,7 @@ const exportNomineeList = async (cycleId: number) => {
       cycle: cycleId,
       token: localStorage.getItem('token') ?? '',
     },
+    responseType: 'blob',
   })
 
   const response = await useAxios(requestConfig)

@@ -35,7 +35,7 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
-const NomineeDetails = (props: NomineeListDetailsProps) => {
+const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
   const { setViewNomination } = props
   const dispatch = useAppDispatch()
   const nomineeDetails = useTypedSelector(

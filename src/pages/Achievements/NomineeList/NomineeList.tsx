@@ -7,7 +7,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { selectCycle } from '../AchievementConstants'
 
-const NomineeList = () => {
+const NomineeList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [currentCycle, setCurrentCycle] = useState<string>(selectCycle)
   const [isViewNomination, setViewNomination] = useState<boolean>(false)

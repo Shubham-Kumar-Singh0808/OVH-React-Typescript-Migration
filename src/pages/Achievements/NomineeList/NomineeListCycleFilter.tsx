@@ -23,7 +23,9 @@ const getCycleId = (cycleList: NomineeCycleType[], itemName: string) => {
   return cycleId.id
 }
 
-const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
+const NomineeListCycleFilter = (
+  props: NomineeFilterCycleProps,
+): JSX.Element => {
   const { currentCycle, setCurrentCycle } = props
   const dispatch = useAppDispatch()
   const nomineeCycles = useTypedSelector(
@@ -54,7 +56,7 @@ const NomineeListCycleFilter = (props: NomineeFilterCycleProps) => {
 
   return (
     <>
-      <CContainer className="mt-4 ms-1 mb-4">
+      <CContainer className="mt-2 mb-4">
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-1">Cycle:</CFormLabel>

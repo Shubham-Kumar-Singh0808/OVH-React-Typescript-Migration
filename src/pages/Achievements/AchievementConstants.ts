@@ -72,7 +72,7 @@ export const NomineeRatingList: RatingType[] = [
   },
 ]
 
-export const getNomineeRatingString = (givenRating: number | null) => {
+export const getNomineeRatingString = (givenRating: number | null): string => {
   if (givenRating === null) {
     return selectRating
   }
@@ -84,7 +84,7 @@ export const getNomineeRatingString = (givenRating: number | null) => {
   return selectRating
 }
 
-export const getNomineeRatingNumber = (givenRating: string) => {
+export const getNomineeRatingNumber = (givenRating: string): number => {
   for (const obj of NomineeRatingList) {
     if (obj.ratingString === givenRating) {
       return obj.ratingNumber
@@ -93,7 +93,7 @@ export const getNomineeRatingNumber = (givenRating: string) => {
   return notFoundNumber
 }
 
-export const convertNomineeDisplayToApiValue = (eValue: string) => {
+export const convertNomineeDisplayToApiValue = (eValue: string): string => {
   if (eValue === nomineeSelectionStatus.selected) {
     return String(OutgoingNominationStatus.selected)
   }
