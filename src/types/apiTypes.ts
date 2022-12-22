@@ -603,3 +603,7 @@ export interface ProjectDetailsApi extends ApiBase {
 export interface ProjectTimeLineApi extends ApiBase {
   getProjectHistory: string
 }
+
+export interface ProjectChangeRequestApi extends ApiBase {
+  getCRList: string
+}

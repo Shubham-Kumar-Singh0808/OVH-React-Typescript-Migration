@@ -9,7 +9,7 @@ const ProjectView = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Project Details"
-        CBodyClassName="ps-0 pe-0"
+        CBodyClassName="ps-0 pe-0 row"
         CFooterClassName="d-none"
       >
         <ProjectDetails />
