@@ -596,3 +596,10 @@ export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
 }
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+  getAllProfileEmployeesData: string
+  getAllProjectSearch: string
+  confirmNewMeetingAppointment: string
+}
