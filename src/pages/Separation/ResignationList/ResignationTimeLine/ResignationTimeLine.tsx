@@ -104,7 +104,7 @@ const ResignationTimeLine = (): JSX.Element => {
                           {item.status}
                         </div>
                         {item.comments ? (
-                          <div className="mb-1">
+                          <div className="mb-1 resignation-comments">
                             <CFormLabel className="col-form-label p-0">
                               Comments:
                             </CFormLabel>

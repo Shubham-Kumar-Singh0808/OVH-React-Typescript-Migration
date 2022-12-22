@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  NewBookingApi,
   EventListApi,
   AddTrackerApi,
   AllocateEmployeeApi,
@@ -726,4 +727,13 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
 export const myKRAsApiConfig: MyKRAsApi = {
   getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
   getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  confirmNewMeetingAppointment:
+    apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
 }

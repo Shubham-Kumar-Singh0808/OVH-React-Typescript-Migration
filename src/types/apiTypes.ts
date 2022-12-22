@@ -601,3 +601,10 @@ export interface MyKRAsApi extends ApiBase {
   getKRAForIndividualEmployee: string
   getKPIsForIndividualEmployee: string
 }
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+  getAllProfileEmployeesData: string
+  getAllProjectSearch: string
+  confirmNewMeetingAppointment: string
+}
