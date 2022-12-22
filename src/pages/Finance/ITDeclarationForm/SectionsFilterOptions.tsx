@@ -60,7 +60,7 @@ const SectionsFilterOptions = (): JSX.Element => {
   const alreadyExistToastMessage = (
     <OToast toastMessage="Section already exist" toastColor="danger" />
   )
-  const handleClickSection = () => {
+  const handleClickSection = async (): Promise<void> => {
     const isSectionExists = sectionList.find(
       (currSection) => currSection.sectionId === selectedSection.sectionId,
     )
@@ -69,7 +69,9 @@ const SectionsFilterOptions = (): JSX.Element => {
       setShowInvestment(true)
       setSectionList([...sectionList, selectedSection])
     } else {
-      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+      await dispatch(
+        reduxServices.app.actions.addToast(alreadyExistToastMessage),
+      )
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }

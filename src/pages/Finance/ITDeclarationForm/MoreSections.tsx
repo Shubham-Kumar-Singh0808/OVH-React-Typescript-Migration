@@ -70,7 +70,6 @@ const MoreSections = ({
       const newList = sectionList.filter(
         (section) => section.sectionId !== sectionItem.sectionId,
       )
-      console.log(newList)
       setSectionList(newList)
     }
     console.log(newInvestmentList.length)
@@ -83,7 +82,10 @@ const MoreSections = ({
     const newInvestmentList: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
-    newInvestmentList[customAmtIndex].customAmount = e.target.value
+    newInvestmentList[customAmtIndex].customAmount = e.target.value.replace(
+      /\D/g,
+      '',
+    )
     setInvestmentList(newInvestmentList)
   }
   const alreadyExistToastMessage = (
@@ -95,7 +97,7 @@ const MoreSections = ({
   const onChangeInvestment = async (
     investIndex: number,
     e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  ): Promise<void> => {
     const newInvestmentCopy: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
