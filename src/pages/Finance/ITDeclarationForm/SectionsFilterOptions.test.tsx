@@ -1,16 +1,26 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import SectionsFilterOptions from './SectionsFilterOptions'
 import { render, screen } from '../../../test/testUtils'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { mockSections } from '../../../test/data/investmentCheckListData'
 
-describe(' Deduction available for Salaried employees under Income Tax Act 1961 Section Testing', () => {
-  test('should render `Deduction available for Salaried employees under Income Tax Act 1961` Section Title without crashing', () => {
-    render(<IncomeTaxAct />, {
-      preloadedState: {},
+describe('Sections Filter Options Testing', () => {
+  beforeEach(() => {
+    render(<SectionsFilterOptions />, {
+      preloadedState: {
+        itDeclarationForm: {
+          isLoading: ApiLoadingState.succeeded,
+          sections: mockSections,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
     })
-    expect(
-      screen.getByText(
-        'Deduction available for Salaried employees under Income Tax Act 1961',
-      ),
-    ).toBeInTheDocument()
   })
+  //   test('should render Sections Dropdown without crashing', () => {
+
+  //   })
 })

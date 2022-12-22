@@ -9,6 +9,8 @@ import {
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { showIsRequired } from '../../../utils/helper'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 const SectionsFilterOptions = (): JSX.Element => {
   const [selectedSection, setSelectedSection] = useState<Sections>(
@@ -126,7 +128,14 @@ const SectionsFilterOptions = (): JSX.Element => {
     <>
       <CRow className="mt-4 mb-4">
         <CCol sm={1}>
-          <CFormLabel {...formLabelProps}>Sections:</CFormLabel>
+          <CFormLabel {...formLabelProps}>
+            Sections:
+            <span
+              className={selectedSection?.sectionId ? TextWhite : TextDanger}
+            >
+              *
+            </span>
+          </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <CFormSelect
