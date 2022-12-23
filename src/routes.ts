@@ -238,6 +238,10 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const ITDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
+)
+
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
@@ -339,6 +343,10 @@ const AddAchiever = React.lazy(
 
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
+)
+
+const NomineeList = React.lazy(
+  () => import('./pages/Achievements/NomineeList/NomineeList'),
 )
 
 /**
@@ -641,6 +649,11 @@ const routes = [
     component: LeaveApprovals,
   },
   {
+    path: '/itDeclarationForm',
+    name: 'IT Declaration Form',
+    component: ITDeclarationForm,
+  },
+  {
     path: '/payslip',
     name: 'Payslip',
     component: Payslip,
@@ -746,6 +759,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/nomineesList',
+    name: 'Nominee List',
+    component: NomineeList,
   },
 ]
 

@@ -88,6 +88,7 @@ import projectManagementReducer from './reducers/ProjectManagement/Project/AddEd
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 import newEventReducer from './reducers/ConferenceRoomBooking/NewEvent/newEventSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
+import itDeclarationFormReducer from './reducers/Finance/ITDeclarationForm/itDeclarationFormSlice'
 import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
 import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
 import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
@@ -99,6 +100,7 @@ import achieverListReducer from './reducers/Achievements/AchieverList/AchieverLi
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
+import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -186,6 +188,7 @@ export const allReducers = {
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   leaveApprovals: leaveApprovalsReducer,
+  itDeclarationForm: itDeclarationFormReducer,
   newEvent: newEventReducer,
   paySlips: paySlipsReducer,
   panDetails: panDetailsReducer,
@@ -197,6 +200,7 @@ export const allReducers = {
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
+  nomineeList: nomineeListReducer,
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }

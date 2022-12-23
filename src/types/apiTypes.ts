@@ -504,6 +504,13 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveReject: string
 }
 
+export interface ITDeclarationFormApi extends ApiBase {
+  getEmployeeInfo: string
+  getSectionsHavingInvests: string
+  getInvestsBySectionId: string
+  addITDeclarationForm: string
+  isITDeclarationFormExist: string
+}
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
   generatePayslipAndDownloadPayslip: string
@@ -590,6 +597,14 @@ export interface AddAchieverApi extends ApiBase {
   getActiveEmployeeList: string
   addAchievement: string
   getImageData: string
+}
+
+export interface NomineeListApi extends ApiBase {
+  getAllCycles: string
+  getNominations: string
+  getNominationDetails: string
+  reviewNominee: string
+  exportNomineeList: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

@@ -66,7 +66,9 @@ const ITDeclarationListTable = (
                       {itDeclaration.employeeName}
                     </CTableDataCell>
                     <CTableDataCell>{itDeclaration.designation}</CTableDataCell>
-                    <CTableDataCell>{itDeclaration.grandTotal}</CTableDataCell>
+                    <CTableDataCell>
+                      {itDeclaration.grandTotal?.toLocaleString('en-IN')}
+                    </CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
