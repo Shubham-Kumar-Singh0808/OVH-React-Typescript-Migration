@@ -24,6 +24,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -40,6 +42,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: mockActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -55,6 +59,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
   })
@@ -72,6 +78,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -88,6 +96,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: mockAllCycles?.list,
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -103,6 +113,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
   })
@@ -120,6 +132,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -136,6 +150,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: mockAllQuestions?.list,
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -151,6 +167,8 @@ describe('InitiateCycle Slice', () => {
         activeCycleData: {} as GetActiveCycleData,
         allCycles: { size: 0, list: [] },
         allQuestions: { size: 0, list: [] },
+        currentPage: 1,
+        pageSize: 20,
       })
     })
   })

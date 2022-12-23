@@ -82,7 +82,7 @@ const InitiateCycleTable = ({
                 .trim()
                 .replace(/&nbsp;/g, '')
               const questionLimit =
-                removingSpaces && removingSpaces.length > 30
+                removingSpaces && removingSpaces?.length > 30
                   ? `${removingSpaces.substring(0, 30)}...`
                   : removingSpaces
               return (
