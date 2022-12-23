@@ -29,7 +29,7 @@ describe('InitiateCycle Table with data', () => {
             error: null,
             activeCycleData: mockActiveCycleData,
             allCycles: mockAllCycles?.list,
-            allQuestions: mockAllQuestions?.list,
+            allQuestions: mockAllQuestions,
             listSize: 23,
           },
         },
@@ -73,5 +73,9 @@ describe('InitiateCycle Table with data', () => {
       expect(pageSizeSelect.selected).toBe(false)
       expect(screen.getAllByRole('row')).toHaveLength(1)
     })
+  })
+
+  test('Should be able to see total of records', () => {
+    expect(screen.getByText('Total Records: 23')).toBeInTheDocument()
   })
 })
