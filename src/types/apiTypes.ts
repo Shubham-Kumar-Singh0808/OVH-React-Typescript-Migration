@@ -606,6 +606,9 @@ export interface ProjectTimeLineApi extends ApiBase {
 
 export interface ProjectChangeRequestApi extends ApiBase {
   getCRList: string
+  changeRequest: string
+  deleteCR: string
+  updateChangeRequest: string
 }
 
 export interface ProjectMilestoneApi extends ApiBase {

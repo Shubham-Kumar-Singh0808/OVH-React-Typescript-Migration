@@ -26,3 +26,10 @@ export type ChangeRequestProps = {
   firstIndex: number
   projectid: number
 }
+
+export type AddChangeRequestProps = {
+  descripition: string
+  duration: string
+  name: string
+  projectId: number
+}

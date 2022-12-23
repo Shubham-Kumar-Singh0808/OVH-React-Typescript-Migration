@@ -734,6 +734,9 @@ export const projectTimeLineApiConfig: ProjectTimeLineApi = {
 
 export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
   getCRList: apiPrefix + '/project-mgmt/getCRList',
+  changeRequest: apiPrefix + '/project-mgmt/changeRequest',
+  deleteCR: apiPrefix + '/project-mgmt/deleteCR',
+  updateChangeRequest: apiPrefix + '/project-mgmt/updateChangeRequest',
 }
 
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
