@@ -612,6 +612,11 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface MyKRAsApi extends ApiBase {
+  getKRAForIndividualEmployee: string
+  getKPIsForIndividualEmployee: string
+}
+
 export interface NewBookingApi extends ApiBase {
   getLoggedEmployeeName: string
   getAllProfileEmployeesData: string

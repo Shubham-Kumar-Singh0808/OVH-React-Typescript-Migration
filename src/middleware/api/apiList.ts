@@ -80,6 +80,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  MyKRAsApi,
   NomineeListApi,
 } from '../../types/apiTypes'
 
@@ -741,6 +742,11 @@ export const NomineeListApiConfig: NomineeListApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const myKRAsApiConfig: MyKRAsApi = {
+  getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
+  getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
 }
 
 export const newBookingApiConfig: NewBookingApi = {
