@@ -9,24 +9,29 @@ import {
   CRow,
   CCol,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const ChangeRequestTable = (): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteChangeRequest, setToDeleteChangeRequest] = useState(0)
   const changeRequestList = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.projectChangeRequest,
   )
   const changeRequestSize = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.projectChangeRequestSize,
   )
-
+  const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.isLoading,
   )
@@ -37,12 +42,43 @@ const ChangeRequestTable = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(changeRequestSize, 20)
-
+  const { projectId } = useParams<{ projectId: string }>()
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+  }
+
+  const handleShowDeleteModal = (skillId: number) => {
+    setToDeleteChangeRequest(skillId)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteChangeRequest = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteChangeRequestResultAction = await dispatch(
+      reduxServices.projectChangeRequest.deleteChangeRequest(
+        toDeleteChangeRequest,
+      ),
+    )
+    const toastElement = (
+      <OToast toastMessage="CR Deleted Successfully" toastColor={'success'} />
+    )
+    if (
+      reduxServices.projectChangeRequest.deleteChangeRequest.fulfilled.match(
+        deleteChangeRequestResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectChangeRequest.getProjectChangeRequestList({
+          endIndex: pageSize * currentPage,
+          firstIndex: pageSize * (currentPage - 1),
+          projectid: projectId as string,
+        }),
+      )
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
+    }
   }
   return (
     <>
@@ -76,6 +112,7 @@ const ChangeRequestTable = (): JSX.Element => {
                     <CButton
                       color="danger"
                       className="btn-ovh me-1 btn-ovh-employee-list"
+                      onClick={() => handleShowDeleteModal(item.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -124,6 +161,19 @@ const ChangeRequestTable = (): JSX.Element => {
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Change Request"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteChangeRequest}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }

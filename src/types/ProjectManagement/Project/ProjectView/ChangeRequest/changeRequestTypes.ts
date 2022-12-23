@@ -24,12 +24,12 @@ export type ChangeRequestSliceState = {
 export type ChangeRequestProps = {
   endIndex: number
   firstIndex: number
-  projectid: number
+  projectid: number | string
 }
 
 export type AddChangeRequestProps = {
   descripition: string
   duration: string
   name: string
-  projectId: number
+  projectId: string
 }
