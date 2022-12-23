@@ -78,6 +78,7 @@ import { projectManagementService } from './ProjectManagement/Project/AddEditPra
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { itDeclarationFormService } from './Finance/ITDeclarationForm/itDeclarationFormSlice'
 import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
 import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
@@ -90,6 +91,7 @@ import { commonAchievementsService } from './Achievements/CommonAchievementsSlic
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
+import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -172,6 +174,7 @@ export const reduxServices = {
   projectReport: projectReportsService,
   newEvent: newEventService,
   leaveApprovals: leaveApprovalsService,
+  itDeclarationForm: itDeclarationFormService,
   paySlips: paySlipsService,
   panDetails: panDetailService,
   bankDetails: bankDetailService,
@@ -182,6 +185,7 @@ export const reduxServices = {
   achieverList: achieverListService,
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
+  nomineeList: nomineeListService,
   projectCreationRequest: projectCreationRequestService,
   myKRAs: myKRAsService,
 }

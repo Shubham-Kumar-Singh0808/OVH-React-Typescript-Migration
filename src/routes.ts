@@ -238,6 +238,10 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const ITDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
+)
+
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
@@ -342,6 +346,10 @@ const AchieverList = React.lazy(
 )
 
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
+
+const NomineeList = React.lazy(
+  () => import('./pages/Achievements/NomineeList/NomineeList'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -643,6 +651,11 @@ const routes = [
     component: LeaveApprovals,
   },
   {
+    path: '/itDeclarationForm',
+    name: 'IT Declaration Form',
+    component: ITDeclarationForm,
+  },
+  {
     path: '/payslip',
     name: 'Payslip',
     component: Payslip,
@@ -753,6 +766,11 @@ const routes = [
     path: '/myKRAs',
     name: 'My KRAs',
     component: myKRAs,
+  },
+  {
+    path: '/nomineesList',
+    name: 'Nominee List',
+    component: NomineeList,
   },
 ]
 

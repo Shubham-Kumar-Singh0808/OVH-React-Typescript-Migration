@@ -351,7 +351,9 @@ const AddNewInvestment = ({
                   '2',
                   'investment-text-area documentWidth',
                 )}
-                onChange={(e) => setRequiredDocuments(e.target.value)}
+                onChange={(e) =>
+                  setRequiredDocuments(e.target.value.replace(/^\s*/, ''))
+                }
               ></CFormTextarea>
             </CCol>
           </CRow>

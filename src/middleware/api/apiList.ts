@@ -68,6 +68,7 @@ import {
   NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  ITDeclarationFormApi,
   PaySlipsApi,
   BankDetailsApi,
   PanDetailsApi,
@@ -80,6 +81,7 @@ import {
   ProjectCreationRequestApi,
   AddAchieverApi,
   MyKRAsApi,
+  NomineeListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -620,6 +622,15 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
 
+export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
+  getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
+  getSectionsHavingInvests:
+    apiPrefix + '/itDeclaration/getSectionsHavingInvests',
+  getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
+  isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
+}
+
 export const paySlipsApiConfig: PaySlipsApi = {
   getEmployeePayslipsForSelectedYear:
     apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
@@ -717,6 +728,15 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
   addAchievement: apiPrefix + '/achievement/addAchievement',
   getImageData: apiPrefix + '/achievement/getImageData',
+}
+
+export const NomineeListApiConfig: NomineeListApi = {
+  getAllCycles: apiPrefix + '/nominationController/getallcycles',
+  getNominations: apiPrefix + '/nominationController/getNominations',
+  getNominationDetails:
+    apiPrefix + '/nominationController/getNominationDetails',
+  reviewNominee: apiPrefix + '/nominationController/reviewNominee',
+  exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
