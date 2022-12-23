@@ -238,6 +238,10 @@ const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
 
+const ITDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
+)
+
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
@@ -343,6 +347,8 @@ const AchieverList = React.lazy(
 const InitiateCycle = React.lazy(
   () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
 )
+
+const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
 
 const NomineeList = React.lazy(
   () => import('./pages/Achievements/NomineeList/NomineeList'),
@@ -648,6 +654,11 @@ const routes = [
     component: LeaveApprovals,
   },
   {
+    path: '/itDeclarationForm',
+    name: 'IT Declaration Form',
+    component: ITDeclarationForm,
+  },
+  {
     path: '/payslip',
     name: 'Payslip',
     component: Payslip,
@@ -758,6 +769,11 @@ const routes = [
     path: '/initiateCycle',
     name: 'Initiate Cycle',
     component: InitiateCycle,
+  },
+  {
+    path: '/myKRAs',
+    name: 'My KRAs',
+    component: myKRAs,
   },
   {
     path: '/nomineesList',
