@@ -94,10 +94,10 @@ const MoreSections = ({
       toastColor="danger"
     />
   )
-  const onChangeInvestment = async (
+  const onChangeInvestment = (
     investIndex: number,
     e: React.ChangeEvent<HTMLSelectElement>,
-  ): Promise<void> => {
+  ) => {
     const newInvestmentCopy: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
@@ -108,13 +108,13 @@ const MoreSections = ({
     newInvestmentCopy[investIndex].investmentId = e.target.value
     setInvestmentList(newInvestmentCopy)
     if (isInvestmentExists !== undefined) {
-      await dispatch(
-        reduxServices.app.actions.addToast(alreadyExistToastMessage),
-      )
-      dispatch(reduxServices.app.actions.addToast(undefined))
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       newInvestmentCopy[investIndex].investmentId = ''
       setInvestmentList(newInvestmentCopy)
       setReRender(!reRender)
+      setTimeout(() => {
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }, 2000)
     }
   }
 
