@@ -65,6 +65,17 @@ describe('InitiateCycle Table with data', () => {
     })
   })
 
+  test('should render Initiate Cycle table component with  crashing', async () => {
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      const pageSizeSelect = screen.getByRole('option', {
+        name: '40',
+      }) as HTMLOptionElement
+      expect(pageSizeSelect.selected).toBe(false)
+      expect(screen.getAllByRole('row')).toHaveLength(24)
+    })
+  })
+
   test('should be able to click delete button element', () => {
     const deleteBtn = screen.getByTestId('btn-delete1')
     expect(deleteBtn).toBeInTheDocument()
