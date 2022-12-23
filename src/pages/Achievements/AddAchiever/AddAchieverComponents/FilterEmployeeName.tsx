@@ -1,6 +1,7 @@
 import { CCol, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import Autocomplete from 'react-autocomplete'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import {
   emptyString,
@@ -13,11 +14,15 @@ const FilterEmployeeName = ({
   onSelectEmployee,
   employeeName,
   setEmployeeName,
+  customClass,
+  labelClass,
 }: {
   allEmployees: IncomingActiveEmployee[]
   onSelectEmployee: (value: string) => void
   employeeName: string | undefined
   setEmployeeName: React.Dispatch<React.SetStateAction<string | undefined>>
+  customClass?: string | undefined
+  labelClass?: string | undefined
 }): JSX.Element => {
   console.log(employeeName)
 
@@ -36,17 +41,23 @@ const FilterEmployeeName = ({
   }
 
   return (
-    <AchievementEntryContainer>
+    <AchievementEntryContainer customClass={customClass}>
       <CFormLabel
         data-testid="ach-emp-name"
-        className={newAchievementLabelClass}
+        className={labelClass ? labelClass : newAchievementLabelClass}
       >
         Employee Name:
-        {(employeeName === undefined ||
-          employeeName === emptyString ||
-          employeeName.trim().length === 0) && (
-          <span className="text-danger">*</span>
-        )}
+        <span
+          className={
+            employeeName === undefined ||
+            employeeName === emptyString ||
+            employeeName.trim().length === 0
+              ? TextDanger
+              : TextWhite
+          }
+        >
+          *
+        </span>
       </CFormLabel>
       <CCol md={3}>
         <Autocomplete

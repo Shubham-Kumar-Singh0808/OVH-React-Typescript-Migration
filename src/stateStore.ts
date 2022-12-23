@@ -100,6 +100,7 @@ import commonAchievementsReducer from './reducers/Achievements/CommonAchievement
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
+import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -199,6 +200,7 @@ export const allReducers = {
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
   nomineeList: nomineeListReducer,
+  addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
   // add your slice reducers here
 }

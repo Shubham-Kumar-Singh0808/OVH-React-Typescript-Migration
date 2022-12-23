@@ -1,0 +1,71 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
+import AddNomineeApi from '../../../middleware/api/Achievements/AddNominee/AddNomineeApi'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { AddNomineeInitialState } from '../../../types/Achievements/AddNominee/AddNomineeTypes'
+
+const initialState: AddNomineeInitialState = {
+  isLoading: ApiLoadingState.idle,
+  nominationFormDetails: {
+    achievementType: null,
+    achievementTypeId: null,
+    activateFlag: null,
+    createdBy: null,
+    createdDate: null,
+    cycleID: -1,
+    cycleName: '',
+    employeeId: null,
+    employeeName: null,
+    finalComments: null,
+    fromMonth: '',
+    id: null,
+    nominationQuestionDataDtosId: [],
+    nominationStatus: null,
+    rating: null,
+    toMonth: '',
+  },
+}
+
+const nominationFormDetailsThunk = createAsyncThunk(
+  'addNominee/nominationFormDetailsThunk',
+  async (_, thunkApi) => {
+    try {
+      return await AddNomineeApi.nominationFormDetails()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addNomineeSlice = createSlice({
+  name: 'addNominee',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(nominationFormDetailsThunk.fulfilled, (state, action) => {
+      state.nominationFormDetails = action.payload
+    })
+    builder.addMatcher(
+      isAnyOf(nominationFormDetailsThunk.fulfilled),
+      (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      },
+    )
+    builder.addMatcher(isAnyOf(nominationFormDetailsThunk.pending), (state) => {
+      state.isLoading = ApiLoadingState.loading
+    })
+  },
+})
+
+const addNomineeThunks = {
+  nominationFormDetailsThunk,
+}
+
+export const addNomineeService = {
+  ...addNomineeThunks,
+  actions: addNomineeSlice.actions,
+}
+
+const addNomineeReducer = addNomineeSlice.reducer
+export default addNomineeReducer

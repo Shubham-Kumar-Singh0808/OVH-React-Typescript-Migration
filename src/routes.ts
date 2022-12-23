@@ -345,6 +345,10 @@ const NomineeList = React.lazy(
   () => import('./pages/Achievements/NomineeList/NomineeList'),
 )
 
+const AddNominee = React.lazy(
+  () => import('./pages/Achievements/AddNominee/AddNominee'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -755,6 +759,11 @@ const routes = [
     path: '/nomineesList',
     name: 'Nominee List',
     component: NomineeList,
+  },
+  {
+    path: '/addNominee',
+    name: 'Add Nominee',
+    component: AddNominee,
   },
 ]
 

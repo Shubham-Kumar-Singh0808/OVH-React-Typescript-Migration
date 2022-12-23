@@ -600,6 +600,10 @@ export interface NomineeListApi extends ApiBase {
   exportNomineeList: string
 }
 
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string

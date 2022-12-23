@@ -80,6 +80,7 @@ import {
   ProjectCreationRequestApi,
   AddAchieverApi,
   NomineeListApi,
+  AddNomineeApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -726,6 +727,11 @@ export const NomineeListApiConfig: NomineeListApi = {
     apiPrefix + '/nominationController/getNominationDetails',
   reviewNominee: apiPrefix + '/nominationController/reviewNominee',
   exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
+}
+
+export const AddNomineeApiConfig: AddNomineeApi = {
+  nominationFormDetails:
+    apiPrefix + '/nominationController/nominationFormDetails',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {

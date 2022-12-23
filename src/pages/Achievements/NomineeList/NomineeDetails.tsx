@@ -217,7 +217,9 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
                 <CFormLabel data-testid="inc-question">{`${index + 1}. ${
                   item.questions
                 }`}</CFormLabel>
-                <div data-testid="inc-answers">{parse(item.feedBack)}</div>
+                <div data-testid="inc-answers">
+                  {parse(item.feedBack ? item.feedBack : '')}
+                </div>
               </CRow>
             ))}
           </CContainer>
