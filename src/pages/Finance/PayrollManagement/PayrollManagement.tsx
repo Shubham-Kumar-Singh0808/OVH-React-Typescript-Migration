@@ -6,8 +6,10 @@ import {
   CButton,
   CFormInput,
   CInputGroup,
+  CForm,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
+import { OutTable, ExcelRenderer } from 'react-excel-renderer'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
@@ -15,7 +17,10 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import {
+  CurrentPayslip,
+  ReadExcelFile,
+} from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const PayrollManagement = (): JSX.Element => {
   const [selectMonth, setSelectMonth] = useState<string>('')
@@ -26,6 +31,7 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
+  const [toReadExcelFile, setToReadExcelFile] = useState<ReadExcelFile>()
 
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
@@ -92,6 +98,64 @@ const PayrollManagement = (): JSX.Element => {
     )
   }
 
+  const previewBtnHandler = async () => {
+    const prepareObject = {
+      serialNo: toReadExcelFile?.serialNo,
+      paySlipId: toReadExcelFile?.paySlipId,
+      employeeId: toReadExcelFile?.employeeId,
+      designation: toReadExcelFile?.designation,
+      joiningDate: toReadExcelFile?.joiningDate,
+      name: toReadExcelFile?.name,
+      accountNo: toReadExcelFile?.accountNo,
+      grossSalary: toReadExcelFile?.grossSalary,
+      variablePayPercentage: toReadExcelFile?.variablePayPercentage,
+      variablePay: toReadExcelFile?.variablePay,
+      grossSalAfterVariablepay: toReadExcelFile?.grossSalAfterVariablepay,
+      basicSalary: toReadExcelFile?.basicSalary,
+      houseRentAllowance: toReadExcelFile?.houseRentAllowance,
+      transportAllowance: toReadExcelFile?.transportAllowance,
+      otherAllowance: toReadExcelFile?.otherAllowance,
+      absent: toReadExcelFile?.absent,
+      lossOfPay: toReadExcelFile?.lossOfPay,
+      medicliam: toReadExcelFile?.medicliam,
+      esi: toReadExcelFile?.esi,
+      epf: toReadExcelFile?.epf,
+      gratuity: toReadExcelFile?.gratuity,
+      erc: toReadExcelFile?.erc,
+      taxDeductionScheme: toReadExcelFile?.taxDeductionScheme,
+      professionalTax: toReadExcelFile?.professionalTax,
+      arrears: toReadExcelFile?.arrears,
+      advArrears: toReadExcelFile?.advArrears,
+      incentive: toReadExcelFile?.incentive,
+      vpayable: toReadExcelFile?.vpayable,
+      netSalary: toReadExcelFile?.netSalary,
+      month: toReadExcelFile?.month,
+      year: toReadExcelFile?.year,
+      remarks: toReadExcelFile?.remarks,
+      status: toReadExcelFile?.status,
+      mealsCard: toReadExcelFile?.mealsCard,
+      donation: toReadExcelFile?.donation,
+      specificDesignation: toReadExcelFile?.specificDesignation,
+    }
+    const updatePaySlipsResultAction = await dispatch(
+      reduxServices.payrollManagement.readExcelFile(prepareObject),
+    )
+
+    if (
+      reduxServices.bankDetails.updateBankInformation.fulfilled.match(
+        updatePaySlipsResultAction,
+      )
+    )
+      <CForm>
+        <input
+          className="mt-1"
+          type="file"
+          onChange={(element: SyntheticEvent) =>
+            setToReadExcelFile(element.currentTarget as HTMLInputElement)
+          }
+        />
+      </CForm>
+  }
   return (
     <>
       {toggle === '' && (
@@ -169,10 +233,11 @@ const PayrollManagement = (): JSX.Element => {
           <CRow className="mt-3 justify-content-end">
             <CCol className="text-end" md={4}>
               <CButton
-                className="mt-1 ms-2 btn-ovh btn btn-success"
+                className="text-decoration-none btn btn-ovh"
                 size="sm"
-                color="btn btn-info"
+                color="info"
                 type="submit"
+                onClick={previewBtnHandler}
               >
                 Preview
               </CButton>

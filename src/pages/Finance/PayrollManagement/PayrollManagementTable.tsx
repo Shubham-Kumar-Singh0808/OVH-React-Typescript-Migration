@@ -33,9 +33,12 @@ const PayrollManagementTable = (props: {
   setToEditPayslip: (value: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isViewModalVisible, setIsViewModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
   const [isChecked, setIsChecked] = useState(false)
+  const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
+    {} as CurrentPayslip,
+  )
 
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
@@ -97,9 +100,9 @@ const PayrollManagementTable = (props: {
     props.setToEditPayslip(payslipItem)
   }
 
-  const handleModal = (personId: number) => {
-    setIsModalVisible(true)
-    dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
+  const handleModal = (payslipItem: CurrentPayslip) => {
+    setIsViewModalVisible(true)
+    setSelectedPaySlipDetails(payslipItem)
   }
 
   return (
@@ -261,7 +264,7 @@ const PayrollManagementTable = (props: {
                           size="sm"
                           color="info"
                           className="btn-ovh-employee-list"
-                          onClick={() => handleModal(payslipItem.employeeId)}
+                          onClick={() => handleModal(payslipItem)}
                         >
                           <i className="fa fa-search-plus  text-white"></i>
                         </CButton>
@@ -324,14 +327,14 @@ const PayrollManagementTable = (props: {
       </OModal>
       <OModal
         alignment="center"
-        visible={isModalVisible}
-        setVisible={setIsModalVisible}
+        visible={isViewModalVisible}
+        setVisible={setIsViewModalVisible}
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
       >
         <>
-          <ViewPaySlip />
+          <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />
         </>
       </OModal>
     </>

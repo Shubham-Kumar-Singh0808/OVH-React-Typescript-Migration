@@ -69,7 +69,7 @@ const EditPaySlip = ({
     )
 
     if (
-      reduxServices.bankDetails.updateBankInformation.fulfilled.match(
+      reduxServices.payrollManagement.updatePayslip.fulfilled.match(
         updatePaySlipsResultAction,
       )
     ) {
