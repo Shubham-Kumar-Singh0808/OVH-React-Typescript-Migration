@@ -592,6 +592,14 @@ export interface AddAchieverApi extends ApiBase {
   getImageData: string
 }
 
+export interface NomineeListApi extends ApiBase {
+  getAllCycles: string
+  getNominations: string
+  getNominationDetails: string
+  reviewNominee: string
+  exportNomineeList: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
