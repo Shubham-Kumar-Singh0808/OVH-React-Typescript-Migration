@@ -67,7 +67,7 @@ const InvestmentCheckListDetailsTable = (): JSX.Element => {
                     {invest.investmentName}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {invest.maxLimit?.toLocaleString('en-IN')}
+                    {invest.maxLimit?.toLocaleString('en-IN') || '0'}
                   </CTableDataCell>
                 </CTableRow>
               )
