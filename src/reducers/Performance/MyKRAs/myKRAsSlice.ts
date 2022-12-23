@@ -52,7 +52,7 @@ const getKPIsForIndividualEmployee = createAsyncThunk<
 })
 
 const myKRAsSlice = createSlice({
-  name: 'itDeclarationList',
+  name: 'myKRAs',
   initialState: initialKRAsState,
   reducers: {},
   extraReducers: (builder) => {
@@ -65,11 +65,6 @@ const myKRAsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.kpis = action.payload as KPIs[]
       })
-      //   .addCase(getKRAForIndividualEmployee.fulfilled, (state, action) => {
-      //     state.isLoading = ApiLoadingState.succeeded
-      //     state.sections = action.payload
-      //   })
-
       .addMatcher(
         isAnyOf(
           getKRAForIndividualEmployee.pending,

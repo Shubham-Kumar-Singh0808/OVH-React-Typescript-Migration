@@ -15,6 +15,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
+import { KPIs } from '../../../types/Performance/MyKRAs/myKRAsTypes'
 
 const KRAsDetailsTable = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -27,26 +28,30 @@ const KRAsDetailsTable = (): JSX.Element => {
     setKpiDescription(descKpi)
   }
   const tableHeaderCellPropsIndex = {
-    width: '61px',
+    width: '26px',
     scope: 'col',
   }
   const tableHeaderCellPropsKpiName = {
-    width: '390px',
+    width: '127px',
     scope: 'col',
   }
   const tableHeaderCellPropsDesc = {
-    width: '390px',
+    width: '87px',
     scope: 'col',
   }
 
   const tableHeaderCellPropsFrequency = {
-    width: '222px',
+    width: '90px',
     scope: 'col',
   }
   const tableHeaderCellPropsTarget = {
-    width: '206px',
+    width: '83px',
     scope: 'col',
   }
+  const limit = (value: string): string => {
+    return value?.length > 30 ? `${value?.substring(0, 30)}...` : value
+  }
+
   return (
     <>
       <CTable
@@ -91,37 +96,11 @@ const KRAsDetailsTable = (): JSX.Element => {
         <CTableBody>
           {isLoading !== ApiLoadingState.loading ? (
             kpis &&
-            kpis?.map((kpi, index) => {
-              const removeTag = '/(<([^>]+)>)/gi'
-              const removeSpaceskpiName = kpi.name?.replace(removeTag, '')
-              const kpiNameLimit =
-                removeSpaceskpiName && removeSpaceskpiName.length > 30
-                  ? `${removeSpaceskpiName.substring(0, 30)}...`
-                  : removeSpaceskpiName
-
-              const removeSpaceskpiDesc = kpi.description?.replace(
-                removeTag,
-                '',
-              )
-              const kpiDescriptionLimit =
-                removeSpaceskpiDesc && removeSpaceskpiDesc.length > 30
-                  ? `${removeSpaceskpiDesc.substring(0, 30)}...`
-                  : removeSpaceskpiDesc
-
-              const removeSpaceskpiFrequency = kpi.frequency?.replace(
-                removeTag,
-                '',
-              )
-              const kpiFrequencyLimit =
-                removeSpaceskpiFrequency && removeSpaceskpiFrequency.length > 30
-                  ? `${removeSpaceskpiFrequency.substring(0, 30)}...`
-                  : removeSpaceskpiFrequency
-
-              const removeSpaceskpiTarget = kpi.target?.replace(removeTag, '')
-              const kpiTargetLimit =
-                removeSpaceskpiTarget && removeSpaceskpiTarget.length > 30
-                  ? `${removeSpaceskpiTarget.substring(0, 30)}...`
-                  : removeSpaceskpiTarget
+            kpis?.map((kpi: KPIs, index) => {
+              const kpiNameLimit = limit(kpi.name)
+              const kpiDescriptionLimit = limit(kpi.description)
+              const kpiFrequencyLimit = limit(kpi.frequency)
+              const kpiTargetLimit = limit(kpi.target)
 
               return (
                 <CTableRow key={index}>

@@ -35,7 +35,7 @@ export type KPIs = {
   id: number
   name: string
   target: string
-  kraDto: KRADTo[]
+  kraDto?: KRADTo[]
 }
 
 export type MyKRAsExpandableTableProps = {
