@@ -344,6 +344,10 @@ const InitiateCycle = React.lazy(
   () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
 )
 
+const NomineeList = React.lazy(
+  () => import('./pages/Achievements/NomineeList/NomineeList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -754,6 +758,11 @@ const routes = [
     path: '/initiateCycle',
     name: 'Initiate Cycle',
     component: InitiateCycle,
+  },
+  {
+    path: '/nomineesList',
+    name: 'Nominee List',
+    component: NomineeList,
   },
 ]
 
