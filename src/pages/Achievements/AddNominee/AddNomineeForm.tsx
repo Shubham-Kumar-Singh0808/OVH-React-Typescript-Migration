@@ -74,7 +74,8 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
   const nominationQuestionChangeHandler = (content: string, index: number) => {
     const currentObject = nomineeQuestions[index]
     currentObject.feedBack = content
-    const splicedList = nomineeQuestions.
+    const splicedList = nomineeQuestions.splice(index, 1, currentObject)
+    setNomineeQuestions(splicedList)
   }
 
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -170,7 +171,9 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
               initData={emptyString}
               debug={true}
               config={ckeditorConfig}
-              onChange={({ editor }) => console.log(editor.getData().trim())}
+              onChange={({ editor }) =>
+                nominationQuestionChangeHandler(editor.getData().trim(), index)
+              }
             />
           </CContainer>
         ))}
