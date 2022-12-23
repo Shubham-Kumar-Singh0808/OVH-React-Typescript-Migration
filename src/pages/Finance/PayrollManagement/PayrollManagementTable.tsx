@@ -33,6 +33,7 @@ const PayrollManagementTable = (props: {
   setToEditPayslip: (value: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
   const [isChecked, setIsChecked] = useState(false)
 
@@ -94,6 +95,11 @@ const PayrollManagementTable = (props: {
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
     props.setToEditPayslip(payslipItem)
+  }
+
+  const handleModal = (personId: number) => {
+    setIsModalVisible(true)
+    dispatch(reduxServices.employeeReportees.getEmployeeReporteesKRAs(personId))
   }
 
   return (
@@ -255,6 +261,7 @@ const PayrollManagementTable = (props: {
                           size="sm"
                           color="info"
                           className="btn-ovh-employee-list"
+                          onClick={() => handleModal(payslipItem.employeeId)}
                         >
                           <i className="fa fa-search-plus  text-white"></i>
                         </CButton>
@@ -317,10 +324,11 @@ const PayrollManagementTable = (props: {
       </OModal>
       <OModal
         alignment="center"
-        visible={isDeleteModalVisible}
-        setVisible={setIsDeleteModalVisible}
+        visible={isModalVisible}
+        setVisible={setIsModalVisible}
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
+        modalFooterClass="d-none"
       >
         <>
           <ViewPaySlip />
