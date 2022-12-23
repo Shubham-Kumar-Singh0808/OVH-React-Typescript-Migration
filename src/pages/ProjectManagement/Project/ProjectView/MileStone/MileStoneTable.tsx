@@ -8,8 +8,10 @@ import {
   CButton,
   CRow,
   CCol,
+  CLink,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import parse from 'html-react-parser'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
@@ -18,8 +20,14 @@ import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
+import OModal from '../../../../../components/ReusableComponent/OModal'
+import { MileStoneResponse } from '../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const MileStoneTable = (): JSX.Element => {
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isModalCommentVisible, setIsModalCommentsVisible] = useState(false)
+  const [subject, setSubject] = useState<string>()
+  const [title, setTitle] = useState({} as MileStoneResponse)
   const mileStoneList = useTypedSelector(
     reduxServices.projectMileStone.selectors.projectMileStone,
   )
@@ -44,6 +52,56 @@ const MileStoneTable = (): JSX.Element => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+  const handleModal = (comments: string) => {
+    setIsModalCommentsVisible(true)
+    setSubject(comments)
+  }
+
+  const handleTitleModal = (title: MileStoneResponse) => {
+    setIsModalVisible(true)
+    setTitle(title)
+  }
+  const result = (
+    <>
+      <h5>Milestone Details</h5>
+      <CTable>
+        <CTableBody>
+          <CTableRow>
+            <CTableDataCell>Project</CTableDataCell>
+            <CTableDataCell>{title.project}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Client</CTableDataCell>
+            <CTableDataCell>{title.client}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Milestone</CTableDataCell>
+            <CTableDataCell>{title.title}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Percentage </CTableDataCell>
+            <CTableDataCell>{title.milestonePercentage}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Effort</CTableDataCell>
+            <CTableDataCell>{title.effort || 'N/A'}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Planned End Date</CTableDataCell>
+            <CTableDataCell>{title.planedDate || 'N/A'}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Actual End Date</CTableDataCell>
+            <CTableDataCell>{title.actualDate || 'N/A'}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Comments </CTableDataCell>
+            <CTableDataCell>{title.comments || 'N/A'}</CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+      </CTable>
+    </>
+  )
   return (
     <>
       <CTable striped className="mt-3">
@@ -65,16 +123,51 @@ const MileStoneTable = (): JSX.Element => {
           {isLoading !== ApiLoadingState.loading ? (
             mileStoneList.length > 0 &&
             mileStoneList?.map((item, index) => {
+              const commentsLimit =
+                item.comments && item.comments.length > 30
+                  ? `${item.comments.substring(0, 30)}...`
+                  : item.comments
+
+              const titleLimit =
+                item.title && item.title.length > 30
+                  ? `${item.title.substring(0, 30)}...`
+                  : item.title
+              const billable = item.billable ? 'Yes' : 'No'
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                  <CTableDataCell>{item.title}</CTableDataCell>
-                  <CTableDataCell>{item.crName}</CTableDataCell>
-                  <CTableDataCell>{item.effort}</CTableDataCell>
+                  {titleLimit ? (
+                    <CTableDataCell>
+                      <CLink
+                        className="cursor-pointer text-decoration-none text-primary"
+                        data-testid={`subject-comments${index}`}
+                        onClick={() => handleTitleModal(item)}
+                      >
+                        {parse(titleLimit)}
+                      </CLink>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{`N/A`}</CTableDataCell>
+                  )}
+                  <CTableDataCell>{item.crName || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.effort || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.planedDate}</CTableDataCell>
-                  <CTableDataCell>{item.billable}</CTableDataCell>
+                  <CTableDataCell>{item.actualDate}</CTableDataCell>
+                  <CTableDataCell>{billable}</CTableDataCell>
                   <CTableDataCell>{item.milestonePercentage}%</CTableDataCell>
-                  <CTableDataCell>{item.comments}</CTableDataCell>
+                  {commentsLimit ? (
+                    <CTableDataCell>
+                      <CLink
+                        className="cursor-pointer text-decoration-none text-primary"
+                        data-testid={`subject-comments${index}`}
+                        onClick={() => handleModal(item.comments)}
+                      >
+                        {parse(commentsLimit)}
+                      </CLink>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{`N/A`}</CTableDataCell>
+                  )}
                   <CTableDataCell>
                     <CButton
                       color="danger"
@@ -152,6 +245,40 @@ const MileStoneTable = (): JSX.Element => {
           </CRow>
         </CCol>
       )}
+      <>
+        <OModal
+          modalSize="lg"
+          alignment="center"
+          modalFooterClass="d-none"
+          modalHeaderClass="d-none"
+          modalBodyClass="model-body-text-alinement"
+          visible={isModalCommentVisible}
+          setVisible={setIsModalCommentsVisible}
+        >
+          <>
+            <p>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: subject as string,
+                }}
+              />
+            </p>
+          </>
+        </OModal>
+      </>
+      <>
+        <OModal
+          modalSize="lg"
+          alignment="center"
+          modalFooterClass="d-none"
+          modalHeaderClass="d-none"
+          modalBodyClass="model-body-text-alinement"
+          visible={isModalVisible}
+          setVisible={setIsModalVisible}
+        >
+          {result}
+        </OModal>
+      </>
     </>
   )
 }
