@@ -30,7 +30,7 @@ describe('InitiateCycle Table with data', () => {
             error: null,
             activeCycleData: mockActiveCycleData,
             allCycles: mockAllCycles?.list,
-            allQuestions: mockAllQuestions?.list,
+            allQuestions: mockAllQuestions,
             listSize: 23,
           },
         },
@@ -63,5 +63,24 @@ describe('InitiateCycle Table with data', () => {
       expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
+  })
+
+  test('should be able to click delete button element', () => {
+    const deleteBtn = screen.getByTestId('btn-delete1')
+    expect(deleteBtn).toBeInTheDocument()
+    userEvent.click(deleteBtn)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
+  })
+
+  test('should render question modal', () => {
+    const question = screen.getAllByTestId('question-link')
+    userEvent.click(question[0])
+    expect(question[0]).toBeInTheDocument()
+  })
+
+  test('Should be able to see total of records', () => {
+    expect(screen.getByText('Total Records: 23')).toBeInTheDocument()
   })
 })

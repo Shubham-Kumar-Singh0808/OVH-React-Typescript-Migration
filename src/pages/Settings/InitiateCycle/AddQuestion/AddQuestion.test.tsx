@@ -14,6 +14,8 @@ import {
 const addButton = 'save-btn'
 const clearButton = 'clear-btn'
 const AddQuestionName = 'Question :'
+const QuestionName = 'text-area'
+
 const mockSetTogglePage = jest.fn()
 
 describe('Add Question without data', () => {
@@ -25,7 +27,7 @@ describe('Add Question without data', () => {
           error: null,
           activeCycleData: mockActiveCycleData,
           allCycles: mockAllCycles?.list,
-          allQuestions: mockAllQuestions?.list,
+          allQuestions: mockAllQuestions,
           listSize: 23,
         },
       },
@@ -62,5 +64,11 @@ describe('Add Question without data', () => {
     userEvent.click(screen.getByRole('button', { name: 'Add' }))
     const clearInputName = screen.getByPlaceholderText('Question ?')
     expect(clearInputName).toHaveValue('')
+  })
+  test('should able to Add input field', () => {
+    const questionNameInput = screen.getByTestId(QuestionName)
+    userEvent.type(questionNameInput, 'Answer Question')
+    const addButton = screen.getByTestId('save-btn')
+    expect(addButton).toBeEnabled()
   })
 })
