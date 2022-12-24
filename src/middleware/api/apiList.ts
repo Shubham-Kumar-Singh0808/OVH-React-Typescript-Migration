@@ -68,6 +68,7 @@ import {
   NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  ITDeclarationFormApi,
   PaySlipsApi,
   BankDetailsApi,
   PanDetailsApi,
@@ -79,6 +80,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  MyKRAsApi,
   NomineeListApi,
   AddNomineeApi,
 } from '../../types/apiTypes'
@@ -621,6 +623,15 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
 
+export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
+  getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
+  getSectionsHavingInvests:
+    apiPrefix + '/itDeclaration/getSectionsHavingInvests',
+  getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
+  isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
+}
+
 export const paySlipsApiConfig: PaySlipsApi = {
   getEmployeePayslipsForSelectedYear:
     apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
@@ -738,6 +749,11 @@ export const AddNomineeApiConfig: AddNomineeApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const myKRAsApiConfig: MyKRAsApi = {
+  getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
+  getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
 }
 
 export const newBookingApiConfig: NewBookingApi = {

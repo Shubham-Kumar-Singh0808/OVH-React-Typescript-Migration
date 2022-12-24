@@ -88,6 +88,7 @@ import projectManagementReducer from './reducers/ProjectManagement/Project/AddEd
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 import newEventReducer from './reducers/ConferenceRoomBooking/NewEvent/newEventSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
+import itDeclarationFormReducer from './reducers/Finance/ITDeclarationForm/itDeclarationFormSlice'
 import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
 import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
 import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
@@ -99,6 +100,7 @@ import achieverListReducer from './reducers/Achievements/AchieverList/AchieverLi
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
+import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
 import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlice'
 
@@ -188,6 +190,7 @@ export const allReducers = {
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   leaveApprovals: leaveApprovalsReducer,
+  itDeclarationForm: itDeclarationFormReducer,
   newEvent: newEventReducer,
   paySlips: paySlipsReducer,
   panDetails: panDetailsReducer,
@@ -202,6 +205,7 @@ export const allReducers = {
   nomineeList: nomineeListReducer,
   addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  myKRAs: MyKRAsReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
