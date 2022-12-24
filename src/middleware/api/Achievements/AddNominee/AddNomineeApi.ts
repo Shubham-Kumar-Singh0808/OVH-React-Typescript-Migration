@@ -1,3 +1,4 @@
+import { IncomingNominationFormDetails } from '../../../../types/Achievements/AddNominee/AddNomineeTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -14,8 +15,20 @@ const nominationFormDetails = async () => {
   return response.data
 }
 
+const addNominee = async (outBody: IncomingNominationFormDetails) => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AddNomineeApiConfig.addNominee,
+    method: AllowedHttpMethods.post,
+    data: outBody,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddNomineeApi = {
   nominationFormDetails,
+  addNominee,
 }
 
 export default AddNomineeApi

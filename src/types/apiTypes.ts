@@ -602,6 +602,7 @@ export interface NomineeListApi extends ApiBase {
 
 export interface AddNomineeApi extends ApiBase {
   nominationFormDetails: string
+  addNominee: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {

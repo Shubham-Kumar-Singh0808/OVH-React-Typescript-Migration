@@ -11,10 +11,17 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
-import { useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { IncomingActiveEmployee } from '../../../types/Achievements/AddAchiever/AddAchieverTypes'
-import { AddNomineeFormProps } from '../../../types/Achievements/AddNominee/AddNomineeTypes'
+import {
+  AddNomineeFormProps,
+  IncomingNominationFormDetails,
+} from '../../../types/Achievements/AddNominee/AddNomineeTypes'
+import { IncomingAchievementTypes } from '../../../types/Achievements/commonAchievementTypes'
+import { IncomingNominationQuestions } from '../../../types/Achievements/NomineeList/NomineeListTypes'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { emptyString, selectAchievementType } from '../AchievementConstants'
 import AchievementEntryContainer from '../AddAchiever/AchievementTypeList/AchievementEntryContainer'
@@ -30,14 +37,23 @@ const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
   return data.employeeId
 }
 
+const getAchievementTypeId = (list: IncomingAchievementTypes, name: string) => {
+  for (const item of list.list) {
+    if (item.typeName === name) {
+      return item.id
+    }
+  }
+
+  return -1
+}
+
 const AddNomineeForm = (props: AddNomineeFormProps) => {
+  const dispatch = useAppDispatch()
   const {
     achievementType,
     setAchievementType,
     nominatedEmployeeName,
     setNominatedEmployeeName,
-    nomineeQuestions,
-    setNomineeQuestions,
   } = props
   const allActiveEmployees = useTypedSelector(
     (state) => state.addAchiever.activeEmployeeList,
@@ -48,18 +64,37 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
   const formDetails = useTypedSelector(
     (state) => state.addNominee.nominationFormDetails,
   )
+  const userAccessToFeatures = useTypedSelector((state) =>
+    state.userAccessToFeatures.userAccessToFeatures?.find(
+      (item) => item.featureId === 239,
+    ),
+  )
+  const descriptionContent = useTypedSelector(
+    (state) => state.addNominee.questionsInformation,
+  )
   const [employeeName, setEmployeeName] = useState<string | undefined>(
     nominatedEmployeeName,
   )
 
+  const [showEditors, setShowEditors] = useState<boolean>(true)
+  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+
   useEffect(() => {
     if (
-      formDetails.nominationQuestionDataDtosId &&
-      formDetails.nominationQuestionDataDtosId.length > 0
+      achievementType === selectAchievementType ||
+      nominatedEmployeeName === emptyString
     ) {
-      setNomineeQuestions(formDetails.nominationQuestionDataDtosId)
+      setAddButtonEnabled(false)
+    } else {
+      setAddButtonEnabled(true)
+      for (const item of descriptionContent) {
+        if (item.isDone === false) {
+          setAddButtonEnabled(false)
+          break
+        }
+      }
     }
-  }, [formDetails.nominationQuestionDataDtosId])
+  }, [nominatedEmployeeName, achievementType, descriptionContent])
 
   const achievementTypeChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -71,21 +106,66 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
     setNominatedEmployeeName(value)
   }
 
-  const nominationQuestionChangeHandler = (content: string, index: number) => {
-    const currentObject = nomineeQuestions[index]
-    currentObject.feedBack = content
-    const splicedList = nomineeQuestions.splice(index, 1, currentObject)
-    setNomineeQuestions(splicedList)
+  const nominationQuestionChangeHandler = (
+    description: string,
+    index: number,
+  ) => {
+    dispatch(
+      reduxServices.addNominee.actions.setQuestionInformationIndexContent({
+        description,
+        index,
+      }),
+    )
   }
 
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setNominatedEmployeeName(undefined)
+    setNominatedEmployeeName(emptyString)
+    setShowEditors(false)
+    setTimeout(() => {
+      setShowEditors(true)
+    }, 10)
     setAchievementType(selectAchievementType)
   }
 
+  const addButtonHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const questionsData: IncomingNominationQuestions[] = Array.from(
+      formDetails.nominationQuestionDataDtosId,
+    )
+    for (let i = 0; i < questionsData.length; i++) {
+      questionsData[i] = {
+        ...questionsData[i],
+        feedBack: descriptionContent[i].description,
+      }
+    }
+    const finalData: IncomingNominationFormDetails = {
+      ...formDetails,
+      achievementTypeId: getAchievementTypeId(
+        achievementTypes,
+        achievementType,
+      ),
+      cycleID: formDetails.cycleID,
+      cycleName: formDetails.cycleName,
+      employeeId: getEmployeeId(allActiveEmployees, nominatedEmployeeName),
+      nominationQuestionDataDtosId: questionsData,
+    }
+
+    const successToast = (
+      <OToast toastColor="success" toastMessage="Nominee Added Successfully" />
+    )
+
+    const result = await dispatch(
+      reduxServices.addNominee.addNomineeThunk(finalData),
+    )
+
+    if (reduxServices.addNominee.addNomineeThunk.fulfilled.match(result)) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
+    }
+  }
+
   return (
-    <CForm>
+    <CForm onSubmit={addButtonHandler}>
       <CContainer className="mt-4 ms-2">
         <FilterEmployeeName
           setEmployeeName={setEmployeeName}
@@ -95,7 +175,10 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
           labelClass="col-sm-2 col-form-label text-end"
         />
         <AchievementEntryContainer>
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+          <CFormLabel
+            data-testid="ach-type-label"
+            className="col-sm-2 col-form-label text-end"
+          >
             Achievement Type:
             <span
               className={
@@ -112,6 +195,7 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
               onChange={achievementTypeChangeHandler}
               value={achievementType}
               size="sm"
+              data-testid="ach-name-sel"
             >
               <option value={selectAchievementType}>
                 {selectAchievementType}
@@ -125,34 +209,49 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
           </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+          <CFormLabel
+            data-testid="cycle-label"
+            className="col-sm-2 col-form-label text-end"
+          >
             Cycle:
             <span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol md={3}>
-            <CFormInput readOnly value={formDetails.cycleName} />
+            <CFormInput
+              data-testid="cycle-read"
+              readOnly
+              value={formDetails.cycleName}
+            />
           </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+          <CFormLabel
+            data-testid="fromMonth-label"
+            className="col-sm-2 col-form-label text-end"
+          >
             From Month:
             <span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol md={3}>
             <CFormInput
               readOnly
+              data-testid="fromMonth-read"
               value={formDetails.fromMonth}
               placeholder="mm/yyyy"
             />
           </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
-          <CFormLabel className="col-sm-2 col-form-label text-end">
+          <CFormLabel
+            data-testid="toMonth-label"
+            className="col-sm-2 col-form-label text-end"
+          >
             To Month:
             <span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol md={3}>
             <CFormInput
+              data-testid="toMonth-read"
               readOnly
               value={formDetails.toMonth}
               placeholder="mm/yyyy"
@@ -163,32 +262,56 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
       <CContainer>
         {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
           <CContainer key={index} className="mb-5">
-            <CFormLabel>
+            <CFormLabel data-testid="question-label">
               {index + 1}. {item.questions}
-              <span className={TextDanger}>*</span>
+              <span
+                className={
+                  descriptionContent?.at(index)?.isDone ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
-            <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
-              initData={emptyString}
-              debug={true}
-              config={ckeditorConfig}
-              onChange={({ editor }) =>
-                nominationQuestionChangeHandler(editor.getData().trim(), index)
-              }
-            />
+            {showEditors && (
+              <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
+                initData={emptyString}
+                key={index}
+                debug={true}
+                config={ckeditorConfig}
+                onChange={({ editor }) =>
+                  nominationQuestionChangeHandler(
+                    editor.getData().trim(),
+                    index,
+                  )
+                }
+              />
+            )}
+            {!descriptionContent?.at(index)?.isDone ? (
+              <p className={TextDanger}>
+                Content should be more than 150 words
+              </p>
+            ) : (
+              <></>
+            )}
           </CContainer>
         ))}
       </CContainer>
       <CRow>
         <CFormLabel className="col-form-label category-label col-sm-1 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
-          <CButton
-            data-testid="view-btn-id"
-            type="submit"
-            className="btn-ovh me-1"
-            color="success"
-          >
-            Add
-          </CButton>
+          {userAccessToFeatures?.createaccess ? (
+            <CButton
+              data-testid="add-btn-id"
+              type="submit"
+              className="btn-ovh me-1"
+              color="success"
+              disabled={!isAddButtonEnabled}
+            >
+              Add
+            </CButton>
+          ) : (
+            <></>
+          )}
           <CButton
             data-testid="clear-btn-id"
             color="warning "

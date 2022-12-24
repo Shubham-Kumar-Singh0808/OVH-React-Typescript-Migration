@@ -1,16 +1,16 @@
 import React from 'react'
-import { LoadingState } from '../../commonTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
 import { IncomingNominationQuestions } from '../NomineeList/NomineeListTypes'
 
 export interface IncomingNominationFormDetails {
   achievementType: null
-  achievementTypeId: null
+  achievementTypeId: null | number
   activateFlag: null
   createdBy: null
   createdDate: null
   cycleID: number
   cycleName: string
-  employeeId: null
+  employeeId: null | number
   employeeName: null
   finalComments: null
   fromMonth: string
@@ -21,20 +21,21 @@ export interface IncomingNominationFormDetails {
   toMonth: string
 }
 
+export interface StoreDescription {
+  description: string
+  isDone: boolean
+}
+
 export interface AddNomineeInitialState {
   isLoading: LoadingState
   nominationFormDetails: IncomingNominationFormDetails
+  questionsInformation: StoreDescription[]
+  error: ValidationError
 }
 
 export interface AddNomineeFormProps {
   achievementType: string
   setAchievementType: React.Dispatch<React.SetStateAction<string>>
-  nominatedEmployeeName: string | undefined
-  setNominatedEmployeeName: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >
-  nomineeQuestions: IncomingNominationQuestions[]
-  setNomineeQuestions: React.Dispatch<
-    React.SetStateAction<IncomingNominationQuestions[]>
-  >
+  nominatedEmployeeName: string
+  setNominatedEmployeeName: React.Dispatch<React.SetStateAction<string>>
 }

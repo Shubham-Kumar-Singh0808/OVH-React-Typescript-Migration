@@ -1,24 +1,21 @@
-import { CContainer, CForm } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AddNomineeForm from './AddNomineeForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { selectAchievementType } from '../AchievementConstants'
+import { emptyString, selectAchievementType } from '../AchievementConstants'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { IncomingNominationQuestions } from '../../../types/Achievements/NomineeList/NomineeListTypes'
+import { StoreDescription } from '../../../types/Achievements/AddNominee/AddNomineeTypes'
 
 const AddNominee = () => {
   const dispatch = useAppDispatch()
 
-  const [nominatedEmployeeName, setNominatedEmployeeName] = useState<string>()
+  const [nominatedEmployeeName, setNominatedEmployeeName] =
+    useState<string>(emptyString)
   const [nominatedAchievementType, setNominatedAchievementType] =
     useState<string>(selectAchievementType)
-  const [nomineeQuestions, setNomineeQuestions] = useState<
-    IncomingNominationQuestions[]
-  >([])
 
   useEffect(() => {
     dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
@@ -36,6 +33,30 @@ const AddNominee = () => {
     (state) => state.addNominee.isLoading,
   )
 
+  const formDetails = useTypedSelector(
+    (state) => state.addNominee.nominationFormDetails,
+  )
+
+  useEffect(() => {
+    if (
+      formDetails.nominationQuestionDataDtosId &&
+      formDetails.nominationQuestionDataDtosId.length > 0
+    ) {
+      const newList: StoreDescription[] = []
+      const newObj: StoreDescription = { isDone: false, description: '' }
+      for (
+        let i = 0;
+        i < formDetails.nominationQuestionDataDtosId.length;
+        i++
+      ) {
+        newList.push(newObj)
+      }
+      dispatch(
+        reduxServices.addNominee.actions.setQuestionInformationList(newList),
+      )
+    }
+  }, [formDetails.nominationQuestionDataDtosId])
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -48,8 +69,6 @@ const AddNominee = () => {
       isLoadingAddNominee !== ApiLoadingState.loading ? (
         <AddNomineeForm
           achievementType={nominatedAchievementType}
-          nomineeQuestions={nomineeQuestions}
-          setNomineeQuestions={setNomineeQuestions}
           setAchievementType={setNominatedAchievementType}
           nominatedEmployeeName={nominatedEmployeeName}
           setNominatedEmployeeName={setNominatedEmployeeName}

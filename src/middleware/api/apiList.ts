@@ -732,6 +732,7 @@ export const NomineeListApiConfig: NomineeListApi = {
 export const AddNomineeApiConfig: AddNomineeApi = {
   nominationFormDetails:
     apiPrefix + '/nominationController/nominationFormDetails',
+  addNominee: apiPrefix + '/nominationController/addNominee',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
