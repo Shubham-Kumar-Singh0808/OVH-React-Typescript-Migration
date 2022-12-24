@@ -11,6 +11,7 @@ import { mockAchievementTypeList } from '../../../test/data/AchieverListData'
 import { mockNominationFormDetails } from '../../../test/data/AddNomineeData'
 import { mockActiveEmployeeList } from '../../../test/data/AddAchieverData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { TextDanger } from '../../../constant/ClassName'
 
 const mockSelectAchievementType = jest.fn()
 const mockSelectNominatedEmployeeName = jest.fn()
@@ -81,12 +82,16 @@ describe('add nominee form', () => {
       const fromMonth = screen.getByTestId('fromMonth-label')
       const toMonth = screen.getByTestId('toMonth-label')
 
+      expect(screen.getByTestId('ach-star')).toHaveClass(TextDanger)
+
       expect(empName).toHaveTextContent('Employee Name:*')
       expect(achType).toHaveTextContent('Achievement Type:*')
       expect(cycle).toHaveTextContent('Cycle:*')
       expect(fromMonth).toHaveTextContent('From Month:*')
       expect(toMonth).toHaveTextContent('To Month:*')
       expect(screen.getAllByTestId('question-label')).toHaveLength(4)
+      expect(screen.getByTestId('ques-star-1')).toHaveClass(TextDanger)
+      expect(screen.getByTestId('ques-error-1')).toHaveClass(TextDanger)
     })
     test('input being rendered', () => {
       const empName = screen.getByPlaceholderText('Employee Name')
@@ -138,6 +143,42 @@ describe('add nominee form', () => {
       userEvent.click(screen.getByTestId(clearBtnId))
       expect(mockSelectAchievementType).toHaveBeenCalledTimes(2)
       expect(mockSelectNominatedEmployeeName).toHaveBeenCalledTimes(2)
+    })
+  })
+  describe('User Feature Validation', () => {
+    beforeEach(() => {
+      render(toRender, {
+        preloadedState: {
+          commonAchievements: {
+            isLoading: ApiLoadingState.succeeded,
+            achievementTypeList: mockAchievementTypeList,
+          },
+          addNominee: {
+            isLoading: ApiLoadingState.succeeded,
+            nominationFormDetails: mockNominationFormDetails,
+          },
+          addAchiever: {
+            isLoading: ApiLoadingState.succeeded,
+            activeEmployeeList: mockActiveEmployeeList,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'admin',
+              employeeId: '1983',
+              userName: 'admin',
+              role: 'admin',
+              tenantKey: 'abc',
+              token: 'test',
+              designation: 'developer',
+            },
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    screen.debug()
+    test('add button is not visible', () => {
+      expect(screen.getByTestId('add-inv')).toBeVisible()
     })
   })
 })

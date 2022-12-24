@@ -6,7 +6,7 @@ const AchievementEntryContainer = ({
   customClass,
 }: {
   children: React.ReactNode
-  customClass?: string | undefined
+  customClass?: string
 }): JSX.Element => {
   return (
     <CRow

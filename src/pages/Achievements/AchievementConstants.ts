@@ -15,6 +15,7 @@ export const emptyString = ''
 export const selectCycle = 'Select a cycle'
 export const selectRating = 'Select Rating'
 export const notFoundNumber = -1
+export const descriptionLengthError = 'Content should be more than 150 words'
 export type ErrorBooleans = {
   achievementError1: boolean
   achievementError2: boolean

@@ -44,11 +44,7 @@ const AddNominee = () => {
     ) {
       const newList: StoreDescription[] = []
       const newObj: StoreDescription = { isDone: false, description: '' }
-      for (
-        let i = 0;
-        i < formDetails.nominationQuestionDataDtosId.length;
-        i++
-      ) {
+      for (const item of formDetails.nominationQuestionDataDtosId) {
         newList.push(newObj)
       }
       dispatch(

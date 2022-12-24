@@ -21,8 +21,8 @@ const FilterEmployeeName = ({
   onSelectEmployee: (value: string) => void
   employeeName: string | undefined
   setEmployeeName: React.Dispatch<React.SetStateAction<string | undefined>>
-  customClass?: string | undefined
-  labelClass?: string | undefined
+  customClass?: string
+  labelClass?: string
 }): JSX.Element => {
   console.log(employeeName)
 

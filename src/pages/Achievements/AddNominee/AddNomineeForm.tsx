@@ -23,7 +23,11 @@ import {
 import { IncomingAchievementTypes } from '../../../types/Achievements/commonAchievementTypes'
 import { IncomingNominationQuestions } from '../../../types/Achievements/NomineeList/NomineeListTypes'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import { emptyString, selectAchievementType } from '../AchievementConstants'
+import {
+  descriptionLengthError,
+  emptyString,
+  selectAchievementType,
+} from '../AchievementConstants'
 import AchievementEntryContainer from '../AddAchiever/AchievementTypeList/AchievementEntryContainer'
 import FilterEmployeeName from '../AddAchiever/AddAchieverComponents/FilterEmployeeName'
 
@@ -181,6 +185,7 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
           >
             Achievement Type:
             <span
+              data-testid="ach-star"
               className={
                 achievementType === selectAchievementType
                   ? TextDanger
@@ -265,6 +270,7 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
             <CFormLabel data-testid="question-label">
               {index + 1}. {item.questions}
               <span
+                data-testid={`ques-star-${index}`}
                 className={
                   descriptionContent?.at(index)?.isDone ? TextWhite : TextDanger
                 }
@@ -287,8 +293,8 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
               />
             )}
             {!descriptionContent?.at(index)?.isDone ? (
-              <p className={TextDanger}>
-                Content should be more than 150 words
+              <p data-testid={`ques-error-${index}`} className={TextDanger}>
+                {descriptionLengthError}
               </p>
             ) : (
               <></>
@@ -310,7 +316,7 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
               Add
             </CButton>
           ) : (
-            <></>
+            <span data-testid="add-inv"></span>
           )}
           <CButton
             data-testid="clear-btn-id"
