@@ -50,6 +50,9 @@ const AchievementTypeList = ({
   const [newUserSelectedDateReq, setNewUserSelectedDateReq] =
     useState<boolean>(false)
 
+  const [isEditSaveButtonEnabled, setEditSaveButtonEnabled] =
+    useState<boolean>(false)
+
   const newAchievementTypeNameHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -197,6 +200,8 @@ const AchievementTypeList = ({
           />
           <CCol data-testid="scroll-col" className={scrollTernary}>
             <AchievementTypeTable
+              isEditSaveButtonEnabled={isEditSaveButtonEnabled}
+              setEditSaveButtonEnabled={setEditSaveButtonEnabled}
               executeSaveButtonHandler={editSaveButtonHandler}
             />
           </CCol>

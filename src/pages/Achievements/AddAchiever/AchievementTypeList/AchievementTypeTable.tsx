@@ -36,7 +36,11 @@ const editAchievementIdDefaultValue = 0
 const AchievementTypeTable = (
   props: AddAchieverTypeTableProps,
 ): JSX.Element => {
-  const { executeSaveButtonHandler } = props
+  const {
+    executeSaveButtonHandler,
+    isEditSaveButtonEnabled,
+    setEditSaveButtonEnabled,
+  } = props
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
     (state) => state.commonAchievements.achievementTypeList,
@@ -92,6 +96,19 @@ const AchievementTypeTable = (
       setErrors({ ...errors, achievementError2: false })
     }
   }, [editedValues])
+
+  console.log(editedValues)
+  useEffect(() => {
+    if (
+      editedValues.newOrder === emptyString ||
+      editedValues.newStatus === emptyString ||
+      errors.achievementError2
+    ) {
+      setEditSaveButtonEnabled(false)
+    } else {
+      setEditSaveButtonEnabled(true)
+    }
+  }, [editedValues, errors])
 
   const editButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -174,7 +191,11 @@ const AchievementTypeTable = (
   }
 
   const renderCurrentStatus = (value: boolean) => {
-    return value ? NewAchievementStatus.Active : NewAchievementStatus.Inactive
+    return value
+      ? String(NewAchievementStatus.Active).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Active).slice(1)
+      : String(NewAchievementStatus.Inactive).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Inactive).slice(1)
   }
 
   const uniqueOrderTernary = errors.achievementError2 ? (
@@ -260,6 +281,7 @@ const AchievementTypeTable = (
                         className="btn-ovh me-1"
                         data-testid={`save-btn-${index}`}
                         onClick={editSaveButtonHandler}
+                        disabled={!isEditSaveButtonEnabled}
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>
