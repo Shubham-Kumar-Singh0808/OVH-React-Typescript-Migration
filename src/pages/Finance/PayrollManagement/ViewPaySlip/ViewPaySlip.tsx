@@ -15,14 +15,11 @@ const ViewPaySlip = ({
   return (
     <>
       {' '}
-      <CTable
-        responsive
-        className="text-start text-left align-middle alignment"
-      >
+      <CTable responsive className="popUp-alignment">
         <CTableBody>
           <>
             <CTableRow>
-              <CTableDataCell>
+              <CTableDataCell className="text-center" colSpan={5}>
                 <strong>Payslip</strong>
               </CTableDataCell>
             </CTableRow>
@@ -32,7 +29,7 @@ const ViewPaySlip = ({
                   <br></br>
                 </strong>
               </CTableDataCell>
-              <CTableDataCell>
+              <CTableDataCell colSpan={2}>
                 <strong>Particulars</strong>
               </CTableDataCell>
               <CTableDataCell>
