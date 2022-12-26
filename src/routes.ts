@@ -344,6 +344,9 @@ const AddAchiever = React.lazy(
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
+const InitiateCycle = React.lazy(
+  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+)
 
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
 
@@ -761,6 +764,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/initiateCycle',
+    name: 'Initiate Cycle',
+    component: InitiateCycle,
   },
   {
     path: '/myKRAs',
