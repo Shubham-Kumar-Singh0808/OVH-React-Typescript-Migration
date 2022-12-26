@@ -4,14 +4,14 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddNomineeForm from './AddNomineeForm'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import { cleanup, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { emptyString, selectAchievementType } from '../AchievementConstants'
 import { mockAchievementTypeList } from '../../../test/data/AchieverListData'
 import { mockNominationFormDetails } from '../../../test/data/AddNomineeData'
 import { mockActiveEmployeeList } from '../../../test/data/AddAchieverData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
-import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import { TextDanger } from '../../../constant/ClassName'
 
 const mockSelectAchievementType = jest.fn()
 const mockSelectNominatedEmployeeName = jest.fn()
