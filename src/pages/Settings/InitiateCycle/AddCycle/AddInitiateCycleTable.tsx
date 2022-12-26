@@ -53,6 +53,10 @@ const AddInitiateCycleTable = ({
     [allCycles?.list, currentPage, pageSize],
   )
 
+  const editCycleHandler = (id: number) => {
+    dispatch(reduxServices.initiateCycle.editCycle(id))
+  }
+
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -98,6 +102,7 @@ const AddInitiateCycleTable = ({
                         size="sm"
                         className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                         color="info btn-ovh me-1"
+                        onClick={() => editCycleHandler(cycle.id)}
                       >
                         <i className="fa fa-edit" aria-hidden="true"></i>
                       </CButton>

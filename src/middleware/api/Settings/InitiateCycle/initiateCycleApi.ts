@@ -4,6 +4,7 @@ import {
   GetAllQuestions,
   GetQuestion,
   NominationCycle,
+  NominationCycleDto,
   TotalResponse,
 } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import {
@@ -115,6 +116,19 @@ const addCycle = async ({
   return response.data
 }
 
+const editCycle = async (cycleId: number): Promise<NominationCycleDto> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.editCycle,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const initiateCycleApi = {
   getActiveCycleData,
   getAllCycles,
@@ -123,6 +137,7 @@ const initiateCycleApi = {
   deleteQuestion,
   addQuestion,
   addCycle,
+  editCycle,
 }
 
 export default initiateCycleApi
