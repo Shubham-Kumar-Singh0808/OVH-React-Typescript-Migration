@@ -3,6 +3,7 @@ import {
   CCol,
   CContainer,
   CHeader,
+  CHeaderBrand,
   CHeaderNav,
   CHeaderToggler,
   CImage,
@@ -16,6 +17,7 @@ import { useHistory } from 'react-router-dom'
 import AppHeaderDropdown from './AppHeaderDropdown'
 import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../stateStore'
+import { logo } from '../assets/brand/logo'
 
 const AppHeader = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -90,9 +92,9 @@ const AppHeader = (): JSX.Element => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        {/* <CHeaderBrand className="mx-auto d-none">
+        <CHeaderBrand className="mx-auto d-none">
           <CIcon icon={logo} height={48} />
-        </CHeaderBrand> */}
+        </CHeaderBrand>
         <CHeaderNav>
           {userAccessToSearch?.viewaccess && (
             <CInputGroup className="global-search me-4">

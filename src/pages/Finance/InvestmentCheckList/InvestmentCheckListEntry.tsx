@@ -50,7 +50,7 @@ const InvestmentCheckListEntry = (props: {
         </CTableDataCell>
         <CTableDataCell scope="row">{props.section.sectionName}</CTableDataCell>
         <CTableDataCell scope="row">
-          {props.section.sectionLimit}
+          {props.section.sectionLimit?.toLocaleString('en-IN')}
         </CTableDataCell>
       </CTableRow>
       {props.isIconVisible && props.selectedSectionId === props.id ? (
