@@ -314,6 +314,7 @@ const ProjectReportsTable = ({
         projectid: projectId,
       }),
     )
+    dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
   }
 
   const totalRecordsToDisplay = projectReports?.length

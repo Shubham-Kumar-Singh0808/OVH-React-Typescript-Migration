@@ -82,6 +82,7 @@ import {
   ProjectTimeLineApi,
   ProjectChangeRequestApi,
   ProjectMilestoneApi,
+  ProjectInvoiceApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -741,4 +742,10 @@ export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
 
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
+}
+
+export const projectInvoicesApiConfig: ProjectInvoiceApi = {
+  getClosedMilestonesAndCRs:
+    apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
+  getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
 }

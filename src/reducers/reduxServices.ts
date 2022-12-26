@@ -92,6 +92,7 @@ import { projectViewService } from './ProjectManagement/Project/ProjectView/proj
 import { projectTimeLineService } from './ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
 import { changeRequestService } from './ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
 import { mileStoneService } from './ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
+import { invoicesService } from './ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
 
 export const reduxServices = {
   app: appService,
@@ -188,4 +189,5 @@ export const reduxServices = {
   projectTimeLine: projectTimeLineService,
   projectChangeRequest: changeRequestService,
   projectMileStone: mileStoneService,
+  projectInvoices: invoicesService,
 }

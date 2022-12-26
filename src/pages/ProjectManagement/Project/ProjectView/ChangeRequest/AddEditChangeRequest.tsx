@@ -39,28 +39,16 @@ const AddEditChangeRequest = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'duration') {
-      const durationValue = value.replace(/[^0-9]/gi, '')
-      setAddChangeRequest((prevState) => {
-        return { ...prevState, ...{ [name]: durationValue } }
-      })
-    } else if (name === 'name') {
-      const changeRequestValue = value.replace(/[^a-z\s]$/gi, '')
-      setAddChangeRequest((prevState) => {
-        return { ...prevState, ...{ [name]: changeRequestValue } }
-      })
-    } else {
-      setAddChangeRequest((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
+    setAddChangeRequest((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
-
+  console.log(addChangeRequest?.name)
   useEffect(() => {
     if (
       addChangeRequest?.name?.replace(/^\s*/, '') &&
-      addChangeRequest?.duration.replace(/^\s*/, '') &&
-      changeRequestDescription.replace(/^\s*/, '')
+      addChangeRequest?.duration?.replace(/^\s*/, '') &&
+      changeRequestDescription?.replace(/^\s*/, '')
     ) {
       setIsAddButtonEnabled(true)
     } else {
@@ -90,6 +78,13 @@ const AddEditChangeRequest = ({
         addChangeRequestResultAction,
       )
     ) {
+      dispatch(
+        reduxServices.projectChangeRequest.getProjectChangeRequestList({
+          endIndex: 20,
+          firstIndex: 1,
+          projectid: projectId as string,
+        }),
+      )
       setToggle('')
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
@@ -111,13 +106,7 @@ const AddEditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span
-              className={showIsRequired(
-                addChangeRequest?.name?.replace(/^\s*/, ''),
-              )}
-            >
-              *
-            </span>
+            <span className={showIsRequired(addChangeRequest?.name)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -174,8 +163,10 @@ const AddEditChangeRequest = ({
               data-testid="text-area"
               aria-label="textarea"
               value={changeRequestDescription}
+              maxLength={150}
               onChange={(e) => setChangeRequestDescription(e.target.value)}
             ></CFormTextarea>
+            <p>{changeRequestDescription?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>
