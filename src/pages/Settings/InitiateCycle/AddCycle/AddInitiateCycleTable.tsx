@@ -52,8 +52,10 @@ const AddInitiateCycleTable = ({
     () => currentPageData(allCycles?.list, currentPage, pageSize),
     [allCycles?.list, currentPage, pageSize],
   )
+  console.log(currentTotalPageRecords)
 
   const editCycleHandler = (id: number) => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle('editCycle'))
     dispatch(reduxServices.initiateCycle.editCycle(id))
   }
 
@@ -85,32 +87,31 @@ const AddInitiateCycleTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentTotalPageRecords &&
-            currentTotalPageRecords?.map((cycle, index) => {
-              return (
-                <CTableRow key={index}>
-                  <CTableDataCell>{getPageNumber(index)}</CTableDataCell>
-                  <CTableDataCell>{cycle.cycleName}</CTableDataCell>
-                  <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
-                  <CTableDataCell>{cycle.toMonth}</CTableDataCell>
-                  <CTableDataCell>{cycle.activateFlag}</CTableDataCell>
-                  <CTableDataCell>{cycle.startDate}</CTableDataCell>
-                  <CTableDataCell>{cycle.endDate}</CTableDataCell>
-                  <CTableDataCell>
-                    <CTooltip content="Edit">
-                      <CButton
-                        size="sm"
-                        className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                        color="info btn-ovh me-1"
-                        onClick={() => editCycleHandler(cycle.id)}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
+          {currentTotalPageRecords?.map((cycle, index) => {
+            return (
+              <CTableRow key={index}>
+                <CTableDataCell>{getPageNumber(index)}</CTableDataCell>
+                <CTableDataCell>{cycle.cycleName}</CTableDataCell>
+                <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
+                <CTableDataCell>{cycle.toMonth}</CTableDataCell>
+                <CTableDataCell>{cycle.activateFlag}</CTableDataCell>
+                <CTableDataCell>{cycle.startDate}</CTableDataCell>
+                <CTableDataCell>{cycle.endDate}</CTableDataCell>
+                <CTableDataCell>
+                  <CTooltip content="Edit">
+                    <CButton
+                      size="sm"
+                      className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                      color="info btn-ovh me-1"
+                      onClick={() => editCycleHandler(cycle?.id)}
+                    >
+                      <i className="fa fa-edit" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
+                </CTableDataCell>
+              </CTableRow>
+            )
+          })}
         </CTableBody>
       </CTable>
       <CRow>

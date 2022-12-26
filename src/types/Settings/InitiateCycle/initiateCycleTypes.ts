@@ -42,6 +42,7 @@ export type InitiateCycleSliceState = {
   listSize: number
   currentPage: number
   pageSize: number
+  toggle: string
 }
 
 export type GetQuestion = {

@@ -18,12 +18,9 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
+import EditInitiateCycle from '../EditCycle/EditInitiateCycle'
 
-const AddInitiateCycle = ({
-  setToggle,
-}: {
-  setToggle: () => void
-}): JSX.Element => {
+const AddInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [selectCycleName, setSelectCycleName] = useState('')
@@ -73,6 +70,8 @@ const AddInitiateCycle = ({
       data-testid="failedToast"
     />
   )
+
+  const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
 
   const addBtnHandler = async () => {
     const prepareObject = {
@@ -145,227 +144,232 @@ const AddInitiateCycle = ({
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Add Cycle"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={setToggle}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow>
-        <CForm>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Cycle Name:
-              <span className={selectCycleName ? TextWhite : TextDanger}>
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                data-testid="cycleName"
-                type="text"
-                id="cycleName"
-                autoComplete="off"
-                size="sm"
-                name="cycleName"
-                placeholder="Enter Cycle Name"
-                value={selectCycleName}
-                onChange={(e) => setSelectCycleName(e.target.value)}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-2 text-decoration-none">
-                From Month :
-                <span className={fromMonth ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                autoComplete="off"
-                id="fromMonth"
-                data-testid="sh-date-picker"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                showMonthYearPicker
-                placeholderText="mm/yyyy"
-                dateFormat="MM/yyyy"
-                name="selectFromMonth"
-                value={
-                  fromMonth
-                    ? new Date(fromMonth).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) => {
-                  setFromMonth(moment(date).format(commonFormatDate))
-                }}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-2 text-decoration-none">
-                To Month :
-                <span className={toMonth ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                autoComplete="off"
-                id="toMonth"
-                data-testid="sh-date-picker"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                showMonthYearPicker
-                placeholderText="mm/yyyy"
-                dateFormat="MM/yyyy"
-                name="selectToMonth"
-                value={
-                  toMonth
-                    ? new Date(toMonth).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) => {
-                  setToMonth(moment(date).format(commonFormatDate))
-                }}
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-1">
-                Start Date :
-                <span className={startDate ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="startDate"
-                data-testid="startDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                dateFormat="dd/mm/yyyy"
-                placeholderText="dd/mm/yyyy"
-                name="cycleStartDate"
-                value={
-                  startDate
-                    ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setStartDate(moment(date).format(commonFormatDate))
-                }
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-1">
-                End Date :
-                <span className={endDate ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="endDate"
-                data-testid="endDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                dateFormat="dd/mm/yyyy"
-                placeholderText="dd/mm/yyyy"
-                name="cycleEndDate"
-                value={
-                  endDate
-                    ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setEndDate(moment(date).format(commonFormatDate))
-                }
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Activate :
-              <span className={isChecked ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3} className="pt-2">
-              <CFormCheck
-                data-testid="ch-All"
-                id="activate"
-                name="activate"
-                checked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
-              />
-            </CCol>
-          </CRow>
-          <CRow>
-            <CCol md={{ span: 6, offset: 3 }}>
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Add Cycle"
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
               <CButton
-                data-testid="save-btn"
-                className="btn-ovh me-1 text-white"
-                color="success"
-                disabled={!isButtonEnabled}
-                onClick={addBtnHandler}
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={() =>
+                  dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+                }
               >
-                Add
-              </CButton>
-              <CButton
-                data-testid="clear-btn"
-                color="warning"
-                className="btn-ovh text-white"
-                onClick={clearInputs}
-              >
-                Clear
+                <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
             </CCol>
           </CRow>
-        </CForm>
-        <AddInitiateCycleTable
-          paginationRange={paginationRange}
-          setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-          pageSize={pageSize}
-        />
-      </OCard>
+          <CForm>
+            <CRow className="mt-4 mb-4">
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-3 col-form-label text-end"
+              >
+                Cycle Name:
+                <span className={selectCycleName ? TextWhite : TextDanger}>
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  data-testid="cycleName"
+                  type="text"
+                  id="cycleName"
+                  autoComplete="off"
+                  size="sm"
+                  name="cycleName"
+                  placeholder="Enter Cycle Name"
+                  value={selectCycleName}
+                  onChange={(e) => setSelectCycleName(e.target.value)}
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CCol sm={3} md={3} className="text-end">
+                <CFormLabel className="mt-2 text-decoration-none">
+                  From Month :
+                  <span className={fromMonth ? TextWhite : TextDanger}>*</span>
+                </CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="fromMonth"
+                  data-testid="sh-date-picker"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  dateFormat="MM/yyyy"
+                  name="selectFromMonth"
+                  value={
+                    fromMonth
+                      ? new Date(fromMonth).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) => {
+                    setFromMonth(moment(date).format(commonFormatDate))
+                  }}
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CCol sm={3} md={3} className="text-end">
+                <CFormLabel className="mt-2 text-decoration-none">
+                  To Month :
+                  <span className={toMonth ? TextWhite : TextDanger}>*</span>
+                </CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="toMonth"
+                  data-testid="sh-date-picker"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  dateFormat="MM/yyyy"
+                  name="selectToMonth"
+                  value={
+                    toMonth
+                      ? new Date(toMonth).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) => {
+                    setToMonth(moment(date).format(commonFormatDate))
+                  }}
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CCol sm={3} md={3} className="text-end">
+                <CFormLabel className="mt-1">
+                  Start Date :
+                  <span className={startDate ? TextWhite : TextDanger}>*</span>
+                </CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="startDate"
+                  data-testid="startDate"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  autoComplete="off"
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yyyy"
+                  placeholderText="dd/mm/yyyy"
+                  name="cycleStartDate"
+                  value={
+                    startDate
+                      ? new Date(startDate).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setStartDate(moment(date).format(commonFormatDate))
+                  }
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CCol sm={3} md={3} className="text-end">
+                <CFormLabel className="mt-1">
+                  End Date :
+                  <span className={endDate ? TextWhite : TextDanger}>*</span>
+                </CFormLabel>
+              </CCol>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="endDate"
+                  data-testid="endDate"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  autoComplete="off"
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yyyy"
+                  placeholderText="dd/mm/yyyy"
+                  name="cycleEndDate"
+                  value={
+                    endDate
+                      ? new Date(endDate).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setEndDate(moment(date).format(commonFormatDate))
+                  }
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-4 mb-4">
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-3 col-form-label text-end"
+              >
+                Activate :
+                <span className={isChecked ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
+              <CCol sm={3} className="pt-2">
+                <CFormCheck
+                  data-testid="ch-All"
+                  id="activate"
+                  name="activate"
+                  checked={isChecked}
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                />
+              </CCol>
+            </CRow>
+            <CRow>
+              <CCol md={{ span: 6, offset: 3 }}>
+                <CButton
+                  data-testid="save-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  disabled={!isButtonEnabled}
+                  onClick={addBtnHandler}
+                >
+                  Add
+                </CButton>
+                <CButton
+                  data-testid="clear-btn"
+                  color="warning"
+                  className="btn-ovh text-white"
+                  onClick={clearInputs}
+                >
+                  Clear
+                </CButton>
+              </CCol>
+            </CRow>
+          </CForm>
+          <AddInitiateCycleTable
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </OCard>
+      )}
+      {toggle === 'editCycle' && <EditInitiateCycle />}
     </>
   )
 }

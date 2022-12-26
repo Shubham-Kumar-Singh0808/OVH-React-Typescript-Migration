@@ -150,6 +150,7 @@ export const initialCycleState: InitiateCycleSliceState = {
   listSize: 0,
   currentPage: 1,
   pageSize: 20,
+  toggle: '',
 }
 
 const initiateCycleSlice = createSlice({
@@ -161,6 +162,9 @@ const initiateCycleSlice = createSlice({
     },
     setPageSize: (state, action) => {
       state.pageSize = action.payload
+    },
+    setToggle: (state, action) => {
+      state.toggle = action.payload
     },
   },
   extraReducers(builder) {
@@ -228,6 +232,8 @@ const pageFromState = (state: RootState): number =>
 const pageSizeFromState = (state: RootState): number =>
   state.initiateCycle.pageSize
 
+const toggle = (state: RootState): string => state.initiateCycle.toggle
+
 const initiateCycleThunk = {
   getActiveCycleData,
   getAllCycles,
@@ -247,6 +253,7 @@ const initiateCycleSelectors = {
   pageFromState,
   pageSizeFromState,
   allCycles,
+  toggle,
 }
 
 export const initiateCycleService = {

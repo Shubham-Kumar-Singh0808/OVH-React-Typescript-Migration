@@ -6,7 +6,7 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
 import AddQuestion from './AddQuestion/AddQuestion'
 import AddInitiateCycle from './AddCycle/AddInitiateCycle'
@@ -18,8 +18,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import { TotalResponse } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
 const InitiateCycle = (): JSX.Element => {
-  const [toggle, setToggle] = useState<string>('')
-
   const dispatch = useAppDispatch()
 
   const activeCycle = useTypedSelector(
@@ -105,6 +103,9 @@ const InitiateCycle = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
+
   return (
     <>
       {toggle === '' && (
@@ -119,7 +120,11 @@ const InitiateCycle = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                onClick={() => setToggle('addCycle')}
+                onClick={() =>
+                  dispatch(
+                    reduxServices.initiateCycle.actions.setToggle('addCycle'),
+                  )
+                }
               >
                 <i className="fa fa-plus me-1"></i>
                 Add Cycle
@@ -129,7 +134,13 @@ const InitiateCycle = (): JSX.Element => {
                 color="info"
                 className="text-white btn-ovh"
                 size="sm"
-                onClick={() => setToggle('addQuestion')}
+                onClick={() =>
+                  dispatch(
+                    reduxServices.initiateCycle.actions.setToggle(
+                      'addQuestion',
+                    ),
+                  )
+                }
               >
                 Add Question
               </CButton>
@@ -209,20 +220,8 @@ const InitiateCycle = (): JSX.Element => {
           </CRow>
         </OCard>
       )}
-      {toggle === 'addQuestion' && (
-        <AddQuestion
-          setToggle={() => {
-            setToggle('')
-          }}
-        />
-      )}
-      {toggle === 'addCycle' && (
-        <AddInitiateCycle
-          setToggle={() => {
-            setToggle('')
-          }}
-        />
-      )}
+      {toggle === 'addQuestion' && <AddQuestion />}
+      {toggle === 'addCycle' && <AddInitiateCycle />}
     </>
   )
 }

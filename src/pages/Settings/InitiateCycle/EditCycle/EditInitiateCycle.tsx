@@ -14,12 +14,12 @@ import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { NominationCycleDto } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 
-const EditInitiateCycle = ({
-  setToggle,
-}: {
-  setToggle: () => void
-}): JSX.Element => {
+const EditInitiateCycle = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const editCycles = {} as NominationCycleDto
@@ -93,7 +93,9 @@ const EditInitiateCycle = ({
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={setToggle}
+              onClick={() =>
+                dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+              }
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
