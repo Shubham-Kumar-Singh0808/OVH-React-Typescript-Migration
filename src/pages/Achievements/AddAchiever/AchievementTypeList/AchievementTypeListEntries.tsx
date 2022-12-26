@@ -10,7 +10,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AchievementEntryContainer from './AchievementEntryContainer'
-import { TextDanger } from '../../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import {
   AddAchieverTypeEntriesProps,
   NewAchievementStatus,
@@ -49,7 +49,7 @@ const AchievementTypeListEntries = (
     achievementError2: false,
   })
   const existingAchievementTypeList = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList,
+    (state) => state.commonAchievements.achievementTypeList,
   )
 
   const isAchievementNameExists = (enteredName: string) => {
@@ -85,9 +85,11 @@ const AchievementTypeListEntries = (
   useEffect(() => {
     if (
       userNewSelectedAchievementType === emptyString ||
+      userNewSelectedAchievementType.trim().length === 0 ||
       isAchievementOrderExists(newUserSelectedOrder) ||
       isAchievementNameExists(userNewSelectedAchievementType) ||
       newUserSelectedOrder === emptyString ||
+      newUserSelectedOrder.trim().length === 0 ||
       newUserSelectedOrder === '00'
     ) {
       setAddButtonEnabled(false)
@@ -127,12 +129,17 @@ const AchievementTypeListEntries = (
             className={newAchievementLabelClass}
             data-testid="ach-name"
           >
-            Achievement Type Name:{' '}
-            {userNewSelectedAchievementType === '' ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}
+            Achievement Type Name:
+            <span
+              className={
+                userNewSelectedAchievementType === emptyString ||
+                userNewSelectedAchievementType.trim().length === 0
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -150,7 +157,7 @@ const AchievementTypeListEntries = (
             data-testid="ach-status"
             className={newAchievementLabelClass}
           >
-            Status:{' '}
+            Status:<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={2} md={1}>
             <CFormCheck
@@ -182,12 +189,17 @@ const AchievementTypeListEntries = (
             data-testid="ach-order"
             className={newAchievementLabelClass}
           >
-            Order:{' '}
-            {newUserSelectedOrder === emptyString ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}
+            Order:
+            <span
+              className={
+                newUserSelectedOrder === emptyString ||
+                newUserSelectedOrder.trim().length === 0
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -207,7 +219,7 @@ const AchievementTypeListEntries = (
             data-testid="ach-time"
             className={newAchievementLabelClass}
           >
-            Time Period Required:{' '}
+            Time Period Required:<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
@@ -224,7 +236,7 @@ const AchievementTypeListEntries = (
             data-testid="ach-date"
             className={newAchievementLabelClass}
           >
-            Date Required:{' '}
+            Date Required:<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck

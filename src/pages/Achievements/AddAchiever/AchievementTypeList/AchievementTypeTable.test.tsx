@@ -29,7 +29,7 @@ describe('Achievement Type Table Testing', () => {
       render(toRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },

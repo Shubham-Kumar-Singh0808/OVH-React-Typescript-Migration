@@ -39,7 +39,7 @@ const AchievementTypeTable = (
   const { executeSaveButtonHandler } = props
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList,
+    (state) => state.commonAchievements.achievementTypeList,
   )
   const [editAchievementId, setEditAchievementId] = useState<number>(
     editAchievementIdDefaultValue,
@@ -200,7 +200,9 @@ const AchievementTypeTable = (
             </CTableHeaderCell>
             <CTableHeaderCell scope="col">Status</CTableHeaderCell>
             <CTableHeaderCell scope="col">Order</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-end pe-5">
+              Action
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -248,7 +250,7 @@ const AchievementTypeTable = (
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <div
-                  className="d-flex flex-row align-items-center"
+                  className="d-flex flex-row align-items-center justify-content-end"
                   data-testid={`user-access-${index}`}
                 >
                   {isEditAchievementEnabled && editAchievementId === item.id ? (
@@ -310,12 +312,13 @@ const AchievementTypeTable = (
       <OModal
         visible={displayModalContent}
         setVisible={setDisplayModalContent}
-        modalSize="lg"
         alignment="center"
-        modalHeaderClass="d-none"
+        modalTitle="Delete Achievement Type"
+        closeButtonClass="d-none"
         confirmButtonAction={confirmDeleteButtonHandler}
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="ng-binding"
       >
         <div data-testid="confirm-modal-content">{modalContent}</div>
       </OModal>

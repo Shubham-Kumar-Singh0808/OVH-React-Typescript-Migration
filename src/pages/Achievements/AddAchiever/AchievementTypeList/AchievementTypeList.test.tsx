@@ -36,7 +36,7 @@ describe('Achievement Type List Testing', () => {
       render(toRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },
