@@ -12,6 +12,7 @@ import { mockNominationFormDetails } from '../../../test/data/AddNomineeData'
 import { mockActiveEmployeeList } from '../../../test/data/AddAchieverData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { TextDanger } from '../../../constant/ClassName'
+import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
 
 const mockSelectAchievementType = jest.fn()
 const mockSelectNominatedEmployeeName = jest.fn()
@@ -54,6 +55,9 @@ describe('add nominee form', () => {
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+          getLoggedInEmployeeData: {
+            generalInformation: mockGeneralInformationData,
           },
           authentication: {
             authenticatedUser: {

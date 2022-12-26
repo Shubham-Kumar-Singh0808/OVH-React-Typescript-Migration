@@ -8,6 +8,7 @@ import { mockAchievementTypeList } from '../../../test/data/AchieverListData'
 import { mockNominationFormDetails } from '../../../test/data/AddNomineeData'
 import { mockActiveEmployeeList } from '../../../test/data/AddAchieverData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
+import { mockGeneralInformationData } from '../../../test/data/generalInformationData'
 
 const toRender = (
   <div>
@@ -38,6 +39,9 @@ describe('add nominee', () => {
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+          getLoggedInEmployeeData: {
+            generalInformation: mockGeneralInformationData,
           },
           authentication: {
             authenticatedUser: {

@@ -79,6 +79,17 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       (item) => item.featureId === 239,
     ),
   )
+
+  const showHierachyAchievementTypeList = useTypedSelector(
+    (state) => state.userAccessToFeatures.userAccessToFeatures,
+  ).find((item) => item.featureId === 296)?.viewaccess
+
+  const userFullName = useTypedSelector(
+    (state) => state.getLoggedInEmployeeData.generalInformation?.fullName,
+  )
+
+  console.log(userFullName)
+
   const descriptionContent = useTypedSelector(
     (state) => state.addNominee.questionsInformation,
   )
@@ -88,6 +99,12 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
 
   const [showEditors, setShowEditors] = useState<boolean>(true)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+
+  const getHierachyAchievementTypeList = () => {
+    return achievementTypes.list.filter(
+      (item) => item.createdBy === userFullName,
+    )
+  }
 
   useEffect(() => {
     if (
@@ -225,7 +242,10 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
               <option value={selectAchievementType}>
                 {selectAchievementType}
               </option>
-              {achievementTypes.list.map((item, index) => (
+              {(showHierachyAchievementTypeList
+                ? getHierachyAchievementTypeList()
+                : achievementTypes.list
+              ).map((item, index) => (
                 <option key={index} value={item.typeName}>
                   {item.typeName}
                 </option>
