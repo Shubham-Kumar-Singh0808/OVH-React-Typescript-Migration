@@ -80,6 +80,7 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
   AddNomineeApi,
@@ -749,6 +750,15 @@ export const AddNomineeApiConfig: AddNomineeApi = {
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const initiateCycleApiConfig: InitiateCycleApi = {
+  getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
+  getallcycles: apiPrefix + '/nominationController/getallcycles',
+  getAllQuestions: apiPrefix + '/nominationController/getAllQuestions',
+  initiateCycle: apiPrefix + '/nominationController/initiateCycle',
+  deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
+  addQuestion: apiPrefix + '/nominationController/addQuestion',
 }
 
 export const myKRAsApiConfig: MyKRAsApi = {
