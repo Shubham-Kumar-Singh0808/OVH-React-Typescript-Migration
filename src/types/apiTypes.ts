@@ -612,6 +612,15 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface InitiateCycleApi extends ApiBase {
+  getActiveCycleData: string
+  getallcycles: string
+  getAllQuestions: string
+  initiateCycle: string
+  deleteQuestion: string
+  addQuestion: string
+}
+
 export interface MyKRAsApi extends ApiBase {
   getKRAForIndividualEmployee: string
   getKPIsForIndividualEmployee: string
