@@ -36,7 +36,7 @@ describe('Achievement Type List Testing', () => {
       render(toRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },
@@ -106,8 +106,10 @@ describe('Achievement Type List Testing', () => {
       userEvent.click(editBtn)
       const saveBtn = screen.getByTestId('save-btn-1')
       expect(saveBtn).toBeVisible()
+      expect(saveBtn).toBeEnabled()
       const order = screen.getByTestId('new-order')
       userEvent.clear(order)
+      expect(saveBtn).toBeDisabled()
       userEvent.type(order, '5')
       userEvent.click(saveBtn)
       await waitFor(() => {

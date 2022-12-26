@@ -94,6 +94,7 @@ import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlic
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
 import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
+import { myReviewService } from './Performance/MyReview/myReviewSlice'
 
 export const reduxServices = {
   app: appService,
@@ -192,4 +193,5 @@ export const reduxServices = {
   projectCreationRequest: projectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
+  myReview: myReviewService,
 }
