@@ -83,6 +83,7 @@ import {
   InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
+  MyReviewApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -766,4 +767,8 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const myReviewApiConfig: MyReviewApi = {
+  getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
 }
