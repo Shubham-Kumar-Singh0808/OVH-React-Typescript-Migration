@@ -354,6 +354,10 @@ const NomineeList = React.lazy(
   () => import('./pages/Achievements/NomineeList/NomineeList'),
 )
 
+const AddObservation = React.lazy(
+  () => import('./pages/Performance/AddObservation/AddObservationLanding'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -779,6 +783,11 @@ const routes = [
     path: '/nomineesList',
     name: 'Nominee List',
     component: NomineeList,
+  },
+  {
+    path: '/addObservations',
+    name: 'Add Observation',
+    component: AddObservation,
   },
 ]
 

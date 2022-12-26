@@ -103,6 +103,7 @@ import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverS
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
+import addObservationReducer from './reducers/Performance/AddObservation/AddObservationSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -205,6 +206,7 @@ export const allReducers = {
   nomineeList: nomineeListReducer,
   projectCreationRequest: projectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
+  addObservation: addObservationReducer,
   myKRAs: MyKRAsReducer,
   // add your slice reducers here
 }

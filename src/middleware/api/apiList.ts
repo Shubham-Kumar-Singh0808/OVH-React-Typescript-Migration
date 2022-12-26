@@ -83,6 +83,7 @@ import {
   InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
+  AddObservationApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -757,6 +758,10 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
 export const myKRAsApiConfig: MyKRAsApi = {
   getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
   getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const addObservationApiConfig: AddObservationApi = {
+  getRatingScalePage: apiPrefix + '/handbookItem/get',
 }
 
 export const newBookingApiConfig: NewBookingApi = {

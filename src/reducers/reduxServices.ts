@@ -93,6 +93,7 @@ import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
+import { addObservationService } from './Performance/AddObservation/AddObservationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -189,5 +190,6 @@ export const reduxServices = {
   nomineeList: nomineeListService,
   projectCreationRequest: projectCreationRequestService,
   initiateCycle: initiateCycleService,
+  addObservation: addObservationService,
   myKRAs: myKRAsService,
 }

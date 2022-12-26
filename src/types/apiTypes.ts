@@ -626,6 +626,10 @@ export interface MyKRAsApi extends ApiBase {
   getKPIsForIndividualEmployee: string
 }
 
+export interface AddObservationApi extends ApiBase {
+  getRatingScalePage: string
+}
+
 export interface NewBookingApi extends ApiBase {
   getLoggedEmployeeName: string
   getAllProfileEmployeesData: string
