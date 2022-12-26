@@ -31,7 +31,10 @@ import {
 import AchievementEntryContainer from '../AddAchiever/AchievementTypeList/AchievementEntryContainer'
 import FilterEmployeeName from '../AddAchiever/AddAchieverComponents/FilterEmployeeName'
 
-const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
+const getEmployeeId = (
+  list: IncomingActiveEmployee[],
+  name: string,
+): number => {
   const data = list.find(
     (item) => item.empFirstName + ' ' + item.empLastName === name,
   )
@@ -41,7 +44,10 @@ const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
   return data.employeeId
 }
 
-const getAchievementTypeId = (list: IncomingAchievementTypes, name: string) => {
+const getAchievementTypeId = (
+  list: IncomingAchievementTypes,
+  name: string,
+): number => {
   for (const item of list.list) {
     if (item.typeName === name) {
       return item.id
@@ -51,7 +57,7 @@ const getAchievementTypeId = (list: IncomingAchievementTypes, name: string) => {
   return -1
 }
 
-const AddNomineeForm = (props: AddNomineeFormProps) => {
+const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const {
     achievementType,
@@ -122,14 +128,19 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
     )
   }
 
-  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const clearHandler = () => {
     setNominatedEmployeeName(emptyString)
+    setEmployeeName(undefined)
     setShowEditors(false)
     setTimeout(() => {
       setShowEditors(true)
     }, 10)
     setAchievementType(selectAchievementType)
+  }
+
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    clearHandler()
   }
 
   const addButtonHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -165,6 +176,15 @@ const AddNomineeForm = (props: AddNomineeFormProps) => {
 
     if (reduxServices.addNominee.addNomineeThunk.fulfilled.match(result)) {
       dispatch(reduxServices.app.actions.addToast(successToast))
+      clearHandler()
+    } else if (
+      reduxServices.addNominee.addNomineeThunk.rejected.match(result) &&
+      result.payload === 406
+    ) {
+      const existsToast = (
+        <OToast toastColor="danger" toastMessage="Nominee Already Exists" />
+      )
+      dispatch(reduxServices.app.actions.addToast(existsToast))
     }
   }
 

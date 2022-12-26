@@ -1,13 +1,13 @@
-import { CCol, CFormLabel } from '@coreui/react-pro'
+import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import React from 'react'
 import Autocomplete from 'react-autocomplete'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import {
   emptyString,
+  entryContainerClass,
   newAchievementLabelClass,
 } from '../../AchievementConstants'
-import AchievementEntryContainer from '../AchievementTypeList/AchievementEntryContainer'
 
 const FilterEmployeeName = ({
   allEmployees,
@@ -24,8 +24,6 @@ const FilterEmployeeName = ({
   customClass?: string
   labelClass?: string
 }): JSX.Element => {
-  console.log(employeeName)
-
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
@@ -41,7 +39,7 @@ const FilterEmployeeName = ({
   }
 
   return (
-    <AchievementEntryContainer customClass={customClass}>
+    <CRow className={customClass ? customClass : entryContainerClass}>
       <CFormLabel
         data-testid="ach-emp-name"
         className={labelClass ? labelClass : newAchievementLabelClass}
@@ -101,7 +99,7 @@ const FilterEmployeeName = ({
           onSelect={(value) => selectEmployeeHandler(value)}
         />
       </CCol>
-    </AchievementEntryContainer>
+    </CRow>
   )
 }
 

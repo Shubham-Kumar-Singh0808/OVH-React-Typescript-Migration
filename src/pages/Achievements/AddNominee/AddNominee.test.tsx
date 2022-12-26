@@ -34,6 +34,7 @@ describe('add nominee', () => {
           addNominee: {
             isLoading: ApiLoadingState.succeeded,
             nominationFormDetails: mockNominationFormDetails,
+            questionsInformation: [],
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,

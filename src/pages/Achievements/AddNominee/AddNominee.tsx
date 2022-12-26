@@ -9,7 +9,7 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { StoreDescription } from '../../../types/Achievements/AddNominee/AddNomineeTypes'
 
-const AddNominee = () => {
+const AddNominee = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [nominatedEmployeeName, setNominatedEmployeeName] =
@@ -23,16 +23,6 @@ const AddNominee = () => {
     dispatch(reduxServices.addNominee.nominationFormDetailsThunk())
   }, [])
 
-  const isLoadingActiveEmployee = useTypedSelector(
-    (state) => state.addAchiever.isLoading,
-  )
-  const isLoadingAchievementType = useTypedSelector(
-    (state) => state.commonAchievements.isLoading,
-  )
-  const isLoadingAddNominee = useTypedSelector(
-    (state) => state.addNominee.isLoading,
-  )
-
   const formDetails = useTypedSelector(
     (state) => state.addNominee.nominationFormDetails,
   )
@@ -44,7 +34,8 @@ const AddNominee = () => {
     ) {
       const newList: StoreDescription[] = []
       const newObj: StoreDescription = { isDone: false, description: '' }
-      for (const item of formDetails.nominationQuestionDataDtosId) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      for (const _ of formDetails.nominationQuestionDataDtosId) {
         newList.push(newObj)
       }
       dispatch(
@@ -52,6 +43,13 @@ const AddNominee = () => {
       )
     }
   }, [formDetails.nominationQuestionDataDtosId])
+
+  const isLoadingActiveEmployee = useTypedSelector(
+    (state) => state.addAchiever.isLoading,
+  )
+  const isLoadingAchievementType = useTypedSelector(
+    (state) => state.commonAchievements.isLoading,
+  )
 
   return (
     <OCard
@@ -61,8 +59,7 @@ const AddNominee = () => {
       CFooterClassName="d-none"
     >
       {isLoadingAchievementType !== ApiLoadingState.loading &&
-      isLoadingActiveEmployee !== ApiLoadingState.loading &&
-      isLoadingAddNominee !== ApiLoadingState.loading ? (
+      isLoadingActiveEmployee !== ApiLoadingState.loading ? (
         <AddNomineeForm
           achievementType={nominatedAchievementType}
           setAchievementType={setNominatedAchievementType}

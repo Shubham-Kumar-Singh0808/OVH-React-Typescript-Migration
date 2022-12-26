@@ -8,7 +8,7 @@ const toRender = (
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <AchievementEntryContainer customClass={undefined}>
+    <AchievementEntryContainer>
       <div data-testid="ach-cont-check"></div>
     </AchievementEntryContainer>
   </div>

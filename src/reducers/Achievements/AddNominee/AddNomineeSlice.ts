@@ -51,7 +51,7 @@ const addNomineeThunk = createAsyncThunk(
       return await AddNomineeApi.addNominee(outBody)
     } catch (error) {
       const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.data)
+      return thunkApi.rejectWithValue(err.response?.status)
     }
   },
 )
@@ -67,7 +67,7 @@ const addNomineeSlice = createSlice({
       const newList = [...state.questionsInformation]
       const { description, index } = action.payload
       newList[index].description = description as string
-      if (description.length > 150) {
+      if (description.length > 200) {
         newList[index].isDone = true
       } else {
         newList[index].isDone = false
