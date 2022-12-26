@@ -92,6 +92,7 @@ import { projectCreationRequestService } from './ProjectManagement/ProjectCreati
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
+import { myReviewService } from './Performance/MyReview/myReviewSlice'
 
 export const reduxServices = {
   app: appService,
@@ -188,4 +189,5 @@ export const reduxServices = {
   nomineeList: nomineeListService,
   projectCreationRequest: projectCreationRequestService,
   myKRAs: myKRAsService,
+  myReview: myReviewService,
 }

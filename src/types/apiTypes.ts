@@ -623,3 +623,7 @@ export interface NewBookingApi extends ApiBase {
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
 }
+
+export interface MyReviewApi extends ApiBase {
+  getEmployeePerformanceReview: string
+}
