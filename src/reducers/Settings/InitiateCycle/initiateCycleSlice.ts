@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   GetActiveCycleData,
+  GetAllCycles,
   GetAllQuestions,
   InitiateCycleSliceState,
   TotalResponse,
@@ -92,6 +93,42 @@ const addQuestion = createAsyncThunk(
   },
 )
 
+const addCycle = createAsyncThunk(
+  'initiateCycle/addCycle',
+  async (
+    {
+      activateFlag,
+      cycleName,
+      endDate,
+      fromMonth,
+      startDate,
+      toMonth,
+    }: {
+      activateFlag: boolean
+      cycleName: string | undefined
+      endDate: string | undefined
+      fromMonth: string | undefined
+      startDate: string | undefined
+      toMonth: string | undefined
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await initiateCycleApi.addCycle({
+        activateFlag,
+        cycleName,
+        endDate,
+        fromMonth,
+        startDate,
+        toMonth,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialCycleState: InitiateCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -165,6 +202,9 @@ const allQuestions = (state: RootState): GetAllQuestions =>
 
 const listSize = (state: RootState): number => state.initiateCycle.listSize
 
+const allCycles = (state: RootState): GetAllCycles =>
+  state.initiateCycle.allCycles
+
 const pageFromState = (state: RootState): number =>
   state.initiateCycle.currentPage
 
@@ -178,6 +218,7 @@ const initiateCycleThunk = {
   initiateCycle,
   deleteQuestion,
   addQuestion,
+  addCycle,
 }
 
 const initiateCycleSelectors = {
@@ -187,6 +228,7 @@ const initiateCycleSelectors = {
   allQuestions,
   pageFromState,
   pageSizeFromState,
+  allCycles,
 }
 
 export const initiateCycleService = {

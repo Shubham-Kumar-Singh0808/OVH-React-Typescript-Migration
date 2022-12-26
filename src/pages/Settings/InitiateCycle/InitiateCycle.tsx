@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
 import AddQuestion from './AddQuestion/AddQuestion'
+import AddInitiateCycle from './AddCycle/AddInitiateCycle'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -115,7 +116,11 @@ const InitiateCycle = (): JSX.Element => {
         >
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
-              <CButton color="info" className="btn-ovh me-1">
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                onClick={() => setToggle('addCycle')}
+              >
                 <i className="fa fa-plus me-1"></i>
                 Add Cycle
               </CButton>
@@ -206,6 +211,13 @@ const InitiateCycle = (): JSX.Element => {
       )}
       {toggle === 'addQuestion' && (
         <AddQuestion
+          setToggle={() => {
+            setToggle('')
+          }}
+        />
+      )}
+      {toggle === 'addCycle' && (
+        <AddInitiateCycle
           setToggle={() => {
             setToggle('')
           }}

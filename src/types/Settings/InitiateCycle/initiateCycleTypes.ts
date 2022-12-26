@@ -12,6 +12,15 @@ export type NominationCycleDto = {
   questionMappingDtos: null
 }
 
+export type NominationCycle = {
+  cycleName: string
+  fromMonth: string
+  toMonth: string
+  activateFlag: boolean
+  startDate: string
+  endDate: string
+}
+
 export type GetActiveCycleData = {
   id: null | number
   nominationCycleDto: NominationCycleDto

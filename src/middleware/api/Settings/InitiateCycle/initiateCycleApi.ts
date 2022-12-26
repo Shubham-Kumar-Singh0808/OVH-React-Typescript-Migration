@@ -3,6 +3,7 @@ import {
   GetAllCycles,
   GetAllQuestions,
   GetQuestion,
+  NominationCycle,
   TotalResponse,
 } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import {
@@ -82,6 +83,38 @@ const addQuestion = async ({
   return response.data
 }
 
+const addCycle = async ({
+  activateFlag,
+  cycleName,
+  endDate,
+  fromMonth,
+  startDate,
+  toMonth,
+}: {
+  activateFlag: boolean
+  cycleName: string | undefined
+  endDate: string | undefined
+  fromMonth: string | undefined
+  startDate: string | undefined
+  toMonth: string | undefined
+}): Promise<NominationCycle> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.addCycle,
+    method: AllowedHttpMethods.post,
+    data: {
+      activateFlag,
+      cycleName,
+      endDate,
+      fromMonth,
+      startDate,
+      toMonth,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const initiateCycleApi = {
   getActiveCycleData,
   getAllCycles,
@@ -89,6 +122,7 @@ const initiateCycleApi = {
   initiateCycle,
   deleteQuestion,
   addQuestion,
+  addCycle,
 }
 
 export default initiateCycleApi
