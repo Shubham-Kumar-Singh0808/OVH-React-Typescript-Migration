@@ -93,6 +93,7 @@ import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
+import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
 
@@ -189,6 +190,7 @@ export const reduxServices = {
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   nomineeList: nomineeListService,
+  addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,

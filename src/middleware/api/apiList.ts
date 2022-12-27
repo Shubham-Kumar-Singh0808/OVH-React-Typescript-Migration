@@ -83,6 +83,7 @@ import {
   InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
+  AddNomineeApi,
   MyReviewApi,
   LeadershipEnrollmentFormApi,
 } from '../../types/apiTypes'
@@ -740,6 +741,12 @@ export const NomineeListApiConfig: NomineeListApi = {
     apiPrefix + '/nominationController/getNominationDetails',
   reviewNominee: apiPrefix + '/nominationController/reviewNominee',
   exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
+}
+
+export const AddNomineeApiConfig: AddNomineeApi = {
+  nominationFormDetails:
+    apiPrefix + '/nominationController/nominationFormDetails',
+  addNominee: apiPrefix + '/nominationController/addNominee',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
