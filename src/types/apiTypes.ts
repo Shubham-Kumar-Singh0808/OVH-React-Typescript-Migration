@@ -635,4 +635,5 @@ export interface NewBookingApi extends ApiBase {
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+  getEmployeeReviewForm: string
 }

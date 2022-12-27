@@ -5,6 +5,7 @@ import { myReviewApi } from '../../../middleware/api/Performance/MyReview/myRevi
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  EmployeeAppraisalForm,
   MyReviewSliceState,
   PageDetails,
 } from '../../../types/Performance/MyReview/myReviewTypes'
@@ -12,21 +13,8 @@ import {
 const initialMyReviewState: MyReviewSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
-  pageDetails: {
-    country: null,
-    departmentId: null,
-    departmentName: null,
-    description: '',
-    displayOrder: 0,
-    empCountry: '',
-    handCountry: [],
-    id: 0,
-    pageName: '',
-    sectionId: null,
-    sectionName: null,
-    title: '',
-    type: '',
-  },
+  pageDetails: {} as PageDetails,
+  employeeAppraisalForm: {} as EmployeeAppraisalForm,
 }
 
 const getEmployeePerformanceReview = createAsyncThunk<
@@ -46,6 +34,23 @@ const getEmployeePerformanceReview = createAsyncThunk<
   }
 })
 
+const getEmployeeReviewForm = createAsyncThunk<
+  EmployeeAppraisalForm | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('myReview/getEmployeeReviewForm', async (empId: number, thunkApi) => {
+  try {
+    return await myReviewApi.getEmployeeReviewForm(empId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -56,11 +61,24 @@ const myReviewSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.pageDetails = action.payload as PageDetails
       })
-      .addMatcher(isAnyOf(getEmployeePerformanceReview.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getEmployeeReviewForm.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeAppraisalForm = action.payload as EmployeeAppraisalForm
       })
       .addMatcher(
-        isAnyOf(getEmployeePerformanceReview.rejected),
+        isAnyOf(
+          getEmployeePerformanceReview.pending,
+          getEmployeeReviewForm.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getEmployeePerformanceReview.rejected,
+          getEmployeeReviewForm.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -69,16 +87,20 @@ const myReviewSlice = createSlice({
   },
 })
 
-const isLoading = (state: RootState): LoadingState =>
-  state.itDeclarationList.isLoading
+const isLoading = (state: RootState): LoadingState => state.myReview.isLoading
 const reviewPage = (state: RootState): PageDetails => state.myReview.pageDetails
+const appraisalForm = (state: RootState): EmployeeAppraisalForm =>
+  state.myReview.employeeAppraisalForm
+
 const myReviewThunk = {
   getEmployeePerformanceReview,
+  getEmployeeReviewForm,
 }
 
 const myReviewSelectors = {
   isLoading,
   reviewPage,
+  appraisalForm,
 }
 
 export const myReviewService = {
