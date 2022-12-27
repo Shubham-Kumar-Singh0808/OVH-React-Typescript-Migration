@@ -1,26 +1,29 @@
-import { CCol, CFormLabel } from '@coreui/react-pro'
+import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import React from 'react'
 import Autocomplete from 'react-autocomplete'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import {
   emptyString,
+  entryContainerClass,
   newAchievementLabelClass,
 } from '../../AchievementConstants'
-import AchievementEntryContainer from '../AchievementTypeList/AchievementEntryContainer'
 
 const FilterEmployeeName = ({
   allEmployees,
   onSelectEmployee,
   employeeName,
   setEmployeeName,
+  customClass,
+  labelClass,
 }: {
   allEmployees: IncomingActiveEmployee[]
   onSelectEmployee: (value: string) => void
   employeeName: string | undefined
   setEmployeeName: React.Dispatch<React.SetStateAction<string | undefined>>
+  customClass?: string
+  labelClass?: string
 }): JSX.Element => {
-  console.log(employeeName)
-
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
@@ -36,17 +39,23 @@ const FilterEmployeeName = ({
   }
 
   return (
-    <AchievementEntryContainer>
+    <CRow className={customClass ? customClass : entryContainerClass}>
       <CFormLabel
         data-testid="ach-emp-name"
-        className={newAchievementLabelClass}
+        className={labelClass ? labelClass : newAchievementLabelClass}
       >
         Employee Name:
-        {(employeeName === undefined ||
-          employeeName === emptyString ||
-          employeeName.trim().length === 0) && (
-          <span className="text-danger">*</span>
-        )}
+        <span
+          className={
+            employeeName === undefined ||
+            employeeName === emptyString ||
+            employeeName.trim().length === 0
+              ? TextDanger
+              : TextWhite
+          }
+        >
+          *
+        </span>
       </CFormLabel>
       <CCol md={3}>
         <Autocomplete
@@ -90,7 +99,7 @@ const FilterEmployeeName = ({
           onSelect={(value) => selectEmployeeHandler(value)}
         />
       </CCol>
-    </AchievementEntryContainer>
+    </CRow>
   )
 }
 

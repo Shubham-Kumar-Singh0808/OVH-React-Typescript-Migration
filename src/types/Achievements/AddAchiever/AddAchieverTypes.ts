@@ -80,6 +80,8 @@ export interface AddAchieverTypeTableProps {
   executeSaveButtonHandler: (
     incomingData: EditedAchievementDetails,
   ) => Promise<void>
+  isEditSaveButtonEnabled: boolean
+  setEditSaveButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface IncomingActiveEmployee {

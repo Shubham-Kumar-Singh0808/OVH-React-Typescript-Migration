@@ -607,6 +607,11 @@ export interface NomineeListApi extends ApiBase {
   exportNomineeList: string
 }
 
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+  addNominee: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
@@ -634,4 +639,8 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+}
+
+export interface MyReviewApi extends ApiBase {
+  getEmployeePerformanceReview: string
 }

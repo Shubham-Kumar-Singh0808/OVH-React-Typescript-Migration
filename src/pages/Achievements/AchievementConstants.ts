@@ -8,6 +8,7 @@ import { deviceLocale } from '../../utils/dateFormatUtils'
 
 export const selectAchievementType = 'Select Achievement Type'
 export const newAchievementLabelClass = 'col-sm-3 col-form-label text-end'
+export const entryContainerClass = 'mt-3 mb-3 align-items-center'
 export const errorOrderMessage = 'Order must be unique'
 export const errorAchievementNameMessage = 'Achievement name already exists'
 export const fromToDateError = 'To month should be greater than From month'
@@ -15,6 +16,7 @@ export const emptyString = ''
 export const selectCycle = 'Select a cycle'
 export const selectRating = 'Select Rating'
 export const notFoundNumber = -1
+export const descriptionLengthError = 'Please enter atleast 150 characters'
 export type ErrorBooleans = {
   achievementError1: boolean
   achievementError2: boolean
