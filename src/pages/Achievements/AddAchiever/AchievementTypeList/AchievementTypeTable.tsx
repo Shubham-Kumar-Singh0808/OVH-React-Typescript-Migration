@@ -97,12 +97,13 @@ const AchievementTypeTable = (
     }
   }, [editedValues])
 
-  console.log(editedValues)
   useEffect(() => {
     if (
       editedValues.newOrder === emptyString ||
       editedValues.newStatus === emptyString ||
-      errors.achievementError2
+      errors.achievementError2 ||
+      editedValues.newOrder === '0' ||
+      editedValues.newOrder === '00'
     ) {
       setEditSaveButtonEnabled(false)
     } else {
