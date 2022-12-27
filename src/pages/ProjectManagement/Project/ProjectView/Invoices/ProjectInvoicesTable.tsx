@@ -7,7 +7,6 @@ import {
   CTableDataCell,
   CButton,
   CLink,
-  CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import ProjectInvoicesEntryTable from './ProjectInvoicesEntryTable'
@@ -37,38 +36,38 @@ const ProjectInvoicesTable = (): JSX.Element => {
   const result = (
     <CTable>
       <CTableBody>
-        <CRow>
+        <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.project}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Client:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.client}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.title}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Percentage:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Effort:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.effort || 'N/A'}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Planned End Date:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.planedDate || 'N/A'}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Actual End Date:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.actualDate || 'N/A'}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Comments:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.comments || 'N/A'}</CTableDataCell>
-        </CRow>
+        </CTableRow>
       </CTableBody>
     </CTable>
   )
