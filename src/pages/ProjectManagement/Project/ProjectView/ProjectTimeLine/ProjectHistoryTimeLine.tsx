@@ -213,7 +213,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {projectCurrentStatus ? (
+                      {history.isAllocated !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -227,7 +227,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {projectBillable ? (
+                      {history.billable !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
