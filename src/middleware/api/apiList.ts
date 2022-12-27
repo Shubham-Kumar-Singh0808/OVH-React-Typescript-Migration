@@ -83,6 +83,7 @@ import {
   ProjectChangeRequestApi,
   ProjectMilestoneApi,
   ProjectInvoiceApi,
+  ProjectTailoringApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -748,4 +749,10 @@ export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+}
+
+export const projectTailoringApiConfig: ProjectTailoringApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
 }
