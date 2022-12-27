@@ -57,7 +57,7 @@ const LeadershipEnrollmentFormSlice = createSlice({
     builder.addMatcher(
       isAnyOf(getEmployeeDetailsThunk.pending, addLeadershipThunk.pending),
       (state) => {
-        state.isLoading = ApiLoadingState.failed
+        state.isLoading = ApiLoadingState.loading
       },
     )
   },
