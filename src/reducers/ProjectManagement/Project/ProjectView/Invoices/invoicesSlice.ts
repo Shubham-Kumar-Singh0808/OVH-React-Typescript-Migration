@@ -14,7 +14,7 @@ import {
 
 const getClosedMilestonesAndCRs = createAsyncThunk<
   InvoicesList,
-  number,
+  number | string,
   {
     dispatch: AppDispatch
     state: RootState
@@ -22,7 +22,7 @@ const getClosedMilestonesAndCRs = createAsyncThunk<
   }
 >(
   'projectView/getClosedMilestonesAndCRs',
-  async (projectId: number, thunkApi) => {
+  async (projectId: number | string, thunkApi) => {
     try {
       return await invoicesApi.getClosedMilestonesAndCRs(projectId)
     } catch (error) {
@@ -67,7 +67,7 @@ const invoiceSlice = createSlice({
     builder
       .addCase(getClosedMilestonesAndCRs.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.invoicesList = action.payload as InvoicesList
+        state.invoicesList = action.payload
       })
       .addCase(getInvoicesOfMilestone.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded

@@ -8,7 +8,6 @@ import {
   CButton,
   CTooltip,
   CLink,
-  CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../../../components/ReusableComponent/OModal'
@@ -36,86 +35,86 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
   const result2 = (
     <CTable>
       <CTableBody>
-        <CRow>
+        <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.projectName}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Client:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.clientName}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.milestoneName}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Percentage:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Planned End Date:</CTableDataCell>
           <CTableDataCell>
             {ticketSubject?.milestonePlannedEndDate || 'N/A'}
           </CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Actual End Date:</CTableDataCell>
           <CTableDataCell>
             {ticketSubject?.milestoneActualEndDate || 'N/A'}
           </CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Comments:</CTableDataCell>
           <CTableDataCell>
             {ticketSubject?.milestoneComments || 'N/A'}
           </CTableDataCell>
-        </CRow>
+        </CTableRow>
       </CTableBody>
     </CTable>
   )
   const result = (
     <CTable>
       <CTableBody>
-        <CRow>
+        <CTableRow>
           <CTableDataCell>Serial Number:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.invoicNumber}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell> Invoice Number:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.number}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.milestoneName}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Invoice Percentage:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell> Status:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.invoiceStatus}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Sent Date:</CTableDataCell>
           <CTableDataCell>{ticketSubject?.raisedDate || 'N/A'}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Sent Amount</CTableDataCell>
           <CTableDataCell>&{ticketSubject?.totalAmount}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Discount:</CTableDataCell>
           <CTableDataCell>${ticketSubject?.discount}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Tax:</CTableDataCell>
           <CTableDataCell>${ticketSubject?.discountRate}</CTableDataCell>
-        </CRow>
-        <CRow>
+        </CTableRow>
+        <CTableRow>
           <CTableDataCell>Total Sent Amount (AUD):</CTableDataCell>
           <CTableDataCell>${ticketSubject?.totalAmount}</CTableDataCell>
-        </CRow>
+        </CTableRow>
       </CTableBody>
     </CTable>
   )
@@ -146,6 +145,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody>
           {InvoicesOfMilestone?.map((item, index) => {
+            const crName = item.crName !== null ? '' : 'N/A'
             return (
               <CTableRow key={index}>
                 <CTableDataCell scope="row"></CTableDataCell>
@@ -161,7 +161,6 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   </CLink>
                 </CTableDataCell>
                 <CTableDataCell scope="row">{item.number}</CTableDataCell>
-
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
@@ -171,10 +170,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                     {item.milestoneName}
                   </CLink>
                 </CTableDataCell>
-                {/* <CTableDataCell scope="row">
-                  {item.milestoneName}
-                </CTableDataCell> */}
-                <CTableDataCell scope="row">{'N/A'}</CTableDataCell>
+                <CTableDataCell scope="row">{crName}</CTableDataCell>
                 <CTableDataCell scope="row">
                   {item.milestonePercentage}%
                 </CTableDataCell>
@@ -186,6 +182,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                 </CTableDataCell>
                 <CTableDataCell scope="row">{'N/A'}</CTableDataCell>
                 <CTableDataCell scope="row">${item.subtotal}</CTableDataCell>
+                <CTableDataCell scope="row">${item.totalAmount}</CTableDataCell>
                 <CTableDataCell scope="row">${item.totalAmount}</CTableDataCell>
                 <CTableDataCell scope="row">
                   <CTooltip content="Edit">

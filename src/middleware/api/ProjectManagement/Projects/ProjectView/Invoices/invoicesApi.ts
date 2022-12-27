@@ -12,7 +12,7 @@ import {
 } from '../../../../apiList'
 
 const getClosedMilestonesAndCRs = async (
-  projectId: number,
+  projectId: number | string,
 ): Promise<InvoicesList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectInvoicesApiConfig.getClosedMilestonesAndCRs,

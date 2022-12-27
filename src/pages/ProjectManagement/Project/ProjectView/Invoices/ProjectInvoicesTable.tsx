@@ -125,7 +125,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
                       {data.raisedInvoicePercentage}%
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      {data.remainingPercentage}&
+                      {data.remainingPercentage}%
                     </CTableDataCell>
                     <CTableDataCell
                       scope="row"
@@ -135,7 +135,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
                         color="success"
                         className="btn-ovh me-1 btn-ovh-employee-list"
                       >
-                        <i className="fa fa-plus" aria-hidden="true"></i>Raise
+                        <i className="fa fa-plus" aria-hidden="true"></i> Raise
                         Invoice
                       </CButton>
                     </CTableDataCell>
