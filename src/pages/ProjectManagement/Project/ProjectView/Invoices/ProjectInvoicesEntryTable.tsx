@@ -16,104 +16,106 @@ import { useTypedSelector } from '../../../../../stateStore'
 import { InvoicesOfMilestone } from '../../../../../types/ProjectManagement/Project/ProjectView/Invoices/invoicesTypes'
 
 const ProjectInvoicesEntryTable = (): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [ticketSubject, setTicketSubject] = useState<InvoicesOfMilestone>()
+  const [isInvoiceNumberModalVisible, setIsInvoiceNumberModalVisible] =
+    useState(false)
+  const [invoiceNumber, setInvoiceNumber] = useState<InvoicesOfMilestone>()
   const [isModalsVisible, setIsModalsVisible] = useState(false)
+
   const InvoicesOfMilestone = useTypedSelector(
     reduxServices.projectInvoices.selectors.invoicesOfMilestoneList,
   )
 
   const handleModal = (data: InvoicesOfMilestone) => {
-    setIsModalVisible(true)
-    setTicketSubject(data)
+    setIsInvoiceNumberModalVisible(true)
+    setInvoiceNumber(data)
   }
 
   const handleMileStoneModal = (data: InvoicesOfMilestone) => {
     setIsModalsVisible(true)
-    setTicketSubject(data)
+    setInvoiceNumber(data)
   }
-  const result2 = (
+  const milestoneNameModel = (
     <CTable>
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.projectName}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.projectName}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Client:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.clientName}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.clientName}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.milestoneName}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Percentage:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.milestonePercentage}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Planned End Date:</CTableDataCell>
           <CTableDataCell>
-            {ticketSubject?.milestonePlannedEndDate || 'N/A'}
+            {invoiceNumber?.milestonePlannedEndDate || 'N/A'}
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Actual End Date:</CTableDataCell>
           <CTableDataCell>
-            {ticketSubject?.milestoneActualEndDate || 'N/A'}
+            {invoiceNumber?.milestoneActualEndDate || 'N/A'}
           </CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Comments:</CTableDataCell>
           <CTableDataCell>
-            {ticketSubject?.milestoneComments || 'N/A'}
+            {invoiceNumber?.milestoneComments || 'N/A'}
           </CTableDataCell>
         </CTableRow>
       </CTableBody>
     </CTable>
   )
-  const result = (
+  const invoiceModel = (
     <CTable>
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Serial Number:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.invoicNumber}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.invoicNumber}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell> Invoice Number:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.number}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.number}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.milestoneName}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Invoice Percentage:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.milestonePercentage}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell> Status:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.invoiceStatus}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.invoiceStatus}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Sent Date:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.raisedDate || 'N/A'}</CTableDataCell>
+          <CTableDataCell>{invoiceNumber?.raisedDate || 'N/A'}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Sent Amount</CTableDataCell>
-          <CTableDataCell>&{ticketSubject?.totalAmount}</CTableDataCell>
+          <CTableDataCell>&{invoiceNumber?.totalAmount}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Discount:</CTableDataCell>
-          <CTableDataCell>${ticketSubject?.discount}</CTableDataCell>
+          <CTableDataCell>${invoiceNumber?.discount}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Tax:</CTableDataCell>
-          <CTableDataCell>${ticketSubject?.discountRate}</CTableDataCell>
+          <CTableDataCell>${invoiceNumber?.discountRate}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Total Sent Amount (AUD):</CTableDataCell>
-          <CTableDataCell>${ticketSubject?.totalAmount}</CTableDataCell>
+          <CTableDataCell>${invoiceNumber?.totalAmount}</CTableDataCell>
         </CTableRow>
       </CTableBody>
     </CTable>
@@ -150,11 +152,10 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
               <CTableRow key={index}>
                 <CTableDataCell scope="row"></CTableDataCell>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    data-testid={`emp-subject${index}`}
+                    data-testid="invoice-test"
                     onClick={() => handleModal(item)}
                   >
                     {item.invoicNumber}
@@ -164,7 +165,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                 <CTableDataCell scope="row">
                   <CLink
                     className="cursor-pointer text-decoration-none text-primary"
-                    data-testid={`emp-subject${index}`}
+                    data-testid="milestone-name"
                     onClick={() => handleMileStoneModal(item)}
                   >
                     {item.milestoneName}
@@ -229,10 +230,10 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
         modalBodyClass="model-body-text-alinement"
-        visible={isModalVisible}
-        setVisible={setIsModalVisible}
+        visible={isInvoiceNumberModalVisible}
+        setVisible={setIsInvoiceNumberModalVisible}
       >
-        {result}
+        {invoiceModel}
       </OModal>
       <OModal
         modalSize="lg"
@@ -243,7 +244,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
         visible={isModalsVisible}
         setVisible={setIsModalsVisible}
       >
-        {result2}
+        {milestoneNameModel}
       </OModal>
     </>
   )

@@ -18,55 +18,60 @@ import { MilestoneList } from '../../../../../types/ProjectManagement/Project/Pr
 const ProjectInvoicesTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [ticketSubject, setTicketSubject] = useState<MilestoneList>()
-  const [selectEmpId, setSelectEmpId] = useState<number>()
+  const [milestoneName, setMilestoneName] = useState<MilestoneList>()
+  const [milestoneId, setMilestoneId] = useState<number>()
+
   const invoicesOfMilestone = useTypedSelector(
     reduxServices.projectInvoices.selectors.allMilestoneList,
   )
+
   const dispatch = useAppDispatch()
+
   const handleExpandRow = (id: number) => {
     setIsIconVisible(true)
-    setSelectEmpId(id)
+    setMilestoneId(id)
     dispatch(reduxServices.projectInvoices.getInvoicesOfMilestone(id))
   }
+
   const handleModal = (data: MilestoneList) => {
     setIsModalVisible(true)
-    setTicketSubject(data)
+    setMilestoneName(data)
   }
-  const result = (
+
+  const milestoneTitle = (
     <CTable>
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.project}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.project}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Client:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.client}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.client}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.title}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.title}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Percentage:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.milestonePercentage}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.milestonePercentage}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Effort:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.effort || 'N/A'}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.effort || 'N/A'}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Planned End Date:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.planedDate || 'N/A'}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.planedDate || 'N/A'}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Actual End Date:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.actualDate || 'N/A'}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.actualDate || 'N/A'}</CTableDataCell>
         </CTableRow>
         <CTableRow>
           <CTableDataCell>Comments:</CTableDataCell>
-          <CTableDataCell>{ticketSubject?.comments || 'N/A'}</CTableDataCell>
+          <CTableDataCell>{milestoneName?.comments || 'N/A'}</CTableDataCell>
         </CTableRow>
       </CTableBody>
     </CTable>
@@ -98,7 +103,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
                 <React.Fragment key={index}>
                   <CTableRow>
                     <CTableDataCell scope="row">
-                      {isIconVisible && selectEmpId === data.id ? (
+                      {isIconVisible && milestoneId === data.id ? (
                         <i
                           data-testid="minus-btn"
                           className="fa fa-minus-circle cursor-pointer"
@@ -115,7 +120,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
                     <CTableDataCell scope="row">
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`emp-subject${index}`}
+                        data-testid="title-model"
                         onClick={() => handleModal(data)}
                       >
                         {data.title}
@@ -140,7 +145,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
                       </CButton>
                     </CTableDataCell>
                   </CTableRow>
-                  {isIconVisible && selectEmpId === data.id ? (
+                  {isIconVisible && milestoneId === data.id ? (
                     <CTableDataCell colSpan={10}>
                       <ProjectInvoicesEntryTable />
                     </CTableDataCell>
@@ -161,7 +166,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
         visible={isModalVisible}
         setVisible={setIsModalVisible}
       >
-        {result}
+        {milestoneTitle}
       </OModal>
     </>
   )
