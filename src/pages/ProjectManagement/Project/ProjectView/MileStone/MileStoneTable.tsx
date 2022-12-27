@@ -12,13 +12,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
+import { useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { MileStoneResponse } from '../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
@@ -34,10 +35,11 @@ const MileStoneTable = (): JSX.Element => {
   const mileStoneListSize = useTypedSelector(
     reduxServices.projectMileStone.selectors.projectMileStoneSize,
   )
-
+  const { projectId } = useParams<{ projectId: string }>()
   const isLoading = useTypedSelector(
     reduxServices.projectMileStone.selectors.isLoading,
   )
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -61,6 +63,14 @@ const MileStoneTable = (): JSX.Element => {
     setIsModalVisible(true)
     setTitle(title)
   }
+
+  dispatch(
+    reduxServices.projectMileStone.getProjectMileStone({
+      endIndex: pageSize * currentPage,
+      firstIndex: pageSize * (currentPage - 1),
+      projectid: projectId,
+    }),
+  )
   const result = (
     <>
       <h5>Milestone Details</h5>
@@ -140,7 +150,7 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`subject-comments${index}`}
+                        data-testid="title-test"
                         onClick={() => handleTitleModal(item)}
                       >
                         {parse(titleLimit)}
@@ -159,7 +169,7 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>
                       <CLink
                         className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`subject-comments${index}`}
+                        data-testid="comments-test"
                         onClick={() => handleModal(item.comments)}
                       >
                         {parse(commentsLimit)}
