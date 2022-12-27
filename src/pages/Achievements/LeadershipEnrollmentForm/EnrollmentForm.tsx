@@ -64,8 +64,8 @@ const EnrollmentForm = (props: EnrollmentFormProps) => {
   const [showEditors, setShowEditors] = useState<boolean>(true)
 
   const isNullValuePresent = () => {
-    for (const [_, value] of Object.entries(enteredAnswers)) {
-      if (value === null) {
+    for (const [key, value] of Object.entries(enteredAnswers)) {
+      if (key && value === null) {
         return true
       }
     }
