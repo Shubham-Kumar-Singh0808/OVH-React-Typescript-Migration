@@ -46,6 +46,9 @@ const projectTimeLineSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.projectHistoryResponse = action.payload as ProjectHistoryResponse
     })
+    builder.addCase(projectHistoryDetails.pending, (state) => {
+      state.isLoading = ApiLoadingState.loading
+    })
   },
 })
 

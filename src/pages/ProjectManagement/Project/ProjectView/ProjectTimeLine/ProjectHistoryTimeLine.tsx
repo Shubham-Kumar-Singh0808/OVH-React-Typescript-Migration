@@ -57,8 +57,14 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
     <>
       <div className="sh-timeline-container">
         {projectHistoryDetails.map((history, index) => {
-          const projectBillable = history.billable ? 'Yes' : 'No'
+          const projectCurrentStatus = history.isAllocated
+            ? 'Allocated'
+            : 'De-Allocated'
+          const projectOldCurrentStatus = history.oldIsAllocated
+            ? 'Allocated'
+            : 'De-Allocated'
           const projectOldBillable = history.oldBillable ? 'Yes' : 'No'
+          const projectBillable = history.billable ? 'yes' : 'No'
           return (
             <div key={index} className="sh-timeline-card">
               <div
@@ -105,22 +111,6 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-
-                      {projectBillable ? (
-                        <>
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              Billable
-                            </CFormLabel>
-                            {isProjectPrevValue(projectOldBillable as string)}
-                            &nbsp;
-                            {projectBillable}
-                          </div>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-
                       {history.status ? (
                         <>
                           <div className="mb-1">
@@ -195,7 +185,6 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-
                       {history.status ? (
                         <>
                           <div className="mb-1">
@@ -210,16 +199,43 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-
                       {history.type ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
                               Pricing Model
                             </CFormLabel>
-                            {isProjectPrevValue(history.oldType as string)}
+                            {isProjectPrevValue(history.oldType)}
                             &nbsp;
                             {history.type}
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {projectCurrentStatus ? (
+                        <>
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              Current Status
+                            </CFormLabel>
+                            {isProjectPrevValue(projectOldCurrentStatus)}
+                            &nbsp;
+                            {projectCurrentStatus}
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {projectBillable ? (
+                        <>
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              Billable
+                            </CFormLabel>
+                            {isProjectPrevValue(projectOldBillable)}
+                            &nbsp;
+                            {projectBillable}
                           </div>
                         </>
                       ) : (
