@@ -141,6 +141,18 @@ const editCycle = createAsyncThunk(
   },
 )
 
+const updateCycle = createAsyncThunk(
+  'initiateCycle/updateCycle',
+  async (_, thunkApi) => {
+    try {
+      return await initiateCycleApi.updateCycle()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialCycleState: InitiateCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -184,15 +196,19 @@ const initiateCycleSlice = createSlice({
         state.allQuestions = action.payload
         state.listSize = action.payload.size
       })
-      .addMatcher(isAnyOf(editCycle.fulfilled), (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(editCycle.fulfilled, updateCycle.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getActiveCycleData.pending,
           getAllCycles.pending,
           getAllQuestions.pending,
           editCycle.pending,
+          updateCycle.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -204,6 +220,7 @@ const initiateCycleSlice = createSlice({
           getAllCycles.rejected,
           getAllQuestions.rejected,
           editCycle.rejected,
+          updateCycle.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -243,6 +260,7 @@ const initiateCycleThunk = {
   addQuestion,
   addCycle,
   editCycle,
+  updateCycle,
 }
 
 const initiateCycleSelectors = {

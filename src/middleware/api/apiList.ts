@@ -754,6 +754,7 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
   addQuestion: apiPrefix + '/nominationController/addQuestion',
   addCycle: apiPrefix + '/nominationController/addCycle',
   editCycle: apiPrefix + '/nominationController/editCycle',
+  updateCycle: apiPrefix + '/nominationController/updateCycle',
 }
 
 export const myKRAsApiConfig: MyKRAsApi = {

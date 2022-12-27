@@ -10,7 +10,7 @@ import { mockAllCycles } from '../../../../test/data/initiateCycleData'
 const mockSetTogglePage = jest.fn()
 describe('Add Cycle without data', () => {
   beforeEach(() => {
-    render(<AddInitiateCycle setToggle={mockSetTogglePage} />, {
+    render(<AddInitiateCycle />, {
       preloadedState: {
         initiateCycle: {
           isLoading: ApiLoadingState.succeeded,
