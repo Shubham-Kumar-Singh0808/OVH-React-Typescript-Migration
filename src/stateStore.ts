@@ -103,6 +103,7 @@ import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverS
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
+import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlice'
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 
 export const allReducers = {
@@ -204,6 +205,7 @@ export const allReducers = {
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
   nomineeList: nomineeListReducer,
+  addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,
