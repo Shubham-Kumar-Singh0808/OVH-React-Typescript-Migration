@@ -64,7 +64,6 @@ const EnrollmentForm = (props: EnrollmentFormProps) => {
   const [showEditors, setShowEditors] = useState<boolean>(true)
 
   const isNullValuePresent = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     for (const [_, value] of Object.entries(enteredAnswers)) {
       if (value === null) {
         return true
