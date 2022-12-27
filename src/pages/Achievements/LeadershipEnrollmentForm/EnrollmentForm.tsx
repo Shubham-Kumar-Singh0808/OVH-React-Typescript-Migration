@@ -61,10 +61,6 @@ const EnrollmentForm = (props: EnrollmentFormProps) => {
   const [enteredAnswers, setEnteredAnswers] =
     useState<FilledLeadershipForm>(initialAnswersState)
 
-  // const [expectationsExample, setExpectationsExample] =
-  //   useState<string>(emptyString)
-
-  // const [reasonDetails, setReasonDetails] = useState<string>(emptyString)
   const [showEditors, setShowEditors] = useState<boolean>(true)
 
   const isNullValuePresent = () => {
