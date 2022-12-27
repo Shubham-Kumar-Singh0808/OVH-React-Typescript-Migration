@@ -1,7 +1,8 @@
 import React from 'react'
+import AppraisalForm from './AppraisalForm'
 
 const EmployeeReviewForm = (): JSX.Element => {
-  return <h3>Employee Review Form</h3>
+  return <>{AppraisalForm}</>
 }
 
 export default EmployeeReviewForm

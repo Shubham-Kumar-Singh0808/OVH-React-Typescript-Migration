@@ -772,4 +772,5 @@ export const newBookingApiConfig: NewBookingApi = {
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
   getEmployeeReviewForm: apiPrefix + '/appraisal/AppraisalForm',
+  saveAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
 }

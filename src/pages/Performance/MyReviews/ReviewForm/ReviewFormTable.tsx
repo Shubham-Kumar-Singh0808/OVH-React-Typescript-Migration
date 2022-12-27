@@ -1,4 +1,5 @@
 import {
+  CButton,
   CCol,
   CRow,
   CTable,
@@ -8,6 +9,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import ReviewFormEntry from './ReviewFormEntry'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
@@ -18,8 +20,8 @@ const ReviewFormTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedEmpId, setSelectedEmpId] = useState<number>(Number(employeeId))
 
-  const kpisForIndividualKra = useTypedSelector(
-    reduxServices.myKRAs.selectors.kpis,
+  const appraisalForm = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalForm,
   )
 
   return (
@@ -34,37 +36,28 @@ const ReviewFormTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {kpisForIndividualKra &&
-            kpisForIndividualKra?.map((kra, index) => (
-            //   <MyKRAsEntry
-            //     id={kra.id}
-            //     key={index}
-            //     selectedPersonId={Number(selectedPersonId)}
-            //     setSelectedPersonId={setSelectedPersonId}
-            //     isIconVisible={isIconVisible}
-            //     setIsIconVisible={setIsIconVisible}
-            //     employeeKRA={{
-            //       checkType: kra.checkType,
-            //       count: kra.count,
-            //       departmentId: kra.departmentId,
-            //       departmentName: kra.departmentName,
-            //       description: kra.description,
-            //       designationId: kra.designationId,
-            //       designationKraPercentage: kra.designationKraPercentage,
-            //       designationName: kra.designationName,
-            //       id: kra.id,
-            //       kpiLookps: kra.kpiLookps,
-            //       name: kra.name,
-            //     }}
-            //   />
+          {appraisalForm &&
+            appraisalForm?.kra?.map((kra, index) => (
+              <ReviewFormEntry
+                id={kra.id}
+                key={index}
+                selectedEmployeeId={Number(selectedEmpId)}
+                setSelectedEmployeeId={setSelectedEmpId}
+                isIconVisible={isIconVisible}
+                setIsIconVisible={setIsIconVisible}
+                employeeKRA={kra}
+              />
             ))}
         </CTableBody>
       </CTable>
       <CRow>
-        <CCol xs={4}>
-          <p>
-            <strong>Total Records: {kpisForIndividualKra.length}</strong>
-          </p>
+        <CCol md={{ span: 6, offset: 3 }}>
+          <CButton className="btn-ovh me-1" color="success">
+            Save
+          </CButton>
+          <CButton color="success " className="btn-ovh" disabled>
+            Submit
+          </CButton>
         </CCol>
       </CRow>
     </>

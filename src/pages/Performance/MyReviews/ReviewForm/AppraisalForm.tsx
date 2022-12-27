@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import OCard from '../../../../components/ReusableComponent/OCard'
+import ReviewFormTable from './ReviewFormTable'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
-import MyKRAsTable from '../../MyKRAs/MyKRAsTable'
 
 const AppraisalForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -20,18 +19,11 @@ const AppraisalForm = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="My KRAs"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        {isLoading !== ApiLoadingState.loading ? (
-          <MyKRAsTable />
-        ) : (
-          <OLoadingSpinner type={LoadingType.PAGE} />
-        )}
-      </OCard>
+      {isLoading !== ApiLoadingState.loading ? (
+        <ReviewFormTable />
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }
