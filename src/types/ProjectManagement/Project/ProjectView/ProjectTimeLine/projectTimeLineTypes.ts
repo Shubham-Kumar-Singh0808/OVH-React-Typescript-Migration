@@ -6,7 +6,7 @@ export type ProjectHistoryResponse = {
 }
 
 export type ProjectHistory = {
-  id: number
+  id: number | string
   projectName: string
   oldProjectName: string
   startdate: string

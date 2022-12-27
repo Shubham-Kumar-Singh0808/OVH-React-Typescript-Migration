@@ -1,15 +1,25 @@
 import { CCol, CRow, CSpinner } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import ProjectHistoryTimeLine from './ProjectHistoryTimeLine'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ProjectHistoryDetails = (): JSX.Element => {
+  const { projectId } = useParams<{ projectId: string }>()
   const isLoading = useTypedSelector(
     reduxServices.projectTimeLine.selectors.isLoading,
   )
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectTimeLine.projectHistoryDetails(projectId as string),
+    )
+  }, [])
+
   return (
     <>
       <OCard

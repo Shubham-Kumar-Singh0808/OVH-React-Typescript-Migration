@@ -12,7 +12,7 @@ import {
 
 const projectHistoryDetails = createAsyncThunk<
   ProjectHistoryResponse | undefined,
-  number,
+  string | number,
   {
     dispatch: AppDispatch
     state: RootState
@@ -20,7 +20,7 @@ const projectHistoryDetails = createAsyncThunk<
   }
 >(
   'projectCreationRequest/projectRequestHistoryDetails',
-  async (projectRequestId: number, thunkApi) => {
+  async (projectRequestId: string | number, thunkApi) => {
     try {
       return await projectHistoryDetailsApi.projectHistoryDetails(
         projectRequestId,

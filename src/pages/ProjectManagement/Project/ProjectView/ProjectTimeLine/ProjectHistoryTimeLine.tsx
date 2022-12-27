@@ -142,7 +142,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Allocation Start Date
                             </CFormLabel>
-                            {isProjectPrevValue(history.oldStartDate as string)}
+                            {isProjectPrevValue(history.oldStartDate)}
                             &nbsp;
                             {history.startdate}
                           </div>
@@ -157,7 +157,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Allocation End Date
                             </CFormLabel>
-                            {isProjectPrevValue(history.oldEndDate as string)}
+                            {isProjectPrevValue(history.oldEndDate)}
                             &nbsp;
                             {history.enddate}
                           </div>
@@ -172,9 +172,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Project Name
                             </CFormLabel>
-                            {isProjectPrevValue(
-                              history.oldProjectName as string,
-                            )}
+                            {isProjectPrevValue(history.oldProjectName)}
                             &nbsp;
                             {history.projectName}
                           </div>
@@ -189,7 +187,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Client
                             </CFormLabel>
-                            {isProjectPrevValue(history.oldClient as string)}
+                            {isProjectPrevValue(history.oldClient)}
                             &nbsp;
                             {history.client}
                           </div>

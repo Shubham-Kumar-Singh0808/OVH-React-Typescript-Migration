@@ -9,7 +9,7 @@ import {
 } from '../../../../apiList'
 
 const projectHistoryDetails = async (
-  projectId: number,
+  projectId: string | number,
 ): Promise<ProjectHistoryResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectTimeLineApiConfig.getProjectHistory,
