@@ -92,7 +92,7 @@ export interface IncomingActiveEmployee {
   projectId: null
   startDate: null
   endDate: null
-  billable: false
+  billable: boolean
   comments: null
   department: null
   desigination: null

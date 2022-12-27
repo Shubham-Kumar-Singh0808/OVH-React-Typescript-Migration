@@ -80,22 +80,18 @@ const EditInvestmentCycle = ({
   const backButtonHandler = () => {
     dispatch(reduxServices.itDeclarationList.actions.setToggle(''))
   }
-  const handleUpdateInvestmentCycle = async () => {
+  const updateInvestmentCycle = async () => {
     const prepareObject = {
       ...editCycleCopy,
-      cycleId: 1,
       active: isCycleChecked,
       endDate: cycleEndDate,
-      ...{
-        startDate: moment(cycleStartDate).format('MM/YYYY'),
-      },
+      startDate: cycleStartDate,
     }
-
+    setIsActiveCycleModalVisible(false)
     const cycleExist = {
       cycleId: -1,
       cycleName: editCycleCopy.cycleName,
     }
-
     const isCycleExistsResultAction = await dispatch(
       reduxServices.itDeclarationList.isCycleExist(cycleExist),
     )
@@ -120,6 +116,14 @@ const EditInvestmentCycle = ({
       }
     } else {
       dispatch(reduxServices.app.actions.addToast(alreadyExistToastElement))
+    }
+  }
+
+  const handleUpdateBtn = () => {
+    if (isCycleChecked) {
+      setIsActiveCycleModalVisible(true)
+    } else {
+      updateInvestmentCycle()
     }
   }
 
@@ -231,7 +235,7 @@ const EditInvestmentCycle = ({
                 data-testid="ec-update-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                onClick={handleUpdateInvestmentCycle}
+                onClick={handleUpdateBtn}
                 disabled={!isUpdateButtonEnabled}
               >
                 Update
@@ -244,10 +248,11 @@ const EditInvestmentCycle = ({
         visible={isActiveCycleModalVisible}
         setVisible={setIsActiveCycleModalVisible}
         modalBodyClass="mt-0"
+        modalTitle="Activate Cycle"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
-        confirmButtonAction={handleUpdateInvestmentCycle}
+        confirmButtonAction={updateInvestmentCycle}
       >
         <>Do you really want to activate this cycle ?</>
       </OModal>

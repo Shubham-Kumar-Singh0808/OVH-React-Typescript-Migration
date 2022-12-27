@@ -104,6 +104,7 @@ import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycl
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
 import addObservationReducer from './reducers/Performance/AddObservation/AddObservationSlice'
+import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -208,6 +209,7 @@ export const allReducers = {
   initiateCycle: initiateCycleReducer,
   addObservation: addObservationReducer,
   myKRAs: MyKRAsReducer,
+  myReview: myReviewReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

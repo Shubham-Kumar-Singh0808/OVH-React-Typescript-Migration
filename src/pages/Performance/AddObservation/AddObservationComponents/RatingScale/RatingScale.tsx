@@ -1,7 +1,7 @@
 import React from 'react'
 import parse from 'html-react-parser'
-import WrapperComponent from './WrapperComponent'
-import { useTypedSelector } from '../../../../stateStore'
+import WrapperComponent from '../WrapperComponent'
+import { useTypedSelector } from '../../../../../stateStore'
 
 const RatingScale = () => {
   const ratingScaleData = useTypedSelector(

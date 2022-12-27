@@ -7,6 +7,8 @@ import { AddObservationInitialState } from '../../../types/Performance/AddObserv
 
 const initialState: AddObservationInitialState = {
   isLoading: ApiLoadingState.idle,
+  performanceRating: [],
+  activeEmployeeList: [],
   ratingScaleRender: {
     id: -1,
     displayOrder: -1,
@@ -37,6 +39,30 @@ const ratingScaleRenderThunk = createAsyncThunk(
   },
 )
 
+const getActiveEmployeeListThunk = createAsyncThunk(
+  'addObservation/getActiveEmployeeListThunk',
+  async (_, thunkApi) => {
+    try {
+      return await AddObservationApi.getActiveEmployeeList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const getPerformanceRatingThunk = createAsyncThunk(
+  'addObservation/getPerformanceRatingThunk',
+  async (_, thunkApi) => {
+    try {
+      return await AddObservationApi.getPerformanceRating()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const addObservationSlice = createSlice({
   name: 'addObservation',
   initialState,
@@ -45,12 +71,32 @@ const addObservationSlice = createSlice({
     builder.addCase(ratingScaleRenderThunk.fulfilled, (state, action) => {
       state.ratingScaleRender = action.payload
     })
-    builder.addMatcher(isAnyOf(ratingScaleRenderThunk.pending), (state) => {
-      state.isLoading = ApiLoadingState.loading
+    builder.addCase(getPerformanceRatingThunk.fulfilled, (state, action) => {
+      state.performanceRating = action.payload
     })
-    builder.addMatcher(isAnyOf(ratingScaleRenderThunk.fulfilled), (state) => {
-      state.isLoading = ApiLoadingState.succeeded
+    builder.addCase(getActiveEmployeeListThunk.fulfilled, (state, action) => {
+      state.activeEmployeeList = action.payload
     })
+    builder.addMatcher(
+      isAnyOf(
+        ratingScaleRenderThunk.pending,
+        getPerformanceRatingThunk.pending,
+        getActiveEmployeeListThunk.pending,
+      ),
+      (state) => {
+        state.isLoading = ApiLoadingState.loading
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
+        ratingScaleRenderThunk.fulfilled,
+        getPerformanceRatingThunk.fulfilled,
+        getActiveEmployeeListThunk.fulfilled,
+      ),
+      (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      },
+    )
     builder.addMatcher(
       isAnyOf(ratingScaleRenderThunk.rejected),
       (state, action) => {
@@ -63,6 +109,8 @@ const addObservationSlice = createSlice({
 
 const addObservationThunks = {
   ratingScaleRenderThunk,
+  getPerformanceRatingThunk,
+  getActiveEmployeeListThunk,
 }
 
 export const addObservationService = {

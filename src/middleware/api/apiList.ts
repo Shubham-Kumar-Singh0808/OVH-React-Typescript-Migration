@@ -84,6 +84,7 @@ import {
   MyKRAsApi,
   NomineeListApi,
   AddObservationApi,
+  MyReviewApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -762,6 +763,8 @@ export const myKRAsApiConfig: MyKRAsApi = {
 
 export const addObservationApiConfig: AddObservationApi = {
   getRatingScalePage: apiPrefix + '/handbookItem/get',
+  getPerformanceRating: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  getActiveEmployeeList: apiPrefix + '/observation-mgnt/activeEmployee/',
 }
 
 export const newBookingApiConfig: NewBookingApi = {
@@ -771,4 +774,8 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const myReviewApiConfig: MyReviewApi = {
+  getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
 }

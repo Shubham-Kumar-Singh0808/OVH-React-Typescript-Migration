@@ -358,6 +358,10 @@ const AddObservation = React.lazy(
   () => import('./pages/Performance/AddObservation/AddObservationLanding'),
 )
 
+const MyReview = React.lazy(
+  () => import('./pages/Performance/MyReviews/MyReview'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -788,6 +792,11 @@ const routes = [
     path: '/addObservations',
     name: 'Add Observation',
     component: AddObservation,
+  },
+  {
+    path: '/employeeAppraisal',
+    name: 'My Review',
+    component: MyReview,
   },
 ]
 

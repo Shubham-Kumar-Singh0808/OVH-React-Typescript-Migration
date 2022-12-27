@@ -1,3 +1,4 @@
+import { IncomingActiveEmployee } from '../../Achievements/AddAchiever/AddAchieverTypes'
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export interface AddObservationTab {
@@ -22,8 +23,16 @@ export interface IncomingRatingScalePage {
   empCountry: string
 }
 
+export interface IncomingPerformanceRating {
+  id: number
+  label: null | string
+  rating: number
+}
+
 export interface AddObservationInitialState {
   isLoading: LoadingState
   ratingScaleRender: IncomingRatingScalePage
+  performanceRating: IncomingPerformanceRating[]
   error: ValidationError
+  activeEmployeeList: IncomingActiveEmployee[]
 }

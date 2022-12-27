@@ -628,6 +628,8 @@ export interface MyKRAsApi extends ApiBase {
 
 export interface AddObservationApi extends ApiBase {
   getRatingScalePage: string
+  getPerformanceRating: string
+  getActiveEmployeeList: string
 }
 
 export interface NewBookingApi extends ApiBase {
@@ -635,4 +637,8 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+}
+
+export interface MyReviewApi extends ApiBase {
+  getEmployeePerformanceReview: string
 }

@@ -1,5 +1,7 @@
 import { AddObservationTab } from '../../../types/Performance/AddObservation/AddObservationTypes'
 
+export const selectRating = 'Select Rating'
+
 export const AddObservationTabList: AddObservationTab[] = [
   {
     id: 1,

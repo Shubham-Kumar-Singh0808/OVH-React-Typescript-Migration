@@ -6,9 +6,9 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import AddObservation from './AddObservationComponents/AddObservation'
-import RatingScale from './AddObservationComponents/RatingScale'
-import Reportees from './AddObservationComponents/Reportees'
+import AddObservation from './AddObservationComponents/AddObservation/AddObservation'
+import RatingScale from './AddObservationComponents/RatingScale/RatingScale'
+import Reportees from './AddObservationComponents/Reportees/Reportees'
 import { AddObservationTabList } from './AddObservationConstants'
 import { AddObservationTab } from '../../../types/Performance/AddObservation/AddObservationTypes'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -29,6 +29,8 @@ const AddObservationLanding = () => {
 
   useEffect(() => {
     dispatch(reduxServices.addObservation.ratingScaleRenderThunk())
+    dispatch(reduxServices.addObservation.getPerformanceRatingThunk())
+    dispatch(reduxServices.addObservation.getActiveEmployeeListThunk())
   }, [])
 
   useEffect(() => {
@@ -85,7 +87,11 @@ const AddObservationLanding = () => {
         ))}
       </CNav>
       <CTabContent className="inline-tabs-content">
-        <CTabPane role="tabpanel" visible={!!currentTabKey}>
+        <CTabPane
+          className="review-border"
+          role="tabpanel"
+          visible={!!currentTabKey}
+        >
           {currentTabContent}
         </CTabPane>
       </CTabContent>

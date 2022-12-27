@@ -1,4 +1,6 @@
+import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { deviceLocale } from '../utils/dateFormatUtils'
 
 export const priceModelList: GetList[] = [
   { id: 1, name: 'Fixed Bid' },
@@ -43,3 +45,16 @@ export const dateOptionsList = [
   { label: 'Today', name: 'Today' },
   { label: 'Yesterday', name: 'Yesterday' },
 ]
+
+export const emptyString = ''
+export const datePickerFormattedData = (incomingDate: string): string => {
+  return incomingDate
+    ? moment(
+        new Date(incomingDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      ).format('MM-YYYY')
+    : ''
+}
