@@ -6,10 +6,11 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import ProjectTailoringExpendableTable from './ProjectTailoringExpendableTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ProjectTailoringTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
@@ -17,7 +18,11 @@ const ProjectTailoringTable = (): JSX.Element => {
   const projectTailoring = useTypedSelector(
     reduxServices.projectTailoring.selectors.projectTailoring,
   )
-
+  const { projectId } = useParams<{ projectId: string }>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
+  }, [])
   const handleExpandRow = (id: number) => {
     setIsIconVisible(true)
     setMilestoneId(id)
