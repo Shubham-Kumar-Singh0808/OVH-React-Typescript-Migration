@@ -9,7 +9,6 @@ import {
   CForm,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useState } from 'react'
-import { OutTable, ExcelRenderer } from 'react-excel-renderer'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
@@ -142,19 +141,11 @@ const PayrollManagement = (): JSX.Element => {
     )
 
     if (
-      reduxServices.bankDetails.updateBankInformation.fulfilled.match(
+      reduxServices.payrollManagement.readExcelFile.fulfilled.match(
         updatePaySlipsResultAction,
       )
     )
-      <CForm>
-        <input
-          className="mt-1"
-          type="file"
-          onChange={(element: SyntheticEvent) =>
-            setToReadExcelFile(element.currentTarget as HTMLInputElement)
-          }
-        />
-      </CForm>
+
   }
   return (
     <>
