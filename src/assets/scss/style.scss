@@ -76,6 +76,7 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/settings/configurations/addconfigurationoptions';
 @import './pages/projectmanagement/project/project';
 @import './pages/leaves/leaveapprovals/leave-approvals';
+@import './pages/finance/itdeclarationform/it-declaration-form';
 @import './pages/finance/payslips/payslips';
 
 @import './pages/finance/pfandbankdetails/pfandbankdetails';
@@ -84,3 +85,5 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/finance/itdeclarationlist/add-investment';
 @import './pages/finance/payrollmanagement/viewaction';
 
+@import './pages/finance/itdeclarationlist/it-declarationform';
+@import './pages/performance/my-review/my-review';

@@ -66,11 +66,33 @@ const ITDeclarationListTable = (
                       {itDeclaration.employeeName}
                     </CTableDataCell>
                     <CTableDataCell>{itDeclaration.designation}</CTableDataCell>
-                    <CTableDataCell>{itDeclaration.grandTotal}</CTableDataCell>
+                    <CTableDataCell>
+                      {itDeclaration.grandTotal?.toLocaleString('en-IN')}
+                    </CTableDataCell>
                     <CTableDataCell>
                       <CButton
                         className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                         data-testid={`viewItDeclarationForm-btn${index}`}
+                        onClick={() =>
+                          props.viewDeclarationFormButtonHandler([
+                            {
+                              cycleId: itDeclaration.cycleId,
+                              designation: itDeclaration.designation,
+                              employeeId: itDeclaration.employeeId,
+                              employeeName: itDeclaration.employeeName,
+                              filePath: itDeclaration.filePath,
+                              formSectionsDTOs: itDeclaration.formSectionsDTOs,
+                              fromDate: itDeclaration.fromDate,
+                              grandTotal: itDeclaration.grandTotal,
+                              isAgree: itDeclaration.isAgree,
+                              itDeclarationFormId:
+                                itDeclaration.itDeclarationFormId,
+                              organisationName: itDeclaration.organisationName,
+                              panNumber: itDeclaration.panNumber,
+                              toDate: itDeclaration.toDate,
+                            },
+                          ])
+                        }
                       >
                         <i className="fa fa-eye" aria-hidden="true"></i>
                       </CButton>

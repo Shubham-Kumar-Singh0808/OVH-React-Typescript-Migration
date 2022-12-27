@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  NewBookingApi,
   EventListApi,
   AddTrackerApi,
   AllocateEmployeeApi,
@@ -67,6 +68,7 @@ import {
   NewEventApi,
   SubmitResignationApi,
   LeaveApprovalsApi,
+  ITDeclarationFormApi,
   PaySlipsApi,
   BankDetailsApi,
   PanDetailsApi,
@@ -79,6 +81,11 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  InitiateCycleApi,
+  MyKRAsApi,
+  NomineeListApi,
+  AddNomineeApi,
+  MyReviewApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -619,6 +626,15 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
 
+export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
+  getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
+  getSectionsHavingInvests:
+    apiPrefix + '/itDeclaration/getSectionsHavingInvests',
+  getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
+  isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
+}
+
 export const paySlipsApiConfig: PaySlipsApi = {
   getEmployeePayslipsForSelectedYear:
     apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
@@ -680,6 +696,7 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
+  getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
 }
 
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
@@ -725,9 +742,54 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   updateAchievementTypeDetails:
     apiPrefix + '/achievement/updateAchievementType',
   deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  addAchievement: apiPrefix + '/achievement/addAchievement',
+  getImageData: apiPrefix + '/achievement/getImageData',
+}
+
+export const NomineeListApiConfig: NomineeListApi = {
+  getAllCycles: apiPrefix + '/nominationController/getallcycles',
+  getNominations: apiPrefix + '/nominationController/getNominations',
+  getNominationDetails:
+    apiPrefix + '/nominationController/getNominationDetails',
+  reviewNominee: apiPrefix + '/nominationController/reviewNominee',
+  exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
+}
+
+export const AddNomineeApiConfig: AddNomineeApi = {
+  nominationFormDetails:
+    apiPrefix + '/nominationController/nominationFormDetails',
+  addNominee: apiPrefix + '/nominationController/addNominee',
 }
 
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const initiateCycleApiConfig: InitiateCycleApi = {
+  getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
+  getallcycles: apiPrefix + '/nominationController/getallcycles',
+  getAllQuestions: apiPrefix + '/nominationController/getAllQuestions',
+  initiateCycle: apiPrefix + '/nominationController/initiateCycle',
+  deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
+  addQuestion: apiPrefix + '/nominationController/addQuestion',
+}
+
+export const myKRAsApiConfig: MyKRAsApi = {
+  getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
+  getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  confirmNewMeetingAppointment:
+    apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const myReviewApiConfig: MyReviewApi = {
+  getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
 }

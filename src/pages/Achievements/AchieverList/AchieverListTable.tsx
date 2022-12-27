@@ -110,7 +110,9 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
               <CTableHeaderCell scope="col">Time Period (yr)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Description</CTableHeaderCell>
               {ToggleTimelineAccess === true ? (
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="text-center">
+                  Actions
+                </CTableHeaderCell>
               ) : (
                 <></>
               )}
@@ -167,7 +169,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                       <div
                         className="d-flex flex-row align-items-center"
                         data-testid={`user-access-${index}`}
-                        style={{ width: '115px' }}
+                        style={{ width: '125px' }}
                       >
                         <AchieverListToggle achieverItem={item} />
                         <div className="button-events">

@@ -184,19 +184,13 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+
 const EmployeeAllocationReport = React.lazy(
   () =>
     import(
       './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
-const LocationList = React.lazy(
-  () =>
-    import(
-      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
-    ),
-)
-
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
@@ -212,16 +206,15 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const NewBookingRoom = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/NewBooking'),
+)
 const EmployeeAllocation = React.lazy(
   () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
 )
 
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
-)
-
-const RoomList = React.lazy(
-  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
 )
 
 const EditConfiguration = React.lazy(
@@ -243,6 +236,10 @@ const SubmitResignation = React.lazy(
 
 const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
+const ITDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
 )
 
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
@@ -346,6 +343,23 @@ const AddAchiever = React.lazy(
 
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
+)
+const InitiateCycle = React.lazy(
+  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+)
+
+const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
+
+const NomineeList = React.lazy(
+  () => import('./pages/Achievements/NomineeList/NomineeList'),
+)
+
+const AddNominee = React.lazy(
+  () => import('./pages/Achievements/AddNominee/AddNominee'),
+)
+
+const MyReview = React.lazy(
+  () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
 const PayrollManagement = React.lazy(
@@ -595,11 +609,11 @@ const routes = [
     name: 'Event Type List',
     component: EventTypeList,
   },
-  {
-    path: '/newMeetingRequest',
-    name: 'Add LocationList',
-    component: LocationList,
-  },
+  // {
+  //   path: '/newMeetingRequest',
+  //   name: 'Add LocationList',
+  //   component: LocationList,
+  // },
   {
     path: '/trainingFeedBackForm/:eventId',
     name: 'Feedback Forms',
@@ -611,15 +625,20 @@ const routes = [
     component: EditHoliday,
   },
   {
+    path: '/newMeetingRequest',
+    name: 'New Booking',
+    component: NewBookingRoom,
+  },
+  {
     path: '/appraisalCycle',
     name: 'Appraisal Configurations',
     component: AppraisalConfigurations,
   },
-  {
-    path: '/roomList',
-    name: 'RoomList',
-    component: RoomList,
-  },
+  // {
+  //   path: '/roomList',
+  //   name: 'RoomList',
+  //   component: RoomList,
+  // },
   {
     path: '/editAppraisalCycle/:cycleId',
     name: 'Edit Configuration',
@@ -644,6 +663,11 @@ const routes = [
     path: '/leaveApprovals',
     name: 'Leave Approvals',
     component: LeaveApprovals,
+  },
+  {
+    path: '/itDeclarationForm',
+    name: 'IT Declaration Form',
+    component: ITDeclarationForm,
   },
   {
     path: '/payslip',
@@ -756,6 +780,31 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/initiateCycle',
+    name: 'Initiate Cycle',
+    component: InitiateCycle,
+  },
+  {
+    path: '/myKRAs',
+    name: 'My KRAs',
+    component: myKRAs,
+  },
+  {
+    path: '/nomineesList',
+    name: 'Nominee List',
+    component: NomineeList,
+  },
+  {
+    path: '/addNominee',
+    name: 'Add Nominee',
+    component: AddNominee,
+  },
+  {
+    path: '/employeeAppraisal',
+    name: 'My Review',
+    component: MyReview,
   },
 ]
 

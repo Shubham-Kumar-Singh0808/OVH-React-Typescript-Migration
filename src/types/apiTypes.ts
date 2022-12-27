@@ -504,6 +504,13 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveReject: string
 }
 
+export interface ITDeclarationFormApi extends ApiBase {
+  getEmployeeInfo: string
+  getSectionsHavingInvests: string
+  getInvestsBySectionId: string
+  addITDeclarationForm: string
+  isITDeclarationFormExist: string
+}
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
   generatePayslipAndDownloadPayslip: string
@@ -541,6 +548,7 @@ export interface ResignationListApi extends ApiBase {
 }
 
 export interface ITDeclarationListApi extends ApiBase {
+  getEmployeeDetails: string
   getCycles: string
   getSections: string
   getITDeclarationForm: string
@@ -598,9 +606,50 @@ export interface AddAchieverApi extends ApiBase {
   getAchievementTypeDetails: string
   updateAchievementTypeDetails: string
   deleteAchievementType: string
+  getActiveEmployeeList: string
+  addAchievement: string
+  getImageData: string
+}
+
+export interface NomineeListApi extends ApiBase {
+  getAllCycles: string
+  getNominations: string
+  getNominationDetails: string
+  reviewNominee: string
+  exportNomineeList: string
+}
+
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+  addNominee: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
+}
+
+export interface InitiateCycleApi extends ApiBase {
+  getActiveCycleData: string
+  getallcycles: string
+  getAllQuestions: string
+  initiateCycle: string
+  deleteQuestion: string
+  addQuestion: string
+}
+
+export interface MyKRAsApi extends ApiBase {
+  getKRAForIndividualEmployee: string
+  getKPIsForIndividualEmployee: string
+}
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+  getAllProfileEmployeesData: string
+  getAllProjectSearch: string
+  confirmNewMeetingAppointment: string
+}
+
+export interface MyReviewApi extends ApiBase {
+  getEmployeePerformanceReview: string
 }
