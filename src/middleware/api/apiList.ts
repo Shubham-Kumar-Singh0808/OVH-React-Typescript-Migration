@@ -84,6 +84,7 @@ import {
   MyKRAsApi,
   NomineeListApi,
   MyReviewApi,
+  LeadershipEnrollmentFormApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -767,6 +768,11 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
+  employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
+  addLeadership: apiPrefix + '/achievement/addLeadership',
 }
 
 export const myReviewApiConfig: MyReviewApi = {
