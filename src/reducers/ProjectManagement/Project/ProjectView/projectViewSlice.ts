@@ -90,7 +90,7 @@ const projectDetailsSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState =>
-  state.resignationList.isLoading
+  state.projectViewDetails.isLoading
 
 const projectViewDetails = (state: RootState): ProjectViewDetails[] =>
   state.projectViewDetails.projectViewDetails

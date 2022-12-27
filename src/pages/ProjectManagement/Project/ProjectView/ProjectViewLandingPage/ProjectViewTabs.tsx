@@ -54,6 +54,7 @@ const ProjectViewTabs = (): JSX.Element => {
               <CNavLink
                 active={activeTabsKey === item.id}
                 onClick={() => handleActiveTab(item.id)}
+                data-testid="navLink-test"
               >
                 {item.tabName}
               </CNavLink>
