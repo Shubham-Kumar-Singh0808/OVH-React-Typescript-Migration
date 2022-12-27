@@ -1,3 +1,4 @@
+import React from 'react'
 import { LoadingState } from '../../commonTypes'
 
 export interface IncomingEmployeeDetails {
@@ -26,6 +27,13 @@ export interface OutgoingLeadershipForm {
 export enum CheckedQuestionsOptions {
   yes = 'Yes',
   no = 'No',
+}
+
+export interface EnrollmentFormProps {
+  reasonDetails: string
+  setReasonDetails: React.Dispatch<React.SetStateAction<string>>
+  setExpectationsExample: React.Dispatch<React.SetStateAction<string>>
+  expectationsExample: string
 }
 
 export interface FilledLeadershipForm {

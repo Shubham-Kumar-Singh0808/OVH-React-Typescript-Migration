@@ -14,6 +14,7 @@ import { useHistory } from 'react-router-dom'
 import QuestionCheck from './QuestionCheck'
 import {
   CheckedQuestionsOptions,
+  EnrollmentFormProps,
   FilledLeadershipForm,
   OutgoingLeadershipForm,
 } from '../../../types/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormTypes'
@@ -41,7 +42,13 @@ const convertToBooleanValues = (value: string | null): boolean => {
   return value === String(CheckedQuestionsOptions.yes)
 }
 
-const EnrollmentForm = () => {
+const EnrollmentForm = (props: EnrollmentFormProps) => {
+  const {
+    reasonDetails,
+    setReasonDetails,
+    expectationsExample,
+    setExpectationsExample,
+  } = props
   const history = useHistory()
   const dispatch = useAppDispatch()
   const employeeDetails = useTypedSelector(
@@ -54,10 +61,10 @@ const EnrollmentForm = () => {
   const [enteredAnswers, setEnteredAnswers] =
     useState<FilledLeadershipForm>(initialAnswersState)
 
-  const [expectationsExample, setExpectationsExample] =
-    useState<string>(emptyString)
+  // const [expectationsExample, setExpectationsExample] =
+  //   useState<string>(emptyString)
 
-  const [reasonDetails, setReasonDetails] = useState<string>(emptyString)
+  // const [reasonDetails, setReasonDetails] = useState<string>(emptyString)
   const [showEditors, setShowEditors] = useState<boolean>(true)
 
   const isNullValuePresent = () => {
@@ -152,9 +159,6 @@ const EnrollmentForm = () => {
     }
   }
 
-  console.log(enteredAnswers)
-  console.log(employeeDetails)
-
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setEnteredAnswers(initialAnswersState)
@@ -203,6 +207,19 @@ const EnrollmentForm = () => {
       dispatch(reduxServices.app.actions.addToast(successToast))
       history.replace('/dashboard')
     }
+  }
+
+  const reasonDetailsAsterixCondition = () => {
+    return reasonDetails === emptyString || reasonDetails.trim().length === 0
+      ? TextDanger
+      : TextWhite
+  }
+
+  const expectationExampleAsterixCondition = () => {
+    return expectationsExample === emptyString ||
+      expectationsExample.trim().length === 0
+      ? TextDanger
+      : TextWhite
   }
 
   return (
@@ -290,16 +307,7 @@ const EnrollmentForm = () => {
               className="col-sm-4 col-form-label text-end mb-1 align-self-start"
             >
               Please let us know why you want to be part of this elite group:
-              <span
-                className={
-                  reasonDetails === emptyString ||
-                  reasonDetails.trim().length === 0
-                    ? TextDanger
-                    : TextWhite
-                }
-              >
-                *
-              </span>
+              <span className={reasonDetailsAsterixCondition()}>*</span>
             </CFormLabel>
             <CCol sm={8}>
               <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
@@ -319,16 +327,7 @@ const EnrollmentForm = () => {
             >
               Please let us know any example where you really exceeded
               expectations:
-              <span
-                className={
-                  expectationsExample === emptyString ||
-                  expectationsExample.trim().length === 0
-                    ? TextDanger
-                    : TextWhite
-                }
-              >
-                *
-              </span>
+              <span className={expectationExampleAsterixCondition()}>*</span>
             </CFormLabel>
             <CCol sm={8}>
               <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>

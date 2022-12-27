@@ -3,22 +3,49 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
+import { createMemoryHistory } from 'history'
 import EnrollmentForm from './EnrollmentForm'
 import { cleanup, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockEmployeeDetails1 } from '../../../test/data/LeadershipEnrollmentFormData'
+import { emptyString } from '../AchievementConstants'
+
+const mockReasonDetails = jest.fn()
+const mockExpectationExample = jest.fn()
+const history = createMemoryHistory()
 
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <EnrollmentForm />
+    <EnrollmentForm
+      reasonDetails={''}
+      setReasonDetails={mockReasonDetails}
+      setExpectationsExample={mockExpectationExample}
+      expectationsExample={emptyString}
+    />
+  </div>
+)
+
+const stateToRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EnrollmentForm
+      reasonDetails={'checking test'}
+      setReasonDetails={mockReasonDetails}
+      setExpectationsExample={mockExpectationExample}
+      expectationsExample={'checking expectation'}
+    />
   </div>
 )
 
 const submitButtonId = 'submit-btn'
 const clearButtonId = 'clear-btn'
+
+const acceptCheckId = 'acceptance-check'
 
 describe('Enrollment Form', () => {
   describe('render', () => {
@@ -71,7 +98,7 @@ describe('Enrollment Form', () => {
       const yesRadios = screen.getAllByTestId('yes-radio') as HTMLInputElement[]
       const noRadios = screen.getAllByTestId('no-radio') as HTMLInputElement[]
       const acceptanceCheck = screen.getByTestId(
-        'acceptance-check',
+        acceptCheckId,
       ) as HTMLInputElement
 
       expect(acceptanceCheck.checked).toBe(false)
@@ -116,7 +143,7 @@ describe('Enrollment Form', () => {
       const yesRadios = screen.getAllByTestId('yes-radio') as HTMLInputElement[]
       const noRadios = screen.getAllByTestId('no-radio') as HTMLInputElement[]
       const acceptanceCheck = screen.getByTestId(
-        'acceptance-check',
+        acceptCheckId,
       ) as HTMLInputElement
 
       expect(acceptanceCheck.checked).toBe(false)
@@ -131,6 +158,47 @@ describe('Enrollment Form', () => {
       expect(yesRadios[0].checked).toBe(false)
       expect(noRadios[0].checked).toBe(false)
       expect(acceptanceCheck.checked).toBe(false)
+    })
+  })
+
+  describe('render', () => {
+    beforeEach(() => {
+      render(stateToRender, {
+        preloadedState: {
+          leadershipEnrollmentForm: {
+            isLoading: ApiLoadingState.succeeded,
+            employeeDetails: mockEmployeeDetails1,
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    screen.debug()
+
+    test('add button functionality', () => {
+      const yesRadios = screen.getAllByTestId('yes-radio') as HTMLInputElement[]
+      const noRadios = screen.getAllByTestId('no-radio') as HTMLInputElement[]
+      const acceptanceCheck = screen.getByTestId(
+        acceptCheckId,
+      ) as HTMLInputElement
+
+      expect(acceptanceCheck.checked).toBe(false)
+
+      userEvent.click(yesRadios[0])
+      userEvent.click(noRadios[1])
+      userEvent.click(yesRadios[2])
+      userEvent.click(noRadios[3])
+      userEvent.click(yesRadios[4])
+      userEvent.click(noRadios[5])
+      userEvent.click(yesRadios[6])
+      userEvent.click(noRadios[7])
+      userEvent.click(yesRadios[8])
+      userEvent.click(acceptanceCheck)
+
+      const addBtn = screen.getByTestId(submitButtonId)
+      expect(addBtn).toBeEnabled()
+      userEvent.click(addBtn)
+      expect(history.location.pathname).toBe('/')
     })
   })
 })
