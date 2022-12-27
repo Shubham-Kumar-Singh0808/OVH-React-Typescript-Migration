@@ -89,7 +89,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
     <OToast toastColor="danger" toastMessage="Cycle already Exist" />
   )
 
-  const handleAddNewInvestmentCycle = async () => {
+  const addNewInvestmentCycle = async () => {
     const prepareObject = {
       ...addCycle,
       cycleId: -1,
@@ -99,7 +99,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
         startDate: moment(cycleStartDate).format('MM/YYYY'),
       },
     }
-
+    setIsActiveCycleModalVisible(false)
     const cycleExist = {
       cycleId: -1,
       cycleName: addCycle.cycleName,
@@ -130,6 +130,14 @@ const AddNewInvestmentCycle = (): JSX.Element => {
     } else {
       dispatch(reduxServices.app.actions.addToast(alreadyExistToastElement))
       handleClearInputs()
+    }
+  }
+
+  const handleAddBtn = () => {
+    if (isChecked) {
+      setIsActiveCycleModalVisible(true)
+    } else {
+      addNewInvestmentCycle()
     }
   }
 
@@ -222,7 +230,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
                 data-testid="ac-add-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                onClick={handleAddNewInvestmentCycle}
+                onClick={handleAddBtn}
                 disabled={!isButtonEnabled}
               >
                 Add
@@ -242,11 +250,12 @@ const AddNewInvestmentCycle = (): JSX.Element => {
       <OModal
         visible={isActiveCycleModalVisible}
         setVisible={setIsActiveCycleModalVisible}
+        modalTitle="Activate Cycle"
         modalBodyClass="mt-0"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
-        confirmButtonAction={handleAddNewInvestmentCycle}
+        confirmButtonAction={addNewInvestmentCycle}
       >
         <>Do you really want to activate this cycle ?</>
       </OModal>
