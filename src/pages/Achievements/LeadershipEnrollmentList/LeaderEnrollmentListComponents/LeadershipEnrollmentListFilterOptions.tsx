@@ -60,7 +60,6 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   )
   const [fromDate, setFromDate] = useState<string>(emptyString)
   const [toDate, setToDate] = useState<string>(emptyString)
-  const [showErrorDate, setShowErrorDate] = useState<boolean>(false)
 
   const [selectedStatusOption, setSelectedStatusOption] = useState<string>(
     String(LeadershipListStatusFiltersEnums.new),
