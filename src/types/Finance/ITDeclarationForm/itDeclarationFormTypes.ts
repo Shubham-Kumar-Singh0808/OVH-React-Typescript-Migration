@@ -69,6 +69,7 @@ export type ITDeclarationFormSliceState = {
   isLoading: LoadingState
   error: ValidationError
   grandTotal: number
+  isSubmitButtonEnabled: boolean
 }
 
 export type itDeclarationFormSectionList = {

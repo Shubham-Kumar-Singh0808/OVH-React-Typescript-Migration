@@ -94,6 +94,7 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   itDeclarationFormId: 0,
   itDeclarationFormExist: false,
   grandTotal: 0,
+  isSubmitButtonEnabled: false,
 }
 
 const itDeclarationFormSlice = createSlice({
@@ -102,6 +103,12 @@ const itDeclarationFormSlice = createSlice({
   reducers: {
     setGrandTotal: (state, action) => {
       state.grandTotal = action.payload
+    },
+    setSubmitButtonEnabled: (state) => {
+      state.isSubmitButtonEnabled = true
+    },
+    setSubmitButtonDisabled: (state) => {
+      state.isSubmitButtonEnabled = false
     },
   },
   extraReducers: (builder) => {

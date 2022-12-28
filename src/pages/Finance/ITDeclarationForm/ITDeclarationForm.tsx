@@ -32,6 +32,10 @@ const ITDeclarationForm = (): JSX.Element => {
     }
   }, [dispatch, itDeclarationFormExists])
 
+  const isSubmitBtnEnabled = useTypedSelector(
+    (state) => state.itDeclarationForm.isSubmitButtonEnabled,
+  )
+
   return (
     <>
       <OCard
@@ -76,7 +80,7 @@ const ITDeclarationForm = (): JSX.Element => {
               className="btn-ovh me-1"
               data-testid="df-submit-btn"
               size="sm"
-              disabled
+              disabled={!isSubmitBtnEnabled}
             >
               Submit
             </CButton>

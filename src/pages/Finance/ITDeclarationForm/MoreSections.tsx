@@ -75,18 +75,19 @@ const MoreSections = ({
     console.log(newInvestmentList.length)
   }
 
+  const changeAmountHandler = (index: number, value: string) => {
+    const newInvestmentList: Investment[] = JSON.parse(
+      JSON.stringify(investmentList),
+    )
+    newInvestmentList[index].customAmount = value.replace(/\D/g, '')
+    setInvestmentList(newInvestmentList)
+  }
+
   const onChangeCustomAmount = (
     customAmtIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const newInvestmentList: Investment[] = JSON.parse(
-      JSON.stringify(investmentList),
-    )
-    newInvestmentList[customAmtIndex].customAmount = e.target.value.replace(
-      /\D/g,
-      '',
-    )
-    setInvestmentList(newInvestmentList)
+    changeAmountHandler(customAmtIndex, e.target.value)
   }
   const alreadyExistToastMessage = (
     <OToast
@@ -125,6 +126,18 @@ const MoreSections = ({
     setShowSubTotalAmount(total)
   }, [investmentList])
 
+  useEffect(() => {
+    if (sectionItem.sectionLimit < showSubTotalAmount) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastMessage="Section-Limit is Exceeded"
+            toastColor="danger"
+          />,
+        ),
+      )
+    }
+  }, [showSubTotalAmount, sectionItem.sectionLimit])
   useEffect(() => {
     setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
@@ -178,7 +191,9 @@ const MoreSections = ({
           <div className="col-sm-6">
             <b className="pull-right txt-info">
               Max Limit:{' '}
-              <span className="txt-info">{sectionItem.sectionLimit}</span>
+              <span className="txt-info">
+                {sectionItem.sectionLimit.toLocaleString('en-IN')}
+              </span>
             </b>
           </div>
         </CRow>
