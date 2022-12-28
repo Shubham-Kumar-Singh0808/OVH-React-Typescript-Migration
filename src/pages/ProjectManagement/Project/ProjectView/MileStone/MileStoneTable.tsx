@@ -10,7 +10,7 @@ import {
   CCol,
   CLink,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
 import { useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
@@ -63,14 +63,16 @@ const MileStoneTable = (): JSX.Element => {
     setIsModalVisible(true)
     setTitle(title)
   }
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectMileStone.getProjectMileStone({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: projectId,
+      }),
+    )
+  }, [dispatch])
 
-  dispatch(
-    reduxServices.projectMileStone.getProjectMileStone({
-      endIndex: pageSize * currentPage,
-      firstIndex: pageSize * (currentPage - 1),
-      projectid: projectId,
-    }),
-  )
   const result = (
     <>
       <h5>Milestone Details</h5>

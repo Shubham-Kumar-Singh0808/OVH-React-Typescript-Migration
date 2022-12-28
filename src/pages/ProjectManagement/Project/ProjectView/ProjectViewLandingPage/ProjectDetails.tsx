@@ -40,10 +40,7 @@ const ProjectDetails = (): JSX.Element => {
         </dl>
         <dl className="mb-0">
           <dt>Pricing Model</dt>
-          <dd>
-            {getProjectDetail.type.charAt(0).toUpperCase() +
-              getProjectDetail.type.slice(1).toLowerCase()}
-          </dd>
+          <dd>{getProjectDetail.type}</dd>
         </dl>
         <dl className="mb-0">
           <dt>Client</dt>

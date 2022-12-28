@@ -24,7 +24,7 @@ const PeopleTable = (): JSX.Element => {
     useState<boolean>(false)
   const [templateId, setTemplateId] = useState(0)
   const initialEmployeeAllocation = {} as UpdateProjectViewDetails
-  const [editEmployeeAllocation, setEditEmployeeAllocation] = useState(
+  const [editAllocateProject, setEditEmployeeAllocation] = useState(
     initialEmployeeAllocation,
   )
   const dispatch = useAppDispatch()
@@ -50,7 +50,7 @@ const PeopleTable = (): JSX.Element => {
   const saveProjectAllocationHandler = async () => {
     const saveProjectAllocationResultAction = await dispatch(
       reduxServices.projectViewDetails.updateEmployeeAllocationProject(
-        editEmployeeAllocation,
+        editAllocateProject,
       ),
     )
     if (
@@ -69,7 +69,7 @@ const PeopleTable = (): JSX.Element => {
       )
       dispatch(
         reduxServices.projectViewDetails.getProjectDetails(
-          editEmployeeAllocation.projectId,
+          editAllocateProject.projectId,
         ),
       )
     }
@@ -142,7 +142,7 @@ const PeopleTable = (): JSX.Element => {
                           id="allocation"
                           data-testid="template-input"
                           name="allocation"
-                          value={editEmployeeAllocation.allocation}
+                          value={editAllocateProject.allocation}
                           onChange={handleEditProjectAllocationHandler}
                         />
                       </div>
@@ -163,7 +163,7 @@ const PeopleTable = (): JSX.Element => {
                           data-testid="form-select2"
                           name="billable"
                           value={
-                            editEmployeeAllocation.billable as unknown as string
+                            editAllocateProject.billable as unknown as string
                           }
                           onChange={handleEditProjectAllocationHandler}
                         >
@@ -186,7 +186,7 @@ const PeopleTable = (): JSX.Element => {
                           data-testid="form-select2"
                           name="isAllocated"
                           value={
-                            editEmployeeAllocation.isAllocated as unknown as string
+                            editAllocateProject.isAllocated as unknown as string
                           }
                           onChange={handleEditProjectAllocationHandler}
                         >
