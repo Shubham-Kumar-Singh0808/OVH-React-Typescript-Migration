@@ -8,17 +8,21 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React from 'react'
-import { useTypedSelector } from '../../../stateStore'
-import { EnrollmentFormProps } from '../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
+import { useTypedSelector } from '../../../../stateStore'
+import { EnrollmentFormProps } from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
 
-const EnrollmentTable = (props: EnrollmentFormProps) => {
-  const { setShowLeadershipDetails } = props
+const EnrollmentTable = (props: EnrollmentFormProps): JSX.Element => {
+  const { setShowLeadershipDetails, setCurrentIndex } = props
   const listData = useTypedSelector(
     (state) => state.leadershipEnrollmentList.leadershipList,
   )
 
-  const actionButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const actionButtonHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    index: number,
+  ) => {
     e.preventDefault()
+    setCurrentIndex(index)
     setShowLeadershipDetails(true)
   }
 
@@ -54,8 +58,10 @@ const EnrollmentTable = (props: EnrollmentFormProps) => {
                   color="info"
                   className="danger btn-ovh me-1"
                   size="sm"
-                  onClick={actionButtonHandler}
-                  data-testid={`edit-btn-${index}`}
+                  onClick={(e) => {
+                    actionButtonHandler(e, index)
+                  }}
+                  data-testid={`action-btn-${index}`}
                   title="Edit"
                 >
                   <i className="fa fa-eye text-white" aria-hidden="true"></i>

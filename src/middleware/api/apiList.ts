@@ -85,6 +85,7 @@ import {
   NomineeListApi,
   AddNomineeApi,
   MyReviewApi,
+  LeadershipEnrollmentFormApi,
   LeadershipEnrollmentListApi,
 } from '../../types/apiTypes'
 
@@ -777,8 +778,15 @@ export const newBookingApiConfig: NewBookingApi = {
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
 }
 
+export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
+  employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
+  addLeadership: apiPrefix + '/achievement/addLeadership',
+}
+
 export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
   getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
+  leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
+  leadershipReject: apiPrefix + '/achievement/leadershipReject',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

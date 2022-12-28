@@ -3,6 +3,7 @@ import { AxiosError } from 'axios'
 import LeadershipEnrollmentListApi from '../../../middleware/api/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
+  ApproveRejectLeadershipQueryParameters,
   LeadershipEnrollmentListInitialState,
   LeadershipListQueryParameters,
 } from '../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
@@ -17,6 +18,30 @@ const getLeadershipListThunk = createAsyncThunk(
   async (query: LeadershipListQueryParameters, thunkApi) => {
     try {
       return await LeadershipEnrollmentListApi.getLeadershipList(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const approveLeadershipThunk = createAsyncThunk(
+  'leadershipEnrollmentList/approveLeadershipThunk',
+  async (query: ApproveRejectLeadershipQueryParameters, thunkApi) => {
+    try {
+      return await LeadershipEnrollmentListApi.approveLeadership(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const rejectLeadershipThunk = createAsyncThunk(
+  'leadershipEnrollmentList/rejectLeadershipThunk',
+  async (query: ApproveRejectLeadershipQueryParameters, thunkApi) => {
+    try {
+      return await LeadershipEnrollmentListApi.rejectLeadership(query)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status)
@@ -43,6 +68,8 @@ const leadershipEnrollmentListSlice = createSlice({
 
 const leadershipEnrollmentListThunks = {
   getLeadershipListThunk,
+  approveLeadershipThunk,
+  rejectLeadershipThunk,
 }
 
 export const leadershipEnrollmentListService = {

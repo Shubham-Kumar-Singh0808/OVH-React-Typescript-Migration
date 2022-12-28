@@ -49,10 +49,18 @@ export interface LeadershipListQueryParameters {
 
 export interface EnrollmentFormProps {
   setShowLeadershipDetails: React.Dispatch<React.SetStateAction<boolean>>
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>
+}
+
+export interface ApproveRejectLeadershipQueryParameters {
+  comments: string
+  id: number | undefined
 }
 
 export interface LeadershipDetailsProps {
   setShowLeadershipDetails: React.Dispatch<React.SetStateAction<boolean>>
+  setCurrentIndex: React.Dispatch<React.SetStateAction<number>>
+  currentIndex: number
 }
 
 export interface LeadershipEnrollmentListInitialState {

@@ -10,16 +10,16 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { TextDanger } from '../../../constant/ClassName'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { TextDanger } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 import {
   LeadershipListDateFiltersEnums,
   LeadershipListQueryParameters,
   LeadershipListStatusFiltersEnums,
-} from '../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
-import { commonDateFormat } from '../../../utils/dateFormatUtils'
-import { emptyString, getFullDateForamatted } from '../AchievementConstants'
+} from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
+import { commonDateFormat } from '../../../../utils/dateFormatUtils'
+import { emptyString, getFullDateForamatted } from '../../AchievementConstants'
 
 const dateFilterList: string[] = [
   String(LeadershipListDateFiltersEnums.currentMonth),
@@ -37,7 +37,7 @@ const statusFilterList: string[] = [
   String(LeadershipListStatusFiltersEnums.rejected),
 ]
 
-const LeadershipEnrollmentListFilterOptions = () => {
+const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isViewButtonEnabled, setViewButtonEnabled] = useState<boolean>(true)
   const [selectedDateOption, setSelectedDateOption] = useState<string>(
@@ -84,20 +84,42 @@ const LeadershipEnrollmentListFilterOptions = () => {
     )
   }
 
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setSelectedDateOption(String(LeadershipListDateFiltersEnums.currentMonth))
+    setSelectedStatusOption(String(LeadershipListStatusFiltersEnums.new))
+    setFromDate(emptyString)
+    setToDate(emptyString)
+    const finalQueries: LeadershipListQueryParameters = {
+      dateSelection: String(LeadershipListDateFiltersEnums.currentMonth),
+      from: emptyString,
+      to: emptyString,
+      statusSelection: String(LeadershipListStatusFiltersEnums.new),
+    }
+    dispatch(
+      reduxServices.leadershipEnrollmentList.getLeadershipListThunk(
+        finalQueries,
+      ),
+    )
+  }
+
   return (
     <CForm onSubmit={viewButtonHandler}>
       <CContainer className="mt-2 ms-2 mb-4">
         <CRow className="justify-content-end">
           <CCol sm={2} md={1} className="text-end">
-            <CFormLabel className="mt-1">Date:</CFormLabel>
+            <CFormLabel data-testid="date-label" className="mt-1">
+              Date:
+            </CFormLabel>
           </CCol>
           <CCol sm={2}>
             <CFormSelect
               value={selectedDateOption}
+              data-testid="date-sel"
               onChange={dateOptionChangeHandler}
             >
               {dateFilterList.map((item, index) => (
-                <option key={index} value={item}>
+                <option key={index} value={item} data-testid="date-opt">
                   {item}
                 </option>
               ))}
@@ -139,10 +161,13 @@ const LeadershipEnrollmentListFilterOptions = () => {
             <CCol sm={6}></CCol>
           )}
           <CCol sm={2} md={1} className="text-end">
-            <CFormLabel className="mt-1">Status:</CFormLabel>
+            <CFormLabel data-testid="status-label" className="mt-1">
+              Status:
+            </CFormLabel>
           </CCol>
           <CCol sm={2}>
             <CFormSelect
+              data-testid="status-sel"
               value={selectedStatusOption}
               onChange={statusChangeHandler}
             >
@@ -169,7 +194,8 @@ const LeadershipEnrollmentListFilterOptions = () => {
           </CButton>
           <CButton
             data-testid="clear-btn-id"
-            color="warning "
+            color="warning"
+            onClick={clearButtonHandler}
             className="btn-ovh me-1"
           >
             Clear

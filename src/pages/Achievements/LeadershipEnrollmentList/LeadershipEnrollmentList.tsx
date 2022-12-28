@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import EnrollmentTable from './EnrollmentTable'
-import LeadershipEnrollmentListFilterOptions from './LeadershipEnrollmentListFilterOptions'
-import LeadershipDetails from './LeadershipDetails'
+import EnrollmentTable from './LeaderEnrollmentListComponents/EnrollmentTable'
+import LeadershipEnrollmentListFilterOptions from './LeaderEnrollmentListComponents/LeadershipEnrollmentListFilterOptions'
+import LeadershipDetails from './LeaderEnrollmentListComponents/LeadershipDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -19,10 +19,12 @@ const initialQueries: LeadershipListQueryParameters = {
   statusSelection: String(LeadershipListStatusFiltersEnums.new),
 }
 
-const LeadershipEnrollmentList = () => {
+const LeadershipEnrollmentList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [showLeadershipDetails, setShowLeadershipDetails] =
     useState<boolean>(false)
+
+  const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   useEffect(() => {
     dispatch(
@@ -46,12 +48,15 @@ const LeadershipEnrollmentList = () => {
       {showLeadershipDetails ? (
         <LeadershipDetails
           setShowLeadershipDetails={setShowLeadershipDetails}
+          setCurrentIndex={setCurrentIndex}
+          currentIndex={currentIndex}
         />
       ) : (
         <>
           <LeadershipEnrollmentListFilterOptions />
           <EnrollmentTable
             setShowLeadershipDetails={setShowLeadershipDetails}
+            setCurrentIndex={setCurrentIndex}
           />
         </>
       )}

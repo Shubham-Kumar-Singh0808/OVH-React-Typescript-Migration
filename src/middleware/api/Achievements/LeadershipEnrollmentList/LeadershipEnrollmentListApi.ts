@@ -1,4 +1,5 @@
 import {
+  ApproveRejectLeadershipQueryParameters,
   IncomingLeadershipListItem,
   LeadershipListQueryParameters,
 } from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
@@ -26,8 +27,40 @@ const getLeadershipList = async (
   return response.data
 }
 
+const approveLeadership = async (
+  query: ApproveRejectLeadershipQueryParameters,
+): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: LeadershipEnrollmentListApiConfig.leadershipApprove,
+    method: AllowedHttpMethods.put,
+    params: {
+      ...query,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const rejectLeadership = async (
+  query: ApproveRejectLeadershipQueryParameters,
+): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: LeadershipEnrollmentListApiConfig.leadershipReject,
+    method: AllowedHttpMethods.put,
+    params: {
+      ...query,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const LeadershipEnrollmentListApi = {
   getLeadershipList,
+  approveLeadership,
+  rejectLeadership,
 }
 
 export default LeadershipEnrollmentListApi
