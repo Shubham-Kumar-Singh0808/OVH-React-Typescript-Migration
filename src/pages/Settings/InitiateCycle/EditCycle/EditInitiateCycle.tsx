@@ -31,6 +31,7 @@ const EditInitiateCycle = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState<boolean>(
     editInitiateCycle.activateFlag,
   )
+  const [isDateErrorMsg, setIsDateErrorMsg] = useState<boolean>(false)
 
   const editCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.editCycles,
@@ -45,6 +46,22 @@ const EditInitiateCycle = (): JSX.Element => {
       setCycleToDate(editCycle.endDate)
     }
   }, [editCycle])
+
+  const commonFormatDate = 'L'
+
+  useEffect(() => {
+    const tempCycleFromMonth = new Date(
+      moment(cycleFromMonth?.toString()).format(commonFormatDate),
+    )
+    const tempCycleToMonth = new Date(
+      moment(cycleToMonth?.toString()).format(commonFormatDate),
+    )
+    if (tempCycleToMonth.getTime() < tempCycleFromMonth.getTime()) {
+      setIsDateErrorMsg(true)
+    } else {
+      setIsDateErrorMsg(false)
+    }
+  }, [cycleFromMonth, cycleToMonth])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -126,8 +143,10 @@ const EditInitiateCycle = (): JSX.Element => {
     }
   }
 
-  const onChangeStartDateHandler = (date: Date) => {
+  const onChangeDateHandler = (date: Date) => {
     setCycleFromMonth(moment(date).format('MM/YYYY'))
+  }
+  const onChangeMonthHandler = (date: Date) => {
     setCycleToMonth(moment(date).format('MM/YYYY'))
   }
 
@@ -202,9 +221,8 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromMonth}
-                onChange={(date: Date) => onChangeStartDateHandler(date)}
+                onChange={(date: Date) => onChangeDateHandler(date)}
                 dateFormat="MM/yyyy"
-                maxDate={new Date()}
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
                 data-testid="cycleFromMonth-input"
@@ -229,14 +247,20 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToMonth}
-                onChange={(date: Date) => onChangeStartDateHandler(date)}
+                onChange={(date: Date) => onChangeMonthHandler(date)}
                 dateFormat="MM/yyyy"
-                maxDate={new Date()}
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
                 data-testid="cycleToMonth-input"
               />
             </CCol>
+            {isDateErrorMsg && (
+              <CCol sm={6}>
+                <span className="text-danger">
+                  <b>To Month should be greater than From Month</b>
+                </span>
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">

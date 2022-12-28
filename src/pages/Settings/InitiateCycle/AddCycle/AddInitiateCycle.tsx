@@ -259,7 +259,6 @@ const AddInitiateCycle = (): JSX.Element => {
                   }}
                 />
               </CCol>
-
               {isDateError && (
                 <CCol sm={6}>
                   <span className="text-danger">
