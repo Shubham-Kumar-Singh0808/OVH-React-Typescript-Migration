@@ -24,13 +24,14 @@ const ReviewFormDetailsTable = ({
 }: {
   kpiData: KPI[]
 }): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [kpiDescription, setKpiDescription] = useState<string>('')
+  const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
+    useState<boolean>(false)
+  const [kpiDetails, setKpiDetails] = useState({} as KPI)
   const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
 
-  const handlekpiDescriptionModal = (descKpi: string) => {
-    setIsModalVisible(true)
-    setKpiDescription(descKpi)
+  const handlekpiDescriptionModal = (descKpi: KPI) => {
+    setIsKPIDetailsModalVisible(true)
+    setKpiDetails(descKpi)
   }
   const dynamicFormLabelProps = (rows: string, className: string) => {
     return {
@@ -110,7 +111,7 @@ const ReviewFormDetailsTable = ({
                       <CLink
                         className="cursor-pointer text-primary centerAlignment-text"
                         data-testid="kra-Name"
-                        onClick={() => handlekpiDescriptionModal(kpi.name)}
+                        onClick={() => handlekpiDescriptionModal(kpi)}
                       >
                         {parse(kpiNameLimit)}
                       </CLink>
@@ -153,18 +154,32 @@ const ReviewFormDetailsTable = ({
       <OModal
         modalSize="lg"
         alignment="center"
+        visible={isKPIDetailsModalVisible}
+        setVisible={setIsKPIDetailsModalVisible}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
-        visible={isModalVisible}
-        setVisible={setIsModalVisible}
       >
-        <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: kpiDescription,
-            }}
-          />
-        </p>
+        <>
+          <h4 className="model-header-text mb-3">{kpiDetails.name}</h4>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">
+              Description :
+            </span>
+            {kpiDetails?.description}
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">
+              Frequency :
+            </span>
+            {kpiDetails?.frequency}
+          </p>
+          <p className="d-flex">
+            <span className="col-sm-2 text-right fw-bold px-3">Target :</span>
+            {kpiDetails?.target || 'N/A'}
+          </p>
+        </>
       </OModal>
     </>
   )

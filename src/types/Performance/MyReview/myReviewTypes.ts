@@ -161,7 +161,7 @@ export type Employee = {
 }
 
 export type KPI = {
-  description: null
+  description: string
   employeeFeedback: null
   employeeRating: null
   employeeRatingName: null
@@ -172,7 +172,7 @@ export type KPI = {
   managerFeedback: null
   managerRating: null
   name: string
-  target: null
+  target: string
 }
 
 export type KRA = {
