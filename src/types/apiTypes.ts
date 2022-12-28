@@ -641,6 +641,11 @@ export interface NewBookingApi extends ApiBase {
   confirmNewMeetingAppointment: string
 }
 
+export interface LeadershipEnrollmentFormApi extends ApiBase {
+  employeeDetails: string
+  addLeadership: string
+}
+
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
 }
