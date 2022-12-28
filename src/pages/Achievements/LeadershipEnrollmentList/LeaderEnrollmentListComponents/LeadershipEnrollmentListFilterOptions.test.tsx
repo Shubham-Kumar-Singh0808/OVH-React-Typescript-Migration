@@ -3,7 +3,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import LeadershipEnrollmentListFilterOptions from './LeadershipEnrollmentListFilterOptions'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockLeadershipDetails } from '../../../../test/data/LeadershipEnrollmentListData'
 
@@ -63,6 +69,25 @@ describe('Leadership Enrollment List Filter Options', () => {
       userEvent.selectOptions(dateSelect, 'Today')
 
       userEvent.click(screen.getByTestId(clearBtnId))
+    })
+    test('date error', async () => {
+      const dateSelect = screen.getByTestId('date-sel')
+      userEvent.selectOptions(dateSelect, 'Custom')
+      const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
+      fireEvent.click(dates[0])
+      await waitFor(() =>
+        fireEvent.change(dates[0], {
+          target: { value: '12/07/2022' },
+        }),
+      )
+      fireEvent.click(dates[1])
+      await waitFor(() =>
+        fireEvent.change(dates[1], {
+          target: { value: '12/05/2022' },
+        }),
+      )
+      expect(screen.getByTestId('error-msg-date')).toBeVisible()
+      expect(screen.getByTestId(viewBtnId)).toBeDisabled()
     })
   })
 })

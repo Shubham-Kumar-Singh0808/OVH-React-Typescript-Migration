@@ -5,6 +5,7 @@ import {
   CForm,
   CFormLabel,
   CFormSelect,
+  CFormText,
   CRow,
 } from '@coreui/react-pro'
 import moment from 'moment'
@@ -37,6 +38,20 @@ const statusFilterList: string[] = [
   String(LeadershipListStatusFiltersEnums.rejected),
 ]
 
+const formatDate = (date: string): string => {
+  const list = date.split('/')
+  const month = list[0]
+  list[0] = list[1]
+  list[1] = month
+  return list.join('/')
+}
+
+const compareDates = (fromDate: string, toDate: string) => {
+  const fromD = Date.parse(fromDate)
+  const toD = Date.parse(toDate)
+  return fromD > toD
+}
+
 const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isViewButtonEnabled, setViewButtonEnabled] = useState<boolean>(true)
@@ -45,6 +60,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   )
   const [fromDate, setFromDate] = useState<string>(emptyString)
   const [toDate, setToDate] = useState<string>(emptyString)
+  const [showErrorDate, setShowErrorDate] = useState<boolean>(false)
 
   const [selectedStatusOption, setSelectedStatusOption] = useState<string>(
     String(LeadershipListStatusFiltersEnums.new),
@@ -53,7 +69,9 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   useEffect(() => {
     if (
       selectedDateOption === String(LeadershipListDateFiltersEnums.custom) &&
-      (fromDate === emptyString || toDate === emptyString)
+      (fromDate === emptyString ||
+        toDate === emptyString ||
+        compareDates(fromDate, toDate))
     ) {
       setViewButtonEnabled(false)
     } else {
@@ -73,8 +91,8 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     e.preventDefault()
     const finalQueries: LeadershipListQueryParameters = {
       dateSelection: selectedDateOption,
-      from: fromDate,
-      to: toDate,
+      from: formatDate(fromDate),
+      to: formatDate(toDate),
       statusSelection: selectedStatusOption,
     }
     dispatch(
@@ -102,6 +120,16 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
       ),
     )
   }
+
+  const showDateError = compareDates(fromDate, toDate) ? (
+    <div data-testid="error-msg-date">
+      <CFormText className={TextDanger}>
+        To date should be greater than From date
+      </CFormText>
+    </div>
+  ) : (
+    <></>
+  )
 
   return (
     <CForm onSubmit={viewButtonHandler}>
@@ -155,7 +183,8 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
                     setToDate(moment(date).format(commonDateFormat))
                   }}
                 />
-              </CCol>{' '}
+                <CCol>{showDateError}</CCol>
+              </CCol>
             </>
           ) : (
             <CCol sm={6}></CCol>
