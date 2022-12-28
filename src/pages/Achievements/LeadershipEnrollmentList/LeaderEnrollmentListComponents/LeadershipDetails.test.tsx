@@ -90,6 +90,7 @@ describe('Leadership Details', () => {
       userEvent.type(textArea, 'typing here')
 
       const finalButton = screen.getByTestId(finalBtnId)
+      expect(finalButton).toHaveTextContent('Approve')
       userEvent.click(finalButton)
     })
     test('error approve button', () => {
@@ -100,6 +101,11 @@ describe('Leadership Details', () => {
     test('click reject button', () => {
       const rejectButton = screen.getByTestId(approveBtnId)
       userEvent.click(rejectButton)
+      expect(screen.getByTestId('modal-content')).toHaveTextContent(
+        'Do you really want to',
+      )
+      expect(screen.getByTestId('emp-name')).toHaveTextContent('Admin Support?')
+      expect(screen.getByTestId('app-rej')).toHaveTextContent('Approve')
       const textArea = screen.getByTestId('text-area-comments')
       expect(textArea).toBeVisible()
       userEvent.type(textArea, 'typing here')
