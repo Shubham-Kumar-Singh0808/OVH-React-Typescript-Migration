@@ -49,8 +49,8 @@ const ProjectTailoringTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {projectTailoring?.processHeaddto.length > 0 &&
-            projectTailoring?.processHeaddto.map((data, index) => {
+          {projectTailoring?.processHeaddto?.length > 0 &&
+            projectTailoring?.processHeaddto?.map((data, index) => {
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
@@ -65,7 +65,7 @@ const ProjectTailoringTable = (): JSX.Element => {
                         <i
                           data-testid="plus-btn"
                           className="fa fa-plus-circle cursor-pointer"
-                          onClick={() => handleExpandRow(data.processHeadId)}
+                          onClick={() => handleExpandRow(data.id)}
                         />
                       )}
                     </CTableDataCell>
@@ -74,6 +74,9 @@ const ProjectTailoringTable = (): JSX.Element => {
                     </CTableDataCell>
                     <CTableDataCell scope="row">
                       {data.processSubHeadCount}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.documentCount}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
                       {data.tailoredCount}

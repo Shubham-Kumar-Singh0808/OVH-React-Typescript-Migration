@@ -6,20 +6,28 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import ProjectViewTabLabel from '../../../../../middleware/ProjectViewTabLables'
-import ChangeRequest from '../ChangeRequest/ChangeRequest'
-import ProjectInvoices from '../Invoices/ProjectInvoices'
-import MileStone from '../MileStone/MileStone'
-import PeopleTab from '../People/PeopleTab'
-import ProjectMetricsTab from '../ProjectMetrics/ProjectMetricsTab'
-import ProjectTailoring from '../ProjectTailoring/ProjectTailoring'
-import ProjectHistoryDetails from '../ProjectTimeLine/ProjectHistoryDetails'
+import { ProjectTabList } from '../../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
 
-const ProjectViewTabs = (): JSX.Element => {
+const ProjectMetricsTabLabel: ProjectTabList[] = [
+  {
+    id: 1,
+    tabName: 'Schedule Variance',
+  },
+  {
+    id: 2,
+    tabName: 'Effort Variance',
+  },
+  {
+    id: 3,
+    tabName: 'TimeLine',
+  },
+]
+
+const ProjectMetricsTab = (): JSX.Element => {
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
   const handleActiveTab = (tabKey: number) => {
@@ -29,17 +37,9 @@ const ProjectViewTabs = (): JSX.Element => {
   useEffect(() => {
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
-        1: <PeopleTab />,
-        2: <ChangeRequest />,
-        3: <MileStone />,
-        4: <ProjectInvoices />,
-        5: <h6>status</h6>,
-        6: <h6>Notes</h6>,
-        7: <h6>Proposals</h6>,
-        8: <h6>Time Sheet</h6>,
-        9: <ProjectTailoring />,
-        10: <ProjectMetricsTab />,
-        11: <ProjectHistoryDetails />,
+        1: <h6>Schedule Variance</h6>,
+        2: <h6>Effort Variance</h6>,
+        3: <h6>TimeLine</h6>,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
     }
@@ -50,7 +50,7 @@ const ProjectViewTabs = (): JSX.Element => {
   return (
     <>
       <CNav className="inline-tabs-nav" variant="tabs" role="tablist">
-        {ProjectViewTabLabel.map((item) => (
+        {ProjectMetricsTabLabel.map((item) => (
           <CNavItem key={item.id}>
             <>
               <CNavLink
@@ -77,4 +77,4 @@ const ProjectViewTabs = (): JSX.Element => {
   )
 }
 
-export default ProjectViewTabs
+export default ProjectMetricsTab

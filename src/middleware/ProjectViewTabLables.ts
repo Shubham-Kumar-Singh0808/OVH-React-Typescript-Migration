@@ -47,4 +47,5 @@ const ProjectViewTabLabel: ProjectTabList[] = [
     tabName: 'Project Timeline',
   },
 ]
+
 export default ProjectViewTabLabel
