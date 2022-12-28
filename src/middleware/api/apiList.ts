@@ -86,6 +86,7 @@ import {
   AddNomineeApi,
   MyReviewApi,
   LeadershipEnrollmentFormApi,
+  ReviewListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -784,4 +785,8 @@ export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
 
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+}
+
+export const reviewListApiConfig: ReviewListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
 }
