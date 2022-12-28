@@ -12,44 +12,50 @@ import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { NominationCycleDto } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { NominationCycleDto } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
-  const [isChecked, setIsChecked] = useState<boolean>(false)
   const editCycles = {} as NominationCycleDto
   const [editInitiateCycle, setEditInitiateCycle] = useState(editCycles)
-  const [cycleFromMonth, setCycleFromMonth] = useState<string>(
-    editInitiateCycle.fromMonth,
-  )
-  const [cycleToMonth, setCycleToMonth] = useState<string>(
-    editInitiateCycle.toMonth,
-  )
-
-  const [cycleFromDate, setCycleFromDate] = useState<string>(
-    editInitiateCycle.startDate,
-  )
-  const [cycleToDate, setCycleToDate] = useState<string>(
-    editInitiateCycle.endDate,
+  const [cycleFromMonth, setCycleFromMonth] = useState<string>('')
+  const [cycleToMonth, setCycleToMonth] = useState<string>('')
+  const [cycleFromDate, setCycleFromDate] = useState<string>('')
+  const [cycleToDate, setCycleToDate] = useState<string>('')
+  const [isChecked, setIsChecked] = useState<boolean>(
+    editInitiateCycle.activateFlag,
   )
 
-  const commonFormatDate = 'L'
-  const onChangeHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  const editCycle = useTypedSelector(
+    reduxServices.initiateCycle.selectors.editCycles,
+  )
+
+  useEffect(() => {
+    if (editCycle != null) {
+      setEditInitiateCycle(editCycle)
+      setCycleFromMonth(editCycle.fromMonth)
+      setCycleToMonth(editCycle.toMonth)
+      setCycleFromDate(editCycle.startDate)
+      setCycleToDate(editCycle.endDate)
+    }
+  }, [editCycle])
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'cycleName') {
-      const cycleNameInput = value.replace(/\D/g, '')
-      setEditInitiateCycle((values) => {
-        return { ...values, ...{ [name]: cycleNameInput } }
+      const cycleNameInput = value.replace(/^\s*/, '')
+      setEditInitiateCycle((prevState) => {
+        return { ...prevState, ...{ [name]: cycleNameInput } }
+      })
+    } else {
+      setEditInitiateCycle((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
       })
     }
   }
@@ -79,6 +85,52 @@ const EditInitiateCycle = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
+  const updateSuccessToastMessage = (
+    <OToast toastMessage="Cycle updated successfully" toastColor="success" />
+  )
+  const updateFailedToastMessage = (
+    <OToast
+      toastMessage="  Sorry, Cycle already exist for this duration"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const updateCycle = async () => {
+    const prepareObject = {
+      ...editInitiateCycle,
+      endDate: cycleToDate,
+      startDate: cycleFromDate,
+      fromMonth: cycleFromMonth,
+      toMonth: cycleToMonth,
+      activateFlag: isChecked,
+    }
+    const updateCycleResultAction = await dispatch(
+      reduxServices.initiateCycle.updateCycle(prepareObject),
+    )
+    if (
+      reduxServices.initiateCycle.updateCycle.fulfilled.match(
+        updateCycleResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.initiateCycle.updateCycle.rejected.match(
+        updateCycleResultAction,
+      ) &&
+      updateCycleResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
+  const onChangeStartDateHandler = (date: Date) => {
+    setCycleFromMonth(moment(date).format('MM/YYYY'))
+    setCycleToMonth(moment(date).format('MM/YYYY'))
+  }
+
   return (
     <>
       <OCard
@@ -94,7 +146,9 @@ const EditInitiateCycle = (): JSX.Element => {
               className="btn-ovh me-1"
               data-testid="back-button"
               onClick={() =>
-                dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+                dispatch(
+                  reduxServices.initiateCycle.actions.setToggle('addCycle'),
+                )
               }
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
@@ -146,11 +200,9 @@ const EditInitiateCycle = (): JSX.Element => {
             <CCol sm={3}>
               <ReactDatePicker
                 autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromMonth}
-                onChange={(date: Date) => {
-                  setCycleFromMonth(moment(date).format(commonFormatDate))
-                }}
+                onChange={(date: Date) => onChangeStartDateHandler(date)}
                 dateFormat="MM/yyyy"
                 maxDate={new Date()}
                 showMonthYearPicker
@@ -175,11 +227,9 @@ const EditInitiateCycle = (): JSX.Element => {
             <CCol sm={3}>
               <ReactDatePicker
                 autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToMonth}
-                onChange={(date: Date) => {
-                  setCycleToMonth(moment(date).format(commonFormatDate))
-                }}
+                onChange={(date: Date) => onChangeStartDateHandler(date)}
                 dateFormat="MM/yyyy"
                 maxDate={new Date()}
                 showMonthYearPicker
@@ -204,7 +254,7 @@ const EditInitiateCycle = (): JSX.Element => {
             <CCol sm={3}>
               <ReactDatePicker
                 autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromDate}
                 onChange={(date: Date) =>
                   setCycleFromDate(
@@ -224,7 +274,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
                 name="cycleStartDate"
-                data-testid="cycleStartDate-input"
+                data-testid="cycleFromDate-input"
               />
             </CCol>
           </CRow>
@@ -244,7 +294,7 @@ const EditInitiateCycle = (): JSX.Element => {
             <CCol sm={3}>
               <ReactDatePicker
                 autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToDate}
                 onChange={(date: Date) =>
                   setCycleToDate(
@@ -280,8 +330,8 @@ const EditInitiateCycle = (): JSX.Element => {
                 data-testid="ch-All"
                 id="activate"
                 name="activate"
+                onChange={() => setIsChecked(!isChecked)}
                 checked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
               />
             </CCol>
           </CRow>
@@ -293,6 +343,7 @@ const EditInitiateCycle = (): JSX.Element => {
               className="btn-ovh me-1 text-white"
               color="success"
               disabled={!isButtonEnabled}
+              onClick={updateCycle}
             >
               Update
             </CButton>

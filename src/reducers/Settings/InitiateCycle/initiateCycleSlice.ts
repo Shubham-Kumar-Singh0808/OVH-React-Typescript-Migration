@@ -9,6 +9,7 @@ import {
   GetAllCycles,
   GetAllQuestions,
   InitiateCycleSliceState,
+  NominationCycleDto,
   TotalResponse,
 } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
@@ -143,9 +144,9 @@ const editCycle = createAsyncThunk(
 
 const updateCycle = createAsyncThunk(
   'initiateCycle/updateCycle',
-  async (_, thunkApi) => {
+  async (updateCycleData: NominationCycleDto, thunkApi) => {
     try {
-      return await initiateCycleApi.updateCycle()
+      return await initiateCycleApi.updateCycle(updateCycleData)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -163,6 +164,7 @@ export const initialCycleState: InitiateCycleSliceState = {
   currentPage: 1,
   pageSize: 20,
   toggle: '',
+  editCycle: {} as NominationCycleDto,
 }
 
 const initiateCycleSlice = createSlice({
@@ -196,12 +198,13 @@ const initiateCycleSlice = createSlice({
         state.allQuestions = action.payload
         state.listSize = action.payload.size
       })
-      .addMatcher(
-        isAnyOf(editCycle.fulfilled, updateCycle.fulfilled),
-        (state) => {
-          state.isLoading = ApiLoadingState.succeeded
-        },
-      )
+      .addCase(editCycle.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editCycle = action.payload
+      })
+      .addMatcher(isAnyOf(updateCycle.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getActiveCycleData.pending,
@@ -243,6 +246,9 @@ const listSize = (state: RootState): number => state.initiateCycle.listSize
 const allCycles = (state: RootState): GetAllCycles =>
   state.initiateCycle.allCycles
 
+const editCycles = (state: RootState): NominationCycleDto =>
+  state.initiateCycle.editCycle
+
 const pageFromState = (state: RootState): number =>
   state.initiateCycle.currentPage
 
@@ -272,6 +278,7 @@ const initiateCycleSelectors = {
   pageSizeFromState,
   allCycles,
   toggle,
+  editCycles,
 }
 
 export const initiateCycleService = {

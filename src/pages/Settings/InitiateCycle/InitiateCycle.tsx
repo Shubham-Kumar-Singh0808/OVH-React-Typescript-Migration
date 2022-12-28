@@ -10,6 +10,7 @@ import React, { useEffect } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
 import AddQuestion from './AddQuestion/AddQuestion'
 import AddInitiateCycle from './AddCycle/AddInitiateCycle'
+import EditInitiateCycle from './EditCycle/EditInitiateCycle'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -199,13 +200,6 @@ const InitiateCycle = (): JSX.Element => {
               </CCol>
             </CRow>
           </CForm>
-          <InitiateCycleTable
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-          />
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
@@ -218,10 +212,18 @@ const InitiateCycle = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
+          <InitiateCycleTable
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
         </OCard>
       )}
       {toggle === 'addQuestion' && <AddQuestion />}
       {toggle === 'addCycle' && <AddInitiateCycle />}
+      {toggle === 'editCycle' && <EditInitiateCycle />}
     </>
   )
 }

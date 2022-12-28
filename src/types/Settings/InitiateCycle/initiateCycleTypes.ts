@@ -43,6 +43,7 @@ export type InitiateCycleSliceState = {
   currentPage: number
   pageSize: number
   toggle: string
+  editCycle: NominationCycleDto
 }
 
 export type GetQuestion = {

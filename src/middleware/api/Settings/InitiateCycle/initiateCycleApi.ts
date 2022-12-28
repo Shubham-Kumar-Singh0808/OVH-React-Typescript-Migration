@@ -129,10 +129,13 @@ const editCycle = async (cycleId: number): Promise<NominationCycleDto> => {
   return response.data
 }
 
-const updateCycle = async (): Promise<NominationCycleDto> => {
+const updateCycle = async (
+  updateCycleData: NominationCycleDto,
+): Promise<NominationCycleDto> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: initiateCycleApiConfig.updateCycle,
     method: AllowedHttpMethods.put,
+    data: updateCycleData,
   })
 
   const response = await useAxios(requestConfig)

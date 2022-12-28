@@ -18,7 +18,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
-import EditInitiateCycle from '../EditCycle/EditInitiateCycle'
 
 const AddInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -46,10 +45,6 @@ const AddInitiateCycle = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  useEffect(() => {
-    dispatch(reduxServices.initiateCycle.getAllCycles())
-  }, [dispatch])
-
   const clearInputs = () => {
     setSelectCycleName('')
     setToMonth('')
@@ -73,7 +68,7 @@ const AddInitiateCycle = (): JSX.Element => {
 
   const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
 
-  const addBtnHandler = async () => {
+  const addButttonHandler = async () => {
     const prepareObject = {
       activateFlag: isChecked,
       cycleName: selectCycleName,
@@ -94,7 +89,7 @@ const AddInitiateCycle = (): JSX.Element => {
       dispatch(reduxServices.initiateCycle.getAllCycles())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
-      reduxServices.newEvent.uniqueAttendee.rejected.match(
+      reduxServices.initiateCycle.addCycle.rejected.match(
         initiateAddCycleResult,
       ) &&
       initiateAddCycleResult.payload === 409
@@ -104,35 +99,33 @@ const AddInitiateCycle = (): JSX.Element => {
     }
   }
 
-  const endIndexPage = useTypedSelector(
+  const pageFromState = useTypedSelector(
     reduxServices.initiateCycle.selectors.pageFromState,
   )
 
-  const startIndexPage = useTypedSelector(
+  const pageSizeFromState = useTypedSelector(
     reduxServices.initiateCycle.selectors.pageSizeFromState,
   )
 
   useEffect(() => {
-    dispatch(reduxServices.initiateCycle.getActiveCycleData())
     dispatch(reduxServices.initiateCycle.getAllCycles())
-    dispatch(reduxServices.initiateCycle.getAllQuestions())
     dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
     dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
   }, [dispatch])
 
-  const listSize = useTypedSelector(
+  const totalListSize = useTypedSelector(
     reduxServices.initiateCycle.selectors.listSize,
   )
 
-  const ExistingPage = useTypedSelector(
+  const selectCurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
 
   useEffect(() => {
-    if (ExistingPage) {
-      setCurrentPage(ExistingPage)
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
     }
-  }, [ExistingPage])
+  }, [selectCurrentPage])
 
   const {
     paginationRange,
@@ -140,11 +133,11 @@ const AddInitiateCycle = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(listSize, startIndexPage, endIndexPage)
+  } = usePagination(totalListSize, pageSizeFromState, pageFromState)
 
   return (
     <>
-      {toggle === '' && (
+      {toggle === 'addCycle' && (
         <OCard
           className="mb-4 myprofile-wrapper"
           title="Add Cycle"
@@ -345,7 +338,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   className="btn-ovh me-1 text-white"
                   color="success"
                   disabled={!isButtonEnabled}
-                  onClick={addBtnHandler}
+                  onClick={addButttonHandler}
                 >
                   Add
                 </CButton>
@@ -369,7 +362,6 @@ const AddInitiateCycle = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'editCycle' && <EditInitiateCycle />}
     </>
   )
 }

@@ -3,7 +3,10 @@ import InitialCycleReducer, {
   initiateCycleService,
 } from './initiateCycleSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { GetActiveCycleData } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import {
+  GetActiveCycleData,
+  NominationCycleDto,
+} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import {
   mockActiveCycleData,
   mockAllCycles,
@@ -27,6 +30,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -46,6 +50,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -64,6 +69,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
   })
@@ -84,6 +90,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -103,6 +110,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -121,6 +129,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
   })
@@ -141,6 +150,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -160,6 +170,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -178,6 +189,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
   })
@@ -198,13 +210,13 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
     it('Should be able to set isLoading to "success" if editCycle is fulfilled', () => {
       const action = {
         type: initiateCycleService.editCycle.fulfilled.type,
-        payload: mockAllQuestions?.list,
       }
       const state = InitialCycleReducer(initialCycleState, action)
       expect(state).toEqual({
@@ -235,6 +247,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
   })
@@ -255,6 +268,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -274,6 +288,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
 
@@ -292,6 +307,7 @@ describe('InitiateCycle Slice', () => {
         currentPage: 1,
         pageSize: 20,
         toggle: '',
+        editCycle: {} as NominationCycleDto,
       })
     })
   })

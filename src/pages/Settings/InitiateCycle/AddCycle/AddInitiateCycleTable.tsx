@@ -28,12 +28,12 @@ const AddInitiateCycleTable = ({
   const allCycles = useTypedSelector(
     reduxServices.initiateCycle.selectors.allCycles,
   )
-  const allQuestionsListSize = useTypedSelector(
+  const allQuestionsSize = useTypedSelector(
     reduxServices.initiateCycle.selectors.listSize,
   )
 
   const allRecords = allCycles?.list?.length
-    ? `Total Records: ${allQuestionsListSize}`
+    ? `Total Records: ${allQuestionsSize}`
     : `No Records found...`
 
   const dispatch = useAppDispatch()
@@ -52,7 +52,6 @@ const AddInitiateCycleTable = ({
     () => currentPageData(allCycles?.list, currentPage, pageSize),
     [allCycles?.list, currentPage, pageSize],
   )
-  console.log(currentTotalPageRecords)
 
   const editCycleHandler = (id: number) => {
     dispatch(reduxServices.initiateCycle.actions.setToggle('editCycle'))
@@ -94,7 +93,9 @@ const AddInitiateCycleTable = ({
                 <CTableDataCell>{cycle.cycleName}</CTableDataCell>
                 <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
                 <CTableDataCell>{cycle.toMonth}</CTableDataCell>
-                <CTableDataCell>{cycle.activateFlag}</CTableDataCell>
+                <CTableDataCell>
+                  {cycle.activateFlag === true ? 'Active' : 'Inactive'}
+                </CTableDataCell>
                 <CTableDataCell>{cycle.startDate}</CTableDataCell>
                 <CTableDataCell>{cycle.endDate}</CTableDataCell>
                 <CTableDataCell>
@@ -121,7 +122,7 @@ const AddInitiateCycleTable = ({
           </p>
         </CCol>
         <CCol xs={3}>
-          {allQuestionsListSize > 20 && (
+          {allQuestionsSize > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSize}
               options={[20, 40, 60, 80, 100]}
@@ -129,7 +130,7 @@ const AddInitiateCycleTable = ({
             />
           )}
         </CCol>
-        {allQuestionsListSize > 20 && (
+        {allQuestionsSize > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
