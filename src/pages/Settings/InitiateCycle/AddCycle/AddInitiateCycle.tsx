@@ -29,6 +29,7 @@ const AddInitiateCycle = (): JSX.Element => {
   const [endDate, setEndDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [isDateError, setIsDateError] = useState<boolean>(false)
 
   const commonFormatDate = 'L'
 
@@ -44,6 +45,20 @@ const AddInitiateCycle = (): JSX.Element => {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+
+  useEffect(() => {
+    const tempFromMonth = new Date(
+      moment(fromMonth?.toString()).format(commonFormatDate),
+    )
+    const tempToMonth = new Date(
+      moment(toMonth?.toString()).format(commonFormatDate),
+    )
+    if (tempToMonth.getTime() < tempFromMonth.getTime()) {
+      setIsDateError(true)
+    } else {
+      setIsDateError(false)
+    }
+  }, [fromMonth, toMonth])
 
   const clearInputs = () => {
     setSelectCycleName('')
@@ -244,6 +259,14 @@ const AddInitiateCycle = (): JSX.Element => {
                   }}
                 />
               </CCol>
+
+              {isDateError && (
+                <CCol sm={6}>
+                  <span className="text-danger">
+                    <b>To Month should be greater than From Month</b>
+                  </span>
+                </CCol>
+              )}
             </CRow>
             <CRow className="mt-3">
               <CCol sm={3} md={3} className="text-end">
