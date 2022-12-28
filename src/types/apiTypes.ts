@@ -623,3 +623,7 @@ export interface ProjectTailoringApi extends ApiBase {
   getProjectTailoringDocument: string
   getProjectTailoring: string
 }
+
+export interface ProjectTimeSheetApi extends ApiBase {
+  getProjectTimeSheet: string
+}
