@@ -159,10 +159,11 @@ const AchievementTypeListEntries = (
           >
             Status:<span className={TextWhite}>*</span>
           </CFormLabel>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} md={1} className="mt-2">
             <CFormCheck
               type="radio"
               label="Active"
+              hitArea="full"
               value={NewAchievementStatus.Active}
               name="achievementStatusActive"
               data-testid="ach-status-input-active"
@@ -171,10 +172,11 @@ const AchievementTypeListEntries = (
               inline
             />
           </CCol>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} className="mt-2">
             <CFormCheck
               type="radio"
               label="Inactive"
+              hitArea="full"
               value={NewAchievementStatus.Inactive}
               data-testid="ach-status-input-inactive"
               checked={newUserSelectedStatus === NewAchievementStatus.Inactive}

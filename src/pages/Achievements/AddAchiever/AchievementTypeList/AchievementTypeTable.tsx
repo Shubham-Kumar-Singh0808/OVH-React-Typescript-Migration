@@ -337,13 +337,15 @@ const AchievementTypeTable = (
         setVisible={setDisplayModalContent}
         alignment="center"
         modalTitle="Delete Achievement Type"
-        closeButtonClass="d-none"
+        modalHeaderClass="d-none"
         confirmButtonAction={confirmDeleteButtonHandler}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalBodyClass="ng-binding"
       >
-        <div data-testid="confirm-modal-content">{modalContent}</div>
+        <div data-testid="confirm-modal-content" className="pb-4">
+          {modalContent}
+        </div>
       </OModal>
     </>
   )
