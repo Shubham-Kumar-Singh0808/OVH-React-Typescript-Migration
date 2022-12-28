@@ -23,7 +23,7 @@ const getEmployeeDetails = async (): Promise<IncomingEmployeeDetails> => {
 
 const addLeadership = async (
   outBody: OutgoingLeadershipForm,
-): Promise<void> => {
+): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: LeadershipEnrollmentFormApiConfig.addLeadership,
     method: AllowedHttpMethods.post,
