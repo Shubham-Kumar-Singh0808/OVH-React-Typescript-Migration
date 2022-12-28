@@ -618,3 +618,8 @@ export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
   getInvoicesOfMilestone: string
 }
+
+export interface ProjectTailoringApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProjectTailoring: string
+}

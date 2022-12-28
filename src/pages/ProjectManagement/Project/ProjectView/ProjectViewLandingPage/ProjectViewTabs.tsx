@@ -11,6 +11,7 @@ import ChangeRequest from '../ChangeRequest/ChangeRequest'
 import ProjectInvoices from '../Invoices/ProjectInvoices'
 import MileStone from '../MileStone/MileStone'
 import PeopleTab from '../People/PeopleTab'
+import ProjectTailoring from '../ProjectTailoring/ProjectTailoring'
 import ProjectHistoryDetails from '../ProjectTimeLine/ProjectHistoryDetails'
 
 interface ShowTabContentType<TValue> {
@@ -35,7 +36,7 @@ const ProjectViewTabs = (): JSX.Element => {
         6: <h6>Notes</h6>,
         7: <h6>Proposals</h6>,
         8: <h6>Time Sheet</h6>,
-        9: <h6>Project Tailoring</h6>,
+        9: <ProjectTailoring />,
         10: <h6>Project Metrics</h6>,
         11: <ProjectHistoryDetails />,
       }
