@@ -97,56 +97,56 @@ const PayrollManagement = (): JSX.Element => {
     )
   }
 
-  const previewBtnHandler = async () => {
-    const prepareObject = {
-      serialNo: toReadExcelFile?.serialNo,
-      paySlipId: toReadExcelFile?.paySlipId,
-      employeeId: toReadExcelFile?.employeeId,
-      designation: toReadExcelFile?.designation,
-      joiningDate: toReadExcelFile?.joiningDate,
-      name: toReadExcelFile?.name,
-      accountNo: toReadExcelFile?.accountNo,
-      grossSalary: toReadExcelFile?.grossSalary,
-      variablePayPercentage: toReadExcelFile?.variablePayPercentage,
-      variablePay: toReadExcelFile?.variablePay,
-      grossSalAfterVariablepay: toReadExcelFile?.grossSalAfterVariablepay,
-      basicSalary: toReadExcelFile?.basicSalary,
-      houseRentAllowance: toReadExcelFile?.houseRentAllowance,
-      transportAllowance: toReadExcelFile?.transportAllowance,
-      otherAllowance: toReadExcelFile?.otherAllowance,
-      absent: toReadExcelFile?.absent,
-      lossOfPay: toReadExcelFile?.lossOfPay,
-      medicliam: toReadExcelFile?.medicliam,
-      esi: toReadExcelFile?.esi,
-      epf: toReadExcelFile?.epf,
-      gratuity: toReadExcelFile?.gratuity,
-      erc: toReadExcelFile?.erc,
-      taxDeductionScheme: toReadExcelFile?.taxDeductionScheme,
-      professionalTax: toReadExcelFile?.professionalTax,
-      arrears: toReadExcelFile?.arrears,
-      advArrears: toReadExcelFile?.advArrears,
-      incentive: toReadExcelFile?.incentive,
-      vpayable: toReadExcelFile?.vpayable,
-      netSalary: toReadExcelFile?.netSalary,
-      month: toReadExcelFile?.month,
-      year: toReadExcelFile?.year,
-      remarks: toReadExcelFile?.remarks,
-      status: toReadExcelFile?.status,
-      mealsCard: toReadExcelFile?.mealsCard,
-      donation: toReadExcelFile?.donation,
-      specificDesignation: toReadExcelFile?.specificDesignation,
-    }
-    const updatePaySlipsResultAction = await dispatch(
-      reduxServices.payrollManagement.readExcelFile(prepareObject),
-    )
+  // const previewBtnHandler = async () => {
+  //   const prepareObject = {
+  //     serialNo: toReadExcelFile?.serialNo,
+  //     paySlipId: toReadExcelFile?.paySlipId,
+  //     employeeId: toReadExcelFile?.employeeId,
+  //     designation: toReadExcelFile?.designation,
+  //     joiningDate: toReadExcelFile?.joiningDate,
+  //     name: toReadExcelFile?.name,
+  //     accountNo: toReadExcelFile?.accountNo,
+  //     grossSalary: toReadExcelFile?.grossSalary,
+  //     variablePayPercentage: toReadExcelFile?.variablePayPercentage,
+  //     variablePay: toReadExcelFile?.variablePay,
+  //     grossSalAfterVariablepay: toReadExcelFile?.grossSalAfterVariablepay,
+  //     basicSalary: toReadExcelFile?.basicSalary,
+  //     houseRentAllowance: toReadExcelFile?.houseRentAllowance,
+  //     transportAllowance: toReadExcelFile?.transportAllowance,
+  //     otherAllowance: toReadExcelFile?.otherAllowance,
+  //     absent: toReadExcelFile?.absent,
+  //     lossOfPay: toReadExcelFile?.lossOfPay,
+  //     medicliam: toReadExcelFile?.medicliam,
+  //     esi: toReadExcelFile?.esi,
+  //     epf: toReadExcelFile?.epf,
+  //     gratuity: toReadExcelFile?.gratuity,
+  //     erc: toReadExcelFile?.erc,
+  //     taxDeductionScheme: toReadExcelFile?.taxDeductionScheme,
+  //     professionalTax: toReadExcelFile?.professionalTax,
+  //     arrears: toReadExcelFile?.arrears,
+  //     advArrears: toReadExcelFile?.advArrears,
+  //     incentive: toReadExcelFile?.incentive,
+  //     vpayable: toReadExcelFile?.vpayable,
+  //     netSalary: toReadExcelFile?.netSalary,
+  //     month: toReadExcelFile?.month,
+  //     year: toReadExcelFile?.year,
+  //     remarks: toReadExcelFile?.remarks,
+  //     status: toReadExcelFile?.status,
+  //     mealsCard: toReadExcelFile?.mealsCard,
+  //     donation: toReadExcelFile?.donation,
+  //     specificDesignation: toReadExcelFile?.specificDesignation,
+  //   }
+  //   const updatePaySlipsResultAction = await dispatch(
+  //     reduxServices.payrollManagement.readExcelFile(prepareObject),
+  //   )
 
-    if (
-      reduxServices.payrollManagement.readExcelFile.fulfilled.match(
-        updatePaySlipsResultAction,
-      )
-    )
+  //   if (
+  //     reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+  //       updatePaySlipsResultAction,
+  //     )
+  //   )
 
-  }
+  // }
   return (
     <>
       {toggle === '' && (
@@ -228,7 +228,7 @@ const PayrollManagement = (): JSX.Element => {
                 size="sm"
                 color="info"
                 type="submit"
-                onClick={previewBtnHandler}
+                // onClick={previewBtnHandler}
               >
                 Preview
               </CButton>
