@@ -2,12 +2,20 @@ import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ProjectRequestViewDetails from './ProjectRequestViewDetails'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const ProjectRequestView = ({
   setToggle,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const isLoading = useTypedSelector(
+    reduxServices.projectCreationRequest.selectors.isLoading,
+  )
   return (
     <>
       <OCard
@@ -28,7 +36,11 @@ const ProjectRequestView = ({
             </CButton>
           </CCol>
         </CRow>
-        <ProjectRequestViewDetails />
+        {isLoading !== ApiLoadingState.loading ? (
+          <ProjectRequestViewDetails />
+        ) : (
+          <OLoadingSpinner type={LoadingType.PAGE} />
+        )}
       </OCard>
     </>
   )
