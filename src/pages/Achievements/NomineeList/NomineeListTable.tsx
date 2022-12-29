@@ -51,6 +51,7 @@ const NomineeListTable = (props: NomineeListTableProps): JSX.Element => {
               <CTableHeaderCell scope="col">Nominee Name</CTableHeaderCell>
               <CTableHeaderCell scope="col">Achievement Type</CTableHeaderCell>
               <CTableHeaderCell scope="col">From Month</CTableHeaderCell>
+              <CTableHeaderCell scope="col">To Month</CTableHeaderCell>
               <CTableHeaderCell scope="col">Added By</CTableHeaderCell>
               <CTableHeaderCell scope="col">Status</CTableHeaderCell>
               <CTableHeaderCell scope="col">Action</CTableHeaderCell>
@@ -61,6 +62,7 @@ const NomineeListTable = (props: NomineeListTableProps): JSX.Element => {
               <CTableRow key={index}>
                 <CTableDataCell>{index + 1}</CTableDataCell>
                 <CTableDataCell>{item.employeeName}</CTableDataCell>
+                <CTableDataCell>{item.achievementType}</CTableDataCell>
                 <CTableDataCell>{item.fromMonth}</CTableDataCell>
                 <CTableDataCell>{item.toMonth}</CTableDataCell>
                 <CTableDataCell>{item.createdBy}</CTableDataCell>

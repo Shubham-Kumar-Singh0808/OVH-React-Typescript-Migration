@@ -34,7 +34,7 @@ export const NomineeRatingList: RatingType[] = [
   },
   {
     ratingNumber: 1,
-    ratingString: '1 - Oppotunity For Development',
+    ratingString: '1 - Opportunity For Development',
   },
   {
     ratingNumber: 2,
