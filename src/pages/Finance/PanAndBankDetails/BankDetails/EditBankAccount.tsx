@@ -26,7 +26,6 @@ const EditBankAccount = ({
   const editBankAccount = {} as EditBankInformation
   const [editBankInfo, setEditBankInfo] = useState(editBankAccount)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
-  const [bankAccountNumberExist, setBankAccountNumberExist] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -256,11 +255,7 @@ const EditBankAccount = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={
-                isUpdateBtnEnabled
-                  ? isUpdateBtnEnabled && bankAccountNumberExist.length > 0
-                  : !isUpdateBtnEnabled
-              }
+              disabled={!isUpdateBtnEnabled}
               onClick={handleUpdateHandler}
             >
               Update
