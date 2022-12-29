@@ -362,6 +362,13 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const LeadershipEnrollmentList = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentList'
+    ),
+)
+
 const LeadershipEnrollmentForm = React.lazy(
   () =>
     import(
@@ -804,6 +811,11 @@ const routes = [
     path: '/employeeAppraisal',
     name: 'My Review',
     component: MyReview,
+  },
+  {
+    path: '/leadershiplist',
+    name: 'Leadership Enrollment List',
+    component: LeadershipEnrollmentList,
   },
   {
     path: '/leadershipForm',

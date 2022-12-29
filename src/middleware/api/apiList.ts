@@ -86,6 +86,7 @@ import {
   AddNomineeApi,
   MyReviewApi,
   LeadershipEnrollmentFormApi,
+  LeadershipEnrollmentListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -780,6 +781,12 @@ export const newBookingApiConfig: NewBookingApi = {
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
   employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
   addLeadership: apiPrefix + '/achievement/addLeadership',
+}
+
+export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
+  getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
+  leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
+  leadershipReject: apiPrefix + '/achievement/leadershipReject',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

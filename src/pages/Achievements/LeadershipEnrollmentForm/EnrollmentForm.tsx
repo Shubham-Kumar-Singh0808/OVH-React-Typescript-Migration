@@ -371,7 +371,6 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
           </CButton>
           <CButton
             color="warning"
-            role="addNewAchiever"
             data-testid="clear-btn"
             className="btn-ovh me-1"
             onClick={clearButtonHandler}

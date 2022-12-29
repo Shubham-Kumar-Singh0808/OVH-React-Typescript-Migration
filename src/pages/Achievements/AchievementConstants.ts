@@ -121,6 +121,18 @@ export const getDateForamatted = (givenDate: string): string => {
     : ''
 }
 
+export const getFullDateForamatted = (givenDate: string): string => {
+  return givenDate
+    ? moment(
+        new Date(givenDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      ).format('DD/MM/YYYY')
+    : ''
+}
+
 export const initialNewAchieverState: NewAchieverInformation = {
   achievementName: selectAchievementType,
   employeeName: emptyString,
