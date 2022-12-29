@@ -137,7 +137,7 @@ const ApproveProjectForm = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllDomains())
     dispatch(reduxServices.projectManagement.getAllManagers())
     dispatch(reduxServices.projectManagement.getAllPlatforms())
-    dispatch(reduxServices.projectManagement.getProject(projectId))
+    // dispatch(reduxServices.projectManagement.getProject(projectId))
   }, [dispatch])
 
   const clientOrganizationList = projectClients
@@ -267,7 +267,7 @@ const ApproveProjectForm = (): JSX.Element => {
       reduxServices.projectCreationRequest.updateProjectRequest(payload),
     )
     if (
-      reduxServices.projectManagement.updateProject.fulfilled.match(
+      reduxServices.projectCreationRequest.updateProjectRequest.fulfilled.match(
         newProjectResponse,
       )
     ) {

@@ -73,7 +73,7 @@ const getApproveProjectRequest = async (
 
 const updateProjectRequest = async (
   projectRequestDetails: ApproveProjectRequest,
-): Promise<ApproveProjectRequest> => {
+): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProjectCreationRequestApiConfig.updateProjectRequest,
     method: AllowedHttpMethods.post,

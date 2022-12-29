@@ -85,7 +85,7 @@ const getApproveProjectRequest = createAsyncThunk<
 )
 
 const updateProjectRequest = createAsyncThunk<
-  ApproveProjectRequest,
+  number | undefined,
   ApproveProjectRequest,
   {
     dispatch: AppDispatch
