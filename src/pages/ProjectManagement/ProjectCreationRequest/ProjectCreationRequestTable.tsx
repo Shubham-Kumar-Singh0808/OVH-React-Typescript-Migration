@@ -81,6 +81,11 @@ const ProjectCreationRequestTable = ({
     setToggle('projectView')
   }
 
+  const handleProjectRequestApproveClick = (id: number) => {
+    dispatch(reduxServices.projectCreationRequest.getApproveProjectRequest(id))
+    setToggle('approvalProjectHistory')
+  }
+
   const handleProjectRequestHistoryClick = (id: number) => {
     dispatch(
       reduxServices.projectCreationRequest.projectRequestHistoryDetails(id),
@@ -146,6 +151,9 @@ const ProjectCreationRequestTable = ({
                       color="success"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      onClick={() =>
+                        handleProjectRequestApproveClick(projectRequest.id)
+                      }
                     >
                       <i className="fa fa-check-circle-o"></i>
                     </CButton>

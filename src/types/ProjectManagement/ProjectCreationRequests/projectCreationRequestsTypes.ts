@@ -43,7 +43,7 @@ export type ProjectRequestList = {
   email: null
   country: ''
   organization: null
-  intrnalOrNot: null
+  intrnalOrNot: boolean
   cc: ''
   bcc: ''
   chelist: CheckList[]
@@ -74,6 +74,7 @@ export type ProjectCreationRequestState = {
   getAllProjectRequestList: GetAllProjectRequestList
   getProjectRequest: GetProjectRequest
   projectRequestHistoryDetails: ProjectRequestHistoryDetails[]
+  approveProjectRequest: ApproveProjectRequest
   isLoading: LoadingState
   currentPage: number
   pageSize: number
@@ -99,7 +100,7 @@ export type GetProjectRequest = {
   email: null
   country: string
   organization: null
-  intrnalOrNot: null
+  intrnalOrNot: boolean
   cc: string
   bcc: string
   chelist: CheckList[]
@@ -125,4 +126,42 @@ export type ProjectRequestHistoryDetails = {
   additionalInfo: null
   employeeName: string
   auditId: number
+}
+
+export type ApproveProjectRequest = {
+  id: number
+  projectName: string
+  managerId: number
+  startdate: string
+  enddate: string
+  description: string
+  requiredResources: string
+  status: string
+  managerName: string
+  client: string
+  type: string
+  clientId: null
+  newClient: null
+  requestedBy: string
+  technology: string
+  address: null
+  personName: null
+  email: null
+  country: ''
+  organization: null
+  intrnalOrNot: boolean
+  cc: string
+  bcc: string
+  chelist: CheckList[]
+  model: string
+  checkListExist: true
+  projectContactPerson: string
+  projectContactEmail: string
+  billingContactPerson: string
+  billingContactPersonEmail: string
+  projectRequestMilestoneDTO: ProjectRequestMilestoneDTO[]
+  platform: string
+  access: true
+  domain: string
+  health: string
 }

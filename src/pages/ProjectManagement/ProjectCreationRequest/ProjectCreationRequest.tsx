@@ -3,6 +3,7 @@ import { CRow, CCol, CInputGroup, CFormInput, CButton } from '@coreui/react-pro'
 import ProjectCreationRequestTable from './ProjectCreationRequestTable'
 import ProjectRequestView from './ProjectRequestView/ProjectRequestView'
 import ProjectRequestHistoryDetails from './ProjectRequestHistory/ProjectRequestHistoryDetails'
+import ApproveProjectRequest from './ApproveProject/ApproveProjectRequest'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -115,6 +116,7 @@ const ProjectCreationRequest = (): JSX.Element => {
       {toggle === 'projectHistory' && (
         <ProjectRequestHistoryDetails setToggle={setToggle} />
       )}
+      {toggle === 'approvalProjectHistory' && <ApproveProjectRequest />}
     </>
   )
 }
