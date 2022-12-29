@@ -147,12 +147,11 @@ export type ApproveProjectRequest = {
   address: null
   personName: null
   email: null
-  country: ''
+  country: string
   organization: null
   intrnalOrNot: boolean
   cc: string
   bcc: string
-  chelist: CheckList[]
   model: string
   checkListExist: true
   projectContactPerson: string
@@ -161,7 +160,7 @@ export type ApproveProjectRequest = {
   billingContactPersonEmail: string
   projectRequestMilestoneDTO: ProjectRequestMilestoneDTO[]
   platform: string
-  access: true
+  // access: boolean
   domain: string
   health: string
 }

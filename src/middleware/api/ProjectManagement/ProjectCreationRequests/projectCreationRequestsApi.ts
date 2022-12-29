@@ -71,11 +71,24 @@ const getApproveProjectRequest = async (
   return response.data
 }
 
+const updateProjectRequest = async (
+  projectRequestDetails: ApproveProjectRequest,
+): Promise<ApproveProjectRequest> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.updateProjectRequest,
+    method: AllowedHttpMethods.post,
+    data: projectRequestDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectCreationRequestsApi = {
   getAllProjectRequestList,
   getProjectRequest,
   projectRequestHistoryDetails,
   getApproveProjectRequest,
+  updateProjectRequest,
 }
 
 export default projectCreationRequestsApi

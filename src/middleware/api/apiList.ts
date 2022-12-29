@@ -721,6 +721,7 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getAuditForProjectRequest:
     apiPrefix + '/project-mgmt/getAuditForProjectRequest',
   getApproveProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  updateProjectRequest: apiPrefix + '/project-mgmt/project',
 }
 
 export const AddAchieverApiConfig: AddAchieverApi = {

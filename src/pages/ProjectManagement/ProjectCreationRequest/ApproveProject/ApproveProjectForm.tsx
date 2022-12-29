@@ -12,7 +12,8 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+import ProjectMileStone from './ProjectMileStone'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OBackButton from '../../../../components/ReusableComponent/OBackButton'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
@@ -24,7 +25,10 @@ import {
   GetOnSelect,
   ProjectClients,
 } from '../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
-import { ApproveProjectRequest } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
+import {
+  ApproveProjectRequest,
+  ProjectRequestMilestoneDTO,
+} from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 import { listComposer, showIsRequired } from '../../../../utils/helper'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
@@ -34,13 +38,16 @@ import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 const ApproveProjectForm = (): JSX.Element => {
   const initApproveProject = {} as ApproveProjectRequest
+  // const initProjectMileStone = {} as ProjectRequestMilestoneDTO[]
   const [approveProject, setApproveProject] = useState(initApproveProject)
+  const [mileStone, setMileStone] = useState<ProjectRequestMilestoneDTO[]>([])
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
   const [projectName, setProjectName] = useState<string>('')
   const [projectManager, setProjectManager] = useState<string>('')
   const selectedApproveProject = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.approveProjectRequests,
   )
+  const history = useHistory()
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   const classNameStyle = 'col-sm-3 col-form-label text-end'
@@ -70,7 +77,6 @@ const ApproveProjectForm = (): JSX.Element => {
         intrnalOrNot: selectedApproveProject.intrnalOrNot,
         cc: selectedApproveProject.cc,
         bcc: selectedApproveProject.bcc,
-        chelist: selectedApproveProject.chelist,
         model: selectedApproveProject.model,
         checkListExist: selectedApproveProject.checkListExist,
         projectContactPerson: selectedApproveProject.projectContactPerson,
@@ -81,12 +87,13 @@ const ApproveProjectForm = (): JSX.Element => {
         projectRequestMilestoneDTO:
           selectedApproveProject.projectRequestMilestoneDTO,
         platform: selectedApproveProject.platform,
-        access: selectedApproveProject.access,
+        // access?: selectedApproveProject.access,
         domain: selectedApproveProject.domain,
         health: selectedApproveProject.health,
       })
       setProjectName(selectedApproveProject.projectName)
       setProjectManager(selectedApproveProject.managerName)
+      setMileStone(selectedApproveProject.projectRequestMilestoneDTO)
     }
   }, [selectedApproveProject])
 
@@ -231,13 +238,6 @@ const ApproveProjectForm = (): JSX.Element => {
     setApproveProject({ ...approveProject, health: e.target.value })
   }
 
-  //   const onChangeCommentsHandler = (e: { target: { value: string } }) => {
-  //     setApproveProject({
-  //       ...approveProject,
-  //       comments: e.target.value,
-  //     })
-  //   }
-
   const onHandleEndDate = (value: Date) => {
     setApproveProject({
       ...approveProject,
@@ -249,6 +249,32 @@ const ApproveProjectForm = (): JSX.Element => {
       return { ...prevState, ...{ description } }
     })
   }
+
+  const titleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    mileStone[index].title = e.target.value
+    console.log(mileStone)
+  }
+
+  const handleUpdateSubmit = async () => {
+    const payload = {
+      ...approveProject,
+    }
+
+    const newProjectResponse = await dispatch(
+      reduxServices.projectCreationRequest.updateProjectRequest(payload),
+    )
+    if (
+      reduxServices.projectManagement.updateProject.fulfilled.match(
+        newProjectResponse,
+      )
+    ) {
+      history.push('/projectreport')
+    }
+  }
+
   return (
     <CRow className="justify-content-end">
       <OBackButton destination={''} name={''} />
@@ -469,110 +495,16 @@ const ApproveProjectForm = (): JSX.Element => {
         </CRow>
         {approveProject.type === 'FIXEDBID' && (
           <CRow className="mt-4 mb-4">
-            {selectedApproveProject.projectRequestMilestoneDTO.map(
-              (item, index) => {
-                return (
-                  <CRow key={index}>
-                    <OInputField
-                      //   onChangeHandler={titleHandler}
-                      value={item.title}
-                      isRequired={false}
-                      label="Title"
-                      name="title"
-                      placeholder="Title"
-                      dynamicFormLabelProps={dynamicFormLabelProps}
-                    />
-                    <OInputField
-                      //   onChangeHandler={effortHandler}
-                      value={item.effort}
-                      isRequired={false}
-                      label="Effort(Hrs)"
-                      name="effort"
-                      placeholder="Effort"
-                      dynamicFormLabelProps={dynamicFormLabelProps}
-                    />
-                    <CFormLabel
-                      {...dynamicFormLabelProps(
-                        'editprojectenddate',
-                        classNameStyle,
-                      )}
-                    >
-                      From Date:
-                    </CFormLabel>
-                    {/* <DatePicker
-                      id="editprojectenddate"
-                      className="form-control form-control-sm sh-date-picker"
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yy"
-                      data-testid="end-date-picker"
-                      dateFormat="dd/mm/yy"
-                      name="editprojectenddate"
-                      value={item.fromDate}
-                      onChange={(date: Date) => onHandleFromDate(date)}
-                    />
-                    <CFormLabel
-                      {...dynamicFormLabelProps(
-                        'editprojectenddate',
-                        classNameStyle,
-                      )}
-                    >
-                      End Date:
-                    </CFormLabel>
-                    <DatePicker
-                      id="editprojectenddate"
-                      className="form-control form-control-sm sh-date-picker"
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      placeholderText="dd/mm/yy"
-                      data-testid="end-date-picker"
-                      dateFormat="dd/mm/yy"
-                      name="editprojectenddate"
-                      value={item.toDate}
-                      onChange={(date: Date) => onHandleToDate(date)}
-                    /> */}
-                    <CFormLabel
-                      {...dynamicFormLabelProps(
-                        'editprojectenddate',
-                        classNameStyle,
-                      )}
-                    >
-                      Billable
-                    </CFormLabel>
-                    {item.billable}
-                    <CFormLabel
-                      {...dynamicFormLabelProps(
-                        'editprojectenddate',
-                        classNameStyle,
-                      )}
-                    >
-                      Percentage
-                    </CFormLabel>
-                    {item.milestonePercentage}
-                    <CFormLabel
-                      {...dynamicFormLabelProps(
-                        'editprojectenddate',
-                        classNameStyle,
-                      )}
-                    >
-                      Comments
-                    </CFormLabel>
-                    <CFormTextarea
-                      aria-label="textarea"
-                      id="comments"
-                      name="comments"
-                      data-testid="text-area"
-                      value={item.comments}
-                      //   onChange={onChangeCommentsHandler}
-                    ></CFormTextarea>
-                  </CRow>
-                )
-              },
-            )}
+            {mileStone.map((item, index) => {
+              return (
+                <ProjectMileStone
+                  item={item}
+                  key={index}
+                  index={index}
+                  titleOnChange={titleOnChange}
+                />
+              )
+            })}
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">
@@ -581,7 +513,7 @@ const ApproveProjectForm = (): JSX.Element => {
               className="btn-ovh me-1"
               color="success"
               data-testid="update-project"
-              //   onClick={handleUpdateSubmit}
+              onClick={handleUpdateSubmit}
               //   disabled={!isUpdateBtnEnable}
             >
               Add Project

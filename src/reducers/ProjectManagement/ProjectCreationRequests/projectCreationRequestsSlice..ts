@@ -84,6 +84,28 @@ const getApproveProjectRequest = createAsyncThunk<
   },
 )
 
+const updateProjectRequest = createAsyncThunk<
+  ApproveProjectRequest,
+  ApproveProjectRequest,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/updateProjectRequest',
+  async (projectRequestDetails: ApproveProjectRequest, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.updateProjectRequest(
+        projectRequestDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectCreationReuestState: ProjectCreationRequestState = {
   getAllProjectRequestList: {
     projectRequestListSize: 0,
@@ -159,6 +181,7 @@ const projectCreationRequestThunk = {
   getProjectRequest,
   projectRequestHistoryDetails,
   getApproveProjectRequest,
+  updateProjectRequest,
 }
 
 const projectCreationRequestSelectors = {
