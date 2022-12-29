@@ -70,7 +70,7 @@ const BankDetails = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'PF,PAN&Bank Details',
+    (feature) => feature.name === 'My Profile-Finance-Bank Details',
   )
 
   return (
