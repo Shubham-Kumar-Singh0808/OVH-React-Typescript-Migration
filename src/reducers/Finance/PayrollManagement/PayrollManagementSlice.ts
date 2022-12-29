@@ -11,6 +11,7 @@ import {
   GetPaySlipReportResponse,
   PayRollManagementApiProps,
   PayRollManagementSliceState,
+  ReadExcelFile,
 } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const getCurrentPayslip = createAsyncThunk(
@@ -86,7 +87,7 @@ const deleteCheckedPayslips = createAsyncThunk(
 )
 
 const readExcelFile = createAsyncThunk(
-  'panDetails/readExcelFile',
+  'payrollManagement/readExcelFile',
   async (file: FormData, thunkApi) => {
     try {
       return await PayrollManagementApi.readExcelFile(file)
@@ -97,7 +98,7 @@ const readExcelFile = createAsyncThunk(
   },
 )
 const saveExcelFile = createAsyncThunk(
-  'panDetails/saveExcelFile',
+  'payrollManagement/saveExcelFile',
   async (
     {
       month,
@@ -155,6 +156,10 @@ const payrollManagementSlice = createSlice({
       .addCase(getCurrentPayslip.rejected, (state) => {
         state.isLoading = ApiLoadingState.failed
       })
+      .addCase(readExcelFile.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.excelData = action.payload
+      })
       .addMatcher(
         isAnyOf(getCurrentPayslip.fulfilled, searchEmployee.fulfilled),
         (state, action) => {
@@ -183,6 +188,7 @@ const payrollManagementSlice = createSlice({
           searchEmployee.pending,
           downloadExcelFile.pending,
           updatePayslip.pending,
+          readExcelFile.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -195,6 +201,7 @@ const payrollManagementSlice = createSlice({
           downloadExcelFile.rejected,
           updatePayslip.rejected,
           deleteCheckedPayslips.pending,
+          readExcelFile.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -215,6 +222,9 @@ const PaySlipsListSize = (state: RootState): number =>
 const editPayslip = (state: RootState): CurrentPayslip =>
   state.payrollManagement.editPayslip
 
+const excelData = (state: RootState): ReadExcelFile[] =>
+  state.payrollManagement.excelData
+
 export const payrollManagementThunk = {
   getCurrentPayslip,
   downloadExcelFile,
@@ -232,6 +242,7 @@ export const payrollManagementSelectors = {
   paySlipInfo,
   PaySlipsListSize,
   editPayslip,
+  excelData,
 }
 
 export const payrollManagementService = {
