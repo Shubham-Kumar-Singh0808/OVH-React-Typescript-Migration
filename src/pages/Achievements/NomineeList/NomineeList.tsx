@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { CRow, CCol } from '@coreui/react-pro'
 import NomineeListTable from './NomineeListTable'
 import NomineeListCycleFilter from './NomineeListCycleFilter'
 import NomineeDetails from './NomineeDetails'
@@ -13,6 +14,10 @@ const NomineeList = (): JSX.Element => {
   const [isViewNomination, setViewNomination] = useState<boolean>(false)
   const nomineeCycles = useTypedSelector(
     (state) => state.nomineeList.cyclesList,
+  )
+
+  const nomineeRecords = useTypedSelector(
+    (state) => state.nomineeList.nominationsList,
   )
 
   useEffect(() => {
@@ -44,6 +49,15 @@ const NomineeList = (): JSX.Element => {
             setCurrentCycle={setCurrentCycle}
           />
           <NomineeListTable setViewNomination={setViewNomination} />
+          <CRow className="mt-3">
+            <CCol md={3} className="pull-left">
+              <strong data-testid="record-number">
+                {nomineeRecords?.length > 0
+                  ? `Total Records: ${nomineeRecords.length}`
+                  : `No Records Found...`}
+              </strong>
+            </CCol>
+          </CRow>
         </>
       )}
     </OCard>
