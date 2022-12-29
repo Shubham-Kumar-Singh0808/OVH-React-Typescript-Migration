@@ -646,3 +646,7 @@ export interface LeadershipEnrollmentFormApi extends ApiBase {
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
 }
+
+export interface PIPListApi extends ApiBase {
+  getAllPIPList: string
+}

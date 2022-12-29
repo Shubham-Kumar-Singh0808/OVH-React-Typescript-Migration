@@ -369,6 +369,10 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/EmployeePipList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -809,6 +813,11 @@ const routes = [
     path: '/leadershipForm',
     name: 'Leadership Enrollment Form',
     component: LeadershipEnrollmentForm,
+  },
+  {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
   },
 ]
 
