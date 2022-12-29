@@ -1,7 +1,6 @@
 import {
   CForm,
   CContainer,
-  CRow,
   CFormLabel,
   CFormSelect,
   CCol,
@@ -93,9 +92,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
   const descriptionContent = useTypedSelector(
     (state) => state.addNominee.questionsInformation,
   )
-  const [employeeName, setEmployeeName] = useState<string | undefined>(
-    nominatedEmployeeName,
-  )
+  const [employeeName, setEmployeeName] = useState<string | undefined>()
 
   const [showEditors, setShowEditors] = useState<boolean>(true)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
@@ -122,6 +119,13 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       }
     }
   }, [nominatedEmployeeName, achievementType, descriptionContent])
+
+  useEffect(() => {
+    if (getEmployeeId(allActiveEmployees, nominatedEmployeeName) === -1) {
+      setNominatedEmployeeName(emptyString)
+      setEmployeeName(undefined)
+    }
+  }, [nominatedEmployeeName])
 
   const achievementTypeChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -342,32 +346,33 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
           </CContainer>
         ))}
       </CContainer>
-      <CRow>
-        <CFormLabel className="col-form-label category-label col-sm-1 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          {userAccessToFeatures?.createaccess ? (
+      <CContainer>
+        <div className="d-flex flex-row ms-3 flex-wrap-row">
+          <CCol sm={4}>
+            {userAccessToFeatures?.createaccess ? (
+              <CButton
+                data-testid="add-btn-id"
+                type="submit"
+                className="btn-ovh me-1"
+                color="success"
+                disabled={!isAddButtonEnabled}
+              >
+                Add
+              </CButton>
+            ) : (
+              <span data-testid="add-inv"></span>
+            )}
             <CButton
-              data-testid="add-btn-id"
-              type="submit"
+              data-testid="clear-btn-id"
+              color="warning "
               className="btn-ovh me-1"
-              color="success"
-              disabled={!isAddButtonEnabled}
+              onClick={clearButtonHandler}
             >
-              Add
+              Clear
             </CButton>
-          ) : (
-            <span data-testid="add-inv"></span>
-          )}
-          <CButton
-            data-testid="clear-btn-id"
-            color="warning "
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
+          </CCol>
+        </div>
+      </CContainer>
     </CForm>
   )
 }
