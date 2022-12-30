@@ -116,7 +116,9 @@ const ProjectCreationRequest = (): JSX.Element => {
       {toggle === 'projectHistory' && (
         <ProjectRequestHistoryDetails setToggle={setToggle} />
       )}
-      {toggle === 'approvalProjectHistory' && <ApproveProjectRequest />}
+      {toggle === 'approvalProjectHistory' && (
+        <ApproveProjectRequest setToggle={setToggle} />
+      )}
     </>
   )
 }

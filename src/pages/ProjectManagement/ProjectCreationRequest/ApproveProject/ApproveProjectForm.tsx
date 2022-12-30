@@ -14,7 +14,6 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { useHistory } from 'react-router-dom'
 import ProjectMileStone from './ProjectMileStone'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
-import OBackButton from '../../../../components/ReusableComponent/OBackButton'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -28,7 +27,7 @@ import {
   ApproveProjectRequest,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
-import { listComposer, showIsRequired } from '../../../../utils/helper'
+import { isEmail, listComposer, showIsRequired } from '../../../../utils/helper'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
 import { dateFormat } from '../../../../constant/DateFormat'
@@ -43,6 +42,7 @@ const ApproveProjectForm = (): JSX.Element => {
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
   const [projectName, setProjectName] = useState<string>('')
   const [projectManager, setProjectManager] = useState<string>('')
+  const [isUpdateBtnEnable, setUpdateBtn] = useState(false)
   const selectedApproveProject = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.approveProjectRequests,
   )
@@ -93,6 +93,41 @@ const ApproveProjectForm = (): JSX.Element => {
       setMileStone(selectedApproveProject.projectRequestMilestoneDTO)
     }
   }, [selectedApproveProject])
+
+  useEffect(() => {
+    if (
+      approveProject.client !== '' &&
+      approveProject.client != null &&
+      approveProject.projectName !== '' &&
+      approveProject.projectName != null &&
+      approveProject.projectContactPerson != null &&
+      approveProject.projectContactPerson !== '' &&
+      approveProject.projectContactEmail != null &&
+      approveProject.projectContactEmail !== '' &&
+      approveProject.billingContactPerson != null &&
+      approveProject.billingContactPerson !== '' &&
+      approveProject.billingContactPersonEmail != null &&
+      approveProject.billingContactPersonEmail !== '' &&
+      approveProject.model !== '' &&
+      approveProject.model != null &&
+      approveProject.type !== '' &&
+      approveProject.type != null &&
+      approveProject.managerId !== -1 &&
+      approveProject.managerId != null &&
+      approveProject.platform !== '' &&
+      approveProject.platform != null &&
+      approveProject.domain !== '' &&
+      approveProject.domain != null &&
+      approveProject.startdate !== '' &&
+      approveProject.startdate != null &&
+      !isEmail(approveProject.projectContactEmail) &&
+      !isEmail(approveProject.billingContactPersonEmail)
+    ) {
+      setUpdateBtn(true)
+    } else {
+      setUpdateBtn(false)
+    }
+  }, [approveProject])
 
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
@@ -317,7 +352,6 @@ const ApproveProjectForm = (): JSX.Element => {
 
   return (
     <CRow className="justify-content-end">
-      <OBackButton destination={''} name={''} />
       <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
         <ClientOrganization
           list={clientOrganizationList}
@@ -362,7 +396,7 @@ const ApproveProjectForm = (): JSX.Element => {
           value={approveProject.billingContactPersonEmail}
           isRequired={true}
           type="email"
-          label={'Billing Contact Person Email'}
+          label={'Billing Contact Email'}
           name={'billingContactPersonEmail'}
           placeholder={'Email Id'}
           dynamicFormLabelProps={dynamicFormLabelProps}
@@ -558,7 +592,7 @@ const ApproveProjectForm = (): JSX.Element => {
               color="success"
               data-testid="update-project"
               onClick={handleUpdateSubmit}
-              //   disabled={!isUpdateBtnEnable}
+              disabled={!isUpdateBtnEnable}
             >
               Add Project
             </CButton>
