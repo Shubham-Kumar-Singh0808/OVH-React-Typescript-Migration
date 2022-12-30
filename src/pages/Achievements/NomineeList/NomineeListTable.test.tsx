@@ -43,6 +43,12 @@ describe('Nominee List Table', () => {
         screen.getByRole('columnheader', { name: 'Achievement Type' }),
       ).toBeTruthy()
       expect(
+        screen.getByRole('columnheader', { name: 'From Month' }),
+      ).toBeTruthy()
+      expect(
+        screen.getByRole('columnheader', { name: 'To Month' }),
+      ).toBeTruthy()
+      expect(
         screen.getByRole('columnheader', { name: 'Added By' }),
       ).toBeTruthy()
       expect(screen.getByRole('columnheader', { name: 'Status' })).toBeTruthy()
