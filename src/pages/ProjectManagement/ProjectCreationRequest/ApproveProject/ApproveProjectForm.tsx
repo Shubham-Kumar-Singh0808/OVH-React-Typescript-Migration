@@ -58,7 +58,7 @@ const ApproveProjectForm = (): JSX.Element => {
         enddate: selectedApproveProject.enddate,
         description: '',
         requiredResources: selectedApproveProject.requiredResources,
-        status: selectedApproveProject.status,
+        status: 'NEW',
         managerName: selectedApproveProject.managerName,
         client: selectedApproveProject.client,
         type: selectedApproveProject.type,

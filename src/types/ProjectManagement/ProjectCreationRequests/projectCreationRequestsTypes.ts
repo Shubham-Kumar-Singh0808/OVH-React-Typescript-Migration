@@ -140,20 +140,20 @@ export type ApproveProjectRequest = {
   managerName: string
   client: string
   type: string
-  clientId: null
-  newClient: null
+  clientId: null | string
+  newClient: null | string
   requestedBy: string
   technology: string
-  address: null
+  address: null | string
   personName: null
-  email: null
+  email: null | string
   country: string
   organization: null
   intrnalOrNot: boolean
   cc: string
   bcc: string
   model: string
-  checkListExist: true
+  checkListExist: boolean
   projectContactPerson: string
   projectContactEmail: string
   billingContactPerson: string
@@ -163,5 +163,5 @@ export type ApproveProjectRequest = {
   platform: string
   // access: boolean
   domain: string
-  health: string
+  health?: string
 }
