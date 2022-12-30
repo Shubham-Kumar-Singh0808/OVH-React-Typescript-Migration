@@ -7,18 +7,32 @@ import {
 } from '@coreui/react-pro'
 import React from 'react'
 import DatePicker from 'react-datepicker'
-import OInputField from '../../../../components/ReusableComponent/OInputField'
 import { ProjectRequestMilestoneDTO } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
 const ProjectMileStone = ({
   item,
   index,
   titleOnChange,
+  commentsOnChange,
+  effortOnChange,
+  onChangeHandleFromDate,
+  onChangeHandleToDate,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
   titleOnChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  onChangeHandleFromDate: (date: Date, index: number) => void
+  onChangeHandleToDate: (date: Date, index: number) => void
+  effortOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
+  commentsOnChange: (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+  ) => void
 }): JSX.Element => {
+  console.log(item.title)
   return (
     <CRow className="employeeAllocation-form">
       <CCol sm={2} md={1} className="text-end">
@@ -37,9 +51,10 @@ const ProjectMileStone = ({
       </CCol>
       <CCol sm={2}>
         <CFormInput
-          //   onChange={(e) => titleOnChange(e, index)}
+          onChange={(e) => effortOnChange(e, index)}
           value={item.effort}
-          name="title"
+          name="effort"
+          id="effort"
           placeholder="Title"
         />
       </CCol>
@@ -59,7 +74,7 @@ const ProjectMileStone = ({
           dateFormat="dd/mm/yy"
           name="editprojectenddate"
           value={item.fromDate}
-          onChange={(date: Date) => console.log(date)}
+          onChange={(date: Date) => onChangeHandleFromDate(date, index)}
         />
       </CCol>
       <CCol sm={2} md={1} className="text-end">
@@ -77,8 +92,8 @@ const ProjectMileStone = ({
           data-testid="end-date-picker"
           dateFormat="dd/mm/yy"
           name="editprojectenddate"
-          value={item.fromDate}
-          onChange={(date: Date) => console.log(date)}
+          value={item.toDate}
+          onChange={(date: Date) => onChangeHandleToDate(date, index)}
         />
       </CCol>
       <CCol sm={2} md={1} className="text-end">
@@ -99,7 +114,7 @@ const ProjectMileStone = ({
           name="comments"
           data-testid="text-area"
           value={item.comments}
-          //   onChange={onChangeCommentsHandler}
+          onChange={(e) => commentsOnChange(e, index)}
         ></CFormTextarea>
       </CCol>
     </CRow>

@@ -129,7 +129,7 @@ export type ProjectRequestHistoryDetails = {
 }
 
 export type ApproveProjectRequest = {
-  id: number
+  id?: number
   projectName: string
   managerId: number
   startdate: string
@@ -158,6 +158,7 @@ export type ApproveProjectRequest = {
   projectContactEmail: string
   billingContactPerson: string
   billingContactPersonEmail: string
+  projectRequestId: number
   projectRequestMilestoneDTO: ProjectRequestMilestoneDTO[]
   platform: string
   // access: boolean

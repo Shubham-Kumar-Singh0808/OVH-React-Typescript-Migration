@@ -5,14 +5,13 @@ import {
   CFormLabel,
   CFormSelect,
   CButton,
-  CFormTextarea,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import ProjectMileStone from './ProjectMileStone'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OBackButton from '../../../../components/ReusableComponent/OBackButton'
@@ -48,18 +47,16 @@ const ApproveProjectForm = (): JSX.Element => {
     reduxServices.projectCreationRequest.selectors.approveProjectRequests,
   )
   const history = useHistory()
-  const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   const classNameStyle = 'col-sm-3 col-form-label text-end'
   useEffect(() => {
     if (selectedApproveProject != null) {
       setApproveProject({
-        id: selectedApproveProject.id,
         projectName: selectedApproveProject.projectName,
         managerId: selectedApproveProject.managerId,
         startdate: selectedApproveProject.startdate,
         enddate: selectedApproveProject.enddate,
-        description: selectedApproveProject.description,
+        description: '',
         requiredResources: selectedApproveProject.requiredResources,
         status: selectedApproveProject.status,
         managerName: selectedApproveProject.managerName,
@@ -86,8 +83,8 @@ const ApproveProjectForm = (): JSX.Element => {
           selectedApproveProject.billingContactPersonEmail,
         projectRequestMilestoneDTO:
           selectedApproveProject.projectRequestMilestoneDTO,
+        projectRequestId: selectedApproveProject.id as number,
         platform: selectedApproveProject.platform,
-        // access?: selectedApproveProject.access,
         domain: selectedApproveProject.domain,
         health: selectedApproveProject.health,
       })
@@ -137,7 +134,6 @@ const ApproveProjectForm = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllDomains())
     dispatch(reduxServices.projectManagement.getAllManagers())
     dispatch(reduxServices.projectManagement.getAllPlatforms())
-    // dispatch(reduxServices.projectManagement.getProject(projectId))
   }, [dispatch])
 
   const clientOrganizationList = projectClients
@@ -252,15 +248,59 @@ const ApproveProjectForm = (): JSX.Element => {
 
   const titleOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
+
     index: number,
   ) => {
-    mileStone[index].title = e.target.value
-    console.log(mileStone)
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(mileStone),
+    )
+    newMileStone[index].title = e.target.value
+    setMileStone(newMileStone)
+  }
+
+  const commentsOnChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(mileStone),
+    )
+    newMileStone[index].comments = e.target.value
+    setMileStone(newMileStone)
+  }
+
+  const effortOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(mileStone),
+    )
+    newMileStone[index].effort = e.target.value
+    setMileStone(newMileStone)
+  }
+
+  const onChangeHandleFromDate = (date: Date, index: number) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(mileStone),
+    )
+    newMileStone[index].fromDate = moment(date).format('DD/MM/YYYY')
+    setMileStone(newMileStone)
+  }
+
+  const onChangeHandleToDate = (date: Date, index: number) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(mileStone),
+    )
+    newMileStone[index].toDate = moment(date).format('DD/MM/YYYY')
+    setMileStone(newMileStone)
   }
 
   const handleUpdateSubmit = async () => {
     const payload = {
       ...approveProject,
+      projectRequestMilestoneDTO: mileStone,
     }
 
     const newProjectResponse = await dispatch(
@@ -502,6 +542,10 @@ const ApproveProjectForm = (): JSX.Element => {
                   key={index}
                   index={index}
                   titleOnChange={titleOnChange}
+                  commentsOnChange={commentsOnChange}
+                  effortOnChange={effortOnChange}
+                  onChangeHandleFromDate={onChangeHandleFromDate}
+                  onChangeHandleToDate={onChangeHandleToDate}
                 />
               )
             })}
