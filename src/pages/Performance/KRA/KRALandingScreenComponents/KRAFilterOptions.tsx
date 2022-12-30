@@ -13,7 +13,10 @@ import React, { useEffect, useState } from 'react'
 import { emptyString } from '../../../../constant/constantData'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { KRADataQueryBody } from '../../../../types/Performance/KRA/KRATypes'
+import {
+  KRADataQueryBody,
+  KRAFilterOptionsProps,
+} from '../../../../types/Performance/KRA/KRATypes'
 import {
   getDepartmentId,
   getDesignationId,
@@ -21,7 +24,8 @@ import {
   selectDesignation,
 } from '../KRAConstants'
 
-const KRAFilterOptions = (): JSX.Element => {
+const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
+  const { currentPage, pageSize } = props
   const dispatch = useAppDispatch()
   const [isViewButtonEnabled, setViewButtonEnabled] = useState<boolean>(false)
   const [isSearchButtonEnabled, setSearchButtonEnabled] =
@@ -67,6 +71,14 @@ const KRAFilterOptions = (): JSX.Element => {
     }
   }, [selectedDepartment, selectedDesignation])
 
+  const startIndex = (): number => {
+    return (currentPage - 1) * pageSize
+  }
+
+  const endIndex = (): number => {
+    return currentPage * pageSize
+  }
+
   const departmentChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDepartment(e.target.value)
   }
@@ -83,19 +95,30 @@ const KRAFilterOptions = (): JSX.Element => {
     setMultiSearchInput(e.target.value)
   }
 
-  const submitFormHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const getFinalBody = (startInd: number, endInd: number): KRADataQueryBody => {
     const finalBody: KRADataQueryBody = {
       designationId: getDesignationId(
         designationList,
         selectedDesignation,
       ).toString(),
       departmentId: getDepartmentId(empDepartmentsList, selectedDepartment),
-      startIndex: 0,
-      endIndex: 20,
+      startIndex: startInd,
+      endIndex: endInd,
       multipleSearch: multiSearchInput,
     }
-    dispatch(reduxServices.KRA.searchKRADataThunk(finalBody))
+    dispatch(reduxServices.KRA.actions.setKRAQuery(finalBody))
+    return finalBody
+  }
+
+  useEffect(() => {
+    const start = startIndex()
+    const end = endIndex()
+    dispatch(reduxServices.KRA.searchKRADataThunk(getFinalBody(start, end)))
+  }, [currentPage, pageSize])
+
+  const submitFormHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(reduxServices.KRA.searchKRADataThunk(getFinalBody(0, 20)))
   }
 
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -104,6 +127,7 @@ const KRAFilterOptions = (): JSX.Element => {
     setSelectedDesignation(selectDesignation)
     setMultiSearchInput(emptyString)
     dispatch(reduxServices.KRA.actions.clearKRAList())
+    dispatch(reduxServices.KRA.actions.clearKRAQuery())
   }
 
   return (
@@ -111,17 +135,22 @@ const KRAFilterOptions = (): JSX.Element => {
       <CContainer className="mt-4 ms-0 ps-0">
         <CRow className="align-items-center">
           <CCol sm={2} md={1} className="text-end">
-            <CFormLabel>Department:</CFormLabel>
+            <CFormLabel data-testid="dept-label">Department:</CFormLabel>
           </CCol>
           <CCol sm={3}>
             <CFormSelect
               size="sm"
               value={selectedDepartment}
+              data-testid="dept-sel"
               onChange={departmentChangeHandler}
             >
-              <option>{selectDepartment}</option>
-              {empDepartmentsList.map((item, index) => (
-                <option key={index} value={item.departmentName}>
+              <option data-testid="dept-opt">{selectDepartment}</option>
+              {empDepartmentsList?.map((item, index) => (
+                <option
+                  key={index}
+                  value={item.departmentName}
+                  data-testid="dept-opt"
+                >
                   {item.departmentName}
                 </option>
               ))}
@@ -130,17 +159,24 @@ const KRAFilterOptions = (): JSX.Element => {
           <CCol sm={5}>
             <CRow className="align-items-center">
               <CCol sm={3} className="text-end">
-                <CFormLabel>Designation:</CFormLabel>
+                <CFormLabel data-testid="desig-label">Designation:</CFormLabel>
               </CCol>
               <CCol sm={7}>
                 <CFormSelect
                   size="sm"
+                  data-testid="desig-sel"
                   value={selectedDesignation}
                   onChange={designationChangeHandler}
                 >
-                  <option value={selectDesignation}>{selectDesignation}</option>
-                  {designationList.map((item, index) => (
-                    <option key={index} value={item.name}>
+                  <option data-testid="desig-opt" value={selectDesignation}>
+                    {selectDesignation}
+                  </option>
+                  {designationList?.map((item, index) => (
+                    <option
+                      key={index}
+                      value={item.name}
+                      data-testid="desig-opt"
+                    >
                       {item.name}
                     </option>
                   ))}
@@ -149,7 +185,7 @@ const KRAFilterOptions = (): JSX.Element => {
             </CRow>
           </CCol>
           <CCol sm={3} className="px-0 text-end">
-            <CButton color="info" className="btn-ovh">
+            <CButton color="info" className="btn-ovh" data-testid="add-kra-btn">
               +Add KRA
             </CButton>
           </CCol>
@@ -188,11 +224,12 @@ const KRAFilterOptions = (): JSX.Element => {
                 placeholder="Multiple Search"
                 aria-label="Multiple Search"
                 aria-describedby="button-addon2"
+                data-testid="search-inp"
                 value={multiSearchInput}
                 onChange={searchContentChangeHandler}
               />
               <CButton
-                data-testid="multi-search-btn"
+                data-testid="search-btn-id"
                 className="cursor-pointer"
                 type="button"
                 color="info"

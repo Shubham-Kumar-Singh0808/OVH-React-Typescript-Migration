@@ -9,6 +9,8 @@ export interface KRATableItemProps {
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
   setModalDescription: React.Dispatch<React.SetStateAction<string>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setShowModalButtons: React.Dispatch<React.SetStateAction<boolean>>
+  setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
 export interface IncomingEmployeeDepartment {
@@ -57,7 +59,7 @@ export interface KRADto {
   id: number
   name: string
   description: null
-  kpiLookups: null
+  kpiLookps: null
   count: number
   checkType: null
   designationName: null
@@ -85,6 +87,11 @@ export interface KRATableProps {
   pageSize: number
 }
 
+export interface KRAFilterOptionsProps {
+  currentPage: number
+  pageSize: number
+}
+
 export interface KRAInitialState {
   isLoading: LoadingState
   empDepartments: IncomingEmployeeDepartment[]
@@ -93,4 +100,14 @@ export interface KRAInitialState {
   kpisForIndividualKRAList: IncomingKPIDataItem[]
   currentPage: number
   pageSize: number
+  krasQuery: KRADataQueryBody
+}
+
+export interface KPIsTableProps {
+  kraId: number
+}
+
+export interface deleteKPIParams {
+  kpiId: number
+  kraId: number
 }

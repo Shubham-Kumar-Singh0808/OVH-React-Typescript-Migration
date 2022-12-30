@@ -11,20 +11,31 @@ import {
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import OModal from '../../../../components/ReusableComponent/OModal'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { emptyString } from '../../../Achievements/AchievementConstants'
 import { dottedContent } from '../KRAConstants'
+import {
+  deleteKPIParams,
+  KPIsTableProps,
+} from '../../../../types/Performance/KRA/KRATypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 type ModalContent = string | JSX.Element | JSX.Element[]
 
-const KPIsTable = (): JSX.Element => {
+const KPIsTable = (props: KPIsTableProps): JSX.Element => {
+  const { kraId } = props
+  const dispatch = useAppDispatch()
   const kpiList = useTypedSelector(
     (state) => state.KRA.kpisForIndividualKRAList,
   )
+  const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] =
     useState<ModalContent>(emptyString)
-  console.log(kpiList)
+  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
+
+  const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
 
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
@@ -36,6 +47,38 @@ const KPIsTable = (): JSX.Element => {
 
   const modalContentCheck = (value: string | null) => {
     return value !== null ? value : 'N/A'
+  }
+
+  const deleteButtonHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    id: number,
+    name: string,
+  ) => {
+    e.preventDefault()
+    setModalDescription('Do you want to delete this ' + name + '?')
+    setShowModalButtons(true)
+    setModalVisible(true)
+    setDeleteThisKPI(id)
+  }
+
+  const modalDeleteButtonHandler = async () => {
+    if (deleteThisKPI) {
+      const finalQ: deleteKPIParams = {
+        kraId,
+        kpiId: deleteThisKPI,
+      }
+      const result = await dispatch(reduxServices.KRA.deleteKPIThunk(finalQ))
+      const successMessage = (
+        <OToast toastColor="success" toastMessage="KPI Deleted Successfully" />
+      )
+      if (reduxServices.KRA.deleteKPIThunk.fulfilled.match(result)) {
+        setModalVisible(false)
+        dispatch(reduxServices.app.actions.addToast(successMessage))
+        dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
+        dispatch(reduxServices.KRA.kpisForIndividualKraThunk(kraId))
+        setDeleteThisKPI(undefined)
+      }
+    }
   }
 
   return (
@@ -87,7 +130,7 @@ const KPIsTable = (): JSX.Element => {
               {item.description !== null ? (
                 <CTableDataCell scope="row" className="commentWidth">
                   <CLink
-                    className="cursor-pointer text-primary centerAlignment-text"
+                    className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
                     data-testid="kpi-Name"
                     onClick={(e) =>
                       descriptionHandler(
@@ -96,7 +139,7 @@ const KPIsTable = (): JSX.Element => {
                       )
                     }
                   >
-                    {parse(dottedContent(item.description))}
+                    {dottedContent(item.description)}
                   </CLink>
                 </CTableDataCell>
               ) : (
@@ -147,7 +190,11 @@ const KPIsTable = (): JSX.Element => {
                       size="sm"
                       color="danger"
                       className="btn-ovh me-1"
+                      data-testid={`del-btn-${index}`}
                       title="Delete"
+                      onClick={(e) => {
+                        deleteButtonHandler(e, item.id, item.name)
+                      }}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -163,10 +210,13 @@ const KPIsTable = (): JSX.Element => {
         setVisible={setModalVisible}
         modalSize="lg"
         alignment="center"
-        modalFooterClass="d-none"
+        modalFooterClass={showModalButtons ? emptyString : 'd-none'}
         modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={modalDeleteButtonHandler}
       >
-        <div>{modalDescription}</div>
+        <div data-testid="modal-cnt">{modalDescription}</div>
       </OModal>
     </>
   )

@@ -9,12 +9,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import KRATableItem from './KRATableItem'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { emptyString } from '../../../../constant/constantData'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { KRATableProps } from '../../../../types/Performance/KRA/KRATypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const KRATable = (props: KRATableProps): JSX.Element => {
   const {
@@ -24,17 +26,38 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     currentPage,
     pageSize,
   } = props
+  const dispatch = useAppDispatch()
+  const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const kraData = useTypedSelector((state) => state.KRA.kraData)
   const [isIconVisible, setIsIconVisible] = useState<boolean>(false)
+
   const [selectedKRAId, setSelectedKRAId] = useState<number>(-1)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
+  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
+  const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
 
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(e.target.value))
     setCurrentPage(1)
+  }
+
+  const deleteModalKRAButtonHandler = async () => {
+    if (deleteThisKRA) {
+      const result = await dispatch(
+        reduxServices.KRA.deleteKRAThunk(deleteThisKRA),
+      )
+      const successMessage = (
+        <OToast toastColor="success" toastMessage="KRA Deleted Successfully" />
+      )
+      if (reduxServices.KRA.deleteKRAThunk.fulfilled.match(result)) {
+        setModalVisible(false)
+        dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
+        dispatch(reduxServices.app.actions.addToast(successMessage))
+      }
+    }
   }
 
   return (
@@ -63,6 +86,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               selectedKRA={item}
               setModalDescription={setModalDescription}
               setModalVisible={setModalVisible}
+              setShowModalButtons={setShowModalButtons}
+              setDeleteThisKRA={setDeleteThisKRA}
             />
           ))}
         </CTableBody>
@@ -102,7 +127,10 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         setVisible={setModalVisible}
         modalSize="lg"
         alignment="center"
-        modalFooterClass="d-none"
+        modalFooterClass={showModalButtons ? '' : 'd-none'}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={deleteModalKRAButtonHandler}
         modalHeaderClass="d-none"
       >
         <div dangerouslySetInnerHTML={{ __html: modalDescription }}></div>

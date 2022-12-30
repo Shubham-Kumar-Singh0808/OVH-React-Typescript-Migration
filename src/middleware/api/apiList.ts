@@ -795,6 +795,8 @@ export const KRAApiConfig: KRAApi = {
   getDesignation: apiPrefix + '/kra/designation',
   searchKRAData: apiPrefix + '/kra/searchKRAData',
   kpiForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  deleteKRA: apiPrefix + '/kra/',
+  deleteKPI: apiPrefix + '/kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

@@ -1,4 +1,5 @@
 import {
+  deleteKPIParams,
   IncomingEmployeeDepartment,
   IncomingKPIDataItem,
   IncomingKRADataList,
@@ -64,11 +65,37 @@ const kpisForIndividualKra = async (
   return response.data
 }
 
+const deleteKRA = async (kraid: number): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.deleteKRA,
+    method: AllowedHttpMethods.delete,
+    params: {
+      kraid,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteKPI = async (query: deleteKPIParams) => {
+  const { kraId, kpiId } = query
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.deleteKPI + kraId + '/kpi/' + kpiId,
+    method: AllowedHttpMethods.delete,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const KRAApi = {
   getEmpDepartments,
   getDesignation,
   searchKRAData,
   kpisForIndividualKra,
+  deleteKRA,
+  deleteKPI,
 }
 
 export default KRAApi

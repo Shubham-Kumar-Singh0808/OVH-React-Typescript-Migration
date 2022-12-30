@@ -32,7 +32,7 @@ const KRALandingScreen = (): JSX.Element => {
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      <KRAFilterOptions />
+      <KRAFilterOptions currentPage={currentPage} pageSize={pageSize} />
       <KRATable
         paginationRange={paginationRange}
         setPageSize={setPageSize}

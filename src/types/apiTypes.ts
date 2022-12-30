@@ -654,6 +654,8 @@ export interface KRAApi extends ApiBase {
   getDesignation: string
   searchKRAData: string
   kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
 }
 
 export interface MyReviewApi extends ApiBase {

@@ -3,9 +3,18 @@ import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import KRAApi from '../../../middleware/api/Performance/KRA/KRAApi'
 import {
+  deleteKPIParams,
   KRADataQueryBody,
   KRAInitialState,
 } from '../../../types/Performance/KRA/KRATypes'
+
+const kraQueryInitial: KRADataQueryBody = {
+  departmentId: -1,
+  designationId: '',
+  startIndex: 0,
+  endIndex: 20,
+  multipleSearch: '',
+}
 
 const initialState: KRAInitialState = {
   isLoading: ApiLoadingState.idle,
@@ -15,6 +24,7 @@ const initialState: KRAInitialState = {
   kpisForIndividualKRAList: [],
   currentPage: 1,
   pageSize: 20,
+  krasQuery: kraQueryInitial,
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -65,12 +75,42 @@ const kpisForIndividualKraThunk = createAsyncThunk(
   },
 )
 
+const deleteKRAThunk = createAsyncThunk(
+  'KRA/deleteKRAThunk',
+  async (kraid: number, thunkApi) => {
+    try {
+      return await KRAApi.deleteKRA(kraid)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const deleteKPIThunk = createAsyncThunk(
+  'KRA/deleteKPIThunk',
+  async (query: deleteKPIParams, thunkApi) => {
+    try {
+      return await KRAApi.deleteKPI(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const KRASlice = createSlice({
   name: 'KRA',
   initialState,
   reducers: {
     clearKRAList: (state) => {
       state.kraData = { size: 0, list: [] }
+    },
+    setKRAQuery: (state, action) => {
+      state.krasQuery = action.payload
+    },
+    clearKRAQuery: (state) => {
+      state.krasQuery = kraQueryInitial
     },
   },
   extraReducers: (builder) => {
@@ -88,10 +128,25 @@ const KRASlice = createSlice({
     })
     builder.addMatcher(
       isAnyOf(
+        getEmpDepartmentThunk.fulfilled,
+        getDesignationThunk.fulfilled,
+        searchKRADataThunk.fulfilled,
+        kpisForIndividualKraThunk.fulfilled,
+        deleteKRAThunk.fulfilled,
+        deleteKPIThunk.fulfilled,
+      ),
+      (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
         getEmpDepartmentThunk.pending,
         getDesignationThunk.pending,
         searchKRADataThunk.pending,
         kpisForIndividualKraThunk.pending,
+        deleteKRAThunk.pending,
+        deleteKPIThunk.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -103,6 +158,8 @@ const KRASlice = createSlice({
         getDesignationThunk.rejected,
         searchKRADataThunk.rejected,
         kpisForIndividualKraThunk.rejected,
+        deleteKRAThunk.rejected,
+        deleteKPIThunk.rejected,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.failed
@@ -116,6 +173,8 @@ const KRAThunk = {
   getDesignationThunk,
   searchKRADataThunk,
   kpisForIndividualKraThunk,
+  deleteKRAThunk,
+  deleteKPIThunk,
 }
 
 export const KRAService = {

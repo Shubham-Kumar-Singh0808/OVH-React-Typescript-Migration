@@ -22,7 +22,7 @@ export const getDesignationId = (
   list: IncomingKRADesignation[],
   name: string,
 ): string => {
-  const filteredList = list.find((item) => item.name === name)
+  const filteredList = list?.find((item) => item.name === name)
   if (!filteredList) {
     return emptyString
   }

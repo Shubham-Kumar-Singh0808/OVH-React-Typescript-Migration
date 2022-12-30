@@ -15,8 +15,11 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setSelectedKRAId,
     setModalDescription,
     setModalVisible,
+    setShowModalButtons,
+    setDeleteThisKRA,
   } = props
   const dispatch = useAppDispatch()
+
   const rowExpandHandler = (e: React.MouseEvent<HTMLElement>, id: number) => {
     e.preventDefault()
     setSelectedKRAId(id as number)
@@ -33,6 +36,15 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     }
     setModalDescription(content)
     setModalVisible(true)
+    setShowModalButtons(false)
+  }
+
+  const deleteKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setModalDescription('Do you want to delete this ' + selectedKRA.name + '?')
+    setModalVisible(true)
+    setShowModalButtons(true)
+    setDeleteThisKRA(selectedKRA.id)
   }
 
   return (
@@ -103,6 +115,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 color="danger"
                 className="btn-ovh me-1"
                 title="Delete"
+                onClick={deleteKRAButtonHandler}
               >
                 <i className="fa fa-trash-o" aria-hidden="true"></i>
               </CButton>
@@ -121,7 +134,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
       {selectedKRAId === selectedKRA.id && isIconVisible ? (
         <CTableRow>
           <CTableDataCell colSpan={10}>
-            <KPIsTable />
+            <KPIsTable kraId={selectedKRA.id} />
           </CTableDataCell>
         </CTableRow>
       ) : (
