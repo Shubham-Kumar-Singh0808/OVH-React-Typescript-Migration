@@ -76,7 +76,7 @@ const updatePayslip = createAsyncThunk(
 
 const deleteCheckedPayslips = createAsyncThunk(
   'payrollManagement/deleteCheckedPayslips',
-  async (paySlipId: number, thunkApi) => {
+  async (paySlipId: number | string, thunkApi) => {
     try {
       return await PayrollManagementApi.deleteCheckedPayslips(paySlipId)
     } catch (error) {
@@ -142,6 +142,7 @@ const initialPayrollManagementState: PayRollManagementSliceState = {
   paySlipList: { list: [], size: 0 },
   editPayslip: {} as CurrentPayslip,
   excelData: [],
+  uplaodExcelFile: [],
 }
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
@@ -159,6 +160,10 @@ const payrollManagementSlice = createSlice({
       .addCase(readExcelFile.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.excelData = action.payload
+      })
+      .addCase(saveExcelFile.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.uplaodExcelFile = action.payload
       })
       .addMatcher(
         isAnyOf(getCurrentPayslip.fulfilled, searchEmployee.fulfilled),

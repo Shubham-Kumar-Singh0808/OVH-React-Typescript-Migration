@@ -7,7 +7,7 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
@@ -29,6 +29,9 @@ const PayrollManagement = (): JSX.Element => {
     {} as CurrentPayslip,
   )
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
+  const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
+  const [isChecked, setIsChecked] = useState(false)
+  const [isAllChecked, setIsAllChecked] = useState(false)
 
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
@@ -98,8 +101,16 @@ const PayrollManagement = (): JSX.Element => {
 
   const failedToastMessage = (
     <OToast
-      toastMessage="  Something went wrong with excel file.Please download sample file given below,Enter data and upload
+      toastMessage="Something went wrong with excel file.Please download sample file given below,Enter data and upload
       "
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const failedMessage = (
+    <OToast
+      toastMessage="File uploaded is either empty or is in invalid format"
       toastColor="danger"
       data-testid="failedToast"
     />
@@ -115,12 +126,14 @@ const PayrollManagement = (): JSX.Element => {
         reduxServices.payrollManagement.readExcelFile(formData),
       )
       if (
-        reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+        (reduxServices.payrollManagement.readExcelFile.fulfilled.match(
           previewBtnActionResult,
-        )
-      )
+        ),
+        previewBtnActionResult.payload === 200)
+      ) {
         setToggle('excelTable')
-      else if (
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
+      } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
         ) &&
@@ -131,6 +144,46 @@ const PayrollManagement = (): JSX.Element => {
       }
     }
   }
+
+  const deleteSuccessToastMessage = (
+    <OToast
+      toastColor="success"
+      toastMessage={`Successfully Deleted Employee ID ${Number(
+        selectYear,
+      )} PaySlip`}
+    />
+  )
+
+  const allDeleteHandler = async () => {
+    const allDeleteBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(
+        toEditPayslip.paySlipId,
+      ),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        allDeleteBtnActionResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          month: selectMonth,
+          year: Number(selectYear),
+        }),
+      )
+    }
+  }
+
+  useEffect(() => {
+    if (isChecked && isAllChecked) {
+      setIsAllDeleteBtn(true)
+    } else {
+      setIsAllDeleteBtn(false)
+    }
+  }, [isChecked, isAllChecked])
 
   return (
     <>
@@ -268,7 +321,13 @@ const PayrollManagement = (): JSX.Element => {
               >
                 Search
               </CButton>
-              <CButton color="danger btn-ovh">
+              <CButton
+                color="danger btn-ovh"
+                type="button"
+                disabled={!isAllDeleteBtn}
+                id="button-delete"
+                onClick={allDeleteHandler}
+              >
                 <i className="fa fa-trash-o me-1"></i>Delete
               </CButton>
             </CInputGroup>
@@ -285,6 +344,10 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
             setToEditPayslip={setToEditPayslip}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            isAllChecked={isAllChecked}
+            setIsAllChecked={setIsAllChecked}
           />
         )}
       </OCard>

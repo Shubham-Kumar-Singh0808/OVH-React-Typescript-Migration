@@ -88,7 +88,9 @@ const updatePayslip = async (data: CurrentPayslip): Promise<CurrentPayslip> => {
   return response.data
 }
 
-const deleteCheckedPayslips = async (paySlipId: number): Promise<number> => {
+const deleteCheckedPayslips = async (
+  paySlipId: number | string,
+): Promise<number> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: payrollManagementApiConfig.deleteCheckedPayslips,
     method: AllowedHttpMethods.delete,

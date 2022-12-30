@@ -31,15 +31,18 @@ const PayrollManagementTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setToEditPayslip: (value: CurrentPayslip) => void
+  isChecked: boolean
+  setIsChecked: (value: boolean) => void
+  isAllChecked: boolean
+  setIsAllChecked: (value: boolean) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
-  const [isChecked, setIsChecked] = useState(false)
+  const [selectedPaySlipId, setSelectedPaySlipId] = useState<string | number>()
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
     {} as CurrentPayslip,
   )
-
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipInfo,
   )
@@ -105,6 +108,20 @@ const PayrollManagementTable = (props: {
     setSelectedPaySlipDetails(payslipItem)
   }
 
+  const handleCheckbox = (value: boolean, paySlipId: string | number) => {
+    setSelectedPaySlipId(paySlipId)
+    props.setIsChecked(value)
+  }
+
+  const manageCheckboxes = (paySlipId: number) => {
+    if (props.isAllChecked) {
+      return props.isAllChecked
+    } else if (selectedPaySlipId === paySlipId) {
+      return props.isChecked
+    }
+    return false
+  }
+
   return (
     <>
       <CCol className="custom-scroll">
@@ -120,8 +137,8 @@ const PayrollManagementTable = (props: {
                 <CFormCheck
                   className="form-check-input form-select-not-allowed"
                   name="deleteCheckbox"
-                  checked={isChecked}
-                  onChange={(e) => setIsChecked(e.target.checked)}
+                  checked={props.isAllChecked}
+                  onChange={(e) => props.setIsAllChecked(e.target.checked)}
                   data-testid="ch-All"
                 />
               </CTableHeaderCell>
@@ -175,13 +192,23 @@ const PayrollManagementTable = (props: {
             {renderingPayslipData?.length > 0 &&
               renderingPayslipData?.map((payslipItem, index) => {
                 return (
-                  <CTableRow key={index}>
+                  <CTableRow key={payslipItem.paySlipId}>
                     <CTableDataCell className="text-middle ms-2">
                       <CFormCheck
                         className="form-check-input form-select-not-allowed"
                         name="deleteCheckbox"
-                        checked={isChecked}
-                        onChange={(e) => setIsChecked(e.target.checked)}
+                        checked={manageCheckboxes(payslipItem.paySlipId)}
+                        // checked={
+                        //   selectedPaySlipId === payslipItem.paySlipId
+                        //     ? props.isChecked
+                        //     : !!props.isAllChecked
+                        // }
+                        onChange={(e) =>
+                          handleCheckbox(
+                            e.target.checked,
+                            payslipItem.paySlipId,
+                          )
+                        }
                       />
                     </CTableDataCell>
                     <CTableDataCell>{index + 1}</CTableDataCell>

@@ -72,6 +72,7 @@ export type PayRollManagementSliceState = {
   paySlipList: GetPaySlipsResponse
   editPayslip: CurrentPayslip
   excelData: ReadExcelFile[]
+  uplaodExcelFile: ReadExcelFile[]
 }
 
 export type DownloadExcelFile = {
