@@ -78,7 +78,7 @@ const deleteKRA = async (kraid: number): Promise<void> => {
   return response.data
 }
 
-const deleteKPI = async (query: deleteKPIParams) => {
+const deleteKPI = async (query: deleteKPIParams): Promise<void> => {
   const { kraId, kpiId } = query
   const requestConfig = getAuthenticatedRequestConfig({
     url: KRAApiConfig.deleteKPI + kraId + '/kpi/' + kpiId,

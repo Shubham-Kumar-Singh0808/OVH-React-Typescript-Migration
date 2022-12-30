@@ -31,6 +31,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     e: React.MouseEvent<HTMLElement>,
     content: string | null,
   ) => {
+    e.preventDefault()
     if (content === null) {
       return
     }
@@ -89,16 +90,18 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
             'N/A'
           )}
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" data-testid="dept-name">
           {selectedKRA.departmentName}
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" data-testid="desig-name">
           {selectedKRA.designationName}
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" data-testid="kra-percent">
           {selectedKRA.designationKraPercentage}%
         </CTableDataCell>
-        <CTableDataCell scope="row">{selectedKRA.count}</CTableDataCell>
+        <CTableDataCell scope="row" data-testid="kpi-cnt">
+          {selectedKRA.count}
+        </CTableDataCell>
         <CTableDataCell scope="row">
           <div className="d-flex flex-row align-items-center justify-content-end">
             <div className="button-events">
@@ -106,6 +109,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 size="sm"
                 color="info"
                 className="btn-ovh me-1"
+                data-testid="edit-btn-kra"
                 title="Edit"
               >
                 <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -115,6 +119,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 color="danger"
                 className="btn-ovh me-1"
                 title="Delete"
+                data-testid="del-btn-kra"
                 onClick={deleteKRAButtonHandler}
               >
                 <i className="fa fa-trash-o" aria-hidden="true"></i>
@@ -133,7 +138,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
       </CTableRow>
       {selectedKRAId === selectedKRA.id && isIconVisible ? (
         <CTableRow>
-          <CTableDataCell colSpan={10}>
+          <CTableDataCell colSpan={10} data-testid="inner-table">
             <KPIsTable kraId={selectedKRA.id} />
           </CTableDataCell>
         </CTableRow>

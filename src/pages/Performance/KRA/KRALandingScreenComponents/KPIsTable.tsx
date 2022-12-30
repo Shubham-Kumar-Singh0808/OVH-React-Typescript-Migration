@@ -42,6 +42,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     content: ModalContent,
   ) => {
     setModalDescription(content)
+    setShowModalButtons(false)
     setModalVisible(true)
   }
 
@@ -115,13 +116,13 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {kpiList.map((item, index) => (
+          {kpiList?.map((item, index) => (
             <CTableRow key={index}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell scope="row" className="commentWidth">
                 <CLink
                   className="cursor-pointer text-primary centerAlignment-text"
-                  data-testid="kpi-Name"
+                  data-testid={`kpi-Name-${index}`}
                   onClick={(e) => descriptionHandler(e, item.name)}
                 >
                   {dottedContent(item.name)}
@@ -131,7 +132,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                 <CTableDataCell scope="row" className="commentWidth">
                   <CLink
                     className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
-                    data-testid="kpi-Name"
+                    data-testid={`kpi-description-${index}`}
                     onClick={(e) =>
                       descriptionHandler(
                         e,
@@ -216,7 +217,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}
       >
-        <div data-testid="modal-cnt">{modalDescription}</div>
+        <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>
     </>
   )

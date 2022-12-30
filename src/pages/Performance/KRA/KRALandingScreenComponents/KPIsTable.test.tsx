@@ -17,6 +17,8 @@ const toRender = (
   </div>
 )
 
+const modalContentId = 'modal-cnt-kpi'
+
 describe('KPI Table', () => {
   describe('render', () => {
     beforeEach(() => {
@@ -60,14 +62,28 @@ describe('KPI Table', () => {
       const delBtn = screen.getByTestId('del-btn-0')
       expect(delBtn).toBeEnabled()
       userEvent.click(delBtn)
-      const modalCnt = screen.getByTestId('modal-cnt')
-      expect(screen.getByTestId('modal-cnt')).toBeVisible()
+      const modalCnt = screen.getByTestId(modalContentId)
+      expect(modalCnt).toBeVisible()
       expect(modalCnt).toHaveTextContent(
         'Do you want to delete this Help others in resolving issues and meet deadlines?',
       )
       const yesBtn = screen.getByRole('button', { name: 'Yes' })
       expect(yesBtn).toBeVisible()
       userEvent.click(yesBtn)
+    })
+
+    test('name and description render', () => {
+      const name = screen.getByTestId('kpi-Name-1')
+      const description = screen.getByTestId('kpi-description-2')
+      expect(name).toHaveTextContent('Learn new technologies or...')
+      expect(description).toHaveTextContent('<span>This testimonial of...')
+
+      userEvent.click(description)
+      const modalCnt = screen.getByTestId(modalContentId)
+      expect(modalCnt).toBeVisible()
+      expect(modalCnt).toHaveTextContent(
+        'This testimonial of your learning and benchmark against industry, certification is must.',
+      )
     })
   })
 })

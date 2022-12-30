@@ -60,23 +60,30 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     }
   }
 
+  const noRecords =
+    kraData?.size !== 0
+      ? `Total Records: ${kraData?.size}`
+      : `No Records Found...`
+
   return (
     <>
       <CTable responsive striped align="middle">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell></CTableHeaderCell>
-            <CTableHeaderCell>KRA Name</CTableHeaderCell>
-            <CTableHeaderCell>Description</CTableHeaderCell>
-            <CTableHeaderCell>Department</CTableHeaderCell>
-            <CTableHeaderCell>Designation</CTableHeaderCell>
-            <CTableHeaderCell>Percentage</CTableHeaderCell>
-            <CTableHeaderCell>No.of KPIs</CTableHeaderCell>
-            <CTableHeaderCell className="text-center">Actions</CTableHeaderCell>
+            <CTableHeaderCell scope="col"></CTableHeaderCell>
+            <CTableHeaderCell scope="col">KRA Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+            <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-center">
+              Actions
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {kraData.list.map((item, index) => (
+          {kraData?.list.map((item, index) => (
             <KRATableItem
               key={index}
               isIconVisible={isIconVisible}
@@ -94,14 +101,10 @@ const KRATable = (props: KRATableProps): JSX.Element => {
       </CTable>
       <CRow className="mt-3">
         <CCol md={3} className="pull-left">
-          <strong data-testid="record-number">
-            {kraData.size !== 0
-              ? `Total Records: ${kraData.size}`
-              : `No Records Found...`}
-          </strong>
+          <strong data-testid="record-number">{noRecords}</strong>
         </CCol>
         <CCol xs={3}>
-          {kraData.size > 20 && (
+          {kraData?.size > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
               options={[20, 40, 60, 80]}
@@ -109,7 +112,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
             />
           )}
         </CCol>
-        {kraData.size > 20 && (
+        {kraData?.size > 20 && (
           <CCol
             xs={5}
             className="col-6 d-grid d-md-flex justify-content-md-end"
