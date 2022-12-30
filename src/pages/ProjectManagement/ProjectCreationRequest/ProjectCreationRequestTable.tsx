@@ -35,6 +35,7 @@ const ProjectCreationRequestTable = ({
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
+
   const getAllProjectRequestList = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.allProjectCreationList,
   )
@@ -92,6 +93,7 @@ const ProjectCreationRequestTable = ({
     )
     setToggle('projectHistory')
   }
+
   return (
     <>
       <CTable striped className="mt-3">
@@ -154,6 +156,7 @@ const ProjectCreationRequestTable = ({
                       onClick={() =>
                         handleProjectRequestApproveClick(projectRequest.id)
                       }
+                      disabled={projectRequest.status === 'Approved'}
                     >
                       <i className="fa fa-check-circle-o"></i>
                     </CButton>
