@@ -46,7 +46,6 @@ describe('Nominee Details', () => {
       expect(mockSetViewNomination).toHaveBeenCalledTimes(1)
     })
     test('form buttons are rendered', () => {
-      expect(screen.getByTestId(addBtnId)).toBeDisabled()
       expect(screen.getByTestId(clearBtnId)).toBeEnabled()
     })
     test('basic details are rendered', () => {

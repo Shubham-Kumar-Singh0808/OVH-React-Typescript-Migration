@@ -362,6 +362,20 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const LeadershipEnrollmentList = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentList'
+    ),
+)
+
+const LeadershipEnrollmentForm = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentForm'
+    ),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -797,6 +811,16 @@ const routes = [
     path: '/employeeAppraisal',
     name: 'My Review',
     component: MyReview,
+  },
+  {
+    path: '/leadershiplist',
+    name: 'Leadership Enrollment List',
+    component: LeadershipEnrollmentList,
+  },
+  {
+    path: '/leadershipForm',
+    name: 'Leadership Enrollment Form',
+    component: LeadershipEnrollmentForm,
   },
 ]
 

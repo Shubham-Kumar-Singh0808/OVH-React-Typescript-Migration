@@ -35,7 +35,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
-import { TextDanger } from '../../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
@@ -265,11 +265,17 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             data-testid="ach-name-label"
             className={newAchievementLabelClass}
           >
-            Achievement Type:{' '}
-            {(newAchieverDetails.achievementName === null ||
-              newAchieverDetails.achievementName === selectAchievementType) && (
-              <span className={TextDanger}>*</span>
-            )}
+            Achievement Type:
+            <span
+              className={
+                newAchieverDetails.achievementName === null ||
+                newAchieverDetails.achievementName === selectAchievementType
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol md={3}>
             <CFormSelect
@@ -318,13 +324,19 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="ach-timep-label"
             >
               Time Period (year&apos;s):
-              {(newAchieverDetails.timePeriod === null ||
-                newAchieverDetails.timePeriod === emptyString ||
-                newAchieverDetails.timePeriod === '0' ||
-                newAchieverDetails.timePeriod.trim().length === 0 ||
-                !Number(newAchieverDetails.timePeriod)) && (
-                <span className={TextDanger}>*</span>
-              )}
+              <span
+                className={
+                  newAchieverDetails.timePeriod === null ||
+                  newAchieverDetails.timePeriod === emptyString ||
+                  newAchieverDetails.timePeriod === '0' ||
+                  newAchieverDetails.timePeriod.trim().length === 0 ||
+                  !Number(newAchieverDetails.timePeriod)
+                    ? TextDanger
+                    : TextWhite
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <CFormInput
@@ -344,11 +356,17 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="from-date"
               className={newAchievementLabelClass}
             >
-              From Date:{' '}
-              {(newAchieverDetails.startDate === null ||
-                newAchieverDetails.startDate === emptyString) && (
-                <span className={TextDanger}>*</span>
-              )}
+              From Date:
+              <span
+                className={
+                  newAchieverDetails.startDate === null ||
+                  newAchieverDetails.startDate === emptyString
+                    ? TextDanger
+                    : TextWhite
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <ReactDatePicker
@@ -377,11 +395,17 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="to-date"
               className={newAchievementLabelClass}
             >
-              To Date:{' '}
-              {(newAchieverDetails.endDate === null ||
-                newAchieverDetails.endDate === emptyString) && (
-                <span className={TextDanger}>*</span>
-              )}
+              To Date:
+              <span
+                className={
+                  newAchieverDetails.endDate === null ||
+                  newAchieverDetails.endDate === emptyString
+                    ? TextDanger
+                    : TextWhite
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <ReactDatePicker
@@ -400,16 +424,17 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                   })
                 }}
               />
+              <CCol>{datesErrorMessage}</CCol>
             </CCol>
-            <CCol>{datesErrorMessage}</CCol>
           </AchievementEntryContainer>
         )}
         <AchievementEntryContainer>
           <CFormLabel
             data-testid="ach-desc"
-            className={`${newAchievementLabelClass}`}
+            className={`${newAchievementLabelClass} align-self-start`}
           >
-            Description:{' '}
+            Description:
+            <span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={8}>
             {showEditor ? (
@@ -432,6 +457,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             className={newAchievementLabelClass}
           >
             Picture:
+            <span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={12} md={3}>
             <AchieverImage
