@@ -33,6 +33,11 @@ const NomineeList = (): JSX.Element => {
     }
   }, [nomineeCycles.list])
 
+  const noRecords =
+    nomineeRecords?.length > 0
+      ? `Total Records: ${nomineeRecords.length}`
+      : `No Records Found...`
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -51,11 +56,7 @@ const NomineeList = (): JSX.Element => {
           <NomineeListTable setViewNomination={setViewNomination} />
           <CRow className="mt-3">
             <CCol md={3} className="pull-left">
-              <strong data-testid="record-number">
-                {nomineeRecords?.length > 0
-                  ? `Total Records: ${nomineeRecords.length}`
-                  : `No Records Found...`}
-              </strong>
+              <strong data-testid="record-number">{noRecords}</strong>
             </CCol>
           </CRow>
         </>
