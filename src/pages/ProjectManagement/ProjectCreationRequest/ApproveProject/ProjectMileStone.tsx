@@ -1,9 +1,12 @@
 import {
-  CRow,
-  CCol,
-  CFormLabel,
   CFormTextarea,
   CFormInput,
+  CTable,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CTableBody,
+  CTableDataCell,
 } from '@coreui/react-pro'
 import React from 'react'
 import DatePicker from 'react-datepicker'
@@ -32,92 +35,90 @@ const ProjectMileStone = ({
     index: number,
   ) => void
 }): JSX.Element => {
-  console.log(item.title)
+  const projectBillable = item.billable ? 'Yes' : 'No'
   return (
-    <CRow className="employeeAllocation-form">
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel className="mt-2">Title</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <CFormInput
-          onChange={(e) => titleOnChange(e, index)}
-          value={item.title}
-          name="title"
-          placeholder="Title"
-        />
-      </CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>Effort(Hrs)</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <CFormInput
-          onChange={(e) => effortOnChange(e, index)}
-          value={item.effort}
-          name="effort"
-          id="effort"
-          placeholder="Title"
-        />
-      </CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>From Date</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <DatePicker
-          id="editprojectenddate"
-          className="form-control form-control-sm sh-date-picker"
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          placeholderText="dd/mm/yy"
-          data-testid="end-date-picker"
-          dateFormat="dd/mm/yy"
-          name="editprojectenddate"
-          value={item.fromDate}
-          onChange={(date: Date) => onChangeHandleFromDate(date, index)}
-        />
-      </CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>End Date</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <DatePicker
-          id="editprojectenddate"
-          className="form-control form-control-sm sh-date-picker"
-          peekNextMonth
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          placeholderText="dd/mm/yy"
-          data-testid="end-date-picker"
-          dateFormat="dd/mm/yy"
-          name="editprojectenddate"
-          value={item.toDate}
-          onChange={(date: Date) => onChangeHandleToDate(date, index)}
-        />
-      </CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>Billable</CFormLabel>
-      </CCol>
-      <CCol sm={2}>{item.billable}</CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>Percentage</CFormLabel>
-      </CCol>
-      <CCol sm={2}>{item.billable}</CCol>
-      <CCol sm={2} md={1} className="text-end">
-        <CFormLabel>Comments</CFormLabel>
-      </CCol>
-      <CCol sm={2}>
-        <CFormTextarea
-          aria-label="textarea"
-          id="comments"
-          name="comments"
-          data-testid="text-area"
-          value={item.comments}
-          onChange={(e) => commentsOnChange(e, index)}
-        ></CFormTextarea>
-      </CCol>
-    </CRow>
+    <>
+      <CTable striped responsive align="middle">
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+            <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          <CTableDataCell scope="row">
+            <CFormInput
+              onChange={(e) => titleOnChange(e, index)}
+              value={item.title}
+              name="title"
+              placeholder="Title"
+              data-testid="title-test"
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormInput
+              onChange={(e) => effortOnChange(e, index)}
+              value={item.effort}
+              name="effort"
+              id="effort"
+              placeholder="effort"
+              data-testid="effort-test"
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <DatePicker
+              id="editprojectenddate"
+              className="form-control form-control-sm sh-date-picker"
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              placeholderText="dd/mm/yy"
+              data-testid="end-date-picker"
+              dateFormat="dd/mm/yy"
+              name="editprojectenddate"
+              value={item.fromDate}
+              onChange={(date: Date) => onChangeHandleFromDate(date, index)}
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <DatePicker
+              id="editprojectenddate"
+              className="form-control form-control-sm sh-date-picker"
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              placeholderText="dd/mm/yy"
+              data-testid="end-date-picker"
+              dateFormat="dd/mm/yy"
+              name="editprojectenddate"
+              value={item.toDate}
+              onChange={(date: Date) => onChangeHandleToDate(date, index)}
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">{projectBillable}</CTableDataCell>
+          <CTableDataCell scope="row">
+            {item.milestonePercentage}
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormTextarea
+              aria-label="textarea"
+              id="comments"
+              name="comments"
+              data-testid="text-area"
+              value={item.comments}
+              onChange={(e) => commentsOnChange(e, index)}
+            ></CFormTextarea>
+          </CTableDataCell>
+        </CTableBody>
+      </CTable>
+    </>
   )
 }
 
