@@ -5,6 +5,10 @@ import {
   CFormLabel,
   CFormSelect,
   CButton,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CTable,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
@@ -404,6 +408,7 @@ const ApproveProjectForm = (): JSX.Element => {
         <CRow className="mb-3">
           <CFormLabel
             {...dynamicFormLabelProps('editprojectstartdate', classNameStyle)}
+            data-testid="formeditPricingModel"
           >
             Pricing Model:
           </CFormLabel>
@@ -569,20 +574,33 @@ const ApproveProjectForm = (): JSX.Element => {
         </CRow>
         {approveProject.type === 'FIXEDBID' && (
           <CRow className="mt-4 mb-4">
-            {mileStone.map((item, index) => {
-              return (
-                <ProjectMileStone
-                  item={item}
-                  key={index}
-                  index={index}
-                  titleOnChange={titleOnChange}
-                  commentsOnChange={commentsOnChange}
-                  effortOnChange={effortOnChange}
-                  onChangeHandleFromDate={onChangeHandleFromDate}
-                  onChangeHandleToDate={onChangeHandleToDate}
-                />
-              )
-            })}
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              {mileStone.map((item, index) => {
+                return (
+                  <ProjectMileStone
+                    item={item}
+                    key={index}
+                    index={index}
+                    titleOnChange={titleOnChange}
+                    commentsOnChange={commentsOnChange}
+                    effortOnChange={effortOnChange}
+                    onChangeHandleFromDate={onChangeHandleFromDate}
+                    onChangeHandleToDate={onChangeHandleToDate}
+                  />
+                )
+              })}
+            </CTable>
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">
