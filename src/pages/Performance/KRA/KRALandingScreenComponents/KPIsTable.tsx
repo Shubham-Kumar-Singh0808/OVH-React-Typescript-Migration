@@ -87,6 +87,8 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     }
   }
 
+  const modalBtnTernary = showModalButtons ? emptyString : 'd-none'
+
   return (
     <>
       <CTable
@@ -226,7 +228,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         setVisible={setModalVisible}
         modalSize="lg"
         alignment="center"
-        modalFooterClass={showModalButtons ? emptyString : 'd-none'}
+        modalFooterClass={modalBtnTernary}
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"

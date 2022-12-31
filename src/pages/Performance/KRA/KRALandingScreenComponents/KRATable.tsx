@@ -60,6 +60,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     }
   }
 
+  const showModalButtonTernary = showModalButtons ? '' : 'd-none'
   const noRecords =
     kraData?.size !== 0
       ? `Total Records: ${kraData?.size}`
@@ -130,7 +131,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         setVisible={setModalVisible}
         modalSize="lg"
         alignment="center"
-        modalFooterClass={showModalButtons ? '' : 'd-none'}
+        modalFooterClass={showModalButtonTernary}
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
