@@ -107,7 +107,7 @@ export interface KPIsTableProps {
   kraId: number
 }
 
-export interface deleteKPIParams {
+export interface DeleteKPIParams {
   kpiId: number
   kraId: number
 }

@@ -22,7 +22,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
 
   const rowExpandHandler = (e: React.MouseEvent<HTMLElement>, id: number) => {
     e.preventDefault()
-    setSelectedKRAId(id as number)
+    setSelectedKRAId(id)
     dispatch(reduxServices.KRA.kpisForIndividualKraThunk(id))
     setIsIconVisible(true)
   }

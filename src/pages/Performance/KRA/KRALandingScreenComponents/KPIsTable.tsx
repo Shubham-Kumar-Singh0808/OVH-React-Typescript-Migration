@@ -15,7 +15,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { emptyString } from '../../../Achievements/AchievementConstants'
 import { dottedContent } from '../KRAConstants'
 import {
-  deleteKPIParams,
+  DeleteKPIParams,
   KPIsTableProps,
 } from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -45,6 +45,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     e: React.MouseEvent<HTMLElement>,
     content: ModalContent,
   ) => {
+    e.preventDefault()
     setModalDescription(content)
     setShowModalButtons(false)
     setModalVisible(true)
@@ -68,7 +69,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
 
   const modalDeleteButtonHandler = async () => {
     if (deleteThisKPI) {
-      const finalQ: deleteKPIParams = {
+      const finalQ: DeleteKPIParams = {
         kraId,
         kpiId: deleteThisKPI,
       }
@@ -170,6 +171,12 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                   <CLink
                     className="cursor-pointer text-primary centerAlignment-text"
                     data-testid="kpi-Name"
+                    onClick={(e) =>
+                      descriptionHandler(
+                        e,
+                        parse(modalContentCheck(item.target)),
+                      )
+                    }
                   >
                     {dottedContent(item.target)}
                   </CLink>

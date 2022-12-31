@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import KRAApi from '../../../middleware/api/Performance/KRA/KRAApi'
 import {
-  deleteKPIParams,
+  DeleteKPIParams,
   KRADataQueryBody,
   KRAInitialState,
 } from '../../../types/Performance/KRA/KRATypes'
@@ -89,7 +89,7 @@ const deleteKRAThunk = createAsyncThunk(
 
 const deleteKPIThunk = createAsyncThunk(
   'KRA/deleteKPIThunk',
-  async (query: deleteKPIParams, thunkApi) => {
+  async (query: DeleteKPIParams, thunkApi) => {
     try {
       return await KRAApi.deleteKPI(query)
     } catch (error) {
