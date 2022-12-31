@@ -6,6 +6,7 @@ import KRATableItem from './KRATableItem'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockKRADataList } from '../../../../test/data/KRAData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockSetIconVisible = jest.fn()
 const mockSetSelectedKRAId = jest.fn()
@@ -63,6 +64,18 @@ describe('KRA Table Item', () => {
     beforeEach(() => {
       render(toInitialRender, {
         preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'admin',
+              employeeId: '1983',
+              userName: 'admin',
+              role: 'admin',
+              tenantKey: 'abc',
+              token: 'test',
+              designation: 'developer',
+            },
+          },
+          userAccessToFeatures: mockUserAccessToFeaturesData,
           KRA: {
             isLoading: ApiLoadingState.succeeded,
             kraData: mockKRADataList,
@@ -85,7 +98,7 @@ describe('KRA Table Item', () => {
       )
       expect(screen.getByTestId('kra-percent')).toHaveTextContent('25%')
       expect(screen.getByTestId('kpi-cnt')).toHaveTextContent('4')
-      expect(screen.getByTestId(deleteBtnId)).toBeEnabled()
+      expect(screen.getByTestId(deleteBtnId + '-551')).toBeEnabled()
       expect(screen.getByTestId(editButtonId)).toBeEnabled()
     })
 
@@ -94,15 +107,6 @@ describe('KRA Table Item', () => {
       userEvent.click(collapseIcon)
       expect(mockSetIconVisible).toHaveBeenCalledTimes(1)
       expect(mockSetSelectedKRAId).toHaveBeenCalledTimes(1)
-    })
-
-    test('delete button functionality', () => {
-      const deleteButton = screen.getByTestId(deleteBtnId)
-      userEvent.click(deleteButton)
-      expect(mockSetDeleteThisKRA).toHaveBeenCalledTimes(1)
-      expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
-      expect(mockSetShowModalButtons).toHaveBeenCalledTimes(1)
-      expect(mockSetModalVisible).toHaveBeenCalledTimes(1)
     })
 
     test('name click render modal', () => {
@@ -134,6 +138,15 @@ describe('KRA Table Item', () => {
 
     test('expand icon is visible', () => {
       expect(screen.getByTestId(expandIconId)).toBeVisible()
+    })
+
+    test('delete button functionality', () => {
+      const deleteButton = screen.getByTestId(deleteBtnId + '-551')
+      userEvent.click(deleteButton)
+      expect(mockSetDeleteThisKRA).toHaveBeenCalledTimes(1)
+      expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
+      expect(mockSetShowModalButtons).toHaveBeenCalledTimes(1)
+      expect(mockSetModalVisible).toHaveBeenCalledTimes(1)
     })
   })
 })

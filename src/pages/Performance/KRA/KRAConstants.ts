@@ -11,7 +11,7 @@ export const getDepartmentId = (
   list: IncomingEmployeeDepartment[],
   name: string,
 ): number => {
-  const filteredList = list.find((item) => item.departmentName === name)
+  const filteredList = list?.find((item) => item.departmentName === name)
   if (!filteredList) {
     return -1
   }

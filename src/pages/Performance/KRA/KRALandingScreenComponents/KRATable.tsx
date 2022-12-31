@@ -136,7 +136,10 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         confirmButtonAction={deleteModalKRAButtonHandler}
         modalHeaderClass="d-none"
       >
-        <div dangerouslySetInnerHTML={{ __html: modalDescription }}></div>
+        <div
+          data-testid="modal-cnt-kra-table"
+          dangerouslySetInnerHTML={{ __html: modalDescription }}
+        ></div>
       </OModal>
     </>
   )

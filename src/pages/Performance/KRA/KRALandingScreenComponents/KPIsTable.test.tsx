@@ -6,6 +6,7 @@ import KPIsTable from './KPIsTable'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockKPISelfDevDevelopmentList } from '../../../../test/data/KRAData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 //KRA ID is not a random number. It is the real kra id of the mock KPI
 const toRender = (
@@ -27,6 +28,20 @@ describe('KPI Table', () => {
           KRA: {
             isLoading: ApiLoadingState.succeeded,
             kpisForIndividualKRAList: mockKPISelfDevDevelopmentList,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'admin',
+              employeeId: '1983',
+              userName: 'admin',
+              role: 'admin',
+              tenantKey: 'abc',
+              token: 'test',
+              designation: 'developer',
+            },
           },
         },
       })

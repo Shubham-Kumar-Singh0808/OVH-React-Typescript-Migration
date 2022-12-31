@@ -37,6 +37,10 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
 
+  const userAccessToFeatures = useTypedSelector(
+    (state) => state.userAccessToFeatures.userAccessToFeatures,
+  ).find((item) => item.featureId === 34)
+
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
     content: ModalContent,
@@ -176,29 +180,33 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
               <CTableDataCell>
                 <div className="d-flex flex-row align-items-center justify-content-end">
                   <div className="button-events">
-                    <CButton
-                      size="sm"
-                      color="info"
-                      className="btn-ovh me-1"
-                      title="Edit"
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      size="sm"
-                      color="danger"
-                      className="btn-ovh me-1"
-                      data-testid={`del-btn-${index}`}
-                      title="Delete"
-                      onClick={(e) => {
-                        deleteButtonHandler(e, item.id, item.name)
-                      }}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {userAccessToFeatures?.updateaccess && (
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1"
+                        title="Edit"
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    )}
+                    {userAccessToFeatures?.deleteaccess && (
+                      <CButton
+                        size="sm"
+                        color="danger"
+                        className="btn-ovh me-1"
+                        data-testid={`del-btn-${index}`}
+                        title="Delete"
+                        onClick={(e) => {
+                          deleteButtonHandler(e, item.id, item.name)
+                        }}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    )}
                   </div>
                 </div>
               </CTableDataCell>

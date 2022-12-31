@@ -119,11 +119,12 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 color="danger"
                 className="btn-ovh me-1"
                 title="Delete"
-                data-testid="del-btn-kra"
+                data-testid={`del-btn-kra-${selectedKRA.id}`}
                 onClick={deleteKRAButtonHandler}
               >
                 <i className="fa fa-trash-o" aria-hidden="true"></i>
               </CButton>
+
               <CButton
                 size="sm"
                 color="info"

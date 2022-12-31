@@ -9,6 +9,7 @@ import {
   mockKPISelfDevDevelopmentList,
   mockKRADataList,
 } from '../../../../test/data/KRAData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -33,9 +34,21 @@ describe('KRA Table', () => {
     beforeEach(() => {
       render(toRender, {
         preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'admin',
+              employeeId: '1983',
+              userName: 'admin',
+              role: 'admin',
+              tenantKey: 'abc',
+              token: 'test',
+              designation: 'developer',
+            },
+          },
+          userAccessToFeatures: mockUserAccessToFeaturesData,
           KRA: {
             isLoading: ApiLoadingState.succeeded,
-            kraDataList: mockKRADataList,
+            kraData: mockKRADataList,
             kpisForIndividualKRAList: mockKPISelfDevDevelopmentList,
           },
         },
@@ -71,8 +84,21 @@ describe('KRA Table', () => {
 
     test('number of records rendered', () => {
       expect(screen.getByTestId('record-number')).toHaveTextContent(
-        'Total Records: undefined',
+        'Total Records: 127',
       )
+    })
+
+    test('delete kra button functionality', () => {
+      const delBtn = screen.getByTestId('del-btn-kra-551')
+      userEvent.click(delBtn)
+      const modalCnt = screen.getByTestId('modal-cnt-kra-table')
+      expect(modalCnt).toBeVisible()
+      expect(modalCnt).toHaveTextContent(
+        'Do you want to delete this People or Self?',
+      )
+      const yesBtn = screen.getByRole('button', { name: 'Yes' })
+      expect(yesBtn).toBeVisible()
+      userEvent.click(yesBtn)
     })
   })
 })
