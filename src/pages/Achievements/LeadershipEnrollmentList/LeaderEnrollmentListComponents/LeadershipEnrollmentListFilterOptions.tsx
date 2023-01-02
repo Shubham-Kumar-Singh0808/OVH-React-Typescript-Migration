@@ -39,6 +39,9 @@ const statusFilterList: string[] = [
 ]
 
 const formatDate = (date: string): string => {
+  if (date === emptyString) {
+    return emptyString
+  }
   const list = date.split('/')
   const month = list[0]
   list[0] = list[1]
@@ -94,6 +97,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
       to: formatDate(toDate),
       statusSelection: selectedStatusOption,
     }
+    console.log(finalQueries)
     dispatch(
       reduxServices.leadershipEnrollmentList.getLeadershipListThunk(
         finalQueries,
