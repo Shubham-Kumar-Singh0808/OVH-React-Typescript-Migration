@@ -28,6 +28,7 @@ import {
   ErrorBooleans,
   errorOrderMessage,
   orderRegexValue,
+  TableColor,
 } from '../../AchievementConstants'
 
 const defaultAchievementTypeIdValue = -1
@@ -199,11 +200,14 @@ const AchievementTypeTable = (
           String(NewAchievementStatus.Inactive).slice(1)
   }
 
-  const uniqueOrderTernary = errors.achievementError2 ? (
-    <p data-testid="unique-order-err" className={TextDanger}>
+  const uniqueOrderTernary = (
+    <p
+      data-testid="unique-order-err"
+      className={errors.achievementError2 ? TextDanger : TableColor}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <>

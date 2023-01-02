@@ -109,17 +109,23 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler()
   }
 
-  const errorMessageOrderTernary = errors.achievementError2 ? (
-    <p data-testid="uni-order-error" className={TextDanger}>
+  const errorMessageOrderTernary = (
+    <p
+      data-testid="uni-order-error"
+      className={errors.achievementError2 ? TextDanger : TextWhite}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
-  const errorMessageNameTernary = errors.achievementError1 ? (
-    <p data-testid="uni-name-error" className={TextDanger}>
+  const errorMessageNameTernary = (
+    <p
+      data-testid="uni-name-error"
+      className={errors.achievementError1 ? TextDanger : TextWhite}
+    >
       {errorAchievementNameMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <CForm onSubmit={enabledAddButtonHandler}>
