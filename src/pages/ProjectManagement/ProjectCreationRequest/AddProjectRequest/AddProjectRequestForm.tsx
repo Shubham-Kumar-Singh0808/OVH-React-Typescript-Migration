@@ -39,7 +39,9 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
   // const [platform, setPlatform] = useState<string>('')
   // const [domain, setDomain] = useState<string>('')
-  const chelistDetails = {} as Chelist[]
+
+  const checkListDetails = {} as Chelist[]
+  const [checkList, setCheckList] = useState(checkListDetails)
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
     useState<string>('')
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
@@ -51,7 +53,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     billingContactPerson: '',
     billingContactPersonEmail: '',
     cc: '',
-    chelist: chelistDetails,
+    chelist: checkListDetails,
     client: '',
     description: '',
     domain: '',
@@ -85,6 +87,10 @@ const AddProjectRequestForm = (): JSX.Element => {
     reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
   )
 
+  const checkListItems = useTypedSelector(
+    reduxServices.addProjectCreationRequest.selectors.checkList,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.projectManagement.getProjectClients())
     dispatch(reduxServices.projectManagement.getAllDomains())
@@ -93,6 +99,10 @@ const AddProjectRequestForm = (): JSX.Element => {
     dispatch(reduxServices.addProjectCreationRequest.getProjectRequestMailIds())
     dispatch(reduxServices.addProjectCreationRequest.getCheckList())
   }, [dispatch])
+
+  useEffect(() => {
+    if (checkListItems) setCheckList(checkListItems)
+  }, [checkListItems])
 
   const clientOrganizationList = projectClients
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
@@ -199,7 +209,7 @@ const AddProjectRequestForm = (): JSX.Element => {
       return { ...prevState, ...{ description } }
     })
   }
-
+  console.log(projectRequest.description)
   const onHandleCustomerContactName = (value: string) => {
     setProjectRequest({ ...projectRequest, projectContactPerson: value })
   }
@@ -258,6 +268,28 @@ const AddProjectRequestForm = (): JSX.Element => {
     dispatch(
       reduxServices.addProjectCreationRequest.addProjectRequest(projectRequest),
     )
+  }
+
+  const onChangeRadio = (
+    e: React.ChangeEvent<HTMLInputElement>,
+
+    index: number,
+  ) => {
+    console.log(e.target.value, index)
+    const newMileStone: Chelist[] = JSON.parse(JSON.stringify(checkList))
+    newMileStone[index].answer = e.target.value
+    console.log(newMileStone[index].answer)
+    setCheckList(newMileStone)
+    console.log(checkList)
+  }
+
+  const commentsOnChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+  ) => {
+    const newMileStone: Chelist[] = JSON.parse(JSON.stringify(checkList))
+    newMileStone[index].comments = e.target.value
+    setCheckList(newMileStone)
   }
   return (
     <>
@@ -522,7 +554,26 @@ const AddProjectRequestForm = (): JSX.Element => {
             placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
-          <CheckList />
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Checklist:
+            </CFormLabel>
+            <CCol sm={3}>
+              {checkList?.length > 0 &&
+                checkList?.map((item, index) => {
+                  return (
+                    <CheckList
+                      onChangeRadio={onChangeRadio}
+                      commentsOnChange={commentsOnChange}
+                      checkList={checkList}
+                      item={item}
+                      index={index}
+                      key={index}
+                    />
+                  )
+                })}
+            </CCol>
+          </CRow>
         </CCol>
         <CRow className="mb-3 align-items-center">
           <CCol sm={{ span: 6, offset: 3 }}>

@@ -1,5 +1,4 @@
-import { LoadingState } from "../../../commonTypes"
-
+import { LoadingState } from '../../../commonTypes'
 
 export type AddProjectRequestDetails = {
   bcc: string
@@ -30,6 +29,7 @@ export type Chelist = {
   answer: string
   answer1: string
   answer2: string
+  answer3: string
   checklistId: number
   comments: string
   id: null
@@ -53,7 +53,11 @@ export type GetProjectRequestMailIds = {
   createdBy: null
   createdDate: null
 }
-
+export enum CheckedQuestionsOptions {
+  yes = 'Yes',
+  no = 'No',
+  noAnswer = 'N/A',
+}
 export type GetProjectRequestState = {
   getProjectRequestMailIds: GetProjectRequestMailIds
   chelist: Chelist[]

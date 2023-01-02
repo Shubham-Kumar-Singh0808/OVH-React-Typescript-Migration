@@ -1,29 +1,92 @@
-import { CRow, CFormLabel, CCol, CFormCheck } from '@coreui/react-pro'
+import {
+  CRow,
+  CFormLabel,
+  CCol,
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableRow,
+  CFormCheck,
+  CFormTextarea,
+} from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
+import {
+  CheckedQuestionsOptions,
+  Chelist,
+} from '../../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 
-const CheckList = (): JSX.Element => {
-  const checkList = useTypedSelector(
-    reduxServices.addProjectCreationRequest.selectors.checkList,
-  )
+const CheckList = ({
+  onChangeRadio,
+  commentsOnChange,
+  checkList,
+  item,
+  index,
+}: {
+  onChangeRadio: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  commentsOnChange: (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+  ) => void
+  checkList: Chelist[]
+  item: Chelist
+  index: number
+}): JSX.Element => {
   return (
     <>
-      <CRow className="mt-4 mb-4">
-        <CFormLabel className="col-sm-2 col-form-label text-end">
-          Checklist: :
-        </CFormLabel>
-        <CCol sm={3}>
-          {checkList.map((item, index) => {
-            return (
-              <>
-                <p key={index}>{item.checklistId}</p>
-                <p key={index}>{item.name}</p>
-              </>
-            )
-          })}
-        </CCol>
-      </CRow>
+      <CTable key={item.id}>
+        <CTableBody>
+          <CTableRow>
+            <CTableDataCell scope="row">{item.checklistId}</CTableDataCell>
+            <CTableDataCell scope="row">{item.name}</CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormCheck
+                type="radio"
+                data-testid={`yes-radio`}
+                label="Yes"
+                inline
+                checked={item.answer === CheckedQuestionsOptions.yes}
+                onChange={(e) => onChangeRadio(e, index)}
+                value={String(CheckedQuestionsOptions.yes)}
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormCheck
+                type="radio"
+                data-testid={`yes-radio`}
+                label="No"
+                inline
+                checked={item.answer === CheckedQuestionsOptions.no}
+                value={String(CheckedQuestionsOptions.no)}
+                onChange={(e) => onChangeRadio(e, index)}
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormCheck
+                type="radio"
+                data-testid={`yes-radio`}
+                label="N/A"
+                inline
+                checked={item.answer === CheckedQuestionsOptions.noAnswer}
+                onChange={(e) => onChangeRadio(e, index)}
+                value={String(CheckedQuestionsOptions.noAnswer)}
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormTextarea
+                placeholder="Purpose"
+                aria-label="textarea"
+                id="textArea"
+                name="textArea"
+                data-testid="text-area"
+                value={item.comments}
+                onChange={(e) => commentsOnChange(e, index)}
+              ></CFormTextarea>
+            </CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+      </CTable>
     </>
   )
 }
