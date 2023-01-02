@@ -96,6 +96,7 @@ import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
 import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { pipListService } from './Performance/PIPList/pipListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -196,4 +197,5 @@ export const reduxServices = {
   myKRAs: myKRAsService,
   myReview: myReviewService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  pipList: pipListService,
 }
