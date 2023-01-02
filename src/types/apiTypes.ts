@@ -649,6 +649,15 @@ export interface LeadershipEnrollmentFormApi extends ApiBase {
   addLeadership: string
 }
 
+export interface KRAApi extends ApiBase {
+  getEmpDepartments: string
+  getDesignation: string
+  searchKRAData: string
+  kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
+}
+
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
 }
