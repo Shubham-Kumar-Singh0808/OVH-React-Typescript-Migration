@@ -33,8 +33,6 @@ const AddKRA = (props: AddKRAProps): JSX.Element => {
     useState<string>(selectDesignation)
   const [enteredPercentage, setEnteredPercentage] =
     useState<string>(emptyString)
-  // const [enteredDescription, setEnteredDescription] =
-  //   useState<string>(emptyString)
   const [showDescription, setShowDescription] = useState<boolean>(true)
   const [isPercentReadonly, setPercentReadonly] = useState<boolean>(true)
 
