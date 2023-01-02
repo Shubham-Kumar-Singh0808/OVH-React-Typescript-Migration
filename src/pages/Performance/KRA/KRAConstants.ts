@@ -9,7 +9,7 @@ export const selectDesignation = 'Select Designation'
 export const KRAFormLabelClass = 'col-sm-3 col-form-label text-end'
 
 export const regexAlphanumeric = /^[\w\-\s]+$/
-export const regexNumberOnly = /^[0-9][0-9][1-9]$/ ///[^1-9]\d/gi
+export const regexNumberOnly = /^\d\d[1-9]$/ ///[^1-9]\d/gi
 
 export const getDepartmentId = (
   list: IncomingEmployeeDepartment[],

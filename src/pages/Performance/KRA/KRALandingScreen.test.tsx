@@ -6,6 +6,8 @@ import KRALandingScreen from './KRALandingScreen'
 import { cleanup, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
+  mockDevelopmentDesignationList,
+  mockEmpDepartments,
   mockKPISelfDevDevelopmentList,
   mockKRADataList,
 } from '../../../test/data/KRAData'
@@ -31,6 +33,8 @@ describe('KRA Landing Screen', () => {
             kraData: mockKRADataList,
             kpisForIndividualKRAList: mockKPISelfDevDevelopmentList,
             currentOnScreenPage: KRAPages.kraList,
+            empDepartments: mockEmpDepartments,
+            designations: mockDevelopmentDesignationList,
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,
@@ -58,6 +62,12 @@ describe('KRA Landing Screen', () => {
 
     test('redirect to add kra page', () => {
       userEvent.click(screen.getByTestId('add-kra-screen-btn'))
+    })
+
+    test('edit kra button functionality', () => {
+      userEvent.selectOptions(screen.getByTestId('dept-sel'), 'Development')
+      userEvent.click(screen.getByTestId('view-btn-id'))
+      userEvent.click(screen.getByTestId('edit-btn-kra-screen-551'))
     })
   })
 })

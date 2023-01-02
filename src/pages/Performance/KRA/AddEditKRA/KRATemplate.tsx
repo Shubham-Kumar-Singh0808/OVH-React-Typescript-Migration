@@ -90,7 +90,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
     currentPage === KRAPages.editKra
       ? canNewPercentBeUpdatedKRA(
           percentageDone,
-          incomingKRADataEditKRA.designationKraPercentage,
+          incomingKRADataEditKRA?.designationKraPercentage,
           +enteredPercentage,
         )
       : canPercentageBeAdded(percentageDone, +enteredPercentage)

@@ -67,6 +67,10 @@ describe('Add KRA', () => {
     afterEach(cleanup)
     screen.debug()
 
+    test('back button click', () => {
+      userEvent.click(screen.getByTestId('back-btn'))
+    })
+
     test('all labels are rendered', () => {
       expect(screen.getByTestId('kra-name-label')).toHaveTextContent(
         'KRA Name:*',

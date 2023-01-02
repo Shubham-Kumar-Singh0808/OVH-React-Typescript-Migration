@@ -120,7 +120,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 size="sm"
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="edit-btn-kra-screen"
+                data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
                 title="Edit"
                 onClick={editKRAButtonHandler}
               >

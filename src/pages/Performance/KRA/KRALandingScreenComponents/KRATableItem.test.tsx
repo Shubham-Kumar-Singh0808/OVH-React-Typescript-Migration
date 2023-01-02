@@ -58,7 +58,7 @@ const expandIconId = 'ic-expandIcon'
 const collapseIconId = 'ic-collapseIcon'
 
 const deleteBtnId = 'del-btn-kra'
-const editButtonId = 'edit-btn-kra-screen'
+const editButtonId = 'edit-btn-kra-screen-551'
 
 describe('KRA Table Item', () => {
   describe('initial render', () => {
@@ -120,7 +120,7 @@ describe('KRA Table Item', () => {
     })
 
     test('edit kra button', () => {
-      const editBtn = screen.getByTestId('edit-btn-kra-screen')
+      const editBtn = screen.getByTestId(editButtonId)
       expect(editBtn).toBeEnabled()
       userEvent.click(editBtn)
     })
