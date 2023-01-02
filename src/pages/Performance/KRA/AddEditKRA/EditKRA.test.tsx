@@ -56,7 +56,7 @@ describe('Edit KRA', () => {
       expect(errorMess).toHaveClass(TextWhite)
 
       userEvent.clear(percent)
-      userEvent.type(percent, '98')
+      userEvent.type(percent, '90')
       expect(errorMess).toHaveClass(TextDanger)
 
       userEvent.clear(percent)

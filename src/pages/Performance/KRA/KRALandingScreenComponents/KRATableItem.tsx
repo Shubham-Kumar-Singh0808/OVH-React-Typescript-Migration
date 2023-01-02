@@ -53,7 +53,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
 
   const editKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(selectedKRA)
     dispatch(reduxServices.KRA.getDesignationThunk(selectedKRA.departmentId))
     dispatch(reduxServices.KRA.editThisKraThunk(selectedKRA.id))
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKra))
