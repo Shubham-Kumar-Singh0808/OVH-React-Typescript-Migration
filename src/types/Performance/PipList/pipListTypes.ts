@@ -59,5 +59,6 @@ export type EmployeePIPListTableProps = {
   fromDate?: Date | string
   searchInput?: string
   searchByAdded?: boolean
+  setToggle: (value: string) => void
   searchByEmployee?: boolean
 }

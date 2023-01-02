@@ -18,6 +18,7 @@ const EmployeePipListOptions = ({
   searchInput,
   searchByAdded,
   searchByEmployee,
+  setToggle,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -109,7 +110,12 @@ const EmployeePipListOptions = ({
         </div>
 
         <div className="d-inline ml15 pull-right">
-          <CButton color="info" className="text-white btn-ovh" size="sm">
+          <CButton
+            color="info"
+            className="text-white btn-ovh"
+            size="sm"
+            onClick={() => setToggle('addPIP')}
+          >
             <i className="fa fa-plus me-1"></i>
             Add
           </CButton>
