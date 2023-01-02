@@ -90,7 +90,7 @@ describe('KRA Table Item', () => {
       expect(screen.getByTestId(collapseIconId)).toBeVisible()
       expect(screen.getByTestId('kra-Name')).toHaveTextContent('People or Self')
       expect(screen.getByTestId('kra-description')).toHaveTextContent(
-        'People or Self',
+        '<a class="text-primary ng...',
       ) //Due to parsing
       expect(screen.getByTestId('dept-name')).toHaveTextContent('Development')
       expect(screen.getByTestId('desig-name')).toHaveTextContent(

@@ -5,6 +5,7 @@ import KPIsTable from './KPIsTable'
 import { KRATableItemProps } from '../../../../types/Performance/KRA/KRATypes'
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { dottedContent } from '../KRAConstants'
 
 const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   const {
@@ -84,7 +85,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 descriptionClickHandler(e, selectedKRA.description)
               }
             >
-              {parse(selectedKRA.description)}
+              {dottedContent(selectedKRA.description)}
             </CLink>
           ) : (
             'N/A'
