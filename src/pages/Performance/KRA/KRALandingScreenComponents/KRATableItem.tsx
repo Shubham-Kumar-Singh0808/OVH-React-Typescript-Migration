@@ -1,6 +1,5 @@
 import { CButton, CLink, CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React from 'react'
-import parse from 'html-react-parser'
 import KPIsTable from './KPIsTable'
 import { KRATableItemProps } from '../../../../types/Performance/KRA/KRATypes'
 import { useAppDispatch } from '../../../../stateStore'
