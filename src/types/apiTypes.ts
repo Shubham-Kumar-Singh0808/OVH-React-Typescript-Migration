@@ -607,6 +607,11 @@ export interface NomineeListApi extends ApiBase {
   exportNomineeList: string
 }
 
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+  addNominee: string
+}
+
 export interface EmployeeAccountsApi extends ApiBase {
   financeDetails: string
   exportFinanceList: string
@@ -631,6 +636,26 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+}
+
+export interface LeadershipEnrollmentListApi extends ApiBase {
+  getLeadershipList: string
+  leadershipApprove: string
+  leadershipReject: string
+}
+
+export interface LeadershipEnrollmentFormApi extends ApiBase {
+  employeeDetails: string
+  addLeadership: string
+}
+
+export interface KRAApi extends ApiBase {
+  getEmpDepartments: string
+  getDesignation: string
+  searchKRAData: string
+  kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
 }
 
 export interface MyReviewApi extends ApiBase {

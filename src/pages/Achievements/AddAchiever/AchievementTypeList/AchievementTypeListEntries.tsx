@@ -54,14 +54,15 @@ const AchievementTypeListEntries = (
 
   const isAchievementNameExists = (enteredName: string) => {
     const isPresent = existingAchievementTypeList?.list.filter(
-      (item) => item.typeName.toLowerCase() === enteredName.toLowerCase(),
+      (item) =>
+        item.typeName.toLowerCase() === enteredName.toLowerCase().trim(),
     )
     return isPresent?.length > 0
   }
 
   const isAchievementOrderExists = (enteredOrder: string) => {
     const isPresent = existingAchievementTypeList?.list.filter(
-      (item) => item.order === +enteredOrder,
+      (item) => item.order === +enteredOrder.trim(),
     )
     return isPresent?.length > 0
   }

@@ -116,7 +116,9 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
       setAddButtonEnabled(false)
     } else if (
       getNomineeRatingNumber(nomineeRating) === nomineeDetails.rating &&
-      nomineeDescription === nomineeDetails.finalComments
+      (nomineeDescription === nomineeDetails.finalComments ||
+        nomineeDescription.trim() === nomineeDescription) &&
+      nomineeStatus.toUpperCase() === nomineeDetails.nominationStatus
     ) {
       setAddButtonEnabled(false)
     } else {
@@ -176,13 +178,19 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
           <CContainer className="mt-3">
             <div className="d-inline-flex flex-row flex-wrap">
               <NomineeDetailsBasicInfoContainer>
-                <CFormLabel data-testid="empName-label" className="text-info">
+                <CFormLabel
+                  data-testid="empName-label"
+                  className="text-info nominee-detail"
+                >
                   Employee Name:&nbsp;
                 </CFormLabel>
                 <p data-testid="empName-val">{nomineeDetails.employeeName}</p>
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
-                <CFormLabel data-testid="achType-label" className="text-info">
+                <CFormLabel
+                  data-testid="achType-label"
+                  className="text-info nominee-detail"
+                >
                   Achievement Type:&nbsp;
                 </CFormLabel>
                 <p data-testid="achName-val">
@@ -190,26 +198,36 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
                 </p>
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
-                <CFormLabel className="text-info" data-testid="cycle-label">
+                <CFormLabel
+                  className="text-info nominee-detail"
+                  data-testid="cycle-label"
+                >
                   Cycle:&nbsp;
                 </CFormLabel>
                 <p data-testid="cycle-val">{nomineeDetails.cycleName}</p>
               </NomineeDetailsBasicInfoContainer>
               <NomineeDetailsBasicInfoContainer>
-                <CFormLabel className="text-info" data-testid="fromMonth-label">
+                <CFormLabel
+                  className="text-info nominee-detail"
+                  data-testid="fromMonth-label"
+                >
                   From Month:&nbsp;
                 </CFormLabel>
                 <p data-testid="fromMonth-val">{nomineeDetails.fromMonth}</p>
               </NomineeDetailsBasicInfoContainer>
-            </div>
-            <div className="d-flex flex-row flex-wrap">
               <NomineeDetailsBasicInfoContainer>
-                <CFormLabel className="text-info" data-testid="toMonth-label">
+                <CFormLabel
+                  className="text-info nominee-detail"
+                  data-testid="toMonth-label"
+                >
                   To Month:&nbsp;
                 </CFormLabel>
                 <p data-testid="toMonth-val">{nomineeDetails.toMonth}</p>
               </NomineeDetailsBasicInfoContainer>
             </div>
+            {/* <div className="d-flex flex-row flex-wrap">
+              
+            </div> */}
           </CContainer>
           <CContainer className="mt-2">
             {nomineeDetails.nominationQuestionDataDtosId?.map((item, index) => (
@@ -217,7 +235,9 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
                 <CFormLabel data-testid="inc-question">{`${index + 1}. ${
                   item.questions
                 }`}</CFormLabel>
-                <div data-testid="inc-answers">{parse(item.feedBack)}</div>
+                <div data-testid="inc-answers">
+                  {parse(item.feedBack ? item.feedBack : '')}
+                </div>
               </CRow>
             ))}
           </CContainer>

@@ -83,7 +83,11 @@ import {
   InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
+  AddNomineeApi,
   MyReviewApi,
+  LeadershipEnrollmentFormApi,
+  LeadershipEnrollmentListApi,
+  KRAApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -741,6 +745,12 @@ export const NomineeListApiConfig: NomineeListApi = {
   exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
 }
 
+export const AddNomineeApiConfig: AddNomineeApi = {
+  nominationFormDetails:
+    apiPrefix + '/nominationController/nominationFormDetails',
+  addNominee: apiPrefix + '/nominationController/addNominee',
+}
+
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
@@ -767,6 +777,26 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
+  employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
+  addLeadership: apiPrefix + '/achievement/addLeadership',
+}
+
+export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
+  getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
+  leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
+  leadershipReject: apiPrefix + '/achievement/leadershipReject',
+}
+
+export const KRAApiConfig: KRAApi = {
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getDesignation: apiPrefix + '/kra/designation',
+  searchKRAData: apiPrefix + '/kra/searchKRAData',
+  kpiForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  deleteKRA: apiPrefix + '/kra/',
+  deleteKPI: apiPrefix + '/kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {
