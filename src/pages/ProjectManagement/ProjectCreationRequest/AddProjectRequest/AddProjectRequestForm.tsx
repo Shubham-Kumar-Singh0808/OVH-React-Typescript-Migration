@@ -62,6 +62,7 @@ const AddProjectRequestForm = (): JSX.Element => {
       milestonePercentage: '',
       title: '',
       toDate: '',
+      buttonType: 'Add',
     },
   ])
   const checkListDetails = {} as Chelist[]

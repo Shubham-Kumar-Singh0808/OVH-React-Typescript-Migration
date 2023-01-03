@@ -49,9 +49,14 @@ const ProjectMileStone = ({
     index: number,
   ) => void
 }): JSX.Element => {
-  const handleClickMileStone = () => {
+  const handleClickMileStone = (index: number) => {
+    const projectMileStoneCopy: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    projectMileStoneCopy[index].buttonType = 'remove'
+
     setProjectMileStone([
-      ...projectMileStone,
+      ...projectMileStoneCopy,
       {
         id: Math.floor(Math.random() * 10000),
         billable: '',
@@ -61,8 +66,17 @@ const ProjectMileStone = ({
         milestonePercentage: '',
         title: '',
         toDate: '',
+        buttonType: 'Add',
       },
     ])
+  }
+
+  const handleMinusClickMileStone = (id: number) => {
+    const newInvestmentList = projectMileStone.filter(
+      (investment) => investment.id !== id,
+    )
+    setProjectMileStone(newInvestmentList)
+    console.log(newInvestmentList.length)
   }
 
   return (
@@ -153,16 +167,29 @@ const ProjectMileStone = ({
           ></CFormTextarea>
         </CTableDataCell>
         <CTableDataCell scope="row">
-          <CButton
-            data-testid="search-btn1"
-            className="cursor-pointer"
-            type="button"
-            color="info"
-            id="button-addon2"
-            onClick={handleClickMileStone}
-          >
-            <i className="fa fa-plus"></i>
-          </CButton>
+          {item.buttonType === 'Add' ? (
+            <CButton
+              data-testid="search-btn1"
+              className="cursor-pointer"
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={() => handleClickMileStone(index)}
+            >
+              <i className="fa fa-plus"></i>
+            </CButton>
+          ) : (
+            <CButton
+              data-testid="search-btn1"
+              className="cursor-pointer"
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={() => handleMinusClickMileStone(item.id as number)}
+            >
+              <i className="fa fa-minus"></i>
+            </CButton>
+          )}
         </CTableDataCell>
       </CTableBody>
     </>
