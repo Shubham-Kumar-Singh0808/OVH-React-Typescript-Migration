@@ -72,12 +72,16 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
     useState<string>('')
   // const authorDetails = {} as Author
+
+  const projectRequestMailIds = useTypedSelector(
+    reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
+  )
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
   const initProjectRequest = {
-    bcc: '',
+    bcc: projectRequestMailIds.bcc,
     billingContactPerson: '',
     billingContactPersonEmail: '',
-    cc: '',
+    cc: projectRequestMailIds.cc,
     chelist: checkListDetails,
     client: '',
     description: '',
@@ -108,10 +112,6 @@ const AddProjectRequestForm = (): JSX.Element => {
     reduxServices.projectManagement.selectors.platForms,
   )
 
-  const projectRequestMailIds = useTypedSelector(
-    reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
-  )
-
   const checkListItems = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.checkList,
   )
@@ -123,6 +123,9 @@ const AddProjectRequestForm = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllPlatforms())
     dispatch(reduxServices.addProjectCreationRequest.getProjectRequestMailIds())
     dispatch(reduxServices.addProjectCreationRequest.getCheckList())
+    dispatch(
+      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
+    )
   }, [dispatch])
 
   useEffect(() => {
