@@ -797,6 +797,11 @@ export const KRAApiConfig: KRAApi = {
   kpiForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
   deleteKRA: apiPrefix + '/kra/',
   deleteKPI: apiPrefix + '/kra/',
+  designationKRAPercentage: apiPrefix + '/kra/designationKraPercentage',
+  checkIfNewKRADuplicate: apiPrefix + '/kra/',
+  addNewKRA: apiPrefix + '/kra/',
+  editThisKra: apiPrefix + '/kra/',
+  updateKRA: apiPrefix + '/kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

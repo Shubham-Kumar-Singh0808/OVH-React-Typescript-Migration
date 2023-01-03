@@ -11,6 +11,7 @@ import {
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { selectDepartment, selectDesignation } from '../KRAConstants'
 import { emptyString } from '../../../../constant/constantData'
+import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
 
 const toRender = (
   <div>
@@ -21,7 +22,7 @@ const toRender = (
   </div>
 )
 
-const addKRABtnId = 'add-kra-btn'
+const addKRABtnId = 'add-kra-screen-btn'
 const viewBtnId = 'view-btn-id'
 const clearBtnId = 'clear-btn-id'
 const searchBtnId = 'search-btn-id'
@@ -43,6 +44,7 @@ describe('KRA Filter Options', () => {
             isLoading: ApiLoadingState.succeeded,
             empDepartments: mockEmpDepartments,
             designations: mockDevelopmentDesignationList,
+            currentOnScreenPage: KRAPages.kraList,
           },
         },
       })
@@ -100,6 +102,10 @@ describe('KRA Filter Options', () => {
       expect(deptSelect).toHaveValue(selectDepartment)
       expect(desigSelect).toHaveValue(selectDesignation)
       expect(multiSearch).toHaveValue(emptyString)
+    })
+
+    test('add kra button functionality', () => {
+      userEvent.click(screen.getByTestId(addKRABtnId))
     })
   })
 })

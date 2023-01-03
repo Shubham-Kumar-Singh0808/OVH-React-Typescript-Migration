@@ -16,6 +16,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   KRADataQueryBody,
   KRAFilterOptionsProps,
+  KRAPages,
 } from '../../../../types/Performance/KRA/KRATypes'
 import {
   getDepartmentId,
@@ -93,6 +94,12 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setMultiSearchInput(e.target.value)
+  }
+
+  const addKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKra))
   }
 
   const getFinalBody = (startInd: number, endInd: number): KRADataQueryBody => {
@@ -185,7 +192,12 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
             </CRow>
           </CCol>
           <CCol sm={3} className="px-0 text-end">
-            <CButton color="info" className="btn-ovh" data-testid="add-kra-btn">
+            <CButton
+              color="info"
+              className="btn-ovh"
+              data-testid="add-kra-screen-btn"
+              onClick={addKRAButtonHandler}
+            >
               +Add KRA
             </CButton>
           </CCol>
