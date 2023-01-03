@@ -1,26 +1,49 @@
 import React, { useEffect } from 'react'
+import { CCol, CRow } from '@coreui/react-pro'
 import ReviewFormTable from './ReviewFormTable'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+import ReviewHistoryDetails from '../ReviewHistory/ReviewHistoryDetails'
 
 const AppraisalForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const appraisalFormId = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalFormId,
+  )
+
   const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
+  const isReviewCommentsLoading = useTypedSelector(
+    reduxServices.myReview.selectors.isReviewCommentsLoading,
+  )
 
   useEffect(() => {
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }, [dispatch])
 
+  useEffect(() => {
+    if (appraisalFormId) {
+      dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
+    }
+  }, [appraisalFormId])
+
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
-        <ReviewFormTable />
+      {isLoading !== ApiLoadingState.loading &&
+      isReviewCommentsLoading !== ApiLoadingState.loading ? (
+        <>
+          <ReviewFormTable />
+          <CRow className="mt-4">
+            <CCol>
+              <ReviewHistoryDetails />
+            </CCol>
+          </CRow>
+        </>
       ) : (
         <OLoadingSpinner type={LoadingType.PAGE} />
       )}

@@ -23,6 +23,9 @@ const ReviewFormTable = (): JSX.Element => {
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
+  const isButtonsVisible = useTypedSelector(
+    reduxServices.myReview.selectors.isButtonsVisible,
+  )
 
   return (
     <>
@@ -50,16 +53,18 @@ const ReviewFormTable = (): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
-      <CRow>
-        <CCol md={{ span: 6, offset: 3 }}>
-          <CButton className="btn-ovh me-1" color="success">
-            Save
-          </CButton>
-          <CButton color="success " className="btn-ovh" disabled>
-            Submit
-          </CButton>
-        </CCol>
-      </CRow>
+      {isButtonsVisible && (
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton className="btn-ovh me-1" color="success">
+              Save
+            </CButton>
+            <CButton color="success " className="btn-ovh" disabled>
+              Submit
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
     </>
   )
 }

@@ -15,7 +15,7 @@ import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSp
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 import { KPI } from '../../../../types/Performance/MyReview/myReviewTypes'
 
@@ -27,8 +27,11 @@ const ReviewFormDetailsTable = ({
   const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
     useState<boolean>(false)
   const [kpiDetails, setKpiDetails] = useState({} as KPI)
-  const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
+  const [selfRatings, setselfRatings] = useState<KPI[]>([])
 
+  const dispatch = useAppDispatch()
+
+  const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
   const handlekpiDescriptionModal = (descKpi: KPI) => {
     setIsKPIDetailsModalVisible(true)
     setKpiDetails(descKpi)
@@ -57,12 +60,22 @@ const ReviewFormDetailsTable = ({
     scope: 'col',
   }
 
+  const managerCommentExist = (kpi: KPI) => {
+    const isManagerCmmntExist = kpi?.managerCommentsDtos?.length > 0
+    if (!isManagerCmmntExist) {
+      dispatch(reduxServices.myReview.actions.setIsButtonVisible(true))
+    } else {
+      dispatch(reduxServices.myReview.actions.setIsButtonVisible(false))
+    }
+  }
+
   return (
     <>
       <CTable
         responsive
         striped
         className="mt-0 text-start profile-tab-table-size w-100"
+        align="middle"
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
@@ -90,6 +103,18 @@ const ReviewFormDetailsTable = ({
             >
               Comments
             </CTableHeaderCell>
+            <CTableHeaderCell
+              className="profile-tab-content"
+              {...tableHeaderCellPropsFrequency}
+            >
+              Manager Rating
+            </CTableHeaderCell>
+            <CTableHeaderCell
+              className="profile-tab-content"
+              {...tableHeaderCellPropsFrequency}
+            >
+              Manager Comments
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -102,11 +127,11 @@ const ReviewFormDetailsTable = ({
                 removeSpaces && removeSpaces.length > 30
                   ? `${removeSpaces.substring(0, 30)}...`
                   : removeSpaces
-
+              managerCommentExist(kpi)
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                  {kpiNameLimit ? (
+                  {kpiNameLimit && (
                     <CTableDataCell scope="row" className="commentWidth">
                       <CLink
                         className="cursor-pointer text-primary centerAlignment-text"
@@ -116,33 +141,63 @@ const ReviewFormDetailsTable = ({
                         {parse(kpiNameLimit)}
                       </CLink>
                     </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
-                  <CTableDataCell>
-                    <CFormSelect
-                      aria-label="Default select example"
-                      size="sm"
-                      name="rating"
-                      id="empRating"
-                    >
-                      <option value={''}>Select Rating</option>
-                      <option value="5">5</option>
-                      <option value="4">4</option>
-                      <option value="3">3</option>
-                      <option value="2">2</option>
-                      <option value="1">1</option>
-                      <option value="0">0</option>
-                    </CFormSelect>
-                  </CTableDataCell>
-                  <CTableDataCell>
-                    <CFormTextarea
-                      {...dynamicFormLabelProps(
-                        '2',
-                        'investment-text-area documentWidth',
-                      )}
-                    ></CFormTextarea>
-                  </CTableDataCell>
+                  {kpi.employeeRating === null ? (
+                    <CTableDataCell>
+                      <CFormSelect
+                        aria-label="Default select example"
+                        key={index}
+                        size="sm"
+                        name="rating"
+                        id="empRating"
+                        value={kpi.employeeRating}
+                        onChange={(e) =>
+                          onChangeSelfRating(e.target.value, kpi.id)
+                        }
+                      >
+                        <option value={''}>Select Rating</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="0">0</option>
+                      </CFormSelect>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
+                  )}
+                  {kpi.employeeFeedback === null ? (
+                    <CTableDataCell>
+                      <CFormTextarea
+                        {...dynamicFormLabelProps(
+                          '2',
+                          'reviewForm-text-area documentWidth',
+                        )}
+                      ></CFormTextarea>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
+                  )}
+                  {kpi?.managerCommentsDtos &&
+                    kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
+                      <>
+                        {mgrComment?.managerRating !== null ? (
+                          <CTableDataCell key={cmtIndex}>
+                            {mgrComment.managerRating}
+                          </CTableDataCell>
+                        ) : (
+                          <CTableDataCell></CTableDataCell>
+                        )}
+                        {mgrComment?.managerComments !== null ? (
+                          <CTableDataCell>
+                            {mgrComment.managerComments}
+                          </CTableDataCell>
+                        ) : (
+                          <CTableDataCell></CTableDataCell>
+                        )}
+                      </>
+                    ))}
                 </CTableRow>
               )
             })

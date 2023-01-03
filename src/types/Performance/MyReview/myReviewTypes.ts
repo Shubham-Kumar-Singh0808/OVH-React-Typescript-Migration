@@ -160,15 +160,26 @@ export type Employee = {
   workStatus: null
 }
 
+export type ManagerCommentsDTO = {
+  employeeId: number
+  employeeName: string
+  id: number
+  level: number
+  managerComments: string
+  managerRating: number
+  managerRatingName: null
+  status: string
+}
+
 export type KPI = {
   description: string
   employeeFeedback: null
-  employeeRating: null
+  employeeRating: string
   employeeRatingName: null
   frequency: string
   id: number
   manager: null
-  managerCommentsDtos: []
+  managerCommentsDtos: ManagerCommentsDTO[]
   managerFeedback: null
   managerRating: null
   name: string
@@ -218,9 +229,46 @@ export type EmployeeAppraisalForm = {
   requestDiscussion: boolean
 }
 
+export type PerformanceRatings = {
+  id: number
+  rating: number
+  label: null
+}
+
+export type KPIReviewDTO = {
+  id: null
+  kpiName: string
+  newValue: string
+  oldValue: string
+}
+
+export type ReviewComments = {
+  appraisalFormId: null
+  comments: null
+  createdDate: string
+  employeeName: string
+  id: number
+  kpiName: null
+  kpiReviewDtos: KPIReviewDTO[]
+  newValue: null
+  oldValue: null
+  status: string
+}
+
+export type ReviewCommentsResponse = {
+  list: ReviewComments[]
+  size: number
+}
+
 export type MyReviewSliceState = {
   pageDetails: PageDetails
   employeeAppraisalForm: EmployeeAppraisalForm
+  performanceRatings: PerformanceRatings[]
+  reviewComments: ReviewComments[]
+  appraisalFormId: number
+  listSize: number
   isLoading: LoadingState
+  isReviewCommentsLoading: LoadingState
   error: ValidationError
+  isButtonsVisible?: boolean
 }

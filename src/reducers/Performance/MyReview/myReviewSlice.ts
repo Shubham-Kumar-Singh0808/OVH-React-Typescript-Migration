@@ -8,6 +8,7 @@ import {
   EmployeeAppraisalForm,
   MyReviewSliceState,
   PageDetails,
+  ReviewComments,
 } from '../../../types/Performance/MyReview/myReviewTypes'
 
 const initialMyReviewState: MyReviewSliceState = {
@@ -15,6 +16,12 @@ const initialMyReviewState: MyReviewSliceState = {
   error: null,
   pageDetails: {} as PageDetails,
   employeeAppraisalForm: {} as EmployeeAppraisalForm,
+  performanceRatings: [],
+  listSize: 0,
+  reviewComments: [],
+  appraisalFormId: 0,
+  isReviewCommentsLoading: ApiLoadingState.idle,
+  isButtonsVisible: undefined,
 }
 
 const getEmployeePerformanceReview = createAsyncThunk<
@@ -63,10 +70,26 @@ const saveAppraisalForm = createAsyncThunk(
   },
 )
 
+const getReviewComments = createAsyncThunk(
+  'myReview/getReviewComments',
+  async (appraisalFormId: number, thunkApi) => {
+    try {
+      return await myReviewApi.getReviewComments(appraisalFormId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
-  reducers: {},
+  reducers: {
+    setIsButtonVisible: (state, action) => {
+      state.isButtonsVisible = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getEmployeePerformanceReview.fulfilled, (state, action) => {
@@ -76,6 +99,14 @@ const myReviewSlice = createSlice({
       .addCase(getEmployeeReviewForm.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employeeAppraisalForm = action.payload as EmployeeAppraisalForm
+      })
+      .addCase(getReviewComments.fulfilled, (state, action) => {
+        state.isReviewCommentsLoading = ApiLoadingState.succeeded
+        state.reviewComments = action.payload.list as ReviewComments[]
+        state.listSize = action.payload.size
+      })
+      .addCase(getReviewComments.pending, (state) => {
+        state.isReviewCommentsLoading = ApiLoadingState.loading
       })
       .addMatcher(
         isAnyOf(
@@ -92,6 +123,7 @@ const myReviewSlice = createSlice({
           getEmployeePerformanceReview.rejected,
           getEmployeeReviewForm.rejected,
           saveAppraisalForm.rejected,
+          getReviewComments.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -102,20 +134,35 @@ const myReviewSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState => state.myReview.isLoading
+const isButtonsVisible = (state: RootState): boolean =>
+  state.myReview.isButtonsVisible as boolean
+const isReviewCommentsLoading = (state: RootState): LoadingState =>
+  state.myReview.isReviewCommentsLoading
 const reviewPage = (state: RootState): PageDetails => state.myReview.pageDetails
 const appraisalForm = (state: RootState): EmployeeAppraisalForm =>
   state.myReview.employeeAppraisalForm
+const reviewComments = (state: RootState): ReviewComments[] =>
+  state.myReview.reviewComments
+const listSize = (state: RootState): number => state.myReview.listSize
+const appraisalFormId = (state: RootState): number =>
+  state.myReview.employeeAppraisalForm.id
 
 const myReviewThunk = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
   saveAppraisalForm,
+  getReviewComments,
 }
 
 const myReviewSelectors = {
   isLoading,
   reviewPage,
   appraisalForm,
+  reviewComments,
+  listSize,
+  appraisalFormId,
+  isReviewCommentsLoading,
+  isButtonsVisible,
 }
 
 export const myReviewService = {

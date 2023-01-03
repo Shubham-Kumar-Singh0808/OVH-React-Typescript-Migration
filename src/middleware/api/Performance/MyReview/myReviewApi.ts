@@ -1,6 +1,7 @@
 import {
   EmployeeAppraisalForm,
   PageDetails,
+  ReviewCommentsResponse,
 } from '../../../../types/Performance/MyReview/myReviewTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -46,8 +47,24 @@ const saveAppraisalForm = async (
   return response.data
 }
 
+const getReviewComments = async (
+  appraisalFormId: number,
+): Promise<ReviewCommentsResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: myReviewApiConfig.getReviewComments,
+    method: AllowedHttpMethods.get,
+    params: {
+      appraisalFormId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const myReviewApi = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
   saveAppraisalForm,
+  getReviewComments,
 }
