@@ -82,7 +82,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     description: '',
     domain: '',
     enddate: '',
-    intrnalOrNot: true,
+    intrnalOrNot: false,
     managerId: 0,
     model: '',
     platform: '',
@@ -289,9 +289,12 @@ const AddProjectRequestForm = (): JSX.Element => {
 
   const projectPlatforms = listComposer(platforms as [], 'id', 'name')
   const handleSubmitProjectRequest = () => {
-    dispatch(
-      reduxServices.addProjectCreationRequest.addProjectRequest(projectRequest),
-    )
+    const payload = {
+      ...projectRequest,
+      chelist: checkList,
+      projectRequestMilestoneDTO: projectMileStone,
+    }
+    dispatch(reduxServices.addProjectCreationRequest.addProjectRequest(payload))
   }
 
   const onChangeRadio = (
@@ -315,6 +318,79 @@ const AddProjectRequestForm = (): JSX.Element => {
     newMileStone[index].comments = e.target.value
     setCheckList(newMileStone)
   }
+
+  const titleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].title = e.target.value
+    setProjectMileStone(newMileStone)
+  }
+
+  const effortOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].effort = e.target.value
+    setProjectMileStone(newMileStone)
+  }
+
+  const percentageOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].milestonePercentage = e.target.value
+    setProjectMileStone(newMileStone)
+  }
+  const billableOnChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].billable = e.target.value
+    setProjectMileStone(newMileStone)
+  }
+
+  const onChangeHandleFromDate = (date: Date, index: number) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].fromDate = moment(date).format('DD/MM/YYYY')
+    setProjectMileStone(newMileStone)
+  }
+
+  const onChangeHandleToDate = (date: Date, index: number) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].toDate = moment(date).format('DD/MM/YYYY')
+    setProjectMileStone(newMileStone)
+  }
+
+  const commentOnChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+
+    index: number,
+  ) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].comments = e.target.value
+    setProjectMileStone(newMileStone)
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -333,7 +409,7 @@ const AddProjectRequestForm = (): JSX.Element => {
             onChangeHandler={setCustomerContactName}
             onBlurHandler={onHandleCustomerContactName}
             value={customerContactName}
-            isRequired={false}
+            isRequired={true}
             label="Customer Contact Name"
             name="projectContactPerson"
             placeholder="Name"
@@ -343,8 +419,9 @@ const AddProjectRequestForm = (): JSX.Element => {
             onChangeHandler={setCustomerEmail}
             onBlurHandler={onHandleCustomerEmail}
             value={customerEmail}
-            isRequired={false}
-            label="Customer Contact Name"
+            isRequired={true}
+            type="email"
+            label="Customer Email"
             name="projectContactEmail"
             placeholder="Email"
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -364,19 +441,20 @@ const AddProjectRequestForm = (): JSX.Element => {
             onBlurHandler={onHandleBillingContactEmail}
             value={billingContactEmail}
             isRequired={false}
+            type="email"
             label="Billing Contact Email"
             name="billingContactPersonEmail"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <OSelectList
-            isRequired={true}
             list={priceModelList}
             setValue={handlePriceModel}
             value={projectRequest.type}
+            isRequired={true}
             label="Pricing Model"
             name="addPricingModel"
-            placeHolder="---Pricing Model---"
+            placeHolder="Pricing Model"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <CRow className="mb-3 align-items-center">
@@ -402,7 +480,7 @@ const AddProjectRequestForm = (): JSX.Element => {
             value={projectRequest.model}
             name="addProjectType"
             label="Project Type"
-            placeHolder="---Project Type---"
+            placeHolder="Project Type"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <OAutoComplete
@@ -467,6 +545,7 @@ const AddProjectRequestForm = (): JSX.Element => {
               {...dynamicFormLabelProps('addprojectenddate', classNameStyle)}
             >
               End Date:
+              <span className={showIsRequired(projectRequest.enddate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <DatePicker
@@ -621,6 +700,13 @@ const AddProjectRequestForm = (): JSX.Element => {
                       index={index}
                       setProjectMileStone={setProjectMileStone}
                       projectMileStone={projectMileStone}
+                      titleOnChange={titleOnChange}
+                      commentsOnChange={commentOnChange}
+                      effortOnChange={effortOnChange}
+                      onChangeHandleFromDate={onChangeHandleFromDate}
+                      onChangeHandleToDate={onChangeHandleToDate}
+                      billableOnChange={billableOnChange}
+                      percentageOnChange={percentageOnChange}
                     />
                   )
                 })}
