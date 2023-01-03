@@ -638,9 +638,24 @@ export interface NewBookingApi extends ApiBase {
   confirmNewMeetingAppointment: string
 }
 
+export interface LeadershipEnrollmentListApi extends ApiBase {
+  getLeadershipList: string
+  leadershipApprove: string
+  leadershipReject: string
+}
+
 export interface LeadershipEnrollmentFormApi extends ApiBase {
   employeeDetails: string
   addLeadership: string
+}
+
+export interface KRAApi extends ApiBase {
+  getEmpDepartments: string
+  getDesignation: string
+  searchKRAData: string
+  kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
 }
 
 export interface MyReviewApi extends ApiBase {

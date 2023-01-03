@@ -42,7 +42,7 @@ const convertToBooleanValues = (value: string | null): boolean => {
   return value === String(CheckedQuestionsOptions.yes)
 }
 
-const EnrollmentForm = (props: EnrollmentFormProps) => {
+const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
   const {
     reasonDetails,
     setReasonDetails,
@@ -371,7 +371,6 @@ const EnrollmentForm = (props: EnrollmentFormProps) => {
           </CButton>
           <CButton
             color="warning"
-            role="addNewAchiever"
             data-testid="clear-btn"
             className="btn-ovh me-1"
             onClick={clearButtonHandler}

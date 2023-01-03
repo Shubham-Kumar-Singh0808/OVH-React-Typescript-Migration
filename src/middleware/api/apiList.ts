@@ -87,6 +87,8 @@ import {
   MyReviewApi,
   LeadershipEnrollmentFormApi,
   ReviewListApi,
+  LeadershipEnrollmentListApi,
+  KRAApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -781,6 +783,21 @@ export const newBookingApiConfig: NewBookingApi = {
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
   employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
   addLeadership: apiPrefix + '/achievement/addLeadership',
+}
+
+export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
+  getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
+  leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
+  leadershipReject: apiPrefix + '/achievement/leadershipReject',
+}
+
+export const KRAApiConfig: KRAApi = {
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getDesignation: apiPrefix + '/kra/designation',
+  searchKRAData: apiPrefix + '/kra/searchKRAData',
+  kpiForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  deleteKRA: apiPrefix + '/kra/',
+  deleteKPI: apiPrefix + '/kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

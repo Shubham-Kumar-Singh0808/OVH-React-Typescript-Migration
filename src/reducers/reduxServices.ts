@@ -95,8 +95,10 @@ import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
 import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
+import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
 import { reviewListService } from './Performance/ReviewList/reviewListSlice'
+import { KRAService } from './Performance/KRA/KRASlice'
 
 export const reduxServices = {
   app: appService,
@@ -196,6 +198,8 @@ export const reduxServices = {
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
   myReview: myReviewService,
+  leadershipEnrollmentList: leadershipEnrollmentListService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
   reviewList: reviewListService,
+  KRA: KRAService,
 }

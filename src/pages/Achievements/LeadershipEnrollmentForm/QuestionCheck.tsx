@@ -11,7 +11,7 @@ const QuestionCheck = ({
   question: string
   isChecked: null | string
   changeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void
-}) => {
+}): JSX.Element => {
   return (
     <CRow className="align-items-center mb-1">
       <CFormLabel
