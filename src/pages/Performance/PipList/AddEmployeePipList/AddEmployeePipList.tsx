@@ -146,7 +146,6 @@ const AddEmployeePipList = ({
     )
     const selEmpName =
       selectedEmployee?.empFirstName + ' ' + selectedEmployee?.empLastName
-
     setEmployeeName(selEmpName)
   }
 

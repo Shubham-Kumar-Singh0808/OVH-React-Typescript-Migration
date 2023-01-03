@@ -44,7 +44,7 @@ const EmployeePipListTable = ({
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col"> Employee Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
             <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
             <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
             <CTableHeaderCell scope="col">Extended Date</CTableHeaderCell>
@@ -55,7 +55,7 @@ const EmployeePipListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {pipListData &&
+          {pipListData?.length > 0 &&
             pipListData?.map((item, index) => {
               return (
                 <CTableRow key={index}>
