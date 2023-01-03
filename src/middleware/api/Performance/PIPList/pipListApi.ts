@@ -1,7 +1,9 @@
 import {
+  ActiveEmployee,
   EmployeePipStatus,
   GetAllPipList,
   GetAllPipListApiProps,
+  PerformanceRatings,
 } from '../../../../types/Performance/PipList/pipListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -55,9 +57,31 @@ const exportPIPList = async (
   return response.data
 }
 
+const getPerformanceRatings = async (): Promise<PerformanceRatings[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.getPerformanceRatings,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const activeEmployee = async (): Promise<ActiveEmployee[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.activeEmployee,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const pipListApi = {
   getAllPIPList,
   exportPIPList,
+  getPerformanceRatings,
+  activeEmployee,
 }
 
 export default pipListApi

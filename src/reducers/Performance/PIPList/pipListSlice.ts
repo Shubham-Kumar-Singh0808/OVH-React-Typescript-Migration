@@ -9,6 +9,8 @@ import {
   PipListSliceState,
   EmployeePipStatus,
   GetPipList,
+  PerformanceRatings,
+  ActiveEmployee,
 } from '../../../types/Performance/PipList/pipListTypes'
 
 const getAllPIPList = createAsyncThunk(
@@ -35,12 +37,38 @@ const exportPIPList = createAsyncThunk(
   },
 )
 
+const getPerformanceRatings = createAsyncThunk(
+  'pipList/getPerformanceRatings',
+  async (_, thunkApi) => {
+    try {
+      return await pipListApi.getPerformanceRatings()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const activeEmployee = createAsyncThunk(
+  'pipList/activeEmployee',
+  async (_, thunkApi) => {
+    try {
+      return await pipListApi.activeEmployee()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   listSize: 0,
   pipListData: [],
   selectedEmployeePipStatus: EmployeePipStatus.pip,
+  performanceRatings: [],
+  activeEmployee: [],
 }
 const pipListSlice = createSlice({
   name: 'pipList',
@@ -51,11 +79,20 @@ const pipListSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAllPIPList.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.pipListData = action.payload.list
-      state.listSize = action.payload.size
-    })
+    builder
+      .addCase(getAllPIPList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.pipListData = action.payload.list
+        state.listSize = action.payload.size
+      })
+      .addCase(getPerformanceRatings.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.performanceRatings = action.payload
+      })
+      .addCase(activeEmployee.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.activeEmployee = action.payload
+      })
   },
 })
 
@@ -69,9 +106,17 @@ const selectedEmployeePipStatus = (state: RootState): EmployeePipStatus =>
 const pipListData = (state: RootState): GetPipList[] =>
   state.pipList.pipListData
 
+const performanceRatings = (state: RootState): PerformanceRatings[] =>
+  state.pipList.performanceRatings
+
+const employeeData = (state: RootState): ActiveEmployee[] =>
+  state.pipList.activeEmployee
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
+  getPerformanceRatings,
+  activeEmployee,
 }
 
 export const pipListSelectors = {
@@ -79,6 +124,8 @@ export const pipListSelectors = {
   selectedEmployeePipStatus,
   listSize,
   pipListData,
+  performanceRatings,
+  employeeData,
 }
 
 export const pipListService = {

@@ -46,6 +46,8 @@ export type PipListSliceState = {
   pipListData: GetPipList[]
   listSize: number
   selectedEmployeePipStatus: EmployeePipStatus
+  performanceRatings: PerformanceRatings[]
+  activeEmployee: ActiveEmployee[]
 }
 
 export type EmployeePIPListTableProps = {
@@ -61,4 +63,40 @@ export type EmployeePIPListTableProps = {
   searchByAdded?: boolean
   setToggle: (value: string) => void
   searchByEmployee?: boolean
+}
+
+export type PerformanceRatings = {
+  id: number
+  rating: number
+  label: null
+}
+
+export type ActiveEmployee = {
+  employeeId: number
+  empFirstName: string
+  empLastName: string
+  projectName: null
+  projectId: null
+  startDate: null
+  endDate: null
+  billable: boolean
+  comments: null
+  department: null
+  desigination: null
+  userName: null
+  isAllocated: null
+  duration: null
+  count: null
+  rate: null
+  role: null
+  amount: null
+  empName: null
+  status: null
+  monthWorkingDays: null
+  holidays: null
+  leaves: null
+  totalDays: null
+  hours: null
+  totalValue: null
+  allocation: null
 }

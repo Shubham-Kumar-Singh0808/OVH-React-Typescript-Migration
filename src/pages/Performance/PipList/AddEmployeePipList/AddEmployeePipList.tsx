@@ -10,6 +10,7 @@ import {
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
@@ -17,6 +18,8 @@ import {
   TextLabelProps,
   TextWhite,
 } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
 
@@ -34,8 +37,10 @@ const AddEmployeePipList = ({
   const [isImprovementPlan, setIsImprovementPlan] = useState<boolean>(true)
   const [addImprovementPlan, setAddImprovementPlan] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [employeeName, setEmployeeName] = useState<string>('')
 
   const commonFormatDate = 'l'
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const newFromDate = new Date(
@@ -69,11 +74,15 @@ const AddEmployeePipList = ({
 
   const handleText = (comments: string) => {
     setAddReasonForPIP(comments)
+  }
+
+  const handlePIPReason = (comments: string) => {
     setAddImprovementPlan(comments)
   }
 
   const clearInputs = () => {
     setAddReasonForPIP('')
+    setEmployeeName('')
     setIsReasonForPIP(false)
     setTimeout(() => {
       setIsReasonForPIP(true)
@@ -94,13 +103,55 @@ const AddEmployeePipList = ({
       endDate &&
       selectRating &&
       addReasonForPIP &&
-      addImprovementPlan
+      addImprovementPlan &&
+      employeeName
     ) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [startDate, endDate, selectRating, addReasonForPIP, addImprovementPlan])
+  }, [
+    startDate,
+    endDate,
+    selectRating,
+    addReasonForPIP,
+    addImprovementPlan,
+    employeeName,
+  ])
+
+  const ratings = useTypedSelector(
+    reduxServices.pipList.selectors.performanceRatings,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.pipList.activeEmployee())
+    dispatch(reduxServices.pipList.getPerformanceRatings())
+  }, [dispatch])
+
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
+  }
+
+  const formLabel = 'col-sm-3 col-form-label text-end'
+
+  const allEmployeeDetails = useTypedSelector(
+    reduxServices.pipList.selectors.employeeData,
+  )
+
+  const onFocusOut = () => {
+    const selectedEmployee = allEmployeeDetails.find(
+      (value) => value.empFirstName + ' ' + value.empLastName === employeeName,
+    )
+    const selEmpName =
+      selectedEmployee?.empFirstName + ' ' + selectedEmployee?.empLastName
+
+    setEmployeeName(selEmpName)
+  }
+
+  const selectEmployeeHandler = (empName: string) => {
+    setEmployeeName(empName)
+  }
 
   return (
     <>
@@ -123,6 +174,57 @@ const AddEmployeePipList = ({
           </CCol>
         </CRow>
         <CForm>
+          <CRow className="mt-3">
+            <CFormLabel {...formLabelProps} className={formLabel}>
+              Employee Name:
+              <span className={employeeName ? TextWhite : TextDanger}>*</span>
+            </CFormLabel>
+            <CCol md={3}>
+              <Autocomplete
+                inputProps={{
+                  className: 'form-control form-control-sm',
+                  autoComplete: 'on',
+                  placeholder: 'Employee Name',
+                  onBlur: onFocusOut,
+                }}
+                wrapperStyle={{ position: 'relative' }}
+                items={allEmployeeDetails}
+                getItemValue={(item) =>
+                  item.empFirstName + ' ' + item.empLastName
+                }
+                value={employeeName}
+                renderMenu={(children) => (
+                  <div
+                    className={
+                      employeeName && employeeName.length > 0
+                        ? 'autocomplete-dropdown-wrap'
+                        : 'autocomplete-dropdown-wrap hide'
+                    }
+                  >
+                    {children}
+                  </div>
+                )}
+                renderItem={(item, isHighlighted) => (
+                  <div
+                    className={
+                      isHighlighted
+                        ? 'autocomplete-dropdown-item active'
+                        : 'autocomplete-dropdown-item'
+                    }
+                    key={item.employeeId}
+                  >
+                    {item.empFirstName + ' ' + item.empLastName}
+                  </div>
+                )}
+                shouldItemRender={(item, value) =>
+                  item.empFirstName.toLowerCase().indexOf(value.toLowerCase()) >
+                  -1
+                }
+                onChange={(e) => setEmployeeName(e.target.value)}
+                onSelect={(value) => selectEmployeeHandler(value)}
+              />
+            </CCol>
+          </CRow>
           <CRow>
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">
@@ -193,12 +295,13 @@ const AddEmployeePipList = ({
                   setSelectRating(e.target.value)
                 }}
               >
-                <option>Select Rating</option>
-                <option>5</option>
-                <option>4</option>
-                <option>3</option>
-                <option>2</option>
-                <option>1</option>
+                <option value={''}>Select Rating</option>
+                {ratings.length > 0 &&
+                  ratings?.map((item, index) => (
+                    <option key={index} value={item.id}>
+                      {item.rating}
+                    </option>
+                  ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -244,7 +347,7 @@ const AddEmployeePipList = ({
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    handleText(editor.getData().trim())
+                    handlePIPReason(editor.getData().trim())
                   }}
                 />
               </CCol>

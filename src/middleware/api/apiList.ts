@@ -790,4 +790,6 @@ export const myReviewApiConfig: MyReviewApi = {
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
   exportPIPList: apiPrefix + '/PIPManagement/exportPIPList',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  activeEmployee: apiPrefix + '/observation-mgnt/activeEmployee/',
 }

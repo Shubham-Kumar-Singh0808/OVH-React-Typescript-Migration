@@ -650,4 +650,6 @@ export interface MyReviewApi extends ApiBase {
 export interface PIPListApi extends ApiBase {
   getAllPIPList: string
   exportPIPList: string
+  getPerformanceRatings: string
+  activeEmployee: string
 }
