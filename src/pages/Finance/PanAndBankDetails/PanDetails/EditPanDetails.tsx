@@ -93,9 +93,17 @@ const EditPanDetails = ({
       },
     )
 
-    downloadFile(employeeBankDetailsDownload, 'paySlip.csv')
+    downloadFile(
+      employeeBankDetailsDownload,
+      `${bankDetail.finance?.financeFilePath}`,
+    )
   }
-
+  const documentType = bankDetail.finance?.financeFilePath
+  const fileAttachment = documentType ? (
+    <i className="fa fa-paperclip me-1">DOC</i>
+  ) : (
+    ''
+  )
   return (
     <>
       <CCol sm={5}>
@@ -110,10 +118,10 @@ const EditPanDetails = ({
             <CCol sm={2}>
               <CCol sm={5}>
                 <input
-                  className="mt-1"
+                  className="sh-updateTicket-file mt-1 cursor-pointer"
                   data-testid="attachment"
                   type="file"
-                  name="attachment"
+                  name="file"
                   onChange={(element: SyntheticEvent) =>
                     onChangeAttachmentHandler(
                       element.currentTarget as HTMLInputElement,
@@ -132,43 +140,44 @@ const EditPanDetails = ({
                   className="cursor-pointer sh-hive-activity-link"
                   onClick={handleFinanceData}
                 >
-                  <i className="fa fa-paperclip me-1"></i>
-                  Doc
+                  {fileAttachment}
                 </CLink>
               </CCol>
             </>
           )}
         </CRow>
       </CCol>
-      <CRow>
-        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-          <CCol md={{ span: 20, offset: 2 }}>
-            <CTooltip content="Save">
-              <CButton
-                size="sm"
-                data-testid="save-btn"
-                className="btn btn-success btn-sm btn-ovh-employee-list cursor-pointer"
-                color="success btn-ovh me-2"
-                onClick={saveBtnHandler}
-              >
-                <i className="fa fa-floppy-o" aria-hidden="true"></i>
-              </CButton>
-            </CTooltip>
-            <CTooltip content="Cancel">
-              <CButton
-                size="sm"
-                className="btn btn-warning btn-sm btn-ovh-employee-list cursor-pointer"
-                color="warning btn-ovh me-2"
-                onClick={cancelButtonHandler}
-              >
-                <i className="fa fa-times" aria-hidden="true"></i>
-              </CButton>
-            </CTooltip>
-          </CCol>
-        ) : (
-          ''
-        )}
-      </CRow>
+      <CCol className="col-sm-5">
+        <CRow className="mt-2">
+          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+            <CCol md={{ offset: 5 }}>
+              <CTooltip content="Save">
+                <CButton
+                  size="sm"
+                  data-testid="save-btn"
+                  className="btn btn-success btn-sm btn-ovh-employee-list cursor-pointer"
+                  color="success btn-ovh me-2"
+                  onClick={saveBtnHandler}
+                >
+                  <i className="fa fa-floppy-o" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
+              <CTooltip content="Cancel">
+                <CButton
+                  size="sm"
+                  className="btn btn-warning btn-sm btn-ovh-employee-list cursor-pointer"
+                  color="warning btn-ovh me-2"
+                  onClick={cancelButtonHandler}
+                >
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
+            </CCol>
+          ) : (
+            ''
+          )}
+        </CRow>
+      </CCol>
     </>
   )
 }

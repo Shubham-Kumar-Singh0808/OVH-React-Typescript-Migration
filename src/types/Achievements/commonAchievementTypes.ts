@@ -22,3 +22,19 @@ export interface CommonAchievementInitialState {
   achievementTypeList: IncomingAchievementTypes
   isLoading: LoadingState
 }
+
+export interface NomineeCycleType {
+  id: number
+  cycleName: string
+  fromMonth: string
+  toMonth: string
+  activateFlag: boolean
+  startDate: string
+  endDate: string
+  questionMappingDtos: null
+}
+
+export interface NomineeCycleListType {
+  size: number
+  list: NomineeCycleType[]
+}

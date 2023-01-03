@@ -124,7 +124,9 @@ const SectionListTable = ({
                   {getSectionItemNumber(index)}
                 </CTableHeaderCell>
                 <CTableDataCell>{sectionItem.sectionName}</CTableDataCell>
-                <CTableDataCell>{sectionItem.sectionLimit}</CTableDataCell>
+                <CTableDataCell>
+                  {sectionItem.sectionLimit?.toLocaleString('en-IN')}
+                </CTableDataCell>
                 <CTableDataCell>
                   {userAccessToSectionActions?.updateaccess && (
                     <CButton

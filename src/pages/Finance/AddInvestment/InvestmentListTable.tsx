@@ -10,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -20,8 +20,13 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { Investment } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
-const InvestmentListTable = (): JSX.Element => {
+const InvestmentListTable = ({
+  editInvestmentButtonHandler,
+}: {
+  editInvestmentButtonHandler: (editInvestmentData: Investment) => void
+}): JSX.Element => {
   const [isDescModalVisible, setIsDescModalVisible] = useState(false)
   const [description, setDescription] = useState<string>('')
   const investments = useTypedSelector(
@@ -34,6 +39,9 @@ const InvestmentListTable = (): JSX.Element => {
     reduxServices.itDeclarationList.selectors.pageSizeFromState,
   )
   const dispatch = useAppDispatch()
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   const {
     paginationRange,
@@ -42,6 +50,12 @@ const InvestmentListTable = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(investments.length, pageSizeFromState, pageFromState)
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
 
   const [isDeleteInvestmentModalVisible, setIsDeleteInvestmentModalVisible] =
     useState(false)
@@ -52,7 +66,7 @@ const InvestmentListTable = (): JSX.Element => {
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
-    setCurrentPage(1)
+    setCurrentPage(selectCurrentPage)
   }
 
   const getInvestmentItemNumber = (index: number) => {
@@ -66,7 +80,10 @@ const InvestmentListTable = (): JSX.Element => {
   }
 
   const toastElement = (
-    <OToast toastColor="success" toastMessage="Section Deleted Successfully" />
+    <OToast
+      toastColor="success"
+      toastMessage="Investment Deleted Successfully."
+    />
   )
 
   const handleConfirmDeleteInvestment = async () => {
@@ -103,6 +120,17 @@ const InvestmentListTable = (): JSX.Element => {
     setDescription(investmentDescription)
   }
 
+  const sortedSectionName = useMemo(() => {
+    if (currentPageItems) {
+      return currentPageItems
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.sectionName.localeCompare(sortNode2.sectionName),
+        )
+    }
+    return []
+  }, [currentPageItems])
+
   return (
     <>
       <CTable striped responsive align="middle">
@@ -118,7 +146,7 @@ const InvestmentListTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.map((investmentItem, index) => {
+          {sortedSectionName.map((investmentItem, index) => {
             const removeTag = '/(<([^>]+)>)/gi'
             const removeDescSpaces = investmentItem.description?.replace(
               removeTag,
@@ -184,7 +212,7 @@ const InvestmentListTable = (): JSX.Element => {
                   <CTableDataCell>{`N/A`}</CTableDataCell>
                 )}
                 <CTableDataCell scope="row">
-                  {investmentItem.maxLimit}
+                  {investmentItem.maxLimit?.toLocaleString('en-IN') || '0'}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   {userAccessToSectionActions?.updateaccess && (
@@ -193,6 +221,17 @@ const InvestmentListTable = (): JSX.Element => {
                       color="info"
                       className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
                       data-testid={`investment-edit-btn${index}`}
+                      onClick={() =>
+                        editInvestmentButtonHandler({
+                          description: investmentItem.description,
+                          investmentId: investmentItem.investmentId,
+                          investmentName: investmentItem.investmentName,
+                          maxLimit: investmentItem.maxLimit,
+                          requiredDocs: investmentItem.requiredDocs,
+                          sectionName: investmentItem.sectionName,
+                          sectionId: investmentItem.sectionId,
+                        })
+                      }
                     >
                       <i
                         className="fa fa-pencil-square-o"

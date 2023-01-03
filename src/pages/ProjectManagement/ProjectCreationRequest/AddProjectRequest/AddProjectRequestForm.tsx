@@ -1,4 +1,14 @@
-import { CButton, CCol, CFormCheck, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCol,
+  CFormCheck,
+  CFormLabel,
+  CRow,
+  CTable,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
@@ -40,7 +50,9 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
   // const [platform, setPlatform] = useState<string>('')
   // const [domain, setDomain] = useState<string>('')
-
+  const [projectMileStone, setProjectMileStone] = useState<
+    ProjectRequestMilestoneDTO[]
+  >([])
   const checkListDetails = {} as Chelist[]
   const [checkList, setCheckList] = useState(checkListDetails)
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
@@ -577,10 +589,24 @@ const AddProjectRequestForm = (): JSX.Element => {
         </CCol>
         {projectRequest.type === 'Fixed Bid' && (
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-2 col-form-label text-end">
-              Milestone::
-            </CFormLabel>
-            <ProjectMileStone />
+            <CTable striped>
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              {projectMileStone?.map((item, index) => {
+                return (
+                  <ProjectMileStone item={item} key={index} index={index} />
+                )
+              })}
+            </CTable>
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">

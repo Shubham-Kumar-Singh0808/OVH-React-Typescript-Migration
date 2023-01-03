@@ -18,6 +18,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { showIsRequired } from '../../../utils/helper'
 import { AddInvestmentData } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 const AddNewInvestment = ({
   selectedSectionId,
@@ -40,15 +41,10 @@ const AddNewInvestment = ({
     htmlFor: 'inputAddInvestment',
     className: 'col-form-label section-label',
   }
-  const dynamicFormLabelProps = (
-    rows: string,
-    className: string,
-    testid: string,
-  ) => {
+  const dynamicFormLabelProps = (rows: string, className: string) => {
     return {
       rows,
       className,
-      testid,
     }
   }
   const sections = useTypedSelector(
@@ -66,18 +62,24 @@ const AddNewInvestment = ({
   ) => {
     if (event.target.value === 'yes') {
       setIsDocumentsVisible(true)
+    } else if (event.target.value === 'no') {
+      setIsDocumentsVisible(false)
     } else {
       setIsDocumentsVisible(false)
     }
   }
+
   const successToastMessage = (
     <OToast toastMessage="Investment added Successfully" toastColor="success" />
   )
-  const WarningToastMessage = (
+  const warningToastMessage = (
     <OToast
       toastColor="danger"
       toastMessage="Total investment is exceeding section limit"
     />
+  )
+  const alreadyExistToastMessage = (
+    <OToast toastColor="danger" toastMessage="Investment already Exist" />
   )
   const handleDescription = (description: string) => {
     setAddNewInvestment((prevState) => {
@@ -97,12 +99,28 @@ const AddNewInvestment = ({
   }
 
   useEffect(() => {
-    if (selectedSectionId && addNewInvestment?.investmentName) {
+    if (
+      selectedSectionId &&
+      addNewInvestment?.investmentName &&
+      !isDocumentsVisible
+    ) {
+      setIsButtonEnabled(true)
+    } else if (
+      selectedSectionId &&
+      addNewInvestment?.investmentName &&
+      isDocumentsVisible &&
+      requireDocuments
+    ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [selectedSectionId, addNewInvestment.investmentName])
+  }, [
+    selectedSectionId,
+    addNewInvestment.investmentName,
+    isDocumentsVisible,
+    requireDocuments,
+  ])
 
   const handleClear = () => {
     setSelectedSectionId('')
@@ -127,27 +145,43 @@ const AddNewInvestment = ({
       maxLimit: investmentMaxLimit as string,
       requiredDocs: requireDocuments,
     }
-    const addNewInvestmentResultAction = await dispatch(
-      reduxServices.itDeclarationList.addInvestment(prepareObject),
+    const investmentExist = {
+      investmentId: -1,
+      investmentName: addNewInvestment.investmentName,
+      sectionId: Number(selectedSectionId),
+    }
+    const isInvestmentExistsResultAction = await dispatch(
+      reduxServices.itDeclarationList.isInvestmentExist(investmentExist),
     )
-
     if (
-      reduxServices.itDeclarationList.addInvestment.fulfilled.match(
-        addNewInvestmentResultAction,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
-      handleClear()
-      dispatch(reduxServices.itDeclarationList.getSections())
-      dispatch(reduxServices.itDeclarationList.getInvestments())
-    } else if (
-      reduxServices.itDeclarationList.addInvestment.rejected.match(
-        addNewInvestmentResultAction,
+      reduxServices.itDeclarationList.isInvestmentExist.fulfilled.match(
+        isInvestmentExistsResultAction,
       ) &&
-      addNewInvestmentResultAction.payload === 406
+      isInvestmentExistsResultAction.payload === true
     ) {
-      dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
-      setInvestmentMaxLimit('')
+      dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
+    } else {
+      const addNewInvestmentResultAction = await dispatch(
+        reduxServices.itDeclarationList.addInvestment(prepareObject),
+      )
+      if (
+        reduxServices.itDeclarationList.addInvestment.fulfilled.match(
+          addNewInvestmentResultAction,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(successToastMessage))
+        handleClear()
+        dispatch(reduxServices.itDeclarationList.getSections())
+        dispatch(reduxServices.itDeclarationList.getInvestments())
+      } else if (
+        reduxServices.itDeclarationList.addInvestment.rejected.match(
+          addNewInvestmentResultAction,
+        ) &&
+        addNewInvestmentResultAction.payload === 406
+      ) {
+        dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+        setInvestmentMaxLimit('')
+      }
     }
   }
 
@@ -157,7 +191,7 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Section :
             <span className={showIsRequired(selectedSectionId)}>*</span>
@@ -189,10 +223,16 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
-            Investment Name:
-            <span className={showIsRequired(addNewInvestment?.investmentName)}>
+            Investment Name :
+            <span
+              className={
+                addNewInvestment.investmentName?.replace(/^\s*/, '')
+                  ? TextWhite
+                  : TextDanger
+              }
+            >
               *
             </span>
           </CFormLabel>
@@ -212,9 +252,9 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Maximum Investment:
+            Maximum Investment :
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -235,9 +275,9 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Description:
+            Description :
           </CFormLabel>
           {showEditor ? (
             <CCol sm={9}>
@@ -259,18 +299,19 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Required Documents:
+            Required Documents :
           </CFormLabel>
           <CCol className="mt-1" sm={2} md={1} lg={1} data-testid="requiredDoc">
             <CFormCheck
               type="radio"
-              name="requireDocsYes"
+              name="requireDocs"
               id="requireDocsYes"
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
+              checked={isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -284,11 +325,12 @@ const AddNewInvestment = ({
           >
             <CFormCheck
               type="radio"
-              name="requireDocsNo"
+              name="requireDocs"
               id="requireDocsNo"
               data-testid="documentsReqNo"
               label="No"
               value="no"
+              checked={!isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -298,26 +340,27 @@ const AddNewInvestment = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-2 col-form-label text-end"
             >
-              Documents:{' '}
+              Documents :
               <span className={showIsRequired(requireDocuments)}>*</span>
             </CFormLabel>
-            <CCol sm={9}>
+            <CCol sm={9} data-testid="required-documents">
               <CFormTextarea
                 {...dynamicFormLabelProps(
                   '2',
                   'investment-text-area documentWidth',
-                  'required-documents',
                 )}
-                onChange={(e) => setRequiredDocuments(e.target.value)}
+                onChange={(e) =>
+                  setRequiredDocuments(e.target.value.replace(/^\s*/, ''))
+                }
               ></CFormTextarea>
             </CCol>
           </CRow>
         )}
         {userAccessToAddInvestment?.createaccess && (
           <CRow className="mt-4 mb-4">
-            <CCol md={{ span: 6, offset: 3 }}>
+            <CCol md={{ span: 4, offset: 2 }}>
               <>
                 <CButton
                   data-testid="addInv-add-btn"

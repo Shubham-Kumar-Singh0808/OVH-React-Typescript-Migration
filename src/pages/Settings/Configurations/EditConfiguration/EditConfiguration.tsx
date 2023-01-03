@@ -12,7 +12,7 @@ import {
 import { Link, useHistory, useParams } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { getAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
+import { GetAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -24,7 +24,7 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 const EditConfiguration = (): JSX.Element => {
   const { cycleId } = useParams<{ cycleId: string }>()
 
-  const initialCycle = {} as getAppraisalCycle
+  const initialCycle = {} as GetAppraisalCycle
   const [cycle, setCycle] = useState(initialCycle)
   const [textEditor, setTextEditor] = useState<boolean>(true)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =

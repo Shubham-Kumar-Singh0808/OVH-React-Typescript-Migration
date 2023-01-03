@@ -92,4 +92,20 @@ export const itDeclarationListHandlers = [
     })
     return res(getCycleRes)
   }),
+  //checkInvestmentExist api mock
+  rest.get(itDeclarationListApiConfig.isInvestmentExist, (_req, res, ctx) => {
+    const getIsInvestRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(getIsInvestRes)
+  }),
+  //updateInvestment api mock
+  rest.put(itDeclarationListApiConfig.updateInvestment, (_req, res, ctx) => {
+    const getUpdateRes = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(getUpdateRes)
+  }),
 ]

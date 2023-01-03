@@ -37,6 +37,7 @@ export type Chelist = {
 }
 
 export type ProjectRequestMilestoneDTO = {
+  id?: number
   billable: string
   comments: string
   effort: string

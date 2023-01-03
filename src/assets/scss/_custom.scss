@@ -292,3 +292,27 @@ input.capetalized {
 .checkList-table td{
  border-bottom: none;
 }
+.resignation-comments {
+  display: inline-flex;
+}
+.rating-details-table {
+  table > :not(caption) > * {
+    border-width: 1px 0;
+    > * {
+      border-width: 0 1px;
+    }
+  }
+}
+
+.nominee-detail:hover {
+  color: #245269 !important;
+}
+
+.text-decoration-hover {
+  text-decoration: none;
+  color: #428bca !important;
+}
+
+.text-decoration-hover:hover {
+  text-decoration: underline;
+}

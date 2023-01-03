@@ -250,7 +250,8 @@ const NewEvent = (): JSX.Element => {
       ),
     )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const newAttendeesList = attendeesList.map(({ ...rest }) => {
+    const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
+      console.log(name)
       return rest
     })
     const prepareObj = {
@@ -309,7 +310,7 @@ const NewEvent = (): JSX.Element => {
             />
             <EventType
               eventTypeList={eventTypeList}
-              eventTypeValue={addEvent.eventTypeId}
+              eventTypeValue={addEvent.eventTypeId as number}
               onHandleEventType={onHandleEventType}
             />
             <EventFromDate
@@ -317,7 +318,7 @@ const NewEvent = (): JSX.Element => {
               fromDateChangeHandler={fromDateChangeHandler}
             />
             <EventEndDate
-              toDateValue={addEvent.toDate}
+              toDateValue={addEvent.toDate as string}
               toDateChangeHandler={toDateChangeHandler}
             />
             <StartTimeEndTime

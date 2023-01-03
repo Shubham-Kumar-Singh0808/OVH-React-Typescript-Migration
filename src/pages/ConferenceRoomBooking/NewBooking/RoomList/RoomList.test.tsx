@@ -9,10 +9,10 @@ import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessTo
 import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 const roomName = 'Name of the Room:'
-
+const mockSetToggle = jest.fn()
 describe('RoomList without data', () => {
   beforeEach(() => {
-    render(<RoomList />, {
+    render(<RoomList setToggle={jest.fn()} />, {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,
@@ -39,12 +39,6 @@ describe('RoomList without data', () => {
     expect(screen.getByText(roomName)).toBeInTheDocument()
   })
 
-  test('should render  Room List screen and back button without crashing', () => {
-    const backBtnElement = screen.getByRole('button', { name: 'Back' })
-    expect(backBtnElement).toBeInTheDocument()
-    userEvent.click(backBtnElement)
-  })
-
   test('should select Location Name', () => {
     const LocationSelector = screen.getByTestId('form-select1')
     userEvent.selectOptions(LocationSelector, ['RayBusiness-1'])
@@ -64,5 +58,11 @@ describe('RoomList without data', () => {
     await waitFor(() => {
       expect(screen.getByPlaceholderText('Enter Name')).toHaveValue('')
     })
+  })
+  test('should render click on back button ', () => {
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })

@@ -43,3 +43,5 @@ export const dateOptionsList = [
   { label: 'Today', name: 'Today' },
   { label: 'Yesterday', name: 'Yesterday' },
 ]
+
+export const emptyString = ''

@@ -1,5 +1,6 @@
 import commonAchievementsReducer, {
   commonAchievementsService,
+  sortByAscendingOrder,
 } from './CommonAchievementsSlice'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { CommonAchievementInitialState } from '../../types/Achievements/commonAchievementTypes'
@@ -17,7 +18,7 @@ describe('Common Achievement Slice', () => {
       const state = commonAchievementsReducer(initialState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
-        achievementTypeList: { size: 0, list: [] },
+        achievementTypeList: { size: 0, list: sortByAscendingOrder([]) },
       })
     })
   })

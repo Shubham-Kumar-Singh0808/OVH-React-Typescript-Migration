@@ -9,7 +9,7 @@ import {
 } from '../../types/Achievements/commonAchievementTypes'
 import { ValidationError } from '../../types/commonTypes'
 
-const sortByAscendingOrder = (
+export const sortByAscendingOrder = (
   incomingList: AchievementType[],
 ): AchievementType[] => {
   return incomingList.sort((a, b) => {
@@ -44,8 +44,10 @@ const commonAchievementsSlice = createSlice({
       const data = JSON.parse(
         JSON.stringify(action.payload),
       ) as IncomingAchievementTypes
+
       const sortedList = sortByAscendingOrder(data.list)
       const finalData = { ...data, list: sortedList }
+
       state.achievementTypeList = finalData
       state.isLoading = ApiLoadingState.succeeded
     })

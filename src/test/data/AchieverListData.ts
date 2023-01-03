@@ -282,7 +282,7 @@ export const mockAchievementTypeList: IncomingAchievementTypes = {
       updatedDate: '08/12/2022',
       status: true,
       order: 7,
-      timeperiodrequired: true,
+      timeperiodrequired: false,
       daterequired: true,
     },
     {
