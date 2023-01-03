@@ -589,6 +589,7 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAuditForProjectRequest: string
   getApproveProjectRequest: string
   updateProjectRequest: string
+  deleteProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {

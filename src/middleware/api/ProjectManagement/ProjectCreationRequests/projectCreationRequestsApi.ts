@@ -83,12 +83,28 @@ const updateProjectRequest = async (
   return response.data
 }
 
+const deleteProjectRequest = async (
+  id: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.deleteProjectRequest,
+    method: AllowedHttpMethods.delete,
+    params: {
+      id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectCreationRequestsApi = {
   getAllProjectRequestList,
   getProjectRequest,
   projectRequestHistoryDetails,
   getApproveProjectRequest,
   updateProjectRequest,
+  deleteProjectRequest,
 }
 
 export default projectCreationRequestsApi

@@ -106,6 +106,26 @@ const updateProjectRequest = createAsyncThunk<
   },
 )
 
+const deleteProjectRequest = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/deleteProjectRequest',
+  async (id: number, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.deleteProjectRequest(id)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectCreationReuestState: ProjectCreationRequestState = {
   getAllProjectRequestList: {
     projectRequestListSize: 0,
@@ -182,6 +202,7 @@ const projectCreationRequestThunk = {
   projectRequestHistoryDetails,
   getApproveProjectRequest,
   updateProjectRequest,
+  deleteProjectRequest,
 }
 
 const projectCreationRequestSelectors = {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -18,6 +18,8 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const ProjectCreationRequestTable = ({
   paginationRange,
@@ -34,6 +36,8 @@ const ProjectCreationRequestTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
   const dispatch = useAppDispatch()
 
   const getAllProjectRequestList = useTypedSelector(
@@ -92,6 +96,56 @@ const ProjectCreationRequestTable = ({
       reduxServices.projectCreationRequest.projectRequestHistoryDetails(id),
     )
     setToggle('projectHistory')
+  }
+
+  const handleShowDeleteModal = (visaId: number) => {
+    setToDeleteProjectRequestId(visaId)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteProjectRequestDetail = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteProjectRequestResultAction = await dispatch(
+      reduxServices.projectCreationRequest.deleteProjectRequest(
+        toDeleteProjectRequestId,
+      ),
+    )
+    if (
+      reduxServices.projectCreationRequest.deleteProjectRequest.fulfilled.match(
+        deleteProjectRequestResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Visa Detail deleted successfully"
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.projectCreationRequest.deleteProjectRequest.rejected.match(
+        deleteProjectRequestResultAction,
+      ) &&
+      deleteProjectRequestResultAction.payload === 406
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Project request already mapped with project.So,you can't delete"
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -181,6 +235,7 @@ const ProjectCreationRequestTable = ({
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      onClick={() => handleShowDeleteModal(projectRequest.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -229,6 +284,17 @@ const ProjectCreationRequestTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
+      >
+        {`Do you really want to delete this OVH-Test project request?`}
+      </OModal>
     </>
   )
 }
