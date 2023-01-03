@@ -52,9 +52,6 @@ export const canNewPercentBeUpdatedKRA = (
   previousValue: number,
   newValue: number,
 ): boolean => {
-  if (newValue > 100) {
-    return false
-  }
   //This case is if new incoming api value is 100 or edited value is same as rendered value
   if (incomingValue >= 100 || newValue === previousValue) {
     return newValue <= previousValue
