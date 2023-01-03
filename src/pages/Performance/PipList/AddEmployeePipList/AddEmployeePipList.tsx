@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import {
   TextDanger,
   TextLabelProps,
@@ -153,6 +154,48 @@ const AddEmployeePipList = ({
     setEmployeeName(empName)
   }
 
+  const empId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
+  const successToast = (
+    <OToast
+      toastMessage="Added in PIP successfully
+    "
+      toastColor="success"
+    />
+  )
+  const failureToast = (
+    <OToast
+      toastMessage="This employee is already in PIP for the particular Time Period"
+      toastColor="danger"
+    />
+  )
+  const addButtonHandler = async () => {
+    const prepareObject = {
+      empId: Number(empId),
+      endDate: endDate as string,
+      improvement: addImprovementPlan,
+      rating: selectRating,
+      remarks: addReasonForPIP,
+      startDate: startDate as string,
+    }
+    const addPIPResultAction = await dispatch(
+      reduxServices.pipList.addPIP(prepareObject),
+    )
+
+    if (reduxServices.pipList.addPIP.fulfilled.match(addPIPResultAction)) {
+      setToggle()
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.pipList.addPIP.rejected.match(addPIPResultAction) &&
+      addPIPResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failureToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   return (
     <>
       <OCard
@@ -362,6 +405,7 @@ const AddEmployeePipList = ({
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isAddButtonEnabled}
+                onClick={addButtonHandler}
               >
                 Add
               </CButton>

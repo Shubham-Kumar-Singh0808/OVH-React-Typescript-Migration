@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import pipListApi from '../../../middleware/api/Performance/PIPList/pipListApi'
@@ -61,6 +61,42 @@ const activeEmployee = createAsyncThunk(
   },
 )
 
+const addPIP = createAsyncThunk(
+  'pipList/addPIP',
+  async (
+    {
+      empId,
+      endDate,
+      improvement,
+      rating,
+      remarks,
+      startDate,
+    }: {
+      empId: number
+      endDate: string
+      improvement: string
+      rating: string
+      remarks: string
+      startDate: string
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await pipListApi.addPIP({
+        empId,
+        endDate,
+        improvement,
+        rating,
+        remarks,
+        startDate,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -93,6 +129,9 @@ const pipListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.activeEmployee = action.payload
       })
+      .addMatcher(isAnyOf(addPIP.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
   },
 })
 
@@ -117,6 +156,7 @@ export const pipListThunk = {
   exportPIPList,
   getPerformanceRatings,
   activeEmployee,
+  addPIP,
 }
 
 export const pipListSelectors = {

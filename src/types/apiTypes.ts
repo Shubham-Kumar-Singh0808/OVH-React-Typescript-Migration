@@ -652,4 +652,5 @@ export interface PIPListApi extends ApiBase {
   exportPIPList: string
   getPerformanceRatings: string
   activeEmployee: string
+  addPIP: string
 }

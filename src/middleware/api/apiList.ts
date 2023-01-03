@@ -792,4 +792,5 @@ export const PipListApiConfig: PIPListApi = {
   exportPIPList: apiPrefix + '/PIPManagement/exportPIPList',
   getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
   activeEmployee: apiPrefix + '/observation-mgnt/activeEmployee/',
+  addPIP: apiPrefix + '/PIPManagement/addPIP',
 }

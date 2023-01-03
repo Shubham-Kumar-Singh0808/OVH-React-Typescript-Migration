@@ -77,11 +77,44 @@ const activeEmployee = async (): Promise<ActiveEmployee[]> => {
   return response.data
 }
 
+const addPIP = async ({
+  empId,
+  endDate,
+  improvement,
+  rating,
+  remarks,
+  startDate,
+}: {
+  empId: number
+  endDate: string
+  improvement: string
+  rating: string
+  remarks: string
+  startDate: string
+}): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.addPIP,
+    method: AllowedHttpMethods.post,
+    data: {
+      empId,
+      endDate,
+      improvement,
+      rating,
+      remarks,
+      startDate,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const pipListApi = {
   getAllPIPList,
   exportPIPList,
   getPerformanceRatings,
   activeEmployee,
+  addPIP,
 }
 
 export default pipListApi
