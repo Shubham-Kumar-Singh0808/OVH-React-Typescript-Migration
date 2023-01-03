@@ -69,6 +69,13 @@ const ReviewFormDetailsTable = ({
     }
   }
 
+  const onChangeSelfRating = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    kpiId: number,
+  ) => {
+    console.log(e.target.value)
+  }
+
   return (
     <>
       <CTable
@@ -151,9 +158,7 @@ const ReviewFormDetailsTable = ({
                         name="rating"
                         id="empRating"
                         value={kpi.employeeRating}
-                        onChange={(e) =>
-                          onChangeSelfRating(e.target.value, kpi.id)
-                        }
+                        onChange={(e) => onChangeSelfRating(e, kpi.id)}
                       >
                         <option value={''}>Select Rating</option>
                         <option value="5">5</option>
