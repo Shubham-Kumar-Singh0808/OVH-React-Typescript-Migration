@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -40,6 +40,7 @@ const ProjectCreationRequestTable = ({
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
+  const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   const [comments, setComments] = useState<string>('')
   const getAllProjectRequestList = useTypedSelector(
@@ -54,6 +55,14 @@ const ProjectCreationRequestTable = ({
     reduxServices.projectCreationRequest.selectors.isLoading,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessDeleteAction = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project Creation Requests',
+  )
+
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -64,6 +73,14 @@ const ProjectCreationRequestTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  useEffect(() => {
+    if (comments) {
+      setIsYesButtonEnabled(true)
+    } else {
+      setIsYesButtonEnabled(false)
+    }
+  }, [comments])
 
   const projectRequestStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'Rejected') {
@@ -133,7 +150,7 @@ const ProjectCreationRequestTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Project request deleted successfully"
           />,
         ),
       )
@@ -179,7 +196,7 @@ const ProjectCreationRequestTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Project request rejected successfully"
           />,
         ),
       )
@@ -248,7 +265,10 @@ const ProjectCreationRequestTable = ({
                       onClick={() =>
                         handleProjectRequestApproveClick(projectRequest.id)
                       }
-                      disabled={projectRequest.status === 'Approved'}
+                      disabled={
+                        projectRequest.status === 'Rejected' ||
+                        projectRequest.status === 'Approved'
+                      }
                     >
                       <i className="fa fa-check-circle-o"></i>
                     </CButton>
@@ -266,19 +286,24 @@ const ProjectCreationRequestTable = ({
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
-                      disabled={projectRequest.status === 'Rejected'}
+                      disabled={
+                        projectRequest.status === 'Rejected' ||
+                        projectRequest.status === 'Approved'
+                      }
                       onClick={() => handleShowRejectModal(projectRequest.id)}
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                      onClick={() => handleShowDeleteModal(projectRequest.id)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {userAccessDeleteAction?.deleteaccess && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                        onClick={() => handleShowDeleteModal(projectRequest.id)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -343,6 +368,7 @@ const ProjectCreationRequestTable = ({
           modalHeaderClass="d-none"
           confirmButtonText="Yes"
           cancelButtonText="No"
+          isConfirmButtonDisabled={!isYesButtonEnabled}
           confirmButtonAction={handleConfirmRejectProjectRequestDetail}
         >
           <div>
