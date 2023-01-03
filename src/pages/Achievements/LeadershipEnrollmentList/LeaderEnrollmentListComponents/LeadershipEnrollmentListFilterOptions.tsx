@@ -39,6 +39,9 @@ const statusFilterList: string[] = [
 ]
 
 const formatDate = (date: string): string => {
+  if (date === emptyString) {
+    return emptyString
+  }
   const list = date.split('/')
   const month = list[0]
   list[0] = list[1]
