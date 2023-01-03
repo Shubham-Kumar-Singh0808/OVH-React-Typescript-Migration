@@ -5,7 +5,7 @@ const NomineeDetailsBasicInfoContainer = ({
 }: {
   children: React.ReactNode
 }): JSX.Element => {
-  return <div className="d-flex flex-row me-5 flex-wrap">{children}</div>
+  return <div className="d-flex flex-row me-4 flex-wrap">{children}</div>
 }
 
 export default NomineeDetailsBasicInfoContainer
