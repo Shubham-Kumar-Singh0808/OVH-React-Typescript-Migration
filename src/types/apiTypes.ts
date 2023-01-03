@@ -664,4 +664,6 @@ export interface MyReviewApi extends ApiBase {
 
 export interface ReviewListApi extends ApiBase {
   getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
 }

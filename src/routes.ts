@@ -262,6 +262,10 @@ const ResignationFeedBackForm = React.lazy(
     ),
 )
 
+const ReviewList = React.lazy(
+  () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
+)
+
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
@@ -828,6 +832,11 @@ const routes = [
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/listofAppraisal',
+    name: 'KRA',
+    component: ReviewList,
   },
 ]
 

@@ -44,4 +44,18 @@ export const dateOptionsList = [
   { label: 'Yesterday', name: 'Yesterday' },
 ]
 
+export const reviewListStatus = [
+  { label: 'Select Status', name: 'Select Status' },
+  { label: 'Completed', name: 'Completed' },
+  { label: 'Needs Discussion', name: 'Needs Discussion' },
+  { label: 'Needs Acknowledgement', name: 'Acknowledgement' },
+  { label: 'Review Pending', name: 'Review Pending' },
+  { label: 'Not-Submitted', name: 'Not-Submitted' },
+]
+
+export const employeeStatus = [
+  { label: 'Active', name: 'Active' },
+  { label: 'Inactive', name: 'Inactive' },
+]
+
 export const emptyString = ''
