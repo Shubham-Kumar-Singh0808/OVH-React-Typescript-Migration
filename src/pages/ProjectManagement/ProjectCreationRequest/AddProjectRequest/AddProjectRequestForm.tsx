@@ -52,7 +52,18 @@ const AddProjectRequestForm = (): JSX.Element => {
   // const [domain, setDomain] = useState<string>('')
   const [projectMileStone, setProjectMileStone] = useState<
     ProjectRequestMilestoneDTO[]
-  >([])
+  >([
+    {
+      id: Math.floor(Math.random() * 10000),
+      billable: '',
+      comments: '',
+      effort: '',
+      fromDate: '',
+      milestonePercentage: '',
+      title: '',
+      toDate: '',
+    },
+  ])
   const checkListDetails = {} as Chelist[]
   const [checkList, setCheckList] = useState(checkListDetails)
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
@@ -601,11 +612,18 @@ const AddProjectRequestForm = (): JSX.Element => {
                   <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
-              {projectMileStone?.map((item, index) => {
-                return (
-                  <ProjectMileStone item={item} key={index} index={index} />
-                )
-              })}
+              {projectMileStone.length > 0 &&
+                projectMileStone?.map((item, index) => {
+                  return (
+                    <ProjectMileStone
+                      item={item}
+                      key={index}
+                      index={index}
+                      setProjectMileStone={setProjectMileStone}
+                      projectMileStone={projectMileStone}
+                    />
+                  )
+                })}
             </CTable>
           </CRow>
         )}

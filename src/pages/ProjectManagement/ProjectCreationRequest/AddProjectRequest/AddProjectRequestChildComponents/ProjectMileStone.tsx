@@ -13,10 +13,31 @@ import { ProjectRequestMilestoneDTO } from '../../../../../types/ProjectManageme
 const ProjectMileStone = ({
   item,
   index,
+  setProjectMileStone,
+  projectMileStone,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
+  projectMileStone: ProjectRequestMilestoneDTO[]
+  setProjectMileStone: React.Dispatch<
+    React.SetStateAction<ProjectRequestMilestoneDTO[]>
+  >
 }): JSX.Element => {
+  const handleClickMileStone = () => {
+    setProjectMileStone([
+      ...projectMileStone,
+      {
+        id: Math.floor(Math.random() * 10000),
+        billable: '',
+        comments: '',
+        effort: '',
+        fromDate: '',
+        milestonePercentage: '',
+        title: '',
+        toDate: '',
+      },
+    ])
+  }
   return (
     <>
       <CTableBody>
@@ -111,6 +132,7 @@ const ProjectMileStone = ({
             type="button"
             color="info"
             id="button-addon2"
+            onClick={handleClickMileStone}
           >
             <i className="fa fa-plus"></i>
           </CButton>
