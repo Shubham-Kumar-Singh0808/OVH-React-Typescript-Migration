@@ -165,3 +165,8 @@ export type ApproveProjectRequest = {
   domain: string
   health?: string
 }
+
+export type RejectProjectRequestProps = {
+  comment: string
+  requestId: number
+}

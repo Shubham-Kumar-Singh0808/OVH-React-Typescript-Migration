@@ -10,6 +10,8 @@ import {
   CCol,
   CRow,
   CBadge,
+  CFormLabel,
+  CFormTextarea,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -39,7 +41,7 @@ const ProjectCreationRequestTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
   const dispatch = useAppDispatch()
-
+  const [comments, setComments] = useState<string>('')
   const getAllProjectRequestList = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.allProjectCreationList,
   )
@@ -98,7 +100,12 @@ const ProjectCreationRequestTable = ({
     setToggle('projectHistory')
   }
 
-  const handleShowDeleteModal = (visaId: number) => {
+  const handleShowDeleteModal = (requestId: number) => {
+    setToDeleteProjectRequestId(requestId)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleShowRejectModal = (visaId: number) => {
     setToDeleteProjectRequestId(visaId)
     setIsDeleteModalVisible(true)
   }
@@ -142,6 +149,37 @@ const ProjectCreationRequestTable = ({
             toastColor="danger"
             toastMessage="            
             Project request already mapped with project.So,you can't delete"
+          />,
+        ),
+      )
+    }
+  }
+
+  const handleConfirmRejectProjectRequestDetail = async () => {
+    setIsDeleteModalVisible(false)
+    const rejectProjectRequestResultAction = await dispatch(
+      reduxServices.projectCreationRequest.rejectProjectRequest({
+        comment: comments,
+        requestId: toDeleteProjectRequestId,
+      }),
+    )
+    if (
+      reduxServices.projectCreationRequest.rejectProjectRequest.fulfilled.match(
+        rejectProjectRequestResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Visa Detail deleted successfully"
           />,
         ),
       )
@@ -228,6 +266,8 @@ const ProjectCreationRequestTable = ({
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      disabled={projectRequest.status === 'Rejected'}
+                      onClick={() => handleShowRejectModal(projectRequest.id)}
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
@@ -295,6 +335,41 @@ const ProjectCreationRequestTable = ({
       >
         {`Do you really want to delete this OVH-Test project request?`}
       </OModal>
+      <>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalHeaderClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          confirmButtonAction={handleConfirmRejectProjectRequestDetail}
+        >
+          <div>
+            {`Do you really want to reject this project request ?`}
+
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
+                Comments:
+                <span className={comments ? 'text-white' : 'text-danger'}>
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={6} className="w-500">
+                <CFormTextarea
+                  placeholder="Purpose"
+                  aria-label="textarea"
+                  id="textArea"
+                  name="textArea"
+                  data-testid="text-area"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+          </div>
+        </OModal>
+      </>
     </>
   )
 }

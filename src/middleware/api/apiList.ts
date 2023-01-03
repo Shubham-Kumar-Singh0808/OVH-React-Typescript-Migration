@@ -723,6 +723,7 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getApproveProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
   updateProjectRequest: apiPrefix + '/project-mgmt/project',
   deleteProjectRequest: apiPrefix + '/project-mgmt/deleteProjectRequest',
+  rejectProjectRequest: apiPrefix + '/project-mgmt/rejectProjectRequest',
 }
 
 export const AddAchieverApiConfig: AddAchieverApi = {

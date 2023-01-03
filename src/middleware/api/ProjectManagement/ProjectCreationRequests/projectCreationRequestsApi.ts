@@ -4,6 +4,7 @@ import {
   GetProjectRequest,
   ProjectRequestHistoryDetails,
   ApproveProjectRequest,
+  RejectProjectRequestProps,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -98,6 +99,22 @@ const deleteProjectRequest = async (
   return response.data
 }
 
+const rejectProjectRequest = async ({
+  comment,
+  requestId,
+}: RejectProjectRequestProps): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.rejectProjectRequest,
+    method: AllowedHttpMethods.put,
+    params: {
+      comment,
+      requestId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectCreationRequestsApi = {
   getAllProjectRequestList,
   getProjectRequest,
@@ -105,6 +122,7 @@ const projectCreationRequestsApi = {
   getApproveProjectRequest,
   updateProjectRequest,
   deleteProjectRequest,
+  rejectProjectRequest,
 }
 
 export default projectCreationRequestsApi

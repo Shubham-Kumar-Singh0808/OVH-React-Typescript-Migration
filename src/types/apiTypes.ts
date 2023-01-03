@@ -590,6 +590,7 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getApproveProjectRequest: string
   updateProjectRequest: string
   deleteProjectRequest: string
+  rejectProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {

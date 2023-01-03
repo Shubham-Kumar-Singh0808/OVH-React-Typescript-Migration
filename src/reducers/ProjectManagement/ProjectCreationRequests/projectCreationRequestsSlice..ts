@@ -11,6 +11,7 @@ import {
   ProjectCreationRequestState,
   ProjectRequestHistoryDetails,
   ProjectRequestList,
+  RejectProjectRequestProps,
 } from '../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
 const getAllProjectRequestList = createAsyncThunk(
@@ -126,6 +127,29 @@ const deleteProjectRequest = createAsyncThunk<
   },
 )
 
+const rejectProjectRequest = createAsyncThunk<
+  number | undefined,
+  RejectProjectRequestProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/rejectProjectRequest',
+  async ({ comment, requestId }: RejectProjectRequestProps, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.rejectProjectRequest({
+        comment,
+        requestId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectCreationReuestState: ProjectCreationRequestState = {
   getAllProjectRequestList: {
     projectRequestListSize: 0,
@@ -203,6 +227,7 @@ const projectCreationRequestThunk = {
   getApproveProjectRequest,
   updateProjectRequest,
   deleteProjectRequest,
+  rejectProjectRequest,
 }
 
 const projectCreationRequestSelectors = {
