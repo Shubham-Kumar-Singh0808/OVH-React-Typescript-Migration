@@ -40,6 +40,7 @@ const ProjectMileStone = ({
             onChange={(e) => titleOnChange(e, index)}
             value={item.title}
             name="title"
+            id="title"
             placeholder="Title"
             data-testid="title-test"
           />
@@ -56,7 +57,7 @@ const ProjectMileStone = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <DatePicker
-            id="editprojectenddate"
+            id="editProjectFromDate"
             className="form-control form-control-sm sh-date-picker"
             peekNextMonth
             showMonthDropdown
@@ -65,14 +66,14 @@ const ProjectMileStone = ({
             placeholderText="dd/mm/yy"
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
-            name="editprojectenddate"
+            name="editProjectFromDate"
             value={item.fromDate}
             onChange={(date: Date) => onChangeHandleFromDate(date, index)}
           />
         </CTableDataCell>
         <CTableDataCell scope="row">
           <DatePicker
-            id="editprojectenddate"
+            id="editProjectEndDate"
             className="form-control form-control-sm sh-date-picker"
             peekNextMonth
             showMonthDropdown
@@ -81,7 +82,7 @@ const ProjectMileStone = ({
             placeholderText="dd/mm/yy"
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
-            name="editprojectenddate"
+            name="editProjectEndDate"
             value={item.toDate}
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />

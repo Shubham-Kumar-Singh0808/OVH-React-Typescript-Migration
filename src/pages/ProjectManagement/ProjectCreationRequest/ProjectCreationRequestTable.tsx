@@ -122,8 +122,8 @@ const ProjectCreationRequestTable = ({
     setIsDeleteModalVisible(true)
   }
 
-  const handleShowRejectModal = (visaId: number) => {
-    setToDeleteProjectRequestId(visaId)
+  const handleShowRejectModal = (id: number) => {
+    setToDeleteProjectRequestId(id)
     setIsDeleteModalVisible(true)
   }
 

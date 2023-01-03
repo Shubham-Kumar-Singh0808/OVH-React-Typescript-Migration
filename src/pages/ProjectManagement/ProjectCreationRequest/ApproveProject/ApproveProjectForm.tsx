@@ -287,7 +287,6 @@ const ApproveProjectForm = (): JSX.Element => {
 
   const titleOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-
     index: number,
   ) => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
@@ -601,6 +600,7 @@ const ApproveProjectForm = (): JSX.Element => {
                 )
               })}
             </CTable>
+            <span>Total Effort: {}</span>
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">
