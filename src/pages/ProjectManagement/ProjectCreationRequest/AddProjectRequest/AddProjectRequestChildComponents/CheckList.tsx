@@ -1,7 +1,4 @@
 import {
-  CRow,
-  CFormLabel,
-  CCol,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -10,8 +7,6 @@ import {
   CFormTextarea,
 } from '@coreui/react-pro'
 import React from 'react'
-import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
 import {
   CheckedQuestionsOptions,
   Chelist,
@@ -20,7 +15,6 @@ import {
 const CheckList = ({
   onChangeRadio,
   commentsOnChange,
-  checkList,
   item,
   index,
 }: {
@@ -29,7 +23,6 @@ const CheckList = ({
     e: React.ChangeEvent<HTMLTextAreaElement>,
     index: number,
   ) => void
-  checkList: Chelist[]
   item: Chelist
   index: number
 }): JSX.Element => {

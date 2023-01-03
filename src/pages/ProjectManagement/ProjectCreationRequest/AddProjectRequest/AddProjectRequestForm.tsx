@@ -5,6 +5,7 @@ import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import CheckList from './AddProjectRequestChildComponents/CheckList'
+import ProjectMileStone from './AddProjectRequestChildComponents/ProjectMileStone'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { priceModelList } from '../../../../constant/constantData'
@@ -565,7 +566,6 @@ const AddProjectRequestForm = (): JSX.Element => {
                     <CheckList
                       onChangeRadio={onChangeRadio}
                       commentsOnChange={commentsOnChange}
-                      checkList={checkList}
                       item={item}
                       index={index}
                       key={index}
@@ -575,6 +575,14 @@ const AddProjectRequestForm = (): JSX.Element => {
             </CCol>
           </CRow>
         </CCol>
+        {projectRequest.type === 'Fixed Bid' && (
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Milestone::
+            </CFormLabel>
+            <ProjectMileStone />
+          </CRow>
+        )}
         <CRow className="mb-3 align-items-center">
           <CCol sm={{ span: 6, offset: 3 }}>
             <CButton
