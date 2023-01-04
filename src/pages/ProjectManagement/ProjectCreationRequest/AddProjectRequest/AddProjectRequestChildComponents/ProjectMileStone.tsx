@@ -103,7 +103,7 @@ const ProjectMileStone = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <DatePicker
-            id="editprojectenddate"
+            id="editProjectEndDate"
             className="form-control form-control-sm sh-date-picker"
             peekNextMonth
             showMonthDropdown
@@ -112,7 +112,7 @@ const ProjectMileStone = ({
             placeholderText="dd/mm/yy"
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
-            name="editprojectenddate"
+            name="editProjectEndDate"
             value={item.fromDate}
             onChange={(date: Date) => onChangeHandleFromDate(date, index)}
           />
@@ -129,7 +129,7 @@ const ProjectMileStone = ({
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
             name="editprojectenddate"
-            value={item.fromDate}
+            value={item.toDate}
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
         </CTableDataCell>
@@ -150,9 +150,8 @@ const ProjectMileStone = ({
         <CTableDataCell scope="row">
           <CFormInput
             onChange={(e) => percentageOnChange(e, index)}
-            value={item.title}
-            name="title"
-            placeholder="Title"
+            value={item.milestonePercentage}
+            name="milestonePercentage"
             data-testid="title-test"
           />
         </CTableDataCell>

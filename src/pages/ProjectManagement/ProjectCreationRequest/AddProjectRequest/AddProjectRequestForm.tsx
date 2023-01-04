@@ -237,6 +237,19 @@ const AddProjectRequestForm = (): JSX.Element => {
       return { ...prevState, ...{ description } }
     })
   }
+
+  const onHandleRequiredResource = (requiredResources: string) => {
+    setProjectRequest((prevState) => {
+      return { ...prevState, ...{ requiredResources } }
+    })
+  }
+
+  const onHandleTechnology = (technology: string) => {
+    setProjectRequest((prevState) => {
+      return { ...prevState, ...{ technology } }
+    })
+  }
+
   console.log(projectRequest.description)
   const onHandleCustomerContactName = (value: string) => {
     setProjectRequest({ ...projectRequest, projectContactPerson: value })
@@ -295,6 +308,7 @@ const AddProjectRequestForm = (): JSX.Element => {
   const handleSubmitProjectRequest = () => {
     const payload = {
       ...projectRequest,
+      bcc: projectRequestMailIds.bcc,
       chelist: checkList,
       projectRequestMilestoneDTO: projectMileStone,
     }
@@ -588,10 +602,11 @@ const AddProjectRequestForm = (): JSX.Element => {
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
+                  initData={projectRequest?.technology}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
+                    onHandleTechnology(editor.getData().trim())
                   }}
                 />
               </CCol>
@@ -610,10 +625,11 @@ const AddProjectRequestForm = (): JSX.Element => {
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
+                  initData={projectRequest?.requiredResources}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
+                    onHandleRequiredResource(editor.getData().trim())
                   }}
                 />
               </CCol>
@@ -632,6 +648,7 @@ const AddProjectRequestForm = (): JSX.Element => {
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
+                  initData={projectRequest?.description}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
