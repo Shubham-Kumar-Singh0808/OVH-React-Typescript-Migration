@@ -31,6 +31,9 @@ const NomineeListCycleFilter = (
   const nomineeCycles = useTypedSelector(
     (state) => state.nomineeList.cyclesList,
   )
+  const nomineeList = useTypedSelector(
+    (state) => state.nomineeList.nominationsList,
+  )
 
   const cycleChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentCycle(e.target.value)
@@ -82,17 +85,19 @@ const NomineeListCycleFilter = (
               ))}
             </CFormSelect>
           </CCol>
-          <CCol xs={12} md={8} className="px-0 text-end">
-            <CButton
-              size="sm"
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="export-btn"
-              onClick={exportCurrentCycleNomineeList}
-            >
-              + Click To Export
-            </CButton>
-          </CCol>
+          {nomineeList.length > 0 && (
+            <CCol xs={12} md={8} className="px-0 text-end">
+              <CButton
+                size="sm"
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="export-btn"
+                onClick={exportCurrentCycleNomineeList}
+              >
+                + Click To Export
+              </CButton>
+            </CCol>
+          )}
         </CRow>
       </CContainer>
     </>
