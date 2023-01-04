@@ -84,6 +84,7 @@ const ProjectMileStone = ({
       <CTableBody>
         <CTableDataCell scope="row">
           <CFormInput
+            className="mt-2"
             onChange={(e) => titleOnChange(e, index)}
             value={item.title}
             name="title"
@@ -94,6 +95,7 @@ const ProjectMileStone = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormInput
+            className="mt-2"
             onChange={(e) => effortOnChange(e, index)}
             value={item.effort}
             name="effort"
@@ -134,10 +136,15 @@ const ProjectMileStone = ({
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">{projectBillable}</CTableDataCell>
-        <CTableDataCell scope="row">{item.milestonePercentage}</CTableDataCell>
+        <CTableDataCell scope="row" className="project-billable mt-2">
+          {projectBillable}
+        </CTableDataCell>
+        <CTableDataCell scope="row" className="project-billable mt-2">
+          {item.milestonePercentage}
+        </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormTextarea
+            className="mt-2"
             aria-label="textarea"
             id="comments"
             name="comments"
