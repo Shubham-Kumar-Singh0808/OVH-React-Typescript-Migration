@@ -1,10 +1,13 @@
 import { CButton, CLink, CTableDataCell, CTableRow } from '@coreui/react-pro'
 import React from 'react'
+import parse from 'html-react-parser'
 import KPIsTable from './KPIsTable'
-import { KRATableItemProps } from '../../../../types/Performance/KRA/KRATypes'
+import {
+  KRAPages,
+  KRATableItemProps,
+} from '../../../../types/Performance/KRA/KRATypes'
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { dottedContent } from '../KRAConstants'
 
 const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   const {
@@ -48,6 +51,13 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setDeleteThisKRA(selectedKRA.id)
   }
 
+  const editKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(reduxServices.KRA.getDesignationThunk(selectedKRA.departmentId))
+    dispatch(reduxServices.KRA.editThisKraThunk(selectedKRA.id))
+    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKra))
+  }
+
   return (
     <>
       <CTableRow>
@@ -84,7 +94,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 descriptionClickHandler(e, selectedKRA.description)
               }
             >
-              {dottedContent(selectedKRA.description)}
+              {parse(selectedKRA.description)}
             </CLink>
           ) : (
             'N/A'
@@ -109,8 +119,9 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 size="sm"
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="edit-btn-kra"
+                data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
                 title="Edit"
+                onClick={editKRAButtonHandler}
               >
                 <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
               </CButton>

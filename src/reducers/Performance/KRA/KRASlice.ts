@@ -5,7 +5,13 @@ import KRAApi from '../../../middleware/api/Performance/KRA/KRAApi'
 import {
   DeleteKPIParams,
   KRADataQueryBody,
+  KRADesignationPercentageQuery,
   KRAInitialState,
+  KRAPages,
+  KRATableDataItem,
+  NewKRABody,
+  NewKRADuplicateCheckQuery,
+  UpdateKRABody,
 } from '../../../types/Performance/KRA/KRATypes'
 
 const kraQueryInitial: KRADataQueryBody = {
@@ -14,6 +20,20 @@ const kraQueryInitial: KRADataQueryBody = {
   startIndex: 0,
   endIndex: 20,
   multipleSearch: '',
+}
+
+const initialEditKra: KRATableDataItem = {
+  id: -1,
+  name: '',
+  description: null,
+  kpiLookps: null,
+  count: -1,
+  checkType: null,
+  designationName: '',
+  designationId: -1,
+  departmentName: '',
+  departmentId: 1,
+  designationKraPercentage: -1,
 }
 
 const initialState: KRAInitialState = {
@@ -25,6 +45,10 @@ const initialState: KRAInitialState = {
   currentPage: 1,
   pageSize: 20,
   krasQuery: kraQueryInitial,
+  kraDesigPercentage: -1,
+  isNewKRADuplicate: false,
+  editThisKra: initialEditKra,
+  currentOnScreenPage: KRAPages.kraList, // Used for navigating to different screens. Implemented here because there are many child components and screens. This makes it more efficient
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -99,6 +123,66 @@ const deleteKPIThunk = createAsyncThunk(
   },
 )
 
+const getKRADesigPercentageThunk = createAsyncThunk(
+  'KRA/getKRADesigPercentageThunk',
+  async (query: KRADesignationPercentageQuery, thunkApi) => {
+    try {
+      return await KRAApi.getKRADesignationPercentage(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const checkNewKRADuplicacyThunk = createAsyncThunk(
+  'KRA/checkNewKRADuplicacyThunk',
+  async (query: NewKRADuplicateCheckQuery, thunkApi) => {
+    try {
+      return await KRAApi.checkIfNewKraDuplicate(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addNewKRAThunk = createAsyncThunk(
+  'KRA/addNewKRAThunk',
+  async (body: NewKRABody, thunkApi) => {
+    try {
+      return await KRAApi.addNewKRA(body)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const editThisKraThunk = createAsyncThunk(
+  'KRA/editThisKraThunk',
+  async (kraId: number, thunkApi) => {
+    try {
+      return await KRAApi.editThisKra(kraId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const updateKRAThunk = createAsyncThunk(
+  'KRA/updateKRAThunk',
+  async (body: UpdateKRABody, thunkApi) => {
+    try {
+      return await KRAApi.updateKRA(body)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const KRASlice = createSlice({
   name: 'KRA',
   initialState,
@@ -111,6 +195,12 @@ const KRASlice = createSlice({
     },
     clearKRAQuery: (state) => {
       state.krasQuery = kraQueryInitial
+    },
+    clearDesignationList: (state) => {
+      state.designations = []
+    },
+    setCurrentOnScreenPage: (state, action) => {
+      state.currentOnScreenPage = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -126,6 +216,15 @@ const KRASlice = createSlice({
     builder.addCase(kpisForIndividualKraThunk.fulfilled, (state, action) => {
       state.kpisForIndividualKRAList = action.payload
     })
+    builder.addCase(getKRADesigPercentageThunk.fulfilled, (state, action) => {
+      state.kraDesigPercentage = action.payload
+    })
+    builder.addCase(checkNewKRADuplicacyThunk.fulfilled, (state, action) => {
+      state.isNewKRADuplicate = action.payload
+    })
+    builder.addCase(editThisKraThunk.fulfilled, (state, action) => {
+      state.editThisKra = action.payload
+    })
     builder.addMatcher(
       isAnyOf(
         getEmpDepartmentThunk.fulfilled,
@@ -134,6 +233,11 @@ const KRASlice = createSlice({
         kpisForIndividualKraThunk.fulfilled,
         deleteKRAThunk.fulfilled,
         deleteKPIThunk.fulfilled,
+        addNewKRAThunk.fulfilled,
+        getKRADesigPercentageThunk.fulfilled,
+        checkNewKRADuplicacyThunk.fulfilled,
+        editThisKraThunk.fulfilled,
+        updateKRAThunk.fulfilled,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -147,6 +251,11 @@ const KRASlice = createSlice({
         kpisForIndividualKraThunk.pending,
         deleteKRAThunk.pending,
         deleteKPIThunk.pending,
+        addNewKRAThunk.pending,
+        getKRADesigPercentageThunk.pending,
+        checkNewKRADuplicacyThunk.pending,
+        editThisKraThunk.pending,
+        updateKRAThunk.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -160,6 +269,11 @@ const KRASlice = createSlice({
         kpisForIndividualKraThunk.rejected,
         deleteKRAThunk.rejected,
         deleteKPIThunk.rejected,
+        addNewKRAThunk.rejected,
+        getKRADesigPercentageThunk.rejected,
+        checkNewKRADuplicacyThunk.rejected,
+        editThisKraThunk.rejected,
+        updateKRAThunk.rejected,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.failed
@@ -175,6 +289,11 @@ const KRAThunk = {
   kpisForIndividualKraThunk,
   deleteKRAThunk,
   deleteKPIThunk,
+  getKRADesigPercentageThunk,
+  checkNewKRADuplicacyThunk,
+  addNewKRAThunk,
+  editThisKraThunk,
+  updateKRAThunk,
 }
 
 export const KRAService = {

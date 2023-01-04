@@ -5,6 +5,11 @@ import {
   IncomingKRADataList,
   IncomingKRADesignation,
   KRADataQueryBody,
+  KRADesignationPercentageQuery,
+  KRATableDataItem,
+  NewKRABody,
+  NewKRADuplicateCheckQuery,
+  UpdateKRABody,
 } from '../../../../types/Performance/KRA/KRATypes'
 import {
   getAuthenticatedRequestConfig,
@@ -89,6 +94,70 @@ const deleteKPI = async (query: DeleteKPIParams): Promise<void> => {
   return response.data
 }
 
+const getKRADesignationPercentage = async (
+  query: KRADesignationPercentageQuery,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.designationKRAPercentage,
+    method: AllowedHttpMethods.get,
+    params: {
+      ...query,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const checkIfNewKraDuplicate = async (
+  query: NewKRADuplicateCheckQuery,
+): Promise<boolean> => {
+  const { departmentId, designationId } = query
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.checkIfNewKRADuplicate + query.kraName + '/isDuplicate',
+    method: AllowedHttpMethods.get,
+    params: {
+      departmentId,
+      designationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addNewKRA = async (body: NewKRABody): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.addNewKRA,
+    method: AllowedHttpMethods.post,
+    data: body,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const editThisKra = async (kraId: number): Promise<KRATableDataItem> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.editThisKra + kraId,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateKRA = async (body: UpdateKRABody): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.updateKRA,
+    method: AllowedHttpMethods.put,
+    data: body,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const KRAApi = {
   getEmpDepartments,
   getDesignation,
@@ -96,6 +165,11 @@ const KRAApi = {
   kpisForIndividualKra,
   deleteKRA,
   deleteKPI,
+  getKRADesignationPercentage,
+  checkIfNewKraDuplicate,
+  addNewKRA,
+  editThisKra,
+  updateKRA,
 }
 
 export default KRAApi
