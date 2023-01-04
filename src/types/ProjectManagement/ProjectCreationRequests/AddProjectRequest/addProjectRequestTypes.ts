@@ -27,9 +27,9 @@ export type AddProjectRequestDetails = {
 
 export type Chelist = {
   answer: string
-  answer1: string
-  answer2: string
-  answer3: string
+  answer1?: string
+  answer2?: string
+  answer3?: string
   checklistId: number
   comments: string
   id: null
@@ -56,8 +56,8 @@ export type GetProjectRequestMailIds = {
   createdDate: null
 }
 export enum CheckedQuestionsOptions {
-  yes = 'Yes',
-  no = 'No',
+  yes = 'yes',
+  no = 'no',
   noAnswer = 'N/A',
 }
 export type GetProjectRequestState = {

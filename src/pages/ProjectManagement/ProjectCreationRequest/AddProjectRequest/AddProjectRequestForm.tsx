@@ -30,7 +30,6 @@ import {
 import {
   AddProjectRequestDetails,
   Chelist,
-  GetProjectRequestMailIds,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 import { listComposer, showIsRequired } from '../../../../utils/helper'
@@ -79,10 +78,10 @@ const AddProjectRequestForm = (): JSX.Element => {
   )
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
   const initProjectRequest = {
-    bcc: projectRequestMailIds.bcc,
+    bcc: '',
     billingContactPerson: '',
     billingContactPersonEmail: '',
-    cc: projectRequestMailIds.cc,
+    cc: '',
     chelist: checkListDetails,
     client: '',
     description: '',
@@ -108,7 +107,7 @@ const AddProjectRequestForm = (): JSX.Element => {
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
-  console.log(setShowEditor)
+
   const platforms = useTypedSelector(
     reduxServices.projectManagement.selectors.platForms,
   )
@@ -294,10 +293,6 @@ const AddProjectRequestForm = (): JSX.Element => {
     })
   }
 
-  // const onChangeProjectRequestMailIdCC = (value: GetProjectRequestMailIds) => {
-  //   setProjectRequest({ ...projectRequest, cc: value })
-  // }
-
   useEffect(() => {
     setProjectRequestMailIdCC(projectRequestMailIds.cc)
   }, [projectRequestMailIds])
@@ -314,23 +309,36 @@ const AddProjectRequestForm = (): JSX.Element => {
     const payload = {
       ...projectRequest,
       bcc: projectRequestMailIds.bcc,
+      cc: projectRequestMailIds.cc,
       chelist: checkList,
       projectRequestMilestoneDTO: projectMileStone,
     }
     dispatch(reduxServices.addProjectCreationRequest.addProjectRequest(payload))
   }
-
+  const generateAnswers = (option: string) => {
+    if (option === 'yes') {
+      return { answer1: 'false', answer2: 'false' }
+    } else if (option === 'no') {
+      return { answer2: 'false', answer3: 'false' }
+    } else if (option === 'N/A') {
+      return { answer1: 'false', answer3: 'false' }
+    }
+    return null
+  }
   const onChangeRadio = (
     e: React.ChangeEvent<HTMLInputElement>,
 
     index: number,
   ) => {
-    console.log(e.target.value, index)
     const newMileStone: Chelist[] = JSON.parse(JSON.stringify(checkList))
     newMileStone[index].answer = e.target.value
-    console.log(newMileStone[index].answer)
+    const result = generateAnswers(e.target.value)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { answer1, answer2, answer3, ...rest } = newMileStone[index]
+    const newList = { ...rest, ...result }
+    newMileStone[index] = newList
+    console.log(newMileStone)
     setCheckList(newMileStone)
-    console.log(checkList)
   }
 
   const commentsOnChange = (
@@ -664,9 +672,9 @@ const AddProjectRequestForm = (): JSX.Element => {
             )}
           </CRow>
           <OInputField
-            // onChangeHandler={onChangeProjectRequestMailIdCC}
-            // onBlurHandler={handleProjectRequestMailIdCC}
-            value={projectRequestMailIds.cc}
+            onChangeHandler={setProjectRequestMailIdCC}
+            onBlurHandler={handleProjectRequestMailIdCC}
+            value={projectRequestMailIdCC}
             isRequired={false}
             label="CC"
             name="cc"
