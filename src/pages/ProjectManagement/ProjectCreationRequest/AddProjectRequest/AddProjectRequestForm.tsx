@@ -294,9 +294,9 @@ const AddProjectRequestForm = (): JSX.Element => {
     })
   }
 
-  const onChangeProjectRequestMailIdCC = (value: GetProjectRequestMailIds) => {
-    setProjectRequest({ ...projectRequest, cc: value })
-  }
+  // const onChangeProjectRequestMailIdCC = (value: GetProjectRequestMailIds) => {
+  //   setProjectRequest({ ...projectRequest, cc: value })
+  // }
 
   useEffect(() => {
     setProjectRequestMailIdCC(projectRequestMailIds.cc)
@@ -664,7 +664,7 @@ const AddProjectRequestForm = (): JSX.Element => {
             )}
           </CRow>
           <OInputField
-            onChangeHandler={onChangeProjectRequestMailIdCC}
+            // onChangeHandler={onChangeProjectRequestMailIdCC}
             // onBlurHandler={handleProjectRequestMailIdCC}
             value={projectRequestMailIds.cc}
             isRequired={false}
