@@ -71,7 +71,6 @@ const AddProjectRequestForm = (): JSX.Element => {
     useState<string>('')
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
     useState<string>('')
-  // const authorDetails = {} as Author
 
   const projectRequestMailIds = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
@@ -308,6 +307,7 @@ const AddProjectRequestForm = (): JSX.Element => {
   const handleSubmitProjectRequest = () => {
     const payload = {
       ...projectRequest,
+      model: projectRequest.type.toUpperCase(),
       bcc: projectRequestMailIds.bcc,
       cc: projectRequestMailIds.cc,
       chelist: checkList,

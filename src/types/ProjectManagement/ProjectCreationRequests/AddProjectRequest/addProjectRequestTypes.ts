@@ -45,7 +45,7 @@ export type ProjectRequestMilestoneDTO = {
   milestonePercentage: string
   title: string
   toDate: string
-  buttonType: string
+  buttonType?: string
 }
 
 export type GetProjectRequestMailIds = {
