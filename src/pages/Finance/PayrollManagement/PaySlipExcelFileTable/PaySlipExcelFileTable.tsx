@@ -169,7 +169,7 @@ const PaySlipExcelFileTable = (props: {
         Clear
       </CButton>
       <CButton
-        data-testid="update-btn"
+        data-testid="upload-btn"
         className="btn-ovh me-1 text-white"
         color="success"
         onClick={handleUploadFile}
