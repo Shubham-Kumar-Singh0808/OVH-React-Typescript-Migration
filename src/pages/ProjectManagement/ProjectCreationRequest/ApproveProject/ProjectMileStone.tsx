@@ -42,27 +42,29 @@ const ProjectMileStone = ({
   const dispatch = useAppDispatch()
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const start = moment(item.fromDate, dateFormat).format(
+    const start = moment(item?.fromDate, dateFormat).format(
       newDateFormatForIsBefore,
     )
-    const end = moment(item.toDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(item?.toDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
 
     setError(moment(end).isBefore(start))
   }, [item.fromDate, item.toDate])
   const projectBillable = item.billable ? 'Yes' : 'No'
   useEffect(() => {
     if (
-      item.title &&
-      item.effort &&
-      item.fromDate &&
-      item.toDate &&
-      item.comments
+      item?.title &&
+      item?.effort &&
+      item?.fromDate &&
+      item?.toDate &&
+      item?.comments
     ) {
       setIsAddMileStoneButtonEnabled(true)
     } else {
       setIsAddMileStoneButtonEnabled(false)
     }
-  }, [item.title, item.effort, item.fromDate, item.comments])
+  }, [item?.title, item?.effort, item?.fromDate, item?.comments])
 
   useEffect(() => {
     if (error)

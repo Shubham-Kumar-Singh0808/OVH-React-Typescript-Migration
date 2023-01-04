@@ -338,7 +338,7 @@ const ApproveProjectForm = (): JSX.Element => {
   }
 
   useEffect(() => {
-    const total = mileStone.reduce((prev, current) => {
+    const total = mileStone?.reduce((prev, current) => {
       return prev + +current.effort
     }, 0)
     setShowTotalEffort(total)
