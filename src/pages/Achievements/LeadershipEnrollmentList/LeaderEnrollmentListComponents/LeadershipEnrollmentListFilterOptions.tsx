@@ -140,6 +140,9 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     <></>
   )
 
+  const fromDateAsterix = fromDate === emptyString ? TextDanger : TextWhite
+  const toDateAsterix = toDate === emptyString ? TextDanger : TextWhite
+
   return (
     <CForm onSubmit={viewButtonHandler}>
       <CContainer className="mt-2 ms-2 mb-4">
@@ -167,11 +170,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
             <>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">From:</CFormLabel>
-                <span
-                  className={fromDate === emptyString ? TextDanger : TextWhite}
-                >
-                  *
-                </span>
+                <span className={fromDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
@@ -185,11 +184,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
               </CCol>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">To:</CFormLabel>
-                <span
-                  className={toDate === emptyString ? TextDanger : TextWhite}
-                >
-                  *
-                </span>
+                <span className={toDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
