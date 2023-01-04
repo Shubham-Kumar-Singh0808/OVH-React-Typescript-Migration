@@ -223,7 +223,7 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
         <CRow className="align-items-center">
           <CFormLabel
             data-testid="emp-name-test"
-            className="col-sm-4 col-form-label text-end"
+            className="col-sm-4 col-form-label text-end pe-1"
           >
             Employee Name:
             <span className={TextWhite}>*</span>
@@ -237,7 +237,7 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
         <CRow className="align-items-center">
           <CFormLabel
             data-testid="emp-id-test"
-            className="col-sm-4 col-form-label text-end"
+            className="col-sm-4 col-form-label text-end pe-1"
           >
             Employee ID:
             <span className={TextWhite}>*</span>
@@ -299,7 +299,7 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
           <CRow className="align-items-center mb-5">
             <CFormLabel
               data-testid="reason-editor-test"
-              className="col-sm-4 col-form-label text-end mb-1 align-self-start"
+              className="col-sm-4 col-form-label text-end mb-1 align-self-start pe-1"
             >
               Please let us know why you want to be part of this elite group:
               <span className={reasonDetailsAsterixCondition()}>*</span>
@@ -318,7 +318,7 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
           <CRow className="align-items-center mb-1">
             <CFormLabel
               data-testid="expectation-editor-test"
-              className="col-sm-4 col-form-label text-end mb-1 align-self-start"
+              className="col-sm-4 col-form-label text-end mb-1 align-self-start pe-1"
             >
               Please let us know any example where you really exceeded
               expectations:
@@ -371,7 +371,6 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
           </CButton>
           <CButton
             color="warning"
-            role="addNewAchiever"
             data-testid="clear-btn"
             className="btn-ovh me-1"
             onClick={clearButtonHandler}

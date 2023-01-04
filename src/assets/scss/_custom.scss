@@ -304,6 +304,19 @@ input.capetalized {
   }
 }
 
+.table-color {
+  color: rgba(0, 0, 0, 0.02)
+}
+
 .nominee-detail:hover {
   color: #245269 !important;
+}
+
+.text-decoration-hover {
+  text-decoration: none;
+  color: #428bca !important;
+}
+
+.text-decoration-hover:hover {
+  text-decoration: underline;
 }

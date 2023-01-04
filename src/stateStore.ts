@@ -105,7 +105,9 @@ import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
 import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlice'
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
+import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import KRAReducer from './reducers/Performance/KRA/KRASlice'
 
 export const allReducers = {
   app: appReducer,
@@ -211,7 +213,9 @@ export const allReducers = {
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,
   myReview: myReviewReducer,
+  leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  KRA: KRAReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
