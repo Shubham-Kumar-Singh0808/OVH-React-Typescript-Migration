@@ -11,7 +11,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { TextDanger } from '../../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import {
@@ -81,6 +81,13 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     }
   }, [fromDate, toDate, selectedDateOption])
 
+  useEffect(() => {
+    if (selectedDateOption !== String(LeadershipListDateFiltersEnums.custom)) {
+      setFromDate(emptyString)
+      setToDate(emptyString)
+    }
+  }, [selectedDateOption])
+
   const dateOptionChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDateOption(e.target.value)
   }
@@ -94,8 +101,8 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     const finalQueries: LeadershipListQueryParameters = {
       dateSelection: selectedDateOption,
       from: formatDate(fromDate),
-      to: formatDate(toDate),
       statusSelection: selectedStatusOption,
+      to: formatDate(toDate),
     }
     dispatch(
       reduxServices.leadershipEnrollmentList.getLeadershipListThunk(
@@ -125,7 +132,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
 
   const showDateError = compareDates(fromDate, toDate) ? (
     <div data-testid="error-msg-date">
-      <CFormText className={TextDanger}>
+      <CFormText className={TextDanger} style={{ fontWeight: 'bold' }}>
         To date should be greater than From date
       </CFormText>
     </div>
@@ -160,7 +167,11 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
             <>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">From:</CFormLabel>
-                <span className={TextDanger}>*</span>
+                <span
+                  className={fromDate === emptyString ? TextDanger : TextWhite}
+                >
+                  *
+                </span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
@@ -174,7 +185,11 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
               </CCol>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">To:</CFormLabel>
-                <span className={TextDanger}>*</span>
+                <span
+                  className={toDate === emptyString ? TextDanger : TextWhite}
+                >
+                  *
+                </span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
