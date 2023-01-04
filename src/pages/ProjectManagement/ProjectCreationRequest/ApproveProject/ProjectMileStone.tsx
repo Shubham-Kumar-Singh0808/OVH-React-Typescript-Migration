@@ -9,6 +9,8 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { dateFormat } from '../../../../constant/DateFormat'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 import { ProjectRequestMilestoneDTO } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
 const ProjectMileStone = ({
@@ -37,7 +39,7 @@ const ProjectMileStone = ({
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
 }): JSX.Element => {
   const [error, setError] = useState(false)
-
+  const dispatch = useAppDispatch()
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
     const start = moment(item.fromDate, dateFormat).format(
@@ -61,6 +63,19 @@ const ProjectMileStone = ({
       setIsAddMileStoneButtonEnabled(false)
     }
   }, [item.title, item.effort, item.fromDate, item.comments])
+
+  useEffect(() => {
+    if (error)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            MileStone FromDate less than ToDate"
+          />,
+        ),
+      )
+  }, [error])
 
   return (
     <>

@@ -626,7 +626,7 @@ const ApproveProjectForm = (): JSX.Element => {
                   )
                 })}
               </CTable>
-              <span>Total Effort:{showTotalEffort} </span>
+              {showTotalEffort && <span>Total Effort:{showTotalEffort} </span>}
             </CRow>
           </>
         )}
