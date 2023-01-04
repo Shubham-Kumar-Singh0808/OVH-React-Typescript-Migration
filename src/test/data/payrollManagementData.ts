@@ -1,7 +1,7 @@
 import { GetPaySlipReportResponse } from '../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 export const mockCurrentPayslip: GetPaySlipReportResponse = {
-  size: 7,
+  size: 20,
   list: [
     {
       paySlipId: 9575,

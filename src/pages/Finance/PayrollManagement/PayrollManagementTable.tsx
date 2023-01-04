@@ -122,6 +122,10 @@ const PayrollManagementTable = (props: {
     return false
   }
 
+  const totalNoOfRecords = renderingPayslipData?.length
+    ? `Total Records: ${PaySlipsListSize}`
+    : `No Records found...`
+
   return (
     <>
       <CCol className="custom-scroll">
@@ -198,11 +202,6 @@ const PayrollManagementTable = (props: {
                         className="form-check-input form-select-not-allowed"
                         name="deleteCheckbox"
                         checked={manageCheckboxes(payslipItem.paySlipId)}
-                        // checked={
-                        //   selectedPaySlipId === payslipItem.paySlipId
-                        //     ? props.isChecked
-                        //     : !!props.isAllChecked
-                        // }
                         onChange={(e) =>
                           handleCheckbox(
                             e.target.checked,
@@ -303,42 +302,34 @@ const PayrollManagementTable = (props: {
           </CTableBody>
         </CTable>
       </CCol>
-      {renderingPayslipData?.length ? (
-        <CRow>
-          <CCol xs={4}>
-            <p>
-              <strong>Total Records: {PaySlipsListSize}</strong>
-            </p>
-          </CCol>
-          <CCol xs={3}>
-            {PaySlipsListSize > 20 && (
-              <OPageSizeSelect
-                handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
-                selectedPageSize={props.pageSize}
-              />
-            )}
-          </CCol>
-          {PaySlipsListSize > 20 && (
-            <CCol
-              xs={5}
-              className="gap-1 d-grid d-md-flex justify-content-md-end"
-            >
-              <OPagination
-                currentPage={props.currentPage}
-                pageSetter={props.setCurrentPage}
-                paginationRange={props.paginationRange}
-              />
-            </CCol>
-          )}
-        </CRow>
-      ) : (
-        <CCol>
-          <CRow className="mt-3 ms-3">
-            <h5>No Records Found... </h5>
-          </CRow>
+      <CRow>
+        <CCol xs={4}>
+          <p className="mt-2">
+            <strong>{totalNoOfRecords}</strong>
+          </p>
         </CCol>
-      )}
+        <CCol xs={3}>
+          {PaySlipsListSize > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80, 100]}
+              selectedPageSize={props.pageSize}
+            />
+          )}
+        </CCol>
+        {PaySlipsListSize > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={props.currentPage}
+              pageSetter={props.setCurrentPage}
+              paginationRange={props.paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}

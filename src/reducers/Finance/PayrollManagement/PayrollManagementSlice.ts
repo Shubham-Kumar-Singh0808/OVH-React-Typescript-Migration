@@ -217,10 +217,10 @@ const isLoading = (state: RootState): LoadingState =>
   state.payrollManagement.isLoading
 
 const paySlipInfo = (state: RootState): CurrentPayslip[] =>
-  state.payrollManagement.paySlipList.list
+  state.payrollManagement.paySlipList?.list
 
 const PaySlipsListSize = (state: RootState): number =>
-  state.payrollManagement.paySlipList.size
+  state.payrollManagement.paySlipList?.size
 
 const editPayslip = (state: RootState): CurrentPayslip =>
   state.payrollManagement.editPayslip
