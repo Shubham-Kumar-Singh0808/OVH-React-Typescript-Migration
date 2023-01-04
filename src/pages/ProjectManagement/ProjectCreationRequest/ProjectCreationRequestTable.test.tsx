@@ -22,6 +22,7 @@ const toRender = (
       pageSize={20}
       paginationRange={[1, 2, 3]}
       setToggle={mockSetToggle}
+      userDeleteAction={true}
     />
     ,
   </div>
@@ -83,5 +84,16 @@ describe('Employee ProjectCreationRequestTable Component Testing', () => {
     const historyElement = screen.getAllByTestId('history-btn')
     userEvent.click(historyElement[0])
     expect(mockSetToggle).toHaveBeenCalledTimes(1)
+  })
+  test('should click on delete button ', () => {
+    const deleteElement = screen.getAllByTestId('delete-btn')
+    userEvent.click(deleteElement[0])
+    expect(deleteElement[0]).toBeInTheDocument()
+  })
+
+  test('should click on reject button ', () => {
+    const rejectElement = screen.getAllByTestId('reject-btn')
+    userEvent.click(rejectElement[0])
+    expect(rejectElement[0]).toBeInTheDocument()
   })
 })
