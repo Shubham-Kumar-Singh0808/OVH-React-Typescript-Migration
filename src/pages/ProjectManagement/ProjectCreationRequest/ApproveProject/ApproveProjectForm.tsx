@@ -317,7 +317,7 @@ const ApproveProjectForm = (): JSX.Element => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(mileStone),
     )
-    newMileStone[index].effort = e.target.value.replace(/[^0-9]/gi, '')
+    newMileStone[index].effort = e.target.value.replace(/\D/gi, '')
     setMileStone(newMileStone)
   }
 
