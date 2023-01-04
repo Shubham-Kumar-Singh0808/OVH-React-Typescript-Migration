@@ -28,6 +28,7 @@ import {
   ErrorBooleans,
   errorOrderMessage,
   orderRegexValue,
+  TableColor,
 } from '../../AchievementConstants'
 
 const defaultAchievementTypeIdValue = -1
@@ -97,7 +98,6 @@ const AchievementTypeTable = (
     }
   }, [editedValues])
 
-  console.log(editedValues)
   useEffect(() => {
     if (
       editedValues.newOrder === emptyString ||
@@ -200,11 +200,14 @@ const AchievementTypeTable = (
           String(NewAchievementStatus.Inactive).slice(1)
   }
 
-  const uniqueOrderTernary = errors.achievementError2 ? (
-    <p data-testid="unique-order-err" className={TextDanger}>
+  const uniqueOrderTernary = (
+    <p
+      data-testid="unique-order-err"
+      className={errors.achievementError2 ? TextDanger : TableColor}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <>
@@ -338,13 +341,15 @@ const AchievementTypeTable = (
         setVisible={setDisplayModalContent}
         alignment="center"
         modalTitle="Delete Achievement Type"
-        closeButtonClass="d-none"
+        modalHeaderClass="d-none"
         confirmButtonAction={confirmDeleteButtonHandler}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalBodyClass="ng-binding"
       >
-        <div data-testid="confirm-modal-content">{modalContent}</div>
+        <div data-testid="confirm-modal-content" className="pb-4">
+          {modalContent}
+        </div>
       </OModal>
     </>
   )
