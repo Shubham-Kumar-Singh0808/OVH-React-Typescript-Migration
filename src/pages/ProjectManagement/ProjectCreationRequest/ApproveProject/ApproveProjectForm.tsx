@@ -190,56 +190,56 @@ const ApproveProjectForm = (): JSX.Element => {
       name: `${manager.firstName} ${manager.lastName}`,
     } as GetAutoCompleteList
   })
-  const handleClientSelect = (value: GetOnSelect) => {
+  const handleApproveProjectClientSelect = (value: GetOnSelect) => {
     setApproveProject({
       ...approveProject,
       client: value.name,
     })
   }
 
-  const handleProjectName = (value: string) => {
+  const handleApproveProjectName = (value: string) => {
     setApproveProject({
       ...approveProject,
       projectName: value,
     })
   }
 
-  const handleCustomerContactName = (value: string) => {
+  const handleProjectCustomerContactName = (value: string) => {
     setApproveProject({
       ...approveProject,
-      projectContactPerson: value,
+      projectContactPerson: value.replace(/[^a-z\s]$/gi, ''),
     })
   }
 
-  const handleCustomerEmail = (value: string) => {
+  const handleProjectCustomerEmail = (value: string) => {
     setApproveProject({
       ...approveProject,
       projectContactEmail: value,
     })
   }
 
-  const handleBillingPerson = (value: string) => {
+  const handleProjectBillingPerson = (value: string) => {
     setApproveProject({
       ...approveProject,
-      billingContactPerson: value,
+      billingContactPerson: value.replace(/[^a-z\s]$/gi, ''),
     })
   }
 
-  const handleBillingPersonEmail = (value: string) => {
+  const handleProjectBillingPersonEmail = (value: string) => {
     setApproveProject({
       ...approveProject,
       billingContactPersonEmail: value,
     })
   }
 
-  const handleIsInternalStatus = (intrnalOrNot: boolean) => {
+  const handleProjectIsInternalStatus = (intrnalOrNot: boolean) => {
     setApproveProject({
       ...approveProject,
       intrnalOrNot,
     })
   }
 
-  const handleProjectManager = (value: GetOnSelect) => {
+  const handleApproveProjectManager = (value: GetOnSelect) => {
     setApproveProject({
       ...approveProject,
       managerId: value.id,
@@ -248,38 +248,38 @@ const ApproveProjectForm = (): JSX.Element => {
     setProjectManager(value.name)
   }
 
-  const handleDomain = (value: string) => {
+  const handleApproveProjectDomain = (value: string) => {
     setApproveProject({
       ...approveProject,
       domain: value,
     })
   }
 
-  const handlePlatform = (value: string) => {
+  const handleApproveProjectPlatform = (value: string) => {
     setApproveProject({
       ...approveProject,
       platform: value,
     })
   }
 
-  const onHandleStartDate = (value: Date) => {
+  const onHandleProjectStartDate = (value: Date) => {
     setApproveProject({
       ...approveProject,
       startdate: moment(value).format(dateFormat),
     })
   }
 
-  const onHandleHealth = (e: { target: { value: string } }) => {
+  const onHandleApproveProjectHealth = (e: { target: { value: string } }) => {
     setApproveProject({ ...approveProject, health: e.target.value })
   }
 
-  const onHandleEndDate = (value: Date) => {
+  const onHandleApproveProjectEndDate = (value: Date) => {
     setApproveProject({
       ...approveProject,
       enddate: moment(value).format(dateFormat),
     })
   }
-  const onHandleDescription = (description: string) => {
+  const onHandleApproveProjectDescription = (description: string) => {
     setApproveProject((prevState) => {
       return { ...prevState, ...{ description } }
     })
@@ -358,16 +358,16 @@ const ApproveProjectForm = (): JSX.Element => {
       <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
         <ClientOrganization
           list={clientOrganizationList}
-          onSelectHandler={handleClientSelect}
+          onSelectHandler={handleApproveProjectClientSelect}
           value={approveProject.client}
         />
         <ProjectName
           onChange={setProjectName}
-          onBlur={handleProjectName}
+          onBlur={handleApproveProjectName}
           value={projectName}
         />
         <OInputField
-          onChangeHandler={handleCustomerContactName}
+          onChangeHandler={handleProjectCustomerContactName}
           value={approveProject.projectContactPerson}
           isRequired={true}
           label={'Customer Contact Name'}
@@ -376,7 +376,7 @@ const ApproveProjectForm = (): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
         />
         <OInputField
-          onChangeHandler={handleCustomerEmail}
+          onChangeHandler={handleProjectCustomerEmail}
           value={approveProject.projectContactEmail}
           isRequired={true}
           type="email"
@@ -386,7 +386,7 @@ const ApproveProjectForm = (): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
         />
         <OInputField
-          onChangeHandler={handleBillingPerson}
+          onChangeHandler={handleProjectBillingPerson}
           value={approveProject.billingContactPerson}
           isRequired={true}
           label={'Billing Contact Name'}
@@ -395,7 +395,7 @@ const ApproveProjectForm = (): JSX.Element => {
           dynamicFormLabelProps={dynamicFormLabelProps}
         />
         <OInputField
-          onChangeHandler={handleBillingPersonEmail}
+          onChangeHandler={handleProjectBillingPersonEmail}
           value={approveProject.billingContactPersonEmail}
           isRequired={true}
           type="email"
@@ -423,7 +423,9 @@ const ApproveProjectForm = (): JSX.Element => {
               data-testid="editInternalProject"
               id="editInternalProject"
               label="Internal Project"
-              onChange={(event) => handleIsInternalStatus(event.target.checked)}
+              onChange={(event) =>
+                handleProjectIsInternalStatus(event.target.checked)
+              }
               checked={approveProject.intrnalOrNot}
             />
           </CCol>
@@ -438,7 +440,7 @@ const ApproveProjectForm = (): JSX.Element => {
         </CRow>
         <OAutoComplete
           list={projectManagers}
-          onSelect={handleProjectManager}
+          onSelect={handleApproveProjectManager}
           shouldReset={false}
           value={projectManager}
           isRequired={true}
@@ -450,7 +452,7 @@ const ApproveProjectForm = (): JSX.Element => {
         <OSelectList
           isRequired={true}
           list={projectPlatforms}
-          setValue={handlePlatform}
+          setValue={handleApproveProjectPlatform}
           value={approveProject.platform}
           name="platform"
           label="Platform"
@@ -460,7 +462,7 @@ const ApproveProjectForm = (): JSX.Element => {
         <OSelectList
           isRequired={true}
           list={projectDomains}
-          setValue={handleDomain}
+          setValue={handleApproveProjectDomain}
           value={approveProject.domain}
           name="domain"
           label="Domain"
@@ -487,7 +489,7 @@ const ApproveProjectForm = (): JSX.Element => {
               dateFormat="dd/mm/yy"
               name="editprojectstartdate"
               value={approveProject.startdate}
-              onChange={(date: Date) => onHandleStartDate(date)}
+              onChange={(date: Date) => onHandleProjectStartDate(date)}
             />
           </CCol>
         </CRow>
@@ -510,7 +512,7 @@ const ApproveProjectForm = (): JSX.Element => {
               dateFormat="dd/mm/yy"
               name="editprojectenddate"
               value={approveProject.enddate}
-              onChange={(date: Date) => onHandleEndDate(date)}
+              onChange={(date: Date) => onHandleApproveProjectEndDate(date)}
             />
             <span></span>
           </CCol>
@@ -537,7 +539,7 @@ const ApproveProjectForm = (): JSX.Element => {
               data-testid="formEditHealth"
               name="editHealth"
               value={approveProject.health}
-              onChange={onHandleHealth}
+              onChange={onHandleApproveProjectHealth}
             >
               <option value={''}>Select</option>
               {healthList.map((item, index) => {
@@ -566,7 +568,7 @@ const ApproveProjectForm = (): JSX.Element => {
               config={ckeditorConfig}
               debug={false}
               onChange={({ editor }) => {
-                onHandleDescription(editor.getData().trim())
+                onHandleApproveProjectDescription(editor.getData().trim())
               }}
             />
           </CCol>
