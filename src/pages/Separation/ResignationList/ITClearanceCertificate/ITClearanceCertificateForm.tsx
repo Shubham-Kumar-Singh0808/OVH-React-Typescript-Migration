@@ -102,7 +102,7 @@ const ITClearanceCertificateForm = (): JSX.Element => {
             Comments:
             <span
               className={
-                isActiveValue === 'false' || textAreaValue
+                isActiveValue === 'false' || textAreaValue.replace(/^\s*/, '')
                   ? 'text-white'
                   : 'text-danger'
               }
@@ -130,7 +130,10 @@ const ITClearanceCertificateForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitITClearanceCertificateHandler}
-                disabled={isActiveValue === 'true' && textAreaValue === ''}
+                disabled={
+                  isActiveValue === 'true' &&
+                  textAreaValue.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>
