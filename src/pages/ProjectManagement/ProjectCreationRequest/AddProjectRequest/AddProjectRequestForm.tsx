@@ -96,7 +96,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     projectRequestMilestoneDTO: projectRequestMilestoneDTODetails,
     requiredResources: '',
     startdate: '',
-    status: '',
+    status: 'Pending Approval',
     technology: '',
     type: '',
   } as AddProjectRequestDetails
@@ -307,11 +307,14 @@ const AddProjectRequestForm = (): JSX.Element => {
   const handleSubmitProjectRequest = () => {
     const payload = {
       ...projectRequest,
-      model: projectRequest.type.toUpperCase(),
-      bcc: projectRequestMailIds.bcc,
-      cc: projectRequestMailIds.cc,
+      // bcc: projectRequestMailIds.bcc,
+      // cc: projectRequestMailIds.cc,
       chelist: checkList,
-      projectRequestMilestoneDTO: projectMileStone,
+      projectRequestMilestoneDTO: projectMileStone.map((item) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { buttonType, id, ...rest } = item
+        return { ...rest }
+      }),
     }
     dispatch(reduxServices.addProjectCreationRequest.addProjectRequest(payload))
   }
@@ -481,7 +484,7 @@ const AddProjectRequestForm = (): JSX.Element => {
           <OSelectList
             list={priceModelList}
             setValue={handlePriceModel}
-            value={projectRequest.type}
+            value={projectRequest.type.toUpperCase()}
             isRequired={true}
             label="Pricing Model"
             name="addPricingModel"
