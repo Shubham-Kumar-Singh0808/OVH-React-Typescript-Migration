@@ -132,22 +132,6 @@ const ViewPaySlip = ({
 
             <CTableRow>
               <CTableDataCell text-align="left">
-                <strong>Month</strong>
-              </CTableDataCell>
-              <CTableDataCell text-align="left">
-                {selectedPaySlipDetails.month}
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="left">Medical Leave</CTableDataCell>
-              <CTableDataCell text-align="center">
-                {selectedPaySlipDetails.medicliam}
-              </CTableDataCell>
-            </CTableRow>
-
-            <CTableRow>
-              <CTableDataCell text-align="left">
                 <strong>Year</strong>
               </CTableDataCell>
               <CTableDataCell text-align="left">
@@ -178,7 +162,7 @@ const ViewPaySlip = ({
               </CTableDataCell>
             </CTableRow>
 
-            {/* <CTableRow>
+            <CTableRow>
               <CTableDataCell text-align="left">
                 <strong>UAN</strong>
               </CTableDataCell>
@@ -188,11 +172,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="center">
                 <br></br>
               </CTableDataCell>
-              <CTableDataCell text-align="left">Late Coming</CTableDataCell>
-              <CTableDataCell text-align="center">
-                {selectedPaySlipDetails}
-              </CTableDataCell>
-            </CTableRow> */}
+            </CTableRow>
 
             <CTableRow>
               <CTableDataCell text-align="left">
@@ -226,9 +206,9 @@ const ViewPaySlip = ({
                 <br></br>
               </CTableDataCell>
               <CTableDataCell text-align="center">Total Leaves</CTableDataCell>
-              {/* <CTableDataCell text-align="center">
-                {selectedPaySlipDetails}
-              </CTableDataCell> */}
+              <CTableDataCell text-align="center">
+                {selectedPaySlipDetails.sumOfLeaves}
+              </CTableDataCell>
             </CTableRow>
 
             <CTableRow>

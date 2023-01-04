@@ -96,40 +96,40 @@ export type GetPaySlipsResponse = {
 }
 
 export type ReadExcelFile = {
-  serialNo: 1.0
+  serialNo: number
   paySlipId: null
-  employeeId: 1987
-  designation: 'test'
-  joiningDate: '1/20/22'
-  name: 'Employee'
-  accountNo: 'test'
-  grossSalary: 20000
-  variablePayPercentage: 5
-  variablePay: 2000
-  grossSalAfterVariablepay: 18000
-  basicSalary: 10000
-  houseRentAllowance: 3000
-  transportAllowance: 0
-  otherAllowance: 0
-  absent: 0
-  lossOfPay: 0
-  medicliam: 0
-  esi: 0
-  epf: 0
-  gratuity: 200
-  erc: 0
-  taxDeductionScheme: 0
-  professionalTax: 200
-  arrears: 0
-  advArrears: 500
-  incentive: 0
-  vpayable: 0
-  netSalary: 20000
+  employeeId: number
+  designation: string
+  joiningDate: string
+  name: string
+  accountNo: string
+  grossSalary: number
+  variablePayPercentage: number
+  variablePay: number
+  grossSalAfterVariablepay: number
+  basicSalary: number
+  houseRentAllowance: number
+  transportAllowance: number
+  otherAllowance: number
+  absent: number
+  lossOfPay: number
+  medicliam: number
+  esi: number
+  epf: number
+  gratuity: number
+  erc: number
+  taxDeductionScheme: number
+  professionalTax: number
+  arrears: number
+  advArrears: number
+  incentive: number
+  vpayable: number
+  netSalary: number
   month: null
   year: null
-  remarks: 'test'
+  remarks: string
   status: null
-  mealsCard: 0
-  donation: 0
+  mealsCard: number
+  donation: number
   specificDesignation: null
 }

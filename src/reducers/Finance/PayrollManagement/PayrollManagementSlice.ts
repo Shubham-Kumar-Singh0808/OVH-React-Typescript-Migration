@@ -133,7 +133,7 @@ const clearDirectory = createAsyncThunk(
   },
 )
 
-const initialPayrollManagementState: PayRollManagementSliceState = {
+export const initialPayrollManagementState: PayRollManagementSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   currentPaySlipData: {} as GetPaySlipReportResponse,
@@ -150,13 +150,6 @@ const payrollManagementSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-
-      .addCase(getCurrentPayslip.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(getCurrentPayslip.rejected, (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
       .addCase(readExcelFile.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.excelData = action.payload
@@ -181,6 +174,7 @@ const payrollManagementSlice = createSlice({
           deletePayslip.fulfilled,
           downloadExcelFile.fulfilled,
           deleteCheckedPayslips.fulfilled,
+          searchEmployee.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -194,6 +188,8 @@ const payrollManagementSlice = createSlice({
           downloadExcelFile.pending,
           updatePayslip.pending,
           readExcelFile.pending,
+          getCurrentPayslip.pending,
+          saveExcelFile.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -205,8 +201,10 @@ const payrollManagementSlice = createSlice({
           searchEmployee.rejected,
           downloadExcelFile.rejected,
           updatePayslip.rejected,
-          deleteCheckedPayslips.pending,
-          readExcelFile.pending,
+          deleteCheckedPayslips.rejected,
+          readExcelFile.rejected,
+          getCurrentPayslip.rejected,
+          saveExcelFile.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
