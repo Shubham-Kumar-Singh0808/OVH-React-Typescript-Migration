@@ -85,4 +85,15 @@ describe('Employee ProjectCreationRequestTable Component Testing', () => {
     userEvent.click(historyElement[0])
     expect(mockSetToggle).toHaveBeenCalledTimes(1)
   })
+  test('should click on delete button ', () => {
+    const deleteElement = screen.getAllByTestId('delete-btn')
+    userEvent.click(deleteElement[0])
+    expect(deleteElement[0]).toBeInTheDocument()
+  })
+
+  test('should click on reject button ', () => {
+    const rejectElement = screen.getAllByTestId('reject-btn')
+    userEvent.click(rejectElement[0])
+    expect(rejectElement[0]).toBeInTheDocument()
+  })
 })

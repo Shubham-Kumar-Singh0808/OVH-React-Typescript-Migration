@@ -279,7 +279,7 @@ const ProjectCreationRequestTable = ({
                     <CButton
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
+                      data-testid="reject-btn"
                       disabled={
                         projectRequest.status === 'Rejected' ||
                         projectRequest.status === 'Approved'
@@ -292,7 +292,7 @@ const ProjectCreationRequestTable = ({
                       <CButton
                         color="danger"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="edit-btn"
+                        data-testid="delete-btn"
                         onClick={() => handleShowDeleteModal(projectRequest.id)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
