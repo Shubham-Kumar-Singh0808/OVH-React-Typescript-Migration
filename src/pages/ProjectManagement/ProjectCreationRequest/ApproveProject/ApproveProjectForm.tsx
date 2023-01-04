@@ -46,6 +46,9 @@ const ApproveProjectForm = (): JSX.Element => {
   const [projectName, setProjectName] = useState<string>('')
   const [projectManager, setProjectManager] = useState<string>('')
   const [isUpdateBtnEnable, setUpdateBtn] = useState(false)
+  const [showTotalEffort, setShowTotalEffort] = useState<number>(0)
+  const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
+    useState(false)
   const selectedApproveProject = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.approveProjectRequests,
   )
@@ -334,6 +337,13 @@ const ApproveProjectForm = (): JSX.Element => {
     setMileStone(newMileStone)
   }
 
+  useEffect(() => {
+    const total = mileStone.reduce((prev, current) => {
+      return prev + +current.effort
+    }, 0)
+    setShowTotalEffort(total)
+  }, [mileStone])
+
   const handleUpdateSubmit = async () => {
     const payload = {
       ...approveProject,
@@ -605,11 +615,14 @@ const ApproveProjectForm = (): JSX.Element => {
                     effortOnChange={effortOnChange}
                     onChangeHandleFromDate={onChangeHandleFromDate}
                     onChangeHandleToDate={onChangeHandleToDate}
+                    setIsAddMileStoneButtonEnabled={
+                      setIsAddMileStoneButtonEnabled
+                    }
                   />
                 )
               })}
             </CTable>
-            <span>Total Effort: {}</span>
+            <span>Total Effort:{showTotalEffort} </span>
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">
@@ -619,7 +632,7 @@ const ApproveProjectForm = (): JSX.Element => {
               color="success"
               data-testid="update-project"
               onClick={handleUpdateSubmit}
-              disabled={!isUpdateBtnEnable}
+              disabled={!isUpdateBtnEnable || !isAddMilestoneButtonEnabled}
             >
               Add Project
             </CButton>

@@ -4,7 +4,7 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import { ProjectRequestMilestoneDTO } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
@@ -16,6 +16,7 @@ const ProjectMileStone = ({
   effortOnChange,
   onChangeHandleFromDate,
   onChangeHandleToDate,
+  setIsAddMileStoneButtonEnabled,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
@@ -30,8 +31,22 @@ const ProjectMileStone = ({
     e: React.ChangeEvent<HTMLTextAreaElement>,
     index: number,
   ) => void
+  setIsAddMileStoneButtonEnabled: (value: boolean) => void
 }): JSX.Element => {
   const projectBillable = item.billable ? 'Yes' : 'No'
+  useEffect(() => {
+    if (
+      item.title &&
+      item.effort &&
+      item.fromDate &&
+      item.toDate &&
+      item.comments
+    ) {
+      setIsAddMileStoneButtonEnabled(true)
+    } else {
+      setIsAddMileStoneButtonEnabled(false)
+    }
+  }, [item.title, item.effort, item.fromDate, item.comments])
   return (
     <>
       <CTableBody>
