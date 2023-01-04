@@ -96,7 +96,7 @@ const AchievementTypeList = ({
     const achievementStatus =
       newUserSelectedStatus === NewAchievementStatus.Active ? 'true' : 'false'
     const newAchievementData: OutgoingNewAchievementType = {
-      typeName: userNewSelectedAchievementType,
+      typeName: userNewSelectedAchievementType.trim(),
       order: newUserSelectedOrder.toString(),
       status: achievementStatus,
       timeperiodrequired: newUserSelectedTimeReq,
