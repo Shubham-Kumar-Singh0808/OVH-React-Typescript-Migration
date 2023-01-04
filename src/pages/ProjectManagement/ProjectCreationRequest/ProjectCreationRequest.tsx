@@ -118,6 +118,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               currentPage={currentPage}
               pageSize={pageSize}
               setToggle={setToggle}
+              userDeleteAction={userAccessCreateAction?.deleteaccess as boolean}
             />
           </OCard>
         </>

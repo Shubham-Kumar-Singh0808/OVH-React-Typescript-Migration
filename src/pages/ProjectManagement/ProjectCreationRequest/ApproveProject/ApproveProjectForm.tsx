@@ -411,7 +411,11 @@ const ApproveProjectForm = (): JSX.Element => {
           >
             Pricing Model:
           </CFormLabel>
-          <CCol sm={3}>{approveProject.type}</CCol>
+          <CCol sm={3}>
+            <CFormLabel className="form-label col-form-label">
+              {approveProject.type}
+            </CFormLabel>
+          </CCol>
         </CRow>
         <CRow className="mb-3 align-items-center">
           <CCol sm={3} />
@@ -436,7 +440,11 @@ const ApproveProjectForm = (): JSX.Element => {
           >
             Project Type:
           </CFormLabel>
-          <CCol sm={3}>{approveProject.model}</CCol>
+          <CCol sm={3}>
+            <CFormLabel className="form-label col-form-label">
+              {approveProject.model}
+            </CFormLabel>
+          </CCol>
         </CRow>
         <OAutoComplete
           list={projectManagers}

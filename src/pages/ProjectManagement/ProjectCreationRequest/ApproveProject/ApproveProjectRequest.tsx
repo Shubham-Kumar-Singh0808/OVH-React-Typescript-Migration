@@ -1,5 +1,5 @@
 import React from 'react'
-import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { CButton } from '@coreui/react-pro'
 import ApproveProjectForm from './ApproveProjectForm'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
@@ -24,18 +24,17 @@ const ApproveProjectRequest = ({
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="toggle-back-button"
-              onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow>
+        <div className="pull-right">
+          <CButton
+            color="info"
+            className="btn-ovh me-1"
+            data-testid="toggle-back-button"
+            onClick={() => setToggle('')}
+          >
+            <i className="fa fa-arrow-left  me-1"></i>Back
+          </CButton>
+        </div>
+
         {isLoading !== ApiLoadingState.loading ? (
           <ApproveProjectForm />
         ) : (

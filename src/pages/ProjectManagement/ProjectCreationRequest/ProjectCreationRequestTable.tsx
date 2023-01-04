@@ -30,6 +30,7 @@ const ProjectCreationRequestTable = ({
   pageSize,
   setPageSize,
   setToggle,
+  userDeleteAction,
 }: {
   paginationRange: number[]
   currentPage: number
@@ -37,6 +38,7 @@ const ProjectCreationRequestTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  userDeleteAction: boolean
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
@@ -53,14 +55,6 @@ const ProjectCreationRequestTable = ({
 
   const isLoading = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.isLoading,
-  )
-
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-
-  const userAccessDeleteAction = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Project Creation Requests',
   )
 
   const handlePageSizeSelectChange = (
@@ -294,7 +288,7 @@ const ProjectCreationRequestTable = ({
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
-                    {userAccessDeleteAction?.deleteaccess && (
+                    {userDeleteAction && (
                       <CButton
                         color="danger"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
@@ -374,14 +368,14 @@ const ProjectCreationRequestTable = ({
           <div>
             {`Do you really want to reject this project request ?`}
 
-            <CRow className="mt-1 mb-0 align-items-center">
-              <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
+            <CRow className="mt-1 mb-0 align-items-center pt-4">
+              <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
                 Comments:
                 <span className={comments ? 'text-white' : 'text-danger'}>
                   *
                 </span>
               </CFormLabel>
-              <CCol sm={6} className="w-500">
+              <CCol sm={6} className="w-100">
                 <CFormTextarea
                   placeholder="Purpose"
                   aria-label="textarea"
