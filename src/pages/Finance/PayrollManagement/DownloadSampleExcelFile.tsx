@@ -20,6 +20,18 @@ const DownloadSampleExcelFile = (props: DownloadExcelFile): JSX.Element => {
     downloadFile(downloadExcel)
   }
 
+  const downloadSample = async () => {
+    const prepareObject = {
+      fileName: defaultFileName,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    }
+    const downloadSampleExcel = await PayrollManagementApi.downloadExcelFile(
+      prepareObject,
+    )
+    downloadFile(downloadSampleExcel)
+  }
+
   const downloadFile = (downloadExcel: Blob | undefined) => {
     if (downloadExcel) {
       const url = window.URL.createObjectURL(
@@ -37,7 +49,10 @@ const DownloadSampleExcelFile = (props: DownloadExcelFile): JSX.Element => {
   }
   return (
     <>
-      <ins className={props.className} onClick={downloadExcelFileHandler}>
+      <ins
+        className={props.className}
+        onClick={props.fileName ? downloadExcelFileHandler : downloadSample}
+      >
         <i className="fa fa-paperclip me-1"></i>
         Download Sample Excel File
       </ins>
