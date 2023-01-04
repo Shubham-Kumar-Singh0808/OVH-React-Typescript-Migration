@@ -40,7 +40,6 @@ import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 
 const ApproveProjectForm = (): JSX.Element => {
   const initApproveProject = {} as ApproveProjectRequest
-  // const initProjectMileStone = {} as ProjectRequestMilestoneDTO[]
   const [approveProject, setApproveProject] = useState(initApproveProject)
   const [mileStone, setMileStone] = useState<ProjectRequestMilestoneDTO[]>([])
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
@@ -315,7 +314,7 @@ const ApproveProjectForm = (): JSX.Element => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(mileStone),
     )
-    newMileStone[index].effort = e.target.value
+    newMileStone[index].effort = e.target.value.replace(/[^0-9]/gi, '')
     setMileStone(newMileStone)
   }
 
