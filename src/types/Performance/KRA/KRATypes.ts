@@ -101,10 +101,73 @@ export interface KRAInitialState {
   currentPage: number
   pageSize: number
   krasQuery: KRADataQueryBody
+  kraDesigPercentage: number
+  isNewKRADuplicate: boolean
+  editThisKra: KRATableDataItem
+  currentOnScreenPage: KRAPages
+}
+
+// This is for managing the page changes
+export enum KRAPages {
+  kraList = 'KRA List',
+  addKra = 'Add KRA',
+  editKPI = 'Edit KRA',
+  addKPI = 'Add KPI',
+  editKra = 'Edit KRA',
+}
+
+export interface KRATemplateProps {
+  enteredKraName: string
+  setEnteredKraName: React.Dispatch<React.SetStateAction<string>>
+  enteredDept: string
+  setEnteredDept: React.Dispatch<React.SetStateAction<string>>
+  enteredDesig: string
+  setEnteredDesig: React.Dispatch<React.SetStateAction<string>>
+  enteredPercentage: string
+  setEnteredPercentage: React.Dispatch<React.SetStateAction<string>>
+  enteredDescription: string
+  setEnteredDescription: React.Dispatch<React.SetStateAction<string>>
+  showDescription: boolean
+  isPercentReadonly: boolean
+  setPercentReadOnly: React.Dispatch<React.SetStateAction<boolean>>
+  setIsButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
+  callDesignationEveryDepartment: boolean
+}
+
+export interface AddKRAProps {
+  enteredDescription: string
+  setEnteredDescription: React.Dispatch<React.SetStateAction<string>>
 }
 
 export interface KPIsTableProps {
   kraId: number
+}
+
+export interface KRADesignationPercentageQuery {
+  departmentId: number
+  designationId: number
+}
+
+export interface NewKRADuplicateCheckQuery
+  extends KRADesignationPercentageQuery {
+  kraName: string
+}
+
+export interface NewKRABody {
+  departmentId: number
+  description: string
+  designationId: number
+  designationKraPercentage: string
+  name: string
+}
+
+export interface UpdateKRABody extends NewKRABody {
+  checkType: null
+  count: number
+  departmentName: string
+  designationName: string
+  id: number
+  kpiLookps: null
 }
 
 export interface DeleteKPIParams {

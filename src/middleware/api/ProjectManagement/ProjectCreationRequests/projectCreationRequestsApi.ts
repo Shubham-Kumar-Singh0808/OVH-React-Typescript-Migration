@@ -3,6 +3,8 @@ import {
   GetAllProjectRequestListProps,
   GetProjectRequest,
   ProjectRequestHistoryDetails,
+  ApproveProjectRequest,
+  RejectProjectRequestProps,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -56,10 +58,71 @@ const projectRequestHistoryDetails = async (
   return response.data
 }
 
+const getApproveProjectRequest = async (
+  id: number,
+): Promise<ApproveProjectRequest> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.getApproveProjectRequest,
+    method: AllowedHttpMethods.get,
+    params: {
+      id,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateProjectRequest = async (
+  projectRequestDetails: ApproveProjectRequest,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.updateProjectRequest,
+    method: AllowedHttpMethods.post,
+    data: projectRequestDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteProjectRequest = async (
+  id: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.deleteProjectRequest,
+    method: AllowedHttpMethods.delete,
+    params: {
+      id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const rejectProjectRequest = async ({
+  comment,
+  requestId,
+}: RejectProjectRequestProps): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProjectCreationRequestApiConfig.rejectProjectRequest,
+    method: AllowedHttpMethods.put,
+    params: {
+      comment,
+      requestId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectCreationRequestsApi = {
   getAllProjectRequestList,
   getProjectRequest,
   projectRequestHistoryDetails,
+  getApproveProjectRequest,
+  updateProjectRequest,
+  deleteProjectRequest,
+  rejectProjectRequest,
 }
 
 export default projectCreationRequestsApi
