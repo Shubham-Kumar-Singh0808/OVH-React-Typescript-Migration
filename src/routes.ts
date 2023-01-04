@@ -379,6 +379,8 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -829,6 +831,11 @@ const routes = [
     path: '/leadershipForm',
     name: 'Leadership Enrollment Form',
     component: LeadershipEnrollmentForm,
+  },
+  {
+    path: '/addKra',
+    name: 'KRA',
+    component: KRA,
   },
 ]
 

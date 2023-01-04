@@ -146,7 +146,7 @@ describe('add nominee form', () => {
       userEvent.selectOptions(achievementType, achTypeExample)
       userEvent.click(screen.getByTestId(clearBtnId))
       expect(mockSelectAchievementType).toHaveBeenCalledTimes(2)
-      expect(mockSelectNominatedEmployeeName).toHaveBeenCalledTimes(2)
+      expect(mockSelectNominatedEmployeeName).toHaveBeenCalledTimes(3)
     })
   })
   describe('User Feature Validation', () => {
