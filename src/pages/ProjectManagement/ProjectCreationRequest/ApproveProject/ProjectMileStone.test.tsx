@@ -25,6 +25,7 @@ describe('ProjectMileStone Component Testing with data', () => {
         onChangeHandleToDate={jest.fn()}
         effortOnChange={jest.fn()}
         commentsOnChange={jest.fn()}
+        setIsAddMileStoneButtonEnabled={jest.fn()}
       />,
       {
         preloadedState: {
