@@ -230,7 +230,7 @@ const PayrollManagement = (): JSX.Element => {
             </CFormSelect>
           </CCol>
           <CCol className="col-sm-2 control-label text-left">
-            <CFormLabel className="mt-1">
+            <CFormLabel className="mt-1" data-testid="form-select2">
               Select Year:{' '}
               <span className={selectYear ? 'text-white' : 'text-danger'}>
                 *
@@ -242,7 +242,7 @@ const PayrollManagement = (): JSX.Element => {
               aria-label="Default select example"
               size="sm"
               id="Year"
-              data-testid="form-select1"
+              data-testid="form-select2"
               name="Year"
               disabled={!selectMonth}
               value={selectYear}
