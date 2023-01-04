@@ -30,6 +30,7 @@ import {
 import {
   AddProjectRequestDetails,
   Chelist,
+  GetProjectRequestMailIds,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 import { listComposer, showIsRequired } from '../../../../utils/helper'
@@ -291,6 +292,10 @@ const AddProjectRequestForm = (): JSX.Element => {
       ...projectRequest,
       bcc: value,
     })
+  }
+
+  const onChangeProjectRequestMailIdCC = (value: GetProjectRequestMailIds) => {
+    setProjectRequest({ ...projectRequest, cc: value })
   }
 
   useEffect(() => {
@@ -659,9 +664,9 @@ const AddProjectRequestForm = (): JSX.Element => {
             )}
           </CRow>
           <OInputField
-            onChangeHandler={setProjectRequestMailIdCC}
-            onBlurHandler={handleProjectRequestMailIdCC}
-            value={projectRequestMailIdCC}
+            onChangeHandler={onChangeProjectRequestMailIdCC}
+            // onBlurHandler={handleProjectRequestMailIdCC}
+            value={projectRequestMailIds.cc}
             isRequired={false}
             label="CC"
             name="cc"
