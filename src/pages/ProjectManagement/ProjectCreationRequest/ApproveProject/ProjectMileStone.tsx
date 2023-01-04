@@ -4,8 +4,11 @@ import {
   CTableBody,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { ProjectRequestMilestoneDTO } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
 const ProjectMileStone = ({
@@ -33,6 +36,17 @@ const ProjectMileStone = ({
   ) => void
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
 }): JSX.Element => {
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(item.fromDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(item.toDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setError(moment(end).isBefore(start))
+  }, [item.fromDate, item.toDate])
   const projectBillable = item.billable ? 'Yes' : 'No'
   useEffect(() => {
     if (
@@ -47,6 +61,7 @@ const ProjectMileStone = ({
       setIsAddMileStoneButtonEnabled(false)
     }
   }, [item.title, item.effort, item.fromDate, item.comments])
+
   return (
     <>
       <CTableBody>

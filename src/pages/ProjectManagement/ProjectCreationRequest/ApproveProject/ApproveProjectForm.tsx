@@ -495,7 +495,7 @@ const ApproveProjectForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
-              id="editprojectstartdate"
+              id="editProjectEndDate"
               className="form-control form-control-sm sh-date-picker"
               peekNextMonth
               showMonthDropdown
@@ -504,7 +504,7 @@ const ApproveProjectForm = (): JSX.Element => {
               data-testid="start-date-picker"
               placeholderText="dd/mm/yy"
               dateFormat="dd/mm/yy"
-              name="editprojectstartdate"
+              name="editProjectEndDate"
               value={approveProject.startdate}
               onChange={(date: Date) => onHandleProjectStartDate(date)}
             />
@@ -518,7 +518,7 @@ const ApproveProjectForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
-              id="editprojectenddate"
+              id="editProjectEndDate"
               className="form-control form-control-sm sh-date-picker"
               peekNextMonth
               showMonthDropdown
@@ -527,7 +527,7 @@ const ApproveProjectForm = (): JSX.Element => {
               placeholderText="dd/mm/yy"
               data-testid="end-date-picker"
               dateFormat="dd/mm/yy"
-              name="editprojectenddate"
+              name="editProjectEndDate"
               value={approveProject.enddate}
               onChange={(date: Date) => onHandleApproveProjectEndDate(date)}
             />
@@ -591,39 +591,44 @@ const ApproveProjectForm = (): JSX.Element => {
           </CCol>
         </CRow>
         {approveProject.type === 'FIXEDBID' && (
-          <CRow className="mt-4 mb-4">
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              {mileStone.map((item, index) => {
-                return (
-                  <ProjectMileStone
-                    item={item}
-                    key={index}
-                    index={index}
-                    titleOnChange={titleOnChange}
-                    commentsOnChange={commentsOnChange}
-                    effortOnChange={effortOnChange}
-                    onChangeHandleFromDate={onChangeHandleFromDate}
-                    onChangeHandleToDate={onChangeHandleToDate}
-                    setIsAddMileStoneButtonEnabled={
-                      setIsAddMileStoneButtonEnabled
-                    }
-                  />
-                )
-              })}
-            </CTable>
-            <span>Total Effort:{showTotalEffort} </span>
-          </CRow>
+          <>
+            <CFormLabel className="col-sm-1 control-label milestonename">
+              Milestone:
+            </CFormLabel>
+            <CRow className="mt-4 mb-4">
+              <CTable striped>
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                {mileStone.map((item, index) => {
+                  return (
+                    <ProjectMileStone
+                      item={item}
+                      key={index}
+                      index={index}
+                      titleOnChange={titleOnChange}
+                      commentsOnChange={commentsOnChange}
+                      effortOnChange={effortOnChange}
+                      onChangeHandleFromDate={onChangeHandleFromDate}
+                      onChangeHandleToDate={onChangeHandleToDate}
+                      setIsAddMileStoneButtonEnabled={
+                        setIsAddMileStoneButtonEnabled
+                      }
+                    />
+                  )
+                })}
+              </CTable>
+              <span>Total Effort:{showTotalEffort} </span>
+            </CRow>
+          </>
         )}
         <CRow className="mb-3 align-items-center">
           <CCol sm={{ span: 6, offset: 3 }}>
