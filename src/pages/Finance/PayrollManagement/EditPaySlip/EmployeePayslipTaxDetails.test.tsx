@@ -118,4 +118,41 @@ describe('Allocate Employee without data', () => {
     const incentiveInput = screen.getByTestId('incentive')
     userEvent.type(incentiveInput, '0')
   })
+  //
+  test('should able to medicliam field', () => {
+    const medicliamInput = screen.getByTestId('medicliam')
+    userEvent.type(medicliamInput, '0')
+  })
+  test('should able to esi field', () => {
+    const esiInput = screen.getByTestId('esi')
+    userEvent.type(esiInput, '0')
+  })
+  test('should able to epf field', () => {
+    const epfInput = screen.getByTestId('epf')
+    userEvent.type(epfInput, '0')
+  })
+  test('should able to advArrears field', () => {
+    const advArrearsInput = screen.getByTestId('advArrears')
+    userEvent.type(advArrearsInput, '500')
+  })
+  test('should able to erc field', () => {
+    const ercInput = screen.getByTestId('erc')
+    userEvent.type(ercInput, '0')
+  })
+  test('should able to taxDeductionScheme field', () => {
+    const taxDeductionSchemeInput = screen.getByTestId('taxDeductionScheme')
+    userEvent.type(taxDeductionSchemeInput, '0')
+  })
+  test('should able to grossSalary field', () => {
+    const grossSalaryInput = screen.getByTestId('grossSalary')
+    userEvent.type(grossSalaryInput, '20000')
+  })
+  test('should able to professionalTax field', () => {
+    const professionalTaxInput = screen.getByTestId('professionalTax')
+    userEvent.type(professionalTaxInput, '200')
+  })
+  test('should able to arrears field', () => {
+    const arrearsInput = screen.getByTestId('arrears')
+    userEvent.type(arrearsInput, '0')
+  })
 })
