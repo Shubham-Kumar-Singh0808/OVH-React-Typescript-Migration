@@ -152,7 +152,7 @@ const ProjectMileStone = ({
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
-            data-testid="title-test"
+            data-testid="percentage-test"
           />
         </CTableDataCell>
         <CTableDataCell scope="row">
