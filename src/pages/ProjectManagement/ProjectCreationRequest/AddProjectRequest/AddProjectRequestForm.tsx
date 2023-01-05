@@ -48,8 +48,6 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [customerEmail, setCustomerEmail] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
-  // const [platform, setPlatform] = useState<string>('')
-  // const [domain, setDomain] = useState<string>('')
   const [projectMileStone, setProjectMileStone] = useState<
     ProjectRequestMilestoneDTO[]
   >([
@@ -77,10 +75,10 @@ const AddProjectRequestForm = (): JSX.Element => {
   )
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
   const initProjectRequest = {
-    bcc: '',
+    bcc: projectRequestMailIds.bcc,
     billingContactPerson: '',
     billingContactPersonEmail: '',
-    cc: '',
+    cc: projectRequestMailIds.cc,
     chelist: checkListDetails,
     client: '',
     description: '',
@@ -103,6 +101,10 @@ const AddProjectRequestForm = (): JSX.Element => {
 
   const [projectRequest, setProjectRequest] = useState(initProjectRequest)
   const [projectName, setProjectName] = useState<string>('')
+  const [isAddBtnEnable, setAddBtn] = useState(false)
+
+  const [discriptionError, setDescriptionError] = useState(false)
+
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
@@ -126,6 +128,37 @@ const AddProjectRequestForm = (): JSX.Element => {
       reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
     )
   }, [dispatch])
+
+  useEffect(() => {
+    if (
+      projectRequest.client !== '' &&
+      projectRequest.client != null &&
+      projectRequest.projectName !== '' &&
+      projectRequest.projectName != null &&
+      projectRequest.projectContactPerson !== '' &&
+      projectRequest.projectContactPerson !== null &&
+      projectRequest.projectContactEmail !== null &&
+      projectRequest.projectContactEmail !== '' &&
+      projectRequest.model !== '' &&
+      projectRequest.model != null &&
+      projectRequest.type !== '' &&
+      projectRequest.type != null &&
+      projectRequest.managerId !== -1 &&
+      projectRequest.managerId != null &&
+      projectRequest.startdate !== '' &&
+      projectRequest.startdate != null &&
+      projectRequest.platform !== '' &&
+      projectRequest.platform != null &&
+      projectRequest.domain !== '' &&
+      projectRequest.domain != null &&
+      projectRequest.technology !== '' &&
+      projectRequest.technology != null &&
+      projectRequest.description?.length > 156 &&
+      projectRequest.description?.length > 156 != null
+    ) {
+      setAddBtn(true)
+    }
+  }, [projectRequest])
 
   useEffect(() => {
     if (checkListItems) setCheckList(checkListItems)
@@ -231,12 +264,6 @@ const AddProjectRequestForm = (): JSX.Element => {
     })
   }
 
-  const onHandleDescription = (description: string) => {
-    setProjectRequest((prevState) => {
-      return { ...prevState, ...{ description } }
-    })
-  }
-
   const onHandleRequiredResource = (requiredResources: string) => {
     setProjectRequest((prevState) => {
       return { ...prevState, ...{ requiredResources } }
@@ -249,9 +276,11 @@ const AddProjectRequestForm = (): JSX.Element => {
     })
   }
 
-  console.log(projectRequest.description)
   const onHandleCustomerContactName = (value: string) => {
-    setProjectRequest({ ...projectRequest, projectContactPerson: value })
+    setProjectRequest({
+      ...projectRequest,
+      projectContactPerson: value.replace(/[^a-z\s]$/gi, ''),
+    })
   }
 
   const onHandleCustomerEmail = (value: string) => {
@@ -259,7 +288,10 @@ const AddProjectRequestForm = (): JSX.Element => {
   }
 
   const onHandleBillingContactName = (value: string) => {
-    setProjectRequest({ ...projectRequest, billingContactPerson: value })
+    setProjectRequest({
+      ...projectRequest,
+      billingContactPerson: value.replace(/[^a-z\s]$/gi, ''),
+    })
   }
 
   const onHandleBillingContactEmail = (value: string) => {
@@ -307,8 +339,8 @@ const AddProjectRequestForm = (): JSX.Element => {
   const handleSubmitProjectRequest = () => {
     const payload = {
       ...projectRequest,
-      // bcc: projectRequestMailIds.bcc,
-      // cc: projectRequestMailIds.cc,
+      model: projectRequest.model.toUpperCase(),
+      type: projectRequest.type.toUpperCase(),
       chelist: checkList,
       projectRequestMilestoneDTO: projectMileStone.map((item) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -425,6 +457,29 @@ const AddProjectRequestForm = (): JSX.Element => {
     setProjectMileStone(newMileStone)
   }
 
+  const handleClear = () => {
+    setProjectManager('')
+    setProjectName('')
+    onHandleDescription('')
+    setProjectRequest(initProjectRequest)
+    setShowEditor(false)
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }
+
+  const onHandleDescription = (description: string) => {
+    if (description.length > 156) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
+    setProjectRequest((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -484,7 +539,7 @@ const AddProjectRequestForm = (): JSX.Element => {
           <OSelectList
             list={priceModelList}
             setValue={handlePriceModel}
-            value={projectRequest.type.toUpperCase()}
+            value={projectRequest.type}
             isRequired={true}
             label="Pricing Model"
             name="addPricingModel"
@@ -612,6 +667,9 @@ const AddProjectRequestForm = (): JSX.Element => {
               {...dynamicFormLabelProps('description', classNameStyle)}
             >
               Technology:
+              <span className={showIsRequired(projectRequest.technology)}>
+                *
+              </span>
             </CFormLabel>
             {showEditor && (
               <CCol sm={9}>
@@ -628,7 +686,6 @@ const AddProjectRequestForm = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
-
           <CRow className="mt-4 mb-4">
             <CFormLabel
               data-testId="selectLabel"
@@ -651,13 +708,15 @@ const AddProjectRequestForm = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
-
           <CRow className="mt-4 mb-4">
             <CFormLabel
               data-testId="selectLabel"
               {...dynamicFormLabelProps('description', classNameStyle)}
             >
               Description:
+              <span className={showIsRequired(projectRequest.description)}>
+                *
+              </span>
             </CFormLabel>
             {showEditor && (
               <CCol sm={9}>
@@ -671,6 +730,11 @@ const AddProjectRequestForm = (): JSX.Element => {
                     onHandleDescription(editor.getData().trim())
                   }}
                 />
+                {discriptionError && (
+                  <p className="text-danger" data-testid="error-msg">
+                    Please enter at least 150 characters.
+                  </p>
+                )}
               </CCol>
             )}
           </CRow>
@@ -697,8 +761,9 @@ const AddProjectRequestForm = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Checklist:
+              {/* <span className={showIsRequired(checkList.)}>*</span> */}
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={10}>
               {checkList?.length > 0 &&
                 checkList?.map((item, index) => {
                   return (
@@ -757,6 +822,7 @@ const AddProjectRequestForm = (): JSX.Element => {
               color="success"
               data-testid="add-project"
               onClick={handleSubmitProjectRequest}
+              disabled={!isAddBtnEnable}
             >
               Add
             </CButton>
@@ -764,6 +830,7 @@ const AddProjectRequestForm = (): JSX.Element => {
               color="warning"
               className="btn-ovh"
               data-testid="clear-project"
+              onClick={handleClear}
             >
               Clear
             </CButton>
