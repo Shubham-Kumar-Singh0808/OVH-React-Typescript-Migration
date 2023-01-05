@@ -8,11 +8,13 @@ const EmployeePayslipPersonalDetails = ({
   toEditPayslip,
   designation,
   accountNo,
+  setToggle,
 }: {
   toEditPayslip: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
   designation: string
   accountNo: string
+  setToggle: (value: string) => void
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -31,6 +33,7 @@ const EmployeePayslipPersonalDetails = ({
             color="info"
             className="btn-ovh me-1"
             data-testid="back-button"
+            onClick={() => setToggle('')}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
           </CButton>

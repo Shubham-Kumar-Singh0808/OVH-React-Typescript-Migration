@@ -19,6 +19,7 @@ const EditPaySlip = ({
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
   const [designation, setDesignation] = useState('')
   const [accountNo, setAccountNo] = useState('')
+  const [toggle, setToggle] = useState('')
 
   const onChangeInputHandler = (
     e:
@@ -79,36 +80,39 @@ const EditPaySlip = ({
   }
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Edit Payslip"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <EmployeePayslipPersonalDetails
-          toEditPayslip={toEditPayslipCopy}
-          onChangeInputHandler={onChangeInputHandler}
-          designation={designation}
-          accountNo={accountNo}
-        />
-        <EmployeePayslipTaxDetails
-          toEditPayslip={toEditPayslipCopy}
-          onChangeInputHandler={onChangeInputHandler}
-        />
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              data-testid="update-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              disabled={isUpdateBtnEnabled}
-              onClick={handleUpdateHandler}
-            >
-              Update
-            </CButton>
-          </CCol>
-        </CRow>
-      </OCard>
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Edit Payslip"
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <EmployeePayslipPersonalDetails
+            toEditPayslip={toEditPayslipCopy}
+            onChangeInputHandler={onChangeInputHandler}
+            designation={designation}
+            accountNo={accountNo}
+            setToggle={setToggle}
+          />
+          <EmployeePayslipTaxDetails
+            toEditPayslip={toEditPayslipCopy}
+            onChangeInputHandler={onChangeInputHandler}
+          />
+          <CRow>
+            <CCol md={{ span: 6, offset: 3 }}>
+              <CButton
+                data-testid="update-btn"
+                className="btn-ovh me-1 text-white"
+                color="success"
+                disabled={isUpdateBtnEnabled}
+                onClick={handleUpdateHandler}
+              >
+                Update
+              </CButton>
+            </CCol>
+          </CRow>
+        </OCard>
+      )}
     </>
   )
 }
