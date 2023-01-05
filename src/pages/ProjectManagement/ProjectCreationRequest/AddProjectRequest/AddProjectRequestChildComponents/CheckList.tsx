@@ -47,7 +47,7 @@ const CheckList = ({
             <CTableDataCell scope="row">
               <CFormCheck
                 type="radio"
-                data-testid={`yes-radio`}
+                data-testid={`no-radio`}
                 label="No"
                 inline
                 checked={item.answer === CheckedQuestionsOptions.no}
@@ -58,7 +58,7 @@ const CheckList = ({
             <CTableDataCell scope="row">
               <CFormCheck
                 type="radio"
-                data-testid={`yes-radio`}
+                data-testid={`noAnswer-radio`}
                 label="N/A"
                 inline
                 checked={item.answer === CheckedQuestionsOptions.noAnswer}
