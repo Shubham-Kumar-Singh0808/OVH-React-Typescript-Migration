@@ -39,7 +39,11 @@ import OInputField from '../../../../components/ReusableComponent/OInputField'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
 
-const AddProjectRequestForm = (): JSX.Element => {
+const AddProjectRequestForm = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const dispatch = useAppDispatch()
   const [projectManager, setProjectManager] = useState<string>('')
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
@@ -102,8 +106,8 @@ const AddProjectRequestForm = (): JSX.Element => {
   const [projectRequest, setProjectRequest] = useState(initProjectRequest)
   const [projectName, setProjectName] = useState<string>('')
   const [isAddBtnEnable, setAddBtn] = useState(false)
-
-  const [discriptionError, setDescriptionError] = useState(false)
+  console.log(projectRequestMailIds.bcc)
+  const [descriptionError, setDescriptionError] = useState(false)
 
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
@@ -157,6 +161,8 @@ const AddProjectRequestForm = (): JSX.Element => {
       projectRequest.description?.length > 156 != null
     ) {
       setAddBtn(true)
+    } else {
+      setAddBtn(false)
     }
   }, [projectRequest])
 
@@ -290,7 +296,7 @@ const AddProjectRequestForm = (): JSX.Element => {
   const onHandleBillingContactName = (value: string) => {
     setProjectRequest({
       ...projectRequest,
-      billingContactPerson: value.replace(/[^a-z\s]$/gi, ''),
+      billingContactPerson: value,
     })
   }
 
@@ -349,6 +355,7 @@ const AddProjectRequestForm = (): JSX.Element => {
       }),
     }
     dispatch(reduxServices.addProjectCreationRequest.addProjectRequest(payload))
+    setToggle('')
   }
   const generateAnswers = (option: string) => {
     if (option === 'yes') {
@@ -467,6 +474,7 @@ const AddProjectRequestForm = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setDescriptionError(false)
   }
 
   const onHandleDescription = (description: string) => {
@@ -730,7 +738,7 @@ const AddProjectRequestForm = (): JSX.Element => {
                     onHandleDescription(editor.getData().trim())
                   }}
                 />
-                {discriptionError && (
+                {descriptionError && (
                   <p className="text-danger" data-testid="error-msg">
                     Please enter at least 150 characters.
                   </p>
@@ -761,7 +769,7 @@ const AddProjectRequestForm = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Checklist:
-              {/* <span className={showIsRequired(checkList.)}>*</span> */}
+              {/* <span className={showIsRequired(checkList)}>*</span> */}
             </CFormLabel>
             <CCol sm={10}>
               {checkList?.length > 0 &&

@@ -28,7 +28,7 @@ const AddProjectRequest = ({
             </CButton>
           </CCol>
         </CRow>
-        <AddProjectRequestForm />
+        <AddProjectRequestForm setToggle={setToggle} />
       </OCard>
     </>
   )
