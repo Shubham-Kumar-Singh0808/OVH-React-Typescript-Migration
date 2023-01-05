@@ -475,6 +475,10 @@ const AddProjectRequestForm = ({
       setShowEditor(true)
     }, 100)
     setDescriptionError(false)
+    setCustomerContactName('')
+    setCustomerEmail('')
+    setBillingContactName('')
+    setBillingContactEmail('')
   }
 
   const onHandleDescription = (description: string) => {
