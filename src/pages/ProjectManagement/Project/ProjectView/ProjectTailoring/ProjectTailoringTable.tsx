@@ -13,28 +13,27 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ProjectTailoringTable = (): JSX.Element => {
-  const [isIconVisible, setIsIconVisible] = useState(false)
+  const [isIconVisible, setIsIconVisible] = useState(true)
   const [milestoneId, setMilestoneId] = useState<number>()
-  const projectTailoring = useTypedSelector(
+  const projectTailoringList = useTypedSelector(
     reduxServices.projectTailoring.selectors.projectTailoringList,
   )
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
-
   useEffect(() => {
     dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
     dispatch(reduxServices.projectTailoring.getProjectTailoringDocument('view'))
   }, [])
 
   useEffect(() => {
-    if (projectTailoring) {
-      setMilestoneId(projectTailoring[0]?.id)
+    if (projectTailoringList) {
       setIsIconVisible(true)
+      setMilestoneId(projectTailoringList[0]?.processHeadId)
     }
-  }, [])
+  }, [projectTailoringList])
 
   const handleExpandRow = (id: number) => {
-    dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
+    console.log(id)
     setIsIconVisible(true)
     setMilestoneId(id)
   }
@@ -61,13 +60,13 @@ const ProjectTailoringTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {projectTailoring?.length > 0 &&
-            projectTailoring?.map((data, index) => {
+          {projectTailoringList?.length > 0 &&
+            projectTailoringList?.map((data, index) => {
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
                     <CTableDataCell scope="row">
-                      {isIconVisible && milestoneId === data.id ? (
+                      {isIconVisible && milestoneId === data.processHeadId ? (
                         <i
                           data-testid="minus-btn"
                           className="fa fa-minus-circle cursor-pointer"
@@ -77,7 +76,7 @@ const ProjectTailoringTable = (): JSX.Element => {
                         <i
                           data-testid="plus-btn"
                           className="fa fa-plus-circle cursor-pointer"
-                          onClick={() => handleExpandRow(data.id as number)}
+                          onClick={() => handleExpandRow(data.processHeadId)}
                         />
                       )}
                     </CTableDataCell>
@@ -97,7 +96,7 @@ const ProjectTailoringTable = (): JSX.Element => {
                       {data.waivedCount || 'N/A'}
                     </CTableDataCell>
                   </CTableRow>
-                  {isIconVisible && milestoneId === data.id ? (
+                  {isIconVisible && milestoneId === data.processHeadId ? (
                     <CTableDataCell colSpan={10}>
                       <ProjectTailoringExpendableTable />
                     </CTableDataCell>
