@@ -20,6 +20,7 @@ const ProjectTailoringTable = (): JSX.Element => {
   )
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
     dispatch(reduxServices.projectTailoring.getProjectTailoringDocument('view'))
@@ -27,8 +28,8 @@ const ProjectTailoringTable = (): JSX.Element => {
 
   useEffect(() => {
     if (projectTailoring) {
-      setIsIconVisible(true)
       setMilestoneId(projectTailoring[0]?.id)
+      setIsIconVisible(true)
     }
   }, [])
 
