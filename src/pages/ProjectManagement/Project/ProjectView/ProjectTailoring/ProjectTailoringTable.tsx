@@ -16,17 +16,28 @@ const ProjectTailoringTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [milestoneId, setMilestoneId] = useState<number>()
   const projectTailoring = useTypedSelector(
-    reduxServices.projectTailoring.selectors.projectTailoring,
+    reduxServices.projectTailoring.selectors.projectTailoringList,
   )
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
+    dispatch(reduxServices.projectTailoring.getProjectTailoringDocument('view'))
   }, [])
+
+  useEffect(() => {
+    if (projectTailoring) {
+      setIsIconVisible(true)
+      setMilestoneId(projectTailoring[0]?.id)
+    }
+  }, [])
+
   const handleExpandRow = (id: number) => {
+    dispatch(reduxServices.projectTailoring.getProjectTailoring(projectId))
     setIsIconVisible(true)
     setMilestoneId(id)
   }
+
   return (
     <>
       <CTable
@@ -49,8 +60,8 @@ const ProjectTailoringTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {projectTailoring?.processHeaddto?.length > 0 &&
-            projectTailoring?.processHeaddto?.map((data, index) => {
+          {projectTailoring?.length > 0 &&
+            projectTailoring?.map((data, index) => {
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
@@ -65,7 +76,7 @@ const ProjectTailoringTable = (): JSX.Element => {
                         <i
                           data-testid="plus-btn"
                           className="fa fa-plus-circle cursor-pointer"
-                          onClick={() => handleExpandRow(data.id)}
+                          onClick={() => handleExpandRow(data.id as number)}
                         />
                       )}
                     </CTableDataCell>
@@ -79,10 +90,10 @@ const ProjectTailoringTable = (): JSX.Element => {
                       {data.documentCount}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      {data.tailoredCount}
+                      {data.tailoredCount || 'N/A'}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      {data.waivedCount}
+                      {data.waivedCount || 'N/A'}
                     </CTableDataCell>
                   </CTableRow>
                   {isIconVisible && milestoneId === data.id ? (

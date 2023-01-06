@@ -1,7 +1,7 @@
 import { LoadingState } from '../../../../commonTypes'
 
 export type ProjectTailoringList = {
-  id: null
+  id: number
   processHeadId: number
   processHeadname: string
   processSubHeadsDto: ProcessSubHeadsDto[]
@@ -13,7 +13,7 @@ export type ProjectTailoringList = {
 }
 
 export type ProcessSubHeadsDto = {
-  id: null
+  id: number
   categoryId: number
   processSubHeadId: number
   processAreaId: null
