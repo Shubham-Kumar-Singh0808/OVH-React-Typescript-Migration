@@ -13,12 +13,14 @@ export type ReviewListData = {
   departmentName: string
   designationName: string
   empStatus: string
-  employeeID: number
+  employeeID: string
   endIndex: number
   ratings: []
   role: string
   searchString: string
   startIndex: number
+  toDate: string
+  fromDate: string
 }
 
 export type Appraisal = {
@@ -59,11 +61,48 @@ export type AppraisalCycle = {
   servicePeriod: number
 }
 
+export type Designation = {
+  id: number
+  name: string
+  code: null
+  departmentName: string
+  departmentId: number
+}
+
+export type ReviewListTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  filterByDepartment: string
+  filterByDesignation: string
+  isTableView: boolean
+}
+
 export type ReviewListSliceState = {
   employeeDepartments: EmpDepartments[]
   appraisalCycle: AppraisalCycle[]
   appraisal: Appraisal[]
+  designations: Designation[]
+  employeeReviewList: ReviewListResponse
   listSize: number
   isLoading: LoadingState
   error: ValidationError
+}
+
+export type GetSearchResultProps = {
+  appraisalFormStatus: string
+  cycleId: number
+  departmentName: string
+  designationName: string
+  empStatus: string
+  employeeID: number
+  endIndex: number
+  fromDate: null
+  ratings: []
+  role: string
+  searchString: string
+  startIndex: number
+  toDate: null
 }

@@ -12,13 +12,28 @@ import ReactDatePicker from 'react-datepicker'
 import {
   reviewListStatus,
   employeeStatus,
+  reviewRatings,
 } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
 
-const ReviewListFilterOptions = (): JSX.Element => {
-  const [cycle, setCycle] = useState<string>()
+const ReviewListFilterOptions = ({
+  setIsTableView,
+  setFilterByDepartment,
+  setFilterByDesignation,
+  setSelectCycleId,
+}: {
+  setFilterByDepartment: (value: string) => void
+  setFilterByDesignation: (value: string) => void
+  setIsTableView: (value: boolean) => void
+  setSelectCycleId: (value: number) => void
+}): JSX.Element => {
+  const [cycle, setCycle] = useState<number | string>()
+  const [selectDepartment, setSelectedDepartment] = useState<number | string>()
+  const [selectDesignation, setSelectDesignation] = useState<number | string>()
+  const [selectStatus, setSelectStatus] = useState<string>()
+  const [selectEmpstatus, setSelectEmpStatus] = useState<string>()
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
@@ -26,6 +41,28 @@ const ReviewListFilterOptions = (): JSX.Element => {
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
+  const designations = useTypedSelector(
+    reduxServices.reviewList.selectors.designations,
+  )
+
+  const departments = useTypedSelector(
+    reduxServices.reviewList.selectors.departments,
+  )
+
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (!departments)
+      dispatch(reduxServices.reviewList.getEmployeeDepartments())
+    if (selectDepartment) {
+      dispatch(
+        reduxServices.reviewList.getDesignations(selectDepartment as number),
+      )
+    }
+  }, [dispatch, selectDesignation, selectDepartment, departments])
 
   useEffect(() => {
     const start = moment(reviewFromDate, commonDateFormat).format(
@@ -36,14 +73,41 @@ const ReviewListFilterOptions = (): JSX.Element => {
     setDateError(moment(end).isBefore(start))
   }, [reviewFromDate, reviewToDate])
 
-  useEffect(() => {
-    if (appraisalCycles) {
-      const getActiveCycle = appraisalCycles?.filter(
-        (currentCycle) => currentCycle.active === true,
-      )
-      setCycle(String(getActiveCycle[0]?.id))
-    }
-  }, [appraisalCycles])
+  const onViewHandler = () => {
+    setFilterByDepartment(selectDepartment as string)
+    setFilterByDesignation(selectDesignation as string)
+    setSelectCycleId(cycle as number)
+    setIsTableView(true)
+    dispatch(
+      reduxServices.reviewList.getReviewList({
+        appraisalFormStatus: '',
+        cycleId: cycle as number,
+        departmentName: (selectDepartment as string) || '',
+        designationName: (selectDesignation as string) || '',
+        empStatus: 'Active',
+        employeeID: (employeeId as string) || '',
+        endIndex: 20,
+        fromDate: reviewFromDate
+          ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        ratings: [],
+        role: '',
+        searchString: '',
+        startIndex: 0,
+        toDate: reviewToDate
+          ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+      }),
+    )
+  }
 
   return (
     <>
@@ -62,14 +126,12 @@ const ReviewListFilterOptions = (): JSX.Element => {
             }}
           >
             <option value="">Select Appraisal Title</option>
-            {appraisalCycles
-              .slice()
-              .sort((cycle1, cycle2) => cycle1.name.localeCompare(cycle2.name))
-              ?.map((title, index) => (
-                <option key={index} value={title.id}>
-                  {title.name}
-                </option>
-              ))}
+            <option value="">Custom</option>
+            {appraisalCycles?.map((title, index) => (
+              <option key={index} value={title.id}>
+                {title.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
         <CCol sm={3}>
@@ -81,26 +143,47 @@ const ReviewListFilterOptions = (): JSX.Element => {
             id="department"
             data-testid="dept-name"
             name="department"
-            // value={approvalStatus}
-            // onChange={(e) => {
-            //   setApprovalStatus(e.target.value)
-            // }}
-          ></CFormSelect>
+            value={selectDepartment}
+            onChange={(e) => {
+              setSelectedDepartment(e.target.value)
+            }}
+          >
+            <option value="">Select Department</option>
+            {departments
+              .slice()
+              .sort((dept1, dept2) =>
+                dept1.departmentName.localeCompare(dept2.departmentName),
+              )
+              ?.map((dept, index) => (
+                <option key={index} value={dept.departmentId}>
+                  {dept.departmentName}
+                </option>
+              ))}
+          </CFormSelect>
         </CCol>
         <CCol sm={3}>
           <CFormLabel>Designation :</CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="categoryName"
+            id="designation"
             data-testid="categoryNameSelect"
-            name="categoryName"
-            // value={categoryId}
-            // onChange={(e) => {
-            //   setCategoryId(Number(e.target.value))
-            // }}
+            name="designation"
+            value={selectDesignation}
+            onChange={(e) => {
+              setSelectDesignation(e.target.value)
+            }}
           >
-            <option value="">Select Designation :</option>
+            <option value="">Select Designation</option>
+            {designations &&
+              designations
+                ?.slice()
+                .sort((catg1, catg2) => catg1.name.localeCompare(catg2.name))
+                ?.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
           </CFormSelect>
         </CCol>
         <CCol sm={3}>
@@ -108,15 +191,15 @@ const ReviewListFilterOptions = (): JSX.Element => {
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="subCategoryName"
+            id="status"
             data-testid="subCategoryNameSelect"
-            name="subCategoryName"
-            // value={subCategoryIdValue}
-            // onChange={(e) => {
-            //   setSubCategoryIdValue(Number(e.target.value))
-            // }}
+            name="status"
+            value={selectStatus}
+            onChange={(e) => {
+              setSelectStatus(e.target.value)
+            }}
           >
-            {reviewListStatus.map((status, index) => (
+            {reviewListStatus?.map((status, index) => (
               <option key={index} value={status.label}>
                 {status.name}
               </option>
@@ -125,93 +208,112 @@ const ReviewListFilterOptions = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-4 justify-content-between">
-        <CCol sm={2}>
-          <CFormLabel>Ratings:</CFormLabel>
-          <CMultiSelect options={[]} />
-        </CCol>
-        <CCol sm={7} className="d-md-flex justify-content-md-end">
-          <CCol sm={3} className="ticket-from-date-col">
-            <CRow>
-              <CFormLabel>
-                From:
-                {(reviewFromDate == null || reviewFromDate === '') && (
-                  <span className="text-danger">*</span>
-                )}
-              </CFormLabel>
-              <ReactDatePicker
-                autoComplete="off"
-                id="from-date"
-                data-testid="ticketsApprovalsFromDate"
-                className="form-control form-control-sm sh-date-picker"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="dd/mm/yy"
-                name="ticketsFromDate"
-                value={
-                  reviewFromDate
-                    ? new Date(reviewFromDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewFromDate(moment(date).format(commonDateFormat))
-                }
-              />
-            </CRow>
-          </CCol>
-
-          <CCol sm={3} className="justify-content-md-end">
-            <CRow>
-              <CFormLabel>
-                To:
-                {(reviewToDate == null || reviewToDate === '') && (
-                  <span className="text-danger">*</span>
-                )}
-              </CFormLabel>
-              <ReactDatePicker
-                autoComplete="off"
-                id="from-date"
-                data-testid="ticketsApprovalsToDate"
-                className="form-control form-control-sm sh-date-picker"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="dd/mm/yy"
-                name="ticketsToDate"
-                value={
-                  reviewToDate
-                    ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewToDate(moment(date).format(commonDateFormat))
-                }
-              />
-              {dateError && (
-                <CCol sm={12} className="mt-1 pt-1">
-                  <span className="text-danger fw-bold">
-                    To month should be greater than From month
-                  </span>
-                </CCol>
+        <CCol sm={2} className="ticket-from-date-col">
+          <CRow>
+            <CFormLabel>
+              From:
+              {(reviewFromDate == null || reviewFromDate === '') && (
+                <span className="text-danger">*</span>
               )}
-            </CRow>
-          </CCol>
+            </CFormLabel>
+            <ReactDatePicker
+              autoComplete="off"
+              id="from-date"
+              data-testid="ticketsApprovalsFromDate"
+              className="form-control form-control-sm sh-date-picker"
+              dateFormat="MM/yyyy"
+              maxDate={new Date()}
+              showMonthYearPicker
+              placeholderText="mm/yyyy"
+              name="reviewListFromDate"
+              value={
+                reviewFromDate
+                  ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })
+                  : ''
+              }
+              onChange={(date: Date) =>
+                setReviewFromDate(moment(date).format(commonDateFormat))
+              }
+            />
+          </CRow>
+        </CCol>
+
+        <CCol sm={2} className="justify-content-md-end">
+          <CRow>
+            <CFormLabel>
+              To:
+              {(reviewToDate == null || reviewToDate === '') && (
+                <span className="text-danger">*</span>
+              )}
+            </CFormLabel>
+            <ReactDatePicker
+              autoComplete="off"
+              id="from-date"
+              data-testid="ticketsApprovalsToDate"
+              className="form-control form-control-sm sh-date-picker"
+              dateFormat="MM/yyyy"
+              maxDate={new Date()}
+              showMonthYearPicker
+              placeholderText="mm/yyyy"
+              name="reviewListToDate"
+              value={
+                reviewToDate
+                  ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit',
+                    })
+                  : ''
+              }
+              onChange={(date: Date) =>
+                setReviewToDate(moment(date).format(commonDateFormat))
+              }
+            />
+            {dateError && (
+              <CCol sm={12} className="mt-1 pt-1">
+                <span className="text-danger fw-bold">
+                  To month should be greater than From month
+                </span>
+              </CCol>
+            )}
+          </CRow>
+        </CCol>
+        <CCol sm={3}>
+          <CFormLabel>Ratings:</CFormLabel>
+          <CMultiSelect options={reviewRatings} />
+        </CCol>
+        <CCol sm={3}>
+          <CFormLabel>Employee Status :</CFormLabel>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="employeeStatus"
+            data-testid="subCategoryNameSelect"
+            name="employeeStatus"
+            value={selectEmpstatus}
+            onChange={(e) => {
+              setSelectEmpStatus(e.target.value)
+            }}
+          >
+            {employeeStatus?.map((status, statusIndex) => (
+              <option key={statusIndex} value={status.label}>
+                {status.name}
+              </option>
+            ))}
+          </CFormSelect>
         </CCol>
       </CRow>
       <CRow className="mt-3">
         <CCol sm={{ span: 6, offset: 4 }}>
-          <CButton className="cursor-pointer" color="success btn-ovh me-1">
+          <CButton
+            className="cursor-pointer"
+            color="success btn-ovh me-1"
+            onClick={onViewHandler}
+          >
             View
           </CButton>
           <CButton

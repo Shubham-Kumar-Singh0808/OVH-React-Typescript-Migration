@@ -813,4 +813,5 @@ export const reviewListApiConfig: ReviewListApi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getReviewList: apiPrefix + '/appraisal/getSearchResult',
   getAppraisalCycles: apiPrefix + '/appraisal/cycle',
+  getDesignations: apiPrefix + '/kra/designation',
 }

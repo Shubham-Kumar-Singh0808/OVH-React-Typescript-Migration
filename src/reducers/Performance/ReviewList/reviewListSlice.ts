@@ -2,13 +2,15 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   Appraisal,
   AppraisalCycle,
+  Designation,
   EmpDepartments,
   ReviewListData,
+  ReviewListResponse,
   ReviewListSliceState,
 } from '../../../types/Performance/ReviewList/reviewListTypes'
 
@@ -19,6 +21,11 @@ const initialReviewListState: ReviewListSliceState = {
   appraisal: [],
   listSize: 0,
   appraisalCycle: [],
+  designations: [],
+  employeeReviewList: {
+    list: [],
+    size: 0,
+  },
 }
 
 const getEmployeeDepartments = createAsyncThunk(
@@ -57,6 +64,23 @@ const getReviewList = createAsyncThunk(
   },
 )
 
+const getDesignations = createAsyncThunk<
+  Designation[] | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('supportManagement/getDesignations', async (departmentId, thunkApi) => {
+  try {
+    return await reviewListApi.getDesignations(departmentId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const reviewListSlice = createSlice({
   name: 'reviewList',
   initialState: initialReviewListState,
@@ -75,9 +99,13 @@ const reviewListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.appraisalCycle = action.payload
       })
+      .addCase(getDesignations.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.designations = action.payload as Designation[]
+      })
       .addCase(getReviewList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.appraisal = action.payload.list
+        state.employeeReviewList = action.payload
         state.listSize = action.payload.size
       })
       .addMatcher(
@@ -85,6 +113,7 @@ const reviewListSlice = createSlice({
           getEmployeeDepartments.pending,
           getReviewList.pending,
           getAppraisalCycles.pending,
+          getDesignations.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -95,6 +124,7 @@ const reviewListSlice = createSlice({
           getEmployeeDepartments.rejected,
           getReviewList.rejected,
           getAppraisalCycles.rejected,
+          getDesignations.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -107,16 +137,19 @@ const reviewListSlice = createSlice({
 const isLoading = (state: RootState): LoadingState => state.reviewList.isLoading
 const departments = (state: RootState): EmpDepartments[] =>
   state.reviewList.employeeDepartments
+const designations = (state: RootState): Designation[] =>
+  state.reviewList.designations
 const appraisalCycles = (state: RootState): AppraisalCycle[] =>
   state.reviewList.appraisalCycle
-const appraisalReviews = (state: RootState): Appraisal[] =>
-  state.reviewList.appraisal
+const appraisalReviews = (state: RootState): ReviewListResponse =>
+  state.reviewList.employeeReviewList
 const listSize = (state: RootState): number => state.reviewList.listSize
 
 const reviewListThunk = {
   getEmployeeDepartments,
   getReviewList,
   getAppraisalCycles,
+  getDesignations,
 }
 
 const reviewListSelectors = {
@@ -125,6 +158,7 @@ const reviewListSelectors = {
   appraisalCycles,
   appraisalReviews,
   listSize,
+  designations,
 }
 
 export const reviewListService = {

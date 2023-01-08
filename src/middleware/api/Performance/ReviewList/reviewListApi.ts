@@ -1,5 +1,6 @@
 import {
   AppraisalCycle,
+  Designation,
   EmpDepartments,
   ReviewListData,
   ReviewListResponse,
@@ -41,8 +42,19 @@ const getReviewList = async (
   return response.data
 }
 
+const getDesignations = async (deptId: number): Promise<Designation[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: reviewListApiConfig.getDesignations,
+    method: AllowedHttpMethods.get,
+    params: { deptId },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const reviewListApi = {
   getEmployeeDepartments,
   getReviewList,
   getAppraisalCycles,
+  getDesignations,
 }
