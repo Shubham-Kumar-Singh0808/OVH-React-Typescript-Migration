@@ -28,58 +28,58 @@ const CheckList = ({
 }): JSX.Element => {
   return (
     <>
-      <CTable key={item.id}>
-        <CTableBody>
-          <CTableRow>
-            <CTableDataCell scope="row">{item.checklistId}</CTableDataCell>
-            <CTableDataCell scope="row">{item.name}</CTableDataCell>
-            <CTableDataCell scope="row">
-              <CFormCheck
-                type="radio"
-                data-testid={`yes-radio`}
-                label="Yes"
-                inline
-                checked={item.answer === CheckedQuestionsOptions.yes}
-                onChange={(e) => onChangeRadio(e, index)}
-                value={String(CheckedQuestionsOptions.yes)}
-              />
-            </CTableDataCell>
-            <CTableDataCell scope="row">
-              <CFormCheck
-                type="radio"
-                data-testid={`no-radio`}
-                label="No"
-                inline
-                checked={item.answer === CheckedQuestionsOptions.no}
-                value={String(CheckedQuestionsOptions.no)}
-                onChange={(e) => onChangeRadio(e, index)}
-              />
-            </CTableDataCell>
-            <CTableDataCell scope="row">
-              <CFormCheck
-                type="radio"
-                data-testid={`noAnswer-radio`}
-                label="N/A"
-                inline
-                checked={item.answer === CheckedQuestionsOptions.noAnswer}
-                onChange={(e) => onChangeRadio(e, index)}
-                value={String(CheckedQuestionsOptions.noAnswer)}
-              />
-            </CTableDataCell>
-            <CTableDataCell scope="row">
-              <CFormTextarea
-                placeholder="Purpose"
-                aria-label="textarea"
-                id="textArea"
-                name="textArea"
-                data-testid="text-area"
-                value={item.comments}
-                onChange={(e) => commentsOnChange(e, index)}
-              ></CFormTextarea>
-            </CTableDataCell>
-          </CTableRow>
-        </CTableBody>
-      </CTable>
+      {/* <CTable key={item.id}> */}
+      <CTableBody>
+        <CTableRow>
+          <CTableDataCell scope="row">{item.checklistId}</CTableDataCell>
+          <CTableDataCell scope="row">{item.name}</CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormCheck
+              type="radio"
+              data-testid={`yes-radio`}
+              label="Yes"
+              inline
+              checked={item.answer === CheckedQuestionsOptions.yes}
+              onChange={(e) => onChangeRadio(e, index)}
+              value={String(CheckedQuestionsOptions.yes)}
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormCheck
+              type="radio"
+              data-testid={`no-radio`}
+              label="No"
+              inline
+              checked={item.answer === CheckedQuestionsOptions.no}
+              value={String(CheckedQuestionsOptions.no)}
+              onChange={(e) => onChangeRadio(e, index)}
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormCheck
+              type="radio"
+              data-testid={`noAnswer-radio`}
+              label="N/A"
+              inline
+              checked={item.answer === CheckedQuestionsOptions.noAnswer}
+              onChange={(e) => onChangeRadio(e, index)}
+              value={String(CheckedQuestionsOptions.noAnswer)}
+            />
+          </CTableDataCell>
+          <CTableDataCell scope="row">
+            <CFormTextarea
+              placeholder="Purpose"
+              aria-label="textarea"
+              id="textArea"
+              name="textArea"
+              data-testid="text-area"
+              value={item.comments}
+              onChange={(e) => commentsOnChange(e, index)}
+            ></CFormTextarea>
+          </CTableDataCell>
+        </CTableRow>
+      </CTableBody>
+      {/* </CTable> */}
     </>
   )
 }

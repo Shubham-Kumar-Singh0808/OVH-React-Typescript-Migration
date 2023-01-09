@@ -797,18 +797,20 @@ const AddProjectRequestForm = ({
               </span>
             </CFormLabel>
             <CCol sm={10}>
-              {checkList?.length > 0 &&
-                checkList?.map((item, index) => {
-                  return (
-                    <CheckList
-                      onChangeRadio={onChangeRadio}
-                      commentsOnChange={commentsOnChange}
-                      item={item}
-                      index={index}
-                      key={index}
-                    />
-                  )
-                })}
+              <CTable>
+                {checkList?.length > 0 &&
+                  checkList?.map((item, index) => {
+                    return (
+                      <CheckList
+                        onChangeRadio={onChangeRadio}
+                        commentsOnChange={commentsOnChange}
+                        item={item}
+                        index={index}
+                        key={index}
+                      />
+                    )
+                  })}
+              </CTable>
             </CCol>
           </CRow>
         </CCol>

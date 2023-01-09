@@ -16,11 +16,11 @@ const deviceLocale: string =
     ? navigator.languages[0]
     : navigator.language
 
-const updateBtnId = 'update-project'
+const updateBtnId = 'add-project'
 
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
-    render(<AddProjectRequestForm />, {
+    render(<AddProjectRequestForm setToggle={jest.f}/>, {
       preloadedState: {
         projectManagement: {
           projectClients: mockProjectClient,
