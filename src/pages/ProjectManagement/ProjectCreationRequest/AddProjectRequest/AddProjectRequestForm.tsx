@@ -52,6 +52,7 @@ const AddProjectRequestForm = ({
   const [customerEmail, setCustomerEmail] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
+  const [checkListValid, setCheckListValid] = useState<boolean>(false)
   const [projectMileStone, setProjectMileStone] = useState<
     ProjectRequestMilestoneDTO[]
   >([
@@ -158,7 +159,8 @@ const AddProjectRequestForm = ({
       projectRequest.technology !== '' &&
       projectRequest.technology != null &&
       projectRequest.description?.length > 156 &&
-      projectRequest.description?.length > 156 != null
+      projectRequest.description?.length > 156 != null &&
+      checkListValid
     ) {
       setAddBtn(true)
     } else {
@@ -479,7 +481,24 @@ const AddProjectRequestForm = ({
     setCustomerEmail('')
     setBillingContactName('')
     setBillingContactEmail('')
+    setCheckList(
+      checkList.map((item) => {
+        return { ...item, answer: '', comments: '' }
+      }),
+    )
   }
+
+  useEffect(() => {
+    if (checkList) {
+      const isValid =
+        checkList &&
+        checkList?.length &&
+        checkList?.every(
+          (item) => item?.answer !== null && item?.comments !== null,
+        )
+      setCheckListValid(isValid as boolean)
+    }
+  }, [checkList])
 
   const onHandleDescription = (description: string) => {
     if (description.length > 156) {
@@ -765,7 +784,7 @@ const AddProjectRequestForm = ({
             onBlurHandler={handleProjectRequestMailIdBbc}
             value={projectRequestMailIdBbc}
             isRequired={false}
-            label="CC"
+            label="BCC"
             name="bcc"
             placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
@@ -773,7 +792,9 @@ const AddProjectRequestForm = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Checklist:
-              {/* <span className={showIsRequired(checkList)}>*</span> */}
+              <span className={checkListValid ? 'text-white' : 'text-danger'}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={10}>
               {checkList?.length > 0 &&
