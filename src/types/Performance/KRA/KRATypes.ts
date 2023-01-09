@@ -85,6 +85,7 @@ export interface KRATableProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
   pageSize: number
+  viewKPIButtonHandler?: (viewKPI: KRATableDataItem[]) => void
 }
 
 export interface KRAFilterOptionsProps {
@@ -92,6 +93,10 @@ export interface KRAFilterOptionsProps {
   pageSize: number
 }
 
+export type Frequency = {
+  id: number
+  frequencyname: string
+}
 export interface KRAInitialState {
   isLoading: LoadingState
   empDepartments: IncomingEmployeeDepartment[]
@@ -105,6 +110,7 @@ export interface KRAInitialState {
   isNewKRADuplicate: boolean
   editThisKra: KRATableDataItem
   currentOnScreenPage: KRAPages
+  frequency: Frequency[]
 }
 
 // This is for managing the page changes

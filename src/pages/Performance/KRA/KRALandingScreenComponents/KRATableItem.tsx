@@ -58,6 +58,11 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKra))
   }
 
+  const addKPIButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKPI))
+  }
+
   return (
     <>
       <CTableRow>
@@ -141,6 +146,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 color="info"
                 className="btn-ovh"
                 title="Add KPI"
+                onClick={addKPIButtonHandler}
               >
                 <i className="fa fa-plus" aria-hidden="true"></i>
               </CButton>

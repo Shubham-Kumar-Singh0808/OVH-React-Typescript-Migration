@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import KRAApi from '../../../middleware/api/Performance/KRA/KRAApi'
+import { RootState } from '../../../stateStore'
 import {
   DeleteKPIParams,
+  Frequency,
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRAInitialState,
@@ -48,7 +50,8 @@ const initialState: KRAInitialState = {
   kraDesigPercentage: -1,
   isNewKRADuplicate: false,
   editThisKra: initialEditKra,
-  currentOnScreenPage: KRAPages.kraList, // Used for navigating to different screens. Implemented here because there are many child components and screens. This makes it more efficient
+  currentOnScreenPage: KRAPages.kraList,
+  frequency: [],
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -183,6 +186,18 @@ const updateKRAThunk = createAsyncThunk(
   },
 )
 
+const getFrequency = createAsyncThunk(
+  'KRA/getFrequency',
+  async (_, thunkApi) => {
+    try {
+      return await KRAApi.getFrequency()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const KRASlice = createSlice({
   name: 'KRA',
   initialState,
@@ -225,6 +240,9 @@ const KRASlice = createSlice({
     builder.addCase(editThisKraThunk.fulfilled, (state, action) => {
       state.editThisKra = action.payload
     })
+    builder.addCase(getFrequency.fulfilled, (state, action) => {
+      state.frequency = action.payload
+    })
     builder.addMatcher(
       isAnyOf(
         getEmpDepartmentThunk.fulfilled,
@@ -256,6 +274,7 @@ const KRASlice = createSlice({
         checkNewKRADuplicacyThunk.pending,
         editThisKraThunk.pending,
         updateKRAThunk.pending,
+        getFrequency.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -274,6 +293,7 @@ const KRASlice = createSlice({
         checkNewKRADuplicacyThunk.rejected,
         editThisKraThunk.rejected,
         updateKRAThunk.rejected,
+        getFrequency.rejected,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.failed
@@ -294,11 +314,19 @@ const KRAThunk = {
   addNewKRAThunk,
   editThisKraThunk,
   updateKRAThunk,
+  getFrequency,
+}
+
+const frequency = (state: RootState): Frequency[] => state.KRA.frequency
+
+const kRAsSelectors = {
+  frequency,
 }
 
 export const KRAService = {
   ...KRAThunk,
   actions: KRASlice.actions,
+  selectors: kRAsSelectors,
 }
 
 const KRAReducer = KRASlice.reducer

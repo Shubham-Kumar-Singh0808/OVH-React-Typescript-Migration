@@ -1,5 +1,6 @@
 import {
   DeleteKPIParams,
+  Frequency,
   IncomingEmployeeDepartment,
   IncomingKPIDataItem,
   IncomingKRADataList,
@@ -158,6 +159,16 @@ const updateKRA = async (body: UpdateKRABody): Promise<void> => {
   return response.data
 }
 
+const getFrequency = async (): Promise<Frequency[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.getFrequency,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const KRAApi = {
   getEmpDepartments,
   getDesignation,
@@ -170,6 +181,7 @@ const KRAApi = {
   addNewKRA,
   editThisKra,
   updateKRA,
+  getFrequency,
 }
 
 export default KRAApi

@@ -806,6 +806,7 @@ export const KRAApiConfig: KRAApi = {
   addNewKRA: apiPrefix + '/kra/',
   editThisKra: apiPrefix + '/kra/',
   updateKRA: apiPrefix + '/kra/',
+  getFrequency: apiPrefix + '/kra/frequencyList',
 }
 
 export const myReviewApiConfig: MyReviewApi = {
