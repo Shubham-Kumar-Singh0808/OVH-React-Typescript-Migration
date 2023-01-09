@@ -7,6 +7,7 @@ import { NewAchieverInformation } from '../../types/Achievements/AddAchiever/Add
 import { deviceLocale } from '../../utils/dateFormatUtils'
 
 export const selectAchievementType = 'Select Achievement Type'
+export const TableColor = 'table-color'
 export const newAchievementLabelClass = 'col-sm-3 col-form-label text-end'
 export const entryContainerClass = 'mt-3 mb-3 align-items-center'
 export const errorOrderMessage = 'Order must be unique'
@@ -34,7 +35,7 @@ export const NomineeRatingList: RatingType[] = [
   },
   {
     ratingNumber: 1,
-    ratingString: '1 - Oppotunity For Development',
+    ratingString: '1 - Opportunity For Development',
   },
   {
     ratingNumber: 2,
@@ -118,6 +119,18 @@ export const getDateForamatted = (givenDate: string): string => {
           day: '2-digit',
         }),
       ).format('MM-YYYY')
+    : ''
+}
+
+export const getFullDateForamatted = (givenDate: string): string => {
+  return givenDate
+    ? moment(
+        new Date(givenDate).toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      ).format('DD/MM/YYYY')
     : ''
 }
 

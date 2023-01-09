@@ -5,7 +5,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { emptyString } from '../AchievementConstants'
 
-const LeadershipEnrollmentForm = () => {
+const LeadershipEnrollmentForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const isAlreadySubmitted = useTypedSelector(
     (state) => state.leadershipEnrollmentForm.employeeDetails.duplicate,

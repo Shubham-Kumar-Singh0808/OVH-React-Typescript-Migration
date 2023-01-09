@@ -362,12 +362,21 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const LeadershipEnrollmentList = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentList'
+    ),
+)
+
 const LeadershipEnrollmentForm = React.lazy(
   () =>
     import(
       './pages/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentForm'
     ),
 )
+
+const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -806,9 +815,19 @@ const routes = [
     component: MyReview,
   },
   {
+    path: '/leadershiplist',
+    name: 'Leadership Enrollment List',
+    component: LeadershipEnrollmentList,
+  },
+  {
     path: '/leadershipForm',
     name: 'Leadership Enrollment Form',
     component: LeadershipEnrollmentForm,
+  },
+  {
+    path: '/addKra',
+    name: 'KRA',
+    component: KRA,
   },
 ]
 

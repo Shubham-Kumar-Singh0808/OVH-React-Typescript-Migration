@@ -29,7 +29,7 @@ export const mockProjectRequestList: GetAllProjectRequestList = {
       email: null,
       country: '',
       organization: null,
-      intrnalOrNot: null,
+      intrnalOrNot: false,
       cc: '',
       bcc: '',
       chelist: [
@@ -186,7 +186,7 @@ export const mockProjectRequest: GetProjectRequest = {
   email: null,
   country: '',
   organization: null,
-  intrnalOrNot: null,
+  intrnalOrNot: true,
   cc: '',
   bcc: '',
   chelist: [
