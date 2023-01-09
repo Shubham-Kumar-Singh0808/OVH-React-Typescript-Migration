@@ -41,14 +41,12 @@ const ReviewListFilterOptions = ({
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
-  const [selectEmpstatus, setSelectEmpStatus] = useState<string>()
+  const [selectEmpstatus, setSelectEmpStatus] = useState<string>('Active')
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
-  const [employeeNameCheckbox, setEmployeeNameCheckbox] =
-    useState<boolean>(false)
-  const [managerNameCheckbox, setManagerNameCheckbox] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
+  const [selectRadio, setSelectRadio] = useState<string>('')
 
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
@@ -85,18 +83,24 @@ const ReviewListFilterOptions = ({
     setDateError(moment(end).isBefore(start))
   }, [reviewFromDate, reviewToDate])
 
-  const onViewHandler = () => {
-    setFilterByDepartment(selectDepartment as string)
-    setFilterByDesignation(selectDesignation as string)
-    setSelectCycleId(cycle as number)
-    setIsTableView(true)
-    dispatch(
+  const checkRole = (roleValue: string) => {
+    if (roleValue === 'true') {
+      return 'EmpName'
+    } else if (roleValue === 'false') {
+      return 'AddedBy'
+    } else {
+      return ''
+    }
+  }
+
+  const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
+    return dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: '',
         cycleId: cycle as number,
         departmentName: (selectDepartment as string) || '',
         designationName: (selectDesignation as string) || '',
-        empStatus: 'Active',
+        empStatus: selectEmpstatus,
         employeeID: (employeeId as string) || '',
         endIndex: 20,
         fromDate: reviewFromDate
@@ -107,8 +111,8 @@ const ReviewListFilterOptions = ({
             })
           : '',
         ratings: [],
-        role: '',
-        searchString: '',
+        role: checkRole(roleValue as string),
+        searchString: searchInput as string,
         startIndex: 0,
         toDate: reviewToDate
           ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
@@ -119,6 +123,14 @@ const ReviewListFilterOptions = ({
           : '',
       }),
     )
+  }
+
+  const onViewHandler = () => {
+    setFilterByDepartment(selectDepartment as string)
+    setFilterByDesignation(selectDesignation as string)
+    setSelectCycleId(cycle as number)
+    setIsTableView(true)
+    dispatchApiCall()
   }
 
   const prepareReviewListObject = {
@@ -138,17 +150,16 @@ const ReviewListFilterOptions = ({
   }
 
   const searchBtnHandler = () => {
-    // setReviewListParams(prepareReviewListObject)
+    console.log('Submit')
+    dispatchApiCall(selectRadio, searchValue)
   }
 
   const searchButtonOnKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      // setTicketApprovalParams({
-      //   ...prepareObject,
-      //   multiSearch: searchValue,
-      // })
+      console.log('Enter')
+      dispatchApiCall(selectRadio, searchValue)
     }
   }
 
@@ -344,8 +355,8 @@ const ReviewListFilterOptions = ({
             }}
           >
             {employeeStatus?.map((status, statusIndex) => (
-              <option key={statusIndex} value={status.label}>
-                {status.name}
+              <option key={statusIndex} value={status.name}>
+                {status.label}
               </option>
             ))}
           </CFormSelect>
@@ -370,10 +381,8 @@ const ReviewListFilterOptions = ({
         </CCol>
       </CRow>
       <ReviewListSearchFilterOptions
-        employeeNameCheckbox={employeeNameCheckbox}
-        setEmployeeNameCheckbox={setEmployeeNameCheckbox}
-        managerNameCheckbox={managerNameCheckbox}
-        setManagerNameCheckbox={setManagerNameCheckbox}
+        setSelectRadio={setSelectRadio}
+        selectRadio={selectRadio}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         searchButtonOnKeyDown={searchButtonOnKeyDown}
