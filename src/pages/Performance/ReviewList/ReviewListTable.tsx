@@ -14,12 +14,10 @@ import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useTypedSelector } from '../../../stateStore'
 import { ReviewListTableProps } from '../../../types/Performance/ReviewList/reviewListTypes'
 
 const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
-  const dispatch = useAppDispatch()
-
   const appraisalReviews = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalReviews,
   )
@@ -42,6 +40,29 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+  }
+
+  const reviewStatusLabelColor = (status: string): JSX.Element => {
+    if (status === 'COMPLETED') {
+      return (
+        <CBadge color="success" className="text-white">
+          {'Completed'}
+        </CBadge>
+      )
+    } else if (status === 'PENDINGAGREEMENT') {
+      return (
+        <CBadge className="discuss-btn text-white">
+          {'Needs Acknowledgement'}
+        </CBadge>
+      )
+    } else if (status === 'SUBMIT') {
+      return (
+        <CBadge color="warning" className="text-white">
+          {'Review Pending'}
+        </CBadge>
+      )
+    }
+    return <></>
   }
 
   const paginationComponent =
@@ -80,68 +101,60 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
 
   return (
     <>
-      {props.isTableView && (
-        <>
-          <CTable striped responsive align="middle">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Manager Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Month</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Emp Avg Rating</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  {"Manager's Avg Rating"}
-                </CTableHeaderCell>
-                <CTableHeaderCell>Status</CTableHeaderCell>
-                <CTableHeaderCell>Action</CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            {appraisalReviews?.size > 0 && (
-              <CTableBody>
-                {appraisalReviews &&
-                  appraisalReviews.list?.map((review, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell>{index + 1}</CTableDataCell>
-                        <CTableDataCell>{review.empId}</CTableDataCell>
-                        <CTableDataCell>{review.employeeName}</CTableDataCell>
-                        <CTableDataCell>{review.manager1Name}</CTableDataCell>
-                        <CTableDataCell>
-                          {review.empDepartmentName}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          {review.empDesignationName}
-                        </CTableDataCell>
-                        <CTableDataCell>{review.cycleStartDate}</CTableDataCell>
-                        <CTableDataCell>{review.empAvgRating}</CTableDataCell>
-                        <CTableDataCell>
-                          {review.overallAvgRating === 'NaN'
-                            ? 'N/A'
-                            : review.overallAvgRating}
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <CBadge color="success"> {review.formStatus}</CBadge>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <CButton
-                            className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                            data-testid={`view-reviewForm-btn${index}`}
-                          >
-                            <i className="fa fa-eye" aria-hidden="true"></i>
-                          </CButton>
-                        </CTableDataCell>
-                      </CTableRow>
-                    )
-                  })}
-              </CTableBody>
-            )}
-          </CTable>
-        </>
-      )}
+      <CTable striped responsive align="middle">
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Employee Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Manager Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Month</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Emp Avg Rating</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
+              {"Manager's Avg Rating"}
+            </CTableHeaderCell>
+            <CTableHeaderCell>Status</CTableHeaderCell>
+            <CTableHeaderCell>Action</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        {appraisalReviews?.size > 0 && (
+          <CTableBody>
+            {appraisalReviews &&
+              appraisalReviews.list?.map((review, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{index + 1}</CTableDataCell>
+                    <CTableDataCell>{review.empId}</CTableDataCell>
+                    <CTableDataCell>{review.employeeName}</CTableDataCell>
+                    <CTableDataCell>{review.manager1Name}</CTableDataCell>
+                    <CTableDataCell>{review.empDepartmentName}</CTableDataCell>
+                    <CTableDataCell>{review.empDesignationName}</CTableDataCell>
+                    <CTableDataCell>{review.cycleStartDate}</CTableDataCell>
+                    <CTableDataCell>{review.empAvgRating}</CTableDataCell>
+                    <CTableDataCell>
+                      {review.overallAvgRating === 'NaN'
+                        ? 'N/A'
+                        : review.overallAvgRating}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {reviewStatusLabelColor(review.formStatus)}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      <CButton
+                        className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                        data-testid={`view-reviewForm-btn${index}`}
+                      >
+                        <i className="fa fa-eye" aria-hidden="true"></i>
+                      </CButton>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
+          </CTableBody>
+        )}
+      </CTable>
       {paginationComponent}
     </>
   )

@@ -33,7 +33,7 @@ const ReviewListSearchFilterOptions = ({
           <div className="d-flex flex-column pull-right">
             <CFormCheck
               inline
-              className="ticket-search-checkbox"
+              className="reviewList-search-checkbox"
               type="radio"
               name="searchByName"
               data-testid="searchByEmployeeName"
@@ -45,10 +45,10 @@ const ReviewListSearchFilterOptions = ({
             />
             <CFormCheck
               inline
-              className="ticket-search-checkbox"
+              className="reviewList-search-checkbox"
               type="radio"
               name="searchByName"
-              data-testid="searchByAssigneeName"
+              data-testid="searchByManagerName"
               id="searchByAssigneeName"
               label="Search by Manager Name"
               value={'false'}

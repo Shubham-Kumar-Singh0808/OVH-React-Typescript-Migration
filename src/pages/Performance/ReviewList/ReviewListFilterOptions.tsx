@@ -24,18 +24,11 @@ const ReviewListFilterOptions = ({
   setIsTableView,
   setFilterByDepartment,
   setFilterByDesignation,
-  setSelectCycleId,
-  selectCycleId,
-  initialReviewList,
-  setReviewListParams,
 }: {
   setFilterByDepartment: (value: string) => void
   setFilterByDesignation: (value: string) => void
   setIsTableView: (value: boolean) => void
-  selectCycleId: number
-  setSelectCycleId: (value: number) => void
   initialReviewList: ReviewListData
-  setReviewListParams: React.Dispatch<React.SetStateAction<ReviewListData>>
 }): JSX.Element => {
   const [cycle, setCycle] = useState<number | string>()
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
@@ -128,29 +121,11 @@ const ReviewListFilterOptions = ({
   const onViewHandler = () => {
     setFilterByDepartment(selectDepartment as string)
     setFilterByDesignation(selectDesignation as string)
-    setSelectCycleId(cycle as number)
     setIsTableView(true)
     dispatchApiCall()
   }
 
-  const prepareReviewListObject = {
-    appraisalFormStatus: '',
-    cycleId: cycle as number,
-    departmentName: '',
-    designationName: '',
-    empStatus: '',
-    employeeID: employeeId,
-    endIndex: 20,
-    fromDate: '',
-    ratings: [],
-    role: '',
-    searchString: '',
-    startIndex: 0,
-    toDate: '',
-  }
-
   const searchBtnHandler = () => {
-    console.log('Submit')
     dispatchApiCall(selectRadio, searchValue)
   }
 
@@ -163,6 +138,19 @@ const ReviewListFilterOptions = ({
     }
   }
 
+  const handleClearFilters = () => {
+    setCycle('')
+    setSelectedDepartment('')
+    setSelectDesignation('')
+    setSelectStatus('')
+    setSelectEmpStatus('')
+    setSelectRadio('')
+    setReviewToDate('')
+    setReviewFromDate('')
+    setDateError(false)
+    setSearchValue('')
+  }
+
   return (
     <>
       <CRow className="mt-4">
@@ -171,9 +159,9 @@ const ReviewListFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="reviewStatus"
-            data-testid="review-status"
-            name="reviewStatus"
+            id="configurations"
+            data-testid="select-configurations"
+            name="configurations"
             value={cycle}
             onChange={(e) => {
               setCycle(e.target.value)
@@ -221,7 +209,7 @@ const ReviewListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="designation"
-            data-testid="categoryNameSelect"
+            data-testid="designation-name"
             name="designation"
             value={selectDesignation}
             onChange={(e) => {
@@ -246,7 +234,7 @@ const ReviewListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="status"
-            data-testid="subCategoryNameSelect"
+            data-testid="select-status"
             name="status"
             value={selectStatus}
             onChange={(e) => {
@@ -263,7 +251,6 @@ const ReviewListFilterOptions = ({
       </CRow>
       <CRow className="mt-4 justify-content-between">
         <CCol sm={2} className="ticket-from-date-col">
-          {}
           <CRow>
             <CFormLabel>
               From:
@@ -339,7 +326,7 @@ const ReviewListFilterOptions = ({
         </CCol>
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
-          <CMultiSelect options={reviewRatings} />
+          <CMultiSelect options={reviewRatings} data-testid="ratings" />
         </CCol>
         <CCol sm={3}>
           <CFormLabel>Employee Status :</CFormLabel>
@@ -347,7 +334,7 @@ const ReviewListFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="employeeStatus"
-            data-testid="subCategoryNameSelect"
+            data-testid="emp-status"
             name="employeeStatus"
             value={selectEmpstatus}
             onChange={(e) => {
@@ -367,6 +354,7 @@ const ReviewListFilterOptions = ({
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
+            data-testid="view-button"
             onClick={onViewHandler}
           >
             View
@@ -375,6 +363,8 @@ const ReviewListFilterOptions = ({
             className="cursor-pointer"
             disabled={false}
             color="warning btn-ovh me-1"
+            data-testid="clear-button"
+            onClick={handleClearFilters}
           >
             Clear
           </CButton>

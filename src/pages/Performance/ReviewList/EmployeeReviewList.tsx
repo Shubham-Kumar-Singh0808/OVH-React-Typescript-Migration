@@ -31,11 +31,11 @@ const EmployeeReviewList = (): JSX.Element => {
     startIndex: 0,
     toDate: '',
   }
-  const [selectCycleId, setSelectCycleId] = useState<number>()
+  // const [selectCycleId, setSelectCycleId] = useState<number>()
   const [filterByDepartment, setFilterByDepartment] = useState<string>()
   const [filterByDesignation, setFilterByDesignation] = useState<string>()
   const [isTableView, setIsTableView] = useState(false)
-  const [reviewListParams, setReviewListParams] = useState(initialReviewList)
+  // const [reviewListParams, setReviewListParams] = useState(initialReviewList)
 
   const {
     paginationRange,
@@ -50,7 +50,7 @@ const EmployeeReviewList = (): JSX.Element => {
     dispatch(reduxServices.reviewList.getAppraisalCycles())
     dispatch(
       reduxServices.reviewList.getReviewList({
-        ...reviewListParams,
+        ...initialReviewList,
         employeeID: String(employeeId),
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
@@ -70,10 +70,7 @@ const EmployeeReviewList = (): JSX.Element => {
           setFilterByDepartment={setFilterByDepartment}
           setFilterByDesignation={setFilterByDesignation}
           setIsTableView={setIsTableView}
-          selectCycleId={selectCycleId as number}
-          setSelectCycleId={setSelectCycleId}
           initialReviewList={initialReviewList}
-          setReviewListParams={setReviewListParams}
         />
         <CRow className="mt-4 mb-4">
           <CCol>
