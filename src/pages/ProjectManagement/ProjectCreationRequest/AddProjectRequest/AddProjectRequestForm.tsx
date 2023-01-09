@@ -302,7 +302,7 @@ const AddProjectRequestForm = ({
   const onHandleAddProjectBillingContactName = (value: string) => {
     setProjectRequest({
       ...projectRequest,
-      billingContactPerson: value,
+      billingContactPerson: value.replace(/[^a-z\s]$/gi, ''),
     })
   }
 
@@ -440,7 +440,7 @@ const AddProjectRequestForm = ({
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].effort = e.target.value
+    newMileStone[index].effort = e.target.value.replace(/[^0-9]/gi, '')
     setProjectMileStone(newMileStone)
   }
 
@@ -783,7 +783,7 @@ const AddProjectRequestForm = ({
                 *
               </span>
             </CFormLabel>
-            {showEditor && (
+            {showEditor ? (
               <CCol sm={9}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
@@ -801,6 +801,8 @@ const AddProjectRequestForm = ({
                   </p>
                 )}
               </CCol>
+            ) : (
+              ''
             )}
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -825,35 +827,6 @@ const AddProjectRequestForm = ({
                     )
                   })}
               </CTable>
-            </CCol>
-          </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              CC:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                name="CC"
-                id="CC"
-                value={projectRequestMailIdCC}
-                onChange={(e) => handleProjectRequestMailIdCC(e)}
-              />
-            </CCol>
-            <CFormLabel className="col-sm-1 col-form-label text-end">
-              BCC:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                name="BCC"
-                id="BCC"
-                value={projectRequestMailIdBbc}
-                onChange={(e) => handleProjectRequestMailIdBbc(e)}
-              />
-            </CCol>
-            <CCol sm={1}>
-              <CButton className="btn-ovh me-2" color="success">
-                Update
-              </CButton>
             </CCol>
           </CRow>
         </CCol>
@@ -894,9 +867,42 @@ const AddProjectRequestForm = ({
                   )
                 })}
             </CTable>
-            {showTotalEffort && <span>Total Effort:{showTotalEffort} </span>}
+            {showTotalEffort ? (
+              <span>Total Effort:{showTotalEffort} </span>
+            ) : (
+              <></>
+            )}
           </CRow>
         )}
+        <CRow className="mt-4 mb-4">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            CC:
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              name="CC"
+              id="CC"
+              value={projectRequestMailIdCC}
+              onChange={(e) => handleProjectRequestMailIdCC(e)}
+            />
+          </CCol>
+          <CFormLabel className="col-sm-1 col-form-label text-end">
+            BCC:
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              name="BCC"
+              id="BCC"
+              value={projectRequestMailIdBbc}
+              onChange={(e) => handleProjectRequestMailIdBbc(e)}
+            />
+          </CCol>
+          <CCol sm={1}>
+            <CButton className="btn-ovh me-2" color="success">
+              Update
+            </CButton>
+          </CCol>
+        </CRow>
         <CRow className="mb-3 align-items-center">
           <CCol sm={{ span: 6, offset: 3 }}>
             <CButton
@@ -904,7 +910,11 @@ const AddProjectRequestForm = ({
               color="success"
               data-testid="add-project"
               onClick={handleSubmitProjectRequest}
-              disabled={!isAddBtnEnable}
+              disabled={
+                !isAddBtnEnable ||
+                (projectRequest.type === 'FIXEDBID' &&
+                  !isAddMilestoneButtonEnabled)
+              }
             >
               Add
             </CButton>

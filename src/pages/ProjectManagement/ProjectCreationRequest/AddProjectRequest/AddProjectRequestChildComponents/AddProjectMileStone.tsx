@@ -57,12 +57,12 @@ const AddProjectMileStone = ({
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
 }): JSX.Element => {
   const [error, setError] = useState(false)
+  const [isPercentageEnable, setPercentageEnable] = useState(false)
   const handleClickMileStone = (index: number) => {
     const projectMileStoneCopy: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
     projectMileStoneCopy[index].buttonType = 'remove'
-
     setProjectMileStone([
       ...projectMileStoneCopy,
       {
@@ -112,7 +112,7 @@ const AddProjectMileStone = ({
     } else {
       setIsAddMileStoneButtonEnabled(false)
     }
-  }, [item?.title, item?.effort, item?.fromDate, item?.comments])
+  }, [item?.title, item?.effort, item?.fromDate, item?.toDate, item?.comments])
 
   useEffect(() => {
     if (error)
@@ -127,12 +127,21 @@ const AddProjectMileStone = ({
       )
   }, [error])
 
+  useEffect(() => {
+    if (item.billable === 'true') {
+      setPercentageEnable(true)
+    } else {
+      setPercentageEnable(false)
+    }
+  }, [item.billable])
+
   return (
     <>
       <CTableBody>
         <CTableDataCell scope="row">
           <CFormInput
             onChange={(e) => titleOnChange(e, index)}
+            className="mt-2"
             value={item.title}
             name="title"
             placeholder="Title"
@@ -143,6 +152,7 @@ const AddProjectMileStone = ({
           <CFormInput
             onChange={(e) => effortOnChange(e, index)}
             value={item.effort}
+            className="mt-2"
             name="effort"
             id="effort"
             placeholder="effort"
@@ -183,6 +193,7 @@ const AddProjectMileStone = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormSelect
+            className="mt-2"
             aria-label="Default select example"
             size="sm"
             id="billable"
@@ -191,20 +202,24 @@ const AddProjectMileStone = ({
             value={item.billable}
             onChange={(e) => billableOnChange(e, index)}
           >
+            <option value="">Select</option>
             <option value="true">yes</option>
             <option value="false">No</option>
           </CFormSelect>
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormInput
+            className="mt-2"
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
             data-testid="percentage-test"
+            disabled={!isPercentageEnable}
           />
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormTextarea
+            className="mt-2"
             aria-label="textarea"
             id="comments"
             name="comments"
@@ -218,8 +233,8 @@ const AddProjectMileStone = ({
             <CButton
               data-testid="search-btn1"
               className="cursor-pointer"
+              color="info btn-ovh me-1"
               type="button"
-              color="info"
               id="button-addon2"
               onClick={() => handleClickMileStone(index)}
             >
@@ -229,8 +244,8 @@ const AddProjectMileStone = ({
             <CButton
               data-testid="search-btn1"
               className="cursor-pointer"
+              color="info btn-ovh me-1"
               type="button"
-              color="info"
               id="button-addon2"
               onClick={() => handleMinusClickMileStone(item.id as number)}
             >
