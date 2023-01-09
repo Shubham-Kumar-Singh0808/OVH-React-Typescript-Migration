@@ -142,7 +142,7 @@ export const initialPayrollManagementState: PayRollManagementSliceState = {
   paySlipList: { list: [], size: 0 },
   editPayslip: {} as CurrentPayslip,
   excelData: [],
-  uplaodExcelFile: [],
+  uploadExcelFile: [],
 }
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
@@ -156,7 +156,7 @@ const payrollManagementSlice = createSlice({
       })
       .addCase(saveExcelFile.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.uplaodExcelFile = action.payload
+        state.uploadExcelFile = action.payload
       })
       .addMatcher(
         isAnyOf(getCurrentPayslip.fulfilled, searchEmployee.fulfilled),

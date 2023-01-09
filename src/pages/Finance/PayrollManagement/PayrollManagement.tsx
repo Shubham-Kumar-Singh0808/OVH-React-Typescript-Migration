@@ -290,6 +290,7 @@ const PayrollManagement = (): JSX.Element => {
               size="sm"
               color="info"
               type="submit"
+              data-testid="preview-btn"
               onClick={previewBtnHandler}
             >
               Preview

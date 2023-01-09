@@ -48,4 +48,17 @@ describe('Payroll Management component with data', () => {
     userEvent.type(searchInput, 'Vinesh')
     userEvent.click(screen.getByTestId(searchInputTestId))
   })
+  it('should be able to click preview-btn ', () => {
+    const previewButtonElement = screen.getByTestId('preview-btn')
+    userEvent.click(previewButtonElement)
+  })
+  it('should be able to click multi-search-btn ', () => {
+    const multiSearchButtonElement = screen.getByTestId('multi-search-btn')
+    userEvent.click(multiSearchButtonElement)
+  })
+  test('multi search button should enable only if we enter the value', () => {
+    expect(screen.getByTestId(searchInputTestId)).not.toBeEnabled()
+    userEvent.type(screen.getByPlaceholderText('Search by Id/Name'), 'Vinesh')
+    expect(screen.getByTestId(searchInputTestId)).toBeEnabled()
+  })
 })
