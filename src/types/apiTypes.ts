@@ -673,4 +673,6 @@ export interface PIPListApi extends ApiBase {
   getPerformanceRatings: string
   activeEmployee: string
   addPIP: string
+  viewPipDetails: string
+  getPIPHistory: string
 }

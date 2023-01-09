@@ -8,6 +8,7 @@ import {
   CCol,
   CRow,
   CButton,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -68,16 +69,26 @@ const EmployeePipListTable = ({
                   <CTableDataCell>{item.remarks}</CTableDataCell>
                   <CTableDataCell>{item.createdBy}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-2"
-                      data-testid="history-btn"
-                    >
-                      <i
-                        className="fa fa-bar-chart text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <CTooltip content="Timeline">
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-2"
+                        data-testid="history-btn"
+                      >
+                        <i
+                          className="fa fa-bar-chart text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Cleareance Certificate">
+                      <CButton
+                        className="btn btn-primary btn-ovh me-2"
+                        type="button"
+                      >
+                        <i className="fa fa-user-circle text-white"></i>
+                      </CButton>
+                    </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
               )

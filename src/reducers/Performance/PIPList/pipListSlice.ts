@@ -97,6 +97,39 @@ const addPIP = createAsyncThunk(
   },
 )
 
+const viewPipDetails = createAsyncThunk(
+  'pipList/viewPipDetails',
+  async (id: number, thunkApi) => {
+    try {
+      return await pipListApi.viewPipDetails(id)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getPIPHistory = createAsyncThunk(
+  'pipList/getPIPHistory',
+  async (
+    {
+      filterName,
+      pipId,
+    }: {
+      filterName: string
+      pipId: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await pipListApi.getPIPHistory({ filterName, pipId })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -157,6 +190,8 @@ export const pipListThunk = {
   getPerformanceRatings,
   activeEmployee,
   addPIP,
+  viewPipDetails,
+  getPIPHistory,
 }
 
 export const pipListSelectors = {

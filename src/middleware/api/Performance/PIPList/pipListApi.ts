@@ -3,6 +3,8 @@ import {
   EmployeePipStatus,
   GetAllPipList,
   GetAllPipListApiProps,
+  GetPIPHistory,
+  GetPipList,
   PerformanceRatings,
 } from '../../../../types/Performance/PipList/pipListTypes'
 import {
@@ -109,12 +111,47 @@ const addPIP = async ({
   return response.data
 }
 
+const viewPipDetails = async (id: number): Promise<GetPipList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.viewPipDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      id,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getPIPHistory = async ({
+  filterName,
+  pipId,
+}: {
+  filterName: string
+  pipId: number
+}): Promise<GetPIPHistory> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.getPIPHistory,
+    method: AllowedHttpMethods.get,
+    params: {
+      filterName,
+      pipId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const pipListApi = {
   getAllPIPList,
   exportPIPList,
   getPerformanceRatings,
   activeEmployee,
   addPIP,
+  viewPipDetails,
+  getPIPHistory,
 }
 
 export default pipListApi

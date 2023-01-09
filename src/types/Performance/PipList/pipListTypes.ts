@@ -100,3 +100,33 @@ export type ActiveEmployee = {
   totalValue: null
   allocation: null
 }
+
+export type PipHistory = {
+  id: null
+  rating: string
+  remarks: string
+  startDate: string
+  endDate: string
+  extendDate: null
+  employee: string
+  improvement: string
+  oldRating: null
+  oldRemarks: null
+  oldStartDate: null
+  oldEndDate: null
+  oldExtendDate: null
+  oldEmployee: null
+  oldPIPFlag: null
+  oldImprovement: null
+  modifiedDate: string
+  modifiedBy: string
+  persistType: string
+  columnName: null
+  additionalInfo: null
+  pipflag: string
+}
+
+export type GetPIPHistory = {
+  list: PipHistory[]
+  size: number
+}
