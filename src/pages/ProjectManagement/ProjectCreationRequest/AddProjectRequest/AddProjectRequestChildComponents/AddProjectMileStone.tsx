@@ -18,6 +18,7 @@ import { ProjectRequestMilestoneDTO } from '../../../../../types/ProjectManageme
 const AddProjectMileStone = ({
   item,
   index,
+  emptyPercentage,
   setProjectMileStone,
   projectMileStone,
   titleOnChange,
@@ -31,6 +32,7 @@ const AddProjectMileStone = ({
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
+  emptyPercentage: (value: string, index: number) => void
   projectMileStone: ProjectRequestMilestoneDTO[]
   setProjectMileStone: React.Dispatch<
     React.SetStateAction<ProjectRequestMilestoneDTO[]>
@@ -132,6 +134,7 @@ const AddProjectMileStone = ({
       setPercentageEnable(true)
     } else {
       setPercentageEnable(false)
+      emptyPercentage('', index)
     }
   }, [item.billable])
 

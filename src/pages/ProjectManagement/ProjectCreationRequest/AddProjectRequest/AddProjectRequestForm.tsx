@@ -460,6 +460,15 @@ const AddProjectRequestForm = ({
     newMileStone[index].milestonePercentage = e.target.value
     setProjectMileStone(newMileStone)
   }
+
+  const emptyPercentage = (value: string, index: number) => {
+    const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
+      JSON.stringify(projectMileStone),
+    )
+    newMileStone[index].milestonePercentage = value
+    setProjectMileStone(newMileStone)
+  }
+
   const billableOnChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
@@ -875,6 +884,7 @@ const AddProjectRequestForm = ({
                       item={item}
                       key={index}
                       index={index}
+                      emptyPercentage={emptyPercentage}
                       setProjectMileStone={setProjectMileStone}
                       projectMileStone={projectMileStone}
                       titleOnChange={titleOnChange}
