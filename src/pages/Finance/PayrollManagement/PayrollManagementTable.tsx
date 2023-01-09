@@ -128,11 +128,11 @@ const PayrollManagementTable = (props: {
 
   return (
     <>
-      <CCol className="custom-scroll">
+      <CCol className="custom-scroll scroll-alignment">
         <CTable
           striped
           responsive
-          className="text-start text-left align-middle alignment"
+          className="text-start text-left align-middle alignment sh-adjustment"
         >
           <CTableHead>
             <CTableRow>
@@ -257,7 +257,7 @@ const PayrollManagementTable = (props: {
                     <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
                     <CTableDataCell>{payslipItem.month}</CTableDataCell>
                     <CTableDataCell>{payslipItem.year}</CTableDataCell>
-                    <CTableDataCell>
+                    <CTableDataCell className="actions">
                       <CTooltip content="Edit">
                         <CButton
                           size="sm"

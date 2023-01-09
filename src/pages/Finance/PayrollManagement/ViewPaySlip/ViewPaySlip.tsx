@@ -249,24 +249,6 @@ const ViewPaySlip = ({
 
             <CTableRow>
               <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-            </CTableRow>
-
-            <CTableRow>
-              <CTableDataCell text-align="center">
                 <strong> SALARY DETAILS</strong>
               </CTableDataCell>
               <CTableDataCell text-align="center">

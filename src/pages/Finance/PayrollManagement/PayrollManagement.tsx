@@ -193,9 +193,9 @@ const PayrollManagement = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="mb-3 mt-3">
+        <CRow className="mb-3">
           <CCol className="col-sm-2 control-label text-left">
-            <CFormLabel className="mt-1">
+            <CFormLabel className="mt-2">
               Select Month:{' '}
               <span className={selectMonth ? 'text-white' : 'text-danger'}>
                 *
@@ -258,10 +258,27 @@ const PayrollManagement = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        <CRow className="mt-3 justify-content-end">
-          <CCol className="text-end" md={4}>
+        <CRow className="mt-3 sh-previewBtn">
+          <CCol sm={4} className="mt-4 mb-4">
+            <input
+              className="mt-1"
+              data-testid="feedback-form"
+              type="file"
+              name="upload-form"
+              onChange={(element: SyntheticEvent) =>
+                onChangeFileUploadHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
+            />
+            <CRow className="textColor-shade">
+              <span>Note: Please upload file either xls or xlsx format.</span>
+            </CRow>
+          </CCol>
+
+          <CCol md={4} className="text-end mt-4 mb-4">
             <CButton
-              className="text-decoration-none btn btn-ovh"
+              className="btn btn-download text-decoration-none btn btn-ovh"
               size="sm"
               color="info"
               type="submit"
@@ -269,37 +286,15 @@ const PayrollManagement = (): JSX.Element => {
             >
               Preview
             </CButton>
-            &nbsp; &nbsp; &nbsp;
+            &nbsp;
             <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
           </CCol>
-          <CRow className="mt-4 mb-4">
-            {fileUploadErrorText && (
-              <div id="error">
-                <strong className="mt-3 text-danger">
-                  {fileUploadErrorText}
-                </strong>
-              </div>
-            )}
-            <CCol sm={3}>
-              <input
-                className="mt-1"
-                data-testid="feedback-form"
-                type="file"
-                name="upload-form"
-                onChange={(element: SyntheticEvent) =>
-                  onChangeFileUploadHandler(
-                    element.currentTarget as HTMLInputElement,
-                  )
-                }
-              />
-              <span>Note: Please upload file either xls or xlsx format.</span>
-            </CCol>
-          </CRow>
         </CRow>
         <CRow className="gap-2 d-md-flex justify-content-md-end">
           <CCol sm={6} md={4}>
             <CInputGroup className="global-search me-0 justify-content-md-end">
               <CFormInput
+                className="global-search input form-control"
                 data-testid="searchField"
                 placeholder="Search by Id/Name"
                 aria-label="Multiple Search"
@@ -309,6 +304,7 @@ const PayrollManagement = (): JSX.Element => {
                   setSearchInput(e.target.value)
                 }}
                 onKeyDown={handleSearchBtn}
+                type="text"
               />
               <CButton
                 disabled={!searchInput}
@@ -321,6 +317,7 @@ const PayrollManagement = (): JSX.Element => {
               >
                 Search
               </CButton>
+              &nbsp;
               <CButton
                 color="danger btn-ovh"
                 type="button"
@@ -328,7 +325,7 @@ const PayrollManagement = (): JSX.Element => {
                 id="button-delete"
                 onClick={allDeleteHandler}
               >
-                <i className="fa fa-trash-o me-1"></i>Delete
+                Delete
               </CButton>
             </CInputGroup>
           </CCol>
@@ -350,20 +347,20 @@ const PayrollManagement = (): JSX.Element => {
             setIsAllChecked={setIsAllChecked}
           />
         )}
-      </OCard>
 
-      {toggle === 'editPaySlip' && (
-        <EditPaySlip toEditPayslip={toEditPayslip} />
-      )}
-      {toggle === 'excelTable' && (
-        <PaySlipExcelFileTable
-          selectMonth={selectMonth}
-          selectYear={selectYear}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setToggle={setToggle}
-        />
-      )}
+        {toggle === 'editPaySlip' && (
+          <EditPaySlip toEditPayslip={toEditPayslip} />
+        )}
+        {toggle === 'excelTable' && (
+          <PaySlipExcelFileTable
+            selectMonth={selectMonth}
+            selectYear={selectYear}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            setToggle={setToggle}
+          />
+        )}
+      </OCard>
     </>
   )
 }
