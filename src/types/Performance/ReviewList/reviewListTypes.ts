@@ -36,7 +36,7 @@ export type Appraisal = {
   formStatusvalue: number
   id: number
   manager1Name: string
-  overallAvgRating: number
+  overallAvgRating: number | string
   pendingWith: null
 }
 

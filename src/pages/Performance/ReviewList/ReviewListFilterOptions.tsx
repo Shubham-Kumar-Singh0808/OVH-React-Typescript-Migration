@@ -9,6 +9,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
 import {
   reviewListStatus,
   employeeStatus,
@@ -17,17 +18,24 @@ import {
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
+import { ReviewListData } from '../../../types/Performance/ReviewList/reviewListTypes'
 
 const ReviewListFilterOptions = ({
   setIsTableView,
   setFilterByDepartment,
   setFilterByDesignation,
   setSelectCycleId,
+  selectCycleId,
+  initialReviewList,
+  setReviewListParams,
 }: {
   setFilterByDepartment: (value: string) => void
   setFilterByDesignation: (value: string) => void
   setIsTableView: (value: boolean) => void
+  selectCycleId: number
   setSelectCycleId: (value: number) => void
+  initialReviewList: ReviewListData
+  setReviewListParams: React.Dispatch<React.SetStateAction<ReviewListData>>
 }): JSX.Element => {
   const [cycle, setCycle] = useState<number | string>()
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
@@ -37,6 +45,10 @@ const ReviewListFilterOptions = ({
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
+  const [employeeNameCheckbox, setEmployeeNameCheckbox] =
+    useState<boolean>(false)
+  const [managerNameCheckbox, setManagerNameCheckbox] = useState<boolean>(false)
+  const [searchValue, setSearchValue] = useState<string>('')
 
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
@@ -107,6 +119,37 @@ const ReviewListFilterOptions = ({
           : '',
       }),
     )
+  }
+
+  const prepareReviewListObject = {
+    appraisalFormStatus: '',
+    cycleId: cycle as number,
+    departmentName: '',
+    designationName: '',
+    empStatus: '',
+    employeeID: employeeId,
+    endIndex: 20,
+    fromDate: '',
+    ratings: [],
+    role: '',
+    searchString: '',
+    startIndex: 0,
+    toDate: '',
+  }
+
+  const searchBtnHandler = () => {
+    // setReviewListParams(prepareReviewListObject)
+  }
+
+  const searchButtonOnKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      // setTicketApprovalParams({
+      //   ...prepareObject,
+      //   multiSearch: searchValue,
+      // })
+    }
   }
 
   return (
@@ -209,6 +252,7 @@ const ReviewListFilterOptions = ({
       </CRow>
       <CRow className="mt-4 justify-content-between">
         <CCol sm={2} className="ticket-from-date-col">
+          {}
           <CRow>
             <CFormLabel>
               From:
@@ -325,6 +369,16 @@ const ReviewListFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
+      <ReviewListSearchFilterOptions
+        employeeNameCheckbox={employeeNameCheckbox}
+        setEmployeeNameCheckbox={setEmployeeNameCheckbox}
+        managerNameCheckbox={managerNameCheckbox}
+        setManagerNameCheckbox={setManagerNameCheckbox}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        searchButtonOnKeyDown={searchButtonOnKeyDown}
+        searchBtnHandler={searchBtnHandler}
+      />
     </>
   )
 }

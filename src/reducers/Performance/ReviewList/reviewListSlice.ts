@@ -5,7 +5,6 @@ import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/re
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
-  Appraisal,
   AppraisalCycle,
   Designation,
   EmpDepartments,

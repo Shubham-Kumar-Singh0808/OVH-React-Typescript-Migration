@@ -7,6 +7,8 @@ import {
   CButton,
   CCol,
   CRow,
+  CTableDataCell,
+  CBadge,
 } from '@coreui/react-pro'
 import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -80,7 +82,7 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
     <>
       {props.isTableView && (
         <>
-          <CTable striped responsive>
+          <CTable striped responsive align="middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -104,40 +106,34 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                   appraisalReviews.list?.map((review, index) => {
                     return (
                       <CTableRow key={index}>
-                        <CTableHeaderCell>{index + 1}</CTableHeaderCell>
-                        <CTableHeaderCell>{review.empId}</CTableHeaderCell>
-                        <CTableHeaderCell>
-                          {review.employeeName}
-                        </CTableHeaderCell>
-                        <CTableHeaderCell>
-                          {review.manager1Name}
-                        </CTableHeaderCell>
-                        <CTableHeaderCell>
+                        <CTableDataCell>{index + 1}</CTableDataCell>
+                        <CTableDataCell>{review.empId}</CTableDataCell>
+                        <CTableDataCell>{review.employeeName}</CTableDataCell>
+                        <CTableDataCell>{review.manager1Name}</CTableDataCell>
+                        <CTableDataCell>
                           {review.empDepartmentName}
-                        </CTableHeaderCell>
-                        <CTableHeaderCell>
+                        </CTableDataCell>
+                        <CTableDataCell>
                           {review.empDesignationName}
-                        </CTableHeaderCell>
-                        <CTableHeaderCell>
-                          {review.cycleStartDate}
-                        </CTableHeaderCell>
-                        <CTableHeaderCell>
-                          {review.empAvgRating}
-                        </CTableHeaderCell>
-
-                        <CTableHeaderCell>
-                          {Number.isNaN(review.overallAvgRating) && 'N/A'}
-                        </CTableHeaderCell>
-
-                        <CTableHeaderCell>{review.formStatus}</CTableHeaderCell>
-                        <CTableHeaderCell>
+                        </CTableDataCell>
+                        <CTableDataCell>{review.cycleStartDate}</CTableDataCell>
+                        <CTableDataCell>{review.empAvgRating}</CTableDataCell>
+                        <CTableDataCell>
+                          {review.overallAvgRating === 'NaN'
+                            ? 'N/A'
+                            : review.overallAvgRating}
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <CBadge color="success"> {review.formStatus}</CBadge>
+                        </CTableDataCell>
+                        <CTableDataCell>
                           <CButton
                             className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                             data-testid={`view-reviewForm-btn${index}`}
                           >
                             <i className="fa fa-eye" aria-hidden="true"></i>
                           </CButton>
-                        </CTableHeaderCell>
+                        </CTableDataCell>
                       </CTableRow>
                     )
                   })}
