@@ -118,8 +118,8 @@ describe('Allocate Employee without data', () => {
     const incentiveInput = screen.getByTestId('incentive')
     userEvent.type(incentiveInput, '0')
   })
-  //
-  test('should able to medicliam field', () => {
+
+  test('should able to   field', () => {
     const medicliamInput = screen.getByTestId('medicliam')
     userEvent.type(medicliamInput, '0')
   })
