@@ -267,3 +267,263 @@ describe('Payroll Management Slice', () => {
     })
   })
 })
+
+describe('deletePayslip test', () => {
+  it('Should be able to set isLoading to "loading" if deletePayslip is pending', () => {
+    const action = {
+      type: payrollManagementService.deletePayslip.pending.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.loading,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "success" if deletePayslip is fulfilled', () => {
+    const action = {
+      type: payrollManagementService.deletePayslip.fulfilled.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.succeeded,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "failed" if deletePayslip is rejected', () => {
+    const action = {
+      type: payrollManagementService.deletePayslip.rejected.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.failed,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+})
+
+describe('deleteCheckedPayslips test', () => {
+  it('Should be able to set isLoading to "loading" if deleteCheckedPayslips is pending', () => {
+    const action = {
+      type: payrollManagementService.deleteCheckedPayslips.pending.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.loading,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "success" if deleteCheckedPayslips is fulfilled', () => {
+    const action = {
+      type: payrollManagementService.deleteCheckedPayslips.fulfilled.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.succeeded,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "failed" if deleteCheckedPayslips is rejected', () => {
+    const action = {
+      type: payrollManagementService.deleteCheckedPayslips.rejected.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.failed,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+})
+
+describe('deleteCheckedPayslips test', () => {
+  it('Should be able to set isLoading to "loading" if searchEmployee is pending', () => {
+    const action = {
+      type: payrollManagementService.searchEmployee.pending.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.loading,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "success" if searchEmployee is fulfilled', () => {
+    const action = {
+      type: payrollManagementService.searchEmployee.fulfilled.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.succeeded,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: undefined,
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "failed" if searchEmployee is rejected', () => {
+    const action = {
+      type: payrollManagementService.searchEmployee.rejected.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.failed,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+})
+
+describe('downloadExcelFile test', () => {
+  it('Should be able to set isLoading to "loading" if downloadExcelFile is pending', () => {
+    const action = {
+      type: payrollManagementService.downloadExcelFile.pending.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.loading,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "success" if downloadExcelFile is fulfilled', () => {
+    const action = {
+      type: payrollManagementService.downloadExcelFile.fulfilled.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.succeeded,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+
+  it('Should be able to set isLoading to "failed" if downloadExcelFile is rejected', () => {
+    const action = {
+      type: payrollManagementService.downloadExcelFile.rejected.type,
+    }
+    const state = PayrollManagementReducer(
+      initialPayrollManagementState,
+      action,
+    )
+    expect(state).toEqual({
+      isLoading: ApiLoadingState.failed,
+      error: null,
+      currentPaySlipData: {} as GetPaySlipReportResponse,
+      listSize: 0,
+      paySlipInfo: [],
+      paySlipList: { list: [], size: 0 },
+      editPayslip: {} as CurrentPayslip,
+      excelData: [],
+      uplaodExcelFile: [],
+    })
+  })
+})
