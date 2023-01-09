@@ -39,6 +39,7 @@ import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProjectRequestForm = ({
   setToggle,
@@ -56,6 +57,7 @@ const AddProjectRequestForm = ({
   const [checkListValid, setCheckListValid] = useState<boolean>(false)
   const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
     useState(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const [showTotalEffort, setShowTotalEffort] = useState<number>(0)
   const [projectMileStone, setProjectMileStone] = useState<
     ProjectRequestMilestoneDTO[]
@@ -378,11 +380,15 @@ const AddProjectRequestForm = ({
       )
     ) {
       setToggle('')
-      // dispatch(
-      //   reduxServices.app.actions.addToast(
-      //     getToastMessage(actionMapping.updated),
-      //   ),
-      // )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="            
+            Project request added successfully"
+          />,
+        ),
+      )
     }
   }
 
@@ -544,7 +550,25 @@ const AddProjectRequestForm = ({
       return { ...prevState, ...{ description } }
     })
   }
+  const updateMailIdHandler = () => {
+    dispatch(
+      reduxServices.app.actions.addToast(
+        <OToast
+          toastColor="success"
+          toastMessage="            
+        Email Id updated successfully."
+        />,
+      ),
+    )
+  }
 
+  useEffect(() => {
+    if (projectRequestMailIdCC && projectRequestMailIdBbc) {
+      setIsUpdateButtonEnabled(true)
+    } else {
+      setIsUpdateButtonEnabled(false)
+    }
+  }, [projectRequestMailIdCC, projectRequestMailIdBbc])
   return (
     <>
       <CRow className="justify-content-end">
@@ -898,7 +922,12 @@ const AddProjectRequestForm = ({
             />
           </CCol>
           <CCol sm={1}>
-            <CButton className="btn-ovh me-2" color="success">
+            <CButton
+              className="btn-ovh me-2"
+              color="success"
+              onClick={updateMailIdHandler}
+              disabled={!isUpdateButtonEnabled}
+            >
               Update
             </CButton>
           </CCol>
