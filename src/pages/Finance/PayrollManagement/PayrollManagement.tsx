@@ -185,6 +185,13 @@ const PayrollManagement = (): JSX.Element => {
     }
   }, [isChecked, isAllChecked])
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Payroll Management',
+  )
+
   return (
     <>
       <OCard
@@ -318,15 +325,17 @@ const PayrollManagement = (): JSX.Element => {
                 Search
               </CButton>
               &nbsp;
-              <CButton
-                color="danger btn-ovh"
-                type="button"
-                disabled={!isAllDeleteBtn}
-                id="button-delete"
-                onClick={allDeleteHandler}
-              >
-                Delete
-              </CButton>
+              {userAccess?.deleteaccess && (
+                <CButton
+                  color="danger btn-ovh"
+                  type="button"
+                  disabled={!isAllDeleteBtn}
+                  id="button-delete"
+                  onClick={allDeleteHandler}
+                >
+                  Delete
+                </CButton>
+              )}
             </CInputGroup>
           </CCol>
         </CRow>

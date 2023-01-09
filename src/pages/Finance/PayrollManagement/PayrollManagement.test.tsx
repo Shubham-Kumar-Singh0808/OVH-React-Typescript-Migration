@@ -6,6 +6,7 @@ import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockCurrentPayslip } from '../../../test/data/payrollManagementData'
 import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const searchInputTestId = 'multi-search-btn'
 
@@ -23,6 +24,9 @@ describe('Payroll Management component with data', () => {
           editPayslip: {} as CurrentPayslip,
           excelData: [],
           uplaodExcelFile: [],
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
