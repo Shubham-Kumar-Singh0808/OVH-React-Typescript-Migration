@@ -1,5 +1,4 @@
 import {
-  CTable,
   CTableBody,
   CTableDataCell,
   CTableRow,
@@ -12,7 +11,7 @@ import {
   Chelist,
 } from '../../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 
-const CheckList = ({
+const AddCheckList = ({
   onChangeRadio,
   commentsOnChange,
   item,
@@ -28,7 +27,6 @@ const CheckList = ({
 }): JSX.Element => {
   return (
     <>
-      {/* <CTable key={item.id}> */}
       <CTableBody>
         <CTableRow>
           <CTableDataCell scope="row">{item.checklistId}</CTableDataCell>
@@ -79,9 +77,8 @@ const CheckList = ({
           </CTableDataCell>
         </CTableRow>
       </CTableBody>
-      {/* </CTable> */}
     </>
   )
 }
 
-export default CheckList
+export default AddCheckList

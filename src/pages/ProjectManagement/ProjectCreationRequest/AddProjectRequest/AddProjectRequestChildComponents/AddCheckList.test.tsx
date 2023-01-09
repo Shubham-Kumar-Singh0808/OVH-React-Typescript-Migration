@@ -1,20 +1,15 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import CheckList from './CheckList'
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-} from '../../../../../test/testUtils'
+import AddCheckList from './AddCheckList'
+import { render, screen } from '../../../../../test/testUtils'
 import { mockProjectRequestList } from '../../../../../test/data/projectCreationRequestData'
 
 const mockChangeHandler = jest.fn()
-describe('CheckList Component Testing with data', () => {
+describe('AddCheckList Component Testing with data', () => {
   beforeEach(() => {
     render(
-      <CheckList
+      <AddCheckList
         onChangeRadio={mockChangeHandler}
         commentsOnChange={jest.fn()}
         item={{

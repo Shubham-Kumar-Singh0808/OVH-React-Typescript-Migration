@@ -14,8 +14,8 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import CheckList from './AddProjectRequestChildComponents/CheckList'
-import ProjectMileStone from './AddProjectRequestChildComponents/ProjectMileStone'
+import AddProjectMileStone from './AddProjectRequestChildComponents/AddProjectMileStone'
+import AddCheckList from './AddProjectRequestChildComponents/AddCheckList'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OSelectList from '../../../../components/ReusableComponent/OSelectList'
 import { priceModelList } from '../../../../constant/constantData'
@@ -53,6 +53,9 @@ const AddProjectRequestForm = ({
   const [billingContactName, setBillingContactName] = useState<string>('')
   const [billingContactEmail, setBillingContactEmail] = useState<string>('')
   const [checkListValid, setCheckListValid] = useState<boolean>(false)
+  const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
+    useState(false)
+  const [showTotalEffort, setShowTotalEffort] = useState<number>(0)
   const [projectMileStone, setProjectMileStone] = useState<
     ProjectRequestMilestoneDTO[]
   >([
@@ -200,21 +203,21 @@ const AddProjectRequestForm = ({
     }
   }
 
-  const handleClientSelect = (value: GetOnSelect) => {
+  const handleAddProjectRequestClientSelect = (value: GetOnSelect) => {
     setProjectRequest({
       ...projectRequest,
       client: value.name,
     })
   }
 
-  const handleProjectName = (value: string) => {
+  const handleAddProjectName = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       projectName: value,
     })
   }
 
-  const handlePriceModel = (value: string) => {
+  const handleAddProjectPriceModel = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       type: value,
@@ -228,11 +231,11 @@ const AddProjectRequestForm = ({
     })
   }
 
-  const handleProjectType = (value: string) => {
+  const handleAddProjectType = (value: string) => {
     setProjectRequest({ ...projectRequest, model: value })
   }
 
-  const onHandleEndDate = (value: Date) => {
+  const onHandleProjectRequestEndDate = (value: Date) => {
     setProjectRequest({
       ...projectRequest,
       enddate: moment(value).format(dateFormat),
@@ -260,12 +263,12 @@ const AddProjectRequestForm = ({
     } as GetAutoCompleteList
   })
 
-  const handleProjectManager = (value: GetOnSelect) => {
+  const handleAddProjectManager = (value: GetOnSelect) => {
     setProjectRequest({ ...projectRequest, managerId: value.id })
     setProjectManager(value.name)
   }
 
-  const onHandleStartDate = (value: Date) => {
+  const onHandleProjectRequestStartDate = (value: Date) => {
     setProjectRequest({
       ...projectRequest,
       startdate: moment(value).format(dateFormat),
@@ -284,35 +287,35 @@ const AddProjectRequestForm = ({
     })
   }
 
-  const onHandleCustomerContactName = (value: string) => {
+  const onHandleAddProjectCustomerContactName = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       projectContactPerson: value.replace(/[^a-z\s]$/gi, ''),
     })
   }
 
-  const onHandleCustomerEmail = (value: string) => {
+  const onHandleAddProjectCustomerEmail = (value: string) => {
     setProjectRequest({ ...projectRequest, projectContactEmail: value })
   }
 
-  const onHandleBillingContactName = (value: string) => {
+  const onHandleAddProjectBillingContactName = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       billingContactPerson: value,
     })
   }
 
-  const onHandleBillingContactEmail = (value: string) => {
+  const onHandleAddProjectBillingContactEmail = (value: string) => {
     setProjectRequest({ ...projectRequest, billingContactPersonEmail: value })
   }
-  const handlePlatform = (value: string) => {
+  const handleAddProjectPlatform = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       platform: value,
     })
   }
 
-  const handleDomain = (value: string) => {
+  const handleAddProjectDomain = (value: string) => {
     setProjectRequest({
       ...projectRequest,
       domain: value,
@@ -466,6 +469,13 @@ const AddProjectRequestForm = ({
     setProjectMileStone(newMileStone)
   }
 
+  useEffect(() => {
+    const total = projectMileStone?.reduce((prev, current) => {
+      return prev + +current.effort
+    }, 0)
+    setShowTotalEffort(total)
+  }, [projectMileStone])
+
   const handleClear = () => {
     setProjectManager('')
     setProjectName('')
@@ -517,17 +527,17 @@ const AddProjectRequestForm = ({
         <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
           <ClientOrganization
             list={clientOrganizationList}
-            onSelectHandler={handleClientSelect}
+            onSelectHandler={handleAddProjectRequestClientSelect}
             value={projectRequest.client}
           />
           <ProjectName
             onChange={setProjectName}
-            onBlur={handleProjectName}
+            onBlur={handleAddProjectName}
             value={projectName}
           />
           <OInputField
             onChangeHandler={setCustomerContactName}
-            onBlurHandler={onHandleCustomerContactName}
+            onBlurHandler={onHandleAddProjectCustomerContactName}
             value={customerContactName}
             isRequired={true}
             label="Customer Contact Name"
@@ -537,7 +547,7 @@ const AddProjectRequestForm = ({
           />
           <OInputField
             onChangeHandler={setCustomerEmail}
-            onBlurHandler={onHandleCustomerEmail}
+            onBlurHandler={onHandleAddProjectCustomerEmail}
             value={customerEmail}
             isRequired={true}
             type="email"
@@ -548,7 +558,7 @@ const AddProjectRequestForm = ({
           />
           <OInputField
             onChangeHandler={setBillingContactName}
-            onBlurHandler={onHandleBillingContactName}
+            onBlurHandler={onHandleAddProjectBillingContactName}
             value={billingContactName}
             isRequired={false}
             label="Billing Contact Name"
@@ -558,7 +568,7 @@ const AddProjectRequestForm = ({
           />
           <OInputField
             onChangeHandler={setBillingContactEmail}
-            onBlurHandler={onHandleBillingContactEmail}
+            onBlurHandler={onHandleAddProjectBillingContactEmail}
             value={billingContactEmail}
             isRequired={false}
             type="email"
@@ -569,7 +579,7 @@ const AddProjectRequestForm = ({
           />
           <OSelectList
             list={priceModelList}
-            setValue={handlePriceModel}
+            setValue={handleAddProjectPriceModel}
             value={projectRequest.type}
             isRequired={true}
             label="Pricing Model"
@@ -596,7 +606,7 @@ const AddProjectRequestForm = ({
           <OSelectList
             isRequired={true}
             list={projectTypeList}
-            setValue={handleProjectType}
+            setValue={handleAddProjectType}
             value={projectRequest.model}
             name="addProjectType"
             label="Project Type"
@@ -605,7 +615,7 @@ const AddProjectRequestForm = ({
           />
           <OAutoComplete
             list={projectManagers}
-            onSelect={handleProjectManager}
+            onSelect={handleAddProjectManager}
             shouldReset={false}
             value={projectManager}
             isRequired={true}
@@ -617,7 +627,7 @@ const AddProjectRequestForm = ({
           <OSelectList
             isRequired={true}
             list={projectPlatforms}
-            setValue={handlePlatform}
+            setValue={handleAddProjectPlatform}
             value={projectRequest.platform}
             name="platform"
             label="Platform"
@@ -627,7 +637,7 @@ const AddProjectRequestForm = ({
           <OSelectList
             isRequired={true}
             list={projectDomains}
-            setValue={handleDomain}
+            setValue={handleAddProjectDomain}
             value={projectRequest.domain}
             name="domain"
             label="Domain"
@@ -656,7 +666,7 @@ const AddProjectRequestForm = ({
                 dateFormat="dd/mm/yy"
                 name="addprojectstartdate"
                 value={projectRequest.startdate}
-                onChange={(date: Date) => onHandleStartDate(date)}
+                onChange={(date: Date) => onHandleProjectRequestStartDate(date)}
               />
             </CCol>
           </CRow>
@@ -680,7 +690,7 @@ const AddProjectRequestForm = ({
                 dateFormat="dd/mm/yy"
                 name="addprojectenddate"
                 value={projectRequest.enddate}
-                onChange={(date: Date) => onHandleEndDate(date)}
+                onChange={(date: Date) => onHandleProjectRequestEndDate(date)}
               />
               <span></span>
             </CCol>
@@ -801,7 +811,7 @@ const AddProjectRequestForm = ({
                 {checkList?.length > 0 &&
                   checkList?.map((item, index) => {
                     return (
-                      <CheckList
+                      <AddCheckList
                         onChangeRadio={onChangeRadio}
                         commentsOnChange={commentsOnChange}
                         item={item}
@@ -831,7 +841,7 @@ const AddProjectRequestForm = ({
               {projectMileStone.length > 0 &&
                 projectMileStone?.map((item, index) => {
                   return (
-                    <ProjectMileStone
+                    <AddProjectMileStone
                       item={item}
                       key={index}
                       index={index}
@@ -844,10 +854,14 @@ const AddProjectRequestForm = ({
                       onChangeHandleToDate={onChangeHandleToDate}
                       billableOnChange={billableOnChange}
                       percentageOnChange={percentageOnChange}
+                      setIsAddMileStoneButtonEnabled={
+                        setIsAddMileStoneButtonEnabled
+                      }
                     />
                   )
                 })}
             </CTable>
+            {showTotalEffort && <span>Total Effort:{showTotalEffort} </span>}
           </CRow>
         )}
         <CRow className="mb-3 align-items-center">
@@ -857,7 +871,7 @@ const AddProjectRequestForm = ({
               color="success"
               data-testid="add-project"
               onClick={handleSubmitProjectRequest}
-              disabled={!isAddBtnEnable}
+              disabled={!isAddBtnEnable || !isAddMilestoneButtonEnabled}
             >
               Add
             </CButton>

@@ -6,11 +6,16 @@ import {
   CFormTextarea,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import OToast from '../../../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../../../constant/DateFormat'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../../stateStore'
 import { ProjectRequestMilestoneDTO } from '../../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 
-const ProjectMileStone = ({
+const AddProjectMileStone = ({
   item,
   index,
   setProjectMileStone,
@@ -22,6 +27,7 @@ const ProjectMileStone = ({
   onChangeHandleToDate,
   billableOnChange,
   percentageOnChange,
+  setIsAddMileStoneButtonEnabled,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
@@ -48,7 +54,9 @@ const ProjectMileStone = ({
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => void
+  setIsAddMileStoneButtonEnabled: (value: boolean) => void
 }): JSX.Element => {
+  const [error, setError] = useState(false)
   const handleClickMileStone = (index: number) => {
     const projectMileStoneCopy: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
@@ -78,6 +86,46 @@ const ProjectMileStone = ({
     setProjectMileStone(newInvestmentList)
     console.log(newInvestmentList.length)
   }
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(item?.fromDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(item?.toDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setError(moment(end).isBefore(start))
+  }, [item.fromDate, item.toDate])
+
+  useEffect(() => {
+    if (
+      item?.title &&
+      item?.effort &&
+      item?.fromDate &&
+      item?.toDate &&
+      item?.comments
+    ) {
+      setIsAddMileStoneButtonEnabled(true)
+    } else {
+      setIsAddMileStoneButtonEnabled(false)
+    }
+  }, [item?.title, item?.effort, item?.fromDate, item?.comments])
+
+  useEffect(() => {
+    if (error)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            MileStone FromDate less than ToDate"
+          />,
+        ),
+      )
+  }, [error])
 
   return (
     <>
@@ -195,4 +243,4 @@ const ProjectMileStone = ({
   )
 }
 
-export default ProjectMileStone
+export default AddProjectMileStone

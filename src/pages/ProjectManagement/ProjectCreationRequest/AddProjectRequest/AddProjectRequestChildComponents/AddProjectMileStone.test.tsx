@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import ProjectMileStone from './ProjectMileStone'
+import AddProjectMileStone from './AddProjectMileStone'
 import {
   render,
   screen,
@@ -13,7 +13,7 @@ import { mockProjectRequestList } from '../../../../../test/data/projectCreation
 describe('ProjectMileStone Component Testing with data', () => {
   beforeEach(() => {
     render(
-      <ProjectMileStone
+      <AddProjectMileStone
         item={{
           id: undefined,
           billable: '',
