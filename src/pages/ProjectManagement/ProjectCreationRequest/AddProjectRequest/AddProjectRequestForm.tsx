@@ -800,14 +800,14 @@ const AddProjectRequestForm = ({
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <CRow className="mt-4 mb-4">
-            <CFormLabel className="col-sm-2 col-form-label text-end">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
               Checklist:
               <span className={checkListValid ? 'text-white' : 'text-danger'}>
                 *
               </span>
             </CFormLabel>
-            <CCol sm={10}>
-              <CTable>
+            <CCol sm={9}>
+              <CTable className="add-project-checkList-table">
                 {checkList?.length > 0 &&
                   checkList?.map((item, index) => {
                     return (

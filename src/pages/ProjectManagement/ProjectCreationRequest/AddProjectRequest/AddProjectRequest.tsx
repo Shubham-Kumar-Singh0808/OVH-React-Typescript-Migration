@@ -17,10 +17,10 @@ const AddProjectRequest = ({
         CFooterClassName="d-none"
       >
         <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
+          <CCol md={4}>
             <CButton
               color="info"
-              className="btn-ovh me-1"
+              className="btn-ovh me-1 add-project-back-btn"
               data-testid="toggle-back-button"
               onClick={() => setToggle('')}
             >

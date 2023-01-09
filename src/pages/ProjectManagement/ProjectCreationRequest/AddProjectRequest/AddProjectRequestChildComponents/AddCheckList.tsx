@@ -34,6 +34,7 @@ const AddCheckList = ({
           <CTableDataCell scope="row">
             <CFormCheck
               type="radio"
+              className="checkList-radio-btn"
               data-testid={`yes-radio`}
               label="Yes"
               inline
@@ -45,6 +46,7 @@ const AddCheckList = ({
           <CTableDataCell scope="row">
             <CFormCheck
               type="radio"
+              className="checkList-radio-btn"
               data-testid={`no-radio`}
               label="No"
               inline
@@ -56,6 +58,7 @@ const AddCheckList = ({
           <CTableDataCell scope="row">
             <CFormCheck
               type="radio"
+              className="checkList-radio-btn"
               data-testid={`noAnswer-radio`}
               label="N/A"
               inline
@@ -69,7 +72,8 @@ const AddCheckList = ({
               placeholder="Purpose"
               aria-label="textarea"
               id="textArea"
-              name="textArea"
+              className="checklist-textarea"
+              name="textArea "
               data-testid="text-area"
               value={item.comments}
               onChange={(e) => commentsOnChange(e, index)}

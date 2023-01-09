@@ -316,3 +316,24 @@ input.capetalized {
 .text-decoration-hover:hover {
   text-decoration: underline;
 }
+
+.add-project-back-btn {
+  position: absolute;
+  right: 13px;
+}
+.add-project-checkList-table td {
+  border-bottom: none;
+}
+.checkList-radio-btn{
+  margin-right: inherit !important;
+  padding-left: initial !important;
+
+}
+.checkList-radio-btn input {
+  margin-left: 0 !important;
+}
+.checklist-textarea {
+  height: 60px;
+  width: 190px;
+}
+
