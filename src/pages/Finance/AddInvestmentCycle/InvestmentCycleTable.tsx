@@ -33,7 +33,7 @@ const InvestmentCycleTable = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToCyleActions = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment Cycle',
   )
   const dispatch = useAppDispatch()
   const handleShowCycleDeleteModal = (id: number, cycleName: string) => {

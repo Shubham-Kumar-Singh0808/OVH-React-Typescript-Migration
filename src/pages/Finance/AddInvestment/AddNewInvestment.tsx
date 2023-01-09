@@ -54,7 +54,7 @@ const AddNewInvestment = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddInvestment = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment',
   )
 
   const handleSelectDocumentOption = (
