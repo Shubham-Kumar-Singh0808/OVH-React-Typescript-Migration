@@ -3,6 +3,7 @@ import { CRow, CCol, CInputGroup, CFormInput, CButton } from '@coreui/react-pro'
 import ProjectCreationRequestTable from './ProjectCreationRequestTable'
 import ProjectRequestView from './ProjectRequestView/ProjectRequestView'
 import ProjectRequestHistoryDetails from './ProjectRequestHistory/ProjectRequestHistoryDetails'
+import ApproveProjectRequest from './ApproveProject/ApproveProjectRequest'
 import AddProjectRequest from './AddProjectRequest/AddProjectRequest'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -15,6 +16,14 @@ const ProjectCreationRequest = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
   const projectRequestlistSize = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.allProjectCreationListSize,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessCreateAction = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project Creation Requests',
   )
 
   const {
@@ -96,13 +105,15 @@ const ProjectCreationRequest = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
               <CCol sm={3} className="d-md-flex justify-content-end">
-                <CButton
-                  color="info btn-ovh me-1"
-                  className="text-white"
-                  onClick={() => setToggle('addProjectRequest')}
-                >
-                  <i className="fa fa-plus"></i> Project Request
-                </CButton>
+                {userAccessCreateAction?.createaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    className="text-white"
+                    onClick={() => setToggle('addProjectRequest')}
+                  >
+                    <i className="fa fa-plus"></i> Project Request
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <ProjectCreationRequestTable
@@ -112,6 +123,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               currentPage={currentPage}
               pageSize={pageSize}
               setToggle={setToggle}
+              userDeleteAction={userAccessCreateAction?.deleteaccess as boolean}
             />
           </OCard>
         </>
@@ -120,11 +132,13 @@ const ProjectCreationRequest = (): JSX.Element => {
       {toggle === 'projectHistory' && (
         <ProjectRequestHistoryDetails setToggle={setToggle} />
       )}
+      {toggle === 'approvalProjectHistory' && (
+        <ApproveProjectRequest setToggle={setToggle} />
+      )}
       {toggle === 'addProjectRequest' && (
         <AddProjectRequest setToggle={setToggle} />
       )}
     </>
   )
 }
-
 export default ProjectCreationRequest

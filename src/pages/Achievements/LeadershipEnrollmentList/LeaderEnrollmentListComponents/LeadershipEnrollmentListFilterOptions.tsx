@@ -11,7 +11,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { TextDanger } from '../../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import {
@@ -39,6 +39,9 @@ const statusFilterList: string[] = [
 ]
 
 const formatDate = (date: string): string => {
+  if (date === emptyString) {
+    return emptyString
+  }
   const list = date.split('/')
   const month = list[0]
   list[0] = list[1]
@@ -78,6 +81,13 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     }
   }, [fromDate, toDate, selectedDateOption])
 
+  useEffect(() => {
+    if (selectedDateOption !== String(LeadershipListDateFiltersEnums.custom)) {
+      setFromDate(emptyString)
+      setToDate(emptyString)
+    }
+  }, [selectedDateOption])
+
   const dateOptionChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedDateOption(e.target.value)
   }
@@ -91,8 +101,8 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     const finalQueries: LeadershipListQueryParameters = {
       dateSelection: selectedDateOption,
       from: formatDate(fromDate),
-      to: formatDate(toDate),
       statusSelection: selectedStatusOption,
+      to: formatDate(toDate),
     }
     dispatch(
       reduxServices.leadershipEnrollmentList.getLeadershipListThunk(
@@ -122,13 +132,16 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
 
   const showDateError = compareDates(fromDate, toDate) ? (
     <div data-testid="error-msg-date">
-      <CFormText className={TextDanger}>
+      <CFormText className={TextDanger} style={{ fontWeight: 'bold' }}>
         To date should be greater than From date
       </CFormText>
     </div>
   ) : (
     <></>
   )
+
+  const fromDateAsterix = fromDate === emptyString ? TextDanger : TextWhite
+  const toDateAsterix = toDate === emptyString ? TextDanger : TextWhite
 
   return (
     <CForm onSubmit={viewButtonHandler}>
@@ -157,7 +170,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
             <>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">From:</CFormLabel>
-                <span className={TextDanger}>*</span>
+                <span className={fromDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
@@ -171,7 +184,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
               </CCol>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">To:</CFormLabel>
-                <span className={TextDanger}>*</span>
+                <span className={toDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker

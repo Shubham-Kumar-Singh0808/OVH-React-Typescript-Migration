@@ -7,6 +7,7 @@ import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockKRADataList } from '../../../../test/data/KRAData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
 
 const mockSetIconVisible = jest.fn()
 const mockSetSelectedKRAId = jest.fn()
@@ -57,7 +58,7 @@ const expandIconId = 'ic-expandIcon'
 const collapseIconId = 'ic-collapseIcon'
 
 const deleteBtnId = 'del-btn-kra'
-const editButtonId = 'edit-btn-kra'
+const editButtonId = 'edit-btn-kra-screen-551'
 
 describe('KRA Table Item', () => {
   describe('initial render', () => {
@@ -79,6 +80,7 @@ describe('KRA Table Item', () => {
           KRA: {
             isLoading: ApiLoadingState.succeeded,
             kraData: mockKRADataList,
+            currentOnScreenPage: KRAPages.kraList,
           },
         },
       })
@@ -90,7 +92,7 @@ describe('KRA Table Item', () => {
       expect(screen.getByTestId(collapseIconId)).toBeVisible()
       expect(screen.getByTestId('kra-Name')).toHaveTextContent('People or Self')
       expect(screen.getByTestId('kra-description')).toHaveTextContent(
-        '<a class="text-primary ng...',
+        'People or Self',
       ) //Due to parsing
       expect(screen.getByTestId('dept-name')).toHaveTextContent('Development')
       expect(screen.getByTestId('desig-name')).toHaveTextContent(
@@ -115,6 +117,12 @@ describe('KRA Table Item', () => {
       expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
       expect(mockSetShowModalButtons).toHaveBeenCalledTimes(1)
       expect(mockSetModalVisible).toHaveBeenCalledTimes(1)
+    })
+
+    test('edit kra button', () => {
+      const editBtn = screen.getByTestId(editButtonId)
+      expect(editBtn).toBeEnabled()
+      userEvent.click(editBtn)
     })
   })
 

@@ -1,13 +1,18 @@
 import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
+import parse from 'html-react-parser'
 import React from 'react'
+import { emptyString } from '../../AchievementConstants'
 
 const LeadershipDetailsItem = ({
   question,
   answer,
+  toParse,
 }: {
   question: string
   answer: string | undefined
+  toParse: boolean
 }): JSX.Element => {
+  const ans = answer ? answer : emptyString
   return (
     <CRow className="align-items-center mb-1">
       <CFormLabel
@@ -17,7 +22,11 @@ const LeadershipDetailsItem = ({
         {question}:
       </CFormLabel>
       <CCol sm={7}>
-        <strong data-testid="test-answer-check">{answer}</strong>
+        {toParse ? (
+          <div style={{ fontWeight: 'bold' }}>{parse(ans)}</div>
+        ) : (
+          <strong data-testid="test-answer-check">{ans}</strong>
+        )}
       </CCol>
     </CRow>
   )

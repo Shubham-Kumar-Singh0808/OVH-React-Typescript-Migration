@@ -110,17 +110,23 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler()
   }
 
-  const errorMessageOrderTernary = errors.achievementError2 ? (
-    <p data-testid="uni-order-error" className={TextDanger}>
+  const errorMessageOrderTernary = (
+    <p
+      data-testid="uni-order-error"
+      className={errors.achievementError2 ? TextDanger : TextWhite}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
-  const errorMessageNameTernary = errors.achievementError1 ? (
-    <p data-testid="uni-name-error" className={TextDanger}>
+  const errorMessageNameTernary = (
+    <p
+      data-testid="uni-name-error"
+      className={errors.achievementError1 ? TextDanger : TextWhite}
+    >
       {errorAchievementNameMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <CForm onSubmit={enabledAddButtonHandler}>
@@ -160,10 +166,11 @@ const AchievementTypeListEntries = (
           >
             Status:<span className={TextWhite}>*</span>
           </CFormLabel>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} md={1} className="mt-2">
             <CFormCheck
               type="radio"
               label="Active"
+              hitArea="full"
               value={NewAchievementStatus.Active}
               name="achievementStatusActive"
               data-testid="ach-status-input-active"
@@ -172,10 +179,11 @@ const AchievementTypeListEntries = (
               inline
             />
           </CCol>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} className="mt-2">
             <CFormCheck
               type="radio"
               label="Inactive"
+              hitArea="full"
               value={NewAchievementStatus.Inactive}
               data-testid="ach-status-input-inactive"
               checked={newUserSelectedStatus === NewAchievementStatus.Inactive}

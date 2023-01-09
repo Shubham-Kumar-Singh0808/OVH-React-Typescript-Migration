@@ -4,6 +4,7 @@ import {
   IncomingKPIDataItem,
   IncomingKRADataList,
   IncomingKRADesignation,
+  KRATableDataItem,
 } from '../../types/Performance/KRA/KRATypes'
 
 export const mockEmpDepartments: IncomingEmployeeDepartment[] = [
@@ -470,6 +471,20 @@ export const mockKPISelfDevDevelopmentList: IncomingKPIDataItem[] = [
     },
   },
 ]
+
+export const mockEditKRAData: KRATableDataItem = {
+  id: 552,
+  name: 'Project',
+  description: 'Project',
+  kpiLookps: null,
+  count: 4,
+  checkType: null,
+  designationName: 'Senior Consultant',
+  designationId: 164,
+  departmentName: 'Development',
+  departmentId: 6,
+  designationKraPercentage: 40.0,
+}
 
 export const mockKRADataList: IncomingKRADataList = {
   size: 127,

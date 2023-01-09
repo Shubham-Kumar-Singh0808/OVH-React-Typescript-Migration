@@ -27,6 +27,12 @@ const InvestmentList = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.itDeclarationList.selectors.isLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddSection = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Investment Section',
+  )
   const toggle = useTypedSelector(
     reduxServices.itDeclarationList.selectors.toggle,
   )
@@ -65,15 +71,17 @@ const InvestmentList = (): JSX.Element => {
           >
             <CRow className="justify-content-end">
               <CCol className="text-end" md={4}>
-                <Link to={`/addSection`}>
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1"
-                    data-testid="add-section-btn"
-                  >
-                    <i className="fa fa-plus me-1"></i>Add Section
-                  </CButton>
-                </Link>
+                {userAccessToAddSection?.viewaccess && (
+                  <Link to={`/addSection`}>
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-1"
+                      data-testid="add-section-btn"
+                    >
+                      <i className="fa fa-plus me-1"></i>Add Section
+                    </CButton>
+                  </Link>
+                )}
                 <Link to={`/itDeclarationList`}>
                   <CButton
                     color="info"

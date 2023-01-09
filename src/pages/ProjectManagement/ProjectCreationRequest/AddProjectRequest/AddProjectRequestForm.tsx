@@ -2,6 +2,7 @@ import {
   CButton,
   CCol,
   CFormCheck,
+  CFormInput,
   CFormLabel,
   CRow,
   CTable,
@@ -322,17 +323,23 @@ const AddProjectRequestForm = ({
     })
   }
 
-  const handleProjectRequestMailIdCC = (value: string) => {
+  const handleProjectRequestMailIdCC = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setProjectRequest({
       ...projectRequest,
-      cc: value,
+      cc: e.target.value,
     })
+    setProjectRequestMailIdCC(e.target.value)
   }
-  const handleProjectRequestMailIdBbc = (value: string) => {
+  const handleProjectRequestMailIdBbc = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setProjectRequest({
       ...projectRequest,
-      bcc: value,
+      bcc: e.target.value,
     })
+    setProjectRequestMailIdBbc(e.target.value)
   }
 
   useEffect(() => {
@@ -347,11 +354,14 @@ const AddProjectRequestForm = ({
   const projectDomains = listComposer(domainList as [], 'id', 'name')
 
   const projectPlatforms = listComposer(platforms as [], 'id', 'name')
-  const handleSubmitProjectRequest = () => {
+
+  const handleSubmitProjectRequest = async () => {
     const payload = {
       ...projectRequest,
       model: projectRequest.model.toUpperCase(),
       type: projectRequest.type.toUpperCase(),
+      bcc: projectRequestMailIds.bcc,
+      cc: projectRequestMailIds.cc,
       chelist: checkList,
       projectRequestMilestoneDTO: projectMileStone.map((item) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -359,9 +369,23 @@ const AddProjectRequestForm = ({
         return { ...rest }
       }),
     }
-    dispatch(reduxServices.addProjectCreationRequest.addProjectRequest(payload))
-    setToggle('')
+    const addProjectCreationRequestResultAction = await dispatch(
+      reduxServices.addProjectCreationRequest.addProjectRequest(payload),
+    )
+    if (
+      reduxServices.addProjectCreationRequest.addProjectRequest.fulfilled.match(
+        addProjectCreationRequestResultAction,
+      )
+    ) {
+      setToggle('')
+      // dispatch(
+      //   reduxServices.app.actions.addToast(
+      //     getToastMessage(actionMapping.updated),
+      //   ),
+      // )
+    }
   }
+
   const generateAnswers = (option: string) => {
     if (option === 'yes') {
       return { answer1: 'false', answer2: 'false' }
@@ -779,26 +803,6 @@ const AddProjectRequestForm = ({
               </CCol>
             )}
           </CRow>
-          <OInputField
-            onChangeHandler={setProjectRequestMailIdCC}
-            onBlurHandler={handleProjectRequestMailIdCC}
-            value={projectRequestMailIdCC}
-            isRequired={false}
-            label="CC"
-            name="cc"
-            placeholder="Email Id"
-            dynamicFormLabelProps={dynamicFormLabelProps}
-          />
-          <OInputField
-            onChangeHandler={setProjectRequestMailIdBbc}
-            onBlurHandler={handleProjectRequestMailIdBbc}
-            value={projectRequestMailIdBbc}
-            isRequired={false}
-            label="BCC"
-            name="bcc"
-            placeholder="Email Id"
-            dynamicFormLabelProps={dynamicFormLabelProps}
-          />
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Checklist:
@@ -821,6 +825,35 @@ const AddProjectRequestForm = ({
                     )
                   })}
               </CTable>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              CC:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                name="CC"
+                id="CC"
+                value={projectRequestMailIdCC}
+                onChange={(e) => handleProjectRequestMailIdCC(e)}
+              />
+            </CCol>
+            <CFormLabel className="col-sm-1 col-form-label text-end">
+              BCC:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                name="BCC"
+                id="BCC"
+                value={projectRequestMailIdBbc}
+                onChange={(e) => handleProjectRequestMailIdBbc(e)}
+              />
+            </CCol>
+            <CCol sm={1}>
+              <CButton className="btn-ovh me-2" color="success">
+                Update
+              </CButton>
             </CCol>
           </CRow>
         </CCol>
@@ -871,7 +904,7 @@ const AddProjectRequestForm = ({
               color="success"
               data-testid="add-project"
               onClick={handleSubmitProjectRequest}
-              disabled={!isAddBtnEnable || !isAddMilestoneButtonEnabled}
+              disabled={!isAddBtnEnable}
             >
               Add
             </CButton>

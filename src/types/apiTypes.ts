@@ -587,6 +587,10 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+  getApproveProjectRequest: string
+  updateProjectRequest: string
+  deleteProjectRequest: string
+  rejectProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {
@@ -661,6 +665,11 @@ export interface KRAApi extends ApiBase {
   kpiForIndividualKra: string
   deleteKRA: string
   deleteKPI: string
+  designationKRAPercentage: string
+  checkIfNewKRADuplicate: string
+  addNewKRA: string
+  editThisKra: string
+  updateKRA: string
 }
 
 export interface MyReviewApi extends ApiBase {

@@ -105,7 +105,8 @@ const AdminClearanceForm = (): JSX.Element => {
             Comments:
             <span
               className={
-                isActiveAdminValue === 'false' || adminTextAreaValue
+                isActiveAdminValue === 'false' ||
+                adminTextAreaValue?.replace(/^\s*/, '')
                   ? 'text-white'
                   : 'text-danger'
               }
@@ -134,7 +135,8 @@ const AdminClearanceForm = (): JSX.Element => {
                 color="success"
                 onClick={SubmitAdminClearanceCertificateHandler}
                 disabled={
-                  isActiveAdminValue === 'true' && adminTextAreaValue === ''
+                  isActiveAdminValue === 'true' &&
+                  adminTextAreaValue?.replace(/^\s*/, '') === ''
                 }
               >
                 Submit

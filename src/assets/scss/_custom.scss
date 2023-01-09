@@ -303,6 +303,18 @@ input.capetalized {
     }
   }
 }
+.project-billable {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 500;
+}
+.project-creation:hover {
+  color: #245269 !important;
+}
+
+.table-color {
+  color: rgba(0, 0, 0, 0.02)
+}
 
 .nominee-detail:hover {
   color: #245269 !important;
