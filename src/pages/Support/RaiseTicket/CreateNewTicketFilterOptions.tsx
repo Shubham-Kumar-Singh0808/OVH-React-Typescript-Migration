@@ -213,6 +213,13 @@ const CreateNewTicketFilterOptions = ({
     }
   }, [dispatch, categoryId])
 
+  useEffect(() => {
+    if (categoryId === 0 || deptId === 0) {
+      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
+      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+    }
+  }, [dispatch, categoryId, deptId])
+
   return (
     <>
       <CForm>

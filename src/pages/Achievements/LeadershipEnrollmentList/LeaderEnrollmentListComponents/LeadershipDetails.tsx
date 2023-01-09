@@ -12,6 +12,9 @@ import {
   ApproveRejectLeadershipQueryParameters,
   IncomingLeadershipListItem,
   LeadershipDetailsProps,
+  LeadershipListDateFiltersEnums,
+  LeadershipListQueryParameters,
+  LeadershipListStatusFiltersEnums,
 } from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { emptyString } from '../../AchievementConstants'
@@ -121,6 +124,18 @@ const LeadershipDetails = (props: LeadershipDetailsProps): JSX.Element => {
         dispatch(reduxServices.app.actions.addToast(successToast))
       }
     }
+    setShowModal(false)
+    const finalQueries: LeadershipListQueryParameters = {
+      dateSelection: String(LeadershipListDateFiltersEnums.currentMonth),
+      from: emptyString,
+      to: emptyString,
+      statusSelection: String(LeadershipListStatusFiltersEnums.new),
+    }
+    dispatch(
+      reduxServices.leadershipEnrollmentList.getLeadershipListThunk(
+        finalQueries,
+      ),
+    )
   }
 
   const buttonColor =
@@ -150,59 +165,73 @@ const LeadershipDetails = (props: LeadershipDetailsProps): JSX.Element => {
           <LeadershipDetailsItem
             question="Employee Name"
             answer={currentDetails?.employeeName}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Employee ID"
             answer={currentDetails?.employeeId.toString()}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you a Leader?"
             answer={booleanToString(currentDetails?.leader)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Do you communicate clearly and effectively?"
             answer={booleanToString(currentDetails?.communicate)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you interested in taking initiative?"
             answer={booleanToString(currentDetails?.initiative)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you good at working with a team?"
             answer={booleanToString(currentDetails?.teamWorker)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Do you accept constructive criticism?"
             answer={booleanToString(currentDetails?.constructiveCriticism)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Do you help others to ensure the team delivers on time?"
             answer={booleanToString(currentDetails?.helper)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you good at working directly with clients?"
             answer={booleanToString(currentDetails?.directlyWorking)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you open to travel onsite, USA, Australia & Canada?"
             answer={booleanToString(currentDetails?.travelOnsite)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Are you open to innovation and Research for growth?"
             answer={booleanToString(currentDetails?.innovationAndResearch)}
+            toParse={false}
           />
           <LeadershipDetailsItem
             question="Please let us know why you want to be part of this Elite group"
             answer={currentDetails?.reasonDetails}
+            toParse={true}
           />
           <LeadershipDetailsItem
             question="Please let us know any example where you really exceeded expectations"
             answer={currentDetails?.expectationsExample}
+            toParse={true}
           />
           {currentDetails?.status !== 'NEW' && (
             <LeadershipDetailsItem
               question="Comments on Approve / Reject"
               answer={givenComments}
+              toParse={false}
             />
           )}
         </CContainer>
