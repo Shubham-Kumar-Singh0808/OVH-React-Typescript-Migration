@@ -272,6 +272,7 @@ const PayrollManagement = (): JSX.Element => {
               data-testid="feedback-form"
               type="file"
               name="upload-form"
+              value={fileUploadErrorText}
               onChange={(element: SyntheticEvent) =>
                 onChangeFileUploadHandler(
                   element.currentTarget as HTMLInputElement,
@@ -354,6 +355,8 @@ const PayrollManagement = (): JSX.Element => {
             setIsChecked={setIsChecked}
             isAllChecked={isAllChecked}
             setIsAllChecked={setIsAllChecked}
+            userDeleteAccess={userAccess?.deleteaccess as boolean}
+            userEditAccess={userAccess?.updateaccess as boolean}
           />
         )}
 

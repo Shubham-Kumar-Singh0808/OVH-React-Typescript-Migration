@@ -52,6 +52,7 @@ const DownloadSampleExcelFile = (props: DownloadExcelFile): JSX.Element => {
       <ins
         className={props.className}
         onClick={props.fileName ? downloadExcelFileHandler : downloadSample}
+        data-testid="download-Excel"
       >
         <i className="fa fa-paperclip me-1"></i>
         Download Sample Excel File

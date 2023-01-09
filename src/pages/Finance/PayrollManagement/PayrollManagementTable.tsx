@@ -35,6 +35,8 @@ const PayrollManagementTable = (props: {
   setIsChecked: (value: boolean) => void
   isAllChecked: boolean
   setIsAllChecked: (value: boolean) => void
+  userDeleteAccess: boolean
+  userEditAccess: boolean
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -258,32 +260,35 @@ const PayrollManagementTable = (props: {
                     <CTableDataCell>{payslipItem.month}</CTableDataCell>
                     <CTableDataCell>{payslipItem.year}</CTableDataCell>
                     <CTableDataCell className="actions">
-                      <CTooltip content="Edit">
-                        <CButton
-                          size="sm"
-                          className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                          color="info btn-ovh me-1"
-                          onClick={() => {
-                            editPaySlipHandler(payslipItem)
-                          }}
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                          onClick={() =>
-                            deleteButtonHandler(payslipItem.paySlipId)
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {props.userEditAccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            size="sm"
+                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="info btn-ovh me-1"
+                            onClick={() => {
+                              editPaySlipHandler(payslipItem)
+                            }}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                      {props.userDeleteAccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              deleteButtonHandler(payslipItem.paySlipId)
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                       <CTooltip content="View">
                         <CButton
                           data-testid={`btn-view${index}`}
