@@ -20,7 +20,7 @@ const updateBtnId = 'add-project'
 
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
-    render(<AddProjectRequestForm setToggle={jest.f}/>, {
+    render(<AddProjectRequestForm setToggle={jest.f} />, {
       preloadedState: {
         projectManagement: {
           projectClients: mockProjectClient,
@@ -45,7 +45,6 @@ describe('ApproveProjectForm Testing', () => {
     expect(names[0]).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
     expect(names[1]).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Email Id')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Project Manager')).toBeInTheDocument()
     expect(screen.getByRole('option', { name: 'Java' }).selected).toBe(false)
     expect(screen.getByRole('option', { name: 'Banking' }).selected).toBe(false)
@@ -98,11 +97,6 @@ describe('ApproveProjectForm Testing', () => {
     billingContactPerson[1].click()
     billingContactPerson[1].focus()
 
-    // Billing Contact Email
-    const billingContactEmail = screen.getByPlaceholderText('Email Id')
-    billingContactEmail.click()
-    billingContactEmail.focus()
-
     // Internal Project
     const internalProject = screen.getByRole('checkbox', {
       name: 'Internal Project',
@@ -114,10 +108,6 @@ describe('ApproveProjectForm Testing', () => {
     const projectManager = screen.getByPlaceholderText('Project Manager')
     projectManager.click()
     projectManager.focus()
-
-    // fireEvent.change(projectManager, { target: { value: '' } })
-    const dropdownManagerOptions = screen.getAllByTestId('option')
-    fireEvent.click(dropdownManagerOptions[0])
 
     // Project Platform
     const platformSelectList = screen.getByTestId('formplatform')
