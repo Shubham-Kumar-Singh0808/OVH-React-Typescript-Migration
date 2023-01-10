@@ -27,7 +27,6 @@ const ReviewFormDetailsTable = ({
   const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
     useState<boolean>(false)
   const [kpiDetails, setKpiDetails] = useState({} as KPI)
-  const [selfRatings, setselfRatings] = useState<KPI[]>([])
 
   const dispatch = useAppDispatch()
 
@@ -69,10 +68,7 @@ const ReviewFormDetailsTable = ({
     }
   }
 
-  const onChangeSelfRating = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    kpiId: number,
-  ) => {
+  const onChangeSelfRating = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value)
   }
 
@@ -158,7 +154,7 @@ const ReviewFormDetailsTable = ({
                         name="rating"
                         id="empRating"
                         value={kpi.employeeRating}
-                        onChange={(e) => onChangeSelfRating(e, kpi.id)}
+                        onChange={(e) => onChangeSelfRating(e)}
                       >
                         <option value={''}>Select Rating</option>
                         <option value="5">5</option>
