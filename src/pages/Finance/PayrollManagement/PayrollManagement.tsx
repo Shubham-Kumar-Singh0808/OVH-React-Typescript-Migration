@@ -175,6 +175,21 @@ const PayrollManagement = (): JSX.Element => {
       )
   }, [dispatch, selectMonth, selectYear])
 
+  const previewButton = previewBtn ? (
+    <CButton
+      className="btn btn-download text-decoration-none btn btn-ovh"
+      size="sm"
+      color="info"
+      type="submit"
+      data-testid="preview-btn"
+      onClick={previewBtnHandler}
+    >
+      Preview
+    </CButton>
+  ) : (
+    ''
+  )
+
   return (
     <>
       <OCard
@@ -275,20 +290,7 @@ const PayrollManagement = (): JSX.Element => {
               </CRow>
             </CCol>
             <CCol md={4} className="text-end mt-4 mb-4">
-              {previewBtn ? (
-                <CButton
-                  className="btn btn-download text-decoration-none btn btn-ovh"
-                  size="sm"
-                  color="info"
-                  type="submit"
-                  data-testid="preview-btn"
-                  onClick={previewBtnHandler}
-                >
-                  Preview
-                </CButton>
-              ) : (
-                ''
-              )}
+              {previewButton}
               &nbsp;
               <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
             </CCol>
