@@ -626,7 +626,11 @@ const ApproveProjectForm = (): JSX.Element => {
                   )
                 })}
               </CTable>
-              {showTotalEffort && <span>Total Effort:{showTotalEffort} </span>}
+              {showTotalEffort ? (
+                <span>Total Effort:{showTotalEffort} </span>
+              ) : (
+                <></>
+              )}
             </CRow>
           </>
         )}
@@ -637,7 +641,11 @@ const ApproveProjectForm = (): JSX.Element => {
               color="success"
               data-testid="update-project"
               onClick={handleUpdateSubmit}
-              disabled={!isUpdateBtnEnable || !isAddMilestoneButtonEnabled}
+              disabled={
+                !isUpdateBtnEnable ||
+                (approveProject.type === 'FIXEDBID' &&
+                  !isAddMilestoneButtonEnabled)
+              }
             >
               Add Project
             </CButton>

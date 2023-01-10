@@ -79,6 +79,7 @@ import {
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
+  AddProjectCreationRequestApi,
   AddAchieverApi,
   InitiateCycleApi,
   MyKRAsApi,
@@ -760,6 +761,13 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
 
+export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
+  {
+    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
+    getProjectRequestMailIds:
+      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
+  }
 export const initiateCycleApiConfig: InitiateCycleApi = {
   getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
   getallcycles: apiPrefix + '/nominationController/getallcycles',
