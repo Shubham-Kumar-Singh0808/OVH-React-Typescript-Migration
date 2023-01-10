@@ -16,12 +16,12 @@ describe('Review List Table Component Testing without data', () => {
         setPageSize={mockSetPageSize}
         filterByDepartment={''}
         filterByDesignation={''}
-        isTableView={false}
+        isTableView={true}
       />,
     )
   })
   afterEach(cleanup)
-  test('should render the "My KRAs" table ', () => {
+  test('should render the "Review List" table ', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
   })

@@ -37,12 +37,26 @@ export type Appraisal = {
   id: number
   manager1Name: string
   overallAvgRating: number | string
-  pendingWith: null
+  pendingWith: string
 }
 
 export type ReviewListResponse = {
   list: Appraisal[]
   size: number
+}
+
+export type ReviewListApiProps = {
+  activecycleId: number
+  empStatus: string
+  departmentName: string
+  designationName: string
+  appraisalFormStatus: string
+  status: string
+  search: string
+  ratings: string
+  fromDate: null | string
+  toDate: null | string
+  token?: string
 }
 
 export type AppraisalCycle = {
@@ -64,7 +78,7 @@ export type AppraisalCycle = {
 export type Designation = {
   id: number
   name: string
-  code: null
+  code: string
   departmentName: string
   departmentId: number
 }

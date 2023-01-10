@@ -2,6 +2,7 @@ import {
   AppraisalCycle,
   Designation,
   EmpDepartments,
+  ReviewListApiProps,
   ReviewListData,
   ReviewListResponse,
 } from '../../../../types/Performance/ReviewList/reviewListTypes'
@@ -52,9 +53,36 @@ const getDesignations = async (deptId: number): Promise<Designation[]> => {
   return response.data
 }
 
+const exportReviewList = async (
+  props: ReviewListApiProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: reviewListApiConfig.exportReviewList,
+    method: AllowedHttpMethods.get,
+    params: {
+      activecycleId: props.activecycleId ?? '',
+      empStatus: props.empStatus ?? 'Active',
+      departmentName: props.departmentName ?? '',
+      designationName: props.designationName ?? '',
+      appraisalFormStatus: props.appraisalFormStatus ?? '',
+      status: props.status ?? '',
+      search: props.search ?? '',
+      ratings: props.ratings ?? '',
+      fromDate: props.fromDate ?? '',
+      toDate: props.toDate ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const reviewListApi = {
   getEmployeeDepartments,
   getReviewList,
   getAppraisalCycles,
   getDesignations,
+  exportReviewList,
 }

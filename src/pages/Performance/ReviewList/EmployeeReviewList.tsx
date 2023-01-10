@@ -31,11 +31,10 @@ const EmployeeReviewList = (): JSX.Element => {
     startIndex: 0,
     toDate: '',
   }
-  // const [selectCycleId, setSelectCycleId] = useState<number>()
+
   const [filterByDepartment, setFilterByDepartment] = useState<string>()
   const [filterByDesignation, setFilterByDesignation] = useState<string>()
   const [isTableView, setIsTableView] = useState(false)
-  // const [reviewListParams, setReviewListParams] = useState(initialReviewList)
 
   const {
     paginationRange,
@@ -56,7 +55,7 @@ const EmployeeReviewList = (): JSX.Element => {
         endIndex: pageSize * currentPage,
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
 
   return (
     <>

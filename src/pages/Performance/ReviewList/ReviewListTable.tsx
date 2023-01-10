@@ -25,7 +25,6 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   const reviewListSize = useTypedSelector(
     reduxServices.reviewList.selectors.listSize,
   )
-  console.log(appraisalReviews)
 
   const {
     paginationRange,
@@ -66,7 +65,7 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   }
 
   const paginationComponent =
-    appraisalReviews?.size > 0 ? (
+    reviewListSize > 0 ? (
       <CRow className="mt-3">
         <CCol xs={4}>
           <strong>{`Total Records: ${appraisalReviews?.size} `}</strong>

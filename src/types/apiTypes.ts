@@ -676,4 +676,5 @@ export interface ReviewListApi extends ApiBase {
   getReviewList: string
   getAppraisalCycles: string
   getDesignations: string
+  exportReviewList: string
 }

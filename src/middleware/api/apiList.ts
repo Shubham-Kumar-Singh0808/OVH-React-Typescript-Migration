@@ -818,4 +818,5 @@ export const reviewListApiConfig: ReviewListApi = {
   getReviewList: apiPrefix + '/appraisal/getSearchResult',
   getAppraisalCycles: apiPrefix + '/appraisal/cycle',
   getDesignations: apiPrefix + '/kra/designation',
+  exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
 }

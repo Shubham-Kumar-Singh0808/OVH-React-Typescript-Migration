@@ -19,6 +19,8 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
 import { ReviewListData } from '../../../types/Performance/ReviewList/reviewListTypes'
+import { downloadFile } from '../../../utils/helper'
+import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
 
 const ReviewListFilterOptions = ({
   setIsTableView,
@@ -40,7 +42,7 @@ const ReviewListFilterOptions = ({
   const [dateError, setDateError] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
   const [selectRadio, setSelectRadio] = useState<string>('')
-
+  const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
@@ -94,7 +96,7 @@ const ReviewListFilterOptions = ({
         departmentName: (selectDepartment as string) || '',
         designationName: (selectDesignation as string) || '',
         empStatus: selectEmpstatus,
-        employeeID: (employeeId as string) || '',
+        employeeID: employeeId,
         endIndex: 20,
         fromDate: reviewFromDate
           ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
@@ -122,6 +124,7 @@ const ReviewListFilterOptions = ({
     setFilterByDepartment(selectDepartment as string)
     setFilterByDesignation(selectDesignation as string)
     setIsTableView(true)
+    setShowExportButton(true)
     dispatchApiCall()
   }
 
@@ -133,7 +136,6 @@ const ReviewListFilterOptions = ({
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      console.log('Enter')
       dispatchApiCall(selectRadio, searchValue)
     }
   }
@@ -149,6 +151,23 @@ const ReviewListFilterOptions = ({
     setReviewFromDate('')
     setDateError(false)
     setSearchValue('')
+    setShowExportButton(false)
+  }
+
+  const handleExportReviewList = async () => {
+    const reviewListDownload = await reviewListApi.exportReviewList({
+      activecycleId: cycle as number,
+      empStatus: selectEmpstatus,
+      departmentName: selectDepartment as string,
+      designationName: selectDesignation as string,
+      appraisalFormStatus: '',
+      status: selectStatus as string,
+      search: searchValue,
+      ratings: '',
+      fromDate: reviewFromDate || null,
+      toDate: reviewToDate || null,
+    })
+    downloadFile(reviewListDownload, 'AppraisalList.csv')
   }
 
   return (
@@ -168,7 +187,7 @@ const ReviewListFilterOptions = ({
             }}
           >
             <option value="">Select Appraisal Title</option>
-            <option value="">Custom</option>
+            <option value="Custom">Custom</option>
             {appraisalCycles?.map((title, index) => (
               <option key={index} value={title.id}>
                 {title.name}
@@ -250,80 +269,89 @@ const ReviewListFilterOptions = ({
         </CCol>
       </CRow>
       <CRow className="mt-4 justify-content-between">
-        <CCol sm={2} className="ticket-from-date-col">
-          <CRow>
-            <CFormLabel>
-              From:
-              {(reviewFromDate == null || reviewFromDate === '') && (
-                <span className="text-danger">*</span>
-              )}
-            </CFormLabel>
-            <ReactDatePicker
-              autoComplete="off"
-              id="from-date"
-              data-testid="ticketsApprovalsFromDate"
-              className="form-control form-control-sm sh-date-picker"
-              dateFormat="MM/yyyy"
-              maxDate={new Date()}
-              showMonthYearPicker
-              placeholderText="mm/yyyy"
-              name="reviewListFromDate"
-              value={
-                reviewFromDate
-                  ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setReviewFromDate(moment(date).format(commonDateFormat))
-              }
-            />
-          </CRow>
-        </CCol>
-
-        <CCol sm={2} className="justify-content-md-end">
-          <CRow>
-            <CFormLabel>
-              To:
-              {(reviewToDate == null || reviewToDate === '') && (
-                <span className="text-danger">*</span>
-              )}
-            </CFormLabel>
-            <ReactDatePicker
-              autoComplete="off"
-              id="from-date"
-              data-testid="ticketsApprovalsToDate"
-              className="form-control form-control-sm sh-date-picker"
-              dateFormat="MM/yyyy"
-              maxDate={new Date()}
-              showMonthYearPicker
-              placeholderText="mm/yyyy"
-              name="reviewListToDate"
-              value={
-                reviewToDate
-                  ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setReviewToDate(moment(date).format(commonDateFormat))
-              }
-            />
-            {dateError && (
-              <CCol sm={12} className="mt-1 pt-1">
-                <span className="text-danger fw-bold">
-                  To month should be greater than From month
-                </span>
-              </CCol>
-            )}
-          </CRow>
-        </CCol>
+        {cycle === 'Custom' && (
+          <>
+            <CCol sm={2} className="ticket-from-date-col">
+              <CRow>
+                <CFormLabel>
+                  From:
+                  {(reviewFromDate == null || reviewFromDate === '') && (
+                    <span className="text-danger">*</span>
+                  )}
+                </CFormLabel>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="from-date"
+                  data-testid="reviewListFromDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  dateFormat="MM/yyyy"
+                  maxDate={new Date()}
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  name="reviewListFromDate"
+                  value={
+                    reviewFromDate
+                      ? new Date(reviewFromDate).toLocaleDateString(
+                          deviceLocale,
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setReviewFromDate(moment(date).format(commonDateFormat))
+                  }
+                />
+              </CRow>
+            </CCol>
+            <CCol sm={2} className="justify-content-md-end">
+              <CRow>
+                <CFormLabel>
+                  To:
+                  {(reviewToDate == null || reviewToDate === '') && (
+                    <span className="text-danger">*</span>
+                  )}
+                </CFormLabel>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="from-date"
+                  data-testid="reviewListToDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  dateFormat="MM/yyyy"
+                  maxDate={new Date()}
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  name="reviewListToDate"
+                  value={
+                    reviewToDate
+                      ? new Date(reviewToDate).toLocaleDateString(
+                          deviceLocale,
+                          {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                          },
+                        )
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setReviewToDate(moment(date).format(commonDateFormat))
+                  }
+                />
+                {dateError && (
+                  <CCol sm={12} className="mt-1 pt-1">
+                    <span className="text-danger fw-bold">
+                      To month should be greater than From month
+                    </span>
+                  </CCol>
+                )}
+              </CRow>
+            </CCol>
+          </>
+        )}
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
           <CMultiSelect options={reviewRatings} data-testid="ratings" />
@@ -349,6 +377,20 @@ const ReviewListFilterOptions = ({
           </CFormSelect>
         </CCol>
       </CRow>
+      {showExportButton && (
+        <CRow className="justify-content-end mt-4">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1 text-white"
+              data-testid="rl-export-button"
+              onClick={handleExportReviewList}
+            >
+              <i className="fa fa-plus me-1"></i>Click to Export
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
       <CRow className="mt-3">
         <CCol sm={{ span: 6, offset: 4 }}>
           <CButton
