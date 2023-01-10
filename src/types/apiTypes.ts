@@ -621,6 +621,11 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface AddProjectCreationRequestApi extends ApiBase {
+  getCheckList: string
+  getProjectRequestMailIds: string
+  addProjectRequest: string
+}
 export interface InitiateCycleApi extends ApiBase {
   getActiveCycleData: string
   getallcycles: string

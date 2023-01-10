@@ -99,6 +99,7 @@ import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/i
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
@@ -210,6 +211,7 @@ export const allReducers = {
   nomineeList: nomineeListReducer,
   addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  addProjectCreationRequest: addProjectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,
   myReview: myReviewReducer,

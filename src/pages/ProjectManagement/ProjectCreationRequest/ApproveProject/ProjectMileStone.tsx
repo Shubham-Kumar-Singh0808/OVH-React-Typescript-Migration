@@ -3,6 +3,7 @@ import {
   CFormInput,
   CTableBody,
   CTableDataCell,
+  CFormLabel,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -64,7 +65,7 @@ const ProjectMileStone = ({
     } else {
       setIsAddMileStoneButtonEnabled(false)
     }
-  }, [item?.title, item?.effort, item?.fromDate, item?.comments])
+  }, [item?.title, item?.effort, item?.fromDate, item?.comments, item?.toDate])
 
   useEffect(() => {
     if (error)
@@ -136,11 +137,15 @@ const ProjectMileStone = ({
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row" className="project-billable mt-2">
-          {projectBillable}
+        <CTableDataCell scope="row">
+          <CFormLabel className="project-billable">
+            {projectBillable}
+          </CFormLabel>
         </CTableDataCell>
-        <CTableDataCell scope="row" className="project-billable mt-2">
-          {item.milestonePercentage}
+        <CTableDataCell scope="row">
+          <CFormLabel className="project-billable">
+            {item.milestonePercentage}
+          </CFormLabel>
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CFormTextarea
