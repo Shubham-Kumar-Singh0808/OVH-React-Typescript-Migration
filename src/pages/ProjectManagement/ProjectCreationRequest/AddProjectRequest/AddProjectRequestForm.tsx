@@ -446,7 +446,7 @@ const AddProjectRequestForm = ({
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].effort = e.target.value.replace(/[^0-9]/gi, '')
+    newMileStone[index].effort = e.target.value
     setProjectMileStone(newMileStone)
   }
 

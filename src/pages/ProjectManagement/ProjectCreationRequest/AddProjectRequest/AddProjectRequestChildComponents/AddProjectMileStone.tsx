@@ -60,11 +60,12 @@ const AddProjectMileStone = ({
 }): JSX.Element => {
   const [error, setError] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
-  const handleClickMileStone = (index: number) => {
+
+  const handleClickMileStone = (milestoneIndex: number) => {
     const projectMileStoneCopy: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    projectMileStoneCopy[index].buttonType = 'remove'
+    projectMileStoneCopy[milestoneIndex].buttonType = 'remove'
     setProjectMileStone([
       ...projectMileStoneCopy,
       {

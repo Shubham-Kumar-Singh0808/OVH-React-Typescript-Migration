@@ -105,15 +105,14 @@ const ProjectCreationRequest = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
               <CCol sm={3} className="d-md-flex justify-content-end">
-                {userAccessCreateAction?.createaccess && (
-                  <CButton
-                    color="info btn-ovh me-1"
-                    className="text-white"
-                    onClick={() => setToggle('addProjectRequest')}
-                  >
-                    <i className="fa fa-plus"></i> Project Request
-                  </CButton>
-                )}
+                <CButton
+                  color="info btn-ovh me-1"
+                  className="text-white"
+                  onClick={() => setToggle('addProjectRequest')}
+                  data-testid="add-project-test"
+                >
+                  <i className="fa fa-plus"></i> Project Request
+                </CButton>
               </CCol>
             </CRow>
             <ProjectCreationRequestTable
