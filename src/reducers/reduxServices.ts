@@ -90,6 +90,7 @@ import { payrollManagementService } from './Finance/PayrollManagement/PayrollMan
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addProjectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
@@ -196,6 +197,7 @@ export const reduxServices = {
   nomineeList: nomineeListService,
   addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
+  addProjectCreationRequest: addProjectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
   myReview: myReviewService,
