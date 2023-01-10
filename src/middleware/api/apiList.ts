@@ -76,9 +76,11 @@ import {
   EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  PayrollManagementApi,
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
+  AddProjectCreationRequestApi,
   AddAchieverApi,
   InitiateCycleApi,
   MyKRAsApi,
@@ -706,6 +708,19 @@ export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getSections: apiPrefix + '/itDeclaration/getSection',
 }
 
+export const payrollManagementApiConfig: PayrollManagementApi = {
+  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
+  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
+  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
+  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
+  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
+  deleteCheckedPayslips:
+    apiPrefix + '/payslip/payrolladmin/deleteCheckedPayslips',
+  readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
+  saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
+  clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
+}
+
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
   getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
 }
@@ -760,6 +775,13 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
 
+export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
+  {
+    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
+    getProjectRequestMailIds:
+      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
+  }
 export const initiateCycleApiConfig: InitiateCycleApi = {
   getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
   getallcycles: apiPrefix + '/nominationController/getallcycles',

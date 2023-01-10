@@ -362,6 +362,9 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
 const LeadershipEnrollmentList = React.lazy(
   () =>
     import(
@@ -763,6 +766,11 @@ const routes = [
     path: '/investmentCheckList',
     name: 'Investment CheckList',
     component: InvestmentCheckList,
+  },
+  {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
   },
   {
     path: '/achievementList',
