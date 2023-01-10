@@ -19,7 +19,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
 import { ReviewListData } from '../../../types/Performance/ReviewList/reviewListTypes'
-import { downloadFile } from '../../../utils/helper'
+import { downloadFile, showIsRequired } from '../../../utils/helper'
 import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
 
 const ReviewListFilterOptions = ({
@@ -43,6 +43,7 @@ const ReviewListFilterOptions = ({
   const [searchValue, setSearchValue] = useState<string>('')
   const [selectRadio, setSelectRadio] = useState<string>('')
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
+  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
@@ -59,6 +60,15 @@ const ReviewListFilterOptions = ({
   )
 
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (cycle) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [cycle])
+
   useEffect(() => {
     if (!departments)
       dispatch(reduxServices.reviewList.getEmployeeDepartments())
@@ -174,7 +184,10 @@ const ReviewListFilterOptions = ({
     <>
       <CRow className="mt-4">
         <CCol sm={3}>
-          <CFormLabel>Configurations :</CFormLabel>
+          <CFormLabel>
+            Configurations :
+            <span className={showIsRequired(cycle as string)}>*</span>
+          </CFormLabel>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -211,7 +224,7 @@ const ReviewListFilterOptions = ({
           >
             <option value="">Select Department</option>
             {departments
-              .slice()
+              ?.slice()
               .sort((dept1, dept2) =>
                 dept1.departmentName.localeCompare(dept2.departmentName),
               )
@@ -397,6 +410,7 @@ const ReviewListFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             data-testid="view-button"
+            disabled={!isButtonEnabled}
             onClick={onViewHandler}
           >
             View

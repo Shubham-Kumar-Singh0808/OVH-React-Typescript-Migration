@@ -1,9 +1,15 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 
+const multiSearchButton = 'multi-search-btn'
+const multiSearchInput = 'multi-search-input'
+const searchEmpInput = 'searchByEmployeeName'
+const searchManagerInput = 'searchByManagerName'
+const mockSetSearchValue = jest.fn()
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
@@ -13,7 +19,7 @@ const toRender = (
       setSelectRadio={jest.fn()}
       selectRadio={'true'}
       searchValue={'sai'}
-      setSearchValue={jest.fn()}
+      setSearchValue={mockSetSearchValue}
       searchButtonOnKeyDown={jest.fn()}
       searchBtnHandler={jest.fn()}
     />

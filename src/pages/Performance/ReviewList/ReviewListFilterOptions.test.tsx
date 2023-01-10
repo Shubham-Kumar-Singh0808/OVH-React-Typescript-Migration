@@ -1,36 +1,16 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import ReviewListFilterOptions from './ReviewListFilterOptions'
-import { render, screen } from '../../../test/testUtils'
-
-const toRender = (
-  <div>
-    <div id="backdrop-root"></div>
-    <div id="overlay-root"></div>
-    <div id="root"></div>
-    <ReviewListFilterOptions
-      setFilterByDepartment={jest.fn()}
-      setFilterByDesignation={jest.fn()}
-      setIsTableView={jest.fn()}
-      initialReviewList={{
-        appraisalFormStatus: 'COMPLETED',
-        cycleId: 3,
-        departmentName: 'Administrative',
-        designationName: '',
-        empStatus: 'Active',
-        employeeID: '1978',
-        endIndex: 20,
-        ratings: [],
-        role: '',
-        searchString: '',
-        startIndex: 0,
-        toDate: '',
-        fromDate: '',
-      }}
-    />
-  </div>
-)
+import { cleanup, render, screen } from '../../../test/testUtils'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import {
+  mockConfigurationCycle,
+  mockDesignations,
+  mockEmployeeDepartments,
+  mockReviewList,
+} from '../../../test/data/reviewListData'
 
 const configurationsInput = 'select-configurations'
 const deptNameInput = 'dept-name'
@@ -40,10 +20,36 @@ const ratingsInput = 'ratings'
 const empStatusInput = 'emp-status'
 const viewButtonElement = 'view-button'
 const clearButtonElement = 'clear-button'
-describe('Ticket Approvals Filter Options Component Testing', () => {
+const exportButtonElement = 'rl-export-button'
+describe('ReviewList Filter Options Component Testing', () => {
   beforeEach(() => {
-    render(toRender)
+    render(
+      <ReviewListFilterOptions
+        setFilterByDepartment={jest.fn()}
+        setFilterByDesignation={jest.fn()}
+        setIsTableView={jest.fn()}
+        initialReviewList={{
+          appraisalFormStatus: 'COMPLETED',
+          cycleId: 3,
+          departmentName: 'Administrative',
+          designationName: '',
+          empStatus: 'Active',
+          employeeID: '1978',
+          endIndex: 20,
+          ratings: [],
+          role: '',
+          searchString: '',
+          startIndex: 0,
+          toDate: '',
+          fromDate: '',
+        }}
+      />,
+      {
+        preloadedState: {},
+      },
+    )
   })
+  afterEach(cleanup)
   test('should render cycle status filter', () => {
     const cycleStatus = screen.findByTestId(configurationsInput)
     expect(cycleStatus).toBeTruthy()
@@ -75,5 +81,9 @@ describe('Ticket Approvals Filter Options Component Testing', () => {
   test('should render clear button', () => {
     const clearBtn = screen.findByTestId(clearButtonElement)
     expect(clearBtn).toBeTruthy()
+  })
+  test('should render Export Button', () => {
+    const exportButtonEl = screen.findByTestId(exportButtonElement)
+    expect(exportButtonEl).toBeTruthy()
   })
 })

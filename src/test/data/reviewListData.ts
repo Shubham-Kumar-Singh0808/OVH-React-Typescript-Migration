@@ -98,7 +98,7 @@ export const mockConfigurationCycle: AppraisalCycle[] = [
   },
   {
     id: 3,
-    name: 'May 2017 ',
+    name: 'May 2017',
     description: '<p>May month review of all associates test</p>',
     toDate: '16/06/2017',
     fromDate: '06/06/2017',
