@@ -100,7 +100,7 @@ const AddProjectMileStone = ({
     )
 
     setError(moment(end).isBefore(start))
-  }, [item.fromDate, item.toDate])
+  }, [item?.fromDate, item?.toDate])
 
   useEffect(() => {
     if (
