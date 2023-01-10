@@ -85,6 +85,7 @@ import {
   ProjectInvoiceApi,
   ProjectTailoringApi,
   ProjectTimeSheetApi,
+  ProjectProposalApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -760,4 +761,8 @@ export const projectTailoringApiConfig: ProjectTailoringApi = {
 
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
+}
+
+export const projectProposalsApiConfig: ProjectProposalApi = {
+  projectProposal: apiPrefix + '/project-mgmt/projectProposal',
 }

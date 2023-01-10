@@ -95,6 +95,7 @@ import { mileStoneService } from './ProjectManagement/Project/ProjectView/MileSt
 import { invoicesService } from './ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
 import { projectTailoringService } from './ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
 import { projectHiveActivityReportService } from './ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import { projectProposalsService } from './ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -194,4 +195,5 @@ export const reduxServices = {
   projectInvoices: invoicesService,
   projectTailoring: projectTailoringService,
   projectTimeSheet: projectHiveActivityReportService,
+  projectProposals: projectProposalsService,
 }

@@ -105,6 +105,7 @@ import projectMileStoneReducer from './reducers/ProjectManagement/Project/Projec
 import projectInvoicesReducer from './reducers/ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
 import projectTailoringReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
 import projectTimeSheetReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import projectProposalsReducer from './reducers/ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -210,6 +211,7 @@ export const allReducers = {
   projectInvoices: projectInvoicesReducer,
   projectTailoring: projectTailoringReducer,
   projectTimeSheet: projectTimeSheetReducer,
+  projectProposals: projectProposalsReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
