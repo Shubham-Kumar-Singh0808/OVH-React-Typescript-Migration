@@ -17,10 +17,10 @@ const deviceLocale: string =
     : navigator.language
 
 const updateBtnId = 'add-project'
-
+const mockSetToggle = jest.fn()
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
-    render(<AddProjectRequestForm setToggle={jest.f} />, {
+    render(<AddProjectRequestForm setToggle={jest.fn()} />, {
       preloadedState: {
         projectManagement: {
           projectClients: mockProjectClient,
@@ -132,5 +132,10 @@ describe('ApproveProjectForm Testing', () => {
 
     const addBtn = screen.getByTestId(updateBtnId)
     userEvent.click(addBtn)
+
+    const clearBttonElement = screen.getByTestId('clear-project')
+    expect(clearBttonElement).toBeInTheDocument()
+    userEvent.click(clearBttonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })
