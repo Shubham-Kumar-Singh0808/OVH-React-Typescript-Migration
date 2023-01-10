@@ -88,6 +88,7 @@ import {
   AddNomineeApi,
   MyReviewApi,
   LeadershipEnrollmentFormApi,
+  ReviewListApi,
   LeadershipEnrollmentListApi,
   KRAApi,
 } from '../../types/apiTypes'
@@ -832,4 +833,12 @@ export const KRAApiConfig: KRAApi = {
 
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+}
+
+export const reviewListApiConfig: ReviewListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getReviewList: apiPrefix + '/appraisal/getSearchResult',
+  getAppraisalCycles: apiPrefix + '/appraisal/cycle',
+  getDesignations: apiPrefix + '/kra/designation',
+  exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
 }

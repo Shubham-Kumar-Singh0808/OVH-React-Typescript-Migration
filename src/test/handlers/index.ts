@@ -41,6 +41,7 @@ import { itDeclarationListHandlers } from './itDeclarationListHandlers'
 import { addAchieverHandlers } from './addAchieverHandler'
 import { declarationFormHandlers } from './declarationFormHandlers'
 import { myKRAsHandler } from './myKRAsHandler'
+import { reviewListHandlers } from './reviewListHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -88,5 +89,6 @@ export const handlers = [
   ...addAchieverHandlers,
   ...declarationFormHandlers,
   ...myKRAsHandler,
+  ...reviewListHandlers,
   // add your handler here
 ]
