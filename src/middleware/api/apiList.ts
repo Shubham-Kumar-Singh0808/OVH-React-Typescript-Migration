@@ -76,6 +76,7 @@ import {
   EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
+  PayrollManagementApi,
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
@@ -706,6 +707,19 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const payrollManagementApiConfig: PayrollManagementApi = {
+  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
+  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
+  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
+  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
+  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
+  deleteCheckedPayslips:
+    apiPrefix + '/payslip/payrolladmin/deleteCheckedPayslips',
+  readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
+  saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
+  clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
 }
 
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
