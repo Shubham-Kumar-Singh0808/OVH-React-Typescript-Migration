@@ -85,6 +85,9 @@ const PayrollManagement = (): JSX.Element => {
       )
     }
   }
+  const renderingPayslipData = useTypedSelector(
+    reduxServices.payrollManagement.selectors.paySlipList,
+  )
 
   const multiSearchBtnHandler = (e: React.SyntheticEvent) => {
     e.preventDefault()
@@ -192,6 +195,17 @@ const PayrollManagement = (): JSX.Element => {
     (feature) => feature.name === 'Payroll Management',
   )
 
+  useEffect(() => {
+    if (selectMonth && selectYear)
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          month: selectMonth,
+          year: Number(selectYear),
+        }),
+      )
+  }, [dispatch, selectMonth, selectYear])
   return (
     <>
       <OCard
@@ -265,101 +279,120 @@ const PayrollManagement = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        <CRow className="mt-3 sh-previewBtn">
-          <CCol sm={4} className="mt-4 mb-4">
-            <input
-              className="mt-1"
-              data-testid="feedback-form"
-              type="file"
-              name="upload-form"
-              value={fileUploadErrorText}
-              onChange={(element: SyntheticEvent) =>
-                onChangeFileUploadHandler(
-                  element.currentTarget as HTMLInputElement,
-                )
-              }
-            />
-            <CRow className="textColor-shade">
-              <span>Note: Please upload file either xls or xlsx format.</span>
-            </CRow>
-          </CCol>
-
-          <CCol md={4} className="text-end mt-4 mb-4">
-            <CButton
-              className="btn btn-download text-decoration-none btn btn-ovh"
-              size="sm"
-              color="info"
-              type="submit"
-              data-testid="preview-btn"
-              onClick={previewBtnHandler}
-            >
-              Preview
-            </CButton>
-            &nbsp;
-            <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
-          </CCol>
-        </CRow>
-        <CRow className="gap-2 d-md-flex justify-content-md-end">
-          <CCol sm={6} md={4}>
-            <CInputGroup className="global-search me-0 justify-content-md-end">
-              <CFormInput
-                className="global-search input form-control"
-                data-testid="searchField"
-                placeholder="Search by Id/Name"
-                aria-label="Multiple Search"
-                aria-describedby="button-addon2"
-                value={searchInput}
-                onChange={(e) => {
-                  setSearchInput(e.target.value)
-                }}
-                onKeyDown={handleSearchBtn}
-                type="text"
+        {selectMonth && selectYear ? (
+          <CRow className="mt-3 sh-previewBtn">
+            <CCol sm={4} className="mt-4 mb-4">
+              <input
+                className="mt-1"
+                data-testid="feedback-form"
+                type="file"
+                name="upload-form"
+                accept=".xlsx, .xls"
+                onChange={(element: SyntheticEvent) =>
+                  onChangeFileUploadHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
               />
-              <CButton
-                disabled={!searchInput}
-                data-testid="multi-search-btn"
-                className="cursor-pointer"
-                type="button"
-                color="info"
-                id="button-addon2"
-                onClick={multiSearchBtnHandler}
-              >
-                Search
-              </CButton>
-              &nbsp;
-              {userAccess?.deleteaccess && (
-                <CButton
-                  color="danger btn-ovh"
-                  type="button"
-                  disabled={!isAllDeleteBtn}
-                  id="button-delete"
-                  onClick={allDeleteHandler}
-                >
-                  Delete
-                </CButton>
+              {fileUploadErrorText && (
+                <div id="error">
+                  <strong className="mt-3 text-danger">
+                    {fileUploadErrorText}
+                  </strong>
+                </div>
               )}
-            </CInputGroup>
-          </CCol>
-        </CRow>
-        {toggle === '' && (
-          <PayrollManagementTable
-            selectMonth={selectMonth}
-            selectYear={selectYear}
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            setToggle={setToggle}
-            setToEditPayslip={setToEditPayslip}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
-            isAllChecked={isAllChecked}
-            setIsAllChecked={setIsAllChecked}
-            userDeleteAccess={userAccess?.deleteaccess as boolean}
-            userEditAccess={userAccess?.updateaccess as boolean}
-          />
+              <CRow className="textColor-shade">
+                <span>Note: Please upload file either xls or xlsx format.</span>
+              </CRow>
+            </CCol>
+            <CCol md={4} className="text-end mt-4 mb-4">
+              {previewBtn ? (
+                <CButton
+                  className="btn btn-download text-decoration-none btn btn-ovh"
+                  size="sm"
+                  color="info"
+                  type="submit"
+                  data-testid="preview-btn"
+                  onClick={previewBtnHandler}
+                >
+                  Preview
+                </CButton>
+              ) : (
+                ''
+              )}
+              &nbsp;
+              <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
+            </CCol>
+          </CRow>
+        ) : (
+          ''
         )}
+        <>
+          <CRow className="gap-2 d-md-flex justify-content-md-end">
+            {renderingPayslipData?.length > 0 && (
+              <CCol sm={6} md={4}>
+                <CInputGroup className="global-search me-0 justify-content-md-end">
+                  <CFormInput
+                    className="global-search input form-control"
+                    data-testid="searchField"
+                    placeholder="Search by Id/Name"
+                    aria-label="Multiple Search"
+                    aria-describedby="button-addon2"
+                    value={searchInput}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value)
+                    }}
+                    onKeyDown={handleSearchBtn}
+                    type="text"
+                  />
+                  <CButton
+                    disabled={!searchInput}
+                    data-testid="multi-search-btn"
+                    className="cursor-pointer"
+                    type="button"
+                    color="info"
+                    id="button-addon2"
+                    onClick={multiSearchBtnHandler}
+                  >
+                    Search
+                  </CButton>
+                  &nbsp;
+                  {userAccess?.deleteaccess && (
+                    <CButton
+                      color="danger btn-ovh"
+                      type="button"
+                      disabled={!isAllDeleteBtn}
+                      id="button-delete"
+                      onClick={allDeleteHandler}
+                    >
+                      Delete
+                    </CButton>
+                  )}
+                </CInputGroup>
+              </CCol>
+            )}
+          </CRow>
+
+          {toggle === '' && renderingPayslipData?.length > 0 && (
+            <PayrollManagementTable
+              selectMonth={selectMonth}
+              selectYear={selectYear}
+              paginationRange={paginationRange}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              setToggle={setToggle}
+              setToEditPayslip={setToEditPayslip}
+              isChecked={isChecked}
+              setIsChecked={setIsChecked}
+              isAllChecked={isAllChecked}
+              setIsAllChecked={setIsAllChecked}
+              userDeleteAccess={userAccess?.deleteaccess as boolean}
+              userEditAccess={userAccess?.updateaccess as boolean}
+            />
+          )}
+        </>
 
         {toggle === 'editPaySlip' && (
           <EditPaySlip toEditPayslip={toEditPayslip} />

@@ -318,9 +318,13 @@ const PayrollManagementTable = (props: {
       </CCol>
       <CRow>
         <CCol xs={4}>
-          <p className="mt-2">
-            <strong>{totalNoOfRecords}</strong>
-          </p>
+          {renderingPayslipData?.length > 0 ? (
+            <p className="mt-2">
+              <strong>{totalNoOfRecords}</strong>
+            </p>
+          ) : (
+            <></>
+          )}
         </CCol>
         <CCol xs={3}>
           {PaySlipsListSize > 20 && (
