@@ -36,7 +36,7 @@ const AddNewInvestmentCycle = (): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddCycle = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment Cycle',
   )
   useEffect(() => {
     if (addCycle.cycleName && cycleStartDate) {

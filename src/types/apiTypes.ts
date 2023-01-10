@@ -587,6 +587,10 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+  getApproveProjectRequest: string
+  updateProjectRequest: string
+  deleteProjectRequest: string
+  rejectProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {
@@ -605,6 +609,11 @@ export interface NomineeListApi extends ApiBase {
   getNominationDetails: string
   reviewNominee: string
   exportNomineeList: string
+}
+
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+  addNominee: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {
@@ -631,6 +640,31 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+}
+
+export interface LeadershipEnrollmentListApi extends ApiBase {
+  getLeadershipList: string
+  leadershipApprove: string
+  leadershipReject: string
+}
+
+export interface LeadershipEnrollmentFormApi extends ApiBase {
+  employeeDetails: string
+  addLeadership: string
+}
+
+export interface KRAApi extends ApiBase {
+  getEmpDepartments: string
+  getDesignation: string
+  searchKRAData: string
+  kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
+  designationKRAPercentage: string
+  checkIfNewKRADuplicate: string
+  addNewKRA: string
+  editThisKra: string
+  updateKRA: string
 }
 
 export interface MyReviewApi extends ApiBase {

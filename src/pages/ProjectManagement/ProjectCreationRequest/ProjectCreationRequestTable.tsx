@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -10,6 +10,8 @@ import {
   CCol,
   CRow,
   CBadge,
+  CFormLabel,
+  CFormTextarea,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -18,6 +20,8 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const ProjectCreationRequestTable = ({
   paginationRange,
@@ -26,6 +30,7 @@ const ProjectCreationRequestTable = ({
   pageSize,
   setPageSize,
   setToggle,
+  userDeleteAction,
 }: {
   paginationRange: number[]
   currentPage: number
@@ -33,8 +38,13 @@ const ProjectCreationRequestTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  userDeleteAction: boolean
 }): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
+  const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
+  const [comments, setComments] = useState<string>('')
   const getAllProjectRequestList = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.allProjectCreationList,
   )
@@ -57,6 +67,14 @@ const ProjectCreationRequestTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  useEffect(() => {
+    if (comments) {
+      setIsYesButtonEnabled(true)
+    } else {
+      setIsYesButtonEnabled(false)
+    }
+  }, [comments])
 
   const projectRequestStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'Rejected') {
@@ -81,12 +99,104 @@ const ProjectCreationRequestTable = ({
     setToggle('projectView')
   }
 
+  const handleProjectRequestApproveClick = (id: number) => {
+    dispatch(reduxServices.projectCreationRequest.getApproveProjectRequest(id))
+    setToggle('approvalProjectHistory')
+  }
+
   const handleProjectRequestHistoryClick = (id: number) => {
     dispatch(
       reduxServices.projectCreationRequest.projectRequestHistoryDetails(id),
     )
     setToggle('projectHistory')
   }
+
+  const handleShowDeleteModal = (requestId: number) => {
+    setToDeleteProjectRequestId(requestId)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleShowRejectModal = (id: number) => {
+    setToDeleteProjectRequestId(id)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteProjectRequestDetail = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteProjectRequestResultAction = await dispatch(
+      reduxServices.projectCreationRequest.deleteProjectRequest(
+        toDeleteProjectRequestId,
+      ),
+    )
+    if (
+      reduxServices.projectCreationRequest.deleteProjectRequest.fulfilled.match(
+        deleteProjectRequestResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Project request deleted successfully"
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.projectCreationRequest.deleteProjectRequest.rejected.match(
+        deleteProjectRequestResultAction,
+      ) &&
+      deleteProjectRequestResultAction.payload === 406
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Project request already mapped with project.So,you can't delete"
+          />,
+        ),
+      )
+    }
+  }
+
+  const handleConfirmRejectProjectRequestDetail = async () => {
+    setIsDeleteModalVisible(false)
+    const rejectProjectRequestResultAction = await dispatch(
+      reduxServices.projectCreationRequest.rejectProjectRequest({
+        comment: comments,
+        requestId: toDeleteProjectRequestId,
+      }),
+    )
+    if (
+      reduxServices.projectCreationRequest.rejectProjectRequest.fulfilled.match(
+        rejectProjectRequestResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          firstIndex: pageSize * (currentPage - 1),
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Project request rejected successfully"
+          />,
+        ),
+      )
+    }
+  }
+
   return (
     <>
       <CTable striped className="mt-3">
@@ -146,6 +256,13 @@ const ProjectCreationRequestTable = ({
                       color="success"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      onClick={() =>
+                        handleProjectRequestApproveClick(projectRequest.id)
+                      }
+                      disabled={
+                        projectRequest.status === 'Rejected' ||
+                        projectRequest.status === 'Approved'
+                      }
                     >
                       <i className="fa fa-check-circle-o"></i>
                     </CButton>
@@ -162,17 +279,25 @@ const ProjectCreationRequestTable = ({
                     <CButton
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
+                      data-testid="reject-btn"
+                      disabled={
+                        projectRequest.status === 'Rejected' ||
+                        projectRequest.status === 'Approved'
+                      }
+                      onClick={() => handleShowRejectModal(projectRequest.id)}
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {userDeleteAction && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="delete-btn"
+                        onClick={() => handleShowDeleteModal(projectRequest.id)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -218,6 +343,53 @@ const ProjectCreationRequestTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
+      >
+        {`Do you really want to delete this OVH-Test project request?`}
+      </OModal>
+      <>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalHeaderClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          isConfirmButtonDisabled={!isYesButtonEnabled}
+          confirmButtonAction={handleConfirmRejectProjectRequestDetail}
+        >
+          <div>
+            {`Do you really want to reject this project request ?`}
+
+            <CRow className="mt-1 mb-0 align-items-center pt-4">
+              <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
+                Comments:
+                <span className={comments ? 'text-white' : 'text-danger'}>
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={6} className="w-100">
+                <CFormTextarea
+                  placeholder="Purpose"
+                  aria-label="textarea"
+                  id="textArea"
+                  name="textArea"
+                  data-testid="text-area"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+          </div>
+        </OModal>
+      </>
     </>
   )
 }

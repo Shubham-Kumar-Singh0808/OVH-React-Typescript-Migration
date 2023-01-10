@@ -24,7 +24,7 @@ export interface NominationsListTypes {
 export interface IncomingNominationQuestions {
   id: null
   questions: string
-  feedBack: string
+  feedBack: string | null
 }
 
 export interface IncomingNomineeDetails {

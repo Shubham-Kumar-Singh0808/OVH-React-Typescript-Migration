@@ -93,7 +93,11 @@ import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
+import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
+import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
+import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { KRAService } from './Performance/KRA/KRASlice'
 
 export const reduxServices = {
   app: appService,
@@ -188,8 +192,12 @@ export const reduxServices = {
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   nomineeList: nomineeListService,
+  addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
   myReview: myReviewService,
+  leadershipEnrollmentList: leadershipEnrollmentListService,
+  leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  KRA: KRAService,
 }

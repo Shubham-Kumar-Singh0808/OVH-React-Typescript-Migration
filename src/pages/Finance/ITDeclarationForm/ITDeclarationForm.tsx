@@ -14,6 +14,12 @@ const ITDeclarationForm = (): JSX.Element => {
   const itDeclarationFormExists = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToSubmitDeclarationForm = userAccessToFeatures?.find(
+    (feature) => feature.name === 'IT Declaration Form',
+  )
   const grandTotal = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
@@ -70,24 +76,26 @@ const ITDeclarationForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-2 mb-2">
-          <CCol className="col-md-3 offset-md-4">
-            <CButton
-              color="success"
-              className="btn-ovh me-1"
-              data-testid="df-submit-btn"
-              size="sm"
-              disabled
-            >
-              Submit
-            </CButton>
-            <CButton
-              color="warning "
-              className="btn-ovh"
-              data-testid="df-clear-btn"
-            >
-              Clear
-            </CButton>
-          </CCol>
+          {userAccessToSubmitDeclarationForm?.createaccess && (
+            <CCol className="col-md-3 offset-md-4">
+              <CButton
+                color="success"
+                className="btn-ovh me-1"
+                data-testid="df-submit-btn"
+                size="sm"
+                disabled
+              >
+                Submit
+              </CButton>
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                data-testid="df-clear-btn"
+              >
+                Clear
+              </CButton>
+            </CCol>
+          )}
         </CRow>
       </OCard>
     </>
