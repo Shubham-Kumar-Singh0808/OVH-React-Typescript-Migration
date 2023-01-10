@@ -631,3 +631,7 @@ export interface ProjectTimeSheetApi extends ApiBase {
 export interface ProjectProposalApi extends ApiBase {
   projectProposal: string
 }
+
+export interface ProjectNotesApi extends ApiBase {
+  projectNotesTimeLine: string
+}

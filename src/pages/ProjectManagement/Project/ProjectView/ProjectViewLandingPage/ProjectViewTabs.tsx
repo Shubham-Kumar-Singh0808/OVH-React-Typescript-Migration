@@ -10,6 +10,7 @@ import ProjectViewTabLabel from '../../../../../middleware/ProjectViewTabLables'
 import ChangeRequest from '../ChangeRequest/ChangeRequest'
 import ProjectInvoices from '../Invoices/ProjectInvoices'
 import MileStone from '../MileStone/MileStone'
+import ProjectNotes from '../Notes/ProjectNotes'
 import PeopleTab from '../People/PeopleTab'
 import ProjectMetricsTab from '../ProjectMetrics/ProjectMetricsTab'
 import ProjectTailoring from '../ProjectTailoring/ProjectTailoring'
@@ -36,7 +37,7 @@ const ProjectViewTabs = (): JSX.Element => {
         3: <MileStone />,
         4: <ProjectInvoices />,
         5: <h6>status</h6>,
-        6: <h6>Notes</h6>,
+        6: <ProjectNotes />,
         7: <Proposal />,
         8: <ProjectHiveActivityReport />,
         9: <ProjectTailoring />,
