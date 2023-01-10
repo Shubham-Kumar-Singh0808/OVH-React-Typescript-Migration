@@ -46,7 +46,7 @@ const PayrollManagementTable = (props: {
     {} as CurrentPayslip,
   )
   const renderingPayslipData = useTypedSelector(
-    reduxServices.payrollManagement.selectors.paySlipInfo,
+    reduxServices.payrollManagement.selectors.paySlipList,
   )
 
   const dispatch = useAppDispatch()
@@ -131,181 +131,190 @@ const PayrollManagementTable = (props: {
   return (
     <>
       <CCol className="custom-scroll scroll-alignment">
-        <CTable
-          striped
-          responsive
-          className="text-start text-left align-middle alignment sh-adjustment"
-        >
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">
-                All
-                <CFormCheck
-                  className="form-check-input form-select-not-allowed"
-                  name="deleteCheckbox"
-                  checked={props.isAllChecked}
-                  onChange={(e) => props.setIsAllChecked(e.target.checked)}
-                  data-testid="ch-All"
-                />
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
-              <CTableHeaderCell scope="col">DOJ</CTableHeaderCell>
-              <CTableHeaderCell scope="col">A/C No.</CTableHeaderCell>
-              <CTableHeaderCell scope="col">G.Salary</CTableHeaderCell>
-              <CTableHeaderCell scope="col">V.Pay %</CTableHeaderCell>
-              <CTableHeaderCell scope="col">V.Pay</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                G.Salary after V.Pay
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Basic</CTableHeaderCell>
-              <CTableHeaderCell scope="col">HR</CTableHeaderCell>
-              <CTableHeaderCell scope="col">TA</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Other Allowance </CTableHeaderCell>
-              <CTableHeaderCell scope="col">Absent</CTableHeaderCell>
-              <CTableHeaderCell scope="col">LOP</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Mediclaim</CTableHeaderCell>
-              <CTableHeaderCell scope="col">ESI</CTableHeaderCell>
-              <CTableHeaderCell scope="col">EPF</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Gratuity</CTableHeaderCell>
-              <CTableHeaderCell scope="col">
-                S.Adv/Arrears/Other
-              </CTableHeaderCell>
-              <CTableHeaderCell scope="col">ERC</CTableHeaderCell>
+        {renderingPayslipData?.length > 0 ? (
+          <CTable
+            striped
+            responsive
+            className="text-start text-left align-middle alignment sh-adjustment"
+          >
+            <CTableHead>
+              <CTableRow>
+                <CTableHeaderCell scope="col">
+                  All
+                  <CFormCheck
+                    className="form-check-input form-select-not-allowed"
+                    name="deleteCheckbox"
+                    checked={props.isAllChecked}
+                    onChange={(e) => props.setIsAllChecked(e.target.checked)}
+                    data-testid="ch-All"
+                  />
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+                <CTableHeaderCell scope="col">DOJ</CTableHeaderCell>
+                <CTableHeaderCell scope="col">A/C No.</CTableHeaderCell>
+                <CTableHeaderCell scope="col">G.Salary</CTableHeaderCell>
+                <CTableHeaderCell scope="col">V.Pay %</CTableHeaderCell>
+                <CTableHeaderCell scope="col">V.Pay</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  G.Salary after V.Pay
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Basic</CTableHeaderCell>
+                <CTableHeaderCell scope="col">HR</CTableHeaderCell>
+                <CTableHeaderCell scope="col">TA</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  Other Allowance{' '}
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">Absent</CTableHeaderCell>
+                <CTableHeaderCell scope="col">LOP</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Mediclaim</CTableHeaderCell>
+                <CTableHeaderCell scope="col">ESI</CTableHeaderCell>
+                <CTableHeaderCell scope="col">EPF</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Gratuity</CTableHeaderCell>
+                <CTableHeaderCell scope="col">
+                  S.Adv/Arrears/Other
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col">ERC</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">TDS</CTableHeaderCell>
+                <CTableHeaderCell scope="col">TDS</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">P.Tax</CTableHeaderCell>
+                <CTableHeaderCell scope="col">P.Tax</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">Meals Card</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Meals Card</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">Donation</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Donation</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">Arrears</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Arrears</CTableHeaderCell>
 
-              <CTableHeaderCell scope="col">Incentive</CTableHeaderCell>
-              <CTableHeaderCell scope="col">VP Payable </CTableHeaderCell>
-              <CTableHeaderCell scope="col">N.Salary</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Remarks</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Month</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Year</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {renderingPayslipData?.length > 0 &&
-              renderingPayslipData?.map((payslipItem, index) => {
-                return (
-                  <CTableRow key={payslipItem.paySlipId}>
-                    <CTableDataCell className="text-middle ms-2">
-                      <CFormCheck
-                        className="form-check-input form-select-not-allowed"
-                        name="deleteCheckbox"
-                        checked={manageCheckboxes(payslipItem.paySlipId)}
-                        onChange={(e) =>
-                          handleCheckbox(
-                            e.target.checked,
-                            payslipItem.paySlipId,
-                          )
-                        }
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.name}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.designation}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.variablePayPercentage}
-                    </CTableDataCell>
-                    <CTableDataCell>{payslipItem.variablePay}</CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.grossSalAfterVariablepay}
-                    </CTableDataCell>
-                    <CTableDataCell>{payslipItem.basicSalary}</CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.houseRentAllowance}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.transportAllowance}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.otherAllowance}
-                    </CTableDataCell>
-                    <CTableDataCell>{payslipItem.absent}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.lossOfPay}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.medicliam}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.esi}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.epf}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.gratuity}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.advArrears}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.erc}</CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.taxDeductionScheme}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {payslipItem.professionalTax}
-                    </CTableDataCell>
-                    <CTableDataCell>{payslipItem.mealsCard}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.donation}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.month}</CTableDataCell>
-                    <CTableDataCell>{payslipItem.year}</CTableDataCell>
-                    <CTableDataCell className="actions">
-                      {props.userEditAccess && (
-                        <CTooltip content="Edit">
+                <CTableHeaderCell scope="col">Incentive</CTableHeaderCell>
+                <CTableHeaderCell scope="col">VP Payable </CTableHeaderCell>
+                <CTableHeaderCell scope="col">N.Salary</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Remarks</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Month</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Year</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            <CTableBody>
+              {renderingPayslipData?.length > 0 &&
+                renderingPayslipData?.map((payslipItem, index) => {
+                  return (
+                    <CTableRow key={payslipItem.paySlipId}>
+                      <CTableDataCell className="text-middle ms-2">
+                        <CFormCheck
+                          className="form-check-input form-select-not-allowed"
+                          name="deleteCheckbox"
+                          checked={manageCheckboxes(payslipItem.paySlipId)}
+                          onChange={(e) =>
+                            handleCheckbox(
+                              e.target.checked,
+                              payslipItem.paySlipId,
+                            )
+                          }
+                        />
+                      </CTableDataCell>
+                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.name}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.designation}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.variablePayPercentage}
+                      </CTableDataCell>
+                      <CTableDataCell>{payslipItem.variablePay}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.grossSalAfterVariablepay}
+                      </CTableDataCell>
+                      <CTableDataCell>{payslipItem.basicSalary}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.houseRentAllowance}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.transportAllowance}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.otherAllowance}
+                      </CTableDataCell>
+                      <CTableDataCell>{payslipItem.absent}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.lossOfPay}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.medicliam}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.esi}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.epf}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.gratuity}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.advArrears}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.erc}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.taxDeductionScheme}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.professionalTax}
+                      </CTableDataCell>
+                      <CTableDataCell>{payslipItem.mealsCard}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.donation}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.month}</CTableDataCell>
+                      <CTableDataCell>{payslipItem.year}</CTableDataCell>
+                      <CTableDataCell className="actions">
+                        {props.userEditAccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                              onClick={() => {
+                                editPaySlipHandler(payslipItem)
+                              }}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        {props.userDeleteAccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              data-testid={`btn-delete${index}`}
+                              size="sm"
+                              color="danger btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() =>
+                                deleteButtonHandler(payslipItem.paySlipId)
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        <CTooltip content="View">
                           <CButton
+                            data-testid={`btn-view${index}`}
                             size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
-                            onClick={() => {
-                              editPaySlipHandler(payslipItem)
-                            }}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                      {props.userDeleteAccess && (
-                        <CTooltip content="Delete">
-                          <CButton
-                            data-testid={`btn-delete${index}`}
-                            size="sm"
-                            color="danger btn-ovh me-1"
+                            color="info"
                             className="btn-ovh-employee-list"
-                            onClick={() =>
-                              deleteButtonHandler(payslipItem.paySlipId)
-                            }
+                            onClick={() => handleModal(payslipItem)}
                           >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                            <i className="fa fa-search-plus  text-white"></i>
                           </CButton>
                         </CTooltip>
-                      )}
-                      <CTooltip content="View">
-                        <CButton
-                          data-testid={`btn-view${index}`}
-                          size="sm"
-                          color="info"
-                          className="btn-ovh-employee-list"
-                          onClick={() => handleModal(payslipItem)}
-                        >
-                          <i className="fa fa-search-plus  text-white"></i>
-                        </CButton>
-                      </CTooltip>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-          </CTableBody>
-        </CTable>
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                })}
+            </CTableBody>
+          </CTable>
+        ) : (
+          <></>
+        )}
       </CCol>
       <CRow>
         <CCol xs={4}>

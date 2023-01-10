@@ -1,23 +1,25 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import PayrollManagementTable from './PayrollManagementTable'
-import { render, screen } from '../../../test/testUtils'
+import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
-import { mockPaySLip } from '../../../test/data/payrollManagementData'
+import { mockCurrentPayslip } from '../../../test/data/payrollManagementData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetTogglePage = jest.fn()
+const deleteButton = 'btn-delete1'
+const viewButton = 'btn-view1'
 
 describe('Payroll Management Table Component Testing', () => {
   beforeEach(() => {
     render(
       <PayrollManagementTable
         paginationRange={[]}
-        currentPage={0}
+        currentPage={1}
         setCurrentPage={mockSetTogglePage}
-        pageSize={0}
+        pageSize={22}
         setPageSize={mockSetTogglePage}
         selectMonth=""
         selectYear=""
@@ -33,15 +35,9 @@ describe('Payroll Management Table Component Testing', () => {
       {
         preloadedState: {
           payrollManagement: {
-            listSize: 1,
+            listSize: 22,
             isLoading: ApiLoadingState.succeeded,
-            error: null,
-            currentPaySlipData: mockPaySLip,
-            paySlipInfo: [],
-            paySlipList: { list: [], size: 0 },
-            editPayslip: {} as CurrentPayslip,
-            excelData: [],
-            uplaodExcelFile: [],
+            paySlipList: mockCurrentPayslip,
           },
           userAccessToFeatures: {
             userAccessToFeatures: mockUserAccessToFeaturesData,
@@ -101,5 +97,52 @@ describe('Payroll Management Table Component Testing', () => {
     expect(screen.getByRole('columnheader', { name: 'Year' })).toBeTruthy()
     expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     expect(screen.getAllByRole('columnheader')).toHaveLength(35)
+  })
+  test('Should be able to see total of 6 records', () => {
+    expect(
+      screen.getByText(`Total Records: ${mockCurrentPayslip.size}`),
+    ).toBeInTheDocument()
+  })
+  test('should render first page data only', async () => {
+    await waitFor(() => {
+      userEvent.click(screen.getByText('Next ›', { exact: true }))
+      expect(screen.getByText('« First')).not.toHaveAttribute('')
+      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('')
+    })
+  })
+  test('should disable first and prev in pagination if first page', async () => {
+    await waitFor(() => {
+      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
+    })
+  })
+  test('should render employee Accounts table component with data without crashing', async () => {
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      const pageSizeSelect = screen.getByRole('option', {
+        name: '40',
+      }) as HTMLOptionElement
+      expect(pageSizeSelect.selected).toBe(false)
+      expect(screen.getAllByRole('row')).toHaveLength(23)
+    })
+  })
+  it('should render Delete modal popup on clicking delete button from Actions', async () => {
+    const deleteButtonEl = screen.getByTestId(deleteButton)
+    userEvent.click(deleteButtonEl)
+    await waitFor(() => {
+      expect(screen.getByText('Delete Payslip')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Yes' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'No' })).toBeInTheDocument()
+    })
+  })
+  it('should close modal popup after clicking Yes option from the modal', () => {
+    const deleteButtonElement = screen.getByTestId(deleteButton)
+    userEvent.click(deleteButtonElement)
+    const yesButtonEle = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(yesButtonEle)
+  })
+  it('should close modal popup after clicking Yes option from the modal', () => {
+    const viewButtonElement = screen.getByTestId(viewButton)
+    userEvent.click(viewButtonElement)
   })
 })

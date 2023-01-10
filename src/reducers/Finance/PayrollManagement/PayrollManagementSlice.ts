@@ -216,7 +216,7 @@ const payrollManagementSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.payrollManagement.isLoading
 
-const paySlipInfo = (state: RootState): CurrentPayslip[] =>
+const paySlipList = (state: RootState): CurrentPayslip[] =>
   state.payrollManagement.paySlipList?.list
 
 const PaySlipsListSize = (state: RootState): number =>
@@ -242,7 +242,7 @@ export const payrollManagementThunk = {
 
 export const payrollManagementSelectors = {
   isLoading,
-  paySlipInfo,
+  paySlipList,
   PaySlipsListSize,
   editPayslip,
   excelData,
