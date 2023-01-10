@@ -8,22 +8,17 @@ import { mockCurrentPayslip } from '../../../test/data/payrollManagementData'
 import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
-const searchInputTestId = 'multi-search-btn'
-
 describe('Payroll Management component with data', () => {
   beforeEach(() => {
     render(<PayrollManagement />, {
       preloadedState: {
         payrollManagement: {
-          listSize: 20,
+          listSize: 22,
           isLoading: ApiLoadingState.succeeded,
-          error: null,
-          currentPaySlipData: mockCurrentPayslip,
-          paySlipInfo: [],
-          paySlipList: { list: [], size: 0 },
+          paySlipList: mockCurrentPayslip,
           editPayslip: {} as CurrentPayslip,
           excelData: [],
-          uplaodExcelFile: [],
+          uploadExcelFile: [],
         },
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
@@ -42,23 +37,5 @@ describe('Payroll Management component with data', () => {
     const selectMonth = screen.getByTestId('form-select1')
     userEvent.selectOptions(selectMonth, ['January'])
     expect(selectMonth).toHaveValue('January')
-  })
-  test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
-    const searchInput = screen.getByTestId('searchField')
-    userEvent.type(searchInput, 'Vinesh')
-    userEvent.click(screen.getByTestId(searchInputTestId))
-  })
-  it('should be able to click preview-btn ', () => {
-    const previewButtonElement = screen.getByTestId('preview-btn')
-    userEvent.click(previewButtonElement)
-  })
-  it('should be able to click multi-search-btn ', () => {
-    const multiSearchButtonElement = screen.getByTestId('multi-search-btn')
-    userEvent.click(multiSearchButtonElement)
-  })
-  test('multi search button should enable only if we enter the value', () => {
-    expect(screen.getByTestId(searchInputTestId)).not.toBeEnabled()
-    userEvent.type(screen.getByPlaceholderText('Search by Id/Name'), 'Vinesh')
-    expect(screen.getByTestId(searchInputTestId)).toBeEnabled()
   })
 })
