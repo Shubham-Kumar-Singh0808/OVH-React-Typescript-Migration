@@ -29,6 +29,7 @@ const AddProjectMileStone = ({
   billableOnChange,
   percentageOnChange,
   setIsAddMileStoneButtonEnabled,
+  isAddMilestoneButtonEnabled,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
@@ -57,6 +58,7 @@ const AddProjectMileStone = ({
     index: number,
   ) => void
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
+  isAddMilestoneButtonEnabled: boolean
 }): JSX.Element => {
   const [error, setError] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
@@ -141,7 +143,7 @@ const AddProjectMileStone = ({
   return (
     <>
       <CTableBody>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" className="col-sm-2">
           <CFormInput
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
@@ -151,7 +153,7 @@ const AddProjectMileStone = ({
             data-testid="title-testing"
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" className="col-sm-1">
           <CFormInput
             onChange={(e) => effortOnChange(e, index)}
             value={item.effort}
@@ -180,7 +182,7 @@ const AddProjectMileStone = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <DatePicker
-            id="editprojectenddate"
+            id="editProjectEndDate"
             className="form-control form-control-sm sh-date-picker"
             peekNextMonth
             showMonthDropdown
@@ -189,12 +191,12 @@ const AddProjectMileStone = ({
             placeholderText="dd/mm/yy"
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
-            name="editprojectenddate"
+            name="editProjectEndDate"
             value={item.toDate}
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" className="col-sm-2">
           <CFormSelect
             className="mt-2"
             aria-label="Default select example"
@@ -210,7 +212,7 @@ const AddProjectMileStone = ({
             <option value="false">No</option>
           </CFormSelect>
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" className="col-sm-1">
           <CFormInput
             className="mt-2"
             onChange={(e) => percentageOnChange(e, index)}
@@ -220,7 +222,7 @@ const AddProjectMileStone = ({
             disabled={!isPercentageEnable}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" className="col-sm-2">
           <CFormTextarea
             className="mt-2"
             aria-label="textarea"
@@ -235,18 +237,19 @@ const AddProjectMileStone = ({
           {item.buttonType === 'Add' ? (
             <CButton
               data-testid="add-plus-btn1"
-              className="cursor-pointer"
+              className="add-project-request-icon"
               color="info btn-ovh me-1"
               type="button"
               id="button-addon2"
               onClick={() => handleClickMileStone(index)}
+              disabled={!isAddMilestoneButtonEnabled}
             >
               <i className="fa fa-plus"></i>
             </CButton>
           ) : (
             <CButton
               data-testid="search-btn1"
-              className="cursor-pointer"
+              className="add-project-request-icon"
               color="info btn-ovh me-1"
               type="button"
               id="button-addon2"
