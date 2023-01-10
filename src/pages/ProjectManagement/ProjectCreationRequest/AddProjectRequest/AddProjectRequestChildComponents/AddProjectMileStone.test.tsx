@@ -35,6 +35,7 @@ describe('ProjectMileStone Component Testing with data', () => {
         commentsOnChange={jest.fn()}
         billableOnChange={jest.fn()}
         percentageOnChange={jest.fn()}
+        setIsAddMileStoneButtonEnabled={jest.fn()}
       />,
       {
         preloadedState: {
