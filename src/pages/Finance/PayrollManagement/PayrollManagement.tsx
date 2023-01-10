@@ -148,38 +148,6 @@ const PayrollManagement = (): JSX.Element => {
     }
   }
 
-  const deleteSuccessToastMessage = (
-    <OToast
-      toastColor="success"
-      toastMessage={`Successfully Deleted Employee ID ${Number(
-        selectYear,
-      )} PaySlip`}
-    />
-  )
-
-  const allDeleteHandler = async () => {
-    const allDeleteBtnActionResult = await dispatch(
-      reduxServices.payrollManagement.deleteCheckedPayslips(
-        toEditPayslip.paySlipId,
-      ),
-    )
-    if (
-      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
-        allDeleteBtnActionResult,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
-      dispatch(
-        reduxServices.payrollManagement.getCurrentPayslip({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          month: selectMonth,
-          year: Number(selectYear),
-        }),
-      )
-    }
-  }
-
   useEffect(() => {
     if (isChecked && isAllChecked) {
       setIsAllDeleteBtn(true)
@@ -206,6 +174,7 @@ const PayrollManagement = (): JSX.Element => {
         }),
       )
   }, [dispatch, selectMonth, selectYear])
+
   return (
     <>
       <OCard
@@ -363,7 +332,6 @@ const PayrollManagement = (): JSX.Element => {
                       type="button"
                       disabled={!isAllDeleteBtn}
                       id="button-delete"
-                      onClick={allDeleteHandler}
                     >
                       Delete
                     </CButton>
