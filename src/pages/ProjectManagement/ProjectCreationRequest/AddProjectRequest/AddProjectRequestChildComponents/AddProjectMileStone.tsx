@@ -87,7 +87,6 @@ const AddProjectMileStone = ({
       (investment) => investment.id !== id,
     )
     setProjectMileStone(newInvestmentList)
-    console.log(newInvestmentList.length)
   }
 
   const dispatch = useAppDispatch()
@@ -149,7 +148,7 @@ const AddProjectMileStone = ({
             value={item.title}
             name="title"
             placeholder="Title"
-            data-testid="title-test"
+            data-testid="title-testing"
           />
         </CTableDataCell>
         <CTableDataCell scope="row">
@@ -201,7 +200,7 @@ const AddProjectMileStone = ({
             aria-label="Default select example"
             size="sm"
             id="billable"
-            data-testid="form-select2"
+            data-testid="billable-select"
             name="billable"
             value={item.billable}
             onChange={(e) => billableOnChange(e, index)}
@@ -235,7 +234,7 @@ const AddProjectMileStone = ({
         <CTableDataCell scope="row">
           {item.buttonType === 'Add' ? (
             <CButton
-              data-testid="search-btn1"
+              data-testid="add-plus-btn1"
               className="cursor-pointer"
               color="info btn-ovh me-1"
               type="button"

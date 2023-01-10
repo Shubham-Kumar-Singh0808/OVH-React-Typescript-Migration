@@ -10,6 +10,7 @@ import {
 } from '../../../../../test/testUtils'
 import { mockProjectRequestList } from '../../../../../test/data/projectCreationRequestData'
 
+const mockSetToggle = jest.fn()
 describe('ProjectMileStone Component Testing with data', () => {
   beforeEach(() => {
     render(
@@ -70,8 +71,22 @@ describe('ProjectMileStone Component Testing with data', () => {
     expect(datePickers[0]).toHaveValue('')
     expect(datePickers[1]).toHaveValue('')
 
+    const billable = screen.getByTestId('billable-select')
+    userEvent.selectOptions(billable, ['true'])
+    expect(billable).toHaveValue('')
+
     const comments = screen.getByTestId('text-area')
     userEvent.type(comments, 'test')
     expect(comments).toHaveValue('')
+
+    const percentage = screen.getByTestId('percentage-test')
+    userEvent.type(percentage, '20')
+    expect(percentage).toHaveValue('')
+    expect(percentage).toBeDisabled()
+  })
+  test('should able to select values for options for respective title select element', () => {
+    const title = screen.getByTestId('title-testing')
+    userEvent.type(title, 'test')
+    expect(title).toHaveValue('')
   })
 })
