@@ -44,19 +44,19 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   const reviewStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'COMPLETED') {
       return (
-        <CBadge color="success" className="text-white">
+        <CBadge color="success" className="review-status">
           {'Completed'}
         </CBadge>
       )
     } else if (status === 'PENDINGAGREEMENT') {
       return (
-        <CBadge className="discuss-btn text-white">
+        <CBadge className="discuss-btn review-status">
           {'Needs Acknowledgement'}
         </CBadge>
       )
     } else if (status === 'SUBMIT') {
       return (
-        <CBadge color="warning" className="text-white">
+        <CBadge color="warning" className="review-status">
           {'Review Pending'}
         </CBadge>
       )
