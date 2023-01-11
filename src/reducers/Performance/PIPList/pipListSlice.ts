@@ -123,6 +123,30 @@ const getPIPHistory = createAsyncThunk(
   },
 )
 
+const extendPip = createAsyncThunk(
+  'pipList/extendPip',
+  async (props: GetPipList, thunkApi) => {
+    try {
+      return await pipListApi.extendPip(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const removeFromPip = createAsyncThunk(
+  'pipList/removeFromPip',
+  async (props: GetPipList, thunkApi) => {
+    try {
+      return await pipListApi.removeFromPip(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -148,6 +172,14 @@ const pipListSlice = createSlice({
       .addCase(getPIPHistory.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employeePIPTimeline = action.payload
+      })
+      .addCase(extendPip.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.viewPipDetails = action.payload
+      })
+      .addCase(removeFromPip.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.viewPipDetails = action.payload
       })
       .addCase(viewPipDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -193,6 +225,7 @@ const employeePIPTimeline = (state: RootState): PipHistory[] =>
 
 const viewEmployeePipDetails = (state: RootState): GetPipList =>
   state.pipList.viewPipDetails
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -201,6 +234,8 @@ export const pipListThunk = {
   addPIP,
   viewPipDetails,
   getPIPHistory,
+  extendPip,
+  removeFromPip,
 }
 
 export const pipListSelectors = {

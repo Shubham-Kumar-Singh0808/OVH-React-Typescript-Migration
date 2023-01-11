@@ -141,6 +141,28 @@ const getPIPHistory = async (
   return response.data
 }
 
+const extendPip = async (data: GetPipList): Promise<GetPipList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.extendPip,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const removeFromPip = async (data: GetPipList): Promise<GetPipList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.removeFromPip,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const pipListApi = {
   getAllPIPList,
   exportPIPList,
@@ -149,6 +171,8 @@ const pipListApi = {
   addPIP,
   viewPipDetails,
   getPIPHistory,
+  extendPip,
+  removeFromPip,
 }
 
 export default pipListApi

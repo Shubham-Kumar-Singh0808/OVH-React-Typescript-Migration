@@ -675,4 +675,6 @@ export interface PIPListApi extends ApiBase {
   addPIP: string
   viewPipDetails: string
   getPIPHistory: string
+  extendPip: string
+  removeFromPip: string
 }

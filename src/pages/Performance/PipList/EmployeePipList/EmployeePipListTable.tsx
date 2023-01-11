@@ -39,6 +39,7 @@ const EmployeePipListTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
+
   const timeLineHandler = (id: number) => {
     dispatch(reduxServices.pipList.viewPipDetails(id))
     dispatch(
@@ -95,7 +96,8 @@ const EmployeePipListTable = ({
                     </CTooltip>
                     <CTooltip content="Cleareance Certificate">
                       <CButton
-                        className="btn btn-primary btn-ovh me-2"
+                        className="btn-ovh me-2"
+                        color="info"
                         type="button"
                       >
                         <i className="fa fa-user-circle text-white"></i>
