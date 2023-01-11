@@ -687,3 +687,11 @@ export interface KRAApi extends ApiBase {
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
 }
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
+}

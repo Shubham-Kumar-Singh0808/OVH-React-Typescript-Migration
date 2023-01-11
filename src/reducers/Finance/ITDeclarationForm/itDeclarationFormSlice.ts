@@ -6,9 +6,11 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   EmployeeDetails,
+  FormSectionsDTO,
   Invest,
   ITDeclarationFormSliceState,
   Sections,
+  submitITDeclarationForm,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 const getEmployeeInfo = createAsyncThunk(
@@ -72,6 +74,20 @@ const isITDeclarationFormExist = createAsyncThunk<
   }
 })
 
+const addITDeclarationForm = createAsyncThunk(
+  'itDeclarationForm/addITDeclarationForm',
+  async (submitDeclarationForm: submitITDeclarationForm, thunkApi) => {
+    try {
+      return await itDeclarationFormApi.addITDeclarationForm(
+        submitDeclarationForm,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -94,6 +110,7 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   itDeclarationFormId: 0,
   itDeclarationFormExist: false,
   grandTotal: 0,
+  formSectionData: [],
 }
 
 const itDeclarationFormSlice = createSlice({
@@ -102,6 +119,9 @@ const itDeclarationFormSlice = createSlice({
   reducers: {
     setGrandTotal: (state, action) => {
       state.grandTotal = action.payload
+    },
+    setFormSectionData: (state, action) => {
+      state.formSectionData = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -113,6 +133,9 @@ const itDeclarationFormSlice = createSlice({
       .addCase(getSectionsHavingInvests.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.sections = action.payload
+      })
+      .addCase(addITDeclarationForm.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(isITDeclarationFormExist.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -131,6 +154,7 @@ const itDeclarationFormSlice = createSlice({
           getSectionsHavingInvests.pending,
           getInvestsBySectionId.pending,
           isITDeclarationFormExist.pending,
+          addITDeclarationForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -142,6 +166,7 @@ const itDeclarationFormSlice = createSlice({
           getSectionsHavingInvests.rejected,
           getInvestsBySectionId.rejected,
           isITDeclarationFormExist.rejected,
+          addITDeclarationForm.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -168,12 +193,15 @@ const itDeclarationFormExists = (state: RootState): boolean =>
 
 const grandTotal = (state: RootState): number =>
   state.itDeclarationForm.grandTotal
+const formSectionData = (state: RootState): FormSectionsDTO[] =>
+  state.itDeclarationForm.formSectionData
 
 const itDeclarationFormThunk = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
   isITDeclarationFormExist,
+  addITDeclarationForm,
 }
 
 const itDeclarationFormSelectors = {
@@ -183,6 +211,7 @@ const itDeclarationFormSelectors = {
   investments,
   itDeclarationFormExists,
   grandTotal,
+  formSectionData,
 }
 
 export const itDeclarationFormService = {
