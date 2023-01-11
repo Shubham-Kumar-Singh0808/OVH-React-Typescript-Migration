@@ -34,7 +34,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
   const [selectedKRAId, setSelectedKRAId] = useState<number>(-1)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
 
   const handlePageSizeSelectChange = (
@@ -60,7 +59,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     }
   }
 
-  const showModalButtonTernary = showModalButtons ? '' : 'd-none'
+  // const showModalButtonTernary = showModalButtons ? '' : 'd-none'
   const noRecords =
     kraData?.size !== 0
       ? `Total Records: ${kraData?.size}`
@@ -94,7 +93,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               selectedKRA={item}
               setModalDescription={setModalDescription}
               setModalVisible={setModalVisible}
-              setShowModalButtons={setShowModalButtons}
               setDeleteThisKRA={setDeleteThisKRA}
             />
           ))}
@@ -127,15 +125,15 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         )}
       </CRow>
       <OModal
+        alignment="center"
         visible={isModalVisible}
         setVisible={setModalVisible}
-        modalSize="lg"
-        alignment="center"
-        modalFooterClass={showModalButtonTernary}
+        modalTitle="Delete KRA"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
-        modalHeaderClass="d-none"
       >
         <div
           data-testid="modal-cnt-kra-table"

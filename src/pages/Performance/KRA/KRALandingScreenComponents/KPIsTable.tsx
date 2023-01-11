@@ -33,7 +33,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] =
     useState<ModalContent>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
 
@@ -47,7 +46,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription(content)
-    setShowModalButtons(false)
+
     setModalVisible(true)
   }
 
@@ -62,7 +61,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription('Do you want to delete this ' + name + '?')
-    setShowModalButtons(true)
+
     setModalVisible(true)
     setDeleteThisKPI(id)
   }
@@ -86,8 +85,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
       }
     }
   }
-
-  const modalBtnTernary = showModalButtons ? emptyString : 'd-none'
 
   return (
     <>
@@ -193,7 +190,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                       <CButton
                         size="sm"
                         color="info"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         title="Edit"
                       >
                         <i
@@ -206,7 +203,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                       <CButton
                         size="sm"
                         color="danger"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid={`del-btn-${index}`}
                         title="Delete"
                         onClick={(e) => {
@@ -226,10 +223,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
       <OModal
         visible={isModalVisible}
         setVisible={setModalVisible}
-        modalSize="lg"
-        alignment="center"
-        modalFooterClass={modalBtnTernary}
-        modalHeaderClass="d-none"
+        modalTitle="Delete KPI"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}

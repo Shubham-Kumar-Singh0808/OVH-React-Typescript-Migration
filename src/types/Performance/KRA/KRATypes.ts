@@ -9,7 +9,6 @@ export interface KRATableItemProps {
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
   setModalDescription: React.Dispatch<React.SetStateAction<string>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
-  setShowModalButtons: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
