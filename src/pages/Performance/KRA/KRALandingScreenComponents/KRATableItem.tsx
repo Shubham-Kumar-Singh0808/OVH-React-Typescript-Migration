@@ -6,7 +6,7 @@ import {
   KRAPages,
   KRATableItemProps,
 } from '../../../../types/Performance/KRA/KRATypes'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const KRATableItem = (props: KRATableItemProps): JSX.Element => {
@@ -40,6 +40,13 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setModalDescription(content)
     setModalVisible(true)
   }
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToKRA = userAccessToFeatures?.find(
+    (feature) => feature.name === 'KRA',
+  )
 
   const deleteKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -113,35 +120,40 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
         <CTableDataCell scope="row">
           <div className="d-flex flex-row align-items-center justify-content-end">
             <div className="button-events">
-              <CButton
-                size="sm"
-                color="info"
-                className="btn-ovh me-1 btn-ovh-employee-list"
-                data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
-                title="Edit"
-                onClick={editKRAButtonHandler}
-              >
-                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </CButton>
-              <CButton
-                size="sm"
-                color="danger"
-                className="btn-ovh me-1 btn-ovh-employee-list"
-                title="Delete"
-                data-testid={`del-btn-kra-${selectedKRA.id}`}
-                onClick={deleteKRAButtonHandler}
-              >
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </CButton>
-
-              <CButton
-                size="sm"
-                color="info"
-                className="btn-ovh btn-ovh-employee-list"
-                title="Add KPI"
-              >
-                <i className="fa fa-plus" aria-hidden="true"></i>
-              </CButton>
+              {userAccessToKRA?.updateaccess && (
+                <CButton
+                  size="sm"
+                  color="info"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
+                  data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
+                  title="Edit"
+                  onClick={editKRAButtonHandler}
+                >
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </CButton>
+              )}
+              {userAccessToKRA?.deleteaccess && (
+                <CButton
+                  size="sm"
+                  color="danger"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
+                  title="Delete"
+                  data-testid={`del-btn-kra-${selectedKRA.id}`}
+                  onClick={deleteKRAButtonHandler}
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              )}
+              {userAccessToKRA?.createaccess && (
+                <CButton
+                  size="sm"
+                  color="info"
+                  className="btn-ovh btn-ovh-employee-list"
+                  title="Add KPI"
+                >
+                  <i className="fa fa-plus" aria-hidden="true"></i>
+                </CButton>
+              )}
             </div>
           </div>
         </CTableDataCell>

@@ -37,8 +37,11 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
 
   const userAccessToFeatures = useTypedSelector(
-    (state) => state.userAccessToFeatures.userAccessToFeatures,
-  ).find((item) => item.featureId === 34)
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToKPI = userAccessToFeatures?.find(
+    (feature) => feature.name === 'KRA',
+  )
 
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
@@ -186,7 +189,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
               <CTableDataCell>
                 <div className="d-flex flex-row align-items-center justify-content-end">
                   <div className="button-events">
-                    {userAccessToFeatures?.updateaccess && (
+                    {userAccessToKPI?.updateaccess && (
                       <CButton
                         size="sm"
                         color="info"
@@ -199,7 +202,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                         ></i>
                       </CButton>
                     )}
-                    {userAccessToFeatures?.deleteaccess && (
+                    {userAccessToKPI?.deleteaccess && (
                       <CButton
                         size="sm"
                         color="danger"
