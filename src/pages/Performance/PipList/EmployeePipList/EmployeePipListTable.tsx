@@ -11,6 +11,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -38,7 +39,15 @@ const EmployeePipListTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
-
+  const timeLineHandler = (id: number) => {
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: id,
+      }),
+    )
+  }
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -70,16 +79,19 @@ const EmployeePipListTable = ({
                   <CTableDataCell>{item.createdBy}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="Timeline">
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-2"
-                        data-testid="history-btn"
-                      >
-                        <i
-                          className="fa fa-bar-chart text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <Link to={`/ViewPIPDetail/${item.id}`}>
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-2"
+                          data-testid="history-btn"
+                          onClick={() => timeLineHandler(item.id)}
+                        >
+                          <i
+                            className="fa fa-bar-chart text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </Link>
                     </CTooltip>
                     <CTooltip content="Cleareance Certificate">
                       <CButton

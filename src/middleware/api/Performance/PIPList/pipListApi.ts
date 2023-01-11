@@ -6,6 +6,7 @@ import {
   GetPIPHistory,
   GetPipList,
   PerformanceRatings,
+  PipHistoryProps,
 } from '../../../../types/Performance/PipList/pipListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -124,19 +125,15 @@ const viewPipDetails = async (id: number): Promise<GetPipList> => {
   return response.data
 }
 
-const getPIPHistory = async ({
-  filterName,
-  pipId,
-}: {
-  filterName: string
-  pipId: number
-}): Promise<GetPIPHistory> => {
+const getPIPHistory = async (
+  props: PipHistoryProps,
+): Promise<GetPIPHistory> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: PipListApiConfig.getPIPHistory,
     method: AllowedHttpMethods.get,
     params: {
-      filterName,
-      pipId,
+      filterName: props.filterName ?? 20,
+      pipId: props.pipId,
     },
   })
 

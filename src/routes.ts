@@ -223,6 +223,14 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -837,6 +845,11 @@ const routes = [
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:Id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
   },
 ]
 

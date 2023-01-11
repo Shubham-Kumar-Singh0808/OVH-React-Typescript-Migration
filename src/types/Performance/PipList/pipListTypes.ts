@@ -48,6 +48,7 @@ export type PipListSliceState = {
   selectedEmployeePipStatus: EmployeePipStatus
   performanceRatings: PerformanceRatings[]
   activeEmployee: ActiveEmployee[]
+  employeePIPTimeline: GetPIPHistory
 }
 
 export type EmployeePIPListTableProps = {
@@ -129,4 +130,9 @@ export type PipHistory = {
 export type GetPIPHistory = {
   list: PipHistory[]
   size: number
+}
+
+export type PipHistoryProps = {
+  filterName: string
+  pipId: number
 }

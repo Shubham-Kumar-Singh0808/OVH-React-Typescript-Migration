@@ -11,6 +11,8 @@ import {
   GetPipList,
   PerformanceRatings,
   ActiveEmployee,
+  PipHistoryProps,
+  PipHistory,
 } from '../../../types/Performance/PipList/pipListTypes'
 
 const getAllPIPList = createAsyncThunk(
@@ -111,18 +113,9 @@ const viewPipDetails = createAsyncThunk(
 
 const getPIPHistory = createAsyncThunk(
   'pipList/getPIPHistory',
-  async (
-    {
-      filterName,
-      pipId,
-    }: {
-      filterName: string
-      pipId: number
-    },
-    thunkApi,
-  ) => {
+  async (props: PipHistoryProps, thunkApi) => {
     try {
-      return await pipListApi.getPIPHistory({ filterName, pipId })
+      return await pipListApi.getPIPHistory(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -138,7 +131,9 @@ export const initialPipListState: PipListSliceState = {
   selectedEmployeePipStatus: EmployeePipStatus.pip,
   performanceRatings: [],
   activeEmployee: [],
+  employeePIPTimeline: { size: 0, list: [] },
 }
+
 const pipListSlice = createSlice({
   name: 'pipList',
   initialState: initialPipListState,
@@ -149,6 +144,10 @@ const pipListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getPIPHistory.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeePIPTimeline = action.payload
+      })
       .addCase(getAllPIPList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.pipListData = action.payload.list
@@ -184,6 +183,9 @@ const performanceRatings = (state: RootState): PerformanceRatings[] =>
 const employeeData = (state: RootState): ActiveEmployee[] =>
   state.pipList.activeEmployee
 
+const employeePIPTimeline = (state: RootState): PipHistory[] =>
+  state.pipList.employeePIPTimeline.list
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -201,6 +203,7 @@ export const pipListSelectors = {
   pipListData,
   performanceRatings,
   employeeData,
+  employeePIPTimeline,
 }
 
 export const pipListService = {
