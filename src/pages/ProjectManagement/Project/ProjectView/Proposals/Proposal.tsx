@@ -22,12 +22,7 @@ const Proposal = (): JSX.Element => {
     )
   }, [])
   useEffect(() => {
-    if (
-      proposalLink?.replace(
-        '/(http(s)?://.)?(www.)?[-a-zA-Z0-9@:%._+~#=]{2,256}.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/',
-        'g',
-      )
-    ) {
+    if (proposalLink) {
       setIsPostButtonEnabled(true)
     } else {
       setIsPostButtonEnabled(false)
@@ -58,14 +53,7 @@ const Proposal = (): JSX.Element => {
             placeholder="What you are thinking?"
             data-testid="person-name"
             value={proposalLink}
-            onChange={(e) =>
-              setProposalLink(
-                e.target.value.replace(
-                  '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
-                  'g',
-                ),
-              )
-            }
+            onChange={(e) => setProposalLink(e.target.value)}
           />
         </CCol>
       </CRow>

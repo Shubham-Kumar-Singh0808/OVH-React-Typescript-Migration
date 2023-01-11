@@ -1,8 +1,59 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import moment from 'moment'
 import ProjectHiveActivityReportOptions from './ProjectHiveActivityReportOptions'
+import ProjectHiveActivityTable from './ProjectHiveActivityTable'
 import OCard from '../../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
+import { currentMonthDate } from '../../../../../utils/helper'
 
 const ProjectHiveActivityReport = (): JSX.Element => {
+  const [startDate, setStartDate] = useState<Date>()
+  const [isViewClicked, setIsViewClicked] = useState(false)
+  const [filterByDate, setFilterByDate] = useState<Date>()
+  const viewButtonHandler = () => {
+    setIsViewClicked(true)
+  }
+
+  const selectedDate = useTypedSelector(
+    reduxServices.hiveActivityReport.selectors.selectedDate,
+  )
+
+  const dateToUse = filterByDate
+    ? filterByDate?.getMonth() + '/' + filterByDate.getFullYear()
+    : selectedDate
+
+  const dispatch = useAppDispatch()
+  const setMonthToDisplay = useCallback(
+    (dateValue) => {
+      const monthToDisplay =
+        dateValue === currentMonthDate
+          ? moment().format('MMMM-YYYY')
+          : moment().subtract(1, 'months').format('MMMM-YYYY')
+
+      dispatch(
+        reduxServices.hiveActivityReport.actions.setMonthDisplay(
+          monthToDisplay,
+        ),
+      )
+    },
+    [dateToUse],
+  )
+
+  useEffect(() => {
+    if (isViewClicked) {
+      setFilterByDate(startDate)
+      setMonthToDisplay(moment(startDate).format('MM/yyyy'))
+      dispatch(reduxServices.hiveActivityReport.actions.setSelectedDate(''))
+      dispatch(
+        reduxServices.hiveActivityReport.actions.setMonthDisplay(
+          moment(startDate).format('MMMM-YYYY'),
+        ),
+      )
+    }
+
+    setIsViewClicked(false)
+  }, [isViewClicked, setMonthToDisplay])
   return (
     <>
       <OCard
@@ -11,7 +62,12 @@ const ProjectHiveActivityReport = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <ProjectHiveActivityReportOptions />
+        <ProjectHiveActivityReportOptions
+          startDate={startDate}
+          setStartDate={setStartDate}
+          viewButtonHandler={viewButtonHandler}
+        />
+        <ProjectHiveActivityTable />
       </OCard>
     </>
   )

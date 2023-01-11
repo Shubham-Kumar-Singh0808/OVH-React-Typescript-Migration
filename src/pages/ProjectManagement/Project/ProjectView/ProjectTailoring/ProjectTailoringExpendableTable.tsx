@@ -11,8 +11,8 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 
 const ProjectInvoicesEntryTable = (): JSX.Element => {
-  const projectTailoring = useTypedSelector(
-    reduxServices.projectTailoring.selectors.projectTailoring,
+  const projectTailoringList = useTypedSelector(
+    reduxServices.projectTailoring.selectors.projectTailoringList,
   )
   return (
     <>
@@ -37,7 +37,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {projectTailoring?.processHeaddto?.map((item, index) => {
+          {projectTailoringList?.map((item, index) => {
             return (
               <CTableRow key={index}>
                 {item?.processSubHeadsDto?.map((data, index) => {
