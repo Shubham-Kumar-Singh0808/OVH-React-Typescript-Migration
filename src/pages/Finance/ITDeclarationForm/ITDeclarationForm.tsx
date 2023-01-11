@@ -38,12 +38,12 @@ const ITDeclarationForm = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (isAgreeChecked && formSectionData) {
+    if (isAgreeChecked) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [isAgreeChecked, formSectionData])
+  }, [isAgreeChecked])
   useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
     if (itDeclarationFormExists === true) {
