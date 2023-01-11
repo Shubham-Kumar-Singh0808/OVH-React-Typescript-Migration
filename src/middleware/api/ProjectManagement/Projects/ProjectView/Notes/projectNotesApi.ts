@@ -43,7 +43,7 @@ const uploadProjectNotesImage = async (prepareObject: {
     method: AllowedHttpMethods.post,
     data: prepareObject.file,
     params: {
-      ticketId: prepareObject.postid,
+      postid: prepareObject.postid,
     },
     additionalHeaders: {
       'Content-Type': 'multipart/form-data',

@@ -25,7 +25,7 @@ const ProjectNotes = (): JSX.Element => {
   }, [])
 
   const isLoading = useTypedSelector(
-    reduxServices.projectProposals.selectors.isProjectProposalsLoading,
+    reduxServices.projectNotes.selectors.isProjectNotesLoading,
   )
 
   useEffect(() => {
@@ -56,11 +56,8 @@ const ProjectNotes = (): JSX.Element => {
     if (uploadFile) {
       const formData = new FormData()
       formData.append('file', uploadFile, uploadFile.name)
-      const ticketIdParams = postNotesResultAction.payload as unknown as {
-        postid: number
-      }
       const uploadPrepareObject = {
-        postid: ticketIdParams.postid,
+        postid: postNotesResultAction.payload as number,
         file: formData,
       }
       dispatch(
@@ -82,6 +79,9 @@ const ProjectNotes = (): JSX.Element => {
       )
       setNotesLink('')
       setUploadFile(undefined)
+      dispatch(
+        reduxServices.projectNotes.getProjectNotesTimeLine(projectId as string),
+      )
     }
   }
   return (
@@ -98,6 +98,7 @@ const ProjectNotes = (): JSX.Element => {
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
           />
+          <p>{notesLink?.length}/150</p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
