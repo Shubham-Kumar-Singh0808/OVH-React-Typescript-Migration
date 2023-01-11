@@ -8,6 +8,7 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 const ProjectNotes = (): JSX.Element => {
   const [notesLink, setNotesLink] = useState<string>('')
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
+  const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -22,6 +23,11 @@ const ProjectNotes = (): JSX.Element => {
       setIsPostButtonEnabled(false)
     }
   }, [notesLink])
+  const onChangeFileEventHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadFile(file[0])
+  }
   return (
     <>
       <CRow className="mt-4 mb-4">
@@ -35,6 +41,21 @@ const ProjectNotes = (): JSX.Element => {
             data-testid="person-name"
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
+          />
+        </CCol>
+      </CRow>
+      <CRow className="mt-4 mb-4">
+        <CCol sm={3}>
+          <input
+            className="sh-updateTicket-file"
+            type="file"
+            data-testid="file-upload"
+            id="fileUpload"
+            onChange={(element: React.SyntheticEvent) =>
+              onChangeFileEventHandler(
+                element.currentTarget as HTMLInputElement,
+              )
+            }
           />
         </CCol>
       </CRow>
