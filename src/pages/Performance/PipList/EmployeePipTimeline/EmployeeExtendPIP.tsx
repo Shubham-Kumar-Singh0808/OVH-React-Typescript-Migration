@@ -1,4 +1,11 @@
-import { CRow, CCol, CButton } from '@coreui/react-pro'
+import {
+  CRow,
+  CCol,
+  CButton,
+  CForm,
+  CFormInput,
+  CFormLabel,
+} from '@coreui/react-pro'
 import React from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
 
@@ -7,6 +14,10 @@ const EmployeeExtendPIP = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
+  }
   return (
     <>
       <OCard
@@ -27,6 +38,27 @@ const EmployeeExtendPIP = ({
             </CButton>
           </CCol>
         </CRow>
+        <CForm>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Employee Name:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                className="form-control form-control-not-allowed"
+                data-testid="appraisalTitle"
+                type="text"
+                id="appraisalTitle"
+                size="sm"
+                name="name"
+                disabled={true}
+              />
+            </CCol>
+          </CRow>
+        </CForm>
       </OCard>
     </>
   )

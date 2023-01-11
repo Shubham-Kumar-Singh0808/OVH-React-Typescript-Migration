@@ -132,6 +132,7 @@ export const initialPipListState: PipListSliceState = {
   performanceRatings: [],
   activeEmployee: [],
   employeePIPTimeline: { size: 0, list: [] },
+  viewPipDetails: {} as GetPipList,
 }
 
 const pipListSlice = createSlice({
@@ -147,6 +148,10 @@ const pipListSlice = createSlice({
       .addCase(getPIPHistory.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.employeePIPTimeline = action.payload
+      })
+      .addCase(viewPipDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.viewPipDetails = action.payload
       })
       .addCase(getAllPIPList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -186,6 +191,8 @@ const employeeData = (state: RootState): ActiveEmployee[] =>
 const employeePIPTimeline = (state: RootState): PipHistory[] =>
   state.pipList.employeePIPTimeline.list
 
+const viewEmployeePipDetails = (state: RootState): GetPipList =>
+  state.pipList.viewPipDetails
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -204,6 +211,7 @@ export const pipListSelectors = {
   performanceRatings,
   employeeData,
   employeePIPTimeline,
+  viewEmployeePipDetails,
 }
 
 export const pipListService = {
