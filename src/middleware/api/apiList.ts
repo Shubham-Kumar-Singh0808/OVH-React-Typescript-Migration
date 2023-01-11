@@ -769,5 +769,5 @@ export const projectProposalsApiConfig: ProjectProposalApi = {
 }
 
 export const projectNotesApiConfig: ProjectNotesApi = {
-  projectNotesTimeLine: apiPrefix + '/projectnewsfeed',
+  projectNotesTimeLine: apiPrefix + '/projectnewsfeed/',
 }

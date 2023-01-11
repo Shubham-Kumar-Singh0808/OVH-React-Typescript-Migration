@@ -19,9 +19,9 @@ const getProjectNotesTimeLine = createAsyncThunk<
   }
 >(
   'projectProposals/getProjectNotesTimeLine',
-  async (projectId: number | string, thunkApi) => {
+  async (projectid: number | string, thunkApi) => {
     try {
-      return await projectNotesApi.getProjectNotesTimeLine(projectId)
+      return await projectNotesApi.getProjectNotesTimeLine(projectid)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -6,13 +6,13 @@ import {
 import { projectNotesApiConfig, AllowedHttpMethods } from '../../../../apiList'
 
 const getProjectNotesTimeLine = async (
-  projectId: number | string,
+  projectid: number | string,
 ): Promise<ProjectNotesTimeLine[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectNotesApiConfig.projectNotesTimeLine,
     method: AllowedHttpMethods.get,
     params: {
-      projectId,
+      projectid,
     },
   })
   const response = await useAxios(requestConfig)
