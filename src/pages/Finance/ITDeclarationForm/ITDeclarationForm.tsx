@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
 import EmployeeDetails from './EmployeeDetails'
@@ -9,6 +9,9 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const ITDeclarationForm = (): JSX.Element => {
+  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
+  const [isAgreeChecked, setIsAgreeChecked] = useState<boolean>(false)
+
   const dispatch = useAppDispatch()
   const history = useHistory()
   const itDeclarationFormExists = useTypedSelector(
@@ -20,9 +23,13 @@ const ITDeclarationForm = (): JSX.Element => {
   const userAccessToSubmitDeclarationForm = userAccessToFeatures?.find(
     (feature) => feature.name === 'IT Declaration Form',
   )
-  const grandTotal = useTypedSelector(
+  const grandTotalResult = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
+  const formSectionData = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.formSectionData,
+  )
+
   const warningToastMessage = (
     <OToast
       toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
@@ -31,12 +38,54 @@ const ITDeclarationForm = (): JSX.Element => {
   )
 
   useEffect(() => {
+    if (isAgreeChecked && formSectionData) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [isAgreeChecked, formSectionData])
+  useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
     if (itDeclarationFormExists === true) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
       history.push('/itDeclarationList')
     }
   }, [dispatch, itDeclarationFormExists])
+
+  const toastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="IT Declaration Form added Successfully"
+    />
+  )
+
+  const handleSubmitDeclarationForm = async () => {
+    const prepareObject = {
+      designation: '',
+      employeeId: 0,
+      employeeName: '',
+      formSectionsDTOs: formSectionData,
+      fromDate: '',
+      grandTotal: grandTotalResult,
+      isAgree: isAgreeChecked,
+      itDeclarationFormId: null,
+      organisationName: '',
+      panNumber: '',
+      toDate: '',
+    }
+    console.log(prepareObject)
+    const addDeclarationFormResultAction = await dispatch(
+      reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
+    )
+    if (
+      reduxServices.itDeclarationForm.addITDeclarationForm.fulfilled.match(
+        addDeclarationFormResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+      history.push('/itDeclarationList')
+    }
+  }
 
   return (
     <>
@@ -51,14 +100,19 @@ const ITDeclarationForm = (): JSX.Element => {
         <CRow className="mt-3 mb-3">
           <CCol sm={12}>
             <p className="pull-right">
-              <b className="txt-grandtotal ">Grand Total: {grandTotal}</b>
+              <b className="txt-grandtotal ">Grand Total: {grandTotalResult}</b>
             </p>
           </CCol>
         </CRow>
 
         <CRow className="mt-3 mb-3">
           <CCol sm={12} className="mt-2">
-            <CFormCheck name="agree" data-testid="ch-agree" />{' '}
+            <CFormCheck
+              name="agree"
+              data-testid="ch-agree"
+              onChange={() => setIsAgreeChecked(!isAgreeChecked)}
+              checked={isAgreeChecked}
+            />
             <span className="ps-2">
               <strong>
                 I, declare that the above statement is true to the best of my
@@ -83,7 +137,8 @@ const ITDeclarationForm = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="df-submit-btn"
                 size="sm"
-                disabled
+                onClick={handleSubmitDeclarationForm}
+                disabled={!isButtonEnabled}
               >
                 Submit
               </CButton>
