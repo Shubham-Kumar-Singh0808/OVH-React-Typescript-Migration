@@ -5,6 +5,7 @@ import projectProposalsApi from '../../../../../middleware/api/ProjectManagement
 import { AppDispatch, RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import {
+  postProjectProposalProps,
   ProjectProposal,
   ProjectProposalState,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/Proposals/ProjectProposalsTypes'
@@ -22,6 +23,26 @@ const getProjectTimeLine = createAsyncThunk<
   async (projectId: number | string, thunkApi) => {
     try {
       return await projectProposalsApi.getProjectTimeLine(projectId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const postProjectProposal = createAsyncThunk<
+  number | string,
+  postProjectProposalProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectProposals/postProjectProposal',
+  async (postProposal: postProjectProposalProps, thunkApi) => {
+    try {
+      return await projectProposalsApi.postProjectProposal(postProposal)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -52,6 +73,7 @@ const projectProposalsSlice = createSlice({
 
 const projectProposalsThunk = {
   getProjectTimeLine,
+  postProjectProposal,
 }
 
 const isProjectProposalsLoading = (state: RootState): LoadingState =>

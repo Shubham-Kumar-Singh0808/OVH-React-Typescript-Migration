@@ -9,6 +9,11 @@ export type ProjectProposal = {
   projectId: number
 }
 
+export type postProjectProposalProps = {
+  post: string
+  projectId: string
+}
+
 export type ProjectProposalState = {
   projectProposal: ProjectProposal[]
   isLoading: LoadingState
