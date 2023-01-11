@@ -135,7 +135,7 @@ const SectionsFilterOptions = (): JSX.Element => {
     dispatch(
       reduxServices.itDeclarationForm.actions.setFormSectionData(
         formSectionList.forEach((each) => {
-          each.formInvestmentDTO.map((e) => delete e.id)
+          each.formInvestmentDTO.forEach((e) => delete e.id)
           const { invests, ...rest } = each
           const { sectionLimit, ...rest2 } = rest
           rest2.isOld = true
