@@ -1,4 +1,7 @@
-import { ProjectNotesTimeLine } from '../../../../../../types/ProjectManagement/Project/ProjectView/Notes/projectNotesTypes'
+import {
+  ProjectNotesTimeLine,
+  PostNotesProps,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/Notes/projectNotesTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -19,8 +22,41 @@ const getProjectNotesTimeLine = async (
   return response.data
 }
 
+const postProjectNotes = async (
+  postNotes: PostNotesProps,
+): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectNotesApiConfig.projectNotesTimeLine,
+    method: AllowedHttpMethods.post,
+    data: postNotes,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const uploadProjectNotesImage = async (prepareObject: {
+  postid: number
+  file: FormData
+}): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectNotesApiConfig.uploadImage,
+    method: AllowedHttpMethods.post,
+    data: prepareObject.file,
+    params: {
+      ticketId: prepareObject.postid,
+    },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectNotesApi = {
   getProjectNotesTimeLine,
+  postProjectNotes,
+  uploadProjectNotesImage,
 }
 
 export default projectNotesApi

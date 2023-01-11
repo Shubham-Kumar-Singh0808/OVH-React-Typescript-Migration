@@ -634,4 +634,5 @@ export interface ProjectProposalApi extends ApiBase {
 
 export interface ProjectNotesApi extends ApiBase {
   projectNotesTimeLine: string
+  uploadImage: string
 }

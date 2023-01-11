@@ -2,20 +2,32 @@ import { CRow, CCol, CFormInput, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProjectNotesTimeLine from './ProjectNotesTimeLine'
-import { useAppDispatch } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import OToast from '../../../../../components/ReusableComponent/OToast'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const ProjectNotes = (): JSX.Element => {
   const [notesLink, setNotesLink] = useState<string>('')
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const { projectId } = useParams<{ projectId: string }>()
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(
       reduxServices.projectNotes.getProjectNotesTimeLine(projectId as string),
     )
   }, [])
+
+  const isLoading = useTypedSelector(
+    reduxServices.projectProposals.selectors.isProjectProposalsLoading,
+  )
+
   useEffect(() => {
     if (notesLink) {
       setIsPostButtonEnabled(true)
@@ -27,6 +39,50 @@ const ProjectNotes = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadFile(file[0])
+  }
+
+  const postNotesHandler = async () => {
+    const postNotesResultAction = await dispatch(
+      reduxServices.projectNotes.postProjectNotes({
+        post: notesLink,
+        postedBy: {
+          id: employeeId,
+        },
+        project: {
+          id: projectId,
+        },
+      }),
+    )
+    if (uploadFile) {
+      const formData = new FormData()
+      formData.append('file', uploadFile, uploadFile.name)
+      const ticketIdParams = postNotesResultAction.payload as unknown as {
+        postid: number
+      }
+      const uploadPrepareObject = {
+        postid: ticketIdParams.postid,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.projectNotes.uploadProjectNotesImage(uploadPrepareObject),
+      )
+    }
+    if (
+      reduxServices.projectNotes.postProjectNotes.fulfilled.match(
+        postNotesResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="project Notes created successfully"
+          />,
+        ),
+      )
+      setNotesLink('')
+      setUploadFile(undefined)
+    }
   }
   return (
     <>
@@ -64,12 +120,18 @@ const ProjectNotes = (): JSX.Element => {
           <CButton
             color="info btn-ovh me-1 pull-right"
             disabled={!isPostButtonEnabled}
+            onClick={postNotesHandler}
           >
             <i className="fa fa-pencil fa-fw"></i>Post
           </CButton>
         </CCol>
       </CRow>
-      <ProjectNotesTimeLine />
+
+      {isLoading !== ApiLoadingState.loading ? (
+        <ProjectNotesTimeLine />
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }

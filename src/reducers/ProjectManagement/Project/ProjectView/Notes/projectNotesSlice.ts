@@ -5,6 +5,7 @@ import projectNotesApi from '../../../../../middleware/api/ProjectManagement/Pro
 import { AppDispatch, RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import {
+  PostNotesProps,
   ProjectNotesState,
   ProjectNotesTimeLine,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/Notes/projectNotesTypes'
@@ -18,10 +19,42 @@ const getProjectNotesTimeLine = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'projectProposals/getProjectNotesTimeLine',
+  'projectNotes/getProjectNotesTimeLine',
   async (projectid: number | string, thunkApi) => {
     try {
       return await projectNotesApi.getProjectNotesTimeLine(projectid)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const postProjectNotes = createAsyncThunk<
+  number | string,
+  PostNotesProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectNotes/postProjectNotes',
+  async (postNotes: PostNotesProps, thunkApi) => {
+    try {
+      return await projectNotesApi.postProjectNotes(postNotes)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadProjectNotesImage = createAsyncThunk(
+  'projectNotes/uploadProjectNotesImage',
+  async (prepareObject: { postid: number; file: FormData }, thunkApi) => {
+    try {
+      return await projectNotesApi.uploadProjectNotesImage(prepareObject)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -52,6 +85,8 @@ const projectNotesSlice = createSlice({
 
 const projectNotesThunk = {
   getProjectNotesTimeLine,
+  postProjectNotes,
+  uploadProjectNotesImage,
 }
 
 const isProjectNotesLoading = (state: RootState): LoadingState =>

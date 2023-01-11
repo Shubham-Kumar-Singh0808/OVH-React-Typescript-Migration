@@ -288,3 +288,16 @@ export type Manager = {
   countryCodeAlternative: null
   address: null
 }
+
+export type PostNotesProps = {
+  post: string
+  postedBy: PostedBy
+  project: Project
+}
+
+export type PostedBy = {
+  id: string
+}
+export type Project = {
+  id: string
+}
