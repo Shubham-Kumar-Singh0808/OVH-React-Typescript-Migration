@@ -1,5 +1,6 @@
 import {
   AddChangeRequestProps,
+  ChangeRequest,
   ChangeRequestList,
   ChangeRequestProps,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
@@ -56,7 +57,7 @@ const deleteChangeRequest = async (
 }
 
 const updateChangeRequest = async (
-  updateChangeRequest: AddChangeRequestProps,
+  updateChangeRequest: ChangeRequest,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectChangeRequestApiConfig.updateChangeRequest,

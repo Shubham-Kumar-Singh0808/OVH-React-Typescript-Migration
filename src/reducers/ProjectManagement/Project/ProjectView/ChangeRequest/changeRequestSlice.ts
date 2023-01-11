@@ -45,7 +45,7 @@ const addChangeRequest = createAsyncThunk<
 
 const updateChangeRequest = createAsyncThunk<
   number | undefined,
-  AddChangeRequestProps,
+  ChangeRequest,
   {
     dispatch: AppDispatch
     state: RootState
@@ -53,7 +53,7 @@ const updateChangeRequest = createAsyncThunk<
   }
 >(
   'projectView/getUpdateFamilyDetails',
-  async (updateChangeRequest: AddChangeRequestProps, thunkApi) => {
+  async (updateChangeRequest: ChangeRequest, thunkApi) => {
     try {
       return await changeRequestApi.updateChangeRequest(updateChangeRequest)
     } catch (error) {

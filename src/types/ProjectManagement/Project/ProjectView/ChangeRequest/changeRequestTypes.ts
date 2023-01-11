@@ -8,7 +8,7 @@ export type ChangeRequestList = {
 export type ChangeRequest = {
   id: number
   name: string
-  descripition: string
+  descripition?: string
   duration: string
   projectId: number
   numbersStatus: boolean
@@ -24,7 +24,7 @@ export type ChangeRequestSliceState = {
 export type ChangeRequestProps = {
   endIndex: number
   firstIndex: number
-  projectid: number | string
+  projectid: string
 }
 
 export type AddChangeRequestProps = {

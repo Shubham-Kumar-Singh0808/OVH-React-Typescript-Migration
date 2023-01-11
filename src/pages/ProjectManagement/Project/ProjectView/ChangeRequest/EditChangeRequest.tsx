@@ -1,92 +1,78 @@
+import React from 'react'
 import {
-  CForm,
   CRow,
-  CFormLabel,
   CCol,
-  CFormInput,
-  CFormTextarea,
   CButton,
+  CForm,
+  CFormInput,
+  CFormLabel,
+  CFormTextarea,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import OToast from '../../../../../components/ReusableComponent/OToast'
+import { ChangeRequest } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
+import { showIsRequired } from '../../../../../utils/helper'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
-import { AddChangeRequestProps } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
-import { showIsRequired } from '../../../../../utils/helper'
 
-const AddEditChangeRequest = ({
+const EditChangeRequest = ({
   setToggle,
+  editChangeRequest,
+  setEditChangeRequest,
+  editDescription,
+  setEditDescription,
 }: {
   setToggle: (value: string) => void
+  editChangeRequest: ChangeRequest
+  setEditChangeRequest: React.Dispatch<React.SetStateAction<ChangeRequest>>
+  editDescription: string | undefined
+  setEditDescription: React.Dispatch<React.SetStateAction<string | undefined>>
 }): JSX.Element => {
-  const initialChangeRequest = {} as AddChangeRequestProps
-  const [addChangeRequest, setAddChangeRequest] = useState(initialChangeRequest)
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [changeRequestDescription, setChangeRequestDescription] =
-    useState<string>('')
   const classNameProps = 'col-sm-3 col-form-label text-end'
-  const { projectId } = useParams<{ projectId: string }>()
   const nameProps = {
     className: classNameProps,
     htmlFor: 'Name',
   }
+  const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
-
   const onChangeHandler = (
     e:
-      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setAddChangeRequest((prevState) => {
+    setEditChangeRequest((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
-  console.log(addChangeRequest?.name)
-  useEffect(() => {
-    if (
-      addChangeRequest?.name?.replace(/^\s*/, '') &&
-      addChangeRequest?.duration?.replace(/^\s*/, '') &&
-      changeRequestDescription?.replace(/^\s*/, '')
-    ) {
-      setIsAddButtonEnabled(true)
-    } else {
-      setIsAddButtonEnabled(false)
-    }
-  }, [
-    addChangeRequest?.name,
-    addChangeRequest?.duration,
-    changeRequestDescription,
-  ])
-  const toastElement = (
-    <OToast toastMessage="CR Added Successfully" toastColor={'success'} />
-  )
-  const handleAddChangeRequest = async () => {
+
+  const handleUpdateChangeRequest = async () => {
     const prepareObject = {
-      ...addChangeRequest,
+      ...editChangeRequest,
       ...{
-        projectId,
-        descripition: changeRequestDescription,
+        descripition: editDescription as string,
       },
     }
-    const addChangeRequestResultAction = await dispatch(
-      reduxServices.projectChangeRequest.addChangeRequest(prepareObject),
+    const updatechangeRequestsultAction = await dispatch(
+      reduxServices.projectChangeRequest.updateChangeRequest(prepareObject),
     )
     if (
-      reduxServices.projectChangeRequest.addChangeRequest.fulfilled.match(
-        addChangeRequestResultAction,
+      reduxServices.projectChangeRequest.updateChangeRequest.fulfilled.match(
+        updatechangeRequestsultAction,
       )
     ) {
       setToggle('')
-      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
       dispatch(
         reduxServices.projectChangeRequest.getProjectChangeRequestList({
           endIndex: 20,
-          firstIndex: 1,
+          firstIndex: 0,
           projectid: projectId as string,
         }),
       )
+      // dispatch(
+      //   reduxServices.app.actions.addToast(
+      //     getToastMessage(actionMapping.updated),
+      //   ),
+      // )
     }
   }
   return (
@@ -106,7 +92,7 @@ const AddEditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(addChangeRequest?.name)}>*</span>
+            <span className={showIsRequired(editChangeRequest?.name)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -116,7 +102,7 @@ const AddEditChangeRequest = ({
               name="name"
               placeholder="Name"
               data-testid="person-name"
-              value={addChangeRequest?.name}
+              value={editChangeRequest?.name}
               onChange={onChangeHandler}
             />
           </CCol>
@@ -126,7 +112,7 @@ const AddEditChangeRequest = ({
             Duration :
             <span
               className={showIsRequired(
-                addChangeRequest?.duration?.replace(/^\s*/, ''),
+                editChangeRequest?.duration?.replace(/^\s*/, ''),
               )}
             >
               *
@@ -139,7 +125,7 @@ const AddEditChangeRequest = ({
               data-testid="contact-number"
               name="duration"
               placeholder="Hours"
-              value={addChangeRequest?.duration}
+              value={editChangeRequest?.duration}
               onChange={onChangeHandler}
               maxLength={10}
             />
@@ -151,7 +137,7 @@ const AddEditChangeRequest = ({
             Description :
             <span
               className={showIsRequired(
-                changeRequestDescription?.replace(/^\s*/, ''),
+                editChangeRequest.descripition as string,
               )}
             >
               *
@@ -162,11 +148,11 @@ const AddEditChangeRequest = ({
               placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
-              value={changeRequestDescription}
+              value={editDescription}
               maxLength={150}
-              onChange={(e) => setChangeRequestDescription(e.target.value)}
+              onChange={(e) => setEditDescription(e.target.value)}
             ></CFormTextarea>
-            <p>{changeRequestDescription?.length}/150</p>
+            <p>{editChangeRequest.descripition?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>
@@ -175,13 +161,10 @@ const AddEditChangeRequest = ({
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                onClick={handleAddChangeRequest}
-                disabled={!isAddButtonEnabled}
+                onClick={handleUpdateChangeRequest}
+                // disabled={!isAddButtonEnabled}
               >
-                Add
-              </CButton>
-              <CButton color="warning " className="btn-ovh">
-                Clear
+                Update
               </CButton>
             </>
           </CCol>
@@ -191,4 +174,4 @@ const AddEditChangeRequest = ({
   )
 }
 
-export default AddEditChangeRequest
+export default EditChangeRequest

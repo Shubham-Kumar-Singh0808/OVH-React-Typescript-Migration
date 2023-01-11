@@ -21,8 +21,17 @@ import { usePagination } from '../../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
+import { ChangeRequest } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
 
-const ChangeRequestTable = (): JSX.Element => {
+const ChangeRequestTable = ({
+  setEditChangeRequest,
+  setToggle,
+  setEditDescription,
+}: {
+  setEditChangeRequest: React.Dispatch<React.SetStateAction<ChangeRequest>>
+  setEditDescription: React.Dispatch<React.SetStateAction<string | undefined>>
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteChangeRequest, setToDeleteChangeRequest] = useState(0)
   const changeRequestList = useTypedSelector(
@@ -80,6 +89,11 @@ const ChangeRequestTable = (): JSX.Element => {
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
+  const edithangeRequestButtonHandler = (item: ChangeRequest): void => {
+    setEditDescription(item.descripition)
+    setToggle('editChangeRequest')
+    setEditChangeRequest(item)
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -106,6 +120,9 @@ const ChangeRequestTable = (): JSX.Element => {
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
+                      onClick={() => {
+                        edithangeRequestButtonHandler(item)
+                      }}
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>

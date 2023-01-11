@@ -304,14 +304,14 @@ const ProjectReportsTable = ({
       reduxServices.projectChangeRequest.getProjectChangeRequestList({
         endIndex: pageSize * currentPage,
         firstIndex: pageSize * (currentPage - 1),
-        projectid: projectId,
+        projectid: String(projectId),
       }),
     )
     dispatch(
       reduxServices.projectMileStone.getProjectMileStone({
         endIndex: pageSize * currentPage,
         firstIndex: pageSize * (currentPage - 1),
-        projectid: projectId,
+        projectid: String(projectId),
       }),
     )
     dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
