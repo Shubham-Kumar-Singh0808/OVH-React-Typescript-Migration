@@ -58,37 +58,22 @@ const EmployeePipList = (): JSX.Element => {
     }
   }, [selectCurrentPage])
 
+  const pipListObj = {
+    startIndex: pageSize * (selectCurrentPage - 1),
+    endIndex: pageSize * selectCurrentPage,
+    selectionStatus: selectedEmployeePipStatus,
+    dateSelection: selectDate,
+    from: (fromDate as string) || '',
+    multiSearch: searchInput,
+    searchByAdded,
+    searchByEmployee,
+    to: (toDate as string) || '',
+  }
   useEffect(() => {
-    dispatch(
-      reduxServices.pipList.getAllPIPList({
-        startIndex: pageSize * (selectCurrentPage - 1),
-        endIndex: pageSize * selectCurrentPage,
-        selectionStatus: selectedEmployeePipStatus,
-        dateSelection: selectDate,
-        from: (fromDate as string) || '',
-        multiSearch: searchInput,
-        searchByAdded,
-        searchByEmployee,
-        to: (toDate as string) || '',
-      }),
-    )
+    dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
   }, [selectCurrentPage, dispatch, pageSize, selectedEmployeePipStatus])
-
-  // eslint-disable-next-line sonarjs/no-identical-functions
   const multiSearchBtnHandler = () => {
-    dispatch(
-      reduxServices.pipList.getAllPIPList({
-        startIndex: pageSize * (selectCurrentPage - 1),
-        endIndex: pageSize * selectCurrentPage,
-        selectionStatus: selectedEmployeePipStatus,
-        dateSelection: selectDate,
-        from: (fromDate as string) || '',
-        multiSearch: searchInput,
-        searchByAdded,
-        searchByEmployee,
-        to: (toDate as string) || '',
-      }),
-    )
+    dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
   }
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
