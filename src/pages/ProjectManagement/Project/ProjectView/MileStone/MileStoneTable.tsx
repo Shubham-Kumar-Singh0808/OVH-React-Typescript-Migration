@@ -75,8 +75,8 @@ const MileStoneTable = (): JSX.Element => {
 
   const result = (
     <>
-      <h5>Milestone Details</h5>
-      <CTable>
+      <h4 className="mb-4">Milestone Details</h4>
+      <CTable className="milestone-model-table">
         <CTableBody>
           <CTableRow>
             <CTableDataCell>Project</CTableDataCell>

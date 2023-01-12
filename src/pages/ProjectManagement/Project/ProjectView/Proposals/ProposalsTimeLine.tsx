@@ -1,3 +1,4 @@
+import { CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
@@ -8,7 +9,7 @@ const ProposalsTimeLine = () => {
   )
   return (
     <>
-      <div className="sh-timeline-container">
+      <div className="sh-timeline-container mt-3">
         {projectProposalTimeLine.map((item, index) => {
           return (
             <div key={index} className="sh-timeline-card">
@@ -26,7 +27,15 @@ const ProposalsTimeLine = () => {
                   <h4 className="sh-timeline-title">{item.postedBy}</h4>
                 </div>
                 <div className="sh-timeline-body">
-                  <div className="sh-timeline-item mb-1">{item.post}</div>
+                  <div className="sh-timeline-item mb-1">
+                    <div className="mb-1">
+                      <CFormLabel className="col-form-label p-0">
+                        Comments:
+                      </CFormLabel>
+                      &nbsp;
+                      {item.post}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

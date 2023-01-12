@@ -86,7 +86,7 @@ const ProjectNotes = (): JSX.Element => {
   }
   return (
     <>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-4 mb-0">
         <CCol col-xs-12 mt-10>
           <CFormInput
             autoComplete="off"
@@ -98,10 +98,10 @@ const ProjectNotes = (): JSX.Element => {
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
           />
-          <p>{notesLink?.length}/150</p>
+          <p className="mt-1">{notesLink?.length}/250</p>
         </CCol>
       </CRow>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-2 mb-4">
         <CCol sm={3}>
           <input
             className="sh-updateTicket-file"
@@ -115,9 +115,7 @@ const ProjectNotes = (): JSX.Element => {
             }
           />
         </CCol>
-      </CRow>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
+        <CCol className="text-end" md={9}>
           <CButton
             color="info btn-ovh me-1 pull-right"
             disabled={!isPostButtonEnabled}
@@ -127,7 +125,6 @@ const ProjectNotes = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
-
       {isLoading !== ApiLoadingState.loading ? (
         <ProjectNotesTimeLine />
       ) : (

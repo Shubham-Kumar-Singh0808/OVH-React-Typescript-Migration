@@ -39,7 +39,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
   }
 
   const milestoneTitle = (
-    <CTable>
+    <CTable className="milestone-model-table">
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>

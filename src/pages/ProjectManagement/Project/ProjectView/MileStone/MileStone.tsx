@@ -1,7 +1,6 @@
 import React from 'react'
-import { CCol, CRow } from '@coreui/react-pro'
+import { CCol, CRow, CButton } from '@coreui/react-pro'
 import MileStoneTable from './MileStoneTable'
-import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
 import { useTypedSelector } from '../../../../../stateStore'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
@@ -16,7 +15,13 @@ const MileStone = (): JSX.Element => {
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <OAddButton />
+          <CRow className="justify-content-end mt-4">
+            <CCol className="text-end" md={4}>
+              <CButton color="info btn-ovh me-1">
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          </CRow>
           <MileStoneTable />
         </>
       ) : (

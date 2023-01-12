@@ -35,7 +35,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     setInvoiceNumber(data)
   }
   const milestoneNameModel = (
-    <CTable>
+    <CTable className="milestone-model-table">
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Project:</CTableDataCell>
@@ -75,7 +75,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     </CTable>
   )
   const invoiceModel = (
-    <CTable>
+    <CTable className="milestone-model-table">
       <CTableBody>
         <CTableRow>
           <CTableDataCell>Serial Number:</CTableDataCell>

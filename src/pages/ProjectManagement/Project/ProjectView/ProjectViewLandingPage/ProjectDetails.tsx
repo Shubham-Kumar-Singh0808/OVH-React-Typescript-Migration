@@ -10,8 +10,8 @@ const ProjectDetails = (): JSX.Element => {
   )
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol md={4}>
+      <CRow className="justify-content-end ">
+        <CCol md={4} className="text-end position-absolute pe-0">
           <Link to={`/projectreport`}>
             <CButton
               color="info"

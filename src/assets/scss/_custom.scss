@@ -296,3 +296,16 @@ input.capetalized {
   font-size: 24px;
   font-weight: 400;
 }
+.milestone-table th ,.milestone-table td{
+  text-align: center;
+}
+.milestone-model-table{
+  font-weight: bold;
+}
+.milestone-model-table tr td:first-child{
+  width: 150px;
+    text-align: right;
+}
+.milestone-model-table td{
+  border-bottom: none;
+}
