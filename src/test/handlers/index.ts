@@ -39,6 +39,9 @@ import { leaveApprovalsHandlers } from './leaveApprovalsHandlers'
 import { resignationHandlers } from './resignationLitHandler'
 import { itDeclarationListHandlers } from './itDeclarationListHandlers'
 import { addAchieverHandlers } from './addAchieverHandler'
+import { declarationFormHandlers } from './declarationFormHandlers'
+import { myKRAsHandler } from './myKRAsHandler'
+import { reviewListHandlers } from './reviewListHandlers'
 
 export const handlers = [
   ...loginHandlers,
@@ -84,5 +87,8 @@ export const handlers = [
   ...resignationHandlers,
   ...itDeclarationListHandlers,
   ...addAchieverHandlers,
+  ...declarationFormHandlers,
+  ...myKRAsHandler,
+  ...reviewListHandlers,
   // add your handler here
 ]

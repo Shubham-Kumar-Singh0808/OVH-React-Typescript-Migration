@@ -18,6 +18,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { showIsRequired } from '../../../utils/helper'
 import { AddInvestmentData } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 const AddNewInvestment = ({
   selectedSectionId,
@@ -53,7 +54,7 @@ const AddNewInvestment = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddInvestment = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment',
   )
 
   const handleSelectDocumentOption = (
@@ -92,24 +93,34 @@ const AddNewInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'investmentName') {
-      const investNameValue = value.replace(/^\s*/, '')
-      setAddNewInvestment((prevState) => {
-        return { ...prevState, ...{ [name]: investNameValue } }
-      })
-    }
     setAddNewInvestment((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
   }
 
   useEffect(() => {
-    if (selectedSectionId && addNewInvestment?.investmentName) {
+    if (
+      selectedSectionId &&
+      addNewInvestment?.investmentName &&
+      !isDocumentsVisible
+    ) {
+      setIsButtonEnabled(true)
+    } else if (
+      selectedSectionId &&
+      addNewInvestment?.investmentName &&
+      isDocumentsVisible &&
+      requireDocuments
+    ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [selectedSectionId, addNewInvestment.investmentName])
+  }, [
+    selectedSectionId,
+    addNewInvestment.investmentName,
+    isDocumentsVisible,
+    requireDocuments,
+  ])
 
   const handleClear = () => {
     setSelectedSectionId('')
@@ -180,7 +191,7 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Section :
             <span className={showIsRequired(selectedSectionId)}>*</span>
@@ -212,10 +223,16 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
-            Investment Name:
-            <span className={showIsRequired(addNewInvestment?.investmentName)}>
+            Investment Name :
+            <span
+              className={
+                addNewInvestment.investmentName?.replace(/^\s*/, '')
+                  ? TextWhite
+                  : TextDanger
+              }
+            >
               *
             </span>
           </CFormLabel>
@@ -235,9 +252,9 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Maximum Investment:
+            Maximum Investment :
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -258,9 +275,9 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Description:
+            Description :
           </CFormLabel>
           {showEditor ? (
             <CCol sm={9}>
@@ -282,9 +299,9 @@ const AddNewInvestment = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end pe-18"
           >
-            Required Documents:
+            Required Documents :
           </CFormLabel>
           <CCol className="mt-1" sm={2} md={1} lg={1} data-testid="requiredDoc">
             <CFormCheck
@@ -323,9 +340,9 @@ const AddNewInvestment = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-2 col-form-label text-end"
             >
-              Documents:{' '}
+              Documents :
               <span className={showIsRequired(requireDocuments)}>*</span>
             </CFormLabel>
             <CCol sm={9} data-testid="required-documents">
@@ -334,14 +351,16 @@ const AddNewInvestment = ({
                   '2',
                   'investment-text-area documentWidth',
                 )}
-                onChange={(e) => setRequiredDocuments(e.target.value)}
+                onChange={(e) =>
+                  setRequiredDocuments(e.target.value.replace(/^\s*/, ''))
+                }
               ></CFormTextarea>
             </CCol>
           </CRow>
         )}
         {userAccessToAddInvestment?.createaccess && (
           <CRow className="mt-4 mb-4">
-            <CCol md={{ span: 6, offset: 3 }}>
+            <CCol md={{ span: 4, offset: 2 }}>
               <>
                 <CButton
                   data-testid="addInv-add-btn"

@@ -26,7 +26,7 @@ const AddNewSection = (): JSX.Element => {
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddSection = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment Section',
   )
   useEffect(() => {
     if (addNewSection.sectionName && addNewSection.sectionLimit) {

@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -25,7 +26,15 @@ const ITDeclarationListTable = (
   const itDeclarationListSize = useTypedSelector(
     reduxServices.itDeclarationList.selectors.listSize,
   )
-
+  const isITDeclarationFormExists = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToEditDeclarationForm = userAccessToFeatures?.find(
+    (feature) => feature.name === 'IT Declaration Form',
+  )
   const {
     paginationRange,
     pageSize,
@@ -66,10 +75,12 @@ const ITDeclarationListTable = (
                       {itDeclaration.employeeName}
                     </CTableDataCell>
                     <CTableDataCell>{itDeclaration.designation}</CTableDataCell>
-                    <CTableDataCell>{itDeclaration.grandTotal}</CTableDataCell>
+                    <CTableDataCell>
+                      {itDeclaration.grandTotal?.toLocaleString('en-IN')}
+                    </CTableDataCell>
                     <CTableDataCell>
                       <CButton
-                        className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                        className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                         data-testid={`viewItDeclarationForm-btn${index}`}
                         onClick={() =>
                           props.viewDeclarationFormButtonHandler([
@@ -94,6 +105,22 @@ const ITDeclarationListTable = (
                       >
                         <i className="fa fa-eye" aria-hidden="true"></i>
                       </CButton>
+                      {isITDeclarationFormExists === true &&
+                      userAccessToEditDeclarationForm?.updateaccess ? (
+                        <>
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info btn-ovh"
+                              className="btn-ovh-employee-list"
+                              data-testid={`sc-edit-btn${index}`}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

@@ -9,7 +9,6 @@ import {
   mockInvestmentCycles,
 } from '../../../test/data/itDeclarationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
-import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import ITDeclarationFormViewTable from '../ITDeclarationListFormView/ITDeclarationFormViewTable'
 
 const mockSetCurrentPage = jest.fn()

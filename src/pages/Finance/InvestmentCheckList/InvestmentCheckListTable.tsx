@@ -54,7 +54,8 @@ const InvestmentCheckListTable = (): JSX.Element => {
                 section={{
                   sectionId: sectionItem.sectionId,
                   sectionName: sectionItem.sectionName,
-                  sectionLimit: sectionItem.sectionLimit.toLocaleString(),
+                  sectionLimit:
+                    sectionItem.sectionLimit?.toLocaleString('en-IN'),
                   invests: sectionItem.invests,
                 }}
               />

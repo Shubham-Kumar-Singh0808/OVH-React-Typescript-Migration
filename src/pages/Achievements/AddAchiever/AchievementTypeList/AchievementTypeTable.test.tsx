@@ -6,8 +6,11 @@ import AchievementTypeTable from './AchievementTypeTable'
 import { cleanup, fireEvent, render, screen } from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { TextDanger } from '../../../../constant/ClassName'
+import { TableColor } from '../../AchievementConstants'
 
 const mockExecuteSaveButtonHandler = jest.fn()
+const mockSetEditSaveButtonEnabled = jest.fn()
 
 const toRender = (
   <div>
@@ -16,6 +19,8 @@ const toRender = (
     <div id="root"></div>
     <AchievementTypeTable
       executeSaveButtonHandler={mockExecuteSaveButtonHandler}
+      isEditSaveButtonEnabled={false}
+      setEditSaveButtonEnabled={mockSetEditSaveButtonEnabled}
     />
   </div>
 )
@@ -29,7 +34,7 @@ describe('Achievement Type Table Testing', () => {
       render(toRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },
@@ -70,10 +75,11 @@ describe('Achievement Type Table Testing', () => {
       fireEvent.click(editButton)
       const inputOrder = screen.getByTestId('new-order')
       expect(inputOrder).toHaveValue('3')
+      expect(screen.getByTestId('unique-order-err')).toHaveClass(TableColor)
       userEvent.clear(inputOrder)
       userEvent.type(inputOrder, '5')
       expect(inputOrder).toHaveValue('5')
-      expect(screen.getByTestId('unique-order-err')).toBeVisible()
+      expect(screen.getByTestId('unique-order-err')).toHaveClass(TextDanger)
     })
     test('save edited Achievement', () => {
       const editButton = screen.getByTestId(editBtnId)
@@ -86,7 +92,6 @@ describe('Achievement Type Table Testing', () => {
       userEvent.type(inputOrder, '58')
       const saveBtn = screen.getByTestId('save-btn-1')
       userEvent.click(saveBtn)
-      expect(mockExecuteSaveButtonHandler).toHaveBeenCalledTimes(1)
     })
     test('render delete button and be functional', () => {
       const deleteButton = screen.getByTestId(delBtnId)

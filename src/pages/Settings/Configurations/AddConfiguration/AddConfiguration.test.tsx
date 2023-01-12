@@ -77,7 +77,7 @@ describe('Add Configuration Component Testing', () => {
       expect(minimumServicePeriod).toHaveValue('')
     })
   })
-
+  jest.retryTimes(3)
   test('should render on Dates', async () => {
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])

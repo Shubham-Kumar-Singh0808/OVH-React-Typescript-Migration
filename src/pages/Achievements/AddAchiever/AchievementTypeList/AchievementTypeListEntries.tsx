@@ -10,7 +10,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import AchievementEntryContainer from './AchievementEntryContainer'
-import { TextDanger } from '../../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import {
   AddAchieverTypeEntriesProps,
   NewAchievementStatus,
@@ -49,19 +49,20 @@ const AchievementTypeListEntries = (
     achievementError2: false,
   })
   const existingAchievementTypeList = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList,
+    (state) => state.commonAchievements.achievementTypeList,
   )
 
   const isAchievementNameExists = (enteredName: string) => {
     const isPresent = existingAchievementTypeList?.list.filter(
-      (item) => item.typeName.toLowerCase() === enteredName.toLowerCase(),
+      (item) =>
+        item.typeName.toLowerCase() === enteredName.toLowerCase().trim(),
     )
     return isPresent?.length > 0
   }
 
   const isAchievementOrderExists = (enteredOrder: string) => {
     const isPresent = existingAchievementTypeList?.list.filter(
-      (item) => item.order === +enteredOrder,
+      (item) => item.order === +enteredOrder.trim(),
     )
     return isPresent?.length > 0
   }
@@ -85,9 +86,11 @@ const AchievementTypeListEntries = (
   useEffect(() => {
     if (
       userNewSelectedAchievementType === emptyString ||
+      userNewSelectedAchievementType.trim().length === 0 ||
       isAchievementOrderExists(newUserSelectedOrder) ||
       isAchievementNameExists(userNewSelectedAchievementType) ||
       newUserSelectedOrder === emptyString ||
+      newUserSelectedOrder.trim().length === 0 ||
       newUserSelectedOrder === '00'
     ) {
       setAddButtonEnabled(false)
@@ -107,17 +110,23 @@ const AchievementTypeListEntries = (
     achievementClearButtonHandler()
   }
 
-  const errorMessageOrderTernary = errors.achievementError2 ? (
-    <p data-testid="uni-order-error" className={TextDanger}>
+  const errorMessageOrderTernary = (
+    <p
+      data-testid="uni-order-error"
+      className={errors.achievementError2 ? TextDanger : TextWhite}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
-  const errorMessageNameTernary = errors.achievementError1 ? (
-    <p data-testid="uni-name-error" className={TextDanger}>
+  const errorMessageNameTernary = (
+    <p
+      data-testid="uni-name-error"
+      className={errors.achievementError1 ? TextDanger : TextWhite}
+    >
       {errorAchievementNameMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <CForm onSubmit={enabledAddButtonHandler}>
@@ -127,12 +136,17 @@ const AchievementTypeListEntries = (
             className={newAchievementLabelClass}
             data-testid="ach-name"
           >
-            Achievement Type Name:{' '}
-            {userNewSelectedAchievementType === '' ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}
+            Achievement Type Name:
+            <span
+              className={
+                userNewSelectedAchievementType === emptyString ||
+                userNewSelectedAchievementType.trim().length === 0
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -150,12 +164,13 @@ const AchievementTypeListEntries = (
             data-testid="ach-status"
             className={newAchievementLabelClass}
           >
-            Status:{' '}
+            Status:<span className={TextWhite}>*</span>
           </CFormLabel>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} md={1} className="mt-2">
             <CFormCheck
               type="radio"
               label="Active"
+              hitArea="full"
               value={NewAchievementStatus.Active}
               name="achievementStatusActive"
               data-testid="ach-status-input-active"
@@ -164,10 +179,11 @@ const AchievementTypeListEntries = (
               inline
             />
           </CCol>
-          <CCol sm={2} md={1}>
+          <CCol sm={2} className="mt-2">
             <CFormCheck
               type="radio"
               label="Inactive"
+              hitArea="full"
               value={NewAchievementStatus.Inactive}
               data-testid="ach-status-input-inactive"
               checked={newUserSelectedStatus === NewAchievementStatus.Inactive}
@@ -182,12 +198,17 @@ const AchievementTypeListEntries = (
             data-testid="ach-order"
             className={newAchievementLabelClass}
           >
-            Order:{' '}
-            {newUserSelectedOrder === emptyString ? (
-              <span className={TextDanger}>*</span>
-            ) : (
-              <></>
-            )}
+            Order:
+            <span
+              className={
+                newUserSelectedOrder === emptyString ||
+                newUserSelectedOrder.trim().length === 0
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -207,7 +228,7 @@ const AchievementTypeListEntries = (
             data-testid="ach-time"
             className={newAchievementLabelClass}
           >
-            Time Period Required:{' '}
+            Time Period Required:<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
@@ -224,7 +245,7 @@ const AchievementTypeListEntries = (
             data-testid="ach-date"
             className={newAchievementLabelClass}
           >
-            Date Required:{' '}
+            Date Required:<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck

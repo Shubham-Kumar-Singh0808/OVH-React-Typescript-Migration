@@ -1,6 +1,10 @@
 import { rest } from 'msw'
 import { AddAchieverApiConfig } from '../../middleware/api/apiList'
-import { mockAchievementTypeDetails } from '../data/AddAchieverData'
+import {
+  mockAchievementTypeDetails,
+  mockActiveEmployeeList,
+  mockEmployeeData,
+} from '../data/AddAchieverData'
 
 export const addAchieverHandlers = [
   rest.post(AddAchieverApiConfig.addAchievementType, (_req, res, ctx) => {
@@ -36,4 +40,27 @@ export const addAchieverHandlers = [
       return res(resp)
     },
   ),
+  rest.get(AddAchieverApiConfig.getImageData, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: mockEmployeeData,
+      }),
+    )
+  }),
+  rest.get(AddAchieverApiConfig.getActiveEmployeeList, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: mockActiveEmployeeList,
+      }),
+    )
+  }),
+  rest.post(AddAchieverApiConfig.addAchievement, (_req, res, ctx) => {
+    const respones = ctx.json({
+      data: {},
+      status: 200,
+    })
+    return res(respones)
+  }),
 ]

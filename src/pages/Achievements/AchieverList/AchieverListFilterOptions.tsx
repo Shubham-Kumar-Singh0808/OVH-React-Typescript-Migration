@@ -150,9 +150,7 @@ const AchieverListFilterOptions = (
           <CCol sm={8}>
             <CRow>
               <CCol sm={4} lg={4} className="text-end">
-                <CFormLabel className="mt-1">
-                  Select Achievement Type:
-                </CFormLabel>
+                <CFormLabel className="mt-1">Achievement Type:</CFormLabel>
               </CCol>
               <CCol sm={4}>
                 <CFormSelect
@@ -244,7 +242,7 @@ const AchieverListFilterOptions = (
         )}
       </CContainer>
       <CRow className="mt-4">
-        <CFormLabel className="col-form-label category-label col-sm-4 col-form-label text-end"></CFormLabel>
+        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
           <CButton
             data-testid="view-btn-id"

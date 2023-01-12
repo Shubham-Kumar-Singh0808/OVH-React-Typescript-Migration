@@ -81,7 +81,7 @@ describe('Achievement Type List Entries', () => {
       render(toRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },
@@ -101,11 +101,11 @@ describe('Achievement Type List Entries', () => {
       const achievementTimePeriod = screen.getByTestId('ach-time')
       const achievementDate = screen.getByTestId('ach-date')
 
-      expect(achievementName).toHaveTextContent('Achievement Type Name: *')
-      expect(achievementStatus).toHaveTextContent('Status:')
-      expect(achievementOrder).toHaveTextContent('Order: *')
-      expect(achievementTimePeriod).toHaveTextContent('Time Period Required:')
-      expect(achievementDate).toHaveTextContent('Date Required:')
+      expect(achievementName).toHaveTextContent('Achievement Type Name:*')
+      expect(achievementStatus).toHaveTextContent('Status:*')
+      expect(achievementOrder).toHaveTextContent('Order:*')
+      expect(achievementTimePeriod).toHaveTextContent('Time Period Required:*')
+      expect(achievementDate).toHaveTextContent('Date Required:*')
     })
     test('Input is being taken and add button is functioning', () => {
       const addButton = screen.getByTestId(addButtonId)
@@ -171,7 +171,7 @@ describe('Achievement Type List Entries', () => {
       render(confirmToRender, {
         preloadedState: {
           commonAchievements: {
-            dateSortedList: mockAchievementTypeList,
+            achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
         },

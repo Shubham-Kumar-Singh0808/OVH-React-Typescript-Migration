@@ -28,6 +28,7 @@ import {
   ErrorBooleans,
   errorOrderMessage,
   orderRegexValue,
+  TableColor,
 } from '../../AchievementConstants'
 
 const defaultAchievementTypeIdValue = -1
@@ -36,10 +37,14 @@ const editAchievementIdDefaultValue = 0
 const AchievementTypeTable = (
   props: AddAchieverTypeTableProps,
 ): JSX.Element => {
-  const { executeSaveButtonHandler } = props
+  const {
+    executeSaveButtonHandler,
+    isEditSaveButtonEnabled,
+    setEditSaveButtonEnabled,
+  } = props
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList,
+    (state) => state.commonAchievements.achievementTypeList,
   )
   const [editAchievementId, setEditAchievementId] = useState<number>(
     editAchievementIdDefaultValue,
@@ -92,6 +97,20 @@ const AchievementTypeTable = (
       setErrors({ ...errors, achievementError2: false })
     }
   }, [editedValues])
+
+  useEffect(() => {
+    if (
+      editedValues.newOrder === emptyString ||
+      editedValues.newStatus === emptyString ||
+      errors.achievementError2 ||
+      editedValues.newOrder === '0' ||
+      editedValues.newOrder === '00'
+    ) {
+      setEditSaveButtonEnabled(false)
+    } else {
+      setEditSaveButtonEnabled(true)
+    }
+  }, [editedValues, errors])
 
   const editButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -174,14 +193,21 @@ const AchievementTypeTable = (
   }
 
   const renderCurrentStatus = (value: boolean) => {
-    return value ? NewAchievementStatus.Active : NewAchievementStatus.Inactive
+    return value
+      ? String(NewAchievementStatus.Active).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Active).slice(1)
+      : String(NewAchievementStatus.Inactive).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Inactive).slice(1)
   }
 
-  const uniqueOrderTernary = errors.achievementError2 ? (
-    <p data-testid="unique-order-err" className={TextDanger}>
+  const uniqueOrderTernary = (
+    <p
+      data-testid="unique-order-err"
+      className={errors.achievementError2 ? TextDanger : TableColor}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <>
@@ -200,7 +226,9 @@ const AchievementTypeTable = (
             </CTableHeaderCell>
             <CTableHeaderCell scope="col">Status</CTableHeaderCell>
             <CTableHeaderCell scope="col">Order</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-end pe-5">
+              Action
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -248,7 +276,7 @@ const AchievementTypeTable = (
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <div
-                  className="d-flex flex-row align-items-center"
+                  className="d-flex flex-row align-items-center justify-content-end"
                   data-testid={`user-access-${index}`}
                 >
                   {isEditAchievementEnabled && editAchievementId === item.id ? (
@@ -258,6 +286,7 @@ const AchievementTypeTable = (
                         className="btn-ovh me-1"
                         data-testid={`save-btn-${index}`}
                         onClick={editSaveButtonHandler}
+                        disabled={!isEditSaveButtonEnabled}
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>
@@ -310,14 +339,17 @@ const AchievementTypeTable = (
       <OModal
         visible={displayModalContent}
         setVisible={setDisplayModalContent}
-        modalSize="lg"
         alignment="center"
+        modalTitle="Delete Achievement Type"
         modalHeaderClass="d-none"
         confirmButtonAction={confirmDeleteButtonHandler}
         confirmButtonText="Yes"
         cancelButtonText="No"
+        modalBodyClass="ng-binding"
       >
-        <div data-testid="confirm-modal-content">{modalContent}</div>
+        <div data-testid="confirm-modal-content" className="pb-4">
+          {modalContent}
+        </div>
       </OModal>
     </>
   )

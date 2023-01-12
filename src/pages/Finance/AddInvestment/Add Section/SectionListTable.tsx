@@ -89,7 +89,7 @@ const SectionListTable = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToSectionActions = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment Section',
   )
 
   const currentPageItems = useMemo(
@@ -125,7 +125,7 @@ const SectionListTable = ({
                 </CTableHeaderCell>
                 <CTableDataCell>{sectionItem.sectionName}</CTableDataCell>
                 <CTableDataCell>
-                  {sectionItem.sectionLimit.toLocaleString()}
+                  {sectionItem.sectionLimit?.toLocaleString('en-IN')}
                 </CTableDataCell>
                 <CTableDataCell>
                   {userAccessToSectionActions?.updateaccess && (

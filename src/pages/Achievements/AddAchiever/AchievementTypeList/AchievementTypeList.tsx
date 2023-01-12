@@ -30,7 +30,7 @@ const AchievementTypeList = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const achievementTypesLength = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList?.size,
+    (state) => state.commonAchievements.achievementTypeList?.size,
   )
   const addAchieverState = useTypedSelector((state) => state.addAchiever)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
@@ -48,6 +48,9 @@ const AchievementTypeList = ({
     useState<boolean>(false)
 
   const [newUserSelectedDateReq, setNewUserSelectedDateReq] =
+    useState<boolean>(false)
+
+  const [isEditSaveButtonEnabled, setEditSaveButtonEnabled] =
     useState<boolean>(false)
 
   const newAchievementTypeNameHandler = (
@@ -93,7 +96,7 @@ const AchievementTypeList = ({
     const achievementStatus =
       newUserSelectedStatus === NewAchievementStatus.Active ? 'true' : 'false'
     const newAchievementData: OutgoingNewAchievementType = {
-      typeName: userNewSelectedAchievementType,
+      typeName: userNewSelectedAchievementType.trim(),
       order: newUserSelectedOrder.toString(),
       status: achievementStatus,
       timeperiodrequired: newUserSelectedTimeReq,
@@ -197,6 +200,8 @@ const AchievementTypeList = ({
           />
           <CCol data-testid="scroll-col" className={scrollTernary}>
             <AchievementTypeTable
+              isEditSaveButtonEnabled={isEditSaveButtonEnabled}
+              setEditSaveButtonEnabled={setEditSaveButtonEnabled}
               executeSaveButtonHandler={editSaveButtonHandler}
             />
           </CCol>

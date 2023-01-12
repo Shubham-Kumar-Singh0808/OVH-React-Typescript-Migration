@@ -504,6 +504,13 @@ export interface LeaveApprovalsApi extends ApiBase {
   leaveReject: string
 }
 
+export interface ITDeclarationFormApi extends ApiBase {
+  getEmployeeInfo: string
+  getSectionsHavingInvests: string
+  getInvestsBySectionId: string
+  addITDeclarationForm: string
+  isITDeclarationFormExist: string
+}
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
   generatePayslipAndDownloadPayslip: string
@@ -566,6 +573,18 @@ export interface InvestmentCheckListApi extends ApiBase {
   getSections: string
 }
 
+export interface PayrollManagementApi extends ApiBase {
+  getCurrentPayslip: string
+  downloadExcelFile: string
+  searchEmployee: string
+  deletePayslip: string
+  updatePayslip: string
+  deleteCheckedPayslips: string
+  readExcelFile: string
+  saveExcelFile: string
+  clearDirectory: string
+}
+
 export interface CommonAchievementsApi extends ApiBase {
   getAllAchievementsType: string
 }
@@ -580,6 +599,10 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+  getApproveProjectRequest: string
+  updateProjectRequest: string
+  deleteProjectRequest: string
+  rejectProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {
@@ -587,6 +610,22 @@ export interface AddAchieverApi extends ApiBase {
   getAchievementTypeDetails: string
   updateAchievementTypeDetails: string
   deleteAchievementType: string
+  getActiveEmployeeList: string
+  addAchievement: string
+  getImageData: string
+}
+
+export interface NomineeListApi extends ApiBase {
+  getAllCycles: string
+  getNominations: string
+  getNominationDetails: string
+  reviewNominee: string
+  exportNomineeList: string
+}
+
+export interface AddNomineeApi extends ApiBase {
+  nominationFormDetails: string
+  addNominee: string
 }
 
 export interface EmployeeAccountsApi extends ApiBase {
@@ -635,4 +674,66 @@ export interface ProjectProposalApi extends ApiBase {
 export interface ProjectNotesApi extends ApiBase {
   projectNotesTimeLine: string
   uploadImage: string
+}
+export interface AddProjectCreationRequestApi extends ApiBase {
+  getCheckList: string
+  getProjectRequestMailIds: string
+  addProjectRequest: string
+}
+export interface InitiateCycleApi extends ApiBase {
+  getActiveCycleData: string
+  getallcycles: string
+  getAllQuestions: string
+  initiateCycle: string
+  deleteQuestion: string
+  addQuestion: string
+}
+
+export interface MyKRAsApi extends ApiBase {
+  getKRAForIndividualEmployee: string
+  getKPIsForIndividualEmployee: string
+}
+
+export interface NewBookingApi extends ApiBase {
+  getLoggedEmployeeName: string
+  getAllProfileEmployeesData: string
+  getAllProjectSearch: string
+  confirmNewMeetingAppointment: string
+}
+
+export interface LeadershipEnrollmentListApi extends ApiBase {
+  getLeadershipList: string
+  leadershipApprove: string
+  leadershipReject: string
+}
+
+export interface LeadershipEnrollmentFormApi extends ApiBase {
+  employeeDetails: string
+  addLeadership: string
+}
+
+export interface KRAApi extends ApiBase {
+  getEmpDepartments: string
+  getDesignation: string
+  searchKRAData: string
+  kpiForIndividualKra: string
+  deleteKRA: string
+  deleteKPI: string
+  designationKRAPercentage: string
+  checkIfNewKRADuplicate: string
+  addNewKRA: string
+  editThisKra: string
+  updateKRA: string
+}
+
+export interface MyReviewApi extends ApiBase {
+  getEmployeePerformanceReview: string
+}
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
 }

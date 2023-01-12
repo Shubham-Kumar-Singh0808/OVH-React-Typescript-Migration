@@ -19,6 +19,7 @@ import { showIsRequired } from '../../../../utils/helper'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { Investment } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const EditInvestment = ({
   editInvestment,
@@ -79,18 +80,31 @@ const EditInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEditInvestmentCopy((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'investmentName') {
+      const investmentNameVal = value.replace(/^\s*/, '')
+      setEditInvestmentCopy((prevState) => {
+        return { ...prevState, ...{ [name]: investmentNameVal } }
+      })
+    } else {
+      setEditInvestmentCopy((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {
-    if (editInvestmentCopy?.investmentName) {
+    if (editInvestmentCopy?.investmentName && !isDocumentsVisible) {
+      setIsUpdateButtonEnabled(true)
+    } else if (
+      editInvestmentCopy?.investmentName &&
+      isDocumentsVisible &&
+      requireDocuments
+    ) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [editInvestmentCopy.investmentName])
+  }, [editInvestmentCopy.investmentName, isDocumentsVisible, requireDocuments])
 
   useEffect(() => {
     if (editInvestment?.requiredDocs) {
@@ -199,7 +213,9 @@ const EditInvestment = ({
             >
               Investment Name:
               <span
-                className={showIsRequired(editInvestmentCopy?.investmentName)}
+                className={
+                  editInvestmentCopy?.investmentName ? TextWhite : TextDanger
+                }
               >
                 *
               </span>
@@ -212,7 +228,7 @@ const EditInvestment = ({
                 name="investmentName"
                 placeholder="Investment Name"
                 autoComplete="off"
-                value={editInvestmentCopy.investmentName}
+                value={editInvestmentCopy?.investmentName}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -322,7 +338,9 @@ const EditInvestment = ({
                     'investment-text-area documentWidth',
                   )}
                   value={requireDocuments}
-                  onChange={(e) => setRequiredDocuments(e.target.value)}
+                  onChange={(e) =>
+                    setRequiredDocuments(e.target.value.replace(/^\s*/, ''))
+                  }
                 ></CFormTextarea>
               </CCol>
             </CRow>

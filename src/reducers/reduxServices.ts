@@ -64,6 +64,7 @@ import { bookingListService } from './ConferenceRoomBooking/BookingList/bookingL
 import { eventTypeListService } from './ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
 import { employeeAllocationSliceService } from './ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import { addLocationListService } from './ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
+import { newBookingService } from './ConferenceRoomBooking/NewBooking/newBookingSlice'
 import { addTrackerListService } from './Support/RaiseTicket/TrackerList/trackerListSlice'
 import { eventListService } from './ConferenceRoomBooking/EventList/eventListSlice'
 import { employeeSearchService } from './Dashboard/searchEmployeeSlice'
@@ -77,6 +78,7 @@ import { projectManagementService } from './ProjectManagement/Project/AddEditPra
 import { projectReportsService } from './ProjectManagement/Project/projectReportSlice'
 import { newEventService } from './ConferenceRoomBooking/NewEvent/newEventSlice'
 import { leaveApprovalsService } from './Leaves/LeaveApprovals/leaveApprovalsSlice'
+import { itDeclarationFormService } from './Finance/ITDeclarationForm/itDeclarationFormSlice'
 import { paySlipsService } from './Finance/Payslips/payslipsSlice'
 import { panDetailService } from './Finance/PanDetails/panDetailsSlice'
 import { bankDetailService } from './Finance/PanDetails/bankDetailsSlice'
@@ -84,9 +86,11 @@ import { resignationListService } from './Separation/ResignationList/resignation
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { payrollManagementService } from './Finance/PayrollManagement/PayrollManagementSlice'
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addProjectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
 import { projectViewService } from './ProjectManagement/Project/ProjectView/projectViewSlice'
 import { projectTimeLineService } from './ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
@@ -97,6 +101,15 @@ import { projectTailoringService } from './ProjectManagement/Project/ProjectView
 import { projectHiveActivityReportService } from './ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
 import { projectProposalsService } from './ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
 import { projectNotesService } from './ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
+import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
+import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
+import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
+import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
+import { myReviewService } from './Performance/MyReview/myReviewSlice'
+import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
+import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { reviewListService } from './Performance/ReviewList/reviewListSlice'
+import { KRAService } from './Performance/KRA/KRASlice'
 
 export const reduxServices = {
   app: appService,
@@ -166,6 +179,7 @@ export const reduxServices = {
   bookingList: bookingListService,
   eventTypeList: eventTypeListService,
   addLocationList: addLocationListService,
+  newBooking: newBookingService,
   employeeAllocationReport: employeeAllocationSliceService,
   addTrackerLists: addTrackerListService,
   eventList: eventListService,
@@ -178,6 +192,7 @@ export const reduxServices = {
   projectReport: projectReportsService,
   newEvent: newEventService,
   leaveApprovals: leaveApprovalsService,
+  itDeclarationForm: itDeclarationFormService,
   paySlips: paySlipsService,
   panDetails: panDetailService,
   bankDetails: bankDetailService,
@@ -185,9 +200,12 @@ export const reduxServices = {
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  payrollManagement: payrollManagementService,
   achieverList: achieverListService,
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
+  nomineeList: nomineeListService,
+  addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
   projectViewDetails: projectViewService,
   projectTimeLine: projectTimeLineService,
@@ -198,4 +216,12 @@ export const reduxServices = {
   projectTimeSheet: projectHiveActivityReportService,
   projectProposals: projectProposalsService,
   projectNotes: projectNotesService,
+  addProjectCreationRequest: addProjectCreationRequestService,
+  initiateCycle: initiateCycleService,
+  myKRAs: myKRAsService,
+  myReview: myReviewService,
+  leadershipEnrollmentList: leadershipEnrollmentListService,
+  leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  reviewList: reviewListService,
+  KRA: KRAService,
 }

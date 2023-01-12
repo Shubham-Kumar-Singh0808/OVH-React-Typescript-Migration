@@ -73,6 +73,7 @@ import bookingListReducer from './reducers/ConferenceRoomBooking/BookingList/boo
 import leaveReportReducer from './reducers/Leaves/LeaveReports/leaveReportSlice'
 import addLocationListReducer from './reducers/ConferenceRoomBooking/NewBooking/LocationList/locationListSlice'
 import eventTypeListReducer from './reducers/ConferenceRoomBooking/NewEvent/EventTypeList/eventTypeListSlice'
+import newBookingReducer from './reducers/ConferenceRoomBooking/NewBooking/newBookingSlice'
 import employeeAllocationReportReducer from './reducers/ProjectManagement/EmployeeAllocation/employeeAllocationSlice'
 import eventListReducer from './reducers/ConferenceRoomBooking/EventList/eventListSlice'
 import addTrackerListReducer from './reducers/Support/RaiseTicket/TrackerList/trackerListSlice'
@@ -87,6 +88,7 @@ import projectManagementReducer from './reducers/ProjectManagement/Project/AddEd
 import projectReportReducer from './reducers/ProjectManagement/Project/projectReportSlice'
 import newEventReducer from './reducers/ConferenceRoomBooking/NewEvent/newEventSlice'
 import leaveApprovalsReducer from './reducers/Leaves/LeaveApprovals/leaveApprovalsSlice'
+import itDeclarationFormReducer from './reducers/Finance/ITDeclarationForm/itDeclarationFormSlice'
 import paySlipsReducer from './reducers/Finance/Payslips/payslipsSlice'
 import panDetailsReducer from './reducers/Finance/PanDetails/panDetailsSlice'
 import bankDetailsReducer from './reducers/Finance/PanDetails/bankDetailsSlice'
@@ -94,9 +96,11 @@ import resignationListReducer from './reducers/Separation/ResignationList/resign
 import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import payrollManagementReducer from './reducers/Finance/PayrollManagement/PayrollManagementSlice'
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
 import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
@@ -107,6 +111,15 @@ import projectTailoringReducer from './reducers/ProjectManagement/Project/Projec
 import projectTimeSheetReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
 import projectProposalsReducer from './reducers/ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
 import projectNotesReducer from './reducers/ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
+import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
+import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
+import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
+import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlice'
+import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
+import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
+import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
+import KRAReducer from './reducers/Performance/KRA/KRASlice'
 
 export const allReducers = {
   app: appReducer,
@@ -183,6 +196,7 @@ export const allReducers = {
   bookingList: bookingListReducer,
   leaveReport: leaveReportReducer,
   eventTypeList: eventTypeListReducer,
+  newBooking: newBookingReducer,
   employeeAllocationReport: employeeAllocationReportReducer,
   eventList: eventListReducer,
   roomList: addRoomList,
@@ -193,6 +207,7 @@ export const allReducers = {
   addConfiguration: addConfigurationReducer,
   projectReport: projectReportReducer,
   leaveApprovals: leaveApprovalsReducer,
+  itDeclarationForm: itDeclarationFormReducer,
   newEvent: newEventReducer,
   paySlips: paySlipsReducer,
   panDetails: panDetailsReducer,
@@ -201,9 +216,12 @@ export const allReducers = {
   employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  payrollManagement: payrollManagementReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
+  nomineeList: nomineeListReducer,
+  addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
   projectViewDetails: projectViewDetailsReducer,
   projectTimeLine: projectTimeLineReducer,
@@ -214,6 +232,14 @@ export const allReducers = {
   projectTimeSheet: projectTimeSheetReducer,
   projectProposals: projectProposalsReducer,
   projectNotes: projectNotesReducer,
+  addProjectCreationRequest: addProjectCreationRequestReducer,
+  initiateCycle: initiateCycleReducer,
+  myKRAs: MyKRAsReducer,
+  myReview: myReviewReducer,
+  leadershipEnrollmentList: leadershipEnrollmentListReducer,
+  leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  reviewList: reviewListReducer,
+  KRA: KRAReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
