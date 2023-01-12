@@ -45,7 +45,9 @@ describe('KRA Table', () => {
               designation: 'developer',
             },
           },
-          userAccessToFeatures: mockUserAccessToFeaturesData,
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
           KRA: {
             isLoading: ApiLoadingState.succeeded,
             kraData: mockKRADataList,
