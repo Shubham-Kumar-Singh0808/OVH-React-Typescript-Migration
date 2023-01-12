@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ChangeRequestTable from './ChangeRequestTable'
-import AddEditChangeRequest from './AddEditChangeRequest'
+import AddEditChangeRequest from './AddChangeRequest'
 import EditChangeRequest from './EditChangeRequest'
 import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
 import { ChangeRequest } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'

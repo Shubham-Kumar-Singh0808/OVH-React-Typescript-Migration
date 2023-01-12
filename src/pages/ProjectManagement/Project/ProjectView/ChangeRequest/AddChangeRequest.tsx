@@ -83,7 +83,7 @@ const AddEditChangeRequest = ({
       dispatch(
         reduxServices.projectChangeRequest.getProjectChangeRequestList({
           endIndex: 20,
-          firstIndex: 1,
+          firstIndex: 0,
           projectid: projectId as string,
         }),
       )

@@ -9,7 +9,7 @@ import {
   CRow,
   CCol,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../../../components/ReusableComponent/OModal'
@@ -94,6 +94,15 @@ const ChangeRequestTable = ({
     setToggle('editChangeRequest')
     setEditChangeRequest(item)
   }
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectChangeRequest.getProjectChangeRequestList({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+  }, [dispatch])
   return (
     <>
       <CTable striped className="mt-3">
