@@ -390,6 +390,13 @@ const PIPList = React.lazy(
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/ClearenceCertificate/ClearenceCertificate'
+    ),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -850,6 +857,11 @@ const routes = [
     path: '/ViewPIPDetail/:id',
     name: 'ViewPIPDetail',
     component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
   },
 ]
 

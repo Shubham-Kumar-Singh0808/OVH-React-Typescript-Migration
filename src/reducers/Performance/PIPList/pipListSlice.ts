@@ -249,6 +249,9 @@ const employeePIPTimeline = (state: RootState): PipHistory[] =>
 const viewEmployeePipDetails = (state: RootState): GetPipList =>
   state.pipList.viewPipDetails
 
+const clearenceCertificate = (state: RootState): GetPipList =>
+  state.pipList.viewPipDetails
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -271,6 +274,7 @@ export const pipListSelectors = {
   employeeData,
   employeePIPTimeline,
   viewEmployeePipDetails,
+  clearenceCertificate,
 }
 
 export const pipListService = {

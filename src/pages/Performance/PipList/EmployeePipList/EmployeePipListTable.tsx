@@ -49,6 +49,7 @@ const EmployeePipListTable = ({
       }),
     )
   }
+
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -94,14 +95,16 @@ const EmployeePipListTable = ({
                         </CButton>
                       </Link>
                     </CTooltip>
-                    <CTooltip content="Cleareance Certificate">
-                      <CButton
-                        className="btn-ovh me-2"
-                        color="info"
-                        type="button"
-                      >
-                        <i className="fa fa-user-circle text-white"></i>
-                      </CButton>
+                    <CTooltip content="Clearence Certificate">
+                      <Link to={`/PIPClearnceCerticates`}>
+                        <CButton
+                          className="btn-ovh me-2"
+                          color="info"
+                          type="button"
+                        >
+                          <i className="fa fa-user-circle text-white"></i>
+                        </CButton>
+                      </Link>
                     </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
