@@ -309,6 +309,13 @@ const EmployeePipList = (): JSX.Element => {
       )}
       {toggle === 'addPIP' && (
         <AddEmployeePipList
+          pageSize={pageSize}
+          searchByAdded={searchByAdded}
+          searchByEmployee={searchByEmployee}
+          searchInput={searchInput}
+          selectDate={selectDate}
+          fromDate={fromDate as string}
+          toDate={toDate as string}
           setToggle={() => {
             setToggle('')
           }}

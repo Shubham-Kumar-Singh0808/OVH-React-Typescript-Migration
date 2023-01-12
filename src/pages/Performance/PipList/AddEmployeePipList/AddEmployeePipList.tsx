@@ -25,9 +25,23 @@ import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
 
 const AddEmployeePipList = ({
+  pageSize,
+  searchByAdded,
+  searchByEmployee,
+  searchInput,
+  selectDate,
+  fromDate,
+  toDate,
   setToggle,
 }: {
   setToggle: () => void
+  pageSize: number
+  searchByAdded: boolean
+  searchByEmployee: boolean
+  searchInput: string
+  selectDate: string
+  fromDate: Date | string
+  toDate: Date | string
 }): JSX.Element => {
   const [startDate, setStartDate] = useState<Date | string>()
   const [endDate, setEndDate] = useState<Date | string>()
@@ -170,6 +184,13 @@ const AddEmployeePipList = ({
       toastColor="danger"
     />
   )
+
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+  const selectedEmployeePipStatus = useTypedSelector(
+    reduxServices.pipList.selectors.selectedEmployeePipStatus,
+  )
   const addButtonHandler = async () => {
     const prepareObject = {
       empId: Number(empId),
@@ -186,6 +207,19 @@ const AddEmployeePipList = ({
     if (reduxServices.pipList.addPIP.fulfilled.match(addPIPResultAction)) {
       setToggle()
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(
+        reduxServices.pipList.getAllPIPList({
+          startIndex: pageSize * (selectCurrentPage - 1),
+          endIndex: pageSize * selectCurrentPage,
+          selectionStatus: selectedEmployeePipStatus,
+          dateSelection: selectDate,
+          from: (fromDate as string) || '',
+          multiSearch: searchInput,
+          searchByAdded,
+          searchByEmployee,
+          to: (toDate as string) || '',
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.pipList.addPIP.rejected.match(addPIPResultAction) &&
