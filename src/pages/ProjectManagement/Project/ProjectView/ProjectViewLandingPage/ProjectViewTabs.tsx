@@ -99,7 +99,6 @@ const ProjectViewTabs = (): JSX.Element => {
                   {item.tabName}
                 </CNavLink>
               </>
-              {/* )} */}
             </CNavItem>
           ))}
       </CNav>

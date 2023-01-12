@@ -10,7 +10,7 @@ import {
 import { projectViewApiConfig, AllowedHttpMethods } from '../../../apiList'
 
 const getProjectDetails = async (
-  projectId: number,
+  projectId: number | string,
 ): Promise<ProjectViewDetails[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectViewApiConfig.getProjects,
@@ -24,7 +24,9 @@ const getProjectDetails = async (
   return response.data
 }
 
-const getProject = async (projectid: number): Promise<ProjectDetail> => {
+const getProject = async (
+  projectid: number | string,
+): Promise<ProjectDetail> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectViewApiConfig.getProject,
     method: AllowedHttpMethods.get,

@@ -13,30 +13,33 @@ import {
 
 const getProjectDetails = createAsyncThunk<
   ProjectViewDetails[] | undefined,
-  number,
+  number | string,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('Projects/getProjectDetails', async (projectId: number, thunkApi) => {
-  try {
-    return await projectDetailsApi.getProjectDetails(projectId)
-  } catch (error) {
-    const err = error as AxiosError
-    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-  }
-})
+>(
+  'Projects/getProjectDetails',
+  async (projectId: number | string, thunkApi) => {
+    try {
+      return await projectDetailsApi.getProjectDetails(projectId as string)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const getProject = createAsyncThunk<
   ProjectDetail | undefined,
-  number,
+  number | string,
   {
     dispatch: AppDispatch
     state: RootState
     rejectValue: ValidationError
   }
->('Projects/getProject', async (projectid: number, thunkApi) => {
+>('Projects/getProject', async (projectid: number | string, thunkApi) => {
   try {
     return await projectDetailsApi.getProject(projectid)
   } catch (error) {

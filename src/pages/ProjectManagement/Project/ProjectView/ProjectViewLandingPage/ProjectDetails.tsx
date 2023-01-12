@@ -1,4 +1,6 @@
+import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 
@@ -8,6 +10,19 @@ const ProjectDetails = (): JSX.Element => {
   )
   return (
     <>
+      <CRow className="justify-content-end">
+        <CCol md={4}>
+          <Link to={`/projectreport`}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1 add-project-back-btn"
+              data-testid="toggle-back-button"
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
+          </Link>
+        </CCol>
+      </CRow>
       <div className="col-sm-3 project-view-text-header">
         <h3>JXT - UI integration</h3>
       </div>
@@ -29,6 +44,10 @@ const ProjectDetails = (): JSX.Element => {
           <dd>{getProjectDetail.projectContactPerson}</dd>
         </dl>
         <dl className="mb-0">
+          <dt>Customer Email</dt>
+          <dd>{getProjectDetail.projectContactEmail}</dd>
+        </dl>
+        <dl className="mb-0">
           <dt>Platform</dt>
           <dd>{getProjectDetail.platform}</dd>
         </dl>
@@ -40,7 +59,10 @@ const ProjectDetails = (): JSX.Element => {
         </dl>
         <dl className="mb-0">
           <dt>Pricing Model</dt>
-          <dd>{getProjectDetail.type}</dd>
+          <dd>
+            {getProjectDetail.type?.charAt(0).toUpperCase() +
+              getProjectDetail.type?.slice(1).toLowerCase()}
+          </dd>
         </dl>
         <dl className="mb-0">
           <dt>Client</dt>
