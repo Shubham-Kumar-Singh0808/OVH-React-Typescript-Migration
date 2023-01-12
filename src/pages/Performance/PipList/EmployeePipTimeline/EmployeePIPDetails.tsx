@@ -26,18 +26,6 @@ const EmployeePIPDetails = (): JSX.Element => {
           Created
         </CBadge>
       )
-    } else if (persistType === 'CANCELLED') {
-      return (
-        <CBadge className="rounded-pill" color="warning">
-          Cancelled
-        </CBadge>
-      )
-    } else if (persistType === 'REJECTED') {
-      return (
-        <CBadge className="rounded-pill" color="danger">
-          Rejected
-        </CBadge>
-      )
     } else {
       return ''
     }

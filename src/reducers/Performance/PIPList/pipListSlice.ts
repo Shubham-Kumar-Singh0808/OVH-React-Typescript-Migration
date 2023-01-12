@@ -181,30 +181,14 @@ const pipListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getPIPHistory.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.employeePIPTimeline = action.payload
-      })
-      .addCase(extendPip.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.viewPipDetails = action.payload
-      })
-      .addCase(updatePipDetails.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.viewPipDetails = action.payload
-      })
-      .addCase(removeFromPip.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.viewPipDetails = action.payload
-      })
-      .addCase(viewPipDetails.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.viewPipDetails = action.payload
-      })
       .addCase(getAllPIPList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.pipListData = action.payload.list
         state.listSize = action.payload.size
+      })
+      .addCase(getPIPHistory.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeePIPTimeline = action.payload
       })
       .addCase(getPerformanceRatings.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -214,6 +198,29 @@ const pipListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.activeEmployee = action.payload
       })
+      .addMatcher(
+        isAnyOf(
+          extendPip.fulfilled,
+          updatePipDetails.fulfilled,
+          viewPipDetails.fulfilled,
+          removeFromPip.fulfilled,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.viewPipDetails = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          extendPip.pending,
+          updatePipDetails.pending,
+          viewPipDetails.pending,
+          removeFromPip.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(isAnyOf(addPIP.fulfilled), (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })

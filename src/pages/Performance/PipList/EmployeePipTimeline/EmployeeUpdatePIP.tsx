@@ -12,13 +12,14 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import {
   TextWhite,
   TextDanger,
   TextLabelProps,
 } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetPipList } from '../../../../types/Performance/PipList/pipListTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
@@ -61,6 +62,8 @@ const EmployeeUpdatePIP = ({
     setImprovementPlanText(improvement)
   }
 
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (viewEmployeePipData != null) {
       setUpdatePIP(viewEmployeePipData)
@@ -90,6 +93,23 @@ const EmployeeUpdatePIP = ({
       setIsUpdateBtnEnabled(false)
     }
   }, [startDate, selectRatingNo, reasonForPIPText, improvementPlanText])
+
+  const successToast = (
+    <OToast toastMessage="PIP Updated successfully" toastColor="success" />
+  )
+
+  const updateBtnHandler = async () => {
+    await dispatch(reduxServices.pipList.updatePipDetails(viewEmployeePipData))
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: viewEmployeePipData.id,
+      }),
+    )
+    dispatch(reduxServices.app.actions.addToast(successToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
+    setToggle('')
+  }
 
   return (
     <>
@@ -279,6 +299,7 @@ const EmployeeUpdatePIP = ({
               color="success"
               className="btn-ovh me-1 text-white"
               disabled={!isUpdateBtnEnabled}
+              onClick={updateBtnHandler}
             >
               Update
             </CButton>
