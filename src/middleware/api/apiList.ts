@@ -819,4 +819,5 @@ export const PipListApiConfig: PIPListApi = {
   getPIPHistory: apiPrefix + '/PIPManagement/getPIPHistory',
   extendPip: apiPrefix + '/PIPManagement/extendPip',
   removeFromPip: apiPrefix + '/PIPManagement/removeFromPip',
+  updatePipDetails: apiPrefix + '/PIPManagement/updatePipDetails',
 }

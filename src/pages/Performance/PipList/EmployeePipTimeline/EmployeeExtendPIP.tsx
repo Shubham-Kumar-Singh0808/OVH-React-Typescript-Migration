@@ -70,6 +70,12 @@ const EmployeeExtendPIP = ({
 
   const extendBtnHandler = async () => {
     await dispatch(reduxServices.pipList.extendPip(viewEmployeePipDetails))
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: viewEmployeePipDetails.id,
+      }),
+    )
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')

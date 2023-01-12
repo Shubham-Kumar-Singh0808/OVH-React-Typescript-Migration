@@ -147,6 +147,18 @@ const removeFromPip = createAsyncThunk(
   },
 )
 
+const updatePipDetails = createAsyncThunk(
+  'pipList/updatePipDetails',
+  async (props: GetPipList, thunkApi) => {
+    try {
+      return await pipListApi.updatePipDetails(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -174,6 +186,10 @@ const pipListSlice = createSlice({
         state.employeePIPTimeline = action.payload
       })
       .addCase(extendPip.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.viewPipDetails = action.payload
+      })
+      .addCase(updatePipDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.viewPipDetails = action.payload
       })
@@ -236,6 +252,7 @@ export const pipListThunk = {
   getPIPHistory,
   extendPip,
   removeFromPip,
+  updatePipDetails,
 }
 
 export const pipListSelectors = {
