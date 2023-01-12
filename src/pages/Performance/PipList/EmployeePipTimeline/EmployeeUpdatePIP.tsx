@@ -103,7 +103,7 @@ const EmployeeUpdatePIP = ({
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',
-        pipId: viewEmployeePipData.id,
+        pipId: viewEmployeePipData.id as number,
       }),
     )
     dispatch(reduxServices.app.actions.addToast(successToast))

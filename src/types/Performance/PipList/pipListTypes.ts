@@ -24,7 +24,7 @@ export type GetAllPipList = {
 }
 
 export type GetPipList = {
-  id: number
+  id: number | string
   employeeName: string
   startDate: string
   endDate: string

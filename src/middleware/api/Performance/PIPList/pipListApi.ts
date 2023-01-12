@@ -112,7 +112,7 @@ const addPIP = async ({
   return response.data
 }
 
-const viewPipDetails = async (id: number): Promise<GetPipList> => {
+const viewPipDetails = async (id: number | string): Promise<GetPipList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: PipListApiConfig.viewPipDetails,
     method: AllowedHttpMethods.get,

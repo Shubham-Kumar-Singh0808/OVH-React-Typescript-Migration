@@ -847,7 +847,7 @@ const routes = [
     component: KRA,
   },
   {
-    path: '/ViewPIPDetail/:Id',
+    path: '/ViewPIPDetail/:id',
     name: 'ViewPIPDetail',
     component: ViewPIPDetail,
   },

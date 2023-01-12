@@ -85,7 +85,7 @@ const EmployeePipListTable = ({
                           color="info"
                           className="btn-ovh me-2"
                           data-testid="history-btn"
-                          onClick={() => timeLineHandler(item.id)}
+                          onClick={() => timeLineHandler(item.id as number)}
                         >
                           <i
                             className="fa fa-bar-chart text-white"

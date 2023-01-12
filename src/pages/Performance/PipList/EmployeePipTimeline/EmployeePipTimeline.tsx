@@ -1,14 +1,28 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import EmployeePIPDetails from './EmployeePIPDetails'
 import EmployeeExtendPIP from './EmployeeExtendPIP'
 import EmployeeRemovePIP from './EmployeeRemovePIP'
 import EmployeeUpdatePIP from './EmployeeUpdatePIP'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 
 const EmployeePipTimeline = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
+  const { id } = useParams<{ id: string }>()
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: Number(id),
+      }),
+    )
+  }, [dispatch])
 
   return (
     <>

@@ -101,7 +101,7 @@ const addPIP = createAsyncThunk(
 
 const viewPipDetails = createAsyncThunk(
   'pipList/viewPipDetails',
-  async (id: number, thunkApi) => {
+  async (id: number | string, thunkApi) => {
     try {
       return await pipListApi.viewPipDetails(id)
     } catch (error) {
