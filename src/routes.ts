@@ -270,6 +270,10 @@ const ResignationFeedBackForm = React.lazy(
     ),
 )
 
+const ReviewList = React.lazy(
+  () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
+)
+
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
@@ -370,6 +374,9 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
 const LeadershipEnrollmentList = React.lazy(
   () =>
     import(
@@ -784,6 +791,11 @@ const routes = [
     component: InvestmentCheckList,
   },
   {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
+  },
+  {
     path: '/achievementList',
     name: 'Achievements List',
     component: AchieverList,
@@ -862,6 +874,11 @@ const routes = [
     path: '/PIPClearnceCerticates',
     name: 'ClearnceCerticates',
     component: ClearnceCerticates,
+  },
+  {
+    path: '/listofAppraisal',
+    name: 'KRA',
+    component: ReviewList,
   },
 ]
 

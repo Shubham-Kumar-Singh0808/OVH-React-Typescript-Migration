@@ -107,7 +107,7 @@ const InvestmentListTable = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToSectionActions = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment',
   )
 
   const currentPageItems = useMemo(

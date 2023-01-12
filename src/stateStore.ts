@@ -96,9 +96,11 @@ import resignationListReducer from './reducers/Separation/ResignationList/resign
 import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import payrollManagementReducer from './reducers/Finance/PayrollManagement/PayrollManagementSlice'
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
@@ -108,6 +110,7 @@ import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
 import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
+import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
 
 export const allReducers = {
@@ -205,18 +208,21 @@ export const allReducers = {
   employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  payrollManagement: payrollManagementReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
   nomineeList: nomineeListReducer,
   addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  addProjectCreationRequest: addProjectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,
   myReview: myReviewReducer,
   leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
   pipList: pipListReducer,
+  reviewList: reviewListReducer,
   KRA: KRAReducer,
   // add your slice reducers here
 }

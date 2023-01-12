@@ -573,6 +573,18 @@ export interface InvestmentCheckListApi extends ApiBase {
   getSections: string
 }
 
+export interface PayrollManagementApi extends ApiBase {
+  getCurrentPayslip: string
+  downloadExcelFile: string
+  searchEmployee: string
+  deletePayslip: string
+  updatePayslip: string
+  deleteCheckedPayslips: string
+  readExcelFile: string
+  saveExcelFile: string
+  clearDirectory: string
+}
+
 export interface CommonAchievementsApi extends ApiBase {
   getAllAchievementsType: string
 }
@@ -587,6 +599,10 @@ export interface ProjectCreationRequestApi extends ApiBase {
   getAllProjectRequestList: string
   getProjectRequest: string
   getAuditForProjectRequest: string
+  getApproveProjectRequest: string
+  updateProjectRequest: string
+  deleteProjectRequest: string
+  rejectProjectRequest: string
 }
 
 export interface AddAchieverApi extends ApiBase {
@@ -617,6 +633,11 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface AddProjectCreationRequestApi extends ApiBase {
+  getCheckList: string
+  getProjectRequestMailIds: string
+  addProjectRequest: string
+}
 export interface InitiateCycleApi extends ApiBase {
   getActiveCycleData: string
   getallcycles: string
@@ -678,4 +699,12 @@ export interface PIPListApi extends ApiBase {
   extendPip: string
   removeFromPip: string
   updatePipDetails: string
+}
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
 }
