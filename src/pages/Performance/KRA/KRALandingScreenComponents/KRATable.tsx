@@ -59,7 +59,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     }
   }
 
-  // const showModalButtonTernary = showModalButtons ? '' : 'd-none'
   const noRecords =
     kraData?.size !== 0
       ? `Total Records: ${kraData?.size}`
