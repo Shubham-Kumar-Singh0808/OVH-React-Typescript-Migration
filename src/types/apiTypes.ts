@@ -671,6 +671,7 @@ export interface KRAApi extends ApiBase {
   editThisKra: string
   updateKRA: string
   getFrequency: string
+  addKPI: string
 }
 
 export interface MyReviewApi extends ApiBase {

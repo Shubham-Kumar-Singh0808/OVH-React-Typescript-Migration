@@ -9,8 +9,8 @@ export interface KRATableItemProps {
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
   setModalDescription: React.Dispatch<React.SetStateAction<string>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
-  setShowModalButtons: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
+  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem | undefined>>
 }
 
 export interface IncomingEmployeeDepartment {
@@ -85,7 +85,7 @@ export interface KRATableProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
   pageSize: number
-  viewKPIButtonHandler?: (viewKPI: KRATableDataItem[]) => void
+  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem | undefined>>
 }
 
 export interface KRAFilterOptionsProps {
@@ -179,4 +179,14 @@ export interface UpdateKRABody extends NewKRABody {
 export interface DeleteKPIParams {
   kpiId: number
   kraId: number
+}
+export interface addKPIParam {
+  kraId: number
+}
+
+export type AddKPIData = {
+  description: string
+  frequencyId: number
+  name: string
+  target: string
 }

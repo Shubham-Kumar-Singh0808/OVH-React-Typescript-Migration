@@ -1,4 +1,6 @@
 import {
+  AddKPIData,
+  addKPIParam,
   DeleteKPIParams,
   Frequency,
   IncomingEmployeeDepartment,
@@ -78,6 +80,18 @@ const deleteKRA = async (kraid: number): Promise<void> => {
     params: {
       kraid,
     },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addKPI = async (query: addKPIParam, body: AddKPIData): Promise<void> => {
+  const { kraId } = query
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.addKPI + kraId + '/kpi',
+    method: AllowedHttpMethods.post,
+    data: body,
   })
 
   const response = await useAxios(requestConfig)
@@ -182,6 +196,7 @@ const KRAApi = {
   editThisKra,
   updateKRA,
   getFrequency,
+  addKPI,
 }
 
 export default KRAApi

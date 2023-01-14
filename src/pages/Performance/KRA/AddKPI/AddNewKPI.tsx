@@ -9,7 +9,7 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
   TextWhite,
@@ -18,32 +18,77 @@ import {
 } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { AddKPIData } from '../../../../types/Performance/KRA/AddKPI/addKPITypes'
-import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
+import {
+  KRAPages,
+  KRATableDataItem,
+  AddKPIData,
+} from '../../../../types/Performance/KRA/KRATypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { showIsRequired } from '../../../../utils/helper'
 
-const AddNewKPI = (): JSX.Element => {
+const AddNewKPI = ({
+  addKPI,
+}: {
+  addKPI: KRATableDataItem | undefined
+}): JSX.Element => {
   const initialKPIData = {} as AddKPIData
   const formLabelProps = {
     htmlFor: 'inputNewKPI',
     className: 'col-form-label addKpi-label',
   }
 
-  const [addKPI, setAddKPI] = useState(initialKPIData)
+  const [addNewKPi, setAddNewKPi] = useState(initialKPIData)
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectFrequency, setSelectFrequency] = useState<number | string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
   const frequency = useTypedSelector(reduxServices.KRA.selectors.frequency)
   const handleDescription = (description: string) => {
-    setAddKPI((prevState) => {
+    setAddNewKPi((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
+  console.log(selectFrequency)
 
   const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
+  }
+
+  useEffect(() => {
+    if (
+      selectFrequency &&
+      addNewKPi.name &&
+      addNewKPi.target &&
+      addNewKPi.description
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [selectFrequency, addNewKPi.name, addNewKPi.target, addNewKPi.description])
+
+  const handleClearInputs = () => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+    setAddNewKPi({
+      frequencyId: 0,
+      name: '',
+      target: '',
+      description: '',
+    })
+    setSelectFrequency(0)
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    console.log(name, value)
+
+    setAddNewKPi((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
 
   return (
@@ -75,7 +120,7 @@ const AddNewKPI = (): JSX.Element => {
               type="text"
               name="kraName"
               disabled
-              // value={addNewPage.title}
+              value={addKPI?.name}
             />
           </CCol>
         </CRow>
@@ -93,7 +138,7 @@ const AddNewKPI = (): JSX.Element => {
               type="text"
               name="department"
               disabled
-              // value={addNewPage.title}
+              value={addKPI?.departmentName}
             />
           </CCol>
         </CRow>
@@ -111,7 +156,7 @@ const AddNewKPI = (): JSX.Element => {
               type="text"
               name="designation"
               disabled
-              // value={addNewPage.title}
+              value={addKPI?.designationName}
             />
           </CCol>
         </CRow>
@@ -124,11 +169,12 @@ const AddNewKPI = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="title-input"
+              data-testid="frequency-input"
               autoComplete="off"
               type="text"
-              name="title"
-              // value={addNewPage.title}
+              name="kpiName"
+              value={addNewKPi.name}
+              onChange={handleInputChange}
             />
           </CCol>
         </CRow>
@@ -140,9 +186,9 @@ const AddNewKPI = (): JSX.Element => {
           <CCol sm={3}>
             <CFormSelect
               aria-label="deptName"
-              name="deptName"
+              name="frequency"
               id="deptName"
-              data-testid="department-name"
+              data-testid="frequency-input"
               onChange={(e) => {
                 setSelectFrequency(e.target.value)
               }}
@@ -166,11 +212,12 @@ const AddNewKPI = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="title-input"
+              data-testid="target-input"
               autoComplete="off"
               type="text"
-              name="title"
-              // value={addNewPage.title}
+              name="target"
+              value={addNewKPi.target}
+              onChange={handleInputChange}
             />
           </CCol>
         </CRow>
@@ -181,7 +228,7 @@ const AddNewKPI = (): JSX.Element => {
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                //   initData={addNewPage?.description}
+                initData={addNewKPi?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -206,6 +253,7 @@ const AddNewKPI = (): JSX.Element => {
               data-testid="clear-btn"
               color="warning "
               className="btn-ovh"
+              onClick={handleClearInputs}
             >
               Clear
             </CButton>

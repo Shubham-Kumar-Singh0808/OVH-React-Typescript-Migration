@@ -15,21 +15,8 @@ import {
 import { emptyString } from '../../Achievements/AchievementConstants'
 
 const KRALandingScreen = (): JSX.Element => {
-  const [selectedKPI, setSelectedKPI] = useState<KRATableDataItem[]>([
-    {
-      id: 0,
-      name: '',
-      description: '',
-      kpiLookps: null,
-      count: 0,
-      checkType: null,
-      designationName: '',
-      designationId: 0,
-      departmentName: '',
-      departmentId: 0,
-      designationKraPercentage: 0,
-    },
-  ])
+  const [addKPI, setAddKPI] = useState<KRATableDataItem>()
+
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,
@@ -55,24 +42,10 @@ const KRALandingScreen = (): JSX.Element => {
     pageSize,
   } = usePagination(kraTableSize, pageSizeFromState, pageFromState)
 
-  const viewKPIButtonHandler = (kraItem: KRATableDataItem[]): void => {
+  const addKPIButtonHandler = (kraItem: KRATableDataItem): void => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKPI))
     console.log(kraItem)
-    setSelectedKPI([
-      {
-        id: kraItem[0].id,
-        name: kraItem[0].name,
-        description: kraItem[0].description,
-        kpiLookps: kraItem[0].kpiLookps,
-        count: kraItem[0].count,
-        checkType: kraItem[0].checkType,
-        designationName: kraItem[0].designationName,
-        designationId: kraItem[0].designationId,
-        departmentName: kraItem[0].departmentName,
-        departmentId: kraItem[0].departmentId,
-        designationKraPercentage: kraItem[0].designationKraPercentage,
-      },
-    ])
+    setAddKPI(kraItem)
   }
 
   return (
@@ -91,7 +64,7 @@ const KRALandingScreen = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            viewKPIButtonHandler={viewKPIButtonHandler}
+            setAddKPI={setAddKPI}
           />
         </>
       )}
@@ -102,7 +75,7 @@ const KRALandingScreen = (): JSX.Element => {
         />
       )}
       {currentOnScreenPage === KRAPages.editKra && <EditKRA />}
-      {currentOnScreenPage === KRAPages.addKPI && <AddNewKPI />}
+      {currentOnScreenPage === KRAPages.addKPI && <AddNewKPI addKPI={addKPI} />}
     </OCard>
   )
 }

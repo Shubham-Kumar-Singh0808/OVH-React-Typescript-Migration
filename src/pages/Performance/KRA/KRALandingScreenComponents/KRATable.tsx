@@ -14,7 +14,11 @@ import { emptyString } from '../../../../constant/constantData'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
-import { KRATableProps } from '../../../../types/Performance/KRA/KRATypes'
+import {
+  KRAPages,
+  KRATableDataItem,
+  KRATableProps,
+} from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
@@ -25,6 +29,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
+    setAddKPI,
   } = props
   const dispatch = useAppDispatch()
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
@@ -34,9 +39,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
   const [selectedKRAId, setSelectedKRAId] = useState<number>(-1)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
-
+  // const [addKPI, setAddKPI] = useState<KRATableDataItem>()
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -60,7 +64,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     }
   }
 
-  const showModalButtonTernary = showModalButtons ? '' : 'd-none'
   const noRecords =
     kraData?.size !== 0
       ? `Total Records: ${kraData?.size}`
@@ -94,8 +97,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               selectedKRA={item}
               setModalDescription={setModalDescription}
               setModalVisible={setModalVisible}
-              setShowModalButtons={setShowModalButtons}
               setDeleteThisKRA={setDeleteThisKRA}
+              setAddKPI={setAddKPI}
             />
           ))}
         </CTableBody>
@@ -127,15 +130,15 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         )}
       </CRow>
       <OModal
+        alignment="center"
         visible={isModalVisible}
         setVisible={setModalVisible}
-        modalSize="lg"
-        alignment="center"
-        modalFooterClass={showModalButtonTernary}
+        modalTitle="Delete KRA"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
-        modalHeaderClass="d-none"
       >
         <div
           data-testid="modal-cnt-kra-table"
