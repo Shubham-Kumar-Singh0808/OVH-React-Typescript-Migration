@@ -185,6 +185,7 @@ export interface addKPIParam {
 }
 
 export type AddKPIData = {
+  kraId: number
   description: string
   frequencyId: number
   name: string

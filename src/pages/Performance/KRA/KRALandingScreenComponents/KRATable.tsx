@@ -14,11 +14,7 @@ import { emptyString } from '../../../../constant/constantData'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
-import {
-  KRAPages,
-  KRATableDataItem,
-  KRATableProps,
-} from '../../../../types/Performance/KRA/KRATypes'
+import { KRATableProps } from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 

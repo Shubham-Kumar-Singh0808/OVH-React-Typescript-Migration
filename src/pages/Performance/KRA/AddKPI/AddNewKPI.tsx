@@ -10,13 +10,8 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
-import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import {
-  TextWhite,
-  TextDanger,
-  TextLabelProps,
-} from '../../../../constant/ClassName'
+import { TextLabelProps } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
@@ -79,6 +74,7 @@ const AddNewKPI = ({
       name: '',
       target: '',
       description: '',
+      kraId: 0,
     })
     setSelectFrequency(0)
   }
@@ -99,7 +95,7 @@ const AddNewKPI = ({
   const addKPIHandler = async () => {
     const prepareObject = {
       ...addNewKPi,
-      frequencyId: selectFrequency as number,
+      frequencyId: Number(selectFrequency),
     }
     const addKPIResultAction = await dispatch(
       reduxServices.KRA.addKPI(prepareObject),

@@ -42,11 +42,11 @@ const KRALandingScreen = (): JSX.Element => {
     pageSize,
   } = usePagination(kraTableSize, pageSizeFromState, pageFromState)
 
-  const addKPIButtonHandler = (kraItem: KRATableDataItem): void => {
-    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKPI))
-    console.log(kraItem)
-    setAddKPI(kraItem)
-  }
+  // const addKPIButtonHandler = (kraItem: KRATableDataItem): void => {
+  //   dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKPI))
+  //   console.log(kraItem)
+  //   setAddKPI(kraItem)
+  // }
 
   return (
     <OCard

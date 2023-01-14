@@ -1,6 +1,5 @@
 import {
   AddKPIData,
-  addKPIParam,
   DeleteKPIParams,
   Frequency,
   IncomingEmployeeDepartment,
@@ -87,9 +86,8 @@ const deleteKRA = async (kraid: number): Promise<void> => {
 }
 
 const addKPI = async (body: AddKPIData): Promise<AddKPIData> => {
-  // const { kraId } = query
   const requestConfig = getAuthenticatedRequestConfig({
-    url: KRAApiConfig.addKPI,
+    url: KRAApiConfig.addKPI + body.kraId + '/kpi',
     method: AllowedHttpMethods.post,
     data: body,
   })
