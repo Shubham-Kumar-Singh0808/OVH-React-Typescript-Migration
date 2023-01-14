@@ -93,7 +93,7 @@ const searchKRADataThunk = createAsyncThunk(
 
 const addKPI = createAsyncThunk(
   'KRA/addKPI',
-  async (kraId: number,  outBody: AddKPIData, thunkApi) => {
+  async (outBody: AddKPIData, thunkApi) => {
     try {
       return await KRAApi.addKPI(outBody)
     } catch (error) {

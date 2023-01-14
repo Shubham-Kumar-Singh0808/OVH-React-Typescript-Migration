@@ -86,10 +86,10 @@ const deleteKRA = async (kraid: number): Promise<void> => {
   return response.data
 }
 
-const addKPI = async (query: addKPIParam, body: AddKPIData): Promise<void> => {
-  const { kraId } = query
+const addKPI = async (body: AddKPIData): Promise<AddKPIData> => {
+  // const { kraId } = query
   const requestConfig = getAuthenticatedRequestConfig({
-    url: KRAApiConfig.addKPI + kraId + '/kpi',
+    url: KRAApiConfig.addKPI,
     method: AllowedHttpMethods.post,
     data: body,
   })

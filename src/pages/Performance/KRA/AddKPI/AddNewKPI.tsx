@@ -11,6 +11,7 @@ import {
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import {
   TextWhite,
   TextDanger,
@@ -91,6 +92,25 @@ const AddNewKPI = ({
     })
   }
 
+  const toastElement = (
+    <OToast toastColor="success" toastMessage="KPI added successfully." />
+  )
+
+  const addKPIHandler = async () => {
+    const prepareObject = {
+      ...addNewKPi,
+      frequencyId: selectFrequency as number,
+    }
+    const addKPIResultAction = await dispatch(
+      reduxServices.KRA.addKPI(prepareObject),
+    )
+
+    if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
+      dispatch(reduxServices.app.actions.addToast(toastElement))
+      handleClearInputs()
+    }
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -98,7 +118,7 @@ const AddNewKPI = ({
           <CButton
             color="info"
             className="btn-ovh me-1"
-            data-testid="toggle-back-btn"
+            data-testid="kpi-back-btn"
             onClick={backButtonHandler}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
@@ -169,7 +189,7 @@ const AddNewKPI = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="frequency-input"
+              data-testid="kpiName-input"
               autoComplete="off"
               type="text"
               name="kpiName"
@@ -185,9 +205,9 @@ const AddNewKPI = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              aria-label="deptName"
+              aria-label="frequency"
               name="frequency"
-              id="deptName"
+              id="frequency"
               data-testid="frequency-input"
               onChange={(e) => {
                 setSelectFrequency(e.target.value)
@@ -246,6 +266,7 @@ const AddNewKPI = ({
               data-testid="save-btn"
               className="btn-ovh me-1"
               color="success"
+              onClick={addKPIHandler}
             >
               Add
             </CButton>
