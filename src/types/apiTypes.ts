@@ -573,6 +573,18 @@ export interface InvestmentCheckListApi extends ApiBase {
   getSections: string
 }
 
+export interface PayrollManagementApi extends ApiBase {
+  getCurrentPayslip: string
+  downloadExcelFile: string
+  searchEmployee: string
+  deletePayslip: string
+  updatePayslip: string
+  deleteCheckedPayslips: string
+  readExcelFile: string
+  saveExcelFile: string
+  clearDirectory: string
+}
+
 export interface CommonAchievementsApi extends ApiBase {
   getAllAchievementsType: string
 }
@@ -677,4 +689,12 @@ export interface KRAApi extends ApiBase {
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+}
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
 }

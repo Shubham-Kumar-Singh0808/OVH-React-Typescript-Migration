@@ -897,6 +897,7 @@ const AddProjectRequestForm = ({
                       setIsAddMileStoneButtonEnabled={
                         setIsAddMileStoneButtonEnabled
                       }
+                      isAddMilestoneButtonEnabled={isAddMilestoneButtonEnabled}
                     />
                   )
                 })}

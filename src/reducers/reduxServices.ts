@@ -86,6 +86,7 @@ import { resignationListService } from './Separation/ResignationList/resignation
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { payrollManagementService } from './Finance/PayrollManagement/PayrollManagementSlice'
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
@@ -98,6 +99,7 @@ import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
 
 export const reduxServices = {
@@ -189,6 +191,7 @@ export const reduxServices = {
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  payrollManagement: payrollManagementService,
   achieverList: achieverListService,
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
@@ -201,5 +204,6 @@ export const reduxServices = {
   myReview: myReviewService,
   leadershipEnrollmentList: leadershipEnrollmentListService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  reviewList: reviewListService,
   KRA: KRAService,
 }

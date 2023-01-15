@@ -36,15 +36,17 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] =
     useState<ModalContent>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
   const [editKPi, setEditKPi] = useState<IncomingKPIDataItem>(
     {} as IncomingKPIDataItem,
   )
   const userAccessToFeatures = useTypedSelector(
-    (state) => state.userAccessToFeatures.userAccessToFeatures,
-  ).find((item) => item.featureId === 34)
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToKPI = userAccessToFeatures?.find(
+    (feature) => feature.name === 'KRA',
+  )
 
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
@@ -52,7 +54,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription(content)
-    setShowModalButtons(false)
+
     setModalVisible(true)
   }
 
@@ -67,7 +69,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription('Do you want to delete this ' + name + '?')
-    setShowModalButtons(true)
+
     setModalVisible(true)
     setDeleteThisKPI(id)
   }
@@ -95,8 +97,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,
   )
-
-  const modalBtnTernary = showModalButtons ? emptyString : 'd-none'
 
   const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
@@ -204,7 +204,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
               <CTableDataCell>
                 <div className="d-flex flex-row align-items-center justify-content-end">
                   <div className="button-events">
-                    {userAccessToFeatures?.updateaccess && (
+                    {userAccessToKPI?.updateaccess && (
                       <CButton
                         size="sm"
                         color="info"
@@ -218,7 +218,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                         ></i>
                       </CButton>
                     )}
-                    {userAccessToFeatures?.deleteaccess && (
+                    {userAccessToKPI?.deleteaccess && (
                       <CButton
                         size="sm"
                         color="danger"
@@ -242,10 +242,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
       <OModal
         visible={isModalVisible}
         setVisible={setModalVisible}
-        modalSize="lg"
-        alignment="center"
-        modalFooterClass={modalBtnTernary}
-        modalHeaderClass="d-none"
+        modalTitle="Delete KPI"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}

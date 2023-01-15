@@ -96,6 +96,7 @@ import resignationListReducer from './reducers/Separation/ResignationList/resign
 import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import payrollManagementReducer from './reducers/Finance/PayrollManagement/PayrollManagementSlice'
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
@@ -108,6 +109,7 @@ import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlic
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
 
 export const allReducers = {
@@ -205,6 +207,7 @@ export const allReducers = {
   employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  payrollManagement: payrollManagementReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
@@ -217,6 +220,7 @@ export const allReducers = {
   myReview: myReviewReducer,
   leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  reviewList: reviewListReducer,
   KRA: KRAReducer,
   // add your slice reducers here
 }
