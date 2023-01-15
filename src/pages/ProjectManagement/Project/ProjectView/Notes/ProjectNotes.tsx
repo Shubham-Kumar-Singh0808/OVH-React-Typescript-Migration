@@ -94,7 +94,7 @@ const ProjectNotes = (): JSX.Element => {
             id="notesLink"
             name="notesLink"
             placeholder="What you are thinking?"
-            data-testid="person-name"
+            data-testid="notes-link"
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
           />
