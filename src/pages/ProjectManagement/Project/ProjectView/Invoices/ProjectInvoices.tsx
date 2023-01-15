@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ProjectInvoicesTable from './ProjectInvoicesTable'
-import OAddButton from '../../../../../components/ReusableComponent/OAddButton'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
 
@@ -16,7 +15,7 @@ const ProjectInvoices = (): JSX.Element => {
     <>
       <CRow className="justify-content-end mt-4">
         <CCol className="text-end" md={4}>
-          <CButton color="info btn-ovh me-1">
+          <CButton color="info btn-ovh me-1" data-testid="add-btn">
             <i className="fa fa-plus me-1"></i>Add
           </CButton>
         </CCol>

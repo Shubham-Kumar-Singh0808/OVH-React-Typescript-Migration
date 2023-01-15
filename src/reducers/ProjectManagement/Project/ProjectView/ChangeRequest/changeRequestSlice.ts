@@ -92,10 +92,14 @@ const changeRequestSlice = createSlice({
   initialState: initialChangeRequestState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getProjectChangeRequestList.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.changeRequestList = action.payload
-    })
+    builder
+      .addCase(getProjectChangeRequestList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.changeRequestList = action.payload
+      })
+      .addCase(getProjectChangeRequestList.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 

@@ -227,7 +227,7 @@ export const mockProjectNotes: ProjectNotesTimeLine[] = [
       address: null,
     },
     post: '',
-    postDate: '',
+    postDate: '22/04/2023',
     postImageData: '',
     feedPostCommentsList: [],
     project: {

@@ -56,7 +56,7 @@ const Proposal = (): JSX.Element => {
             id="proposalLink"
             name="proposalLink"
             placeholder="What you are thinking?"
-            data-testid="person-name"
+            data-testid="proposal-link"
             value={proposalLink}
             onChange={(e) => setProposalLink(e.target.value)}
           />

@@ -89,6 +89,16 @@ const AddEditChangeRequest = ({
       )
     }
   }
+
+  const clearButtonHandler = () => {
+    setAddChangeRequest({
+      name: '',
+      duration: '',
+      descripition: '',
+      projectId: '',
+    })
+    setChangeRequestDescription('')
+  }
   return (
     <>
       <CRow className="justify-content-end">
@@ -96,6 +106,7 @@ const AddEditChangeRequest = ({
           <CButton
             color="info"
             className="btn-ovh me-1"
+            data-testid="back-btn"
             onClick={() => setToggle('')}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
@@ -115,7 +126,7 @@ const AddEditChangeRequest = ({
               id="name"
               name="name"
               placeholder="Name"
-              data-testid="person-name"
+              data-testid="request-name"
               value={addChangeRequest?.name}
               onChange={onChangeHandler}
             />
@@ -136,7 +147,7 @@ const AddEditChangeRequest = ({
             <CFormInput
               type="text"
               id="duration"
-              data-testid="contact-number"
+              data-testid="duration-testing"
               name="duration"
               placeholder="Hours"
               value={addChangeRequest?.duration}
@@ -180,7 +191,12 @@ const AddEditChangeRequest = ({
               >
                 Add
               </CButton>
-              <CButton color="warning " className="btn-ovh">
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                data-testid="clear-btn"
+                onClick={clearButtonHandler}
+              >
                 Clear
               </CButton>
             </>

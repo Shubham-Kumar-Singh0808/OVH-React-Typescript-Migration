@@ -17,7 +17,7 @@ const MileStone = (): JSX.Element => {
         <>
           <CRow className="justify-content-end mt-4">
             <CCol className="text-end" md={4}>
-              <CButton color="info btn-ovh me-1">
+              <CButton color="info btn-ovh me-1" data-testid="add-btn">
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
             </CCol>

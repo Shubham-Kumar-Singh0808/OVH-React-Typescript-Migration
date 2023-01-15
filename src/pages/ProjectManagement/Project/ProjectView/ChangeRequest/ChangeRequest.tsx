@@ -11,7 +11,7 @@ const ProjectChangeRequest = (): JSX.Element => {
     {} as ChangeRequest,
   )
   const [editDescription, setEditDescription] = useState<string>()
-  console.log(editChangeRequest)
+
   return (
     <>
       {toggle === '' && (
