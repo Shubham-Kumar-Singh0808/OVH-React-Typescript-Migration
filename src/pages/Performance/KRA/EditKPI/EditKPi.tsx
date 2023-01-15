@@ -63,6 +63,19 @@ const EditKPi = ({
     }
   }, [editKPi])
 
+  useEffect(() => {
+    if (
+      selectFrequency &&
+      editKPICopy.name &&
+      editKPICopy.target &&
+      editKPICopy.description
+    ) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [selectFrequency, editKPICopy])
+
   const toastElement = (
     <OToast toastColor="success" toastMessage="KPI updated successfully" />
   )
@@ -89,7 +102,7 @@ const EditKPi = ({
           <CButton
             color="info"
             className="btn-ovh me-1"
-            data-testid="editkpi-back-btn"
+            data-testid="editkpi-backBtn"
             onClick={backButtonHandler}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
@@ -106,7 +119,7 @@ const EditKPi = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="editkra-name"
+              data-testid="edit-kra-name"
               autoComplete="off"
               type="text"
               name="kraName"
@@ -136,7 +149,6 @@ const EditKPi = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Frequency :
-            <span className={showIsRequired(selectFrequency as string)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -149,7 +161,6 @@ const EditKPi = ({
               }}
               value={selectFrequency}
             >
-              <option value="">Select</option>
               {frequency?.map((freq) => (
                 <option key={freq.id} value={freq.id}>
                   {freq.frequencyname}

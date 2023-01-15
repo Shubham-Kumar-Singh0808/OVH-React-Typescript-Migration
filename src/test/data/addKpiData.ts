@@ -1,4 +1,7 @@
-import { Frequency } from '../../types/Performance/KRA/KRATypes'
+import {
+  Frequency,
+  IncomingKPIDataItem,
+} from '../../types/Performance/KRA/KRATypes'
 
 export const mockFrequencyList: Frequency[] = [
   {
@@ -70,3 +73,26 @@ export const mockFrequencyList: Frequency[] = [
     frequencyname: 'Quarterly /Project Based',
   },
 ]
+
+export const mockKPIData: IncomingKPIDataItem = {
+  id: 1864,
+  name: 'Help others in resolving issues and meet deadlines',
+  description:
+    '<div>Are you a team player? Helping others irrespective of asked for or not but making sure we help to meet the overall project milestones and in turn helping others grow.</div><div><br/></div>',
+  frequencyId: 3,
+  frequency: 'Per Sprint',
+  target: '100%',
+  kraDto: {
+    id: 546,
+    name: 'test',
+    description: null,
+    kpiLookps: null,
+    count: 0,
+    checkType: null,
+    designationName: null,
+    designationId: null,
+    departmentName: null,
+    departmentId: null,
+    designationKraPercentage: null,
+  },
+}

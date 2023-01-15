@@ -13,6 +13,7 @@ const deptInputElement = 'dept-name'
 const desgInputElement = 'designation-name'
 const kpiNameInputElement = 'kpiName-input'
 const frequencyInputElement = 'frequency-input'
+const targetInputElement = 'target-input'
 const addButtonElement = 'save-btn'
 const backButtonElement = 'kpi-back-btn'
 const clearButtonElement = 'clear-btn'
@@ -32,7 +33,7 @@ describe('Add KPI Component Testing', () => {
   test('should render KRA name Input', () => {
     expect(screen.getByTestId(kraNameInput)).toBeDisabled()
   })
-  test('should render Departmrnt name Input', () => {
+  test('should render Department name Input', () => {
     expect(screen.getByTestId(deptInputElement)).toBeDisabled()
   })
   test('should render Designation name Input', () => {
@@ -43,6 +44,9 @@ describe('Add KPI Component Testing', () => {
   })
   test('should render frequency input', () => {
     expect(screen.getByTestId(frequencyInputElement)).toBeTruthy()
+  })
+  test('should render target input', () => {
+    expect(screen.getByTestId(targetInputElement)).toBeTruthy()
   })
   it('should render Add button as disabled and Clear Button as enabled Initially', () => {
     expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
@@ -79,7 +83,7 @@ describe('Add KPI Component Testing', () => {
     userEvent.clear(kpiNameEl)
     userEvent.selectOptions(screen.getByTestId(frequencyInputElement), [''])
 
-    const targetEl = screen.getByTestId(kpiNameInputElement)
+    const targetEl = screen.getByTestId(targetInputElement)
     userEvent.clear(targetEl)
     const clearButton = screen.getByTestId(clearButtonElement)
     userEvent.click(clearButton)

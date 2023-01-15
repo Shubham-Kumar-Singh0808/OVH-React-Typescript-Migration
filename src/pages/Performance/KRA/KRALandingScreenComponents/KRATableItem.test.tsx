@@ -149,7 +149,7 @@ describe('KRA Table Item', () => {
     })
 
     test('delete button functionality', () => {
-      const deleteButton = screen.getByTestId(deleteBtnId + '-551')
+      const deleteButton = screen.getByTestId(deleteBtnId + '551')
       userEvent.click(deleteButton)
       expect(mockSetDeleteThisKRA).toHaveBeenCalledTimes(1)
       expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
