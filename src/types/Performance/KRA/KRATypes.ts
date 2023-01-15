@@ -10,7 +10,7 @@ export interface KRATableItemProps {
   setModalDescription: React.Dispatch<React.SetStateAction<string>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
-  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem | undefined>>
+  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem>>
 }
 
 export interface IncomingEmployeeDepartment {
@@ -85,7 +85,7 @@ export interface KRATableProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
   pageSize: number
-  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem | undefined>>
+  setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem>>
 }
 
 export interface KRAFilterOptionsProps {
@@ -117,7 +117,7 @@ export interface KRAInitialState {
 export enum KRAPages {
   kraList = 'KRA List',
   addKra = 'Add KRA',
-  editKPI = 'Edit KRA',
+  editKPI = 'Edit KPI',
   addKPI = 'Add KPI',
   editKra = 'Edit KRA',
 }
@@ -147,6 +147,8 @@ export interface AddKRAProps {
 
 export interface KPIsTableProps {
   kraId: number
+  // setEditKPi: React.Dispatch<React.SetStateAction<IncomingKPIDataItem>>
+  // editKPIButtonHandler: (editKPI: IncomingKPIDataItem) => void
 }
 
 export interface KRADesignationPercentageQuery {
@@ -185,7 +187,7 @@ export interface addKPIParam {
 }
 
 export type AddKPIData = {
-  kraId: number
+  kraId?: number
   description: string
   frequencyId: number
   name: string

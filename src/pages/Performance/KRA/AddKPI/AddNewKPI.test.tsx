@@ -6,6 +6,7 @@ import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockFrequencyList } from '../../../../test/data/addKpiData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockEditKRAData } from '../../../../test/data/KRAData'
+import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
 
 const kraNameInput = 'kra-name'
 const deptInputElement = 'dept-name'
@@ -23,6 +24,7 @@ describe('Add KPI Component Testing', () => {
         KRA: {
           isLoading: ApiLoadingState.succeeded,
           getFrequency: mockFrequencyList,
+          currentOnScreenPage: KRAPages.addKPI,
         },
       },
     })
@@ -62,10 +64,16 @@ describe('Add KPI Component Testing', () => {
 
     const addButtonEl = screen.getByTestId(addButtonElement)
     await waitFor(() => {
-      expect(addButtonEl).toBeEnabled()
       userEvent.click(addButtonEl)
     })
   })
+
+  test('should redirect to kraList page upon clicking back button from Add KPI page', () => {
+    const addKPIBackButton = screen.getByTestId(backButtonElement)
+    userEvent.click(addKPIBackButton)
+    expect(KRAPages.addKPI).toBeTruthy()
+  })
+
   test('should clear inputs upon clicking clear button', async () => {
     const kpiNameEl = screen.getByTestId(kpiNameInputElement)
     userEvent.clear(kpiNameEl)

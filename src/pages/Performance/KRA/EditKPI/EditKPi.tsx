@@ -3,8 +3,8 @@ import {
   CCol,
   CButton,
   CForm,
-  CFormInput,
   CFormLabel,
+  CFormInput,
   CFormSelect,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
@@ -15,28 +15,31 @@ import { TextLabelProps } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
+  IncomingKPIDataItem,
   KRAPages,
-  KRATableDataItem,
-  AddKPIData,
 } from '../../../../types/Performance/KRA/KRATypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { showIsRequired } from '../../../../utils/helper'
 
-const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
-  const initialKPIData = {} as AddKPIData
+const EditKPi = ({
+  editKPi,
+}: {
+  editKPi: IncomingKPIDataItem
+}): JSX.Element => {
+  const initialKPIData = {} as IncomingKPIDataItem
   const formLabelProps = {
-    htmlFor: 'inputNewKPI',
+    htmlFor: 'inputEditKPI',
     className: 'col-form-label addKpi-label',
   }
-
-  const [addNewKPi, setAddNewKPi] = useState(initialKPIData)
+  const [editKPICopy, setEditKPiCopy] = useState(initialKPIData)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectFrequency, setSelectFrequency] = useState<number | string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
   const frequency = useTypedSelector(reduxServices.KRA.selectors.frequency)
+
   const handleDescription = (description: string) => {
-    setAddNewKPi((prevState) => {
+    setEditKPiCopy((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
@@ -47,60 +50,35 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
   }
 
   useEffect(() => {
-    if (
-      selectFrequency &&
-      addNewKPi.name &&
-      addNewKPi.target &&
-      addNewKPi.description
-    ) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
+    if (editKPi) {
+      setEditKPiCopy({
+        id: editKPi.id,
+        name: editKPi.name,
+        description: editKPi.description,
+        frequencyId: editKPi.frequencyId,
+        frequency: editKPi.frequency,
+        target: editKPi.target,
+        kraDto: editKPi.kraDto,
+      })
     }
-  }, [selectFrequency, addNewKPi.name, addNewKPi.target, addNewKPi.description])
-
-  const handleClearInputs = () => {
-    setShowEditor(false)
-    setTimeout(() => {
-      setShowEditor(true)
-    }, 100)
-    setAddNewKPi({
-      frequencyId: 0,
-      name: '',
-      target: '',
-      description: '',
-      kraId: 0,
-    })
-    setSelectFrequency(0)
-  }
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    console.log(name, value)
-
-    setAddNewKPi((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
+  }, [editKPi])
 
   const toastElement = (
-    <OToast toastColor="success" toastMessage="KPI added successfully." />
+    <OToast toastColor="success" toastMessage="KPI updated successfully" />
   )
 
-  const addKPIHandler = async () => {
+  const updateKPIHandler = async () => {
     const prepareObject = {
-      ...addNewKPi,
+      ...editKPICopy,
       frequencyId: Number(selectFrequency),
-      kraId: addKPI.id,
     }
-    console.log(addNewKPi)
-    const addKPIResultAction = await dispatch(
-      reduxServices.KRA.addKPI(prepareObject),
+    const editKPIResultAction = await dispatch(
+      reduxServices.KRA.updateKPI(prepareObject),
     )
 
-    if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
+    if (reduxServices.KRA.updateKPI.fulfilled.match(editKPIResultAction)) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
-      handleClearInputs()
+      // backButtonHandler()
     }
   }
 
@@ -111,7 +89,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           <CButton
             color="info"
             className="btn-ovh me-1"
-            data-testid="kpi-back-btn"
+            data-testid="editkpi-back-btn"
             onClick={backButtonHandler}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
@@ -128,12 +106,12 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="kra-name"
+              data-testid="editkra-name"
               autoComplete="off"
               type="text"
               name="kraName"
               disabled
-              value={addKPI?.name}
+              //   value={addKPI?.name}
             />
           </CCol>
         </CRow>
@@ -142,52 +120,16 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Department:
+            KPI Name:
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="dept-name"
+              data-testid="editkpiName-input"
               autoComplete="off"
               type="text"
-              name="department"
-              disabled
-              value={addKPI?.departmentName}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Designation:
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              data-testid="designation-name"
-              autoComplete="off"
-              type="text"
-              name="designation"
-              disabled
-              value={addKPI?.designationName}
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            KPI Name: <span className={showIsRequired(addNewKPi?.name)}>*</span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormInput
-              data-testid="kpiName-input"
-              autoComplete="off"
-              type="text"
-              name="name"
-              value={addNewKPi.name}
-              onChange={handleInputChange}
+              name="kpiName"
+              //   value={addNewKPi.name}
+              //   onChange={handleInputChange}
             />
           </CCol>
         </CRow>
@@ -201,7 +143,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               aria-label="frequency"
               name="frequency"
               id="frequency"
-              data-testid="frequency-input"
+              data-testid="edit-frequency-input"
               onChange={(e) => {
                 setSelectFrequency(e.target.value)
               }}
@@ -221,30 +163,27 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Target: <span className={showIsRequired(addNewKPi?.target)}>*</span>
+            Target:
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
-              data-testid="target-input"
+              data-testid="edit-target-input"
               autoComplete="off"
               type="text"
               name="target"
-              value={addNewKPi.target}
-              onChange={handleInputChange}
+              //   value={addNewKPi.target}
+              //   onChange={handleInputChange}
             />
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className={TextLabelProps}>
-            Description:
-            <span className={showIsRequired(addNewKPi?.description)}>*</span>
-          </CFormLabel>
+          <CFormLabel className={TextLabelProps}>Description: </CFormLabel>
           {showEditor ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={addNewKPi?.description}
+                initData={editKPICopy?.description}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -262,18 +201,9 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1"
               color="success"
-              disabled={!isButtonEnabled}
-              onClick={addKPIHandler}
+              onClick={updateKPIHandler}
             >
-              Add
-            </CButton>
-            <CButton
-              data-testid="clear-btn"
-              color="warning "
-              className="btn-ovh"
-              onClick={handleClearInputs}
-            >
-              Clear
+              Update
             </CButton>
           </CCol>
         </CRow>
@@ -282,4 +212,4 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
   )
 }
 
-export default AddNewKPI
+export default EditKPi

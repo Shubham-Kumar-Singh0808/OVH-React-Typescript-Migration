@@ -86,9 +86,21 @@ const deleteKRA = async (kraid: number): Promise<void> => {
 }
 
 const addKPI = async (body: AddKPIData): Promise<AddKPIData> => {
+  const { kraId, ...rest } = body
   const requestConfig = getAuthenticatedRequestConfig({
-    url: KRAApiConfig.addKPI + body.kraId + '/kpi',
+    url: KRAApiConfig.addKPI + kraId + '/kpi',
     method: AllowedHttpMethods.post,
+    data: rest,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateKPI = async (body: IncomingKPIDataItem): Promise<AddKPIData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.updateKPI,
+    method: AllowedHttpMethods.put,
     data: body,
   })
 
@@ -195,6 +207,7 @@ const KRAApi = {
   updateKRA,
   getFrequency,
   addKPI,
+  updateKPI,
 }
 
 export default KRAApi

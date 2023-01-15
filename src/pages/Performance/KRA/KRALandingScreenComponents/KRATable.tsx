@@ -36,7 +36,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
-  // const [addKPI, setAddKPI] = useState<KRATableDataItem>()
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {

@@ -7,6 +7,7 @@ import {
   AddKPIData,
   DeleteKPIParams,
   Frequency,
+  IncomingKPIDataItem,
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRAInitialState,
@@ -96,6 +97,18 @@ const addKPI = createAsyncThunk(
   async (outBody: AddKPIData, thunkApi) => {
     try {
       return await KRAApi.addKPI(outBody)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const updateKPI = createAsyncThunk(
+  'KRA/updateKPI',
+  async (outBody: IncomingKPIDataItem, thunkApi) => {
+    try {
+      return await KRAApi.updateKPI(outBody)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status)
@@ -270,6 +283,7 @@ const KRASlice = createSlice({
         editThisKraThunk.fulfilled,
         updateKRAThunk.fulfilled,
         addKPI.fulfilled,
+        updateKPI.fulfilled,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -290,6 +304,7 @@ const KRASlice = createSlice({
         updateKRAThunk.pending,
         getFrequency.pending,
         addKPI.pending,
+        updateKPI.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -310,6 +325,7 @@ const KRASlice = createSlice({
         updateKRAThunk.rejected,
         getFrequency.rejected,
         addKPI.rejected,
+        updateKPI.rejected,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.failed
@@ -332,6 +348,7 @@ const KRAThunk = {
   updateKRAThunk,
   getFrequency,
   addKPI,
+  updateKPI,
 }
 
 const frequency = (state: RootState): Frequency[] => state.KRA.frequency

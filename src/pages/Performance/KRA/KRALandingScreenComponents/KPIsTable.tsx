@@ -16,10 +16,13 @@ import { emptyString } from '../../../Achievements/AchievementConstants'
 import { dottedContent } from '../KRAConstants'
 import {
   DeleteKPIParams,
+  IncomingKPIDataItem,
   KPIsTableProps,
+  KRAPages,
 } from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import EditKPi from '../EditKPI/EditKPi'
 
 type ModalContent = string | JSX.Element | JSX.Element[]
 
@@ -36,7 +39,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
-
+  const [editKPi, setEditKPi] = useState<IncomingKPIDataItem>(
+    {} as IncomingKPIDataItem,
+  )
   const userAccessToFeatures = useTypedSelector(
     (state) => state.userAccessToFeatures.userAccessToFeatures,
   ).find((item) => item.featureId === 34)
@@ -87,7 +92,17 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     }
   }
 
+  const currentOnScreenPage = useTypedSelector(
+    (state) => state.KRA.currentOnScreenPage,
+  )
+
   const modalBtnTernary = showModalButtons ? emptyString : 'd-none'
+
+  const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
+    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
+    setEditKPi(editKPI)
+    console.log(editKPI)
+  }
 
   return (
     <>
@@ -193,8 +208,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                       <CButton
                         size="sm"
                         color="info"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         title="Edit"
+                        onClick={() => editKPIButtonHandler(item)}
                       >
                         <i
                           className="fa fa-pencil-square-o"
@@ -206,7 +222,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                       <CButton
                         size="sm"
                         color="danger"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid={`del-btn-${index}`}
                         title="Delete"
                         onClick={(e) => {
@@ -236,6 +252,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
       >
         <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>
+      {currentOnScreenPage === KRAPages.editKPI && (
+        <EditKPi editKPi={editKPi} />
+      )}
     </>
   )
 }
