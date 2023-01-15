@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event'
 import ProjectNotes from './ProjectNotes'
 import { render, screen, waitFor } from '../../../../../test/testUtils'
 import { mockProjectNotes } from '../../../../../test/data/projectNotesData'
-// import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 
 describe('ProjectNotes Filter Options Component Testing with data', () => {
   beforeEach(() => {
