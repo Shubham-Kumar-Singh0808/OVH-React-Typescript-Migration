@@ -109,6 +109,7 @@ export interface KRAInitialState {
   kraDesigPercentage: number
   isNewKRADuplicate: boolean
   editThisKra: KRATableDataItem
+  editThisKpi: IncomingKPIDataItem
   currentOnScreenPage: KRAPages
   frequency: Frequency[]
 }

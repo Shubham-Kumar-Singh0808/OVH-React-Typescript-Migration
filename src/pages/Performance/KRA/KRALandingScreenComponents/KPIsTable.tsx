@@ -22,7 +22,6 @@ import {
 } from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import EditKPi from '../EditKPI/EditKPi'
 
 type ModalContent = string | JSX.Element | JSX.Element[]
 
@@ -41,9 +40,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
   const [deleteKPIName, setDeleteKPIName] = useState('')
-  const [editKPi, setEditKPi] = useState<IncomingKPIDataItem>(
-    {} as IncomingKPIDataItem,
-  )
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -95,14 +91,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     }
   }
 
-  const currentOnScreenPage = useTypedSelector(
-    (state) => state.KRA.currentOnScreenPage,
-  )
-
   const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
-    setEditKPi(editKPI)
-    console.log(editKPI)
+    dispatch(reduxServices.KRA.actions.setEditKpi(editKPI))
   }
 
   return (
@@ -139,105 +130,106 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {kpiList?.map((item, index) => (
-            <CTableRow key={index}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
-              <CTableDataCell scope="row" className="commentWidth">
-                <CLink
-                  className="cursor-pointer text-primary centerAlignment-text"
-                  data-testid={`kpi-Name-${index}`}
-                  onClick={(e) => descriptionHandler(e, item.name)}
-                >
-                  {dottedContent(item.name)}
-                </CLink>
-              </CTableDataCell>
-              {item.description !== null ? (
-                <CTableDataCell scope="row" className="commentWidth">
-                  <CLink
-                    className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
-                    data-testid={`kpi-description-${index}`}
-                    onClick={(e) =>
-                      descriptionHandler(
-                        e,
-                        parse(modalContentCheck(item.description)),
-                      )
-                    }
-                  >
-                    {dottedContent(item.description)}
-                  </CLink>
-                </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              {item.frequency !== null ? (
+          {kpiList &&
+            kpiList?.map((item, index) => (
+              <CTableRow key={index}>
+                <CTableDataCell>{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row" className="commentWidth">
                   <CLink
                     className="cursor-pointer text-primary centerAlignment-text"
-                    data-testid="kpi-Name"
-                    onClick={(e) =>
-                      descriptionHandler(e, modalContentCheck(item.frequency))
-                    }
+                    data-testid={`kpi-Name-${index}`}
+                    onClick={(e) => descriptionHandler(e, item.name)}
                   >
-                    {item.frequency}
+                    {dottedContent(item.name)}
                   </CLink>
                 </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              {item.target !== null ? (
-                <CTableDataCell scope="row" className="commentWidth">
-                  <CLink
-                    className="cursor-pointer text-primary centerAlignment-text"
-                    data-testid="kpi-Name"
-                    onClick={(e) =>
-                      descriptionHandler(
-                        e,
-                        parse(modalContentCheck(item.target)),
-                      )
-                    }
-                  >
-                    {dottedContent(item.target)}
-                  </CLink>
-                </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              <CTableDataCell>
-                <div className="d-flex flex-row align-items-center justify-content-end">
-                  <div className="button-events">
-                    {userAccessToKPI?.updateaccess && (
-                      <CButton
-                        size="sm"
-                        color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        title="Edit"
-                        onClick={() => editKPIButtonHandler(item)}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    )}
-                    {userAccessToKPI?.deleteaccess && (
-                      <CButton
-                        size="sm"
-                        color="danger"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        data-testid={`del-btn-${index}`}
-                        title="Delete"
-                        onClick={(e) => {
-                          deleteButtonHandler(e, item.id, item.name)
-                        }}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
-                    )}
+                {item.description !== null ? (
+                  <CTableDataCell scope="row" className="commentWidth">
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
+                      data-testid={`kpi-description-${index}`}
+                      onClick={(e) =>
+                        descriptionHandler(
+                          e,
+                          parse(modalContentCheck(item.description)),
+                        )
+                      }
+                    >
+                      {dottedContent(item.description)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                {item.frequency !== null ? (
+                  <CTableDataCell scope="row" className="commentWidth">
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid="kpi-Name"
+                      onClick={(e) =>
+                        descriptionHandler(e, modalContentCheck(item.frequency))
+                      }
+                    >
+                      {item.frequency}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                {item.target !== null ? (
+                  <CTableDataCell scope="row" className="commentWidth">
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid="kpi-Name"
+                      onClick={(e) =>
+                        descriptionHandler(
+                          e,
+                          parse(modalContentCheck(item.target)),
+                        )
+                      }
+                    >
+                      {dottedContent(item.target)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                <CTableDataCell>
+                  <div className="d-flex flex-row align-items-center justify-content-end">
+                    <div className="button-events">
+                      {userAccessToKPI?.updateaccess && (
+                        <CButton
+                          size="sm"
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          title="Edit"
+                          onClick={() => editKPIButtonHandler(item)}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccessToKPI?.deleteaccess && (
+                        <CButton
+                          size="sm"
+                          color="danger"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid={`del-btn-${index}`}
+                          title="Delete"
+                          onClick={(e) => {
+                            deleteButtonHandler(e, item.id, item.name)
+                          }}
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </CTableDataCell>
-            </CTableRow>
-          ))}
+                </CTableDataCell>
+              </CTableRow>
+            ))}
         </CTableBody>
       </CTable>
       <OModal
@@ -262,9 +254,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
       >
         <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>
-      {currentOnScreenPage === KRAPages.editKPI && (
-        <EditKPi editKPi={editKPi} />
-      )}
     </>
   )
 }

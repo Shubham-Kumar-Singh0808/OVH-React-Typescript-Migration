@@ -2,11 +2,8 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EditKPi from './EditKPi'
-import { render, screen, waitFor } from '../../../../test/testUtils'
-import {
-  mockFrequencyList,
-  mockKPIData,
-} from '../../../../test/data/addKpiData'
+import { render, screen } from '../../../../test/testUtils'
+import { mockFrequencyList } from '../../../../test/data/addKpiData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
 
@@ -19,7 +16,7 @@ const backButtonElement = 'editkpi-backBtn'
 
 describe('Edit KPI Component Testing', () => {
   beforeEach(() => {
-    render(<EditKPi editKPi={mockKPIData} />, {
+    render(<EditKPi />, {
       preloadedState: {
         KRA: {
           isLoading: ApiLoadingState.succeeded,

@@ -4,6 +4,7 @@ import KRATable from './KRALandingScreenComponents/KRATable'
 import AddKRA from './AddEditKRA/AddKRA'
 import EditKRA from './AddEditKRA/EditKRA'
 import AddNewKPI from './AddKPI/AddNewKPI'
+import EditKPi from './EditKPI/EditKPi'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -16,6 +17,10 @@ import { emptyString } from '../../Achievements/AchievementConstants'
 
 const KRALandingScreen = (): JSX.Element => {
   const [addKPI, setAddKPI] = useState<KRATableDataItem>({} as KRATableDataItem)
+  // const [editKPI, setEditKPI] = useState<IncomingKPIDataItem>(
+  //   {} as IncomingKPIDataItem,
+  // )
+  // const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,
@@ -69,6 +74,7 @@ const KRALandingScreen = (): JSX.Element => {
       )}
       {currentOnScreenPage === KRAPages.editKra && <EditKRA />}
       {currentOnScreenPage === KRAPages.addKPI && <AddNewKPI addKPI={addKPI} />}
+      {currentOnScreenPage === KRAPages.editKPI && <EditKPi />}
     </OCard>
   )
 }

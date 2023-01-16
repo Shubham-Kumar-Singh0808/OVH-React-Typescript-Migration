@@ -54,6 +54,7 @@ const initialState: KRAInitialState = {
   editThisKra: initialEditKra,
   currentOnScreenPage: KRAPages.kraList,
   frequency: [],
+  editThisKpi: {} as IncomingKPIDataItem,
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -243,6 +244,9 @@ const KRASlice = createSlice({
     setCurrentOnScreenPage: (state, action) => {
       state.currentOnScreenPage = action.payload
     },
+    setEditKpi: (state, action) => {
+      state.editThisKpi = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getEmpDepartmentThunk.fulfilled, (state, action) => {
@@ -352,9 +356,11 @@ const KRAThunk = {
 }
 
 const frequency = (state: RootState): Frequency[] => state.KRA.frequency
+const editKpi = (state: RootState): IncomingKPIDataItem => state.KRA.editThisKpi
 
 const kRAsSelectors = {
   frequency,
+  editKpi,
 }
 
 export const KRAService = {
