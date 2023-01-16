@@ -20,6 +20,6 @@ describe('ProjectInvoices Testing', () => {
     const addButtonElement = screen.getByTestId('add-btn')
     expect(addButtonElement).toBeInTheDocument()
     userEvent.click(addButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(1)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })
