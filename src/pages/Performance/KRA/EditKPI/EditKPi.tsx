@@ -14,26 +14,20 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextLabelProps } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import {
-  IncomingKPIDataItem,
-  KRAPages,
-} from '../../../../types/Performance/KRA/KRATypes'
+import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { showIsRequired } from '../../../../utils/helper'
 
 const EditKPi = (): JSX.Element => {
-  const initialKPIData = {} as IncomingKPIDataItem
   const formLabelProps = {
     htmlFor: 'inputEditKPI',
     className: 'col-form-label addKpi-label',
   }
-  const [editKPICopy, setEditKPiCopy] = useState(initialKPIData)
-
+  const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
+  const [editKPICopy, setEditKPiCopy] = useState(editKpi)
   const [selectFrequency, setSelectFrequency] = useState<number | string>()
   const dispatch = useAppDispatch()
   const frequency = useTypedSelector(reduxServices.KRA.selectors.frequency)
-  const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
-
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const handleDescription = (description: string) => {
     setEditKPiCopy((prevState) => {
@@ -53,40 +47,29 @@ const EditKPi = (): JSX.Element => {
 
   const onChangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    if (name === 'name') {
-      const kpiNameVal = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
-      setEditKPiCopy((prevState) => {
-        return { ...prevState, ...{ [name]: kpiNameVal } }
-      })
-    } else if (name === 'target') {
-      const target = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
-      setEditKPiCopy((prevState) => {
-        return { ...prevState, ...{ [name]: target } }
-      })
-    } else {
-      setEditKPiCopy((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
+    setEditKPiCopy((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
   }
+
   const toastElement = (
     <OToast toastColor="success" toastMessage="KPI updated successfully" />
   )
 
   const updateKPIHandler = async () => {
-    const prepareObject = {
-      ...editKPICopy,
-      description: editKpi.description,
-      frequency: editKpi.frequency,
-      id: editKpi.id,
-      name: editKpi.name,
-      target: editKpi.target,
-      kraDto: editKpi.kraDto,
-      frequencyId: editKpi.frequencyId,
-      // frequencyId: Number(selectFrequency),
-    }
+    // const prepareObject = {
+    //   ...editKPICopy,
+    //   description: editKpi.description,
+    //   frequency: editKpi.frequency,
+    //   id: editKpi.id,
+    //   name: editKpi.name,
+    //   target: editKpi.target,
+    //   kraDto: editKpi.kraDto,
+    //   frequencyId: editKpi.frequencyId,
+    //   // frequencyId: Number(selectFrequency),
+    // }
     const editKPIResultAction = await dispatch(
-      reduxServices.KRA.updateKPI(prepareObject),
+      reduxServices.KRA.updateKPI(editKPICopy),
     )
 
     if (reduxServices.KRA.updateKPI.fulfilled.match(editKPIResultAction)) {
@@ -142,7 +125,8 @@ const EditKPi = (): JSX.Element => {
               autoComplete="off"
               type="text"
               name="name"
-              value={editKpi?.name}
+              id="name"
+              value={editKPICopy?.name}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -182,8 +166,9 @@ const EditKPi = (): JSX.Element => {
               data-testid="edit-target-input"
               autoComplete="off"
               type="text"
+              id="target"
               name="target"
-              value={editKpi?.target}
+              value={editKPICopy?.target}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -194,7 +179,7 @@ const EditKPi = (): JSX.Element => {
             <CKEditor<{
               onChange: CKEditorEventHandler<'change'>
             }>
-              initData={editKpi?.description}
+              initData={editKPICopy?.description}
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {
