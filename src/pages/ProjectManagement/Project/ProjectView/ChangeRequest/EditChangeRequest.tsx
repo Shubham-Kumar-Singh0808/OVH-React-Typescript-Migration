@@ -94,6 +94,7 @@ const EditChangeRequest = ({
           <CButton
             color="info"
             className="btn-ovh me-1"
+            data-testid="back-btn"
             onClick={() => setToggle('')}
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
@@ -113,7 +114,7 @@ const EditChangeRequest = ({
               id="name"
               name="name"
               placeholder="Name"
-              data-testid="person-name"
+              data-testid="request-name"
               value={editChangeRequest?.name}
               onChange={onChangeHandler}
             />
@@ -134,7 +135,7 @@ const EditChangeRequest = ({
             <CFormInput
               type="text"
               id="duration"
-              data-testid="contact-number"
+              data-testid="duration-testing"
               name="duration"
               placeholder="Hours"
               value={editChangeRequest?.duration}
