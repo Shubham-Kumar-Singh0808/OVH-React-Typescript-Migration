@@ -72,13 +72,13 @@ const EmployeePipListTable = ({
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
-                  <CTableDataCell>{item.employeeName}</CTableDataCell>
-                  <CTableDataCell>{item.startDate}</CTableDataCell>
-                  <CTableDataCell>{item.endDate}</CTableDataCell>
+                  <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.startDate || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.endDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.extendDate || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{item.rating}</CTableDataCell>
-                  <CTableDataCell>{item.remarks}</CTableDataCell>
-                  <CTableDataCell>{item.createdBy}</CTableDataCell>
+                  <CTableDataCell>{item.rating || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.remarks || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.createdBy || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="Timeline">
                       <Link to={`/ViewPIPDetail/${item.id}`}>

@@ -30,6 +30,7 @@ const EmployeePipList = (): JSX.Element => {
   const [toDate, setToDate] = useState<Date | string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const [toggle, setToggle] = useState<string>('')
+  const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
 
   const dispatch = useAppDispatch()
   const commonFormatDate = 'l'
@@ -43,6 +44,14 @@ const EmployeePipList = (): JSX.Element => {
   const selectedEmployeePipStatus = useTypedSelector(
     reduxServices.pipList.selectors.selectedEmployeePipStatus,
   )
+
+  useEffect(() => {
+    if (searchByAdded || searchByEmployee) {
+      setIsMultiSearchBtn(true)
+    } else {
+      setIsMultiSearchBtn(false)
+    }
+  }, [searchByEmployee, searchByAdded])
 
   const {
     paginationRange,
@@ -256,7 +265,7 @@ const EmployeePipList = (): JSX.Element => {
               <CForm>
                 <CInputGroup className="global-search me-0">
                   <CFormInput
-                    disabled={!searchByAdded}
+                    disabled={!isMultiSearchBtn}
                     placeholder="Employee Search"
                     aria-label="Multiple Search"
                     aria-describedby="button-addon2"

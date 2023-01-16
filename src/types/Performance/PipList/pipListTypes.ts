@@ -49,7 +49,7 @@ export type PipListSliceState = {
   performanceRatings: PerformanceRatings[]
   activeEmployee: ActiveEmployee[]
   employeePIPTimeline: GetPIPHistory
-  viewPipDetails: GetPipList
+  list: GetPipList
 }
 
 export type EmployeePIPListTableProps = {

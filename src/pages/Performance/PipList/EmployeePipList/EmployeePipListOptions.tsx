@@ -72,7 +72,7 @@ const EmployeePipListOptions = ({
           <>
             <CFormCheck
               type="radio"
-              name="pip"
+              name="EmployeePipStatus"
               value={EmployeePipStatus.pip}
               id="employmentActive"
               label="PIP"
@@ -84,7 +84,7 @@ const EmployeePipListOptions = ({
             />
             <CFormCheck
               type="radio"
-              name="RemovedFromPIP"
+              name="EmployeePipStatus"
               value={EmployeePipStatus.RemovedFromPIP}
               id="RemovedFromPIP"
               label="Removed From PIP"
@@ -96,7 +96,7 @@ const EmployeePipListOptions = ({
             />
             <CFormCheck
               type="radio"
-              name="inactive"
+              name="EmployeePipStatus"
               value={EmployeePipStatus.inactive}
               id="inactive"
               label="Inactive"

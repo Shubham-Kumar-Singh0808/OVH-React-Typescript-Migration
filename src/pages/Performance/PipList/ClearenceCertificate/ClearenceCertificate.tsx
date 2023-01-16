@@ -9,6 +9,7 @@ const ClearenceCertificate = (): JSX.Element => {
   const clearenceCertificate = useTypedSelector(
     reduxServices.pipList.selectors.clearenceCertificate,
   )
+  console.log(clearenceCertificate)
 
   return (
     <>

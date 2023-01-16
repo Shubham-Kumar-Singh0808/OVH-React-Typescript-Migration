@@ -168,7 +168,7 @@ export const initialPipListState: PipListSliceState = {
   performanceRatings: [],
   activeEmployee: [],
   employeePIPTimeline: { size: 0, list: [] },
-  viewPipDetails: {} as GetPipList,
+  list: {} as GetPipList,
 }
 
 const pipListSlice = createSlice({
@@ -207,7 +207,7 @@ const pipListSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.viewPipDetails = action.payload
+          state.list = action.payload
         },
       )
       .addMatcher(
@@ -247,10 +247,10 @@ const employeePIPTimeline = (state: RootState): PipHistory[] =>
   state.pipList.employeePIPTimeline.list
 
 const viewEmployeePipDetails = (state: RootState): GetPipList =>
-  state.pipList.viewPipDetails
+  state.pipList.list
 
 const clearenceCertificate = (state: RootState): GetPipList =>
-  state.pipList.viewPipDetails
+  state.pipList.list
 
 export const pipListThunk = {
   getAllPIPList,
