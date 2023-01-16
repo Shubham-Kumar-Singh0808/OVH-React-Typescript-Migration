@@ -34,10 +34,13 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   )
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] =
+    useState<boolean>(false)
   const [modalDescription, setModalDescription] =
     useState<ModalContent>(emptyString)
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
+  const [deleteKPIName, setDeleteKPIName] = useState('')
   const [editKPi, setEditKPi] = useState<IncomingKPIDataItem>(
     {} as IncomingKPIDataItem,
   )
@@ -54,7 +57,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription(content)
-
     setModalVisible(true)
   }
 
@@ -68,10 +70,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     name: string,
   ) => {
     e.preventDefault()
-    setModalDescription('Do you want to delete this ' + name + '?')
-
-    setModalVisible(true)
+    setIsDeleteModalVisible(true)
     setDeleteThisKPI(id)
+    setDeleteKPIName(name)
   }
 
   const modalDeleteButtonHandler = async () => {
@@ -85,7 +86,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         <OToast toastColor="success" toastMessage="KPI Deleted Successfully" />
       )
       if (reduxServices.KRA.deleteKPIThunk.fulfilled.match(result)) {
-        setModalVisible(false)
+        setIsDeleteModalVisible(false)
         dispatch(reduxServices.app.actions.addToast(successMessage))
         dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
         dispatch(reduxServices.KRA.kpisForIndividualKraThunk(kraId))
@@ -240,14 +241,24 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         </CTableBody>
       </CTable>
       <OModal
-        visible={isModalVisible}
-        setVisible={setModalVisible}
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
         modalTitle="Delete KPI"
         modalBodyClass="mt-0"
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}
+      >
+        <>Do you want to delete this {deleteKPIName} ?</>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setModalVisible}
       >
         <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>

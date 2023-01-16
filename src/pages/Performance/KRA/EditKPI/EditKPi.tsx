@@ -44,8 +44,7 @@ const EditKPi = ({
     })
   }
 
-  const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  const backButtonHandler = () => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
   }
 
@@ -61,20 +60,21 @@ const EditKPi = ({
         kraDto: editKPi.kraDto,
       })
     }
+    if (editKPi.description) {
+      setShowEditor(false)
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+    }
   }, [editKPi])
 
   useEffect(() => {
-    if (
-      selectFrequency &&
-      editKPICopy.name &&
-      editKPICopy.target &&
-      editKPICopy.description
-    ) {
+    if (editKPICopy.name && editKPICopy.target) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [selectFrequency, editKPICopy])
+  }, [editKPICopy.name, editKPICopy.target])
 
   const toastElement = (
     <OToast toastColor="success" toastMessage="KPI updated successfully" />
@@ -91,7 +91,7 @@ const EditKPi = ({
 
     if (reduxServices.KRA.updateKPI.fulfilled.match(editKPIResultAction)) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
-      // backButtonHandler()
+      backButtonHandler()
     }
   }
 
@@ -124,7 +124,7 @@ const EditKPi = ({
               type="text"
               name="kraName"
               disabled
-              //   value={addKPI?.name}
+              value={editKPi?.kraDto.name}
             />
           </CCol>
         </CRow>
@@ -133,7 +133,7 @@ const EditKPi = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            KPI Name:
+            KPI Name: <span className={showIsRequired(editKPi?.name)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -141,8 +141,8 @@ const EditKPi = ({
               autoComplete="off"
               type="text"
               name="kpiName"
-              //   value={addNewKPi.name}
-              //   onChange={handleInputChange}
+              value={editKPICopy?.name}
+              // onChange={handleInputChange}
             />
           </CCol>
         </CRow>
@@ -174,7 +174,7 @@ const EditKPi = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Target:
+            Target: <span className={showIsRequired(editKPi?.target)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -182,7 +182,7 @@ const EditKPi = ({
               autoComplete="off"
               type="text"
               name="target"
-              //   value={addNewKPi.target}
+              value={editKPICopy.target}
               //   onChange={handleInputChange}
             />
           </CCol>
@@ -213,6 +213,7 @@ const EditKPi = ({
               className="btn-ovh me-1"
               color="success"
               onClick={updateKPIHandler}
+              disabled={!isButtonEnabled}
             >
               Update
             </CButton>

@@ -75,7 +75,7 @@ export interface IncomingKPIDataItem {
   description: string | null
   frequencyId: number
   frequency: string | null
-  target: string | null
+  target: string
   kraDto: KRADto
 }
 
@@ -180,9 +180,6 @@ export interface UpdateKRABody extends NewKRABody {
 
 export interface DeleteKPIParams {
   kpiId: number
-  kraId: number
-}
-export interface addKPIParam {
   kraId: number
 }
 

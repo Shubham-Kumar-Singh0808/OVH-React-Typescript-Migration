@@ -1,16 +1,14 @@
 import { CButton, CLink, CTableDataCell, CTableRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React from 'react'
 import parse from 'html-react-parser'
 import KPIsTable from './KPIsTable'
 import {
-  IncomingKPIDataItem,
   KRAPages,
   KRATableDataItem,
   KRATableItemProps,
 } from '../../../../types/Performance/KRA/KRATypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import EditKPi from '../EditKPI/EditKPi'
 
 const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   const {
