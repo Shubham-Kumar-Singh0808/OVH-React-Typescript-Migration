@@ -40,6 +40,15 @@ const ChangeRequestTable = ({
   const changeRequestSize = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.projectChangeRequestSize,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessChangeRequestEditDelete = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-CR',
+  )
+
   const dispatch = useAppDispatch()
   const isLoading = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.isLoading,
@@ -89,7 +98,7 @@ const ChangeRequestTable = ({
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
-  const edithangeRequestButtonHandler = (item: ChangeRequest): void => {
+  const editChangeRequestButtonHandler = (item: ChangeRequest): void => {
     setEditDescription(item.descripition)
     setToggle('editChangeRequest')
     setEditChangeRequest(item)
@@ -126,22 +135,26 @@ const ChangeRequestTable = ({
                   <CTableDataCell>{item.duration}</CTableDataCell>
                   <CTableDataCell>{item.descripition}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                      onClick={() => {
-                        edithangeRequestButtonHandler(item)
-                      }}
-                    >
-                      <i className="fa fa-pencil-square-o"></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                      onClick={() => handleShowDeleteModal(item.id)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    {userAccessChangeRequestEditDelete?.updateaccess && (
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() => {
+                          editChangeRequestButtonHandler(item)
+                        }}
+                      >
+                        <i className="fa fa-pencil-square-o"></i>
+                      </CButton>
+                    )}
+                    {userAccessChangeRequestEditDelete?.deleteaccess && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() => handleShowDeleteModal(item.id)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )

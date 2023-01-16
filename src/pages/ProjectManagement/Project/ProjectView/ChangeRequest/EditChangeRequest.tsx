@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CRow,
   CCol,
@@ -13,6 +13,7 @@ import { ChangeRequest } from '../../../../../types/ProjectManagement/Project/Pr
 import { showIsRequired } from '../../../../../utils/helper'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 
 const EditChangeRequest = ({
   setToggle,
@@ -27,6 +28,7 @@ const EditChangeRequest = ({
   editDescription: string | undefined
   setEditDescription: React.Dispatch<React.SetStateAction<string | undefined>>
 }): JSX.Element => {
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const classNameProps = 'col-sm-3 col-form-label text-end'
   const nameProps = {
     className: classNameProps,
@@ -44,7 +46,9 @@ const EditChangeRequest = ({
       return { ...prevState, ...{ [name]: value } }
     })
   }
-
+  const toastElement = (
+    <OToast toastMessage="CR Updated Successfully" toastColor={'success'} />
+  )
   const handleUpdateChangeRequest = async () => {
     const prepareObject = {
       ...editChangeRequest,
@@ -68,13 +72,21 @@ const EditChangeRequest = ({
           projectid: projectId as string,
         }),
       )
-      // dispatch(
-      //   reduxServices.app.actions.addToast(
-      //     getToastMessage(actionMapping.updated),
-      //   ),
-      // )
+      dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
     }
   }
+
+  useEffect(() => {
+    if (
+      editChangeRequest?.name?.replace(/^\s*/, '') &&
+      editChangeRequest?.duration?.replace(/^\s*/, '') &&
+      editDescription
+    ) {
+      setIsUpdateButtonEnabled(true)
+    } else {
+      setIsUpdateButtonEnabled(false)
+    }
+  }, [editChangeRequest?.name, editChangeRequest?.duration, editDescription])
   return (
     <>
       <CRow className="justify-content-end">
@@ -162,7 +174,7 @@ const EditChangeRequest = ({
                 className="btn-ovh me-1"
                 color="success"
                 onClick={handleUpdateChangeRequest}
-                // disabled={!isAddButtonEnabled}
+                disabled={!isUpdateButtonEnabled}
               >
                 Update
               </CButton>

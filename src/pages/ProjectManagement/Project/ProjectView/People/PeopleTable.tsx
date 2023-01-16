@@ -28,6 +28,14 @@ const PeopleTable = (): JSX.Element => {
     initialEmployeeAllocation,
   )
   const dispatch = useAppDispatch()
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessEditPeople = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-People',
+  )
   const handleEditProjectAllocationHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -220,15 +228,17 @@ const PeopleTable = (): JSX.Element => {
                       </>
                     ) : (
                       <>
-                        <CButton
-                          color="info btn-ovh me-2"
-                          data-testid="edit-btn"
-                          onClick={() => {
-                            editProjectAllocationButtonHandler(project)
-                          }}
-                        >
-                          <i className="fa fa-pencil-square-o"></i>
-                        </CButton>
+                        {userAccessEditPeople?.updateaccess && (
+                          <CButton
+                            color="info btn-ovh me-2"
+                            data-testid="edit-btn"
+                            onClick={() => {
+                              editProjectAllocationButtonHandler(project)
+                            }}
+                          >
+                            <i className="fa fa-pencil-square-o"></i>
+                          </CButton>
+                        )}
                       </>
                     )}
                   </CTableDataCell>

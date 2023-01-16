@@ -33,3 +33,9 @@ export type AddChangeRequestProps = {
   name: string
   projectId: string
 }
+
+export type ChangeRequestUserAccess = {
+  createaccess: boolean
+  updateaccess: boolean
+  deleteaccess: boolean
+}
