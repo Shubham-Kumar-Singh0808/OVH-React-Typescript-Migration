@@ -8,7 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import ProjectTailoringExpendableTable from './ProjectTailoringExpendableTable'
+// import ProjectTailoringExpendableTable from './ProjectTailoringExpendableTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
@@ -98,7 +98,7 @@ const ProjectTailoringTable = (): JSX.Element => {
                   </CTableRow>
                   {isIconVisible && milestoneId === data.processHeadId ? (
                     <CTableDataCell colSpan={10}>
-                      <ProjectTailoringExpendableTable />
+                      {/* <ProjectTailoringExpendableTable /> */}
                     </CTableDataCell>
                   ) : (
                     <></>
