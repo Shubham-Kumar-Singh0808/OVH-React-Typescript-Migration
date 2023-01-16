@@ -53,9 +53,9 @@ const updateChangeRequest = createAsyncThunk<
   }
 >(
   'projectView/getUpdateFamilyDetails',
-  async (updateChangeRequest: ChangeRequest, thunkApi) => {
+  async (updateChangeRequests: ChangeRequest, thunkApi) => {
     try {
-      return await changeRequestApi.updateChangeRequest(updateChangeRequest)
+      return await changeRequestApi.updateChangeRequest(updateChangeRequests)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

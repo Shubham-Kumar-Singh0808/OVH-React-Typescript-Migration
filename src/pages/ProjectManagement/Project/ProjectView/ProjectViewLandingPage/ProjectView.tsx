@@ -17,10 +17,8 @@ const ProjectView = (): JSX.Element => {
   const { projectId } = useParams<{ projectId: string }>()
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(
-      reduxServices.projectViewDetails.getProjectDetails(projectId as string),
-    )
-    dispatch(reduxServices.projectViewDetails.getProject(projectId as string))
+    dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+    dispatch(reduxServices.projectViewDetails.getProject(projectId))
   }, [])
   return (
     <>

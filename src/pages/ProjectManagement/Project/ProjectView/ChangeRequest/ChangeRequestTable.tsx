@@ -92,7 +92,7 @@ const ChangeRequestTable = ({
         reduxServices.projectChangeRequest.getProjectChangeRequestList({
           endIndex: pageSize * currentPage,
           firstIndex: pageSize * (currentPage - 1),
-          projectid: projectId as string,
+          projectid: projectId,
         }),
       )
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))

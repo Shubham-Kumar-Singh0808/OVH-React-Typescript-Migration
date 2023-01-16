@@ -59,9 +59,9 @@ const MileStoneTable = (): JSX.Element => {
     setSubject(comments)
   }
 
-  const handleTitleModal = (title: MileStoneResponse) => {
+  const handleTitleModal = (titleItem: MileStoneResponse) => {
     setIsModalVisible(true)
-    setTitle(title)
+    setTitle(titleItem)
   }
   useEffect(() => {
     dispatch(

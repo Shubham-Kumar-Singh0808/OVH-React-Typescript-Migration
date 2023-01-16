@@ -17,9 +17,7 @@ const ProjectHistoryDetails = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(
-      reduxServices.projectTimeLine.projectHistoryDetails(projectId as string),
-    )
+    dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
   }, [])
 
   return (

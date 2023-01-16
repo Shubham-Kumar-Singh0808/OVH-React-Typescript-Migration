@@ -57,12 +57,12 @@ const deleteChangeRequest = async (
 }
 
 const updateChangeRequest = async (
-  updateChangeRequest: ChangeRequest,
+  updateChangeRequests: ChangeRequest,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectChangeRequestApiConfig.updateChangeRequest,
     method: AllowedHttpMethods.put,
-    data: updateChangeRequest,
+    data: updateChangeRequests,
   })
   const response = await useAxios(requestConfig)
   return response.data

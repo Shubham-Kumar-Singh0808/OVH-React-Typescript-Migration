@@ -21,7 +21,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
   const [invoiceNumber, setInvoiceNumber] = useState<InvoicesOfMilestone>()
   const [isModalsVisible, setIsModalsVisible] = useState(false)
 
-  const InvoicesOfMilestone = useTypedSelector(
+  const InvoicesOfMilestones = useTypedSelector(
     reduxServices.projectInvoices.selectors.invoicesOfMilestoneList,
   )
 
@@ -146,7 +146,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {InvoicesOfMilestone?.map((item, index) => {
+          {InvoicesOfMilestones?.map((item, index) => {
             const crName = item.crName !== null ? '' : 'N/A'
             return (
               <CTableRow key={index}>

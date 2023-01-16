@@ -19,9 +19,7 @@ const ProjectNotes = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(
-      reduxServices.projectNotes.getProjectNotesTimeLine(projectId as string),
-    )
+    dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
   }, [])
 
   const isLoading = useTypedSelector(

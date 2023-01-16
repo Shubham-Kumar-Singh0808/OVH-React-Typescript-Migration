@@ -42,9 +42,7 @@ const Proposal = (): JSX.Element => {
       }),
     )
     setProposalLink('')
-    dispatch(
-      reduxServices.projectProposals.getProjectTimeLine(projectId as string),
-    )
+    dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }
   return (
     <>
