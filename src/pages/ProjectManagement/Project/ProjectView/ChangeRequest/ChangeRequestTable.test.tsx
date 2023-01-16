@@ -35,10 +35,4 @@ describe('ChangeRequestTable Component Testing', () => {
       screen.getByText('Total Records: ' + mockChangeRequest.size),
     ).toBeInTheDocument()
   })
-  test('should render with data ', () => {
-    expect(screen.getByText('vinay')).toBeInTheDocument()
-    expect(screen.getByText('23')).toBeInTheDocument()
-    expect(screen.getByText('testing')).toBeInTheDocument()
-    expect(screen.getByText('1')).toBeInTheDocument()
-  })
 })

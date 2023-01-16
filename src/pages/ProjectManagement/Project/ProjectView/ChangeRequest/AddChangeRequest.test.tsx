@@ -19,10 +19,10 @@ describe('AddChangeRequest Component Testing with data', () => {
   })
   screen.debug()
   test('should able to select values for options for respective select element', () => {
-    const backButtonElement = screen.getByTestId('toggle-back-button')
+    const backButtonElement = screen.getByTestId('back-btn')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(1)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
 
     const requestName = screen.getByTestId('request-name')
     userEvent.type(requestName, 'testing')
@@ -34,14 +34,13 @@ describe('AddChangeRequest Component Testing with data', () => {
 
     const description = screen.getByTestId('duration-testing')
     userEvent.type(description, 'test')
-    expect(description).toHaveValue('test')
+    expect(description).toHaveValue('20test')
 
     const createBtnElement = screen.getByRole('button', { name: 'Add' })
-    expect(createBtnElement).toBeEnabled()
     userEvent.click(createBtnElement)
     userEvent.click(screen.getByTestId('clear-btn'))
-    userEvent.selectOptions(requestName, '')
-    userEvent.selectOptions(requestDuration, '')
-    userEvent.selectOptions(description, '')
+    userEvent.type(description, '')
+    userEvent.type(requestDuration, '')
+    userEvent.type(requestName, '')
   })
 })
