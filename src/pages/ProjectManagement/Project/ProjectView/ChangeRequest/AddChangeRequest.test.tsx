@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddChangeRequest from './AddChangeRequest'
-import { render, screen } from '../../../test/testUtils'
+import { mockChangeRequest } from '../../../../../test/data/projectChangeRequestData'
+import { render, screen } from '../../../../../test/testUtils'
 
 const mockSetToggle = jest.fn()
 

@@ -60,10 +60,10 @@ const Proposal = (): JSX.Element => {
             value={proposalLink}
             onChange={(e) =>
               setProposalLink(
-                e.target.replace(
+                e.target.value.replace(
                   '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
                   '',
-                )
+                ),
               )
             }
           />
