@@ -25,7 +25,9 @@ const EditKPi = (): JSX.Element => {
   }
   const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
   const [editKPICopy, setEditKPiCopy] = useState(editKpi)
-  const [selectFrequency, setSelectFrequency] = useState<number | string>()
+  const [selectFrequency, setSelectFrequency] = useState(editKpi.frequencyId)
+  const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>()
+  const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
   const frequency = useTypedSelector(reduxServices.KRA.selectors.frequency)
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
@@ -38,18 +40,41 @@ const EditKPi = (): JSX.Element => {
   const backButtonHandler = () => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
   }
+  useEffect(() => {
+    if (editKPICopy.name && editKPICopy.target) {
+      setIsUpdateBtnEnabled(true)
+    } else {
+      setIsUpdateBtnEnabled(false)
+    }
+  }, [editKPICopy.name, editKPICopy.target])
 
   useEffect(() => {
     if (editKpi) {
       dispatch(reduxServices.KRA.actions.setEditKpi(editKpi))
     }
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }, [editKpi])
 
   const onChangeInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setEditKPiCopy((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'name') {
+      const kpiNameVal = value.replace(/^\s*/, '')
+      setEditKPiCopy((prevState) => {
+        return { ...prevState, ...{ [name]: kpiNameVal } }
+      })
+    } else if (name === 'target') {
+      const targetVal = value.replace(/^\s*/, '')
+      setEditKPiCopy((prevState) => {
+        return { ...prevState, ...{ [name]: targetVal } }
+      })
+    } else {
+      setEditKPiCopy((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   const toastElement = (
@@ -57,19 +82,12 @@ const EditKPi = (): JSX.Element => {
   )
 
   const updateKPIHandler = async () => {
-    // const prepareObject = {
-    //   ...editKPICopy,
-    //   description: editKpi.description,
-    //   frequency: editKpi.frequency,
-    //   id: editKpi.id,
-    //   name: editKpi.name,
-    //   target: editKpi.target,
-    //   kraDto: editKpi.kraDto,
-    //   frequencyId: editKpi.frequencyId,
-    //   // frequencyId: Number(selectFrequency),
-    // }
+    const prepareObject = {
+      ...editKPICopy,
+      frequencyId: selectFrequency,
+    }
     const editKPIResultAction = await dispatch(
-      reduxServices.KRA.updateKPI(editKPICopy),
+      reduxServices.KRA.updateKPI(prepareObject),
     )
 
     if (reduxServices.KRA.updateKPI.fulfilled.match(editKPIResultAction)) {
@@ -117,7 +135,8 @@ const EditKPi = (): JSX.Element => {
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            KPI Name: <span className={showIsRequired(editKpi?.name)}>*</span>
+            KPI Name:{' '}
+            <span className={showIsRequired(editKPICopy?.name)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -159,7 +178,8 @@ const EditKPi = (): JSX.Element => {
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Target: <span className={showIsRequired(editKpi?.target)}>*</span>
+            Target:{' '}
+            <span className={showIsRequired(editKPICopy?.target)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -176,16 +196,18 @@ const EditKPi = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className={TextLabelProps}>Description: </CFormLabel>
           <CCol sm={9}>
-            <CKEditor<{
-              onChange: CKEditorEventHandler<'change'>
-            }>
-              initData={editKPICopy?.description}
-              config={ckeditorConfig}
-              debug={true}
-              onChange={({ editor }) => {
-                handleDescription(editor.getData().trim())
-              }}
-            />
+            {showEditor && (
+              <CKEditor<{
+                onChange: CKEditorEventHandler<'change'>
+              }>
+                initData={editKPICopy?.description}
+                config={ckeditorConfig}
+                debug={true}
+                onChange={({ editor }) => {
+                  handleDescription(editor.getData().trim())
+                }}
+              />
+            )}
           </CCol>
         </CRow>
         <CRow>
@@ -194,6 +216,7 @@ const EditKPi = (): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1"
               color="success"
+              disabled={!isUpdateBtnEnabled}
               onClick={updateKPIHandler}
             >
               Update

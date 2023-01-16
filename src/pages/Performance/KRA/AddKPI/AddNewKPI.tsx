@@ -76,11 +76,21 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    console.log(name, value)
-
-    setAddNewKPi((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'name') {
+      const kpiNameVal = value.replace(/^\s*/, '')
+      setAddNewKPi((prevState) => {
+        return { ...prevState, ...{ [name]: kpiNameVal } }
+      })
+    } else if (name === 'target') {
+      const targetVal = value.replace(/^\s*/, '')
+      setAddNewKPi((prevState) => {
+        return { ...prevState, ...{ [name]: targetVal } }
+      })
+    } else {
+      setAddNewKPi((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   const toastElement = (
