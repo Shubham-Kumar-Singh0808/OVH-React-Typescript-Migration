@@ -36,6 +36,7 @@ const ProjectNotesTimeLine = (): JSX.Element => {
                         className="rounded-circle img-responsive"
                         src={item.postImageData}
                         width={100}
+                        height={100}
                       />
                     </div>
                     <div className="mb-1">

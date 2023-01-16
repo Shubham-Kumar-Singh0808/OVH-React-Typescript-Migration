@@ -3,7 +3,7 @@ import React from 'react'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
 
-const ProposalsTimeLine = () => {
+const ProposalsTimeLine = (): JSX.Element => {
   const projectProposalTimeLine = useTypedSelector(
     reduxServices.projectProposals.selectors.projectProposalsTimeLine,
   )
