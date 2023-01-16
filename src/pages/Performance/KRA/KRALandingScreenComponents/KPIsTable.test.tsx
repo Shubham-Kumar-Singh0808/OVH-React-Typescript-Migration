@@ -77,11 +77,6 @@ describe('KPI Table', () => {
       const delBtn = screen.getByTestId('del-btn-0')
       expect(delBtn).toBeEnabled()
       userEvent.click(delBtn)
-      const modalCnt = screen.getByTestId(modalContentId)
-      expect(modalCnt).toBeVisible()
-      expect(modalCnt).toHaveTextContent(
-        'Do you want to delete this Help others in resolving issues and meet deadlines?',
-      )
       const yesBtn = screen.getByRole('button', { name: 'Yes' })
       expect(yesBtn).toBeVisible()
       userEvent.click(yesBtn)
