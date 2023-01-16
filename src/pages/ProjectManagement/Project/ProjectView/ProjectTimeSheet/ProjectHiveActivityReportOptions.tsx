@@ -10,21 +10,24 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 const ProjectHiveActivityReportOptions = ({
   startDate,
   setStartDate,
-  viewButtonHandler,
+  viewButtonHandler: timeLineViewButtonHandler,
 }: {
   startDate: Date | undefined
   setStartDate: React.Dispatch<React.SetStateAction<Date | undefined>>
   viewButtonHandler: () => void
 }): JSX.Element => {
-  const [isDatePickerVisible, setIsDatePickerVisible] = useState(false)
+  const [isProjectDatePickerVisible, setIsProjectDatePickerVisible] =
+    useState(false)
   const [filterByDate, setFilterByDate] = useState<Date>()
-  const [isViewClicked, setIsViewClicked] = useState(false)
-  const currentMonthDate = moment().subtract(1, 'months').format('M/YYYY')
+  const [isProjectViewClicked, setIsProjectViewClicked] = useState(false)
+  const projectCurrentMonthDate = moment()
+    .subtract(1, 'months')
+    .format('M/YYYY')
   const previousMonthDate = moment().subtract(2, 'months').format('M/YYYY')
   const selectedDate = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedDate,
   )
-  const monthDisplay = useTypedSelector(
+  const projectMonthDisplay = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.monthDisplay,
   )
   const dispatch = useAppDispatch()
@@ -37,10 +40,10 @@ const ProjectHiveActivityReportOptions = ({
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (event.target.value === 'currentMonth') {
-      setIsDatePickerVisible(false)
+      setIsProjectDatePickerVisible(false)
       dispatch(
         reduxServices.hiveActivityReport.actions.setSelectedDate(
-          currentMonthDate,
+          projectCurrentMonthDate,
         ),
       )
       dispatch(
@@ -51,7 +54,7 @@ const ProjectHiveActivityReportOptions = ({
       )
       setStartDate(undefined)
     } else if (event.target.value === 'previousMonth') {
-      setIsDatePickerVisible(false)
+      setIsProjectDatePickerVisible(false)
       dispatch(
         reduxServices.hiveActivityReport.actions.setSelectedDate(
           previousMonthDate,
@@ -71,11 +74,11 @@ const ProjectHiveActivityReportOptions = ({
           projectId,
         }),
       )
-      setIsDatePickerVisible(true)
+      setIsProjectDatePickerVisible(true)
     }
   }
 
-  const clearButtonHandler = () => {
+  const clearBtnHandler = () => {
     setStartDate(undefined)
     dispatch(
       reduxServices.projectTimeSheet.getProjectTimeSheet({
@@ -85,16 +88,16 @@ const ProjectHiveActivityReportOptions = ({
     )
   }
 
-  const setMonthToDisplay = useCallback(
+  const setProjectMonthToDisplay = useCallback(
     (dateValue) => {
-      const monthToDisplay =
-        dateValue === currentMonthDate
+      const projectMonthToDisplay =
+        dateValue === projectCurrentMonthDate
           ? moment().format('MMMM-YYYY')
           : moment().subtract(1, 'months').format('MMMM-YYYY')
 
       dispatch(
         reduxServices.hiveActivityReport.actions.setMonthDisplay(
-          monthToDisplay,
+          projectMonthToDisplay,
         ),
       )
     },
@@ -102,9 +105,9 @@ const ProjectHiveActivityReportOptions = ({
   )
 
   useEffect(() => {
-    if (isViewClicked) {
+    if (isProjectViewClicked) {
       setFilterByDate(startDate)
-      setMonthToDisplay(moment(startDate).format('MM/yyyy'))
+      setProjectMonthToDisplay(moment(startDate).format('MM/yyyy'))
       dispatch(reduxServices.hiveActivityReport.actions.setSelectedDate(''))
       dispatch(
         reduxServices.hiveActivityReport.actions.setMonthDisplay(
@@ -113,8 +116,8 @@ const ProjectHiveActivityReportOptions = ({
       )
     }
 
-    setIsViewClicked(false)
-  }, [isViewClicked, setMonthToDisplay])
+    setIsProjectViewClicked(false)
+  }, [isProjectViewClicked, setProjectMonthToDisplay])
   return (
     <>
       <CRow>
@@ -128,7 +131,7 @@ const ProjectHiveActivityReportOptions = ({
                 label="Current Month"
                 value="currentMonth"
                 inline
-                defaultChecked={selectedDate === currentMonthDate}
+                defaultChecked={selectedDate === projectCurrentMonthDate}
                 onChange={handleSelectMonthRadio}
               />
               <CFormCheck
@@ -149,7 +152,7 @@ const ProjectHiveActivityReportOptions = ({
                 value="otherMonth"
                 inline
                 defaultChecked={
-                  selectedDate !== currentMonthDate &&
+                  selectedDate !== projectCurrentMonthDate &&
                   selectedDate !== previousMonthDate
                 }
                 onChange={handleSelectMonthRadio}
@@ -158,7 +161,7 @@ const ProjectHiveActivityReportOptions = ({
           </div>
         </CCol>
       </CRow>
-      {isDatePickerVisible && (
+      {isProjectDatePickerVisible && (
         <>
           <CRow className="mt-2">
             <CCol sm={3} md={1} className="text-end">
@@ -192,7 +195,7 @@ const ProjectHiveActivityReportOptions = ({
                       <CButton
                         color="info btn-ovh me-1"
                         disabled={!startDate}
-                        onClick={viewButtonHandler}
+                        onClick={timeLineViewButtonHandler}
                       >
                         <i className="fa fa-search-plus me-1"></i>
                         View
@@ -201,7 +204,7 @@ const ProjectHiveActivityReportOptions = ({
                       <CButton
                         color="info btn-ovh me-0"
                         disabled={!startDate}
-                        onClick={clearButtonHandler}
+                        onClick={clearBtnHandler}
                       >
                         <i className="fa fa-refresh me-1"></i>
                         Clear
@@ -217,7 +220,7 @@ const ProjectHiveActivityReportOptions = ({
       <CRow className="mt-4">
         <CCol sm={8}>
           <h5 className="sh-summary-text">
-            Hive Activity Summary for {monthDisplay}
+            Hive Activity Summary for {projectMonthDisplay}
           </h5>
         </CCol>
       </CRow>

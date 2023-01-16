@@ -17,9 +17,7 @@ const Proposal = (): JSX.Element => {
     reduxServices.projectProposals.selectors.isProjectProposalsLoading,
   )
   useEffect(() => {
-    dispatch(
-      reduxServices.projectProposals.getProjectTimeLine(projectId as string),
-    )
+    dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }, [])
   useEffect(() => {
     if (

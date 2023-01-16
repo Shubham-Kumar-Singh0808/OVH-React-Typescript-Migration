@@ -40,11 +40,13 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
           {projectTailoringList?.map((item, index) => {
             return (
               <CTableRow key={index}>
-                {item?.processSubHeadsDto?.map((data, item) => {
+                {item?.processSubHeadsDto?.map((data, tailoringIndex) => {
                   return (
                     <>
                       <CTableDataCell scope="row"></CTableDataCell>
-                      <CTableDataCell scope="row">{item + 1}</CTableDataCell>
+                      <CTableDataCell scope="row">
+                        {tailoringIndex + 1}
+                      </CTableDataCell>
                       <CTableDataCell scope="row">
                         {data.processSubHeadName}
                       </CTableDataCell>

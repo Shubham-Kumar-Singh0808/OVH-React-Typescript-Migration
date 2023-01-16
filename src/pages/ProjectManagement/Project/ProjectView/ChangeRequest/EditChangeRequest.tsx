@@ -69,7 +69,7 @@ const EditChangeRequest = ({
         reduxServices.projectChangeRequest.getProjectChangeRequestList({
           endIndex: 20,
           firstIndex: 0,
-          projectid: projectId as string,
+          projectid: projectId,
         }),
       )
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))

@@ -24,16 +24,16 @@ const ProjectHiveActivityReport = (): JSX.Element => {
     : selectedDate
 
   const dispatch = useAppDispatch()
-  const setMonthToDisplay = useCallback(
+  const setProjectMonthToDisplay = useCallback(
     (dateValue) => {
-      const monthToDisplay =
+      const projectMonthToDisplay =
         dateValue === currentMonthDate
           ? moment().format('MMMM-YYYY')
           : moment().subtract(1, 'months').format('MMMM-YYYY')
 
       dispatch(
         reduxServices.hiveActivityReport.actions.setMonthDisplay(
-          monthToDisplay,
+          projectMonthToDisplay,
         ),
       )
     },
@@ -43,7 +43,7 @@ const ProjectHiveActivityReport = (): JSX.Element => {
   useEffect(() => {
     if (isViewClicked) {
       setFilterByDate(startDate)
-      setMonthToDisplay(moment(startDate).format('MM/yyyy'))
+      setProjectMonthToDisplay(moment(startDate).format('MM/yyyy'))
       dispatch(reduxServices.hiveActivityReport.actions.setSelectedDate(''))
       dispatch(
         reduxServices.hiveActivityReport.actions.setMonthDisplay(
@@ -53,7 +53,7 @@ const ProjectHiveActivityReport = (): JSX.Element => {
     }
 
     setIsViewClicked(false)
-  }, [isViewClicked, setMonthToDisplay])
+  }, [isViewClicked, setProjectMonthToDisplay])
   return (
     <>
       <OCard

@@ -8,7 +8,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-// import ProjectTailoringExpendableTable from './ProjectTailoringExpendableTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 

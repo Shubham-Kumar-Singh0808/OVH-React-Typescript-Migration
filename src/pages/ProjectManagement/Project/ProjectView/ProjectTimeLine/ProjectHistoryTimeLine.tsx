@@ -9,7 +9,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
     reduxServices.projectTimeLine.selectors.projectHistory,
   )
 
-  const isPersistValue = (persistType: string) => {
+  const isProjectPersistValue = (persistType: string) => {
     if (persistType === 'UPDATED') {
       return (
         <CBadge className="rounded-pill" color="info" data-testid="update-btn">
@@ -80,7 +80,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                 >
                   <h4 className="sh-timeline-title">{history.modifiedBy} -</h4>
                   <span className="sh-timeline-status">
-                    {isPersistValue(history.persistType)}
+                    {isProjectPersistValue(history.persistType)}
                   </span>
                 </div>
                 <div className="sh-timeline-body">

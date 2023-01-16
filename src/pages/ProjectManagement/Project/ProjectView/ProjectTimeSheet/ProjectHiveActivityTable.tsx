@@ -15,7 +15,7 @@ import { useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const ProjectHiveActivityTable = (): JSX.Element => {
-  const managerHiveActivityReport = useTypedSelector(
+  const projectHiveActivityReport = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
   )
 
@@ -67,9 +67,9 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         </CTableHead>
         {isLoading !== ApiLoadingState.loading ? (
           <CTableBody>
-            {managerHiveActivityReport.list?.map(
+            {projectHiveActivityReport.list?.map(
               (employeeRecord, employeeRecordIndex) => {
-                const sortedActivityTimes = employeeRecord.activityTimes
+                const sortedProjectActivityTimes = employeeRecord.activityTimes
                   ?.slice()
                   .sort(
                     (activityItem1, activityItem2) =>
@@ -79,7 +79,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
                   <CTableRow key={employeeRecordIndex}>
                     <CTableDataCell>{employeeRecord.id}</CTableDataCell>
                     <CTableDataCell>{`${employeeRecord.firstName} ${employeeRecord.lastName}`}</CTableDataCell>
-                    {sortedActivityTimes.map((value, index) => {
+                    {sortedProjectActivityTimes.map((value, index) => {
                       return (
                         <React.Fragment key={index}>
                           {value.hours === '-' ? (
@@ -109,7 +109,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         )}
       </CTable>
       <strong>
-        {managerHiveActivityReport.list?.length
+        {projectHiveActivityReport.list?.length
           ? `Total Records: ${ManagerReportListSize}`
           : `No Records found...`}
       </strong>

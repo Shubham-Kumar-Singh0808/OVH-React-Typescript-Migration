@@ -77,9 +77,7 @@ const ProjectNotes = (): JSX.Element => {
       )
       setNotesLink('')
       setUploadFile(undefined)
-      dispatch(
-        reduxServices.projectNotes.getProjectNotesTimeLine(projectId as string),
-      )
+      dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
   return (
