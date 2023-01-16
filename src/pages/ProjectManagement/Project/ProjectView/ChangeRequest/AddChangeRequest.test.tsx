@@ -18,7 +18,7 @@ describe('AddChangeRequest Component Testing with data', () => {
     })
   })
   screen.debug()
-  test('should able to select values for options for respective select element', async () => {
+  test('should able to select values for options for respective select element', () => {
     const backButtonElement = screen.getByTestId('toggle-back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)

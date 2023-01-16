@@ -24,7 +24,7 @@ const Proposal = (): JSX.Element => {
   useEffect(() => {
     if (
       proposalLink.replace(
-        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
         '',
       )
     ) {
@@ -58,7 +58,14 @@ const Proposal = (): JSX.Element => {
             placeholder="What you are thinking?"
             data-testid="proposal-link"
             value={proposalLink}
-            onChange={(e) => setProposalLink(e.target.value)}
+            onChange={(e) =>
+              setProposalLink(
+                e.target.replace(
+                  '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
+                  '',
+                )
+              )
+            }
           />
         </CCol>
       </CRow>
