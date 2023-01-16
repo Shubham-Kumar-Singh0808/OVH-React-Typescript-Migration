@@ -25,6 +25,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
+    setAddKPI,
   } = props
   const dispatch = useAppDispatch()
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
@@ -35,7 +36,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
-
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -93,6 +93,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               setModalDescription={setModalDescription}
               setModalVisible={setModalVisible}
               setDeleteThisKRA={setDeleteThisKRA}
+              setAddKPI={setAddKPI}
             />
           ))}
         </CTableBody>

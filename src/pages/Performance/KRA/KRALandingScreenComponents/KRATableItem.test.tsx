@@ -13,7 +13,6 @@ const mockSetIconVisible = jest.fn()
 const mockSetSelectedKRAId = jest.fn()
 const mockSetModalDescription = jest.fn()
 const mockSetModalVisible = jest.fn()
-const mockSetShowModalButtons = jest.fn()
 const mockSetDeleteThisKRA = jest.fn()
 
 const toInitialRender = (
@@ -30,6 +29,7 @@ const toInitialRender = (
       setModalDescription={mockSetModalDescription}
       setModalVisible={mockSetModalVisible}
       setDeleteThisKRA={mockSetDeleteThisKRA}
+      setAddKPI={jest.fn()}
     />
   </div>
 )
@@ -48,6 +48,7 @@ const kpiVisibleRender = (
       setModalDescription={mockSetModalDescription}
       setModalVisible={mockSetModalVisible}
       setDeleteThisKRA={mockSetDeleteThisKRA}
+      setAddKPI={jest.fn()}
     />
   </div>
 )

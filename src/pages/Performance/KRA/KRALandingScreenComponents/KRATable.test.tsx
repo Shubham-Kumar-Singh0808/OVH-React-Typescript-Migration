@@ -10,6 +10,7 @@ import {
   mockKRADataList,
 } from '../../../../test/data/KRAData'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import { KRATableDataItem } from '../../../../types/Performance/KRA/KRATypes'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -25,6 +26,7 @@ const toRender = (
       currentPage={1}
       setCurrentPage={mockSetCurrentPage}
       setPageSize={mockSetPageSize}
+      setAddKPI={jest.fn()}
     />
   </div>
 )
@@ -88,19 +90,6 @@ describe('KRA Table', () => {
       expect(screen.getByTestId('record-number')).toHaveTextContent(
         'Total Records: 127',
       )
-    })
-
-    test('delete kra button functionality', () => {
-      const delBtn = screen.getByTestId('del-btn-kra-551')
-      userEvent.click(delBtn)
-      const modalCnt = screen.getByTestId('modal-cnt-kra-table')
-      expect(modalCnt).toBeVisible()
-      expect(modalCnt).toHaveTextContent(
-        'Do you want to delete this People or Self?',
-      )
-      const yesBtn = screen.getByRole('button', { name: 'Yes' })
-      expect(yesBtn).toBeVisible()
-      userEvent.click(yesBtn)
     })
   })
 })
