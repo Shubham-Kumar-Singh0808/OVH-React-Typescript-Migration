@@ -20,7 +20,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
   )
 
   const ManagerReportListSize = useTypedSelector(
-    reduxServices.hiveActivityReport.selectors.managerReportSize,
+    reduxServices.hiveActivityReport.selectors?.managerReportSize,
   )
 
   const isLoading = useTypedSelector(
@@ -67,7 +67,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         </CTableHead>
         {isLoading !== ApiLoadingState.loading ? (
           <CTableBody>
-            {projectHiveActivityReport.list?.map(
+            {projectHiveActivityReport?.list?.map(
               (employeeRecord, employeeRecordIndex) => {
                 const sortedProjectActivityTimes = employeeRecord.activityTimes
                   ?.slice()
@@ -109,7 +109,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         )}
       </CTable>
       <strong>
-        {projectHiveActivityReport.list?.length
+        {projectHiveActivityReport?.list?.length
           ? `Total Records: ${ManagerReportListSize}`
           : `No Records found...`}
       </strong>
