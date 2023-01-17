@@ -19,7 +19,9 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setSelectedKRAId,
     setModalDescription,
     setModalVisible,
+    setIsDeleteModalVisible,
     setDeleteThisKRA,
+    setDeleteThisKRAName,
     setAddKPI,
   } = props
 
@@ -53,10 +55,9 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
 
   const deleteKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    setModalDescription('Do you want to delete this ' + selectedKRA.name + '?')
-    setModalVisible(true)
-
+    setIsDeleteModalVisible(true)
     setDeleteThisKRA(selectedKRA.id)
+    setDeleteThisKRAName(selectedKRA.name)
   }
 
   const editKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,7 +70,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   const addKPIButtonHandler = (addNewKPI: KRATableDataItem) => {
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKPI))
     setAddKPI(addNewKPI)
-    console.log(addNewKPI)
   }
 
   return (
