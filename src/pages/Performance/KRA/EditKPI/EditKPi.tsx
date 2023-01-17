@@ -57,17 +57,6 @@ const EditKPi = (): JSX.Element => {
   )
 
   const updateKPIHandler = async () => {
-    // const prepareObject = {
-    //   ...editKPICopy,
-    //   description: editKpi.description,
-    //   frequency: editKpi.frequency,
-    //   id: editKpi.id,
-    //   name: editKpi.name,
-    //   target: editKpi.target,
-    //   kraDto: editKpi.kraDto,
-    //   frequencyId: editKpi.frequencyId,
-    //   // frequencyId: Number(selectFrequency),
-    // }
     const editKPIResultAction = await dispatch(
       reduxServices.KRA.updateKPI(editKPICopy),
     )
