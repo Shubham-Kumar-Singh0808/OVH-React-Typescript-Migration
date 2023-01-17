@@ -191,7 +191,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             <CFormLabel className="col-form-label p-0">
                               Status
                             </CFormLabel>
-                            {isProjectPrevValue(history.oldStatus as string)}
+                            {isProjectPrevValue(history.oldStatus)}
                             &nbsp;
                             {history.status}
                           </div>
