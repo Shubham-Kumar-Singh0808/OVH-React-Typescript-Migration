@@ -44,6 +44,9 @@ const projectHiveActivityReportSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.employeeHiveActivityReport = action.payload
     })
+    builder.addCase(getProjectTimeSheet.pending, (state) => {
+      state.isLoading = ApiLoadingState.loading
+    })
   },
 })
 

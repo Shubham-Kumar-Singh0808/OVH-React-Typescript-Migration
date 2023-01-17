@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import projectDetailsApi from '../../../../middleware/api/ProjectManagement/Projects/ProjectView/projectViewApi'
@@ -85,10 +85,17 @@ const projectDetailsSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.projectViewDetails = action.payload as ProjectViewDetails[]
     })
-    builder.addCase(getProject.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.projectDetail = action.payload as ProjectDetail
-    })
+    builder
+      .addCase(getProject.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.projectDetail = action.payload as ProjectDetail
+      })
+      .addMatcher(
+        isAnyOf(getProjectDetails.pending, getProject.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
