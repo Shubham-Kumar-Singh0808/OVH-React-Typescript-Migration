@@ -9,7 +9,9 @@ export interface KRATableItemProps {
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
   setModalDescription: React.Dispatch<React.SetStateAction<string>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+  setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
+  setDeleteThisKRAName: React.Dispatch<React.SetStateAction<string>>
   setAddKPI: React.Dispatch<React.SetStateAction<KRATableDataItem>>
 }
 
@@ -73,7 +75,7 @@ export interface IncomingKPIDataItem {
   id: number
   name: string
   description: string | null
-  frequencyId: number
+  frequencyId: number | string
   frequency: string | null
   target: string
   kraDto: KRADto
