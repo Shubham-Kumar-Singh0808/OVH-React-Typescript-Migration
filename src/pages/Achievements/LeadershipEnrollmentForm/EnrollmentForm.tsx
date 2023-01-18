@@ -339,24 +339,6 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
       ) : (
         <></>
       )}
-      {/* <CRow className="mt-3 mb-3">
-        <CCol sm={12} className="mt-2">
-          <CFormCheck
-            data-testid="acceptance-check"
-            type="checkbox"
-            valid={true}
-            required
-            checked={enteredAnswers.acceptance !== null}
-            onChange={acceptanceChangeHandler}
-          />
-          <CCol sm={8}>
-            <strong data-testid="acceptance-label">
-              I hereby declare that the above furnished information has been
-              accepted by me
-            </strong>
-          </CCol>
-        </CCol>
-      </CRow> */}
       <CRow className="align-items-center mt-4 mb-4">
         <CFormLabel
           data-testid="emp-agree"
