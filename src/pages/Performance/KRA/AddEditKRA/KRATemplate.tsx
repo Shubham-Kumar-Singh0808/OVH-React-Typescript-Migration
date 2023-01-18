@@ -5,7 +5,6 @@ import {
   CFormInput,
   CFormLabel,
   CFormSelect,
-  CFormText,
   CRow,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
@@ -28,7 +27,6 @@ import {
   getDesignationId,
   KRAFormLabelClass,
   regexAlphanumeric,
-  regexNumberOnly,
   selectDepartment,
   selectDesignation,
 } from '../KRAConstants'
@@ -73,15 +71,6 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
     setEnteredDesig(e.target.value)
   }
 
-  const percentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const orderValue = e.target.value.replace(regexNumberOnly, '')
-    setEnteredPercentage(orderValue)
-  }
-
-  const descriptionChangeHandler = (value: string) => {
-    setEnteredDescription(value)
-  }
-
   const currentPage = useTypedSelector((state) => state.KRA.currentOnScreenPage)
   const incomingKRADataEditKRA = useTypedSelector(
     (state) => state.KRA.editThisKra,
@@ -94,6 +83,18 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           +enteredPercentage,
         )
       : canPercentageBeAdded(percentageDone, +enteredPercentage)
+
+  const percentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let orderValue = e.target.value.replace(/\D/g, '')
+    if (Number(orderValue) > 100) {
+      orderValue = '100'
+    }
+    setEnteredPercentage(orderValue)
+  }
+
+  const descriptionChangeHandler = (value: string) => {
+    setEnteredDescription(value)
+  }
 
   useEffect(() => {
     if (callDesignationEveryDepartment) {
@@ -277,16 +278,14 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
             onChange={percentChangeHandler}
           />
         </CCol>
-        <CCol sm={1}>
-          <strong>%</strong>
-        </CCol>
-        <CCol sm={3}>
-          <CFormText
+        <CCol sm={4}>
+          <strong>% </strong>
+          <strong
             data-testid="error-percent"
             className={isPercentErrorHidden ? TextWhite : TextDanger}
           >
             You can&apos;t add more than 100 % per KRA
-          </CFormText>
+          </strong>
         </CCol>
       </KRAInputFieldContainer>
       <KRAInputFieldContainer>
