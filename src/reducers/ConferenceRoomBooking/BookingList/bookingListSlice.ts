@@ -53,6 +53,18 @@ const getBookingsForSelection = createAsyncThunk(
   },
 )
 
+const cancelRoomBooking = createAsyncThunk(
+  'conferenceRoomBooking/cancelRoomBooking',
+  async (id: number, thunkApi) => {
+    try {
+      return await bookingListApi.cancelRoomBooking(id)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const initialBookingListState: BookingListSliceState = {
   meetingLocation: [],
   roomsOfLocation: [],
@@ -131,6 +143,7 @@ const bookingListThunk = {
   getAllMeetingLocations,
   getRoomsOfLocation,
   getBookingsForSelection,
+  cancelRoomBooking,
 }
 
 export const bookingListService = {

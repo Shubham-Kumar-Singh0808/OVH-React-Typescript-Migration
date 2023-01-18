@@ -27,6 +27,8 @@ import { GetBookingsForSelection } from '../../../types/ConferenceRoomBooking/Bo
 const BookingListTable = (): JSX.Element => {
   const [isAgendaModalVisible, setIsAgendaModalVisible] =
     useState<boolean>(false)
+  const [toCancelBookingId, setToCancelBookingId] = useState(0)
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [modalAgenda, setModalAgenda] = useState({} as GetBookingsForSelection)
   const BookingsForSelection = useTypedSelector(
     reduxServices.bookingList.selectors.bookingsForSelection,
@@ -85,6 +87,11 @@ const BookingListTable = (): JSX.Element => {
       )
     }
     return <></>
+  }
+
+  const handleShowCancelModal = (visaId: number) => {
+    setToCancelBookingId(visaId)
+    setIsCancelModalVisible(true)
   }
 
   return (
@@ -151,6 +158,7 @@ const BookingListTable = (): JSX.Element => {
                         <CButton
                           color="btn btn-warning"
                           className="btn-ovh me-2"
+                          onClick={() => handleShowCancelModal(bookingItem.id)}
                         >
                           <i
                             className="fa fa-times text-white"

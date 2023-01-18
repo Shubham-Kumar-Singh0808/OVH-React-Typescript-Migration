@@ -53,10 +53,21 @@ const getBookingsForSelection = async (
   return response.data
 }
 
+const cancelRoomBooking = async (id: number): Promise<void> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bookingListApiConfig.cancelRoomBooking + id + '/Cancelled',
+    method: AllowedHttpMethods.delete,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bookingListApi = {
   getAllMeetingLocations,
   getRoomsOfLocation,
   getBookingsForSelection,
+  cancelRoomBooking,
 }
 
 export default bookingListApi
