@@ -1,7 +1,7 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import EmployeePIPDetails from './EmployeePIPDetails'
+import EmployeePipTimelineOptions from './EmployeePipTimelineOptions'
 import EmployeeExtendPIP from './EmployeeExtendPIP'
 import EmployeeRemovePIP from './EmployeeRemovePIP'
 import EmployeeUpdatePIP from './EmployeeUpdatePIP'
@@ -70,7 +70,7 @@ const EmployeePipTimeline = (): JSX.Element => {
               </Link>
             </CCol>
           </CRow>
-          <EmployeePIPDetails />
+          <EmployeePipTimelineOptions />
         </OCard>
       )}
       {toggle === 'employeeExtendPIP' && (

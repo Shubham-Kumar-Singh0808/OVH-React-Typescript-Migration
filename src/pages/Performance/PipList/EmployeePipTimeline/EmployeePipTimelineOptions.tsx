@@ -4,7 +4,7 @@ import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
-const EmployeePIPDetails = (): JSX.Element => {
+const EmployeePipTimelineOptions = (): JSX.Element => {
   const employeePIPTimeline = useTypedSelector(
     reduxServices.pipList.selectors.employeePIPTimeline,
   )
@@ -176,4 +176,4 @@ const EmployeePIPDetails = (): JSX.Element => {
   )
 }
 
-export default EmployeePIPDetails
+export default EmployeePipTimelineOptions
