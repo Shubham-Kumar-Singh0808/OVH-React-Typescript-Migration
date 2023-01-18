@@ -1,15 +1,102 @@
-import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { CRow, CCol, CButton, CFormLabel, CForm } from '@coreui/react-pro'
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const EmployeePIPClearenceCertificate = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+  const [uploadExitFeedbackForm, setUploadExitFeedbackForm] = useState<
+    File | undefined
+  >(undefined)
+  const [uploadRelievingLetter, setUploadRelievingLetter] = useState<
+    File | undefined
+  >(undefined)
+  const [isSubmitBtn, setIsSubmitBtn] = useState(false)
+
+  const onChangeExitFeedBackFormEventHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (!file) return
+    setUploadExitFeedbackForm(file[0])
+  }
+  const onChangeUploadRelievingLetterEventHandler = (
+    element: HTMLInputElement,
+  ) => {
+    const file = element.files
+    if (!file) return
+    setUploadRelievingLetter(file[0])
+  }
+  useEffect(() => {
+    if (uploadExitFeedbackForm && uploadRelievingLetter) {
+      setIsSubmitBtn(true)
+    } else {
+      setIsSubmitBtn(false)
+    }
+  }, [uploadExitFeedbackForm, uploadRelievingLetter])
+
+  const clearButtonHandler = () => {
+    setUploadExitFeedbackForm(undefined)
+    setUploadRelievingLetter(undefined)
+  }
+
   const clearenceCertificate = useTypedSelector(
     reduxServices.pipList.selectors.clearenceCertificate,
   )
-  console.log(clearenceCertificate)
+
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
+  const handleSubmitExitFeedBackForm = async () => {
+    const feedBackFormResultAction = await dispatch(
+      reduxServices.pipList.savePIPClearnceCertificate(employeeId),
+    )
+    if (uploadExitFeedbackForm) {
+      const formData = new FormData()
+      formData.append(
+        'file',
+        uploadExitFeedbackForm,
+        uploadExitFeedbackForm.name,
+      )
+      const exitFeedBackFormIdParams = feedBackFormResultAction.payload
+      const prepareObject = {
+        exitFormId: exitFeedBackFormIdParams as number,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.resignationList.uploadRelievingLetter(prepareObject),
+      )
+    }
+    if (uploadRelievingLetter) {
+      const formData = new FormData()
+      formData.append('file', uploadRelievingLetter, uploadRelievingLetter.name)
+      const exitFeedBackFormIdIdParams = feedBackFormResultAction.payload
+      const uploadPrepareObject = {
+        exitFeedBackFormId: exitFeedBackFormIdIdParams as number,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.resignationList.uploadExitFeedBackFile(
+          uploadPrepareObject,
+        ),
+      )
+    }
+    history.push('/PIPList')
+    if (
+      reduxServices.pipList.savePIPClearnceCertificate.fulfilled.match(
+        feedBackFormResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast toastColor="success" toastMessage="successfully" />,
+        ),
+      )
+    }
+  }
 
   return (
     <>
@@ -20,35 +107,108 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <Link to={`/PIPList`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-btn"
+        <CForm>
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <Link to={`/PIPList`}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  data-testid="back-btn"
+                >
+                  <i className="fa fa-arrow-left  me-1"></i>Back
+                </CButton>
+              </Link>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+              Employee ID:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{clearenceCertificate.empId}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+              Employee Name:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{clearenceCertificate.employeeName}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+              Upload Exit Feedback Form :
+              <span
+                className={
+                  uploadExitFeedbackForm ? 'text-white' : 'text-danger'
+                }
               >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Employee ID:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{clearenceCertificate.empId}</p>
-          </CCol>
-        </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Employee Name:
-          </CFormLabel>
-          <CCol sm={3}>
-            <p className="mb-0">{clearenceCertificate.employeeName}</p>
-          </CCol>
-        </CRow>
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <input
+                className="sh-updateTicket-file"
+                type="file"
+                data-testid="file-upload"
+                id="fileUpload"
+                onChange={(element: React.SyntheticEvent) =>
+                  onChangeExitFeedBackFormEventHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+              Upload Relieving Letter :
+              <span
+                className={uploadRelievingLetter ? 'text-white' : 'text-danger'}
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <input
+                className="sh-updateTicket-file"
+                type="file"
+                data-testid="relievingFile-upload"
+                id="fileUpload"
+                onChange={(element: React.SyntheticEvent) =>
+                  onChangeUploadRelievingLetterEventHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CCol md={{ span: 6, offset: 3 }}>
+              <>
+                <CButton
+                  className="btn-ovh me-1"
+                  data-testid="create-btn"
+                  color="success"
+                  disabled={!isSubmitBtn}
+                  onClick={handleSubmitExitFeedBackForm}
+                >
+                  Submit
+                </CButton>
+                <CButton
+                  color="warning "
+                  data-testid="clear-btn"
+                  className="btn-ovh"
+                  onClick={clearButtonHandler}
+                >
+                  Clear
+                </CButton>
+              </>
+            </CCol>
+          </CRow>
+        </CForm>
       </OCard>
     </>
   )

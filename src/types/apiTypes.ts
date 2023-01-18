@@ -699,6 +699,7 @@ export interface PIPListApi extends ApiBase {
   extendPip: string
   removeFromPip: string
   updatePipDetails: string
+  savePIPClearnceCertificate: string
 }
 
 export interface ReviewListApi extends ApiBase {

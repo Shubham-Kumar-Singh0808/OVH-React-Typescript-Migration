@@ -174,6 +174,20 @@ const updatePipDetails = async (data: GetPipList): Promise<GetPipList> => {
   return response.data
 }
 
+const savePIPClearnceCertificate = async (
+  employeeId: number | string,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: PipListApiConfig.savePIPClearnceCertificate,
+    method: AllowedHttpMethods.post,
+    params: {
+      employeeId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const pipListApi = {
   getAllPIPList,
   exportPIPList,
@@ -185,6 +199,7 @@ const pipListApi = {
   extendPip,
   removeFromPip,
   updatePipDetails,
+  savePIPClearnceCertificate,
 }
 
 export default pipListApi

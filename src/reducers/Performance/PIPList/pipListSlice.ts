@@ -159,6 +159,18 @@ const updatePipDetails = createAsyncThunk(
   },
 )
 
+const savePIPClearnceCertificate = createAsyncThunk(
+  'pipList/savePIPClearnceCertificate',
+  async (employeeId: number | string, thunkApi) => {
+    try {
+      return await pipListApi.savePIPClearnceCertificate(employeeId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -263,6 +275,7 @@ export const pipListThunk = {
   extendPip,
   removeFromPip,
   updatePipDetails,
+  savePIPClearnceCertificate,
 }
 
 export const pipListSelectors = {
