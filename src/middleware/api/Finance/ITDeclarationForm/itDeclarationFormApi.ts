@@ -53,6 +53,20 @@ const addITDeclarationForm = async (
   return response.data
 }
 
+const isITDeclarationFormEditable = async (
+  itFormId: number,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.isITDeclarationFormEditable,
+    method: AllowedHttpMethods.post,
+    params: {
+      itFormId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const isITDeclarationFormExist = async (): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationFormApiConfig.isITDeclarationFormExist,
@@ -68,6 +82,7 @@ const itDeclarationFormApi = {
   getInvestsBySectionId,
   addITDeclarationForm,
   isITDeclarationFormExist,
+  isITDeclarationFormEditable,
 }
 
 export default itDeclarationFormApi

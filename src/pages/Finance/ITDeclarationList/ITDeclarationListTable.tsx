@@ -11,6 +11,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -26,14 +27,14 @@ const ITDeclarationListTable = (
   const itDeclarationListSize = useTypedSelector(
     reduxServices.itDeclarationList.selectors.listSize,
   )
-  const isITDeclarationFormExists = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
-  )
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToEditDeclarationForm = userAccessToFeatures?.find(
     (feature) => feature.name === 'IT Declaration Form',
+  )
+  const employeeID = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
   const {
     paginationRange,
@@ -105,17 +106,22 @@ const ITDeclarationListTable = (
                       >
                         <i className="fa fa-eye" aria-hidden="true"></i>
                       </CButton>
-                      {isITDeclarationFormExists === true &&
+                      {Number(employeeID) === itDeclaration.employeeId &&
                       userAccessToEditDeclarationForm?.updateaccess ? (
                         <>
                           <CTooltip content="Edit">
-                            <CButton
-                              color="info btn-ovh"
-                              className="btn-ovh-employee-list"
-                              data-testid={`sc-edit-btn${index}`}
-                            >
-                              <i className="fa fa-edit" aria-hidden="true"></i>
-                            </CButton>
+                            <Link to={`/editItForm`}>
+                              <CButton
+                                color="info btn-ovh"
+                                className="btn-ovh-employee-list"
+                                data-testid={`sc-edit-btn${index}`}
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </Link>
                           </CTooltip>
                         </>
                       ) : (

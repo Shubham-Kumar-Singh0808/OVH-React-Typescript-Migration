@@ -242,6 +242,9 @@ const ITDeclarationForm = React.lazy(
   () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
 )
 
+const UpdateDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
+)
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
@@ -857,6 +860,11 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/editItForm',
+    name: 'Update Declaration Form',
+    component: UpdateDeclarationForm,
   },
 ]
 

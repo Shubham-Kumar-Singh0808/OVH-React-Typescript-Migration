@@ -88,6 +88,26 @@ const addITDeclarationForm = createAsyncThunk(
   },
 )
 
+const isITDeclarationFormEditable = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'itDeclarationForm/isITDeclarationFormEditable',
+  async (itFormId, thunkApi) => {
+    try {
+      return await itDeclarationFormApi.isITDeclarationFormEditable(itFormId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -137,6 +157,9 @@ const itDeclarationFormSlice = createSlice({
       .addCase(addITDeclarationForm.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
+      .addCase(isITDeclarationFormEditable.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addCase(isITDeclarationFormExist.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.itDeclarationFormExist = action.payload as boolean
@@ -155,6 +178,7 @@ const itDeclarationFormSlice = createSlice({
           getInvestsBySectionId.pending,
           isITDeclarationFormExist.pending,
           addITDeclarationForm.pending,
+          isITDeclarationFormEditable.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -167,6 +191,7 @@ const itDeclarationFormSlice = createSlice({
           getInvestsBySectionId.rejected,
           isITDeclarationFormExist.rejected,
           addITDeclarationForm.rejected,
+          isITDeclarationFormEditable.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -202,6 +227,7 @@ const itDeclarationFormThunk = {
   getInvestsBySectionId,
   isITDeclarationFormExist,
   addITDeclarationForm,
+  isITDeclarationFormEditable,
 }
 
 const itDeclarationFormSelectors = {
