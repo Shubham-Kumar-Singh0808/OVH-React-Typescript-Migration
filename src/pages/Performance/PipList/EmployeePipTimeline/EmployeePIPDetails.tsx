@@ -46,6 +46,7 @@ const EmployeePIPDetails = (): JSX.Element => {
       {' '}
       <div className="sh-timeline-container">
         {employeePIPTimeline.map((pipDetails, index) => {
+          const condition = pipDetails.pipflag === 'true' ? 'In PIP' : ''
           return (
             <div key={index} className="sh-timeline-card">
               <div
@@ -75,7 +76,7 @@ const EmployeePIPDetails = (): JSX.Element => {
                           PIP Status
                         </CFormLabel>
                         &nbsp;
-                        {pipDetails.pipflag === 'true' ? 'In PIP' : ''}
+                        {condition}
                       </div>
                     </>
                   ) : (
