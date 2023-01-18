@@ -237,6 +237,9 @@ const EmployeePipList = (): JSX.Element => {
             searchByAdded={searchByAdded}
             searchByEmployee={searchByEmployee}
             setToggle={setToggle}
+            setSelectDate={setSelectDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
           />
           <CRow>
             <CFormCheck
@@ -298,6 +301,9 @@ const EmployeePipList = (): JSX.Element => {
             pageSize={pageSize}
             selectDate={selectDate}
             setToggle={setToggle}
+            setSelectDate={setSelectDate}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
           />
         </OCard>
       )}

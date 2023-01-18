@@ -65,6 +65,9 @@ export type EmployeePIPListTableProps = {
   searchByAdded?: boolean
   setToggle: (value: string) => void
   searchByEmployee?: boolean
+  setSelectDate: (value: string) => void
+  setFromDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
+  setToDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
 }
 
 export type PerformanceRatings = {

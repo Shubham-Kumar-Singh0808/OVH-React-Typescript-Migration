@@ -19,6 +19,9 @@ const EmployeePipListOptions = ({
   searchByAdded,
   searchByEmployee,
   setToggle,
+  setSelectDate,
+  setFromDate,
+  setToDate,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -49,20 +52,25 @@ const EmployeePipListOptions = ({
     downloadFile(employeePipListDownload, 'PIPList.csv')
   }
 
+  const pipListObject = {
+    dateSelection: selectDate,
+    from: (fromDate as string) || '',
+    multiSearch: searchInput as string,
+    searchByAdded: searchByAdded as boolean,
+    searchByEmployee: searchByEmployee as boolean,
+    selectionStatus: selectedEmployeePipStatus,
+    to: (toDate as string) || '',
+    endIndex: pageSize * currentPage,
+    startIndex: pageSize * (currentPage - 1),
+  }
   const viewButtonHandler = () => {
-    dispatch(
-      reduxServices.pipList.getAllPIPList({
-        dateSelection: selectDate,
-        from: (fromDate as string) || '',
-        multiSearch: searchInput as string,
-        searchByAdded: searchByAdded as boolean,
-        searchByEmployee: searchByEmployee as boolean,
-        selectionStatus: selectedEmployeePipStatus,
-        to: (toDate as string) || '',
-        endIndex: pageSize * currentPage,
-        startIndex: pageSize * (currentPage - 1),
-      }),
-    )
+    dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
+  }
+
+  const clearButtonHandler = () => {
+    setSelectDate('Current Month')
+    setFromDate('')
+    setToDate('')
   }
 
   return (
@@ -148,6 +156,7 @@ const EmployeePipListOptions = ({
             className="cursor-pointer"
             disabled={false}
             color="warning btn-ovh me-1"
+            onClick={clearButtonHandler}
           >
             Clear
           </CButton>

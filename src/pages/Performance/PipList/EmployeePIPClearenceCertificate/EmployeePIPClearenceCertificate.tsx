@@ -5,7 +5,7 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
-const ClearenceCertificate = (): JSX.Element => {
+const EmployeePIPClearenceCertificate = (): JSX.Element => {
   const clearenceCertificate = useTypedSelector(
     reduxServices.pipList.selectors.clearenceCertificate,
   )
@@ -54,4 +54,4 @@ const ClearenceCertificate = (): JSX.Element => {
   )
 }
 
-export default ClearenceCertificate
+export default EmployeePIPClearenceCertificate

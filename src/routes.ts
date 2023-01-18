@@ -400,7 +400,7 @@ const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const ClearnceCerticates = React.lazy(
   () =>
     import(
-      './pages/Performance/PipList/ClearenceCertificate/ClearenceCertificate'
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
     ),
 )
 
