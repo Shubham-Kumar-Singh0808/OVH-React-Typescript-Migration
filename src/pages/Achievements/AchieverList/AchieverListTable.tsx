@@ -128,7 +128,6 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                         className="rounded-circle img-responsive"
                         src={item.profilePicture}
                         alt={item.employeeName}
-                        title={item.employeeName}
                         width={35}
                       />
                     </div>

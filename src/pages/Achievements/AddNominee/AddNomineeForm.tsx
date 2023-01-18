@@ -307,8 +307,48 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
             />
           </CCol>
         </AchievementEntryContainer>
+        <AchievementEntryContainer>
+          {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
+            <CContainer key={index} className="mb-5">
+              <CFormLabel data-testid="question-label">
+                {index + 1}. {item.questions}
+                <span
+                  data-testid={`ques-star-${index}`}
+                  className={
+                    descriptionContent?.at(index)?.isDone
+                      ? TextWhite
+                      : TextDanger
+                  }
+                >
+                  *
+                </span>
+              </CFormLabel>
+              {showEditors && (
+                <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
+                  initData={emptyString}
+                  key={index}
+                  debug={true}
+                  config={ckeditorConfig}
+                  onChange={({ editor }) =>
+                    nominationQuestionChangeHandler(
+                      editor.getData().trim(),
+                      index,
+                    )
+                  }
+                />
+              )}
+              {!descriptionContent?.at(index)?.isDone ? (
+                <p data-testid={`ques-error-${index}`} className={TextDanger}>
+                  {descriptionLengthError}
+                </p>
+              ) : (
+                <></>
+              )}
+            </CContainer>
+          ))}
+        </AchievementEntryContainer>
       </CContainer>
-      <CContainer>
+      {/* <CContainer>
         {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
           <CContainer key={index} className="mb-5">
             <CFormLabel data-testid="question-label">
@@ -345,10 +385,10 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
             )}
           </CContainer>
         ))}
-      </CContainer>
+      </CContainer> */}
       <CContainer>
         <div className="d-flex flex-row ms-3 flex-wrap-row">
-          <CCol sm={4}>
+          <CCol md={{ span: 4, offset: 2 }}>
             {userAccessToFeatures?.createaccess ? (
               <CButton
                 data-testid="add-btn-id"
