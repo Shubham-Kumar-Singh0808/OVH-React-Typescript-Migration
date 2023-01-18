@@ -136,7 +136,7 @@ const BookingListTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="booking deleted successfully"
+            toastMessage="Meeting status updated Successfully"
           />,
         ),
       )
@@ -342,7 +342,7 @@ const BookingListTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmCancelBookingDetails}
       >
-        {`Do you really want to delete this ?`}
+        {`Do you really want to cancel this Meeting ?`}
       </OModal>
     </>
   )
