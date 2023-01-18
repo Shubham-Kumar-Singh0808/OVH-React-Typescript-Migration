@@ -28,7 +28,13 @@ const BookingList = (): JSX.Element => {
           selectDate={selectDate}
           setSelectDate={setSelectDate}
         />
-        <BookingListTable />
+        <BookingListTable
+          location={location}
+          meetingStatus={meetingStatus}
+          room={room}
+          selectDate={selectDate}
+          selectDateOptions={selectDateOptions}
+        />
       </OCard>
     </>
   )

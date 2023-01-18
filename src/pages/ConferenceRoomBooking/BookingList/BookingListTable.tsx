@@ -17,14 +17,28 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { GetBookingsForSelection } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
-const BookingListTable = (): JSX.Element => {
+const BookingListTable = ({
+  location,
+  room,
+  meetingStatus,
+  selectDateOptions,
+  selectDate,
+}: {
+  location: string
+  room: string
+  meetingStatus: string
+  selectDateOptions: string
+  selectDate: string
+}): JSX.Element => {
   const [isAgendaModalVisible, setIsAgendaModalVisible] =
     useState<boolean>(false)
   const [toCancelBookingId, setToCancelBookingId] = useState(0)
@@ -43,7 +57,7 @@ const BookingListTable = (): JSX.Element => {
   const pageSizeFromState = useTypedSelector(
     reduxServices.bookingList.selectors.pageSizeFromState,
   )
-
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -92,6 +106,41 @@ const BookingListTable = (): JSX.Element => {
   const handleShowCancelModal = (visaId: number) => {
     setToCancelBookingId(visaId)
     setIsCancelModalVisible(true)
+  }
+
+  const handleConfirmCancelBookingDetails = async () => {
+    setIsCancelModalVisible(false)
+    const cancelBookingResultAction = await dispatch(
+      reduxServices.bookingList.cancelRoomBooking(toCancelBookingId),
+    )
+    if (
+      reduxServices.bookingList.cancelRoomBooking.fulfilled.match(
+        cancelBookingResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.bookingList.getBookingsForSelection({
+          location: Number(location),
+          meetingStatus,
+          room,
+          status: selectDate
+            ? new Date(selectDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '' || selectDateOptions,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="booking deleted successfully"
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -283,6 +332,17 @@ const BookingListTable = (): JSX.Element => {
             )}
           </p>
         </>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isCancelModalVisible}
+        setVisible={setIsCancelModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCancelBookingDetails}
+      >
+        {`Do you really want to delete this ?`}
       </OModal>
     </>
   )

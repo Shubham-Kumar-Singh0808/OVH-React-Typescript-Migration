@@ -539,7 +539,7 @@ export const bookingListApiConfig: BookingListApi = {
   getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
   getBookingsForSelection:
     apiPrefix + '/meetingRequest/getBookingsForSelection',
-  cancelRoomBooking: '/meetingRequest/changeMeetingStatus/',
+  cancelRoomBooking: apiPrefix + '/meetingRequest/changeMeetingStatus/',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {
