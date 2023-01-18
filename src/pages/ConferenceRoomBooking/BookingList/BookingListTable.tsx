@@ -13,6 +13,7 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -143,6 +144,10 @@ const BookingListTable = ({
     }
   }
 
+  const editButtonHandler = (id: number) => {
+    dispatch(reduxServices.bookingList.editMeetingRequest(id))
+  }
+
   return (
     <>
       <CTable responsive striped className="text-start mt-5">
@@ -200,10 +205,15 @@ const BookingListTable = ({
                   <CTableDataCell scope="row">
                     {bookingItem.isAuthorisedUser ? (
                       <>
-                        <CButton color="info" className="btn-ovh me-2">
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-
+                        <Link to={`/MeetingRequestEdit/${bookingItem.id}`}>
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            onClick={() => editButtonHandler(bookingItem.id)}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </Link>
                         <CButton
                           color="btn btn-warning"
                           className="btn-ovh me-2"

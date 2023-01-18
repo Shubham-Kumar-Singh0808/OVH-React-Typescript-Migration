@@ -385,6 +385,10 @@ const LeadershipEnrollmentForm = React.lazy(
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -845,6 +849,11 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
   },
 ]
 

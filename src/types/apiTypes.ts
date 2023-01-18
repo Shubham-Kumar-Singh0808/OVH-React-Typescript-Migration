@@ -427,6 +427,8 @@ export interface BookingListApi extends ApiBase {
   getAllMeetingLocations: string
   getBookingsForSelection: string
   cancelRoomBooking: string
+  editMeeting: string
+  confirmUpdateMeetingRequest: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string

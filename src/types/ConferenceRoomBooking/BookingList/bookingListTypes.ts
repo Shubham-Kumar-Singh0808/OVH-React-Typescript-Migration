@@ -1,4 +1,5 @@
 import { LoadingState } from '../../commonTypes'
+import { Author } from '../NewBooking/newBookingTypes'
 
 export type MeetingLocations = {
   id: number
@@ -21,6 +22,7 @@ export type BookingListSliceState = {
   isLoading: LoadingState
   currentPage: number
   pageSize: number
+  editMeetingRequest: EditMeetingRequest
 }
 
 export type GetBookingsForSelectionProps = {
@@ -101,4 +103,47 @@ export type handleModelProps = {
   roomName: string
   locationName: string
   description: string
+}
+
+export type MeetingEditDTOList = {
+  availability: string
+  flag: string
+  fullName: string
+  id: number
+}
+
+export type EditMeetingRequest = {
+  id: number
+  agenda: string
+  roomId: number
+  roomName: string
+  locationName: string
+  fromDate: string
+  toDate: null
+  startTime: string
+  endTime: string
+  projectName: string
+  employeeIds: null
+  authorName: Author
+  employeeNames: []
+  isAuthorisedUser: boolean
+  locationId: number
+  employeeAvailability: null
+  timeFomrat: null
+  disableEdit: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingAttendeesDto: null
+  availability: null
+  meetingStatus: null
+  conferenceType: string
+  eventTypeName: null
+  eventTypeId: null
+  eventLocation: null
+  eventId: null
+  description: null
+  eventEditAccess: null
+  empDesignations: null
+  employeeDto: null
+  trainerName: null
+  availableDates: string
 }
