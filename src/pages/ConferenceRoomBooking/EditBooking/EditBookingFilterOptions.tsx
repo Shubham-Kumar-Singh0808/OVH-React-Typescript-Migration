@@ -6,6 +6,12 @@ import {
   CFormLabel,
   CFormInput,
   CFormTextarea,
+  CTable,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+  CTableBody,
+  CTableDataCell,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -47,7 +53,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     toDate: null,
     startTime: '',
     endTime: '',
-    projectName: '',
+    projectName: editExistingMeetingRequest.projectName,
     employeeIds: null,
     authorName: authorDetails,
     employeeNames: [],
@@ -190,6 +196,28 @@ const EditBookingFilterOptions = (): JSX.Element => {
               onSelectProject={onSelectProject}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
             />
+            <CTable responsive striped className="align-middle">
+              <CTableHead>
+                <CTableRow>
+                  <CTableHeaderCell>Attendees</CTableHeaderCell>
+                  <CTableHeaderCell>Availability</CTableHeaderCell>
+                  <CTableHeaderCell>Action</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {editExistingMeetingRequest?.meetingEditDTOList?.map(
+                  (item, index) => {
+                    return (
+                      <CTableRow key={index}>
+                        <CTableDataCell>{item?.fullName}</CTableDataCell>
+                        <CTableDataCell>{item?.availability}</CTableDataCell>
+                      </CTableRow>
+                    )
+                  },
+                )}
+              </CTableBody>
+            </CTable>
+
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
