@@ -24,7 +24,7 @@ const ProjectDetails = (): JSX.Element => {
         </CCol>
       </CRow>
       <div className="col-sm-3 project-view-text-header">
-        <h3>JXT - UI integration</h3>
+        <h3>{getProjectDetail.projectName}</h3>
       </div>
       <div className="col-sm-3">
         <dl className="mb-0">
