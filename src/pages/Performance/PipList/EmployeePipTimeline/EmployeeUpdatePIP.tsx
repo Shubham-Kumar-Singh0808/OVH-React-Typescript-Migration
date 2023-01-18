@@ -142,7 +142,7 @@ const EmployeeUpdatePIP = ({
             <CCol sm={3}>
               <CFormInput
                 className="form-control form-control-not-allowed"
-                data-testid="employeeName"
+                data-testid="UpdateEmployeeName"
                 type="text"
                 id="employeeName"
                 size="sm"

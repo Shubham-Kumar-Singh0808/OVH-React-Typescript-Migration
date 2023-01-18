@@ -30,9 +30,11 @@ const EmployeePipListTable = ({
   const pipListData = useTypedSelector(
     reduxServices.pipList.selectors.pipListData,
   )
-  const listSize = useTypedSelector(reduxServices.pipList.selectors.listSize)
+  const pipListSizeRecords = useTypedSelector(
+    reduxServices.pipList.selectors.listSize,
+  )
 
-  const handlePageSizeSelectChange = (
+  const handlePipListPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
@@ -115,19 +117,21 @@ const EmployeePipListTable = ({
       <CRow>
         <CCol md={3} className="no-records">
           <strong>
-            {listSize ? `Total Records: ${listSize}` : `No Records Found...`}
+            {pipListSizeRecords
+              ? `Total Records: ${pipListSizeRecords}`
+              : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>
-          {listSize > 20 && (
+          {pipListSizeRecords > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              handlePageSizeSelectChange={handlePipListPageSizeSelectChange}
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {listSize > 20 && (
+        {pipListSizeRecords > 20 && (
           <CCol
             xs={5}
             className="gap-1 d-grid d-md-flex justify-content-md-end"

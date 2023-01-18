@@ -103,20 +103,24 @@ const EmployeePipList = (): JSX.Element => {
     }
   }
   useEffect(() => {
-    const newFromDate = new Date(
+    const employeeFromDate = new Date(
       moment(fromDate?.toString()).format(commonFormatDate),
     )
-    const newToDate = new Date(
+    const employeeToDate = new Date(
       moment(toDate?.toString()).format(commonFormatDate),
     )
-    if (fromDate && toDate && newToDate.getTime() < newFromDate.getTime()) {
+    if (
+      fromDate &&
+      toDate &&
+      employeeToDate.getTime() < employeeFromDate.getTime()
+    ) {
       setDateError(true)
     } else {
       setDateError(false)
     }
   }, [fromDate, toDate])
 
-  const toDateValue = toDate
+  const employeeToDateValue = toDate
     ? new Date(toDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
@@ -124,7 +128,7 @@ const EmployeePipList = (): JSX.Element => {
       })
     : ''
 
-  const fromDateValue = fromDate
+  const employeeFromDateValue = fromDate
     ? new Date(fromDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
@@ -187,7 +191,7 @@ const EmployeePipList = (): JSX.Element => {
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    value={fromDateValue}
+                    value={employeeFromDateValue}
                     onChange={(date: Date) => setFromDate(date)}
                     selected={fromDate as Date}
                   />
@@ -209,7 +213,7 @@ const EmployeePipList = (): JSX.Element => {
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    value={toDateValue}
+                    value={employeeToDateValue}
                     onChange={(date: Date) => setToDate(date)}
                     selected={toDate as Date}
                   />

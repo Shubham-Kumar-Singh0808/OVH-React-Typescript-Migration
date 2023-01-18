@@ -112,7 +112,7 @@ const EmployeeExtendPIP = ({
             <CCol sm={3}>
               <CFormInput
                 className="form-control form-control-not-allowed"
-                data-testid="employeeName"
+                data-testid="ExtendEmployeeName"
                 type="text"
                 id="employeeName"
                 size="sm"

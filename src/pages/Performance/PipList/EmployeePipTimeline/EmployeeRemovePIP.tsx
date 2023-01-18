@@ -95,7 +95,7 @@ const EmployeeRemovePIP = ({
             <CCol sm={3}>
               <CFormInput
                 className="form-control form-control-not-allowed"
-                data-testid="employeeName"
+                data-testid="RemoveEmployeeName"
                 type="text"
                 id="employeeName"
                 size="sm"

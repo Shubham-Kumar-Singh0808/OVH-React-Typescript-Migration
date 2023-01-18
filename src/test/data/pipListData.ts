@@ -1,7 +1,25 @@
 import {
   GetAllPipList,
   GetPIPHistory,
+  GetPipList,
 } from '../../types/Performance/PipList/pipListTypes'
+
+export const mockGetPipList: GetPipList = {
+  id: 86,
+  employeeName: 'Ashish  kumar Kashyap kumar',
+  startDate: '01/01/2022',
+  endDate: '11/01/2024',
+  extendDate: null,
+  rating: '4',
+  remarks: 'test',
+  createdBy: 'Stagging test  Test',
+  createdDate: '03/01/2043',
+  updatedBy: '',
+  updatedDate: null,
+  empId: 1409,
+  improvement: 'tststs',
+  pipflag: true,
+}
 
 export const mockGetAllPipList: GetAllPipList = {
   size: 25,
