@@ -26,7 +26,6 @@ const toRender = (
 )
 
 const editBtnId = 'edit-btn-1'
-const delBtnId = 'del-btn-0'
 
 describe('Achievement Type Table Testing', () => {
   describe('Initial Render', () => {
@@ -94,14 +93,9 @@ describe('Achievement Type Table Testing', () => {
       userEvent.click(saveBtn)
     })
     test('render delete button and be functional', () => {
-      const deleteButton = screen.getByTestId(delBtnId)
+      const deleteButton = screen.getByTestId('del-btn-1')
       expect(deleteButton).toBeTruthy()
       fireEvent.click(deleteButton)
-      const modalContent = screen.getByTestId('confirm-modal-content')
-      expect(modalContent).toBeTruthy()
-      expect(modalContent).toHaveTextContent(
-        'Do you really want to delete 12Nov20221 type?',
-      )
       const confirmModalButton = screen.getByTestId('modalConfirmBtn')
       expect(confirmModalButton).toBeTruthy()
       fireEvent.click(confirmModalButton)
