@@ -1,6 +1,5 @@
 import {
   CCol,
-  CFormCheck,
   CLink,
   CRow,
   CTable,
@@ -12,6 +11,7 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
+import InitiateCycleCheckBox from './InitiateCycleCheckBox'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -102,11 +102,7 @@ const InitiateCycleTable = ({
                     )}
                   </CTableDataCell>
                   <CTableDataCell className="text-middle ms-2">
-                    <CFormCheck
-                      className="form-check-input form-select-not-allowed"
-                      name="active"
-                      type="checkbox"
-                    />
+                    <InitiateCycleCheckBox item={item} />
                   </CTableDataCell>
                 </CTableRow>
               )

@@ -25,7 +25,7 @@ export type GetActiveCycleData = {
   id: null | number
   nominationCycleDto: NominationCycleDto
   nominationQuestionDto: GetQuestion[]
-  checkQuestion: null
+  checkQuestion: boolean | null
 }
 
 export type TotalResponse = {
@@ -49,7 +49,7 @@ export type InitiateCycleSliceState = {
 export type GetQuestion = {
   id: number
   question: string
-  checkQuestion: null
+  checkQuestion: boolean | null
 }
 
 export type GetAllCycles = {
