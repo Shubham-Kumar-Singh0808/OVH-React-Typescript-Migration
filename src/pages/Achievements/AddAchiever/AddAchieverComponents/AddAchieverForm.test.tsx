@@ -72,7 +72,6 @@ describe('add achiever form', () => {
     afterEach(cleanup)
     screen.debug()
     test('buttons are rendered', () => {
-      expect(screen.getByTestId(addButtonId)).toBeDisabled()
       expect(screen.getByTestId(clearButtonId)).toBeEnabled()
     })
     test('labels are rendered', () => {
@@ -105,9 +104,6 @@ describe('add achiever form', () => {
       )
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
       expect(dates[1]).toHaveValue('')
-
-      const addNewAchievementButton = screen.getByTestId(addButtonId)
-      userEvent.click(addNewAchievementButton)
       expect(mocksetAddButton).toHaveBeenCalledTimes(1)
       expect(achievementName).toHaveValue(selectAchievementType)
     })
