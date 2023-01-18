@@ -77,7 +77,7 @@ const EmployeeRemovePIP = ({
             <CButton
               color="info"
               className="btn-ovh me-1"
-              data-testid="back-button"
+              data-testid="removeBack-button"
               onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
