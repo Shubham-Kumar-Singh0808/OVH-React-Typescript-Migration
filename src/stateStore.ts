@@ -102,6 +102,15 @@ import commonAchievementsReducer from './reducers/Achievements/CommonAchievement
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
+import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
+import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
+import projectChangeRequestReducer from './reducers/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import projectMileStoneReducer from './reducers/ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
+import projectInvoicesReducer from './reducers/ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
+import projectTailoringReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
+import projectTimeSheetReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import projectProposalsReducer from './reducers/ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
+import projectNotesReducer from './reducers/ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
@@ -215,6 +224,15 @@ export const allReducers = {
   nomineeList: nomineeListReducer,
   addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  projectViewDetails: projectViewDetailsReducer,
+  projectTimeLine: projectTimeLineReducer,
+  projectChangeRequest: projectChangeRequestReducer,
+  projectMileStone: projectMileStoneReducer,
+  projectInvoices: projectInvoicesReducer,
+  projectTailoring: projectTailoringReducer,
+  projectTimeSheet: projectTimeSheetReducer,
+  projectProposals: projectProposalsReducer,
+  projectNotes: projectNotesReducer,
   addProjectCreationRequest: addProjectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,

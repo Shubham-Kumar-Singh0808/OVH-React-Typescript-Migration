@@ -80,6 +80,15 @@ import {
   CommonAchievementsApi,
   ProjectCreationRequestApi,
   AddAchieverApi,
+  ProjectDetailsApi,
+  ProjectTimeLineApi,
+  ProjectChangeRequestApi,
+  ProjectMilestoneApi,
+  ProjectInvoiceApi,
+  ProjectTailoringApi,
+  ProjectTimeSheetApi,
+  ProjectProposalApi,
+  ProjectNotesApi,
   InitiateCycleApi,
   MyKRAsApi,
   NomineeListApi,
@@ -793,6 +802,50 @@ export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
 
+export const projectViewApiConfig: ProjectDetailsApi = {
+  getProjects: apiPrefix + '/allocation-mgmt/projects',
+  getProject: apiPrefix + '/project-mgmt/project',
+  updateProjectDetails: apiPrefix + '/project-mgmt/updateAllocateProject',
+}
+export const projectTimeLineApiConfig: ProjectTimeLineApi = {
+  getProjectHistory: apiPrefix + '/project-mgmt/getProjectHistory',
+}
+
+export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
+  getCRList: apiPrefix + '/project-mgmt/getCRList',
+  changeRequest: apiPrefix + '/project-mgmt/changeRequest',
+  deleteCR: apiPrefix + '/project-mgmt/deleteCR',
+  updateChangeRequest: apiPrefix + '/project-mgmt/updateChangeRequest',
+}
+
+export const projectMileStoneApiConfig: ProjectMilestoneApi = {
+  mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
+}
+
+export const projectInvoicesApiConfig: ProjectInvoiceApi = {
+  getClosedMilestonesAndCRs:
+    apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
+  getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+}
+
+export const projectTailoringApiConfig: ProjectTailoringApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+}
+
+export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
+  getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
+}
+
+export const projectProposalsApiConfig: ProjectProposalApi = {
+  projectProposal: apiPrefix + '/project-mgmt/projectProposal',
+}
+
+export const projectNotesApiConfig: ProjectNotesApi = {
+  projectNotesTimeLine: apiPrefix + '/projectnewsfeed/',
+  uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
+}
 export const initiateCycleApiConfig: InitiateCycleApi = {
   getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
   getallcycles: apiPrefix + '/nominationController/getallcycles',
@@ -839,6 +892,9 @@ export const KRAApiConfig: KRAApi = {
   addNewKRA: apiPrefix + '/kra/',
   editThisKra: apiPrefix + '/kra/',
   updateKRA: apiPrefix + '/kra/',
+  getFrequency: apiPrefix + '/kra/frequencyList',
+  addKPI: apiPrefix + '/kra/',
+  updateKPI: apiPrefix + '/kra/updateKpi',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

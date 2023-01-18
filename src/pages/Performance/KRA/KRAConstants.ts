@@ -34,7 +34,7 @@ export const getDesignationId = (
 }
 
 export const dottedContent = (content: string): string => {
-  return content.length > 25 ? content.substring(0, 25) + '...' : content
+  return content?.length > 25 ? content.substring(0, 25) + '...' : content
 }
 
 export const canPercentageBeAdded = (

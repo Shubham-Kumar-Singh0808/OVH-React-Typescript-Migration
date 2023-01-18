@@ -21,6 +21,9 @@ export interface IncomingAchievementTypes {
 export interface CommonAchievementInitialState {
   achievementTypeList: IncomingAchievementTypes
   isLoading: LoadingState
+  currentPage: number
+  pageSize: number
+  listSize: number
 }
 
 export interface NomineeCycleType {

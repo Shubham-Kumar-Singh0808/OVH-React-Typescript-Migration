@@ -342,6 +342,13 @@ const AddSection = React.lazy(
   () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
 )
 
+const ViewProjectDetails = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/ProjectViewLandingPage/ProjectView'
+    ),
+)
+
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
@@ -819,6 +826,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/viewProject/:projectId',
+    name: 'View Project',
+    component: ViewProjectDetails,
   },
   {
     path: '/initiateCycle',
