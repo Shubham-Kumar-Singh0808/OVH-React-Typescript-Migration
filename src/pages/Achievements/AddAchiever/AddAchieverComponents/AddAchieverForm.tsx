@@ -467,30 +467,30 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             />
           </CCol>
         </AchievementEntryContainer>
+        <CRow>
+          <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+          <CCol sm={3} md={3}>
+            <CButton
+              type="submit"
+              color="success"
+              className="btn-ovh me-1"
+              data-testid="add-achiever-btn"
+              disabled={!isAddButtonEnabled}
+            >
+              Add
+            </CButton>
+            <CButton
+              color="warning"
+              role="addNewAchiever"
+              data-testid="clear-btn"
+              className="btn-ovh me-1"
+              onClick={clearButtonHandler}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
       </CContainer>
-      <CRow>
-        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="add-achiever-btn"
-            disabled={!isAddButtonEnabled}
-          >
-            Add
-          </CButton>
-          <CButton
-            color="warning"
-            role="addNewAchiever"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
     </CForm>
   )
 }
