@@ -91,6 +91,7 @@ const ProjectNotes = (): JSX.Element => {
             name="notesLink"
             placeholder="What you are thinking?"
             data-testid="notes-link"
+            maxLength={250}
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
           />
