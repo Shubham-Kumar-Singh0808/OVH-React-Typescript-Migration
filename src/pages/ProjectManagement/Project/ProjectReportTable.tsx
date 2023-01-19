@@ -296,6 +296,27 @@ const ProjectReportsTable = ({
     })
   }
 
+  const handleViewModel = (projectId: number) => {
+    dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+    dispatch(reduxServices.projectViewDetails.getProject(projectId))
+    dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
+    dispatch(
+      reduxServices.projectChangeRequest.getProjectChangeRequestList({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(
+      reduxServices.projectMileStone.getProjectMileStone({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
+  }
+
   const totalRecordsToDisplay = projectReports?.length
     ? `Total Records: ${listSize}`
     : `No Records found...`
@@ -393,16 +414,19 @@ const ProjectReportsTable = ({
                         )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="info-light btn-ovh me-1"
-                          data-testid="view-btn"
-                        >
-                          <i
-                            className="fa fa-eye text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <Link to={`/viewProject/${value.id}`}>
+                          <CButton
+                            className="btn-ovh-employee-list cursor-pointer"
+                            color="info-light btn-ovh me-1"
+                            data-testid="view-btn"
+                            onClick={() => handleViewModel(value.id)}
+                          >
+                            <i
+                              className="fa fa-eye text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </Link>
                         {userAccess.updateaccess && (
                           <Link to={`/editproject/${value.id}`}>
                             <CButton

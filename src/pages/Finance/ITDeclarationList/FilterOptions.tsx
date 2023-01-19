@@ -32,8 +32,11 @@ const FilterOptions = ({
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
-  const userAccessToViewAddSectionAndInvestment = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+  const userAccessToAddInvestmentCycle = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Investment Cycle',
+  )
+  const userAccessToAddInvestment = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Investment',
   )
   const toastElement = (
     <OToast toastColor="danger" toastMessage="Please Select Cycle" />
@@ -109,7 +112,7 @@ const FilterOptions = ({
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
-            {userAccessToViewAddSectionAndInvestment?.viewaccess && (
+            {userAccessToAddInvestmentCycle?.viewaccess && (
               <Link to={`/addCycle`}>
                 <CButton
                   color="info btn-ovh me-1"
@@ -122,7 +125,7 @@ const FilterOptions = ({
             )}
           </CCol>
           <CCol sm={5} className="text-end">
-            {userAccessToViewAddSectionAndInvestment?.viewaccess && (
+            {userAccessToAddInvestment?.viewaccess && (
               <Link to={`/addInvestment`}>
                 <CButton
                   color="info btn-ovh me-1"

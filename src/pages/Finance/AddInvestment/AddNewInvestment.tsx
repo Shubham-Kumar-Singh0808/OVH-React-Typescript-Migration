@@ -54,7 +54,7 @@ const AddNewInvestment = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToAddInvestment = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment',
   )
 
   const handleSelectDocumentOption = (
@@ -93,9 +93,16 @@ const AddNewInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setAddNewInvestment((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'investmentName') {
+      const invNameVal = value.replace(/^\s*/, '')
+      setAddNewInvestment((prevState) => {
+        return { ...prevState, ...{ [name]: invNameVal } }
+      })
+    } else {
+      setAddNewInvestment((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {

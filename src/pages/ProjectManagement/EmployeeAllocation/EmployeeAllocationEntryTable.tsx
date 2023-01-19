@@ -287,7 +287,7 @@ const EmployeeAllocationEntryTable = (props: {
                       )}
                       {isProjectAllocationEdit &&
                       projectReport.id === templateId ? (
-                        <CTableDataCell scope="row">
+                        <CTableDataCell scope="row" style={{ width: '90px' }}>
                           <div className="edit-time-control">
                             <CFormSelect
                               aria-label="Default select example"
@@ -310,7 +310,7 @@ const EmployeeAllocationEntryTable = (props: {
                       )}
                       {isProjectAllocationEdit &&
                       projectReport.id === templateId ? (
-                        <CTableDataCell scope="row">
+                        <CTableDataCell scope="row" style={{ width: '150px' }}>
                           <div className="edit-time-control">
                             <CFormSelect
                               aria-label="Default select example"

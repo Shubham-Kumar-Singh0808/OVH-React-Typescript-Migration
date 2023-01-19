@@ -1,5 +1,7 @@
 import {
+  AddKPIData,
   DeleteKPIParams,
+  Frequency,
   IncomingEmployeeDepartment,
   IncomingKPIDataItem,
   IncomingKRADataList,
@@ -83,6 +85,29 @@ const deleteKRA = async (kraid: number): Promise<void> => {
   return response.data
 }
 
+const addKPI = async (body: AddKPIData): Promise<AddKPIData> => {
+  const { kraId, ...rest } = body
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.addKPI + kraId + '/kpi',
+    method: AllowedHttpMethods.post,
+    data: rest,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateKPI = async (body: IncomingKPIDataItem): Promise<AddKPIData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.updateKPI,
+    method: AllowedHttpMethods.put,
+    data: body,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const deleteKPI = async (query: DeleteKPIParams): Promise<void> => {
   const { kraId, kpiId } = query
   const requestConfig = getAuthenticatedRequestConfig({
@@ -158,6 +183,16 @@ const updateKRA = async (body: UpdateKRABody): Promise<void> => {
   return response.data
 }
 
+const getFrequency = async (): Promise<Frequency[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.getFrequency,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const KRAApi = {
   getEmpDepartments,
   getDesignation,
@@ -170,6 +205,9 @@ const KRAApi = {
   addNewKRA,
   editThisKra,
   updateKRA,
+  getFrequency,
+  addKPI,
+  updateKPI,
 }
 
 export default KRAApi
