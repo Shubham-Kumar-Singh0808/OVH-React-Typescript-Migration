@@ -208,14 +208,14 @@ const PeopleTable = (): JSX.Element => {
                   ) : (
                     <CTableDataCell>{allocated}</CTableDataCell>
                   )}
-                  <CTableDataCell scope="row">
+                  <CTableDataCell scope="row" style={{ width: '100px' }}>
                     {isProjectAllocationEdit &&
                     project.employeeId === templateId ? (
                       <>
                         <CTooltip content="Save">
                           <CButton
                             color="success"
-                            className="btn-ovh me-1 mb-1"
+                            className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                             onClick={saveProjectAllocationHandler}
                           >
                             <i
@@ -228,7 +228,7 @@ const PeopleTable = (): JSX.Element => {
                           <CButton
                             color="warning"
                             data-testid="cancel-btn"
-                            className="btn-ovh me-1 mb-1"
+                            className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                             onClick={cancelProjectAllocationButtonHandler}
                           >
                             <i className="fa fa-times" aria-hidden="true"></i>
