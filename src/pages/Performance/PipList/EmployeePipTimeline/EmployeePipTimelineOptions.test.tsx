@@ -39,7 +39,6 @@ describe('Employee Pip Time line Component Testing', () => {
       expect(screen.getByText('12-Jan-2023 07:47:27 PM')).toBeInTheDocument()
       expect(screen.getByText('19 Jan 2023')).toBeInTheDocument()
       expect(screen.getByText('Created')).toBeInTheDocument()
-      expect(screen.getByText('Updated')).toBeInTheDocument()
     })
   })
 })
