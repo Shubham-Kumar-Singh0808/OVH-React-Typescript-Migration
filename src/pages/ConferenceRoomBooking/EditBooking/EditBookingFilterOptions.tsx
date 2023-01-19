@@ -27,6 +27,7 @@ import {
   Author,
   Availability,
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
@@ -54,6 +55,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     reduxServices.allocateEmployee.selectors.allProjects,
   )
 
+  console.log(projectsAutoCompleteTarget)
   useEffect(() => {
     if (projectsAutoCompleteTarget) {
       dispatch(
@@ -71,6 +73,8 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const formLabel = 'col-sm-3 col-form-label text-end'
   const authorDetails = {} as Author
   const meetingEditDTOList = {} as MeetingEditDTOList[]
+  const availability = {} as Availability[]
+  const trainerDetails = {} as TrainerDetails
   const dateFormat = 'DD/MM/YYYY'
   const initNewBooking = {
     id: 0,
@@ -79,7 +83,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     roomName: '',
     locationName: '',
     fromDate: '',
-    toDate: null,
+    toDate: '',
     startTime: '',
     endTime: '',
     projectName: editExistingMeetingRequest.projectName,
@@ -93,20 +97,20 @@ const EditBookingFilterOptions = (): JSX.Element => {
     disableEdit: null,
     meetingEditDTOList,
     meetingAttendeesDto: null,
-    availability: null,
+    availability,
     meetingStatus: null,
     conferenceType: '',
     eventTypeName: null,
     eventTypeId: null,
-    eventLocation: null,
-    eventId: null,
-    description: null,
+    eventLocation: '',
+    eventId: 0,
+    description: '',
     eventEditAccess: null,
     empDesignations: null,
     employeeDto: null,
-    trainerName: null,
+    trainerName: trainerDetails,
     availableDates: '',
-  } as EditMeetingRequest
+  } as unknown as EditMeetingRequest
   const dispatch = useAppDispatch()
   const [projectName, setProjectName] = useState<string>('')
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)

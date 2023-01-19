@@ -1,5 +1,6 @@
 import { LoadingState } from '../../commonTypes'
-import { Author } from '../NewBooking/newBookingTypes'
+import { Author, Availability } from '../NewBooking/newBookingTypes'
+import { TrainerDetails } from '../NewEvent/newEventTypes'
 
 export type MeetingLocations = {
   id: number
@@ -119,7 +120,7 @@ export type EditMeetingRequest = {
   roomName: string
   locationName: string
   fromDate: string
-  toDate: null
+  toDate: string
   startTime: string
   endTime: string
   projectName: string
@@ -133,17 +134,17 @@ export type EditMeetingRequest = {
   disableEdit: null
   meetingEditDTOList: MeetingEditDTOList[]
   meetingAttendeesDto: null
-  availability: null
+  availability: Availability[]
   meetingStatus: null
   conferenceType: string
   eventTypeName: null
-  eventTypeId: null
-  eventLocation: null
-  eventId: null
-  description: null
+  eventTypeId: number
+  eventLocation: string
+  eventId: number
+  description: string
   eventEditAccess: null
   empDesignations: null
   employeeDto: null
-  trainerName: null
+  trainerName: TrainerDetails
   availableDates: string
 }
