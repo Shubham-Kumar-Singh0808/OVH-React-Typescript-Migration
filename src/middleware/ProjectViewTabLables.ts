@@ -40,7 +40,7 @@ const ProjectViewTabLabel: MyProfileTabList[] = [
   {
     id: 8,
     tabName: 'TimeSheet',
-    label: '',
+    label: 'Project-People',
   },
   {
     id: 9,
