@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import { CKEditor } from 'ckeditor4-react'
 import EmployeeRemovePIP from './EmployeeRemovePIP'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { render, screen } from '../../../../test/testUtils'
@@ -37,5 +38,37 @@ describe('should render Employee Pip Time line Component without data', () => {
     const selectRating = screen.getByTestId('form-select1')
     userEvent.selectOptions(selectRating, ['10'])
     expect(selectRating).toHaveValue('10')
+  })
+  test('should render with RemoveEmployeeName ', () => {
+    const subject = screen.getByTestId('RemoveEmployeeName')
+    userEvent.type(subject, 'Ashish  kumar Kashyap kumar')
+    expect(subject).toHaveValue('Ashish  kumar Kashyap kumar')
+  })
+  test('should render with startDate ', () => {
+    const subject = screen.getByTestId('startDate')
+    userEvent.type(subject, '01/01/2022')
+    expect(subject).toHaveValue('01/01/2022')
+  })
+  test('should render with endDate ', () => {
+    const subject = screen.getByTestId('endDate')
+    userEvent.type(subject, '11/01/2024')
+    expect(subject).toHaveValue('11/01/2024')
+  })
+  test('should render with extendDate ', () => {
+    const subject = screen.getByTestId('extendDate')
+    userEvent.type(subject, '')
+    expect(subject).toHaveValue('')
+  })
+  test('pass comments to test input value', () => {
+    render(
+      <CKEditor
+        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
+      />,
+    )
+  })
+  test('should be able to click Add button element', () => {
+    const addBtn = screen.getByRole('button', { name: 'Remove' })
+    userEvent.click(addBtn)
+    expect(addBtn).toBeInTheDocument()
   })
 })
