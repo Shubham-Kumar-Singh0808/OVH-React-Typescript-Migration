@@ -308,7 +308,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
           </CCol>
         </AchievementEntryContainer>
       </CContainer>
-      <CContainer>
+      <CContainer className="mt-3 mb-3">
         {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
           <CContainer key={index} className="mb-5">
             <CFormLabel data-testid="question-label">
@@ -336,6 +336,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
                 }
               />
             )}
+
             {!descriptionContent?.at(index)?.isDone ? (
               <p data-testid={`ques-error-${index}`} className={TextDanger}>
                 {descriptionLengthError}
@@ -348,7 +349,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       </CContainer>
       <CContainer>
         <div className="d-flex flex-row ms-3 flex-wrap-row">
-          <CCol sm={4}>
+          <CCol md={{ span: 4, offset: 2 }}>
             {userAccessToFeatures?.createaccess ? (
               <CButton
                 data-testid="add-btn-id"
