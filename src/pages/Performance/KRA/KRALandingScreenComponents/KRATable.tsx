@@ -140,7 +140,9 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
       >
-        <>Do you want to delete this {deleteThisKRAName} ?</>
+        <>
+          Do you want to delete this <strong>{deleteThisKRAName}</strong> ?
+        </>
       </OModal>
       <OModal
         modalSize="lg"
