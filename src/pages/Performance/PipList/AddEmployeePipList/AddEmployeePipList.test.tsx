@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { CKEditor } from 'ckeditor4-react'
 import AddEmployeePipList from './AddEmployeePipList'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
@@ -8,6 +9,7 @@ import { EmployeePipStatus } from '../../../../types/Performance/PipList/pipList
 import { mockGetAllPipList } from '../../../../test/data/pipListData'
 
 const mockSetTogglePage = jest.fn()
+const clearButton = 'clear-btn'
 
 describe('Employee Accounts Table Component Testing', () => {
   beforeEach(() => {
@@ -67,5 +69,15 @@ describe('Employee Accounts Table Component Testing', () => {
     )
     expect(datePickers[0]).toHaveValue('8/30/2022')
     expect(datePickers[1]).toHaveValue('9/07/2022')
+    userEvent.click(screen.getByTestId(clearButton))
+    expect(datePickers[0]).toHaveValue('')
+    expect(datePickers[1]).toHaveValue('')
+  })
+  test('pass comments to test input value', () => {
+    render(
+      <CKEditor
+        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
+      />,
+    )
   })
 })

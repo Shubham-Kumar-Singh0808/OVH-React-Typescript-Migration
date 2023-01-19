@@ -145,6 +145,7 @@ const EmployeePipListOptions = ({
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"
+            data-testid="view-btn"
             onClick={viewButtonHandler}
             disabled={
               selectDate === 'Custom' && !(fromDate !== '' && toDate !== '')

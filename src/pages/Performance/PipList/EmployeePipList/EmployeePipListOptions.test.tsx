@@ -63,4 +63,26 @@ describe('Employee Accounts Table Component Testing', () => {
     expect(removedFromPIP.checked).toEqual(false)
     expect(inactiveRadio.checked).toEqual(true)
   })
+  test('should render add PIP component with out crashing', () => {
+    expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
+  test('should be able to click View button element', () => {
+    const addBtn = screen.getByRole('button', { name: 'View' })
+    userEvent.click(addBtn)
+    expect(addBtn).toBeInTheDocument()
+  })
+  test('should render  Configuration  screen and Allocate button without crashing', () => {
+    const allocateButton = screen.getByTestId('view-btn')
+    expect(allocateButton).toBeInTheDocument()
+    userEvent.click(allocateButton)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
+  })
+  test('should able to click Add Button', () => {
+    const addBtnElement = screen.getByRole('button', {
+      name: 'Add',
+    })
+    expect(addBtnElement).toBeEnabled()
+    userEvent.click(addBtnElement)
+  })
 })
