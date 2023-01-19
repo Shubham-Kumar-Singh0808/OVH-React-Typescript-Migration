@@ -27,27 +27,27 @@ const KRAsDetailsTable = (): JSX.Element => {
     setIsModalVisible(true)
     setKpiDescription(descKpi)
   }
-  const tableHeaderCellPropsIndex = {
-    width: '26px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsKpiName = {
-    width: '127px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsDesc = {
-    width: '87px',
-    scope: 'col',
-  }
+  // const tableHeaderCellPropsIndex = {
+  //   width: '26px',
+  //   scope: 'col',
+  // }
+  // const tableHeaderCellPropsKpiName = {
+  //   width: '127px',
+  //   scope: 'col',
+  // }
+  // const tableHeaderCellPropsDesc = {
+  //   width: '87px',
+  //   scope: 'col',
+  // }
 
-  const tableHeaderCellPropsFrequency = {
-    width: '90px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsTarget = {
-    width: '83px',
-    scope: 'col',
-  }
+  // const tableHeaderCellPropsFrequency = {
+  //   width: '90px',
+  //   scope: 'col',
+  // }
+  // const tableHeaderCellPropsTarget = {
+  //   width: '83px',
+  //   scope: 'col',
+  // }
   const limit = (value: string): string => {
     return value?.length > 30 ? `${value?.substring(0, 30)}...` : value
   }
@@ -55,39 +55,38 @@ const KRAsDetailsTable = (): JSX.Element => {
   return (
     <>
       <CTable
-        responsive
         striped
-        className="mt-0 text-start profile-tab-table-size w-100"
+        className="mt-0 text-start profile-tab-table-size w-100 table-layout-fixed"
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell
               className="profile-tab-content"
-              {...tableHeaderCellPropsIndex}
+              // {...tableHeaderCellPropsIndex}
             >
               #
             </CTableHeaderCell>
             <CTableHeaderCell
               className="profile-tab-content"
-              {...tableHeaderCellPropsKpiName}
+              // {...tableHeaderCellPropsKpiName}
             >
               KPI Name
             </CTableHeaderCell>
             <CTableHeaderCell
               className="profile-tab-content"
-              {...tableHeaderCellPropsDesc}
+              // {...tableHeaderCellPropsDesc}
             >
               Description
             </CTableHeaderCell>
             <CTableHeaderCell
               className="profile-tab-content"
-              {...tableHeaderCellPropsFrequency}
+              // {...tableHeaderCellPropsFrequency}
             >
               Frequency
             </CTableHeaderCell>
             <CTableHeaderCell
               className="profile-tab-content"
-              {...tableHeaderCellPropsTarget}
+              // {...tableHeaderCellPropsTarget}
             >
               Target
             </CTableHeaderCell>

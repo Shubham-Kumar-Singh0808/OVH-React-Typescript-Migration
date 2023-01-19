@@ -374,3 +374,9 @@ input.capetalized {
     color: #fff;
 }
 
+.table-layout-fixed {
+  table-layout: fixed;
+  th:first-of-type{
+      width: 40px;
+    }
+}

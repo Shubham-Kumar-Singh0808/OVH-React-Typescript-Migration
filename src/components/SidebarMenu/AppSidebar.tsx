@@ -1,4 +1,4 @@
-import { CLink, CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
+import { CSidebar, CSidebarBrand, CSidebarNav } from '@coreui/react-pro'
 import { useDispatch } from 'react-redux'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
