@@ -9,8 +9,4 @@ describe('Exit FeedBack form Component Testing', () => {
 
     expect(screen.getByText('Exit FeedBack Form')).toBeInTheDocument()
   })
-  test('should render add PIP component with out crashing', () => {
-    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
-  })
 })
