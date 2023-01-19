@@ -153,6 +153,7 @@ const AddEditChangeRequest = ({
               value={addChangeRequest?.duration}
               onChange={onChangeHandler}
               maxLength={10}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
@@ -175,6 +176,7 @@ const AddEditChangeRequest = ({
               aria-label="textarea"
               value={changeRequestDescription}
               maxLength={150}
+              autoComplete="off"
               onChange={(e) => setChangeRequestDescription(e.target.value)}
             ></CFormTextarea>
             <p>{changeRequestDescription?.length}/150</p>

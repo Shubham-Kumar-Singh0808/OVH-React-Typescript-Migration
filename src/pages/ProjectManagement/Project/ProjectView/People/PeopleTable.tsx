@@ -151,6 +151,7 @@ const PeopleTable = (): JSX.Element => {
                           id="allocation"
                           data-testid="template-input"
                           name="allocation"
+                          maxLength={3}
                           value={editAllocateProject.allocation}
                           onChange={handleEditProjectAllocationHandler}
                         />

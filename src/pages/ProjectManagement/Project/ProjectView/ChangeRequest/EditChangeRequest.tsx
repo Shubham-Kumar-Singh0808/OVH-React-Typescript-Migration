@@ -135,6 +135,7 @@ const EditChangeRequest = ({
             <CFormInput
               type="text"
               id="duration"
+              autoComplete="off"
               data-testid="duration-testing"
               name="duration"
               placeholder="Hours"
@@ -161,6 +162,7 @@ const EditChangeRequest = ({
               placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
+              autoComplete="off"
               value={editDescription}
               maxLength={150}
               onChange={(e) => setEditDescription(e.target.value)}
