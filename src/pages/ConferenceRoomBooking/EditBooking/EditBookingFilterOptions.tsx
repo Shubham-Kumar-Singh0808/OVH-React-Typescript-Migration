@@ -16,6 +16,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
+import EditAttendees from './EditAttendees'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -44,18 +45,15 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const editExistingMeetingRequest = useTypedSelector(
     reduxServices.bookingList.selectors.editExistingMeetingRequest,
   )
-  const [isEnable, setIsEnable] = useState(false)
+
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
-  const allProjects = useTypedSelector(
-    reduxServices.allocateEmployee.selectors.allProjects,
-  )
+
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
 
-  console.log(projectsAutoCompleteTarget)
   useEffect(() => {
     if (projectsAutoCompleteTarget) {
       dispatch(
@@ -112,7 +110,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     availableDates: '',
   } as unknown as EditMeetingRequest
   const dispatch = useAppDispatch()
-  const [projectName, setProjectName] = useState<string>('')
+
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -127,6 +125,17 @@ const EditBookingFilterOptions = (): JSX.Element => {
       setProjectsAutoCompleteTarget(editExistingMeetingRequest.projectName)
     }
   }, [editExistingMeetingRequest])
+
+  const time = editMeetingRequest?.startTime
+  const Hour = time?.split(':')[0]
+  const meridian = time?.split(' ')[1]
+  const minutes = time?.split(':')[1]
+  const minutesDay = minutes?.split(':')[0]
+
+  console.log(Hour)
+  console.log(meridian)
+  console.log(minutesDay)
+  console.log(minutes)
 
   const allEmployeesProfiles = useTypedSelector(
     reduxServices.newEvent.selectors.allEmployeesProfiles,
@@ -154,9 +163,19 @@ const EditBookingFilterOptions = (): JSX.Element => {
     })
   }
 
+  useEffect(() => {
+    dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    if (editMeetingRequest.locationId) {
+      dispatch(
+        reduxServices.bookingList.getRoomsOfLocation(
+          Number(editMeetingRequest.locationId),
+        ),
+      )
+    }
+  }, [dispatch, editMeetingRequest])
+
   const onHandleSelectProjectName = (projectName: string) => {
     setProjectsAutoCompleteTarget(projectName)
-    setIsEnable(true)
   }
 
   const autoCompleteOnChangeHandler = (
@@ -170,6 +189,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
       return attendee.id === attendeeId
     })
   }
+
+  useEffect(() => {
+    if (projectsAutoCompleteTarget)
+      dispatch(
+        reduxServices.newEvent.getProjectMembers(projectsAutoCompleteTarget),
+      )
+  }, [projectsAutoCompleteTarget])
 
   const onSelectAttendee = (attendeeId: number, attendeeName: string) => {
     selectProjectMember(attendeeId, attendeeName)
@@ -237,7 +263,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
-  console.log(editMeetingRequest.locationId)
   return (
     <>
       <CRow>
@@ -308,15 +333,16 @@ const EditBookingFilterOptions = (): JSX.Element => {
                 ></CFormTextarea>
               </CCol>
             </CRow>
-            {/* <SelectProject
-              allProjects={allProjects}
-              onSelectProject={onSelectProject}
-              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-            /> */}
             <CRow className="mt-3">
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Name:
-                <span className={isEnable ? TextWhite : TextDanger}>*</span>
+                <span
+                  className={
+                    projectsAutoCompleteTarget ? TextWhite : TextDanger
+                  }
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
@@ -378,27 +404,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-            <CTable responsive striped className="align-middle">
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell>Attendees</CTableHeaderCell>
-                  <CTableHeaderCell>Availability</CTableHeaderCell>
-                  <CTableHeaderCell>Action</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {editExistingMeetingRequest?.meetingEditDTOList?.map(
-                  (item, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell>{item?.fullName}</CTableDataCell>
-                        <CTableDataCell>{item?.availability}</CTableDataCell>
-                      </CTableRow>
-                    )
-                  },
-                )}
-              </CTableBody>
-            </CTable>
+            <EditAttendees />
             {projectMembers?.length > 0 && (
               <ProjectMembersSelection
                 addEvent={editMeetingRequest}
