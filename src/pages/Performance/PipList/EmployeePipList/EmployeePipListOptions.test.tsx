@@ -89,4 +89,9 @@ describe('Employee Accounts Table Component Testing', () => {
     const exportComponent = screen.getByTestId('employee-export-btn')
     expect(exportComponent).toBeTruthy()
   })
+  test('should able to click "click to to export" button', () => {
+    const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
+    userEvent.click(exportBtn)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
+  })
 })
