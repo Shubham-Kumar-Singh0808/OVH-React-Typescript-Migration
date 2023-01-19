@@ -9,14 +9,20 @@ import {
   CRow,
   CButton,
   CTooltip,
+  CLink,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import parse from 'html-react-parser'
 import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { EmployeePIPListTableProps } from '../../../../types/Performance/PipList/pipListTypes'
+import {
+  EmployeePIPListTableProps,
+  GetPipList,
+} from '../../../../types/Performance/PipList/pipListTypes'
+import OModal from '../../../../components/ReusableComponent/OModal'
 
 const EmployeePipListTable = ({
   paginationRange,
@@ -26,6 +32,9 @@ const EmployeePipListTable = ({
   setCurrentPage,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [isReasonForPIPVisible, setIsReasonForPIPVisible] =
+    useState<boolean>(false)
+  const [reasonModal, setReasonModal] = useState({} as GetPipList)
 
   const pipListData = useTypedSelector(
     reduxServices.pipList.selectors.pipListData,
@@ -52,6 +61,11 @@ const EmployeePipListTable = ({
     )
   }
 
+  const handleAgendaModal = (appraisalCycleInfo: GetPipList) => {
+    setIsReasonForPIPVisible(true)
+    setReasonModal(appraisalCycleInfo)
+  }
+
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -71,6 +85,14 @@ const EmployeePipListTable = ({
         <CTableBody>
           {pipListData?.length > 0 &&
             pipListData?.map((item, index) => {
+              const removeSpaces = item.remarks
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+              const agendaLimit =
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
@@ -79,7 +101,19 @@ const EmployeePipListTable = ({
                   <CTableDataCell>{item.endDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.extendDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.rating || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{item.remarks || 'N/A'}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    {item.remarks ? (
+                      <CLink
+                        className="cursor-pointer text-decoration-none"
+                        data-testid="description-modal-link"
+                        onClick={() => handleAgendaModal(item)}
+                      >
+                        {parse(agendaLimit)}
+                      </CLink>
+                    ) : (
+                      'N/A'
+                    )}
+                  </CTableDataCell>
                   <CTableDataCell>{item.createdBy || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="Timeline">
@@ -144,6 +178,24 @@ const EmployeePipListTable = ({
           </CCol>
         )}
       </CRow>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        visible={isReasonForPIPVisible}
+        setVisible={setIsReasonForPIPVisible}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        <>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: reasonModal.remarks as string,
+            }}
+          />
+        </>
+      </OModal>
     </>
   )
 }

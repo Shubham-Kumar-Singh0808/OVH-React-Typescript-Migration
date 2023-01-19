@@ -10,7 +10,7 @@ import { mockGetAllPipList } from '../../../../test/data/pipListData'
 
 const mockSetTogglePage = jest.fn()
 
-describe('Employee Accounts Table Component Testing', () => {
+describe('Employee PipList Table Component Testing', () => {
   beforeEach(() => {
     render(
       <EmployeePipListTable
@@ -52,7 +52,9 @@ describe('Employee Accounts Table Component Testing', () => {
     expect(screen.getByText('Actions')).toBeInTheDocument()
   })
   test('Should be able to see total of 9 records', () => {
-    expect(screen.getByText('Total Records: 25')).toBeInTheDocument()
+    expect(
+      screen.getByText(`Total Records: ${mockGetAllPipList?.size}`),
+    ).toBeInTheDocument()
   })
   test('should render first page data only', async () => {
     await waitFor(() => {
@@ -67,7 +69,7 @@ describe('Employee Accounts Table Component Testing', () => {
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
-  test('should render employee Accounts table component with data without crashing', async () => {
+  test('should render  Employee PipList Table component with data without crashing', async () => {
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
       const pageSizeSelect = screen.getByRole('option', {
@@ -76,5 +78,38 @@ describe('Employee Accounts Table Component Testing', () => {
       expect(pageSizeSelect.selected).toBe(false)
       expect(screen.getAllByRole('row')).toHaveLength(1)
     })
+  })
+})
+
+describe('Employee PipList Table Component Testing', () => {
+  beforeEach(() => {
+    render(
+      <EmployeePipListTable
+        paginationRange={[]}
+        currentPage={0}
+        setCurrentPage={mockSetTogglePage}
+        pageSize={0}
+        setPageSize={mockSetTogglePage}
+        selectDate=""
+        setToggle={mockSetTogglePage}
+        setSelectDate={mockSetTogglePage}
+        setFromDate={mockSetTogglePage}
+        setToDate={mockSetTogglePage}
+      />,
+      {
+        preloadedState: {
+          pipList: {
+            isLoading: ApiLoadingState.succeeded,
+            pipListData: mockGetAllPipList?.list,
+            listSize: 25,
+          },
+        },
+      },
+    )
+  })
+  test('should render description modal', () => {
+    const description = screen.getAllByTestId('description-modal-link')
+    userEvent.click(description[0])
+    expect(description[0]).toBeInTheDocument()
   })
 })
