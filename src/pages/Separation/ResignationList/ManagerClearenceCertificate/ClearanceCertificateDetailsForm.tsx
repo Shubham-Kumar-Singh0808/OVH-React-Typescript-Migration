@@ -158,7 +158,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearanceDetails[0]?.employeeName}
+                  {managerClearanceDetails[0]?.seperationEmpName}
                 </p>
               </CCol>
             </CRow>
@@ -178,7 +178,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearanceDetails[0]?.seperationEmpName}
+                  {managerClearanceDetails[0]?.employeeName}
                 </p>
               </CCol>
             </CRow>

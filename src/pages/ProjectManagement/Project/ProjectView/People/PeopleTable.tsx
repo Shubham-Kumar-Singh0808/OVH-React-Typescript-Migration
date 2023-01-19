@@ -9,6 +9,7 @@ import {
   CFormSelect,
   CLink,
   CTableBody,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OToast from '../../../../../components/ReusableComponent/OToast'
@@ -210,34 +211,43 @@ const PeopleTable = (): JSX.Element => {
                     {isProjectAllocationEdit &&
                     project.employeeId === templateId ? (
                       <>
-                        <CButton
-                          color="success"
-                          className="btn-ovh me-1 mb-1"
-                          onClick={saveProjectAllocationHandler}
-                        >
-                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                        </CButton>
-                        <CButton
-                          color="warning"
-                          data-testid="cancel-btn"
-                          className="btn-ovh me-1 mb-1"
-                          onClick={cancelProjectAllocationButtonHandler}
-                        >
-                          <i className="fa fa-times" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Save">
+                          <CButton
+                            color="success"
+                            className="btn-ovh me-1 mb-1"
+                            onClick={saveProjectAllocationHandler}
+                          >
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="warning"
+                            data-testid="cancel-btn"
+                            className="btn-ovh me-1 mb-1"
+                            onClick={cancelProjectAllocationButtonHandler}
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     ) : (
                       <>
                         {userAccessEditPeople?.updateaccess && (
-                          <CButton
-                            color="info btn-ovh me-2"
-                            data-testid="edit-btn"
-                            onClick={() => {
-                              editProjectAllocationButtonHandler(project)
-                            }}
-                          >
-                            <i className="fa fa-pencil-square-o"></i>
-                          </CButton>
+                          <CTooltip content="Cancel">
+                            <CButton
+                              color="info btn-ovh me-2"
+                              data-testid="edit-btn"
+                              onClick={() => {
+                                editProjectAllocationButtonHandler(project)
+                              }}
+                            >
+                              <i className="fa fa-pencil-square-o"></i>
+                            </CButton>
+                          </CTooltip>
                         )}
                       </>
                     )}
