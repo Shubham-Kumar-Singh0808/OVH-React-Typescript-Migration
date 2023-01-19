@@ -86,7 +86,7 @@ describe('Achievement Type Table Testing', () => {
       const selectStatus = screen.getByTestId('new-status-sel')
       const inputOrder = screen.getByTestId('new-order')
       expect(inputOrder).toHaveValue('3')
-      userEvent.selectOptions(selectStatus, 'inactive')
+      userEvent.selectOptions(selectStatus, 'Inactive')
       userEvent.clear(inputOrder)
       userEvent.type(inputOrder, '58')
       const saveBtn = screen.getByTestId('save-btn-1')
