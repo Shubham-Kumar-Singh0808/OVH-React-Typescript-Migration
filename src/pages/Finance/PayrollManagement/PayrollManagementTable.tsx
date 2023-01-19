@@ -368,6 +368,7 @@ const PayrollManagementTable = (props: {
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
+        modalSize="lg"
       >
         <>
           <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />
