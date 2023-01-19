@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
-import EmployeeDetails from './EmployeeDetails'
-import IncomeTaxAct from './IncomeTaxAct'
+import EditIncomeTaxActForm from './EditIncomeTaxActForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
+import EmployeeDetails from '../ITDeclarationForm/EmployeeDetails'
 
-const ITDeclarationForm = (): JSX.Element => {
-  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
-  const [isAgreeChecked, setIsAgreeChecked] = useState<boolean>(false)
+const UpdateITDeclarationForm = (): JSX.Element => {
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
+    useState<boolean>(false)
+  const [isAgreeCheck, setIsAgreeCheck] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const history = useHistory()
-  const itDeclarationFormExists = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
-  )
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
-  const userAccessToSubmitDeclarationForm = userAccessToFeatures?.find(
+  const userAccessToUpdateDeclarationForm = userAccessToFeatures?.find(
     (feature) => feature.name === 'IT Declaration Form',
   )
   const grandTotalResult = useTypedSelector(
@@ -29,28 +27,13 @@ const ITDeclarationForm = (): JSX.Element => {
     reduxServices.itDeclarationForm.selectors.formSectionData,
   )
 
-  const warningToastMessage = (
-    <OToast
-      toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
-      toastColor="danger"
-    />
-  )
-
   useEffect(() => {
-    if (isAgreeChecked) {
-      setIsButtonEnabled(true)
+    if (isAgreeCheck) {
+      setIsUpdateButtonEnabled(true)
     } else {
-      setIsButtonEnabled(false)
+      setIsUpdateButtonEnabled(false)
     }
-  }, [isAgreeChecked])
-
-  useEffect(() => {
-    dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
-    if (itDeclarationFormExists === true) {
-      dispatch(reduxServices.app.actions.addToast(warningToastMessage))
-      history.push('/itDeclarationList')
-    }
-  }, [dispatch, itDeclarationFormExists])
+  }, [isAgreeCheck])
 
   const toastElement = (
     <OToast
@@ -59,7 +42,7 @@ const ITDeclarationForm = (): JSX.Element => {
     />
   )
 
-  const handleSubmitDeclarationForm = async () => {
+  const handleUpdateDeclarationForm = async () => {
     const prepareObject = {
       designation: '',
       employeeId: 0,
@@ -67,7 +50,7 @@ const ITDeclarationForm = (): JSX.Element => {
       formSectionsDTOs: formSectionData,
       fromDate: '',
       grandTotal: grandTotalResult,
-      isAgree: isAgreeChecked,
+      isAgree: isAgreeCheck,
       itDeclarationFormId: null,
       organisationName: '',
       panNumber: '',
@@ -96,7 +79,7 @@ const ITDeclarationForm = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <EmployeeDetails />
-        <IncomeTaxAct />
+        <EditIncomeTaxActForm />
         <CRow className="mt-3 mb-3">
           <CCol sm={12}>
             <p className="pull-right">
@@ -109,9 +92,9 @@ const ITDeclarationForm = (): JSX.Element => {
           <CCol sm={12} className="mt-2">
             <CFormCheck
               name="agree"
-              data-testid="ch-agree"
-              onChange={() => setIsAgreeChecked(!isAgreeChecked)}
-              checked={isAgreeChecked}
+              data-testid="edit-ch-agree"
+              onChange={() => setIsAgreeCheck(!isAgreeCheck)}
+              checked={isAgreeCheck}
             />
             <span className="ps-2">
               <strong>
@@ -130,24 +113,14 @@ const ITDeclarationForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-2 mb-2">
-          {userAccessToSubmitDeclarationForm?.createaccess && (
-            <CCol className="col-md-3 offset-md-4">
+          {userAccessToUpdateDeclarationForm?.updateaccess && (
+            <CCol className="col-md-3 offset-md-3">
               <CButton
-                color="success"
-                className="btn-ovh me-1"
-                data-testid="df-submit-btn"
-                size="sm"
-                onClick={handleSubmitDeclarationForm}
-                disabled={!isButtonEnabled}
-              >
-                Submit
-              </CButton>
-              <CButton
-                color="warning "
                 className="btn-ovh"
-                data-testid="df-clear-btn"
+                color="success"
+                disabled={!isUpdateButtonEnabled}
               >
-                Clear
+                Update
               </CButton>
             </CCol>
           )}
@@ -157,4 +130,4 @@ const ITDeclarationForm = (): JSX.Element => {
   )
 }
 
-export default ITDeclarationForm
+export default UpdateITDeclarationForm

@@ -242,9 +242,6 @@ const ITDeclarationForm = React.lazy(
   () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
 )
 
-const UpdateDeclarationForm = React.lazy(
-  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
-)
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
@@ -394,6 +391,10 @@ const LeadershipEnrollmentForm = React.lazy(
 )
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+
+const UpdateDeclarationForm = React.lazy(
+  () => import('./pages/Finance/UpdateDeclarationForm/UpdateITDeclarationForm'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.

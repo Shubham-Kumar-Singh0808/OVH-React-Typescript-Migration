@@ -21,7 +21,7 @@ import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationLi
 const ITDeclarationFormViewTable = ({
   viewDeclarationForm,
 }: {
-  viewDeclarationForm: ITForm[]
+  viewDeclarationForm: ITForm
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const backButtonHandler = () => {
@@ -57,13 +57,13 @@ const ITDeclarationFormViewTable = ({
                 Employee Id:
               </CFormLabel>
               <CCol sm={3} className="mt-2">
-                {viewDeclarationForm[0]?.employeeId}
+                {viewDeclarationForm?.employeeId}
               </CCol>
               <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
                 Employee Name:
               </CFormLabel>
               <CCol sm={3} className="mt-2">
-                {viewDeclarationForm[0]?.employeeName}
+                {viewDeclarationForm?.employeeName}
               </CCol>
             </CRow>
             <CRow>
@@ -71,13 +71,13 @@ const ITDeclarationFormViewTable = ({
                 PAN:
               </CFormLabel>
               <CCol sm={3} className="mt-2">
-                {viewDeclarationForm[0]?.panNumber}
+                {viewDeclarationForm?.panNumber}
               </CCol>
               <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
                 Designation:
               </CFormLabel>
               <CCol sm={3} className="mt-2">
-                {viewDeclarationForm[0]?.designation}
+                {viewDeclarationForm?.designation}
               </CCol>
             </CRow>
           </CCol>
@@ -102,7 +102,7 @@ const ITDeclarationFormViewTable = ({
                 </CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-            {viewDeclarationForm[0]?.formSectionsDTOs
+            {viewDeclarationForm?.formSectionsDTOs
               ?.slice()
               .sort((sec1, sec2) =>
                 sec1.sectionName.localeCompare(sec2.sectionName),
@@ -166,7 +166,7 @@ const ITDeclarationFormViewTable = ({
               <p className="pull-right fs-16">
                 <b>
                   Grand Total:{' '}
-                  {viewDeclarationForm[0]?.grandTotal?.toLocaleString()}
+                  {viewDeclarationForm?.grandTotal?.toLocaleString()}
                 </b>
               </p>
             </div>

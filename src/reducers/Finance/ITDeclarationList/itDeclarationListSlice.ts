@@ -28,7 +28,7 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   toggle: '',
   investments: [],
   sections: [],
-  editDeclarationForm: [],
+  editDeclarationForm: {} as ITForm,
   isEditITForm: false,
 }
 
@@ -368,7 +368,7 @@ const sections = (state: RootState): Section[] =>
   state.itDeclarationList.sections
 const itDeclarationForms = (state: RootState): ITForm[] =>
   state.itDeclarationList.itDeclarationForms
-const editDeclarationForm = (state: RootState): ITForm[] =>
+const editDeclarationForm = (state: RootState): ITForm =>
   state.itDeclarationList.editDeclarationForm
 const listSize = (state: RootState): number => state.itDeclarationList.listSize
 const searchEmployee = (state: RootState): string =>

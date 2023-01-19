@@ -84,24 +84,7 @@ const ITDeclarationListTable = (
                         className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                         data-testid={`viewItDeclarationForm-btn${index}`}
                         onClick={() =>
-                          props.viewDeclarationFormButtonHandler([
-                            {
-                              cycleId: itDeclaration.cycleId,
-                              designation: itDeclaration.designation,
-                              employeeId: itDeclaration.employeeId,
-                              employeeName: itDeclaration.employeeName,
-                              filePath: itDeclaration.filePath,
-                              formSectionsDTOs: itDeclaration.formSectionsDTOs,
-                              fromDate: itDeclaration.fromDate,
-                              grandTotal: itDeclaration.grandTotal,
-                              isAgree: itDeclaration.isAgree,
-                              itDeclarationFormId:
-                                itDeclaration.itDeclarationFormId,
-                              organisationName: itDeclaration.organisationName,
-                              panNumber: itDeclaration.panNumber,
-                              toDate: itDeclaration.toDate,
-                            },
-                          ])
+                          props.viewDeclarationFormButtonHandler(itDeclaration)
                         }
                       >
                         <i className="fa fa-eye" aria-hidden="true"></i>
@@ -116,26 +99,9 @@ const ITDeclarationListTable = (
                                 className="btn-ovh-employee-list"
                                 data-testid={`sc-edit-btn${index}`}
                                 onClick={() =>
-                                  props.editDeclarationFormButtonHandler([
-                                    {
-                                      cycleId: itDeclaration.cycleId,
-                                      designation: itDeclaration.designation,
-                                      employeeId: itDeclaration.employeeId,
-                                      employeeName: itDeclaration.employeeName,
-                                      filePath: itDeclaration.filePath,
-                                      formSectionsDTOs:
-                                        itDeclaration.formSectionsDTOs,
-                                      fromDate: itDeclaration.fromDate,
-                                      grandTotal: itDeclaration.grandTotal,
-                                      isAgree: itDeclaration.isAgree,
-                                      itDeclarationFormId:
-                                        itDeclaration.itDeclarationFormId,
-                                      organisationName:
-                                        itDeclaration.organisationName,
-                                      panNumber: itDeclaration.panNumber,
-                                      toDate: itDeclaration.toDate,
-                                    },
-                                  ])
+                                  props.editDeclarationFormButtonHandler(
+                                    itDeclaration,
+                                  )
                                 }
                               >
                                 <i

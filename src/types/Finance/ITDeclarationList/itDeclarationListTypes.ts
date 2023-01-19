@@ -62,10 +62,8 @@ export type ITDeclarationListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
-  editDeclarationFormButtonHandler: (editForm: ITForm[]) => void
-  isEditITForm: boolean
-  setIsEditITForm: (value: React.SetStateAction<boolean>) => void
+  viewDeclarationFormButtonHandler: (viewForm: ITForm) => void
+  editDeclarationFormButtonHandler: (editForm: ITForm) => void
 }
 
 export type ITDeclarationListOptionsProps = {
@@ -128,6 +126,6 @@ export type ITDeclarationListSliceState = {
   currentPage: number
   pageSize: number
   toggle: string
-  editDeclarationForm: ITForm[]
+  editDeclarationForm: ITForm
   isEditITForm: boolean
 }

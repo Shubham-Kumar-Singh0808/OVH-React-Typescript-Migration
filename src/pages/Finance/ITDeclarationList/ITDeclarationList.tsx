@@ -15,24 +15,9 @@ import ITDeclarationFormViewTable from '../ITDeclarationListFormView/ITDeclarati
 const ITDeclarationList = (): JSX.Element => {
   const [investmentCycle, setInvestmentCycle] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>('')
-  const [viewDeclarationForm, setViewDeclarationForm] = useState<ITForm[]>([
-    {
-      cycleId: 0,
-      designation: '',
-      employeeId: 0,
-      employeeName: '',
-      filePath: null,
-      formSectionsDTOs: [],
-      fromDate: '',
-      grandTotal: 0,
-      isAgree: null,
-      itDeclarationFormId: 0,
-      organisationName: '',
-      panNumber: '',
-      toDate: '',
-    },
-  ])
-  const [isEditITForm, setIsEditITForm] = useState<boolean>(false)
+  const [viewDeclarationForm, setViewDeclarationForm] = useState<ITForm>(
+    {} as ITForm,
+  )
 
   const itDeclarationListPath = '/itDeclarationList'
   const dispatch = useAppDispatch()
@@ -81,39 +66,23 @@ const ITDeclarationList = (): JSX.Element => {
     }
   }, [window.location.pathname])
 
-  const viewDeclarationFormButtonHandler = (viewForm: ITForm[]): void => {
+  const viewDeclarationFormButtonHandler = (viewForm: ITForm): void => {
     dispatch(
       reduxServices.itDeclarationList.actions.setToggle(
         'viewITDeclarationForm',
       ),
     )
-    setViewDeclarationForm([
-      {
-        cycleId: viewForm[0].cycleId,
-        designation: viewForm[0].designation,
-        employeeId: viewForm[0].employeeId,
-        employeeName: viewForm[0].employeeName,
-        filePath: viewForm[0].filePath,
-        formSectionsDTOs: viewForm[0].formSectionsDTOs,
-        fromDate: viewForm[0].fromDate,
-        grandTotal: viewForm[0].grandTotal,
-        isAgree: viewForm[0].isAgree,
-        itDeclarationFormId: viewForm[0].itDeclarationFormId,
-        organisationName: viewForm[0].organisationName,
-        panNumber: viewForm[0].panNumber,
-        toDate: viewForm[0].toDate,
-      },
-    ])
+    setViewDeclarationForm(viewForm)
   }
 
-  const editDeclarationFormButtonHandler = (editForm: ITForm[]): void => {
+  const editDeclarationFormButtonHandler = (editForm: ITForm): void => {
     dispatch(
       reduxServices.itDeclarationForm.isITDeclarationFormEditable(
-        editForm[0].itDeclarationFormId,
+        editForm.itDeclarationFormId,
       ),
     )
-    history.push('/itDeclarationForm')
-    setIsEditITForm(true)
+    history.push('/editItForm')
+    // setIsEditITForm(true)
     console.log(editForm)
     dispatch(
       reduxServices.itDeclarationList.actions.setEditDeclarationForm(editForm),
@@ -149,8 +118,6 @@ const ITDeclarationList = (): JSX.Element => {
                 editDeclarationFormButtonHandler={
                   editDeclarationFormButtonHandler
                 }
-                isEditITForm={false}
-                setIsEditITForm={setIsEditITForm}
               />
             ) : (
               <>
