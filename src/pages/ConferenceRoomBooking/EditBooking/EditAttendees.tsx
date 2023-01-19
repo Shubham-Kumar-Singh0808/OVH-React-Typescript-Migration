@@ -8,14 +8,45 @@ import {
   CButton,
   CCol,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { Availability } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 
-const EditAttendees = (): JSX.Element => {
+const EditAttendees = ({
+  attendeesList,
+  setAttendeesList,
+}: {
+  attendeesList: Availability[]
+  setAttendeesList: (value: Availability[]) => void
+}): JSX.Element => {
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
   const editExistingMeetingRequest = useTypedSelector(
     reduxServices.bookingList.selectors.editExistingMeetingRequest,
   )
+
+  const deleteAttendeeSuccessToast = (
+    <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
+  )
+
+  const dispatch = useAppDispatch()
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
+  const handleConfirmDeleteAttendee = () => {
+    const newList = attendeesList.filter(
+      (attendee) => attendee.id !== (deleteAttendeeId as number),
+    )
+    setAttendeesList([...newList])
+    setDeleteAttendeeModalVisible(false)
+    dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
+  }
   return (
     <>
       <CCol sm={5} md={4} className="fixed-height pe-0 ps-0">
@@ -45,7 +76,7 @@ const EditAttendees = (): JSX.Element => {
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list"
                         data-testid="delete-btn"
-                        // onClick={() => deleteBtnHandler(item.id)}
+                        onClick={() => deleteBtnHandler(item.id)}
                       >
                         <i
                           className="fa fa-trash-o text-white"
@@ -60,6 +91,19 @@ const EditAttendees = (): JSX.Element => {
           </CTableBody>
         </CTable>
       </CCol>
+      <OModal
+        alignment="center"
+        modalTitle="Delete Attendee"
+        visible={deleteAttendeeModalVisible}
+        setVisible={setDeleteAttendeeModalVisible}
+        closeButtonClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalBodyClass="mt-0"
+        confirmButtonAction={handleConfirmDeleteAttendee}
+      >
+        <span>Do you really want to delete this Attendee ?</span>
+      </OModal>
     </>
   )
 }

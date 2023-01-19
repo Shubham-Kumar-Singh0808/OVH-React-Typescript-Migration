@@ -404,7 +404,10 @@ const EditBookingFilterOptions = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-            <EditAttendees />
+            <EditAttendees
+              attendeesList={attendeesList}
+              setAttendeesList={setAttendeesList}
+            />
             {projectMembers?.length > 0 && (
               <ProjectMembersSelection
                 addEvent={editMeetingRequest}
