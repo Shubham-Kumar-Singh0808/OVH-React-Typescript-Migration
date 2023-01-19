@@ -39,7 +39,7 @@ const EmployeeUpdatePIP = ({
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
   const [selectRatingNo, setSelectRatingNo] = useState<string>(
-    viewEmployeePipData.rating,
+    viewEmployeePipData?.rating,
   )
   const [reasonForPIPText, setReasonForPIPText] = useState<string>(
     viewEmployeePipData?.remarks,

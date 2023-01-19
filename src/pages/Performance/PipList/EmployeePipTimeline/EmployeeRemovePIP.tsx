@@ -100,7 +100,7 @@ const EmployeeRemovePIP = ({
                 id="employeeName"
                 size="sm"
                 name="employeeName"
-                value={viewPipDetails.employeeName}
+                value={viewPipDetails?.employeeName}
                 disabled={true}
               />
             </CCol>
@@ -120,7 +120,7 @@ const EmployeeRemovePIP = ({
                 id="startDate"
                 size="sm"
                 name="startDate"
-                value={viewPipDetails.startDate}
+                value={viewPipDetails?.startDate}
                 disabled={true}
               />
             </CCol>
@@ -140,7 +140,7 @@ const EmployeeRemovePIP = ({
                 id="endDate"
                 size="sm"
                 name="endDate"
-                value={viewPipDetails.endDate}
+                value={viewPipDetails?.endDate}
                 disabled={true}
               />
             </CCol>
@@ -160,7 +160,7 @@ const EmployeeRemovePIP = ({
                 id="extendDate"
                 size="sm"
                 name="extendDate"
-                value={viewPipDetails.extendDate as string}
+                value={viewPipDetails?.extendDate as string}
                 disabled={true}
               />
             </CCol>

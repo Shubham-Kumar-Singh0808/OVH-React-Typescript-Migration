@@ -36,7 +36,7 @@ const EmployeePipTimeline = (): JSX.Element => {
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
               <CButton
-                data-testid="save-btn"
+                data-testid="update-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
                 onClick={() => setToggle('employeeUpdatePIP')}
@@ -44,7 +44,7 @@ const EmployeePipTimeline = (): JSX.Element => {
                 Update
               </CButton>
               <CButton
-                data-testid="clear-btn"
+                data-testid="Extend-btn"
                 color="warning"
                 className="btn-ovh me-1 text-white"
                 onClick={() => setToggle('employeeExtendPIP')}
@@ -52,7 +52,7 @@ const EmployeePipTimeline = (): JSX.Element => {
                 Extend PIP
               </CButton>
               <CButton
-                data-testid="save-btn"
+                data-testid="Remove-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
                 onClick={() => setToggle('employeeRemovePIP')}

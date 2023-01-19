@@ -26,7 +26,7 @@ describe('should render Employee Pip Time line Component without data', () => {
   test('should render EmployeePip Timeline component with out crashing', () => {
     expect(screen.getByText('PIP Details')).toBeInTheDocument()
   })
-  test('should render Employee Pip List component with out crashing', () => {
+  test('should render Pip List component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument()
     expect(
       screen.getByRole('button', { name: 'Extend PIP' }),
@@ -42,7 +42,6 @@ describe('should render Employee Pip Time line Component without data', () => {
     userEvent.click(backButtonElement)
     expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
-
   describe('Employee ExtendPIP Component Testing', () => {
     test('should render Employee ExtendPIP component with out crashing', () => {
       render(<EmployeeExtendPIP setToggle={mockSetToggle} />)
@@ -71,5 +70,37 @@ describe('should render Employee Pip Time line Component without data', () => {
       userEvent.click(backButtonElement)
       expect(mockSetToggle).toHaveBeenCalledTimes(1)
     })
+  })
+})
+
+describe('should render Employee Pip Time line Component with data', () => {
+  beforeEach(() => {
+    render(<EmployeePipTimeline />, {
+      preloadedState: {
+        pipList: {
+          isLoading: ApiLoadingState.succeeded,
+          listSize: 1,
+          employeePIPTimeline: mockPipHistoryTimeline,
+        },
+      },
+    })
+  })
+  test('should render Employee Pip List component with out crashing', () => {
+    const updateButtonElement = screen.getByTestId('update-btn')
+    expect(updateButtonElement).toBeInTheDocument()
+    userEvent.click(updateButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
+  })
+  test('should render Employee Pip List', () => {
+    const updateButtonElement = screen.getByTestId('Extend-btn')
+    expect(updateButtonElement).toBeInTheDocument()
+    userEvent.click(updateButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
+  })
+  test('should render Employee Pip', () => {
+    const updateButtonElement = screen.getByTestId('Remove-btn')
+    expect(updateButtonElement).toBeInTheDocument()
+    userEvent.click(updateButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })

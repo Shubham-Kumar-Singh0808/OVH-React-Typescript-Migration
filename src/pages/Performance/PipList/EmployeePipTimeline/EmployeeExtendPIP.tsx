@@ -117,7 +117,7 @@ const EmployeeExtendPIP = ({
                 id="employeeName"
                 size="sm"
                 name="employeeName"
-                value={viewEmployeePipDetails.employeeName}
+                value={viewEmployeePipDetails?.employeeName}
                 disabled={true}
               />
             </CCol>
@@ -137,7 +137,7 @@ const EmployeeExtendPIP = ({
                 id="startDate"
                 size="sm"
                 name="startDate"
-                value={viewEmployeePipDetails.startDate}
+                value={viewEmployeePipDetails?.startDate}
                 disabled={true}
               />
             </CCol>
@@ -157,7 +157,7 @@ const EmployeeExtendPIP = ({
                 id="endDate"
                 size="sm"
                 name="endDate"
-                value={viewEmployeePipDetails.endDate}
+                value={viewEmployeePipDetails?.endDate}
                 disabled={true}
               />
             </CCol>
