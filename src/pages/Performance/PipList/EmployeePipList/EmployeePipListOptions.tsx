@@ -141,7 +141,7 @@ const EmployeePipListOptions = ({
         </div>
       </div>
       <CRow className="mt-5 mb-4">
-        <CCol sm={{ span: 6, offset: 3 }}>
+        <CCol sm={{ span: 6 }}>
           <CButton
             className="cursor-pointer"
             color="success btn-ovh me-1"

@@ -301,13 +301,11 @@ const AddEmployeePipList = ({
               />
             </CCol>
           </CRow>
-          <CRow>
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">
-                Start Date :
-                <span className={showIsRequired(startDate as string)}>*</span>
-              </CFormLabel>
-            </CCol>
+          <CRow className="mt-3">
+            <CFormLabel className={formLabel}>
+              Start Date :
+              <span className={showIsRequired(startDate as string)}>*</span>
+            </CFormLabel>
             <CCol sm={2}>
               <ReactDatePicker
                 className="form-control form-control-sm sh-date-picker"
@@ -324,12 +322,12 @@ const AddEmployeePipList = ({
                 selected={startDate as Date}
               />
             </CCol>
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">
-                End Date :
-                <span className={showIsRequired(endDate as string)}>*</span>
-              </CFormLabel>
-            </CCol>
+          </CRow>
+          <CRow className="mt-3">
+            <CFormLabel className={formLabel}>
+              End Date :
+              <span className={showIsRequired(endDate as string)}>*</span>
+            </CFormLabel>
             <CCol sm={2}>
               <ReactDatePicker
                 className="form-control form-control-sm sh-date-picker"
@@ -352,13 +350,11 @@ const AddEmployeePipList = ({
               )}
             </CCol>
           </CRow>
-          <CRow className="employeeAllocation-form">
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">
-                Rating:
-                <span className={showIsRequired(selectRating)}>*</span>
-              </CFormLabel>
-            </CCol>
+          <CRow className="employeeAllocation-form mt-3">
+            <CFormLabel className={formLabel}>
+              Rating:
+              <span className={showIsRequired(selectRating)}>*</span>
+            </CFormLabel>
             <CCol sm={2}>
               <CFormSelect
                 aria-label="Default select example"

@@ -145,7 +145,7 @@ const EmployeePipList = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
-          <CRow className="employeeAllocation-form">
+          <CRow className="employeeAllocation-form  mt-4">
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-2">Select:</CFormLabel>
             </CCol>
@@ -169,6 +169,25 @@ const EmployeePipList = (): JSX.Element => {
                 <option value="Custom">Custom</option>
                 <option value="Current Month">Current Month</option>
               </CFormSelect>
+            </CCol>
+            <CCol sm={12} md={9}>
+              <EmployeePipListOptions
+                selectDate={selectDate}
+                paginationRange={paginationRange}
+                setPageSize={setPageSize}
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                fromDate={fromDate as string}
+                toDate={toDate as string}
+                searchInput={searchInput}
+                searchByAdded={searchByAdded}
+                searchByEmployee={searchByEmployee}
+                setToggle={setToggle}
+                setSelectDate={setSelectDate}
+                setFromDate={setFromDate}
+                setToDate={setToDate}
+              />
             </CCol>
             {selectDate === 'Custom' ? (
               <>
@@ -228,44 +247,32 @@ const EmployeePipList = (): JSX.Element => {
               <></>
             )}
           </CRow>
-          <EmployeePipListOptions
-            selectDate={selectDate}
-            paginationRange={paginationRange}
-            setPageSize={setPageSize}
-            setCurrentPage={setCurrentPage}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            fromDate={fromDate as string}
-            toDate={toDate as string}
-            searchInput={searchInput}
-            searchByAdded={searchByAdded}
-            searchByEmployee={searchByEmployee}
-            setToggle={setToggle}
-            setSelectDate={setSelectDate}
-            setFromDate={setFromDate}
-            setToDate={setToDate}
-          />
+
           <CRow>
-            <CFormCheck
-              className="pt-2"
-              data-testid="ch-searchByEmployee"
-              id="searchByEmployee"
-              name="searchByEmployee"
-              checked={searchByEmployee}
-              onChange={(e) => setSearchByEmployee(e.target.checked)}
-            />
-            <b>Search by Employee Name</b>
+            <label className="search_emp d-flex justify-content-end">
+              <CFormCheck
+                className="pt-2"
+                data-testid="ch-searchByEmployee"
+                id="searchByEmployee"
+                name="searchByEmployee"
+                checked={searchByEmployee}
+                onChange={(e) => setSearchByEmployee(e.target.checked)}
+              />
+              <b>Search by Employee Name</b>
+            </label>
           </CRow>
           <CRow>
-            <CFormCheck
-              className="pt-2"
-              data-testid="ch-searchByAdded"
-              id="searchByAdded"
-              name="searchByAdded"
-              checked={searchByAdded}
-              onChange={(e) => setSearchByAdded(e.target.checked)}
-            />
-            <b>Search by Added by Name</b>
+            <label className="search_emp d-flex justify-content-end">
+              <CFormCheck
+                className="pt-2"
+                data-testid="ch-searchByAdded"
+                id="searchByAdded"
+                name="searchByAdded"
+                checked={searchByAdded}
+                onChange={(e) => setSearchByAdded(e.target.checked)}
+              />
+              <b>Search by Added by Name</b>
+            </label>
           </CRow>
           <CRow className="gap-2 d-md-flex justify-content-md-end">
             <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
