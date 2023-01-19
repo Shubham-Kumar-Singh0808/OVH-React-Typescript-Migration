@@ -33,4 +33,9 @@ describe('should render Employee Pip Time line Component without data', () => {
     userEvent.click(backButtonElement)
     expect(mockSetToggle).toHaveBeenCalledTimes(1)
   })
+  test('should select rating', () => {
+    const selectRating = screen.getByTestId('form-select1')
+    userEvent.selectOptions(selectRating, ['10'])
+    expect(selectRating).toHaveValue('10')
+  })
 })
