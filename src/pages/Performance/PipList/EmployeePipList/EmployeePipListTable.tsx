@@ -191,7 +191,7 @@ const EmployeePipListTable = ({
         <>
           <div
             dangerouslySetInnerHTML={{
-              __html: reasonModal.remarks as string,
+              __html: reasonModal.remarks,
             }}
           />
         </>

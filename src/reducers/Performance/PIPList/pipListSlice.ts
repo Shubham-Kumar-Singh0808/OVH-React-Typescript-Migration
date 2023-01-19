@@ -195,8 +195,8 @@ const pipListSlice = createSlice({
     builder
       .addCase(getAllPIPList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.pipListData = action.payload.list
-        state.listSize = action.payload.size
+        state.pipListData = action.payload?.list
+        state.listSize = action.payload?.size
       })
       .addCase(getPIPHistory.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -228,14 +228,34 @@ const pipListSlice = createSlice({
           updatePipDetails.pending,
           viewPipDetails.pending,
           removeFromPip.pending,
+          getAllPIPList.pending,
+          exportPIPList.pending,
+          getPerformanceRatings.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
-      .addMatcher(isAnyOf(addPIP.fulfilled), (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          extendPip.rejected,
+          updatePipDetails.rejected,
+          viewPipDetails.rejected,
+          removeFromPip.rejected,
+          getAllPIPList.rejected,
+          exportPIPList.rejected,
+          getPerformanceRatings.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
+      .addMatcher(
+        isAnyOf(addPIP.fulfilled, exportPIPList.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
   },
 })
 
