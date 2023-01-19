@@ -32,6 +32,7 @@ const ITDeclarationList = (): JSX.Element => {
       toDate: '',
     },
   ])
+  const [isEditITForm, setIsEditITForm] = useState<boolean>(false)
 
   const itDeclarationListPath = '/itDeclarationList'
   const dispatch = useAppDispatch()
@@ -106,7 +107,13 @@ const ITDeclarationList = (): JSX.Element => {
   }
 
   const editDeclarationFormButtonHandler = (editForm: ITForm[]): void => {
+    dispatch(
+      reduxServices.itDeclarationForm.isITDeclarationFormEditable(
+        editForm[0].itDeclarationFormId,
+      ),
+    )
     history.push('/itDeclarationForm')
+    setIsEditITForm(true)
     console.log(editForm)
     dispatch(
       reduxServices.itDeclarationList.actions.setEditDeclarationForm(editForm),
@@ -142,6 +149,8 @@ const ITDeclarationList = (): JSX.Element => {
                 editDeclarationFormButtonHandler={
                   editDeclarationFormButtonHandler
                 }
+                isEditITForm={false}
+                setIsEditITForm={setIsEditITForm}
               />
             ) : (
               <>

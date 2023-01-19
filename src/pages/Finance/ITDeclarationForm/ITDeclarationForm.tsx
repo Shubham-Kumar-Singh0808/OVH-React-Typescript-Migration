@@ -129,7 +129,7 @@ const ITDeclarationForm = (): JSX.Element => {
             </span>
           </CCol>
         </CRow>
-        <CRow>
+        {/* <CRow>
           <CCol className="col-md-3 offset-md-3">
             <CButton
               className="btn-ovh"
@@ -139,7 +139,7 @@ const ITDeclarationForm = (): JSX.Element => {
               Update
             </CButton>
           </CCol>
-        </CRow>
+        </CRow> */}
         <CRow className="mt-2 mb-2">
           {userAccessToSubmitDeclarationForm?.createaccess && (
             <CCol className="col-md-3 offset-md-4">
