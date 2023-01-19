@@ -39,9 +39,16 @@ const AddEditChangeRequest = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setAddChangeRequest((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'duration') {
+      const durationValue = value.replace(/[^0-9]/gi, '')
+      setAddChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: durationValue } }
+      })
+    } else {
+      setAddChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   console.log(addChangeRequest?.name)
   useEffect(() => {
@@ -152,7 +159,7 @@ const AddEditChangeRequest = ({
               placeholder="Hours"
               value={addChangeRequest?.duration}
               onChange={onChangeHandler}
-              maxLength={10}
+              maxLength={8}
               autoComplete="off"
             />
           </CCol>
