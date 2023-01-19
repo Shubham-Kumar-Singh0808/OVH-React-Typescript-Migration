@@ -85,4 +85,8 @@ describe('Employee Accounts Table Component Testing', () => {
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)
   })
+  test('should render export button', () => {
+    const exportComponent = screen.getByTestId('employee-export-btn')
+    expect(exportComponent).toBeTruthy()
+  })
 })

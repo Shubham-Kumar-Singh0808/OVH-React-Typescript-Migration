@@ -276,6 +276,7 @@ const EmployeePipList = (): JSX.Element => {
                     placeholder="Employee Search"
                     aria-label="Multiple Search"
                     aria-describedby="button-addon2"
+                    data-testid="searchField"
                     value={searchInput}
                     onChange={(e) => {
                       setSearchInput(e.target.value)
