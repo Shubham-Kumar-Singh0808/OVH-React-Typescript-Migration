@@ -27,7 +27,7 @@ describe('filter employee name', () => {
     test('render label', () => {
       const empLabel = screen.getByTestId('ach-emp-name')
       expect(empLabel).toBeInTheDocument()
-      expect(empLabel).toHaveTextContent('Employee Name:*')
+      expect(empLabel).toHaveTextContent('Employee Name :*')
     })
 
     test('render placeholder', () => {
