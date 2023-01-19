@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import FilterOptions from './FilterOptions'
 import ITDeclarationListTable from './ITDeclarationListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -31,11 +32,13 @@ const ITDeclarationList = (): JSX.Element => {
       toDate: '',
     },
   ])
+
   const itDeclarationListPath = '/itDeclarationList'
   const dispatch = useAppDispatch()
   const toggle = useTypedSelector(
     reduxServices.itDeclarationList.selectors.toggle,
   )
+  const history = useHistory()
   const isLoading = useTypedSelector(
     reduxServices.itDeclarationList.selectors.isLoading,
   )
@@ -102,6 +105,14 @@ const ITDeclarationList = (): JSX.Element => {
     ])
   }
 
+  const editDeclarationFormButtonHandler = (editForm: ITForm[]): void => {
+    history.push('/itDeclarationForm')
+    console.log(editForm)
+    dispatch(
+      reduxServices.itDeclarationList.actions.setEditDeclarationForm(editForm),
+    )
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -127,6 +138,9 @@ const ITDeclarationList = (): JSX.Element => {
                 pageSize={pageSize}
                 viewDeclarationFormButtonHandler={
                   viewDeclarationFormButtonHandler
+                }
+                editDeclarationFormButtonHandler={
+                  editDeclarationFormButtonHandler
                 }
               />
             ) : (

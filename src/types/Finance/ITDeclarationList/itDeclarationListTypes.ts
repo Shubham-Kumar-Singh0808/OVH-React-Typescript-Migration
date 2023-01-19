@@ -63,6 +63,7 @@ export type ITDeclarationListTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
+  editDeclarationFormButtonHandler: (editForm: ITForm[]) => void
 }
 
 export type ITDeclarationListOptionsProps = {
@@ -125,4 +126,6 @@ export type ITDeclarationListSliceState = {
   currentPage: number
   pageSize: number
   toggle: string
+  editDeclarationForm: ITForm[]
+  isEditITForm: boolean
 }

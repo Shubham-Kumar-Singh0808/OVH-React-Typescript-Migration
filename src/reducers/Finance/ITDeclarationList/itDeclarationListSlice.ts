@@ -28,6 +28,8 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   toggle: '',
   investments: [],
   sections: [],
+  editDeclarationForm: [],
+  isEditITForm: false,
 }
 
 const getCycles = createAsyncThunk(
@@ -262,6 +264,12 @@ const itDeclarationListSlice = createSlice({
     setToggle: (state, action) => {
       state.toggle = action.payload
     },
+    setEditDeclarationForm: (state, action) => {
+      state.editDeclarationForm = action.payload
+    },
+    setIsEditITForm: (state) => {
+      state.isEditITForm = false
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -360,6 +368,8 @@ const sections = (state: RootState): Section[] =>
   state.itDeclarationList.sections
 const itDeclarationForms = (state: RootState): ITForm[] =>
   state.itDeclarationList.itDeclarationForms
+const editDeclarationForm = (state: RootState): ITForm[] =>
+  state.itDeclarationList.editDeclarationForm
 const listSize = (state: RootState): number => state.itDeclarationList.listSize
 const searchEmployee = (state: RootState): string =>
   state.itDeclarationList.searchEmployee
@@ -401,6 +411,7 @@ const itDeclarationListSelectors = {
   toggle,
   investments,
   sections,
+  editDeclarationForm,
 }
 
 export const itDeclarationListService = {

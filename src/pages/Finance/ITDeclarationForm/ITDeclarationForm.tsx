@@ -11,7 +11,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const ITDeclarationForm = (): JSX.Element => {
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState<boolean>(false)
-
   const dispatch = useAppDispatch()
   const history = useHistory()
   const itDeclarationFormExists = useTypedSelector(
@@ -44,13 +43,14 @@ const ITDeclarationForm = (): JSX.Element => {
       setIsButtonEnabled(false)
     }
   }, [isAgreeChecked])
-  useEffect(() => {
-    dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
-    if (itDeclarationFormExists === true) {
-      dispatch(reduxServices.app.actions.addToast(warningToastMessage))
-      history.push('/itDeclarationList')
-    }
-  }, [dispatch, itDeclarationFormExists])
+
+  // useEffect(() => {
+  //   dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
+  //   if (itDeclarationFormExists === true) {
+  //     dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+  //     history.push('/itDeclarationList')
+  //   }
+  // }, [dispatch, itDeclarationFormExists])
 
   const toastElement = (
     <OToast
@@ -127,6 +127,17 @@ const ITDeclarationForm = (): JSX.Element => {
                 deduction of income tax dues from salary.
               </strong>
             </span>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol className="col-md-3 offset-md-3">
+            <CButton
+              className="btn-ovh"
+              color="success"
+              disabled={!isButtonEnabled}
+            >
+              Update
+            </CButton>
           </CCol>
         </CRow>
         <CRow className="mt-2 mb-2">

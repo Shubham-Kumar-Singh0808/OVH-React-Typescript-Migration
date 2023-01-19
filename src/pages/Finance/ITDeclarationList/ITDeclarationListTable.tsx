@@ -115,6 +115,28 @@ const ITDeclarationListTable = (
                                 color="info btn-ovh"
                                 className="btn-ovh-employee-list"
                                 data-testid={`sc-edit-btn${index}`}
+                                onClick={() =>
+                                  props.editDeclarationFormButtonHandler([
+                                    {
+                                      cycleId: itDeclaration.cycleId,
+                                      designation: itDeclaration.designation,
+                                      employeeId: itDeclaration.employeeId,
+                                      employeeName: itDeclaration.employeeName,
+                                      filePath: itDeclaration.filePath,
+                                      formSectionsDTOs:
+                                        itDeclaration.formSectionsDTOs,
+                                      fromDate: itDeclaration.fromDate,
+                                      grandTotal: itDeclaration.grandTotal,
+                                      isAgree: itDeclaration.isAgree,
+                                      itDeclarationFormId:
+                                        itDeclaration.itDeclarationFormId,
+                                      organisationName:
+                                        itDeclaration.organisationName,
+                                      panNumber: itDeclaration.panNumber,
+                                      toDate: itDeclaration.toDate,
+                                    },
+                                  ])
+                                }
                               >
                                 <i
                                   className="fa fa-edit"
