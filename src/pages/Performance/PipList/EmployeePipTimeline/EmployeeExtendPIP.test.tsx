@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import EmployeeExtendPIP from './EmployeeExtendPIP'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { mockGetPipList } from '../../../../test/data/pipListData'
 
 const mockSetToggle = jest.fn()
@@ -65,5 +65,16 @@ describe('should render Employee Pip Time line Component without data', () => {
     const addBtn = screen.getByRole('button', { name: 'Extend' })
     userEvent.click(addBtn)
     expect(addBtn).toBeInTheDocument()
+  })
+  test('should render on Dates AllocateEmployee', async () => {
+    const datePickers = screen.getAllByPlaceholderText('Extend Date')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
+    expect(datePickers[0]).toHaveValue('08/30/2022')
   })
 })

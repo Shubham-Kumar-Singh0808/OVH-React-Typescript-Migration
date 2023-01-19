@@ -3,7 +3,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddEmployeePipList from './AddEmployeePipList'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { EmployeePipStatus } from '../../../../types/Performance/PipList/pipListTypes'
 import { mockGetAllPipList } from '../../../../test/data/pipListData'
 
@@ -49,5 +49,23 @@ describe('Employee Accounts Table Component Testing', () => {
   test('should render add PIP component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
+  test('should render on Dates AllocateEmployee', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '07 Sep, 2022' },
+      }),
+    )
+    expect(datePickers[0]).toHaveValue('8/30/2022')
+    expect(datePickers[1]).toHaveValue('9/07/2022')
   })
 })
