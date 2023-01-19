@@ -31,7 +31,7 @@ const OSelect = ({
         >
           {label}:
           {isRequired && (
-            <span className={showIsRequired(selectedValue as string)}>*</span>
+            <span className={showIsRequired(selectedValue)}>*</span>
           )}
         </CFormLabel>
         <CCol sm={3}>
