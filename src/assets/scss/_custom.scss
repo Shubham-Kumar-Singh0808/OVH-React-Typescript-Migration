@@ -385,3 +385,10 @@ input.capetalized {
     border: 1px solid #000;
   }
 }
+
+.table-layout-fixed {
+  table-layout: fixed;
+  th:first-of-type{
+      width: 40px;
+    }
+}
