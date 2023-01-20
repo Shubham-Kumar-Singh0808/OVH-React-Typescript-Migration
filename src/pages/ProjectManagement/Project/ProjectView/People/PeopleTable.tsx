@@ -11,7 +11,7 @@ import {
   CTableBody,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
@@ -23,6 +23,7 @@ const PeopleTable = (): JSX.Element => {
   )
   const [isProjectAllocationEdit, setIsProjectAllocationEdit] =
     useState<boolean>(false)
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [templateId, setTemplateId] = useState(0)
   const initialEmployeeAllocation = {} as UpdateProjectViewDetails
   const [editAllocateProject, setEditEmployeeAllocation] = useState(
@@ -86,6 +87,13 @@ const PeopleTable = (): JSX.Element => {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+  useEffect(() => {
+    if (editAllocateProject.allocation?.replace(/^\s*/, '')) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [editAllocateProject.allocation])
   return (
     <>
       <CTable striped responsive className="sh-project-report-details">
@@ -118,9 +126,11 @@ const PeopleTable = (): JSX.Element => {
             <CTableHeaderCell scope="col" className="profile-tab-content">
               Current Status
             </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Actions
-            </CTableHeaderCell>
+            {userAccessEditPeople?.updateaccess && (
+              <CTableHeaderCell scope="col" className="profile-tab-content">
+                Actions
+              </CTableHeaderCell>
+            )}
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -217,6 +227,7 @@ const PeopleTable = (): JSX.Element => {
                             color="success"
                             className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                             onClick={saveProjectAllocationHandler}
+                            disabled={!isSaveButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"

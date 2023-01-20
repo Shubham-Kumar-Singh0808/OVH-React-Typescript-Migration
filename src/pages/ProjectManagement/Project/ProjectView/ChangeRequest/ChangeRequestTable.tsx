@@ -111,7 +111,7 @@ const ChangeRequestTable = ({
         projectid: String(projectId),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
   return (
     <>
       <CTable striped className="mt-3">
