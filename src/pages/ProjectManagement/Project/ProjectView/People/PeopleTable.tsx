@@ -86,7 +86,7 @@ const PeopleTable = (): JSX.Element => {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
- 
+
   return (
     <>
       <CTable striped responsive className="sh-project-report-details">
@@ -219,7 +219,7 @@ const PeopleTable = (): JSX.Element => {
                           <CButton
                             color="success"
                             className="btn-ovh-employee-list btn-ovh me-1 mb-1"
-                            onClick={saveProjectAllocationHandler}                            
+                            onClick={saveProjectAllocationHandler}
                           >
                             <i
                               className="fa fa-floppy-o"
