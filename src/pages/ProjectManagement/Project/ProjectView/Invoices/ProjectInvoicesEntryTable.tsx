@@ -125,11 +125,10 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
       <CTable
         responsive
         striped
-        className="mt-2 text-start profile-tab-table-size"
+        className="mb-0 text-start profile-tab-table-size"
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Serial Number</CTableHeaderCell>
             <CTableHeaderCell scope="col">Invoice Number</CTableHeaderCell>
@@ -150,7 +149,6 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
             const crName = item.crName !== null ? '' : 'N/A'
             return (
               <CTableRow key={index}>
-                <CTableDataCell scope="row"></CTableDataCell>
                 <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row">
                   <CLink
@@ -189,7 +187,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Edit">
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh m-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
@@ -197,7 +195,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="View">
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh m-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-eye text-white fa-fw"></i>
                     </CButton>
@@ -205,7 +203,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Timeline">
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh m-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-bar-chart  fa-fw"></i>
                     </CButton>
@@ -213,7 +211,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Discussion">
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh m-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-comments text-white"></i>
                     </CButton>
