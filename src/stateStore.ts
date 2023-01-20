@@ -118,6 +118,7 @@ import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlic
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
 import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
 
@@ -238,6 +239,7 @@ export const allReducers = {
   myReview: myReviewReducer,
   leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  pipList: pipListReducer,
   reviewList: reviewListReducer,
   KRA: KRAReducer,
   // add your slice reducers here

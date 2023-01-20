@@ -76,11 +76,9 @@ import {
   EmployeeAccountsApi,
   ITDeclarationListApi,
   InvestmentCheckListApi,
-  PayrollManagementApi,
   AchieverListApi,
   CommonAchievementsApi,
   ProjectCreationRequestApi,
-  AddProjectCreationRequestApi,
   AddAchieverApi,
   ProjectDetailsApi,
   ProjectTimeLineApi,
@@ -97,9 +95,12 @@ import {
   AddNomineeApi,
   MyReviewApi,
   LeadershipEnrollmentFormApi,
-  ReviewListApi,
+  PIPListApi,
   LeadershipEnrollmentListApi,
   KRAApi,
+  AddProjectCreationRequestApi,
+  PayrollManagementApi,
+  ReviewListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -640,6 +641,19 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
 }
 
+export const payrollManagementApiConfig: PayrollManagementApi = {
+  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
+  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
+  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
+  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
+  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
+  deleteCheckedPayslips:
+    apiPrefix + '/payslip/payrolladmin/deleteCheckedPayslips',
+  readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
+  saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
+  clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
+}
+
 export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
   getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
   getSectionsHavingInvests:
@@ -718,17 +732,12 @@ export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getSections: apiPrefix + '/itDeclaration/getSection',
 }
 
-export const payrollManagementApiConfig: PayrollManagementApi = {
-  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
-  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
-  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
-  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
-  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
-  deleteCheckedPayslips:
-    apiPrefix + '/payslip/payrolladmin/deleteCheckedPayslips',
-  readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
-  saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
-  clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
+export const reviewListApiConfig: ReviewListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getReviewList: apiPrefix + '/appraisal/getSearchResult',
+  getAppraisalCycles: apiPrefix + '/appraisal/cycle',
+  getDesignations: apiPrefix + '/kra/designation',
+  exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
 }
 
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
@@ -740,6 +749,14 @@ export const AchieverListApiConfig: AchieverListApi = {
   updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
   achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
 }
+
+export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
+  {
+    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
+    getProjectRequestMailIds:
+      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
+  }
 
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getAllProjectRequestList:
@@ -829,13 +846,6 @@ export const projectNotesApiConfig: ProjectNotesApi = {
   projectNotesTimeLine: apiPrefix + '/projectnewsfeed/',
   uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
 }
-export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
-  {
-    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
-    getProjectRequestMailIds:
-      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
-    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
-  }
 export const initiateCycleApiConfig: InitiateCycleApi = {
   getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
   getallcycles: apiPrefix + '/nominationController/getallcycles',
@@ -894,10 +904,17 @@ export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
 }
 
-export const reviewListApiConfig: ReviewListApi = {
-  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
-  getReviewList: apiPrefix + '/appraisal/getSearchResult',
-  getAppraisalCycles: apiPrefix + '/appraisal/cycle',
-  getDesignations: apiPrefix + '/kra/designation',
-  exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
+export const PipListApiConfig: PIPListApi = {
+  getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
+  exportPIPList: apiPrefix + '/PIPManagement/exportPIPList',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  activeEmployee: apiPrefix + '/observation-mgnt/activeEmployee/',
+  addPIP: apiPrefix + '/PIPManagement/addPIP',
+  viewPipDetails: apiPrefix + '/PIPManagement/viewPipDetails',
+  getPIPHistory: apiPrefix + '/PIPManagement/getPIPHistory',
+  extendPip: apiPrefix + '/PIPManagement/extendPip',
+  removeFromPip: apiPrefix + '/PIPManagement/removeFromPip',
+  updatePipDetails: apiPrefix + '/PIPManagement/updatePipDetails',
+  savePIPClearnceCertificate:
+    apiPrefix + '/PIPManagement/savePIPClearnceCertificate',
 }

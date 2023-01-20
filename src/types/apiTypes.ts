@@ -736,6 +736,20 @@ export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
 }
 
+export interface PIPListApi extends ApiBase {
+  getAllPIPList: string
+  exportPIPList: string
+  getPerformanceRatings: string
+  activeEmployee: string
+  addPIP: string
+  viewPipDetails: string
+  getPIPHistory: string
+  extendPip: string
+  removeFromPip: string
+  updatePipDetails: string
+  savePIPClearnceCertificate: string
+}
+
 export interface ReviewListApi extends ApiBase {
   getEmployeeDepartments: string
   getReviewList: string
