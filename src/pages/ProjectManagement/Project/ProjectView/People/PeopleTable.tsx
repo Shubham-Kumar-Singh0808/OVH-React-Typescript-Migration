@@ -11,7 +11,7 @@ import {
   CTableBody,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'

@@ -1,4 +1,4 @@
-import { CFormLabel } from '@coreui/react-pro'
+import { CFormLabel, CLink } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../stateStore'
@@ -33,7 +33,9 @@ const ProposalsTimeLine = (): JSX.Element => {
                         Comments:
                       </CFormLabel>
                       &nbsp;
-                      {item.post}
+                      <CLink href={item.post} target="_blank">
+                        {item.post}
+                      </CLink>
                     </div>
                   </div>
                 </div>

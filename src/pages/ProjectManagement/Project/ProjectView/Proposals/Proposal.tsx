@@ -48,7 +48,7 @@ const Proposal = (): JSX.Element => {
         <CCol col-xs-12 mt-10>
           <CFormInput
             autoComplete="off"
-            type="text"
+            type="link"
             id="proposalLink"
             name="proposalLink"
             placeholder="Please Enter Proposal link"
