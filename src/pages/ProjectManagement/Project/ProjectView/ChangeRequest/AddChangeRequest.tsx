@@ -40,7 +40,7 @@ const AddEditChangeRequest = ({
   ) => {
     const { name, value } = e.target
     if (name === 'duration') {
-      const durationValues = value.replace(/['\D']/gi, '')
+      const durationValues = value.replace(/\D/gi, '')
       setAddChangeRequest((prevState) => {
         return { ...prevState, ...{ [name]: durationValues } }
       })
