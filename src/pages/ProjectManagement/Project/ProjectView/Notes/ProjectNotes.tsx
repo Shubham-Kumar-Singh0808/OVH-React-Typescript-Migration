@@ -110,6 +110,7 @@ const ProjectNotes = (): JSX.Element => {
                 element.currentTarget as HTMLInputElement,
               )
             }
+            accept="image/*"
           />
         </CCol>
         <CCol className="text-end" md={9}>
