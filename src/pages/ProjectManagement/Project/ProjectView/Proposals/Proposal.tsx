@@ -51,7 +51,7 @@ const Proposal = (): JSX.Element => {
             type="text"
             id="proposalLink"
             name="proposalLink"
-            placeholder="Please Enter Proposal link?"
+            placeholder="Please Enter Proposal link"
             data-testid="proposal-link"
             value={proposalLink}
             onChange={(e) =>
@@ -68,6 +68,7 @@ const Proposal = (): JSX.Element => {
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
           <CButton
+            className="proposal-post-button"
             color="info btn-ovh me-1 pull-right"
             disabled={!isPostButtonEnabled}
             onClick={postButtonHandler}

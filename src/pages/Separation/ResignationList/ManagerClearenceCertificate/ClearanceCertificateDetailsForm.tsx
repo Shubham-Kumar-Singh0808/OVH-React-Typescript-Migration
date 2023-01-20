@@ -68,7 +68,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         isDue: isActiveValue as unknown as boolean,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
-        seperationId: managerClearanceDetails[0]?.seperationId,
+        seperationId: getAllResignationHistory.separationId,
       }),
     )
     if (

@@ -72,7 +72,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
         isDue: isFinanceEditActiveValue as unknown as boolean,
         seperationEmpId: FinanceCCDetails[0]?.seperationEmpId,
         seperationEmpName: FinanceCCDetails[0]?.seperationEmpName,
-        seperationId: FinanceCCDetails[0]?.seperationId,
+        seperationId: getAllResignationHistory.separationId,
       }),
     )
     if (
@@ -197,7 +197,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isFinanceEditActiveValue as unknown as boolean}
+                    checked={!isFinanceEditActiveValue}
                     onChange={handleEditFinanceCCDetailsHandler}
                   />
                   <CFormCheck
