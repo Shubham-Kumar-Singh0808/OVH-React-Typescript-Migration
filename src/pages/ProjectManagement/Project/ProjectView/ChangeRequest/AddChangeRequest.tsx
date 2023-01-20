@@ -124,7 +124,13 @@ const AddEditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(addChangeRequest?.name)}>*</span>
+            <span
+              className={showIsRequired(
+                addChangeRequest?.name?.replace(/^\s*/, ''),
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -132,7 +138,7 @@ const AddEditChangeRequest = ({
               type="text"
               id="name"
               name="name"
-              placeholder="Name"
+              placeholder="Title"
               data-testid="request-name"
               value={addChangeRequest?.name}
               onChange={onChangeHandler}
@@ -140,7 +146,7 @@ const AddEditChangeRequest = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
             Duration :
             <span
               className={showIsRequired(
@@ -166,7 +172,7 @@ const AddEditChangeRequest = ({
         </CRow>
 
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
             Description :
             <span
               className={showIsRequired(
@@ -178,7 +184,6 @@ const AddEditChangeRequest = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormTextarea
-              placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
               value={changeRequestDescription}
