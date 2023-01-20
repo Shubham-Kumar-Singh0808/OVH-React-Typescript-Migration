@@ -23,7 +23,6 @@ const PeopleTable = (): JSX.Element => {
   )
   const [isProjectAllocationEdit, setIsProjectAllocationEdit] =
     useState<boolean>(false)
-  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [templateId, setTemplateId] = useState(0)
   const initialEmployeeAllocation = {} as UpdateProjectViewDetails
   const [editAllocateProject, setEditEmployeeAllocation] = useState(
@@ -87,13 +86,7 @@ const PeopleTable = (): JSX.Element => {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
-  useEffect(() => {
-    if (editAllocateProject.allocation?.replace(/^\s*/, '')) {
-      setIsSaveButtonEnabled(true)
-    } else {
-      setIsSaveButtonEnabled(false)
-    }
-  }, [editAllocateProject.allocation])
+ 
   return (
     <>
       <CTable striped responsive className="sh-project-report-details">
@@ -226,8 +219,7 @@ const PeopleTable = (): JSX.Element => {
                           <CButton
                             color="success"
                             className="btn-ovh-employee-list btn-ovh me-1 mb-1"
-                            onClick={saveProjectAllocationHandler}
-                            disabled={!isSaveButtonEnabled}
+                            onClick={saveProjectAllocationHandler}                            
                           >
                             <i
                               className="fa fa-floppy-o"
