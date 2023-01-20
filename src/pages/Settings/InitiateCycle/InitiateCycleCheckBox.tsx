@@ -4,17 +4,15 @@ import { GetQuestion } from '../../../types/Settings/InitiateCycle/initiateCycle
 
 const InitiateCycleCheckBox = ({
   item,
+  onChangeHandler,
 }: {
   item: GetQuestion
+  onChangeHandler: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
 }): JSX.Element => {
-  const [isChecked, setIsChecked] = useState(item.checkQuestion)
-
-  const switchOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { checked } = e.target
-    const checkedCopy = checked
-    setIsChecked(checkedCopy)
-  }
-
+  const [isChecked, setIsChecked] = useState<boolean>()
   return (
     <>
       <CFormCheck
@@ -22,8 +20,9 @@ const InitiateCycleCheckBox = ({
         id="all"
         type="checkbox"
         name="checkQuestion"
-        checked={isChecked as boolean}
-        onChange={(e) => switchOnChangeHandler(e)}
+        checked={item.checkQuestion === true ? isChecked : false}
+        onChange={(e) => setIsChecked(e.target.checked)}
+        // onChange={() => onChangeHandler}
       />
     </>
   )

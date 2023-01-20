@@ -6,7 +6,7 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
 import AddQuestion from './AddQuestion/AddQuestion'
 import AddInitiateCycle from './AddCycle/AddInitiateCycle'
@@ -16,10 +16,20 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { TotalResponse } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import {
+  GetQuestion,
+  TotalResponse,
+} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
 const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [cycleChecked, setCycleChecked] = useState<GetQuestion[]>([
+    {
+      id: 0,
+      question: '',
+      checkQuestion: true,
+    },
+  ])
 
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
@@ -73,6 +83,7 @@ const InitiateCycle = (): JSX.Element => {
       toastColor="danger"
     />
   )
+
   const addBtnHandler = async () => {
     const prepareObject = {
       nominationCycleDto: {
@@ -83,7 +94,7 @@ const InitiateCycle = (): JSX.Element => {
         id: activeCycle.nominationCycleDto.id,
         toMonth: activeCycle.nominationCycleDto.toMonth,
       },
-      nominationQuestionDto: [{}],
+      nominationQuestionDto: cycleChecked,
     } as unknown as TotalResponse
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
@@ -218,6 +229,8 @@ const InitiateCycle = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
+            cycleChecked={cycleChecked}
+            setCycleChecked={setCycleChecked}
           />
         </OCard>
       )}

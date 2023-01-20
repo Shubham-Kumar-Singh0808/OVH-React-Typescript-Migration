@@ -1,5 +1,6 @@
 import {
   CCol,
+  CFormCheck,
   CLink,
   CRow,
   CTable,
@@ -17,7 +18,10 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { InitiateCycleTableProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import {
+  GetQuestion,
+  InitiateCycleCheckBoxProps,
+} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const InitiateCycleTable = ({
@@ -26,7 +30,9 @@ const InitiateCycleTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-}: InitiateCycleTableProps): JSX.Element => {
+  setCycleChecked,
+  cycleChecked,
+}: InitiateCycleCheckBoxProps): JSX.Element => {
   const [isQuestionVisible, setIsQuestionVisible] = useState<boolean>(false)
   const [questionModal, setQuestionModal] = useState<string>('')
 
@@ -102,7 +108,24 @@ const InitiateCycleTable = ({
                     )}
                   </CTableDataCell>
                   <CTableDataCell className="text-middle ms-2">
-                    <InitiateCycleCheckBox item={item} />
+                    <CFormCheck
+                      key={index}
+                      data-testid="ch-All-countries"
+                      id="all"
+                      type="checkbox"
+                      name="checkQuestion"
+                      checked={item?.checkQuestion as boolean}
+                      onChange={() => {
+                        setCycleChecked([
+                          {
+                            id: item.id,
+                            question: item.question,
+                            checkQuestion: true,
+                          },
+                        ])
+                      }}
+                      value={cycleChecked as unknown as string}
+                    />
                   </CTableDataCell>
                 </CTableRow>
               )

@@ -49,7 +49,7 @@ export type InitiateCycleSliceState = {
 export type GetQuestion = {
   id: number
   question: string
-  checkQuestion: boolean | null
+  checkQuestion: boolean | null | string
 }
 
 export type GetAllCycles = {
@@ -68,4 +68,14 @@ export type InitiateCycleTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type InitiateCycleCheckBoxProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  cycleChecked: GetQuestion[]
+  setCycleChecked: React.Dispatch<React.SetStateAction<GetQuestion[]>>
 }
