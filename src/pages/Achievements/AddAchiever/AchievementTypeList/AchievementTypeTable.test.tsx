@@ -8,6 +8,7 @@ import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { TextDanger } from '../../../../constant/ClassName'
 import { TableColor } from '../../AchievementConstants'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockExecuteSaveButtonHandler = jest.fn()
 const mockSetEditSaveButtonEnabled = jest.fn()
@@ -35,6 +36,9 @@ describe('Achievement Type Table Testing', () => {
           commonAchievements: {
             achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

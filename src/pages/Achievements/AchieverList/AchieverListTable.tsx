@@ -121,7 +121,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                     <CTableDataCell scope="row">
                       {descLimit ? (
                         <div
-                          className="text-info"
+                          className="text-info cursor-pointer"
                           // role="button"
                           data-testid={`description-${index}`}
                           onClick={() => {

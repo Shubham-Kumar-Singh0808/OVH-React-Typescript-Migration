@@ -98,7 +98,7 @@ describe('Testing Achiever List Table', () => {
       const element = screen.getByTestId('description-0')
       expect(element).toBeInTheDocument()
       fireEvent.click(element)
-      expect(screen.getByTestId('modal-txt')).toBeInTheDocument()
+      expect(screen.getAllByText('This is testing')[0]).toBeInTheDocument()
     })
     test('Should change on clicking toggle', () => {
       const toggleBtn = screen.getAllByTestId('btn-toggle')
