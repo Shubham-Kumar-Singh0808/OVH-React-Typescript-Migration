@@ -8,6 +8,7 @@ import {
   AppraisalTemplateSliceState,
   DesignationsUnderCycleProps,
   GetCycleList,
+  GetDesignationsUnderCycle,
 } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const activeCycle = createAsyncThunk(
@@ -52,12 +53,21 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   listSize: 0,
   cycleList: [],
   designationsUnderCycle: [],
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const appraisalTemplateSlice = createSlice({
   name: 'appraisalTemplate',
   initialState: initialAppraisalTemplateState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(activeCycle.fulfilled, (state) => {
@@ -67,12 +77,30 @@ const appraisalTemplateSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.cycleList = action.payload
       })
-      .addMatcher(isAnyOf(activeCycle.pending, cycle.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getDesignationsUnderCycle.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.designationsUnderCycle = action.payload
       })
-      .addMatcher(isAnyOf(activeCycle.rejected, cycle.rejected), (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
+      .addMatcher(
+        isAnyOf(
+          activeCycle.pending,
+          cycle.pending,
+          getDesignationsUnderCycle.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          activeCycle.rejected,
+          cycle.rejected,
+          getDesignationsUnderCycle.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
   },
 })
 
@@ -84,6 +112,15 @@ const listSize = (state: RootState): number => state.appraisalTemplate.listSize
 const cycleList = (state: RootState): GetCycleList[] =>
   state.appraisalTemplate.cycleList
 
+const pageFromState = (state: RootState): number =>
+  state.appraisalTemplate.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.appraisalTemplate.pageSize
+
+const designationsUnderCycle = (
+  state: RootState,
+): GetDesignationsUnderCycle[] => state.appraisalTemplate.designationsUnderCycle
+
 export const appraisalTemplateThunk = {
   activeCycle,
   cycle,
@@ -94,6 +131,9 @@ export const appraisalTemplateSelectors = {
   isLoading,
   listSize,
   cycleList,
+  designationsUnderCycle,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const appraisalTemplateService = {

@@ -23,6 +23,8 @@ export type AppraisalTemplateSliceState = {
   listSize: number
   cycleList: GetCycleList[]
   designationsUnderCycle: GetDesignationsUnderCycle[]
+  currentPage: number
+  pageSize: number
 }
 
 export type AppraisalCycleDto = {

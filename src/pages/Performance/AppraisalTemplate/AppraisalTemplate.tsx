@@ -59,7 +59,7 @@ const AppraisalTemplate = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        <AppraisalTemplateTable />
+        <AppraisalTemplateTable selectAppraisalId={selectAppraisalId} />
       </OCard>
     </>
   )
