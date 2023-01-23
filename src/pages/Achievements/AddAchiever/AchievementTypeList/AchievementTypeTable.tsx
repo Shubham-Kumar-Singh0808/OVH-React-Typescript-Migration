@@ -261,11 +261,9 @@ const AchievementTypeTable = (
   return (
     <>
       <CTable
-        className="mt-2 mb-2"
+        className="mt-2 mb-2 table-layout-fixed align-center"
         responsive
         striped
-        align="middle"
-        role="table"
       >
         <CTableHead>
           <CTableRow>
@@ -385,7 +383,7 @@ const AchievementTypeTable = (
           ))}
         </CTableBody>
       </CTable>
-      <CRow>
+      <CRow className="mt-3">
         <CCol xs={4}>
           <p>
             <strong>Total Records: {achievementTypeDataList?.size}</strong>

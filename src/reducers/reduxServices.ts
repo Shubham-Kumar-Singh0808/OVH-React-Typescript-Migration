@@ -108,6 +108,7 @@ import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { pipListService } from './Performance/PIPList/pipListSlice'
 import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
 
@@ -222,6 +223,7 @@ export const reduxServices = {
   myReview: myReviewService,
   leadershipEnrollmentList: leadershipEnrollmentListService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  pipList: pipListService,
   reviewList: reviewListService,
   KRA: KRAService,
 }

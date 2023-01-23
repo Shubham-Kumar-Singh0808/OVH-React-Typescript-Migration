@@ -111,10 +111,10 @@ const ChangeRequestTable = ({
         projectid: String(projectId),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="mt-3 table-layout-fixed">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

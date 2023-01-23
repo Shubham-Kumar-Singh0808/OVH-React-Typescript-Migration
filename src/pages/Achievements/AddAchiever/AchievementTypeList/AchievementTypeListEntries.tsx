@@ -232,6 +232,7 @@ const AchievementTypeListEntries = (
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
+              className="achievement-typeList-checkbox"
               type="checkbox"
               data-testid="ach-time-check"
               valid={true}
