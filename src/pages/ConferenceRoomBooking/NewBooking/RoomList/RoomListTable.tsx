@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -16,6 +16,10 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { currentPageData } from '../../../../utils/paginationUtils'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
 
 const RoomListTable = ({
   userDeleteAccess,
@@ -29,6 +33,37 @@ const RoomListTable = ({
   const [deleteLocationId, setDeleteLocationId] = useState(0)
 
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
+
+  const pageFromState = useTypedSelector(
+    reduxServices.category.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.category.selectors.pageSizeFromState,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(roomList?.length, pageSizeFromState, pageFromState)
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(roomList, currentPage, pageSize),
+    [roomList, currentPage, pageSize],
+  )
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Room Deleted Successfully" />
@@ -71,12 +106,14 @@ const RoomListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {roomList &&
-            roomList?.length > 0 &&
-            roomList?.map((room, index) => {
+          {currentPageItems &&
+            currentPageItems?.length > 0 &&
+            currentPageItems?.map((room, index) => {
               return (
-                <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                <CTableRow key={getItemNumber(index)}>
+                  <CTableDataCell key={getItemNumber(index)}>
+                    {index + 1}
+                  </CTableDataCell>
                   <CTableDataCell>{room.locationName}</CTableDataCell>
                   <CTableDataCell>{room.roomName}</CTableDataCell>
                   <CTableDataCell>
@@ -106,10 +143,32 @@ const RoomListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {roomList.length}</strong>
-          </p>
+          <strong>
+            {roomList?.length
+              ? `Total Records: ${roomList?.length}`
+              : `No Records Found`}
+          </strong>
         </CCol>
+        <CCol xs={3}>
+          {roomList?.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {roomList?.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
       </CRow>
       <OModal
         alignment="center"
