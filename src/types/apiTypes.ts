@@ -758,4 +758,5 @@ export interface ReviewListApi extends ApiBase {
 export interface AppraisalTemplateApi extends ApiBase {
   cycle: string
   activeCycle: string
+  getDesignationsUnderCycle: string
 }

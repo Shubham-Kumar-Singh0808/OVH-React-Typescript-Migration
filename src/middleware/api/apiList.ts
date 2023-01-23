@@ -920,4 +920,5 @@ export const PipListApiConfig: PIPListApi = {
 export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   cycle: apiPrefix + '/appraisal/cycle',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
+  getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
 }
