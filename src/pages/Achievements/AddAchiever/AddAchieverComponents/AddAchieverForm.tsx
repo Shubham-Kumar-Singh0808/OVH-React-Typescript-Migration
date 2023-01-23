@@ -1,5 +1,5 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
-  CContainer,
   CFormLabel,
   CForm,
   CRow,
@@ -18,7 +18,6 @@ import FilterEmployeeName from './FilterEmployeeName'
 import AchieverImage from './AchieverImage'
 import {
   base64Extension,
-  emptyString,
   fromToDateError,
   getDateForamatted,
   newAchievementLabelClass,
@@ -73,11 +72,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const achievementTypeDetailsAscendingList = useTypedSelector(
     (state) => state.commonAchievements.achievementTypeList,
   )
-
   const selectedEmployee = useTypedSelector(
     (state) => state.addAchiever.employeeData,
   )
-
   const allActiveEmployees = useTypedSelector(
     (state) => state.addAchiever.activeEmployeeList,
   )
@@ -85,22 +82,27 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     useState<AchievementType>()
 
   const [achievementDescription, setAchievementDescription] =
-    useState<string>(emptyString)
+    useState<string>('')
 
   const [imageDescription, setImageDescription] = useState<string>()
 
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeFilterName, setEmployeeFilterName] = useState<string>()
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToViewAchievementType = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Achievement Type',
+  )
+  const userAccessToAchievement = userAccessToFeatures?.find(
+    (feature) => feature.name === "Add Achiever's",
+  )
   const showDates =
     achievementTypeDetails && achievementTypeDetails.daterequired
 
   const showTimePeriod =
     achievementTypeDetails && achievementTypeDetails.timeperiodrequired
-
-  const fromDate = getDateForamatted(newAchieverDetails.startDate)
-
-  const toDate = getDateForamatted(newAchieverDetails.endDate)
 
   const datesErrorMessage = compareTheDates(
     newAchieverDetails.startDate,
@@ -122,9 +124,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     setNewAchieverDetails({
       ...newAchieverDetails,
       achievementName: value,
-      timePeriod: emptyString,
-      startDate: emptyString,
-      endDate: emptyString,
+      timePeriod: '',
+      startDate: '',
+      endDate: '',
     })
     const achievement = achievementTypeDetailsAscendingList.list.find(
       (item) => item.typeName === value,
@@ -161,16 +163,16 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   useEffect(() => {
     if (
       newAchieverDetails.achievementName === selectAchievementType ||
-      newAchieverDetails.employeeName === emptyString ||
-      employeeFilterName === emptyString
+      newAchieverDetails.employeeName === '' ||
+      employeeFilterName === ''
     ) {
       setAddButton(false)
     } else {
       setAddButton(true)
       if (
         showDates &&
-        (newAchieverDetails.startDate === emptyString ||
-          newAchieverDetails.endDate === emptyString ||
+        (newAchieverDetails.startDate === '' ||
+          newAchieverDetails.endDate === '' ||
           compareTheDates(
             newAchieverDetails.startDate,
             newAchieverDetails.endDate,
@@ -180,7 +182,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
       }
       if (
         showTimePeriod &&
-        (newAchieverDetails.timePeriod === emptyString ||
+        (newAchieverDetails.timePeriod === '' ||
           newAchieverDetails.timePeriod === '0' ||
           newAchieverDetails.timePeriod.trim().length === 0 ||
           !Number(newAchieverDetails.timePeriod))
@@ -196,7 +198,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     ) {
       setNewAchieverDetails({
         ...newAchieverDetails,
-        employeeName: emptyString,
+        employeeName: '',
       })
       setEmployeeFilterName(undefined)
     }
@@ -205,7 +207,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const clearLocalDetails = () => {
     clearInfoButtonHandler()
     setShowEditor(false)
-    setAchievementDescription(emptyString)
+    setAchievementDescription('')
     setAchievementTypeDetails(undefined)
     setEmployeeFilterName(undefined)
     setImageDescription(undefined)
@@ -259,45 +261,45 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
 
   return (
     <CForm onSubmit={submitNewAchievementHandler}>
-      <CContainer className="mt-4 ms-2">
-        <AchievementEntryContainer>
-          <CFormLabel
-            data-testid="ach-name-label"
-            className={newAchievementLabelClass}
+      <AchievementEntryContainer>
+        <CFormLabel
+          data-testid="ach-name-label"
+          className={newAchievementLabelClass}
+        >
+          Achievement Type :
+          <span
+            className={
+              newAchieverDetails.achievementName === null ||
+              newAchieverDetails.achievementName === selectAchievementType
+                ? TextDanger
+                : TextWhite
+            }
           >
-            Achievement Type:
-            <span
-              className={
-                newAchieverDetails.achievementName === null ||
-                newAchieverDetails.achievementName === selectAchievementType
-                  ? TextDanger
-                  : TextWhite
-              }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol md={3}>
-            <CFormSelect
-              size="sm"
-              value={newAchieverDetails.achievementName}
-              data-testid="ach-name-sel"
-              onChange={setAchievementTypeHandler}
-            >
-              <option data-testid="ach-name-opt" value={selectAchievementType}>
-                {selectAchievementType}
+            *
+          </span>
+        </CFormLabel>
+        <CCol md={3}>
+          <CFormSelect
+            size="sm"
+            value={newAchieverDetails.achievementName}
+            data-testid="ach-name-sel"
+            onChange={setAchievementTypeHandler}
+          >
+            <option data-testid="ach-name-opt" value={selectAchievementType}>
+              {selectAchievementType}
+            </option>
+            {achievementTypeDetailsAscendingList.list.map((item, index) => (
+              <option
+                data-testid="ach-name-opt"
+                key={index}
+                value={item.typeName}
+              >
+                {item.typeName}
               </option>
-              {achievementTypeDetailsAscendingList.list.map((item, index) => (
-                <option
-                  data-testid="ach-name-opt"
-                  key={index}
-                  value={item.typeName}
-                >
-                  {item.typeName}
-                </option>
-              ))}
-            </CFormSelect>
-          </CCol>
+            ))}
+          </CFormSelect>
+        </CCol>
+        {userAccessToViewAchievementType?.viewaccess && (
           <CCol md={3}>
             <CButton
               color="info"
@@ -310,187 +312,184 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               + Add
             </CButton>
           </CCol>
-        </AchievementEntryContainer>
-        <FilterEmployeeName
-          allEmployees={allActiveEmployees}
-          onSelectEmployee={onSelectEmployee}
-          employeeName={employeeFilterName}
-          setEmployeeName={setEmployeeFilterName}
-        />
-        {showTimePeriod && (
-          <AchievementEntryContainer>
-            <CFormLabel
-              className={newAchievementLabelClass}
-              data-testid="ach-timep-label"
-            >
-              Time Period (year&apos;s):
-              <span
-                className={
-                  newAchieverDetails.timePeriod === null ||
-                  newAchieverDetails.timePeriod === emptyString ||
-                  newAchieverDetails.timePeriod === '0' ||
-                  newAchieverDetails.timePeriod.trim().length === 0 ||
-                  !Number(newAchieverDetails.timePeriod)
-                    ? TextDanger
-                    : TextWhite
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol md={3}>
-              <CFormInput
-                type="text"
-                data-testid="timep-inp"
-                maxLength={2}
-                placeholder="Time Period"
-                value={newAchieverDetails.timePeriod}
-                onChange={setTimePeriodHandler}
-              />
-            </CCol>
-          </AchievementEntryContainer>
         )}
-        {showDates && (
-          <AchievementEntryContainer>
-            <CFormLabel
-              data-testid="from-date"
-              className={newAchievementLabelClass}
-            >
-              From Date:
-              <span
-                className={
-                  newAchieverDetails.startDate === null ||
-                  newAchieverDetails.startDate === emptyString
-                    ? TextDanger
-                    : TextWhite
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol md={3}>
-              <ReactDatePicker
-                dateFormat="MMMM yyyy"
-                autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
-                data-testid="startDate"
-                placeholderText="MM-YYYY"
-                peekNextMonth
-                showMonthYearPicker
-                dropdownMode="select"
-                value={fromDate}
-                onChange={(date: Date) => {
-                  setNewAchieverDetails({
-                    ...newAchieverDetails,
-                    startDate: moment(date).format(commonDateFormat),
-                  })
-                }}
-              />
-            </CCol>
-          </AchievementEntryContainer>
-        )}
-        {showDates && (
-          <AchievementEntryContainer>
-            <CFormLabel
-              data-testid="to-date"
-              className={newAchievementLabelClass}
-            >
-              To Date:
-              <span
-                className={
-                  newAchieverDetails.endDate === null ||
-                  newAchieverDetails.endDate === emptyString
-                    ? TextDanger
-                    : TextWhite
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol md={3}>
-              <ReactDatePicker
-                dateFormat="MMMM yyyy"
-                autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
-                placeholderText="MM-YYYY"
-                peekNextMonth
-                showMonthYearPicker
-                dropdownMode="select"
-                value={toDate}
-                onChange={(date: Date) => {
-                  setNewAchieverDetails({
-                    ...newAchieverDetails,
-                    endDate: moment(date).format(commonDateFormat),
-                  })
-                }}
-              />
-              <CCol>{datesErrorMessage}</CCol>
-            </CCol>
-          </AchievementEntryContainer>
-        )}
+      </AchievementEntryContainer>
+      <FilterEmployeeName
+        allEmployees={allActiveEmployees}
+        onSelectEmployee={onSelectEmployee}
+        employeeName={employeeFilterName}
+        setEmployeeName={setEmployeeFilterName}
+      />
+      {showTimePeriod && (
         <AchievementEntryContainer>
           <CFormLabel
-            data-testid="ach-desc"
-            className={`${newAchievementLabelClass} align-self-start`}
-          >
-            Description:
-            <span className={TextWhite}>*</span>
-          </CFormLabel>
-          <CCol sm={8}>
-            {showEditor ? (
-              <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
-                initData={achievementDescription}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  descriptionHandler(editor.getData().trim())
-                }}
-              />
-            ) : (
-              <></>
-            )}
-          </CCol>
-        </AchievementEntryContainer>
-        <AchievementEntryContainer>
-          <CFormLabel
-            data-testid="ach-pic"
             className={newAchievementLabelClass}
+            data-testid="ach-timep-label"
           >
-            Picture:
-            <span className={TextWhite}>*</span>
+            Time Period (year&apos;s) :
+            <span
+              className={
+                newAchieverDetails.timePeriod === null ||
+                newAchieverDetails.timePeriod === '' ||
+                newAchieverDetails.timePeriod === '0' ||
+                newAchieverDetails.timePeriod.trim().length === 0 ||
+                !Number(newAchieverDetails.timePeriod)
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
           </CFormLabel>
-          <CCol sm={12} md={3}>
-            <AchieverImage
-              file={`${base64Extension}${selectedEmployee?.imageData}`}
-              empId={selectedEmployee?.id}
-              onUploadImage={croppedImageDataHandler}
+          <CCol md={3}>
+            <CFormInput
+              type="text"
+              data-testid="timep-inp"
+              maxLength={2}
+              placeholder="Time Period"
+              value={newAchieverDetails.timePeriod}
+              onChange={setTimePeriodHandler}
             />
           </CCol>
         </AchievementEntryContainer>
-      </CContainer>
-      <CRow>
-        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="add-achiever-btn"
-            disabled={!isAddButtonEnabled}
+      )}
+      {showDates && (
+        <AchievementEntryContainer>
+          <CFormLabel
+            data-testid="from-date"
+            className={newAchievementLabelClass}
           >
-            Add
-          </CButton>
-          <CButton
-            color="warning"
-            role="addNewAchiever"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
+            From Date :
+            <span
+              className={
+                newAchieverDetails.startDate === null ||
+                newAchieverDetails.startDate === ''
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol md={3}>
+            <ReactDatePicker
+              dateFormat="MMMM yyyy"
+              autoComplete="off"
+              className="form-control form-control-sm sh-date-picker"
+              data-testid="startDate"
+              placeholderText="MM-YYYY"
+              peekNextMonth
+              showMonthYearPicker
+              dropdownMode="select"
+              value={getDateForamatted(newAchieverDetails.startDate)}
+              onChange={(date: Date) => {
+                setNewAchieverDetails({
+                  ...newAchieverDetails,
+                  startDate: moment(date).format(commonDateFormat),
+                })
+              }}
+            />
+          </CCol>
+        </AchievementEntryContainer>
+      )}
+      {showDates && (
+        <AchievementEntryContainer>
+          <CFormLabel
+            data-testid="to-date"
+            className={newAchievementLabelClass}
           >
-            Clear
-          </CButton>
+            To Date :
+            <span
+              className={
+                newAchieverDetails.endDate === null ||
+                newAchieverDetails.endDate === ''
+                  ? TextDanger
+                  : TextWhite
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol md={3}>
+            <ReactDatePicker
+              dateFormat="MMMM yyyy"
+              autoComplete="off"
+              className="form-control form-control-sm sh-date-picker"
+              placeholderText="MM-YYYY"
+              peekNextMonth
+              showMonthYearPicker
+              dropdownMode="select"
+              value={getDateForamatted(newAchieverDetails.endDate)}
+              onChange={(date: Date) => {
+                setNewAchieverDetails({
+                  ...newAchieverDetails,
+                  endDate: moment(date).format(commonDateFormat),
+                })
+              }}
+            />
+            <CCol>{datesErrorMessage}</CCol>
+          </CCol>
+        </AchievementEntryContainer>
+      )}
+      <AchievementEntryContainer>
+        <CFormLabel
+          data-testid="ach-desc"
+          className={`${newAchievementLabelClass} align-self-start`}
+        >
+          Description :<span className={TextWhite}>*</span>
+        </CFormLabel>
+        <CCol sm={8}>
+          {showEditor ? (
+            <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
+              initData={achievementDescription}
+              config={ckeditorConfig}
+              debug={true}
+              onChange={({ editor }) => {
+                descriptionHandler(editor.getData().trim())
+              }}
+            />
+          ) : (
+            <></>
+          )}
         </CCol>
-      </CRow>
+      </AchievementEntryContainer>
+      <AchievementEntryContainer>
+        <CFormLabel data-testid="ach-pic" className={newAchievementLabelClass}>
+          Picture :<span className={TextWhite}>*</span>
+        </CFormLabel>
+        <CCol sm={12} md={3}>
+          <AchieverImage
+            file={`${base64Extension}${selectedEmployee?.imageData}`}
+            empId={selectedEmployee?.id}
+            onUploadImage={croppedImageDataHandler}
+          />
+        </CCol>
+      </AchievementEntryContainer>
+      {userAccessToAchievement?.createaccess && (
+        <CRow>
+          <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+          <CCol sm={4}>
+            <CButton
+              type="submit"
+              color="success"
+              className="btn-ovh me-1"
+              data-testid="add-achiever-btn"
+              disabled={!isAddButtonEnabled}
+            >
+              Add
+            </CButton>
+            <CButton
+              color="warning"
+              role="addNewAchiever"
+              data-testid="clear-btn"
+              className="btn-ovh me-1"
+              onClick={clearButtonHandler}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
     </CForm>
   )
 }
