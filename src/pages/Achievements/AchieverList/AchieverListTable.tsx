@@ -110,7 +110,9 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
               <CTableHeaderCell scope="col">Time Period (yr)</CTableHeaderCell>
               <CTableHeaderCell scope="col">Description</CTableHeaderCell>
               {ToggleTimelineAccess === true ? (
-                <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="text-center">
+                  Actions
+                </CTableHeaderCell>
               ) : (
                 <></>
               )}
@@ -126,7 +128,6 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                         className="rounded-circle img-responsive"
                         src={item.profilePicture}
                         alt={item.employeeName}
-                        title={item.employeeName}
                         width={35}
                       />
                     </div>
@@ -167,7 +168,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                       <div
                         className="d-flex flex-row align-items-center"
                         data-testid={`user-access-${index}`}
-                        style={{ width: '115px' }}
+                        style={{ width: '125px' }}
                       >
                         <AchieverListToggle achieverItem={item} />
                         <div className="button-events">
@@ -222,7 +223,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
           {achieverListState.achieverList.size > 20 && (
             <CCol
               xs={5}
-              className="d-grid gap-1 d-md-flex justify-content-md-end"
+              className="col-6 d-grid d-md-flex justify-content-md-end"
             >
               <OPagination
                 currentPage={currentPage}

@@ -119,8 +119,10 @@ const AchieverListFilterOptions = (
     <CForm onSubmit={filterHandler}>
       <CContainer className="mt-4 ms-2">
         <CRow>
-          <CCol xs={12} md={3} className="mb-1">
-            <CFormLabel>Select:</CFormLabel>
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel className="mt-1">Select:</CFormLabel>
+          </CCol>
+          <CCol sm={2}>
             <CFormSelect
               data-testid="select-date-type"
               aria-label="Default select example"
@@ -145,34 +147,39 @@ const AchieverListFilterOptions = (
               ))}
             </CFormSelect>
           </CCol>
-          <CCol md={2}></CCol>
-          <CCol xs={12} md={3} className="mb-1">
-            <CFormLabel>Achievement Type:</CFormLabel>
-            <CFormSelect
-              data-testid="achievement-type-select"
-              aria-label="Default select example"
-              size="sm"
-              value={currentAchievement}
-              onChange={achievementChangeHandler}
-            >
-              <option
-                value={selectAchievementType}
-                data-testid="achievement-option-default"
-              >
-                {selectAchievementType}
-              </option>
-              {achievementTypes?.list.map(
-                (item: AchievementType, index: number) => (
+          <CCol sm={8}>
+            <CRow>
+              <CCol sm={4} lg={4} className="text-end">
+                <CFormLabel className="mt-1">Achievement Type:</CFormLabel>
+              </CCol>
+              <CCol sm={4}>
+                <CFormSelect
+                  data-testid="achievement-type-select"
+                  aria-label="Default select example"
+                  size="sm"
+                  value={currentAchievement}
+                  onChange={achievementChangeHandler}
+                >
                   <option
-                    key={index}
-                    value={item.typeName}
-                    data-testid="achievement-option-fetched"
+                    value={selectAchievementType}
+                    data-testid="achievement-option-default"
                   >
-                    {item.typeName}
+                    {selectAchievementType}
                   </option>
-                ),
-              )}
-            </CFormSelect>
+                  {achievementTypes?.list.map(
+                    (item: AchievementType, index: number) => (
+                      <option
+                        key={index}
+                        value={item.typeName}
+                        data-testid="achievement-option-fetched"
+                      >
+                        {item.typeName}
+                      </option>
+                    ),
+                  )}
+                </CFormSelect>
+              </CCol>
+            </CRow>
           </CCol>
         </CRow>
         {currentSelectedOption !== SelectMonthOptions.customDate ? (
@@ -235,7 +242,7 @@ const AchieverListFilterOptions = (
         )}
       </CContainer>
       <CRow className="mt-4">
-        <CFormLabel className="col-form-label category-label col-sm-4 col-form-label text-end"></CFormLabel>
+        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
           <CButton
             data-testid="view-btn-id"

@@ -27,7 +27,11 @@ const addSectionButtonElement = 'add-section-btn'
 describe('IT Declaration List Component Testing', () => {
   beforeEach(() => {
     render(toRender, {
-      preloadedState: {},
+      preloadedState: {
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
     })
   })
   test('should render InvestmentList Page Title', () => {

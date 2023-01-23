@@ -13,7 +13,6 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import {
   EditedAchievementDetails,
   emptyString,
-  orderRegexValue,
 } from '../../AchievementConstants'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
@@ -29,9 +28,6 @@ const AchievementTypeList = ({
   backButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const achievementTypesLength = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList?.size,
-  )
   const addAchieverState = useTypedSelector((state) => state.addAchiever)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
   const [userNewSelectedAchievementType, setNewSelectedAchievementType] =
@@ -50,6 +46,9 @@ const AchievementTypeList = ({
   const [newUserSelectedDateReq, setNewUserSelectedDateReq] =
     useState<boolean>(false)
 
+  const [isEditSaveButtonEnabled, setEditSaveButtonEnabled] =
+    useState<boolean>(false)
+
   const newAchievementTypeNameHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -63,7 +62,7 @@ const AchievementTypeList = ({
   }
 
   const newSelectedOrderHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const orderValue = e.target.value.replace(orderRegexValue, '')
+    const orderValue = e.target.value.replace(/\D/g, '')
     setNewUserSelectedOrder(orderValue)
   }
 
@@ -93,7 +92,7 @@ const AchievementTypeList = ({
     const achievementStatus =
       newUserSelectedStatus === NewAchievementStatus.Active ? 'true' : 'false'
     const newAchievementData: OutgoingNewAchievementType = {
-      typeName: userNewSelectedAchievementType,
+      typeName: userNewSelectedAchievementType.trim(),
       order: newUserSelectedOrder.toString(),
       status: achievementStatus,
       timeperiodrequired: newUserSelectedTimeReq,
@@ -157,12 +156,6 @@ const AchievementTypeList = ({
     }
   }
 
-  const scrollTernary = achievementTypesLength > 15 ? 'custom-scroll' : ''
-  const recordStringTernary =
-    achievementTypesLength > 0
-      ? `Total Records: ${achievementTypesLength}`
-      : 'No Records Found...'
-
   return (
     <CContainer>
       <CRow className="mt-2 justify-content-end text-end">
@@ -195,14 +188,13 @@ const AchievementTypeList = ({
             addButtonHandler={addAchievementButtonHandler}
             achievementClearButtonHandler={addAchievementClearButtonHandler}
           />
-          <CCol data-testid="scroll-col" className={scrollTernary}>
+          <CCol className="mt-3">
             <AchievementTypeTable
+              isEditSaveButtonEnabled={isEditSaveButtonEnabled}
+              setEditSaveButtonEnabled={setEditSaveButtonEnabled}
               executeSaveButtonHandler={editSaveButtonHandler}
             />
           </CCol>
-          <CRow className="mt-3">
-            <strong data-testid="tot-rec-num">{recordStringTernary}</strong>
-          </CRow>
         </>
       ) : (
         <OLoadingSpinner type={LoadingType.PAGE} />

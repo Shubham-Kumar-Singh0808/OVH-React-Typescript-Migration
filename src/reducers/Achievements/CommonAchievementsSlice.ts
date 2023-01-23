@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import commonAchievementsApi from '../../middleware/api/Achievements/CommonAchievementsApi'
 import { ApiLoadingState } from '../../middleware/api/apiList'
+import { RootState } from '../../stateStore'
 import {
   AchievementType,
   CommonAchievementInitialState,
@@ -17,21 +18,12 @@ export const sortByAscendingOrder = (
   })
 }
 
-export const sortByDateCreated = (
-  incomingList: AchievementType[],
-): AchievementType[] => {
-  return incomingList.sort((a, b) => {
-    return (
-      new Date(b.createdDate.split('/').reverse().join('-')).getTime() -
-      new Date(a.createdDate.split('/').reverse().join('-')).getTime()
-    )
-  })
-}
-
 const initialState: CommonAchievementInitialState = {
   achievementTypeList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
-  dateSortedList: { size: 0, list: [] },
+  currentPage: 1,
+  pageSize: 20,
+  listSize: 0,
 }
 
 const getAllAchievementsType = createAsyncThunk(
@@ -50,7 +42,14 @@ const getAllAchievementsType = createAsyncThunk(
 const commonAchievementsSlice = createSlice({
   name: 'commonAchievements',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllAchievementsType.fulfilled, (state, action) => {
       const data = JSON.parse(
@@ -61,7 +60,6 @@ const commonAchievementsSlice = createSlice({
       const finalData = { ...data, list: sortedList }
 
       state.achievementTypeList = finalData
-      state.dateSortedList = { ...data, list: sortByDateCreated(data.list) }
       state.isLoading = ApiLoadingState.succeeded
     })
     builder.addMatcher(isAnyOf(getAllAchievementsType.pending), (state) => {
@@ -70,13 +68,26 @@ const commonAchievementsSlice = createSlice({
   },
 })
 
+const pageFromState = (state: RootState): number =>
+  state.commonAchievements.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.commonAchievements.pageSize
+const listSize = (state: RootState): number => state.commonAchievements.listSize
+
 const commonAchievementsThunk = {
   getAllAchievementsType,
+}
+
+const commonAchievementsSelectors = {
+  pageFromState,
+  pageSizeFromState,
+  listSize,
 }
 
 export const commonAchievementsService = {
   ...commonAchievementsThunk,
   actions: commonAchievementsSlice.actions,
+  selectors: commonAchievementsSelectors,
 }
 
 const commonAchievementsReducer = commonAchievementsSlice.reducer

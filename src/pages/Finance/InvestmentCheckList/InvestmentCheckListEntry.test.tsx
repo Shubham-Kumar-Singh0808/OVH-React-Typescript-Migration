@@ -2,12 +2,11 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import InvestmentCheckListEntry from './InvestmentCheckListEntry'
-import { cleanup, render, screen } from '../../../test/testUtils'
+import { render, screen } from '../../../test/testUtils'
 import {
   mockInvestments,
   mockSections,
 } from '../../../test/data/investmentCheckListData'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const mockSectionsData = {
   sectionId: '6',

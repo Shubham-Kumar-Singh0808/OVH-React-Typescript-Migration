@@ -184,19 +184,13 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
+
 const EmployeeAllocationReport = React.lazy(
   () =>
     import(
       './pages/ProjectManagement/EmployeeAllocation/EmployeeAllocationReport'
     ),
 )
-const LocationList = React.lazy(
-  () =>
-    import(
-      './pages/ConferenceRoomBooking/NewBooking/LocationList/LocationList'
-    ),
-)
-
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
@@ -212,6 +206,9 @@ const EditHoliday = React.lazy(
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
 
+const NewBookingRoom = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/NewBooking/NewBooking'),
+)
 const EmployeeAllocation = React.lazy(
   () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
 )
@@ -220,16 +217,20 @@ const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
 
-const RoomList = React.lazy(
-  () => import('./pages/ConferenceRoomBooking/NewBooking/RoomList/RoomList'),
-)
-
 const EditConfiguration = React.lazy(
   () =>
     import(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -243,6 +244,10 @@ const SubmitResignation = React.lazy(
 
 const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
+)
+
+const ITDeclarationForm = React.lazy(
+  () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
 )
 
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
@@ -263,6 +268,10 @@ const ResignationFeedBackForm = React.lazy(
     import(
       './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
     ),
+)
+
+const ReviewList = React.lazy(
+  () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
 )
 
 const ResignationManagerClearanceCertificate = React.lazy(
@@ -333,6 +342,13 @@ const AddSection = React.lazy(
   () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
 )
 
+const ViewProjectDetails = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/ProjectViewLandingPage/ProjectView'
+    ),
+)
+
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
@@ -346,6 +362,53 @@ const AddAchiever = React.lazy(
 
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
+)
+const InitiateCycle = React.lazy(
+  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+)
+
+const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
+
+const NomineeList = React.lazy(
+  () => import('./pages/Achievements/NomineeList/NomineeList'),
+)
+
+const AddNominee = React.lazy(
+  () => import('./pages/Achievements/AddNominee/AddNominee'),
+)
+
+const MyReview = React.lazy(
+  () => import('./pages/Performance/MyReviews/MyReview'),
+)
+
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
+const LeadershipEnrollmentList = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentList'
+    ),
+)
+
+const LeadershipEnrollmentForm = React.lazy(
+  () =>
+    import(
+      './pages/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentForm'
+    ),
+)
+
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/EmployeePipList'),
+)
+
+const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
+    ),
 )
 
 /**
@@ -592,11 +655,11 @@ const routes = [
     name: 'Event Type List',
     component: EventTypeList,
   },
-  {
-    path: '/newMeetingRequest',
-    name: 'Add LocationList',
-    component: LocationList,
-  },
+  // {
+  //   path: '/newMeetingRequest',
+  //   name: 'Add LocationList',
+  //   component: LocationList,
+  // },
   {
     path: '/trainingFeedBackForm/:eventId',
     name: 'Feedback Forms',
@@ -608,15 +671,20 @@ const routes = [
     component: EditHoliday,
   },
   {
+    path: '/newMeetingRequest',
+    name: 'New Booking',
+    component: NewBookingRoom,
+  },
+  {
     path: '/appraisalCycle',
     name: 'Appraisal Configurations',
     component: AppraisalConfigurations,
   },
-  {
-    path: '/roomList',
-    name: 'RoomList',
-    component: RoomList,
-  },
+  // {
+  //   path: '/roomList',
+  //   name: 'RoomList',
+  //   component: RoomList,
+  // },
   {
     path: '/editAppraisalCycle/:cycleId',
     name: 'Edit Configuration',
@@ -641,6 +709,11 @@ const routes = [
     path: '/leaveApprovals',
     name: 'Leave Approvals',
     component: LeaveApprovals,
+  },
+  {
+    path: '/itDeclarationForm',
+    name: 'IT Declaration Form',
+    component: ITDeclarationForm,
   },
   {
     path: '/payslip',
@@ -725,6 +798,11 @@ const routes = [
     component: InvestmentCheckList,
   },
   {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
+  },
+  {
     path: '/achievementList',
     name: 'Achievements List',
     component: AchieverList,
@@ -748,6 +826,71 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/viewProject/:projectId',
+    name: 'View Project',
+    component: ViewProjectDetails,
+  },
+  {
+    path: '/initiateCycle',
+    name: 'Initiate Cycle',
+    component: InitiateCycle,
+  },
+  {
+    path: '/myKRAs',
+    name: 'My KRAs',
+    component: myKRAs,
+  },
+  {
+    path: '/nomineesList',
+    name: 'Nominee List',
+    component: NomineeList,
+  },
+  {
+    path: '/addNominee',
+    name: 'Add Nominee',
+    component: AddNominee,
+  },
+  {
+    path: '/employeeAppraisal',
+    name: 'My Review',
+    component: MyReview,
+  },
+  {
+    path: '/leadershiplist',
+    name: 'Leadership Enrollment List',
+    component: LeadershipEnrollmentList,
+  },
+  {
+    path: '/leadershipForm',
+    name: 'Leadership Enrollment Form',
+    component: LeadershipEnrollmentForm,
+  },
+  {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
+  },
+  {
+    path: '/addKra',
+    name: 'KRA',
+    component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
+  },
+  {
+    path: '/listofAppraisal',
+    name: 'KRA',
+    component: ReviewList,
   },
 ]
 

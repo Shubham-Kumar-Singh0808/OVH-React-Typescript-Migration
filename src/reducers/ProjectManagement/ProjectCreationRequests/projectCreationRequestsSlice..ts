@@ -5,11 +5,13 @@ import projectCreationRequestsApi from '../../../middleware/api/ProjectManagemen
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  ApproveProjectRequest,
   GetAllProjectRequestListProps,
   GetProjectRequest,
   ProjectCreationRequestState,
   ProjectRequestHistoryDetails,
   ProjectRequestList,
+  RejectProjectRequestProps,
 } from '../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
 
 const getAllProjectRequestList = createAsyncThunk(
@@ -63,6 +65,91 @@ const projectRequestHistoryDetails = createAsyncThunk<
   },
 )
 
+const getApproveProjectRequest = createAsyncThunk<
+  ApproveProjectRequest | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/getApproveProjectRequest',
+  async (id: number, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.getApproveProjectRequest(id)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateProjectRequest = createAsyncThunk<
+  number | undefined,
+  ApproveProjectRequest,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/updateProjectRequest',
+  async (projectRequestDetails: ApproveProjectRequest, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.updateProjectRequest(
+        projectRequestDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteProjectRequest = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/deleteProjectRequest',
+  async (id: number, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.deleteProjectRequest(id)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const rejectProjectRequest = createAsyncThunk<
+  number | undefined,
+  RejectProjectRequestProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/rejectProjectRequest',
+  async ({ comment, requestId }: RejectProjectRequestProps, thunkApi) => {
+    try {
+      return await projectCreationRequestsApi.rejectProjectRequest({
+        comment,
+        requestId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectCreationReuestState: ProjectCreationRequestState = {
   getAllProjectRequestList: {
     projectRequestListSize: 0,
@@ -73,6 +160,7 @@ const initialProjectCreationReuestState: ProjectCreationRequestState = {
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
+  approveProjectRequest: {} as ApproveProjectRequest,
 }
 
 const projectCreationRequestSlice = createSlice({
@@ -88,6 +176,10 @@ const projectCreationRequestSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.getProjectRequest = action.payload as GetProjectRequest
     })
+    builder.addCase(getApproveProjectRequest.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.approveProjectRequest = action.payload as ApproveProjectRequest
+    })
     builder
       .addCase(projectRequestHistoryDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -99,6 +191,7 @@ const projectCreationRequestSlice = createSlice({
           getAllProjectRequestList.pending,
           getProjectRequest.pending,
           projectRequestHistoryDetails.pending,
+          getApproveProjectRequest.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -119,6 +212,9 @@ const allProjectCreationListSize = (state: RootState): number =>
 const getProjectRequests = (state: RootState): GetProjectRequest =>
   state.projectCreationRequest.getProjectRequest
 
+const approveProjectRequests = (state: RootState): ApproveProjectRequest =>
+  state.projectCreationRequest.approveProjectRequest
+
 const projectHistoryDetails = (
   state: RootState,
 ): ProjectRequestHistoryDetails[] =>
@@ -128,6 +224,10 @@ const projectCreationRequestThunk = {
   getAllProjectRequestList,
   getProjectRequest,
   projectRequestHistoryDetails,
+  getApproveProjectRequest,
+  updateProjectRequest,
+  deleteProjectRequest,
+  rejectProjectRequest,
 }
 
 const projectCreationRequestSelectors = {
@@ -136,6 +236,7 @@ const projectCreationRequestSelectors = {
   allProjectCreationListSize,
   getProjectRequests,
   projectHistoryDetails,
+  approveProjectRequests,
 }
 
 export const projectCreationRequestService = {

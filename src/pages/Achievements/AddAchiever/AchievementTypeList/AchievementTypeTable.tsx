@@ -11,10 +11,13 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
@@ -22,12 +25,14 @@ import {
   AddAchieverTypeTableProps,
   NewAchievementStatus,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { currentPageData } from '../../../../utils/paginationUtils'
 import {
   EditedAchievementDetails,
   emptyString,
   ErrorBooleans,
   errorOrderMessage,
   orderRegexValue,
+  TableColor,
 } from '../../AchievementConstants'
 
 const defaultAchievementTypeIdValue = -1
@@ -36,10 +41,14 @@ const editAchievementIdDefaultValue = 0
 const AchievementTypeTable = (
   props: AddAchieverTypeTableProps,
 ): JSX.Element => {
-  const { executeSaveButtonHandler } = props
+  const {
+    executeSaveButtonHandler,
+    isEditSaveButtonEnabled,
+    setEditSaveButtonEnabled,
+  } = props
   const dispatch = useAppDispatch()
   const achievementTypeDataList = useTypedSelector(
-    (state) => state.commonAchievements.dateSortedList,
+    (state) => state.commonAchievements.achievementTypeList,
   )
   const [editAchievementId, setEditAchievementId] = useState<number>(
     editAchievementIdDefaultValue,
@@ -93,6 +102,20 @@ const AchievementTypeTable = (
     }
   }, [editedValues])
 
+  useEffect(() => {
+    if (
+      editedValues.newOrder === emptyString ||
+      editedValues.newStatus === emptyString ||
+      errors.achievementError2 ||
+      editedValues.newOrder === '0' ||
+      editedValues.newOrder === '00'
+    ) {
+      setEditSaveButtonEnabled(false)
+    } else {
+      setEditSaveButtonEnabled(true)
+    }
+  }, [editedValues, errors])
+
   const editButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
     id: number,
@@ -118,6 +141,51 @@ const AchievementTypeTable = (
 
   const [selectedDeleteAchievementId, setSelectedDeleteAchievementId] =
     useState<number>(defaultAchievementTypeIdValue)
+
+  const pageFromState = useTypedSelector(
+    reduxServices.commonAchievements.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.commonAchievements.selectors.pageSizeFromState,
+  )
+
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(
+    achievementTypeDataList.size,
+    pageSizeFromState,
+    pageFromState,
+  )
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(achievementTypeDataList.list, currentPage, pageSize),
+    [achievementTypeDataList.list, currentPage, pageSize],
+  )
 
   const deleteToModalButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -174,23 +242,28 @@ const AchievementTypeTable = (
   }
 
   const renderCurrentStatus = (value: boolean) => {
-    return value ? NewAchievementStatus.Active : NewAchievementStatus.Inactive
+    return value
+      ? String(NewAchievementStatus.Active).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Active).slice(1)
+      : String(NewAchievementStatus.Inactive).charAt(0).toUpperCase() +
+          String(NewAchievementStatus.Inactive).slice(1)
   }
 
-  const uniqueOrderTernary = errors.achievementError2 ? (
-    <p data-testid="unique-order-err" className={TextDanger}>
+  const uniqueOrderTernary = (
+    <p
+      data-testid="unique-order-err"
+      className={errors.achievementError2 ? TextDanger : TableColor}
+    >
       {errorOrderMessage}
     </p>
-  ) : undefined
+  )
 
   return (
     <>
       <CTable
-        className="mt-2 mb-2"
+        className="mt-2 mb-2 table-layout-fixed align-center"
         responsive
         striped
-        align="middle"
-        role="table"
       >
         <CTableHead>
           <CTableRow>
@@ -200,13 +273,15 @@ const AchievementTypeTable = (
             </CTableHeaderCell>
             <CTableHeaderCell scope="col">Status</CTableHeaderCell>
             <CTableHeaderCell scope="col">Order</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
+            <CTableHeaderCell scope="col" className="text-end pe-5">
+              Action
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {achievementTypeDataList?.list.map((item, index) => (
+          {currentPageItems?.map((item, index) => (
             <CTableRow key={index}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
+              <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
               <CTableDataCell>{item.typeName}</CTableDataCell>
               <CTableDataCell>
                 {isEditAchievementEnabled && item.id === editAchievementId ? (
@@ -248,22 +323,23 @@ const AchievementTypeTable = (
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <div
-                  className="d-flex flex-row align-items-center"
+                  className="d-flex flex-row align-items-center justify-content-end"
                   data-testid={`user-access-${index}`}
                 >
                   {isEditAchievementEnabled && editAchievementId === item.id ? (
                     <div className="button-events">
                       <CButton
                         color="success"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid={`save-btn-${index}`}
                         onClick={editSaveButtonHandler}
+                        disabled={!isEditSaveButtonEnabled}
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>
                       <CButton
                         color="warning"
-                        className="btn-ovh"
+                        className="btn-ovh btn-ovh-employee-list"
                         data-testid={`close-btn-${index}`}
                         onClick={closeEditButtonHandler}
                       >
@@ -274,7 +350,7 @@ const AchievementTypeTable = (
                     <div className="button-events">
                       <CButton
                         color="info"
-                        className="danger btn-ovh me-1"
+                        className="danger btn-ovh me-1 btn-ovh-employee-list"
                         size="sm"
                         data-testid={`edit-btn-${index}`}
                         title="Edit"
@@ -290,7 +366,7 @@ const AchievementTypeTable = (
                       <CButton
                         color="danger"
                         size="sm"
-                        className="btn-ovh me-2"
+                        className="btn-ovh me-2 btn-ovh-employee-list"
                         data-testid={`del-btn-${index}`}
                         title="Delete"
                         onClick={(e) => {
@@ -307,17 +383,52 @@ const AchievementTypeTable = (
           ))}
         </CTableBody>
       </CTable>
+      <CRow className="mt-3">
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {achievementTypeDataList?.size}</strong>
+          </p>
+        </CCol>
+        {!achievementTypeDataList?.size && (
+          <CCol>
+            <CRow>
+              <h4 className="text-center">No Records Found...</h4>
+            </CRow>
+          </CCol>
+        )}
+        <CCol xs={3}>
+          {achievementTypeDataList?.size > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {achievementTypeDataList?.size > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
+        alignment="center"
         visible={displayModalContent}
         setVisible={setDisplayModalContent}
-        modalSize="lg"
-        alignment="center"
-        modalHeaderClass="d-none"
+        modalTitle="Delete Achievement Type"
         confirmButtonAction={confirmDeleteButtonHandler}
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
       >
-        <div data-testid="confirm-modal-content">{modalContent}</div>
+        <>{modalContent}</>
       </OModal>
     </>
   )

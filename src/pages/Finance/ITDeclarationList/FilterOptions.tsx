@@ -29,6 +29,15 @@ const FilterOptions = ({
   const itDeclarationListForms = useTypedSelector(
     reduxServices.itDeclarationList.selectors.itDeclarationForms,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddInvestmentCycle = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Investment Cycle',
+  )
+  const userAccessToAddInvestment = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Investment',
+  )
   const toastElement = (
     <OToast toastColor="danger" toastMessage="Please Select Cycle" />
   )
@@ -103,29 +112,30 @@ const FilterOptions = ({
             </CFormSelect>
           </CCol>
           <CCol sm={4}>
-            {/* {userAccessToDeclarationList?.viewaccess === false && ( */}
-            <Link to={`/addCycle`}>
-              <CButton
-                color="info btn-ovh me-1"
-                className="text-white"
-                data-testid="add-investmentCycle-btn"
-              >
-                <i className="fa fa-plus me-1"></i>Add Investment Cycle
-              </CButton>
-            </Link>
+            {userAccessToAddInvestmentCycle?.viewaccess && (
+              <Link to={`/addCycle`}>
+                <CButton
+                  color="info btn-ovh me-1"
+                  className="text-white"
+                  data-testid="add-investmentCycle-btn"
+                >
+                  <i className="fa fa-plus me-1"></i>Add Investment Cycle
+                </CButton>
+              </Link>
+            )}
           </CCol>
           <CCol sm={5} className="text-end">
-            {/* {userAccessToDeclarationList?.viewaccess === false && ( */}
-            <Link to={`/addInvestment`}>
-              <CButton
-                color="info btn-ovh me-1"
-                className="text-white"
-                data-testid="add-investment-btn"
-              >
-                <i className="fa fa-plus me-1"></i>Add Investment
-              </CButton>
-            </Link>
-
+            {userAccessToAddInvestment?.viewaccess && (
+              <Link to={`/addInvestment`}>
+                <CButton
+                  color="info btn-ovh me-1"
+                  className="text-white"
+                  data-testid="add-investment-btn"
+                >
+                  <i className="fa fa-plus me-1"></i>Add Investment
+                </CButton>
+              </Link>
+            )}
             {/* <CCol sm={2} className="text-end"> */}
             {itDeclarationListForms?.length > 0 && (
               <CButton

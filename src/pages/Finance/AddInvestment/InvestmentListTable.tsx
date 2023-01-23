@@ -10,7 +10,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -39,6 +39,9 @@ const InvestmentListTable = ({
     reduxServices.itDeclarationList.selectors.pageSizeFromState,
   )
   const dispatch = useAppDispatch()
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   const {
     paginationRange,
@@ -47,6 +50,12 @@ const InvestmentListTable = ({
     currentPage,
     pageSize,
   } = usePagination(investments.length, pageSizeFromState, pageFromState)
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
 
   const [isDeleteInvestmentModalVisible, setIsDeleteInvestmentModalVisible] =
     useState(false)
@@ -57,7 +66,7 @@ const InvestmentListTable = ({
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
-    setCurrentPage(1)
+    setCurrentPage(selectCurrentPage)
   }
 
   const getInvestmentItemNumber = (index: number) => {
@@ -98,7 +107,7 @@ const InvestmentListTable = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToSectionActions = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Add Section and Investment',
+    (feature) => feature.name === 'Investment',
   )
 
   const currentPageItems = useMemo(
@@ -110,6 +119,17 @@ const InvestmentListTable = ({
     setIsDescModalVisible(true)
     setDescription(investmentDescription)
   }
+
+  const sortedSectionName = useMemo(() => {
+    if (currentPageItems) {
+      return currentPageItems
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.sectionName.localeCompare(sortNode2.sectionName),
+        )
+    }
+    return []
+  }, [currentPageItems])
 
   return (
     <>
@@ -126,7 +146,7 @@ const InvestmentListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.map((investmentItem, index) => {
+          {sortedSectionName.map((investmentItem, index) => {
             const removeTag = '/(<([^>]+)>)/gi'
             const removeDescSpaces = investmentItem.description?.replace(
               removeTag,
@@ -192,7 +212,7 @@ const InvestmentListTable = ({
                   <CTableDataCell>{`N/A`}</CTableDataCell>
                 )}
                 <CTableDataCell scope="row">
-                  {investmentItem.maxLimit}
+                  {investmentItem.maxLimit?.toLocaleString('en-IN') || '0'}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   {userAccessToSectionActions?.updateaccess && (

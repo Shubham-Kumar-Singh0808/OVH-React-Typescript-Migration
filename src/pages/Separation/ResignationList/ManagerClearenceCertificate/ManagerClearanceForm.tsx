@@ -103,7 +103,9 @@ const ManagerClearanceForm = (): JSX.Element => {
             Comments:
             <span
               className={
-                isActive === 'false' || textArea ? 'text-white' : 'text-danger'
+                isActive === 'false' || textArea?.replace(/^\s*/, '')
+                  ? 'text-white'
+                  : 'text-danger'
               }
             >
               *
@@ -129,7 +131,9 @@ const ManagerClearanceForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitClearanceCertificateHandler}
-                disabled={isActive === 'true' && textArea === ''}
+                disabled={
+                  isActive === 'true' && textArea?.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>
