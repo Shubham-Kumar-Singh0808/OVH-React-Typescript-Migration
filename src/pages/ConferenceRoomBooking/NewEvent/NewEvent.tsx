@@ -100,6 +100,7 @@ const NewEvent = (): JSX.Element => {
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  console.log(attendeesList)
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())

@@ -14,7 +14,10 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
-import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import {
+  EditMeetingRequest,
+  MeetingEditDTOList,
+} from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import {
   AddEvent,
   ProjectMember,
@@ -22,7 +25,7 @@ import {
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const ProjectMembersSelection = ({
-  addEvent,
+  editMeetingRequest,
   projectMembers,
   attendeeResponse,
   setAttendeeReport,
@@ -32,7 +35,7 @@ const ProjectMembersSelection = ({
   checkIsAttendeeExists,
   setIsErrorShow,
 }: {
-  addEvent: AddEvent
+  editMeetingRequest: EditMeetingRequest
   projectMembers: ProjectMember[]
   attendeeResponse: MeetingEditDTOList[]
   setAttendeeReport: (value: MeetingEditDTOList[]) => void
@@ -49,11 +52,6 @@ const ProjectMembersSelection = ({
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
-
-  const deleteBtnHandler = (id: number) => {
-    setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
-  }
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
@@ -89,13 +87,13 @@ const ProjectMembersSelection = ({
     setIsErrorShow(false)
     const newResult = await Promise.all(
       projectMembers.map(async (member) => {
-        const startTimeCopy = addEvent?.startTime.split(':')
-        const endTimeCopy = addEvent?.endTime.split(':')
+        const startTimeCopy = editMeetingRequest?.startTime.split(':')
+        const endTimeCopy = editMeetingRequest?.endTime.split(':')
         const prepareObj = {
           attendeeId: member.id,
           attendeeName: member.fullName,
-          startTime: `${addEvent.fromDate}/${startTimeCopy[0]}/${startTimeCopy[1]}`,
-          endTime: `${addEvent.fromDate}/${endTimeCopy[0]}/${endTimeCopy[1]}`,
+          startTime: `${editMeetingRequest.fromDate}/${startTimeCopy[0]}/${startTimeCopy[1]}`,
+          endTime: `${editMeetingRequest.fromDate}/${endTimeCopy[0]}/${endTimeCopy[1]}`,
         }
         const uniqueAttendanceResultAction = await dispatch(
           reduxServices.bookingList.editUniqueAttendee(prepareObj),

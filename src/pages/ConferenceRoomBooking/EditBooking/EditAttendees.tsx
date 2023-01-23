@@ -60,35 +60,33 @@ const EditAttendees = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {editExistingMeetingRequest?.meetingEditDTOList?.map(
-              (item, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{item?.fullName}</CTableDataCell>
-                    <CTableDataCell>
-                      {item?.availability === 'free' ? (
-                        <span className="sh-span-green">Available</span>
-                      ) : (
-                        <span className="sh-span-red">Not Available</span>
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      <CButton
-                        color="danger btn-ovh me-1"
-                        className="btn-ovh-employee-list"
-                        data-testid="delete-btn"
-                        onClick={() => deleteBtnHandler(item.id)}
-                      >
-                        <i
-                          className="fa fa-trash-o text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              },
-            )}
+            {attendeeResponse?.map((item, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{item?.fullName}</CTableDataCell>
+                  <CTableDataCell>
+                    {item?.availability === 'free' ? (
+                      <span className="sh-span-green">Available</span>
+                    ) : (
+                      <span className="sh-span-red">Not Available</span>
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    <CButton
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      data-testid="delete-btn"
+                      onClick={() => deleteBtnHandler(item.id)}
+                    >
+                      <i
+                        className="fa fa-trash-o text-white"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
           </CTableBody>
         </CTable>
       </CCol>
