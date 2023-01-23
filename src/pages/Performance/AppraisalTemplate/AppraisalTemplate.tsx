@@ -1,5 +1,6 @@
 import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
+import AppraisalTemplateTable from './AppraisalTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -11,7 +12,6 @@ const AppraisalTemplate = (): JSX.Element => {
   const cycleList = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.cycleList,
   )
-  console.log(cycleList)
 
   const dispatch = useAppDispatch()
 
@@ -59,6 +59,7 @@ const AppraisalTemplate = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
+        <AppraisalTemplateTable />
       </OCard>
     </>
   )

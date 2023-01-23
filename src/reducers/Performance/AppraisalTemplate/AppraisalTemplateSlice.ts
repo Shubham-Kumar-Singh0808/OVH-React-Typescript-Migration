@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AppraisalTemplateSliceState,
+  DesignationsUnderCycleProps,
   GetCycleList,
 } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
@@ -33,11 +34,24 @@ const cycle = createAsyncThunk(
   },
 )
 
+const getDesignationsUnderCycle = createAsyncThunk(
+  'appraisalTemplate/getDesignationsUnderCycle',
+  async (props: DesignationsUnderCycleProps, thunkApi) => {
+    try {
+      return await AppraisalTemplateApi.getDesignationsUnderCycle(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   listSize: 0,
   cycleList: [],
+  designationsUnderCycle: [],
 }
 
 const appraisalTemplateSlice = createSlice({
@@ -73,6 +87,7 @@ const cycleList = (state: RootState): GetCycleList[] =>
 export const appraisalTemplateThunk = {
   activeCycle,
   cycle,
+  getDesignationsUnderCycle,
 }
 
 export const appraisalTemplateSelectors = {

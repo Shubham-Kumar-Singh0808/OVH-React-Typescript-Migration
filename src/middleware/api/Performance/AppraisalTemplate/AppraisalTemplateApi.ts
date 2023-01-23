@@ -1,4 +1,8 @@
-import { GetCycleList } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import {
+  DesignationsUnderCycleProps,
+  GetCycleList,
+  GetDesignationsUnderCycle,
+} from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -25,9 +29,27 @@ const cycle = async (): Promise<GetCycleList[]> => {
   return response.data
 }
 
+const getDesignationsUnderCycle = async (
+  props: DesignationsUnderCycleProps,
+): Promise<GetDesignationsUnderCycle[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AppraisalTemplateApiConfig.getDesignationsUnderCycle,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId: props.cycleId,
+      endIndex: props.endIndex,
+      startIndex: props.startIndex,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AppraisalTemplateApi = {
   activeCycle,
   cycle,
+  getDesignationsUnderCycle,
 }
 
 export default AppraisalTemplateApi

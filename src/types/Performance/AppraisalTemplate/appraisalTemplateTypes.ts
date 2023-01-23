@@ -22,6 +22,7 @@ export type AppraisalTemplateSliceState = {
   error: ValidationError
   listSize: number
   cycleList: GetCycleList[]
+  designationsUnderCycle: GetDesignationsUnderCycle[]
 }
 
 export type AppraisalCycleDto = {
@@ -58,4 +59,17 @@ export type KraLookups = {
   departmentName: string
   departmentId: number
   designationKraPercentage: number
+}
+
+export type GetDesignationsUnderCycle = {
+  id: number
+  designation: Designation
+  appraisalCycleDto: AppraisalCycleDto
+  kraLookups: KraLookups[]
+}
+
+export type DesignationsUnderCycleProps = {
+  cycleId: number
+  endIndex: number
+  startIndex: number
 }
