@@ -265,13 +265,7 @@ const AchievementTypeTable = (
 
   return (
     <>
-      <CTable
-        className="mt-3 mb-3 table-layout-fixed"
-        responsive
-        striped
-        align="middle"
-        role="table"
-      >
+      <CTable className="mt-3 mb-3 table-layout-fixed" responsive striped>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

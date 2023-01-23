@@ -81,7 +81,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
       <CTable
         striped
         responsive
-        className="text-start text-left align-middle alignment"
+        className="text-start text-center align-middle alignment"
       >
         <CTableHead>
           <CTableRow>
@@ -102,7 +102,7 @@ const ProjectInvoicesTable = (): JSX.Element => {
               return (
                 <React.Fragment key={index}>
                   <CTableRow>
-                    <CTableDataCell scope="row">
+                    <CTableDataCell scope="row" className="text-center">
                       {isIconVisible && milestoneId === data.id ? (
                         <i
                           data-testid="minus-btn"

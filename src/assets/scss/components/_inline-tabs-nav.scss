@@ -14,7 +14,7 @@
       font-weight: 700;
       padding: 5px 8px;
       &:hover {
-        background-color: $primary-navHover;
+        //background-color: $primary-navHover;
         border-color: $primary-navHover;
         cursor: pointer;
       }
@@ -25,10 +25,10 @@
         color: $black;
         line-height: 24px;
         &:hover {
-          background-color: $primary-navHover;
-          border-bottom-color: $primary-navHover;
+          //background-color: $primary-navHover;
+         // border-bottom-color: $primary-navHover;
           cursor: pointer;
-          color: $white;
+          //color: $white;
         }
       }
     }
