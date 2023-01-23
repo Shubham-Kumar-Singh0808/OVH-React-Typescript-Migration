@@ -89,6 +89,9 @@ const AppraisalTemplateTable = ({
             designationsUnderCycle?.map((cycle, index) => {
               return (
                 <CTableRow key={getItemNumber(index)}>
+                  <CTableDataCell key={index}>
+                    {cycle?.appraisalCycleDto?.name}
+                  </CTableDataCell>
                   {cycle?.kraLookups.map((item, index) => {
                     return (
                       <>
