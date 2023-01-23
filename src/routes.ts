@@ -391,6 +391,12 @@ const LeadershipEnrollmentForm = React.lazy(
 )
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+const MileStoneHistory = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneHistory/MileStoneHistory'
+    ),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -857,6 +863,12 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+
+  {
+    path: '/milestonehistory/:projectId',
+    name: 'MileStone History',
+    component: MileStoneHistory,
   },
 ]
 

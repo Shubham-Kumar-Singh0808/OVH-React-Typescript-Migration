@@ -114,14 +114,13 @@ const mileStoneSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.mileStoneHistory = action.payload
     })
-    builder
-      .addCase(getMilestone.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.getMilestone = action.payload
-      })
-      .addCase(getProjectMileStone.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+    builder.addCase(getMilestone.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.getMilestone = action.payload
+    })
+    // .addCase(getProjectMileStone.pending, (state) => {
+    //   state.isLoading = ApiLoadingState.loading
+    // })
   },
 })
 

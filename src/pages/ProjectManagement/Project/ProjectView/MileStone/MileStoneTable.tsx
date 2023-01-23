@@ -12,7 +12,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
@@ -114,6 +114,9 @@ const MileStoneTable = (): JSX.Element => {
       </CTable>
     </>
   )
+  const mileStoneHistoryButtonHandler = (id: number) => {
+    dispatch(reduxServices.projectMileStone.mileStoneTimeLine(id))
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -194,12 +197,15 @@ const MileStoneTable = (): JSX.Element => {
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
+                    <Link to={`/milestonehistory/${item.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() => mileStoneHistoryButtonHandler(item.id)}
+                      >
+                        <i className="fa fa-bar-chart text-white"></i>
+                      </CButton>
+                    </Link>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
