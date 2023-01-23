@@ -117,6 +117,16 @@ const MileStoneTable = (): JSX.Element => {
   const mileStoneHistoryButtonHandler = (id: number) => {
     dispatch(reduxServices.projectMileStone.mileStoneTimeLine(id))
   }
+
+  const mileStoneDiscussionButtonHandler = (id: number) => {
+    dispatch(reduxServices.projectMileStone.getMilestone(id))
+    dispatch(
+      reduxServices.projectMileStone.getMilestoneNewsFeed({
+        milestoneId: id,
+        projectid: String(projectId),
+      }),
+    )
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -206,12 +216,17 @@ const MileStoneTable = (): JSX.Element => {
                         <i className="fa fa-bar-chart text-white"></i>
                       </CButton>
                     </Link>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-comments text-white"></i>
-                    </CButton>
+                    <Link to={`/milestoneNewsFeed/${item.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() =>
+                          mileStoneDiscussionButtonHandler(item.id)
+                        }
+                      >
+                        <i className="fa fa-comments text-white"></i>
+                      </CButton>
+                    </Link>
                     <CButton
                       color="danger"
                       className="btn-ovh me-1 btn-ovh-employee-list"

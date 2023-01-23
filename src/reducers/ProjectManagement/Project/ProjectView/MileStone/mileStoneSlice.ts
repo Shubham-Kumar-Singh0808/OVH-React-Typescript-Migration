@@ -7,7 +7,9 @@ import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import { ChangeRequestProps } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
 import {
   GetMilestone,
+  MileStoneDiscussionProps,
   MileStoneHistory,
+  MilestoneNewsFeed,
   MileStoneResponse,
   MileStoneSliceState,
   PostMileStoneProps,
@@ -91,6 +93,18 @@ const postProjectMileStone = createAsyncThunk<
   },
 )
 
+const getMilestoneNewsFeed = createAsyncThunk(
+  'projectView/getMilestoneNewsFeed',
+  async (props: MileStoneDiscussionProps, thunkApi) => {
+    try {
+      return await mileStoneApi.getMilestoneNewsFeed(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialMileStoneState: MileStoneSliceState = {
   mileStonesList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -118,9 +132,10 @@ const mileStoneSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.getMilestone = action.payload
     })
-    // .addCase(getProjectMileStone.pending, (state) => {
-    //   state.isLoading = ApiLoadingState.loading
-    // })
+    builder.addCase(getMilestoneNewsFeed.fulfilled, (state, action) => {
+      state.isLoading = ApiLoadingState.succeeded
+      state.milestoneNewsFeed = action.payload
+    })
   },
 })
 
@@ -139,12 +154,16 @@ const projectMileStoneTimeLine = (state: RootState): MileStoneHistory[] =>
 const getProjectMileStoneResponse = (state: RootState): GetMilestone =>
   state.projectMileStone.getMilestone
 
+const projectMileStoneNewsFeed = (state: RootState): MilestoneNewsFeed[] =>
+  state.projectMileStone.milestoneNewsFeed
+
 const mileStoneThunk = {
   getProjectMileStone,
   mileStoneTimeLine,
   getMilestone,
   uploadProjectMileStoneImage,
   postProjectMileStone,
+  getMilestoneNewsFeed,
 }
 
 const mileStoneSelectors = {
@@ -153,6 +172,7 @@ const mileStoneSelectors = {
   projectMileStoneSize,
   projectMileStoneTimeLine,
   getProjectMileStoneResponse,
+  projectMileStoneNewsFeed,
 }
 
 export const mileStoneService = {

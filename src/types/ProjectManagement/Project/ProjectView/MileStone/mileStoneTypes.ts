@@ -159,7 +159,7 @@ export type MilestoneNewsFeed = {
   invoiceId: null
   post: string
   postDate: string
-  postImageData: null
+  postImageData: string
   milestone: Milestone
   project: Project
   postedBy: PostedBy
@@ -417,7 +417,7 @@ export type Milestone = {
 
 export type MileStoneDiscussionProps = {
   milestoneId: number
-  projectid: number
+  projectid: number | string
 }
 
 export type PostMileStoneProps = {
@@ -428,11 +428,11 @@ export type PostMileStoneProps = {
 }
 
 export type PostMileStone = {
-  id: string
+  id: string | number
 }
 
 export type postedBy = {
-  id: number
+  id: string | number
 }
 export type PostProjectMileStone = {
   id: string

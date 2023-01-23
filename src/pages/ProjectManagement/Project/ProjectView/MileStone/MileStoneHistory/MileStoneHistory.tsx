@@ -16,6 +16,9 @@ const MileStoneHistory = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.projectMileStone.selectors.isLoading,
   )
+  const getMileStone = useTypedSelector(
+    reduxServices.projectMileStone.selectors.getProjectMileStoneResponse,
+  )
 
   return (
     <>
@@ -56,7 +59,7 @@ const MileStoneHistory = (): JSX.Element => {
                 </p>
                 <p className="ng-binding">
                   <span className="text-info">Milestone Name:</span>
-                  {/* {getProjectDetail.tit} */}
+                  {getMileStone.title}
                 </p>
               </div>
             </CRow>

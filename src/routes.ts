@@ -398,6 +398,13 @@ const MileStoneHistory = React.lazy(
     ),
 )
 
+const MileStoneDiscussion = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneDiscussion/MileStoneDiscussion'
+    ),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -869,6 +876,11 @@ const routes = [
     path: '/milestonehistory/:projectId',
     name: 'MileStone History',
     component: MileStoneHistory,
+  },
+  {
+    path: '/milestoneNewsFeed/:id',
+    name: 'MileStone Discussion',
+    component: MileStoneDiscussion,
   },
 ]
 

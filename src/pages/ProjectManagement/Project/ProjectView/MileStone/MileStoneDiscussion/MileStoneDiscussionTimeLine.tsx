@@ -1,17 +1,17 @@
 import { CFormLabel } from '@coreui/react-pro'
 import React from 'react'
-import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { reduxServices } from '../../../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../../../stateStore'
 
-const ProjectNotesTimeLine = (): JSX.Element => {
-  const projectNotesTimeLine = useTypedSelector(
-    reduxServices.projectNotes.selectors.projectNotesTimeLine,
+const MileStoneDiscussionTimeLine = (): JSX.Element => {
+  const mileStoneDiscussionTimeLine = useTypedSelector(
+    reduxServices.projectMileStone.selectors.projectMileStoneNewsFeed,
   )
 
   return (
     <>
       <div className="sh-timeline-container">
-        {projectNotesTimeLine.map((item, index) => {
+        {mileStoneDiscussionTimeLine.map((item, index) => {
           return (
             <div key={index} className="sh-timeline-card">
               <div
@@ -31,14 +31,18 @@ const ProjectNotesTimeLine = (): JSX.Element => {
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    <div className="mb-1">
-                      <img
-                        className="rounded-circle img-responsive"
-                        src={item.postImageData}
-                        width={100}
-                        height={100}
-                      />
-                    </div>
+                    {item.postImageData ? (
+                      <div className="mb-1">
+                        <img
+                          className="rounded-circle img-responsive"
+                          src={item.postImageData}
+                          width={100}
+                          height={100}
+                        />
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                     <div className="mb-1">
                       <CFormLabel className="col-form-label p-0">
                         Comments:
@@ -57,4 +61,4 @@ const ProjectNotesTimeLine = (): JSX.Element => {
   )
 }
 
-export default ProjectNotesTimeLine
+export default MileStoneDiscussionTimeLine
