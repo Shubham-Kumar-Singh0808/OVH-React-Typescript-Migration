@@ -35,10 +35,10 @@ const RoomListTable = ({
   const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
 
   const pageFromState = useTypedSelector(
-    reduxServices.category.selectors.pageFromState,
+    reduxServices.roomLists.selectors.pageFromState,
   )
   const pageSizeFromState = useTypedSelector(
-    reduxServices.category.selectors.pageSizeFromState,
+    reduxServices.roomLists.selectors.pageSizeFromState,
   )
 
   const {
@@ -54,6 +54,7 @@ const RoomListTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const getItemNumber = (index: number) => {
