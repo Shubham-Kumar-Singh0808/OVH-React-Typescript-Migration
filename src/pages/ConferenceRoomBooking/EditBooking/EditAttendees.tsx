@@ -13,14 +13,15 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { Availability } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 
 const EditAttendees = ({
-  attendeesList,
-  setAttendeesList,
+  attendeeResponse,
+  setAttendeeReport,
 }: {
-  attendeesList: Availability[]
-  setAttendeesList: (value: Availability[]) => void
+  attendeeResponse: MeetingEditDTOList[]
+  setAttendeeReport: (value: MeetingEditDTOList[]) => void
 }): JSX.Element => {
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
@@ -39,10 +40,10 @@ const EditAttendees = ({
     setDeleteAttendeeModalVisible(true)
   }
   const handleConfirmDeleteAttendee = () => {
-    const newList = attendeesList.filter(
-      (attendee) => attendee.id !== (deleteAttendeeId as number),
+    const newList = attendeeResponse?.filter(
+      (attendee) => attendee?.id !== (deleteAttendeeId as number),
     )
-    setAttendeesList([...newList])
+    setAttendeeReport([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
     dispatch(reduxServices.app.actions.addToast(undefined))

@@ -17,6 +17,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import EditAttendees from './EditAttendees'
+import EditProjectMembers from './EditProjectMembers'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -40,19 +41,28 @@ import {
   StartTimeEndTime,
 } from '../NewEvent/NewEventChildComponents'
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
+import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const editExistingMeetingRequest = useTypedSelector(
     reduxServices.bookingList.selectors.editExistingMeetingRequest,
   )
-
+  const [attendeeResponse, setAttendeeReport] = useState<MeetingEditDTOList[]>(
+    [],
+  )
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
-
+  const [isProjectChange, setIsProjectChange] = useState<string>('')
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
+
+  useEffect(() => {
+    if (editExistingMeetingRequest?.meetingEditDTOList != null) {
+      setAttendeeReport(editExistingMeetingRequest?.meetingEditDTOList)
+    }
+  }, [editExistingMeetingRequest?.meetingEditDTOList])
 
   useEffect(() => {
     if (projectsAutoCompleteTarget) {
@@ -129,14 +139,12 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const time = editMeetingRequest?.startTime
   const Hour = time?.split(':')[0]
   const meridian = time?.split(' ')[1]
-  const minutes = time?.split(':')[1]
-  const minutesDay = minutes?.split(':')[0]
+  const minutesDay = time?.split(':')[1]?.split(' ')[0]
 
   console.log(Hour)
   console.log(meridian)
   console.log(minutesDay)
-  console.log(minutes)
-
+  console.log(editMeetingRequest?.startTime)
   const allEmployeesProfiles = useTypedSelector(
     reduxServices.newEvent.selectors.allEmployeesProfiles,
   )
@@ -183,9 +191,10 @@ const EditBookingFilterOptions = (): JSX.Element => {
   ) => {
     setProjectsAutoCompleteTarget(e.target.value)
     setSelectProject(undefined)
+    setIsProjectChange(e.target.value)
   }
   const checkIsAttendeeExists = (attendeeId: number) => {
-    return attendeesList.some((attendee) => {
+    return attendeeResponse.some((attendee) => {
       return attendee.id === attendeeId
     })
   }
@@ -221,17 +230,19 @@ const EditBookingFilterOptions = (): JSX.Element => {
   ) => {
     const newStartTime = editMeetingRequest.startTime.split(':')
     const newEndTime = editMeetingRequest.endTime.split(':')
+    const newMeetingRequestId = editMeetingRequest.id
     const prepareObj = {
       attendeeId,
       attendeeName,
-      startTime: `${editMeetingRequest.fromDate}/${newStartTime[0]}/${newStartTime[1]}`,
-      endTime: `${editMeetingRequest.fromDate}/${newEndTime[0]}/${newEndTime[1]}`,
+      startTime: `${editMeetingRequest.fromDate}/${Hour}/${minutesDay}`,
+      endTime: `${editMeetingRequest.fromDate}/${Hour}/${minutesDay}`,
+      meetingRequestId: newMeetingRequestId,
     }
     const uniqueAttendanceResult = await dispatch(
-      reduxServices.newEvent.uniqueAttendee(prepareObj),
+      reduxServices.bookingList.editUniqueAttendee(prepareObj),
     )
     if (
-      reduxServices.newEvent.uniqueAttendee.rejected.match(
+      reduxServices.bookingList.editUniqueAttendee.rejected.match(
         uniqueAttendanceResult,
       ) &&
       uniqueAttendanceResult.payload === 409
@@ -239,10 +250,11 @@ const EditBookingFilterOptions = (): JSX.Element => {
       const attendeeObj = {
         id: attendeeId,
         availability: 'buzy',
-        name: attendeeName,
+        fullName: attendeeName,
+        flag: 'free',
       }
       if (!checkIsAttendeeExists(attendeeId)) {
-        setAttendeesList([attendeeObj, ...attendeesList])
+        setAttendeeReport([attendeeObj, ...attendeeResponse])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       } else {
@@ -252,12 +264,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
       const attendeeObj2 = {
         id: attendeeId,
         availability: 'free',
-        name: attendeeName,
+        fullName: attendeeName,
+        flag: 'free',
       }
       if (checkIsAttendeeExists(attendeeId)) {
         setIsErrorShow(true)
       } else {
-        setAttendeesList([attendeeObj2, ...attendeesList])
+        setAttendeeReport([attendeeObj2, ...attendeeResponse])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       }
@@ -404,23 +417,33 @@ const EditBookingFilterOptions = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-            <EditAttendees
-              attendeesList={attendeesList}
-              setAttendeesList={setAttendeesList}
-            />
-            {projectMembers?.length > 0 && (
-              <ProjectMembersSelection
-                addEvent={editMeetingRequest}
-                projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-              />
-            )}
+            <CRow className="mt-4 ms-5">
+              <CCol sm={12}>
+                <CRow>
+                  {projectMembers?.length > 0 && isProjectChange && (
+                    <EditProjectMembers
+                      addEvent={editMeetingRequest}
+                      projectMembers={projectMembers}
+                      attendeeResponse={attendeeResponse}
+                      setAttendeeReport={setAttendeeReport}
+                      selectProjectMember={selectProjectMember}
+                      isErrorShow={isErrorShow}
+                      setIsErrorShow={setIsErrorShow}
+                      setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                      checkIsAttendeeExists={checkIsAttendeeExists}
+                    />
+                  )}
+                  <EditAttendees
+                    attendeeResponse={attendeeResponse}
+                    setAttendeeReport={setAttendeeReport}
+                  />
+                  {/* <SelectedAttendees
+                    attendeesList={attendeesList}
+                    deleteBtnHandler={deleteBtnHandler}
+                  /> */}
+                </CRow>
+              </CCol>
+            </CRow>
 
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
