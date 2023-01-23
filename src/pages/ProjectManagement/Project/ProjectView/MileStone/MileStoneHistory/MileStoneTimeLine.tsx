@@ -141,7 +141,7 @@ const MileStoneTimeLine = (): JSX.Element => {
                           const projectBillable = data.isBillable ? 'Yes' : 'No'
                           return (
                             <>
-                              <CTableRow key={index}>
+                              <CTableRow>
                                 <CTableDataCell scope="row">
                                   {data.employeeId}
                                 </CTableDataCell>
