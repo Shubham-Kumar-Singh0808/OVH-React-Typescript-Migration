@@ -25,6 +25,7 @@ export type AppraisalTemplateSliceState = {
   designationsUnderCycle: GetDesignationsUnderCycle[]
   currentPage: number
   pageSize: number
+  designationsUnderCycleProps: GetDesignationsUnderCycleProps
 }
 
 export type AppraisalCycleDto = {
@@ -74,4 +75,9 @@ export type DesignationsUnderCycleProps = {
   cycleId: number
   endIndex: number
   startIndex: number
+}
+
+export type GetDesignationsUnderCycleProps = {
+  list: GetDesignationsUnderCycle[]
+  size: number
 }

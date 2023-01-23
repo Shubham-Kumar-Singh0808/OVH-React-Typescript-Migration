@@ -55,6 +55,7 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   designationsUnderCycle: [],
   currentPage: 1,
   pageSize: 20,
+  designationsUnderCycleProps: { size: 0, list: [] },
 }
 
 const appraisalTemplateSlice = createSlice({
@@ -79,7 +80,8 @@ const appraisalTemplateSlice = createSlice({
       })
       .addCase(getDesignationsUnderCycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.designationsUnderCycle = action.payload
+        state.designationsUnderCycleProps = action.payload
+        state.listSize = action.payload.size
       })
       .addMatcher(
         isAnyOf(
@@ -119,7 +121,8 @@ const pageSizeFromState = (state: RootState): number =>
 
 const designationsUnderCycle = (
   state: RootState,
-): GetDesignationsUnderCycle[] => state.appraisalTemplate.designationsUnderCycle
+): GetDesignationsUnderCycle[] =>
+  state.appraisalTemplate.designationsUnderCycleProps?.list
 
 export const appraisalTemplateThunk = {
   activeCycle,

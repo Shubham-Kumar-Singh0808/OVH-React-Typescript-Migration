@@ -22,10 +22,15 @@ const AppraisalTemplateTable = ({
 }: {
   selectAppraisalId: string
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const designationsUnderCycle = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.designationsUnderCycle,
   )
-  const dispatch = useAppDispatch()
+
+  const appraisalTemplateListSize = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.listSize,
+  )
 
   useEffect(() => {
     if (selectAppraisalId)
@@ -37,8 +42,6 @@ const AppraisalTemplateTable = ({
         }),
       )
   }, [dispatch, selectAppraisalId])
-
-  console.log(designationsUnderCycle)
 
   const pageFromState = useTypedSelector(
     reduxServices.category.selectors.pageFromState,
@@ -53,11 +56,7 @@ const AppraisalTemplateTable = ({
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(
-    designationsUnderCycle?.length,
-    pageSizeFromState,
-    pageFromState,
-  )
+  } = usePagination(appraisalTemplateListSize, pageSizeFromState, pageFromState)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -75,7 +74,6 @@ const AppraisalTemplateTable = ({
       <CTable striped responsive className="mt-5 align-middle alignment">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Appraisal Title</CTableHeaderCell>
             <CTableHeaderCell scope="col">Department</CTableHeaderCell>
             <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
@@ -89,18 +87,14 @@ const AppraisalTemplateTable = ({
             designationsUnderCycle?.map((cycle, index) => {
               return (
                 <CTableRow key={getItemNumber(index)}>
-                  <CTableDataCell key={index}>
+                  <CTableDataCell>
                     {cycle?.appraisalCycleDto?.name}
                   </CTableDataCell>
-                  {cycle?.kraLookups.map((item, index) => {
+                  {cycle?.kraLookups.map((item) => {
                     return (
                       <>
-                        <CTableDataCell key={index}>
-                          {item?.departmentName}
-                        </CTableDataCell>
-                        <CTableDataCell key={index}>
-                          {item?.designationName}
-                        </CTableDataCell>
+                        <CTableDataCell>{item?.departmentName}</CTableDataCell>
+                        <CTableDataCell>{item?.designationName}</CTableDataCell>
                         <CTableDataCell>
                           <CTooltip content="view">
                             <CButton
@@ -109,8 +103,8 @@ const AppraisalTemplateTable = ({
                               data-testid="view-btn"
                             >
                               <i
-                                className="fa fa-eye text-white"
                                 aria-hidden="true"
+                                className="fa fa-eye text-white"
                               ></i>
                             </CButton>
                           </CTooltip>
@@ -127,19 +121,19 @@ const AppraisalTemplateTable = ({
         <CCol xs={4}>
           <strong>
             {designationsUnderCycle?.length
-              ? `Total Records: ${designationsUnderCycle?.length}`
+              ? `Total Records: ${appraisalTemplateListSize}`
               : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>
-          {designationsUnderCycle?.length > 20 && (
+          {appraisalTemplateListSize > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {designationsUnderCycle?.length > 20 && (
+        {appraisalTemplateListSize > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"

@@ -1,7 +1,7 @@
 import {
   DesignationsUnderCycleProps,
   GetCycleList,
-  GetDesignationsUnderCycle,
+  GetDesignationsUnderCycleProps,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -31,7 +31,7 @@ const cycle = async (): Promise<GetCycleList[]> => {
 
 const getDesignationsUnderCycle = async (
   props: DesignationsUnderCycleProps,
-): Promise<GetDesignationsUnderCycle[]> => {
+): Promise<GetDesignationsUnderCycleProps> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AppraisalTemplateApiConfig.getDesignationsUnderCycle,
     method: AllowedHttpMethods.get,
