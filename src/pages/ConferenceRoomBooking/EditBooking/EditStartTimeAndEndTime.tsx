@@ -13,10 +13,16 @@ const EditStartTimeAndEndTime = ({
   const editExistingMeetingRequest = useTypedSelector(
     reduxServices.bookingList.selectors.editExistingMeetingRequest,
   )
-  const time = editExistingMeetingRequest?.startTime
-  const startHour = time?.split(':')[0]
-  const startMeridian = time?.split(' ')[1]
-  const startMinutesDay = time?.split(':')[1]?.split(' ')[0]
+  const bookingStartTime = editExistingMeetingRequest?.startTime
+  const bookingEndTime = editExistingMeetingRequest?.endTime
+
+  const startHour = bookingStartTime?.split(':')[0]
+  const startMeridian = bookingStartTime?.split(' ')[1]
+  const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
+
+  const endHour = bookingEndTime?.split(':')[0]
+  const endMeridian = bookingEndTime?.split(' ')[1]
+  const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
 
   const hoursList = [
     { label: '00', value: '' },
@@ -54,7 +60,18 @@ const EditStartTimeAndEndTime = ({
 
   useEffect(() => {
     if (startHour && startMinutesDay && startMeridian) {
-      setStartTime({ startHour, startMinutesDay, startMeridian })
+      setStartTime({
+        hours: startHour,
+        minutes: startMinutesDay,
+        meridian: startMeridian,
+      })
+    }
+    if (endHour && endMeridian && endMinutesDay) {
+      setEndTime({
+        hours: endHour,
+        minutes: endMinutesDay,
+        meridian: endMeridian,
+      })
     }
   }, [startHour, startMinutesDay, startMeridian])
 

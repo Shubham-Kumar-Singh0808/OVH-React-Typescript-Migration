@@ -18,6 +18,7 @@ import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import EditAttendees from './EditAttendees'
 import EditProjectMembers from './EditProjectMembers'
+import EditStartTimeAndEndTime from './EditStartTimeAndEndTime'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -317,7 +318,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
               fromDateValue={editMeetingRequest?.fromDate}
               fromDateChangeHandler={fromDateChangeHandler}
             />
-            <StartTimeEndTime
+            <EditStartTimeAndEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
             />
             <CRow className="mt-1 mb-3">
