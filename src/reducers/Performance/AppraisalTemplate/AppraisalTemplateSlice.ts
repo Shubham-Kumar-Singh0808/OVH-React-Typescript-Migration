@@ -51,8 +51,7 @@ const appraisalTemplateSlice = createSlice({
       })
       .addCase(cycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.cycleList = action.payload?.list
-        state.listSize = action.payload?.size
+        state.cycleList = action.payload
       })
       .addMatcher(isAnyOf(activeCycle.pending, cycle.pending), (state) => {
         state.isLoading = ApiLoadingState.loading

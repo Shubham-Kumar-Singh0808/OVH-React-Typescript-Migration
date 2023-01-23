@@ -17,11 +17,6 @@ export type GetCycleList = {
   servicePeriod: number
 }
 
-export type GetAllCycleList = {
-  list: GetCycleList[]
-  size: number
-}
-
 export type AppraisalTemplateSliceState = {
   isLoading: ApiLoadingState
   error: ValidationError

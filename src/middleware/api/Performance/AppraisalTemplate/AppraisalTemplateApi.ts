@@ -1,4 +1,4 @@
-import { GetAllCycleList } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import { GetCycleList } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -15,7 +15,7 @@ const activeCycle = async (): Promise<number | string> => {
   return response.data
 }
 
-const cycle = async (): Promise<GetAllCycleList> => {
+const cycle = async (): Promise<GetCycleList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AppraisalTemplateApiConfig.cycle,
     method: AllowedHttpMethods.get,
