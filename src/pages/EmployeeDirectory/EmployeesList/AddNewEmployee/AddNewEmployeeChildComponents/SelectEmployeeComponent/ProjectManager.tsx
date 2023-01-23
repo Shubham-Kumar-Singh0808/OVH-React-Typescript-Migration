@@ -51,11 +51,6 @@ const ProjectManager = ({
           )}
         >
           Project Manager:
-          {isRequired && (
-            <span className={showIsRequired(autoCompleteTarget as string)}>
-              *
-            </span>
-          )}
         </CFormLabel>
         <CCol sm={3}>
           <Autocomplete

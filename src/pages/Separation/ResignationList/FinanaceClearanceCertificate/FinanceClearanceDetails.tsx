@@ -72,7 +72,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
         isDue: isFinanceEditActiveValue as unknown as boolean,
         seperationEmpId: FinanceCCDetails[0]?.seperationEmpId,
         seperationEmpName: FinanceCCDetails[0]?.seperationEmpName,
-        seperationId: FinanceCCDetails[0]?.seperationId,
+        seperationId: getAllResignationHistory.separationId,
       }),
     )
     if (
@@ -161,7 +161,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.employeeName}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpName}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -177,7 +177,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpName}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeName}</p>
               </CCol>
             </CRow>
 
@@ -197,7 +197,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isFinanceEditActiveValue as unknown as boolean}
+                    checked={!isFinanceEditActiveValue}
                     onChange={handleEditFinanceCCDetailsHandler}
                   />
                   <CFormCheck
