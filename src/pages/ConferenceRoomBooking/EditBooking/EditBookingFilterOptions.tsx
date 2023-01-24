@@ -55,6 +55,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
   )
+  console.log(attendeeResponse)
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
@@ -141,15 +142,17 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }, [editExistingMeetingRequest])
 
+  useEffect(() => {
+    if (editExistingMeetingRequest.meetingEditDTOList != null) {
+      setAttendeeReport(editExistingMeetingRequest.meetingEditDTOList)
+    }
+  }, [editExistingMeetingRequest])
+
   const time = editMeetingRequest?.startTime
   const Hour = time?.split(':')[0]
   const meridian = time?.split(' ')[1]
   const minutesDay = time?.split(':')[1]?.split(' ')[0]
 
-  console.log(Hour)
-  console.log(meridian)
-  console.log(minutesDay)
-  console.log(editMeetingRequest?.startTime)
   const allEmployeesProfiles = useTypedSelector(
     reduxServices.newEvent.selectors.allEmployeesProfiles,
   )

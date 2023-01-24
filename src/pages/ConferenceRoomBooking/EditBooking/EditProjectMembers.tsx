@@ -53,11 +53,6 @@ const ProjectMembersSelection = ({
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
 
-  const deleteBtnHandler = (id: number) => {
-    setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
-  }
-
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
   )
