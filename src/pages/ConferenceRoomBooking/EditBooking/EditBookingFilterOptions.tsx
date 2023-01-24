@@ -441,10 +441,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     attendeeResponse={attendeeResponse}
                     setAttendeeReport={setAttendeeReport}
                   />
-                  {/* <SelectedAttendees
-                    attendeesList={attendeesList}
-                    deleteBtnHandler={deleteBtnHandler}
-                  /> */}
                 </CRow>
               </CCol>
             </CRow>
