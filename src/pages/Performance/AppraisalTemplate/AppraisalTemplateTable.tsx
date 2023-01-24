@@ -69,6 +69,15 @@ const AppraisalTemplateTable = ({
     return (currentPage - 1) * pageSize + index + 1
   }
 
+  const editCycleHandler = (departmentId: number, designationId: number) => {
+    dispatch(
+      reduxServices.appraisalTemplate.getDesignationWiseKRAs({
+        departmentId,
+        designationId,
+      }),
+    )
+  }
+
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -101,6 +110,12 @@ const AppraisalTemplateTable = ({
                               className="btn-ovh-employee-list cursor-pointer"
                               color="info-light btn-ovh me-1"
                               data-testid="view-btn"
+                              onClick={() =>
+                                editCycleHandler(
+                                  item?.departmentId,
+                                  item?.designationId,
+                                )
+                              }
                             >
                               <i
                                 aria-hidden="true"

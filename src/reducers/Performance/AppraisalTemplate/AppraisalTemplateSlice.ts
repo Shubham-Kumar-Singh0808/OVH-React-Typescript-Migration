@@ -7,6 +7,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AppraisalTemplateSliceState,
   DesignationsUnderCycleProps,
+  DesignationWiseKRAsProps,
   GetCycleList,
   GetDesignationsUnderCycle,
 } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
@@ -47,6 +48,51 @@ const getDesignationsUnderCycle = createAsyncThunk(
   },
 )
 
+const getDesignationWiseKRAs = createAsyncThunk(
+  'appraisalTemplate/getDesignationWiseKRAs',
+  async (props: DesignationWiseKRAsProps, thunkApi) => {
+    try {
+      return await AppraisalTemplateApi.getDesignationWiseKRAs(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const searchKRAList = createAsyncThunk(
+  'assignTemplate/searchKRAList',
+  async (
+    {
+      departmentId,
+      designationId,
+      endIndex,
+      multipleSearch,
+      startIndex,
+    }: {
+      departmentId: number
+      designationId: number
+      endIndex: number
+      multipleSearch: string
+      startIndex: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await AppraisalTemplateApi.searchKRAList({
+        departmentId,
+        designationId,
+        endIndex,
+        multipleSearch,
+        startIndex,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -56,6 +102,8 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   currentPage: 1,
   pageSize: 20,
   designationsUnderCycleProps: { size: 0, list: [] },
+  designationWiseKRAs: [],
+  searchKRAData: { size: 0, list: [] },
 }
 
 const appraisalTemplateSlice = createSlice({
@@ -128,6 +176,8 @@ export const appraisalTemplateThunk = {
   activeCycle,
   cycle,
   getDesignationsUnderCycle,
+  getDesignationWiseKRAs,
+  searchKRAList,
 }
 
 export const appraisalTemplateSelectors = {

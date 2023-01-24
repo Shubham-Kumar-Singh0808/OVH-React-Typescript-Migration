@@ -25,7 +25,9 @@ export type AppraisalTemplateSliceState = {
   designationsUnderCycle: GetDesignationsUnderCycle[]
   currentPage: number
   pageSize: number
-  designationsUnderCycleProps: GetDesignationsUnderCycleProps
+  designationsUnderCycleProps: DesignationsUnderCycleResponse
+  designationWiseKRAs: GetDesignationWiseKRAs[]
+  searchKRAData: SearchKRAList
 }
 
 export type AppraisalCycleDto = {
@@ -77,7 +79,59 @@ export type DesignationsUnderCycleProps = {
   startIndex: number
 }
 
-export type GetDesignationsUnderCycleProps = {
+export type DesignationsUnderCycleResponse = {
   list: GetDesignationsUnderCycle[]
   size: number
+}
+
+export type GetDesignationWiseKRAs = {
+  id: number
+  name: string
+  description: string
+  kpiLookps: null
+  count: number
+  checkType: null
+  designationName: string
+  designationId: number
+  departmentName: string
+  departmentId: number
+  designationKraPercentage: number
+}
+
+export type DesignationWiseKRAsProps = {
+  departmentId: number
+  designationId: number
+}
+
+export type DesignationWiseKRAsWithNumber = {
+  id: 153
+  name: 'Bankers and Lawyer Management'
+  description: null
+  kpiLookps: null
+  count: 1
+  checkType: null
+  designationName: 'Finance and Account Executive '
+  designationId: 51
+  departmentName: 'Accounts'
+  departmentId: 4
+  designationKraPercentage: 5.0
+}
+
+export type SearchKRA = {
+  id: number
+  name: string
+  description: string
+  kpiLookps: null
+  count: number
+  checkType: null
+  designationName: string
+  designationId: number
+  departmentName: string
+  departmentId: number
+  designationKraPercentage: number
+}
+
+export type SearchKRAList = {
+  size: number
+  list: SearchKRA[]
 }

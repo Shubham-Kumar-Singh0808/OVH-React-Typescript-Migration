@@ -759,4 +759,7 @@ export interface AppraisalTemplateApi extends ApiBase {
   cycle: string
   activeCycle: string
   getDesignationsUnderCycle: string
+  getDesignationWiseKRAs: string
+  51: string
+  searchKRAData: string
 }

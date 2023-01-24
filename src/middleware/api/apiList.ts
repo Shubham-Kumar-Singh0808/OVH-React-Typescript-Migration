@@ -921,4 +921,7 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   cycle: apiPrefix + '/appraisal/cycle',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
   getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
+  getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
+  51: apiPrefix + '/appraisal/underKras/23/51',
+  searchKRAData: apiPrefix + '/kra/searchKRAData',
 }

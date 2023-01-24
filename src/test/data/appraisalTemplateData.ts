@@ -1,6 +1,6 @@
 import {
   GetCycleList,
-  GetDesignationsUnderCycleProps,
+  DesignationsUnderCycleResponse,
 } from '../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 export const mockCycle: GetCycleList = {
@@ -18,7 +18,7 @@ export const mockCycle: GetCycleList = {
   appraisalEndDate: '12/2016',
   servicePeriod: 180,
 }
-export const mockDesignationsUnderCycle: GetDesignationsUnderCycleProps = {
+export const mockDesignationsUnderCycle: DesignationsUnderCycleResponse = {
   size: 2,
   list: [
     {
