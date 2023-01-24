@@ -23,6 +23,7 @@ import {
   newAchievementLabelClass,
 } from '../../AchievementConstants'
 import { useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AchievementTypeListEntries = (
   props: AddAchieverTypeEntriesProps,
@@ -51,7 +52,12 @@ const AchievementTypeListEntries = (
   const existingAchievementTypeList = useTypedSelector(
     (state) => state.commonAchievements.achievementTypeList,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchievementType = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Achievement Type',
+  )
   const isAchievementNameExists = (enteredName: string) => {
     const isPresent = existingAchievementTypeList?.list.filter(
       (item) =>
@@ -232,9 +238,9 @@ const AchievementTypeListEntries = (
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
+              className="achievement-typeList-checkbox"
               type="checkbox"
               data-testid="ach-time-check"
-              valid={true}
               checked={newUserSelectedTimeReq}
               onChange={newSelectedTimeReqHandler}
             />
@@ -251,35 +257,36 @@ const AchievementTypeListEntries = (
             <CFormCheck
               type="checkbox"
               data-testid="ach-date-check"
-              valid={true}
               checked={newUserSelectedDateReq}
               onChange={newSelectedDateReqHandler}
             />
           </CCol>
         </AchievementEntryContainer>
+        {userAccessToAchievementType?.createaccess && (
+          <CRow>
+            <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+            <CCol sm={4}>
+              <CButton
+                data-testid="add-btn-id"
+                type="submit"
+                className="btn-ovh me-1"
+                color="success"
+                disabled={!isAddButtonEnabled}
+              >
+                Add
+              </CButton>
+              <CButton
+                data-testid="clear-btn-id"
+                color="warning"
+                className="btn-ovh me-1"
+                onClick={clearButtonHandler}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CContainer>
-      <CRow>
-        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          <CButton
-            data-testid="add-btn-id"
-            type="submit"
-            className="btn-ovh me-1"
-            color="success"
-            disabled={!isAddButtonEnabled}
-          >
-            Add
-          </CButton>
-          <CButton
-            data-testid="clear-btn-id"
-            color="warning"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
     </CForm>
   )
 }

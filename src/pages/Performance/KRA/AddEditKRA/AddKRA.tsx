@@ -44,7 +44,6 @@ const AddKRA = (props: AddKRAProps): JSX.Element => {
   const empDeptList = useTypedSelector((state) => state.KRA.empDepartments)
   const desigList = useTypedSelector((state) => state.KRA.designations)
   const currentQueries = useTypedSelector((state) => state.KRA.krasQuery)
-
   const clearHandler = () => {
     setEnteredKraName(emptyString)
     setEnteredDepartment(selectDepartment)

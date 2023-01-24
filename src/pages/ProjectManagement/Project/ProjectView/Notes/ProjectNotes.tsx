@@ -1,4 +1,4 @@
-import { CRow, CCol, CFormInput, CButton } from '@coreui/react-pro'
+import { CRow, CCol, CFormTextarea, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProjectNotesTimeLine from './ProjectNotesTimeLine'
@@ -84,16 +84,17 @@ const ProjectNotes = (): JSX.Element => {
     <>
       <CRow className="mt-4 mb-0">
         <CCol col-xs-12 mt-10>
-          <CFormInput
+          <CFormTextarea
             autoComplete="off"
             type="text"
             id="notesLink"
             name="notesLink"
             placeholder="What you are thinking?"
             data-testid="notes-link"
+            maxLength={250}
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
-          />
+          ></CFormTextarea>
           <p className="mt-1">{notesLink?.length}/250</p>
         </CCol>
       </CRow>
@@ -109,6 +110,7 @@ const ProjectNotes = (): JSX.Element => {
                 element.currentTarget as HTMLInputElement,
               )
             }
+            accept="image/*"
           />
         </CCol>
         <CCol className="text-end" md={9}>

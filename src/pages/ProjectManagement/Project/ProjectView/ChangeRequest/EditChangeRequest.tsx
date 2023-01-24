@@ -42,9 +42,16 @@ const EditChangeRequest = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEditChangeRequest((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'duration') {
+      const durationValue = value.replace(/\D/gi, '')
+      setEditChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: durationValue } }
+      })
+    } else {
+      setEditChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   const toastElement = (
     <OToast toastMessage="CR Updated Successfully" toastColor={'success'} />
@@ -135,12 +142,13 @@ const EditChangeRequest = ({
             <CFormInput
               type="text"
               id="duration"
+              autoComplete="off"
               data-testid="duration-testing"
               name="duration"
               placeholder="Hours"
               value={editChangeRequest?.duration}
               onChange={onChangeHandler}
-              maxLength={10}
+              maxLength={8}
             />
           </CCol>
         </CRow>
@@ -161,6 +169,7 @@ const EditChangeRequest = ({
               placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
+              autoComplete="off"
               value={editDescription}
               maxLength={150}
               onChange={(e) => setEditDescription(e.target.value)}

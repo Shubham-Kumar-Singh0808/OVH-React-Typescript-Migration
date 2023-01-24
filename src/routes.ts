@@ -223,6 +223,14 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -390,10 +398,21 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/EmployeePipList'),
+)
+
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
 const UpdateDeclarationForm = React.lazy(
   () => import('./pages/Finance/UpdateDeclarationForm/UpdateITDeclarationForm'),
+)
+
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
+    ),
 )
 
 /**
@@ -853,9 +872,24 @@ const routes = [
     component: LeadershipEnrollmentForm,
   },
   {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
+  },
+  {
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
   },
   {
     path: '/listofAppraisal',

@@ -39,9 +39,16 @@ const AddEditChangeRequest = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setAddChangeRequest((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'duration') {
+      const durationValues = value.replace(/\D/gi, '')
+      setAddChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: durationValues } }
+      })
+    } else {
+      setAddChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   console.log(addChangeRequest?.name)
   useEffect(() => {
@@ -117,7 +124,13 @@ const AddEditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(addChangeRequest?.name)}>*</span>
+            <span
+              className={showIsRequired(
+                addChangeRequest?.name?.replace(/^\s*/, ''),
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -125,7 +138,7 @@ const AddEditChangeRequest = ({
               type="text"
               id="name"
               name="name"
-              placeholder="Name"
+              placeholder="Title"
               data-testid="request-name"
               value={addChangeRequest?.name}
               onChange={onChangeHandler}
@@ -133,7 +146,7 @@ const AddEditChangeRequest = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
             Duration :
             <span
               className={showIsRequired(
@@ -152,13 +165,14 @@ const AddEditChangeRequest = ({
               placeholder="Hours"
               value={addChangeRequest?.duration}
               onChange={onChangeHandler}
-              maxLength={10}
+              maxLength={8}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
 
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
             Description :
             <span
               className={showIsRequired(
@@ -170,11 +184,11 @@ const AddEditChangeRequest = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormTextarea
-              placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
               value={changeRequestDescription}
               maxLength={150}
+              autoComplete="off"
               onChange={(e) => setChangeRequestDescription(e.target.value)}
             ></CFormTextarea>
             <p>{changeRequestDescription?.length}/150</p>
