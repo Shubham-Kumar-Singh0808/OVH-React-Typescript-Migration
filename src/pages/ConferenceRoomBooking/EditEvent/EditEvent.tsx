@@ -29,6 +29,7 @@ import {
 import { Availability } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
+import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 const EditEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -58,42 +59,43 @@ const EditEvent = (): JSX.Element => {
   const trainerDetails = {} as Trainer
   const dateFormat = 'DD/MM/YYYY'
 
-  //   const initialEventData = {
-  //     agenda: '',
-  //     authorName: loggedEmployee,
-  //     availability,
-  //     availableDates: '',
-  //     conferenceType: '',
-  //     description: '',
-  //     disableEdit: null,
-  //     empDesignations: null,
-  //     employeeAvailability: null,
-  //     employeeDto: null,
-  //     employeeIds: null,
-  //     employeeNames: [],
-  //     endTime: '',
-  //     eventEditAccess: null,
-  //     eventId: 0,
-  //     eventLocation: '',
-  //     eventTypeId: 0,
-  //     eventTypeName: '',
-  //     fromDate: '',
-  //     id: 0,
-  //     isAuthorisedUser: true,
-  //     locationId: editExistingEvent.locationId,
-  //     locationName: '',
-  //     meetingAttendeesDto: null,
-  //     meetingEditDTOList,
-  //     meetingStatus: null,
-  //     projectName: editExistingEvent.projectName,
-  //     roomId: editExistingEvent.roomId,
-  //     roomName: '',
-  //     startTime: '',
-  //     timeFomrat: null,
-  //     toDate: '',
-  //     trainerName: trainerDetails,
-  //   }
-  const [editEvent, setEditEvent] = useState(editExistingEvent)
+  const initialEventData = {
+    agenda: editExistingEvent.agenda,
+    authorName: editExistingEvent.authorName,
+    availability,
+    availableDates: '',
+    conferenceType: 'Event',
+    description: editExistingEvent.description,
+    disableEdit: null,
+    empDesignations: null,
+    employeeAvailability: null,
+    employeeDto: null,
+    employeeIds: null,
+    employeeNames: [],
+    endTime: '',
+    eventEditAccess: null,
+    eventId: 0,
+    eventLocation: '',
+    eventTypeId: 0,
+    eventTypeName: '',
+    fromDate: '',
+    id: editExistingEvent.id,
+    isAuthorisedUser: true,
+    locationId: editExistingEvent.locationId,
+    locationName: '',
+    meetingAttendeesDto: null,
+    meetingEditDTOList,
+    meetingStatus: null,
+    projectName: editExistingEvent?.projectName,
+    roomId: editExistingEvent.roomId,
+    roomName: editExistingEvent.roomName,
+    startTime: editExistingEvent.startTime,
+    timeFomrat: null,
+    toDate: '',
+    trainerName: trainerDetails,
+  }
+
+  const [editEvent, setEditEvent] = useState(initialEventData)
   const [descriptionValue, setDescriptionValue] = useState('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
@@ -101,7 +103,23 @@ const EditEvent = (): JSX.Element => {
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [attendeeReport, setAttendeeReport] = useState<MeetingEditDTOList[]>([])
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+  const [selectProject, setSelectProject] = useState<GetAllProjects>()
+  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
+    useState<string>('')
+  const [isProjectChange, setIsProjectChange] = useState<string>('')
+
+  const eventStartTime = editEvent?.startTime
+  const eventEndTime = editEvent?.endTime
+
+  const eventStartHour = eventStartTime?.split(':')[0]
+  const eventStartMeridian = eventStartTime?.split(' ')[1]
+  const eventStartMinutesDay = eventStartTime?.split(':')[1]?.split(' ')[0]
+
+  const eventEndHour = eventEndTime?.split(':')[0]
+  const eventEndMeridian = eventEndTime?.split(' ')[1]
+  const eventEndMinutesDay = eventEndTime?.split(':')[1]?.split(' ')[0]
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
@@ -112,6 +130,29 @@ const EditEvent = (): JSX.Element => {
       )
     }
   }, [dispatch, editEvent])
+
+  useEffect(() => {
+    if (editEvent?.meetingEditDTOList != null) {
+      setAttendeeReport(editEvent?.meetingEditDTOList)
+    }
+  }, [editEvent?.meetingEditDTOList])
+
+  useEffect(() => {
+    if (projectsAutoCompleteTarget) {
+      dispatch(
+        reduxServices.allocateEmployee.getAllProjectSearchData(
+          projectsAutoCompleteTarget,
+        ),
+      )
+    }
+  }, [projectsAutoCompleteTarget])
+  useEffect(() => {
+    if (editEvent.startTime === '' && editEvent.endTime === '') {
+      setIsProjectAndAttendeesEnable(true)
+    } else {
+      setIsProjectAndAttendeesEnable(false)
+    }
+  }, [editEvent.startTime, editEvent.endTime])
 
   const onSelectTrainer = (value: Author) => {
     setEditEvent({ ...editEvent, trainerName: value })

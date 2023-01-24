@@ -62,7 +62,7 @@ const EventAttendees = ({
           inputProps={{
             className: 'form-control form-control-sm',
             id: 'trainer-autocomplete',
-            placeholder: 'Trainer',
+            placeholder: 'Attendee Name',
             disabled: isProjectAndAttendeesEnable,
             onBlur: onAttendeeFocusOut,
           }}

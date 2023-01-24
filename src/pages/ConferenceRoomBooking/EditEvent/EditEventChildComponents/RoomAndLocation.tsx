@@ -1,5 +1,5 @@
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React from 'react'
 import { getAllMeetingLocations } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 import { RoomsByLocation } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
