@@ -12,16 +12,12 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
-import InitiateCycleCheckBox from './InitiateCycleCheckBox'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  GetQuestion,
-  InitiateCycleCheckBoxProps,
-} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { InitiateCycleCheckBoxProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const InitiateCycleTable = ({

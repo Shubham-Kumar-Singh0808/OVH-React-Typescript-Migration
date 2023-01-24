@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { cleanup } from '@testing-library/react'
-import InitiateCycle from './InitiateCycle'
+import InitiateCycle from './InitiateNewCycle'
 import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockActiveCycleData } from '../../../test/data/initiateCycleData'
