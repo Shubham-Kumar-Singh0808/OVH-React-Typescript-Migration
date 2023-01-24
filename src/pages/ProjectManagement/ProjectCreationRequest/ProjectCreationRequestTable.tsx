@@ -41,6 +41,7 @@ const ProjectCreationRequestTable = ({
   userDeleteAction: boolean
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
   const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
@@ -69,7 +70,7 @@ const ProjectCreationRequestTable = ({
   }
 
   useEffect(() => {
-    if (comments) {
+    if (comments?.replace(/^\s*/, '')) {
       setIsYesButtonEnabled(true)
     } else {
       setIsYesButtonEnabled(false)
@@ -118,7 +119,7 @@ const ProjectCreationRequestTable = ({
 
   const handleShowRejectModal = (id: number) => {
     setToDeleteProjectRequestId(id)
-    setIsDeleteModalVisible(true)
+    setIsCancelModalVisible(true)
   }
 
   const handleConfirmDeleteProjectRequestDetail = async () => {
@@ -167,7 +168,7 @@ const ProjectCreationRequestTable = ({
   }
 
   const handleConfirmRejectProjectRequestDetail = async () => {
-    setIsDeleteModalVisible(false)
+    setIsCancelModalVisible(false)
     const rejectProjectRequestResultAction = await dispatch(
       reduxServices.projectCreationRequest.rejectProjectRequest({
         comment: comments,
@@ -357,8 +358,8 @@ const ProjectCreationRequestTable = ({
       <>
         <OModal
           alignment="center"
-          visible={isDeleteModalVisible}
-          setVisible={setIsDeleteModalVisible}
+          visible={isCancelModalVisible}
+          setVisible={setIsCancelModalVisible}
           modalHeaderClass="d-none"
           confirmButtonText="Yes"
           cancelButtonText="No"
@@ -371,7 +372,11 @@ const ProjectCreationRequestTable = ({
             <CRow className="mt-1 mb-0 align-items-center pt-4">
               <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
                 Comments:
-                <span className={comments ? 'text-white' : 'text-danger'}>
+                <span
+                  className={
+                    comments?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+                  }
+                >
                   *
                 </span>
               </CFormLabel>
