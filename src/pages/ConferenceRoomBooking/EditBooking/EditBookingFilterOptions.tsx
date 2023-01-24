@@ -44,6 +44,7 @@ import {
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
 import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
 import OToast from '../../../components/ReusableComponent/OToast'
+import SlotsBooked from '../NewEvent/NewEventChildComponents/SlotsBooked'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const editExistingMeetingRequest = useTypedSelector(
@@ -313,7 +314,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       eventLocation: null,
       eventTypeId: null,
       eventTypeName: null,
-      fromDate: moment(new Date()).format('DD/MM/YYYY'),
+      fromDate: editMeetingRequest?.fromDate,
       id: editMeetingRequest.id,
       isAuthorisedUser: true,
       locationId: editMeetingRequest.locationId as number,
@@ -356,7 +357,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   // console.log(projectsAutoCompleteTarget)
   // console.log(editMeetingRequest?.agenda)
 
-  console.log(startHour)
+  console.log(editMeetingRequest?.roomName)
 
   return (
     <>
@@ -552,6 +553,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
             </CRow>
           </CForm>
         </CCol>
+        {editMeetingRequest.roomId && editMeetingRequest.endTime ? (
+          <CCol sm={4}>
+            <SlotsBooked />
+          </CCol>
+        ) : (
+          <></>
+        )}
       </CRow>
     </>
   )
