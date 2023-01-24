@@ -111,6 +111,7 @@ import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnroll
 import { pipListService } from './Performance/PIPList/pipListSlice'
 import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
+import { appraisalTemplateService } from './Performance/AppraisalTemplate/AppraisalTemplateSlice'
 
 export const reduxServices = {
   app: appService,
@@ -226,4 +227,5 @@ export const reduxServices = {
   pipList: pipListService,
   reviewList: reviewListService,
   KRA: KRAService,
+  appraisalTemplate: appraisalTemplateService,
 }

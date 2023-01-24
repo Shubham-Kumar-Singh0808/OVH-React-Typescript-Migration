@@ -415,6 +415,10 @@ const ClearnceCerticates = React.lazy(
     ),
 )
 
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -900,6 +904,11 @@ const routes = [
     path: '/editItForm',
     name: 'Update Declaration Form',
     component: UpdateDeclarationForm,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: '/appraisalTemplate',
+    component: AppraisalTemplate,
   },
 ]
 
