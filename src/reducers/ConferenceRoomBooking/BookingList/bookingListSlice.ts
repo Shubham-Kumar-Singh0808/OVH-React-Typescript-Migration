@@ -11,7 +11,7 @@ import {
   GetBookingsForSelectionProps,
   MeetingLocations,
   RoomsOfLocation,
-  updateRoomBooking,
+  UpdateRoomBooking,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { UniqueAttendeeParams } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
@@ -99,7 +99,7 @@ const editUniqueAttendee = createAsyncThunk(
 
 const confirmUpdateMeetingRequest = createAsyncThunk<
   number | undefined,
-  updateRoomBooking,
+  UpdateRoomBooking,
   {
     dispatch: AppDispatch
     state: RootState
@@ -107,7 +107,7 @@ const confirmUpdateMeetingRequest = createAsyncThunk<
   }
 >(
   'conferenceRoomBooking/confirmUpdateMeetingRequest',
-  async (updateMeetingAppointment: updateRoomBooking, thunkApi) => {
+  async (updateMeetingAppointment: UpdateRoomBooking, thunkApi) => {
     try {
       return await bookingListApi.confirmUpdateMeetingRequest(
         updateMeetingAppointment,

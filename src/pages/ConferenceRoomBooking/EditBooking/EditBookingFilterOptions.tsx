@@ -55,7 +55,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
   )
-  console.log(attendeeResponse)
+
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
@@ -100,7 +100,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     toDate: '',
     startTime: '',
     endTime: '',
-    projectName: editExistingMeetingRequest.projectName,
+    projectName: '',
     employeeIds: null,
     authorName: loggedEmployee,
     employeeNames: [],
@@ -109,13 +109,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
     employeeAvailability: null,
     timeFomrat: null,
     disableEdit: null,
-    meetingEditDTOList,
+    meetingEditDTOList: [],
     meetingAttendeesDto: null,
     availability,
     meetingStatus: null,
     conferenceType: '',
     eventTypeName: null,
-    eventTypeId: null,
+    eventTypeId: 0,
     eventLocation: '',
     eventId: 0,
     description: '',
@@ -124,7 +124,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     employeeDto: null,
     trainerName: trainerDetails,
     availableDates: '',
-  } as unknown as EditMeetingRequest
+  } as EditMeetingRequest
   const dispatch = useAppDispatch()
 
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
@@ -181,6 +181,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    dispatch(reduxServices.newEvent.getLoggedEmployee())
     if (editMeetingRequest.locationId) {
       dispatch(
         reduxServices.bookingList.getRoomsOfLocation(
@@ -305,7 +306,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       employeeAvailability: null,
       employeeDto: null,
       employeeIds: null,
-      employeeNames: '',
+      employeeNames: editMeetingRequest.employeeNames,
       endTime: `${editMeetingRequest.fromDate}/${endHour}/${endMinutesDay}`,
       eventEditAccess: null,
       eventId: null,
@@ -318,9 +319,12 @@ const EditBookingFilterOptions = (): JSX.Element => {
       locationId: editMeetingRequest.locationId as number,
       locationName: editMeetingRequest.locationName,
       meetingAttendeesDto: null,
-      meetingEditDTOList,
+      meetingEditDTOList: attendeeResponse?.map((item) => {
+        const { flag, fullName, ...rest } = item
+        return { ...rest }
+      }),
       meetingStatus: null,
-      projectName: selectProject?.projectName as string,
+      projectName: projectsAutoCompleteTarget,
       roomId: editMeetingRequest.roomId,
       roomName: editMeetingRequest.roomName,
       startTime: `${editMeetingRequest.fromDate}/${startHour}/${startMinutesDay}`,
@@ -346,6 +350,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
       )
     }
   }
+  // console.log(editMeetingRequest.locationId)
+  // console.log(editMeetingRequest.roomId)
+  // console.log(editMeetingRequest?.fromDate)
+  // console.log(projectsAutoCompleteTarget)
+  // console.log(editMeetingRequest?.agenda)
+
+  console.log(startHour)
 
   return (
     <>

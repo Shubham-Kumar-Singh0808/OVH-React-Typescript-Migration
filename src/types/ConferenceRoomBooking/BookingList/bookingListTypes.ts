@@ -110,7 +110,7 @@ export type handleModelProps = {
 export type MeetingEditDTOList = {
   availability: string
   flag?: string
-  fullName: string
+  fullName?: string
   id: number
 }
 
@@ -150,7 +150,7 @@ export type EditMeetingRequest = {
   availableDates: string
 }
 
-export type updateRoomBooking = {
+export type UpdateRoomBooking = {
   agenda: string
   authorName: Author
   availability: null
@@ -162,7 +162,7 @@ export type updateRoomBooking = {
   employeeAvailability: null
   employeeDto: null
   employeeIds: null
-  employeeNames: string
+  employeeNames: []
   endTime: string
   eventEditAccess: null
   eventId: null
