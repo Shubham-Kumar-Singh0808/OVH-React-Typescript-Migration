@@ -631,7 +631,7 @@ const AddProjectRequestForm = ({
             type="email"
             label="Billing Contact Email"
             name="billingContactPersonEmail"
-            placeholder="Name"
+            placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
           />
           <OSelectList
@@ -719,7 +719,7 @@ const AddProjectRequestForm = ({
                 showYearDropdown
                 dropdownMode="select"
                 data-testid="start-date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
                 name="addprojectstartdate"
                 value={projectRequest.startdate}
@@ -744,7 +744,7 @@ const AddProjectRequestForm = ({
                 dropdownMode="select"
                 placeholderText="dd/mm/yy"
                 data-testid="end-date-picker"
-                dateFormat="dd/mm/yy"
+                dateFormat="dd/mm/yyyy"
                 name="addprojectenddate"
                 value={projectRequest.enddate}
                 onChange={(date: Date) => onHandleProjectRequestEndDate(date)}
