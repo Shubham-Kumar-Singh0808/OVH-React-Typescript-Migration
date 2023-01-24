@@ -241,8 +241,9 @@ const PeopleTable = (): JSX.Element => {
                     ) : (
                       <>
                         {userAccessEditPeople?.updateaccess && (
-                          <CTooltip content="Cancel">
+                          <CTooltip content="Edit">
                             <CButton
+                              className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                               color="info btn-ovh me-2"
                               data-testid="edit-btn"
                               onClick={() => {
