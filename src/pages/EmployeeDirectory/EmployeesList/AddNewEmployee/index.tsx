@@ -233,7 +233,6 @@ const AddNewEmployee = (): JSX.Element => {
       addEmployee.firstName !== '' &&
       addEmployee.gender !== '' &&
       addEmployee.lastName !== '' &&
-      addEmployee.middleName !== '' &&
       addEmployee.hrAssociate.fullName != null &&
       addEmployee.jobTypeName !== '' &&
       addEmployee.manager.fullName != null &&

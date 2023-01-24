@@ -7,7 +7,12 @@ const StarOfTheMonth = (): JSX.Element => {
   const achievements = useTypedSelector(
     reduxServices.employeeAchievements.selectors.achievements,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchieversList = userAccessToFeatures?.find(
+    (feature) => feature.name === `Achiever's List`,
+  )
   const starOfTheMonthFooterLink = (
     <CCardFooter>
       <CLink
@@ -27,28 +32,31 @@ const StarOfTheMonth = (): JSX.Element => {
       <CRow>
         <CCol sm={12}>
           <CRow className="media-body text-center">
-            {achievements.starOfTheMonth?.map((starOfTheMonthAward, index) => {
-              return (
-                <CCol sm={3} key={index}>
-                  <h6>
-                    <span className="profile-avatar">
-                      <CImage
-                        src={starOfTheMonthAward.profilePicture}
-                        className="employee-profile"
-                      />
-                    </span>
-                  </h6>
-                  <h6>{starOfTheMonthAward.employeeName}</h6>
-                  <p>
-                    {`${starOfTheMonthAward.startDate} to
+            {achievements.starOfTheMonth &&
+              achievements.starOfTheMonth?.map((starOfTheMonthAward, index) => {
+                return (
+                  <CCol sm={3} key={index}>
+                    <h6>
+                      <span className="profile-avatar">
+                        <CImage
+                          src={starOfTheMonthAward.profilePicture}
+                          className="employee-profile"
+                        />
+                      </span>
+                    </h6>
+                    <h6>{starOfTheMonthAward.employeeName}</h6>
+                    <p>
+                      {`${starOfTheMonthAward.startDate} to
                     ${starOfTheMonthAward.endDate}`}
-                  </p>
-                </CCol>
-              )
-            })}
+                    </p>
+                  </CCol>
+                )
+              })}
           </CRow>
         </CCol>
-        {starOfTheMonthFooterLink}
+        {userAccessToAchieversList?.viewaccess && (
+          <>{starOfTheMonthFooterLink}</>
+        )}
       </CRow>
     </>
   )

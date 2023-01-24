@@ -8,9 +8,10 @@ import { mockLocationNames } from '../../../../test/data/addLocationListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
+const mockSetToggle = jest.fn()
 describe('Add Location List without data', () => {
   beforeEach(() => {
-    render(<LocationList />, {
+    render(<LocationList setToggle={jest.fn()} />, {
       preloadedState: {
         addLocationList: {
           meetingLocations: mockLocationNames,
@@ -46,7 +47,7 @@ describe('Add Location List without data', () => {
 
 describe('Add Location List without data', () => {
   beforeEach(() => {
-    render(<LocationList />, {
+    render(<LocationList setToggle={jest.fn()} />, {
       preloadedState: {
         addLocationList: {
           meetingLocations: mockLocationNames,
@@ -64,5 +65,11 @@ describe('Add Location List without data', () => {
 
   test('should render Add button as disabled  initially', () => {
     expect(screen.getByTestId('designationButton')).toBeDisabled()
+  })
+  test('should render click on back button', () => {
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })

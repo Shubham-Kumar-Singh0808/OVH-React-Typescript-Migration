@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -34,31 +34,36 @@ const AppraisalConfigurationsTable = ({
   )
   const dispatch = useAppDispatch()
 
-  const appraisalCycleNames = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
+  const appraisalCycle = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.appraisalCycle,
   )
-
+  const appraisalCycleListSize = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.listSize,
+  )
+  const presentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
   useEffect(() => {
-    dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-  }, [dispatch])
-
-  const pageFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageFromState,
-  )
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.pageSizeFromState,
-  )
+    if (presentPage) {
+      setCurrentPage(presentPage)
+    }
+  }, [presentPage])
   const {
     paginationRange,
-    setCurrentPage,
     setPageSize,
+    setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(
-    appraisalCycleNames.length,
-    pageSizeFromState,
-    pageFromState,
-  )
+  } = usePagination(appraisalCycleListSize, 20)
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.appraisalConfigurations.getAppraisalCycle({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -68,11 +73,25 @@ const AppraisalConfigurationsTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const handleAgendaModal = (appraisalCycle: GetAppraisalCycle) => {
+  const handleAgendaModal = (appraisalCycleInfo: GetAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
-    setDescriptionModal(appraisalCycle)
+    setDescriptionModal(appraisalCycleInfo)
   }
 
+  const sortedAppraisalDates = useMemo(() => {
+    if (appraisalCycle) {
+      return appraisalCycle
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.toDate.localeCompare(sortNode2.fromDate),
+        )
+    }
+    return []
+  }, [appraisalCycle])
+
+  const totalRecords = appraisalCycle?.length
+    ? `Total Records: ${appraisalCycleListSize}`
+    : `No Records found...`
   return (
     <>
       <CTable
@@ -97,13 +116,16 @@ const AppraisalConfigurationsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {appraisalCycleNames?.length > 0 &&
-            appraisalCycleNames?.map((appraisalCycle, index) => {
+          {sortedAppraisalDates?.length > 0 &&
+            sortedAppraisalDates?.map((appraisalCycle, index) => {
+              const removeSpaces = appraisalCycle.description
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
               const agendaLimit =
-                appraisalCycle.description &&
-                appraisalCycle.description.length > 30
-                  ? `${appraisalCycle.description.substring(0, 30)}...`
-                  : appraisalCycle.description
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
@@ -139,13 +161,15 @@ const AppraisalConfigurationsTable = ({
                     {userEditAccess && (
                       <>
                         <CTooltip content="Edit">
-                          <CButton
-                            size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
+                          <Link to={`/editAppraisalCycle/${appraisalCycle.id}`}>
+                            <CButton
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </Link>
                         </CTooltip>
                         <CTooltip content="Assign Template">
                           <Link to={`/assignTemplate/${appraisalCycle.id}`}>
@@ -166,45 +190,34 @@ const AppraisalConfigurationsTable = ({
             })}
         </CTableBody>
       </CTable>
-
-      {appraisalCycleNames.length ? (
-        <CRow>
-          <CCol xs={4}>
-            <p>
-              <strong>Total Records: {appraisalCycleNames.length}</strong>
-            </p>
-          </CCol>
-          <CCol xs={3}>
-            {appraisalCycleNames.length > 20 && (
-              <OPageSizeSelect
-                handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
-                selectedPageSize={pageSize}
-              />
-            )}
-          </CCol>
-          {appraisalCycleNames.length > 20 && (
-            <CCol
-              xs={5}
-              className="gap-1 d-grid d-md-flex justify-content-md-end"
-            >
-              <OPagination
-                currentPage={currentPage}
-                pageSetter={setCurrentPage}
-                paginationRange={paginationRange}
-              />
-            </CCol>
-          )}
-        </CRow>
-      ) : (
-        <CCol>
-          <CRow className="mt-3 ms-3">
-            <p>
-              <strong>No Records Found... </strong>
-            </p>
-          </CRow>
+      <CRow>
+        <CCol xs={4}>
+          <p className="mt-2">
+            <strong>{totalRecords}</strong>
+          </p>
         </CCol>
-      )}
+        <CCol xs={3}>
+          {appraisalCycleListSize > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80]}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {appraisalCycleListSize > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
         modalSize="lg"
         alignment="center"
@@ -216,7 +229,11 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <p>{descriptionModal.description}</p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: descriptionModal.description as string,
+            }}
+          />
         </>
       </OModal>
     </>

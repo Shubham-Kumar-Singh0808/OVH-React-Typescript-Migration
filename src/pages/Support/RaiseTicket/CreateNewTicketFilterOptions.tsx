@@ -206,6 +206,20 @@ const CreateNewTicketFilterOptions = ({
     setUploadFile(file[0])
   }
 
+  useEffect(() => {
+    if (categoryId === 0 && subCategoryIdValue === 0) {
+      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
+    }
+  }, [dispatch, categoryId])
+
+  useEffect(() => {
+    if (categoryId === 0 || deptId === 0) {
+      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
+      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+    }
+  }, [dispatch, categoryId, deptId])
+
   return (
     <>
       <CForm>
@@ -355,6 +369,7 @@ const CreateNewTicketFilterOptions = ({
               minDate={new Date()}
               dropdownMode="select"
               dateFormat="dd/mm/yy"
+              autoComplete="off"
               placeholderText="dd/mm/yy"
               name="fromDate"
               value={
@@ -385,6 +400,7 @@ const CreateNewTicketFilterOptions = ({
               showYearDropdown
               minDate={new Date()}
               dropdownMode="select"
+              autoComplete="off"
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yy"
               name="toDate"

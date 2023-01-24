@@ -125,6 +125,12 @@ const ticketApprovalsSlice = createSlice({
     setRoutePath: (state, action) => {
       state.routePath = action.payload
     },
+    clearCategory: (state) => {
+      state.departmentCategoryList = []
+    },
+    clearSubCategory: (state) => {
+      state.subCategoryList = []
+    },
   },
   extraReducers: (builder) => {
     builder

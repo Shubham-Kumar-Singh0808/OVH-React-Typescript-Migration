@@ -14,8 +14,13 @@ import Multiselect from 'multiselect-react-dropdown'
 import EmployeeAllocationReportTable from './EmployeeAllocationReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale, showIsRequired } from '../../../utils/helper'
+import {
+  deviceLocale,
+  downloadFile,
+  showIsRequired,
+} from '../../../utils/helper'
 import { EmployeeDepartment } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import employeeAllocationReportApi from '../../../middleware/api/ProjectManagement/EmployeeAllocation/employeeAllocationApi'
 
 const EmployeeAllocationFilterOptions = ({
   Select,
@@ -47,6 +52,16 @@ const EmployeeAllocationFilterOptions = ({
   const departmentsList = useTypedSelector(
     reduxServices.newEmployee.employeeDepartmentsService.selectors
       .employeeDepartments,
+  )
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessAllocatonFeature = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Individual Employee Allocation',
   )
 
   useEffect(() => {
@@ -83,7 +98,7 @@ const EmployeeAllocationFilterOptions = ({
     )
   }, [dispatch])
 
-  const handleViewButtonHandler = () => {
+  const handleViewBtnHandler = () => {
     dispatch(
       reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
         Billingtype: billingStatus,
@@ -124,7 +139,7 @@ const EmployeeAllocationFilterOptions = ({
     }
   }, [getTechnologies])
 
-  const clearButtonHandler = () => {
+  const clearBtnHandler = () => {
     setSelect('Current Month')
     setBillingStatus('All')
     setSelectTechnology('')
@@ -146,9 +161,10 @@ const EmployeeAllocationFilterOptions = ({
         technology: '',
       }),
     )
+    setIsIconVisible(false)
   }
 
-  const handleSearch = () => {
+  const handleSearchResult = () => {
     dispatch(
       reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
         Billingtype: billingStatus,
@@ -176,6 +192,28 @@ const EmployeeAllocationFilterOptions = ({
         firstIndex: 0,
         technology: selectTechnology,
       }),
+    )
+  }
+
+  const handleExportEmployeeAllocation = async () => {
+    const employeeEmployeeAllocationReportDownload =
+      await employeeAllocationReportApi.exportEmployeeAllocationData({
+        id: employeeId,
+        startIndex: 0,
+        endIndex: 20,
+        empName: '',
+        technology: '',
+        isbillable: billingStatus,
+        isAllocated: '',
+        startdate: '',
+        lastdate: '',
+        departmentNames:
+          'Networking,Administrative,HR,Accounts,Designing,Development,Sales,Testing,Business Analyst,Presales,Marketing,Software Quality Assurance',
+        dateSelection: Select,
+      })
+    downloadFile(
+      employeeEmployeeAllocationReportDownload,
+      'EmployeeAllocationList.csv',
     )
   }
 
@@ -223,7 +261,7 @@ const EmployeeAllocationFilterOptions = ({
     <>
       <CRow className="employeeAllocation-form">
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Select:</CFormLabel>
+          <CFormLabel className="mt-2">Select:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -247,7 +285,7 @@ const EmployeeAllocationFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Employee Billing Status:</CFormLabel>
+          <CFormLabel>Employee Billing Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -268,7 +306,7 @@ const EmployeeAllocationFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Allocation Status:</CFormLabel>
+          <CFormLabel>Allocation Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -284,27 +322,33 @@ const EmployeeAllocationFilterOptions = ({
             <option value="false">De-Allocated</option>
           </CFormSelect>
         </CCol>
+
+        {userAccessAllocatonFeature?.viewaccess && (
+          <>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel className="mt-1">Department:</CFormLabel>
+            </CCol>
+
+            <CCol sm={2}>
+              <Multiselect
+                className="ovh-multiselect"
+                data-testid="department-option"
+                options={departmentsList?.map((department) => department) || []}
+                displayValue="departmentName"
+                placeholder="Select"
+                selectedValues={selectDepartment}
+                onSelect={(list: EmployeeDepartment[]) =>
+                  handleDepartmentMultiSelect(list)
+                }
+                onRemove={(selectedList: EmployeeDepartment[]) =>
+                  handleOnRemoveDepartmentSelectedOption(selectedList)
+                }
+              />
+            </CCol>
+          </>
+        )}
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Department:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <Multiselect
-            className="ovh-multiselect"
-            data-testid="department-option"
-            options={departmentsList?.map((department) => department) || []}
-            displayValue="departmentName"
-            placeholder="Select"
-            selectedValues={selectDepartment}
-            onSelect={(list: EmployeeDepartment[]) =>
-              handleDepartmentMultiSelect(list)
-            }
-            onRemove={(selectedList: EmployeeDepartment[]) =>
-              handleOnRemoveDepartmentSelectedOption(selectedList)
-            }
-          />
-        </CCol>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Technology:</CFormLabel>
+          <CFormLabel className="mt-2">Technology:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -341,6 +385,7 @@ const EmployeeAllocationFilterOptions = ({
                 placeholderText="dd/mm/yy"
                 name="fromDate"
                 maxDate={new Date()}
+                autoComplete="off"
                 id="fromDate"
                 peekNextMonth
                 showMonthDropdown
@@ -363,6 +408,7 @@ const EmployeeAllocationFilterOptions = ({
                 placeholderText="dd/mm/yy"
                 name="toDate"
                 id="toDate"
+                autoComplete="off"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -382,7 +428,11 @@ const EmployeeAllocationFilterOptions = ({
           <></>
         )}
         <CCol className="employee-allocation-export-btn">
-          <CButton color="info btn-ovh me-0" data-testid="export-btn">
+          <CButton
+            color="info btn-ovh me-0"
+            data-testid="export-btn"
+            onClick={handleExportEmployeeAllocation}
+          >
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
         </CCol>
@@ -393,7 +443,7 @@ const EmployeeAllocationFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             data-testid="view-btn"
-            onClick={handleViewButtonHandler}
+            onClick={handleViewBtnHandler}
             disabled={
               Select === 'Custom' && !(fromDate !== '' && toDate !== '')
             }
@@ -405,7 +455,7 @@ const EmployeeAllocationFilterOptions = ({
             disabled={false}
             data-testid="clear-btn"
             color="warning btn-ovh me-1"
-            onClick={clearButtonHandler}
+            onClick={clearBtnHandler}
           >
             Clear
           </CButton>
@@ -430,7 +480,7 @@ const EmployeeAllocationFilterOptions = ({
               type="button"
               color="info"
               id="button-addon2"
-              onClick={handleSearch}
+              onClick={handleSearchResult}
             >
               <i className="fa fa-search"></i>
             </CButton>

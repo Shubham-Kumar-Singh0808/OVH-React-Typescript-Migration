@@ -2,11 +2,12 @@ import { rest } from 'msw'
 import { ticketConfigurationApiConfig } from '../../middleware/api/apiList'
 import {
   mockAddSubCategory,
+  mockCategoryList,
   mockDepartments,
   mockTicketConfigurationCategory,
   mockTicketConfigurationSubCategory,
   mockTicketConfigurationSubCategoryList,
-  mockTicketHistory,
+  mockTicketHistoryData,
 } from '../data/ticketConfigurationData'
 
 export const ticketConfigurationHandlers = [
@@ -51,7 +52,7 @@ export const ticketConfigurationHandlers = [
     return res(
       ctx.json({
         status: 200,
-        data: mockTicketHistory,
+        data: mockTicketHistoryData,
       }),
     )
   }),
@@ -75,5 +76,45 @@ export const ticketConfigurationHandlers = [
         data: { mockAddSubCategory },
       }),
     )
+  }),
+  //getCategoryList api mock
+  rest.get(ticketConfigurationApiConfig.getAllCategory, (_req, res, ctx) => {
+    return res(
+      ctx.json({
+        status: 200,
+        data: { mockCategoryList },
+      }),
+    )
+  }),
+  // addNewCategory api mock
+  rest.post(ticketConfigurationApiConfig.addCategory, (_req, res, ctx) => {
+    const addResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(addResponse)
+  }),
+  // updateCategory api mock
+  rest.put(ticketConfigurationApiConfig.updateCategory, (_req, res, ctx) => {
+    const updateResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(updateResponse)
+  }),
+  // deleteCategory api mock
+  rest.delete(ticketConfigurationApiConfig.deleteCategory, (_req, res, ctx) => {
+    const deleteResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(deleteResponse)
+  }),
+  rest.put(ticketConfigurationApiConfig.updateSubCategory, (_req, res, ctx) => {
+    const updateSubCategoryResponse = ctx.json({
+      status: 200,
+      data: {},
+    })
+    return res(updateSubCategoryResponse)
   }),
 ]

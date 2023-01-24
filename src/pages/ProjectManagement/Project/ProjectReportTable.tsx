@@ -268,13 +268,13 @@ const ProjectReportsTable = ({
       billable: subProject?.billable === 'Yes',
     }
 
-    const deallocateResponse = await dispatch(
+    const updateResponse = await dispatch(
       reduxServices.projectReport.updateProjectReport(payload),
     )
 
     if (
       reduxServices.projectReport.updateProjectReport.fulfilled.match(
-        deallocateResponse,
+        updateResponse,
       ) &&
       selectedProject != null
     ) {
@@ -294,6 +294,27 @@ const ProjectReportsTable = ({
     setAllocatedProject({
       isAllocatedVisible: false,
     })
+  }
+
+  const handleViewModel = (projectId: number) => {
+    dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+    dispatch(reduxServices.projectViewDetails.getProject(projectId))
+    dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
+    dispatch(
+      reduxServices.projectChangeRequest.getProjectChangeRequestList({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(
+      reduxServices.projectMileStone.getProjectMileStone({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
   }
 
   const totalRecordsToDisplay = projectReports?.length
@@ -393,16 +414,19 @@ const ProjectReportsTable = ({
                         )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="info-light btn-ovh me-1"
-                          data-testid="view-btn"
-                        >
-                          <i
-                            className="fa fa-eye text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <Link to={`/viewProject/${value.id}`}>
+                          <CButton
+                            className="btn-ovh-employee-list cursor-pointer"
+                            color="info-light btn-ovh me-1"
+                            data-testid="view-btn"
+                            onClick={() => handleViewModel(value.id)}
+                          >
+                            <i
+                              className="fa fa-eye text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </Link>
                         {userAccess.updateaccess && (
                           <Link to={`/editproject/${value.id}`}>
                             <CButton
@@ -464,7 +488,7 @@ const ProjectReportsTable = ({
             </CTableBody>
           </CTable>
           <CRow>
-            <CCol xs={4}>
+            <CCol xs={4} md={3}>
               <p className="mt-2">
                 <strong>{totalRecordsToDisplay}</strong>
               </p>
@@ -473,7 +497,7 @@ const ProjectReportsTable = ({
               {listSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSizeSelectChange}
-                  options={[20, 40, 60, 80]}
+                  options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
                 />
               )}
@@ -481,6 +505,7 @@ const ProjectReportsTable = ({
             {listSize > 20 && (
               <CCol
                 xs={5}
+                md={6}
                 className="gap-1 d-grid d-md-flex justify-content-md-end"
               >
                 <OPagination

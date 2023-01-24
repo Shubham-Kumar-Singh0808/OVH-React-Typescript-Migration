@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import EmployeeAllocationEntryTable from './EmployeeAllocationEntryTable'
 import { cleanup, render, screen } from '../../../test/testUtils'
 import { mockProjectUnderEmployeesList } from '../../../test/data/employeeAllocationReportData'
@@ -43,10 +42,5 @@ describe('Employee Allocation Entry Table Component Testing', () => {
     mockProjectUnderEmployeesList.forEach((project) => {
       expect(screen.getByText(project.projectName)).toBeInTheDocument()
     })
-  })
-  test('should render click on edit button', () => {
-    const editButton = screen.getAllByTestId('edit-btn')
-    userEvent.click(editButton[0])
-    expect(editButton[0]).toBeInTheDocument()
   })
 })

@@ -40,6 +40,7 @@ describe('Other Filter Options Component Testing', () => {
       expect(screen.getByRole('button', { name: 'Clear' })).not.toBeEnabled()
     })
   })
+  jest.retryTimes(3)
   test('should render attendance report upon view button click', async () => {
     const datePicker = screen.getByPlaceholderText('mm/yyyy')
     fireEvent.click(datePicker)

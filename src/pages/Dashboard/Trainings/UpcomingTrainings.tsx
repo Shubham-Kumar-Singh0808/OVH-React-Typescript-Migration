@@ -19,6 +19,9 @@ const UpcomingTrainings = (): JSX.Element => {
     (feature) => feature.name === 'Upcoming Trainings',
   )
 
+  const userAccessToTrainings = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Event List',
+  )
   return (
     <>
       {userAccessToUpcomingTrainings?.viewaccess && (
@@ -47,12 +50,14 @@ const UpcomingTrainings = (): JSX.Element => {
               </div>
               {upcomingTrainings?.length !== 0 && (
                 <div className="panel-footer mbtrl0">
-                  <p className="text-right mb0">
-                    <a href="/eventList">
-                      More {''}
-                      <i className="fa fa-angle-double-right fa-lg"></i>
-                    </a>
-                  </p>
+                  {userAccessToTrainings?.viewaccess && (
+                    <p className="text-right mb0">
+                      <a href="/eventList">
+                        More {''}
+                        <i className="fa fa-angle-double-right fa-lg"></i>
+                      </a>
+                    </p>
+                  )}
                 </div>
               )}
             </>

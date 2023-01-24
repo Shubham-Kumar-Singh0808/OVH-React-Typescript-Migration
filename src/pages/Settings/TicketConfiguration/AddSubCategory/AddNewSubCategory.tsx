@@ -15,6 +15,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { AddSubCategoryDetails } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 import { showIsRequired } from '../../../../utils/helper'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger } from '../../../../constant/ClassName'
 
 const AddNewSubCategory = (): JSX.Element => {
   const initialSubCategoryDetails = {} as AddSubCategoryDetails
@@ -28,8 +29,11 @@ const AddNewSubCategory = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [estimatedHours, setEstimatedHours] = useState('')
   const [estimatedMins, setEstimatedMins] = useState('')
+  const [isSubCategoryNameExist, setIsSubCategoryNameExist] = useState('')
   const dispatch = useAppDispatch()
-
+  const subCategoryList = useTypedSelector(
+    reduxServices.ticketConfiguration.selectors.subCategoryList,
+  )
   const backButtonHandler = () => {
     dispatch(reduxServices.ticketConfiguration.actions.setToggle(''))
   }
@@ -64,7 +68,8 @@ const AddNewSubCategory = (): JSX.Element => {
     if (
       selectDepartment &&
       selectCategory &&
-      addNewSubCategory.subCategoryName
+      addNewSubCategory.subCategoryName &&
+      !isSubCategoryNameExist
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -72,18 +77,38 @@ const AddNewSubCategory = (): JSX.Element => {
     }
   }, [selectDepartment, selectCategory, addNewSubCategory])
 
+  const validateSubCategoryName = (name: string) => {
+    return subCategoryList.list?.find((subCategoryItem) => {
+      return (
+        subCategoryItem.subCategoryName.toLowerCase() === name.toLowerCase()
+      )
+    })
+  }
+
   const estimatedTimeRegexReplace = /\D/g
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'subCategoryName') {
-      const subCategoryName = value.replace(/[^a-z\s]$/gi, '')
+      const subCategoryName = value
+        .replace(/^\s*/, '')
+        .replace(/[^a-z\s]/gi, '')
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: subCategoryName } }
+      })
+    } else if (name === 'levelOfHierarchy') {
+      const level = value.replace(estimatedTimeRegexReplace, '')
+      setAddNewSubCategory((prevState) => {
+        return { ...prevState, ...{ [name]: level } }
       })
     } else {
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: value } }
       })
+    }
+    if (validateSubCategoryName(value)) {
+      setIsSubCategoryNameExist(value)
+    } else {
+      setIsSubCategoryNameExist('')
     }
   }
   const handleEstimatedTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +160,10 @@ const AddNewSubCategory = (): JSX.Element => {
     }
   }
 
+  const addCategoryButtonHandler = () => {
+    dispatch(reduxServices.ticketConfiguration.actions.setToggle('addCategory'))
+  }
+
   return (
     <>
       <OCard
@@ -177,11 +206,16 @@ const AddNewSubCategory = (): JSX.Element => {
               >
                 <option value="">Select Department</option>
                 {getDepartments &&
-                  getDepartments?.map((department) => (
-                    <option key={department.id} value={department.id}>
-                      {department.name}
-                    </option>
-                  ))}
+                  getDepartments
+                    ?.slice()
+                    .sort((department1, department2) =>
+                      department1.name.localeCompare(department2.name),
+                    )
+                    ?.map((department) => (
+                      <option key={department.id} value={department.id}>
+                        {department.name}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -205,14 +239,19 @@ const AddNewSubCategory = (): JSX.Element => {
               >
                 <option value="">Select Category</option>
                 {getCategories &&
-                  getCategories?.map((category) => (
-                    <option
-                      key={category.categoryId}
-                      value={category.categoryId}
-                    >
-                      {category.categoryName}
-                    </option>
-                  ))}
+                  getCategories
+                    ?.slice()
+                    .sort((catg1, catg2) =>
+                      catg1.categoryName.localeCompare(catg2.categoryName),
+                    )
+                    ?.map((category) => (
+                      <option
+                        key={category.categoryId}
+                        value={category.categoryId}
+                      >
+                        {category.categoryName}
+                      </option>
+                    ))}
               </CFormSelect>
             </CCol>
             <CCol className="col-sm-3">
@@ -220,6 +259,7 @@ const AddNewSubCategory = (): JSX.Element => {
                 color="info"
                 className="btn-ovh"
                 data-testid="addCategory-btn"
+                onClick={addCategoryButtonHandler}
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
@@ -249,6 +289,13 @@ const AddNewSubCategory = (): JSX.Element => {
                 value={addNewSubCategory.subCategoryName}
                 onChange={handleInputChange}
               />
+            </CCol>
+            <CCol sm={3} className="mt-2">
+              {isSubCategoryNameExist && (
+                <p className={TextDanger} data-testid="categoryName-exist">
+                  Sub-Category Name Already Exist
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -290,7 +337,6 @@ const AddNewSubCategory = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={1} className="mt-2">
               <CFormCheck
-                className="form-select-not-allowed"
                 name="workFlow"
                 data-testid="ch-workFlow"
                 onChange={() => setIsChecked(!isChecked)}

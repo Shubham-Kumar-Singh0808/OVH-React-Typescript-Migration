@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { ValidationError } from '../../SidebarMenu/sidebarMenuType'
 
 export type GetAppraisalCycle = {
   id: number
@@ -15,10 +16,44 @@ export type GetAppraisalCycle = {
   appraisalEndDate: string
   servicePeriod: number
 }
+export type GetCycle = {
+  active: boolean
+  appraisalDuration: string
+  appraisalEndDate: string
+  appraisalStartDate: string
+  appraisalType: string
+  cycleStartedFlag: boolean
+  description: string | null
+  fromDate: string
+  id: number
+  level: number
+  name: string
+  servicePeriod: number
+  toDate: string
+}
 
 export type AppraisalCycleSliceState = {
   appraisalCycle: GetAppraisalCycle[]
+  editAppraisalCycle: GetCycle
   isLoading: ApiLoadingState
+  error: ValidationError
+  listSize: number
+}
+
+export type GetAppraisalCycleResponse = {
+  list: GetAppraisalCycle[]
+  size: number
+}
+
+export type AppraisalCycleTableProps = {
+  paginationRange: number[]
   currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type AppraisalCycleApiProps = {
+  startIndex?: number
+  endIndex?: number
 }

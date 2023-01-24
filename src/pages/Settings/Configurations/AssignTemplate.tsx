@@ -35,16 +35,16 @@ const AssignTemplate = (): JSX.Element => {
   )
 
   const appraisalCycleName = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
+    reduxServices.appraisalConfigurations.selectors.appraisalCycle,
   )
 
   const designations = useTypedSelector(
     reduxServices.assignTemplate.selectors.empDesignations,
   )
 
-  useEffect(() => {
-    dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
+  // }, [dispatch])
 
   useEffect(() => {
     dispatch(reduxServices.assignTemplate.getAllEmpDepartmentNames())

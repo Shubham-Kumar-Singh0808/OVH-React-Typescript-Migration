@@ -57,6 +57,7 @@ import {
   EventTypeListApi,
   EmployeeAllocationApi,
   AddLocationListApi,
+  NewBookingApi,
   EventListApi,
   AddTrackerApi,
   AllocateEmployeeApi,
@@ -65,7 +66,42 @@ import {
   AssignTemplateApi,
   AddConfigurationsApi,
   TicketConfigurationApi,
+  NewEventApi,
+  SubmitResignationApi,
   LeaveApprovalsApi,
+  ITDeclarationFormApi,
+  PaySlipsApi,
+  BankDetailsApi,
+  PanDetailsApi,
+  ResignationListApi,
+  EmployeeAccountsApi,
+  ITDeclarationListApi,
+  InvestmentCheckListApi,
+  AchieverListApi,
+  CommonAchievementsApi,
+  ProjectCreationRequestApi,
+  AddAchieverApi,
+  ProjectDetailsApi,
+  ProjectTimeLineApi,
+  ProjectChangeRequestApi,
+  ProjectMilestoneApi,
+  ProjectInvoiceApi,
+  ProjectTailoringApi,
+  ProjectTimeSheetApi,
+  ProjectProposalApi,
+  ProjectNotesApi,
+  InitiateCycleApi,
+  MyKRAsApi,
+  NomineeListApi,
+  AddNomineeApi,
+  MyReviewApi,
+  LeadershipEnrollmentFormApi,
+  PIPListApi,
+  LeadershipEnrollmentListApi,
+  KRAApi,
+  AddProjectCreationRequestApi,
+  PayrollManagementApi,
+  ReviewListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -488,6 +524,7 @@ export const dashboardApiConfig: DashboardApi = {
   getHolidayInformation: apiPrefix + '/Employee/holiday',
   updateHoliday: apiPrefix + '/Employee/editHoliday',
   searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getLeaveSummary: apiPrefix + '/leave/leaveSummaryDashboard',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
@@ -520,7 +557,19 @@ export const eventTypeListApiConfig: EventTypeListApi = {
   addEventType: apiPrefix + '/meetingRequest/addEventType',
   deleteEventType: apiPrefix + '/meetingRequest/deleteEventType',
   updateEventType: apiPrefix + '/meetingRequest/updateEventType',
+}
+
+export const newEventApiConfig: NewEventApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllAttendees: apiPrefix + '/meetingRequest/getAllAttendies',
+  uniqueAttendee: apiPrefix + '/meetingRequest/uniqueAttendee',
+  timeChecking: apiPrefix + '/meetingRequest/timechecking',
+  getAllBookedDetailsForEvent:
+    apiPrefix + '/meetingRequest/getAllBookedDetailsForEvent',
+  addNewEvent: apiPrefix + '/meetingRequest/addNewEvent',
 }
 
 export const employeeAllocationApiConfig: EmployeeAllocationApi = {
@@ -546,7 +595,10 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/cycle',
+  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
+  editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
+  updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
+  validateCycle: apiPrefix + '/appraisal/validateCycle',
 }
 export const addConfigurationsApiConfig: AddConfigurationsApi = {
   addAppraisalCycle: apiPrefix + '/appraisal/cycle',
@@ -579,6 +631,18 @@ export const ticketConfigurationApiConfig: TicketConfigurationApi = {
   deleteSubCategory: apiPrefix + '/supportManagement/deleteSubCategory',
   ticketHistory: apiPrefix + '/supportManagement/getAudit',
   addSubCategory: apiPrefix + '/supportManagement/addSubCategory',
+  getAllCategory: apiPrefix + '/supportManagement/getAllCategoryList',
+  deleteCategory: apiPrefix + '/supportManagement/deleteCategory',
+  addCategory: apiPrefix + '/supportManagement/addCategory',
+  updateCategory: apiPrefix + '/supportManagement/updateCategory',
+  updateSubCategory: apiPrefix + '/supportManagement/updateSubCategory',
+}
+
+export const submitResignationApiConfig: SubmitResignationApi = {
+  getSeparationForm: apiPrefix + '/separationController/getSeparationForm',
+  submitResignation: apiPrefix + '/separationController/SubmitResignation',
+  getEmployeeResg: apiPrefix + '/separationController/getEmployeeResg',
+  revokeResignation: apiPrefix + '/separationController/revokeResignation',
 }
 
 export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
@@ -588,4 +652,279 @@ export const leaveApprovalsApiConfig: LeaveApprovalsApi = {
   checkProjectManagerExits: apiPrefix + '/leave/checkProjectManagerExits',
   leaveApprove: apiPrefix + '/leave/bioAdminManager/approve',
   leaveReject: apiPrefix + '/leave/bioAdminManager/reject',
+}
+
+export const payrollManagementApiConfig: PayrollManagementApi = {
+  getCurrentPayslip: apiPrefix + '/payslip/payrolladmin/getCurrentPayslip',
+  downloadExcelFile: apiPrefix + '/payslip/payrolladmin/downloadExcelFile',
+  searchEmployee: apiPrefix + '/payslip/payrolladmin/searchEmployee',
+  deletePayslip: apiPrefix + '/payslip/payrolladmin/deletePayslip',
+  updatePayslip: apiPrefix + '/payslip/payrolladmin/updatePayslip',
+  deleteCheckedPayslips:
+    apiPrefix + '/payslip/payrolladmin/deleteCheckedPayslips',
+  readExcelFile: apiPrefix + '/payslip/payrolladmin/readExcelFile',
+  saveExcelFile: apiPrefix + '/payslip/payrolladmin/saveExcelFile',
+  clearDirectory: apiPrefix + '/payslip/payrolladmin/clearDirectory',
+}
+
+export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
+  getEmployeeInfo: apiPrefix + '/itDeclaration/getEmployee',
+  getSectionsHavingInvests:
+    apiPrefix + '/itDeclaration/getSectionsHavingInvests',
+  getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
+  isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
+}
+
+export const paySlipsApiConfig: PaySlipsApi = {
+  getEmployeePayslipsForSelectedYear:
+    apiPrefix + '/payslip/getEmployeePayslipsForSelectedYear',
+  generatePayslipAndDownloadPayslip:
+    apiPrefix + '/payslip/payrolladmin/generatePayslipAndDownloadPayslip',
+}
+
+export const panDetailsApiConfig: PanDetailsApi = {
+  bankInformation: apiPrefix + '/Employee/bankInformation',
+  updateFinanceInformation: apiPrefix + '/Employee/updateFinanceInformation',
+  uploadEmployeeFinanceDetails:
+    apiPrefix + '/fileUpload/uploadEmployeeFinanceDetails',
+  downloadFinanceFile: apiPrefix + '/Employee/downloadFinanceFile',
+}
+
+export const bankDetailsApiConfig: BankDetailsApi = {
+  getBankNameLookup: apiPrefix + '/Employee/getBankNameLookup',
+  saveBankInformation: apiPrefix + '/Employee/saveBankInformation',
+  updateBankInformation: apiPrefix + '/Employee/updateBankInformation',
+  deleteBankAccount: apiPrefix + '/Employee/deleteBankAccount',
+  editBankInformation: apiPrefix + '/Employee/bankInformation',
+}
+
+export const resignationListApiConfig: ResignationListApi = {
+  resignationList: apiPrefix + '/separationController/resignationList',
+  exportResignationList:
+    apiPrefix + '/separationController/exportResignationList',
+  resignationInitiateCC: apiPrefix + '/separationController/IntitiateCC',
+  getSeparationTimeLine: apiPrefix + '/separationController/getSeparation',
+  clearanceCertificateComments:
+    apiPrefix + '/separationController/clearanceCertificateComments',
+  getClearanceDetails: apiPrefix + '/separationController/getClearanceDetails',
+  updateCCDetails: apiPrefix + '/separationController/updateCC',
+  checkExitFeedBackForm:
+    apiPrefix + '/separationController/checkExitFeedBackForm',
+  getSeparationChart: apiPrefix + '/separationController/getSeparationChart',
+  getEmpDetails: apiPrefix + '/separationController/getEmpDetails',
+  saveExitFeedBackForm:
+    apiPrefix + '/separationController/saveExitFeedBackForm',
+  uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
+  uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
+}
+
+export const itDeclarationListApiConfig: ITDeclarationListApi = {
+  getCycles: apiPrefix + '/itDeclaration/getCycles',
+  getSections: apiPrefix + '/itDeclaration/getSection',
+  getITDeclarationForm: apiPrefix + '/itDeclaration/getItDeclarationForm',
+  exportITDeclarationList: apiPrefix + '/itDeclaration/exportITDeclarationList',
+  addCycle: apiPrefix + '/itDeclaration/addCycle',
+  deleteSection: apiPrefix + '/itDeclaration/deleteSection',
+  addSection: apiPrefix + '/itDeclaration/addSection',
+  updateSection: apiPrefix + '/itDeclaration/editSection',
+  getInvestments: apiPrefix + '/itDeclaration/getInvestments',
+  addInvestment: apiPrefix + '/itDeclaration/addInvestment',
+  deleteInvestment: apiPrefix + '/itDeclaration/deleteInvestment',
+  deleteCycle: apiPrefix + '/itDeclaration/deleteCycle',
+  isCycleExist: apiPrefix + '/itDeclaration/isCycleExist',
+  updateCycle: apiPrefix + '/itDeclaration/editCycle',
+  updateInvestment: apiPrefix + '/itDeclaration/updateInvestment',
+  isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
+  isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
+  getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
+}
+
+export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
+  getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
+  getSections: apiPrefix + '/itDeclaration/getSection',
+}
+
+export const reviewListApiConfig: ReviewListApi = {
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getReviewList: apiPrefix + '/appraisal/getSearchResult',
+  getAppraisalCycles: apiPrefix + '/appraisal/cycle',
+  getDesignations: apiPrefix + '/kra/designation',
+  exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
+}
+
+export const CommonAchievementsApiConfig: CommonAchievementsApi = {
+  getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
+}
+
+export const AchieverListApiConfig: AchieverListApi = {
+  getAchieverList: apiPrefix + '/achievement/getAllAchievement',
+  updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
+  achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
+}
+
+export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
+  {
+    getCheckList: apiPrefix + '/project-mgmt/getCheckList',
+    getProjectRequestMailIds:
+      apiPrefix + '/project-mgmt/getProjectRequestMailIds',
+    addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
+  }
+
+export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
+  getAllProjectRequestList:
+    apiPrefix + '/project-mgmt/getAllProjectRequestList',
+  getProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  getAuditForProjectRequest:
+    apiPrefix + '/project-mgmt/getAuditForProjectRequest',
+  getApproveProjectRequest: apiPrefix + '/project-mgmt/getProjectRequest',
+  updateProjectRequest: apiPrefix + '/project-mgmt/project',
+  deleteProjectRequest: apiPrefix + '/project-mgmt/deleteProjectRequest',
+  rejectProjectRequest: apiPrefix + '/project-mgmt/rejectProjectRequest',
+}
+
+export const AddAchieverApiConfig: AddAchieverApi = {
+  addAchievementType: apiPrefix + '/achievement/addAchievementType',
+  getAchievementTypeDetails:
+    apiPrefix + '/achievement/getAchievementTypeDetails',
+  updateAchievementTypeDetails:
+    apiPrefix + '/achievement/updateAchievementType',
+  deleteAchievementType: apiPrefix + '/achievement/deleteAchievementType',
+  getActiveEmployeeList: apiPrefix + '/assetManagement/getActiveEmployeeList',
+  addAchievement: apiPrefix + '/achievement/addAchievement',
+  getImageData: apiPrefix + '/achievement/getImageData',
+}
+
+export const NomineeListApiConfig: NomineeListApi = {
+  getAllCycles: apiPrefix + '/nominationController/getallcycles',
+  getNominations: apiPrefix + '/nominationController/getNominations',
+  getNominationDetails:
+    apiPrefix + '/nominationController/getNominationDetails',
+  reviewNominee: apiPrefix + '/nominationController/reviewNominee',
+  exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
+}
+
+export const AddNomineeApiConfig: AddNomineeApi = {
+  nominationFormDetails:
+    apiPrefix + '/nominationController/nominationFormDetails',
+  addNominee: apiPrefix + '/nominationController/addNominee',
+}
+
+export const employeeAccountsApiConfig: EmployeeAccountsApi = {
+  financeDetails: apiPrefix + '/Employee/financeDetails',
+  exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
+}
+
+export const projectViewApiConfig: ProjectDetailsApi = {
+  getProjects: apiPrefix + '/allocation-mgmt/projects',
+  getProject: apiPrefix + '/project-mgmt/project',
+  updateProjectDetails: apiPrefix + '/project-mgmt/updateAllocateProject',
+}
+export const projectTimeLineApiConfig: ProjectTimeLineApi = {
+  getProjectHistory: apiPrefix + '/project-mgmt/getProjectHistory',
+}
+
+export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
+  getCRList: apiPrefix + '/project-mgmt/getCRList',
+  changeRequest: apiPrefix + '/project-mgmt/changeRequest',
+  deleteCR: apiPrefix + '/project-mgmt/deleteCR',
+  updateChangeRequest: apiPrefix + '/project-mgmt/updateChangeRequest',
+}
+
+export const projectMileStoneApiConfig: ProjectMilestoneApi = {
+  mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
+}
+
+export const projectInvoicesApiConfig: ProjectInvoiceApi = {
+  getClosedMilestonesAndCRs:
+    apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
+  getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+}
+
+export const projectTailoringApiConfig: ProjectTailoringApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+}
+
+export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
+  getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
+}
+
+export const projectProposalsApiConfig: ProjectProposalApi = {
+  projectProposal: apiPrefix + '/project-mgmt/projectProposal',
+}
+
+export const projectNotesApiConfig: ProjectNotesApi = {
+  projectNotesTimeLine: apiPrefix + '/projectnewsfeed/',
+  uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
+}
+export const initiateCycleApiConfig: InitiateCycleApi = {
+  getActiveCycleData: apiPrefix + '/nominationController/getActiveCycleData',
+  getallcycles: apiPrefix + '/nominationController/getallcycles',
+  getAllQuestions: apiPrefix + '/nominationController/getAllQuestions',
+  initiateCycle: apiPrefix + '/nominationController/initiateCycle',
+  deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
+  addQuestion: apiPrefix + '/nominationController/addQuestion',
+}
+
+export const myKRAsApiConfig: MyKRAsApi = {
+  getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
+  getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
+}
+
+export const newBookingApiConfig: NewBookingApi = {
+  getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
+  getAllProfileEmployeesData:
+    apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
+  confirmNewMeetingAppointment:
+    apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+}
+
+export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
+  employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
+  addLeadership: apiPrefix + '/achievement/addLeadership',
+}
+
+export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
+  getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
+  leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
+  leadershipReject: apiPrefix + '/achievement/leadershipReject',
+}
+
+export const KRAApiConfig: KRAApi = {
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getDesignation: apiPrefix + '/kra/designation',
+  searchKRAData: apiPrefix + '/kra/searchKRAData',
+  kpiForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  deleteKRA: apiPrefix + '/kra/',
+  deleteKPI: apiPrefix + '/kra/',
+  designationKRAPercentage: apiPrefix + '/kra/designationKraPercentage',
+  checkIfNewKRADuplicate: apiPrefix + '/kra/',
+  addNewKRA: apiPrefix + '/kra/',
+  editThisKra: apiPrefix + '/kra/',
+  updateKRA: apiPrefix + '/kra/',
+  getFrequency: apiPrefix + '/kra/frequencyList',
+  addKPI: apiPrefix + '/kra/',
+  updateKPI: apiPrefix + '/kra/updateKpi',
+}
+
+export const myReviewApiConfig: MyReviewApi = {
+  getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+}
+
+export const PipListApiConfig: PIPListApi = {
+  getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
+  exportPIPList: apiPrefix + '/PIPManagement/exportPIPList',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  activeEmployee: apiPrefix + '/observation-mgnt/activeEmployee/',
+  addPIP: apiPrefix + '/PIPManagement/addPIP',
+  viewPipDetails: apiPrefix + '/PIPManagement/viewPipDetails',
+  getPIPHistory: apiPrefix + '/PIPManagement/getPIPHistory',
+  extendPip: apiPrefix + '/PIPManagement/extendPip',
+  removeFromPip: apiPrefix + '/PIPManagement/removeFromPip',
+  updatePipDetails: apiPrefix + '/PIPManagement/updatePipDetails',
+  savePIPClearnceCertificate:
+    apiPrefix + '/PIPManagement/savePIPClearnceCertificate',
 }

@@ -1,0 +1,52 @@
+.actions{
+    min-width: 126px;
+}
+.scroll-alignment{
+    height: auto;
+}
+.sh-adjustment{
+    height: 300px;
+    width: 1000;
+    overflow-x: auto;
+}
+.alignment >thead >tr >th{
+padding: 8px 8px;
+}
+.textColor-shade{
+    font-weight: bold;
+    color: #178ec0;
+}
+.textColor-shade:hover{
+    color:  #245269;
+}
+.sh-previewBtn{
+    justify-content: space-between
+}
+.sh-excelTable{
+    border: 1px;
+}
+.excelTable-color{
+    background-color: lightgray;
+}
+.sh-excelScroll{
+    overflow-x: auto;
+   
+}
+.sh-excelTable td{
+border-top: 1px solid #ddd;
+border: 1px;
+
+}
+.sh-excelTable tr:last-child td{
+border-bottom-color: #87898c;
+}
+.sh-excelTable tr td{
+border-top: 1px solid #ddd;
+border-right: 1px solid #87898c;
+}
+.sh-uploadFile{
+background-color: #3f8bd1;
+  }
+  .global-search input.form-control{
+min-width: 169px;
+  }

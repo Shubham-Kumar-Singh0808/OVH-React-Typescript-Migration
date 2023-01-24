@@ -5,75 +5,150 @@ import appraisalConfigurationsApi from '../../../middleware/api/Settings/Configu
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  AppraisalCycleApiProps,
   AppraisalCycleSliceState,
   GetAppraisalCycle,
+  GetCycle,
 } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 
-const getAllAppraisalCycleData = createAsyncThunk(
+const getAppraisalCycle = createAsyncThunk(
   'appraisalConfigurations/getAllAppraisalCycle',
-  async (_, thunkApi) => {
+  async (props: AppraisalCycleApiProps, thunkApi) => {
     try {
-      return await appraisalConfigurationsApi.getAllAppraisalCycle()
+      return await appraisalConfigurationsApi.getAppraisalCycle(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
     }
   },
 )
-const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
+
+const getCycleToEdit = createAsyncThunk(
+  'appraisalCycle/getCycleToEdit',
+  async (cycleId: number, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.getCycleToEdit(cycleId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateAppraisalCycle = createAsyncThunk(
+  'appraisalCycle/updateAppraisalCycle',
+  async (updateCycleDetails: GetCycle, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.updateAppraisalCycle(
+        updateCycleDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const validateAppraisalCycle = createAsyncThunk(
+  'appraisalCycle/updateAppraisalCycle',
+  async (validateCycleDetails: GetCycle, thunkApi) => {
+    try {
+      return await appraisalConfigurationsApi.validateAppraisalCycle(
+        validateCycleDetails,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+export const initialAppraisalCycleSliceState: AppraisalCycleSliceState = {
   appraisalCycle: [],
+  editAppraisalCycle: {} as GetCycle,
   isLoading: ApiLoadingState.idle,
-  currentPage: 1,
-  pageSize: 20,
+  error: null,
+  listSize: 0,
 }
 
 const appraisalCycleSlice = createSlice({
   name: 'appraisalCycle',
   initialState: initialAppraisalCycleSliceState,
-  reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload
-    },
-    setPageSize: (state, action) => {
-      state.pageSize = action.payload
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
-
-      .addMatcher(isAnyOf(getAllAppraisalCycleData.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getCycleToEdit.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editAppraisalCycle = action.payload as GetCycle
+      })
+      .addCase(getAppraisalCycle.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.appraisalCycle = action.payload.list
+        state.listSize = action.payload.size
       })
       .addMatcher(
-        isAnyOf(getAllAppraisalCycleData.fulfilled),
-        (state, action) => {
+        isAnyOf(
+          getAppraisalCycle.pending,
+          getCycleToEdit.pending,
+          updateAppraisalCycle.pending,
+          validateAppraisalCycle.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          updateAppraisalCycle.fulfilled,
+          validateAppraisalCycle.fulfilled,
+        ),
+        (state) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.appraisalCycle = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCycleToEdit.rejected,
+          getAppraisalCycle.rejected,
+          validateAppraisalCycle.rejected,
+          updateAppraisalCycle.rejected,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
         },
       )
   },
 })
 
-const appraisalCycleNames = (state: RootState): GetAppraisalCycle[] =>
+const appraisalCycle = (state: RootState): GetAppraisalCycle[] =>
   state.appraisalConfigurations.appraisalCycle
 
 const isLoading = (state: RootState): LoadingState =>
   state.appraisalConfigurations.isLoading
 
-const pageFromState = (state: RootState): number =>
-  state.appraisalConfigurations.currentPage
-const pageSizeFromState = (state: RootState): number =>
-  state.appraisalConfigurations.pageSize
+const getEditAppraisal = (state: RootState): GetAppraisalCycle =>
+  state.appraisalConfigurations.editAppraisalCycle
+
+const selectError = (state: RootState): ValidationError =>
+  state.appraisalConfigurations.error
+
+const listSize = (state: RootState): number =>
+  state.appraisalConfigurations.listSize
 
 const appraisalCycleThunk = {
-  getAllAppraisalCycle: getAllAppraisalCycleData,
+  getAppraisalCycle,
+  getCycleToEdit,
+  updateAppraisalCycle,
+  validateAppraisalCycle,
 }
 
 const appraisalCycleSelectors = {
   isLoading,
-  appraisalCycleNames,
-  pageFromState,
-  pageSizeFromState,
+  appraisalCycle,
+  getEditAppraisal,
+  selectError,
+  listSize,
 }
 
 export const appraisalCycleService = {

@@ -55,7 +55,7 @@ body {
   border-radius: 0.15em;
 }
 .form-check-input:checked {
-  background-color: $info-base;
+  background-color: $info-base !important;
   border-color: $info-base;
 }
 .form-check-input:checked[type='checkbox'] {
@@ -269,4 +269,132 @@ input.capetalized {
 
 .pe-18{
   padding-right: 18px;
+}
+
+.resignation-initiate-btn{
+  background-color: $blue-btnBg;
+    border-color:$blue-btnBg;
+    color: $white;
+}
+.sh-btn-group.resign-btn button{
+ margin:2px;
+ padding:4px 8px;
+}
+.status-name{
+  padding: 3px 10px !important;
+}
+.project-width{
+  width: 100px;
+}
+.project-creation{
+  font-weight: 400 !important;
+} 
+.checkList-table td{
+ border-bottom: none;
+}
+.project-view-text-header h3{
+  font-size: 24px;
+  font-weight: 400;
+}
+.milestone-table th ,.milestone-table td{
+  text-align: center;
+}
+.milestone-model-table{
+  font-weight: bold;
+}
+.milestone-model-table tr td:first-child{
+  width: 150px;
+    text-align: right;
+}
+.milestone-model-table td{
+  border-bottom: none;
+}
+.resignation-comments {
+  display: inline-flex;
+}
+.rating-details-table {
+  table > :not(caption) > * {
+    border-width: 1px 0;
+    > * {
+      border-width: 0 1px;
+    }
+  }
+}
+.project-billable {
+  display: inline-block;
+  margin-top: 14px;
+  font-weight: 500;
+}
+.project-creation:hover {
+  color: #245269 !important;
+}
+
+.table-color {
+  color: rgba(0, 0, 0, 0.02)
+}
+
+.nominee-detail:hover {
+  color: #245269 !important;
+}
+
+.text-decoration-hover {
+  text-decoration: none;
+  color: #428bca !important;
+}
+
+.text-decoration-hover:hover {
+  text-decoration: underline;
+}
+
+.add-project-back-btn {
+  position: absolute;
+  right: 13px;
+}
+.add-project-checkList-table td {
+  border-bottom: none;
+}
+.checkList-radio-btn{
+  margin-right: inherit !important;
+  padding-left: initial !important;
+
+}
+.checkList-radio-btn input {
+  margin-left: 0 !important;
+}
+.checklist-textarea {
+  height: 60px;
+  width: 190px;
+}
+
+.add-project-request-icon {
+   padding: 4px 8px !important;
+    margin-top: 18px;
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+}
+
+.was-validated .form-check-input:valid, .form-check-input.is-valid, .form-check-input.ng-valid{
+  border-color: #b1b7c1;
+}
+.sh-timeline-title{
+  font-weight: 400;
+}
+.edit-time-control{
+  input,select{
+    border: 1px solid #000;
+  }
+}
+
+.table-layout-fixed {
+  table-layout: fixed;
+  th:first-of-type{
+      width: 40px;
+    }
+}
+.sh-project-report-details{
+
+  .profile-tab-header{
+    background-color: $primary-75;
+  }
 }

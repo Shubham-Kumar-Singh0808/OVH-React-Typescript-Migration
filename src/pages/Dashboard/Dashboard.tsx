@@ -57,7 +57,7 @@ const Dashboard = (): JSX.Element => {
     )
     dispatch(reduxServices.holidays.getUpcomingHolidays())
     dispatch(reduxServices.earnedLeaves.getFinancialYear())
-    dispatch(reduxServices.employeeLeaveSummary.getEmployeeLeaveSummary())
+    dispatch(reduxServices.earnedLeaves.getLeaveSummary())
     dispatch(reduxServices.weeklyTimeInOffice.getEmployeeTimeInOffice())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingTrainings())
     dispatch(reduxServices.trainingsAndEvents.getUpcomingEvents())
@@ -90,7 +90,8 @@ const Dashboard = (): JSX.Element => {
                       className="mb-4 myprofile-wrapper"
                       title="Job Openings"
                       CBodyClassName="ps-0 pe-0"
-                      footerPath="/jobvacancies"
+                      CFooterClassName="d-none"
+                      // footerPath="/jobvacancies"
                     >
                       <JobVacanciesTable />
                     </OCard>

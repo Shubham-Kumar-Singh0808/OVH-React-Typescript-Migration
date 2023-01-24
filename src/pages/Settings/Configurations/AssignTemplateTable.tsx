@@ -93,28 +93,28 @@ const AssignTemplateTable = ({
   )
 
   const appraisalCycle = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.appraisalCycleNames,
+    reduxServices.appraisalConfigurations.selectors.appraisalCycle,
   )
 
-  const saveButtonHandler = async () => {
-    const prepareObject = {
-      appraisalCycleDto: appraisalCycle,
-      designation: designations,
-      kraLookups: designationWiseKRA,
-    }
-    const saveKRAResultAction = await dispatch(
-      reduxServices.assignTemplate.designingMap(prepareObject),
-    )
-    if (
-      reduxServices.assignTemplate.designingMap.fulfilled.match(
-        saveKRAResultAction,
-      )
-    ) {
-      dispatch(reduxServices.appraisalConfigurations.getAllAppraisalCycle())
-      dispatch(reduxServices.app.actions.addToast(successMsg))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    }
-  }
+  // const saveButtonHandler = async () => {
+  //   const prepareObject = {
+  //     appraisalCycleDto: appraisalCycle,
+  //     designation: designations,
+  //     kraLookups: designationWiseKRA,
+  //   }
+  //   const saveKRAResultAction = await dispatch(
+  //     reduxServices.assignTemplate.designingMap(prepareObject),
+  //   )
+  //   if (
+  //     reduxServices.assignTemplate.designingMap.fulfilled.match(
+  //       saveKRAResultAction,
+  //     )
+  //   ) {
+  //     dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
+  //     dispatch(reduxServices.app.actions.addToast(successMsg))
+  //     dispatch(reduxServices.app.actions.addToast(undefined))
+  //   }
+  // }
 
   return (
     <>
@@ -223,7 +223,7 @@ const AssignTemplateTable = ({
             className="btn-ovh me-1 text-white"
             color="success"
             disabled={!isSaveBtnEnabled}
-            onClick={saveButtonHandler}
+            // onClick={saveButtonHandler}
           >
             Save
           </CButton>

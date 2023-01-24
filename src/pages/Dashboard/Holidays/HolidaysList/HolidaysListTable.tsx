@@ -38,7 +38,7 @@ const HolidaysListTable = ({
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
   const userAccessToHolidays = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Holiday Actions',
+    (feature) => feature.name === 'Holiday',
   )
 
   const isLoading = useTypedSelector(reduxServices.holidays.selectors.isLoading)
