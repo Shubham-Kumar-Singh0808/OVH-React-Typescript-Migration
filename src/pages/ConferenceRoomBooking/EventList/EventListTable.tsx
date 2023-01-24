@@ -12,7 +12,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -41,7 +41,7 @@ const EventListTable = (
   const role = useTypedSelector(
     (state) => state.authentication.authenticatedUser.role,
   )
-
+  const history = useHistory()
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -128,6 +128,10 @@ const EventListTable = (
       ? selectedEventDetails.description
       : 'N/A'
 
+  const editButtonHandler = (id: number) => {
+    dispatch(reduxServices.eventList.editEvent(id))
+    history.push(`/editEvent/${id}`)
+  }
   return (
     <>
       <CTable className="mt-2 mb-2" striped responsive align="middle">
@@ -193,6 +197,7 @@ const EventListTable = (
                         color="info"
                         className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
                         data-testid={`editEvent-btn${index}`}
+                        onClick={() => editButtonHandler(event.id)}
                       >
                         <i className="fa fa-edit" aria-hidden="true"></i>
                       </CButton>

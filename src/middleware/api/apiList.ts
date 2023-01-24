@@ -586,6 +586,7 @@ export const eventListApiConfig: EventListApi = {
   downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
   uploadFeedbackForm:
     apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
+  editEvent: apiPrefix + '/meetingRequest/editmeeting',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {

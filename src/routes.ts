@@ -411,6 +411,10 @@ const ClearnceCerticates = React.lazy(
     ),
 )
 
+const EditEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -891,6 +895,11 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/editEvent/:eventId',
+    name: 'Edit Event',
+    component: EditEvent,
   },
 ]
 

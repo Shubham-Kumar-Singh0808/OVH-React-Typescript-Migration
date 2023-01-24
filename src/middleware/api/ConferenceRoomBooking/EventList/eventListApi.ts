@@ -1,5 +1,6 @@
 import {
   DownloadFeedbackFormInterface,
+  EditExistingEventDetails,
   EventListApiProps,
   FeedbackFormApiProps,
   GetEventListResponse,
@@ -96,12 +97,27 @@ const uploadFeedbackForm = async (
   return response.data
 }
 
+const editEvent = async (
+  eventId: number,
+): Promise<EditExistingEventDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.editEvent,
+    method: AllowedHttpMethods.get,
+    params: {
+      id: eventId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const eventListApi = {
   getAllEvents,
   cancelEvent,
   getFeedbackFormList,
   downloadFeedbackForm,
   uploadFeedbackForm,
+  editEvent,
 }
 
 export default eventListApi

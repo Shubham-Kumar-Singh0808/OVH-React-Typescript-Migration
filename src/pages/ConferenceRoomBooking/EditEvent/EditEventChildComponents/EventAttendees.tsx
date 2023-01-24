@@ -5,7 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import { LoggedEmployee } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
-const Attendees = ({
+const EventAttendees = ({
   allEmployeesProfiles,
   isProjectAndAttendeesEnable,
   onSelectAttendee,
@@ -62,7 +62,7 @@ const Attendees = ({
           inputProps={{
             className: 'form-control form-control-sm',
             id: 'trainer-autocomplete',
-            placeholder: 'Attendee Name',
+            placeholder: 'Trainer',
             disabled: isProjectAndAttendeesEnable,
             onBlur: onAttendeeFocusOut,
           }}
@@ -119,4 +119,4 @@ const Attendees = ({
   )
 }
 
-export default Attendees
+export default EventAttendees
