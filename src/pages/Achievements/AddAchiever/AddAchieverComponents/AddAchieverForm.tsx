@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import {
   CFormLabel,
   CForm,
@@ -91,15 +90,6 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeFilterName, setEmployeeFilterName] = useState<string>()
 
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-  const userAccessToViewAchievementType = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Achievement Type',
-  )
-  const userAccessToAchievement = userAccessToFeatures?.find(
-    (feature) => feature.name === "Add Achiever's",
-  )
   const showDates =
     achievementTypeDetails && achievementTypeDetails.daterequired
 
@@ -305,20 +295,18 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               ))}
             </CFormSelect>
           </CCol>
-          {userAccessToViewAchievementType?.viewaccess && (
-            <CCol md={3}>
-              <CButton
-                color="info"
-                data-testid="add-ach-btn"
-                size="sm"
-                className="btn-ovh me-1"
-                onClick={addAchievementTypeButtonHandler}
-              >
-                {' '}
-                + Add
-              </CButton>
-            </CCol>
-          )}
+          <CCol md={3}>
+            <CButton
+              color="info"
+              data-testid="add-ach-btn"
+              size="sm"
+              className="btn-ovh me-1"
+              onClick={addAchievementTypeButtonHandler}
+            >
+              {' '}
+              + Add
+            </CButton>
+          </CCol>
         </AchievementEntryContainer>
         <FilterEmployeeName
           allEmployees={allActiveEmployees}
@@ -477,31 +465,29 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
           </CCol>
         </AchievementEntryContainer>
       </CContainer>
-      {userAccessToAchievement?.createaccess && (
-        <CRow>
-          <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-          <CCol sm={4}>
-            <CButton
-              type="submit"
-              color="success"
-              className="btn-ovh me-1"
-              data-testid="add-achiever-btn"
-              disabled={!isAddButtonEnabled}
-            >
-              Add
-            </CButton>
-            <CButton
-              color="warning"
-              role="addNewAchiever"
-              data-testid="clear-btn"
-              className="btn-ovh me-1"
-              onClick={clearButtonHandler}
-            >
-              Clear
-            </CButton>
-          </CCol>
-        </CRow>
-      )}
+      <CRow>
+        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+        <CCol sm={4}>
+          <CButton
+            type="submit"
+            color="success"
+            className="btn-ovh me-1"
+            data-testid="add-achiever-btn"
+            disabled={!isAddButtonEnabled}
+          >
+            Add
+          </CButton>
+          <CButton
+            color="warning"
+            role="addNewAchiever"
+            data-testid="clear-btn"
+            className="btn-ovh me-1"
+            onClick={clearButtonHandler}
+          >
+            Clear
+          </CButton>
+        </CCol>
+      </CRow>
     </CForm>
   )
 }
