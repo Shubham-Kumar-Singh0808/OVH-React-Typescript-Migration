@@ -119,6 +119,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
                 className="btn-ovh"
                 color="success"
                 disabled={!isUpdateButtonEnabled}
+                onClick={handleUpdateDeclarationForm}
               >
                 Update
               </CButton>

@@ -129,8 +129,8 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   },
   itDeclarationFormId: 0,
   itDeclarationFormExist: false,
-  grandTotal: 0,
   formSectionData: [],
+  grandTotal: 0,
 }
 
 const itDeclarationFormSlice = createSlice({

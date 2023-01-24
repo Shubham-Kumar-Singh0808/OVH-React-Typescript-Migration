@@ -126,7 +126,7 @@ const MoreSections = ({
   }, [investmentList])
 
   useEffect(() => {
-    console.log({ formSectionList })
+    // console.log({ formSectionList })
     setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {

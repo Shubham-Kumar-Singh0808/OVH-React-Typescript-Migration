@@ -28,7 +28,7 @@ const ITDeclarationForm = (): JSX.Element => {
   const formSectionData = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.formSectionData,
   )
-
+  console.log({ formSectionData })
   const warningToastMessage = (
     <OToast
       toastMessage="You had submitted IT Declaration Form so you cannot fill the form again."
@@ -37,12 +37,12 @@ const ITDeclarationForm = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (isAgreeChecked) {
+    if (isAgreeChecked && formSectionData) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [isAgreeChecked])
+  }, [isAgreeChecked, formSectionData])
 
   useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
