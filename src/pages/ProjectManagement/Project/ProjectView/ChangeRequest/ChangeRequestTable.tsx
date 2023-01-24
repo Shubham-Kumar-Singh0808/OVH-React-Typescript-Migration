@@ -112,6 +112,10 @@ const ChangeRequestTable = ({
       }),
     )
   }, [dispatch, pageSize, currentPage])
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
   return (
     <>
       <CTable striped className="mt-3 table-layout-fixed">
@@ -130,7 +134,9 @@ const ChangeRequestTable = ({
             changeRequestList?.map((item, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{item.name}</CTableDataCell>
                   <CTableDataCell>{item.duration}</CTableDataCell>
                   <CTableDataCell>{item.descripition}</CTableDataCell>
