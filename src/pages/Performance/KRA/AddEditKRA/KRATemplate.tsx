@@ -257,7 +257,6 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <span
             data-testid="percent-asterix"
             className={
-              enteredPercentage.trim().length === 0 ||
               enteredPercentage === '0' ||
               enteredPercentage === '00' ||
               enteredPercentage === '000'
@@ -278,8 +277,21 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
             onChange={percentChangeHandler}
           />
         </CCol>
-        <CCol sm={4}>
+        <CCol sm={1}>
           <strong>% </strong>
+        </CCol>
+        {enteredPercentage === '0' ||
+          enteredPercentage === '00' ||
+          (enteredPercentage === '000' ? (
+            <CCol sm={4}>
+              <strong data-testid="error-percent" className="text-danger">
+                Percentage can&apos;t be zero.
+              </strong>
+            </CCol>
+          ) : (
+            <></>
+          ))}
+        <CCol sm={4}>
           <strong
             data-testid="error-percent"
             className={isPercentErrorHidden ? TextWhite : TextDanger}
