@@ -754,3 +754,9 @@ export interface ReviewListApi extends ApiBase {
   getDesignations: string
   exportReviewList: string
 }
+
+export interface AppraisalTemplateApi extends ApiBase {
+  cycle: string
+  activeCycle: string
+  getDesignationsUnderCycle: string
+}

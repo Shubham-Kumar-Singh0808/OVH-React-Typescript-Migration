@@ -101,6 +101,7 @@ import {
   AddProjectCreationRequestApi,
   PayrollManagementApi,
   ReviewListApi,
+  AppraisalTemplateApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -914,4 +915,10 @@ export const PipListApiConfig: PIPListApi = {
   updatePipDetails: apiPrefix + '/PIPManagement/updatePipDetails',
   savePIPClearnceCertificate:
     apiPrefix + '/PIPManagement/savePIPClearnceCertificate',
+}
+
+export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
+  cycle: apiPrefix + '/appraisal/cycle',
+  activeCycle: apiPrefix + '/appraisal/activeCycle',
+  getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
 }
