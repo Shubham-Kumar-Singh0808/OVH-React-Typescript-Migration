@@ -1,6 +1,7 @@
 import { LoadingState } from '../../commonTypes'
+import { GetAllProjects } from '../../ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { Author, Availability } from '../NewBooking/newBookingTypes'
-import { TrainerDetails } from '../NewEvent/newEventTypes'
+import { LoggedEmployee, TrainerDetails } from '../NewEvent/newEventTypes'
 
 export type MeetingLocations = {
   id: number
@@ -109,7 +110,7 @@ export type handleModelProps = {
 export type MeetingEditDTOList = {
   availability: string
   flag?: string
-  fullName: string
+  fullName?: string
   id: number
 }
 
@@ -147,4 +148,40 @@ export type EditMeetingRequest = {
   employeeDto: null
   trainerName: TrainerDetails
   availableDates: string
+}
+
+export type UpdateRoomBooking = {
+  agenda: string
+  authorName: Author
+  availability: null
+  availableDates: null
+  conferenceType: string
+  description: null
+  disableEdit: null
+  empDesignations: null
+  employeeAvailability: null
+  employeeDto: null
+  employeeIds: null
+  employeeNames: []
+  endTime: string
+  eventEditAccess: null
+  eventId: null
+  eventLocation: null
+  eventTypeId: null
+  eventTypeName: null
+  fromDate: string
+  id: number
+  isAuthorisedUser: boolean
+  locationId: string | number
+  locationName: string
+  meetingAttendeesDto: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingStatus: null
+  projectName: string
+  roomId: number
+  roomName: string
+  startTime: string
+  timeFomrat: null
+  toDate: null
+  trainerName: null
 }

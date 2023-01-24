@@ -43,6 +43,8 @@ import {
 } from '../NewEvent/NewEventChildComponents'
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
 import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
+import OToast from '../../../components/ReusableComponent/OToast'
+import SlotsBooked from '../NewEvent/NewEventChildComponents/SlotsBooked'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const editExistingMeetingRequest = useTypedSelector(
@@ -51,7 +53,10 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const [attendeeResponse, setAttendeeReport] = useState<MeetingEditDTOList[]>(
     [],
   )
-  console.log(attendeeResponse)
+  const loggedEmployee = useTypedSelector(
+    reduxServices.newEvent.selectors.loggedEmployee,
+  )
+
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
@@ -96,22 +101,22 @@ const EditBookingFilterOptions = (): JSX.Element => {
     toDate: '',
     startTime: '',
     endTime: '',
-    projectName: editExistingMeetingRequest.projectName,
+    projectName: '',
     employeeIds: null,
-    authorName: authorDetails,
+    authorName: loggedEmployee,
     employeeNames: [],
     isAuthorisedUser: true,
     locationId: 0,
     employeeAvailability: null,
     timeFomrat: null,
     disableEdit: null,
-    meetingEditDTOList,
+    meetingEditDTOList: [],
     meetingAttendeesDto: null,
     availability,
     meetingStatus: null,
     conferenceType: '',
     eventTypeName: null,
-    eventTypeId: null,
+    eventTypeId: 0,
     eventLocation: '',
     eventId: 0,
     description: '',
@@ -120,7 +125,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     employeeDto: null,
     trainerName: trainerDetails,
     availableDates: '',
-  } as unknown as EditMeetingRequest
+  } as EditMeetingRequest
   const dispatch = useAppDispatch()
 
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
@@ -177,6 +182,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    dispatch(reduxServices.newEvent.getLoggedEmployee())
     if (editMeetingRequest.locationId) {
       dispatch(
         reduxServices.bookingList.getRoomsOfLocation(
@@ -232,8 +238,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     attendeeId: number,
     attendeeName: string,
   ) => {
-    const newStartTime = editMeetingRequest.startTime.split(':')
-    const newEndTime = editMeetingRequest.endTime.split(':')
     const newMeetingRequestId = editMeetingRequest.id
     const prepareObj = {
       attendeeId,
@@ -280,6 +284,81 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
+  const bookingStartTime = editExistingMeetingRequest?.startTime
+  const bookingEndTime = editExistingMeetingRequest?.endTime
+
+  const startHour = bookingStartTime?.split(':')[0]
+  const startMeridian = bookingStartTime?.split(' ')[1]
+  const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
+
+  const endHour = bookingEndTime?.split(':')[0]
+  const endMeridian = bookingEndTime?.split(' ')[1]
+  const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
+  const handleConfirmBtn = async () => {
+    const prepareObj = {
+      agenda: editMeetingRequest?.agenda,
+      authorName: loggedEmployee,
+      availability: null,
+      availableDates: null,
+      conferenceType: 'Meeting',
+      description: null,
+      disableEdit: null,
+      empDesignations: null,
+      employeeAvailability: null,
+      employeeDto: null,
+      employeeIds: null,
+      employeeNames: editMeetingRequest.employeeNames,
+      endTime: `${editMeetingRequest.fromDate}/${endHour}/${endMinutesDay}`,
+      eventEditAccess: null,
+      eventId: null,
+      eventLocation: null,
+      eventTypeId: null,
+      eventTypeName: null,
+      fromDate: editMeetingRequest?.fromDate,
+      id: editMeetingRequest.id,
+      isAuthorisedUser: true,
+      locationId: editMeetingRequest.locationId as number,
+      locationName: editMeetingRequest.locationName,
+      meetingAttendeesDto: null,
+      meetingEditDTOList: attendeeResponse?.map((item) => {
+        const { flag, fullName, ...rest } = item
+        return { ...rest }
+      }),
+      meetingStatus: null,
+      projectName: projectsAutoCompleteTarget,
+      roomId: editMeetingRequest.roomId,
+      roomName: editMeetingRequest.roomName,
+      startTime: `${editMeetingRequest.fromDate}/${startHour}/${startMinutesDay}`,
+      timeFomrat: null,
+      toDate: null,
+      trainerName: null,
+    }
+    const addEventResult = await dispatch(
+      reduxServices.bookingList.confirmUpdateMeetingRequest(prepareObj),
+    )
+    if (
+      reduxServices.bookingList.confirmUpdateMeetingRequest.fulfilled.match(
+        addEventResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Event Added Successfully"
+          />,
+        ),
+      )
+    }
+  }
+  // console.log(editMeetingRequest.locationId)
+  // console.log(editMeetingRequest.roomId)
+  // console.log(editMeetingRequest?.fromDate)
+  // console.log(projectsAutoCompleteTarget)
+  // console.log(editMeetingRequest?.agenda)
+
+  console.log(editMeetingRequest?.roomName)
+
   return (
     <>
       <CRow>
@@ -452,7 +531,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    // onClick={handleConfirmBtn}
+                    onClick={handleConfirmBtn}
                     // disabled={!isConfirmButtonEnabled}
                   >
                     Update
@@ -470,6 +549,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
             </CRow>
           </CForm>
         </CCol>
+        {editMeetingRequest.roomId && editMeetingRequest.endTime ? (
+          <CCol sm={4}>
+            <SlotsBooked />
+          </CCol>
+        ) : (
+          <></>
+        )}
       </CRow>
     </>
   )

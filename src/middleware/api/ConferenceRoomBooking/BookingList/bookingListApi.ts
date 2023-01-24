@@ -4,6 +4,7 @@ import {
   GetBookingsForSelectionProps,
   MeetingLocations,
   RoomsOfLocation,
+  UpdateRoomBooking,
 } from '../../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { ConfirmNewMeetingAppointment } from '../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { UniqueAttendeeParams } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
@@ -67,7 +68,7 @@ const cancelRoomBooking = async (id: number): Promise<void> => {
 }
 
 const confirmUpdateMeetingRequest = async (
-  updateMeetingAppointment: ConfirmNewMeetingAppointment,
+  updateMeetingAppointment: UpdateRoomBooking,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bookingListApiConfig.confirmUpdateMeetingRequest,

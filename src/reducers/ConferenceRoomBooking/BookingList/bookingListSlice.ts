@@ -11,6 +11,7 @@ import {
   GetBookingsForSelectionProps,
   MeetingLocations,
   RoomsOfLocation,
+  UpdateRoomBooking,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { UniqueAttendeeParams } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
@@ -89,6 +90,28 @@ const editUniqueAttendee = createAsyncThunk(
   async (props: UniqueAttendeeParams, thunkApi) => {
     try {
       return await bookingListApi.editUniqueAttendee(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const confirmUpdateMeetingRequest = createAsyncThunk<
+  number | undefined,
+  UpdateRoomBooking,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'conferenceRoomBooking/confirmUpdateMeetingRequest',
+  async (updateMeetingAppointment: UpdateRoomBooking, thunkApi) => {
+    try {
+      return await bookingListApi.confirmUpdateMeetingRequest(
+        updateMeetingAppointment,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -190,6 +213,7 @@ const bookingListThunk = {
   cancelRoomBooking,
   editMeetingRequest,
   editUniqueAttendee,
+  confirmUpdateMeetingRequest,
 }
 
 export const bookingListService = {
