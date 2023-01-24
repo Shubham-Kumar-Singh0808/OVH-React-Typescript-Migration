@@ -271,14 +271,12 @@ const PeopleTable = (): JSX.Element => {
               )
             })}
         </CTableBody>
-        <span>
-          <strong>
-            {getProjectDetail?.length
-              ? `Total Records: ${getProjectDetail?.length}`
-              : `No Records found`}
-          </strong>
-        </span>
       </CTable>
+      <strong>
+        {getProjectDetail?.length
+          ? `Total Records: ${getProjectDetail?.length}`
+          : `No Records found`}
+      </strong>
     </>
   )
 }

@@ -118,7 +118,7 @@ const ChangeRequestTable = ({
   }
   return (
     <>
-      <CTable striped className="mt-3 table-layout-fixed">
+      <CTable striped className="mt-3 table-layout-fixed changeRequest-table">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

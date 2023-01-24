@@ -200,7 +200,7 @@ const ProjectCreationRequestTable = ({
 
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="projectCreation-request-table mt-3">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
