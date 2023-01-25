@@ -103,6 +103,7 @@ const PayrollManagementTable = (props: {
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
     props.setToEditPayslip(payslipItem)
+    props.setToggle('editPaySlip')
   }
 
   const handleModal = (payslipItem: CurrentPayslip) => {
