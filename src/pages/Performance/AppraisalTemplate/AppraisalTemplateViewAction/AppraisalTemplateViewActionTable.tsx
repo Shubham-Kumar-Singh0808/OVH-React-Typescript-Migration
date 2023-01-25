@@ -10,9 +10,38 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 
 const AppraisalTemplateViewActionTable = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
+
+  const dispatch = useAppDispatch()
+
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.appraisalTemplate.searchKRAList({
+          departmentId: selectDepartment,
+          designationId: selectDesignation,
+          multipleSearch: searchInput,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
+  }
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.appraisalTemplate.searchKRAList({
+        departmentId: selectDepartment,
+        designationId: selectDesignation,
+        multipleSearch: searchInput,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }
 
   return (
     <>
@@ -28,6 +57,7 @@ const AppraisalTemplateViewActionTable = (): JSX.Element => {
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
+              onKeyDown={handleSearchBtn}
             />
             <CButton
               disabled={!searchInput}
@@ -36,6 +66,7 @@ const AppraisalTemplateViewActionTable = (): JSX.Element => {
               type="button"
               color="info"
               id="button-addon2"
+              onClick={multiSearchBtnHandler}
             >
               <i className="fa fa-search"></i>
             </CButton>
