@@ -258,18 +258,23 @@ const PayrollManagementOptions = ({
       {selectMonth && selectYear ? (
         <CRow className="mt-3 sh-previewBtn">
           <CCol sm={4} className="mt-4 mb-4">
-            <input
-              className="mt-1"
-              data-testid="feedback-form"
-              type="file"
-              name="upload-form"
-              accept=".xlsx, .xls"
-              onChange={(element: SyntheticEvent) =>
-                onChangeFileUploadHandler(
-                  element.currentTarget as HTMLInputElement,
-                )
-              }
-            />
+            <label className="col-sm-6 control-label text-left">
+              <input
+                className="mt-1"
+                data-testid="feedback-form"
+                type="file"
+                name="upload-form"
+                accept=".xlsx, .xls"
+                onChange={(element: SyntheticEvent) =>
+                  onChangeFileUploadHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
+              />
+              <span className="textColor-shade" ng-show="MsgFlag">
+                Note: Please upload file either xls or xlsx format.
+              </span>
+            </label>
             {fileUploadErrorText && (
               <div id="error">
                 <strong className="mt-3 text-danger">
@@ -277,9 +282,6 @@ const PayrollManagementOptions = ({
                 </strong>
               </div>
             )}
-            <CRow className="textColor-shade">
-              <span>Note: Please upload file either xls or xlsx format.</span>
-            </CRow>
           </CCol>
           <CCol md={4} className="text-end mt-4 mb-4">
             {previewButton}
