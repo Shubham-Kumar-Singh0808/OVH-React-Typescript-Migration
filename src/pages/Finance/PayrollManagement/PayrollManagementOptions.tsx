@@ -258,9 +258,9 @@ const PayrollManagementOptions = ({
       {selectMonth && selectYear ? (
         <CRow className="mt-3 sh-previewBtn">
           <CCol sm={4} className="mt-4 mb-4">
-            <label className="col-sm-6 control-label text-left">
+            <label className="col-sm-12 control-label text-left">
               <input
-                className="mt-1"
+                className="mt-1 w-100"
                 data-testid="feedback-form"
                 type="file"
                 name="upload-form"

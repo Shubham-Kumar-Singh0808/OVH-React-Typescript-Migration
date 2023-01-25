@@ -35,8 +35,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('esi', formLabel)}>
           ESI:
         </CFormLabel>
@@ -69,8 +67,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('advArrears', formLabel)}>
           Adv Arrears:
         </CFormLabel>
@@ -103,8 +99,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('taxDeductionScheme', formLabel)}>
           Tax Deduction at Source:
         </CFormLabel>
@@ -137,8 +131,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('professionalTax', formLabel)}>
           Professional Tax:
         </CFormLabel>
@@ -171,8 +163,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('incentive', formLabel)}>
           Incentive:
         </CFormLabel>
@@ -205,8 +195,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('netSalary', formLabel)}>
           Net Salary:
         </CFormLabel>
