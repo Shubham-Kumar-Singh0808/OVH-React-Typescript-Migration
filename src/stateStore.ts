@@ -121,6 +121,7 @@ import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipE
 import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
 import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
+import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/AppraisalTemplateSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -242,6 +243,7 @@ export const allReducers = {
   pipList: pipListReducer,
   reviewList: reviewListReducer,
   KRA: KRAReducer,
+  appraisalTemplate: appraisalTemplateReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

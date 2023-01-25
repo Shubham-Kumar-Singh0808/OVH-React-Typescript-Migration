@@ -48,12 +48,21 @@ const deleteLocation = createAsyncThunk(
 const initialAddLocationListState: AddLocationSliceState = {
   meetingLocations: [],
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const addLocationListSlice = createSlice({
   name: 'addLocationList',
   initialState: initialAddLocationListState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -93,23 +102,30 @@ const deleteLocationNames = (state: RootState): getAllMeetingLocations[] =>
 const isLoading = (state: RootState): LoadingState =>
   state.addLocationList.isLoading
 
+const pageFromState = (state: RootState): number =>
+  state.addLocationList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.addLocationList.pageSize
+
 const addLocationListThunk = {
   getAllMeetingLocationsData,
   addLocation,
   deleteLocation,
 }
 
-const allocateEmployeeSelectors = {
+const locationListSelectors = {
   isLoading,
   locationNames,
   addLocationNames,
   deleteLocationNames,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const addLocationListService = {
   ...addLocationListThunk,
   actions: addLocationListSlice.actions,
-  selectors: allocateEmployeeSelectors,
+  selectors: locationListSelectors,
 }
 
 export default addLocationListSlice.reducer

@@ -112,7 +112,13 @@ const EditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(editChangeRequest?.name)}>*</span>
+            <span
+              className={showIsRequired(
+                editChangeRequest?.name?.replace(/^\s*/, ''),
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput

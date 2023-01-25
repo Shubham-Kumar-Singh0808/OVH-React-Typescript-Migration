@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -15,6 +15,10 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { currentPageData } from '../../../../utils/paginationUtils'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 
 const LocationListTable = ({
   userDeleteAccess,
@@ -51,6 +55,37 @@ const LocationListTable = ({
     setDeleteLocationName(locationName)
   }
 
+  const pageFromState = useTypedSelector(
+    reduxServices.addLocationList.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.addLocationList.selectors.pageSizeFromState,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(locationNames?.length, pageSizeFromState, pageFromState)
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(locationNames, currentPage, pageSize),
+    [locationNames, currentPage, pageSize],
+  )
+
   return (
     <>
       <CTable
@@ -66,10 +101,10 @@ const LocationListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {locationNames.length > 0 &&
-            locationNames?.map((location, index) => {
+          {currentPageItems.length > 0 &&
+            currentPageItems?.map((location, index) => {
               return (
-                <CTableRow key={index}>
+                <CTableRow key={getItemNumber(index)}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
                   <CTableDataCell>{location.locationName}</CTableDataCell>
                   <CTableDataCell>
@@ -99,10 +134,32 @@ const LocationListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {locationNames.length}</strong>
-          </p>
+          <strong>
+            {locationNames?.length
+              ? `Total Records: ${locationNames?.length}`
+              : `No Records Found`}
+          </strong>
         </CCol>
+        <CCol xs={3}>
+          {locationNames?.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {locationNames?.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
       </CRow>
       <OModal
         alignment="center"

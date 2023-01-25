@@ -19,7 +19,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
-  const SubmitHRlearanceCertificateHandler = async () => {
+  const SubmitHRClearanceCertificateHandler = async () => {
     const addTemplateTypeResultAction = await dispatch(
       reduxServices.resignationList.submitClearanceCertificate({
         addedBy: 'HR',
@@ -130,7 +130,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="confirmBtn"
                 color="success"
-                onClick={SubmitHRlearanceCertificateHandler}
+                onClick={SubmitHRClearanceCertificateHandler}
                 disabled={hrIsActive === 'true' && hrTextArea === ''}
               >
                 Submit
