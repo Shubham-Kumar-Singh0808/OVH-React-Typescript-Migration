@@ -742,7 +742,7 @@ const AddProjectRequestForm = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 data-testid="end-date-picker"
                 dateFormat="dd/mm/yyyy"
                 name="addprojectenddate"
