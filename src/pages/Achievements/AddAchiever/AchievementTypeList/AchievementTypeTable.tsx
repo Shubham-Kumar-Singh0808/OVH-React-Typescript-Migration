@@ -11,10 +11,13 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
@@ -22,6 +25,7 @@ import {
   AddAchieverTypeTableProps,
   NewAchievementStatus,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { currentPageData } from '../../../../utils/paginationUtils'
 import {
   EditedAchievementDetails,
   emptyString,
@@ -138,6 +142,51 @@ const AchievementTypeTable = (
   const [selectedDeleteAchievementId, setSelectedDeleteAchievementId] =
     useState<number>(defaultAchievementTypeIdValue)
 
+  const pageFromState = useTypedSelector(
+    reduxServices.commonAchievements.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.commonAchievements.selectors.pageSizeFromState,
+  )
+
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(
+    achievementTypeDataList.size,
+    pageSizeFromState,
+    pageFromState,
+  )
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const currentPageItems = useMemo(
+    () => currentPageData(achievementTypeDataList.list, currentPage, pageSize),
+    [achievementTypeDataList.list, currentPage, pageSize],
+  )
+
   const deleteToModalButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
     achievementTypeId: number,
@@ -212,11 +261,9 @@ const AchievementTypeTable = (
   return (
     <>
       <CTable
-        className="mt-2 mb-2"
+        className="mt-2 mb-2 table-layout-fixed align-center"
         responsive
         striped
-        align="middle"
-        role="table"
       >
         <CTableHead>
           <CTableRow>
@@ -232,9 +279,9 @@ const AchievementTypeTable = (
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {achievementTypeDataList?.list.map((item, index) => (
+          {currentPageItems?.map((item, index) => (
             <CTableRow key={index}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
+              <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
               <CTableDataCell>{item.typeName}</CTableDataCell>
               <CTableDataCell>
                 {isEditAchievementEnabled && item.id === editAchievementId ? (
@@ -283,7 +330,7 @@ const AchievementTypeTable = (
                     <div className="button-events">
                       <CButton
                         color="success"
-                        className="btn-ovh me-1"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid={`save-btn-${index}`}
                         onClick={editSaveButtonHandler}
                         disabled={!isEditSaveButtonEnabled}
@@ -292,7 +339,7 @@ const AchievementTypeTable = (
                       </CButton>
                       <CButton
                         color="warning"
-                        className="btn-ovh"
+                        className="btn-ovh btn-ovh-employee-list"
                         data-testid={`close-btn-${index}`}
                         onClick={closeEditButtonHandler}
                       >
@@ -303,7 +350,7 @@ const AchievementTypeTable = (
                     <div className="button-events">
                       <CButton
                         color="info"
-                        className="danger btn-ovh me-1"
+                        className="danger btn-ovh me-1 btn-ovh-employee-list"
                         size="sm"
                         data-testid={`edit-btn-${index}`}
                         title="Edit"
@@ -319,7 +366,7 @@ const AchievementTypeTable = (
                       <CButton
                         color="danger"
                         size="sm"
-                        className="btn-ovh me-2"
+                        className="btn-ovh me-2 btn-ovh-employee-list"
                         data-testid={`del-btn-${index}`}
                         title="Delete"
                         onClick={(e) => {
@@ -336,20 +383,52 @@ const AchievementTypeTable = (
           ))}
         </CTableBody>
       </CTable>
+      <CRow className="mt-3">
+        <CCol xs={4}>
+          <p>
+            <strong>Total Records: {achievementTypeDataList?.size}</strong>
+          </p>
+        </CCol>
+        {!achievementTypeDataList?.size && (
+          <CCol>
+            <CRow>
+              <h4 className="text-center">No Records Found...</h4>
+            </CRow>
+          </CCol>
+        )}
+        <CCol xs={3}>
+          {achievementTypeDataList?.size > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {achievementTypeDataList?.size > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
       <OModal
+        alignment="center"
         visible={displayModalContent}
         setVisible={setDisplayModalContent}
-        alignment="center"
         modalTitle="Delete Achievement Type"
-        modalHeaderClass="d-none"
         confirmButtonAction={confirmDeleteButtonHandler}
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
-        modalBodyClass="ng-binding"
       >
-        <div data-testid="confirm-modal-content" className="pb-4">
-          {modalContent}
-        </div>
+        <>{modalContent}</>
       </OModal>
     </>
   )

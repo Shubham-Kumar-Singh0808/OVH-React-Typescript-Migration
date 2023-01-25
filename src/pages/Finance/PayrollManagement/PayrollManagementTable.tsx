@@ -45,6 +45,7 @@ const PayrollManagementTable = (props: {
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
     {} as CurrentPayslip,
   )
+  const [deletePayslip, setDeletePayslip] = useState('')
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipList,
   )
@@ -84,9 +85,10 @@ const PayrollManagementTable = (props: {
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
-  const deleteButtonHandler = (id: number) => {
+  const deleteButtonHandler = (id: number, name: string) => {
     setIsDeleteModalVisible(true)
     setDeletePaySlipId(id)
+    setDeletePayslip(name)
   }
 
   const handlePageSizeSelectChange = (
@@ -286,7 +288,10 @@ const PayrollManagementTable = (props: {
                               color="danger btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() =>
-                                deleteButtonHandler(payslipItem.paySlipId)
+                                deleteButtonHandler(
+                                  payslipItem.paySlipId,
+                                  payslipItem.name,
+                                )
                               }
                             >
                               <i
@@ -360,7 +365,10 @@ const PayrollManagementTable = (props: {
         modalBodyClass="mt-0"
         confirmButtonAction={confirmDeletePayslip}
       >
-        <>Do you really want to delete this </>
+        <>
+          Do you really want to delete this <strong>{deletePayslip}</strong>{' '}
+          record ?{' '}
+        </>
       </OModal>
       <OModal
         alignment="center"
@@ -369,6 +377,7 @@ const PayrollManagementTable = (props: {
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
+        modalSize="lg"
       >
         <>
           <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />

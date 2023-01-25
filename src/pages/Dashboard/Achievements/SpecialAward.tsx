@@ -33,27 +33,28 @@ const SpecialAward = (): JSX.Element => {
       <CRow>
         <CCol sm={12}>
           <CRow className="media-body text-center">
-            {achievements.specialAwards?.map((specialAward, index) => {
-              return (
-                <CCol sm={3} key={index}>
-                  <h6>
-                    <span className="profile-avatar">
-                      <CImage
-                        src={specialAward.profilePicture}
-                        className="employee-profile"
-                      />
-                    </span>
-                  </h6>
-                  <h6>{specialAward.employeeName}</h6>
-                  <p>
-                    {`${specialAward.startDate} to
+            {achievements.specialAwards &&
+              achievements.specialAwards?.map((specialAward, index) => {
+                return (
+                  <CCol sm={3} key={index}>
+                    <h6>
+                      <span className="profile-avatar">
+                        <CImage
+                          src={specialAward.profilePicture}
+                          className="employee-profile"
+                        />
+                      </span>
+                    </h6>
+                    <h6>{specialAward.employeeName}</h6>
+                    <p>
+                      {`${specialAward.startDate} to
                     ${
                       specialAward.endDate === null ? ' ' : specialAward.endDate
                     }`}
-                  </p>
-                </CCol>
-              )
-            })}
+                    </p>
+                  </CCol>
+                )
+              })}
           </CRow>
         </CCol>
         {userAccessToAchieversList?.viewaccess && <>{specialAwardFooterLink}</>}

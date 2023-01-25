@@ -633,6 +633,48 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface ProjectDetailsApi extends ApiBase {
+  getProjects: string
+  getProject: string
+  updateProjectDetails: string
+}
+
+export interface ProjectTimeLineApi extends ApiBase {
+  getProjectHistory: string
+}
+
+export interface ProjectChangeRequestApi extends ApiBase {
+  getCRList: string
+  changeRequest: string
+  deleteCR: string
+  updateChangeRequest: string
+}
+
+export interface ProjectMilestoneApi extends ApiBase {
+  mileStonesList: string
+}
+export interface ProjectInvoiceApi extends ApiBase {
+  getClosedMilestonesAndCRs: string
+  getInvoicesOfMilestone: string
+}
+
+export interface ProjectTailoringApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProjectTailoring: string
+}
+
+export interface ProjectTimeSheetApi extends ApiBase {
+  getProjectTimeSheet: string
+}
+
+export interface ProjectProposalApi extends ApiBase {
+  projectProposal: string
+}
+
+export interface ProjectNotesApi extends ApiBase {
+  projectNotesTimeLine: string
+  uploadImage: string
+}
 export interface AddProjectCreationRequestApi extends ApiBase {
   getCheckList: string
   getProjectRequestMailIds: string
@@ -682,8 +724,33 @@ export interface KRAApi extends ApiBase {
   addNewKRA: string
   editThisKra: string
   updateKRA: string
+  getFrequency: string
+  addKPI: string
+  updateKPI: string
 }
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+}
+
+export interface PIPListApi extends ApiBase {
+  getAllPIPList: string
+  exportPIPList: string
+  getPerformanceRatings: string
+  activeEmployee: string
+  addPIP: string
+  viewPipDetails: string
+  getPIPHistory: string
+  extendPip: string
+  removeFromPip: string
+  updatePipDetails: string
+  savePIPClearnceCertificate: string
+}
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
 }

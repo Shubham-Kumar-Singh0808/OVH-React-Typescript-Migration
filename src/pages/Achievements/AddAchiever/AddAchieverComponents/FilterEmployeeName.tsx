@@ -44,7 +44,7 @@ const FilterEmployeeName = ({
         data-testid="ach-emp-name"
         className={labelClass ? labelClass : newAchievementLabelClass}
       >
-        Employee Name:
+        Employee Name :
         <span
           className={
             employeeName === undefined ||

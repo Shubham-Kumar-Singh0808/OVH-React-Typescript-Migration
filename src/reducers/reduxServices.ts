@@ -92,6 +92,15 @@ import { commonAchievementsService } from './Achievements/CommonAchievementsSlic
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
 import { addProjectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
+import { projectViewService } from './ProjectManagement/Project/ProjectView/projectViewSlice'
+import { projectTimeLineService } from './ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
+import { changeRequestService } from './ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import { mileStoneService } from './ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
+import { invoicesService } from './ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
+import { projectTailoringService } from './ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
+import { projectHiveActivityReportService } from './ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import { projectProposalsService } from './ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
+import { projectNotesService } from './ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
@@ -99,6 +108,8 @@ import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { pipListService } from './Performance/PIPList/pipListSlice'
+import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
 
 export const reduxServices = {
@@ -197,11 +208,22 @@ export const reduxServices = {
   nomineeList: nomineeListService,
   addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
+  projectViewDetails: projectViewService,
+  projectTimeLine: projectTimeLineService,
+  projectChangeRequest: changeRequestService,
+  projectMileStone: mileStoneService,
+  projectInvoices: invoicesService,
+  projectTailoring: projectTailoringService,
+  projectTimeSheet: projectHiveActivityReportService,
+  projectProposals: projectProposalsService,
+  projectNotes: projectNotesService,
   addProjectCreationRequest: addProjectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
   myReview: myReviewService,
   leadershipEnrollmentList: leadershipEnrollmentListService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  pipList: pipListService,
+  reviewList: reviewListService,
   KRA: KRAService,
 }

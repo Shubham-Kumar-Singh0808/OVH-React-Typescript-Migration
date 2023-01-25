@@ -2,8 +2,12 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import KRAApi from '../../../middleware/api/Performance/KRA/KRAApi'
+import { RootState } from '../../../stateStore'
 import {
+  AddKPIData,
   DeleteKPIParams,
+  Frequency,
+  IncomingKPIDataItem,
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRAInitialState,
@@ -48,7 +52,9 @@ const initialState: KRAInitialState = {
   kraDesigPercentage: -1,
   isNewKRADuplicate: false,
   editThisKra: initialEditKra,
-  currentOnScreenPage: KRAPages.kraList, // Used for navigating to different screens. Implemented here because there are many child components and screens. This makes it more efficient
+  currentOnScreenPage: KRAPages.kraList,
+  frequency: [],
+  editThisKpi: {} as IncomingKPIDataItem,
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -80,6 +86,30 @@ const searchKRADataThunk = createAsyncThunk(
   async (outBody: KRADataQueryBody, thunkApi) => {
     try {
       return await KRAApi.searchKRAData(outBody)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addKPI = createAsyncThunk(
+  'KRA/addKPI',
+  async (outBody: AddKPIData, thunkApi) => {
+    try {
+      return await KRAApi.addKPI(outBody)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const updateKPI = createAsyncThunk(
+  'KRA/updateKPI',
+  async (outBody: IncomingKPIDataItem, thunkApi) => {
+    try {
+      return await KRAApi.updateKPI(outBody)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status)
@@ -183,6 +213,18 @@ const updateKRAThunk = createAsyncThunk(
   },
 )
 
+const getFrequency = createAsyncThunk(
+  'KRA/getFrequency',
+  async (_, thunkApi) => {
+    try {
+      return await KRAApi.getFrequency()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const KRASlice = createSlice({
   name: 'KRA',
   initialState,
@@ -201,6 +243,9 @@ const KRASlice = createSlice({
     },
     setCurrentOnScreenPage: (state, action) => {
       state.currentOnScreenPage = action.payload
+    },
+    setEditKpi: (state, action) => {
+      state.editThisKpi = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -225,6 +270,9 @@ const KRASlice = createSlice({
     builder.addCase(editThisKraThunk.fulfilled, (state, action) => {
       state.editThisKra = action.payload
     })
+    builder.addCase(getFrequency.fulfilled, (state, action) => {
+      state.frequency = action.payload
+    })
     builder.addMatcher(
       isAnyOf(
         getEmpDepartmentThunk.fulfilled,
@@ -238,6 +286,8 @@ const KRASlice = createSlice({
         checkNewKRADuplicacyThunk.fulfilled,
         editThisKraThunk.fulfilled,
         updateKRAThunk.fulfilled,
+        addKPI.fulfilled,
+        updateKPI.fulfilled,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -256,6 +306,9 @@ const KRASlice = createSlice({
         checkNewKRADuplicacyThunk.pending,
         editThisKraThunk.pending,
         updateKRAThunk.pending,
+        getFrequency.pending,
+        addKPI.pending,
+        updateKPI.pending,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -274,6 +327,9 @@ const KRASlice = createSlice({
         checkNewKRADuplicacyThunk.rejected,
         editThisKraThunk.rejected,
         updateKRAThunk.rejected,
+        getFrequency.rejected,
+        addKPI.rejected,
+        updateKPI.rejected,
       ),
       (state) => {
         state.isLoading = ApiLoadingState.failed
@@ -294,11 +350,23 @@ const KRAThunk = {
   addNewKRAThunk,
   editThisKraThunk,
   updateKRAThunk,
+  getFrequency,
+  addKPI,
+  updateKPI,
+}
+
+const frequency = (state: RootState): Frequency[] => state.KRA.frequency
+const editKpi = (state: RootState): IncomingKPIDataItem => state.KRA.editThisKpi
+
+const kRAsSelectors = {
+  frequency,
+  editKpi,
 }
 
 export const KRAService = {
   ...KRAThunk,
   actions: KRASlice.actions,
+  selectors: kRAsSelectors,
 }
 
 const KRAReducer = KRASlice.reducer

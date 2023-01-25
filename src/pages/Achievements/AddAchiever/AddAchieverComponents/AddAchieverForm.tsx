@@ -265,7 +265,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             data-testid="ach-name-label"
             className={newAchievementLabelClass}
           >
-            Achievement Type:
+            Achievement Type :
             <span
               className={
                 newAchieverDetails.achievementName === null ||
@@ -323,7 +323,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               className={newAchievementLabelClass}
               data-testid="ach-timep-label"
             >
-              Time Period (year&apos;s):
+              Time Period (year&apos;s) :
               <span
                 className={
                   newAchieverDetails.timePeriod === null ||
@@ -356,7 +356,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="from-date"
               className={newAchievementLabelClass}
             >
-              From Date:
+              From Date :
               <span
                 className={
                   newAchieverDetails.startDate === null ||
@@ -395,7 +395,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="to-date"
               className={newAchievementLabelClass}
             >
-              To Date:
+              To Date :
               <span
                 className={
                   newAchieverDetails.endDate === null ||
@@ -431,10 +431,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
         <AchievementEntryContainer>
           <CFormLabel
             data-testid="ach-desc"
-            className={`${newAchievementLabelClass} align-self-start`}
+            className="col-sm-3 col-form-label text-end pe-18"
           >
-            Description:
-            <span className={TextWhite}>*</span>
+            Description :<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={8}>
             {showEditor ? (
@@ -454,10 +453,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
         <AchievementEntryContainer>
           <CFormLabel
             data-testid="ach-pic"
-            className={newAchievementLabelClass}
+            className="col-sm-3 col-form-label text-end pe-18"
           >
-            Picture:
-            <span className={TextWhite}>*</span>
+            Picture :<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={12} md={3}>
             <AchieverImage
@@ -467,30 +465,30 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             />
           </CCol>
         </AchievementEntryContainer>
+        <CRow>
+          <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
+          <CCol sm={4}>
+            <CButton
+              type="submit"
+              color="success"
+              className="btn-ovh me-1"
+              data-testid="add-achiever-btn"
+              disabled={!isAddButtonEnabled}
+            >
+              Add
+            </CButton>
+            <CButton
+              color="warning"
+              role="addNewAchiever"
+              data-testid="clear-btn"
+              className="btn-ovh me-1"
+              onClick={clearButtonHandler}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
       </CContainer>
-      <CRow>
-        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="add-achiever-btn"
-            disabled={!isAddButtonEnabled}
-          >
-            Add
-          </CButton>
-          <CButton
-            color="warning"
-            role="addNewAchiever"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
     </CForm>
   )
 }

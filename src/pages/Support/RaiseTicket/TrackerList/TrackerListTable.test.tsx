@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import TrackerListTable from './TrackerListTable'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../../test/testUtils'
 import { mockTrackerList } from '../../../../test/data/ticketApprovalsData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
@@ -56,5 +56,22 @@ describe('Add Tracker List Table without data', () => {
     expect(
       screen.getByText('Total Records: ' + mockTrackerList.length),
     ).toBeInTheDocument()
+  })
+  test('should render first page data only', () => {
+    waitFor(() => {
+      userEvent.click(screen.getByText('Next >', { exact: true }))
+
+      expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
+    })
+  })
+
+  test('should disable first and prev in pagination if first page', () => {
+    waitFor(() => {
+      expect(screen.getByText('« First')).toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
+    })
   })
 })

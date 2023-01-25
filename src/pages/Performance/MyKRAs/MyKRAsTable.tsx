@@ -25,7 +25,11 @@ const MyKRAsTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable responsive striped className="mt-3 align-middle">
+      <CTable
+        responsive
+        striped
+        className="mt-3 align-middle table-layout-fixed"
+      >
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell></CTableHeaderCell>
