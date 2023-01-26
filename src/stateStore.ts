@@ -122,6 +122,7 @@ import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
 import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
 import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/AppraisalTemplateSlice'
+import projectStatusReducer from './reducers/ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -244,6 +245,7 @@ export const allReducers = {
   reviewList: reviewListReducer,
   KRA: KRAReducer,
   appraisalTemplate: appraisalTemplateReducer,
+  projectStatus: projectStatusReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

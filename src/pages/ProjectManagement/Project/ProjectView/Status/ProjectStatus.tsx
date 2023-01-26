@@ -1,0 +1,64 @@
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { CRow, CCol, CButton } from '@coreui/react-pro'
+import ProjectStatusTable from './ProjectStatusTable'
+import AddProjectStatus from './AddProjectStatus'
+import { usePagination } from '../../../../../middleware/hooks/usePagination'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import { useTypedSelector, useAppDispatch } from '../../../../../stateStore'
+
+const ProjectStatus = (): JSX.Element => {
+  const [toggle, setToggle] = useState('')
+  const listSize = useTypedSelector(
+    reduxServices.tickets.selectors.allTicketsListSize,
+  )
+  const { projectId } = useParams<{ projectId: string }>()
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
+
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectStatus.getStatusReportList({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectId,
+      }),
+    )
+  }, [dispatch, pageSize, currentPage])
+  return (
+    <>
+      {toggle === '' && (
+        <>
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <CButton
+                color="info btn-ovh me-1"
+                onClick={() => setToggle('addProjectStatus')}
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          </CRow>
+          <ProjectStatusTable
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+          />
+        </>
+      )}
+      {toggle === 'addProjectStatus' && (
+        <AddProjectStatus setToggle={setToggle} />
+      )}
+    </>
+  )
+}
+
+export default ProjectStatus
