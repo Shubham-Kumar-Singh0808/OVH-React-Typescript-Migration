@@ -9,14 +9,18 @@ import {
   CCol,
   CRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
+import { ProjectStatusReport } from '../../../../../types/ProjectManagement/Project/ProjectView/Status/projectStatusTypes'
 
 const ProjectStatusTable = ({
   paginationRange,
@@ -24,13 +28,34 @@ const ProjectStatusTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
+  setToggle,
+  setEditCurrentWeekDate,
+  setEditNextWeekDate,
+  setEditNextWeekStatus,
+  setEditCurrentWeekStatus,
+  setStatusId,
 }: {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: (value: string) => void
+  setEditCurrentWeekDate: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekStatus: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setEditCurrentWeekStatus: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setStatusId: React.Dispatch<React.SetStateAction<number | undefined>>
 }): JSX.Element => {
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
+  const { projectId } = useParams<{ projectId: string }>()
   const projectStatusList = useTypedSelector(
     reduxServices.projectStatus.selectors.projectStatusReport,
   )
@@ -41,6 +66,7 @@ const ProjectStatusTable = ({
   const isLoading = useTypedSelector(
     reduxServices.projectStatus.selectors.isLoading,
   )
+  const dispatch = useAppDispatch()
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -49,6 +75,47 @@ const ProjectStatusTable = ({
   }
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
+  }
+  const handleShowDeleteModal = (id: number) => {
+    setToDeleteVisaId(id)
+    setIsDeleteModalVisible(true)
+  }
+
+  const handleConfirmDeleteProjectStatus = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteProjectStatusResultAction = await dispatch(
+      reduxServices.projectStatus.deleteProjectStatus(toDeleteVisaId),
+    )
+    if (
+      reduxServices.projectStatus.deleteProjectStatus.fulfilled.match(
+        deleteProjectStatusResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectStatus.getStatusReportList({
+          endIndex: pageSize * currentPage,
+          firstIndex: pageSize * (currentPage - 1),
+          projectId,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Visa Detail deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const editProjectStatusButtonHandler = (item: ProjectStatusReport): void => {
+    setToggle('editProjectStatus')
+    setEditCurrentWeekDate(item.prevDate)
+    setEditNextWeekDate(item.nextDate)
+    setEditNextWeekStatus(item.nextstatus)
+    setEditCurrentWeekStatus(item.prevstatus)
+    setStatusId(item.id)
   }
   return (
     <>
@@ -66,20 +133,35 @@ const ProjectStatusTable = ({
         <CTableBody color="light">
           {isLoading !== ApiLoadingState.loading ? (
             projectStatusList &&
-            projectStatusList?.map((statusReort, index) => {
+            projectStatusList?.map((statusReport, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                  <CTableDataCell>{statusReort.prevDate}</CTableDataCell>
-                  <CTableDataCell>{statusReort.prevstatus}</CTableDataCell>
-                  <CTableDataCell>{statusReort.nextDate}</CTableDataCell>
-                  <CTableDataCell>{statusReort.nextstatus}</CTableDataCell>
+                  <CTableDataCell>{statusReport.prevDate}</CTableDataCell>
+                  <CTableDataCell>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: statusReport.prevstatus,
+                      }}
+                    />
+                  </CTableDataCell>
+                  <CTableDataCell>{statusReport.nextDate}</CTableDataCell>
+                  <CTableDataCell>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: statusReport.nextstatus,
+                      }}
+                    />
+                  </CTableDataCell>
                   <CTableDataCell>
                     <>
                       <CButton
                         color="info"
                         className="btn-ovh me-2"
                         data-testid="edit-btn"
+                        onClick={() => {
+                          editProjectStatusButtonHandler(statusReport)
+                        }}
                       >
                         <i
                           className="fa fa-pencil-square-o"
@@ -89,7 +171,7 @@ const ProjectStatusTable = ({
                       <CButton
                         color="danger"
                         className="btn-ovh me-1 btn-ovh-employee-list"
-                        // onClick={() => handleShowDeleteModal(item.id)}
+                        onClick={() => handleShowDeleteModal(statusReport.id)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -139,6 +221,17 @@ const ProjectStatusTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteProjectStatus}
+      >
+        {`Do you really want to delete this ?`}
+      </OModal>
     </>
   )
 }

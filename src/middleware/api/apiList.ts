@@ -927,4 +927,6 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
 export const projectStatusApiConfig: ProjectStatusApi = {
   statusReportLis: apiPrefix + '/project-mgmt/statusReportList',
   addStatusReport: apiPrefix + '/project-mgmt/statusReports',
+  deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
+  updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
 }

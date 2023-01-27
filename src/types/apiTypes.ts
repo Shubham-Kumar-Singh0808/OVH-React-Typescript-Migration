@@ -764,4 +764,6 @@ export interface AppraisalTemplateApi extends ApiBase {
 export interface ProjectStatusApi extends ApiBase {
   statusReportLis: string
   addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
 }

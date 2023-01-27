@@ -9,6 +9,7 @@ import {
   ProjectStatusReport,
   StatusReportListProps,
   StatusReportListSliceState,
+  UpdateProjectStatusReportProps,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/Status/projectStatusTypes'
 
 const getStatusReportList = createAsyncThunk(
@@ -16,6 +17,18 @@ const getStatusReportList = createAsyncThunk(
   async (props: StatusReportListProps, thunkApi) => {
     try {
       return await projectStatusApi.getStatusReportList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteProjectStatus = createAsyncThunk(
+  'status/deleteProjectStatus',
+  async (statusReportId: number, thunkApi) => {
+    try {
+      return await projectStatusApi.deleteProjectStatus(statusReportId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -32,13 +45,38 @@ const addProjectStatusReport = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'projectView/addChangeRequest',
+  'projectView/addProjectStatusReport',
   async (
     addProjectStatusReportProps: AddProjectStatusReportProps,
     thunkApi,
   ) => {
     try {
       return await projectStatusApi.addProjectStatusReport(
+        addProjectStatusReportProps,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateProjectStatusReport = createAsyncThunk<
+  number | undefined,
+  UpdateProjectStatusReportProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectView/updateProjectStatusReport',
+  async (
+    addProjectStatusReportProps: UpdateProjectStatusReportProps,
+    thunkApi,
+  ) => {
+    try {
+      return await projectStatusApi.updateProjectStatusReport(
         addProjectStatusReportProps,
       )
     } catch (error) {
@@ -78,6 +116,8 @@ const statusReportListSize = (state: RootState): number =>
 const projectStatusThunk = {
   getStatusReportList,
   addProjectStatusReport,
+  deleteProjectStatus,
+  updateProjectStatusReport,
 }
 
 const projectStatusSelectors = {

@@ -34,3 +34,12 @@ export type AddProjectStatusReportProps = {
   prevstatus: string
   projectId: string
 }
+export type UpdateProjectStatusReportProps = {
+  addOn: null
+  id: number
+  nextDate: string
+  nextstatus: string
+  prevDate: string
+  prevstatus: string
+  projectId: string | number
+}

@@ -2,6 +2,7 @@ import {
   StatusReportListProps,
   StatusReportList,
   AddProjectStatusReportProps,
+  UpdateProjectStatusReportProps,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/Status/projectStatusTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -37,9 +38,39 @@ const addProjectStatusReport = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const deleteProjectStatus = async (
+  statusReportId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectStatusApiConfig.deleteStatusReport,
+    method: AllowedHttpMethods.get,
+    params: {
+      statusReportId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateProjectStatusReport = async (
+  updateProjectStatusReportProps: UpdateProjectStatusReportProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectStatusApiConfig.updateStatusReport,
+    method: AllowedHttpMethods.post,
+    data: updateProjectStatusReportProps,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const projectStatusApi = {
   getStatusReportList,
   addProjectStatusReport,
+  deleteProjectStatus,
+  updateProjectStatusReport,
 }
 
 export default projectStatusApi

@@ -1,71 +1,85 @@
 import { CRow, CCol, CButton, CForm, CFormLabel } from '@coreui/react-pro'
-import React, { useState } from 'react'
-import moment from 'moment'
-import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import moment from 'moment'
+import DatePicker from 'react-datepicker'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { deviceLocale } from '../../../../../utils/helper'
 import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
+import { deviceLocale } from '../../../../../utils/dateFormatUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 
-const AddProjectStatus = ({
+const EditProjectStatus = ({
   setToggle,
+  editCurrentWeekDate,
+  editNextWeekDate,
+  editCurrentWeekStatus,
+  editNextWeekStatus,
+  setEditCurrentWeekDate,
+  setEditNextWeekDate,
+  setEditNextWeekStatus,
+  setEditCurrentWeekStatus,
+  statusId,
 }: {
   setToggle: (value: string) => void
+  editCurrentWeekDate: string | undefined
+  editNextWeekDate: string | undefined
+  editCurrentWeekStatus: string | undefined
+  editNextWeekStatus: string | undefined
+  setEditCurrentWeekDate: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekStatus: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  setEditCurrentWeekStatus: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
+  statusId: number | undefined
 }): JSX.Element => {
-  const [currentWeekDate, setCurrentWeekDate] = useState<string>()
-  const [nextWeekDate, setNextWeekDate] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [currentWeekStatus, setCurrentWeekStatus] = useState<string>()
-  const [nextWeekStatus, setNextWeekStatus] = useState<string>()
-  const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
+  const commonFormatDate = 'l'
   const handleCurrentWeekStatus = (currentStatus: string) => {
-    setCurrentWeekStatus(currentStatus)
+    setEditCurrentWeekStatus(currentStatus)
   }
   const handleNextWeekStatus = (nextStatus: string) => {
-    setNextWeekStatus(nextStatus)
+    setEditNextWeekStatus(nextStatus)
   }
   const { projectId } = useParams<{ projectId: string }>()
-  const clearBtnHandler = () => {
-    setCurrentWeekDate('')
-    setNextWeekDate('')
-    setShowEditor(false)
-    setTimeout(() => {
-      setShowEditor(true)
-    }, 100)
-  }
   const toastElement = (
-    <OToast toastMessage="Status Added Successfully" toastColor={'success'} />
+    <OToast toastMessage="Status Updated Successfully" toastColor={'success'} />
   )
-  const addProjectStatusHandler = async () => {
-    const addProjectStatusReportResultAction = await dispatch(
-      reduxServices.projectStatus.addProjectStatusReport({
-        nextDate: nextWeekDate
-          ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
+  const updateProjectStatusHandler = async () => {
+    const updateProjectStatusReportResultAction = await dispatch(
+      reduxServices.projectStatus.updateProjectStatusReport({
+        addOn: null,
+        nextDate: editCurrentWeekDate
+          ? new Date(editCurrentWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
             })
           : '',
-        nextstatus: nextWeekStatus as string,
-        prevDate: currentWeekDate
-          ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
+        nextstatus: editNextWeekStatus as string,
+        prevDate: editNextWeekDate
+          ? new Date(editNextWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
             })
           : '',
-        prevstatus: currentWeekStatus as string,
+        prevstatus: editCurrentWeekStatus as string,
         projectId,
+        id: statusId as number,
       }),
     )
     if (
-      reduxServices.projectStatus.addProjectStatusReport.fulfilled.match(
-        addProjectStatusReportResultAction,
+      reduxServices.projectStatus.updateProjectStatusReport.fulfilled.match(
+        updateProjectStatusReportResultAction,
       )
     ) {
       setToggle('')
@@ -79,6 +93,7 @@ const AddProjectStatus = ({
       )
     }
   }
+  console.log(setShowEditor)
   return (
     <>
       <CRow className="justify-content-end">
@@ -111,16 +126,19 @@ const AddProjectStatus = ({
               placeholderText="dd/mm/yy"
               name="fromDate"
               value={
-                currentWeekDate
-                  ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: '2-digit',
-                    })
+                editCurrentWeekDate
+                  ? new Date(editCurrentWeekDate).toLocaleDateString(
+                      deviceLocale,
+                      {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      },
+                    )
                   : ''
               }
               onChange={(date: Date) =>
-                setCurrentWeekDate(moment(date).format(commonFormatDate))
+                setEditCurrentWeekDate(moment(date).format(commonFormatDate))
               }
             />
           </CCol>
@@ -142,16 +160,19 @@ const AddProjectStatus = ({
               placeholderText="dd/mm/yy"
               name="fromDate"
               value={
-                nextWeekDate
-                  ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: '2-digit',
-                    })
+                editNextWeekDate
+                  ? new Date(editNextWeekDate).toLocaleDateString(
+                      deviceLocale,
+                      {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      },
+                    )
                   : ''
               }
               onChange={(date: Date) =>
-                setNextWeekDate(moment(date).format(commonFormatDate))
+                setEditNextWeekDate(moment(date).format(commonFormatDate))
               }
             />
           </CCol>
@@ -165,7 +186,7 @@ const AddProjectStatus = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={currentWeekStatus}
+                initData={editCurrentWeekStatus}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -186,7 +207,7 @@ const AddProjectStatus = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={nextWeekStatus}
+                initData={editNextWeekStatus}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -204,17 +225,9 @@ const AddProjectStatus = ({
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                onClick={addProjectStatusHandler}
+                onClick={updateProjectStatusHandler}
               >
-                Add
-              </CButton>
-              <CButton
-                color="warning "
-                className="btn-ovh"
-                data-testid="clear-btn"
-                onClick={clearBtnHandler}
-              >
-                Clear
+                Update
               </CButton>
             </>
           </CCol>
@@ -224,4 +237,4 @@ const AddProjectStatus = ({
   )
 }
 
-export default AddProjectStatus
+export default EditProjectStatus
