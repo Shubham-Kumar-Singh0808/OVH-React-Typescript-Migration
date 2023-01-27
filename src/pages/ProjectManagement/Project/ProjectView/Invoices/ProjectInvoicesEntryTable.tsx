@@ -187,7 +187,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Edit">
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
@@ -195,7 +195,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="View">
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-eye text-white fa-fw"></i>
                     </CButton>
@@ -203,7 +203,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Timeline">
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-bar-chart  fa-fw"></i>
                     </CButton>
@@ -211,7 +211,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Discussion">
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-comments text-white"></i>
                     </CButton>

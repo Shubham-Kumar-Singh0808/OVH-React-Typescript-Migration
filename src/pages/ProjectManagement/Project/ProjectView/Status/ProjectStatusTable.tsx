@@ -8,6 +8,7 @@ import {
   CTableDataCell,
   CCol,
   CRow,
+  CLink,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -54,6 +55,8 @@ const ProjectStatusTable = ({
   setStatusId: React.Dispatch<React.SetStateAction<number | undefined>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [subject, setSubject] = useState<string>('')
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const { projectId } = useParams<{ projectId: string }>()
   const projectStatusList = useTypedSelector(
@@ -117,6 +120,10 @@ const ProjectStatusTable = ({
     setEditCurrentWeekStatus(item.prevstatus)
     setStatusId(item.id)
   }
+  const handleModal = (ticket: string) => {
+    setIsModalVisible(true)
+    setSubject(ticket)
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -139,25 +146,37 @@ const ProjectStatusTable = ({
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                   <CTableDataCell>{statusReport.prevDate}</CTableDataCell>
                   <CTableDataCell>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: statusReport.prevstatus,
-                      }}
-                    />
+                    <CLink
+                      className="cursor-pointer text-decoration-none text-primary"
+                      data-testid={`subject-comments${index}`}
+                      onClick={() => handleModal(statusReport.prevstatus)}
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: statusReport.prevstatus,
+                        }}
+                      />
+                    </CLink>
                   </CTableDataCell>
                   <CTableDataCell>{statusReport.nextDate}</CTableDataCell>
                   <CTableDataCell>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: statusReport.nextstatus,
-                      }}
-                    />
+                    <CLink
+                      className="cursor-pointer text-decoration-none text-primary"
+                      data-testid={`dsc-comments${index}`}
+                      onClick={() => handleModal(statusReport.nextstatus)}
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: statusReport.nextstatus,
+                        }}
+                      />
+                    </CLink>
                   </CTableDataCell>
                   <CTableDataCell>
                     <>
                       <CButton
                         color="info"
-                        className="btn-ovh me-2"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid="edit-btn"
                         onClick={() => {
                           editProjectStatusButtonHandler(statusReport)
@@ -231,6 +250,21 @@ const ProjectStatusTable = ({
         confirmButtonAction={handleConfirmDeleteProjectStatus}
       >
         {`Do you really want to delete this ?`}
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        modalBodyClass="model-body-text-alinement"
+        visible={isModalVisible}
+        setVisible={setIsModalVisible}
+      >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: subject,
+          }}
+        />
       </OModal>
     </>
   )

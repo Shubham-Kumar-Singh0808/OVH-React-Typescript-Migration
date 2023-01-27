@@ -1,5 +1,5 @@
 import { CRow, CCol, CButton, CForm, CFormLabel } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom'
 import { deviceLocale } from '../../../../../utils/helper'
 import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 
 const AddProjectStatus = ({
@@ -21,8 +21,12 @@ const AddProjectStatus = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [currentWeekStatus, setCurrentWeekStatus] = useState<string>()
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
+  const [dateError, setDateError] = useState<boolean>(false)
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
+  const getProjectDetail = useTypedSelector(
+    reduxServices.projectViewDetails.selectors.projectDetail,
+  )
   const handleCurrentWeekStatus = (currentStatus: string) => {
     setCurrentWeekStatus(currentStatus)
   }
@@ -79,6 +83,65 @@ const AddProjectStatus = ({
       )
     }
   }
+  const failureToastMessage = (
+    <OToast
+      toastMessage="Add an employee within project date limits."
+      toastColor="danger"
+    />
+  )
+
+  const allocateButtonHandler = () => {
+    const tempAllocationDate = new Date(
+      moment(currentWeekDate).format(commonFormatDate),
+    )
+    const startDateParts = getProjectDetail?.startdate
+      ? getProjectDetail.startdate.split('/')
+      : ''
+    const tempProjectStartDate = new Date(
+      Number(startDateParts[2]),
+      Number(startDateParts[1]) - 1,
+      Number(startDateParts[0]),
+    )
+
+    const tempEndDate = new Date(moment(nextWeekDate).format(commonFormatDate))
+    const endDateParts = getProjectDetail?.enddate
+      ? getProjectDetail.enddate.split('/')
+      : ''
+    const tempProjectEndDate = new Date(
+      Number(endDateParts[2]),
+      Number(endDateParts[1]) - 1,
+      Number(endDateParts[0]),
+    )
+
+    if (
+      tempAllocationDate <= tempEndDate &&
+      tempAllocationDate >= tempProjectStartDate &&
+      tempAllocationDate <= tempProjectEndDate &&
+      tempEndDate <= tempProjectEndDate &&
+      tempEndDate >= tempProjectStartDate
+    ) {
+      addProjectStatusHandler()
+    } else {
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+    }
+  }
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(currentWeekDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(nextWeekDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      currentWeekDate &&
+      nextWeekDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [currentWeekDate, nextWeekDate])
   return (
     <>
       <CRow className="justify-content-end">
@@ -156,6 +219,16 @@ const AddProjectStatus = ({
             />
           </CCol>
         </CRow>
+        {dateError && (
+          <CRow className="mt-2">
+            <CCol sm={{ span: 6, offset: 4 }}>
+              <span className="text-danger" data-testid="errorMessage">
+                Next week date should be greater than current week date and
+                should be after one week from current week date
+              </span>
+            </CCol>
+          </CRow>
+        )}
         <CRow className="mt-3">
           <CCol sm={8} data-testid="ckEditor-component">
             <CFormLabel className="col-sm-3 col-form-label">
@@ -204,7 +277,7 @@ const AddProjectStatus = ({
               <CButton
                 className="btn-ovh me-1"
                 color="success"
-                onClick={addProjectStatusHandler}
+                onClick={allocateButtonHandler}
               >
                 Add
               </CButton>
