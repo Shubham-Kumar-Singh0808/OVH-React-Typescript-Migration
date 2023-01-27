@@ -50,8 +50,7 @@ const EmployeeAllocationEntryTable = (props: {
   )
 
   const dispatch = useAppDispatch()
-  const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
-    props
+  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
 
   const allocationStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'New') {
@@ -109,9 +108,13 @@ const EmployeeAllocationEntryTable = (props: {
       )
     ) {
       dispatch(
-        reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
+        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
+          Billingtype: billingStatus,
+          EmployeeStatus: allocationStatus,
           dateSelection: Select,
-          employeeid: id,
+          departmentNames: [],
+          employeeName: '',
+          endIndex: 20,
           enddate: toDate
             ? new Date(toDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -119,8 +122,7 @@ const EmployeeAllocationEntryTable = (props: {
                 day: '2-digit',
               })
             : '',
-          isAllocated: allocationStatus,
-          isBillale: billingStatus,
+          firstIndex: 0,
           startdate: fromDate
             ? new Date(fromDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -128,19 +130,6 @@ const EmployeeAllocationEntryTable = (props: {
                 day: '2-digit',
               })
             : '',
-        }),
-      )
-      dispatch(
-        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
-          Billingtype: billingStatus,
-          EmployeeStatus: '',
-          dateSelection: Select,
-          departmentNames: [],
-          employeeName: '',
-          endIndex: 20,
-          enddate: '',
-          firstIndex: 0,
-          startdate: '',
           technology: '',
         }),
       )

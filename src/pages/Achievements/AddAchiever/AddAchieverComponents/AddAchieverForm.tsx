@@ -320,7 +320,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               className={newAchievementLabelClass}
               data-testid="ach-timep-label"
             >
-              Time Period (year&apos;s):
+              Time Period (year&apos;s) :
               <span
                 className={
                   newAchieverDetails.timePeriod === null ||
@@ -353,7 +353,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="from-date"
               className={newAchievementLabelClass}
             >
-              From Date:
+              From Month :
               <span
                 className={
                   newAchieverDetails.startDate === null ||
@@ -371,7 +371,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="startDate"
-                placeholderText="MM-YYYY"
+                placeholderText="mm-yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -392,7 +392,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="to-date"
               className={newAchievementLabelClass}
             >
-              To Date:
+              To Month :
               <span
                 className={
                   newAchieverDetails.endDate === null ||
@@ -409,7 +409,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 dateFormat="MMMM yyyy"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
-                placeholderText="MM-YYYY"
+                placeholderText="mm-yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -430,8 +430,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             data-testid="ach-desc"
             className={`${newAchievementLabelClass} align-self-start`}
           >
-            Description:
-            <span className={TextWhite}>*</span>
+            Description :<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={8}>
             {showEditor ? (
@@ -453,8 +452,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             data-testid="ach-pic"
             className={newAchievementLabelClass}
           >
-            Picture:
-            <span className={TextWhite}>*</span>
+            Picture :<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={12} md={3}>
             <AchieverImage
