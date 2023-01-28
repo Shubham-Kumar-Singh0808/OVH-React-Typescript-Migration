@@ -23,9 +23,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
   const grandTotalResult = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
-  const itDeclarationID = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.itDeclarationFormId,
-  )
+
   const formSectionData = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.formSectionData,
   )
