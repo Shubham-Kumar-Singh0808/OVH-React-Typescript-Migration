@@ -68,7 +68,7 @@ const ITDeclarationForm = (): JSX.Element => {
       fromDate: '',
       grandTotal: grandTotalResult,
       isAgree: isAgreeChecked,
-      itDeclarationFormId: null,
+      itDeclarationFormId: 0,
       organisationName: '',
       panNumber: '',
       toDate: '',

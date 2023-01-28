@@ -23,6 +23,9 @@ const UpdateITDeclarationForm = (): JSX.Element => {
   const grandTotalResult = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
+  const itDeclarationID = useTypedSelector(
+    reduxServices.itDeclarationForm.selectors.itDeclarationFormId,
+  )
   const formSectionData = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.formSectionData,
   )
@@ -38,7 +41,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
   const toastElement = (
     <OToast
       toastColor="success"
-      toastMessage="IT Declaration Form added Successfully"
+      toastMessage="IT Declaration Form Edited Successfully"
     />
   )
 
@@ -51,17 +54,17 @@ const UpdateITDeclarationForm = (): JSX.Element => {
       fromDate: '',
       grandTotal: grandTotalResult,
       isAgree: isAgreeCheck,
-      itDeclarationFormId: null,
+      itDeclarationFormId: 0,
       organisationName: '',
       panNumber: '',
       toDate: '',
     }
     console.log(prepareObject)
     const addDeclarationFormResultAction = await dispatch(
-      reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
+      reduxServices.itDeclarationForm.updateITDeclarationForm(prepareObject),
     )
     if (
-      reduxServices.itDeclarationForm.addITDeclarationForm.fulfilled.match(
+      reduxServices.itDeclarationForm.updateITDeclarationForm.fulfilled.match(
         addDeclarationFormResultAction,
       )
     ) {

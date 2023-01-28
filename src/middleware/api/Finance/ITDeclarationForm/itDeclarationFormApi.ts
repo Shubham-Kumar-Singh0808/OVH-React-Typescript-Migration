@@ -76,6 +76,18 @@ const isITDeclarationFormExist = async (): Promise<boolean | undefined> => {
   return response.data
 }
 
+const updateITDeclarationForm = async (
+  updateDeclarationForm: submitITDeclarationForm,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.updateITDeclarationForm,
+    method: AllowedHttpMethods.put,
+    data: updateDeclarationForm,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const itDeclarationFormApi = {
   getEmployeeInfo,
   getSectionsHavingInvests,
@@ -83,6 +95,7 @@ const itDeclarationFormApi = {
   addITDeclarationForm,
   isITDeclarationFormExist,
   isITDeclarationFormEditable,
+  updateITDeclarationForm,
 }
 
 export default itDeclarationFormApi

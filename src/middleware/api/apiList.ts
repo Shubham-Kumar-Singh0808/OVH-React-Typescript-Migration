@@ -663,6 +663,7 @@ export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
   addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
   isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
   isITDeclarationFormEditable: apiPrefix + '/itDeclaration/isItFormEditable',
+  updateITDeclarationForm: apiPrefix + '/itDeclaration/editItForm',
 }
 
 export const paySlipsApiConfig: PaySlipsApi = {

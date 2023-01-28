@@ -52,7 +52,7 @@ export type submitITDeclarationForm = {
   fromDate: string
   grandTotal: number
   isAgree: boolean
-  itDeclarationFormId: null
+  itDeclarationFormId: number
   organisationName: string
   panNumber: string
   toDate: string
@@ -70,6 +70,7 @@ export type ITDeclarationFormSliceState = {
   error: ValidationError
   grandTotal: number
   formSectionData: FormSectionsDTO[]
+  iTDeclarationId: number
 }
 
 export type itDeclarationFormSectionList = {

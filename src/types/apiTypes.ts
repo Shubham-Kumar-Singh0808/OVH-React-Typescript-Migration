@@ -511,6 +511,7 @@ export interface ITDeclarationFormApi extends ApiBase {
   addITDeclarationForm: string
   isITDeclarationFormExist: string
   isITDeclarationFormEditable: string
+  updateITDeclarationForm: string
 }
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string

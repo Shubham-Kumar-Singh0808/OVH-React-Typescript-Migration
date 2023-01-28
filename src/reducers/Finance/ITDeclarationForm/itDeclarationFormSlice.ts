@@ -108,6 +108,20 @@ const isITDeclarationFormEditable = createAsyncThunk<
   },
 )
 
+const updateITDeclarationForm = createAsyncThunk(
+  'itDeclarationForm/updateITDeclarationForm',
+  async (updateDeclarationForm: submitITDeclarationForm, thunkApi) => {
+    try {
+      return await itDeclarationFormApi.updateITDeclarationForm(
+        updateDeclarationForm,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -121,7 +135,7 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
     fromDate: '',
     grandTotal: 0,
     isAgree: false,
-    itDeclarationFormId: null,
+    itDeclarationFormId: 0,
     organisationName: '',
     panNumber: '',
     toDate: '',
@@ -131,6 +145,7 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   itDeclarationFormExist: false,
   formSectionData: [],
   grandTotal: 0,
+  iTDeclarationId: 0,
 }
 
 const itDeclarationFormSlice = createSlice({
@@ -157,6 +172,9 @@ const itDeclarationFormSlice = createSlice({
       .addCase(addITDeclarationForm.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
+      .addCase(updateITDeclarationForm.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addCase(isITDeclarationFormEditable.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
@@ -179,6 +197,7 @@ const itDeclarationFormSlice = createSlice({
           isITDeclarationFormExist.pending,
           addITDeclarationForm.pending,
           isITDeclarationFormEditable.pending,
+          updateITDeclarationForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -192,6 +211,7 @@ const itDeclarationFormSlice = createSlice({
           isITDeclarationFormExist.rejected,
           addITDeclarationForm.rejected,
           isITDeclarationFormEditable.rejected,
+          updateITDeclarationForm.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -218,6 +238,8 @@ const itDeclarationFormExists = (state: RootState): boolean =>
 
 const grandTotal = (state: RootState): number =>
   state.itDeclarationForm.grandTotal
+const itDeclarationFormId = (state: RootState): number =>
+  state.itDeclarationForm.itDeclarationFormId
 const formSectionData = (state: RootState): FormSectionsDTO[] =>
   state.itDeclarationForm.formSectionData
 
@@ -228,6 +250,7 @@ const itDeclarationFormThunk = {
   isITDeclarationFormExist,
   addITDeclarationForm,
   isITDeclarationFormEditable,
+  updateITDeclarationForm,
 }
 
 const itDeclarationFormSelectors = {
@@ -238,6 +261,7 @@ const itDeclarationFormSelectors = {
   itDeclarationFormExists,
   grandTotal,
   formSectionData,
+  itDeclarationFormId,
 }
 
 export const itDeclarationFormService = {
