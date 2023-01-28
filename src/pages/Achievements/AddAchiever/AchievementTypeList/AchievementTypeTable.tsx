@@ -443,7 +443,8 @@ const AchievementTypeTable = (
         cancelButtonText="No"
       >
         <>
-          Do you really want to delete this <strong>{modalContent}</strong>{' '}
+          Do you really want to delete this <strong>{modalContent}</strong>
+          {'  '}
           achievement type ?
         </>
       </OModal>

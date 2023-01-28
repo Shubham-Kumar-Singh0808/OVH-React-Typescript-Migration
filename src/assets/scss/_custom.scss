@@ -398,3 +398,15 @@ input.capetalized {
     background-color: $primary-75;
   }
 }
+.projectCreation-request-table{
+  .badge{
+    font-size: 85%;
+    padding: 3px 10px;
+    width: 100%;
+  }
+}
+.changeRequest-table {
+  th:first-of-type{
+    width: auto;
+  }
+}
