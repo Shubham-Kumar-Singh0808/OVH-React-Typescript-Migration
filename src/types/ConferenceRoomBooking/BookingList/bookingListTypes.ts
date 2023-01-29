@@ -108,10 +108,10 @@ export type handleModelProps = {
 }
 
 export type MeetingEditDTOList = {
-  availability: string
   flag?: string
   fullName?: string
   id: number
+  availability: string
 }
 
 export type EditMeetingRequest = {

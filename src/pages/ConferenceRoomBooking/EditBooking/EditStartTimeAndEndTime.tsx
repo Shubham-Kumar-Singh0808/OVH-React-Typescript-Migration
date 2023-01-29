@@ -81,7 +81,6 @@ const EditStartTimeAndEndTime = ({
       const concatEndTime = `${endTime.hours}:${endTime.minutes} ${endTime.meridian}`
       const startTimeResult = convertTime(concatStartTime)
       const endTimeResult = convertTime(concatEndTime)
-      console.log(startTimeResult)
       onSelectStartAndEndTime(startTimeResult, endTimeResult)
     } else {
       onSelectStartAndEndTime('', '')

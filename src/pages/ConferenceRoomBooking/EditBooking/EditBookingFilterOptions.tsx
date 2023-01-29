@@ -6,12 +6,6 @@ import {
   CFormLabel,
   CFormInput,
   CFormTextarea,
-  CTable,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-  CTableBody,
-  CTableDataCell,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
@@ -32,17 +26,10 @@ import {
 } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
-import { showIsRequired } from '../../../utils/helper'
+import { convertTime, showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
-import {
-  Attendees,
-  EventFromDate,
-  SelectProject,
-  StartTimeEndTime,
-} from '../NewEvent/NewEventChildComponents'
-import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
-import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
+import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
 import SlotsBooked from '../NewEvent/NewEventChildComponents/SlotsBooked'
 
@@ -57,7 +44,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     reduxServices.newEvent.selectors.loggedEmployee,
   )
 
-  const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
   const [isProjectChange, setIsProjectChange] = useState<string>('')
@@ -86,8 +72,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
-  const authorDetails = {} as Author
-  const meetingEditDTOList = {} as MeetingEditDTOList[]
   const availability = {} as Availability[]
   const trainerDetails = {} as TrainerDetails
   const dateFormat = 'DD/MM/YYYY'
@@ -129,7 +113,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
-  const [attendeesList, setAttendeesList] = useState<Availability[]>([])
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
@@ -148,11 +131,9 @@ const EditBookingFilterOptions = (): JSX.Element => {
       setAttendeeReport(editExistingMeetingRequest.meetingEditDTOList)
     }
   }, [editExistingMeetingRequest])
-
-  const time = editMeetingRequest?.startTime
-  const Hour = time?.split(':')[0]
-  const meridian = time?.split(' ')[1]
-  const minutesDay = time?.split(':')[1]?.split(' ')[0]
+  const roomsOfLocation = useTypedSelector(
+    (state) => state.bookingList.roomsOfLocation,
+  )
 
   const allEmployeesProfiles = useTypedSelector(
     reduxServices.newEvent.selectors.allEmployeesProfiles,
@@ -160,11 +141,28 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const projectMembers = useTypedSelector(
     reduxServices.newEvent.selectors.projectMembers,
   )
+  const meetingLocation = useTypedSelector(
+    (state) => state.bookingList.meetingLocation,
+  )
   const onHandleLocation = (value: string) => {
-    setEditMeetingRequest({ ...editMeetingRequest, locationId: Number(value) })
+    const filterLocationName = meetingLocation?.filter(
+      (item) => item.id === Number(value),
+    )
+    setEditMeetingRequest({
+      ...editMeetingRequest,
+      locationId: Number(value),
+      locationName: filterLocationName[0].locationName,
+    })
   }
   const onHandleRoom = (value: string) => {
-    setEditMeetingRequest({ ...editMeetingRequest, roomId: Number(value) })
+    const filterRoomName = roomsOfLocation?.filter(
+      (item) => item.id === Number(value),
+    )
+    setEditMeetingRequest({
+      ...editMeetingRequest,
+      roomId: Number(value),
+      roomName: filterRoomName[0].roomName,
+    })
   }
   const fromDateChangeHandler = (value: Date) => {
     setEditMeetingRequest({
@@ -200,7 +198,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setProjectsAutoCompleteTarget(e.target.value)
-    setSelectProject(undefined)
     setIsProjectChange(e.target.value)
   }
   const checkIsAttendeeExists = (attendeeId: number) => {
@@ -234,6 +231,18 @@ const EditBookingFilterOptions = (): JSX.Element => {
       setIsProjectAndAttendeesEnable(false)
     }
   }, [editMeetingRequest.startTime, editMeetingRequest.endTime])
+
+  const bookingStartTime = editExistingMeetingRequest?.startTime
+  const bookingEndTime = editExistingMeetingRequest?.endTime
+
+  const startHour = bookingStartTime?.split(':')[0]
+  const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
+  const startTimeResult = convertTime(bookingStartTime)
+  const startTimeSplit = startTimeResult.split(':')
+  console.log(startTimeSplit[0])
+
+  const endHour = bookingEndTime?.split(':')[0]
+  const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
   const selectProjectMember = async (
     attendeeId: number,
     attendeeName: string,
@@ -242,8 +251,8 @@ const EditBookingFilterOptions = (): JSX.Element => {
     const prepareObj = {
       attendeeId,
       attendeeName,
-      startTime: `${editMeetingRequest.fromDate}/${Hour}/${minutesDay}`,
-      endTime: `${editMeetingRequest.fromDate}/${Hour}/${minutesDay}`,
+      startTime: `${editMeetingRequest.fromDate}/${startHour}/${startMinutesDay}`,
+      endTime: `${editMeetingRequest.fromDate}/${endHour}/${endMinutesDay}`,
       meetingRequestId: newMeetingRequestId,
     }
     const uniqueAttendanceResult = await dispatch(
@@ -284,17 +293,19 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
-  const bookingStartTime = editExistingMeetingRequest?.startTime
-  const bookingEndTime = editExistingMeetingRequest?.endTime
-
-  const startHour = bookingStartTime?.split(':')[0]
-  const startMeridian = bookingStartTime?.split(' ')[1]
-  const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
-
-  const endHour = bookingEndTime?.split(':')[0]
-  const endMeridian = bookingEndTime?.split(' ')[1]
-  const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
   const handleConfirmBtn = async () => {
+    const timeCheckResult = await dispatch(
+      reduxServices.newEvent.timeCheck(
+        `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startMinutesDay}`,
+      ),
+    )
+    const newAttendeesList = attendeeResponse?.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ flag, fullName, ...rest }) => {
+        return rest
+      },
+    )
+    console.log(newAttendeesList)
     const prepareObj = {
       agenda: editMeetingRequest?.agenda,
       authorName: loggedEmployee,
@@ -320,10 +331,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       locationId: editMeetingRequest.locationId as number,
       locationName: editMeetingRequest.locationName,
       meetingAttendeesDto: null,
-      meetingEditDTOList: attendeeResponse?.map((item) => {
-        const { flag, fullName, ...rest } = item
-        return { ...rest }
-      }),
+      meetingEditDTOList: newAttendeesList,
       meetingStatus: null,
       projectName: projectsAutoCompleteTarget,
       roomId: editMeetingRequest.roomId,
@@ -333,31 +341,29 @@ const EditBookingFilterOptions = (): JSX.Element => {
       toDate: null,
       trainerName: null,
     }
-    const addEventResult = await dispatch(
-      reduxServices.bookingList.confirmUpdateMeetingRequest(prepareObj),
-    )
-    if (
-      reduxServices.bookingList.confirmUpdateMeetingRequest.fulfilled.match(
-        addEventResult,
+    if (timeCheckResult.payload === false) {
+      const addEventResult = await dispatch(
+        reduxServices.bookingList.confirmUpdateMeetingRequest(prepareObj),
       )
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Event Added Successfully"
-          />,
-        ),
-      )
+      if (
+        reduxServices.bookingList.confirmUpdateMeetingRequest.fulfilled.match(
+          addEventResult,
+        )
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Event Added Successfully"
+            />,
+          ),
+        )
+      }
     }
   }
-  // console.log(editMeetingRequest.locationId)
-  // console.log(editMeetingRequest.roomId)
-  // console.log(editMeetingRequest?.fromDate)
+  // console.log(startHour)
+  // console.log(startMinutesDay)
   // console.log(projectsAutoCompleteTarget)
-  // console.log(editMeetingRequest?.agenda)
-
-  console.log(editMeetingRequest?.roomName)
 
   return (
     <>
