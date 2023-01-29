@@ -20,12 +20,8 @@ import {
   EditMeetingRequest,
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
-import {
-  Author,
-  Availability,
-} from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import { Availability } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
-import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { convertTime, showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'

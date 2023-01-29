@@ -18,11 +18,7 @@ import {
   EditMeetingRequest,
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
-import {
-  AddEvent,
-  ProjectMember,
-  Availability,
-} from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
+import { ProjectMember } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const ProjectMembersSelection = ({
   editMeetingRequest,

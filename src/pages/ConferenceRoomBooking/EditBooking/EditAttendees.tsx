@@ -12,9 +12,8 @@ import React, { useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
-import { Availability } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 
 const EditAttendees = ({
   attendeeResponse,
@@ -26,9 +25,6 @@ const EditAttendees = ({
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
-  const editExistingMeetingRequest = useTypedSelector(
-    reduxServices.bookingList.selectors.editExistingMeetingRequest,
-  )
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />

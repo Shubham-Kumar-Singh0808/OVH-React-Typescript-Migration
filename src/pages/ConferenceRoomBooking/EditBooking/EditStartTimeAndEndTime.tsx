@@ -2,7 +2,6 @@ import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { EditMeetingRequest } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { convertTime, showIsRequired } from '../../../utils/helper'
 
 const EditStartTimeAndEndTime = ({
