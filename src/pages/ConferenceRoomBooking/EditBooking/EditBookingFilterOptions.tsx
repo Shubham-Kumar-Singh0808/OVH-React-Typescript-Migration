@@ -232,13 +232,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }, [editMeetingRequest.startTime, editMeetingRequest.endTime])
 
-  const bookingStartTime = editExistingMeetingRequest?.startTime
-  const bookingEndTime = editExistingMeetingRequest?.endTime
+  const bookingStartTime = editMeetingRequest?.startTime
+  const bookingEndTime = editMeetingRequest?.endTime
 
   const startHour = bookingStartTime?.split(':')[0]
   const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
   const startTimeResult = convertTime(bookingStartTime)
-  const startTimeSplit = startTimeResult.split(':')
+  const startTimeSplit = startTimeResult?.split(':')
   console.log(startTimeSplit[0])
 
   const endHour = bookingEndTime?.split(':')[0]
@@ -301,8 +301,8 @@ const EditBookingFilterOptions = (): JSX.Element => {
     )
     const newAttendeesList = attendeeResponse?.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      ({ flag, fullName, ...rest }) => {
-        return rest
+      ({ id, availability }) => {
+        return { id, availability }
       },
     )
     console.log(newAttendeesList)
@@ -361,7 +361,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
-  // console.log(startHour)
+  console.log(startHour)
   // console.log(startMinutesDay)
   // console.log(projectsAutoCompleteTarget)
 
