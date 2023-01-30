@@ -6,7 +6,6 @@ import {
   RoomsOfLocation,
   UpdateRoomBooking,
 } from '../../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
-import { ConfirmNewMeetingAppointment } from '../../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { UniqueAttendeeParams } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import {
   getAuthenticatedRequestConfig,

@@ -190,7 +190,7 @@ const ProjectMembersSelection = ({
         <CButton
           color="info btn-ovh me-1"
           className="btn-ovh"
-          data-testid="delete-btn"
+          data-testid="attendeeDelete-btn"
           onClick={() => setAddListModalVisible(true)}
         >
           <i className="fa fa-arrow-right text-white" aria-hidden="true"></i>
