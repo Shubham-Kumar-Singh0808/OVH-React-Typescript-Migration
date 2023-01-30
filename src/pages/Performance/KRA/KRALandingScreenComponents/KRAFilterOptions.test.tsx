@@ -12,6 +12,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { selectDepartment, selectDesignation } from '../KRAConstants'
 import { emptyString } from '../../../../constant/constantData'
 import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -45,6 +46,9 @@ describe('KRA Filter Options', () => {
             empDepartments: mockEmpDepartments,
             designations: mockDevelopmentDesignationList,
             currentOnScreenPage: KRAPages.kraList,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
