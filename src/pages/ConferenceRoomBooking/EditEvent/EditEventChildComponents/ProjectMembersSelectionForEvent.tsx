@@ -10,10 +10,8 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import SelectedAttendeesForEvent from './SelectedAttendeesForEvent'
 import {
   AddEvent,
-  Availability,
   ProjectMember,
 } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import OModal from '../../../../components/ReusableComponent/OModal'

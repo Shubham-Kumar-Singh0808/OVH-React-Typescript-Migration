@@ -7,7 +7,7 @@ import {
   CFormTextarea,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import Autocomplete from 'react-autocomplete'
@@ -25,17 +25,17 @@ import {
   EditExistingEventDetails,
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
-import { Availability } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const editExistingEvent = useTypedSelector(
     reduxServices.eventList.selectors.editExistingEventData,
   )
-
+  const history = useHistory()
   const formLabelProps = {
     htmlFor: 'inputEditEvent',
     className: 'col-form-label category-label',
@@ -73,7 +73,9 @@ const EditEvent = (): JSX.Element => {
   const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
     {} as EditExistingEventDetails,
   )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
+  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
+    editExistingEvent?.description,
+  )
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -103,7 +105,6 @@ const EditEvent = (): JSX.Element => {
   useEffect(() => {
     if (editExistingEvent != null) {
       setEditEvent(editExistingEvent)
-      setEventDescriptionValue(editExistingEvent?.description)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
       setAttendeesResponse(editExistingEvent?.meetingEditDTOList)
@@ -129,6 +130,14 @@ const EditEvent = (): JSX.Element => {
 
   const onHandleDescription = (value: string) => {
     setEventDescriptionValue(value)
+  }
+
+  const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setEditEvent({
+      ...editEvent,
+      startTime: val1,
+      endTime: val2,
+    })
   }
 
   const checkIsAttendeeExists = (attendeeId: number) => {
@@ -206,6 +215,73 @@ const EditEvent = (): JSX.Element => {
       setIsAttendeeErrorShow(true)
     } else {
       setIsAttendeeErrorShow(false)
+    }
+  }
+  const handleConfirmBtn = async () => {
+    const startTimeSplit = editEvent.startTime.split(':')
+    const timeCheckResult = await dispatch(
+      reduxServices.newEvent.timeCheck(
+        `${editEvent.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      ),
+    )
+    const newAttendeesList = attendeesResponse?.map(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      ({ id, availability }) => {
+        return { id, availability }
+      },
+    )
+    console.log(newAttendeesList)
+    const prepareObj = {
+      agenda: editEvent?.agenda,
+      authorName: editEvent.authorName,
+      availability: editEvent?.availability,
+      availableDates: null,
+      conferenceType: 'Event',
+      description: editEvent.description,
+      disableEdit: null,
+      empDesignations: null,
+      employeeAvailability: null,
+      employeeDto: null,
+      employeeIds: null,
+      employeeNames: editEvent.employeeNames,
+      endTime: `${editEvent.fromDate}/${eventEndHour}/${eventEndMinutesDay}`,
+      eventEditAccess: null,
+      eventId: null,
+      eventLocation: editEvent?.eventLocation,
+      eventTypeId: editEvent?.eventTypeId,
+      eventTypeName: editEvent?.eventTypeName,
+      fromDate: editEvent?.fromDate,
+      id: editEvent.id,
+      isAuthorisedUser: editEvent?.isAuthorisedUser,
+      locationId: editEvent.locationId,
+      locationName: editEvent.locationName,
+      meetingAttendeesDto: null,
+      meetingEditDTOList: newAttendeesList,
+      meetingStatus: null,
+      projectName: projectAutoCompleteTarget,
+      roomName: editEvent.roomName,
+      startTime: `${editEvent.fromDate}/${eventStartHour}/${eventStartMinutesDay}`,
+      timeFomrat: null,
+      toDate: editEvent?.toDate,
+      trainerName: editEvent?.trainerName,
+    }
+    if (timeCheckResult.payload === true) {
+      const updateEventResult = await dispatch(
+        reduxServices.eventList.updateEvent(prepareObj),
+      )
+      if (
+        reduxServices.eventList.updateEvent.fulfilled.match(updateEventResult)
+      ) {
+        history.push('/eventList')
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Event Updated Successfully"
+            />,
+          ),
+        )
+      }
     }
   }
 
@@ -302,8 +378,7 @@ const EditEvent = (): JSX.Element => {
               endDate={editExistingEvent.toDate}
             />
             <EventStartTimeEndTime
-              startTime={editExistingEvent.startTime}
-              endTime={editExistingEvent.endTime}
+              onSelectStartAndEndTime={onSelectStartAndEndTime}
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -437,7 +512,7 @@ const EditEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    // onClick={handleConfirmBtn}
+                    onClick={handleConfirmBtn}
                   >
                     Update
                   </CButton>

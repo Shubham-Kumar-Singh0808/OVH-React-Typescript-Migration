@@ -590,6 +590,7 @@ export const eventListApiConfig: EventListApi = {
   uploadFeedbackForm:
     apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
   editEvent: apiPrefix + '/meetingRequest/editmeeting',
+  updateEvent: apiPrefix + '/meetingRequest/updateEvent',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {

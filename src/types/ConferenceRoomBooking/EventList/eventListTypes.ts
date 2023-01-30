@@ -141,7 +141,7 @@ export type UploadFeedbackFormInterface = {
 export type MeetingEditDTOList = {
   availability: string
   flag?: string
-  fullName: string
+  fullName?: string
   id: number
 }
 
@@ -181,6 +181,41 @@ export type EditExistingEventDetails = {
   trainerName: Trainer
 }
 
+export type UpdateEventDetails = {
+  agenda: string
+  authorName: Author
+  availability: Availability[]
+  availableDates: null
+  conferenceType: string
+  description: string
+  disableEdit: null
+  empDesignations: null
+  employeeAvailability: null
+  employeeDto: null
+  employeeIds: null
+  employeeNames: []
+  endTime: string
+  eventEditAccess: null
+  eventId: null
+  eventLocation: string
+  eventTypeId: number
+  eventTypeName: string
+  fromDate: string
+  id: number
+  isAuthorisedUser: true
+  locationId: number
+  locationName: string
+  meetingAttendeesDto: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingStatus: null
+  projectName: string
+  roomName: string
+  startTime: string
+  timeFomrat: null
+  toDate: string
+  trainerName: Trainer
+}
+
 export type EventListSliceState = {
   events: Event[]
   feedbackFormDetails: FeedbackForm[]
@@ -188,6 +223,7 @@ export type EventListSliceState = {
   listSize: number
   feedbackFormListSize: number
   editExistingEventData: EditExistingEventDetails
+  updateEventData: UpdateEventDetails
   isLoading: LoadingState
   error: ValidationError
 }

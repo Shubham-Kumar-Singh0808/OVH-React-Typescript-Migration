@@ -1,14 +1,29 @@
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
+import { convertTime } from '../../../../utils/helper'
 
 const EventStartTimeEndTime = ({
-  startTime,
-  endTime,
+  onSelectStartAndEndTime,
 }: {
-  startTime: string
-  endTime: string
+  onSelectStartAndEndTime: (val1: string, val2: string) => void
 }): JSX.Element => {
-  const eventHoursList = [
+  const editExistingEvent = useTypedSelector(
+    reduxServices.eventList.selectors.editExistingEventData,
+  )
+  const eventStartTime = editExistingEvent?.startTime
+  const eventEndTime = editExistingEvent?.endTime
+
+  const startHour = eventStartTime?.split(':')[0]
+  const startMeridian = eventStartTime?.split(' ')[1]
+  const startMinutesDay = eventStartTime?.split(':')[1]?.split(' ')[0]
+
+  const endHour = eventEndTime?.split(':')[0]
+  const endMeridian = eventEndTime?.split(' ')[1]
+  const endMinutesDay = eventEndTime?.split(':')[1]?.split(' ')[0]
+
+  const hoursList = [
     { label: '00', value: '' },
     { label: '01', value: '01' },
     { label: '02', value: '02' },
@@ -24,23 +39,52 @@ const EventStartTimeEndTime = ({
     { label: '12', value: '12' },
   ]
 
-  const eventMinutesList = [
+  const minutesList = [
     { label: '00', value: '' },
     { label: '15', value: '15' },
     { label: '30', value: '30' },
     { label: '45', value: '45' },
   ]
 
-  const [eventStartTime, setEventStartTime] = useState({
+  const [startTime, setStartTime] = useState({
     hours: '',
     minutes: '00',
     meridian: 'AM',
   })
-  const [eventEndTime, setEventEndTime] = useState({
+  const [endTime, setEndTime] = useState({
     hours: '',
     minutes: '00',
     meridian: 'AM',
   })
+
+  useEffect(() => {
+    if (startHour && startMinutesDay && startMeridian) {
+      setStartTime({
+        hours: startHour,
+        minutes: startMinutesDay,
+        meridian: startMeridian,
+      })
+    }
+    if (endHour && endMeridian && endMinutesDay) {
+      setEndTime({
+        hours: endHour,
+        minutes: endMinutesDay,
+        meridian: endMeridian,
+      })
+    }
+  }, [startHour, startMinutesDay, startMeridian])
+
+  useEffect(() => {
+    if (startTime.hours && endTime.hours) {
+      const concatStartTime = `${startTime.hours}:${startTime.minutes} ${startTime.meridian}`
+      const concatEndTime = `${endTime.hours}:${endTime.minutes} ${endTime.meridian}`
+      const startTimeResult = convertTime(concatStartTime)
+      const endTimeResult = convertTime(concatEndTime)
+      onSelectStartAndEndTime(startTimeResult, endTimeResult)
+    } else {
+      onSelectStartAndEndTime('', '')
+    }
+  }, [startTime, endTime])
 
   return (
     <>
@@ -57,16 +101,13 @@ const EventStartTimeEndTime = ({
                   id="startTimeHours"
                   data-testid="startTimeHours"
                   name="startTimeHours"
-                  value={eventStartTime.hours}
+                  value={startTime.hours}
                   disabled
                   onChange={(e) => {
-                    setEventStartTime({
-                      ...eventStartTime,
-                      hours: e.target.value,
-                    })
+                    setStartTime({ ...startTime, hours: e.target.value })
                   }}
                 >
-                  {eventHoursList.map((currOpt, index) => (
+                  {hoursList.map((currOpt, index) => (
                     <option key={index} value={currOpt.value}>
                       {currOpt.label}
                     </option>
@@ -79,16 +120,13 @@ const EventStartTimeEndTime = ({
                   id="startTimeMin"
                   data-testid="startTimeMin"
                   name="startTimeMin"
+                  value={startTime.minutes}
                   disabled
-                  value={eventStartTime.minutes}
                   onChange={(e) => {
-                    setEventStartTime({
-                      ...eventStartTime,
-                      minutes: e.target.value,
-                    })
+                    setStartTime({ ...startTime, minutes: e.target.value })
                   }}
                 >
-                  {eventMinutesList.map((minItem, index) => (
+                  {minutesList.map((minItem, index) => (
                     <option key={index} value={minItem.value}>
                       {minItem.label}
                     </option>
@@ -101,13 +139,10 @@ const EventStartTimeEndTime = ({
                   id="startTimeMeridian"
                   data-testid="startTimeMeridian"
                   name="startTimeMeridian"
-                  value={eventStartTime.meridian}
+                  value={startTime.meridian}
                   disabled
                   onChange={(e) => {
-                    setEventStartTime({
-                      ...eventStartTime,
-                      meridian: e.target.value,
-                    })
+                    setStartTime({ ...startTime, meridian: e.target.value })
                   }}
                 >
                   <option value="AM">AM</option>
@@ -131,13 +166,13 @@ const EventStartTimeEndTime = ({
                   id="endTimeHours"
                   data-testid="endTimeHours"
                   name="endTimeHours"
-                  value={eventEndTime.hours}
+                  value={endTime.hours}
                   disabled
                   onChange={(e) => {
-                    setEventEndTime({ ...eventEndTime, hours: e.target.value })
+                    setEndTime({ ...endTime, hours: e.target.value })
                   }}
                 >
-                  {eventHoursList.map((currItem, index) => (
+                  {hoursList.map((currItem, index) => (
                     <option key={index} value={currItem.value}>
                       {currItem.label}
                     </option>
@@ -150,16 +185,13 @@ const EventStartTimeEndTime = ({
                   id="endTimeMin"
                   data-testid="endTimeMin"
                   name="endTimeMin"
-                  value={eventEndTime.minutes}
+                  value={endTime.minutes}
                   disabled
                   onChange={(e) => {
-                    setEventEndTime({
-                      ...eventEndTime,
-                      minutes: e.target.value,
-                    })
+                    setEndTime({ ...endTime, minutes: e.target.value })
                   }}
                 >
-                  {eventMinutesList.map((currMin, index) => (
+                  {minutesList.map((currMin, index) => (
                     <option key={index} value={currMin.value}>
                       {currMin.label}
                     </option>
@@ -172,13 +204,10 @@ const EventStartTimeEndTime = ({
                   id="endTimeMeridian"
                   data-testid="endTimeMeridian"
                   name="endTimeMeridian"
-                  value={eventEndTime.meridian}
+                  value={endTime.meridian}
                   disabled
                   onChange={(e) => {
-                    setEventEndTime({
-                      ...eventEndTime,
-                      meridian: e.target.value,
-                    })
+                    setEndTime({ ...endTime, meridian: e.target.value })
                   }}
                 >
                   <option value="AM">AM</option>
