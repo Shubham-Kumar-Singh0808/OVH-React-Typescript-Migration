@@ -17,10 +17,6 @@ import { emptyString } from '../../Achievements/AchievementConstants'
 
 const KRALandingScreen = (): JSX.Element => {
   const [addKPI, setAddKPI] = useState<KRATableDataItem>({} as KRATableDataItem)
-  // const [editKPI, setEditKPI] = useState<IncomingKPIDataItem>(
-  //   {} as IncomingKPIDataItem,
-  // )
-  // const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,

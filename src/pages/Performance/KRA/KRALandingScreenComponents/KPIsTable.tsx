@@ -242,7 +242,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}
       >
-        <>Do you want to delete this {deleteKPIName} ?</>
+        <>
+          Do you want to delete this <strong>{deleteKPIName}</strong> ?
+        </>
       </OModal>
       <OModal
         modalSize="lg"

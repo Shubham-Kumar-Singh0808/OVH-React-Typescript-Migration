@@ -34,8 +34,11 @@ const KRATable = (props: KRATableProps): JSX.Element => {
 
   const [selectedKRAId, setSelectedKRAId] = useState<number>(-1)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] =
+    useState<boolean>(false)
   const [modalDescription, setModalDescription] = useState<string>(emptyString)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
+  const [deleteThisKRAName, setDeleteThisKRAName] = useState<string>('')
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -52,7 +55,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         <OToast toastColor="success" toastMessage="KRA Deleted Successfully" />
       )
       if (reduxServices.KRA.deleteKRAThunk.fulfilled.match(result)) {
-        setModalVisible(false)
+        setIsDeleteModalVisible(false)
         dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
         dispatch(reduxServices.app.actions.addToast(successMessage))
       }
@@ -94,6 +97,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               setModalVisible={setModalVisible}
               setDeleteThisKRA={setDeleteThisKRA}
               setAddKPI={setAddKPI}
+              setIsDeleteModalVisible={setIsDeleteModalVisible}
+              setDeleteThisKRAName={setDeleteThisKRAName}
             />
           ))}
         </CTableBody>
@@ -126,8 +131,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
       </CRow>
       <OModal
         alignment="center"
-        visible={isModalVisible}
-        setVisible={setModalVisible}
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
         modalTitle="Delete KRA"
         modalBodyClass="mt-0"
         closeButtonClass="d-none"
@@ -135,10 +140,19 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
       >
-        <div
-          data-testid="modal-cnt-kra-table"
-          dangerouslySetInnerHTML={{ __html: modalDescription }}
-        ></div>
+        <>
+          Do you want to delete this <strong>{deleteThisKRAName}</strong> ?
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setModalVisible}
+      >
+        <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>
     </>
   )

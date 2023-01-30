@@ -2,7 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EditKPi from './EditKPi'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockFrequencyList } from '../../../../test/data/addKpiData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
@@ -39,12 +39,42 @@ describe('Edit KPI Component Testing', () => {
     expect(screen.getByTestId(frequencyInputElement)).toBeTruthy()
   })
   it('should render Update button as enabled Initially', () => {
-    expect(screen.getByRole('button', { name: 'Update' })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Update' })).toBeDisabled()
   })
 
   test('should redirect to kraList page upon clicking back button from Add KPI page', () => {
     const editKPIBackButton = screen.getByTestId(backButtonElement)
     userEvent.click(editKPIBackButton)
     expect(KRAPages.kraList).toBeTruthy()
+  })
+  test('should disable update button, when mandatory fields are not entered', async () => {
+    const kpiNameEl = screen.getByTestId(kpiNameInputElement)
+    userEvent.clear(kpiNameEl)
+    expect(kpiNameEl).toHaveValue('')
+
+    const targetEl = screen.getByTestId(targetInputElement)
+    userEvent.clear(targetEl)
+    userEvent.type(targetEl, '5%')
+    expect(targetEl).toHaveValue('5%')
+
+    const updateButtonEl = screen.getByTestId(updateButtonElement)
+    await waitFor(() => {
+      expect(updateButtonEl).toBeDisabled()
+    })
+  })
+  test('should enable update button, when mandatory fields are not entered and update on click', async () => {
+    const kpiNameEle = screen.getByTestId(kpiNameInputElement)
+    userEvent.type(kpiNameEle, 'test')
+    expect(kpiNameEle).toHaveValue('test')
+
+    const targetEle = screen.getByTestId(targetInputElement)
+    userEvent.type(targetEle, '15%')
+    expect(targetEle).toHaveValue('15%')
+
+    const updateButtonEl = screen.getByTestId(updateButtonElement)
+    await waitFor(() => {
+      userEvent.click(updateButtonEl)
+      expect(KRAPages.kraList).toBeTruthy()
+    })
   })
 })

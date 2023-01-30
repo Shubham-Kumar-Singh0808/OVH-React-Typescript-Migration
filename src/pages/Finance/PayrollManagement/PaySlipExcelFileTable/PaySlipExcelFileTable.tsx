@@ -74,7 +74,7 @@ const PaySlipExcelFileTable = (props: {
 
   return (
     <>
-      <CRow className="sh-excelScroll">
+      <CRow className="sh-excelScroll mt-4">
         <CTable responsive className="sh-excelTable">
           <CTableBody>
             <CTableRow className="excelTable-color">

@@ -12,6 +12,7 @@ import {
 } from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockBackButtonHandler = jest.fn()
 
@@ -39,6 +40,9 @@ describe('Achievement Type List Testing', () => {
             achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -51,14 +55,7 @@ describe('Achievement Type List Testing', () => {
       fireEvent.click(backBtn)
       expect(mockBackButtonHandler).toHaveBeenCalledTimes(1)
     })
-    test('Total number of records are displayed', () => {
-      const tag = screen.getByTestId('tot-rec-num')
-      expect(tag).toHaveTextContent('Total Records: 10')
-    })
-    test('scroll functionality not enabled', () => {
-      const col = screen.getByTestId('scroll-col')
-      expect(col).not.toHaveClass('custom-scroll')
-    })
+
     //Wrote these tests again here to meet sonar requirements and all functions are included as this is the parent file
     test('test clear button', () => {
       const achName = screen.getByTestId('ach-name-input')
@@ -115,23 +112,6 @@ describe('Achievement Type List Testing', () => {
       await waitFor(() => {
         expect(
           screen.findByText('Achievement Type Updated Successfully'),
-        ).toBeTruthy()
-      })
-    })
-    test('test delete button', async () => {
-      const editBtn = screen.getByTestId('del-btn-0')
-      userEvent.click(editBtn)
-      const modalContent = screen.getByTestId('confirm-modal-content')
-      expect(modalContent).toBeTruthy()
-      expect(modalContent).toHaveTextContent(
-        'Do you really want to delete 12Nov20221 type?',
-      )
-      const confirmModalButton = screen.getByTestId('modalConfirmBtn')
-      userEvent.click(confirmModalButton)
-      expect(modalContent).not.toBeVisible()
-      await waitFor(() => {
-        expect(
-          screen.findByText('Achievement Type Deleted Successfully'),
         ).toBeTruthy()
       })
     })

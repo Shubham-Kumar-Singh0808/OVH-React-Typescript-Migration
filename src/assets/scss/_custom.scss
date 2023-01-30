@@ -55,7 +55,7 @@ body {
   border-radius: 0.15em;
 }
 .form-check-input:checked {
-  background-color: $info-base;
+  background-color: $info-base !important;
   border-color: $info-base;
 }
 .form-check-input:checked[type='checkbox'] {
@@ -292,6 +292,23 @@ input.capetalized {
 .checkList-table td{
  border-bottom: none;
 }
+.project-view-text-header h3{
+  font-size: 24px;
+  font-weight: 400;
+}
+.milestone-table th ,.milestone-table td{
+  text-align: center;
+}
+.milestone-model-table{
+  font-weight: bold;
+}
+.milestone-model-table tr td:first-child{
+  width: 150px;
+    text-align: right;
+}
+.milestone-model-table td{
+  border-bottom: none;
+}
 .resignation-comments {
   display: inline-flex;
 }
@@ -357,3 +374,39 @@ input.capetalized {
     color: #fff;
 }
 
+.was-validated .form-check-input:valid, .form-check-input.is-valid, .form-check-input.ng-valid{
+  border-color: #b1b7c1;
+}
+.sh-timeline-title{
+  font-weight: 400;
+}
+.edit-time-control{
+  input,select{
+    border: 1px solid #000;
+  }
+}
+
+.table-layout-fixed {
+  table-layout: fixed;
+  th:first-of-type{
+      width: 40px;
+    }
+}
+.sh-project-report-details{
+
+  .profile-tab-header{
+    background-color: $primary-75;
+  }
+}
+.projectCreation-request-table{
+  .badge{
+    font-size: 85%;
+    padding: 3px 10px;
+    width: 100%;
+  }
+}
+.changeRequest-table {
+  th:first-of-type{
+    width: auto;
+  }
+}

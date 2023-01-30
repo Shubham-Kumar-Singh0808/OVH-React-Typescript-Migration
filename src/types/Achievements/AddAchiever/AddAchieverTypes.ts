@@ -3,8 +3,8 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 import { AchievementType } from '../commonAchievementTypes'
 
 export enum NewAchievementStatus {
-  Active = 'active',
-  Inactive = 'inactive',
+  Active = 'Active',
+  Inactive = 'Inactive',
 }
 
 export interface OutgoingNewAchievementType {

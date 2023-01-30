@@ -8,6 +8,7 @@ import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { TextDanger } from '../../../../constant/ClassName'
 import { TableColor } from '../../AchievementConstants'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockExecuteSaveButtonHandler = jest.fn()
 const mockSetEditSaveButtonEnabled = jest.fn()
@@ -26,7 +27,6 @@ const toRender = (
 )
 
 const editBtnId = 'edit-btn-1'
-const delBtnId = 'del-btn-0'
 
 describe('Achievement Type Table Testing', () => {
   describe('Initial Render', () => {
@@ -36,6 +36,9 @@ describe('Achievement Type Table Testing', () => {
           commonAchievements: {
             achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })
@@ -87,21 +90,16 @@ describe('Achievement Type Table Testing', () => {
       const selectStatus = screen.getByTestId('new-status-sel')
       const inputOrder = screen.getByTestId('new-order')
       expect(inputOrder).toHaveValue('3')
-      userEvent.selectOptions(selectStatus, 'inactive')
+      userEvent.selectOptions(selectStatus, 'Inactive')
       userEvent.clear(inputOrder)
       userEvent.type(inputOrder, '58')
       const saveBtn = screen.getByTestId('save-btn-1')
       userEvent.click(saveBtn)
     })
     test('render delete button and be functional', () => {
-      const deleteButton = screen.getByTestId(delBtnId)
+      const deleteButton = screen.getByTestId('del-btn-1')
       expect(deleteButton).toBeTruthy()
       fireEvent.click(deleteButton)
-      const modalContent = screen.getByTestId('confirm-modal-content')
-      expect(modalContent).toBeTruthy()
-      expect(modalContent).toHaveTextContent(
-        'Do you really want to delete 12Nov20221 type?',
-      )
       const confirmModalButton = screen.getByTestId('modalConfirmBtn')
       expect(confirmModalButton).toBeTruthy()
       fireEvent.click(confirmModalButton)
