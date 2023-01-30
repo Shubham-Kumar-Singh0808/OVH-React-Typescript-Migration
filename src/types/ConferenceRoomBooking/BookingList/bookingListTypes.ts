@@ -1,7 +1,6 @@
 import { LoadingState } from '../../commonTypes'
-import { GetAllProjects } from '../../ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { Author, Availability } from '../NewBooking/newBookingTypes'
-import { LoggedEmployee, TrainerDetails } from '../NewEvent/newEventTypes'
+import { TrainerDetails } from '../NewEvent/newEventTypes'
 
 export type MeetingLocations = {
   id: number

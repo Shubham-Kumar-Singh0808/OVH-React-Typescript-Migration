@@ -21,7 +21,6 @@ import {
   EditMeetingRequest,
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
-import { Availability } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { convertTime, showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
@@ -30,7 +29,6 @@ import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditBookingFilterOptions = (): JSX.Element => {
-  const availability = {} as Availability[]
   const trainerDetails = {} as TrainerDetails
   const dateFormat = 'DD/MM/YYYY'
   const [attendeeResponse, setAttendeeReport] = useState<MeetingEditDTOList[]>(
@@ -72,7 +70,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     disableEdit: null,
     meetingEditDTOList: [],
     meetingAttendeesDto: null,
-    availability,
+    availability: [],
     meetingStatus: null,
     conferenceType: '',
     eventTypeName: null,
@@ -330,7 +328,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       fromDate: editMeetingRequest?.fromDate,
       id: editMeetingRequest.id,
       isAuthorisedUser: true,
-      locationId: editMeetingRequest.locationId as number,
+      locationId: editMeetingRequest.locationId,
       locationName: editMeetingRequest.locationName,
       meetingAttendeesDto: null,
       meetingEditDTOList: newAttendeesList,
