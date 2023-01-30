@@ -34,11 +34,11 @@ const EditAttendees = ({
   )
 
   const dispatch = useAppDispatch()
-  const deleteBtnHandler = (id: number) => {
+  const deleteButtonHandler = (id: number) => {
     setDeleteAttendeeId(id)
     setDeleteAttendeeModalVisible(true)
   }
-  const handleConfirmDeleteAttendee = () => {
+  const handleDeleteAttendee = () => {
     const newList = attendeeResponse?.filter(
       (attendee) => attendee?.id !== (deleteAttendeeId as number),
     )
@@ -75,7 +75,7 @@ const EditAttendees = ({
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list"
                       data-testid="delete-btn"
-                      onClick={() => deleteBtnHandler(item.id)}
+                      onClick={() => deleteButtonHandler(item.id)}
                     >
                       <i
                         className="fa fa-trash-o text-white"
@@ -98,7 +98,7 @@ const EditAttendees = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalBodyClass="mt-0"
-        confirmButtonAction={handleConfirmDeleteAttendee}
+        confirmButtonAction={handleDeleteAttendee}
       >
         <span>Do you really want to delete this Attendee ?</span>
       </OModal>
