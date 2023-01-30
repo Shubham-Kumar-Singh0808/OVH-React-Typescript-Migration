@@ -10,24 +10,25 @@ import {
   CFormCheck,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { deviceLocale } from '../../../../utils/helper'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const EmployeePipList = (): JSX.Element => {
   const [selectDate, setSelectDate] = useState<string>('Current Month')
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
-  const [fromDate, setFromDate] = useState<Date | string>()
-  const [toDate, setToDate] = useState<Date | string>()
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const [toggle, setToggle] = useState<string>('')
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
@@ -120,22 +121,6 @@ const EmployeePipList = (): JSX.Element => {
     }
   }, [fromDate, toDate])
 
-  const employeeToDateValue = toDate
-    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
-
-  const employeeFromDateValue = fromDate
-    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
-
   return (
     <>
       {toggle === '' && (
@@ -178,8 +163,8 @@ const EmployeePipList = (): JSX.Element => {
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}
                 pageSize={pageSize}
-                fromDate={fromDate as string}
-                toDate={toDate as string}
+                fromDate={fromDate}
+                toDate={toDate}
                 searchInput={searchInput}
                 searchByAdded={searchByAdded}
                 searchByEmployee={searchByEmployee}
@@ -194,47 +179,65 @@ const EmployeePipList = (): JSX.Element => {
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel className="mt-1">
                     From:
-                    <span className={showIsRequired(fromDate as string)}>
-                      *
-                    </span>
+                    <span className={fromDate ? TextWhite : TextDanger}>*</span>
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
-                  <ReactDatePicker
-                    className="form-control form-control-sm sh-date-picker"
-                    data-testid="date-picker"
-                    placeholderText="dd/mm/yy"
-                    name="fromDate"
-                    autoComplete="off"
+                  <DatePicker
                     id="fromDate"
+                    data-testid="leaveApplyFromDate"
+                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                     showMonthDropdown
                     showYearDropdown
+                    autoComplete="off"
                     dropdownMode="select"
-                    value={employeeFromDateValue}
-                    onChange={(date: Date) => setFromDate(date)}
-                    selected={fromDate as Date}
+                    dateFormat="dd/mm/yy"
+                    placeholderText="dd/mm/yy"
+                    name="fromDate"
+                    value={
+                      fromDate
+                        ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: '2-digit',
+                          })
+                        : ''
+                    }
+                    onChange={(date: Date) =>
+                      setFromDate(moment(date).format(commonFormatDate))
+                    }
                   />
                 </CCol>
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel className="mt-1">
                     To:
-                    <span className={showIsRequired(toDate as string)}>*</span>
+                    <span className={toDate ? TextWhite : TextDanger}>*</span>
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
-                  <ReactDatePicker
-                    className="form-control form-control-sm sh-date-picker"
-                    data-testid="date-picker"
-                    placeholderText="dd/mm/yy"
-                    name="toDate"
+                  <DatePicker
                     id="toDate"
-                    autoComplete="off"
+                    data-testid="leaveApprovalFromDate"
+                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                     showMonthDropdown
+                    autoComplete="off"
                     showYearDropdown
                     dropdownMode="select"
-                    value={employeeToDateValue}
-                    onChange={(date: Date) => setToDate(date)}
-                    selected={toDate as Date}
+                    dateFormat="dd/mm/yy"
+                    placeholderText="dd/mm/yy"
+                    name="toDate"
+                    value={
+                      toDate
+                        ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: '2-digit',
+                          })
+                        : ''
+                    }
+                    onChange={(date: Date) =>
+                      setToDate(moment(date).format(commonFormatDate))
+                    }
                   />
                   {dateError && (
                     <span className="text-danger" data-testid="errorMessage">

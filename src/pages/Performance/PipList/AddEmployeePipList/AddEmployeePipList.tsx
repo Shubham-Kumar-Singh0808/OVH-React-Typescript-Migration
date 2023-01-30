@@ -11,7 +11,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -43,8 +43,8 @@ const AddEmployeePipList = ({
   fromDate: Date | string
   toDate: Date | string
 }): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date | string>()
-  const [endDate, setEndDate] = useState<Date | string>()
+  const [startDate, setStartDate] = useState<string>()
+  const [endDate, setEndDate] = useState<string>()
   const [dateErrorMsg, setDateErrorMsg] = useState<boolean>(false)
   const [selectRating, setSelectRating] = useState<string>('')
   const [isReasonForPIP, setIsReasonForPIP] = useState<boolean>(true)
@@ -70,22 +70,6 @@ const AddEmployeePipList = ({
       setDateErrorMsg(false)
     }
   }, [startDate, endDate])
-
-  const endDateValue = endDate
-    ? new Date(endDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
-
-  const startDateValue = startDate
-    ? new Date(startDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
 
   const handleText = (comments: string) => {
     setAddReasonForPIP(comments)
@@ -304,44 +288,60 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               Start Date :
-              <span className={showIsRequired(startDate as string)}>*</span>
+              <span className={startDate ? TextWhite : TextDanger}> *</span>
             </CFormLabel>
             <CCol sm={2}>
-              <ReactDatePicker
-                className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="fromDate"
-                autoComplete="off"
-                id="fromDate"
+              <DatePicker
+                id="startDate"
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
-                value={startDateValue}
-                onChange={(date: Date) => setStartDate(date)}
-                selected={startDate as Date}
+                dateFormat="dd/mm/yy"
+                placeholderText="Start Date"
+                name="startDate"
+                value={
+                  startDate
+                    ? new Date(startDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
+                onChange={(date: Date) =>
+                  setStartDate(moment(date).format(commonFormatDate))
+                }
               />
             </CCol>
           </CRow>
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               End Date :
-              <span className={showIsRequired(endDate as string)}>*</span>
+              <span className={endDate ? TextWhite : TextDanger}> *</span>
             </CFormLabel>
             <CCol sm={2}>
-              <ReactDatePicker
-                className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="toDate"
-                id="toDate"
-                autoComplete="off"
+              <DatePicker
+                id="endDate"
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
-                value={endDateValue}
-                onChange={(date: Date) => setEndDate(date)}
-                selected={endDate as Date}
+                dateFormat="dd/mm/yy"
+                placeholderText="End Date"
+                name="endDate"
+                value={
+                  endDate
+                    ? new Date(endDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
+                onChange={(date: Date) =>
+                  setEndDate(moment(date).format(commonFormatDate))
+                }
               />
               {dateErrorMsg && (
                 <span className="text-danger" data-testid="errorMessage">
