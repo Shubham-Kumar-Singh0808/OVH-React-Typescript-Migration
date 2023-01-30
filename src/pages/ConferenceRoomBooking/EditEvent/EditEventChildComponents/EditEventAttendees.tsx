@@ -17,12 +17,12 @@ import { MeetingEditDTOList } from '../../../../types/ConferenceRoomBooking/Even
 
 const EditEventAttendees = ({
   attendeeResponse,
-  setAttendeeReport,
+  setAttendeesResponse,
   deleteAttendeeId,
   setDeleteAttendeeId,
 }: {
   attendeeResponse: MeetingEditDTOList[]
-  setAttendeeReport: (value: MeetingEditDTOList[]) => void
+  setAttendeesResponse: (value: MeetingEditDTOList[]) => void
   deleteAttendeeId: number | undefined
   setDeleteAttendeeId: React.Dispatch<React.SetStateAction<number | undefined>>
 }): JSX.Element => {
@@ -42,7 +42,7 @@ const EditEventAttendees = ({
     const newList = attendeeResponse?.filter(
       (attendee) => attendee?.id !== (deleteAttendeeId as number),
     )
-    setAttendeeReport([...newList])
+    setAttendeesResponse([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
     dispatch(reduxServices.app.actions.addToast(undefined))

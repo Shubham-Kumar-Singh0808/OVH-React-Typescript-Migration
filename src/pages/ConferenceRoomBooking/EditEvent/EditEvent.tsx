@@ -76,22 +76,18 @@ const EditEvent = (): JSX.Element => {
   const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
-  const [attendeesList, setAttendeesList] = useState<Availability[]>([])
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
-  const [attendeeReport, setAttendeeReport] = useState<MeetingEditDTOList[]>([])
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
 
   const eventStartTime = editEvent?.startTime
   const eventEndTime = editEvent?.endTime
 
   const eventStartHour = eventStartTime?.split(':')[0]
-  const eventStartMeridian = eventStartTime?.split(' ')[1]
   const eventStartMinutesDay = eventStartTime?.split(':')[1]?.split(' ')[0]
 
   const eventEndHour = eventEndTime?.split(':')[0]
-  const eventEndMeridian = eventEndTime?.split(' ')[1]
   const eventEndMinutesDay = eventEndTime?.split(':')[1]?.split(' ')[0]
 
   useEffect(() => {
@@ -136,7 +132,7 @@ const EditEvent = (): JSX.Element => {
   }
 
   const checkIsAttendeeExists = (attendeeId: number) => {
-    return attendeeReport.some((attendee) => {
+    return attendeesResponse.some((attendee) => {
       return attendee.id === attendeeId
     })
   }
@@ -157,19 +153,19 @@ const EditEvent = (): JSX.Element => {
     attendeeId: number,
     attendeeName: string,
   ) => {
-    const newStartTime = editEvent.startTime.split(':')
-    const newEndTime = editEvent.endTime.split(':')
+    const newMeetingRequestId = editEvent.id
     const prepareObj = {
       attendeeId,
       attendeeName,
-      startTime: `${editEvent.fromDate}/${newStartTime[0]}/${newStartTime[1]}`,
-      endTime: `${editEvent.fromDate}/${newEndTime[0]}/${newEndTime[1]}`,
+      startTime: `${editEvent.fromDate}/${eventStartHour}/${eventStartMinutesDay}`,
+      endTime: `${editEvent.fromDate}/${eventEndHour}/${eventEndMinutesDay}`,
+      meetingRequestId: newMeetingRequestId,
     }
     const uniqueAttendanceResult = await dispatch(
-      reduxServices.newEvent.uniqueAttendee(prepareObj),
+      reduxServices.bookingList.editUniqueAttendee(prepareObj),
     )
     if (
-      reduxServices.newEvent.uniqueAttendee.rejected.match(
+      reduxServices.bookingList.editUniqueAttendee.rejected.match(
         uniqueAttendanceResult,
       ) &&
       uniqueAttendanceResult.payload === 409
@@ -177,10 +173,11 @@ const EditEvent = (): JSX.Element => {
       const attendeeObj = {
         id: attendeeId,
         availability: 'buzy',
-        name: attendeeName,
+        fullName: attendeeName,
+        flag: 'free',
       }
       if (!checkIsAttendeeExists(attendeeId)) {
-        setAttendeesList([attendeeObj, ...attendeesList])
+        setAttendeesResponse([attendeeObj, ...attendeesResponse])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       } else {
@@ -190,12 +187,13 @@ const EditEvent = (): JSX.Element => {
       const attendeeObj2 = {
         id: attendeeId,
         availability: 'free',
-        name: attendeeName,
+        fullName: attendeeName,
+        flag: 'free',
       }
       if (checkIsAttendeeExists(attendeeId)) {
         setIsErrorShow(true)
       } else {
-        setAttendeesList([attendeeObj2, ...attendeesList])
+        setAttendeesResponse([attendeeObj2, ...attendeesResponse])
         setIsErrorShow(false)
         setAttendeesAutoCompleteTarget('')
       }
@@ -428,7 +426,7 @@ const EditEvent = (): JSX.Element => {
             )}
             <EditEventAttendees
               attendeeResponse={attendeesResponse}
-              setAttendeeReport={setAttendeeReport}
+              setAttendeesResponse={setAttendeesResponse}
               deleteAttendeeId={deleteAttendeeId}
               setDeleteAttendeeId={setDeleteAttendeeId}
             />
