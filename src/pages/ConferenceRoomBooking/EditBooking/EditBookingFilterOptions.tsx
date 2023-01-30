@@ -30,48 +30,27 @@ import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditBookingFilterOptions = (): JSX.Element => {
-  const editExistingMeetingRequest = useTypedSelector(
-    reduxServices.bookingList.selectors.editExistingMeetingRequest,
-  )
+  const availability = {} as Availability[]
+  const trainerDetails = {} as TrainerDetails
+  const dateFormat = 'DD/MM/YYYY'
   const [attendeeResponse, setAttendeeReport] = useState<MeetingEditDTOList[]>(
     [],
   )
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
+    useState<string>('')
+  const [isProjectChange, setIsProjectChange] = useState<string>('')
+  const [isErrorShow, setIsErrorShow] = useState(false)
+  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
+    useState<string>()
+  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
+    useState(true)
+
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
   )
 
-  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>('')
-  const [isProjectChange, setIsProjectChange] = useState<string>('')
-  const allProjectNames = useTypedSelector(
-    reduxServices.allocateEmployee.selectors.allProjects,
-  )
-
-  useEffect(() => {
-    if (editExistingMeetingRequest?.meetingEditDTOList != null) {
-      setAttendeeReport(editExistingMeetingRequest?.meetingEditDTOList)
-    }
-  }, [editExistingMeetingRequest?.meetingEditDTOList])
-
-  useEffect(() => {
-    if (projectsAutoCompleteTarget) {
-      dispatch(
-        reduxServices.allocateEmployee.getAllProjectSearchData(
-          projectsAutoCompleteTarget,
-        ),
-      )
-    }
-  }, [projectsAutoCompleteTarget])
-
-  const formLabelProps = {
-    htmlFor: 'inputNewHandbook',
-    className: 'col-form-label category-label',
-  }
-  const formLabel = 'col-sm-3 col-form-label text-end'
-  const availability = {} as Availability[]
-  const trainerDetails = {} as TrainerDetails
-  const dateFormat = 'DD/MM/YYYY'
   const initNewBooking = {
     id: 0,
     agenda: '',
@@ -107,16 +86,50 @@ const EditBookingFilterOptions = (): JSX.Element => {
     trainerName: trainerDetails,
     availableDates: '',
   } as EditMeetingRequest
+  const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
+
+  const editExistingMeetingRequest = useTypedSelector(
+    reduxServices.bookingList.selectors.editExistingMeetingRequest,
+  )
+
+  const allProjectNames = useTypedSelector(
+    reduxServices.allocateEmployee.selectors.allProjects,
+  )
+  const allEmployeesProfiles = useTypedSelector(
+    reduxServices.newEvent.selectors.allEmployeesProfiles,
+  )
+  const projectMembers = useTypedSelector(
+    reduxServices.newEvent.selectors.projectMembers,
+  )
+  const meetingLocation = useTypedSelector(
+    (state) => state.bookingList.meetingLocation,
+  )
+
   const dispatch = useAppDispatch()
   const history = useHistory()
 
-  const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
-  const [isErrorShow, setIsErrorShow] = useState(false)
-  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
-  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
-    useState<string>()
-  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
-    useState(true)
+  useEffect(() => {
+    if (editExistingMeetingRequest?.meetingEditDTOList != null) {
+      setAttendeeReport(editExistingMeetingRequest?.meetingEditDTOList)
+    }
+  }, [editExistingMeetingRequest?.meetingEditDTOList])
+
+  useEffect(() => {
+    if (projectsAutoCompleteTarget) {
+      dispatch(
+        reduxServices.allocateEmployee.getAllProjectSearchData(
+          projectsAutoCompleteTarget,
+        ),
+      )
+    }
+  }, [projectsAutoCompleteTarget])
+
+  const formLabelProps = {
+    htmlFor: 'inputNewHandbook',
+    className: 'col-form-label category-label',
+  }
+  const formLabel = 'col-sm-3 col-form-label text-end'
+
   useEffect(() => {
     if (editExistingMeetingRequest != null) {
       setEditMeetingRequest(editExistingMeetingRequest)
@@ -133,15 +146,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     (state) => state.bookingList.roomsOfLocation,
   )
 
-  const allEmployeesProfiles = useTypedSelector(
-    reduxServices.newEvent.selectors.allEmployeesProfiles,
-  )
-  const projectMembers = useTypedSelector(
-    reduxServices.newEvent.selectors.projectMembers,
-  )
-  const meetingLocation = useTypedSelector(
-    (state) => state.bookingList.meetingLocation,
-  )
   const onHandleLocation = (value: string) => {
     const filterLocationName = meetingLocation?.filter(
       (item) => item.id === Number(value),
