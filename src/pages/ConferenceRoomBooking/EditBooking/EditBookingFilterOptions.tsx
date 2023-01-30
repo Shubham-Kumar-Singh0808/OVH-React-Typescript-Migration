@@ -243,8 +243,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const endHour = bookingEndTime?.split(':')[0]
   const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
   const startTimeResult = convertTime(bookingStartTime)
-  // const startTimeSplit = startTimeResult?.split(':')
-
   const selectProjectMember = async (
     attendeeId: number,
     attendeeName: string,
@@ -529,12 +527,16 @@ const EditBookingFilterOptions = (): JSX.Element => {
                       deleteAttendeeId={deleteAttendeeId}
                     />
                   )}
-                  <EditAttendees
-                    attendeeResponse={attendeeResponse}
-                    setAttendeeReport={setAttendeeReport}
-                    deleteAttendeeId={deleteAttendeeId}
-                    setDeleteAttendeeId={setDeleteAttendeeId}
-                  />
+                  {attendeeResponse.length > 0 ? (
+                    <EditAttendees
+                      attendeeResponse={attendeeResponse}
+                      setAttendeeReport={setAttendeeReport}
+                      deleteAttendeeId={deleteAttendeeId}
+                      setDeleteAttendeeId={setDeleteAttendeeId}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </CRow>
               </CCol>
             </CRow>
