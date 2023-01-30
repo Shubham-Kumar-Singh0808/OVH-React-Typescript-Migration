@@ -22,6 +22,7 @@ const AddProjectStatus = ({
   const [currentWeekStatus, setCurrentWeekStatus] = useState<string>()
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
   const getProjectDetail = useTypedSelector(
@@ -142,13 +143,25 @@ const AddProjectStatus = ({
       setDateError(false)
     }
   }, [currentWeekDate, nextWeekDate])
+  useEffect(() => {
+    if (
+      currentWeekDate &&
+      currentWeekStatus &&
+      nextWeekDate &&
+      nextWeekStatus
+    ) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [currentWeekDate, currentWeekStatus, nextWeekDate, nextWeekStatus])
   return (
     <>
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
           <CButton
             color="info"
-            className="btn-ovh me-1"
+            className="btn-ovh me-1 add-project-back-btn"
             data-testid="back-btn"
             onClick={() => setToggle('')}
           >
@@ -157,7 +170,7 @@ const AddProjectStatus = ({
         </CCol>
       </CRow>
       <CForm>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-2 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Current Week Date :
           </CFormLabel>
@@ -186,6 +199,27 @@ const AddProjectStatus = ({
                 setCurrentWeekDate(moment(date).format(commonFormatDate))
               }
             />
+          </CCol>
+        </CRow>
+        <CRow className="mt-3">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Current Week Status:
+          </CFormLabel>
+          <CCol sm={12} data-testid="ckEditor-component">
+            {showEditor ? (
+              <CKEditor<{
+                onChange: CKEditorEventHandler<'change'>
+              }>
+                initData={currentWeekStatus}
+                config={ckeditorConfig}
+                debug={true}
+                onChange={({ editor }) => {
+                  handleCurrentWeekStatus(editor.getData().trim())
+                }}
+              />
+            ) : (
+              ''
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -230,31 +264,10 @@ const AddProjectStatus = ({
           </CRow>
         )}
         <CRow className="mt-3">
-          <CCol sm={8} data-testid="ckEditor-component">
-            <CFormLabel className="col-sm-3 col-form-label">
-              Current Week Status:
-            </CFormLabel>
-            {showEditor ? (
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={currentWeekStatus}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleCurrentWeekStatus(editor.getData().trim())
-                }}
-              />
-            ) : (
-              ''
-            )}
-          </CCol>
-        </CRow>
-        <CRow className="mt-3">
-          <CCol sm={8} data-testid="ckEditor-component">
-            <CFormLabel className="col-sm-3 col-form-label">
-              Comments:{' '}
-            </CFormLabel>
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Comments:{' '}
+          </CFormLabel>
+          <CCol sm={12} data-testid="ckEditor-component">
             {showEditor ? (
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
@@ -271,13 +284,14 @@ const AddProjectStatus = ({
             )}
           </CCol>
         </CRow>
-        <CRow>
+        <CRow className="mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             <>
               <CButton
                 className="btn-ovh me-1"
                 color="success"
                 onClick={allocateButtonHandler}
+                disabled={!isAddButtonEnabled}
               >
                 Add
               </CButton>
