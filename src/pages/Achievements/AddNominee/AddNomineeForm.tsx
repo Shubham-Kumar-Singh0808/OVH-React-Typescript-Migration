@@ -349,7 +349,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       </CContainer>
       <CContainer>
         <div className="d-flex flex-row ms-3 flex-wrap-row">
-          <CCol md={{ span: 4, offset: 2 }}>
+          <CCol md={{ span: 4, offset: 0 }} className="mt-0">
             {userAccessToFeatures?.createaccess ? (
               <CButton
                 data-testid="add-btn-id"

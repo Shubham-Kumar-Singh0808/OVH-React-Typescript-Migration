@@ -16,6 +16,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { emptyString, selectAchievementType } from '../../AchievementConstants'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockaddAchievementTypeButtonHandler = jest.fn()
 const mocksetNewAchieverDetails = jest.fn()
@@ -65,6 +66,9 @@ describe('add achiever form', () => {
           addAchiever: {
             isLoading: ApiLoadingState.succeeded,
             activeEmployeeList: mockActiveEmployeeList,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

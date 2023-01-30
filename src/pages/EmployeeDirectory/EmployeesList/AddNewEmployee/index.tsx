@@ -480,7 +480,7 @@ const AddNewEmployee = (): JSX.Element => {
                 placeHolder="Select Department"
               />
               <OSelectList
-                isRequired={true}
+                isRequired={false}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedTechnologyList}
                 setValue={onHandleTechnology}

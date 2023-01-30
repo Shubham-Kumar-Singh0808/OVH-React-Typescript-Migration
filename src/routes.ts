@@ -415,6 +415,10 @@ const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
 
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -900,6 +904,11 @@ const routes = [
     path: '/editEvent/:eventId',
     name: 'Edit Event',
     component: EditEvent,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: '/appraisalTemplate',
+    component: AppraisalTemplate,
   },
 ]
 
