@@ -11,6 +11,7 @@ import {
   MeetingLocations,
   RoomsOfLocation,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import { UniqueAttendeeParams } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const getAllMeetingLocations = createAsyncThunk(
   'conferenceRoomBooking/getAllMeetingLocations',
@@ -53,6 +54,18 @@ const getBookingsForSelection = createAsyncThunk(
   },
 )
 
+const editUniqueAttendee = createAsyncThunk(
+  'newEventSlice/uniqueAttendee',
+  async (props: UniqueAttendeeParams, thunkApi) => {
+    try {
+      return await bookingListApi.editUniqueAttendee(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialBookingListState: BookingListSliceState = {
   meetingLocation: [],
   roomsOfLocation: [],
@@ -88,11 +101,15 @@ const bookingListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getBookingsForSelection = action.payload
       })
+      .addCase(editUniqueAttendee.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getAllMeetingLocations.pending,
           getRoomsOfLocation.pending,
           getBookingsForSelection.pending,
+          editUniqueAttendee.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -131,6 +148,7 @@ const bookingListThunk = {
   getAllMeetingLocations,
   getRoomsOfLocation,
   getBookingsForSelection,
+  editUniqueAttendee,
 }
 
 export const bookingListService = {

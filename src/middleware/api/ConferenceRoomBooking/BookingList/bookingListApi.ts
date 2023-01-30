@@ -4,6 +4,7 @@ import {
   MeetingLocations,
   RoomsOfLocation,
 } from '../../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import { UniqueAttendeeParams } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -53,10 +54,29 @@ const getBookingsForSelection = async (
   return response.data
 }
 
+const editUniqueAttendee = async (
+  props: UniqueAttendeeParams,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: bookingListApiConfig.uniqueAttendee,
+    method: AllowedHttpMethods.get,
+    params: {
+      attendeeId: props.attendeeId,
+      attendeeName: props.attendeeName,
+      endTime: props.endTime,
+      meetingRequestId: props.meetingRequestId,
+      startTime: props.startTime,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bookingListApi = {
   getAllMeetingLocations,
   getRoomsOfLocation,
   getBookingsForSelection,
+  editUniqueAttendee,
 }
 
 export default bookingListApi

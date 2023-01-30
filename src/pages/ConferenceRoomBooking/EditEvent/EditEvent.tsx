@@ -10,93 +10,70 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import Autocomplete from 'react-autocomplete'
 import RoomAndLocation from './EditEventChildComponents/RoomAndLocation'
 import ReservedBy from './EditEventChildComponents/ReservedBy'
 import FromAndToDate from './EditEventChildComponents/FromAndToDate'
-import EventTrainer from './EditEventChildComponents/EventTrainer'
 import EventStartTimeEndTime from './EditEventChildComponents/EventStartTimeEndTime'
-import SelectProject from './EditEventChildComponents/SelectProject'
 import EventAttendees from './EditEventChildComponents/EventAttendees'
 import ProjectMembersSelectionForEvent from './EditEventChildComponents/ProjectMembersSelectionForEvent'
+import EditEventAttendees from './EditEventChildComponents/EditEventAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
-  Author,
+  EditExistingEventDetails,
   MeetingEditDTOList,
-  Trainer,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import { Availability } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
 
 const EditEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const editExistingEvent = useTypedSelector(
     reduxServices.eventList.selectors.editExistingEventData,
   )
-  console.log(editExistingEvent)
 
-  const locations = useTypedSelector(
-    reduxServices.addLocationList.selectors.locationNames,
-  )
+  const formLabelProps = {
+    htmlFor: 'inputEditEvent',
+    className: 'col-form-label category-label',
+  }
+  const formLabel = 'col-sm-3 col-form-label text-end'
+  const [attendeesResponse, setAttendeesResponse] = useState<
+    MeetingEditDTOList[]
+  >([])
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
 
-  const rooms = useTypedSelector(
-    reduxServices.newEvent.selectors.roomsByLocation,
-  )
-  const allProjects = useTypedSelector(
+  const [projectAutoCompleteTarget, setProjectAutoCompleteTarget] =
+    useState<string>('')
+  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
+    useState<string>('')
+  const [isProjectChange, setIsProjectChange] = useState<string>('')
+
+  const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
+
   const allEmployeesProfiles = useTypedSelector(
     reduxServices.newEvent.selectors.allEmployeesProfiles,
   )
   const projectMembers = useTypedSelector(
     reduxServices.newEvent.selectors.projectMembers,
   )
-  const meetingEditDTOList = {} as MeetingEditDTOList[]
-  const availability = {} as Availability[]
-  const trainerDetails = {} as Trainer
-  const dateFormat = 'DD/MM/YYYY'
+  const eventLocations = useTypedSelector(
+    reduxServices.addLocationList.selectors.locationNames,
+  )
 
-  const initialEventData = {
-    agenda: editExistingEvent.agenda,
-    authorName: editExistingEvent.authorName,
-    availability,
-    availableDates: '',
-    conferenceType: 'Event',
-    description: editExistingEvent.description,
-    disableEdit: null,
-    empDesignations: null,
-    employeeAvailability: null,
-    employeeDto: null,
-    employeeIds: null,
-    employeeNames: [],
-    endTime: '',
-    eventEditAccess: null,
-    eventId: 0,
-    eventLocation: '',
-    eventTypeId: 0,
-    eventTypeName: '',
-    fromDate: '',
-    id: editExistingEvent.id,
-    isAuthorisedUser: true,
-    locationId: editExistingEvent.locationId,
-    locationName: '',
-    meetingAttendeesDto: null,
-    meetingEditDTOList,
-    meetingStatus: null,
-    projectName: editExistingEvent?.projectName,
-    roomId: editExistingEvent.roomId,
-    roomName: editExistingEvent.roomName,
-    startTime: editExistingEvent.startTime,
-    timeFomrat: null,
-    toDate: '',
-    trainerName: trainerDetails,
-  }
+  const locationRooms = useTypedSelector(
+    reduxServices.newEvent.selectors.roomsByLocation,
+  )
 
-  const [editEvent, setEditEvent] = useState(initialEventData)
-  const [descriptionValue, setDescriptionValue] = useState('')
+  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
+    {} as EditExistingEventDetails,
+  )
+  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
@@ -105,10 +82,6 @@ const EditEvent = (): JSX.Element => {
     useState<string>()
   const [attendeeReport, setAttendeeReport] = useState<MeetingEditDTOList[]>([])
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
-  const [selectProject, setSelectProject] = useState<GetAllProjects>()
-  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>('')
-  const [isProjectChange, setIsProjectChange] = useState<string>('')
 
   const eventStartTime = editEvent?.startTime
   const eventEndTime = editEvent?.endTime
@@ -132,20 +105,24 @@ const EditEvent = (): JSX.Element => {
   }, [dispatch, editEvent])
 
   useEffect(() => {
-    if (editEvent?.meetingEditDTOList != null) {
-      setAttendeeReport(editEvent?.meetingEditDTOList)
+    if (editExistingEvent != null) {
+      setEditEvent(editExistingEvent)
+      setEventDescriptionValue(editExistingEvent?.description)
+      setProjectAutoCompleteTarget(editExistingEvent.projectName)
+      setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
+      setAttendeesResponse(editExistingEvent?.meetingEditDTOList)
     }
-  }, [editEvent?.meetingEditDTOList])
+  }, [editExistingEvent])
 
   useEffect(() => {
-    if (projectsAutoCompleteTarget) {
+    if (projectAutoCompleteTarget) {
       dispatch(
         reduxServices.allocateEmployee.getAllProjectSearchData(
-          projectsAutoCompleteTarget,
+          projectAutoCompleteTarget,
         ),
       )
     }
-  }, [projectsAutoCompleteTarget])
+  }, [projectAutoCompleteTarget])
   useEffect(() => {
     if (editEvent.startTime === '' && editEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -154,21 +131,26 @@ const EditEvent = (): JSX.Element => {
     }
   }, [editEvent.startTime, editEvent.endTime])
 
-  const onSelectTrainer = (value: Author) => {
-    setEditEvent({ ...editEvent, trainerName: value })
-  }
   const onHandleDescription = (value: string) => {
-    setDescriptionValue(value)
-  }
-
-  const onSelectProject = (value: string) => {
-    setEditEvent({ ...editEvent, projectName: value })
+    setEventDescriptionValue(value)
   }
 
   const checkIsAttendeeExists = (attendeeId: number) => {
-    return attendeesList.some((attendee) => {
+    return attendeeReport.some((attendee) => {
       return attendee.id === attendeeId
     })
+  }
+
+  const onHandleSelectProjectName = (projectName: string) => {
+    setProjectAutoCompleteTarget(projectName)
+  }
+  const onHandleSelectTrainer = (trainerName: string) => {
+    setTrainerAutoCompleteTarget(trainerName)
+  }
+
+  const projectsOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProjectAutoCompleteTarget(e.target.value)
+    setIsProjectChange(e.target.value)
   }
 
   const selectProjectMember = async (
@@ -253,16 +235,70 @@ const EditEvent = (): JSX.Element => {
         <CCol sm={8}>
           <CForm className="ms-4">
             <RoomAndLocation
-              eventLocations={locations}
-              locationRooms={rooms}
+              eventLocations={eventLocations}
+              locationRooms={locationRooms}
               locationValue={editEvent.locationId}
               roomValue={editEvent.roomId}
             />
             <ReservedBy eventReservedBy={editEvent?.authorName?.fullName} />
-            <EventTrainer
-              allEmployeesProfiles={allEmployeesProfiles}
-              onSelectTrainer={onSelectTrainer}
-            />
+            <CRow className="mt-1 mb-3">
+              <CFormLabel
+                className="col-sm-3 col-form-label text-end"
+                data-testid="pmLabel"
+              >
+                Trainer:
+                <span
+                  className={trainerAutoCompleteTarget ? TextWhite : TextDanger}
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={6}>
+                <Autocomplete
+                  inputProps={{
+                    className: 'form-control form-control-sm',
+                    id: 'trainer-autocomplete',
+                    placeholder: 'Trainer',
+                  }}
+                  getItemValue={(item) => item.fullName}
+                  items={allEmployeesProfiles}
+                  data-testid="author-input"
+                  wrapperStyle={{ position: 'relative' }}
+                  renderMenu={(children) => (
+                    <div
+                      className={
+                        trainerAutoCompleteTarget &&
+                        trainerAutoCompleteTarget.length > 0
+                          ? 'autocomplete-dropdown-wrap'
+                          : 'autocomplete-dropdown-wrap hide'
+                      }
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      data-testid="trainer-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active'
+                          : 'autocomplete-dropdown-item '
+                      }
+                      key={item.id}
+                    >
+                      {item.fullName}
+                    </div>
+                  )}
+                  value={trainerAutoCompleteTarget}
+                  shouldItemRender={(item, value) =>
+                    item.fullName.toLowerCase().indexOf(value.toLowerCase()) >
+                    -1
+                  }
+                  onChange={(e) => setTrainerAutoCompleteTarget(e.target.value)}
+                  onSelect={(value) => onHandleSelectTrainer(value)}
+                />
+              </CCol>
+            </CRow>
             <FromAndToDate
               fromDate={editExistingEvent.fromDate}
               endDate={editExistingEvent.toDate}
@@ -291,13 +327,13 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(descriptionValue)}>*</span>
+                <span className={showIsRequired(eventDescriptionValue)}>*</span>
               </CFormLabel>
               <CCol sm={8}>
                 <CKEditor<{
                   onChange: CKEditorEventHandler<'change'>
                 }>
-                  initData={''}
+                  initData={eventDescriptionValue}
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
@@ -306,12 +342,62 @@ const EditEvent = (): JSX.Element => {
                 />
               </CCol>
             </CRow>
-            <SelectProject
-              allProjects={allProjects}
-              onSelectProject={onSelectProject}
-              isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
-            />
-
+            <CRow className="mt-3">
+              <CFormLabel {...formLabelProps} className={formLabel}>
+                Project Name:
+                <span
+                  className={projectAutoCompleteTarget ? TextWhite : TextDanger}
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={6}>
+                <Autocomplete
+                  inputProps={{
+                    className: 'form-control form-control-sm',
+                    placeholder: 'Project Name',
+                  }}
+                  getItemValue={(item) => item.projectName}
+                  items={allProjectNames ? allProjectNames : []}
+                  wrapperStyle={{ position: 'relative' }}
+                  renderMenu={(children) => (
+                    <div
+                      className={
+                        projectAutoCompleteTarget &&
+                        projectAutoCompleteTarget.length > 0
+                          ? 'autocomplete-dropdown-wrap'
+                          : 'autocomplete-dropdown-wrap hide'
+                      }
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      data-testid="project-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active'
+                          : 'autocomplete-dropdown-item '
+                      }
+                      key={item.id}
+                    >
+                      {item.projectName}
+                    </div>
+                  )}
+                  value={projectAutoCompleteTarget}
+                  shouldItemRender={(item, itemValue) =>
+                    item?.projectName
+                      ?.toLowerCase()
+                      .indexOf(itemValue.toLowerCase()) > -1
+                  }
+                  onChange={(e) => projectsOnChangeHandler(e)}
+                  onSelect={(selectedVal) =>
+                    onHandleSelectProjectName(selectedVal)
+                  }
+                />
+              </CCol>
+            </CRow>
             <EventAttendees
               allEmployeesProfiles={allEmployeesProfiles}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
@@ -326,20 +412,26 @@ const EditEvent = (): JSX.Element => {
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
 
-            {projectMembers?.length > 0 && (
+            {projectMembers?.length > 0 && isProjectChange && (
               <ProjectMembersSelectionForEvent
                 editEvent={editEvent}
                 projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
+                attendeeResponse={attendeesResponse}
+                setAttendeesResponse={setAttendeesResponse}
                 selectProjectMember={selectProjectMember}
                 isErrorShow={isErrorShow}
                 setIsErrorShow={setIsErrorShow}
                 setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                 checkIsAttendeeExists={checkIsAttendeeExists}
+                deleteAttendeeId={deleteAttendeeId}
               />
             )}
-
+            <EditEventAttendees
+              attendeeResponse={attendeesResponse}
+              setAttendeeReport={setAttendeeReport}
+              deleteAttendeeId={deleteAttendeeId}
+              setDeleteAttendeeId={setDeleteAttendeeId}
+            />
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
@@ -351,25 +443,20 @@ const EditEvent = (): JSX.Element => {
                   >
                     Update
                   </CButton>
-                  <CButton
-                    color="warning "
-                    data-testid="clearBtn"
-                    className="btn-ovh"
-                  >
-                    Cancel
-                  </CButton>
+                  <Link to={`/eventList`}>
+                    <CButton
+                      color="warning "
+                      data-testid="clearBtn"
+                      className="btn-ovh"
+                    >
+                      Cancel
+                    </CButton>
+                  </Link>
                 </>
               </CCol>
             </CRow>
           </CForm>
         </CCol>
-        {/* {addEvent.roomId && addEvent.toDate ? (
-          <CCol sm={4}>
-            <SlotsBooked />
-          </CCol>
-        ) : (
-          <></>
-        )} */}
       </CRow>
     </OCard>
   )

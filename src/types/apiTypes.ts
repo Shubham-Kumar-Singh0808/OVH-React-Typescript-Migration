@@ -426,6 +426,7 @@ export interface BookingListApi extends ApiBase {
   getRoomsOfLocation: string
   getAllMeetingLocations: string
   getBookingsForSelection: string
+  uniqueAttendee: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string

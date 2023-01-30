@@ -20,40 +20,42 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
+import { MeetingEditDTOList } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 
 const ProjectMembersSelectionForEvent = ({
   editEvent,
   projectMembers,
-  attendeesList,
-  setAttendeesList,
+  attendeeResponse,
+  setAttendeesResponse,
   selectProjectMember,
   isErrorShow,
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
+  deleteAttendeeId,
 }: {
   editEvent: AddEvent
   projectMembers: ProjectMember[]
-  attendeesList: Availability[]
-  setAttendeesList: (value: Availability[]) => void
-  selectProjectMember: (attendeeId: number, attendeeName: string) => void
+  attendeeResponse: MeetingEditDTOList[]
+  setAttendeesResponse: (value: MeetingEditDTOList[]) => void
+  selectProjectMember: (
+    attendeeId: number,
+    attendeeName: string,
+    meetingRequestId: number,
+  ) => void
   isErrorShow: boolean
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
+  deleteAttendeeId: number | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  // const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
-
-  const deleteBtnHandler = (id: number) => {
-    setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
-  }
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
@@ -66,11 +68,20 @@ const ProjectMembersSelectionForEvent = ({
     />
   )
 
+  // const handleConfirmDeleteAttendee = () => {
+  //   const newList = attendeesList.filter(
+  //     (attendee) => attendee.id !== (deleteAttendeeId as number),
+  //   )
+  //   setAttendeesList([...newList])
+  //   setDeleteAttendeeModalVisible(false)
+  //   dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
+  //   dispatch(reduxServices.app.actions.addToast(undefined))
+  // }
   const handleConfirmDeleteAttendee = () => {
-    const newList = attendeesList.filter(
+    const newList = attendeeResponse.filter(
       (attendee) => attendee.id !== (deleteAttendeeId as number),
     )
-    setAttendeesList([...newList])
+    setAttendeesResponse([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
@@ -78,30 +89,31 @@ const ProjectMembersSelectionForEvent = ({
 
   const confirmDeleteAllAttendees = () => {
     setDeleteListModalVisible(false)
-    setAttendeesList([])
+    setAttendeesResponse([])
     dispatch(reduxServices.app.actions.addToast(deleteAllAttendeesToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
-  const newMember: Availability[] = []
+  const newMember: MeetingEditDTOList[] = []
   const confirmAddAllAttendees = async () => {
     setAddListModalVisible(false)
     setIsErrorShow(false)
     const newResult = await Promise.all(
       projectMembers.map(async (member) => {
-        const startTimeCopy = editEvent.startTime.split(':')
-        const endTimeCopy = editEvent.endTime.split(':')
+        const startTimeCopy = editEvent?.startTime.split(':')
+        const endTimeCopy = editEvent?.endTime.split(':')
         const prepareObj = {
-          attendeeId: member.id,
+          attendeeId: member.candidateId,
           attendeeName: member.fullName,
+          meetingRequestId: member.id,
           startTime: `${editEvent.fromDate}/${startTimeCopy[0]}/${startTimeCopy[1]}`,
           endTime: `${editEvent.fromDate}/${endTimeCopy[0]}/${endTimeCopy[1]}`,
         }
         const uniqueAttendanceResultAction = await dispatch(
-          reduxServices.newEvent.uniqueAttendee(prepareObj),
+          reduxServices.bookingList.editUniqueAttendee(prepareObj),
         )
         if (
-          reduxServices.newEvent.uniqueAttendee.rejected.match(
+          reduxServices.bookingList.editUniqueAttendee.rejected.match(
             uniqueAttendanceResultAction,
           ) &&
           uniqueAttendanceResultAction.payload === 409
@@ -110,14 +122,14 @@ const ProjectMembersSelectionForEvent = ({
             newMember.push({
               id: member.id,
               availability: 'buzy',
-              name: member.fullName,
+              fullName: member.fullName,
             })
           }
         } else if (!checkIsAttendeeExists(member.id)) {
           newMember?.push({
             id: member.id,
             availability: 'free',
-            name: member.fullName,
+            fullName: member.fullName,
           })
         }
         return newMember
@@ -125,9 +137,9 @@ const ProjectMembersSelectionForEvent = ({
     )
 
     const filteredMembers = Array.from(new Set(newResult))[0].filter(
-      (obj1) => !attendeesList?.some((obj2) => obj1?.id === obj2?.id),
+      (obj1) => !attendeeResponse?.some((obj2) => obj1?.id === obj2?.id),
     )
-    setAttendeesList([...filteredMembers, ...attendeesList])
+    setAttendeesResponse([...filteredMembers, ...attendeeResponse])
     dispatch(
       reduxServices.app.actions.addToast(
         <OToast
@@ -167,6 +179,7 @@ const ProjectMembersSelectionForEvent = ({
                                 selectProjectMember(
                                   currMember.id,
                                   currMember.fullName,
+                                  currMember.candidateId,
                                 )
                                 setIsAttendeeErrorShow(false)
                               }}
@@ -205,7 +218,7 @@ const ProjectMembersSelectionForEvent = ({
                   aria-hidden="true"
                 ></i>
               </CButton>
-              {attendeesList?.length > 0 && (
+              {attendeeResponse?.length > 0 && (
                 <CButton
                   color="danger btn-ovh me-1"
                   className="btn-ovh"
@@ -219,10 +232,6 @@ const ProjectMembersSelectionForEvent = ({
                 </CButton>
               )}
             </CCol>
-            <SelectedAttendeesForEvent
-              attendeesList={attendeesList}
-              deleteBtnHandler={deleteBtnHandler}
-            />
           </CRow>
         </CCol>
       </CRow>

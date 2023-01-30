@@ -4,10 +4,10 @@ import { getAllMeetingLocations } from '../../../../types/ConferenceRoomBooking/
 import { RoomsByLocation } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const RoomAndLocation = ({
-  eventLocations,
-  locationRooms,
   locationValue,
   roomValue,
+  eventLocations,
+  locationRooms,
 }: {
   eventLocations: getAllMeetingLocations[]
 
