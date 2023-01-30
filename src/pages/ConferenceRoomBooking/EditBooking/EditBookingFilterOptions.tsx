@@ -354,7 +354,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
           reduxServices.app.actions.addToast(
             <OToast
               toastColor="success"
-              toastMessage="Event Added Successfully"
+              toastMessage="Meeting Request Updated Successfully"
             />,
           ),
         )
