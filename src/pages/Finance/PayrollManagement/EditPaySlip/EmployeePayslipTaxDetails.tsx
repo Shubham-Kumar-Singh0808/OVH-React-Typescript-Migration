@@ -227,8 +227,6 @@ const EmployeePayslipTaxDetails = ({
             onChange={onChangeInputHandler}
           />
         </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('remarks', formLabel)}>
           Remarks:
         </CFormLabel>
