@@ -22,7 +22,7 @@ import {
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
-import { convertTime, showIsRequired } from '../../../utils/helper'
+import { showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
 import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
@@ -240,7 +240,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
 
   const endHour = bookingEndTime?.split(':')[0]
   const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
-  const startTimeResult = convertTime(bookingStartTime)
+
   const selectProjectMember = async (
     attendeeId: number,
     attendeeName: string,
@@ -292,11 +292,10 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }
   const handleConfirmBtn = async () => {
+    const startTimeSplit = editMeetingRequest.startTime.split(':')
     const timeCheckResult = await dispatch(
       reduxServices.newEvent.timeCheck(
-        `${editMeetingRequest.fromDate}/${
-          startTimeResult?.split(':')[0]
-        }/${startMinutesDay}`,
+        `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
       ),
     )
     const newAttendeesList = attendeeResponse?.map(

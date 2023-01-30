@@ -48,8 +48,7 @@ const ProjectMembersSelection = ({
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  // const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
-  const [addListModalVisible, setAddListModalVisible] = useState(false)
+  const [updateListModalVisible, setUpdateListModalVisible] = useState(false)
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
@@ -62,7 +61,7 @@ const ProjectMembersSelection = ({
     />
   )
 
-  const handleConfirmDeleteAttendee = () => {
+  const handleConfirmDeleteAttendeeList = () => {
     const newList = attendeeResponse.filter(
       (attendee) => attendee.id !== (deleteAttendeeId as number),
     )
@@ -72,7 +71,7 @@ const ProjectMembersSelection = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
-  const confirmDeleteAllAttendees = () => {
+  const confirmDeleteAllAttendeesList = () => {
     setDeleteListModalVisible(false)
     setAttendeeReport([])
     dispatch(reduxServices.app.actions.addToast(deleteAllAttendeesToast))
@@ -80,11 +79,11 @@ const ProjectMembersSelection = ({
   }
 
   const newMember: MeetingEditDTOList[] = []
-  const confirmAddAllAttendees = async () => {
-    setAddListModalVisible(false)
+  const confirmAddAllAttendeesList = async () => {
+    setUpdateListModalVisible(false)
     setIsErrorShow(false)
     const newResult = await Promise.all(
-      projectMembers.map(async (member) => {
+      projectMembers?.map(async (member) => {
         const startTimeCopy = editMeetingRequest?.startTime.split(':')
         const endTimeCopy = editMeetingRequest?.endTime.split(':')
         const prepareObj = {
@@ -191,7 +190,7 @@ const ProjectMembersSelection = ({
           color="info btn-ovh me-1"
           className="btn-ovh"
           data-testid="attendeeDelete-btn"
-          onClick={() => setAddListModalVisible(true)}
+          onClick={() => setUpdateListModalVisible(true)}
         >
           <i className="fa fa-arrow-right text-white" aria-hidden="true"></i>
         </CButton>
@@ -214,7 +213,7 @@ const ProjectMembersSelection = ({
           confirmButtonText="Yes"
           cancelButtonText="No"
           modalBodyClass="mt-0"
-          confirmButtonAction={handleConfirmDeleteAttendee}
+          confirmButtonAction={handleConfirmDeleteAttendeeList}
         >
           <span>Do you really want to delete this Attendee ?</span>
         </OModal>
@@ -227,20 +226,20 @@ const ProjectMembersSelection = ({
           confirmButtonText="Yes"
           cancelButtonText="No"
           modalBodyClass="mt-0"
-          confirmButtonAction={confirmDeleteAllAttendees}
+          confirmButtonAction={confirmDeleteAllAttendeesList}
         >
           <span>Do you really want to delete all Attendees ?</span>
         </OModal>
         <OModal
           alignment="center"
           modalTitle="Add All Attendees"
-          visible={addListModalVisible}
-          setVisible={setAddListModalVisible}
+          visible={updateListModalVisible}
+          setVisible={setUpdateListModalVisible}
           closeButtonClass="d-none"
           confirmButtonText="Yes"
           cancelButtonText="No"
           modalBodyClass="mt-0"
-          confirmButtonAction={confirmAddAllAttendees}
+          confirmButtonAction={confirmAddAllAttendeesList}
         >
           <span>Do you really want to add all Attendees ?</span>
         </OModal>

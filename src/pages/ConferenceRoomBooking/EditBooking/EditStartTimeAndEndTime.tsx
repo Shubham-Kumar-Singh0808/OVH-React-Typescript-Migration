@@ -23,7 +23,7 @@ const EditStartTimeAndEndTime = ({
   const endMeridian = bookingEndTime?.split(' ')[1]
   const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
 
-  const hoursList = [
+  const editHoursList = [
     { label: '00', value: '' },
     { label: '01', value: '01' },
     { label: '02', value: '02' },
@@ -39,19 +39,19 @@ const EditStartTimeAndEndTime = ({
     { label: '12', value: '12' },
   ]
 
-  const minutesList = [
+  const editMinutesList = [
     { label: '00', value: '' },
     { label: '15', value: '15' },
     { label: '30', value: '30' },
     { label: '45', value: '45' },
   ]
 
-  const [startTime, setStartTime] = useState({
+  const [editStartTime, setEditStartTime] = useState({
     hours: '',
     minutes: '00',
     meridian: 'AM',
   })
-  const [endTime, setEndTime] = useState({
+  const [editEndTime, setEditEndTime] = useState({
     hours: '',
     minutes: '00',
     meridian: 'AM',
@@ -59,14 +59,14 @@ const EditStartTimeAndEndTime = ({
 
   useEffect(() => {
     if (startHour && startMinutesDay && startMeridian) {
-      setStartTime({
+      setEditStartTime({
         hours: startHour,
         minutes: startMinutesDay,
         meridian: startMeridian,
       })
     }
     if (endHour && endMeridian && endMinutesDay) {
-      setEndTime({
+      setEditEndTime({
         hours: endHour,
         minutes: endMinutesDay,
         meridian: endMeridian,
@@ -75,23 +75,23 @@ const EditStartTimeAndEndTime = ({
   }, [startHour, startMinutesDay, startMeridian])
 
   useEffect(() => {
-    if (startTime.hours && endTime.hours) {
-      const concatStartTime = `${startTime.hours}:${startTime.minutes} ${startTime.meridian}`
-      const concatEndTime = `${endTime.hours}:${endTime.minutes} ${endTime.meridian}`
+    if (editStartTime.hours && editEndTime.hours) {
+      const concatStartTime = `${editStartTime.hours}:${editStartTime.minutes} ${editStartTime.meridian}`
+      const concatEndTime = `${editEndTime.hours}:${editEndTime.minutes} ${editEndTime.meridian}`
       const startTimeResult = convertTime(concatStartTime)
       const endTimeResult = convertTime(concatEndTime)
       onSelectStartAndEndTime(startTimeResult, endTimeResult)
     } else {
       onSelectStartAndEndTime('', '')
     }
-  }, [startTime, endTime])
+  }, [editStartTime, editEndTime])
 
   return (
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
           Start Time:
-          <span className={showIsRequired(startTime.hours)}>*</span>
+          <span className={showIsRequired(editStartTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={6}>
           <CCol sm={12}>
@@ -102,12 +102,15 @@ const EditStartTimeAndEndTime = ({
                   id="startTimeHours"
                   data-testid="startTimeHours"
                   name="startTimeHours"
-                  value={startTime.hours}
+                  value={editStartTime.hours}
                   onChange={(e) => {
-                    setStartTime({ ...startTime, hours: e.target.value })
+                    setEditStartTime({
+                      ...editStartTime,
+                      hours: e.target.value,
+                    })
                   }}
                 >
-                  {hoursList.map((currOpt, index) => (
+                  {editHoursList.map((currOpt, index) => (
                     <option key={index} value={currOpt.value}>
                       {currOpt.label}
                     </option>
@@ -120,12 +123,15 @@ const EditStartTimeAndEndTime = ({
                   id="startTimeMin"
                   data-testid="startTimeMin"
                   name="startTimeMin"
-                  value={startTime.minutes}
+                  value={editStartTime.minutes}
                   onChange={(e) => {
-                    setStartTime({ ...startTime, minutes: e.target.value })
+                    setEditStartTime({
+                      ...editStartTime,
+                      minutes: e.target.value,
+                    })
                   }}
                 >
-                  {minutesList.map((minItem, index) => (
+                  {editMinutesList.map((minItem, index) => (
                     <option key={index} value={minItem.value}>
                       {minItem.label}
                     </option>
@@ -138,9 +144,12 @@ const EditStartTimeAndEndTime = ({
                   id="startTimeMeridian"
                   data-testid="startTimeMeridian"
                   name="startTimeMeridian"
-                  value={startTime.meridian}
+                  value={editStartTime.meridian}
                   onChange={(e) => {
-                    setStartTime({ ...startTime, meridian: e.target.value })
+                    setEditStartTime({
+                      ...editStartTime,
+                      meridian: e.target.value,
+                    })
                   }}
                 >
                   <option value="AM">AM</option>
@@ -154,7 +163,7 @@ const EditStartTimeAndEndTime = ({
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
           End Time:
-          <span className={showIsRequired(endTime.hours)}>*</span>
+          <span className={showIsRequired(editEndTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={6}>
           <CCol sm={12}>
@@ -165,12 +174,12 @@ const EditStartTimeAndEndTime = ({
                   id="endTimeHours"
                   data-testid="endTimeHours"
                   name="endTimeHours"
-                  value={endTime.hours}
+                  value={editEndTime.hours}
                   onChange={(e) => {
-                    setEndTime({ ...endTime, hours: e.target.value })
+                    setEditEndTime({ ...editEndTime, hours: e.target.value })
                   }}
                 >
-                  {hoursList.map((currItem, index) => (
+                  {editHoursList.map((currItem, index) => (
                     <option key={index} value={currItem.value}>
                       {currItem.label}
                     </option>
@@ -183,12 +192,12 @@ const EditStartTimeAndEndTime = ({
                   id="endTimeMin"
                   data-testid="endTimeMin"
                   name="endTimeMin"
-                  value={endTime.minutes}
+                  value={editEndTime.minutes}
                   onChange={(e) => {
-                    setEndTime({ ...endTime, minutes: e.target.value })
+                    setEditEndTime({ ...editEndTime, minutes: e.target.value })
                   }}
                 >
-                  {minutesList.map((currMin, index) => (
+                  {editMinutesList.map((currMin, index) => (
                     <option key={index} value={currMin.value}>
                       {currMin.label}
                     </option>
@@ -201,9 +210,9 @@ const EditStartTimeAndEndTime = ({
                   id="endTimeMeridian"
                   data-testid="endTimeMeridian"
                   name="endTimeMeridian"
-                  value={endTime.meridian}
+                  value={editEndTime.meridian}
                   onChange={(e) => {
-                    setEndTime({ ...endTime, meridian: e.target.value })
+                    setEditEndTime({ ...editEndTime, meridian: e.target.value })
                   }}
                 >
                   <option value="AM">AM</option>
