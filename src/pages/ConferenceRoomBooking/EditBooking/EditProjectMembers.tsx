@@ -137,7 +137,7 @@ const ProjectMembersSelection = ({
 
   return (
     <>
-      <CCol sm={5} md={4}>
+      <CCol sm={4} md={4}>
         <CTable responsive striped className="align-middle">
           <CTableHead>
             <CTableRow>
@@ -186,7 +186,7 @@ const ProjectMembersSelection = ({
         )}
       </CCol>
 
-      <CCol sm={2} md={3} className="meeting-bulk-add">
+      <CCol sm={2} md={2} className="meeting-bulk-add">
         <CButton
           color="info btn-ovh me-1"
           className="btn-ovh"
@@ -205,46 +205,46 @@ const ProjectMembersSelection = ({
             <i className="fa fa-trash-o text-white" aria-hidden="true"></i>
           </CButton>
         )}
+        <OModal
+          alignment="center"
+          modalTitle="Delete Attendee"
+          visible={deleteAttendeeModalVisible}
+          setVisible={setDeleteAttendeeModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={handleConfirmDeleteAttendee}
+        >
+          <span>Do you really want to delete this Attendee ?</span>
+        </OModal>
+        <OModal
+          alignment="center"
+          modalTitle="Delete All Attendees"
+          visible={deleteListModalVisible}
+          setVisible={setDeleteListModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={confirmDeleteAllAttendees}
+        >
+          <span>Do you really want to delete all Attendees ?</span>
+        </OModal>
+        <OModal
+          alignment="center"
+          modalTitle="Add All Attendees"
+          visible={addListModalVisible}
+          setVisible={setAddListModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={confirmAddAllAttendees}
+        >
+          <span>Do you really want to add all Attendees ?</span>
+        </OModal>
       </CCol>
-      <OModal
-        alignment="center"
-        modalTitle="Delete Attendee"
-        visible={deleteAttendeeModalVisible}
-        setVisible={setDeleteAttendeeModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={handleConfirmDeleteAttendee}
-      >
-        <span>Do you really want to delete this Attendee ?</span>
-      </OModal>
-      <OModal
-        alignment="center"
-        modalTitle="Delete All Attendees"
-        visible={deleteListModalVisible}
-        setVisible={setDeleteListModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={confirmDeleteAllAttendees}
-      >
-        <span>Do you really want to delete all Attendees ?</span>
-      </OModal>
-      <OModal
-        alignment="center"
-        modalTitle="Add All Attendees"
-        visible={addListModalVisible}
-        setVisible={setAddListModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={confirmAddAllAttendees}
-      >
-        <span>Do you really want to add all Attendees ?</span>
-      </OModal>
     </>
   )
 }

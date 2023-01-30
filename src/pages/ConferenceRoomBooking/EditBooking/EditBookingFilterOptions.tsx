@@ -510,35 +510,32 @@ const EditBookingFilterOptions = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-            <CRow className="mt-4 ms-5">
-              <CCol sm={12}>
-                <CRow>
-                  {projectMembers?.length > 0 && isProjectChange && (
-                    <EditProjectMembers
-                      editMeetingRequest={editMeetingRequest}
-                      projectMembers={projectMembers}
-                      attendeeResponse={attendeeResponse}
-                      setAttendeeReport={setAttendeeReport}
-                      selectProjectMember={selectProjectMember}
-                      isErrorShow={isErrorShow}
-                      setIsErrorShow={setIsErrorShow}
-                      setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                      checkIsAttendeeExists={checkIsAttendeeExists}
-                      deleteAttendeeId={deleteAttendeeId}
-                    />
-                  )}
-                  {attendeeResponse.length > 0 ? (
-                    <EditAttendees
-                      attendeeResponse={attendeeResponse}
-                      setAttendeeReport={setAttendeeReport}
-                      deleteAttendeeId={deleteAttendeeId}
-                      setDeleteAttendeeId={setDeleteAttendeeId}
-                    />
-                  ) : (
-                    <></>
-                  )}
-                </CRow>
-              </CCol>
+            <CRow className="row d-flex justify-content-center">
+              {projectMembers?.length > 0 && isProjectChange && (
+                <EditProjectMembers
+                  editMeetingRequest={editMeetingRequest}
+                  projectMembers={projectMembers}
+                  attendeeResponse={attendeeResponse}
+                  setAttendeeReport={setAttendeeReport}
+                  selectProjectMember={selectProjectMember}
+                  isErrorShow={isErrorShow}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                  deleteAttendeeId={deleteAttendeeId}
+                />
+              )}
+
+              {attendeeResponse.length > 0 ? (
+                <EditAttendees
+                  attendeeResponse={attendeeResponse}
+                  setAttendeeReport={setAttendeeReport}
+                  deleteAttendeeId={deleteAttendeeId}
+                  setDeleteAttendeeId={setDeleteAttendeeId}
+                />
+              ) : (
+                <></>
+              )}
             </CRow>
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
