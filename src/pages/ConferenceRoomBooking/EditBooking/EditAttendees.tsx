@@ -18,11 +18,14 @@ import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/Booking
 const EditAttendees = ({
   attendeeResponse,
   setAttendeeReport,
+  deleteAttendeeId,
+  setDeleteAttendeeId,
 }: {
   attendeeResponse: MeetingEditDTOList[]
   setAttendeeReport: (value: MeetingEditDTOList[]) => void
+  deleteAttendeeId: number | undefined
+  setDeleteAttendeeId: React.Dispatch<React.SetStateAction<number | undefined>>
 }): JSX.Element => {
-  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
 

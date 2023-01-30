@@ -75,9 +75,9 @@ export const mapTabsToFeatures = (
 
 // Utilized in New Event Child Components for formatting time
 export const convertTime = (timeString: string): string => {
-  const [time, modifier] = timeString.split(' ')
+  const [time, modifier] = timeString?.split(' ')
   /*eslint prefer-const: ["error", {"destructuring": "all"}]*/
-  let [hours, minutes] = time.split(':')
+  let [hours, minutes] = time?.split(':')
   if (hours === '12') {
     hours = '00'
   }

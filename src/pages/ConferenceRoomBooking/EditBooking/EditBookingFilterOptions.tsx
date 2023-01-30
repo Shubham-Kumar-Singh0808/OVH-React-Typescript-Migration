@@ -10,6 +10,7 @@ import {
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
+import { useHistory } from 'react-router-dom'
 import EditAttendees from './EditAttendees'
 import EditProjectMembers from './EditProjectMembers'
 import EditStartTimeAndEndTime from './EditStartTimeAndEndTime'
@@ -27,7 +28,6 @@ import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBooki
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
 import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
-import SlotsBooked from '../NewEvent/NewEventChildComponents/SlotsBooked'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const editExistingMeetingRequest = useTypedSelector(
@@ -36,6 +36,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const [attendeeResponse, setAttendeeReport] = useState<MeetingEditDTOList[]>(
     [],
   )
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
   )
@@ -107,6 +108,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     availableDates: '',
   } as EditMeetingRequest
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   const [editMeetingRequest, setEditMeetingRequest] = useState(initNewBooking)
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -197,7 +199,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     setIsProjectChange(e.target.value)
   }
   const checkIsAttendeeExists = (attendeeId: number) => {
-    return attendeeResponse.some((attendee) => {
+    return attendeeResponse?.some((attendee) => {
       return attendee.id === attendeeId
     })
   }
@@ -233,12 +235,12 @@ const EditBookingFilterOptions = (): JSX.Element => {
 
   const startHour = bookingStartTime?.split(':')[0]
   const startMinutesDay = bookingStartTime?.split(':')[1]?.split(' ')[0]
-  const startTimeResult = convertTime(bookingStartTime)
-  const startTimeSplit = startTimeResult?.split(':')
-  console.log(startTimeSplit[0])
 
   const endHour = bookingEndTime?.split(':')[0]
   const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
+  const startTimeResult = convertTime(bookingStartTime)
+  // const startTimeSplit = startTimeResult?.split(':')
+
   const selectProjectMember = async (
     attendeeId: number,
     attendeeName: string,
@@ -292,7 +294,9 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const handleConfirmBtn = async () => {
     const timeCheckResult = await dispatch(
       reduxServices.newEvent.timeCheck(
-        `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startMinutesDay}`,
+        `${editMeetingRequest.fromDate}/${
+          startTimeResult?.split(':')[0]
+        }/${startMinutesDay}`,
       ),
     )
     const newAttendeesList = attendeeResponse?.map(
@@ -346,6 +350,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
           addEventResult,
         )
       ) {
+        history.push('/meetingList')
         dispatch(
           reduxServices.app.actions.addToast(
             <OToast
@@ -357,9 +362,10 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
-  console.log(startHour)
-  // console.log(startMinutesDay)
-  // console.log(projectsAutoCompleteTarget)
+
+  const ClearButtonHandler = () => {
+    history.push('/meetingList')
+  }
 
   return (
     <>
@@ -516,16 +522,18 @@ const EditBookingFilterOptions = (): JSX.Element => {
                       setIsErrorShow={setIsErrorShow}
                       setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                       checkIsAttendeeExists={checkIsAttendeeExists}
+                      deleteAttendeeId={deleteAttendeeId}
                     />
                   )}
                   <EditAttendees
                     attendeeResponse={attendeeResponse}
                     setAttendeeReport={setAttendeeReport}
+                    deleteAttendeeId={deleteAttendeeId}
+                    setDeleteAttendeeId={setDeleteAttendeeId}
                   />
                 </CRow>
               </CCol>
             </CRow>
-
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
@@ -534,7 +542,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
-                    // disabled={!isConfirmButtonEnabled}
                   >
                     Update
                   </CButton>
@@ -542,7 +549,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     color="warning "
                     data-testid="clearBtn"
                     className="btn-ovh"
-                    // onClick={ClearButtonHandler}
+                    onClick={ClearButtonHandler}
                   >
                     Clear
                   </CButton>
@@ -551,13 +558,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
             </CRow>
           </CForm>
         </CCol>
-        {editMeetingRequest.roomId && editMeetingRequest.endTime ? (
-          <CCol sm={4}>
-            <SlotsBooked />
-          </CCol>
-        ) : (
-          <></>
-        )}
       </CRow>
     </>
   )

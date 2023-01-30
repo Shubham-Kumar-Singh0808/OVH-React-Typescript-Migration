@@ -30,6 +30,7 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
+  deleteAttendeeId,
 }: {
   editMeetingRequest: EditMeetingRequest
   projectMembers: ProjectMember[]
@@ -40,13 +41,14 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
+  deleteAttendeeId: number | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  // const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
 
   const deleteAttendeeSuccessToast = (
