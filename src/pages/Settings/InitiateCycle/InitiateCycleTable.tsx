@@ -112,13 +112,16 @@ const InitiateCycleTable = ({
                       name="checkQuestion"
                       checked={item?.checkQuestion as boolean}
                       onChange={() => {
-                        setCycleChecked([
-                          {
-                            id: item.id,
-                            question: item.question,
-                            checkQuestion: true,
-                          },
-                        ])
+                        setCycleChecked((prevState) => {
+                          return {
+                            ...prevState,
+                            ...{
+                              [id]: item.id,
+                              checkQuestion: item.checkQuestion,
+                              question: item.question,
+                            },
+                          }
+                        })
                       }}
                       value={cycleChecked as unknown as string}
                     />

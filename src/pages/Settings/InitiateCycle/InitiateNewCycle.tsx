@@ -23,14 +23,8 @@ import {
 
 const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [cycleChecked, setCycleChecked] = useState<GetQuestion[]>([
-    {
-      id: 0,
-      question: '',
-      checkQuestion: true,
-    },
-  ])
-
+  const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
+  console.log(cycleChecked)
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
@@ -229,7 +223,7 @@ const InitiateCycle = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            cycleChecked={cycleChecked}
+            cycleChecked={cycleChecked as GetQuestion}
             setCycleChecked={setCycleChecked}
           />
         </OCard>

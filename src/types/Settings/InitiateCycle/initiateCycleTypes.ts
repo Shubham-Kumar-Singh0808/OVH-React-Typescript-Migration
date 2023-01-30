@@ -76,6 +76,6 @@ export type InitiateCycleCheckBoxProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  cycleChecked: GetQuestion[]
-  setCycleChecked: React.Dispatch<React.SetStateAction<GetQuestion[]>>
+  cycleChecked: GetQuestion
+  setCycleChecked: React.Dispatch<React.SetStateAction<GetQuestion>>
 }
