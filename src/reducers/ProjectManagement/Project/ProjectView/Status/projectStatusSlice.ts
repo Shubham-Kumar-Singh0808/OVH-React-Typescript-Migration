@@ -101,6 +101,9 @@ const projectStatusSlice = createSlice({
       state.isLoading = ApiLoadingState.succeeded
       state.statusReportList = action.payload
     })
+    builder.addCase(getStatusReportList.pending, (state) => {
+      state.isLoading = ApiLoadingState.loading
+    })
   },
 })
 
