@@ -7,9 +7,18 @@ import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAcces
 
 const mockSetToggle = jest.fn()
 
-describe('Ticket Configurations Filter Options Component Testing', () => {
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ProjectStatus />
+  </div>
+)
+
+describe('ProjectStatus Component Testing', () => {
   beforeEach(() => {
-    render(<ProjectStatus />, {
+    render(toRender, {
       preloadedState: {
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,

@@ -79,6 +79,7 @@ const Proposal = (): JSX.Element => {
             <CButton
               className="proposal-post-button"
               color="info btn-ovh me-1 pull-right"
+              data-testid="post-btn"
               disabled={!isPostButtonEnabled}
               onClick={postButtonHandler}
             >
