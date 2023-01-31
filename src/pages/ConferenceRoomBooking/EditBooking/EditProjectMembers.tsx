@@ -157,8 +157,8 @@ const ProjectMembersSelection = ({
                         data-testid="project-member"
                         onClick={() => {
                           selectEditProjectMember(
-                            currMember.id,
-                            currMember.fullName,
+                            currMember?.id,
+                            currMember?.fullName,
                           )
                           setIsAttendeeErrorShow(false)
                         }}
