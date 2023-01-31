@@ -415,6 +415,10 @@ const ClearnceCerticates = React.lazy(
     ),
 )
 
+const EditEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
+)
+
 const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
@@ -899,6 +903,11 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/editEvent/:eventId',
+    name: 'Edit Event',
+    component: EditEvent,
   },
   {
     path: '/MeetingRequestEdit/:id',

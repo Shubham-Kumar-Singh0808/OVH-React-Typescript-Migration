@@ -601,6 +601,7 @@ const AddProjectRequestForm = ({
             name="projectContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setCustomerEmail}
@@ -612,6 +613,7 @@ const AddProjectRequestForm = ({
             name="projectContactEmail"
             placeholder="Email"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactName}
@@ -622,6 +624,7 @@ const AddProjectRequestForm = ({
             name="billingContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactEmail}
@@ -633,6 +636,7 @@ const AddProjectRequestForm = ({
             name="billingContactPersonEmail"
             placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OSelectList
             list={priceModelList}
