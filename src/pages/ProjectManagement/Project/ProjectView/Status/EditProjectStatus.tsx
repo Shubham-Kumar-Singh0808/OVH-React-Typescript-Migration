@@ -62,16 +62,16 @@ const EditProjectStatus = ({
     const updateProjectStatusReportResultAction = await dispatch(
       reduxServices.projectStatus.updateProjectStatusReport({
         addOn: null,
-        nextDate: editCurrentWeekDate
-          ? new Date(editCurrentWeekDate).toLocaleDateString(deviceLocale, {
+        nextDate: editNextWeekDate
+          ? new Date(editNextWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
             })
           : '',
         nextstatus: editNextWeekStatus as string,
-        prevDate: editNextWeekDate
-          ? new Date(editNextWeekDate).toLocaleDateString(deviceLocale, {
+        prevDate: editCurrentWeekDate
+          ? new Date(editCurrentWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
               day: '2-digit',
