@@ -71,6 +71,7 @@ export type InitialNewEventSliceState = {
   projectMembers: ProjectMember[]
   error: ValidationError
   allBookedDetailsForEvent: GetAllBookedDetailsForEvent[]
+  trainer: TrainerDetails
 }
 
 export type EventTypeList = {
@@ -146,7 +147,7 @@ export type ProjectMember = {
   passportIssuedDate: null
   token: null
   underNoticeDate: null
-  candidateId: null
+  candidateId: number
   underNotice: null
   emailId: null
   empManager: null

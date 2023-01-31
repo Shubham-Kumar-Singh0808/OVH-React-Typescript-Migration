@@ -460,6 +460,8 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+  editEvent: string
+  updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string

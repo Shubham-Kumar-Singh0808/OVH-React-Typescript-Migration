@@ -5,7 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import { LoggedEmployee } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
-const Attendees = ({
+const EventAttendees = ({
   allEmployeesProfiles,
   isProjectAndAttendeesEnable,
   onSelectAttendee,
@@ -40,11 +40,11 @@ const Attendees = ({
   }
 
   const onAttendeeFocusOut = () => {
-    const selectedProject = allEmployeesProfiles.find(
+    const selectProject = allEmployeesProfiles.find(
       (value) => value.fullName === attendeesAutoCompleteTarget,
     )
-    if (selectedProject) {
-      onSelectAttendee(selectedProject?.id, selectedProject?.fullName)
+    if (selectProject) {
+      onSelectAttendee(selectProject?.id, selectProject?.fullName)
       setIsErrorShow(false)
     }
   }
@@ -53,7 +53,7 @@ const Attendees = ({
     <CRow className="mt-1 mb-3">
       <CFormLabel
         className="col-sm-3 col-form-label text-end"
-        data-testid="pmLabel"
+        data-testid="attendees"
       >
         Attendees:
       </CFormLabel>
@@ -61,7 +61,7 @@ const Attendees = ({
         <Autocomplete
           inputProps={{
             className: 'form-control form-control-sm',
-            id: 'trainer-autocomplete',
+            id: 'attendee-autocomplete',
             placeholder: 'Attendee Name',
             disabled: isProjectAndAttendeesEnable,
             onBlur: onAttendeeFocusOut,
@@ -119,4 +119,4 @@ const Attendees = ({
   )
 }
 
-export default Attendees
+export default EventAttendees
