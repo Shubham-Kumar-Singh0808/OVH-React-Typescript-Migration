@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ClearanceCertificateDetailsForm = (): JSX.Element => {
   const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
-  const [isActiveValue, setIsActiveValue] = useState<boolean>()
+  const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
   const initialCCDetails = {} as UpdateClearanceDetails
   const [editCCDetails, setEditCCDetails] = useState(initialCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +35,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     setIsCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditCCDetails(updateClearanceDetails)
+    setIsActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditCCDetailsHandler = (
@@ -65,7 +66,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearanceDetails[0]?.employeeId,
         employeeName: managerClearanceDetails[0]?.employeeName,
-        isDue: isActiveValue as unknown as boolean,
+        isDue: isActiveValue as boolean,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
         seperationId: getAllResignationHistory.separationId,
@@ -199,7 +200,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isActiveValue as unknown as boolean}
+                    checked={isActiveValue}
                     onChange={handleEditCCDetailsHandler}
                   />
                   <CFormCheck
