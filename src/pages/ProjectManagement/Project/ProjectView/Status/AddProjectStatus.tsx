@@ -222,7 +222,7 @@ const AddProjectStatus = ({
             )}
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end">
             Next Week Date:
           </CFormLabel>
@@ -255,7 +255,7 @@ const AddProjectStatus = ({
         </CRow>
         {dateError && (
           <CRow className="mt-2">
-            <CCol sm={{ span: 6, offset: 4 }}>
+            <CCol sm={{ span: 6, offset: 3 }}>
               <span className="text-danger" data-testid="errorMessage">
                 Next week date should be greater than current week date and
                 should be after one week from current week date
