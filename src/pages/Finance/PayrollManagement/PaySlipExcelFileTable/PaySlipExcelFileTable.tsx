@@ -69,6 +69,7 @@ const PaySlipExcelFileTable = (props: {
           year: Number(props.selectYear),
         }),
       )
+      console.log('testing')
     }
   }
 

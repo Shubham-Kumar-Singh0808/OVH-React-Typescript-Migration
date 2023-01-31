@@ -266,18 +266,23 @@ const PayrollManagement = (): JSX.Element => {
         {selectMonth && selectYear ? (
           <CRow className="mt-3 sh-previewBtn">
             <CCol sm={4} className="mt-4 mb-4">
-              <input
-                className="mt-1"
-                data-testid="feedback-form"
-                type="file"
-                name="upload-form"
-                accept=".xlsx, .xls"
-                onChange={(element: SyntheticEvent) =>
-                  onChangeFileUploadHandler(
-                    element.currentTarget as HTMLInputElement,
-                  )
-                }
-              />
+              <label className="col-sm-12 control-label text-left">
+                <input
+                  className="mt-1 w-100"
+                  data-testid="feedback-form"
+                  type="file"
+                  name="upload-form"
+                  accept=".xlsx, .xls"
+                  onChange={(element: SyntheticEvent) =>
+                    onChangeFileUploadHandler(
+                      element.currentTarget as HTMLInputElement,
+                    )
+                  }
+                />
+                <span className="textColor-shade" ng-show="MsgFlag">
+                  Note: Please upload file either xls or xlsx format.
+                </span>
+              </label>
               {fileUploadErrorText && (
                 <div id="error">
                   <strong className="mt-3 text-danger">
@@ -285,9 +290,6 @@ const PayrollManagement = (): JSX.Element => {
                   </strong>
                 </div>
               )}
-              <CRow className="textColor-shade">
-                <span>Note: Please upload file either xls or xlsx format.</span>
-              </CRow>
             </CCol>
             <CCol md={4} className="text-end mt-4 mb-4">
               {previewButton}
@@ -363,9 +365,8 @@ const PayrollManagement = (): JSX.Element => {
             />
           )}
         </>
-
         {toggle === 'editPaySlip' && (
-          <EditPaySlip toEditPayslip={toEditPayslip} />
+          <EditPaySlip toEditPayslip={toEditPayslip} setToggle={setToggle} />
         )}
         {toggle === 'excelTable' && (
           <PaySlipExcelFileTable
@@ -375,7 +376,7 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
           />
-        )}
+        )}{' '}
       </OCard>
     </>
   )
