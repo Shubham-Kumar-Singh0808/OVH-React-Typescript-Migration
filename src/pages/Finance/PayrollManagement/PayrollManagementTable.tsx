@@ -62,7 +62,13 @@ const PayrollManagementTable = (props: {
           year: Number(props.selectYear),
         }),
       )
-  }, [dispatch, props.selectMonth, props.selectYear])
+  }, [
+    dispatch,
+    props.selectMonth,
+    props.selectYear,
+    props.pageSize,
+    props.currentPage,
+  ])
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Payslip Deleted Successfully" />
@@ -129,6 +135,10 @@ const PayrollManagementTable = (props: {
   const totalNoOfRecords = renderingPayslipData?.length
     ? `Total Records: ${PaySlipsListSize}`
     : `No Records found...`
+
+  const getItemNumber = (index: number) => {
+    return (props.currentPage - 1) * props.pageSize + index + 1
+  }
 
   return (
     <>
@@ -203,7 +213,7 @@ const PayrollManagementTable = (props: {
               {renderingPayslipData?.length > 0 &&
                 renderingPayslipData?.map((payslipItem, index) => {
                   return (
-                    <CTableRow key={payslipItem.paySlipId}>
+                    <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
                           className="form-check-input form-select-not-allowed"
@@ -217,7 +227,7 @@ const PayrollManagementTable = (props: {
                           }
                         />
                       </CTableDataCell>
-                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                       <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
                       <CTableDataCell>{payslipItem.name}</CTableDataCell>
                       <CTableDataCell>{payslipItem.designation}</CTableDataCell>
@@ -376,7 +386,6 @@ const PayrollManagementTable = (props: {
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
-        modalSize="lg"
       >
         <>
           <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />

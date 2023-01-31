@@ -1,4 +1,4 @@
-import { CRow, CCol, CButton, CFormLabel, CFormInput } from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormInput } from '@coreui/react-pro'
 import React from 'react'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/PayrollManagementTypes'
@@ -8,13 +8,11 @@ const EmployeePayslipPersonalDetails = ({
   toEditPayslip,
   designation,
   accountNo,
-  setToggle,
 }: {
   toEditPayslip: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
   designation: string
   accountNo: string
-  setToggle: (value: string) => void
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -27,18 +25,6 @@ const EmployeePayslipPersonalDetails = ({
 
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="back-button"
-            onClick={() => setToggle('')}
-          >
-            <i className="fa fa-arrow-left  me-1"></i>Back
-          </CButton>
-        </CCol>
-      </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
         <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Name:

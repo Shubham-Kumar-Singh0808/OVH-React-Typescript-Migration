@@ -124,8 +124,10 @@ const TrackerListTable = ({
           {currentPageItems?.length > 0 &&
             currentPageItems?.map((tracker, index) => {
               return (
-                <CTableRow key={getItemNumber(index)}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{tracker.name}</CTableDataCell>
                   <CTableDataCell className="text-middle ms-2">
                     <span className="hidden-block ms-3 sh-tracker-checkbox">
