@@ -55,7 +55,7 @@ const PaySlipExcelFileTable = (props: {
       reduxServices.payrollManagement.saveExcelFile(prepareObject),
     )
     if (
-      reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+      reduxServices.payrollManagement.saveExcelFile.fulfilled.match(
         uploadBtnActionResult,
       )
     ) {
@@ -69,7 +69,6 @@ const PaySlipExcelFileTable = (props: {
           year: Number(props.selectYear),
         }),
       )
-      console.log('testing')
     }
   }
 

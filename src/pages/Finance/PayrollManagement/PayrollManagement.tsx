@@ -190,6 +190,12 @@ const PayrollManagement = (): JSX.Element => {
     ''
   )
 
+  useEffect(() => {
+    if (window.location.pathname === '/payslipUpload') {
+      dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
+    }
+  }, [])
+
   return (
     <>
       <OCard
