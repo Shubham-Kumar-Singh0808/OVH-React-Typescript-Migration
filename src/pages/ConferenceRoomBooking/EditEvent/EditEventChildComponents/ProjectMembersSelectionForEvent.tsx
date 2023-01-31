@@ -142,127 +142,115 @@ const ProjectMembersSelectionForEvent = ({
 
   return (
     <>
-      <CRow className="mt-4 ms-5">
-        <CCol sm={12}>
-          <CRow>
-            <CCol sm={5} md={4}>
-              <CTable responsive striped className="align-middle">
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell>Project People</CTableHeaderCell>
-                    <CTableHeaderCell>Action</CTableHeaderCell>
+      <CCol sm={4} md={4}>
+        <CTable responsive striped className="align-middle">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell>Project People</CTableHeaderCell>
+              <CTableHeaderCell>Action</CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            {projectMembers &&
+              projectMembers?.map((currProjMember, index) => {
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{currProjMember?.fullName}</CTableDataCell>
+                    <CTableDataCell>
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        data-testid="event-project-member"
+                        onClick={() => {
+                          selectProjectMember(
+                            currProjMember?.id,
+                            currProjMember?.fullName,
+                            currProjMember?.candidateId,
+                          )
+                          setIsAttendeeErrorShow(false)
+                        }}
+                      >
+                        <i
+                          className="fa fa-arrow-right text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTableDataCell>
                   </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {projectMembers &&
-                    projectMembers?.map((currMember, index) => {
-                      return (
-                        <CTableRow key={index}>
-                          <CTableDataCell>{currMember.fullName}</CTableDataCell>
-                          <CTableDataCell>
-                            <CButton
-                              color="info btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                              data-testid="project-member"
-                              onClick={() => {
-                                selectProjectMember(
-                                  currMember.id,
-                                  currMember.fullName,
-                                  currMember.candidateId,
-                                )
-                                setIsAttendeeErrorShow(false)
-                              }}
-                            >
-                              <i
-                                className="fa fa-arrow-right text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTableDataCell>
-                        </CTableRow>
-                      )
-                    })}
-                </CTableBody>
-              </CTable>
-              {isErrorShow && (
-                <CRow>
-                  <CCol>
-                    <span className="sh-span-red">
-                      The employee already added to Attendees
-                    </span>
-                  </CCol>
-                </CRow>
-              )}
-            </CCol>
-
-            <CCol sm={2} md={3} className="meeting-bulk-add">
-              <CButton
-                color="info btn-ovh me-1"
-                className="btn-ovh"
-                data-testid="delete-btn"
-                onClick={() => setAddListModalVisible(true)}
-              >
-                <i
-                  className="fa fa-arrow-right text-white"
-                  aria-hidden="true"
-                ></i>
-              </CButton>
-              {attendeeResponse?.length > 0 && (
-                <CButton
-                  color="danger btn-ovh me-1"
-                  className="btn-ovh"
-                  data-testid="delete-button"
-                  onClick={() => setDeleteListModalVisible(true)}
-                >
-                  <i
-                    className="fa fa-trash-o text-white"
-                    aria-hidden="true"
-                  ></i>
-                </CButton>
-              )}
+                )
+              })}
+          </CTableBody>
+        </CTable>
+        {isErrorShow && (
+          <CRow>
+            <CCol>
+              <span className="sh-span-red">
+                The employee already added to Attendees
+              </span>
             </CCol>
           </CRow>
-        </CCol>
-      </CRow>
-      <OModal
-        alignment="center"
-        modalTitle="Delete Attendee"
-        visible={deleteAttendeeModalVisible}
-        setVisible={setDeleteAttendeeModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={handleConfirmDeleteAttendee}
-      >
-        <span>Do you really want to delete this Attendee ?</span>
-      </OModal>
-      <OModal
-        alignment="center"
-        modalTitle="Delete All Attendees"
-        visible={deleteListModalVisible}
-        setVisible={setDeleteListModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={confirmDeleteAllAttendees}
-      >
-        <span>Do you really want to delete all Attendees ?</span>
-      </OModal>
-      <OModal
-        alignment="center"
-        modalTitle="Add All Attendees"
-        visible={addListModalVisible}
-        setVisible={setAddListModalVisible}
-        closeButtonClass="d-none"
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalBodyClass="mt-0"
-        confirmButtonAction={confirmAddAllAttendees}
-      >
-        <span>Do you really want to add all Attendees ?</span>
-      </OModal>
+        )}
+      </CCol>
+
+      <CCol sm={2} md={2} className="meeting-bulk-add">
+        <CButton
+          color="info btn-ovh me-1"
+          className="btn-ovh"
+          data-testid="delete-btn"
+          onClick={() => setAddListModalVisible(true)}
+        >
+          <i className="fa fa-arrow-right text-white" aria-hidden="true"></i>
+        </CButton>
+        {attendeeResponse?.length > 0 && (
+          <CButton
+            color="danger btn-ovh me-1"
+            className="btn-ovh"
+            data-testid="attendees-delete-button"
+            onClick={() => setDeleteListModalVisible(true)}
+          >
+            <i className="fa fa-trash-o text-white" aria-hidden="true"></i>
+          </CButton>
+        )}
+        <OModal
+          alignment="center"
+          modalTitle="Delete Attendee"
+          visible={deleteAttendeeModalVisible}
+          setVisible={setDeleteAttendeeModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={handleConfirmDeleteAttendee}
+        >
+          <span>Do you really want to delete this Attendee ?</span>
+        </OModal>
+        <OModal
+          alignment="center"
+          modalTitle="Delete All Attendees"
+          visible={deleteListModalVisible}
+          setVisible={setDeleteListModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={confirmDeleteAllAttendees}
+        >
+          <span>Do you really want to delete all Attendees ?</span>
+        </OModal>
+        <OModal
+          alignment="center"
+          modalTitle="Add All Attendees"
+          visible={addListModalVisible}
+          setVisible={setAddListModalVisible}
+          closeButtonClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalBodyClass="mt-0"
+          confirmButtonAction={confirmAddAllAttendees}
+        >
+          <span>Do you really want to add all Attendees ?</span>
+        </OModal>
+      </CCol>
     </>
   )
 }

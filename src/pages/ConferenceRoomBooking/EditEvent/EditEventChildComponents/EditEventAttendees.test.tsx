@@ -3,24 +3,18 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import EditEventAttendees from './EditEventAttendees'
 import { render, screen } from '../../../../test/testUtils'
-// import { mockMeetingDToList } from '../../../../test/data/bookingListData'
+import { mockMeetingDToList } from '../../../../test/data/bookingListData'
 
 describe('EditAttendees Component', () => {
   describe('Should be able to reset EditAttendees Component value', () => {
     beforeEach(() => {
       render(
         <EditEventAttendees
-          attendeeResponse={[]}
+          attendeeResponse={mockMeetingDToList}
           setAttendeesResponse={jest.fn()}
           deleteAttendeeId={0}
           setDeleteAttendeeId={jest.fn()}
         />,
-        //     <EditAttendees
-        //       attendeeResponse={mockMeetingDToList}
-        //       setAttendeeReport={jest.fn()}
-        //       deleteAttendeeId={0}
-        //       setDeleteAttendeeId={jest.fn()}
-        //     />,
       )
     })
     test('should render with data ', () => {

@@ -309,6 +309,7 @@ const EventListTable = (
         visible={isEventCancelModalVisible}
         setVisible={setIsEventCancelModalVisible}
         modalTitle="Cancel Event"
+        modalBodyClass="mt-0"
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"

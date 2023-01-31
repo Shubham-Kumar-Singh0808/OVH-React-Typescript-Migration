@@ -453,7 +453,7 @@ const EditEvent = (): JSX.Element => {
                   shouldItemRender={(item, itemValue) =>
                     item?.projectName
                       ?.toLowerCase()
-                      .indexOf(itemValue.toLowerCase()) > -1
+                      .indexOf(itemValue?.toLowerCase()) > -1
                   }
                   onChange={(e) => projectsOnChangeHandler(e)}
                   onSelect={(selectedVal) =>
@@ -475,27 +475,32 @@ const EditEvent = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-
-            {projectMembers?.length > 0 && isProjectChange && (
-              <ProjectMembersSelectionForEvent
-                editEvent={editEvent}
-                projectMembers={projectMembers}
-                attendeeResponse={attendeesResponse}
-                setAttendeesResponse={setAttendeesResponse}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-                deleteAttendeeId={deleteAttendeeId}
-              />
-            )}
-            <EditEventAttendees
-              attendeeResponse={attendeesResponse}
-              setAttendeesResponse={setAttendeesResponse}
-              deleteAttendeeId={deleteAttendeeId}
-              setDeleteAttendeeId={setDeleteAttendeeId}
-            />
+            <CRow className="row d-flex justify-content-center">
+              {projectMembers?.length > 0 && isProjectChange && (
+                <ProjectMembersSelectionForEvent
+                  editEvent={editEvent}
+                  projectMembers={projectMembers}
+                  attendeeResponse={attendeesResponse}
+                  setAttendeesResponse={setAttendeesResponse}
+                  selectProjectMember={selectProjectMember}
+                  isErrorShow={isErrorShow}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                  deleteAttendeeId={deleteAttendeeId}
+                />
+              )}
+              {attendeesResponse?.length > 0 ? (
+                <EditEventAttendees
+                  attendeeResponse={attendeesResponse}
+                  setAttendeesResponse={setAttendeesResponse}
+                  deleteAttendeeId={deleteAttendeeId}
+                  setDeleteAttendeeId={setDeleteAttendeeId}
+                />
+              ) : (
+                <></>
+              )}
+            </CRow>
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>

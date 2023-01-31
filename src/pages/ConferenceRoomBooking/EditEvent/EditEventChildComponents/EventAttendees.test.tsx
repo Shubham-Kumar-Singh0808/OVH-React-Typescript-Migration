@@ -5,7 +5,7 @@ import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { selectedAttendees } from '../../../../test/constants'
 import { mockTrainerDataList } from '../../../../test/data/newEventData'
 
-describe('Attendees Component', () => {
+describe('Event Attendees Component', () => {
   describe('Empty value of  Attendees Component', () => {
     beforeEach(() => {
       render(
@@ -28,7 +28,7 @@ describe('Attendees Component', () => {
     })
 
     test('should be able to render Attendees Component label', () => {
-      expect(screen.getByTestId('pmLabel')).toBeTruthy()
+      expect(screen.getByTestId('attendees')).toBeTruthy()
     })
 
     test('should be able to render Attendees Component placeholder', () => {
