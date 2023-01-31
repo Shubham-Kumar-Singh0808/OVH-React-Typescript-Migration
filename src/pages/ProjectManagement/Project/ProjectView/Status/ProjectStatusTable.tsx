@@ -69,6 +69,12 @@ const ProjectStatusTable = ({
   const isLoading = useTypedSelector(
     reduxServices.projectStatus.selectors.isLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProjectStatus = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Status',
+  )
   const dispatch = useAppDispatch()
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -148,7 +154,7 @@ const ProjectStatusTable = ({
                   <CTableDataCell>
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      data-testid={`subject-comments${index}`}
+                      data-testid={`subject-comments`}
                       onClick={() => handleModal(statusReport.prevstatus)}
                     >
                       <div
@@ -162,7 +168,7 @@ const ProjectStatusTable = ({
                   <CTableDataCell>
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
-                      data-testid={`dsc-comments${index}`}
+                      data-testid={`dsc-comments`}
                       onClick={() => handleModal(statusReport.nextstatus)}
                     >
                       <div
@@ -174,26 +180,31 @@ const ProjectStatusTable = ({
                   </CTableDataCell>
                   <CTableDataCell>
                     <>
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        data-testid="edit-btn"
-                        onClick={() => {
-                          editProjectStatusButtonHandler(statusReport)
-                        }}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        color="danger"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => handleShowDeleteModal(statusReport.id)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      {userAccessToProjectStatus?.updateaccess && (
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid="edit-btn"
+                          onClick={() => {
+                            editProjectStatusButtonHandler(statusReport)
+                          }}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      )}
+                      {userAccessToProjectStatus?.deleteaccess && (
+                        <CButton
+                          color="danger"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid="delete-btn"
+                          onClick={() => handleShowDeleteModal(statusReport.id)}
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      )}
                     </>
                   </CTableDataCell>
                 </CTableRow>

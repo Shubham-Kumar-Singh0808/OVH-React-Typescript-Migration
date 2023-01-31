@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import Proposal from './Proposal'
 import { render, screen } from '../../../../../test/testUtils'
 import { mockProjectProposals } from '../../../../../test/data/projectProposalsData'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -20,6 +21,9 @@ describe('ProjectProposals Filter Options Component Testing with data', () => {
       preloadedState: {
         projectProposals: {
           projectProposal: mockProjectProposals,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

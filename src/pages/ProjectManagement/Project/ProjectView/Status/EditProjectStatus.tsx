@@ -205,7 +205,7 @@ const EditProjectStatus = ({
               autoComplete="off"
               dropdownMode="select"
               dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yy"
+              placeholderText="dd/mm/yyyy"
               name="fromDate"
               value={
                 editCurrentWeekDate
@@ -260,7 +260,7 @@ const EditProjectStatus = ({
               autoComplete="off"
               dropdownMode="select"
               dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yy"
+              placeholderText="dd/mm/yyyy"
               name="fromDate"
               value={
                 editNextWeekDate

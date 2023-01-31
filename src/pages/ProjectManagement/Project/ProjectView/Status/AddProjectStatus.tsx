@@ -184,7 +184,7 @@ const AddProjectStatus = ({
               autoComplete="off"
               dropdownMode="select"
               dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yy"
+              placeholderText="dd/mm/yyyy"
               name="fromDate"
               value={
                 currentWeekDate
@@ -236,7 +236,7 @@ const AddProjectStatus = ({
               autoComplete="off"
               dropdownMode="select"
               dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yy"
+              placeholderText="dd/mm/yyyy"
               name="fromDate"
               value={
                 nextWeekDate

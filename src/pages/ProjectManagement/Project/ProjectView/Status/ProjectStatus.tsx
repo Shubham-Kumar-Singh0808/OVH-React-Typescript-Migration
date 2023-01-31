@@ -18,6 +18,12 @@ const ProjectStatus = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddProjectStatus = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Status',
+  )
   const { projectId } = useParams<{ projectId: string }>()
   const {
     paginationRange,
@@ -43,12 +49,15 @@ const ProjectStatus = (): JSX.Element => {
         <>
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
-              <CButton
-                color="info btn-ovh me-1"
-                onClick={() => setToggle('addProjectStatus')}
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
+              {userAccessToAddProjectStatus?.createaccess && (
+                <CButton
+                  color="info btn-ovh me-1"
+                  data-testid="add-btn"
+                  onClick={() => setToggle('addProjectStatus')}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              )}
             </CCol>
           </CRow>
           <ProjectStatusTable
