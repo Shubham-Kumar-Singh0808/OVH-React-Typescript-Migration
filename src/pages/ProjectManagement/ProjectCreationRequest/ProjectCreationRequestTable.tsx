@@ -113,10 +113,13 @@ const ProjectCreationRequestTable = ({
     setToggle('projectHistory')
   }
 
-  const handleShowDeleteModal = (requestId: number, projectName: string) => {
+  const handleShowDeleteModal = (
+    requestId: number,
+    projectRequestName: string,
+  ) => {
     setToDeleteProjectRequestId(requestId)
     setIsDeleteModalVisible(true)
-    setProjectName(projectName)
+    setProjectName(projectRequestName)
   }
 
   const handleShowRejectModal = (id: number) => {
