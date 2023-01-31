@@ -218,6 +218,7 @@ const AchievementTypeListEntries = (
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
+              className="mb-0"
               type="text"
               data-testid="ach-order-input"
               maxLength={2}

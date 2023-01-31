@@ -277,13 +277,13 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
             onChange={percentChangeHandler}
           />
         </CCol>
-        <CCol sm={1}>
+        <CCol sm={1} className="p-0 w-auto">
           <strong>% </strong>
         </CCol>
         {enteredPercentage === '0' ||
           enteredPercentage === '00' ||
           (enteredPercentage === '000' ? (
-            <CCol sm={4}>
+            <CCol sm={4} className="p-1">
               <strong data-testid="error-percent" className="text-danger">
                 Percentage can&apos;t be zero.
               </strong>
@@ -291,10 +291,10 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           ) : (
             <></>
           ))}
-        <CCol sm={4}>
+        <CCol sm={4} className="p-1">
           <strong
             data-testid="error-percent"
-            className={isPercentErrorHidden ? TextWhite : TextDanger}
+            className={isPercentErrorHidden ? 'd-none' : TextDanger}
           >
             You can&apos;t add more than 100 % per KRA
           </strong>
