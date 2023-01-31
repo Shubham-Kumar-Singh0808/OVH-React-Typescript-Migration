@@ -190,7 +190,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }, [dispatch, editMeetingRequest])
 
-  const onHandleSelectProjectName = (projectName: string) => {
+  const onHandleEditSelectProjectName = (projectName: string) => {
     setProjectsAutoCompleteTarget(projectName)
   }
 
@@ -214,7 +214,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   }, [projectsAutoCompleteTarget])
 
   const onSelectAttendee = (attendeeId: number, attendeeName: string) => {
-    selectProjectMember(attendeeId, attendeeName)
+    selectEditProjectMember(attendeeId, attendeeName)
     if (checkIsAttendeeExists(attendeeId)) {
       setIsAttendeeErrorShow(true)
     } else {
@@ -241,7 +241,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const endHour = bookingEndTime?.split(':')[0]
   const endMinutesDay = bookingEndTime?.split(':')[1]?.split(' ')[0]
 
-  const selectProjectMember = async (
+  const selectEditProjectMember = async (
     attendeeId: number,
     attendeeName: string,
   ) => {
@@ -489,7 +489,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                   }
                   onChange={(e) => autoCompleteOnChangeHandler(e)}
                   onSelect={(selectedVal) =>
-                    onHandleSelectProjectName(selectedVal)
+                    onHandleEditSelectProjectName(selectedVal)
                   }
                 />
               </CCol>
@@ -514,7 +514,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                   projectMembers={projectMembers}
                   attendeeResponse={attendeeResponse}
                   setAttendeeReport={setAttendeeReport}
-                  selectProjectMember={selectProjectMember}
+                  selectEditProjectMember={selectEditProjectMember}
                   isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}

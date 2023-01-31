@@ -25,7 +25,7 @@ const ProjectMembersSelection = ({
   projectMembers,
   attendeeResponse,
   setAttendeeReport,
-  selectProjectMember,
+  selectEditProjectMember,
   isErrorShow,
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
@@ -36,7 +36,7 @@ const ProjectMembersSelection = ({
   projectMembers: ProjectMember[]
   attendeeResponse: MeetingEditDTOList[]
   setAttendeeReport: (value: MeetingEditDTOList[]) => void
-  selectProjectMember: (attendeeId: number, attendeeName: string) => void
+  selectEditProjectMember: (attendeeId: number, attendeeName: string) => void
   isErrorShow: boolean
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
@@ -156,7 +156,7 @@ const ProjectMembersSelection = ({
                         className="btn-ovh-employee-list"
                         data-testid="project-member"
                         onClick={() => {
-                          selectProjectMember(
+                          selectEditProjectMember(
                             currMember.id,
                             currMember.fullName,
                           )
