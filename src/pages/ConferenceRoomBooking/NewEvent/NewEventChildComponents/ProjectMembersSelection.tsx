@@ -89,8 +89,8 @@ const ProjectMembersSelection = ({
     setIsErrorShow(false)
     const newResult = await Promise.all(
       projectMembers.map(async (member) => {
-        const startTimeCopy = addEvent.startTime.split(':')
-        const endTimeCopy = addEvent.endTime.split(':')
+        const startTimeCopy = addEvent?.startTime.split(':')
+        const endTimeCopy = addEvent?.endTime.split(':')
         const prepareObj = {
           attendeeId: member.id,
           attendeeName: member.fullName,

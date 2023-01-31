@@ -404,6 +404,10 @@ const PIPList = React.lazy(
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+
 const ClearnceCerticates = React.lazy(
   () =>
     import(
@@ -895,6 +899,11 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
   },
   {
     path: '/appraisalTemplate',

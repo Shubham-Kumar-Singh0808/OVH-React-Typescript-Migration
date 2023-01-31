@@ -550,6 +550,12 @@ export const bookingListApiConfig: BookingListApi = {
   getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
   getBookingsForSelection:
     apiPrefix + '/meetingRequest/getBookingsForSelection',
+  cancelRoomBooking: apiPrefix + '/meetingRequest/changeMeetingStatus/',
+  editMeeting: apiPrefix + '/meetingRequest/editmeeting',
+  confirmUpdateMeetingRequest:
+    apiPrefix + '/meetingRequest/confirmupdateMeetingRequest',
+  uniqueAttendee:
+    apiPrefix + '/meetingRequest/uniqueAttendeeuniqueAttendeeWithId',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {

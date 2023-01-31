@@ -190,6 +190,7 @@ export type UniqueAttendeeParams = {
   attendeeName: string
   endTime: string
   startTime: string
+  meetingRequestId?: number
 }
 
 export type GetBookedEventsParams = {
