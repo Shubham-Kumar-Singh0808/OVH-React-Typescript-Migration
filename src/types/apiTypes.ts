@@ -766,3 +766,10 @@ export interface AppraisalTemplateApi extends ApiBase {
   activeCycle: string
   getDesignationsUnderCycle: string
 }
+
+export interface ProjectStatusApi extends ApiBase {
+  statusReportLis: string
+  addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
+}

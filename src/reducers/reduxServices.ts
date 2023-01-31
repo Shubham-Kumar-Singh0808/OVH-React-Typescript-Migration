@@ -112,6 +112,7 @@ import { pipListService } from './Performance/PIPList/pipListSlice'
 import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
 import { appraisalTemplateService } from './Performance/AppraisalTemplate/AppraisalTemplateSlice'
+import { projectStatusService } from './ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
 
 export const reduxServices = {
   app: appService,
@@ -228,4 +229,5 @@ export const reduxServices = {
   reviewList: reviewListService,
   KRA: KRAService,
   appraisalTemplate: appraisalTemplateService,
+  projectStatus: projectStatusService,
 }

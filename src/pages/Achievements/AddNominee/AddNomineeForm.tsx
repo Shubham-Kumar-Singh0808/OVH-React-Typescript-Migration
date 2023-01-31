@@ -310,7 +310,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       </CContainer>
       <CContainer className="mt-3 mb-3">
         {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
-          <CContainer key={index} className="mb-5">
+          <CContainer key={index}>
             <CFormLabel data-testid="question-label">
               {index + 1}. {item.questions}
               <span

@@ -102,6 +102,7 @@ import {
   PayrollManagementApi,
   ReviewListApi,
   AppraisalTemplateApi,
+  ProjectStatusApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -929,4 +930,11 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   cycle: apiPrefix + '/appraisal/cycle',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
   getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
+}
+
+export const projectStatusApiConfig: ProjectStatusApi = {
+  statusReportLis: apiPrefix + '/project-mgmt/statusReportList',
+  addStatusReport: apiPrefix + '/project-mgmt/statusReports',
+  deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
+  updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
 }

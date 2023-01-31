@@ -13,6 +13,7 @@ const OInputField = ({
   label,
   name,
   placeholder,
+  autoComplete,
 }: InputField): JSX.Element => {
   const isInvalid = isEmail(value)
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +49,7 @@ const OInputField = ({
             value={value}
             onBlur={handleOnBlurInput}
             onChange={handleOnChangeInput}
+            autoComplete={'off'}
           />
           {inputType === 'email' && isInvalid ? (
             <span style={{ color: 'red' }}>Enter a valid Email address</span>

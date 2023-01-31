@@ -44,9 +44,17 @@ const PeopleTable = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditEmployeeAllocation((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'allocation') {
+      let targetValue = value.replace(/\D/g, '')
+      if (Number(targetValue) > 100) targetValue = '100'
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: targetValue } }
+      })
+    } else {
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const editProjectAllocationButtonHandler = (
@@ -138,7 +146,7 @@ const PeopleTable = (): JSX.Element => {
         <CTableBody>
           {getProjectDetail?.length > 0 &&
             getProjectDetail?.map((project, i) => {
-              const billable = project.billable ? 'yes' : 'No'
+              const billable = project.billable ? 'Yes' : 'No'
               const allocated = project.isAllocated
                 ? 'Allocated'
                 : 'De-Allocated'
@@ -164,6 +172,8 @@ const PeopleTable = (): JSX.Element => {
                           data-testid="template-input"
                           name="allocation"
                           maxLength={3}
+                          max={100}
+                          autoComplete="off"
                           value={editAllocateProject.allocation}
                           onChange={handleEditProjectAllocationHandler}
                         />
