@@ -63,7 +63,7 @@ const ProjectStatusTable = ({
     reduxServices.projectStatus.selectors.projectStatusReport,
   )
 
-  const listSize = useTypedSelector(
+  const projectListSize = useTypedSelector(
     reduxServices.projectStatus.selectors.statusReportListSize,
   )
   const isLoading = useTypedSelector(
@@ -219,11 +219,11 @@ const ProjectStatusTable = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {listSize}</strong>
+              <strong>Total Records: {projectListSize}</strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {projectListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80]}
@@ -231,7 +231,7 @@ const ProjectStatusTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {projectListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"

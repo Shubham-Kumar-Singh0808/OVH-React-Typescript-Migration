@@ -48,10 +48,10 @@ const EditProjectStatus = ({
   )
   const dispatch = useAppDispatch()
   const commonFormatDate = 'l'
-  const handleCurrentWeekStatus = (currentStatus: string) => {
+  const handleEditCurrentWeekStatus = (currentStatus: string) => {
     setEditCurrentWeekStatus(currentStatus)
   }
-  const handleNextWeekStatus = (nextStatus: string) => {
+  const handleEditNextWeekStatus = (nextStatus: string) => {
     setEditNextWeekStatus(nextStatus)
   }
   const { projectId } = useParams<{ projectId: string }>()
@@ -238,7 +238,7 @@ const EditProjectStatus = ({
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleCurrentWeekStatus(editor.getData().trim())
+                  handleEditCurrentWeekStatus(editor.getData().trim())
                 }}
               />
             ) : (
@@ -301,7 +301,7 @@ const EditProjectStatus = ({
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleNextWeekStatus(editor.getData().trim())
+                  handleEditNextWeekStatus(editor.getData().trim())
                 }}
               />
             ) : (
