@@ -18,9 +18,8 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { deviceLocale } from '../../../../utils/helper'
+import { deviceLocale, showIsRequired } from '../../../../utils/helper'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const EmployeePipList = (): JSX.Element => {
   const [selectDate, setSelectDate] = useState<string>('Current Month')
@@ -121,6 +120,21 @@ const EmployeePipList = (): JSX.Element => {
     }
   }, [fromDate, toDate])
 
+  const empFromDateValue = fromDate
+    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  const empToDateValue = toDate
+    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
   return (
     <>
       {toggle === '' && (
@@ -179,7 +193,9 @@ const EmployeePipList = (): JSX.Element => {
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel className="mt-1">
                     From:
-                    <span className={fromDate ? TextWhite : TextDanger}>*</span>
+                    <span className={showIsRequired(fromDate as string)}>
+                      *
+                    </span>
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
@@ -194,15 +210,7 @@ const EmployeePipList = (): JSX.Element => {
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="fromDate"
-                    value={
-                      fromDate
-                        ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-                            year: 'numeric',
-                            month: 'numeric',
-                            day: '2-digit',
-                          })
-                        : ''
-                    }
+                    value={empFromDateValue}
                     onChange={(date: Date) =>
                       setFromDate(moment(date).format(commonFormatDate))
                     }
@@ -211,7 +219,7 @@ const EmployeePipList = (): JSX.Element => {
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel className="mt-1">
                     To:
-                    <span className={toDate ? TextWhite : TextDanger}>*</span>
+                    <span className={showIsRequired(toDate as string)}>*</span>
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
@@ -226,15 +234,7 @@ const EmployeePipList = (): JSX.Element => {
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="toDate"
-                    value={
-                      toDate
-                        ? new Date(toDate).toLocaleDateString(deviceLocale, {
-                            year: 'numeric',
-                            month: 'numeric',
-                            day: '2-digit',
-                          })
-                        : ''
-                    }
+                    value={empToDateValue}
                     onChange={(date: Date) =>
                       setToDate(moment(date).format(commonFormatDate))
                     }
