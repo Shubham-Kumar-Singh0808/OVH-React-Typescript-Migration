@@ -99,7 +99,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeHours"
                   id="startTimeHours"
-                  data-testid="startTimeHours"
+                  data-testid="event-startTimeHours"
                   name="startTimeHours"
                   value={startTime.hours}
                   disabled
@@ -118,7 +118,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMin"
                   id="startTimeMin"
-                  data-testid="startTimeMin"
+                  data-testid="event-startTimeMin"
                   name="startTimeMin"
                   value={startTime.minutes}
                   disabled
@@ -137,7 +137,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMeridian"
                   id="startTimeMeridian"
-                  data-testid="startTimeMeridian"
+                  data-testid="event-startTimeMeridian"
                   name="startTimeMeridian"
                   value={startTime.meridian}
                   disabled
@@ -164,7 +164,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeHours"
                   id="endTimeHours"
-                  data-testid="endTimeHours"
+                  data-testid="event-endTimeHours"
                   name="endTimeHours"
                   value={endTime.hours}
                   disabled
@@ -183,7 +183,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMin"
                   id="endTimeMin"
-                  data-testid="endTimeMin"
+                  data-testid="event-endTimeMin"
                   name="endTimeMin"
                   value={endTime.minutes}
                   disabled
@@ -202,7 +202,7 @@ const EventStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMeridian"
                   id="endTimeMeridian"
-                  data-testid="endTimeMeridian"
+                  data-testid="event-endTimeMeridian"
                   name="endTimeMeridian"
                   value={endTime.meridian}
                   disabled

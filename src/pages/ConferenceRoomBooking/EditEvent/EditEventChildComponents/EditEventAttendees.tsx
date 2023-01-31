@@ -26,25 +26,25 @@ const EditEventAttendees = ({
   deleteAttendeeId: number | undefined
   setDeleteAttendeeId: React.Dispatch<React.SetStateAction<number | undefined>>
 }): JSX.Element => {
-  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+  const [deleteEventAttendeeModalVisible, setDeleteEventAttendeeModalVisible] =
     useState(false)
 
-  const deleteAttendeeSuccessToast = (
+  const deleteToastMessage = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
   )
 
   const dispatch = useAppDispatch()
-  const deleteButtonHandler = (id: number) => {
+  const deleteAttendeeButtonHandler = (id: number) => {
     setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
+    setDeleteEventAttendeeModalVisible(true)
   }
-  const handleDeleteAttendee = () => {
-    const newList = attendeeResponse?.filter(
+  const handleDeleteEventAttendee = () => {
+    const newAttendeeList = attendeeResponse?.filter(
       (attendee) => attendee?.id !== (deleteAttendeeId as number),
     )
-    setAttendeesResponse([...newList])
-    setDeleteAttendeeModalVisible(false)
-    dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
+    setAttendeesResponse([...newAttendeeList])
+    setDeleteEventAttendeeModalVisible(false)
+    dispatch(reduxServices.app.actions.addToast(deleteToastMessage))
     dispatch(reduxServices.app.actions.addToast(undefined))
   }
   return (
@@ -74,8 +74,8 @@ const EditEventAttendees = ({
                     <CButton
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list"
-                      data-testid="delete-btn"
-                      onClick={() => deleteButtonHandler(item.id)}
+                      data-testid="delete-attendee-btn"
+                      onClick={() => deleteAttendeeButtonHandler(item.id)}
                     >
                       <i
                         className="fa fa-trash-o text-white"
@@ -92,13 +92,13 @@ const EditEventAttendees = ({
       <OModal
         alignment="center"
         modalTitle="Delete Attendee"
-        visible={deleteAttendeeModalVisible}
-        setVisible={setDeleteAttendeeModalVisible}
+        visible={deleteEventAttendeeModalVisible}
+        setVisible={setDeleteEventAttendeeModalVisible}
         closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalBodyClass="mt-0"
-        confirmButtonAction={handleDeleteAttendee}
+        confirmButtonAction={handleDeleteEventAttendee}
       >
         <span>Do you really want to delete this Attendee ?</span>
       </OModal>

@@ -218,19 +218,12 @@ const EditEvent = (): JSX.Element => {
     }
   }
   const handleConfirmBtn = async () => {
-    const startTimeSplit = editEvent.startTime.split(':')
-    const timeCheckResult = await dispatch(
-      reduxServices.newEvent.timeCheck(
-        `${editEvent.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
-      ),
-    )
     const newAttendeesList = attendeesResponse?.map(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ({ id, availability }) => {
         return { id, availability }
       },
     )
-    console.log(newAttendeesList)
     const prepareObj = {
       agenda: editEvent?.agenda,
       authorName: editEvent.authorName,
@@ -265,23 +258,21 @@ const EditEvent = (): JSX.Element => {
       toDate: editEvent?.toDate,
       trainerName: editEvent?.trainerName,
     }
-    if (timeCheckResult.payload === true) {
-      const updateEventResult = await dispatch(
-        reduxServices.eventList.updateEvent(prepareObj),
+    const updateEventResult = await dispatch(
+      reduxServices.eventList.updateEvent(prepareObj),
+    )
+    if (
+      reduxServices.eventList.updateEvent.fulfilled.match(updateEventResult)
+    ) {
+      history.push('/eventList')
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Event Updated Successfully"
+          />,
+        ),
       )
-      if (
-        reduxServices.eventList.updateEvent.fulfilled.match(updateEventResult)
-      ) {
-        history.push('/eventList')
-        dispatch(
-          reduxServices.app.actions.addToast(
-            <OToast
-              toastColor="success"
-              toastMessage="Event Updated Successfully"
-            />,
-          ),
-        )
-      }
     }
   }
 
@@ -311,8 +302,8 @@ const EditEvent = (): JSX.Element => {
             <RoomAndLocation
               eventLocations={eventLocations}
               locationRooms={locationRooms}
-              locationValue={editEvent.locationId}
-              roomValue={editEvent.roomId}
+              eventLocationValue={editEvent.locationId}
+              eventRoomValue={editEvent.roomId}
             />
             <ReservedBy eventReservedBy={editEvent?.authorName?.fullName} />
             <CRow className="mt-1 mb-3">
@@ -374,8 +365,8 @@ const EditEvent = (): JSX.Element => {
               </CCol>
             </CRow>
             <FromAndToDate
-              fromDate={editExistingEvent.fromDate}
-              endDate={editExistingEvent.toDate}
+              fromDate={editExistingEvent?.fromDate}
+              endDate={editExistingEvent?.toDate}
             />
             <EventStartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}

@@ -66,15 +66,6 @@ const ProjectMembersSelectionForEvent = ({
     />
   )
 
-  // const handleConfirmDeleteAttendee = () => {
-  //   const newList = attendeesList.filter(
-  //     (attendee) => attendee.id !== (deleteAttendeeId as number),
-  //   )
-  //   setAttendeesList([...newList])
-  //   setDeleteAttendeeModalVisible(false)
-  //   dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
-  //   dispatch(reduxServices.app.actions.addToast(undefined))
-  // }
   const handleConfirmDeleteAttendee = () => {
     const newList = attendeeResponse.filter(
       (attendee) => attendee.id !== (deleteAttendeeId as number),

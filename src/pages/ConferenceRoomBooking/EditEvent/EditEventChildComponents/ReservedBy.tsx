@@ -16,10 +16,10 @@ const ReservedBy = ({
       </CFormLabel>
       <CCol sm={6}>
         <CFormInput
-          data-testid="kra-name"
+          data-testid="event-reserved-by"
           autoComplete="off"
           type="text"
-          name="kraName"
+          name="reservedBy"
           disabled
           value={eventReservedBy}
         />

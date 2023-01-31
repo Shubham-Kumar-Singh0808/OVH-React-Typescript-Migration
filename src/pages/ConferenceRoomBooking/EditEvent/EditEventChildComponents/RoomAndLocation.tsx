@@ -4,16 +4,15 @@ import { getAllMeetingLocations } from '../../../../types/ConferenceRoomBooking/
 import { RoomsByLocation } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const RoomAndLocation = ({
-  locationValue,
-  roomValue,
+  eventLocationValue,
+  eventRoomValue,
   eventLocations,
   locationRooms,
 }: {
   eventLocations: getAllMeetingLocations[]
-
   locationRooms: RoomsByLocation[]
-  locationValue: number
-  roomValue: number
+  eventLocationValue: number
+  eventRoomValue: number
 }): JSX.Element => {
   return (
     <>
@@ -25,9 +24,9 @@ const RoomAndLocation = ({
           <CFormSelect
             aria-label="location"
             id="location"
-            data-testid="locationSelect"
+            data-testid="event-locationSelect"
             name="locationId"
-            value={locationValue}
+            value={eventLocationValue}
             disabled
           >
             <option value={''}>Select Location</option>
@@ -47,9 +46,9 @@ const RoomAndLocation = ({
           <CFormSelect
             aria-label="room"
             id="room"
-            data-testid="roomSelect"
+            data-testid="event-roomSelect"
             name="roomId"
-            value={roomValue}
+            value={eventRoomValue}
             disabled
           >
             <option value={''}>Select Room</option>
