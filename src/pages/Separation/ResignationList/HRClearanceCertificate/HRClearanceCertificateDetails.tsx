@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const HRClearanceCertificateDetails = (): JSX.Element => {
   const [isHrCCDetailsEdit, setIsHrCCDetailsEdit] = useState<boolean>(false)
-  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>()
+  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
   const initialHrCCDetails = {} as UpdateClearanceDetails
   const [editHrCCDetails, setEditHrCCDetails] = useState(initialHrCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +35,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
     setIsHrCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditHrCCDetails(updateClearanceDetails)
+    setIsEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditHrCCDetailsHandler = (
@@ -213,7 +214,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditActiveValue as unknown as boolean}
+                    checked={isEditActiveValue}
                     onChange={handleEditHrCCDetailsHandler}
                   />
                   <CFormCheck
