@@ -135,6 +135,28 @@ const EmployeePipList = (): JSX.Element => {
       })
     : ''
 
+  const pipListObject = {
+    dateSelection: selectDate,
+    from: (fromDate as string) || '',
+    multiSearch: searchInput as string,
+    searchByAdded: searchByAdded as boolean,
+    searchByEmployee: searchByEmployee as boolean,
+    selectionStatus: selectedEmployeePipStatus,
+    to: (toDate as string) || '',
+    endIndex: pageSize * currentPage,
+    startIndex: pageSize * (currentPage - 1),
+  }
+
+  const viewButtonHandler = () => {
+    dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
+  }
+
+  const clearButtonHandler = () => {
+    setSelectDate('Current Month')
+    setFromDate('')
+    setToDate('')
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -165,8 +187,8 @@ const EmployeePipList = (): JSX.Element => {
                 <option value="This Week">This Week</option>
                 <option value="Last Week">Last Week</option>
                 <option value="Last Month">Last Month</option>
-                <option value="Custom">Custom</option>
                 <option value="Current Month">Current Month</option>
+                <option value="Custom">Custom</option>
               </CFormSelect>
             </CCol>
             <CCol sm={12} md={9}>
@@ -202,13 +224,13 @@ const EmployeePipList = (): JSX.Element => {
                   <DatePicker
                     id="fromDate"
                     data-testid="leaveApplyFromDate"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                     showMonthDropdown
                     showYearDropdown
                     autoComplete="off"
                     dropdownMode="select"
                     dateFormat="dd/mm/yy"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     name="fromDate"
                     value={empFromDateValue}
                     onChange={(date: Date) =>
@@ -226,13 +248,13 @@ const EmployeePipList = (): JSX.Element => {
                   <DatePicker
                     id="toDate"
                     data-testid="leaveApprovalFromDate"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                     showMonthDropdown
                     autoComplete="off"
                     showYearDropdown
                     dropdownMode="select"
                     dateFormat="dd/mm/yy"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     name="toDate"
                     value={empToDateValue}
                     onChange={(date: Date) =>
@@ -250,7 +272,29 @@ const EmployeePipList = (): JSX.Element => {
               <></>
             )}
           </CRow>
-
+          <CRow className="mt-5 mb-4">
+            <CCol sm={9} md={{ offset: 3 }}>
+              <CButton
+                className="cursor-pointer"
+                color="success btn-ovh me-1"
+                data-testid="view-btn"
+                onClick={viewButtonHandler}
+                disabled={
+                  selectDate === 'Custom' && !(fromDate !== '' && toDate !== '')
+                }
+              >
+                View
+              </CButton>
+              <CButton
+                className="cursor-pointer"
+                disabled={false}
+                color="warning btn-ovh me-1"
+                onClick={clearButtonHandler}
+              >
+                Clear
+              </CButton>
+            </CCol>
+          </CRow>
           <CRow>
             <label className="search_emp d-flex justify-content-end">
               <CFormCheck
