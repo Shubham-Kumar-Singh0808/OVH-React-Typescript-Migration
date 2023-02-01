@@ -23,6 +23,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { emptyString } from '../../../Achievements/AchievementConstants'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -237,7 +238,18 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Employee Name:
-              <span className={employeeName ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  employeeName === undefined ||
+                  employeeName === emptyString ||
+                  employeeName.trim().length === 0 ||
+                  employeeName
+                    ? TextDanger
+                    : TextWhite
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <Autocomplete
@@ -293,6 +305,7 @@ const AddEmployeePipList = ({
             <CCol sm={2}>
               <DatePicker
                 id="startDate"
+                className="form-control form-control-sm sh-date-picker"
                 showMonthDropdown
                 showYearDropdown
                 autoComplete="off"
@@ -323,6 +336,7 @@ const AddEmployeePipList = ({
             <CCol sm={2}>
               <DatePicker
                 id="endDate"
+                className="form-control form-control-sm sh-date-picker"
                 showMonthDropdown
                 showYearDropdown
                 autoComplete="off"
