@@ -70,7 +70,7 @@ const AdminClearanceDetails = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: adminClearanceDetails[0]?.employeeId,
         employeeName: adminClearanceDetails[0]?.employeeName,
-        isDue: isEditAdminActiveValue as unknown as boolean,
+        isDue: isEditAdminActiveValue,
         seperationEmpId: adminClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: adminClearanceDetails[0]?.seperationEmpName,
         seperationId: adminClearanceDetails[0]?.seperationId,
