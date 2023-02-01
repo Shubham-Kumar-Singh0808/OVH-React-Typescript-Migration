@@ -7,29 +7,78 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import moment from 'moment'
+import Multiselect from 'multiselect-react-dropdown'
+import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
+import ReactDatePicker from 'react-datepicker'
 import OCard from '../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../constant/ClassName'
 import { reduxServices } from '../../reducers/reduxServices'
-import { useTypedSelector } from '../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
+import { GetAllEmployeesNames } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { deviceLocale, showIsRequired } from '../../utils/helper'
 
 const AddNewAudit = (): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'newAuditEvent',
     className: 'col-form-label category-label',
   }
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
+  const commonFormatDate = 'L'
+  const deviceLocale: string =
+    navigator.languages && navigator.languages.length
+      ? navigator.languages[0]
+      : navigator.language
+  const dispatch = useAppDispatch()
   const formLabel = 'col-sm-3 col-form-label text-end'
   const [projectNameAutoCompleteTarget, setProjectNameAutoCompleteTarget] =
     useState<string>('')
+  const [addAuditorName, setAddAuditorName] = useState<GetAllEmployeesNames[]>(
+    [],
+  )
+  const [auditDate, setAuditDate] = useState<string>()
   const projects = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
+  const allEmployeesProfiles = useTypedSelector(
+    reduxServices.newEvent.selectors.allEmployeesProfiles,
+  )
+
+  useEffect(() => {
+    if (projectNameAutoCompleteTarget) {
+      dispatch(
+        reduxServices.allocateEmployee.getAllProjectSearchData(
+          projectNameAutoCompleteTarget,
+        ),
+      )
+    }
+  }, [projectNameAutoCompleteTarget])
+
+  useEffect(() => {
+    dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
+  }, [dispatch])
+
   const projectsOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProjectNameAutoCompleteTarget(e.target.value)
   }
   const onHandleSelectProjectName = (projectName: string) => {
     setProjectNameAutoCompleteTarget(projectName)
+  }
+
+  const handleMultiSelect = (list: GetAllEmployeesNames[]) => {
+    setAddAuditorName(list)
+  }
+
+  const handleOnRemoveSelectedOption = (
+    selectedList: GetAllEmployeesNames[],
+  ) => {
+    setAddAuditorName(selectedList)
   }
 
   return (
@@ -162,22 +211,89 @@ const AddNewAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Post Graduation:
+              Auditors:
+              <span className={addAuditorName?.length ? TextWhite : TextDanger}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <Multiselect
                 className="ovh-multiselect"
-                options={getPgAndGraduationLookUpItems?.pgDetails || []}
-                displayValue="label"
-                selectedValues={addQualification.pgLookUp}
-                onSelect={(list: PostGraduationAndGraduationLookUp[]) =>
-                  handleMultiSelect(list, 'pgLookUp')
+                data-testid="employee-option"
+                options={
+                  allEmployeesProfiles?.map((employee) => employee.fullName) ||
+                  []
                 }
-                onRemove={(selectedList: PostGraduationAndGraduationLookUp[]) =>
-                  handleOnRemoveSelectedOption(selectedList, 'pgLookUp')
+                displayValue="fullName"
+                placeholder={addAuditorName?.length ? '' : 'Employees Name'}
+                selectedValues={addAuditorName}
+                onSelect={(list: GetAllEmployeesNames[]) =>
+                  handleMultiSelect(list)
                 }
+                onRemove={(selectedList: GetAllEmployeesNames[]) =>
+                  handleOnRemoveSelectedOption(selectedList)
+                }
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Auditees:
+              <span className={addAuditorName?.length ? TextWhite : TextDanger}>
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <Multiselect
+                className="ovh-multiselect"
+                data-testid="employee-option"
+                options={
+                  allEmployeesProfiles?.map((employee) => employee) || []
+                }
+                displayValue="fullName"
+                placeholder={addAuditorName?.length ? '' : 'Employees Name'}
+                selectedValues={addAuditorName}
+                onSelect={(list: GetAllEmployeesNames[]) =>
+                  handleMultiSelect(list)
+                }
+                onRemove={(selectedList: GetAllEmployeesNames[]) =>
+                  handleOnRemoveSelectedOption(selectedList)
+                }
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+            <CFormLabel className="col-sm-3 col-form-label text-end">
+              Audit Date:
+              <span className={showIsRequired(auditDate as string)}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <ReactDatePicker
+                id="holiday-date"
+                data-testid="holidayDateInput"
+                autoComplete="off"
+                className="form-control form-control-sm sh-date-picker"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                placeholderText="Holiday Date"
+                name="holidayDate"
+                minDate={new Date()}
+                value={
+                  auditDate
+                    ? new Date(auditDate).toLocaleDateString(deviceLocale, {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                      })
+                    : ''
+                }
+                onChange={(date: Date) => {
+                  setAuditDate(moment(date).format(commonFormatDate))
+                }}
               />
             </CCol>
           </CRow>
