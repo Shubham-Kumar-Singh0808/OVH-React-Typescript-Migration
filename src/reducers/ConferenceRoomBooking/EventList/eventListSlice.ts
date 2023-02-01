@@ -5,11 +5,13 @@ import eventListApi from '../../../middleware/api/ConferenceRoomBooking/EventLis
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  EditExistingEventDetails,
   Event,
   EventListApiProps,
   EventListSliceState,
   FeedbackForm,
   FeedbackFormApiProps,
+  UpdateEventDetails,
   UploadFeedbackFormInterface,
 } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 
@@ -74,6 +76,43 @@ const uploadFeedbackForm = createAsyncThunk<
   },
 )
 
+const editEvent = createAsyncThunk<
+  EditExistingEventDetails | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('eventList/editEvent', async (eventId: number, thunkApi) => {
+  try {
+    return await eventListApi.editEvent(eventId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const updateEvent = createAsyncThunk<
+  number | undefined,
+  UpdateEventDetails,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'conferenceRoomBooking/updateEvent',
+  async (updateEventDetails: UpdateEventDetails, thunkApi) => {
+    try {
+      return await eventListApi.updateEvent(updateEventDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialEventListState: EventListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -82,6 +121,8 @@ const initialEventListState: EventListSliceState = {
   listSize: 0,
   feedbackFormDetails: [],
   feedbackFormListSize: 0,
+  editExistingEventData: {} as EditExistingEventDetails,
+  updateEventData: {} as UpdateEventDetails,
 }
 const eventListSlice = createSlice({
   name: 'eventList',
@@ -103,8 +144,16 @@ const eventListSlice = createSlice({
         state.feedbackFormDetails = action.payload.list
         state.feedbackFormListSize = action.payload.size
       })
+      .addCase(editEvent.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editExistingEventData = action.payload as EditExistingEventDetails
+      })
       .addMatcher(
-        isAnyOf(cancelEvent.fulfilled, uploadFeedbackForm.fulfilled),
+        isAnyOf(
+          cancelEvent.fulfilled,
+          uploadFeedbackForm.fulfilled,
+          updateEvent.fulfilled,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -115,6 +164,7 @@ const eventListSlice = createSlice({
           cancelEvent.pending,
           getFeedbackFormList.pending,
           uploadFeedbackForm.pending,
+          editEvent.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -132,12 +182,16 @@ const feedbackForms = (state: RootState): FeedbackForm[] =>
   state.eventList.feedbackFormDetails
 const feedbackFormListSize = (state: RootState): number =>
   state.eventList.feedbackFormListSize
+const editExistingEventData = (state: RootState): EditExistingEventDetails =>
+  state.eventList.editExistingEventData
 
 export const eventListThunk = {
   getAllEvents,
   cancelEvent,
   getFeedbackFormList,
   uploadFeedbackForm,
+  editEvent,
+  updateEvent,
 }
 
 export const eventListSelectors = {
@@ -147,6 +201,7 @@ export const eventListSelectors = {
   selectedMonth,
   feedbackForms,
   feedbackFormListSize,
+  editExistingEventData,
 }
 
 export const eventListService = {

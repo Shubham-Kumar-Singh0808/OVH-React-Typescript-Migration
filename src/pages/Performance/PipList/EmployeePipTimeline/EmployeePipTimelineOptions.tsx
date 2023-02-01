@@ -104,7 +104,13 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         </CFormLabel>
                         {isTicketPrevValue(pipDetails.oldRemarks)}
                         &nbsp;
-                        {pipDetails.remarks}
+                        <p>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: pipDetails.remarks,
+                            }}
+                          />
+                        </p>
                       </div>
                     </>
                   ) : (
@@ -118,7 +124,13 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         </CFormLabel>
                         {isTicketPrevValue(pipDetails.oldImprovement)}
                         &nbsp;
-                        {pipDetails.improvement}
+                        <p>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: pipDetails.improvement,
+                            }}
+                          />
+                        </p>
                       </div>
                     </>
                   ) : (

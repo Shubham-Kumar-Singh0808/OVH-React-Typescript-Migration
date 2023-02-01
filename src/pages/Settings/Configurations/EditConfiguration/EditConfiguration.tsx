@@ -92,6 +92,10 @@ const EditConfiguration = (): JSX.Element => {
       setCycle((values) => {
         return { ...values, ...{ [name]: Number(servicePeriodDays) } }
       })
+    } else {
+      setCycle((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
     }
   }
 
@@ -211,16 +215,18 @@ const EditConfiguration = (): JSX.Element => {
             </CCol>
           </CRow>
           <CRow className="mt-3 ">
-            <CFormLabel {...dynamicFormLabelProps('editReviewType', formLabel)}>
+            <CFormLabel {...dynamicFormLabelProps('appraisalType', formLabel)}>
               Review Type:
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
-                id="editReviewType"
+                id="appraisalType"
                 data-testid="form-select1"
                 size="sm"
                 aria-label="editReviewType"
-                name="editReviewType"
+                name="appraisalType"
+                value={cycle.appraisalType}
+                onChange={onChangeInputHandler}
               >
                 <option>Monthly</option>
                 <option>Annual</option>

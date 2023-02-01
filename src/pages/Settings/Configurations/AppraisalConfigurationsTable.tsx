@@ -89,6 +89,10 @@ const AppraisalConfigurationsTable = ({
     return []
   }, [appraisalCycle])
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const totalRecords = appraisalCycle?.length
     ? `Total Records: ${appraisalCycleListSize}`
     : `No Records found...`
@@ -128,7 +132,9 @@ const AppraisalConfigurationsTable = ({
                   : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{appraisalCycle.name}</CTableDataCell>
                   <CTableDataCell>
                     {appraisalCycle.appraisalType}

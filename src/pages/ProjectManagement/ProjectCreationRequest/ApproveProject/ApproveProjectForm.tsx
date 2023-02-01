@@ -383,6 +383,7 @@ const ApproveProjectForm = (): JSX.Element => {
           name={'customerContactName'}
           placeholder={'Name'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
         <OInputField
           onChangeHandler={handleProjectCustomerEmail}
@@ -393,6 +394,7 @@ const ApproveProjectForm = (): JSX.Element => {
           name={'customerEmail'}
           placeholder={'Email'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
         <OInputField
           onChangeHandler={handleProjectBillingPerson}
@@ -402,6 +404,7 @@ const ApproveProjectForm = (): JSX.Element => {
           name={'billingContactPerson'}
           placeholder={'Name'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
         <OInputField
           onChangeHandler={handleProjectBillingPersonEmail}
@@ -412,6 +415,7 @@ const ApproveProjectForm = (): JSX.Element => {
           name={'billingContactPersonEmail'}
           placeholder={'Email Id'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
         <CRow className="mb-3">
           <CFormLabel

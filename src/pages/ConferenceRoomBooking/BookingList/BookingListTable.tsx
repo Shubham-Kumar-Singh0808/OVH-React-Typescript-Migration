@@ -13,20 +13,37 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { GetBookingsForSelection } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
-const BookingListTable = (): JSX.Element => {
+const BookingListTable = ({
+  location,
+  room,
+  meetingStatus,
+  selectDateOptions,
+  selectDate,
+}: {
+  location: string
+  room: string
+  meetingStatus: string
+  selectDateOptions: string
+  selectDate: string
+}): JSX.Element => {
   const [isAgendaModalVisible, setIsAgendaModalVisible] =
     useState<boolean>(false)
+  const [toCancelBookingId, setToCancelBookingId] = useState(0)
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [modalAgenda, setModalAgenda] = useState({} as GetBookingsForSelection)
   const BookingsForSelection = useTypedSelector(
     reduxServices.bookingList.selectors.bookingsForSelection,
@@ -41,7 +58,7 @@ const BookingListTable = (): JSX.Element => {
   const pageSizeFromState = useTypedSelector(
     reduxServices.bookingList.selectors.pageSizeFromState,
   )
-
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -85,6 +102,50 @@ const BookingListTable = (): JSX.Element => {
       )
     }
     return <></>
+  }
+
+  const handleShowCancelModal = (visaId: number) => {
+    setToCancelBookingId(visaId)
+    setIsCancelModalVisible(true)
+  }
+
+  const handleConfirmCancelBookingDetails = async () => {
+    setIsCancelModalVisible(false)
+    const cancelBookingResultAction = await dispatch(
+      reduxServices.bookingList.cancelRoomBooking(toCancelBookingId),
+    )
+    if (
+      reduxServices.bookingList.cancelRoomBooking.fulfilled.match(
+        cancelBookingResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.bookingList.getBookingsForSelection({
+          location: Number(location),
+          meetingStatus,
+          room,
+          status: selectDate
+            ? new Date(selectDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '' || selectDateOptions,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Meeting status updated Successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const editButtonHandler = (id: number) => {
+    dispatch(reduxServices.bookingList.editMeetingRequest(id))
   }
 
   return (
@@ -144,13 +205,19 @@ const BookingListTable = (): JSX.Element => {
                   <CTableDataCell scope="row">
                     {bookingItem.isAuthorisedUser ? (
                       <>
-                        <CButton color="info" className="btn-ovh me-2">
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-
+                        <Link to={`/MeetingRequestEdit/${bookingItem.id}`}>
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            onClick={() => editButtonHandler(bookingItem.id)}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </Link>
                         <CButton
                           color="btn btn-warning"
                           className="btn-ovh me-2"
+                          onClick={() => handleShowCancelModal(bookingItem.id)}
                         >
                           <i
                             className="fa fa-times text-white"
@@ -275,6 +342,17 @@ const BookingListTable = (): JSX.Element => {
             )}
           </p>
         </>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isCancelModalVisible}
+        setVisible={setIsCancelModalVisible}
+        modalHeaderClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCancelBookingDetails}
+      >
+        {`Do you really want to cancel this Meeting ?`}
       </OModal>
     </>
   )

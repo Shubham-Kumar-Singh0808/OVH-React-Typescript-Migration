@@ -111,9 +111,9 @@ const RoomListTable = ({
             currentPageItems?.length > 0 &&
             currentPageItems?.map((room, index) => {
               return (
-                <CTableRow key={getItemNumber(index)}>
-                  <CTableDataCell key={getItemNumber(index)}>
-                    {index + 1}
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
                   </CTableDataCell>
                   <CTableDataCell>{room.locationName}</CTableDataCell>
                   <CTableDataCell>{room.roomName}</CTableDataCell>

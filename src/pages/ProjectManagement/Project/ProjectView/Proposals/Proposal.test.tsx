@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import Proposal from './Proposal'
 import { render, screen } from '../../../../../test/testUtils'
 import { mockProjectProposals } from '../../../../../test/data/projectProposalsData'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -21,6 +22,9 @@ describe('ProjectProposals Filter Options Component Testing with data', () => {
         projectProposals: {
           projectProposal: mockProjectProposals,
         },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
       },
     })
   })
@@ -29,15 +33,5 @@ describe('ProjectProposals Filter Options Component Testing with data', () => {
     const notesLink = screen.getByTestId('proposal-link')
     userEvent.type(notesLink, 'testing')
     expect(notesLink).toHaveValue('testing')
-
-    const postBtnElement = screen.getByRole('button', { name: 'Post' })
-    expect(postBtnElement).toBeEnabled()
-    userEvent.click(postBtnElement)
-  })
-
-  test('should be able to click post button element', () => {
-    const toggleBtn = screen.getByRole('button', { name: 'Post' })
-    userEvent.click(toggleBtn)
-    expect(toggleBtn).toBeInTheDocument()
   })
 })

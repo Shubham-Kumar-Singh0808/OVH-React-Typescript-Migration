@@ -102,6 +102,7 @@ import {
   PayrollManagementApi,
   ReviewListApi,
   AppraisalTemplateApi,
+  ProjectStatusApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -550,6 +551,12 @@ export const bookingListApiConfig: BookingListApi = {
   getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
   getBookingsForSelection:
     apiPrefix + '/meetingRequest/getBookingsForSelection',
+  cancelRoomBooking: apiPrefix + '/meetingRequest/changeMeetingStatus/',
+  editMeeting: apiPrefix + '/meetingRequest/editmeeting',
+  confirmUpdateMeetingRequest:
+    apiPrefix + '/meetingRequest/confirmupdateMeetingRequest',
+  uniqueAttendee:
+    apiPrefix + '/meetingRequest/uniqueAttendeeuniqueAttendeeWithId',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {
@@ -587,6 +594,8 @@ export const eventListApiConfig: EventListApi = {
   downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
   uploadFeedbackForm:
     apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
+  editEvent: apiPrefix + '/meetingRequest/editmeeting',
+  updateEvent: apiPrefix + '/meetingRequest/updateEvent',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {
@@ -921,4 +930,11 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   cycle: apiPrefix + '/appraisal/cycle',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
   getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
+}
+
+export const projectStatusApiConfig: ProjectStatusApi = {
+  statusReportLis: apiPrefix + '/project-mgmt/statusReportList',
+  addStatusReport: apiPrefix + '/project-mgmt/statusReports',
+  deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
+  updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
 }
