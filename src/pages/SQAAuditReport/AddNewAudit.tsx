@@ -12,6 +12,7 @@ import Multiselect from 'multiselect-react-dropdown'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
+import AuditStartTimeEndTime from './AuditStartTimeEndTime'
 import OCard from '../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../constant/ClassName'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -37,6 +38,7 @@ const AddNewAudit = (): JSX.Element => {
       : navigator.language
   const dispatch = useAppDispatch()
   const formLabel = 'col-sm-3 col-form-label text-end'
+  const [addAudit, setAddAudit] = useState<>()
   const [projectNameAutoCompleteTarget, setProjectNameAutoCompleteTarget] =
     useState<string>('')
   const [addAuditorName, setAddAuditorName] = useState<GetAllEmployeesNames[]>(
@@ -79,6 +81,10 @@ const AddNewAudit = (): JSX.Element => {
     selectedList: GetAllEmployeesNames[],
   ) => {
     setAddAuditorName(selectedList)
+  }
+
+  const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setAddEvent({ ...addEvent, startTime: val1, endTime: val2 })
   }
 
   return (
@@ -297,6 +303,9 @@ const AddNewAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
+          <AuditStartTimeEndTime
+            onSelectStartAndEndTime={onSelectStartAndEndTime}
+          />
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
