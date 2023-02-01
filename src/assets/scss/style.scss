@@ -83,5 +83,10 @@ $enable-rtl: true; /* stylelint-disable-line scss/dollar-variable-default */
 @import './pages/finance/employeeaccounts/employeeaccounts';
 
 @import './pages/finance/itdeclarationlist/add-investment';
+@import './pages/finance/payrollmanagement/viewaction';
+
 @import './pages/finance/itdeclarationlist/it-declarationform';
 @import './pages/performance/my-review/my-review';
+@import './pages/performance/reviewlist//review-list';
+@import './pages/finance/payrollmanagement/payrollmanagement';
+@import './pages/performance/piplist/pip-list';

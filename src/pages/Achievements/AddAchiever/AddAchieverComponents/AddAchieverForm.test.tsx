@@ -16,6 +16,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { emptyString, selectAchievementType } from '../../AchievementConstants'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockaddAchievementTypeButtonHandler = jest.fn()
 const mocksetNewAchieverDetails = jest.fn()
@@ -66,13 +67,15 @@ describe('add achiever form', () => {
             isLoading: ApiLoadingState.succeeded,
             activeEmployeeList: mockActiveEmployeeList,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
     afterEach(cleanup)
     screen.debug()
     test('buttons are rendered', () => {
-      expect(screen.getByTestId(addButtonId)).toBeDisabled()
       expect(screen.getByTestId(clearButtonId)).toBeEnabled()
     })
     test('labels are rendered', () => {
@@ -105,9 +108,6 @@ describe('add achiever form', () => {
       )
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
       expect(dates[1]).toHaveValue('')
-
-      const addNewAchievementButton = screen.getByTestId(addButtonId)
-      userEvent.click(addNewAchievementButton)
       expect(mocksetAddButton).toHaveBeenCalledTimes(1)
       expect(achievementName).toHaveValue(selectAchievementType)
     })

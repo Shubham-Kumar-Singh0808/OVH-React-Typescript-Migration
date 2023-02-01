@@ -69,10 +69,13 @@ export type ITDeclarationFormSliceState = {
   isLoading: LoadingState
   error: ValidationError
   grandTotal: number
+  formSectionData: FormSectionsDTO[]
 }
 
 export type itDeclarationFormSectionList = {
   formInvestmentDTO: Investment[]
+  isOld?: boolean
+  itSectionsId?: null
   sectionId: number
   sectionName: string
   sectionLimit: number

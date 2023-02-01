@@ -1,6 +1,7 @@
 import { CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { SelectProps } from '../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
+import { showIsRequired } from '../../utils/helper'
 
 const OSelect = ({
   dynamicFormLabelProps,
@@ -10,6 +11,7 @@ const OSelect = ({
   name,
   label,
   placeHolder,
+  isRequired,
 }: SelectProps): JSX.Element => {
   const onChangeHandler = (e: { target: { value: string } }) => {
     if (setValue == null) return
@@ -28,6 +30,9 @@ const OSelect = ({
           )}
         >
           {label}:
+          {isRequired && (
+            <span className={showIsRequired(selectedValue)}>*</span>
+          )}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect

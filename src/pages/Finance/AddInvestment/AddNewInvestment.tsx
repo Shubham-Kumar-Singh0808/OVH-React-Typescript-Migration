@@ -93,9 +93,16 @@ const AddNewInvestment = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setAddNewInvestment((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'investmentName') {
+      const invNameVal = value.replace(/^\s*/, '')
+      setAddNewInvestment((prevState) => {
+        return { ...prevState, ...{ [name]: invNameVal } }
+      })
+    } else {
+      setAddNewInvestment((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {

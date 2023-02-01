@@ -96,10 +96,21 @@ import resignationListReducer from './reducers/Separation/ResignationList/resign
 import employeeAccountsReducer from './reducers/Finance/EmployeeAccounts/employeeAccountsSlice'
 import itDeclarationListReducer from './reducers/Finance/ITDeclarationList/itDeclarationListSlice'
 import investmentCheckListReducer from './reducers/Finance/InvestmentCheckList/investmentCheckListSlice'
+import payrollManagementReducer from './reducers/Finance/PayrollManagement/PayrollManagementSlice'
 import achieverListReducer from './reducers/Achievements/AchieverList/AchieverListSlice'
 import commonAchievementsReducer from './reducers/Achievements/CommonAchievementsSlice'
 import projectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import addProjectCreationRequestReducer from './reducers/ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import addAchieverReducer from './reducers/Achievements/AddAchiever/AddAchieverSlice'
+import projectViewDetailsReducer from './reducers/ProjectManagement/Project/ProjectView/projectViewSlice'
+import projectTimeLineReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
+import projectChangeRequestReducer from './reducers/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import projectMileStoneReducer from './reducers/ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
+import projectInvoicesReducer from './reducers/ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
+import projectTailoringReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
+import projectTimeSheetReducer from './reducers/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import projectProposalsReducer from './reducers/ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
+import projectNotesReducer from './reducers/ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
 import initiateCycleReducer from './reducers/Settings/InitiateCycle/initiateCycleSlice'
 import MyKRAsReducer from './reducers/Performance/MyKRAs/myKRAsSlice'
 import nomineeListReducer from './reducers/Achievements/NomineeList/NomineeListSlice'
@@ -107,7 +118,10 @@ import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlic
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
+import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
+import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/AppraisalTemplateSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -204,18 +218,32 @@ export const allReducers = {
   employeeAccounts: employeeAccountsReducer,
   itDeclarationList: itDeclarationListReducer,
   investmentCheckList: investmentCheckListReducer,
+  payrollManagement: payrollManagementReducer,
   achieverList: achieverListReducer,
   commonAchievements: commonAchievementsReducer,
   addAchiever: addAchieverReducer,
   nomineeList: nomineeListReducer,
   addNominee: addNomineeReducer,
   projectCreationRequest: projectCreationRequestReducer,
+  projectViewDetails: projectViewDetailsReducer,
+  projectTimeLine: projectTimeLineReducer,
+  projectChangeRequest: projectChangeRequestReducer,
+  projectMileStone: projectMileStoneReducer,
+  projectInvoices: projectInvoicesReducer,
+  projectTailoring: projectTailoringReducer,
+  projectTimeSheet: projectTimeSheetReducer,
+  projectProposals: projectProposalsReducer,
+  projectNotes: projectNotesReducer,
+  addProjectCreationRequest: addProjectCreationRequestReducer,
   initiateCycle: initiateCycleReducer,
   myKRAs: MyKRAsReducer,
   myReview: myReviewReducer,
   leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  pipList: pipListReducer,
+  reviewList: reviewListReducer,
   KRA: KRAReducer,
+  appraisalTemplate: appraisalTemplateReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

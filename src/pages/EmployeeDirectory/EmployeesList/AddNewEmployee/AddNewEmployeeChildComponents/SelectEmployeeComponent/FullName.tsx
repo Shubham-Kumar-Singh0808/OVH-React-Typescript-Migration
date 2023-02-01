@@ -15,8 +15,8 @@ const FullName = ({
 }: FullNameChangeHandlerProp): JSX.Element => {
   const isFullNameRequired =
     showIsRequired(firstNameValue) === TextDanger ||
-    showIsRequired(lastNameValue) === TextDanger ||
-    showIsRequired(middleNameValue) === TextDanger
+    showIsRequired(middleNameValue) === TextDanger ||
+    showIsRequired(lastNameValue) === TextDanger
   return (
     <>
       <CRow className="mb-3">
@@ -34,7 +34,7 @@ const FullName = ({
           <CRow>
             <CCol sm={3}>
               <CFormInput
-                id="fullname"
+                id="firstname"
                 size="sm"
                 type="text"
                 name="firstname"

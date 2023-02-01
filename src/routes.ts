@@ -223,6 +223,14 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -260,6 +268,10 @@ const ResignationFeedBackForm = React.lazy(
     import(
       './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
     ),
+)
+
+const ReviewList = React.lazy(
+  () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
 )
 
 const ResignationManagerClearanceCertificate = React.lazy(
@@ -330,6 +342,13 @@ const AddSection = React.lazy(
   () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
 )
 
+const ViewProjectDetails = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/ProjectViewLandingPage/ProjectView'
+    ),
+)
+
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
@@ -362,6 +381,9 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
 const LeadershipEnrollmentList = React.lazy(
   () =>
     import(
@@ -376,7 +398,26 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/EmployeePipList'),
+)
+
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
+    ),
+)
+
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
 
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -765,6 +806,11 @@ const routes = [
     component: InvestmentCheckList,
   },
   {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
+  },
+  {
     path: '/achievementList',
     name: 'Achievements List',
     component: AchieverList,
@@ -788,6 +834,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/viewProject/:projectId',
+    name: 'View Project',
+    component: ViewProjectDetails,
   },
   {
     path: '/initiateCycle',
@@ -825,9 +876,39 @@ const routes = [
     component: LeadershipEnrollmentForm,
   },
   {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
+  },
+  {
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
+  },
+  {
+    path: '/listofAppraisal',
+    name: 'KRA',
+    component: ReviewList,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: '/appraisalTemplate',
+    component: AppraisalTemplate,
   },
 ]
 

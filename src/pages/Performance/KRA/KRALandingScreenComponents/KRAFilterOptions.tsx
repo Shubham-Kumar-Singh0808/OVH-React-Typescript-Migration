@@ -41,7 +41,12 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
     (state) => state.KRA.empDepartments,
   )
   const designationList = useTypedSelector((state) => state.KRA.designations)
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddKRA = userAccessToFeatures?.find(
+    (feature) => feature.name === 'KRA',
+  )
   useEffect(() => {
     if (selectedDepartment !== selectDepartment) {
       dispatch(
@@ -191,16 +196,18 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
               </CCol>
             </CRow>
           </CCol>
-          <CCol sm={3} className="px-0 text-end">
-            <CButton
-              color="info"
-              className="btn-ovh"
-              data-testid="add-kra-screen-btn"
-              onClick={addKRAButtonHandler}
-            >
-              +Add KRA
-            </CButton>
-          </CCol>
+          {userAccessToAddKRA?.createaccess && (
+            <CCol sm={3} className="px-0 text-end">
+              <CButton
+                color="info"
+                className="btn-ovh"
+                data-testid="add-kra-screen-btn"
+                onClick={addKRAButtonHandler}
+              >
+                +Add KRA
+              </CButton>
+            </CCol>
+          )}
         </CRow>
       </CContainer>
       <CContainer>
