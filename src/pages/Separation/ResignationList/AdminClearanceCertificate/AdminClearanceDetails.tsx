@@ -19,7 +19,7 @@ const AdminClearanceDetails = (): JSX.Element => {
   const [isAdminCCDetailsEdit, setIsAdminCCDetailsEdit] =
     useState<boolean>(false)
   const [isEditAdminActiveValue, setIsAdminEditActiveValue] =
-    useState<boolean>()
+    useState<boolean>(false)
   const initialAdminCCDetails = {} as UpdateClearanceDetails
   const [editAdminCCDetails, setEditAdminCCDetails] = useState(
     initialAdminCCDetails,
@@ -39,6 +39,7 @@ const AdminClearanceDetails = (): JSX.Element => {
     setIsAdminCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditAdminCCDetails(updateClearanceDetails)
+    setIsAdminEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditAdminCCDetailsHandler = (
@@ -202,7 +203,7 @@ const AdminClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditAdminActiveValue as unknown as boolean}
+                    checked={isEditAdminActiveValue}
                     onChange={handleEditAdminCCDetailsHandler}
                   />
                   <CFormCheck
