@@ -142,12 +142,12 @@ const PayrollManagementTable = (props: {
 
   return (
     <>
-      <CCol className="custom-scroll scroll-alignment">
+      <CCol className="custom-scroll scroll-alignment py-5">
         {renderingPayslipData?.length > 0 ? (
           <CTable
             striped
             responsive
-            className="text-start text-left align-middle alignment sh-adjustment"
+            className="text-start text-left align-middle sh-payroll-alignment"
           >
             <CTableHead>
               <CTableRow>
