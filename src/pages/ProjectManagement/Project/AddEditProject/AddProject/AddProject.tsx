@@ -434,6 +434,7 @@ const AddProject = (): JSX.Element => {
                 name="hiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel

@@ -17,7 +17,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const ITClearanceDetails = (): JSX.Element => {
   const [isItCCDetailsEdit, setIsItCCDetailsEdit] = useState<boolean>(false)
-  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>()
+  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
   const initialItCCDetails = {} as UpdateClearanceDetails
   const [editItCCDetails, setEditItCCDetails] = useState(initialItCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +35,7 @@ const ITClearanceDetails = (): JSX.Element => {
     setIsItCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditItCCDetails(updateClearanceDetails)
+    setIsEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditItCCDetailsHandler = (
@@ -195,7 +196,7 @@ const ITClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditActiveValue as unknown as boolean}
+                    checked={isEditActiveValue}
                     onChange={handleEditItCCDetailsHandler}
                   />
                   <CFormCheck

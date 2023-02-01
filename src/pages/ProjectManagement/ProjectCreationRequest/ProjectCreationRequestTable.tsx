@@ -44,6 +44,7 @@ const ProjectCreationRequestTable = ({
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
   const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
+  const [projectName, setProjectName] = useState<string>('')
   const dispatch = useAppDispatch()
   const [comments, setComments] = useState<string>('')
   const getAllProjectRequestList = useTypedSelector(
@@ -112,9 +113,13 @@ const ProjectCreationRequestTable = ({
     setToggle('projectHistory')
   }
 
-  const handleShowDeleteModal = (requestId: number) => {
+  const handleShowDeleteModal = (
+    requestId: number,
+    projectRequestName: string,
+  ) => {
     setToDeleteProjectRequestId(requestId)
     setIsDeleteModalVisible(true)
+    setProjectName(projectRequestName)
   }
 
   const handleShowRejectModal = (id: number) => {
@@ -294,7 +299,12 @@ const ProjectCreationRequestTable = ({
                         color="danger"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                         data-testid="delete-btn"
-                        onClick={() => handleShowDeleteModal(projectRequest.id)}
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            projectRequest.id,
+                            projectRequest.projectName,
+                          )
+                        }
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -353,7 +363,10 @@ const ProjectCreationRequestTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
       >
-        {`Do you really want to delete this OVH-Test project request?`}
+        <>
+          Do you really want to delete this <span>{projectName}</span> project
+          request?
+        </>
       </OModal>
       <>
         <OModal

@@ -460,6 +460,8 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+  editEvent: string
+  updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
@@ -763,4 +765,11 @@ export interface AppraisalTemplateApi extends ApiBase {
   cycle: string
   activeCycle: string
   getDesignationsUnderCycle: string
+}
+
+export interface ProjectStatusApi extends ApiBase {
+  statusReportLis: string
+  addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
 }
