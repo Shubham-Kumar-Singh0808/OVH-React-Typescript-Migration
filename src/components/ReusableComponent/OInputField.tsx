@@ -13,7 +13,6 @@ const OInputField = ({
   label,
   name,
   placeholder,
-  autoComplete,
 }: InputField): JSX.Element => {
   const isInvalid = isEmail(value)
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
