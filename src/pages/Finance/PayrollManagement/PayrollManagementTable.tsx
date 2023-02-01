@@ -12,6 +12,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import ViewPaySlip from './ViewPaySlip/ViewPaySlip'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -43,6 +44,9 @@ const PayrollManagementTable = (props: {
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
   const [selectedPaySlipId, setSelectedPaySlipId] = useState<string | number>()
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
+    {} as CurrentPayslip,
+  )
+  const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
   const [deletePayslip, setDeletePayslip] = useState('')
@@ -277,16 +281,21 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell className="actions">
                         {props.userEditAccess && (
                           <CTooltip content="Edit">
-                            <CButton
-                              size="sm"
-                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                              color="info btn-ovh me-1"
-                              onClick={() => {
-                                editPaySlipHandler(payslipItem)
-                              }}
-                            >
-                              <i className="fa fa-edit" aria-hidden="true"></i>
-                            </CButton>
+                            <Link to={'/editPaySlip'}>
+                              <CButton
+                                size="sm"
+                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                                color="info btn-ovh me-1"
+                                onClick={() => {
+                                  editPaySlipHandler(payslipItem)
+                                }}
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </Link>
                           </CTooltip>
                         )}
                         {props.userDeleteAccess && (
