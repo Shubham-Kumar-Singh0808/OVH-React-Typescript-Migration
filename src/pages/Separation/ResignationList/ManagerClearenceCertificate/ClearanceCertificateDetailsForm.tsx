@@ -66,7 +66,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearanceDetails[0]?.employeeId,
         employeeName: managerClearanceDetails[0]?.employeeName,
-        isDue: isActiveValue as boolean,
+        isDue: isActiveValue,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
         seperationId: getAllResignationHistory.separationId,
