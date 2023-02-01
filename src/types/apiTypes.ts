@@ -737,6 +737,10 @@ export interface KRAApi extends ApiBase {
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+  getEmployeeReviewForm: string
+  saveAppraisalForm: string
+  getEmployeeAppraisalRating: string
+  getReviewComments: string
 }
 
 export interface PIPListApi extends ApiBase {

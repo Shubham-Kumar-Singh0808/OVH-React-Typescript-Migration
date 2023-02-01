@@ -909,6 +909,11 @@ export const KRAApiConfig: KRAApi = {
 
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+  getEmployeeReviewForm: apiPrefix + '/appraisal/AppraisalForm',
+  saveAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
+  getEmployeeAppraisalRating:
+    apiPrefix + '/appraisal/employeeAppraisalFormForRating',
+  getReviewComments: apiPrefix + '/appraisal/getReviewComments',
 }
 
 export const PipListApiConfig: PIPListApi = {

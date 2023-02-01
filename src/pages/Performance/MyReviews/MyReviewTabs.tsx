@@ -7,7 +7,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import EmployeeRatingDetails from './RatingDetailsTab/EmployeeRatingDetails'
-import EmployeeReviewForm from './ReviewForm/EmployeeReviewForm'
+import AppraisalForm from './ReviewForm/AppraisalForm'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { MyReviewTabList } from '../../../types/Performance/MyReview/myReviewTypes'
@@ -55,7 +55,7 @@ const MyReviewTabs = (): JSX.Element => {
 
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
-        1: <EmployeeReviewForm />,
+        1: <AppraisalForm />,
         2: <EmployeeRatingDetails />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
