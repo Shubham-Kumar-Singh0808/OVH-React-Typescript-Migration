@@ -272,7 +272,7 @@ const EmployeePipList = (): JSX.Element => {
               <></>
             )}
           </CRow>
-          <CRow className="mt-5 mb-4">
+          <CRow className="mt-4 mb-4">
             <CCol sm={9} md={{ offset: 3 }}>
               <CButton
                 className="cursor-pointer"
@@ -295,34 +295,35 @@ const EmployeePipList = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
-          <CRow>
-            <label className="search_emp d-flex justify-content-end">
-              <CFormCheck
-                className="pt-2"
-                data-testid="ch-searchByEmployee"
-                id="searchByEmployee"
-                name="searchByEmployee"
-                checked={searchByEmployee}
-                onChange={(e) => setSearchByEmployee(e.target.checked)}
-              />
-              <b>Search by Employee Name</b>
-            </label>
+          <CRow className="justify-content-end">
+            <CCol sm={3}>
+              <label className="search_emp">
+                <CFormCheck
+                  className="pt-2"
+                  data-testid="ch-searchByEmployee"
+                  id="searchByEmployee"
+                  name="searchByEmployee"
+                  checked={searchByEmployee}
+                  onChange={(e) => setSearchByEmployee(e.target.checked)}
+                />
+                <b>Search by Employee Name</b>
+              </label>
+              <label className="search_emp">
+                <CFormCheck
+                  className="pt-2"
+                  data-testid="ch-searchByAdded"
+                  id="searchByAdded"
+                  name="searchByAdded"
+                  checked={searchByAdded}
+                  onChange={(e) => setSearchByAdded(e.target.checked)}
+                />
+                <b>Search by Added by Name</b>
+              </label>
+            </CCol>
           </CRow>
-          <CRow>
-            <label className="search_emp d-flex justify-content-end">
-              <CFormCheck
-                className="pt-2"
-                data-testid="ch-searchByAdded"
-                id="searchByAdded"
-                name="searchByAdded"
-                checked={searchByAdded}
-                onChange={(e) => setSearchByAdded(e.target.checked)}
-              />
-              <b>Search by Added by Name</b>
-            </label>
-          </CRow>
+
           <CRow className="gap-2 d-md-flex justify-content-md-end">
-            <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
+            <CCol sm={3} md={3}>
               <CForm>
                 <CInputGroup className="global-search me-0">
                   <CFormInput

@@ -300,9 +300,9 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               Start Date :
-              <span className={startDate ? TextWhite : TextDanger}> *</span>
+              <span className={startDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <DatePicker
                 id="startDate"
                 className="form-control form-control-sm sh-date-picker"
@@ -331,9 +331,9 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               End Date :
-              <span className={endDate ? TextWhite : TextDanger}> *</span>
+              <span className={endDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <DatePicker
                 id="endDate"
                 className="form-control form-control-sm sh-date-picker"
@@ -369,7 +369,7 @@ const AddEmployeePipList = ({
               Rating:
               <span className={showIsRequired(selectRating)}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
