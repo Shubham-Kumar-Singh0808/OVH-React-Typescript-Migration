@@ -34,6 +34,7 @@ const ChangeRequestTable = ({
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteChangeRequest, setToDeleteChangeRequest] = useState(0)
+  const [duration, setDuration] = useState<string>()
   const changeRequestList = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.projectChangeRequest,
   )
@@ -68,9 +69,10 @@ const ChangeRequestTable = ({
     setCurrentPage(1)
   }
 
-  const handleShowDeleteModal = (skillId: number) => {
+  const handleShowDeleteModal = (skillId: number, durationId: string) => {
     setToDeleteChangeRequest(skillId)
     setIsDeleteModalVisible(true)
+    setDuration(durationId)
   }
 
   const handleConfirmDeleteChangeRequest = async () => {
@@ -156,7 +158,9 @@ const ChangeRequestTable = ({
                       <CButton
                         color="danger"
                         className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => handleShowDeleteModal(item.id)}
+                        onClick={() =>
+                          handleShowDeleteModal(item.id, item.duration)
+                        }
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -217,7 +221,10 @@ const ChangeRequestTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteChangeRequest}
       >
-        {`Do you really want to delete this ?`}
+        <>
+          Do you really want to delete this <strong>{duration}</strong> Change
+          request?
+        </>
       </OModal>
     </>
   )

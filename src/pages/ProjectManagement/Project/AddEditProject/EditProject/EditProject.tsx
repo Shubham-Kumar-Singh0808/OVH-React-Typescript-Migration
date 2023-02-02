@@ -547,6 +547,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -573,6 +574,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>
