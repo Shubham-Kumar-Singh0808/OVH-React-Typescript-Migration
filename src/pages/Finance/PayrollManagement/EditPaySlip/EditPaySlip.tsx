@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import EmployeePayslipPersonalDetails from './EmployeePayslipPersonalDetails'
 import EmployeePayslipTaxDetails from './EmployeePayslipTaxDetails'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -10,10 +11,8 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditPaySlip = ({
   toEditPayslip,
-  setToggle,
 }: {
   toEditPayslip: CurrentPayslip
-  setToggle: (value: string) => void
 }): JSX.Element => {
   const [toEditPayslipCopy, setToEditPayslipCopy] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
@@ -48,7 +47,7 @@ const EditPaySlip = ({
   }, [toEditPayslip])
 
   useEffect(() => {
-    if (toEditPayslip.designation && toEditPayslip.accountNo) {
+    if (toEditPayslip?.designation && toEditPayslip?.accountNo) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
@@ -93,14 +92,15 @@ const EditPaySlip = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={'/payslipUpload'}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
 

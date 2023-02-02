@@ -16,7 +16,6 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const PayrollManagement = (): JSX.Element => {
@@ -25,9 +24,6 @@ const PayrollManagement = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
   const [toggle, setToggle] = useState('')
-  const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
-    {} as CurrentPayslip,
-  )
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
   const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
@@ -361,7 +357,6 @@ const PayrollManagement = (): JSX.Element => {
               currentPage={currentPage}
               pageSize={pageSize}
               setToggle={setToggle}
-              setToEditPayslip={setToEditPayslip}
               isChecked={isChecked}
               setIsChecked={setIsChecked}
               isAllChecked={isAllChecked}
@@ -371,9 +366,6 @@ const PayrollManagement = (): JSX.Element => {
             />
           )}
         </>
-        {toggle === 'editPaySlip' && (
-          <EditPaySlip toEditPayslip={toEditPayslip} setToggle={setToggle} />
-        )}
         {toggle === 'excelTable' && (
           <PaySlipExcelFileTable
             selectMonth={selectMonth}

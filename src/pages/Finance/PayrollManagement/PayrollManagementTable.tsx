@@ -31,7 +31,6 @@ const PayrollManagementTable = (props: {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
-  setToEditPayslip: (value: CurrentPayslip) => void
   isChecked: boolean
   setIsChecked: (value: boolean) => void
   isAllChecked: boolean
@@ -114,7 +113,7 @@ const PayrollManagementTable = (props: {
   )
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToEditPayslip(payslipItem)
+    setToEditPayslip(payslipItem)
   }
 
   const handleModal = (payslipItem: CurrentPayslip) => {
