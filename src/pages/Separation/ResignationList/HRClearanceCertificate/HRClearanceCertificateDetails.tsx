@@ -66,7 +66,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: HrClearanceDetails[0]?.employeeId,
         employeeName: HrClearanceDetails[0]?.employeeName,
-        isDue: isEditActiveValue as unknown as boolean,
+        isDue: isEditActiveValue,
         seperationEmpId: HrClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: HrClearanceDetails[0]?.seperationEmpName,
         seperationId: HrClearanceDetails[0]?.seperationId,
