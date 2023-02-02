@@ -116,8 +116,8 @@ const InitiateCycleTable = ({
                           return {
                             ...prevState,
                             ...{
-                              [id]: item.id,
-                              checkQuestion: item.checkQuestion,
+                              id: item.id,
+                              checkQuestion: true,
                               question: item.question,
                             },
                           }
