@@ -423,6 +423,9 @@ const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
 
+const processAreaList = React.lazy(
+  () => import('./pages/Settings/ProcessArea/ProcessArea'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -916,8 +919,13 @@ const routes = [
   },
   {
     path: '/appraisalTemplate',
-    name: '/appraisalTemplate',
+    name: 'appraisalTemplate',
     component: AppraisalTemplate,
+  },
+  {
+    path: '/processAreaList',
+    name: 'processAreaList',
+    component: processAreaList,
   },
 ]
 

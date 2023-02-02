@@ -773,3 +773,6 @@ export interface ProjectStatusApi extends ApiBase {
   deleteStatusReport: string
   updateStatusReport: string
 }
+export interface ProcessAreaListApi extends ApiBase {
+  getProjectTailoringDocument: string
+}
