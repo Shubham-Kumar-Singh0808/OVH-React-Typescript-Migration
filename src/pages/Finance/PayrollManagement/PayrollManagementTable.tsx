@@ -12,7 +12,6 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
 import ViewPaySlip from './ViewPaySlip/ViewPaySlip'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -31,21 +30,20 @@ const PayrollManagementTable = (props: {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
+  setToEditPayslip: (value: CurrentPayslip) => void
   isChecked: boolean
   setIsChecked: (value: boolean) => void
   isAllChecked: boolean
   setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
+  editPaySlipHandler: (payslipItem: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
   const [selectedPaySlipId, setSelectedPaySlipId] = useState<string | number>()
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
-    {} as CurrentPayslip,
-  )
-  const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
   const [deletePayslip, setDeletePayslip] = useState('')
@@ -112,10 +110,6 @@ const PayrollManagementTable = (props: {
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
 
-  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    setToEditPayslip(payslipItem)
-  }
-
   const handleModal = (payslipItem: CurrentPayslip) => {
     setIsViewModalVisible(true)
     setSelectedPaySlipDetails(payslipItem)
@@ -145,12 +139,12 @@ const PayrollManagementTable = (props: {
 
   return (
     <>
-      <CCol className="custom-scroll scroll-alignment py-5">
+      <CCol className="custom-scroll scroll-alignment">
         {renderingPayslipData?.length > 0 ? (
           <CTable
             striped
             responsive
-            className="text-start text-left align-middle sh-payroll-alignment"
+            className="text-start text-left align-middle alignment sh-adjustment"
           >
             <CTableHead>
               <CTableRow>
@@ -280,21 +274,16 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell className="actions">
                         {props.userEditAccess && (
                           <CTooltip content="Edit">
-                            <Link to={'/editPaySlip'}>
-                              <CButton
-                                size="sm"
-                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                                color="info btn-ovh me-1"
-                                onClick={() => {
-                                  editPaySlipHandler(payslipItem)
-                                }}
-                              >
-                                <i
-                                  className="fa fa-edit"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
-                            </Link>
+                            <CButton
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                              onClick={() => {
+                                props.editPaySlipHandler(payslipItem)
+                              }}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
                           </CTooltip>
                         )}
                         {props.userDeleteAccess && (

@@ -11,8 +11,10 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditPaySlip = ({
   toEditPayslip,
+  setToggle,
 }: {
   toEditPayslip: CurrentPayslip
+  setToggle: (value: string) => void
 }): JSX.Element => {
   const [toEditPayslipCopy, setToEditPayslipCopy] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
@@ -97,6 +99,7 @@ const EditPaySlip = ({
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="back-button"
+                onClick={() => setToggle('')}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>

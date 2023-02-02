@@ -922,11 +922,11 @@ const routes = [
     name: '/appraisalTemplate',
     component: AppraisalTemplate,
   },
-  {
-    path: '/editPaySlip',
-    name: 'Edit PaySLip',
-    component: EditPaySLip,
-  },
+  // {
+  //   path: '/editPaySlip',
+  //   name: 'Edit PaySLip',
+  //   component: EditPaySLip,
+  // },
 ]
 
 export default routes
