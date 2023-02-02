@@ -81,7 +81,7 @@ const ITClearanceDetails = (): JSX.Element => {
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
-          submittedBy: 'HR',
+          submittedBy: 'IT',
         }),
       )
     }

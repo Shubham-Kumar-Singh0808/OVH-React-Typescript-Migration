@@ -228,7 +228,7 @@ const ResignationListTable = ({
               </Link>
             )}
             {userAccessITClearance?.viewaccess && (
-              <Link to={`/ClearanceCertificateManager`}>
+              <Link to={`/ClearanceCertificateIT`}>
                 <CTooltip content="IT">
                   <CButton
                     size="sm"
