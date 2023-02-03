@@ -360,10 +360,11 @@ const ProjectCreationRequestTable = ({
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Project Request"
-        modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this <span>{projectName}</span> project

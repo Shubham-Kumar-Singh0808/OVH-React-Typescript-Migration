@@ -215,11 +215,11 @@ const ChangeRequestTable = ({
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Change Request"
-        modalBodyClass="mt-0"
-        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteChangeRequest}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this <strong>{duration}</strong> Change
