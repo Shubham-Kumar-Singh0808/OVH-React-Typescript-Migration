@@ -4,9 +4,9 @@ import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/Payr
 
 const EmployeePayslipTaxDetails = ({
   onChangeInputHandler,
-  toEditPayslip,
+  toEditPayslipCopy,
 }: {
-  toEditPayslip: CurrentPayslip
+  toEditPayslipCopy: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -30,7 +30,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="medicliam"
             name="medicliam"
             autoComplete="off"
-            value={toEditPayslip.medicliam}
+            value={toEditPayslipCopy.medicliam}
             placeholder="medicliam"
             onChange={onChangeInputHandler}
           />
@@ -45,7 +45,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="esi"
             name="esi"
             autoComplete="off"
-            value={toEditPayslip.esi}
+            value={toEditPayslipCopy.esi}
             placeholder="esi"
             onChange={onChangeInputHandler}
           />
@@ -62,7 +62,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="epf"
             name="epf"
             autoComplete="off"
-            value={toEditPayslip.epf}
+            value={toEditPayslipCopy.epf}
             placeholder="epf"
             onChange={onChangeInputHandler}
           />
@@ -77,7 +77,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="advArrears"
             name="advArrears"
             autoComplete="off"
-            value={toEditPayslip.advArrears}
+            value={toEditPayslipCopy.advArrears}
             placeholder="advArrears"
             onChange={onChangeInputHandler}
           />
@@ -94,7 +94,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="erc"
             name="erc"
             autoComplete="off"
-            value={toEditPayslip.erc}
+            value={toEditPayslipCopy.erc}
             placeholder="erc"
             onChange={onChangeInputHandler}
           />
@@ -109,7 +109,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="taxDeductionScheme"
             name="taxDeductionScheme"
             autoComplete="off"
-            value={toEditPayslip.taxDeductionScheme}
+            value={toEditPayslipCopy.taxDeductionScheme}
             placeholder="taxDeductionScheme"
             onChange={onChangeInputHandler}
           />
@@ -126,7 +126,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="grossSalary"
             name="grossSalary"
             autoComplete="off"
-            value={toEditPayslip.grossSalary}
+            value={toEditPayslipCopy.grossSalary}
             placeholder="grossSalary"
             onChange={onChangeInputHandler}
           />
@@ -141,7 +141,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="professionalTax"
             name="professionalTax"
             autoComplete="off"
-            value={toEditPayslip.professionalTax}
+            value={toEditPayslipCopy.professionalTax}
             placeholder="professionalTax"
             onChange={onChangeInputHandler}
           />
@@ -158,7 +158,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="arrears"
             name="arrears"
             autoComplete="off"
-            value={toEditPayslip.arrears}
+            value={toEditPayslipCopy.arrears}
             placeholder="arrears"
             onChange={onChangeInputHandler}
           />
@@ -173,7 +173,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="incentive"
             name="incentive"
             autoComplete="off"
-            value={toEditPayslip.incentive}
+            value={toEditPayslipCopy.incentive}
             placeholder="incentive"
             onChange={onChangeInputHandler}
           />
@@ -190,7 +190,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="vpayable"
             name="vpayable"
             autoComplete="off"
-            value={toEditPayslip.vpayable}
+            value={toEditPayslipCopy.vpayable}
             placeholder="vpayable"
             onChange={onChangeInputHandler}
           />
@@ -205,7 +205,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="netSalary"
             name="netSalary"
             autoComplete="off"
-            value={toEditPayslip.netSalary}
+            value={toEditPayslipCopy.netSalary}
             placeholder="netSalary"
             onChange={onChangeInputHandler}
           />
@@ -222,7 +222,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="gratuity"
             name="gratuity"
             autoComplete="off"
-            value={toEditPayslip.gratuity}
+            value={toEditPayslipCopy.gratuity}
             placeholder="gratuity"
             onChange={onChangeInputHandler}
           />
@@ -237,7 +237,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="remarks"
             name="remarks"
             autoComplete="off"
-            value={toEditPayslip.remarks}
+            value={toEditPayslipCopy.remarks}
             placeholder="remarks"
             onChange={onChangeInputHandler}
           />
@@ -248,7 +248,7 @@ const EmployeePayslipTaxDetails = ({
           Month:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.month}</p>
+          <p className="mb-0">{toEditPayslipCopy.month}</p>
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -256,7 +256,7 @@ const EmployeePayslipTaxDetails = ({
           Year:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.year}</p>
+          <p className="mb-0">{toEditPayslipCopy.year}</p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
@@ -270,7 +270,7 @@ const EmployeePayslipTaxDetails = ({
             data-testid="donation"
             name="donation"
             autoComplete="off"
-            value={toEditPayslip.donation}
+            value={toEditPayslipCopy.donation}
             placeholder="donation"
             onChange={onChangeInputHandler}
           />

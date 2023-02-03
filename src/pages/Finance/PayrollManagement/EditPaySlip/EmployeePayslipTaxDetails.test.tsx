@@ -12,7 +12,7 @@ describe('Allocate Employee without data', () => {
   beforeEach(() => {
     render(
       <EmployeePayslipTaxDetails
-        toEditPayslip={{
+        toEditPayslipCopy={{
           paySlipId: 0,
           employeeId: 0,
           designation: '',

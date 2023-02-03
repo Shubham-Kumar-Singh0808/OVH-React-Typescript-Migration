@@ -5,14 +5,10 @@ import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/Payr
 
 const EmployeePayslipPersonalDetails = ({
   onChangeInputHandler,
-  toEditPayslip,
-  setToEditPayslipCopy,
+  toEditPayslipCopy,
 }: {
-  toEditPayslip: CurrentPayslip
+  toEditPayslipCopy: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
-  designation: string
-  accountNo: string
-  setToEditPayslipCopy: React.Dispatch<React.SetStateAction<CurrentPayslip>>
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -22,19 +18,7 @@ const EmployeePayslipPersonalDetails = ({
   }
 
   const formLabel = 'col-sm-3 col-form-label text-end'
-  console.log(toEditPayslip?.designation)
-  const onChangeDesignationInputHandler = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target
 
-    setToEditPayslipCopy((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
-  }
   return (
     <>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -42,7 +26,7 @@ const EmployeePayslipPersonalDetails = ({
           Name:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.name}</p>
+          <p className="mb-0">{toEditPayslipCopy.name}</p>
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -50,13 +34,15 @@ const EmployeePayslipPersonalDetails = ({
           Employee Id:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.employeeId}</p>
+          <p className="mb-0">{toEditPayslipCopy.employeeId}</p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Designation:
-          <span className={toEditPayslip?.designation ? TextWhite : TextDanger}>
+          <span
+            className={toEditPayslipCopy?.designation ? TextWhite : TextDanger}
+          >
             *
           </span>
         </CFormLabel>
@@ -67,9 +53,9 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="designation-name"
             name="designation"
             autoComplete="off"
-            value={toEditPayslip?.designation}
+            value={toEditPayslipCopy?.designation}
             placeholder="designation"
-            onChange={onChangeDesignationInputHandler}
+            onChange={onChangeInputHandler}
           />
         </CCol>
       </CRow>
@@ -78,13 +64,15 @@ const EmployeePayslipPersonalDetails = ({
           DOJ:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.dateOfBirth}</p>
+          <p className="mb-0">{toEditPayslipCopy.dateOfBirth}</p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Account Number:
-          <span className={toEditPayslip.accountNo ? TextWhite : TextDanger}>
+          <span
+            className={toEditPayslipCopy.accountNo ? TextWhite : TextDanger}
+          >
             *
           </span>
         </CFormLabel>
@@ -95,9 +83,9 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="accountNo"
             name="accountNo"
             autoComplete="off"
-            value={toEditPayslip.accountNo}
+            value={toEditPayslipCopy.accountNo}
             placeholder="AccountNum"
-            onChange={onChangeDesignationInputHandler}
+            onChange={onChangeInputHandler}
           />
         </CCol>
       </CRow>
@@ -112,7 +100,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="grossSalary"
             name="grossSalary"
             autoComplete="off"
-            value={toEditPayslip.grossSalary}
+            value={toEditPayslipCopy.grossSalary}
             placeholder="grossSalary"
             onChange={onChangeInputHandler}
           />
@@ -131,7 +119,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="variablePayPercentage"
             name="variablePayPercentage"
             autoComplete="off"
-            value={toEditPayslip.variablePayPercentage}
+            value={toEditPayslipCopy.variablePayPercentage}
             placeholder="variablePayPercentage"
             onChange={onChangeInputHandler}
           />
@@ -148,7 +136,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="variablePay"
             name="variablePay"
             autoComplete="off"
-            value={toEditPayslip.variablePay}
+            value={toEditPayslipCopy.variablePay}
             placeholder="variablePay"
             onChange={onChangeInputHandler}
           />
@@ -167,7 +155,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="grossSalAfterVariablepay"
             name="grossSalAfterVariablepay"
             autoComplete="off"
-            value={toEditPayslip.grossSalAfterVariablepay}
+            value={toEditPayslipCopy.grossSalAfterVariablepay}
             placeholder="grossSalAfterVariablepay"
             onChange={onChangeInputHandler}
           />
@@ -184,7 +172,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="basicSalary"
             name="basicSalary"
             autoComplete="off"
-            value={toEditPayslip.basicSalary}
+            value={toEditPayslipCopy.basicSalary}
             placeholder="basicSalary"
             onChange={onChangeInputHandler}
           />
@@ -201,7 +189,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="houseRentAllowance"
             name="houseRentAllowance"
             autoComplete="off"
-            value={toEditPayslip.houseRentAllowance}
+            value={toEditPayslipCopy.houseRentAllowance}
             placeholder="houseRentAllowance"
             onChange={onChangeInputHandler}
           />
@@ -218,7 +206,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="transportAllowance"
             name="transportAllowance"
             autoComplete="off"
-            value={toEditPayslip.transportAllowance}
+            value={toEditPayslipCopy.transportAllowance}
             placeholder="transportAllowance"
             onChange={onChangeInputHandler}
           />
@@ -235,7 +223,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="otherAllowance"
             name="otherAllowance"
             autoComplete="off"
-            value={toEditPayslip.otherAllowance}
+            value={toEditPayslipCopy.otherAllowance}
             placeholder="otherAllowance"
             onChange={onChangeInputHandler}
           />
@@ -252,7 +240,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="absent"
             name="absent"
             autoComplete="off"
-            value={toEditPayslip.absent}
+            value={toEditPayslipCopy.absent}
             placeholder="absent"
             onChange={onChangeInputHandler}
           />
@@ -269,7 +257,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="lossOfPay"
             name="lossOfPay"
             autoComplete="off"
-            value={toEditPayslip.lossOfPay}
+            value={toEditPayslipCopy.lossOfPay}
             placeholder="lossOfPay"
             onChange={onChangeInputHandler}
           />
@@ -286,7 +274,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="mealsCard"
             name="mealsCard"
             autoComplete="off"
-            value={toEditPayslip.mealsCard}
+            value={toEditPayslipCopy.mealsCard}
             placeholder="mealsCard"
             onChange={onChangeInputHandler}
           />
