@@ -116,21 +116,6 @@ const EmployeePayslipTaxDetails = ({
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('grossSalary', formLabel)}>
-          Gross Salary:
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            type="text"
-            id="grossSalary"
-            data-testid="grossSalary"
-            name="grossSalary"
-            autoComplete="off"
-            value={toEditPayslipCopy.grossSalary}
-            placeholder="grossSalary"
-            onChange={onChangeInputHandler}
-          />
-        </CCol>
         <CFormLabel {...dynamicFormLabelProps('professionalTax', formLabel)}>
           Professional Tax:
         </CFormLabel>
@@ -248,7 +233,9 @@ const EmployeePayslipTaxDetails = ({
           Month:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslipCopy.month}</p>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.month}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -256,7 +243,9 @@ const EmployeePayslipTaxDetails = ({
           Year:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslipCopy.year}</p>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.year}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">

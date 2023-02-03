@@ -26,7 +26,9 @@ const EmployeePayslipPersonalDetails = ({
           Name:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslipCopy.name}</p>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.name}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -34,14 +36,16 @@ const EmployeePayslipPersonalDetails = ({
           Employee Id:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslipCopy.employeeId}</p>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.employeeId}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Designation:
           <span
-            className={toEditPayslipCopy?.designation ? TextWhite : TextDanger}
+            className={toEditPayslipCopy.designation ? TextWhite : TextDanger}
           >
             *
           </span>
@@ -53,7 +57,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="designation-name"
             name="designation"
             autoComplete="off"
-            value={toEditPayslipCopy?.designation}
+            value={toEditPayslipCopy.designation}
             placeholder="designation"
             onChange={onChangeInputHandler}
           />
@@ -64,7 +68,9 @@ const EmployeePayslipPersonalDetails = ({
           DOJ:
         </CFormLabel>
         <CCol sm={3}>
-          <p className="mb-0">{toEditPayslipCopy.dateOfBirth}</p>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.dateOfBirth}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
