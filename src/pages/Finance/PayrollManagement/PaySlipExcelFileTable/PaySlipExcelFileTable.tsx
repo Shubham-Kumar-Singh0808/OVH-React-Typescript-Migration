@@ -18,6 +18,7 @@ const PaySlipExcelFileTable = (props: {
   selectYear: string
   currentPage: number
   pageSize: number
+  setExcelTable: (value: boolean) => void
   setToggle: (value: string) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -27,6 +28,7 @@ const PaySlipExcelFileTable = (props: {
   )
   const clearExcelData = () => {
     props.setToggle('')
+    props.setExcelTable(false)
     dispatch(reduxServices.payrollManagement.clearDirectory())
     dispatch(
       reduxServices.payrollManagement.getCurrentPayslip({
@@ -47,6 +49,7 @@ const PaySlipExcelFileTable = (props: {
 
   const handleUploadFile = async () => {
     props.setToggle('')
+    props.setExcelTable(false)
     const prepareObject = {
       month: props.selectMonth,
       year: Number(props.selectYear),

@@ -6,13 +6,13 @@ import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/Payr
 const EmployeePayslipPersonalDetails = ({
   onChangeInputHandler,
   toEditPayslip,
-  designation,
-  accountNo,
+  setToEditPayslipCopy,
 }: {
   toEditPayslip: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
   designation: string
   accountNo: string
+  setToEditPayslipCopy: React.Dispatch<React.SetStateAction<CurrentPayslip>>
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -22,7 +22,19 @@ const EmployeePayslipPersonalDetails = ({
   }
 
   const formLabel = 'col-sm-3 col-form-label text-end'
+  console.log(toEditPayslip?.designation)
+  const onChangeDesignationInputHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target
 
+    setToEditPayslipCopy((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
+  }
   return (
     <>
       <CRow className="mt-1 mb-0 align-items-center">
@@ -44,7 +56,9 @@ const EmployeePayslipPersonalDetails = ({
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Designation:
-          <span className={designation ? TextWhite : TextDanger}>*</span>
+          <span className={toEditPayslip?.designation ? TextWhite : TextDanger}>
+            *
+          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -53,9 +67,9 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="designation-name"
             name="designation"
             autoComplete="off"
-            value={toEditPayslip.designation}
+            value={toEditPayslip?.designation}
             placeholder="designation"
-            onChange={onChangeInputHandler}
+            onChange={onChangeDesignationInputHandler}
           />
         </CCol>
       </CRow>
@@ -70,7 +84,9 @@ const EmployeePayslipPersonalDetails = ({
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Account Number:
-          <span className={accountNo ? TextWhite : TextDanger}>*</span>
+          <span className={toEditPayslip.accountNo ? TextWhite : TextDanger}>
+            *
+          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -81,7 +97,7 @@ const EmployeePayslipPersonalDetails = ({
             autoComplete="off"
             value={toEditPayslip.accountNo}
             placeholder="AccountNum"
-            onChange={onChangeInputHandler}
+            onChange={onChangeDesignationInputHandler}
           />
         </CCol>
       </CRow>

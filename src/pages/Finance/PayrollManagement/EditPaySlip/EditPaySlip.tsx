@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import EmployeePayslipPersonalDetails from './EmployeePayslipPersonalDetails'
 import EmployeePayslipTaxDetails from './EmployeePayslipTaxDetails'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -48,12 +49,15 @@ const EditPaySlip = ({
   }, [toEditPayslip])
 
   useEffect(() => {
-    if (toEditPayslip.designation && toEditPayslip.accountNo) {
+    if (toEditPayslip?.designation && toEditPayslip?.accountNo) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
   }, [toEditPayslip])
+
+  console.log(toEditPayslip?.designation)
+  console.log(toEditPayslip?.accountNo)
 
   const dispatch = useAppDispatch()
 
@@ -93,14 +97,16 @@ const EditPaySlip = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={'/payslipUpload'}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={() => setToggle('')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
 
@@ -108,6 +114,7 @@ const EditPaySlip = ({
           toEditPayslip={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
           designation={designation}
+          setToEditPayslipCopy={setToEditPayslipCopy}
           accountNo={accountNo}
         />
         <EmployeePayslipTaxDetails
@@ -120,7 +127,7 @@ const EditPaySlip = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={isUpdateBtnEnabled}
+              disabled={!isUpdateBtnEnabled}
               onClick={handleUpdateHandler}
             >
               Update

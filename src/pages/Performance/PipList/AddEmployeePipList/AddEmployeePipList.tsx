@@ -23,6 +23,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { emptyString } from '../../../Achievements/AchievementConstants'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -237,7 +238,18 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Employee Name:
-              <span className={employeeName ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  employeeName === undefined ||
+                  employeeName === emptyString ||
+                  employeeName.trim().length === 0 ||
+                  employeeName
+                    ? TextDanger
+                    : TextWhite
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <Autocomplete
@@ -288,11 +300,12 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               Start Date :
-              <span className={startDate ? TextWhite : TextDanger}> *</span>
+              <span className={startDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <DatePicker
                 id="startDate"
+                className="form-control form-control-sm sh-date-picker"
                 showMonthDropdown
                 showYearDropdown
                 autoComplete="off"
@@ -318,11 +331,12 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               End Date :
-              <span className={endDate ? TextWhite : TextDanger}> *</span>
+              <span className={endDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <DatePicker
                 id="endDate"
+                className="form-control form-control-sm sh-date-picker"
                 showMonthDropdown
                 showYearDropdown
                 autoComplete="off"
@@ -355,7 +369,7 @@ const AddEmployeePipList = ({
               Rating:
               <span className={showIsRequired(selectRating)}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"

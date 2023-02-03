@@ -115,21 +115,31 @@ const EditPanDetails = ({
             :
           </CCol>
           {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            <CCol sm={2}>
-              <CCol sm={5}>
-                <input
-                  className="sh-updateTicket-file mt-1 cursor-pointer"
-                  data-testid="attachment"
-                  type="file"
-                  name="file"
-                  onChange={(element: SyntheticEvent) =>
-                    onChangeAttachmentHandler(
-                      element.currentTarget as HTMLInputElement,
-                    )
-                  }
-                />
+            <>
+              <CCol sm={2}>
+                <CCol sm={5}>
+                  <input
+                    className="sh-updateTicket-file mt-1 cursor-pointer"
+                    data-testid="attachment"
+                    type="file"
+                    name="file"
+                    onChange={(element: SyntheticEvent) =>
+                      onChangeAttachmentHandler(
+                        element.currentTarget as HTMLInputElement,
+                      )
+                    }
+                  />
+                </CCol>
               </CCol>
-            </CCol>
+              <CCol sm={5} className="sh-alignment offset-md-5">
+                <CLink
+                  className="cursor-pointer sh-hive-activity-link"
+                  onClick={handleFinanceData}
+                >
+                  {fileAttachment}
+                </CLink>
+              </CCol>
+            </>
           ) : (
             <>
               <CCol sm={5} className="sh-alignment">

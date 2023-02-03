@@ -64,6 +64,7 @@ describe('Allocate Employee without data', () => {
         onChangeInputHandler={mockSetTogglePage}
         designation={''}
         accountNo={''}
+        setToEditPayslipCopy={mockSetTogglePage}
       />,
       {
         preloadedState: {
