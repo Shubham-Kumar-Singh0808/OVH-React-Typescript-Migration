@@ -356,6 +356,7 @@ const AddProject = (): JSX.Element => {
                     name="addprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -382,6 +383,7 @@ const AddProject = (): JSX.Element => {
                     name="addprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>

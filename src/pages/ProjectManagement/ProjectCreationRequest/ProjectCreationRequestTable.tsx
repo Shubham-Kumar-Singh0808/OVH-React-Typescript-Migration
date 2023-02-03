@@ -125,6 +125,7 @@ const ProjectCreationRequestTable = ({
   const handleShowRejectModal = (id: number) => {
     setToDeleteProjectRequestId(id)
     setIsCancelModalVisible(true)
+    setComments('')
   }
 
   const handleConfirmDeleteProjectRequestDetail = async () => {
@@ -358,6 +359,7 @@ const ProjectCreationRequestTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Project Request"
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
