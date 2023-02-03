@@ -56,6 +56,9 @@ const EditPaySlip = ({
     }
   }, [toEditPayslip])
 
+  console.log(toEditPayslip?.designation)
+  console.log(toEditPayslip?.accountNo)
+
   const dispatch = useAppDispatch()
 
   const updateToastMessage = (
@@ -111,6 +114,7 @@ const EditPaySlip = ({
           toEditPayslip={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
           designation={designation}
+          setToEditPayslipCopy={setToEditPayslipCopy}
           accountNo={accountNo}
         />
         <EmployeePayslipTaxDetails
@@ -123,7 +127,7 @@ const EditPaySlip = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={isUpdateBtnEnabled}
+              disabled={!isUpdateBtnEnabled}
               onClick={handleUpdateHandler}
             >
               Update

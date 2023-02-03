@@ -138,9 +138,9 @@ const EmployeePipList = (): JSX.Element => {
   const pipListObject = {
     dateSelection: selectDate,
     from: (fromDate as string) || '',
-    multiSearch: searchInput as string,
-    searchByAdded: searchByAdded as boolean,
-    searchByEmployee: searchByEmployee as boolean,
+    multiSearch: searchInput,
+    searchByAdded,
+    searchByEmployee,
     selectionStatus: selectedEmployeePipStatus,
     to: (toDate as string) || '',
     endIndex: pageSize * currentPage,

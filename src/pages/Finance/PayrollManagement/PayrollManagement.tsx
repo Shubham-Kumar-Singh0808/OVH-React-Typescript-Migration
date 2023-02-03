@@ -25,6 +25,7 @@ const PayrollManagement = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
   const [toggle, setToggle] = useState('')
+  const [excelTable, setExcelTable] = useState(false)
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
@@ -125,7 +126,7 @@ const PayrollManagement = (): JSX.Element => {
   )
 
   const previewBtnHandler = async () => {
-    setToggle('excelTable')
+    setExcelTable(true)
     if (previewBtn) {
       const formData = new FormData()
       formData.append('file', previewBtn, previewBtn.name)
@@ -357,41 +358,51 @@ const PayrollManagement = (): JSX.Element => {
                   </CCol>
                 )}
               </CRow>
-
-              {renderingPayslipData?.length > 0 && (
-                <PayrollManagementTable
+              {excelTable === false ? (
+                <>
+                  {renderingPayslipData?.length > 0 && (
+                    <PayrollManagementTable
+                      selectMonth={selectMonth}
+                      selectYear={selectYear}
+                      paginationRange={paginationRange}
+                      setPageSize={setPageSize}
+                      setCurrentPage={setCurrentPage}
+                      currentPage={currentPage}
+                      pageSize={pageSize}
+                      setToggle={setToggle}
+                      setToEditPayslip={setToEditPayslip}
+                      isChecked={isChecked}
+                      setIsChecked={setIsChecked}
+                      isAllChecked={isAllChecked}
+                      setIsAllChecked={setIsAllChecked}
+                      userDeleteAccess={userAccess?.deleteaccess as boolean}
+                      userEditAccess={userAccess?.updateaccess as boolean}
+                      editPaySlipHandler={editPaySlipHandler}
+                    />
+                  )}
+                </>
+              ) : (
+                <></>
+              )}
+            </>
+            {excelTable ? (
+              <>
+                <PaySlipExcelFileTable
                   selectMonth={selectMonth}
                   selectYear={selectYear}
-                  paginationRange={paginationRange}
-                  setPageSize={setPageSize}
-                  setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
                   pageSize={pageSize}
                   setToggle={setToggle}
-                  setToEditPayslip={setToEditPayslip}
-                  isChecked={isChecked}
-                  setIsChecked={setIsChecked}
-                  isAllChecked={isAllChecked}
-                  setIsAllChecked={setIsAllChecked}
-                  userDeleteAccess={userAccess?.deleteaccess as boolean}
-                  userEditAccess={userAccess?.updateaccess as boolean}
-                  editPaySlipHandler={editPaySlipHandler}
+                  setExcelTable={setExcelTable}
                 />
-              )}
-            </>
+              </>
+            ) : (
+              <></>
+            )}
           </OCard>
         </>
       )}
-      {toggle === 'excelTable' && (
-        <PaySlipExcelFileTable
-          selectMonth={selectMonth}
-          selectYear={selectYear}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setToggle={setToggle}
-        />
-      )}
-      {toggle === 'editPaySlip' && (
+      {toggle === 'editPaySlip' && !excelTable && (
         <EditPaySlip toEditPayslip={toEditPayslip} setToggle={setToggle} />
       )}
     </>

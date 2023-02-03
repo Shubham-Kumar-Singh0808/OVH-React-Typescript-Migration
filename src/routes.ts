@@ -423,9 +423,6 @@ const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
 
-const EditPaySLip = React.lazy(
-  () => import('./pages/Finance/PayrollManagement/EditPaySlip/EditPaySlip'),
-)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -922,11 +919,6 @@ const routes = [
     name: '/appraisalTemplate',
     component: AppraisalTemplate,
   },
-  // {
-  //   path: '/editPaySlip',
-  //   name: 'Edit PaySLip',
-  //   component: EditPaySLip,
-  // },
 ]
 
 export default routes
