@@ -25,7 +25,6 @@ const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
   const [checkList, setCheckList] = useState<GetQuestion[]>([])
-  console.log('>> cycleChecked ', cycleChecked)
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
@@ -55,7 +54,9 @@ const InitiateCycle = (): JSX.Element => {
   )
 
   useEffect(() => {
-    // setCheckList([...])
+    if (cycleChecked) {
+      setCheckList([...checkList, cycleChecked])
+    }
   }, [cycleChecked])
 
   useEffect(() => {
@@ -93,9 +94,8 @@ const InitiateCycle = (): JSX.Element => {
         id: activeCycle.nominationCycleDto.id,
         toMonth: activeCycle.nominationCycleDto.toMonth,
       },
-      nominationQuestionDto: cycleChecked,
+      nominationQuestionDto: checkList,
     } as unknown as TotalResponse
-    console.log('>> prepareObject ', prepareObject)
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
     )
