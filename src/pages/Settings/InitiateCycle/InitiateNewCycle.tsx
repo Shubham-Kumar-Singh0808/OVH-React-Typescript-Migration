@@ -24,7 +24,8 @@ import {
 const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
-  console.log(cycleChecked)
+  const [checkList, setCheckList] = useState<GetQuestion[]>([])
+  console.log('>> cycleChecked ', cycleChecked)
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
@@ -52,6 +53,10 @@ const InitiateCycle = (): JSX.Element => {
   const ExistingPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
+
+  useEffect(() => {
+    // setCheckList([...])
+  }, [cycleChecked])
 
   useEffect(() => {
     if (ExistingPage) {
@@ -90,6 +95,7 @@ const InitiateCycle = (): JSX.Element => {
       },
       nominationQuestionDto: cycleChecked,
     } as unknown as TotalResponse
+    console.log('>> prepareObject ', prepareObject)
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
     )
@@ -165,7 +171,7 @@ const InitiateCycle = (): JSX.Element => {
                   id="Name"
                   size="sm"
                   name="cycleName"
-                  value={activeCycle?.nominationCycleDto?.cycleName}
+                  value={activeCycle?.nominationCycleDto?.cycleName || ''}
                   disabled
                 />
               </CCol>
@@ -183,7 +189,7 @@ const InitiateCycle = (): JSX.Element => {
                   size="sm"
                   name="fromMonth"
                   disabled
-                  value={activeCycle?.nominationCycleDto?.fromMonth}
+                  value={activeCycle?.nominationCycleDto?.fromMonth || ''}
                 />
               </CCol>
             </CRow>
@@ -200,7 +206,7 @@ const InitiateCycle = (): JSX.Element => {
                   size="sm"
                   name="toMonth"
                   disabled
-                  value={activeCycle?.nominationCycleDto?.toMonth}
+                  value={activeCycle?.nominationCycleDto?.toMonth || ''}
                 />
               </CCol>
             </CRow>
