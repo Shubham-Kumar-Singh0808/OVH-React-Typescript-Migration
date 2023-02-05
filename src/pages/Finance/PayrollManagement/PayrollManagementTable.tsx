@@ -37,6 +37,7 @@ const PayrollManagementTable = (props: {
   setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
+  editPaySlipHandler: (payslipItem: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -108,10 +109,6 @@ const PayrollManagementTable = (props: {
   const PaySlipsListSize = useTypedSelector(
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
-
-  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToEditPayslip(payslipItem)
-  }
 
   const handleModal = (payslipItem: CurrentPayslip) => {
     setIsViewModalVisible(true)
@@ -282,7 +279,7 @@ const PayrollManagementTable = (props: {
                               className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                               color="info btn-ovh me-1"
                               onClick={() => {
-                                editPaySlipHandler(payslipItem)
+                                props.editPaySlipHandler(payslipItem)
                               }}
                             >
                               <i className="fa fa-edit" aria-hidden="true"></i>

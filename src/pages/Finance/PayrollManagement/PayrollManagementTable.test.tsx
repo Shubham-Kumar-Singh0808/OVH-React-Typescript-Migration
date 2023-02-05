@@ -31,6 +31,7 @@ describe('Payroll Management Table Component Testing', () => {
         setIsAllChecked={mockSetTogglePage}
         userDeleteAccess={true}
         userEditAccess={true}
+        editPaySlipHandler={mockSetTogglePage}
       />,
       {
         preloadedState: {
