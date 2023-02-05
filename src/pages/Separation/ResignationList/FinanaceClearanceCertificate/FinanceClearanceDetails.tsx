@@ -19,7 +19,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
   const [isFinanceCCDetailsEdit, setIsFinanceCCDetailsEdit] =
     useState<boolean>(false)
   const [isFinanceEditActiveValue, setIsEditFinanceActiveValue] =
-    useState<boolean>()
+    useState<boolean>(false)
   const initialFinanceCCDetails = {} as UpdateClearanceDetails
   const [editFinanceCCDetails, setEditFinanceCCDetails] = useState(
     initialFinanceCCDetails,
@@ -39,6 +39,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
     setIsFinanceCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditFinanceCCDetails(updateClearanceDetails)
+    setIsEditFinanceActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditFinanceCCDetailsHandler = (
@@ -63,7 +64,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
   const SubmitFinanceClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
-        addedBy: 'HR',
+        addedBy: 'Finance',
         ccId: FinanceCCDetails[0].ccId,
         comments: editFinanceCCDetails?.comments,
         createdDate: new Date(),
@@ -84,7 +85,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
-          submittedBy: 'HR',
+          submittedBy: 'Finance',
         }),
       )
     }
@@ -197,7 +198,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={!isFinanceEditActiveValue}
+                    checked={isFinanceEditActiveValue}
                     onChange={handleEditFinanceCCDetailsHandler}
                   />
                   <CFormCheck

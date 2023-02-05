@@ -147,7 +147,11 @@ export const initialPayrollManagementState: PayRollManagementSliceState = {
 const payrollManagementSlice = createSlice({
   name: 'payrollManagement',
   initialState: initialPayrollManagementState,
-  reducers: {},
+  reducers: {
+    clearPayrollManagement: (state) => {
+      state.paySlipList.list = []
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(readExcelFile.fulfilled, (state, action) => {

@@ -150,7 +150,10 @@ const AppraisalConfigurationsTable = ({
                   <CTableDataCell>
                     {appraisalCycle.active ? 'Yes' : 'No'}
                   </CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
+                  <CTableDataCell
+                    scope="row"
+                    className="sh-organization-link sh-comment"
+                  >
                     {appraisalCycle.description ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
@@ -233,7 +236,7 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: descriptionModal.description as string,
             }}
