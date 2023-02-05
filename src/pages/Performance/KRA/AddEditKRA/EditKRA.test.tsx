@@ -53,7 +53,7 @@ describe('Edit KRA', () => {
       expect(name).toHaveValue('Project')
       expect(dept).toHaveValue('Development')
       expect(desig).toHaveValue('Senior Consultant')
-      expect(errorMess).toHaveClass(TextWhite)
+      expect(errorMess).toHaveClass('d-none')
 
       userEvent.clear(percent)
       userEvent.type(percent, '90')
