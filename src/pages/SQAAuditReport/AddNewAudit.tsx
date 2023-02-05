@@ -18,38 +18,46 @@ import { TextWhite, TextDanger } from '../../constant/ClassName'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { GetAllEmployeesNames } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
-import { deviceLocale, showIsRequired } from '../../utils/helper'
+import { showIsRequired } from '../../utils/helper'
+import { SaveAuditForm } from '../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
+import OToast from '../../components/ReusableComponent/OToast'
 
 const AddNewAudit = (): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'newAuditEvent',
     className: 'col-form-label category-label',
   }
-  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
-    return {
-      htmlFor,
-      className,
-    }
-  }
-  const commonFormatDate = 'L'
-  const deviceLocale: string =
-    navigator.languages && navigator.languages.length
-      ? navigator.languages[0]
-      : navigator.language
   const dispatch = useAppDispatch()
   const formLabel = 'col-sm-3 col-form-label text-end'
-  const [addAudit, setAddAudit] = useState<>()
+  const [addAudit, setAddAudit] = useState<SaveAuditForm>({} as SaveAuditForm)
   const [projectNameAutoCompleteTarget, setProjectNameAutoCompleteTarget] =
     useState<string>('')
+  const [
+    projectManagerAutoCompleteTarget,
+    setProjectManagerAutoCompleteTarget,
+  ] = useState<string>('')
   const [addAuditorName, setAddAuditorName] = useState<GetAllEmployeesNames[]>(
     [],
   )
-  const [auditDate, setAuditDate] = useState<string>()
+  const [addAuditeeName, setAddAuditeeName] = useState<GetAllEmployeesNames[]>(
+    [],
+  )
+  const [auditDate, setAuditDate] = useState<string>('')
+  const [selectProject, setSelectProject] = useState<number>()
+  const [selectProjectMgr, setSelectProjectMgr] = useState<number>()
+  const [isProjectManagerVisible, setIsProjectManagerVisible] =
+    useState<boolean>(false)
+  const [isButtonEnable, setIsButtonEnable] = useState<boolean>(false)
+  const [auditProjectType, setAuditProjectType] = useState<string>('true')
+
   const projects = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
-  const allEmployeesProfiles = useTypedSelector(
-    reduxServices.newEvent.selectors.allEmployeesProfiles,
+  const projectManagers = useTypedSelector(
+    reduxServices.projectManagement.selectors.managers,
+  )
+  const allEmployeeProfiles = useTypedSelector(
+    reduxServices.allocateEmployee.selectors.employeeNames,
   )
 
   useEffect(() => {
@@ -60,38 +68,170 @@ const AddNewAudit = (): JSX.Element => {
         ),
       )
     }
-  }, [projectNameAutoCompleteTarget])
+    if (projectManagerAutoCompleteTarget) {
+      dispatch(reduxServices.projectManagement.getAllManagers())
+    }
+  }, [projectNameAutoCompleteTarget, projectManagerAutoCompleteTarget])
 
   useEffect(() => {
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
   }, [dispatch])
 
+  const handleInputChange = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = e.target
+    if (name === 'auditType') {
+      const auditTypeVal = value.replace(/^\s*/, '')
+      setAddAudit((prevState) => {
+        return { ...prevState, ...{ [name]: auditTypeVal } }
+      })
+    } else {
+      setAddAudit((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (
+      addAudit?.auditType &&
+      addAudit?.startTime &&
+      addAudit?.endTime &&
+      auditDate &&
+      projectNameAutoCompleteTarget &&
+      addAuditorName.length > 0 &&
+      addAuditeeName.length > 0 &&
+      !isProjectManagerVisible
+    ) {
+      setIsButtonEnable(true)
+    } else if (
+      addAudit?.auditType &&
+      addAudit?.startTime &&
+      addAudit?.endTime &&
+      addAudit?.projectName &&
+      auditDate &&
+      projectManagerAutoCompleteTarget &&
+      addAuditorName.length > 0 &&
+      addAuditeeName.length > 0 &&
+      isProjectManagerVisible
+    ) {
+      setIsButtonEnable(true)
+    } else {
+      setIsButtonEnable(false)
+    }
+  }, [
+    addAudit.auditType,
+    addAudit?.projectName,
+    addAudit?.startTime,
+    addAudit?.endTime,
+    auditDate,
+    projectNameAutoCompleteTarget,
+    projectManagerAutoCompleteTarget,
+    addAuditorName,
+    addAuditeeName,
+    isProjectManagerVisible,
+  ])
+
   const projectsOnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProjectNameAutoCompleteTarget(e.target.value)
   }
+  const projectManagerOnChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setProjectManagerAutoCompleteTarget(e.target.value)
+  }
   const onHandleSelectProjectName = (projectName: string) => {
+    const selectedProjectResult = projects.find(
+      (value) => value.projectName === projectName,
+    )
+    setSelectProject(selectedProjectResult?.id)
     setProjectNameAutoCompleteTarget(projectName)
   }
-
-  const handleMultiSelect = (list: GetAllEmployeesNames[]) => {
-    setAddAuditorName(list)
+  const onHandleSelectProjectManager = (projectManagerName: string) => {
+    const selectedProjectMgrResult = projectManagers.find(
+      (value) => value.firstName === projectManagerName,
+    )
+    setSelectProjectMgr(selectedProjectMgrResult?.id)
+    setProjectManagerAutoCompleteTarget(projectManagerName)
   }
 
-  const handleOnRemoveSelectedOption = (
+  const handleMultiSelectAuditor = (list: GetAllEmployeesNames[]) => {
+    setAddAuditorName(list)
+  }
+  const handleMultiSelectAuditees = (list: GetAllEmployeesNames[]) => {
+    setAddAuditeeName(list)
+  }
+
+  const handleOnRemoveSelectedAuditorOption = (
     selectedList: GetAllEmployeesNames[],
   ) => {
     setAddAuditorName(selectedList)
   }
+  const handleOnRemoveSelectedAuditeeOption = (
+    selectedList: GetAllEmployeesNames[],
+  ) => {
+    setAddAuditeeName(selectedList)
+  }
+
+  const handleSelectProjectType = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setAuditProjectType(event.target.value)
+    if (event.target.value === 'false') {
+      setIsProjectManagerVisible(true)
+    } else {
+      setIsProjectManagerVisible(false)
+    }
+  }
 
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
-    setAddEvent({ ...addEvent, startTime: val1, endTime: val2 })
+    setAddAudit({ ...addAudit, startTime: val1, endTime: val2 })
+  }
+  const successToastMessage = (
+    <OToast toastMessage="Audit Form Saved Successfully" toastColor="success" />
+  )
+  const handleAddNewAuditForm = async () => {
+    const startTimeSplit = addAudit.startTime.split(':')
+    const endTimeSplit = addAudit.endTime.split(':')
+    const prepareObject = {
+      ...addAudit,
+      auditDate,
+      auditRescheduleStatus: false,
+      formStatus: 'Save' || 'Submit',
+      projectType: auditProjectType,
+      projectName:
+        auditProjectType === 'false'
+          ? addAudit.projectName
+          : projectNameAutoCompleteTarget,
+      ...(auditProjectType === 'true' && { projectId: selectProject }),
+      ...(auditProjectType === 'false' && {
+        projectManagerId: selectProjectMgr,
+      }),
+      auditeeIds: addAuditeeName?.map((currentItem) => currentItem.id),
+      auditorIds: addAuditorName?.map((currentItem) => currentItem.id),
+      startTime: `${auditDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      endTime: `${auditDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
+    }
+    const addNewAuditFormResultAction = await dispatch(
+      reduxServices.addNewAuditForm.saveNewAuditForm(prepareObject),
+    )
+    if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
+        addNewAuditFormResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
   }
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Event Edit"
+        title="Add New Audit"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -117,6 +257,9 @@ const AddNewAudit = (): JSX.Element => {
                 autoComplete="off"
                 type="text"
                 name="auditType"
+                placeholder="Audit Type"
+                value={addAudit.auditType}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -129,7 +272,7 @@ const AddNewAudit = (): JSX.Element => {
               sm={2}
               md={1}
               lg={1}
-              data-testid="requiredDoc"
+              data-testid="projectType-development"
             >
               <CFormCheck
                 type="radio"
@@ -137,8 +280,10 @@ const AddNewAudit = (): JSX.Element => {
                 id="projectType"
                 data-testid="projType-dev"
                 label="Development "
-                value="yes"
+                value="true"
                 inline
+                checked={!isProjectManagerVisible}
+                onChange={handleSelectProjectType}
               />
             </CCol>
             <CCol
@@ -146,7 +291,7 @@ const AddNewAudit = (): JSX.Element => {
               sm={2}
               md={1}
               lg={1}
-              data-testid="documentsReqNo"
+              data-testid="projectType-support"
             >
               <CFormCheck
                 type="radio"
@@ -154,8 +299,10 @@ const AddNewAudit = (): JSX.Element => {
                 id="projectType"
                 data-testid="projType-support"
                 label="Support"
-                value="no"
+                value="false"
                 inline
+                checked={isProjectManagerVisible}
+                onChange={handleSelectProjectType}
               />
             </CCol>
           </CRow>
@@ -170,53 +317,128 @@ const AddNewAudit = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
-              <Autocomplete
-                inputProps={{
-                  className: 'form-control form-control-sm',
-                  placeholder: 'Project Name',
-                }}
-                getItemValue={(item) => item.projectName}
-                items={projects ? projects : []}
-                wrapperStyle={{ position: 'relative' }}
-                renderMenu={(children) => (
-                  <div
-                    className={
-                      projectNameAutoCompleteTarget &&
-                      projectNameAutoCompleteTarget.length > 0
-                        ? 'autocomplete-dropdown-wrap'
-                        : 'autocomplete-dropdown-wrap hide'
-                    }
-                  >
-                    {children}
-                  </div>
-                )}
-                renderItem={(item, isHighlighted) => (
-                  <div
-                    data-testid="project-option"
-                    className={
-                      isHighlighted
-                        ? 'autocomplete-dropdown-item active'
-                        : 'autocomplete-dropdown-item '
-                    }
-                    key={item.id}
-                  >
-                    {item.projectName}
-                  </div>
-                )}
-                value={projectNameAutoCompleteTarget}
-                shouldItemRender={(item, itemValue) =>
-                  item?.projectName
-                    ?.toLowerCase()
-                    .indexOf(itemValue?.toLowerCase()) > -1
-                }
-                onChange={(e) => projectsOnChangeHandler(e)}
-                onSelect={(selectedVal) =>
-                  onHandleSelectProjectName(selectedVal)
-                }
-              />
-            </CCol>
+            {!isProjectManagerVisible && (
+              <CCol sm={3}>
+                <Autocomplete
+                  inputProps={{
+                    className: 'form-control form-control-sm',
+                    placeholder: 'Project Name',
+                  }}
+                  getItemValue={(item) => item.projectName}
+                  items={projects ? projects : []}
+                  wrapperStyle={{ position: 'relative' }}
+                  renderMenu={(children) => (
+                    <div
+                      className={
+                        projectNameAutoCompleteTarget &&
+                        projectNameAutoCompleteTarget.length > 0
+                          ? 'autocomplete-dropdown-wrap'
+                          : 'autocomplete-dropdown-wrap hide'
+                      }
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      data-testid="project-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active'
+                          : 'autocomplete-dropdown-item '
+                      }
+                      key={item.id}
+                    >
+                      {item.projectName}
+                    </div>
+                  )}
+                  value={projectNameAutoCompleteTarget}
+                  shouldItemRender={(item, itemValue) =>
+                    item?.projectName
+                      ?.toLowerCase()
+                      .indexOf(itemValue?.toLowerCase()) > -1
+                  }
+                  onChange={(e) => projectsOnChangeHandler(e)}
+                  onSelect={(selectedVal) =>
+                    onHandleSelectProjectName(selectedVal)
+                  }
+                />
+              </CCol>
+            )}
+            {isProjectManagerVisible && (
+              <CCol sm={3}>
+                <CFormInput
+                  data-testid="projectName-input"
+                  autoComplete="off"
+                  type="text"
+                  name="projectName"
+                  placeholder="Project Name"
+                  value={addAudit.projectName}
+                  onChange={handleInputChange}
+                />
+              </CCol>
+            )}
           </CRow>
+          {isProjectManagerVisible && (
+            <CRow className="mt-4 mb-4">
+              <CFormLabel {...formLabelProps} className={formLabel}>
+                Project Manager:
+                <span
+                  className={
+                    projectManagerAutoCompleteTarget ? TextWhite : TextDanger
+                  }
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={3}>
+                <Autocomplete
+                  inputProps={{
+                    className: 'form-control form-control-sm',
+                    placeholder: 'Project Manager',
+                  }}
+                  getItemValue={(item) => item.firstName}
+                  items={projectManagers ? projectManagers : []}
+                  wrapperStyle={{ position: 'relative' }}
+                  renderMenu={(children) => (
+                    <div
+                      className={
+                        projectManagerAutoCompleteTarget &&
+                        projectManagerAutoCompleteTarget.length > 0
+                          ? 'autocomplete-dropdown-wrap'
+                          : 'autocomplete-dropdown-wrap hide'
+                      }
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      data-testid="projectManager-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active'
+                          : 'autocomplete-dropdown-item '
+                      }
+                      key={item.id}
+                    >
+                      {item.firstName}
+                    </div>
+                  )}
+                  value={projectManagerAutoCompleteTarget}
+                  shouldItemRender={(item, itemValue) =>
+                    item?.firstName
+                      ?.toLowerCase()
+                      .indexOf(itemValue?.toLowerCase()) > -1
+                  }
+                  onChange={(e) => projectManagerOnChangeHandler(e)}
+                  onSelect={(selectedVal) =>
+                    onHandleSelectProjectManager(selectedVal)
+                  }
+                />
+              </CCol>
+            </CRow>
+          )}
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Auditors:
@@ -228,18 +450,15 @@ const AddNewAudit = (): JSX.Element => {
               <Multiselect
                 className="ovh-multiselect"
                 data-testid="employee-option"
-                options={
-                  allEmployeesProfiles?.map((employee) => employee.fullName) ||
-                  []
-                }
+                options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
                 placeholder={addAuditorName?.length ? '' : 'Employees Name'}
                 selectedValues={addAuditorName}
                 onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelect(list)
+                  handleMultiSelectAuditor(list)
                 }
                 onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedOption(selectedList)
+                  handleOnRemoveSelectedAuditorOption(selectedList)
                 }
               />
             </CCol>
@@ -247,7 +466,7 @@ const AddNewAudit = (): JSX.Element => {
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Auditees:
-              <span className={addAuditorName?.length ? TextWhite : TextDanger}>
+              <span className={addAuditeeName?.length ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -255,17 +474,15 @@ const AddNewAudit = (): JSX.Element => {
               <Multiselect
                 className="ovh-multiselect"
                 data-testid="employee-option"
-                options={
-                  allEmployeesProfiles?.map((employee) => employee) || []
-                }
+                options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
-                placeholder={addAuditorName?.length ? '' : 'Employees Name'}
-                selectedValues={addAuditorName}
+                placeholder={addAuditeeName?.length ? '' : 'Employees Name'}
+                selectedValues={addAuditeeName}
                 onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelect(list)
+                  handleMultiSelectAuditees(list)
                 }
                 onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedOption(selectedList)
+                  handleOnRemoveSelectedAuditeeOption(selectedList)
                 }
               />
             </CCol>
@@ -278,27 +495,19 @@ const AddNewAudit = (): JSX.Element => {
             <CCol sm={3}>
               <ReactDatePicker
                 id="holiday-date"
-                data-testid="holidayDateInput"
+                data-testid="auditDate-Input"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="Holiday Date"
-                name="holidayDate"
+                placeholderText="dd/mm/yyyy"
+                name="auditDate"
                 minDate={new Date()}
-                value={
-                  auditDate
-                    ? new Date(auditDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
+                value={auditDate}
                 onChange={(date: Date) => {
-                  setAuditDate(moment(date).format(commonFormatDate))
+                  setAuditDate(moment(date).format('DD/MM/YYYY'))
                 }}
               />
             </CCol>
@@ -312,7 +521,8 @@ const AddNewAudit = (): JSX.Element => {
                 data-testid="newAudit-save-btn"
                 className="btn-ovh me-1"
                 color="success"
-                disabled
+                disabled={!isButtonEnable}
+                onClick={handleAddNewAuditForm}
               >
                 Save
               </CButton>
@@ -320,6 +530,8 @@ const AddNewAudit = (): JSX.Element => {
                 data-testid="newAudit-submit-btn"
                 color="success "
                 className="btn-ovh"
+                disabled={!isButtonEnable}
+                onClick={handleAddNewAuditForm}
               >
                 Submit
               </CButton>

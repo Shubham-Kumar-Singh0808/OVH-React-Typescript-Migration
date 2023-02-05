@@ -8,7 +8,7 @@ const AuditStartTimeEndTime = ({
   onSelectStartAndEndTime: (val1: string, val2: string) => void
 }): JSX.Element => {
   const auditHoursList = [
-    { label: '00', value: '' },
+    { label: '00', value: '00' },
     { label: '01', value: '01' },
     { label: '02', value: '02' },
     { label: '03', value: '03' },
