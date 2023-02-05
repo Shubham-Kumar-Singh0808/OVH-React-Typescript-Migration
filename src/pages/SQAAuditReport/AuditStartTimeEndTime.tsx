@@ -68,7 +68,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeHours"
                   id="startTimeHours"
-                  data-testid="startTimeHours"
+                  data-testid="audit-startTimeHours"
                   name="startTimeHours"
                   value={auditStartTime.hours}
                   onChange={(e) => {
@@ -89,7 +89,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMin"
                   id="startTimeMin"
-                  data-testid="startTimeMin"
+                  data-testid="audit-startTimeMin"
                   name="startTimeMin"
                   value={auditStartTime.minutes}
                   onChange={(e) => {
@@ -110,7 +110,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMeridian"
                   id="startTimeMeridian"
-                  data-testid="startTimeMeridian"
+                  data-testid="audit-startTimeMeridian"
                   name="startTimeMeridian"
                   value={auditStartTime.meridian}
                   onChange={(e) => {
@@ -140,7 +140,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeHours"
                   id="endTimeHours"
-                  data-testid="endTimeHours"
+                  data-testid="audit-endTimeHours"
                   name="endTimeHours"
                   value={auditEndTime.hours}
                   onChange={(e) => {
@@ -158,7 +158,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMin"
                   id="endTimeMin"
-                  data-testid="endTimeMin"
+                  data-testid="audit-endTimeMin"
                   name="endTimeMin"
                   value={auditEndTime.minutes}
                   onChange={(e) => {
@@ -179,7 +179,7 @@ const AuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMeridian"
                   id="endTimeMeridian"
-                  data-testid="endTimeMeridian"
+                  data-testid="audit-endTimeMeridian"
                   name="endTimeMeridian"
                   value={auditEndTime.meridian}
                   onChange={(e) => {
