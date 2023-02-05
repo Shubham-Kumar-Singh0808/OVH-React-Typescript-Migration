@@ -1,16 +1,21 @@
-import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
+import ProcessAreaTable from './ProcessAreaTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const ProcessArea = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getMeetingRooms())
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
   }, [dispatch])
+
+  const ProjectTailoringList = useTypedSelector(
+    reduxServices.processArea.selectors.ProjectTailoringList,
+  )
+
   return (
     <>
       <OCard
@@ -32,9 +37,22 @@ const ProcessArea = (): JSX.Element => {
               name="location"
             >
               <option value={''}>-- Select Category --</option>
+              {ProjectTailoringList.length > 0 &&
+                ProjectTailoringList?.map((item, index) => (
+                  <option key={index}>{item.processHeadname}</option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton color="info" className="btn-ovh me-1">
+              <i className="fa fa-plus me-1"></i>
+              Add Process Area
+            </CButton>
+          </CCol>
+        </CRow>
+        <ProcessAreaTable />
       </OCard>
     </>
   )

@@ -35,4 +35,5 @@ export type ProcessAreaSliceState = {
   isLoading: ApiLoadingState
   error: ValidationError
   getProjectTailoringDocument: ProjectTailoringDocument[]
+  ProcessSubHeads: ProcessSubHeadsDto[]
 }

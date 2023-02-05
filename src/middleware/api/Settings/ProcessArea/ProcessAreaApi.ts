@@ -10,7 +10,7 @@ const getProjectTailoringDocument = async (
 ): Promise<ProjectTailoringDocument[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: processAreaApiConfig.getProjectTailoringDocument,
-    method: AllowedHttpMethods.delete,
+    method: AllowedHttpMethods.get,
     params: {
       flag,
     },
