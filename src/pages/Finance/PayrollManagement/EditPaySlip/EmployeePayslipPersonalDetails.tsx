@@ -45,7 +45,11 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Designation:
           <span
-            className={toEditPayslipCopy.designation ? TextWhite : TextDanger}
+            className={
+              toEditPayslipCopy.designation?.replace(/^\s*/, '')
+                ? TextWhite
+                : TextDanger
+            }
           >
             *
           </span>
@@ -77,7 +81,11 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
           Account Number:
           <span
-            className={toEditPayslipCopy.accountNo ? TextWhite : TextDanger}
+            className={
+              toEditPayslipCopy.accountNo?.replace(/^\s*/, '')
+                ? TextWhite
+                : TextDanger
+            }
           >
             *
           </span>
