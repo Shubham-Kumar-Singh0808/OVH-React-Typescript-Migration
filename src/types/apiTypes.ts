@@ -773,3 +773,7 @@ export interface ProjectStatusApi extends ApiBase {
   deleteStatusReport: string
   updateStatusReport: string
 }
+export interface SQAAuditReportApi extends ApiBase {
+  getSQAAuditReport: string
+  exportSqaAuditReport: string
+}
