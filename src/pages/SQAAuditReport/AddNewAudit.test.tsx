@@ -1,19 +1,32 @@
 import React from 'react'
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
 import AddNewAudit from './AddNewAudit'
-import { render, screen } from '../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
+import {
+  mockEmployeeNames,
+  mockProjectNames,
+} from '../../test/data/allocateEmployeeData'
 
 const backButton = 'newAudit-back-btn'
 const auditTypeInputElement = 'auditType-input'
 const projectTypeDevelopment = 'projType-dev'
 const projectTypeSupport = 'projType-support'
 const projectNameInputElement = 'projectName-input'
+const employeeNames = 'Employees Name'
 const auditorsOptions = 'auditors-option'
 const auditeesOptions = 'auditees-option'
 
 describe('render all inputs without crashing', () => {
   beforeEach(() => {
-    render(<AddNewAudit />)
+    render(<AddNewAudit />, {
+      preloadedState: {
+        allocateEmployee: {
+          getAllEmployees: mockEmployeeNames,
+          getAllProjects: mockProjectNames,
+        },
+      },
+    })
   })
   test('should render Add Audit Header Text', () => {
     expect(screen.getByText('Add New Audit')).toBeInTheDocument()
@@ -37,12 +50,29 @@ describe('render all inputs without crashing', () => {
     expect(screen.getByTestId(projectTypeSupport)).toBeTruthy()
   })
   test('should render projectName Input', () => {
+    const projectTypeRbtn = screen.getByTestId(projectTypeSupport)
+    userEvent.click(projectTypeRbtn)
+    expect(projectTypeRbtn).toBeChecked()
     expect(screen.getByTestId(projectNameInputElement)).toBeTruthy()
   })
-  test('should render auditors options', () => {
-    expect(screen.getByTestId(auditorsOptions)).toBeTruthy()
+  test('should render auditdate', async () => {
+    const audiDatePickerEle = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(audiDatePickerEle[0])
+
+    await waitFor(() =>
+      fireEvent.change(audiDatePickerEle[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
   })
-  test('should render auditees options', () => {
-    expect(screen.getByTestId(auditeesOptions)).toBeTruthy()
+  test('should render projectName autocomplete on select projectType Development', () => {
+    const projectTypeRbtn = screen.getByTestId(projectTypeDevelopment)
+    userEvent.click(projectTypeRbtn)
+    expect(projectTypeRbtn).toBeChecked()
+    const employeeNameInput = screen.getAllByPlaceholderText(employeeNames)
+    userEvent.type(employeeNameInput[0], 'Sunny')
+
+    const projectNameInput = screen.getByPlaceholderText('Project Name')
+    userEvent.type(projectNameInput, 'ovh')
   })
 })
