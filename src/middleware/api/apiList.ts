@@ -103,6 +103,7 @@ import {
   ReviewListApi,
   AppraisalTemplateApi,
   ProjectStatusApi,
+  SQAAuditReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -937,4 +938,9 @@ export const projectStatusApiConfig: ProjectStatusApi = {
   addStatusReport: apiPrefix + '/project-mgmt/statusReports',
   deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
   updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
+}
+
+export const sqaAuditReportApiConfig: SQAAuditReportApi = {
+  getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
+  exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
 }
