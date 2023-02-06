@@ -193,6 +193,9 @@ const AddNewAudit = (): JSX.Element => {
   const successToastMessage = (
     <OToast toastMessage="Audit Form Saved Successfully" toastColor="success" />
   )
+  const warningToastMessage = (
+    <OToast toastMessage="Audit Already Exists" toastColor="danger" />
+  )
   const handleAddNewAuditForm = async () => {
     const startTimeSplit = addAudit.startTime.split(':')
     const endTimeSplit = addAudit.endTime.split(':')
@@ -224,6 +227,13 @@ const AddNewAudit = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    } else if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
+        addNewAuditFormResultAction,
+      ) &&
+      addNewAuditFormResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(warningToastMessage))
     }
   }
 
@@ -253,7 +263,7 @@ const AddNewAudit = (): JSX.Element => {
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="audit-type"
+                data-testid="auditType-input"
                 autoComplete="off"
                 type="text"
                 name="auditType"
@@ -449,7 +459,7 @@ const AddNewAudit = (): JSX.Element => {
             <CCol sm={3}>
               <Multiselect
                 className="ovh-multiselect"
-                data-testid="employee-option"
+                data-testid="auditors-option"
                 options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
                 placeholder={addAuditorName?.length ? '' : 'Employees Name'}
@@ -473,7 +483,7 @@ const AddNewAudit = (): JSX.Element => {
             <CCol sm={3}>
               <Multiselect
                 className="ovh-multiselect"
-                data-testid="employee-option"
+                data-testid="auditees-option"
                 options={allEmployeeProfiles?.map((employee) => employee) || []}
                 displayValue="fullName"
                 placeholder={addAuditeeName?.length ? '' : 'Employees Name'}

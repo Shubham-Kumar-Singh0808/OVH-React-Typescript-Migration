@@ -3,12 +3,13 @@ import '@testing-library/jest-dom'
 import AddNewAudit from './AddNewAudit'
 import { render, screen } from '../../test/testUtils'
 
-const startTimeHrsInput = 'audit-startTimeHours'
-const endTimeHrsInput = 'audit-endTimeHours'
-const startTimeMinInput = 'audit-startTimeMin'
-const endTimeMinInput = 'audit-endTimeMin'
-const startTimeMeridianInput = 'audit-startTimeMeridian'
-const endTimeMeridianInput = 'audit-endTimeMeridian'
+const backButton = 'newAudit-back-btn'
+const auditTypeInputElement = 'auditType-input'
+const projectTypeDevelopment = 'projType-dev'
+const projectTypeSupport = 'projType-support'
+const projectNameInputElement = 'projectName-input'
+const auditorsOptions = 'auditors-option'
+const auditeesOptions = 'auditees-option'
 
 describe('render all inputs without crashing', () => {
   beforeEach(() => {
@@ -23,22 +24,25 @@ describe('render all inputs without crashing', () => {
     const submitBtnElement = screen.getByRole('button', { name: 'Submit' })
     expect(submitBtnElement).toBeTruthy()
   })
-  test('should startTime Hrs name Input', () => {
-    expect(screen.getByTestId(startTimeHrsInput)).toBeTruthy()
+  test('should render back button', () => {
+    expect(screen.getByTestId(backButton)).toBeTruthy()
   })
-  test('should render startTimeMins Input', () => {
-    expect(screen.getByTestId(startTimeMinInput)).toBeTruthy()
+  test('should render auditType Input', () => {
+    expect(screen.getByTestId(auditTypeInputElement)).toBeTruthy()
   })
-  test('should render startTimeMeridian Input', () => {
-    expect(screen.getByTestId(startTimeMeridianInput)).toBeTruthy()
+  test('should render development radio button Input', () => {
+    expect(screen.getByTestId(projectTypeDevelopment)).toBeTruthy()
   })
-  test('should endTime Hrs name Input', () => {
-    expect(screen.getByTestId(endTimeHrsInput)).toBeTruthy()
+  test('should render support radio button Input', () => {
+    expect(screen.getByTestId(projectTypeSupport)).toBeTruthy()
   })
-  test('should render endTimeMins Input', () => {
-    expect(screen.getByTestId(endTimeMinInput)).toBeTruthy()
+  test('should render projectName Input', () => {
+    expect(screen.getByTestId(projectNameInputElement)).toBeTruthy()
   })
-  test('should render endTimeMeridian Input', () => {
-    expect(screen.getByTestId(endTimeMeridianInput)).toBeTruthy()
+  test('should render auditors options', () => {
+    expect(screen.getByTestId(auditorsOptions)).toBeTruthy()
+  })
+  test('should render auditees options', () => {
+    expect(screen.getByTestId(auditeesOptions)).toBeTruthy()
   })
 })
