@@ -49,6 +49,9 @@ const SQAAuditReportTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -79,7 +82,7 @@ const SQAAuditReportTable = ({
                 auditReport?.projectType === 'true' ? 'Development' : 'Support'
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                   <CTableDataCell>{auditReport?.auditType}</CTableDataCell>
                   <CTableDataCell>{projectType}</CTableDataCell>
                   <CTableDataCell>{auditReport?.projectName}</CTableDataCell>
