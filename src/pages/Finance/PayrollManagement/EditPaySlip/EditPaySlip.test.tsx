@@ -59,6 +59,10 @@ describe('Edit BankAccount without data', () => {
           specificDesignation: null,
         }}
         setToggle={mockSetTogglePage}
+        currentPage={1}
+        pageSize={22}
+        selectMonth=""
+        selectYear=""
       />,
     )
   })
