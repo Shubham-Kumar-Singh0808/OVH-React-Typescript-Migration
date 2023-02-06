@@ -72,30 +72,39 @@ const SQAAuditReportTable = ({
           {isLoading !== ApiLoadingState.loading ? (
             sqaAuditReportResponse &&
             sqaAuditReportResponse?.map((auditReport, index) => {
+              const auditRescheduleStatus = auditReport?.auditRescheduleStatus
+                ? 'Yes'
+                : 'No'
+              const projectType =
+                auditReport?.projectType === 'true' ? 'Development' : 'Support'
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
                   <CTableDataCell>{auditReport?.auditType}</CTableDataCell>
-                  <CTableDataCell>{auditReport?.projectType}</CTableDataCell>
+                  <CTableDataCell>{projectType}</CTableDataCell>
                   <CTableDataCell>{auditReport?.projectName}</CTableDataCell>
                   <CTableDataCell>{auditReport?.projectManager}</CTableDataCell>
                   <CTableDataCell>{auditReport?.auditDate}</CTableDataCell>
-                  {/* <CTableDataCell>{auditReport}</CTableDataCell> */}
+                  <CTableDataCell>
+                    {auditReport?.startTime}-{auditReport.endTime}
+                  </CTableDataCell>
                   <CTableDataCell>{auditReport.auditStatus}</CTableDataCell>
-                  <CTableDataCell>{'N/A'}</CTableDataCell>
-                  <CTableDataCell>{'N/A'}</CTableDataCell>
-                  <CTableDataCell>{'N/A'}</CTableDataCell>
+                  <CTableDataCell>{auditReport.pci || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>
+                    {auditReport.followUpDate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>{auditRescheduleStatus}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
-                      color="info"
-                      className="btn-ovh me-2"
+                      color="success"
+                      className="btn-ovh-employee-list"
                       data-testid="edit-btn"
                     >
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh me-2"
+                      className="btn-ovh-employee-list"
                       data-testid="edit-btn"
                     >
                       <i
@@ -105,7 +114,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh me-2"
+                      className="btn-ovh-employee-list"
                       data-testid="edit-btn"
                     >
                       <i
@@ -114,8 +123,18 @@ const SQAAuditReportTable = ({
                       ></i>
                     </CButton>
                     <CButton
-                      color="info"
-                      className="btn-ovh me-2"
+                      color="danger"
+                      className="btn-ovh-employee-list"
+                      data-testid="edit-btn"
+                    >
+                      <i
+                        className="fa fa-times text-white"
+                        aria-hidden="true"
+                      ></i>
+                    </CButton>
+                    <CButton
+                      color="danger"
+                      className="btn-ovh-employee-list"
                       data-testid="edit-btn"
                     >
                       <i
@@ -125,7 +144,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh me-2"
+                      className="btn-ovh-employee-list"
                       data-testid="edit-btn"
                     >
                       <i

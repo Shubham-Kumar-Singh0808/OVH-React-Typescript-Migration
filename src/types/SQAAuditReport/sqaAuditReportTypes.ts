@@ -27,7 +27,7 @@ export type SQAAuditReportList = {
   projectManager: string
   projectManagerId: number
   projectName: string
-  projectType: string
+  projectType: string | boolean
   showEditButton: boolean
   sqaComments: null
   sqaFileName: null
