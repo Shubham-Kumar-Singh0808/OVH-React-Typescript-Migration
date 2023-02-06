@@ -36,9 +36,46 @@ const getProcessAreas = async (categoryId: number): Promise<ProcessAreas[]> => {
   return response.data
 }
 
+const createProcessArea = async ({
+  categoryId,
+  name,
+}: {
+  categoryId: number
+  name: string
+}): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.createProcessArea,
+    method: AllowedHttpMethods.post,
+    data: {
+      name,
+      categoryId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const checkDuplicateProcess = async (
+  processName: string,
+): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.checkDuplicateProcess,
+    method: AllowedHttpMethods.get,
+    params: {
+      processName,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ProcessAreaApi = {
   getProjectTailoringDocument,
   getProcessAreas,
+  createProcessArea,
+  checkDuplicateProcess,
 }
 
 export default ProcessAreaApi

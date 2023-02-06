@@ -944,4 +944,6 @@ export const processAreaApiConfig: ProcessAreaListApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProcessAreas: apiPrefix + '/projectTailoring/getProcessAreas',
+  createProcessArea: apiPrefix + '/projectTailoring/createProcessArea',
+  checkDuplicateProcess: apiPrefix + '/projectTailoring/checkDuplicateProcess',
 }

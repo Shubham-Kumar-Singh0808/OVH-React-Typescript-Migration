@@ -35,6 +35,42 @@ const getProcessAreas = createAsyncThunk(
   },
 )
 
+const createProcessArea = createAsyncThunk(
+  'processArea/createProcessArea',
+  async (
+    {
+      categoryId,
+      name,
+    }: {
+      categoryId: number
+      name: string
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await ProcessAreaApi.createProcessArea({
+        name,
+        categoryId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const checkDuplicateProcess = createAsyncThunk(
+  'processArea/checkDuplicateProcess',
+  async (processName: string, thunkApi) => {
+    try {
+      return await ProcessAreaApi.checkDuplicateProcess(processName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialProcessAreaState: ProcessAreaSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -53,12 +89,22 @@ const ProcessAreaSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getProjectTailoringDocument = action.payload
       })
-      .addMatcher(isAnyOf(getProjectTailoringDocument.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getProcessAreas.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.ProcessAreas = action.payload
       })
-      .addMatcher(isAnyOf(getProjectTailoringDocument.rejected), (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
+      .addMatcher(
+        isAnyOf(getProjectTailoringDocument.pending, getProcessAreas.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(getProjectTailoringDocument.rejected, getProcessAreas.rejected),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
   },
 })
 
@@ -77,6 +123,8 @@ const ProcessArea = (state: RootState): ProcessAreas[] =>
 const processAreaThunk = {
   getProjectTailoringDocument,
   getProcessAreas,
+  createProcessArea,
+  checkDuplicateProcess,
 }
 
 const processAreaSelectors = {

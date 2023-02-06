@@ -9,21 +9,25 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const NewProcessAreas = ({
   setToggle,
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const ProjectTailoringList = useTypedSelector(
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
   const [selectCategory, setSelectCategory] = useState<string>('')
   const [processArea, setProcessArea] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [processNameExists, setProcessNameExists] = useState<string>('')
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -41,6 +45,56 @@ const NewProcessAreas = ({
   const clearData = () => {
     setSelectCategory('')
     setProcessArea('')
+  }
+
+  const processNameAlreadyExists = (name: string) => {
+    return ProjectTailoringList?.find((processName) => {
+      return processName.processHeadname.toLowerCase() === name.toLowerCase()
+    })
+  }
+
+  const handledInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'processArea') {
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+      setProcessArea(newValue)
+    }
+    if (processNameAlreadyExists(value)) {
+      setProcessNameExists(value)
+    } else {
+      setProcessNameExists('')
+    }
+  }
+
+  const addedToastMessage = (
+    <OToast
+      toastMessage="Process Area saved successfully.
+    "
+      toastColor="success"
+    />
+  )
+
+  const addBtnHandler = async () => {
+    const addProcessNameResultAction = await dispatch(
+      reduxServices.processArea.createProcessArea({
+        categoryId: selectCategory as unknown as number,
+        name: processArea,
+      }),
+    )
+
+    if (
+      reduxServices.processArea.createProcessArea.fulfilled.match(
+        addProcessNameResultAction,
+      )
+    ) {
+      dispatch(reduxServices.processArea.checkDuplicateProcess(processArea))
+      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
   }
 
   return (
@@ -108,16 +162,23 @@ const NewProcessAreas = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="reviewTitle"
+                data-testid="processArea"
                 type="text"
-                id="reviewTitle"
+                id="processArea"
                 autoComplete="off"
                 size="sm"
-                name="reviewTitle"
+                name="processArea"
                 placeholder="Process Area Name"
                 value={processArea}
-                onChange={(e) => setProcessArea(e.target.value)}
+                onChange={handledInputChange}
               />
+            </CCol>
+            <CCol sm={3}>
+              {processNameExists && (
+                <p className={TextDanger} data-testid="nameAlreadyExist">
+                  Process Name Already Exists
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow>
@@ -127,6 +188,7 @@ const NewProcessAreas = ({
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isAddButtonEnabled}
+                onClick={addBtnHandler}
               >
                 Add
               </CButton>
