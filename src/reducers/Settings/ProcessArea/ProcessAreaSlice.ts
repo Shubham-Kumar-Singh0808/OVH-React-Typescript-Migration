@@ -5,6 +5,7 @@ import ProcessAreaApi from '../../../middleware/api/Settings/ProcessArea/Process
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  ProcessAreas,
   ProcessAreaSliceState,
   ProcessSubHeadsDto,
   ProjectTailoringDocument,
@@ -22,11 +23,24 @@ const getProjectTailoringDocument = createAsyncThunk(
   },
 )
 
+const getProcessAreas = createAsyncThunk(
+  'processArea/getProcessAreas',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await ProcessAreaApi.getProcessAreas(categoryId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialProcessAreaState: ProcessAreaSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   getProjectTailoringDocument: [],
   ProcessSubHeads: [],
+  ProcessAreas: [],
 }
 
 const ProcessAreaSlice = createSlice({
@@ -57,14 +71,19 @@ const ProjectTailoringList = (state: RootState): ProjectTailoringDocument[] =>
 const ProcessSubHeads = (state: RootState): ProcessSubHeadsDto[] =>
   state.processArea.ProcessSubHeads
 
+const ProcessArea = (state: RootState): ProcessAreas[] =>
+  state.processArea.ProcessAreas
+
 const processAreaThunk = {
   getProjectTailoringDocument,
+  getProcessAreas,
 }
 
 const processAreaSelectors = {
   isLoading,
   ProjectTailoringList,
   ProcessSubHeads,
+  ProcessArea,
 }
 
 export const processAreaService = {

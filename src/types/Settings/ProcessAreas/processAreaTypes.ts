@@ -2,7 +2,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { ValidationError } from '../../commonTypes'
 
 export type ProjectTailoringDocument = {
-  id: null
+  id: null | number
   processHeadId: number
   processHeadname: string
   processSubHeadsDto: ProcessSubHeadsDto[]
@@ -13,7 +13,7 @@ export type ProjectTailoringDocument = {
   processCount: string
 }
 export type ProcessSubHeadsDto = {
-  id: null
+  id: null | number
   categoryId: number
   processSubHeadId: number
   processAreaId: null
@@ -36,4 +36,11 @@ export type ProcessAreaSliceState = {
   error: ValidationError
   getProjectTailoringDocument: ProjectTailoringDocument[]
   ProcessSubHeads: ProcessSubHeadsDto[]
+  ProcessAreas: ProcessAreas[]
+}
+
+export type ProcessAreas = {
+  id: number
+  name: string
+  categoryId: number
 }

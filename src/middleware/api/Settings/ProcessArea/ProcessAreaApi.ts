@@ -1,4 +1,7 @@
-import { ProjectTailoringDocument } from '../../../../types/Settings/ProcessAreas/processAreaTypes'
+import {
+  ProcessAreas,
+  ProjectTailoringDocument,
+} from '../../../../types/Settings/ProcessAreas/processAreaTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -20,8 +23,22 @@ const getProjectTailoringDocument = async (
   return response.data
 }
 
+const getProcessAreas = async (categoryId: number): Promise<ProcessAreas[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.getProcessAreas,
+    method: AllowedHttpMethods.get,
+    params: {
+      categoryId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ProcessAreaApi = {
   getProjectTailoringDocument,
+  getProcessAreas,
 }
 
 export default ProcessAreaApi

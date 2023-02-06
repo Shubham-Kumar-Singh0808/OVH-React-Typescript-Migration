@@ -775,4 +775,5 @@ export interface ProjectStatusApi extends ApiBase {
 }
 export interface ProcessAreaListApi extends ApiBase {
   getProjectTailoringDocument: string
+  getProcessAreas: string
 }

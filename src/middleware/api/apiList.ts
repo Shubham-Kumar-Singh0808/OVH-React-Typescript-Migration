@@ -943,4 +943,5 @@ export const projectStatusApiConfig: ProjectStatusApi = {
 export const processAreaApiConfig: ProcessAreaListApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProcessAreas: apiPrefix + '/projectTailoring/getProcessAreas',
 }
