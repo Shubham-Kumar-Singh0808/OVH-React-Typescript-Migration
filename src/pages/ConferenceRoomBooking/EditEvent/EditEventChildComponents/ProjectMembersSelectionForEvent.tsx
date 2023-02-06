@@ -52,7 +52,6 @@ const ProjectMembersSelectionForEvent = ({
   const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
     useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  // const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
 
   const deleteAttendeeSuccessToast = (
