@@ -169,31 +169,28 @@ const SQAAuditReportFilterOptions = ({
             <option value="Custom">Custom</option>
           </CFormSelect>
         </CCol>
-        <CCol sm={4}>
-          <CRow>
-            <CCol sm={4} lg={5} className="text-end">
-              <CFormLabel className="mt-1">Status :</CFormLabel>
-            </CCol>
-            <CCol sm={6}>
-              <CFormSelect
-                aria-label="Default select example"
-                size="sm"
-                id="status"
-                data-testid="status"
-                name="status"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value={''}>Select Status</option>
-                <option value="open">open</option>
-                <option value="Closed">Closed</option>
-              </CFormSelect>
-            </CCol>
-          </CRow>
+
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">Status :</CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="status"
+            data-testid="status"
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value={''}>Select Status</option>
+            <option value="open">open</option>
+            <option value="Closed">Closed</option>
+          </CFormSelect>
         </CCol>
         <CCol sm={4}>
           <CRow>
-            <CCol sm={4} lg={5} className="text-end">
+            <CCol sm={3} lg={3} className="text-end">
               <CFormLabel className="mt-1">Reschedule Status :</CFormLabel>
             </CCol>
             <CCol sm={6}>
@@ -216,67 +213,69 @@ const SQAAuditReportFilterOptions = ({
       </CRow>
       {selectDate === 'Custom' ? (
         <>
-          <CCol sm={6}>
-            <CRow>
-              <CCol sm={4} md={4}>
-                <CFormLabel>
-                  From :
-                  {(fromDate == null || fromDate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
-                </CFormLabel>
-                <ReactDatePicker
-                  id="fromDate"
-                  data-testid="ticketReportFromDate"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  dateFormat="dd/mm/yy"
-                  placeholderText="dd/mm/yy"
-                  name="fromDate"
-                  value={fromDateValue}
-                  onChange={(date: Date) =>
-                    setFromDate(moment(date).format(commonFormatDate))
-                  }
-                />
-              </CCol>
-              <CCol sm={4} md={4}>
-                <CFormLabel>
-                  To :
-                  {(toDate == null || toDate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
-                </CFormLabel>
-                <ReactDatePicker
-                  id="toDate"
-                  data-testid="leaveApprovalFromDate"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  dateFormat="dd/mm/yy"
-                  placeholderText="dd/mm/yy"
-                  name="toDate"
-                  value={toDateValue}
-                  onChange={(date: Date) =>
-                    setToDate(moment(date).format(commonFormatDate))
-                  }
-                />
+          <CRow>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel>
+                From :
+                {(fromDate == null || fromDate === '') && (
+                  <span className="text-danger">*</span>
+                )}
+              </CFormLabel>
+            </CCol>
+            <CCol sm={2}>
+              <ReactDatePicker
+                id="fromDate"
+                data-testid="ticketReportFromDate"
+                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="dd/mm/yy"
+                name="fromDate"
+                value={fromDateValue}
+                onChange={(date: Date) =>
+                  setFromDate(moment(date).format(commonFormatDate))
+                }
+              />
+            </CCol>
+            <CCol sm={2} md={1} className="text-end">
+              <CFormLabel>
+                To :
+                {(toDate == null || toDate === '') && (
+                  <span className="text-danger">*</span>
+                )}
+              </CFormLabel>
+            </CCol>
+            <CCol sm={2}>
+              <ReactDatePicker
+                id="toDate"
+                data-testid="leaveApprovalFromDate"
+                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="dd/mm/yy"
+                name="toDate"
+                value={toDateValue}
+                onChange={(date: Date) =>
+                  setToDate(moment(date).format(commonFormatDate))
+                }
+              />
+            </CCol>
+          </CRow>
+          {dateError && (
+            <CRow className="mt-2">
+              <CCol sm={{ span: 6, offset: 4 }}>
+                <span className="text-danger">
+                  To date should be greater than From date
+                </span>
               </CCol>
             </CRow>
-            {dateError && (
-              <CRow className="mt-2">
-                <CCol sm={{ span: 6, offset: 4 }}>
-                  <span className="text-danger">
-                    To date should be greater than From date
-                  </span>
-                </CCol>
-              </CRow>
-            )}
-          </CCol>
+          )}
         </>
       ) : (
         <></>
@@ -301,8 +300,11 @@ const SQAAuditReportFilterOptions = ({
           </CButton>
         </CCol>
         <CCol xs={3} className="d-md-flex justify-content-md-end">
-          <CButton color="info btn-ovh me-0" onClick={handleExportSQAAuditData}>
+          <CButton color="info btn-ovh me-1" onClick={handleExportSQAAuditData}>
             <i className="fa fa-plus me-1"></i>Click to Export
+          </CButton>
+          <CButton color="info btn-ovh me-0">
+            <i className="fa fa-plus me-1"></i>Add
           </CButton>
         </CCol>
       </CRow>

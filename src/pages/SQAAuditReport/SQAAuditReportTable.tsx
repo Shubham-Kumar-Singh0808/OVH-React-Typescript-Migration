@@ -97,14 +97,14 @@ const SQAAuditReportTable = ({
                   <CTableDataCell>
                     <CButton
                       color="success"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i
@@ -114,7 +114,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i
@@ -124,7 +124,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="danger"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i
@@ -134,7 +134,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="danger"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i
@@ -144,7 +144,7 @@ const SQAAuditReportTable = ({
                     </CButton>
                     <CButton
                       color="info"
-                      className="btn-ovh-employee-list"
+                      className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
                     >
                       <i
