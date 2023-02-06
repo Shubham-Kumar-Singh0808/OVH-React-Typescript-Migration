@@ -422,6 +422,10 @@ const EditEvent = React.lazy(
 const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
+
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit'),
+)
 const SQAAudit = React.lazy(
   () => import('./pages/SQAAuditReport/SQAAuditReport'),
 )
@@ -921,6 +925,11 @@ const routes = [
     path: '/appraisalTemplate',
     name: '/appraisalTemplate',
     component: AppraisalTemplate,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
   },
 
   {
