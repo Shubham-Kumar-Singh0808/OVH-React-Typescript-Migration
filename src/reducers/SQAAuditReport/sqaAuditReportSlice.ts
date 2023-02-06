@@ -33,14 +33,19 @@ const sqaAuditReportSlice = createSlice({
   initialState: initialSQAAuditReportState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getSQAAuditReport.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.getSQAAuditReport = action.payload
-    })
+    builder
+      .addCase(getSQAAuditReport.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getSQAAuditReport = action.payload
+      })
+      .addCase(getSQAAuditReport.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 
-const isLoading = (state: RootState): LoadingState => state.tickets.isLoading
+const isLoading = (state: RootState): LoadingState =>
+  state.sqaAuditReport.isLoading
 
 const sqaAuditReport = (state: RootState): SQAAuditReportList[] =>
   state.sqaAuditReport.getSQAAuditReport.list
