@@ -134,8 +134,8 @@ const SQAAuditReportFilterOptions = ({
         SQAAuditSelectionDate: '',
         auditStatus: '',
         auditRescheduleStatus: '',
-        startdate: undefined,
-        enddate: undefined,
+        startdate: '',
+        enddate: '',
         multiSearch: '',
       },
     )
