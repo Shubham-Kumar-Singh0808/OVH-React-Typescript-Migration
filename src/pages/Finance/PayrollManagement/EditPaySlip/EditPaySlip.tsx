@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import EmployeePayslipPersonalDetails from './EmployeePayslipPersonalDetails'
 import EmployeePayslipTaxDetails from './EmployeePayslipTaxDetails'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -11,16 +12,22 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 const EditPaySlip = ({
   toEditPayslip,
   setToggle,
+  selectMonth,
+  selectYear,
+  currentPage,
+  pageSize,
 }: {
   toEditPayslip: CurrentPayslip
   setToggle: (value: string) => void
+  selectMonth: string
+  selectYear: string
+  currentPage: number
+  pageSize: number
 }): JSX.Element => {
   const [toEditPayslipCopy, setToEditPayslipCopy] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
-  const [designation, setDesignation] = useState('')
-  const [accountNo, setAccountNo] = useState('')
 
   const onChangeInputHandler = (
     e:
@@ -29,16 +36,9 @@ const EditPaySlip = ({
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'designation') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setDesignation(newValue)
-    } else if (name === 'accountNo') {
-      const accountNumber = value.replace(/\D/g, '')
-      setAccountNo(accountNumber)
-    } else
-      setToEditPayslipCopy((values) => {
-        return { ...values, ...{ [name]: value } }
-      })
+    setToEditPayslipCopy((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
   }
 
   useEffect(() => {
@@ -48,18 +48,18 @@ const EditPaySlip = ({
   }, [toEditPayslip])
 
   useEffect(() => {
-    if (toEditPayslip.designation && toEditPayslip.accountNo) {
+    if (toEditPayslipCopy?.designation && toEditPayslipCopy?.accountNo) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
-  }, [toEditPayslip])
+  }, [toEditPayslipCopy])
 
   const dispatch = useAppDispatch()
 
   const updateToastMessage = (
     <OToast
-      toastMessage="  Your changes have been saved successfully.
+      toastMessage="Your changes have been saved successfully.
     "
       toastColor="success"
     />
@@ -67,7 +67,7 @@ const EditPaySlip = ({
 
   const handleUpdateHandler = async () => {
     const prepareObject = {
-      ...toEditPayslip,
+      ...toEditPayslipCopy,
     }
     const updatePaySlipsResultAction = await dispatch(
       reduxServices.payrollManagement.updatePayslip(prepareObject),
@@ -78,6 +78,15 @@ const EditPaySlip = ({
         updatePaySlipsResultAction,
       )
     ) {
+      setToggle('')
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          month: selectMonth,
+          year: Number(selectYear),
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -93,25 +102,25 @@ const EditPaySlip = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={'/payslipUpload'}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={() => setToggle('')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
 
         <EmployeePayslipPersonalDetails
-          toEditPayslip={toEditPayslipCopy}
+          toEditPayslipCopy={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
-          designation={designation}
-          accountNo={accountNo}
         />
         <EmployeePayslipTaxDetails
-          toEditPayslip={toEditPayslipCopy}
+          toEditPayslipCopy={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
         />
         <CRow>
@@ -120,7 +129,7 @@ const EditPaySlip = ({
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={isUpdateBtnEnabled}
+              disabled={!isUpdateBtnEnabled}
               onClick={handleUpdateHandler}
             >
               Update

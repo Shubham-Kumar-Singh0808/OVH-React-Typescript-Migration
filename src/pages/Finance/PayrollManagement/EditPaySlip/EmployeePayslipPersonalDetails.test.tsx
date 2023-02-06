@@ -12,7 +12,7 @@ describe('Allocate Employee without data', () => {
   beforeEach(() => {
     render(
       <EmployeePayslipPersonalDetails
-        toEditPayslip={{
+        toEditPayslipCopy={{
           paySlipId: 0,
           employeeId: 0,
           designation: '',
@@ -62,8 +62,6 @@ describe('Allocate Employee without data', () => {
           specificDesignation: null,
         }}
         onChangeInputHandler={mockSetTogglePage}
-        designation={''}
-        accountNo={''}
       />,
       {
         preloadedState: {
