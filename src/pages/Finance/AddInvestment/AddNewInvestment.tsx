@@ -318,7 +318,7 @@ const AddNewInvestment = ({
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
-              checked={isDocumentsVisible}
+              checked={isDocumentsVisible || false}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -337,7 +337,6 @@ const AddNewInvestment = ({
               data-testid="documentsReqNo"
               label="No"
               value="no"
-              checked={!isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />
