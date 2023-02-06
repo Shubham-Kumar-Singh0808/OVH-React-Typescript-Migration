@@ -500,7 +500,7 @@ const AddNewAudit = (): JSX.Element => {
           <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Audit Date:
-              <span className={showIsRequired(auditDate as string)}>*</span>
+              <span className={showIsRequired(auditDate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <ReactDatePicker
