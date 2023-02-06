@@ -45,15 +45,13 @@ const AddProcessArea = ({
   const ProcessArea = useTypedSelector(
     reduxServices.processArea.selectors.ProcessArea,
   )
-  console.log(employeeVisaDetails.categoryId)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (selectCategory)
       dispatch(
-        reduxServices.processArea.getProcessAreas(
-          employeeVisaDetails.categoryId,
-        ),
+        reduxServices.processArea.getProcessAreas(Number(selectCategory)),
       )
   }, [dispatch, selectCategory])
 
@@ -93,16 +91,15 @@ const AddProcessArea = ({
                 id="location"
                 data-testid="form-select1"
                 name="location"
-                // value={employeeVisaDetails.categoryId}
-                // onChange={onChangeHandler}
+                value={selectCategory}
+                onChange={(e) => setSelectCategory(e.target.value)}
               >
                 <option value={''}>-- Select Category --</option>
-                {/* {ProjectTailoringList.length > 0 &&
-                  ProjectTailoringList?.map((item, index) => (
-                    <option key={index} value={item.id as number}>
-                      {item.processHeadname}
-                    </option>
-                  ))} */}
+                {ProjectTailoringList?.map((countriesItem, index) => (
+                  <option key={index} value={countriesItem.id as number}>
+                    {countriesItem.processHeadname}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -123,16 +120,15 @@ const AddProcessArea = ({
                 id="location"
                 data-testid="form-select1"
                 name="location"
-                // value={selectProcessAreaName}
-                // onChange={(e) => setSelectProcessAreaName(e.target.value)}
+                value={selectProcessAreaName}
+                onChange={(e) => setSelectProcessAreaName(e.target.value)}
               >
                 <option value={''}>-- Select Process Areas --</option>
-                {/* {ProcessArea.length > 0 &&
-                  ProcessArea?.map((item, index) => (
-                    <option key={index} value={item.id as number}>
-                      {item.name}
-                    </option>
-                  ))} */}
+                {ProcessArea?.map((visaTypeItem, index) => (
+                  <option key={index} value={visaTypeItem.categoryId}>
+                    {visaTypeItem.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CCol>
             <CCol className="col-sm-3">

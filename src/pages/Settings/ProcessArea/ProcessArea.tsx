@@ -20,6 +20,9 @@ const ProcessArea = (): JSX.Element => {
   const ProjectTailoringList = useTypedSelector(
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
+  const onChangeHandlerFunction = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectCategory(e.target.value)
+  }
   return (
     <>
       {toggle === '' && (
@@ -41,9 +44,10 @@ const ProcessArea = (): JSX.Element => {
                 data-testid="form-select1"
                 name="location"
                 value={selectCategory}
-                onChange={(e) => {
-                  setSelectCategory(e.target.value)
-                }}
+                // onChange={(e) => {
+                //   setSelectCategory(e.target.value)
+                // }}
+                onChange={onChangeHandlerFunction}
               >
                 <option value={''}>-- Select Category --</option>
                 {ProjectTailoringList.length > 0 &&
@@ -65,7 +69,7 @@ const ProcessArea = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
-          <ProcessAreaTable />
+          <ProcessAreaTable selectCategory={selectCategory} />
         </OCard>
       )}
       {toggle === 'addProcessArea' && <AddProcessArea setToggle={setToggle} />}

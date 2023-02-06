@@ -1,22 +1,29 @@
 import React from 'react'
 import {
+  CButton,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const ProcessAreaTable = (): JSX.Element => {
+const ProcessAreaTable = ({
+  selectCategory,
+}: {
+  selectCategory: string
+}): JSX.Element => {
   const ProjectTailoringList = useTypedSelector(
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
-  const ProcessSubHeads = useTypedSelector(
-    reduxServices.processArea.selectors.ProcessSubHeads,
+  const result = ProjectTailoringList?.filter(
+    (value) => value.processHeadname === selectCategory,
   )
+
   return (
     <>
       <CTable
@@ -37,29 +44,49 @@ const ProcessAreaTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {ProjectTailoringList.length > 0 &&
-            ProjectTailoringList?.map((item, index) => {
+          {result?.length > 0 &&
+            result?.map((cycle) => {
               return (
-                <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index}</CTableDataCell>
-                  {ProcessSubHeads.length > 0 &&
-                    ProcessSubHeads?.map((count) => {
+                <>
+                  {cycle.processSubHeadsDto.length > 0 &&
+                    cycle.processSubHeadsDto?.map((count, index) => {
                       return (
                         <>
-                          <CTableDataCell>
-                            {count.processSubHeadName}
-                          </CTableDataCell>
-                          <CTableDataCell>{count?.documentName}</CTableDataCell>
-                          <CTableDataCell>{count?.responsible}</CTableDataCell>
-                          <CTableDataCell>{count?.link}</CTableDataCell>
-                          <CTableDataCell>
-                            {count.status === 'true' ? 'Active' : 'Inactive'}
-                          </CTableDataCell>
-                          <CTableDataCell>{count?.order}</CTableDataCell>
+                          <CTableRow key={index}>
+                            <CTableDataCell scope="row">
+                              {index + 1}
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              {count.processSubHeadName}
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              {count?.documentName}
+                            </CTableDataCell>
+                            <CTableDataCell>
+                              {count?.responsible}
+                            </CTableDataCell>
+                            <CTableDataCell>{count?.link}</CTableDataCell>
+                            <CTableDataCell>
+                              {count.status === 'true' ? 'Active' : 'Inactive'}
+                            </CTableDataCell>
+                            <CTableDataCell>{count?.order}</CTableDataCell>
+                            <CTooltip content="Edit">
+                              <CButton
+                                size="sm"
+                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                                color="info btn-ovh me-1"
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
+                          </CTableRow>
                         </>
                       )
                     })}
-                </CTableRow>
+                </>
               )
             })}
         </CTableBody>
