@@ -1,30 +1,36 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import SQAAuditReportFilterOptions from './SQAAuditReportFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
 import { mockSQAAuditReport } from '../../test/data/sqaAuditReportData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <SQAAuditReportFilterOptions
+      selectDate={'Custom'}
+      setSelectDate={jest.fn()}
+      fromDate={''}
+      setFromDate={jest.fn()}
+      toDate={''}
+      setToDate={jest.fn()}
+    />
+    ,
+  </div>
+)
+
 describe('Create New Ticket Filter Options Component Testing with data', () => {
   beforeEach(() => {
-    render(
-      <SQAAuditReportFilterOptions
-        selectDate={'Custom'}
-        setSelectDate={jest.fn()}
-        fromDate={''}
-        setFromDate={jest.fn()}
-        toDate={''}
-        setToDate={jest.fn()}
-      />,
-      {
-        preloadedState: {
-          sqaAuditReport: {
-            getSQAAuditReport: mockSQAAuditReport,
-          },
+    render(toRender, {
+      preloadedState: {
+        sqaAuditReport: {
+          getSQAAuditReport: mockSQAAuditReport,
         },
       },
-    )
+    })
   })
   screen.debug()
   test('should able to select values for options for respective select element', async () => {
