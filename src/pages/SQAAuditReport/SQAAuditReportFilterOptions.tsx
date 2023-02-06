@@ -10,6 +10,7 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import SQAAuditReportTable from './SQAAuditReportTable'
 import { usePagination } from '../../middleware/hooks/usePagination'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -303,9 +304,11 @@ const SQAAuditReportFilterOptions = ({
           <CButton color="info btn-ovh me-1" onClick={handleExportSQAAuditData}>
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
-          <CButton color="info btn-ovh me-0">
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
+          <Link to={`/addAuditForm`}>
+            <CButton color="info btn-ovh me-0">
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </Link>
         </CCol>
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end">

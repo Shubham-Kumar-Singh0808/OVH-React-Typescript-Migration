@@ -12,6 +12,7 @@ import Multiselect from 'multiselect-react-dropdown'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
+import { Link, useHistory } from 'react-router-dom'
 import AuditStartTimeEndTime from './AuditStartTimeEndTime'
 import OCard from '../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../constant/ClassName'
@@ -27,6 +28,7 @@ const AddNewAudit = (): JSX.Element => {
     htmlFor: 'newAuditEvent',
     className: 'col-form-label category-label',
   }
+  const history = useHistory()
   const dispatch = useAppDispatch()
   const formLabel = 'col-sm-3 col-form-label text-end'
   const [addAudit, setAddAudit] = useState<SaveAuditForm>({} as SaveAuditForm)
@@ -227,6 +229,7 @@ const AddNewAudit = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      history.push('/SQAAudit')
     } else if (
       reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
         addNewAuditFormResultAction,
@@ -247,13 +250,15 @@ const AddNewAudit = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="newAudit-back-btn"
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
+            <Link to={`/SQAAudit`}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="newAudit-back-btn"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CForm>
