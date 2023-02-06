@@ -103,6 +103,7 @@ import {
   ReviewListApi,
   AppraisalTemplateApi,
   ProjectStatusApi,
+  AddNewAudit,
   SQAAuditReportApi,
 } from '../../types/apiTypes'
 
@@ -938,6 +939,10 @@ export const projectStatusApiConfig: ProjectStatusApi = {
   addStatusReport: apiPrefix + '/project-mgmt/statusReports',
   deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
   updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
+}
+
+export const addNewAuditApiConfig: AddNewAudit = {
+  saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
 }
 
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
