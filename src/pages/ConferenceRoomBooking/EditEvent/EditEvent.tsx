@@ -111,7 +111,7 @@ const EditEvent = (): JSX.Element => {
   }, [editExistingEvent])
 
   useEffect(() => {
-    if (editExistingEvent.meetingEditDTOList != null) {
+    if (editExistingEvent?.meetingEditDTOList != null) {
       setAttendeesResponse(editExistingEvent.meetingEditDTOList)
     }
   }, [editExistingEvent])
