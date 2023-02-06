@@ -403,7 +403,14 @@ const PayrollManagement = (): JSX.Element => {
         </>
       )}
       {toggle === 'editPaySlip' && !excelTable && (
-        <EditPaySlip toEditPayslip={toEditPayslip} setToggle={setToggle} />
+        <EditPaySlip
+          toEditPayslip={toEditPayslip}
+          setToggle={setToggle}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          selectMonth={selectMonth}
+          selectYear={selectYear}
+        />
       )}
     </>
   )

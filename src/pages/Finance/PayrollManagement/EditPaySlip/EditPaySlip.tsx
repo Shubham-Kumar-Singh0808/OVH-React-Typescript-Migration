@@ -12,16 +12,22 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 const EditPaySlip = ({
   toEditPayslip,
   setToggle,
+  selectMonth,
+  selectYear,
+  currentPage,
+  pageSize,
 }: {
   toEditPayslip: CurrentPayslip
   setToggle: (value: string) => void
+  selectMonth: string
+  selectYear: string
+  currentPage: number
+  pageSize: number
 }): JSX.Element => {
   const [toEditPayslipCopy, setToEditPayslipCopy] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
-  const [designation, setDesignation] = useState('')
-  const [accountNo, setAccountNo] = useState('')
 
   const onChangeInputHandler = (
     e:
@@ -30,16 +36,9 @@ const EditPaySlip = ({
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target
-    if (name === 'designation') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setDesignation(newValue)
-    } else if (name === 'accountNo') {
-      const accountNumber = value.replace(/\D/g, '')
-      setAccountNo(accountNumber)
-    } else
-      setToEditPayslipCopy((values) => {
-        return { ...values, ...{ [name]: value } }
-      })
+    setToEditPayslipCopy((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
   }
 
   useEffect(() => {
@@ -49,21 +48,18 @@ const EditPaySlip = ({
   }, [toEditPayslip])
 
   useEffect(() => {
-    if (toEditPayslip?.designation && toEditPayslip?.accountNo) {
+    if (toEditPayslipCopy?.designation && toEditPayslipCopy?.accountNo) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
-  }, [toEditPayslip])
-
-  console.log(toEditPayslip?.designation)
-  console.log(toEditPayslip?.accountNo)
+  }, [toEditPayslipCopy])
 
   const dispatch = useAppDispatch()
 
   const updateToastMessage = (
     <OToast
-      toastMessage="  Your changes have been saved successfully.
+      toastMessage="Your changes have been saved successfully.
     "
       toastColor="success"
     />
@@ -71,7 +67,7 @@ const EditPaySlip = ({
 
   const handleUpdateHandler = async () => {
     const prepareObject = {
-      ...toEditPayslip,
+      ...toEditPayslipCopy,
     }
     const updatePaySlipsResultAction = await dispatch(
       reduxServices.payrollManagement.updatePayslip(prepareObject),
@@ -82,6 +78,15 @@ const EditPaySlip = ({
         updatePaySlipsResultAction,
       )
     ) {
+      setToggle('')
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          month: selectMonth,
+          year: Number(selectYear),
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -111,14 +116,11 @@ const EditPaySlip = ({
         </CRow>
 
         <EmployeePayslipPersonalDetails
-          toEditPayslip={toEditPayslipCopy}
+          toEditPayslipCopy={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
-          designation={designation}
-          setToEditPayslipCopy={setToEditPayslipCopy}
-          accountNo={accountNo}
         />
         <EmployeePayslipTaxDetails
-          toEditPayslip={toEditPayslipCopy}
+          toEditPayslipCopy={toEditPayslipCopy}
           onChangeInputHandler={onChangeInputHandler}
         />
         <CRow>
