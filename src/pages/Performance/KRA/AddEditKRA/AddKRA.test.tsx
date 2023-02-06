@@ -94,7 +94,7 @@ describe('Add KRA', () => {
         'Description:*',
       )
       expect(screen.getByTestId('descrip-asterix')).toHaveClass(TextWhite)
-      expect(screen.getByTestId('error-percent')).toHaveClass('d-none')
+      expect(screen.getByTestId('error-percent')).toHaveClass(TextWhite)
     })
 
     test('number of dept options are rendered', () => {
