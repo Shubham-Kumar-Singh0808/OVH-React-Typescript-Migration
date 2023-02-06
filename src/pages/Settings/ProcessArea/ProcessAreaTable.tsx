@@ -70,18 +70,20 @@ const ProcessAreaTable = ({
                               {count.status === 'true' ? 'Active' : 'Inactive'}
                             </CTableDataCell>
                             <CTableDataCell>{count?.order}</CTableDataCell>
-                            <CTooltip content="Edit">
-                              <CButton
-                                size="sm"
-                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                                color="info btn-ovh me-1"
-                              >
-                                <i
-                                  className="fa fa-edit"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
-                            </CTooltip>
+                            <CTableDataCell>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  size="sm"
+                                  className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                                  color="info btn-ovh me-1"
+                                >
+                                  <i
+                                    className="fa fa-edit"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
+                            </CTableDataCell>
                           </CTableRow>
                         </>
                       )
