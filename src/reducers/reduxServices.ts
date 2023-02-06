@@ -114,6 +114,7 @@ import { KRAService } from './Performance/KRA/KRASlice'
 import { appraisalTemplateService } from './Performance/AppraisalTemplate/AppraisalTemplateSlice'
 import { projectStatusService } from './ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
 import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
+import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -232,4 +233,5 @@ export const reduxServices = {
   appraisalTemplate: appraisalTemplateService,
   projectStatus: projectStatusService,
   addNewAuditForm: addNewAuditService,
+  sqaAuditReport: sqaAuditReportService,
 }

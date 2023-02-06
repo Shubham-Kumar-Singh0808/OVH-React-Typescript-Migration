@@ -78,7 +78,7 @@ const AddNewSubCategory = (): JSX.Element => {
   }, [selectDepartment, selectCategory, addNewSubCategory])
 
   const validateSubCategoryName = (name: string) => {
-    return subCategoryList.list?.find((subCategoryItem) => {
+    return subCategoryList?.list?.find((subCategoryItem) => {
       return (
         subCategoryItem.subCategoryName.toLowerCase() === name.toLowerCase()
       )
@@ -107,8 +107,6 @@ const AddNewSubCategory = (): JSX.Element => {
     }
     if (validateSubCategoryName(value)) {
       setIsSubCategoryNameExist(value)
-    } else {
-      setIsSubCategoryNameExist('')
     }
   }
   const handleEstimatedTime = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,6 +129,7 @@ const AddNewSubCategory = (): JSX.Element => {
     })
     setEstimatedHours('')
     setEstimatedMins('')
+    setIsSubCategoryNameExist('')
     setIsChecked(false)
   }
   const successToastMessage = (
