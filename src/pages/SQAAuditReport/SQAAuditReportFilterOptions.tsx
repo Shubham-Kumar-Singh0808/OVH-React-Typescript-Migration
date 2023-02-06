@@ -281,6 +281,7 @@ const SQAAuditReportFilterOptions = ({
           <CButton
             className="cursor-pointer"
             disabled={false}
+            data-testid="clear-btn"
             color="warning btn-ovh me-1"
             onClick={clearButtonHandler}
           >
