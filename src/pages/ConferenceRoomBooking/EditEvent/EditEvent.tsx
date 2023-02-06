@@ -107,7 +107,12 @@ const EditEvent = (): JSX.Element => {
       setEditEvent(editExistingEvent)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
-      setAttendeesResponse(editExistingEvent?.meetingEditDTOList)
+    }
+  }, [editExistingEvent])
+
+  useEffect(() => {
+    if (editExistingEvent.meetingEditDTOList != null) {
+      setAttendeesResponse(editExistingEvent.meetingEditDTOList)
     }
   }, [editExistingEvent])
 
@@ -131,7 +136,12 @@ const EditEvent = (): JSX.Element => {
   const onHandleDescription = (value: string) => {
     setEventDescriptionValue(value)
   }
-
+  useEffect(() => {
+    if (projectAutoCompleteTarget)
+      dispatch(
+        reduxServices.newEvent.getProjectMembers(projectAutoCompleteTarget),
+      )
+  }, [projectAutoCompleteTarget])
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
     setEditEvent({
       ...editEvent,
