@@ -139,12 +139,12 @@ const PayrollManagementTable = (props: {
 
   return (
     <>
-      <CCol className="custom-scroll scroll-alignment">
+      <CCol className="custom-scroll scroll-alignment py-4">
         {renderingPayslipData?.length > 0 ? (
           <CTable
             striped
             responsive
-            className="text-start text-left align-middle alignment sh-adjustment"
+            className="text-start text-left align-middle alignment"
           >
             <CTableHead>
               <CTableRow>
@@ -227,7 +227,9 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                       <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
                       <CTableDataCell>{payslipItem.name}</CTableDataCell>
-                      <CTableDataCell>{payslipItem.designation}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.designation || 'N/A'}
+                      </CTableDataCell>
                       <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
                       <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
                       <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
@@ -383,6 +385,7 @@ const PayrollManagementTable = (props: {
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
+        modalSize="lg"
       >
         <>
           <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />
