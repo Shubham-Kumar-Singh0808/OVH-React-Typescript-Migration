@@ -75,12 +75,12 @@ const SQAAuditReportTable = ({
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{index + 1}</CTableDataCell>
-                  <CTableDataCell>{auditReport.auditType}</CTableDataCell>
-                  <CTableDataCell>{auditReport.projectType}</CTableDataCell>
-                  <CTableDataCell>{auditReport.projectName}</CTableDataCell>
-                  <CTableDataCell>{auditReport.projectManager}</CTableDataCell>
-                  <CTableDataCell>{auditReport.auditDate}</CTableDataCell>
-                  <CTableDataCell>{auditReport}</CTableDataCell>
+                  <CTableDataCell>{auditReport?.auditType}</CTableDataCell>
+                  <CTableDataCell>{auditReport?.projectType}</CTableDataCell>
+                  <CTableDataCell>{auditReport?.projectName}</CTableDataCell>
+                  <CTableDataCell>{auditReport?.projectManager}</CTableDataCell>
+                  <CTableDataCell>{auditReport?.auditDate}</CTableDataCell>
+                  {/* <CTableDataCell>{auditReport}</CTableDataCell> */}
                   <CTableDataCell>{auditReport.auditStatus}</CTableDataCell>
                   <CTableDataCell>{'N/A'}</CTableDataCell>
                   <CTableDataCell>{'N/A'}</CTableDataCell>

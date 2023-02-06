@@ -942,4 +942,5 @@ export const projectStatusApiConfig: ProjectStatusApi = {
 
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
+  exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
 }

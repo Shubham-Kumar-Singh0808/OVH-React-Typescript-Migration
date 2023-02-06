@@ -67,3 +67,12 @@ export type GetSQAAuditReportProps = {
   startIndex: number
   to: string
 }
+
+export type ExportSQAAuditReportProps = {
+  SQAAuditSelectionDate: string
+  auditStatus: string
+  auditRescheduleStatus: string
+  startdate: undefined
+  enddate: undefined
+  multiSearch: string
+}

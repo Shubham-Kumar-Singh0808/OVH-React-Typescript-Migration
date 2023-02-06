@@ -775,4 +775,5 @@ export interface ProjectStatusApi extends ApiBase {
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
+  exportSqaAuditReport: string
 }

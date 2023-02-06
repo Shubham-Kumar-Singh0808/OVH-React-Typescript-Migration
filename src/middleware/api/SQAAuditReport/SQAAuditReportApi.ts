@@ -1,6 +1,7 @@
 import {
   GetSQAAuditReportProps,
   GetSQAAuditReport,
+  ExportSQAAuditReportProps,
 } from '../../../types/SQAAuditReport/sqaAuditReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -30,8 +31,30 @@ const getSQAAuditReport = async (
   return response.data
 }
 
+const exportSqaAuditReport = async (
+  props: ExportSQAAuditReportProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.exportSqaAuditReport,
+    method: AllowedHttpMethods.get,
+    params: {
+      SQAAuditSelectionDate: props.SQAAuditSelectionDate,
+      auditStatus: props.auditStatus,
+      auditRescheduleStatus: props.auditRescheduleStatus,
+      startdate: props.startdate,
+      enddate: props.enddate,
+      multiSearch: props.multiSearch,
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const sqaAuditReportApi = {
   getSQAAuditReport,
+  exportSqaAuditReport,
 }
 
 export default sqaAuditReportApi
