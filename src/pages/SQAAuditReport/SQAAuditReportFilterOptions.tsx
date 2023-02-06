@@ -115,6 +115,18 @@ const SQAAuditReportFilterOptions = ({
     setToDate('')
     setStatus('')
     setRescheduleStatus('')
+    dispatch(
+      reduxServices.sqaAuditReport.getSQAAuditReport({
+        endIndex: pageSize * currentPage,
+        multiSearch: '',
+        startIndex: pageSize * (currentPage - 1),
+        SQAAuditSelectionDate: '',
+        auditRescheduleStatus: '',
+        auditStatus: '',
+        from: '',
+        to: '',
+      }),
+    )
   }
   const handleExportSQAAuditData = async () => {
     const sqaAuditReportDownload = await sqaAuditReportApi.exportSqaAuditReport(
