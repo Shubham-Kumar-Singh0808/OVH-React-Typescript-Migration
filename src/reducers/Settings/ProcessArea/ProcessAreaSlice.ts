@@ -5,6 +5,7 @@ import ProcessAreaApi from '../../../middleware/api/Settings/ProcessArea/Process
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  AddProcessAreaProps,
   ProcessAreas,
   ProcessAreaSliceState,
   ProcessSubHeadsDto,
@@ -64,6 +65,42 @@ const checkDuplicateProcess = createAsyncThunk(
   async (processName: string, thunkApi) => {
     try {
       return await ProcessAreaApi.checkDuplicateProcess(processName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const saveProcessArea = createAsyncThunk(
+  'processArea/saveProcessArea',
+  async (props: AddProcessAreaProps, thunkApi) => {
+    try {
+      return await ProcessAreaApi.saveProcessArea(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const incrementOrDecrementOrder = createAsyncThunk(
+  'processArea/incrementOrDecrementOrder',
+  async (props: AddProcessAreaProps, thunkApi) => {
+    try {
+      return await ProcessAreaApi.incrementOrDecrementOrder(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getOrderCountOfActiveProcesses = createAsyncThunk(
+  'processArea/getOrderCountOfActiveProcesses',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await ProcessAreaApi.getOrderCountOfActiveProcesses(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -139,6 +176,9 @@ const processAreaThunk = {
   getProcessAreas,
   createProcessArea,
   checkDuplicateProcess,
+  saveProcessArea,
+  incrementOrDecrementOrder,
+  getOrderCountOfActiveProcesses,
 }
 
 const processAreaSelectors = {

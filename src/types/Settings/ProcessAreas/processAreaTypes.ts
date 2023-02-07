@@ -46,3 +46,13 @@ export type ProcessAreas = {
   name: string
   categoryId: number
 }
+
+export type AddProcessAreaProps = {
+  categoryId: number
+  documentName: string
+  link: string
+  order: string
+  processAreaId: number
+  responsible: string
+  status: string
+}

@@ -1,4 +1,5 @@
 import {
+  AddProcessAreaProps,
   ProcessAreas,
   ProjectTailoringDocument,
 } from '../../../../types/Settings/ProcessAreas/processAreaTypes'
@@ -71,11 +72,55 @@ const checkDuplicateProcess = async (
   return response.data
 }
 
+const saveProcessArea = async (
+  props: AddProcessAreaProps,
+): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.saveProcessArea,
+    method: AllowedHttpMethods.post,
+    data: props,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const incrementOrDecrementOrder = async (
+  props: AddProcessAreaProps,
+): Promise<number | string> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.incrementOrDecrementOrder,
+    method: AllowedHttpMethods.put,
+    data: props,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getOrderCountOfActiveProcesses = async (
+  categoryId: number,
+): Promise<ProcessAreas[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.getOrderCountOfActiveProcesses,
+    method: AllowedHttpMethods.get,
+    params: {
+      categoryId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ProcessAreaApi = {
   getProjectTailoringDocument,
   getProcessAreas,
   createProcessArea,
   checkDuplicateProcess,
+  saveProcessArea,
+  incrementOrDecrementOrder,
+  getOrderCountOfActiveProcesses,
 }
 
 export default ProcessAreaApi

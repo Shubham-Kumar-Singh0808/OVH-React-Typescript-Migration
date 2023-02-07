@@ -47,11 +47,11 @@ const NewProcessAreas = ({
     setProcessArea('')
   }
 
-  const processNameAlreadyExists = (name: string) => {
-    return ProjectTailoringList?.find((processName) => {
-      return processName.processHeadname.toLowerCase() === name.toLowerCase()
-    })
-  }
+  // const processNameAlreadyExists = (name: string) => {
+  //   return ProjectTailoringList?.find((processName) => {
+  //     return processName.processHeadname.toLowerCase() === name.toLowerCase()
+  //   })
+  // }
 
   const handledInputChange = (
     event:
@@ -63,11 +63,11 @@ const NewProcessAreas = ({
       const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setProcessArea(newValue)
     }
-    if (processNameAlreadyExists(value)) {
-      setProcessNameExists(value)
-    } else {
-      setProcessNameExists('')
-    }
+    // if (processNameAlreadyExists(value)) {
+    //   setProcessNameExists(value)
+    // } else {
+    //   setProcessNameExists('')
+    // }
   }
 
   const addedToastMessage = (
@@ -91,7 +91,6 @@ const NewProcessAreas = ({
         addProcessNameResultAction,
       )
     ) {
-      dispatch(reduxServices.processArea.checkDuplicateProcess(processArea))
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -141,7 +140,9 @@ const NewProcessAreas = ({
                 <option value={''}>-- Select Category --</option>
                 {ProjectTailoringList.length > 0 &&
                   ProjectTailoringList?.map((item, index) => (
-                    <option key={index}>{item.processHeadname}</option>
+                    <option key={index} value={item.processHeadId}>
+                      {item.processHeadname}
+                    </option>
                   ))}
               </CFormSelect>
             </CCol>
