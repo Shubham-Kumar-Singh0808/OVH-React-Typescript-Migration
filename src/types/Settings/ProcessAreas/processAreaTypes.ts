@@ -37,6 +37,8 @@ export type ProcessAreaSliceState = {
   getProjectTailoringDocument: ProjectTailoringDocument[]
   ProcessSubHeads: ProcessSubHeadsDto[]
   ProcessAreas: ProcessAreas[]
+  currentPage: number
+  pageSize: number
 }
 
 export type ProcessAreas = {

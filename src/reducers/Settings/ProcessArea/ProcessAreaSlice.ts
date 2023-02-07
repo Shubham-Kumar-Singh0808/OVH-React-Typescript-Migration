@@ -77,12 +77,21 @@ export const initialProcessAreaState: ProcessAreaSliceState = {
   getProjectTailoringDocument: [],
   ProcessSubHeads: [],
   ProcessAreas: [],
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const ProcessAreaSlice = createSlice({
   name: 'processArea',
   initialState: initialProcessAreaState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getProjectTailoringDocument.fulfilled, (state, action) => {
@@ -108,6 +117,11 @@ const ProcessAreaSlice = createSlice({
   },
 })
 
+const pageFromState = (state: RootState): number =>
+  state.processArea.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.processArea.pageSize
+
 const isLoading = (state: RootState): LoadingState =>
   state.processArea.isLoading
 
@@ -132,6 +146,8 @@ const processAreaSelectors = {
   ProjectTailoringList,
   ProcessSubHeads,
   ProcessArea,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const processAreaService = {

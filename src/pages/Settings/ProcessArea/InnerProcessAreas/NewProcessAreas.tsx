@@ -81,7 +81,7 @@ const NewProcessAreas = ({
   const addBtnHandler = async () => {
     const addProcessNameResultAction = await dispatch(
       reduxServices.processArea.createProcessArea({
-        categoryId: selectCategory as unknown as number,
+        categoryId: Number(selectCategory),
         name: processArea,
       }),
     )

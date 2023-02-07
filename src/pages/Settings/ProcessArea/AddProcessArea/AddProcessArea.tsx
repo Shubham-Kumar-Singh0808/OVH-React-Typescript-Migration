@@ -25,7 +25,7 @@ const AddProcessArea = ({
   const [responsible, setResponsible] = useState<string>('')
   const [documentLink, setDocumentLink] = useState<string>('')
   const [selectProcessAreaName, setSelectProcessAreaName] = useState<string>('')
-  const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
+  const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
 
   const initialEmployeeVisaDetails = {} as ProcessSubHeadsDto
@@ -54,6 +54,30 @@ const AddProcessArea = ({
         reduxServices.processArea.getProcessAreas(Number(selectCategory)),
       )
   }, [dispatch, selectCategory])
+
+  console.log(selectActiveStatus)
+  const handleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'documentName') {
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+      setDocumentName(newValue)
+    } else if (name === 'responsible') {
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setResponsible(newValue)
+    } else if (name === 'documentLink') {
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setDocumentLink(newValue)
+    } else if (name === 'selectOrder') {
+      const newValue = value.replace(/[\D]/gi, '')
+      setSelectOrder(newValue)
+    } else if (name === 'activeState') {
+      setSelectActiveStatus(value === 'true')
+    }
+  }
 
   return (
     <>
@@ -150,15 +174,16 @@ const AddProcessArea = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="reviewTitle"
+                data-testid="documentName"
                 type="text"
-                id="reviewTitle"
+                id="documentName"
                 autoComplete="off"
+                defaultValue="Mark"
                 size="sm"
-                name="reviewTitle"
-                placeholder="Name"
+                name="documentName"
+                placeholder="Document Name"
                 value={documentName}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -172,15 +197,15 @@ const AddProcessArea = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="reviewTitle"
+                data-testid="responsible"
                 type="text"
-                id="reviewTitle"
+                id="responsible"
                 autoComplete="off"
                 size="sm"
-                name="reviewTitle"
-                placeholder="Name"
+                name="responsible"
+                placeholder="Responsible"
                 value={responsible}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -194,15 +219,15 @@ const AddProcessArea = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="reviewTitle"
+                data-testid="documentLink"
                 type="text"
-                id="reviewTitle"
+                id="documentLink"
                 autoComplete="off"
                 size="sm"
-                name="reviewTitle"
-                placeholder="Name"
+                name="documentLink"
+                placeholder="Link"
                 value={documentLink}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -218,24 +243,24 @@ const AddProcessArea = ({
                 data-testid="active"
                 className="mt-2 sh-hover-handSymbol"
                 type="radio"
-                name="yes"
-                id="yes"
-                label="Yes"
+                name="activeState"
+                id="Active"
+                label="Active"
+                value="true"
                 inline
-                onChange={(e) => setSelectActiveStatus(e.target.value)}
-                value={'true'}
-                checked={selectActiveStatus === 'true'}
+                checked={selectActiveStatus}
+                onChange={handleInputChange}
               />
               <CFormCheck
                 className="mt-2 sh-hover-handSymbol"
                 type="radio"
-                name="no"
-                id="no"
-                label="No"
+                name="activeState"
+                id="Inactive"
+                label="Inactive"
+                value="false"
                 inline
-                onChange={(e) => setSelectActiveStatus(e.target.value)}
-                value={'false'}
-                checked={selectActiveStatus === 'false'}
+                checked={!selectActiveStatus}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
@@ -249,15 +274,17 @@ const AddProcessArea = ({
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
-                data-testid="reviewTitle"
+                data-testid="selectOrder"
                 type="text"
-                id="reviewTitle"
+                id="selectOrder"
                 autoComplete="off"
                 size="sm"
-                name="reviewTitle"
-                placeholder="Name"
-                value={selectOrder}
-                // onChange={handleInputChange}
+                maxLength={2}
+                min={1}
+                max={99}
+                name="selectOrder"
+                value={selectOrder || ''}
+                onChange={handleInputChange}
               />
             </CCol>
           </CRow>
