@@ -21,7 +21,7 @@ const EmployeePayslipPersonalDetails = ({
 
   return (
     <>
-      <CRow className="mt-1 mb-0 align-items-center">
+      <CRow className="mt-4 mb-4 align-items-center">
         <CFormLabel className="col-sm-6 col-form-label text-end">
           Name:
         </CFormLabel>
@@ -31,7 +31,7 @@ const EmployeePayslipPersonalDetails = ({
           </p>
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
+      <CRow className="mt-4 mb-4 align-items-center">
         <CFormLabel className="col-sm-6 col-form-label text-end">
           Employee Id:
         </CFormLabel>
@@ -67,7 +67,7 @@ const EmployeePayslipPersonalDetails = ({
           />
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
+      <CRow className="mt-4 mb-4 align-items-center">
         <CFormLabel className="col-sm-6 col-form-label text-end">
           DOJ:
         </CFormLabel>

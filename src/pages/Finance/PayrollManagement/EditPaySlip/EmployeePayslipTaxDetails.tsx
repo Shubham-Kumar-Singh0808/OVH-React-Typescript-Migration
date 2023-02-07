@@ -250,7 +250,7 @@ const EmployeePayslipTaxDetails = ({
           </p>
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
+      <CRow className="mt-4 mb-4 align-items-center">
         <CFormLabel className="col-sm-6 col-form-label text-end">
           Year:
         </CFormLabel>
