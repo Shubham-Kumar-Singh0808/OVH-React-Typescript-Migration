@@ -34,7 +34,7 @@ const AddNewInvestment = ({
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [requireDocuments, setRequiredDocuments] = useState<string>('')
-  const [isDocumentsVisible, setIsDocumentsVisible] = useState<boolean>(false)
+  const [isDocumentsVisible, setIsDocumentsVisible] = useState<boolean>()
   const [investmentMaxLimit, setInvestmentMaxLimit] = useState<string>()
   const dispatch = useAppDispatch()
   const formLabelProps = {
@@ -272,7 +272,6 @@ const AddNewInvestment = ({
               placeholder="Maximum Investment"
               autoComplete="off"
               value={investmentMaxLimit}
-              maxLength={16}
               onChange={(e) =>
                 setInvestmentMaxLimit(e.target.value.replace(/\D/g, ''))
               }
@@ -318,7 +317,7 @@ const AddNewInvestment = ({
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
-              checked={isDocumentsVisible}
+              checked={isDocumentsVisible || false}
               onChange={handleSelectDocumentOption}
               inline
             />
@@ -337,7 +336,6 @@ const AddNewInvestment = ({
               data-testid="documentsReqNo"
               label="No"
               value="no"
-              checked={!isDocumentsVisible}
               onChange={handleSelectDocumentOption}
               inline
             />

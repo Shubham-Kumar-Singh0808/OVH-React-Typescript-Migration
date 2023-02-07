@@ -423,6 +423,13 @@ const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
 
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit'),
+)
+const SQAAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -918,6 +925,17 @@ const routes = [
     path: '/appraisalTemplate',
     name: '/appraisalTemplate',
     component: AppraisalTemplate,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
+  },
+
+  {
+    path: '/SQAAudit',
+    name: '/SQA Audit',
+    component: SQAAudit,
   },
 ]
 
