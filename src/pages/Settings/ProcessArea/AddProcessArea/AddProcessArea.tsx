@@ -13,7 +13,6 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ProcessSubHeadsDto } from '../../../../types/Settings/ProcessAreas/processAreaTypes'
 
 const AddProcessArea = ({
   setToggle,
@@ -27,11 +26,6 @@ const AddProcessArea = ({
   const [selectProcessAreaName, setSelectProcessAreaName] = useState<string>('')
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
-
-  const initialEmployeeVisaDetails = {} as ProcessSubHeadsDto
-  const [employeeVisaDetails, setEmployeeVisaDetails] = useState(
-    initialEmployeeVisaDetails,
-  )
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -50,12 +44,9 @@ const AddProcessArea = ({
 
   useEffect(() => {
     if (selectCategory)
-      dispatch(
-        reduxServices.processArea.getProcessAreas(Number(selectCategory)),
-      )
+      dispatch(reduxServices.processArea.getProcessAreas(Number('1')))
   }, [dispatch, selectCategory])
 
-  console.log(selectActiveStatus)
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -77,6 +68,14 @@ const AddProcessArea = ({
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
     }
+  }
+
+  const clearData = () => {
+    setDocumentName('')
+    setResponsible('')
+    setDocumentLink('')
+    setSelectActiveStatus(true)
+    setSelectOrder('')
   }
 
   return (
@@ -112,17 +111,15 @@ const AddProcessArea = ({
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
-                id="location"
+                id="selectCategory"
                 data-testid="form-select1"
-                name="location"
+                name="selectCategory"
                 value={selectCategory}
                 onChange={(e) => setSelectCategory(e.target.value)}
               >
                 <option value={''}>-- Select Category --</option>
-                {ProjectTailoringList?.map((countriesItem, index) => (
-                  <option key={index} value={countriesItem.id as number}>
-                    {countriesItem.processHeadname}
-                  </option>
+                {ProjectTailoringList?.map((item, index) => (
+                  <option key={index}>{item.processHeadname}</option>
                 ))}
               </CFormSelect>
             </CCol>
@@ -141,16 +138,16 @@ const AddProcessArea = ({
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
-                id="location"
+                id="selectProcessAreaName"
                 data-testid="form-select1"
-                name="location"
+                name="selectProcessAreaName"
                 value={selectProcessAreaName}
                 onChange={(e) => setSelectProcessAreaName(e.target.value)}
               >
                 <option value={''}>-- Select Process Areas --</option>
-                {ProcessArea?.map((visaTypeItem, index) => (
-                  <option key={index} value={visaTypeItem.categoryId}>
-                    {visaTypeItem.name}
+                {ProcessArea?.map((item, index) => (
+                  <option key={index} value={item.categoryId}>
+                    {item.name}
                   </option>
                 ))}
               </CFormSelect>
@@ -178,12 +175,12 @@ const AddProcessArea = ({
                 type="text"
                 id="documentName"
                 autoComplete="off"
-                defaultValue="Mark"
                 size="sm"
                 name="documentName"
                 placeholder="Document Name"
                 value={documentName}
                 onChange={handleInputChange}
+                required
               />
             </CCol>
           </CRow>
@@ -264,30 +261,32 @@ const AddProcessArea = ({
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Order
-              <span className={selectOrder ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                data-testid="selectOrder"
-                type="text"
-                id="selectOrder"
-                autoComplete="off"
-                size="sm"
-                maxLength={2}
-                min={1}
-                max={99}
-                name="selectOrder"
-                value={selectOrder || ''}
-                onChange={handleInputChange}
-              />
-            </CCol>
-          </CRow>
+          {selectActiveStatus === true && (
+            <CRow className="mt-4 mb-4">
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-3 col-form-label text-end"
+              >
+                Order
+                <span className={selectOrder ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  data-testid="selectOrder"
+                  type="text"
+                  id="selectOrder"
+                  autoComplete="off"
+                  size="sm"
+                  maxLength={2}
+                  min={1}
+                  max={99}
+                  name="selectOrder"
+                  value={selectOrder || ''}
+                  onChange={handleInputChange}
+                />
+              </CCol>
+            </CRow>
+          )}
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
@@ -301,6 +300,8 @@ const AddProcessArea = ({
                 data-testid="clear-btn"
                 color="warning"
                 className="btn-ovh text-white"
+                onClick={clearData}
+                type="submit"
               >
                 Clear
               </CButton>

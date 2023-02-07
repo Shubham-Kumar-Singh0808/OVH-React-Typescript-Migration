@@ -171,6 +171,7 @@ const NewProcessAreas = ({
                 placeholder="Process Area Name"
                 value={processArea}
                 onChange={handledInputChange}
+                required
               />
             </CCol>
             <CCol sm={3}>
@@ -197,6 +198,7 @@ const NewProcessAreas = ({
                 color="warning"
                 className="btn-ovh text-white"
                 onClick={clearData}
+                type="submit"
               >
                 Clear
               </CButton>
