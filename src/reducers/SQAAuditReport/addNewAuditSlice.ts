@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
   AddNewAuditSliceState,
+  Employee,
   SaveAuditForm,
 } from '../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 
@@ -26,6 +27,7 @@ const initialAddNewAuditFormState: AddNewAuditSliceState = {
     auditorIds: [],
     projectName: '',
   },
+  employee: [],
 }
 
 const saveNewAuditForm = createAsyncThunk<
@@ -37,7 +39,7 @@ const saveNewAuditForm = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'supportManagement/addSubCategory',
+  'addNewAuditForm/saveNewAuditForm',
   async (newSubCategoryDetails: SaveAuditForm, thunkApi) => {
     try {
       return await addNewAuditApi.saveNewAuditForm(newSubCategoryDetails)
@@ -48,6 +50,23 @@ const saveNewAuditForm = createAsyncThunk<
   },
 )
 
+const getProjectEmployees = createAsyncThunk<
+  Employee[],
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('addNewAuditForm/getProjectEmployees', async (projectId, thunkApi) => {
+  try {
+    return await addNewAuditApi.getProjectEmployees(projectId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const addNewAuditSlice = createSlice({
   name: 'addNewAuditForm',
   initialState: initialAddNewAuditFormState,
@@ -56,6 +75,10 @@ const addNewAuditSlice = createSlice({
     builder
       .addCase(saveNewAuditForm.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
+      })
+      .addCase(getProjectEmployees.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employee = action.payload as Employee[]
       })
       .addCase(saveNewAuditForm.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -70,12 +93,18 @@ const addNewAuditSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state.addNewAuditForm.isLoading
 
+const employees = (state: RootState): Employee[] =>
+  state.addNewAuditForm.employee
+
 const addNewAuditThunk = {
   saveNewAuditForm,
+  getProjectEmployees,
 }
 
 const addNewAuditSelectors = {
   isLoading,
+  employees,
+  getProjectEmployees,
 }
 
 export const addNewAuditService = {

@@ -51,9 +51,11 @@ const AddNewAudit = (): JSX.Element => {
     useState<boolean>(false)
   const [isButtonEnable, setIsButtonEnable] = useState<boolean>(false)
   const [auditProjectType, setAuditProjectType] = useState<string>('true')
-
   const projects = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
+  )
+  const employees = useTypedSelector(
+    reduxServices.addNewAuditForm.selectors.employees,
   )
   const projectManagers = useTypedSelector(
     reduxServices.projectManagement.selectors.managers,
@@ -198,6 +200,21 @@ const AddNewAudit = (): JSX.Element => {
   const warningToastMessage = (
     <OToast toastMessage="Audit Already Exists" toastColor="danger" />
   )
+  const selectAuditees = () => {
+    const selectedProject = projects.find(
+      (value) => value.projectName === projectNameAutoCompleteTarget,
+    )
+    dispatch(
+      reduxServices.addNewAuditForm.getProjectEmployees(
+        selectedProject?.id as number,
+      ),
+    )
+  }
+
+  useEffect(() => {
+    setAddAuditeeName(employees)
+  }, [employees])
+
   const handleAddNewAuditForm = async () => {
     const startTimeSplit = addAudit.startTime.split(':')
     const endTimeSplit = addAudit.endTime.split(':')
@@ -338,6 +355,7 @@ const AddNewAudit = (): JSX.Element => {
                   inputProps={{
                     className: 'form-control form-control-sm',
                     placeholder: 'Project Name',
+                    onBlur: selectAuditees,
                   }}
                   getItemValue={(item) => item.projectName}
                   items={projects ? projects : []}
@@ -412,7 +430,7 @@ const AddNewAudit = (): JSX.Element => {
                     className: 'form-control form-control-sm',
                     placeholder: 'Project Manager',
                   }}
-                  getItemValue={(item) => item.firstName}
+                  getItemValue={(item) => item.firstName + ' ' + item.lastName}
                   items={projectManagers ? projectManagers : []}
                   wrapperStyle={{ position: 'relative' }}
                   renderMenu={(children) => (
