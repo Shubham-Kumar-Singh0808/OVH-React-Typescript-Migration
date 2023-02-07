@@ -103,6 +103,9 @@ import {
   ReviewListApi,
   AppraisalTemplateApi,
   ProjectStatusApi,
+  ProcessAreaListApi,
+  AddNewAudit,
+  SQAAuditReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -937,4 +940,20 @@ export const projectStatusApiConfig: ProjectStatusApi = {
   addStatusReport: apiPrefix + '/project-mgmt/statusReports',
   deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
   updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
+}
+
+export const processAreaApiConfig: ProcessAreaListApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProcessAreas: apiPrefix + '/projectTailoring/getProcessAreas',
+  createProcessArea: apiPrefix + '/projectTailoring/createProcessArea',
+  checkDuplicateProcess: apiPrefix + '/projectTailoring/checkDuplicateProcess',
+}
+export const addNewAuditApiConfig: AddNewAudit = {
+  saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+}
+
+export const sqaAuditReportApiConfig: SQAAuditReportApi = {
+  getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
+  exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
 }
