@@ -17,32 +17,32 @@ const EmployeePayslipPersonalDetails = ({
     }
   }
 
-  const formLabel = 'col-sm-3 col-form-label text-end'
+  const formLabel = 'col-sm-6 col-form-label text-end'
 
   return (
     <>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Name:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <p className="mb-0">
             <b>{toEditPayslipCopy.name}</b>
           </p>
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Employee Id:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <p className="mb-0">
             <b>{toEditPayslipCopy.employeeId}</b>
           </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
+        <CFormLabel className="col-sm-6 col-form-label text-end p-1">
           Designation:
           <span
             className={
@@ -54,7 +54,7 @@ const EmployeePayslipPersonalDetails = ({
             *
           </span>
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="designation"
@@ -68,17 +68,17 @@ const EmployeePayslipPersonalDetails = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           DOJ:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <p className="mb-0">
             <b>{toEditPayslipCopy.dateOfBirth}</b>
           </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
+        <CFormLabel className="col-sm-6 col-form-label text-end p-1">
           Account Number:
           <span
             className={
@@ -90,7 +90,7 @@ const EmployeePayslipPersonalDetails = ({
             *
           </span>
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="accountNo"
@@ -107,7 +107,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('grossSalary', formLabel)}>
           Gross Salary:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="grossSalary"
@@ -126,7 +126,7 @@ const EmployeePayslipPersonalDetails = ({
         >
           Variable Pay Percentage:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="variablePayPercentage"
@@ -143,7 +143,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('variablePay', formLabel)}>
           Variable Pay:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="variablePay"
@@ -162,7 +162,7 @@ const EmployeePayslipPersonalDetails = ({
         >
           Gross Sal After Variable Pay:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="grossSalAfterVariablepay"
@@ -179,7 +179,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('basicSalary', formLabel)}>
           Basic Salary:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="basicSalary"
@@ -196,7 +196,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('houseRentAllowance', formLabel)}>
           House Rent Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="houseRentAllowance"
@@ -213,7 +213,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('transportAllowance', formLabel)}>
           Transport Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="transportAllowance"
@@ -230,7 +230,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('otherAllowance', formLabel)}>
           Other Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="otherAllowance"
@@ -247,7 +247,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('absent', formLabel)}>
           Absent:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="absent"
@@ -264,7 +264,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('lossOfPay', formLabel)}>
           LOP :
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="lossOfPay"
@@ -281,7 +281,7 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('mealsCard', formLabel)}>
           Meals Card:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="mealsCard"
