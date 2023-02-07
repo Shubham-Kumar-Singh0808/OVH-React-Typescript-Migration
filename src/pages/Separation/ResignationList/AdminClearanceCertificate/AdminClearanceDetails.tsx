@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AdminClearanceDetails = (): JSX.Element => {
   const [isAdminCCDetailsEdit, setIsAdminCCDetailsEdit] =
@@ -61,6 +62,13 @@ const AdminClearanceDetails = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitAdminClearanceCertificateHandler = async () => {
     const updateItCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -82,6 +90,7 @@ const AdminClearanceDetails = (): JSX.Element => {
       )
     ) {
       setIsAdminCCDetailsEdit(false)
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
@@ -242,7 +251,8 @@ const AdminClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {adminClearanceDetails[0]?.comments || 'N/A'}
+                    {adminClearanceDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}

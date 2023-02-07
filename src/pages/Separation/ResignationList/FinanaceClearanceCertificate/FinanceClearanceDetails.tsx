@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const FinanceClearanceDetails = (): JSX.Element => {
   const [isFinanceCCDetailsEdit, setIsFinanceCCDetailsEdit] =
@@ -61,6 +62,13 @@ const FinanceClearanceDetails = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitFinanceClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -88,6 +96,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
           submittedBy: 'Finance',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -237,7 +246,8 @@ const FinanceClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {FinanceCCDetails[0]?.comments || 'N/A'}
+                    {FinanceCCDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}
