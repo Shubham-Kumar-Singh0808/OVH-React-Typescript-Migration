@@ -281,6 +281,19 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <strong>% </strong>
         </CCol>
         {enteredPercentage === '0' ||
+        enteredPercentage === '00' ||
+        enteredPercentage === '000' ? (
+          <>
+            <CCol sm={4}>
+              <strong data-testid="error-percent" className="text-danger">
+                Percentage can&apos;t be zero.
+              </strong>
+            </CCol>
+          </>
+        ) : (
+          <></>
+        )}
+        {/* {enteredPercentage === '0' ||
           enteredPercentage === '00' ||
           (enteredPercentage === '000' ? (
             <CCol sm={4}>
@@ -290,7 +303,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
             </CCol>
           ) : (
             <></>
-          ))}
+          ))} */}
         <CCol sm={4}>
           <strong
             data-testid="error-percent"
