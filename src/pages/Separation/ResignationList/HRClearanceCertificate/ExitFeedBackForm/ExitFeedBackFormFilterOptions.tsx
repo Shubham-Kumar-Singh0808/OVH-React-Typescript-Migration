@@ -118,7 +118,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Ticket created successfully"
+            toastMessage="Exit form added Successfully"
           />,
         ),
       )

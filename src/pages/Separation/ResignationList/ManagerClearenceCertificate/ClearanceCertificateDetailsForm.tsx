@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const ClearanceCertificateDetailsForm = (): JSX.Element => {
   const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
@@ -57,6 +58,13 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -84,6 +92,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
           submittedBy: 'Manager',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -239,7 +248,10 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {managerClearanceDetails[0]?.comments || 'N/A'}
+                    {managerClearanceDetails[0]?.comments?.replace(
+                      /^\s*/,
+                      '',
+                    ) || 'N/A'}
                   </p>
                 </CCol>
               )}
