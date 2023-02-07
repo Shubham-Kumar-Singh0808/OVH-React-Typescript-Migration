@@ -423,6 +423,13 @@ const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
 
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit'),
+)
+const SQAAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+
 const processAreaList = React.lazy(
   () => import('./pages/Settings/ProcessArea/ProcessArea'),
 )
@@ -926,6 +933,17 @@ const routes = [
     path: '/processAreaList',
     name: 'processAreaList',
     component: processAreaList,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
+  },
+
+  {
+    path: '/SQAAudit',
+    name: '/SQA Audit',
+    component: SQAAudit,
   },
 ]
 
