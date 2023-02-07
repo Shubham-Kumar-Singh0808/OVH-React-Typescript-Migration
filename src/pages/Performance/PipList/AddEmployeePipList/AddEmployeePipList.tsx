@@ -139,15 +139,6 @@ const AddEmployeePipList = ({
     reduxServices.pipList.selectors.employeeData,
   )
 
-  const onFocusOut = () => {
-    const selectedEmployee = allEmployeeDetails.find(
-      (value) => value.empFirstName + ' ' + value.empLastName === employeeName,
-    )
-    const selEmpName =
-      selectedEmployee?.empFirstName + ' ' + selectedEmployee?.empLastName
-    setEmployeeName(selEmpName)
-  }
-
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
@@ -240,9 +231,9 @@ const AddEmployeePipList = ({
               Employee Name:
               <span
                 className={
-                  employeeName === undefined ||
                   employeeName === emptyString ||
                   employeeName.trim().length === 0 ||
+                  employeeName?.replace(/^\s*/, '') ||
                   employeeName
                     ? TextDanger
                     : TextWhite
@@ -257,7 +248,6 @@ const AddEmployeePipList = ({
                   className: 'form-control form-control-sm',
                   autoComplete: 'on',
                   placeholder: 'Employee Name',
-                  onBlur: onFocusOut,
                 }}
                 wrapperStyle={{ position: 'relative' }}
                 items={allEmployeeDetails}
@@ -394,7 +384,11 @@ const AddEmployeePipList = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={addReasonForPIP ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addReasonForPIP?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -419,7 +413,13 @@ const AddEmployeePipList = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={addImprovementPlan ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addImprovementPlan?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
