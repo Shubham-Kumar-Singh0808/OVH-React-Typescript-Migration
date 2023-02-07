@@ -19,11 +19,13 @@ const AddProcessArea = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
-  const [selectCategory, setSelectCategory] = useState<string>('')
+  const [selectCategory, setSelectCategory] = useState<number | string>()
   const [documentName, setDocumentName] = useState<string>('')
   const [responsible, setResponsible] = useState<string>('')
   const [documentLink, setDocumentLink] = useState<string>('')
-  const [selectProcessAreaName, setSelectProcessAreaName] = useState<string>('')
+  const [selectProcessAreaName, setSelectProcessAreaName] = useState<
+    number | string
+  >()
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
 
@@ -44,7 +46,9 @@ const AddProcessArea = ({
 
   useEffect(() => {
     if (selectCategory)
-      dispatch(reduxServices.processArea.getProcessAreas(Number('1')))
+      dispatch(
+        reduxServices.processArea.getProcessAreas(selectCategory as number),
+      )
   }, [dispatch, selectCategory])
 
   const handleInputChange = (
@@ -119,7 +123,9 @@ const AddProcessArea = ({
               >
                 <option value={''}>-- Select Category --</option>
                 {ProjectTailoringList?.map((item, index) => (
-                  <option key={index}>{item.processHeadname}</option>
+                  <option key={index} value={item.processHeadId as number}>
+                    {item.processHeadname}
+                  </option>
                 ))}
               </CFormSelect>
             </CCol>
@@ -146,9 +152,7 @@ const AddProcessArea = ({
               >
                 <option value={''}>-- Select Process Areas --</option>
                 {ProcessArea?.map((item, index) => (
-                  <option key={index} value={item.categoryId}>
-                    {item.name}
-                  </option>
+                  <option key={index}>{item.name}</option>
                 ))}
               </CFormSelect>
             </CCol>
