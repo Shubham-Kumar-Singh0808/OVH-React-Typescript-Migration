@@ -231,6 +231,7 @@ const SQAAuditReportFilterOptions = ({
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
@@ -257,6 +258,7 @@ const SQAAuditReportFilterOptions = ({
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yy"
@@ -287,6 +289,11 @@ const SQAAuditReportFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             onClick={viewButtonHandler}
+            disabled={
+              (selectDate === 'Custom' &&
+                !(fromDate !== '' && toDate !== '')) ||
+              dateError
+            }
           >
             View
           </CButton>
