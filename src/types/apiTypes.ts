@@ -781,3 +781,6 @@ export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
   exportSqaAuditReport: string
 }
+export interface ProjectScheduleVarianceApi extends ApiBase {
+  getScheduleVariance: string
+}

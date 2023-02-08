@@ -6,6 +6,8 @@ import {
   CTabPane,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import EffortVariance from './EffortVariance/EffortVariance'
+import ScheduleVariance from './ScheduleVariance/ScheduleVariance'
 import { ProjectTabList } from '../../../../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 
 interface ShowTabContentType<TValue> {
@@ -37,8 +39,8 @@ const ProjectMetricsTab = (): JSX.Element => {
   useEffect(() => {
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
-        1: <h6>Schedule Variance</h6>,
-        2: <h6>Effort Variance</h6>,
+        1: <ScheduleVariance />,
+        2: <EffortVariance />,
         3: <h6>TimeLine</h6>,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

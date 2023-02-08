@@ -105,6 +105,7 @@ import {
   ProjectStatusApi,
   AddNewAudit,
   SQAAuditReportApi,
+  ProjectScheduleVarianceApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -948,4 +949,8 @@ export const addNewAuditApiConfig: AddNewAudit = {
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
   exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
+}
+
+export const projectScheduleVarianceApiConfig: ProjectScheduleVarianceApi = {
+  getScheduleVariance: apiPrefix + '/projectmetrics/getScheduleVariance',
 }
