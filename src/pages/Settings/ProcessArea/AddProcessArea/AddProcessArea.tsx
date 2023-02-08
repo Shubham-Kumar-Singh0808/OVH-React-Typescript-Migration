@@ -10,6 +10,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -28,6 +29,29 @@ const AddProcessArea = ({
   >()
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+
+  useEffect(() => {
+    if (
+      selectCategory &&
+      documentName &&
+      responsible &&
+      documentLink &&
+      selectProcessAreaName &&
+      selectOrder
+    ) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [
+    selectCategory,
+    documentName,
+    responsible,
+    documentLink,
+    selectProcessAreaName,
+    selectOrder,
+  ])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -80,6 +104,54 @@ const AddProcessArea = ({
     setDocumentLink('')
     setSelectActiveStatus(true)
     setSelectOrder('')
+    setSelectCategory('')
+    setSelectProcessAreaName('')
+  }
+
+  const addedToastMessage = (
+    <OToast
+      toastMessage="Process Area saved successfully.
+    "
+      toastColor="success"
+    />
+  )
+
+  const addButtonHandler = async () => {
+    const addProcessNameResultAction = await dispatch(
+      reduxServices.processArea.saveProcessArea({
+        categoryId: Number(selectCategory),
+        documentName,
+        link: documentLink,
+        order: selectOrder,
+        processAreaId: Number(selectProcessAreaName),
+        responsible,
+        status: selectActiveStatus,
+      }),
+    )
+    if (
+      reduxServices.processArea.saveProcessArea.fulfilled.match(
+        addProcessNameResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatch(
+        reduxServices.processArea.incrementOrDecrementOrder({
+          categoryId: Number(selectCategory),
+          documentName,
+          link: documentLink,
+          order: selectOrder,
+          processAreaId: Number(selectProcessAreaName),
+          responsible,
+          status: selectActiveStatus,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
   }
 
   return (
@@ -152,7 +224,9 @@ const AddProcessArea = ({
               >
                 <option value={''}>-- Select Process Areas --</option>
                 {ProcessArea?.map((item, index) => (
-                  <option key={index}>{item.name}</option>
+                  <option key={index} value={item.id as number}>
+                    {item.name}
+                  </option>
                 ))}
               </CFormSelect>
             </CCol>
@@ -297,6 +371,8 @@ const AddProcessArea = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
+                disabled={!isAddButtonEnabled}
+                onClick={addButtonHandler}
               >
                 Add
               </CButton>

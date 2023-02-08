@@ -54,5 +54,5 @@ export type AddProcessAreaProps = {
   order: string
   processAreaId: number
   responsible: string
-  status: string
+  status: string | boolean
 }
