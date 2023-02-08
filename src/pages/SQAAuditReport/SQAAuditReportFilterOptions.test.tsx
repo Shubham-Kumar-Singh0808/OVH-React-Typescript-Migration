@@ -64,7 +64,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     expect(datePickers[1]).toHaveValue('')
 
     const viewBtnElement = screen.getByRole('button', { name: 'View' })
-    expect(viewBtnElement).toBeEnabled()
+    expect(viewBtnElement).toBeDisabled()
     userEvent.click(viewBtnElement)
     userEvent.click(screen.getByTestId('clear-btn'))
     userEvent.selectOptions(selectDate, [''])

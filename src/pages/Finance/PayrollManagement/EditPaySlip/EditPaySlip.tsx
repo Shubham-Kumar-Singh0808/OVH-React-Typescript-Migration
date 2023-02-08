@@ -48,7 +48,10 @@ const EditPaySlip = ({
   }, [toEditPayslip])
 
   useEffect(() => {
-    if (toEditPayslipCopy?.designation && toEditPayslipCopy?.accountNo) {
+    if (
+      toEditPayslipCopy?.designation?.replace(/^\s*/, '') &&
+      toEditPayslipCopy?.accountNo?.replace(/^\s*/, '')
+    ) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
@@ -114,17 +117,23 @@ const EditPaySlip = ({
             </Link>
           </CCol>
         </CRow>
-
-        <EmployeePayslipPersonalDetails
-          toEditPayslipCopy={toEditPayslipCopy}
-          onChangeInputHandler={onChangeInputHandler}
-        />
-        <EmployeePayslipTaxDetails
-          toEditPayslipCopy={toEditPayslipCopy}
-          onChangeInputHandler={onChangeInputHandler}
-        />
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol sm={6}>
+            <EmployeePayslipPersonalDetails
+              toEditPayslipCopy={toEditPayslipCopy}
+              onChangeInputHandler={onChangeInputHandler}
+            />
+          </CCol>
+          <CCol sm={6}>
+            <EmployeePayslipTaxDetails
+              toEditPayslipCopy={toEditPayslipCopy}
+              onChangeInputHandler={onChangeInputHandler}
+            />
+          </CCol>
+        </CRow>
+
+        <CRow>
+          <CCol sm={9} md={{ offset: 6 }}>
             <CButton
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
