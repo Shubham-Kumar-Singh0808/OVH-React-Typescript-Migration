@@ -9,9 +9,12 @@ import {
   CButton,
   CCol,
   CRow,
+  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import ScheduleVarianceEntryTable from './ScheduleVarianceEntryTable'
+import { ApiLoadingState } from '../../../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 
@@ -21,6 +24,9 @@ const AddScheduleVariance = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getProjectOverallScheduleVariance = useTypedSelector(
     reduxServices.scheduleVariance.selectors.projectOverallScheduleVariance,
+  )
+  const isLoading = useTypedSelector(
+    reduxServices.scheduleVariance.selectors.isProjectScheduleVarianceLoading,
   )
   useEffect(() => {
     dispatch(
@@ -99,6 +105,17 @@ const AddScheduleVariance = (): JSX.Element => {
           </>
         </CCol>
       </CRow>
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <ScheduleVarianceEntryTable />
+        </>
+      ) : (
+        <CCol>
+          <CRow className="category-loading-spinner">
+            <CSpinner />
+          </CRow>
+        </CCol>
+      )}
     </>
   )
 }

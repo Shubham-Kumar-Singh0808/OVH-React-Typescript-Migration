@@ -8,6 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { ApiLoadingState } from '../../../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 
@@ -17,6 +18,7 @@ const ScheduleVarianceEntryTable = () => {
   const getProjectOverallScheduleVariance = useTypedSelector(
     reduxServices.scheduleVariance.selectors.projectOverallScheduleVariance,
   )
+
   useEffect(() => {
     dispatch(
       reduxServices.scheduleVariance.getOverAllScheduleVariance(projectId),
