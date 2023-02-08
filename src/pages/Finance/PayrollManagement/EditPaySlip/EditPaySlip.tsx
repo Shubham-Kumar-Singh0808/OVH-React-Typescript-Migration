@@ -39,38 +39,8 @@ const EditPaySlip = ({
     setToEditPayslipCopy((values) => {
       return { ...values, ...{ [name]: value } }
     })
-    if (
-      name === 'accountNo' ||
-      name === 'grossSalary' ||
-      name === 'variablePayPercentage' ||
-      name === 'variablePay' ||
-      name === 'grossSalAfterVariablepay' ||
-      name === 'basicSalary' ||
-      name === 'houseRentAllowance' ||
-      name === 'transportAllowance' ||
-      name === 'otherAllowance' ||
-      name === 'absent' ||
-      name === 'lossOfPay' ||
-      name === 'mealsCard' ||
-      name === 'medicliam' ||
-      name === 'esi' ||
-      name === 'epf' ||
-      name === 'advArrears' ||
-      name === 'erc' ||
-      name === 'taxDeductionScheme' ||
-      name === 'professionalTax' ||
-      name === 'arrears' ||
-      name === 'incentive' ||
-      name === 'vpayable' ||
-      name === 'netSalary' ||
-      name === 'donation'
-    ) {
-      const newValue = value.replace(/[^0-9]/gi, '')
-      setToEditPayslipCopy((prevState) => {
-        return { ...prevState, ...{ [name]: newValue } }
-      })
-    }
   }
+
   useEffect(() => {
     if (toEditPayslip != null) {
       setToEditPayslipCopy(toEditPayslip)
