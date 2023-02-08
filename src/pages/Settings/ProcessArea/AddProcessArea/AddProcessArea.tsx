@@ -30,6 +30,7 @@ const AddProcessArea = ({
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [documentNameExists, setDocumentNameExists] = useState<string>('')
 
   useEffect(() => {
     if (
@@ -65,7 +66,9 @@ const AddProcessArea = ({
   const ProcessArea = useTypedSelector(
     reduxServices.processArea.selectors.ProcessArea,
   )
-
+  const ProcessSubHeads = useTypedSelector(
+    reduxServices.processArea.selectors.ProcessSubHeads,
+  )
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -75,6 +78,11 @@ const AddProcessArea = ({
       )
   }, [dispatch, selectCategory])
 
+  const documentNameAlreadyExists = (name: string) => {
+    return ProcessSubHeads?.find((processName) => {
+      return processName.documentName.toLowerCase() === name.toLowerCase()
+    })
+  }
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -95,6 +103,11 @@ const AddProcessArea = ({
       setSelectOrder(newValue)
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
+    }
+    if (documentNameAlreadyExists(value.trim())) {
+      setDocumentNameExists(value.trim())
+    } else {
+      setDocumentNameExists('')
     }
   }
 
@@ -150,6 +163,7 @@ const AddProcessArea = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      setToggle('')
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
@@ -183,7 +197,7 @@ const AddProcessArea = ({
               >
                 <option value={''}>-- Select Category --</option>
                 {ProjectTailoringList?.map((item, index) => (
-                  <option key={index} value={item.processHeadId as number}>
+                  <option key={index} value={item.processHeadId}>
                     {item.processHeadname}
                   </option>
                 ))}
@@ -215,14 +229,14 @@ const AddProcessArea = ({
                 aria-label="Default select example"
                 size="sm"
                 id="selectProcessAreaName"
-                data-testid="form-select1"
+                data-testid="form-select2"
                 name="selectProcessAreaName"
                 value={selectProcessAreaName}
                 onChange={(e) => setSelectProcessAreaName(e.target.value)}
               >
                 <option value={''}>-- Select Process Areas --</option>
                 {ProcessArea?.map((item, index) => (
-                  <option key={index} value={item.id as number}>
+                  <option key={index} value={item.id}>
                     {item.name}
                   </option>
                 ))}
@@ -231,6 +245,7 @@ const AddProcessArea = ({
             <CCol className="col-sm-3">
               <CButton
                 color="info btn-ovh me-1"
+                data-testid="add-inner"
                 onClick={() => setToggle('addNewProcessArea')}
               >
                 <i className="fa fa-plus me-1"></i>Add
@@ -258,6 +273,11 @@ const AddProcessArea = ({
                 onChange={handleInputChange}
                 required
               />
+              {documentNameExists && (
+                <p className={TextDanger} data-testid="nameAlreadyExist">
+                  Document Name Already Exists
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -309,7 +329,7 @@ const AddProcessArea = ({
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              Status :
+              Status:
             </CFormLabel>
             <CCol sm={3}>
               <CFormCheck

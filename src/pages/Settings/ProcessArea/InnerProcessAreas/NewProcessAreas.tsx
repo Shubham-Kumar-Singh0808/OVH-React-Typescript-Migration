@@ -21,13 +21,17 @@ const NewProcessAreas = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const ProjectTailoringList = useTypedSelector(
-    reduxServices.processArea.selectors.ProjectTailoringList,
+  const ProcessArea = useTypedSelector(
+    reduxServices.processArea.selectors.ProcessArea,
   )
   const [selectCategory, setSelectCategory] = useState<string>('')
   const [processArea, setProcessArea] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [processNameExists, setProcessNameExists] = useState<string>('')
+
+  const ProjectTailoringList = useTypedSelector(
+    reduxServices.processArea.selectors.ProjectTailoringList,
+  )
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -47,11 +51,11 @@ const NewProcessAreas = ({
     setProcessArea('')
   }
 
-  // const processNameAlreadyExists = (name: string) => {
-  //   return ProjectTailoringList?.find((processName) => {
-  //     return processName.processHeadname.toLowerCase() === name.toLowerCase()
-  //   })
-  // }
+  const processNameAlreadyExists = (name: string) => {
+    return ProcessArea?.find((processName) => {
+      return processName.name.toLowerCase() === name.toLowerCase()
+    })
+  }
 
   const handledInputChange = (
     event:
@@ -63,11 +67,11 @@ const NewProcessAreas = ({
       const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setProcessArea(newValue)
     }
-    // if (processNameAlreadyExists(value)) {
-    //   setProcessNameExists(value)
-    // } else {
-    //   setProcessNameExists('')
-    // }
+    if (processNameAlreadyExists(value.trim())) {
+      setProcessNameExists(value.trim())
+    } else {
+      setProcessNameExists('')
+    }
   }
 
   const addedToastMessage = (
@@ -75,6 +79,14 @@ const NewProcessAreas = ({
       toastMessage="Process Area saved successfully.
     "
       toastColor="success"
+    />
+  )
+
+  const addedErrorToastMessage = (
+    <OToast
+      toastMessage="Process Area already exists.
+    "
+      toastColor="danger"
     />
   )
 
@@ -92,6 +104,16 @@ const NewProcessAreas = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      setSelectCategory('')
+      setProcessArea('')
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.processArea.createProcessArea.rejected.match(
+        addProcessNameResultAction,
+      ) &&
+      addProcessNameResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(addedErrorToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
@@ -172,8 +194,6 @@ const NewProcessAreas = ({
                 onChange={handledInputChange}
                 required
               />
-            </CCol>
-            <CCol sm={3}>
               {processNameExists && (
                 <p className={TextDanger} data-testid="nameAlreadyExist">
                   Process Name Already Exists
@@ -187,7 +207,11 @@ const NewProcessAreas = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && processNameExists?.length > 0
+                    : !isAddButtonEnabled
+                }
                 onClick={addBtnHandler}
               >
                 Add

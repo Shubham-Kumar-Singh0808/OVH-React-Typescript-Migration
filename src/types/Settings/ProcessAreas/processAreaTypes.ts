@@ -18,7 +18,7 @@ export type ProcessSubHeadsDto = {
   processSubHeadId: number
   processAreaId: null
   processSubHeadName: string
-  processName: null
+  processName: null | string
   documentName: string
   responsible: string
   common: null
@@ -28,7 +28,7 @@ export type ProcessSubHeadsDto = {
   sqaApproval: null
   link: string
   status: string
-  order: number
+  order: number | null
 }
 
 export type ProcessAreaSliceState = {
