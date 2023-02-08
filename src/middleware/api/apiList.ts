@@ -953,4 +953,6 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
 
 export const projectScheduleVarianceApiConfig: ProjectScheduleVarianceApi = {
   getScheduleVariance: apiPrefix + '/projectmetrics/getScheduleVariance',
+  getOverAllScheduleVariance:
+    apiPrefix + '/projectmetrics/getOverAllScheduleVariance',
 }

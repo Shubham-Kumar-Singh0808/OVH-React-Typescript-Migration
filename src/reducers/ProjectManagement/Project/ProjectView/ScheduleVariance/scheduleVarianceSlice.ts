@@ -5,6 +5,7 @@ import projectScheduleVarianceApi from '../../../../../middleware/api/ProjectMan
 import { AppDispatch, RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import {
+  ProjectOverAllScheduleVariance,
   ProjectScheduleVariance,
   ProjectScheduleVarianceState,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/ScheduleVariance/scheduleVarianceTypes'
@@ -18,7 +19,7 @@ const getScheduleVariance = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'projectProposals/getProjectTimeLine',
+  'projectView/getScheduleVariance',
   async (projectId: number | string, thunkApi) => {
     try {
       return await projectScheduleVarianceApi.getScheduleVariance(projectId)
@@ -29,8 +30,31 @@ const getScheduleVariance = createAsyncThunk<
   },
 )
 
+const getOverAllScheduleVariance = createAsyncThunk<
+  ProjectOverAllScheduleVariance[] | undefined,
+  number | string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectProposals/getProjectTimeLine',
+  async (projectId: number | string, thunkApi) => {
+    try {
+      return await projectScheduleVarianceApi.getOverAllScheduleVariance(
+        projectId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialProjectScheduleVarianceState: ProjectScheduleVarianceState = {
   projectScheduleVariance: [],
+  projectOverAllScheduleVariance: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -45,6 +69,11 @@ const projectScheduleVarianceSlice = createSlice({
         state.projectScheduleVariance =
           action.payload as ProjectScheduleVariance[]
       })
+      .addCase(getOverAllScheduleVariance.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.projectOverAllScheduleVariance =
+          action.payload as ProjectOverAllScheduleVariance[]
+      })
       .addCase(getScheduleVariance.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
@@ -53,6 +82,7 @@ const projectScheduleVarianceSlice = createSlice({
 
 const projectScheduleVarianceThunk = {
   getScheduleVariance,
+  getOverAllScheduleVariance,
 }
 const isProjectScheduleVarianceLoading = (state: RootState): LoadingState =>
   state.scheduleVariance.isLoading
@@ -60,9 +90,15 @@ const isProjectScheduleVarianceLoading = (state: RootState): LoadingState =>
 const projectScheduleVariance = (state: RootState): ProjectScheduleVariance[] =>
   state.scheduleVariance.projectScheduleVariance
 
+const projectOverallScheduleVariance = (
+  state: RootState,
+): ProjectOverAllScheduleVariance[] =>
+  state.scheduleVariance.projectOverAllScheduleVariance
+
 const projectScheduleVarianceSelectors = {
   isProjectScheduleVarianceLoading,
   projectScheduleVariance,
+  projectOverallScheduleVariance,
 }
 
 export const projectScheduleVarianceService = {

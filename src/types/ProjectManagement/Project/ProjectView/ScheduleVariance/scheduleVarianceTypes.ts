@@ -16,7 +16,23 @@ export type ProjectScheduleVariance = {
   id: null
 }
 
+export type ProjectOverAllScheduleVariance = {
+  id: number
+  projectId: null
+  baseLineStartDate: string
+  baseLineEndDate: string
+  actualStartDate: string
+  actualEndDate: string
+  overAllSheduleVariance: string
+  comments: string
+  createdBy: null
+  employeeName: string
+  createdDate: string
+  createdTime: string
+}
+
 export type ProjectScheduleVarianceState = {
   projectScheduleVariance: ProjectScheduleVariance[]
+  projectOverAllScheduleVariance: ProjectOverAllScheduleVariance[]
   isLoading: LoadingState
 }
