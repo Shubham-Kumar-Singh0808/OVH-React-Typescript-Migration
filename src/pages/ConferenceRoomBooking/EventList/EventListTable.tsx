@@ -123,11 +123,6 @@ const EventListTable = (
       ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
       : 'N/A'
 
-  // const eventDescription =
-  //   selectedEventDetails.description !== null
-  //     ? selectedEventDetails.description
-  //     : 'N/A'
-
   const editButtonHandler = (id: number) => {
     dispatch(reduxServices.eventList.editEvent(id))
     history.push(`/editEvent/${id}`)
