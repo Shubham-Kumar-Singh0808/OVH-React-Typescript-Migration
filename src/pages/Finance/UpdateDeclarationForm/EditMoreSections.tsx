@@ -16,6 +16,7 @@ import {
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const EditMoreSections = ({
   sectionItem,
@@ -44,8 +45,25 @@ const EditMoreSections = ({
       customAmount: '',
     },
   ])
+
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
   const [reRender, setReRender] = useState<boolean>(false)
+
+  const [editMoreSections, setEditMoreSections] = useState<ITForm>({
+    fromDate: '',
+    grandTotal: 0,
+    isAgree: null,
+    itDeclarationFormId: 0,
+    organisationName: '',
+    panNumber: '',
+    toDate: '',
+    cycleId: 0,
+    designation: '',
+    employeeId: 0,
+    employeeName: '',
+    filePath: null,
+    formSectionsDTOs: [],
+  })
 
   const dispatch = useAppDispatch()
 
@@ -197,6 +215,8 @@ const EditMoreSections = ({
                     onChangeInvestment={onChangeInvestment}
                     index={index}
                     sectionList={sectionList}
+                    editMoreSections={editMoreSections}
+                    setEditMoreSections={setEditMoreSections}
                   />
                 </React.Fragment>
               )
