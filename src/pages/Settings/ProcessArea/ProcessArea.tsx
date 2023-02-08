@@ -56,6 +56,7 @@ const ProcessArea = (): JSX.Element => {
           <CRow className="justify-content-end mb-4">
             <CCol className="text-end" md={4}>
               <CButton
+                data-testid="Process-Area"
                 color="info"
                 className="btn-ovh me-1"
                 onClick={() => setToggle('addProcessArea')}
