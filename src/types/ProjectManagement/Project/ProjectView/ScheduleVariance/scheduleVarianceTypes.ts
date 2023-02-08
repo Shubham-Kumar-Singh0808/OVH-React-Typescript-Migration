@@ -1,8 +1,22 @@
+import { LoadingState } from '../../../../commonTypes'
+
 export type ProjectScheduleVariance = {
-  id: number
-  post: string
-  postedBy: string
-  postedOn: string
-  projectName: string
-  projectId: number
+  versionName: string
+  actuallEffort: number
+  plannedEffort: null
+  actualStartDate: string
+  actualEndDate: string
+  baseLineStartDate: string
+  baseLineEndDate: string
+  sheduleVariance: number
+  percentageOfCompletion: null
+  status: string
+  projectedStartDate: string
+  projectedEndDate: string
+  id: null
+}
+
+export type ProjectScheduleVarianceState = {
+  projectScheduleVariance: ProjectScheduleVariance[]
+  isLoading: LoadingState
 }

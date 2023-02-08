@@ -125,6 +125,7 @@ import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/A
 import projectStatusReducer from './reducers/ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
 import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
+import scheduleVarianceReducer from './reducers/ProjectManagement/Project/ProjectView/ScheduleVariance/scheduleVarianceSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -250,6 +251,7 @@ export const allReducers = {
   projectStatus: projectStatusReducer,
   addNewAuditForm: addNewAuditFormReducer,
   sqaAuditReport: sqaAuditReportReducer,
+  scheduleVariance: scheduleVarianceReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

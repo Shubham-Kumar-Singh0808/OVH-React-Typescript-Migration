@@ -115,6 +115,7 @@ import { appraisalTemplateService } from './Performance/AppraisalTemplate/Apprai
 import { projectStatusService } from './ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
 import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
+import { projectScheduleVarianceService } from './ProjectManagement/Project/ProjectView/ScheduleVariance/scheduleVarianceSlice'
 
 export const reduxServices = {
   app: appService,
@@ -234,4 +235,5 @@ export const reduxServices = {
   projectStatus: projectStatusService,
   addNewAuditForm: addNewAuditService,
   sqaAuditReport: sqaAuditReportService,
+  scheduleVariance: projectScheduleVarianceService,
 }
