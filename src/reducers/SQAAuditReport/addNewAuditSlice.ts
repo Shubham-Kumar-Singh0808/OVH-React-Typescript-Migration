@@ -78,7 +78,7 @@ const addNewAuditSlice = createSlice({
       })
       .addCase(getProjectEmployees.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.employee = action.payload as Employee[]
+        state.employee = action.payload
       })
       .addCase(saveNewAuditForm.pending, (state) => {
         state.isLoading = ApiLoadingState.loading

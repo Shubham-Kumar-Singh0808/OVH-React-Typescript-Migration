@@ -49,12 +49,16 @@ const AddNewAudit = (): JSX.Element => {
   const [selectProjectMgr, setSelectProjectMgr] = useState<number>()
   const [isProjectManagerVisible, setIsProjectManagerVisible] =
     useState<boolean>(false)
+  const [showProjectMangerName, setShowProjectManagerName] =
+    useState<string>('')
+
   const [isButtonEnable, setIsButtonEnable] = useState<boolean>(false)
   const [auditProjectType, setAuditProjectType] = useState<string>('true')
+
   const projects = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
-  const employees = useTypedSelector(
+  const projectEmployees = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.employees,
   )
   const projectManagers = useTypedSelector(
@@ -186,6 +190,7 @@ const AddNewAudit = (): JSX.Element => {
     setAuditProjectType(event.target.value)
     if (event.target.value === 'false') {
       setIsProjectManagerVisible(true)
+      setShowProjectManagerName('')
     } else {
       setIsProjectManagerVisible(false)
     }
@@ -209,11 +214,12 @@ const AddNewAudit = (): JSX.Element => {
         selectedProject?.id as number,
       ),
     )
+    setShowProjectManagerName(selectedProject?.managerName as string)
   }
 
   useEffect(() => {
-    setAddAuditeeName(employees)
-  }, [employees])
+    setAddAuditeeName(projectEmployees)
+  }, [projectEmployees])
 
   const handleAddNewAuditForm = async () => {
     const startTimeSplit = addAudit.startTime.split(':')
@@ -412,18 +418,23 @@ const AddNewAudit = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
-          {isProjectManagerVisible && (
-            <CRow className="mt-4 mb-4">
-              <CFormLabel {...formLabelProps} className={formLabel}>
-                Project Manager:
-                <span
-                  className={
-                    projectManagerAutoCompleteTarget ? TextWhite : TextDanger
-                  }
-                >
-                  *
-                </span>
-              </CFormLabel>
+
+          <CRow className="mt-4 mb-4">
+            <CFormLabel {...formLabelProps} className={formLabel}>
+              Project Manager:
+              <span
+                className={
+                  projectManagerAutoCompleteTarget ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            {!isProjectManagerVisible ? (
+              <CCol sm={3}>
+                <span className="fw-bold">{showProjectMangerName}</span>
+              </CCol>
+            ) : (
               <CCol sm={3}>
                 <Autocomplete
                   inputProps={{
@@ -470,8 +481,9 @@ const AddNewAudit = (): JSX.Element => {
                   }
                 />
               </CCol>
-            </CRow>
-          )}
+            )}
+          </CRow>
+
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Auditors:
