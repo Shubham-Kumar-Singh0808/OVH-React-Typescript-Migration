@@ -104,13 +104,11 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         </CFormLabel>
                         {isTicketPrevValue(pipDetails.oldRemarks)}
                         &nbsp;
-                        <p>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: pipDetails.remarks,
-                            }}
-                          />
-                        </p>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: pipDetails.remarks,
+                          }}
+                        />
                       </div>
                     </>
                   ) : (
@@ -124,13 +122,11 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         </CFormLabel>
                         {isTicketPrevValue(pipDetails.oldImprovement)}
                         &nbsp;
-                        <p>
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: pipDetails.improvement,
-                            }}
-                          />
-                        </p>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: pipDetails.improvement,
+                          }}
+                        />
                       </div>
                     </>
                   ) : (
