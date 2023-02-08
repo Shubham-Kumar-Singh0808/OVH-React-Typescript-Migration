@@ -115,6 +115,7 @@ const NewProcessAreas = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(addedErrorToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
+      setProcessArea('')
     }
   }
 

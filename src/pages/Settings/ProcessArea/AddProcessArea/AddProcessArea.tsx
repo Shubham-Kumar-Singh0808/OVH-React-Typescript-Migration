@@ -30,7 +30,6 @@ const AddProcessArea = ({
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [documentNameExists, setDocumentNameExists] = useState<string>('')
 
   useEffect(() => {
     if (
@@ -66,9 +65,7 @@ const AddProcessArea = ({
   const ProcessArea = useTypedSelector(
     reduxServices.processArea.selectors.ProcessArea,
   )
-  const ProcessSubHeads = useTypedSelector(
-    reduxServices.processArea.selectors.ProcessSubHeads,
-  )
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -78,11 +75,6 @@ const AddProcessArea = ({
       )
   }, [dispatch, selectCategory])
 
-  const documentNameAlreadyExists = (name: string) => {
-    return ProcessSubHeads?.find((processName) => {
-      return processName.documentName.toLowerCase() === name.toLowerCase()
-    })
-  }
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -104,11 +96,6 @@ const AddProcessArea = ({
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
     }
-    if (documentNameAlreadyExists(value.trim())) {
-      setDocumentNameExists(value.trim())
-    } else {
-      setDocumentNameExists('')
-    }
   }
 
   const clearData = () => {
@@ -126,6 +113,13 @@ const AddProcessArea = ({
       toastMessage="Process Area saved successfully.
     "
       toastColor="success"
+    />
+  )
+  const addedErrorToastMessage = (
+    <OToast
+      toastMessage="Document Name already exists.
+    "
+      toastColor="danger"
     />
   )
 
@@ -162,9 +156,21 @@ const AddProcessArea = ({
           status: selectActiveStatus,
         }),
       )
+      dispatch(
+        reduxServices.processArea.getProjectTailoringDocument('totalList'),
+      )
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.processArea.saveProcessArea.rejected.match(
+        addProcessNameResultAction,
+      ) &&
+      addProcessNameResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(addedErrorToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+      setDocumentName('')
     }
   }
 
@@ -273,11 +279,6 @@ const AddProcessArea = ({
                 onChange={handleInputChange}
                 required
               />
-              {documentNameExists && (
-                <p className={TextDanger} data-testid="nameAlreadyExist">
-                  Document Name Already Exists
-                </p>
-              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
