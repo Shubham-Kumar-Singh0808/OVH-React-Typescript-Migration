@@ -30,8 +30,8 @@ const ProcessArea = (): JSX.Element => {
           CFooterClassName="d-none"
         >
           <CRow className="mb-3 mt-3">
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">Category: </CFormLabel>
+            <CCol sm={3} md={3} className="text-end">
+              <CFormLabel className="pt-2">Category: </CFormLabel>
             </CCol>
             <CCol sm={3}>
               <CFormSelect
@@ -53,7 +53,7 @@ const ProcessArea = (): JSX.Element => {
               </CFormSelect>
             </CCol>
           </CRow>
-          <CRow className="justify-content-end">
+          <CRow className="justify-content-end mb-4">
             <CCol className="text-end" md={4}>
               <CButton
                 color="info"

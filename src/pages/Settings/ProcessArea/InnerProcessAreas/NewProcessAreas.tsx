@@ -104,20 +104,8 @@ const NewProcessAreas = ({
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={() => setToggle('addProcessArea')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow>
         <CForm>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-2 mb-4">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
@@ -145,6 +133,16 @@ const NewProcessAreas = ({
                     </option>
                   ))}
               </CFormSelect>
+            </CCol>
+            <CCol className="text-end" md={6}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={() => setToggle('addProcessArea')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
