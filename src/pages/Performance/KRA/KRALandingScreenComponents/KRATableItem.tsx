@@ -1,4 +1,10 @@
-import { CButton, CLink, CTableDataCell, CTableRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CLink,
+  CTableDataCell,
+  CTableRow,
+  CTooltip,
+} from '@coreui/react-pro'
 import React from 'react'
 import parse from 'html-react-parser'
 import KPIsTable from './KPIsTable'
@@ -131,47 +137,66 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
             <div className="d-flex flex-row align-items-center justify-content-end">
               <div className="button-events">
                 {userAccessToKRA?.updateaccess && (
-                  <CButton
-                    size="sm"
-                    color="info"
-                    className="btn-ovh me-1 btn-ovh-employee-list"
-                    data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
-                    title="Edit"
-                    onClick={editKRAButtonHandler}
-                  >
-                    <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-                  </CButton>
+                  <>
+                    <CTooltip content="Edit">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
+                        title="Edit"
+                        onClick={editKRAButtonHandler}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
+                  </>
                 )}
                 {userAccessToKRA?.deleteaccess && (
-                  <CButton
-                    size="sm"
-                    color="danger"
-                    className="btn-ovh me-1 btn-ovh-employee-list"
-                    title="Delete"
-                    data-testid={`del-btn-kra-${selectedKRA.id}`}
-                    onClick={deleteKRAButtonHandler}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  <>
+                    <CTooltip content="Delete">
+                      <CButton
+                        size="sm"
+                        color="danger"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        title="Delete"
+                        data-testid={`del-btn-kra-${selectedKRA.id}`}
+                        onClick={deleteKRAButtonHandler}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </>
                 )}
                 {userAccessToKRA?.createaccess && (
-                  <CButton
-                    size="sm"
-                    color="info"
-                    className="btn-ovh btn-ovh-employee-list"
-                    title="Add KPI"
-                    onClick={() => addKPIButtonHandler(selectedKRA)}
-                  >
-                    <i className="fa fa-plus" aria-hidden="true"></i>
-                  </CButton>
+                  <>
+                    <CTooltip content="Add KPI">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh btn-ovh-employee-list"
+                        title="Add KPI"
+                        onClick={() => addKPIButtonHandler(selectedKRA)}
+                      >
+                        <i className="fa fa-plus" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </>
                 )}
               </div>
             </div>
           </CTableDataCell>
         </CTableRow>
         {selectedKRAId === selectedKRA.id && isIconVisible ? (
-          <CTableRow>
-            <CTableDataCell colSpan={10} data-testid="inner-table">
+          <CTableRow style={{ backgroundColor: '#fff' }}>
+            <CTableDataCell
+              colSpan={8}
+              data-testid="inner-table"
+              style={{ backgroundColor: '#fff' }}
+            >
               <KPIsTable kraId={selectedKRA.id} />
             </CTableDataCell>
           </CTableRow>
