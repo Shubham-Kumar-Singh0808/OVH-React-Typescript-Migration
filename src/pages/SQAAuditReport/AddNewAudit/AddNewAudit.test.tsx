@@ -2,11 +2,11 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import AddNewAudit from './AddNewAudit'
-import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import {
   mockEmployeeNames,
   mockProjectNames,
-} from '../../test/data/allocateEmployeeData'
+} from '../../../test/data/allocateEmployeeData'
 
 const backButton = 'newAudit-back-btn'
 const auditTypeInputElement = 'auditType-input'

@@ -424,10 +424,13 @@ const AppraisalTemplate = React.lazy(
 )
 
 const AddNewAudit = React.lazy(
-  () => import('./pages/SQAAuditReport/AddNewAudit'),
+  () => import('./pages/SQAAuditReport/AddNewAudit/AddNewAudit'),
 )
 const SQAAudit = React.lazy(
   () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+const EditAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/EditAuditForm/EditAudit'),
 )
 
 /**
@@ -931,11 +934,15 @@ const routes = [
     name: 'Add New Audit',
     component: AddNewAudit,
   },
-
   {
     path: '/SQAAudit',
     name: '/SQA Audit',
     component: SQAAudit,
+  },
+  {
+    path: '/editAuditForm/:auditId',
+    name: 'Edit Audit Form',
+    component: EditAudit,
   },
 ]
 

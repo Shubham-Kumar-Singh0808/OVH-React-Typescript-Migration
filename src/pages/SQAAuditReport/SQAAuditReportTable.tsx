@@ -10,6 +10,7 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
@@ -115,16 +116,18 @@ const SQAAuditReportTable = ({
                         aria-hidden="true"
                       ></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-edit text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <Link to={`editAuditForm/${auditReport.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh-employee-list me-1 mt-1"
+                        data-testid="edit-btn"
+                      >
+                        <i
+                          className="fa fa-edit text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </Link>
                     <CButton
                       color="danger"
                       className="btn-ovh-employee-list me-1 mt-1"

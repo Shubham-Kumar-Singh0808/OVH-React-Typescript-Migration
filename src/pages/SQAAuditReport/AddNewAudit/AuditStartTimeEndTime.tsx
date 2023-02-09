@@ -1,6 +1,6 @@
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { convertTime, showIsRequired } from '../../utils/helper'
+import { convertTime, showIsRequired } from '../../../utils/helper'
 
 const AuditStartTimeEndTime = ({
   onSelectStartAndEndTime,

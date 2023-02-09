@@ -943,6 +943,7 @@ export const projectStatusApiConfig: ProjectStatusApi = {
 
 export const addNewAuditApiConfig: AddNewAudit = {
   saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  editAuditFormDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
 }
 
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {

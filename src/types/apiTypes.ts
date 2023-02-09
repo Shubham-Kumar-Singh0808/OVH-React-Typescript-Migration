@@ -776,6 +776,7 @@ export interface ProjectStatusApi extends ApiBase {
 
 export interface AddNewAudit extends ApiBase {
   saveNewAuditForm: string
+  editAuditFormDetails: string
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
