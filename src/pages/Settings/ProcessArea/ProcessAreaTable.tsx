@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import {
   CButton,
   CTable,
@@ -25,10 +25,6 @@ const ProcessAreaTable = ({
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
 
-  const ProcessSubHeads = useTypedSelector(
-    reduxServices.processArea.selectors.ProcessSubHeads,
-  )
-
   const result = ProjectTailoringList?.filter(
     (value) => value.processHeadname === selectCategory,
   )
@@ -38,15 +34,6 @@ const ProcessAreaTable = ({
     dispatch(reduxServices.processArea.getProcessAreas(categoryId))
     dispatch(reduxServices.processArea.getProcessAreaDetails(processSubHeadId))
   }
-
-  const sortedFamilyDetails = useMemo(() => {
-    if (ProcessSubHeads) {
-      return ProcessSubHeads.slice().sort(
-        (a, b) => Number(b.order) - Number(a.order),
-      )
-    }
-    return []
-  }, [ProcessSubHeads])
 
   return (
     <>

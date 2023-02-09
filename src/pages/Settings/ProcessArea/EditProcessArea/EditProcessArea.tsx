@@ -160,6 +160,7 @@ const EditProcessArea = ({
         reduxServices.processArea.getProjectTailoringDocument('totalList'),
       )
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      setToggle('')
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
@@ -184,9 +185,9 @@ const EditProcessArea = ({
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
-                id="selectCategory"
+                id="categoryId"
                 data-testid="form-select1"
-                name="selectCategory"
+                name="categoryId"
                 value={processArea.categoryId}
                 onChange={onChangeInputHandler}
               >
@@ -226,12 +227,13 @@ const EditProcessArea = ({
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
-                id="selectProcessAreaName"
+                id="processSubHeadName"
                 data-testid="form-select2"
-                name="selectProcessAreaName"
+                name="processSubHeadName"
                 value={processArea.processSubHeadName}
                 onChange={onChangeInputHandler}
               >
+                {/* <option value={''}>Select Option</option> */}
                 {ProcessAreaList?.map((item, index) => (
                   <option key={index} value={item.id}>
                     {item.name}
@@ -306,10 +308,10 @@ const EditProcessArea = ({
               <CFormInput
                 data-testid="documentLink"
                 type="text"
-                id="documentLink"
+                id="link"
                 autoComplete="off"
                 size="sm"
-                name="documentLink"
+                name="link"
                 placeholder="Link"
                 value={processArea?.link}
                 onChange={onChangeInputHandler}
@@ -363,13 +365,13 @@ const EditProcessArea = ({
               <CFormInput
                 data-testid="selectOrder"
                 type="text"
-                id="selectOrder"
+                id="order"
                 autoComplete="off"
                 size="sm"
                 maxLength={2}
                 min={1}
                 max={99}
-                name="selectOrder"
+                name="order"
                 value={processArea.order}
                 onChange={onChangeInputHandler}
               />
