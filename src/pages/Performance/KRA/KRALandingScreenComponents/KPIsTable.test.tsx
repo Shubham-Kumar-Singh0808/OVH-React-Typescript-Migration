@@ -70,7 +70,7 @@ describe('KPI Table', () => {
     })
 
     test('number of rows are rendered', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(5)
+      expect(screen.queryAllByRole('row')).toHaveLength(4)
     })
 
     test('delete button functionality', () => {

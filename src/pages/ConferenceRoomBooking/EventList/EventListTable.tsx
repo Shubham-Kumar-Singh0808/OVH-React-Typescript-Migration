@@ -123,11 +123,6 @@ const EventListTable = (
       ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
       : 'N/A'
 
-  const eventDescription =
-    selectedEventDetails.description !== null
-      ? selectedEventDetails.description
-      : 'N/A'
-
   const editButtonHandler = (id: number) => {
     dispatch(reduxServices.eventList.editEvent(id))
     history.push(`/editEvent/${id}`)
@@ -289,19 +284,21 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">Location :</span>
             {`${selectedEventDetails.roomName} in ${selectedEventDetails.locationName}`}
           </p>
-          <p className="d-flex">
+          <div className="d-flex mb-2">
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
-            {eventDescription}
-          </p>
+            {selectedEventDetails.description
+              ? parse(selectedEventDetails.description)
+              : 'N/A'}
+          </div>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Trainer :</span>
             {trainer}
           </p>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
-            {attendees}
+            <div className="col-sm-6">{attendees}</div>
           </p>
         </>
       </OModal>

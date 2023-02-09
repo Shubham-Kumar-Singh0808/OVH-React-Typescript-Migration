@@ -62,7 +62,7 @@ const EditPaySlip = ({
 
   const updateToastMessage = (
     <OToast
-      toastMessage="Your changes have been saved successfully.
+      toastMessage="Payslip Updated Successfully.
     "
       toastColor="success"
     />

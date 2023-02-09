@@ -590,7 +590,7 @@ const AddProjectRequestForm = ({
           <ProjectName
             onChange={setProjectName}
             onBlur={handleAddProjectName}
-            value={projectName}
+            value={projectName?.replace(/^\s*/, '')}
           />
           <OInputField
             onChangeHandler={setCustomerContactName}
