@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import ResignationTimeLine from './ResignationTimeLine'
@@ -8,6 +8,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
+import { SeparationTimeLine } from '../../../../types/Separation/ResignationList/resignationListTypes'
 
 const ResignationHistory = (): JSX.Element => {
   const isLoading = useTypedSelector(
@@ -25,6 +26,18 @@ const ResignationHistory = (): JSX.Element => {
   const userAccessEditTimeLine = userAccessToFeatures?.find(
     (feature) => feature.name === 'Separation',
   )
+  const [isResignationTimeLineEdit, setIsResignationTimeLineEdit] =
+    useState<boolean>(false)
+  const [resignationId, setResignationId] = useState(0)
+  const initialResignationTimeLine = {} as SeparationTimeLine
+  const [editResignationTimeLine, setEditResignationTimeLine] = useState(
+    initialResignationTimeLine,
+  )
+  const editButtonHandler = () => {
+    setEditResignationTimeLine(getAllResignationHistory)
+    setIsResignationTimeLineEdit(true)
+    setResignationId(getAllResignationHistory.separationId)
+  }
   return (
     <>
       <OCard
@@ -35,13 +48,17 @@ const ResignationHistory = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {getAllResignationHistory.status === 'Relieved' &&
+            {getAllResignationHistory.status === 'Resigned' &&
             userAccessEditTimeLine ? (
-              ''
-            ) : (
-              <CButton color="info" className="btn-ovh me-1">
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                onClick={editButtonHandler}
+              >
                 <i className="fa fa-arrow-left  me-1"></i>Edit
               </CButton>
+            ) : (
+              ''
             )}
             <Link to={`/resignationList`}>
               <CButton color="info" className="btn-ovh me-1">
@@ -52,7 +69,14 @@ const ResignationHistory = (): JSX.Element => {
         </CRow>
         {isLoading !== ApiLoadingState.loading ? (
           <>
-            <ResignationTimeLine />
+            <ResignationTimeLine
+              editResignationTimeLine={editResignationTimeLine}
+              setEditResignationTimeLine={setEditResignationTimeLine}
+              resignationId={resignationId}
+              setResignationId={setResignationId}
+              isResignationTimeLineEdit={isResignationTimeLineEdit}
+              setIsResignationTimeLineEdit={setIsResignationTimeLineEdit}
+            />
           </>
         ) : (
           <OLoadingSpinner type={LoadingType.PAGE} />
