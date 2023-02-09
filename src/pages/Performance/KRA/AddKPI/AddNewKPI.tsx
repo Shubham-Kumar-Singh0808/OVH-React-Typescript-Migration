@@ -66,7 +66,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
       description: '',
       kraId: 0,
     })
-    setSelectFrequency(0)
+    setSelectFrequency('')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,6 +181,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               name="name"
               placeholder="KPI Name"
               value={addNewKPi.name}
+              maxLength={250}
               onChange={handleInputChange}
             />
           </CCol>
@@ -245,7 +246,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               />
             </CCol>
           ) : (
-            ''
+            'N/A'
           )}
         </CRow>
         <CRow>
