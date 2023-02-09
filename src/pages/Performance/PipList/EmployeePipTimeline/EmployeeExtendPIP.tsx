@@ -105,7 +105,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Employee Name:
             </CFormLabel>
@@ -125,7 +125,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Start Date:
             </CFormLabel>
@@ -145,9 +145,9 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              End Date :
+              End Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -165,7 +165,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                Extend Date :
+                Extend Date:
                 <span className={extendDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
