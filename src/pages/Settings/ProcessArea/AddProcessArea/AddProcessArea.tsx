@@ -213,7 +213,7 @@ const AddProcessArea = ({
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="back-button"
+                data-testid="back-btn"
                 onClick={() => setToggle('')}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back

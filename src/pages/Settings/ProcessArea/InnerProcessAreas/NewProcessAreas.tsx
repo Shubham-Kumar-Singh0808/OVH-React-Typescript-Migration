@@ -24,12 +24,12 @@ const NewProcessAreas = ({
   const ProcessArea = useTypedSelector(
     reduxServices.processArea.selectors.ProcessArea,
   )
-  const [selectCategory, setSelectCategory] = useState<string>('')
+  const [selectCategoryName, setSelectCategoryName] = useState<string>('')
   const [processArea, setProcessArea] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [processNameExists, setProcessNameExists] = useState<string>('')
 
-  const ProjectTailoringList = useTypedSelector(
+  const ProjectTailoringData = useTypedSelector(
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
 
@@ -39,15 +39,15 @@ const NewProcessAreas = ({
   }
 
   useEffect(() => {
-    if (selectCategory && processArea.replace(/^\s*/, '')) {
+    if (selectCategoryName && processArea.replace(/^\s*/, '')) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [selectCategory, processArea])
+  }, [selectCategoryName, processArea])
 
   const clearData = () => {
-    setSelectCategory('')
+    setSelectCategoryName('')
     setProcessArea('')
   }
 
@@ -93,7 +93,7 @@ const NewProcessAreas = ({
   const addBtnHandler = async () => {
     const addProcessNameResultAction = await dispatch(
       reduxServices.processArea.createProcessArea({
-        categoryId: Number(selectCategory),
+        categoryId: Number(selectCategoryName),
         name: processArea,
       }),
     )
@@ -104,7 +104,7 @@ const NewProcessAreas = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(addedToastMessage))
-      setSelectCategory('')
+      setSelectCategoryName('')
       setProcessArea('')
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
@@ -134,7 +134,9 @@ const NewProcessAreas = ({
               className="col-sm-3 col-form-label text-end"
             >
               Category:
-              <span className={selectCategory ? TextWhite : TextDanger}>*</span>
+              <span className={selectCategoryName ? TextWhite : TextDanger}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -143,14 +145,14 @@ const NewProcessAreas = ({
                 id="location"
                 data-testid="form-select1"
                 name="location"
-                value={selectCategory}
+                value={selectCategoryName}
                 onChange={(e) => {
-                  setSelectCategory(e.target.value)
+                  setSelectCategoryName(e.target.value)
                 }}
               >
                 <option value={''}>-- Select Category --</option>
-                {ProjectTailoringList.length > 0 &&
-                  ProjectTailoringList?.map((item, index) => (
+                {ProjectTailoringData.length > 0 &&
+                  ProjectTailoringData?.map((item, index) => (
                     <option key={index} value={item.processHeadId}>
                       {item.processHeadname}
                     </option>

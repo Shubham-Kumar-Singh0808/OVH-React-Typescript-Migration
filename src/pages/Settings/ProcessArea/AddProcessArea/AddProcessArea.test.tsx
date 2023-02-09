@@ -32,7 +32,7 @@ describe('New Process Areas without data', () => {
     expect(screen.getByText('Add Process Area')).toBeInTheDocument()
   })
   test('should render click on back button ', () => {
-    const backButtonElement = screen.getByTestId('back-button')
+    const backButtonElement = screen.getByTestId('back-btn')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
     expect(mockSetToggle).toHaveBeenCalledTimes(1)
