@@ -14,9 +14,8 @@ const FullName = ({
   middleNameValue,
 }: FullNameChangeHandlerProp): JSX.Element => {
   const isFullNameRequired =
-    showIsRequired(firstNameValue) === TextDanger ||
-    showIsRequired(middleNameValue) === TextDanger ||
-    showIsRequired(lastNameValue) === TextDanger
+    showIsRequired(firstNameValue?.replace(/^\s*/, '')) === TextDanger ||
+    showIsRequired(lastNameValue?.replace(/^\s*/, '')) === TextDanger
   return (
     <>
       <CRow className="mb-3">

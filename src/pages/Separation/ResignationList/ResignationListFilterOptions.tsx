@@ -39,6 +39,14 @@ const ResignationListFilterOptions = ({
     reduxServices.resignationList.selectors.resignationListSize,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessViewChart = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Separation Chart',
+  )
+
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -238,15 +246,17 @@ const ResignationListFilterOptions = ({
       </CRow>
       <CRow className="mb-3">
         <CCol sm={{ span: 6, offset: 3 }}>
-          <Link to={`/separationChart`}>
-            <CButton
-              color="info btn-ovh me-3"
-              data-testid="view-btn"
-              onClick={viewChartHandler}
-            >
-              <i className="fa fa-eye"></i>View Chart
-            </CButton>
-          </Link>
+          {userAccessViewChart?.viewaccess && (
+            <Link to={`/separationChart`}>
+              <CButton
+                color="info btn-ovh me-3"
+                data-testid="view-btn"
+                onClick={viewChartHandler}
+              >
+                <i className="fa fa-eye"></i>View Chart
+              </CButton>
+            </Link>
+          )}
           <CButton
             color="info btn-ovh me-3"
             data-testid="export-btn"
