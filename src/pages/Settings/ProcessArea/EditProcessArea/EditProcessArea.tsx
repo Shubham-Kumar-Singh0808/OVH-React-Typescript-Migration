@@ -10,9 +10,10 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetProcessAreaDetails } from '../../../../types/Settings/ProcessAreas/processAreaTypes'
 
 const EditProcessArea = ({
@@ -20,9 +21,12 @@ const EditProcessArea = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const initialProcessAreaDetails = {} as GetProcessAreaDetails
   const [processArea, setProcessArea] = useState(initialProcessAreaDetails)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
+  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -33,22 +37,50 @@ const EditProcessArea = ({
     reduxServices.processArea.selectors.processAreaDetails,
   )
 
+  const ProjectTailoringInfo = useTypedSelector(
+    reduxServices.processArea.selectors.ProjectTailoringList,
+  )
+
+  const ProcessAreaList = useTypedSelector(
+    reduxServices.processArea.selectors.ProcessArea,
+  )
+
+  useEffect(() => {
+    if (processArea.categoryId)
+      dispatch(
+        reduxServices.processArea.getProcessAreas(processArea.categoryId),
+      )
+  }, [dispatch, processArea.categoryId])
+
   useEffect(() => {
     if (processAreaDetails != null) {
       setProcessArea(processAreaDetails)
     }
   }, [processAreaDetails])
 
+  useEffect(() => {
+    if (processAreaDetails?.id === '') {
+      dispatch(reduxServices.processArea.actions.clearCategoryId())
+    }
+  }, [dispatch, processAreaDetails?.id])
+
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+      | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setProcessArea((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'activeState') {
+      setIsEditActiveValue(value === 'true')
+      const status = value === 'true'
+      setProcessArea((values) => {
+        return { ...values, ...{ [name]: status } }
+      })
+    } else {
+      setProcessArea((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   useEffect(() => {
@@ -56,13 +88,81 @@ const EditProcessArea = ({
       processArea.documentName &&
       processArea.responsible &&
       processArea.link &&
-      processArea.order
+      processArea.order &&
+      processArea.processSubHeadName
     ) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
   }, [processArea])
+
+  const addedToastMessage = (
+    <OToast
+      toastMessage="Process Area Updated successfully
+    "
+      toastColor="success"
+    />
+  )
+
+  const updateButtonHandler = async () => {
+    const updateProcessNameResultAction = await dispatch(
+      reduxServices.processArea.saveProcessArea({
+        categoryId: processArea.categoryId,
+        documentName: processArea.documentName,
+        link: processArea.link,
+        order: processArea.order,
+        processAreaId: processArea.processAreaId,
+        responsible: processArea.responsible,
+        status: processArea.status,
+        comments: processArea.comments,
+        common: processArea.common,
+        id: processArea.id,
+        processName: processArea.processName,
+        processSubHeadId: processArea.processSubHeadId,
+        processSubHeadName: processArea.processSubHeadName,
+        specificToProject: processArea.specificToProject,
+        sqaApproval: processArea.sqaApproval,
+        sqaComments: processArea.sqaComments,
+      }),
+    )
+    if (
+      reduxServices.processArea.saveProcessArea.fulfilled.match(
+        updateProcessNameResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          processArea.categoryId,
+        ),
+      )
+      dispatch(
+        reduxServices.processArea.incrementOrDecrementOrder({
+          categoryId: processArea.categoryId,
+          documentName: processArea.documentName,
+          link: processArea.link,
+          order: processArea.order,
+          processAreaId: processArea.processAreaId,
+          responsible: processArea.responsible,
+          status: processArea.status,
+          comments: processArea.comments,
+          common: processArea.common,
+          id: processArea.id,
+          processName: processArea.processName,
+          processSubHeadId: processArea.processSubHeadId,
+          processSubHeadName: processArea.processSubHeadName,
+          specificToProject: processArea.specificToProject,
+          sqaApproval: processArea.sqaApproval,
+          sqaComments: processArea.sqaComments,
+        }),
+      )
+      dispatch(
+        reduxServices.processArea.getProjectTailoringDocument('totalList'),
+      )
+      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
 
   return (
     <>
@@ -88,7 +188,14 @@ const EditProcessArea = ({
                 data-testid="form-select1"
                 name="selectCategory"
                 value={processArea.categoryId}
-              ></CFormSelect>
+                onChange={onChangeInputHandler}
+              >
+                {ProjectTailoringInfo?.map((item, index) => (
+                  <option key={index} value={item.processHeadId}>
+                    {item.processHeadname}
+                  </option>
+                ))}
+              </CFormSelect>
             </CCol>
             <CCol className="text-end" md={6}>
               <CButton
@@ -123,7 +230,14 @@ const EditProcessArea = ({
                 data-testid="form-select2"
                 name="selectProcessAreaName"
                 value={processArea.processSubHeadName}
-              ></CFormSelect>
+                onChange={onChangeInputHandler}
+              >
+                {ProcessAreaList?.map((item, index) => (
+                  <option key={index} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </CFormSelect>
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -184,7 +298,7 @@ const EditProcessArea = ({
               className="col-sm-3 col-form-label text-end"
             >
               Project Document Link:
-              <span className={processArea.link ? TextWhite : TextDanger}>
+              <span className={processArea?.link ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -197,7 +311,7 @@ const EditProcessArea = ({
                 size="sm"
                 name="documentLink"
                 placeholder="Link"
-                value={processArea.link}
+                value={processArea?.link}
                 onChange={onChangeInputHandler}
               />
             </CCol>
@@ -215,19 +329,23 @@ const EditProcessArea = ({
                 className="mt-2 sh-hover-handSymbol"
                 type="radio"
                 name="activeState"
-                id="Active"
-                label="Active"
+                id="yes"
                 value="true"
+                label="Active "
                 inline
+                checked={isEditActiveValue}
+                onChange={onChangeInputHandler}
               />
               <CFormCheck
                 className="mt-2 sh-hover-handSymbol"
                 type="radio"
                 name="activeState"
-                id="Inactive"
+                id="no"
                 label="Inactive"
                 value="false"
                 inline
+                checked={!isEditActiveValue}
+                onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
@@ -264,6 +382,7 @@ const EditProcessArea = ({
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isUpdateBtnEnabled}
+                onClick={updateButtonHandler}
               >
                 Update
               </CButton>

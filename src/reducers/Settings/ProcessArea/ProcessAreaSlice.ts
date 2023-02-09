@@ -142,12 +142,17 @@ const ProcessAreaSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
+    clearCategoryId: (state) => {
+      state.ProcessAreas = []
+    },
   },
   extraReducers(builder) {
     builder
       .addCase(getProjectTailoringDocument.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.getProjectTailoringDocument = action.payload
+        state.ProcessSubHeads =
+          action.payload as unknown as ProcessSubHeadsDto[]
       })
       .addCase(getProcessAreas.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded

@@ -28,7 +28,7 @@ export type ProcessSubHeadsDto = {
   sqaApproval: null
   link: string
   status: string
-  order: number | null
+  order: number | string | null
 }
 
 export type ProcessAreaSliceState = {
@@ -52,10 +52,20 @@ export type AddProcessAreaProps = {
   categoryId: number
   documentName: string
   link: string
-  order: string
+  order: string | number
   processAreaId: number
   responsible: string
   status: string | boolean
+
+  comments?: null
+  common?: null
+  id?: number | null
+  processName?: null
+  processSubHeadId?: number
+  processSubHeadName?: string
+  specificToProject?: string
+  sqaApproval?: null
+  sqaComments?: null
 }
 
 export type GetProcessAreaDetails = {

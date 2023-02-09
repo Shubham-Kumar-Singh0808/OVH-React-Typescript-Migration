@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   CButton,
   CTable,
@@ -25,17 +25,29 @@ const ProcessAreaTable = ({
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
 
+  const ProcessSubHeads = useTypedSelector(
+    reduxServices.processArea.selectors.ProcessSubHeads,
+  )
+
   const result = ProjectTailoringList?.filter(
     (value) => value.processHeadname === selectCategory,
   )
 
-  const editButtonHandler = () => {
+  const editButtonHandler = (categoryId: number, processSubHeadId: number) => {
     setToggle('editProcessArea')
-    dispatch(reduxServices.processArea.getProcessAreas(Number(selectCategory)))
-    dispatch(
-      reduxServices.processArea.getProcessAreaDetails(Number(selectCategory)),
-    )
+    dispatch(reduxServices.processArea.getProcessAreas(categoryId))
+    dispatch(reduxServices.processArea.getProcessAreaDetails(processSubHeadId))
   }
+
+  const sortedFamilyDetails = useMemo(() => {
+    if (ProcessSubHeads) {
+      return ProcessSubHeads.slice().sort(
+        (a, b) => Number(b.order) - Number(a.order),
+      )
+    }
+    return []
+  }, [ProcessSubHeads])
+
   return (
     <>
       <CTable
@@ -94,7 +106,12 @@ const ProcessAreaTable = ({
                                   size="sm"
                                   className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                                   color="info btn-ovh me-1"
-                                  onClick={editButtonHandler}
+                                  onClick={() =>
+                                    editButtonHandler(
+                                      count.categoryId,
+                                      count.processSubHeadId,
+                                    )
+                                  }
                                 >
                                   <i
                                     className="fa fa-edit"

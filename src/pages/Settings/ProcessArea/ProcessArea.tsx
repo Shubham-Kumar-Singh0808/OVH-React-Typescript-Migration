@@ -49,7 +49,9 @@ const ProcessArea = (): JSX.Element => {
                 <option value={''}>-- Select Category --</option>
                 {ProjectTailoringList.length > 0 &&
                   ProjectTailoringList?.map((item, index) => (
-                    <option key={index}>{item.processHeadname}</option>
+                    <option key={index} value={item.id as number}>
+                      {item.processHeadname}
+                    </option>
                   ))}
               </CFormSelect>
             </CCol>
