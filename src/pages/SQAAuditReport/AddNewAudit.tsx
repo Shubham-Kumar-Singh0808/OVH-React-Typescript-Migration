@@ -287,7 +287,10 @@ const AddNewAudit = (): JSX.Element => {
         <CForm>
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Audit Type:
+              Audit Type :
+              <span className={addAudit.auditType ? TextWhite : TextDanger}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -346,7 +349,7 @@ const AddNewAudit = (): JSX.Element => {
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel {...formLabelProps} className={formLabel}>
-              Project Name:
+              Project Name :
               <span
                 className={
                   projectNameAutoCompleteTarget ? TextWhite : TextDanger
@@ -421,7 +424,7 @@ const AddNewAudit = (): JSX.Element => {
 
           <CRow className="mt-4 mb-4">
             <CFormLabel {...formLabelProps} className={formLabel}>
-              Project Manager:
+              Project Manager :
               <span
                 className={
                   projectManagerAutoCompleteTarget ? TextWhite : TextDanger
@@ -486,7 +489,7 @@ const AddNewAudit = (): JSX.Element => {
 
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Auditors:
+              Auditors :
               <span className={addAuditorName?.length ? TextWhite : TextDanger}>
                 *
               </span>
@@ -510,7 +513,7 @@ const AddNewAudit = (): JSX.Element => {
           </CRow>
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Auditees:
+              Auditees :
               <span className={addAuditeeName?.length ? TextWhite : TextDanger}>
                 *
               </span>
@@ -534,8 +537,7 @@ const AddNewAudit = (): JSX.Element => {
           </CRow>
           <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Audit Date:
-              <span className={showIsRequired(auditDate)}>*</span>
+              Audit Date :<span className={showIsRequired(auditDate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <ReactDatePicker
