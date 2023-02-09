@@ -269,6 +269,7 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
                       <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
                       <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
+
                       <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
                       <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
                       <CTableDataCell>{payslipItem.month}</CTableDataCell>
