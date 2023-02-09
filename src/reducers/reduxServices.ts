@@ -113,6 +113,7 @@ import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
 import { appraisalTemplateService } from './Performance/AppraisalTemplate/AppraisalTemplateSlice'
 import { projectStatusService } from './ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
+import { processAreaService } from './Settings/ProcessArea/ProcessAreaSlice'
 import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 
@@ -232,6 +233,7 @@ export const reduxServices = {
   KRA: KRAService,
   appraisalTemplate: appraisalTemplateService,
   projectStatus: projectStatusService,
+  processArea: processAreaService,
   addNewAuditForm: addNewAuditService,
   sqaAuditReport: sqaAuditReportService,
 }
