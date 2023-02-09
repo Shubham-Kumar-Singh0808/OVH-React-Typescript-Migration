@@ -33,7 +33,7 @@ const ProjectNotes = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (notesLink) {
+    if (notesLink?.replace(/^\s*/, '')) {
       setIsPostButtonEnabled(true)
     } else {
       setIsPostButtonEnabled(false)
