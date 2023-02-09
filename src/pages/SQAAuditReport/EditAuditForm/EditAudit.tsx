@@ -20,10 +20,6 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { EditAuditFormData } from '../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
-import {
-  GetProjectManager,
-  Label,
-} from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { showIsRequired } from '../../../utils/helper'
 import AuditStartTimeEndTime from '../AddNewAudit/AuditStartTimeEndTime'
@@ -31,7 +27,6 @@ import AuditStartTimeEndTime from '../AddNewAudit/AuditStartTimeEndTime'
 const EditAudit = (): JSX.Element => {
   const initAuditFormData = {} as EditAuditFormData
   const [editAuditForm, setEditAuditForm] = useState(initAuditFormData)
-  const [projectName, setProjectName] = useState<string>('')
   const [editAuditDate, setEditAuditDate] = useState<string>('')
   const [editAuditorName, setEditAuditorName] = useState<
     GetAllEmployeesNames[]

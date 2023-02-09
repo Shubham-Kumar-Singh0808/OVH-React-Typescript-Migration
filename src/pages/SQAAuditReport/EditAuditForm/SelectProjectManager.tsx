@@ -4,8 +4,6 @@ import Autocomplete from 'react-autocomplete'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { GetAllReportingManagers } from '../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
-import { Managers } from '../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 
 const SelectProjectManager = ({
   managers,
