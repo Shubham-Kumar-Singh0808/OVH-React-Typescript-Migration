@@ -20,6 +20,7 @@ const PaySlipExcelFileTable = (props: {
   pageSize: number
   setExcelTable: (value: boolean) => void
   setToggle: (value: string) => void
+  setClearFile: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -38,6 +39,7 @@ const PaySlipExcelFileTable = (props: {
         year: Number(props.selectYear),
       }),
     )
+    props.setClearFile('')
   }
 
   const successToast = (

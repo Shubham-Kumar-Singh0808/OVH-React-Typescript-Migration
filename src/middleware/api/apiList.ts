@@ -103,6 +103,7 @@ import {
   ReviewListApi,
   AppraisalTemplateApi,
   ProjectStatusApi,
+  ProcessAreaListApi,
   AddNewAudit,
   SQAAuditReportApi,
 } from '../../types/apiTypes'
@@ -941,6 +942,18 @@ export const projectStatusApiConfig: ProjectStatusApi = {
   updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
 }
 
+export const processAreaApiConfig: ProcessAreaListApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProcessAreas: apiPrefix + '/projectTailoring/getProcessAreas',
+  createProcessArea: apiPrefix + '/projectTailoring/createProcessArea',
+  checkDuplicateProcess: apiPrefix + '/projectTailoring/checkDuplicateProcess',
+  saveProcessArea: apiPrefix + '/projectTailoring/saveProcessArea',
+  incrementOrDecrementOrder:
+    apiPrefix + '/projectTailoring/incrementOrDecrementOrder',
+  getOrderCountOfActiveProcesses:
+    apiPrefix + '/projectTailoring/getOrderCountOfActiveProcesses',
+}
 export const addNewAuditApiConfig: AddNewAudit = {
   saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
   getProjectEmployees: apiPrefix + '/allocation-mgmt/getProjectEmployees',
