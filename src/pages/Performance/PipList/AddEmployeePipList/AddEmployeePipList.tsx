@@ -231,12 +231,7 @@ const AddEmployeePipList = ({
               Employee Name:
               <span
                 className={
-                  employeeName === emptyString ||
-                  employeeName.trim().length === 0 ||
-                  employeeName?.replace(/^\s*/, '') ||
-                  employeeName
-                    ? TextDanger
-                    : TextWhite
+                  employeeName?.replace(/^\s*/, '') ? TextWhite : TextDanger
                 }
               >
                 *
