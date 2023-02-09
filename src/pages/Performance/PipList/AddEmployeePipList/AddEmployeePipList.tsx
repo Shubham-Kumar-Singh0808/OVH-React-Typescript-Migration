@@ -23,7 +23,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
-import { emptyString } from '../../../Achievements/AchievementConstants'
 
 const AddEmployeePipList = ({
   pageSize,
