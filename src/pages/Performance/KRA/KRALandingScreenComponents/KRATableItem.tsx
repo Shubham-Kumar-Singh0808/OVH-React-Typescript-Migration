@@ -144,7 +144,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                         color="info"
                         className="btn-ovh me-1 btn-ovh-employee-list"
                         data-testid={`edit-btn-kra-screen-${selectedKRA.id}`}
-                        title="Edit"
                         onClick={editKRAButtonHandler}
                       >
                         <i
@@ -162,7 +161,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                         size="sm"
                         color="danger"
                         className="btn-ovh me-1 btn-ovh-employee-list"
-                        title="Delete"
                         data-testid={`del-btn-kra-${selectedKRA.id}`}
                         onClick={deleteKRAButtonHandler}
                       >
@@ -178,7 +176,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                         size="sm"
                         color="info"
                         className="btn-ovh btn-ovh-employee-list"
-                        title="Add KPI"
                         onClick={() => addKPIButtonHandler(selectedKRA)}
                       >
                         <i className="fa fa-plus" aria-hidden="true"></i>

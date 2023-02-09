@@ -211,7 +211,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                               size="sm"
                               color="info"
                               className="btn-ovh me-1 btn-ovh-employee-list"
-                              title="Edit"
                               onClick={() => editKPIButtonHandler(item)}
                             >
                               <i
@@ -230,7 +229,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                               color="danger"
                               className="btn-ovh me-1 btn-ovh-employee-list"
                               data-testid={`del-btn-${index}`}
-                              title="Delete"
                               onClick={(e) => {
                                 deleteButtonHandler(e, item.id, item.name)
                               }}
