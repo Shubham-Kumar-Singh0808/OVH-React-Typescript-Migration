@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   AddProcessAreaProps,
+  GetProcessAreaDetails,
   ProcessAreas,
   ProcessAreaSliceState,
   ProcessSubHeadsDto,
@@ -108,6 +109,18 @@ const getOrderCountOfActiveProcesses = createAsyncThunk(
   },
 )
 
+const getProcessAreaDetails = createAsyncThunk(
+  'processArea/getProcessAreaDetails',
+  async (processSubHeadId: number, thunkApi) => {
+    try {
+      return await ProcessAreaApi.getProcessAreaDetails(processSubHeadId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialProcessAreaState: ProcessAreaSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -116,6 +129,7 @@ export const initialProcessAreaState: ProcessAreaSliceState = {
   ProcessAreas: [],
   currentPage: 1,
   pageSize: 20,
+  processAreaDetails: {} as GetProcessAreaDetails,
 }
 
 const ProcessAreaSlice = createSlice({
@@ -139,14 +153,26 @@ const ProcessAreaSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.ProcessAreas = action.payload
       })
+      .addCase(getProcessAreaDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.processAreaDetails = action.payload
+      })
       .addMatcher(
-        isAnyOf(getProjectTailoringDocument.pending, getProcessAreas.pending),
+        isAnyOf(
+          getProjectTailoringDocument.pending,
+          getProcessAreas.pending,
+          getProcessAreaDetails.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(getProjectTailoringDocument.rejected, getProcessAreas.rejected),
+        isAnyOf(
+          getProjectTailoringDocument.rejected,
+          getProcessAreas.rejected,
+          getProcessAreaDetails.rejected,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
         },
@@ -171,6 +197,9 @@ const ProcessSubHeads = (state: RootState): ProcessSubHeadsDto[] =>
 const ProcessArea = (state: RootState): ProcessAreas[] =>
   state.processArea.ProcessAreas
 
+const processAreaDetails = (state: RootState): GetProcessAreaDetails =>
+  state.processArea.processAreaDetails
+
 const processAreaThunk = {
   getProjectTailoringDocument,
   getProcessAreas,
@@ -179,6 +208,7 @@ const processAreaThunk = {
   saveProcessArea,
   incrementOrDecrementOrder,
   getOrderCountOfActiveProcesses,
+  getProcessAreaDetails,
 }
 
 const processAreaSelectors = {
@@ -188,6 +218,7 @@ const processAreaSelectors = {
   ProcessArea,
   pageFromState,
   pageSizeFromState,
+  processAreaDetails,
 }
 
 export const processAreaService = {

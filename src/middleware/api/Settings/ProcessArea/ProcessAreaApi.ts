@@ -1,5 +1,6 @@
 import {
   AddProcessAreaProps,
+  GetProcessAreaDetails,
   ProcessAreas,
   ProjectTailoringDocument,
 } from '../../../../types/Settings/ProcessAreas/processAreaTypes'
@@ -113,6 +114,21 @@ const getOrderCountOfActiveProcesses = async (
   return response.data
 }
 
+const getProcessAreaDetails = async (
+  processSubHeadId: number,
+): Promise<GetProcessAreaDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.getProcessAreaDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      processSubHeadId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ProcessAreaApi = {
   getProjectTailoringDocument,
   getProcessAreas,
@@ -121,6 +137,7 @@ const ProcessAreaApi = {
   saveProcessArea,
   incrementOrDecrementOrder,
   getOrderCountOfActiveProcesses,
+  getProcessAreaDetails,
 }
 
 export default ProcessAreaApi

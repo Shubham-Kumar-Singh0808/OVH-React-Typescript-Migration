@@ -1,4 +1,5 @@
 import {
+  GetProcessAreaDetails,
   ProcessAreas,
   ProcessSubHeadsDto,
   ProjectTailoringDocument,
@@ -864,3 +865,22 @@ export const mockProcessSubHeadsDto: ProcessSubHeadsDto[] = [
     order: 8,
   },
 ]
+
+export const mockProcessAreaDetails: GetProcessAreaDetails = {
+  id: null,
+  categoryId: 3,
+  processSubHeadId: 81,
+  processAreaId: 10,
+  processSubHeadName: 'Configuration Management',
+  processName: null,
+  documentName: 'Configuration Status Accounting Register',
+  responsible: 'Lead / CC',
+  common: null,
+  specificToProject: 'No',
+  comments: null,
+  sqaComments: null,
+  sqaApproval: null,
+  link: 'https://hive.raybiztech.com/projects/qms-v6-0/wiki/configuration-management',
+  status: 'true',
+  order: 1,
+}

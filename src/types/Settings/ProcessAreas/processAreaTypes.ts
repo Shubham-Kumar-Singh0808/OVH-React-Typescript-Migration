@@ -39,6 +39,7 @@ export type ProcessAreaSliceState = {
   ProcessAreas: ProcessAreas[]
   currentPage: number
   pageSize: number
+  processAreaDetails: GetProcessAreaDetails
 }
 
 export type ProcessAreas = {
@@ -55,4 +56,23 @@ export type AddProcessAreaProps = {
   processAreaId: number
   responsible: string
   status: string | boolean
+}
+
+export type GetProcessAreaDetails = {
+  id: null
+  categoryId: number
+  processSubHeadId: number
+  processAreaId: number
+  processSubHeadName: string
+  processName: null
+  documentName: string
+  responsible: string
+  common: null
+  specificToProject: string
+  comments: null
+  sqaComments: null
+  sqaApproval: null
+  link: string
+  status: string
+  order: number
 }

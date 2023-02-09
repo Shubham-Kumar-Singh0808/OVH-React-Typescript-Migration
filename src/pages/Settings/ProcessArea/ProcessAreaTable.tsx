@@ -10,13 +10,17 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const ProcessAreaTable = ({
   selectCategory,
+  setToggle,
 }: {
   selectCategory: string
+  setToggle: (value: string) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const ProjectTailoringList = useTypedSelector(
     reduxServices.processArea.selectors.ProjectTailoringList,
   )
@@ -25,6 +29,13 @@ const ProcessAreaTable = ({
     (value) => value.processHeadname === selectCategory,
   )
 
+  const editButtonHandler = () => {
+    setToggle('editProcessArea')
+    dispatch(reduxServices.processArea.getProcessAreas(Number(selectCategory)))
+    dispatch(
+      reduxServices.processArea.getProcessAreaDetails(Number(selectCategory)),
+    )
+  }
   return (
     <>
       <CTable
@@ -83,6 +94,7 @@ const ProcessAreaTable = ({
                                   size="sm"
                                   className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                                   color="info btn-ovh me-1"
+                                  onClick={editButtonHandler}
                                 >
                                   <i
                                     className="fa fa-edit"

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ProcessAreaTable from './ProcessAreaTable'
 import AddProcessArea from './AddProcessArea/AddProcessArea'
 import NewProcessAreas from './InnerProcessAreas/NewProcessAreas'
+import EditProcessArea from './EditProcessArea/EditProcessArea'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -66,12 +67,18 @@ const ProcessArea = (): JSX.Element => {
               </CButton>
             </CCol>
           </CRow>
-          <ProcessAreaTable selectCategory={selectCategory} />
+          <ProcessAreaTable
+            selectCategory={selectCategory}
+            setToggle={setToggle}
+          />
         </OCard>
       )}
       {toggle === 'addProcessArea' && <AddProcessArea setToggle={setToggle} />}
       {toggle === 'addNewProcessArea' && (
         <NewProcessAreas setToggle={setToggle} />
+      )}
+      {toggle === 'editProcessArea' && (
+        <EditProcessArea setToggle={setToggle} />
       )}
     </>
   )
