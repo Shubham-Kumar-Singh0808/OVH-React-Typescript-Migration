@@ -1,4 +1,5 @@
 import {
+  EditAuditFormData,
   Employee,
   SaveAuditForm,
 } from '../../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
