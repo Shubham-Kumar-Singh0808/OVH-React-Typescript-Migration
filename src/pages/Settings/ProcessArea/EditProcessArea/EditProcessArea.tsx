@@ -123,26 +123,27 @@ const EditProcessArea = ({
       toastColor="danger"
     />
   )
+  const prepareObject = {
+    categoryId: processArea.categoryId,
+    documentName: processArea.documentName,
+    link: processArea.link,
+    order: processArea.order,
+    processAreaId: processArea.processAreaId,
+    responsible: processArea.responsible,
+    status: processArea.status,
+    comments: processArea.comments,
+    common: processArea.common,
+    id: processArea.id,
+    processName: processArea.processName,
+    processSubHeadId: processArea.processSubHeadId,
+    processSubHeadName: processArea.processSubHeadName,
+    specificToProject: processArea.specificToProject,
+    sqaApproval: processArea.sqaApproval,
+    sqaComments: processArea.sqaComments,
+  }
   const updateButtonHandler = async () => {
     const updateProcessNameResultAction = await dispatch(
-      reduxServices.processArea.saveProcessArea({
-        categoryId: processArea.categoryId,
-        documentName: processArea.documentName,
-        link: processArea.link,
-        order: processArea.order,
-        processAreaId: processArea.processAreaId,
-        responsible: processArea.responsible,
-        status: processArea.status,
-        comments: processArea.comments,
-        common: processArea.common,
-        id: processArea.id,
-        processName: processArea.processName,
-        processSubHeadId: processArea.processSubHeadId,
-        processSubHeadName: processArea.processSubHeadName,
-        specificToProject: processArea.specificToProject,
-        sqaApproval: processArea.sqaApproval,
-        sqaComments: processArea.sqaComments,
-      }),
+      reduxServices.processArea.saveProcessArea(prepareObject),
     )
     if (
       reduxServices.processArea.saveProcessArea.fulfilled.match(
@@ -155,24 +156,7 @@ const EditProcessArea = ({
         ),
       )
       dispatch(
-        reduxServices.processArea.incrementOrDecrementOrder({
-          categoryId: processArea.categoryId,
-          documentName: processArea.documentName,
-          link: processArea.link,
-          order: processArea.order,
-          processAreaId: processArea.processAreaId,
-          responsible: processArea.responsible,
-          status: processArea.status,
-          comments: processArea.comments,
-          common: processArea.common,
-          id: processArea.id,
-          processName: processArea.processName,
-          processSubHeadId: processArea.processSubHeadId,
-          processSubHeadName: processArea.processSubHeadName,
-          specificToProject: processArea.specificToProject,
-          sqaApproval: processArea.sqaApproval,
-          sqaComments: processArea.sqaComments,
-        }),
+        reduxServices.processArea.incrementOrDecrementOrder(prepareObject),
       )
       dispatch(
         reduxServices.processArea.getProjectTailoringDocument('totalList'),
