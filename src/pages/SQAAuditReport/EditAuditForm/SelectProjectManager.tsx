@@ -36,9 +36,6 @@ const SelectProjectManager = ({
       (value) => value.fullName === projectManagerAutoComplete,
     )
     onSelectManager(selectedProjectManager?.fullName as string)
-    if (!selectedProjectManager) {
-      onSelectManager(projectManagerAutoComplete as string)
-    }
   }
 
   return (
@@ -49,13 +46,13 @@ const SelectProjectManager = ({
       >
         Project Manager:
       </CFormLabel>
-      <CCol sm={6}>
+      <CCol sm={3}>
         <Autocomplete
           inputProps={{
             autoComplete: 'off',
             className: 'form-control form-control-sm',
             id: 'project-autocomplete',
-            placeholder: 'Project',
+            placeholder: 'Project Manager',
             onBlur: onFocusOut,
           }}
           getItemValue={(item) => item.projectName}

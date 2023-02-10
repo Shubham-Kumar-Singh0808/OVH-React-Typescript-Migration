@@ -31,16 +31,28 @@ const SelectProjectName = ({
     setProjectsAutoCompleteTarget(projectName)
   }
 
-  const onFocusOut = () => {
+  const selectAuditees = () => {
     const selectedProject = projects.find(
       (value) => value.projectName === projectsAutoCompleteTarget,
     )
-    onSelectProject(selectedProject?.projectName as string)
-    if (!selectedProject) {
-      dispatch(reduxServices.newEvent.actions.clearProjectMembers())
-      onSelectProject(projectsAutoCompleteTarget as string)
-    }
+    dispatch(
+      reduxServices.addNewAuditForm.getProjectEmployees(
+        selectedProject?.id as number,
+      ),
+    )
+    // setShowProjectManagerName(selectedProject?.managerName as string)
   }
+
+  // const onFocusOut = () => {
+  //   const selectedProject = projects.find(
+  //     (value) => value.projectName === projectsAutoCompleteTarget,
+  //   )
+  //   onSelectProject(selectedProject?.projectName as string)
+  //   if (!selectedProject) {
+  //     dispatch(reduxServices.newEvent.actions.clearProjectMembers())
+  //     onSelectProject(projectsAutoCompleteTarget as string)
+  //   }
+  // }
 
   return (
     <CRow className="mt-1 mb-3">
@@ -57,7 +69,7 @@ const SelectProjectName = ({
             className: 'form-control form-control-sm',
             id: 'project-autocomplete',
             placeholder: 'Project',
-            onBlur: onFocusOut,
+            onBlur: selectAuditees,
           }}
           getItemValue={(item) => item.projectName}
           items={projects}

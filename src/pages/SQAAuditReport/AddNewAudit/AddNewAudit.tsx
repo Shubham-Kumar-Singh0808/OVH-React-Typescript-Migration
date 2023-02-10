@@ -192,20 +192,27 @@ const AddNewAudit = (): JSX.Element => {
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
     setAddAudit({ ...addAudit, startTime: val1, endTime: val2 })
   }
-  const successToastMessage = (
+  const saveToastMessage = (
     <OToast toastMessage="Audit Form Saved Successfully" toastColor="success" />
+  )
+  const submitToastMessage = (
+    <OToast
+      toastMessage="Audit Form Submitted Successfully"
+      toastColor="success"
+    />
   )
   const warningToastMessage = (
     <OToast toastMessage="Audit Already Exists" toastColor="danger" />
   )
-  const handleAddNewAuditForm = async () => {
+
+  const handleAddNewAuditForm = async (auditFormStatus: string) => {
     const startTimeSplit = addAudit.startTime.split(':')
     const endTimeSplit = addAudit.endTime.split(':')
     const prepareObject = {
       ...addAudit,
       auditDate,
       auditRescheduleStatus: false,
-      formStatus: 'Save' || 'Submit',
+      formStatus: auditFormStatus,
       projectType: auditProjectType,
       projectName:
         auditProjectType === 'false'
@@ -226,9 +233,18 @@ const AddNewAudit = (): JSX.Element => {
     if (
       reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
         addNewAuditFormResultAction,
-      )
+      ) &&
+      auditFormStatus === 'Save'
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(saveToastMessage))
+      history.push('/SQAAudit')
+    } else if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
+        addNewAuditFormResultAction,
+      ) &&
+      auditFormStatus === 'Submit'
+    ) {
+      dispatch(reduxServices.app.actions.addToast(submitToastMessage))
       history.push('/SQAAudit')
     } else if (
       reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
@@ -537,7 +553,7 @@ const AddNewAudit = (): JSX.Element => {
                 className="btn-ovh me-1"
                 color="success"
                 disabled={!isButtonEnable}
-                onClick={handleAddNewAuditForm}
+                onClick={() => handleAddNewAuditForm('Save')}
               >
                 Save
               </CButton>
@@ -546,7 +562,7 @@ const AddNewAudit = (): JSX.Element => {
                 color="success "
                 className="btn-ovh"
                 disabled={!isButtonEnable}
-                onClick={handleAddNewAuditForm}
+                onClick={() => handleAddNewAuditForm('Submit')}
               >
                 Submit
               </CButton>

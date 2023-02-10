@@ -45,19 +45,21 @@ const EditAudit = (): JSX.Element => {
   const selectedAuditDetails = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
   )
-  console.log(selectedAuditDetails)
+  console.log(selectedAuditDetails.id)
 
   const employeeNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
   useEffect(() => {
-    dispatch(
-      reduxServices.addNewAuditForm.editAuditFormDetails(
-        selectedAuditDetails.id,
-      ),
-    )
+    if (selectedAuditDetails?.id) {
+      dispatch(
+        reduxServices.addNewAuditForm.editAuditFormDetails(
+          selectedAuditDetails?.id,
+        ),
+      )
+    }
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
-  }, [dispatch])
+  }, [selectedAuditDetails, dispatch])
 
   const onSelectProject = (value: string) => {
     setEditAuditForm({ ...editAuditForm, projectName: value })
@@ -168,7 +170,7 @@ const EditAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          <CRow>
+          {/* <CRow>
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Project Manager:
               <span className={TextDanger}>*</span>
@@ -184,7 +186,7 @@ const EditAudit = (): JSX.Element => {
                 // onChange={handleInputChange}
               />
             </CCol>
-          </CRow>
+          </CRow> */}
           <SelectProjectName
             projects={projects}
             onSelectProject={onSelectProject}
