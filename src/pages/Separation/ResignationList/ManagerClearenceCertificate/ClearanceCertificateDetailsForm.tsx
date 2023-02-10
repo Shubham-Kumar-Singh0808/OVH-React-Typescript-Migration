@@ -159,7 +159,9 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{managerClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">
+                  {managerClearanceDetails[0]?.seperationEmpId}
+                </p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -177,9 +179,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {managerClearanceDetails[0]?.seperationEmpId}
-                </p>
+                <p className="mb-0">{managerClearanceDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -267,7 +267,8 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                       color="success"
                       onClick={SubmitClearanceCertificateHandler}
                       disabled={
-                        isActiveValue === true && editCCDetails?.comments === ''
+                        isActiveValue === true &&
+                        editCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update

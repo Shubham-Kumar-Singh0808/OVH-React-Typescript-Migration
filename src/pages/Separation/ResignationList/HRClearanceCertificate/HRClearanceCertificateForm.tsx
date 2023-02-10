@@ -113,7 +113,6 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6} className="w-500">
             <CFormTextarea
-              placeholder="Purpose"
               aria-label="textarea"
               id="textArea"
               name="textArea"
@@ -131,7 +130,10 @@ const HRClearanceCertificateForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitHRClearanceCertificateHandler}
-                disabled={hrIsActive === 'true' && hrTextArea === ''}
+                disabled={
+                  hrIsActive === 'true' &&
+                  hrTextArea?.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>
