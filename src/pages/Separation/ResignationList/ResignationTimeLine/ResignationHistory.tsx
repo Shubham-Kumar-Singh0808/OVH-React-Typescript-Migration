@@ -73,9 +73,7 @@ const ResignationHistory = (): JSX.Element => {
               editResignationTimeLine={editResignationTimeLine}
               setEditResignationTimeLine={setEditResignationTimeLine}
               resignationId={resignationId}
-              setResignationId={setResignationId}
               isResignationTimeLineEdit={isResignationTimeLineEdit}
-              setIsResignationTimeLineEdit={setIsResignationTimeLineEdit}
             />
           </>
         ) : (

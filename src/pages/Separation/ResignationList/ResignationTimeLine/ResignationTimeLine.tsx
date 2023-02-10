@@ -1,8 +1,16 @@
-import { CForm, CRow, CFormLabel, CCol, CButton } from '@coreui/react-pro'
+import {
+  CForm,
+  CRow,
+  CFormLabel,
+  CCol,
+  CButton,
+  CFormSelect,
+} from '@coreui/react-pro'
 import React, { useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
@@ -12,18 +20,14 @@ const ResignationTimeLine = ({
   editResignationTimeLine,
   setEditResignationTimeLine,
   resignationId,
-  setResignationId,
   isResignationTimeLineEdit,
-  setIsResignationTimeLineEdit,
 }: {
   editResignationTimeLine: SeparationTimeLine
   resignationId: number
-  setResignationId: React.Dispatch<React.SetStateAction<number>>
   isResignationTimeLineEdit: boolean
   setEditResignationTimeLine: React.Dispatch<
     React.SetStateAction<SeparationTimeLine>
   >
-  setIsResignationTimeLineEdit: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
@@ -33,6 +37,29 @@ const ResignationTimeLine = ({
   const [comments, setComments] = useState<string>()
   const handleDescription = (description: string) => {
     setComments(description)
+  }
+  const onStartDateChangeHandler = (date: Date) => {
+    const formatDate = moment(date).format('DD/MM/YYYY')
+    const name = 'relievingDate'
+    setEditResignationTimeLine((prevState) => {
+      return { ...prevState, ...{ [name]: formatDate } }
+    })
+  }
+  const handleEditResignationTimeLineHandler = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    setEditResignationTimeLine((values) => {
+      return { ...values, ...{ [name]: value } }
+    })
+  }
+  const clearBtnHandler = () => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
   return (
     <>
@@ -72,14 +99,14 @@ const ResignationTimeLine = ({
                 <DatePicker
                   className="form-control form-control-sm sh-date-picker"
                   placeholderText="dd/mm/yy"
-                  name="startdate"
-                  id="startdate"
+                  name="relievingDate"
+                  id="relievingDate"
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                   value={editResignationTimeLine?.relievingDate}
-                  onChange={(date: Date) => console.log(date)}
+                  onChange={(date: Date) => onStartDateChangeHandler(date)}
                 />
               </div>
             ) : (
@@ -118,7 +145,28 @@ const ResignationTimeLine = ({
             Status:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{getAllResignationHistory?.status}</p>
+            {isResignationTimeLineEdit &&
+            getAllResignationHistory.separationId === resignationId ? (
+              <div className="edit-time-control">
+                <CFormSelect
+                  aria-label="Default select example"
+                  size="sm"
+                  id="status"
+                  data-testid="form-select2"
+                  name="status"
+                  value={editResignationTimeLine.status}
+                  onChange={handleEditResignationTimeLineHandler}
+                >
+                  <option value=""></option>
+                  <option value="">Select Status</option>
+                  <option value="Resigned">Resigned</option>
+                  <option value="Absconding">Absconding</option>
+                  <option value="Terminated">Terminated</option>
+                </CFormSelect>
+              </div>
+            ) : (
+              <p className="mb-0">{getAllResignationHistory?.status}</p>
+            )}
           </CCol>
         </CRow>
         {getAllResignationHistory.status === 'Resigned' ? (
@@ -155,7 +203,7 @@ const ResignationTimeLine = ({
                 className="btn-ovh me-1"
                 data-testid="create-btn"
                 color="success"
-                // onClick={handleApplyTicket}
+                // onClick={updateTimeLineHandler}
                 // disabled={!isCreateButtonEnabled || dateError}
               >
                 Submit
@@ -164,7 +212,7 @@ const ResignationTimeLine = ({
                 color="warning "
                 data-testid="clear-btn"
                 className="btn-ovh"
-                // onClick={clearBtnHandler}
+                onClick={clearBtnHandler}
               >
                 Clear
               </CButton>
