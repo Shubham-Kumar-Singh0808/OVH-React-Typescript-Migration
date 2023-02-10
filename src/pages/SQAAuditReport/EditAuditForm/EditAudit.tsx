@@ -45,6 +45,8 @@ const EditAudit = (): JSX.Element => {
   const selectedAuditDetails = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
   )
+  console.log(selectedAuditDetails)
+
   const employeeNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -118,7 +120,7 @@ const EditAudit = (): JSX.Element => {
                 type="text"
                 name="auditType"
                 placeholder="Audit Type"
-                // value={addAudit.auditType}
+                value={editAuditForm.auditType}
                 // onChange={handleInputChange}
               />
             </CCol>
@@ -178,7 +180,7 @@ const EditAudit = (): JSX.Element => {
                 type="text"
                 name="projectName"
                 placeholder="Project Name"
-                // value={addAudit.projectName}
+                value={editAuditForm.projectName}
                 // onChange={handleInputChange}
               />
             </CCol>
@@ -276,13 +278,15 @@ const EditAudit = (): JSX.Element => {
               >
                 Submit
               </CButton>
-              <CButton
-                data-testid="newAudit-submit-btn"
-                color="success "
-                className="btn-ovh"
-              >
-                Cancel
-              </CButton>
+              <Link to={`/SQAAudit`}>
+                <CButton
+                  data-testid="newAudit-submit-btn"
+                  color="warning"
+                  className="btn-ovh"
+                >
+                  Cancel
+                </CButton>
+              </Link>
             </CCol>
           </CRow>
         </CForm>

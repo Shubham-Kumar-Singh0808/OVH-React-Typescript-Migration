@@ -370,7 +370,7 @@ const AddNewInvestment = ({
                 </CButton>
                 <CButton
                   data-testid="addInv-clear-btn"
-                  color="warning "
+                  color="warning"
                   className="btn-ovh text-white"
                   onClick={handleClear}
                 >
