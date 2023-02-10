@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import EditProcessArea from './EditProcessArea'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockProcessAreaDetails,
@@ -45,7 +45,37 @@ describe('New Process Areas without data', () => {
     expect(screen.getByText('Responsible:')).toBeInTheDocument()
     expect(screen.getByText('Project Document Link:')).toBeInTheDocument()
     expect(screen.getByText('Status:')).toBeInTheDocument()
-    expect(screen.getByText('Order')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument()
+  })
+  test('should select Location Name', () => {
+    const LocationSelector = screen.getByTestId('form-select1')
+    userEvent.selectOptions(LocationSelector, ['Project Management'])
+    expect(LocationSelector).toHaveValue('1')
+
+    const Location = screen.getByTestId('form-select2')
+    userEvent.selectOptions(Location, ['Project Planning h'])
+    expect(Location).toHaveValue('1')
+
+    const level = screen.getByPlaceholderText('Responsible')
+    userEvent.type(level, 'PM')
+    expect(level).toHaveValue('Lead / CCPM')
+
+    const leveling = screen.getByPlaceholderText('Link')
+    userEvent.type(
+      leveling,
+      'https://hive.raybiztech.com/projects/qms-v6-0/wiki/risk-management',
+    )
+    const activeState = screen.getByRole('radio', {
+      name: 'Active',
+    }) as HTMLInputElement
+    const inactiveState = screen.getByRole('radio', {
+      name: 'Inactive',
+    }) as HTMLInputElement
+    expect(activeState.checked).toEqual(false)
+    expect(inactiveState.checked).toEqual(true)
+    fireEvent.click(inactiveState)
+    expect(activeState.checked).toEqual(false)
+
+    userEvent.click(screen.getByTestId('updateBtn'))
   })
 })

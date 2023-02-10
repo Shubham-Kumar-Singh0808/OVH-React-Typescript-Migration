@@ -38,6 +38,16 @@ const AddProcessArea = ({
       responsible &&
       documentLink &&
       selectProcessAreaName &&
+      !selectActiveStatus
+    ) {
+      setIsAddButtonEnabled(true)
+    } else if (
+      selectCategory &&
+      documentName &&
+      responsible &&
+      documentLink &&
+      selectProcessAreaName &&
+      selectActiveStatus &&
       selectOrder
     ) {
       setIsAddButtonEnabled(true)
@@ -51,6 +61,7 @@ const AddProcessArea = ({
     documentLink,
     selectProcessAreaName,
     selectOrder,
+    selectActiveStatus,
   ])
 
   const formLabelProps = {

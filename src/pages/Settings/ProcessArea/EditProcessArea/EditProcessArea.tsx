@@ -26,7 +26,10 @@ const EditProcessArea = ({
   const initialProcessAreaDetails = {} as GetProcessAreaDetails
   const [processArea, setProcessArea] = useState(initialProcessAreaDetails)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
-  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
+  const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
+  const [requireOrder, setRequiredOrder] = useState<string | number>(
+    processArea.order,
+  )
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -67,44 +70,59 @@ const EditProcessArea = ({
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
     if (name === 'activeState') {
-      setIsEditActiveValue(value === 'true')
-      const status = value === 'true'
+      setIsActiveValue(value === 'true')
+      const activeStatus = value === 'true'
       setProcessArea((values) => {
-        return { ...values, ...{ [name]: status } }
+        return { ...values, ...{ [name]: activeStatus } }
       })
     } else {
-      setProcessArea((values) => {
-        return { ...values, ...{ [name]: value } }
+      setProcessArea((prevState) => {
+        return { ...prevState, ...{ [name]: value?.replace(/^\s*/, '') } }
       })
     }
   }
-
   useEffect(() => {
     if (
       processArea.documentName &&
       processArea.responsible &&
       processArea.link &&
-      processArea.order &&
-      processArea.processSubHeadName
+      processArea.processSubHeadName &&
+      !isActiveValue
+    ) {
+      setIsUpdateBtnEnabled(true)
+    } else if (
+      processArea.documentName &&
+      processArea.responsible &&
+      processArea.link &&
+      processArea.processSubHeadName &&
+      isActiveValue &&
+      requireOrder
     ) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
-  }, [processArea])
+  }, [processArea, isActiveValue, requireOrder])
 
-  const addedToastMessage = (
+  const updatedToastMessage = (
     <OToast
       toastMessage="Process Area Updated successfully
     "
       toastColor="success"
     />
   )
-
+  const updatedErrorToastMessage = (
+    <OToast
+      toastMessage="Document Name already exists.
+    "
+      toastColor="danger"
+    />
+  )
   const updateButtonHandler = async () => {
     const updateProcessNameResultAction = await dispatch(
       reduxServices.processArea.saveProcessArea({
@@ -159,8 +177,16 @@ const EditProcessArea = ({
       dispatch(
         reduxServices.processArea.getProjectTailoringDocument('totalList'),
       )
-      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
       setToggle('')
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.processArea.saveProcessArea.rejected.match(
+        updateProcessNameResultAction,
+      ) &&
+      updateProcessNameResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(updatedErrorToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
@@ -335,7 +361,7 @@ const EditProcessArea = ({
                 value="true"
                 label="Active "
                 inline
-                checked={isEditActiveValue}
+                checked={isActiveValue}
                 onChange={onChangeInputHandler}
               />
               <CFormCheck
@@ -346,37 +372,41 @@ const EditProcessArea = ({
                 label="Inactive"
                 value="false"
                 inline
-                checked={!isEditActiveValue}
+                checked={!isActiveValue}
                 onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Order
-              <span className={processArea.order ? TextWhite : TextDanger}>
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                data-testid="selectOrder"
-                type="text"
-                id="order"
-                autoComplete="off"
-                size="sm"
-                maxLength={2}
-                min={1}
-                max={99}
-                name="order"
-                value={processArea.order}
-                onChange={onChangeInputHandler}
-              />
-            </CCol>
-          </CRow>
+          {isActiveValue === true && (
+            <CRow className="mt-4 mb-4">
+              <CFormLabel
+                {...formLabelProps}
+                className="col-sm-3 col-form-label text-end"
+              >
+                Order
+                <span className={requireOrder ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
+              <CCol sm={3}>
+                <CFormInput
+                  data-testid="selectOrder"
+                  type="text"
+                  id="order"
+                  autoComplete="off"
+                  size="sm"
+                  maxLength={2}
+                  min={1}
+                  max={99}
+                  name="order"
+                  value={requireOrder || ''}
+                  onChange={(e) =>
+                    setRequiredOrder(
+                      e.target.value.replace(/^\s*/, '').replace(/[\D]/gi, ''),
+                    )
+                  }
+                />
+              </CCol>
+            </CRow>
+          )}
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
