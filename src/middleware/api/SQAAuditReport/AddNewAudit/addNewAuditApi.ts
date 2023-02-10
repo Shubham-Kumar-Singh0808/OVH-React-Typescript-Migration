@@ -1,5 +1,5 @@
 import {
-  EditAuditFormData,
+  Employee,
   SaveAuditForm,
 } from '../../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 import {
@@ -34,7 +34,20 @@ const editAuditFormDetails = async (
   return response.data
 }
 
+const getProjectEmployees = async (projectId: number): Promise<Employee[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: addNewAuditApiConfig.getProjectEmployees,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const addNewAuditApi = {
   saveNewAuditForm,
   editAuditFormDetails,
+  getProjectEmployees,
 }

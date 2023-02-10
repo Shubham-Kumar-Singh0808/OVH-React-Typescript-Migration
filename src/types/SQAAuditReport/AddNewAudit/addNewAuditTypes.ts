@@ -52,9 +52,20 @@ export type EditAuditFormData = {
   updatedDate: null
 }
 
+export type Employee = {
+  designation: string
+  emailId: string
+  firstName: string
+  fullName: string
+  id: number
+  lastName: string
+  profilePicPath: string
+}
+
 export type AddNewAuditSliceState = {
   saveAuditForm: SaveAuditForm
   editAuditForm: EditAuditFormData
+  employee: Employee[]
   isLoading: LoadingState
   error: ValidationError
 }
