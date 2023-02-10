@@ -23,7 +23,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { deviceLocale, showIsRequired } from '../../../../utils/helper'
-import { emptyString } from '../../../Achievements/AchievementConstants'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -231,12 +230,7 @@ const AddEmployeePipList = ({
               Employee Name:
               <span
                 className={
-                  employeeName === emptyString ||
-                  employeeName.trim().length === 0 ||
-                  employeeName?.replace(/^\s*/, '') ||
-                  employeeName
-                    ? TextDanger
-                    : TextWhite
+                  employeeName?.replace(/^\s*/, '') ? TextWhite : TextDanger
                 }
               >
                 *

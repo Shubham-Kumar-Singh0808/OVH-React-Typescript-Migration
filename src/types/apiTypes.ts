@@ -786,6 +786,7 @@ export interface ProcessAreaListApi extends ApiBase {
 
 export interface AddNewAudit extends ApiBase {
   saveNewAuditForm: string
+  getProjectEmployees: string
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string

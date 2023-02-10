@@ -957,6 +957,7 @@ export const processAreaApiConfig: ProcessAreaListApi = {
 }
 export const addNewAuditApiConfig: AddNewAudit = {
   saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  getProjectEmployees: apiPrefix + '/allocation-mgmt/getProjectEmployees',
 }
 
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
