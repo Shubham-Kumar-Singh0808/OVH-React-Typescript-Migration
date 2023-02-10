@@ -6,7 +6,6 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   mockProcessAreaDetails,
   mockProcessAreas,
-  mockProjectTailoring,
 } from '../../../test/data/processAreaData'
 import { GetProcessAreaDetails } from '../../../types/Settings/ProcessAreas/processAreaTypes'
 
@@ -85,14 +84,13 @@ describe('Process Area Slice', () => {
     it('Should be able to set isLoading to "success" if getProjectTailoringDocument is fulfilled', () => {
       const action = {
         type: processAreaService.getProjectTailoringDocument.fulfilled.type,
-        payload: mockProjectTailoring,
       }
       const state = ProcessAreaReducer(initialProcessAreaState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         error: null,
-        getProjectTailoringDocument: mockProjectTailoring,
-        ProcessSubHeads: [],
+        getProjectTailoringDocument: undefined,
+        ProcessSubHeads: undefined,
         ProcessAreas: [],
         processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
