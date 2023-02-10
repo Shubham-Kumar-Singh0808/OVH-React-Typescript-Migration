@@ -256,13 +256,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           Percentage:
           <span
             data-testid="percent-asterix"
-            className={
-              enteredPercentage === '0' ||
-              enteredPercentage === '00' ||
-              enteredPercentage === '000'
-                ? TextDanger
-                : TextWhite
-            }
+            className={enteredPercentage ? TextWhite : TextDanger}
           >
             *
           </span>
