@@ -8,9 +8,11 @@ import { GetAllReportingManagers } from '../../../types/EmployeeDirectory/Employ
 const SelectProjectManager = ({
   managers,
   onSelectManager,
+  projectManagerValue,
 }: {
   managers: GetAllReportingManagers[]
   onSelectManager: (value: string) => void
+  projectManagerValue: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -25,18 +27,20 @@ const SelectProjectManager = ({
         ),
       )
     }
+    setProjectManagerAutoComplete(projectManagerValue)
   }, [projectManagerAutoComplete])
 
-  const onHandleSelectProjectManager = (projectName: string) => {
-    setProjectManagerAutoComplete(projectName)
+  const onHandleSelectProjectManager = (projectManagerName: string) => {
+    setProjectManagerAutoComplete(projectManagerName)
+    onSelectManager(projectManagerName)
   }
 
-  const onFocusOut = () => {
-    const selectedProjectManager = managers.find(
-      (value) => value.fullName === projectManagerAutoComplete,
-    )
-    onSelectManager(selectedProjectManager?.fullName as string)
-  }
+  // const onFocusOut = () => {
+  //   const selectedProjectManager = managers.find(
+  //     (value) => value.fullName === projectManagerAutoComplete,
+  //   )
+  //   onSelectManager(selectedProjectManager?.fullName as string)
+  // }
 
   return (
     <CRow className="mt-1 mb-3">
@@ -53,9 +57,8 @@ const SelectProjectManager = ({
             className: 'form-control form-control-sm',
             id: 'project-autocomplete',
             placeholder: 'Project Manager',
-            onBlur: onFocusOut,
           }}
-          getItemValue={(item) => item.projectName}
+          getItemValue={(item) => item.fullName}
           items={managers}
           data-testid="project-input"
           wrapperStyle={{ position: 'relative' }}

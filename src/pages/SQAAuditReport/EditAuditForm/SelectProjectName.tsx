@@ -7,10 +7,12 @@ import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmploye
 
 const SelectProjectName = ({
   projects,
+  projectValue,
   onSelectProject,
 }: {
   projects: GetAllProjects[]
   onSelectProject: (value: string) => void
+  projectValue: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -25,7 +27,8 @@ const SelectProjectName = ({
         ),
       )
     }
-  }, [projectsAutoCompleteTarget])
+    setProjectsAutoCompleteTarget(projectValue)
+  }, [projectsAutoCompleteTarget, projectValue])
 
   const onHandleSelectProject = (projectName: string) => {
     setProjectsAutoCompleteTarget(projectName)
@@ -40,19 +43,9 @@ const SelectProjectName = ({
         selectedProject?.id as number,
       ),
     )
+    onSelectProject(selectedProject?.projectName as string)
     // setShowProjectManagerName(selectedProject?.managerName as string)
   }
-
-  // const onFocusOut = () => {
-  //   const selectedProject = projects.find(
-  //     (value) => value.projectName === projectsAutoCompleteTarget,
-  //   )
-  //   onSelectProject(selectedProject?.projectName as string)
-  //   if (!selectedProject) {
-  //     dispatch(reduxServices.newEvent.actions.clearProjectMembers())
-  //     onSelectProject(projectsAutoCompleteTarget as string)
-  //   }
-  // }
 
   return (
     <CRow className="mt-1 mb-3">

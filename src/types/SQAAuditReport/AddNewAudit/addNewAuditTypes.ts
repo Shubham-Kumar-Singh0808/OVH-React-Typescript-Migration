@@ -24,7 +24,7 @@ export type EditAuditFormData = {
   auditorIds: null
   auditees: number[]
   auditors: number[]
-  comments: null
+  comments: string
   containsFile: null
   createdBy: string
   createdDate: string
@@ -34,7 +34,7 @@ export type EditAuditFormData = {
   formStatus: string
   id: number
   isSQA: boolean
-  pci: null
+  pci: null | number
   pmComments: null
   pmFileName: null
   pmFilesPath: null
