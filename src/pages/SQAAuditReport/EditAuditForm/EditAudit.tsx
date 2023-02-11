@@ -51,15 +51,20 @@ const EditAudit = (): JSX.Element => {
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
   useEffect(() => {
-    if (selectedAuditDetails?.id) {
-      dispatch(
-        reduxServices.addNewAuditForm.editAuditFormDetails(
-          selectedAuditDetails?.id,
-        ),
-      )
-    }
+    dispatch(
+      reduxServices.addNewAuditForm.editAuditFormDetails(
+        selectedAuditDetails?.id,
+      ),
+    )
+
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
-  }, [selectedAuditDetails, dispatch])
+  }, [dispatch])
+
+  useEffect(() => {
+    if (selectedAuditDetails !== null) {
+      setEditAuditForm(selectedAuditDetails)
+    }
+  }, [selectedAuditDetails])
 
   const onSelectProject = (value: string) => {
     setEditAuditForm({ ...editAuditForm, projectName: value })
