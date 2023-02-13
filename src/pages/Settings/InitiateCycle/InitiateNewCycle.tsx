@@ -59,6 +59,8 @@ const InitiateCycle = (): JSX.Element => {
     }
   }, [cycleChecked])
 
+  console.log(checkList)
+
   useEffect(() => {
     if (ExistingPage) {
       setCurrentPage(ExistingPage)
@@ -95,21 +97,24 @@ const InitiateCycle = (): JSX.Element => {
         toMonth: activeCycle.nominationCycleDto.toMonth,
       },
       nominationQuestionDto: checkList,
-    } as unknown as TotalResponse
+    } as TotalResponse
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
     )
     if (
       reduxServices.initiateCycle.initiateCycle.fulfilled.match(
         initiateCycleResultAction,
-      )
+      ) &&
+      prepareObject.nominationQuestionDto.length !== 0
     ) {
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.initiateCycle.getActiveCycleData())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.initiateCycle.initiateCycle.rejected.match(
         initiateCycleResultAction,
-      )
+      ) ||
+      prepareObject.nominationQuestionDto.length === 0
     ) {
       dispatch(reduxServices.app.actions.addToast(failedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))

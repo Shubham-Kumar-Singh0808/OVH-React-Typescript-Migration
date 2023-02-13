@@ -169,13 +169,13 @@ const InitiateCycleTable = ({
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>
+        <>
           <div
             dangerouslySetInnerHTML={{
               __html: questionModal,
             }}
           />
-        </p>
+        </>
       </OModal>
     </>
   )
