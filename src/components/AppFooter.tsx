@@ -2,9 +2,11 @@ import React from 'react'
 import { CFooter } from '@coreui/react-pro'
 
 const AppFooter = () => {
+  const currentTime = new Date()
+  const currentYear = currentTime.getFullYear()
   return (
     <CFooter className="main-footer">
-      Copyright &copy; Ray Business Technologies 2022
+      Copyright &copy; Ray Business Technologies {currentYear}
     </CFooter>
   )
 }
