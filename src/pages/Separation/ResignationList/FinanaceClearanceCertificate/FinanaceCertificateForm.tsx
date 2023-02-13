@@ -72,7 +72,7 @@ const FinanceCertificateForm = (): JSX.Element => {
           </CCol>
         </CRow>
 
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 mb-3 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Due:
           </CFormLabel>
@@ -103,7 +103,7 @@ const FinanceCertificateForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 sh-clearance">
             Comments:
             <span
               className={
@@ -127,7 +127,7 @@ const FinanceCertificateForm = (): JSX.Element => {
             ></CFormTextarea>
           </CCol>
         </CRow>
-        <CRow className="mt-5 mb-4">
+        <CRow className="mb-4 mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             <>
               <CButton

@@ -154,7 +154,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
     <>
       <CForm>   
        
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Salary :
           </CFormLabel>
@@ -170,7 +170,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Opportunity for growth :
           </CFormLabel>
@@ -186,7 +186,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Recognition of work :
           </CFormLabel>
@@ -202,7 +202,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Promotion :
           </CFormLabel>
@@ -218,7 +218,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Use of educational background :
           </CFormLabel>
@@ -234,7 +234,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Personnel policies :
           </CFormLabel>
@@ -250,7 +250,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Culture of the organisation :
           </CFormLabel>
@@ -266,7 +266,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Role clarity :
           </CFormLabel>
@@ -282,7 +282,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
             Guidance from subordinate/superior :
           </CFormLabel>
@@ -298,9 +298,9 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            What were your expectation when you joined the company ? :
+            What were your expectation when you joined the company ?
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -314,9 +314,9 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-            Would you say that your expectations have been fulfilled ? :
+            Would you say that your expectations have been fulfilled ?
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -330,12 +330,12 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           What did you like and dislike about the company :
           </CFormLabel>         
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
            Like :
           </CFormLabel>
@@ -351,7 +351,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Dislike :
           </CFormLabel>
@@ -367,7 +367,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1">
            Would you consider back to join us at a later date :
           </CFormLabel>
@@ -383,7 +383,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Upload Exit Feedback Form :
           <span
@@ -410,7 +410,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 align-items-center mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end p-1">
           Upload Relieving Letter :
           <span

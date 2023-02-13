@@ -264,7 +264,7 @@ const EventListTable = (
         modalHeaderClass="d-none"
       >
         <>
-          <h4 className="model-header-text mb-3">
+          <h4 className="model-header-text mb-3 ms-4 me-4">
             {selectedEventDetails.agenda}
           </h4>
           <p className="d-flex">

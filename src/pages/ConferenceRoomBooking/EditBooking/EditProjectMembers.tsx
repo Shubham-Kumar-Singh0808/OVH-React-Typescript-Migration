@@ -136,7 +136,7 @@ const ProjectMembersSelection = ({
 
   return (
     <>
-      <CCol sm={4} md={4}>
+      <CCol sm={4} md={5}>
         <CTable responsive striped className="align-middle">
           <CTableHead>
             <CTableRow>
