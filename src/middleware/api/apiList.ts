@@ -716,6 +716,7 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/saveExitFeedBackForm',
   uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
   uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
+  updateTimeLine: apiPrefix + '/separationController/update',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {

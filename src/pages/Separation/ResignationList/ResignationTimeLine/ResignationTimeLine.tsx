@@ -6,13 +6,13 @@ import {
   CButton,
   CFormSelect,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { SeparationTimeLine } from '../../../../types/Separation/ResignationList/resignationListTypes'
 
@@ -32,12 +32,20 @@ const ResignationTimeLine = ({
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
-
+  const dispatch = useAppDispatch()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
   const handleDescription = (description: string) => {
     setComments(description)
   }
+  useEffect(() => {
+    if (comments) {
+      setIsSubmitButtonEnabled(true)
+    } else {
+      setIsSubmitButtonEnabled(false)
+    }
+  }, [comments])
   const onStartDateChangeHandler = (date: Date) => {
     const formatDate = moment(date).format('DD/MM/YYYY')
     const name = 'relievingDate'
@@ -60,6 +68,60 @@ const ResignationTimeLine = ({
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+  }
+  const updateTimeLineHandler = () => {
+    dispatch(
+      reduxServices.resignationList.updateResignationTimeLine({
+        adminCcCss: null,
+        canberevoked: false,
+        certificate: null,
+        certificateDTO: [],
+        contractEndDate: null,
+        contractExists: null,
+        contractStartDate: null,
+        empStatus: null,
+        employeeComments: comments as string,
+        employeeId: getAllResignationHistory.employeeId,
+        employeeName: getAllResignationHistory.employeeName,
+        exitFeedbackFormPath: null,
+        finanaceCcCss: null,
+        hrCcCss: null,
+        initiatedDate: null,
+        isPIP: null,
+        isRevoked: false,
+        isprocessInitiated: null,
+        itCcCss: null,
+        managerCcCss: null,
+        managerComments: comments as string,
+        managerName: null,
+        personalEmailFlag: null,
+        pipAuditDTO: null,
+        primaryReasonId: null,
+        primaryReasonName: getAllResignationHistory.primaryReasonName,
+        reasonComments: '',
+        relievingDate: getAllResignationHistory.relievingDate,
+        relievingLetterPath: null,
+        resignationDate: getAllResignationHistory.resignationDate,
+        separationComments: getAllResignationHistory?.separationComments.map(
+          (item) => {
+            return item
+          },
+        ),
+        separationExist: null,
+        separationId: getAllResignationHistory.separationId,
+        seperationComments: getAllResignationHistory?.separationComments.map(
+          (item) => {
+            return item
+          },
+        ),
+        showCommentsBox: true,
+        showEditButton: true,
+        showManagerClearance: null,
+        showTimeline: null,
+        status: getAllResignationHistory.status,
+        withdrawComments: null,
+      }),
+    )
   }
   return (
     <>
@@ -203,8 +265,8 @@ const ResignationTimeLine = ({
                 className="btn-ovh me-1"
                 data-testid="create-btn"
                 color="success"
-                // onClick={updateTimeLineHandler}
-                // disabled={!isCreateButtonEnabled || dateError}
+                onClick={updateTimeLineHandler}
+                disabled={!isSubmitButtonEnabled}
               >
                 Submit
               </CButton>
