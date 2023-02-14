@@ -84,7 +84,7 @@ const UploadFeedbackForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <input
-              className="mt-1 mb-2"
+              className="mt-1"
               data-testid="feedback-form"
               type="file"
               name="upload-form"
@@ -102,7 +102,7 @@ const UploadFeedbackForm = (): JSX.Element => {
             )}
           </CCol>
         </CRow>
-        <CRow className="mb-4">
+        <CRow className="mt-4 mb-4">
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
               data-testid="upload-btn"

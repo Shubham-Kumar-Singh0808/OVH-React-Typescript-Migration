@@ -155,7 +155,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
       <CForm>   
        
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Salary :
           </CFormLabel>
           <CCol sm={3}>
@@ -171,7 +171,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Opportunity for growth :
           </CFormLabel>
           <CCol sm={3}>
@@ -187,7 +187,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Recognition of work :
           </CFormLabel>
           <CCol sm={3}>
@@ -203,7 +203,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Promotion :
           </CFormLabel>
           <CCol sm={3}>
@@ -219,7 +219,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Use of educational background :
           </CFormLabel>
           <CCol sm={3}>
@@ -235,7 +235,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Personnel policies :
           </CFormLabel>
           <CCol sm={3}>
@@ -251,7 +251,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Culture of the organisation :
           </CFormLabel>
           <CCol sm={3}>
@@ -267,7 +267,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Role clarity :
           </CFormLabel>
           <CCol sm={3}>
@@ -283,7 +283,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Guidance from subordinate/superior :
           </CFormLabel>
           <CCol sm={3}>
@@ -299,7 +299,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             What were your expectation when you joined the company ?
           </CFormLabel>
           <CCol sm={3}>
@@ -315,7 +315,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Would you say that your expectations have been fulfilled ?
           </CFormLabel>
           <CCol sm={3}>
@@ -331,12 +331,12 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
           What did you like and dislike about the company :
           </CFormLabel>         
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
            Like :
           </CFormLabel>
           <CCol sm={3}>
@@ -352,7 +352,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
           Dislike :
           </CFormLabel>
           <CCol sm={3}>
@@ -368,7 +368,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
            Would you consider back to join us at a later date :
           </CFormLabel>
           <CCol sm={3}>
@@ -384,7 +384,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-2 pe-2">
           Upload Exit Feedback Form :
           <span
                 className={
@@ -411,7 +411,7 @@ const ExitFeedBackFormFilterOptions = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 align-items-center mb-3">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-2 pe-2">
           Upload Relieving Letter :
           <span
                 className={

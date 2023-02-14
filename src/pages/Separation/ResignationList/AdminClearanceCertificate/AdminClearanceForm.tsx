@@ -116,7 +116,6 @@ const AdminClearanceForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6} className="w-500">
             <CFormTextarea
-              placeholder="Purpose"
               aria-label="textarea"
               id="textArea"
               name="textArea"

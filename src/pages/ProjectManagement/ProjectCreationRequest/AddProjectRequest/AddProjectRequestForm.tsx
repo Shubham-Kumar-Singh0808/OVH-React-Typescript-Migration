@@ -653,6 +653,7 @@ const AddProjectRequestForm = ({
             <CCol sm={3}>
               <CFormCheck
                 inline
+                className="sh-formLabel"
                 type="checkbox"
                 name="internalProject"
                 id="internalProject"
@@ -868,50 +869,60 @@ const AddProjectRequestForm = ({
           </CRow>
         </CCol>
         {projectRequest.type === 'Fixed Bid' && (
-          <CRow className="mt-4 mb-4">
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              {projectMileStone.length > 0 &&
-                projectMileStone?.map((item, index) => {
-                  return (
-                    <AddProjectMileStone
-                      item={item}
-                      key={index}
-                      index={index}
-                      emptyPercentage={emptyPercentage}
-                      setProjectMileStone={setProjectMileStone}
-                      projectMileStone={projectMileStone}
-                      titleOnChange={titleOnChange}
-                      commentsOnChange={commentOnChange}
-                      effortOnChange={effortOnChange}
-                      onChangeHandleFromDate={onChangeHandleFromDate}
-                      onChangeHandleToDate={onChangeHandleToDate}
-                      billableOnChange={billableOnChange}
-                      percentageOnChange={percentageOnChange}
-                      setIsAddMileStoneButtonEnabled={
-                        setIsAddMileStoneButtonEnabled
-                      }
-                      isAddMilestoneButtonEnabled={isAddMilestoneButtonEnabled}
-                    />
-                  )
-                })}
-            </CTable>
-            {showTotalEffort ? (
-              <span>Total Effort:{showTotalEffort} </span>
-            ) : (
-              <></>
-            )}
-          </CRow>
+          <>
+            <label className="ps-5">
+              <b>Milestone:</b>
+            </label>
+            <CRow className="mt-4 mb-4">
+              <CTable striped className="align-middle">
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                {projectMileStone.length > 0 &&
+                  projectMileStone?.map((item, index) => {
+                    return (
+                      <AddProjectMileStone
+                        item={item}
+                        key={index}
+                        index={index}
+                        emptyPercentage={emptyPercentage}
+                        setProjectMileStone={setProjectMileStone}
+                        projectMileStone={projectMileStone}
+                        titleOnChange={titleOnChange}
+                        commentsOnChange={commentOnChange}
+                        effortOnChange={effortOnChange}
+                        onChangeHandleFromDate={onChangeHandleFromDate}
+                        onChangeHandleToDate={onChangeHandleToDate}
+                        billableOnChange={billableOnChange}
+                        percentageOnChange={percentageOnChange}
+                        setIsAddMileStoneButtonEnabled={
+                          setIsAddMileStoneButtonEnabled
+                        }
+                        isAddMilestoneButtonEnabled={
+                          isAddMilestoneButtonEnabled
+                        }
+                      />
+                    )
+                  })}
+              </CTable>
+              {showTotalEffort ? (
+                <span>
+                  <strong>Total Effort: </strong>
+                  {showTotalEffort}{' '}
+                </span>
+              ) : (
+                <></>
+              )}
+            </CRow>
+          </>
         )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">
