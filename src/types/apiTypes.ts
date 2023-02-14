@@ -406,6 +406,7 @@ export interface DashboardApi extends ApiBase {
   updateHoliday: string
   searchEmployee: string
   getLeaveSummary: string
+  imageFix: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
