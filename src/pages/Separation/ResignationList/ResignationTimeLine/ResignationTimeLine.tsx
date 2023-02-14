@@ -232,53 +232,55 @@ const ResignationTimeLine = ({
           </CCol>
         </CRow>
         {getAllResignationHistory.status === 'Resigned' ? (
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="col-sm-4 col-form-label text-end p-1">
-              Comments:
-            </CFormLabel>
-            {showEditor ? (
-              <CCol sm={9}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={comments}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    handleDescription(editor.getData().trim())
-                  }}
-                />
+          <>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="col-sm-4 col-form-label text-end p-1">
+                Comments:
+              </CFormLabel>
+              {showEditor ? (
+                <CCol sm={9}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={comments}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
+              ) : (
+                ''
+              )}
+            </CRow>
+            <CRow>
+              <CCol md={{ span: 6, offset: 2 }}>
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    data-testid="create-btn"
+                    color="success"
+                    onClick={updateTimeLineHandler}
+                    disabled={!isSubmitButtonEnabled}
+                  >
+                    Submit
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    data-testid="clear-btn"
+                    className="btn-ovh"
+                    onClick={clearBtnHandler}
+                  >
+                    Clear
+                  </CButton>
+                </>
               </CCol>
-            ) : (
-              ''
-            )}
-          </CRow>
+            </CRow>
+          </>
         ) : (
           ''
         )}
-        <CRow>
-          <CCol md={{ span: 6, offset: 2 }}>
-            <>
-              <CButton
-                className="btn-ovh me-1"
-                data-testid="create-btn"
-                color="success"
-                onClick={updateTimeLineHandler}
-                disabled={!isSubmitButtonEnabled}
-              >
-                Submit
-              </CButton>
-              <CButton
-                color="warning "
-                data-testid="clear-btn"
-                className="btn-ovh"
-                onClick={clearBtnHandler}
-              >
-                Clear
-              </CButton>
-            </>
-          </CCol>
-        </CRow>
         <div className="sh-timeline-container">
           {getAllResignationHistory?.separationComments?.map((item, index) => {
             return (
