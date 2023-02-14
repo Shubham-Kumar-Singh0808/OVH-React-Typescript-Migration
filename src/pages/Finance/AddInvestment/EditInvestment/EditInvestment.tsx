@@ -283,13 +283,7 @@ const EditInvestment = ({
             >
               Required Documents:
             </CFormLabel>
-            <CCol
-              className="mt-1"
-              sm={2}
-              md={1}
-              lg={1}
-              data-testid="requiredDoc"
-            >
+            <CCol sm={3}>
               <CFormCheck
                 type="radio"
                 name="requireDocs"
@@ -301,14 +295,6 @@ const EditInvestment = ({
                 checked={isDocumentsVisible}
                 inline
               />
-            </CCol>
-            <CCol
-              className="mt-1"
-              sm={2}
-              md={1}
-              lg={1}
-              data-testid="documentsReqNo"
-            >
               <CFormCheck
                 type="radio"
                 name="requireDocs"
