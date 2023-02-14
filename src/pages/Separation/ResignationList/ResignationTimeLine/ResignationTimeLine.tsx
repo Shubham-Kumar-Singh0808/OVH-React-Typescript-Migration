@@ -190,7 +190,7 @@ const ResignationTimeLine = ({
           <CFormLabel className="col-sm-4 col-form-label text-end p-1">
             Employee Comments:
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={2}>
             <p className="mb-0">
               <span className="descriptionField">
                 <div
@@ -236,7 +236,6 @@ const ResignationTimeLine = ({
             <CFormLabel className="col-sm-4 col-form-label text-end p-1">
               Comments:
             </CFormLabel>
-            {/* <CCol sm={12}> */}
             {showEditor ? (
               <CCol sm={9}>
                 <CKEditor<{
@@ -253,7 +252,6 @@ const ResignationTimeLine = ({
             ) : (
               ''
             )}
-            {/* </CCol> */}
           </CRow>
         ) : (
           ''

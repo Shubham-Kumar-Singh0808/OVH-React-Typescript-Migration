@@ -551,7 +551,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     className="btn-ovh"
                     onClick={ClearButtonHandler}
                   >
-                    Clear
+                    Cancel
                   </CButton>
                 </>
               </CCol>

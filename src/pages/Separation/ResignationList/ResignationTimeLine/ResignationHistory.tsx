@@ -49,13 +49,13 @@ const ResignationHistory = (): JSX.Element => {
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             {getAllResignationHistory.status === 'Resigned' &&
-            userAccessEditTimeLine ? (
+            userAccessEditTimeLine?.updateaccess ? (
               <CButton
                 color="info"
                 className="btn-ovh me-1"
                 onClick={editButtonHandler}
               >
-                <i className="fa fa-arrow-left  me-1"></i>Edit
+                <i className="fa fa-edit"></i>Edit
               </CButton>
             ) : (
               ''

@@ -328,7 +328,13 @@ const NewEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Subject:
-                <span className={showIsRequired(addEvent.agenda)}>*</span>
+                <span
+                  className={showIsRequired(
+                    addEvent.agenda?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
@@ -345,7 +351,13 @@ const NewEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(descriptionValue)}>*</span>
+                <span
+                  className={showIsRequired(
+                    descriptionValue?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={8}>
                 <CKEditor<{
