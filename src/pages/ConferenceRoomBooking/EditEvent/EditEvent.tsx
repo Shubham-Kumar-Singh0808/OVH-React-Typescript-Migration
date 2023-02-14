@@ -125,6 +125,14 @@ const EditEvent = (): JSX.Element => {
       )
     }
   }, [projectAutoCompleteTarget])
+
+  useEffect(() => {
+    if (trainerAutoCompleteTarget)
+      dispatch(
+        reduxServices.newEvent.getAllEmployees(trainerAutoCompleteTarget),
+      )
+  }, [trainerAutoCompleteTarget])
+
   useEffect(() => {
     if (editEvent.startTime === '' && editEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
