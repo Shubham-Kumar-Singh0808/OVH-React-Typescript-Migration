@@ -9,6 +9,7 @@ import {
   EditAuditFormData,
   Employee,
   SaveAuditForm,
+  UpdateSQAAudit,
 } from '../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 
 const initialAddNewAuditFormState: AddNewAuditSliceState = {
@@ -86,6 +87,26 @@ const getProjectEmployees = createAsyncThunk<
   }
 })
 
+const updateSQAAuditForm = createAsyncThunk<
+  number | undefined,
+  UpdateSQAAudit,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'addNewAuditForm/updateSQAAuditForm',
+  async (updateSQAAuditDetails: UpdateSQAAudit, thunkApi) => {
+    try {
+      return await addNewAuditApi.updateSQAAuditForm(updateSQAAuditDetails)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const addNewAuditSlice = createSlice({
   name: 'addNewAuditForm',
   initialState: initialAddNewAuditFormState,
@@ -103,14 +124,25 @@ const addNewAuditSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.editAuditForm = action.payload as EditAuditFormData
       })
+      .addCase(updateSQAAuditForm.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
-        isAnyOf(saveNewAuditForm.pending, editAuditFormDetails.pending),
+        isAnyOf(
+          saveNewAuditForm.pending,
+          editAuditFormDetails.pending,
+          updateSQAAuditForm.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
       .addMatcher(
-        isAnyOf(saveNewAuditForm.rejected, editAuditFormDetails.rejected),
+        isAnyOf(
+          saveNewAuditForm.rejected,
+          editAuditFormDetails.rejected,
+          updateSQAAuditForm.rejected,
+        ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
           state.error = action.payload as ValidationError
@@ -132,6 +164,7 @@ const addNewAuditThunk = {
   saveNewAuditForm,
   editAuditFormDetails,
   getProjectEmployees,
+  updateSQAAuditForm,
 }
 
 const addNewAuditSelectors = {

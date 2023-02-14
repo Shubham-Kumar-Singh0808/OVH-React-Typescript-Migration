@@ -7,25 +7,26 @@ import {
   CFormInput,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
-import Multiselect from 'multiselect-react-dropdown'
+// import Multiselect from 'multiselect-react-dropdown'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import SelectProjectName from './SelectProjectName'
 import SelectProjectManager from './SelectProjectManager'
 import EditAuditStartTimeEndTime from './EditAuditStartTimeEndTime'
+import AuditMembersDetails from './AuditMembersDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { EditAuditFormData } from '../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditAudit = (): JSX.Element => {
   const initAuditFormData = {} as EditAuditFormData
@@ -42,17 +43,18 @@ const EditAudit = (): JSX.Element => {
   >([])
   const [isProjectManagerVisible, setIsProjectManagerVisible] =
     useState<boolean>(false)
+  const [selectProjectId, setSelectProjectId] = useState<number>()
+  const [selectProjectMgrId, setSelectProjectMgrId] = useState<number>()
   const [editAuditProjectType, setEditAuditProjectType] = useState<string>(
     selectedAuditDetails.projectType,
   )
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [uploadAuditFile, setUploadAuditFile] = useState<File | undefined>(
-    undefined,
-  )
+  const [isDisabled, setIsDisabled] = useState<boolean>(false)
+
   const formStatusSave = editAuditForm.formStatus === 'Save'
   const formStatusSubmit = selectedAuditDetails.formStatus === 'Submit'
   const formStatusPMUpdate = selectedAuditDetails.formStatus === 'PM Update'
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const history = useHistory()
   const projects = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
@@ -63,6 +65,7 @@ const EditAudit = (): JSX.Element => {
   const employeeNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
+
   useEffect(() => {
     dispatch(
       reduxServices.addNewAuditForm.editAuditFormDetails(
@@ -104,44 +107,19 @@ const EditAudit = (): JSX.Element => {
     }
   }
 
-  const onChangeFileUploadHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    const acceptedFileTypes = ['pdf', 'doc', 'docx']
-    let extension = ''
-    if (!file) return
-    if (file && file[0] !== undefined) {
-      extension = file[0].name.split('.').pop() as string
-    }
-    if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText(
-        'File size exceeded. Please upload a file less than 2MB.',
-      )
-      return
-    }
-    if (!acceptedFileTypes.includes(extension)) {
-      setUploadErrorText('Please choose excel file')
-      return
-    }
-    setUploadErrorText('')
-    setUploadAuditFile(file[0])
-  }
-  // const handleUploadFeedbackForm = async () => {
-  //   if (uploadAuditFile) {
-  //     const formData = new FormData()
-  //     formData.append('file', uploadAuditFile, uploadAuditFile.name)
-  //     const uploadPrepareObject = {
-  //       eventId: Number(eventId),
-  //       file: formData,
-  //     }
-  //     await dispatch(eventListThunk.uploadFeedbackForm(uploadPrepareObject))
-  //   }
-  // }
-
   const onSelectProject = (value: string) => {
     setEditAuditForm({ ...editAuditForm, projectName: value })
+    const selectedProjectResult = projects.find(
+      (item) => item.projectName === value,
+    )
+    setSelectProjectId(selectedProjectResult?.id)
   }
   const onSelectManager = (value: string) => {
     setEditAuditForm({ ...editAuditForm, projectManager: value })
+    const selectedProjectResult = projects.find(
+      (item) => item.projectName === value,
+    )
+    setSelectProjectMgrId(selectedProjectResult?.id)
   }
 
   const handleMultiSelectAuditor = (list: GetAllEmployeesNames[]) => {
@@ -171,7 +149,6 @@ const EditAudit = (): JSX.Element => {
   const handleSelectProjectType = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    // console.log(event.target.value)
     setEditAuditProjectType(event.target.value)
     if (event.target.value === 'false') {
       setIsProjectManagerVisible(true)
@@ -193,43 +170,56 @@ const EditAudit = (): JSX.Element => {
     return name
   }
 
-  // const handleSubmitAuditForm = async () => {
-  //   const startTimeSplit = editAuditForm.startTime.split(':')
-  //   const endTimeSplit = editAuditForm.endTime.split(':')
-  //   const prepareObject = {
-  //     ...editAuditForm,
-  //     editAuditDate,
-  //     auditRescheduleStatus: false,
-  //     formStatus: 'Save' || 'Submit',
-  //     projectType: editAuditProjectType,
-  //     ...(editAuditProjectType === 'true' && { projectId: selectProject }),
-  //     ...(editAuditProjectType === 'false' && {
-  //       projectManagerId: selectProjectMgr,
-  //     }),
-  //     auditeeIds: editAuditeeName?.map((currentItem) => currentItem.id),
-  //     auditorIds: editAuditorName?.map((currentItem) => currentItem.id),
-  //     startTime: `${editAuditDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
-  //     endTime: `${editAuditDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
-  //   }
-  //   const addNewAuditFormResultAction = await dispatch(
-  //     reduxServices.addNewAuditForm.saveNewAuditForm(prepareObject),
-  //   )
-  //   if (
-  //     reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
-  //       addNewAuditFormResultAction,
-  //     )
-  //   ) {
-  //     dispatch(reduxServices.app.actions.addToast(successToastMessage))
-  //     history.push('/SQAAudit')
-  //   } else if (
-  //     reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
-  //       addNewAuditFormResultAction,
-  //     ) &&
-  //     addNewAuditFormResultAction.payload === 409
-  //   ) {
-  //     dispatch(reduxServices.app.actions.addToast(warningToastMessage))
-  //   }
-  // }
+  const submitToastMessage = (
+    <OToast
+      toastMessage="Audit Form Submitted Successfully"
+      toastColor="success"
+    />
+  )
+  const auditExistsToastMessage = (
+    <OToast toastMessage="Audit Already Exists" toastColor="danger" />
+  )
+  const handleSubmitAuditForm = async (formAuditStatus: string) => {
+    const startTimeSplit = editAuditForm.startTime.split(':')
+    const endTimeSplit = editAuditForm.endTime.split(':')
+    const prepareObject = {
+      auditType: editAuditForm.auditType,
+      auditDate: editAuditDate,
+      auditRescheduleStatus: false,
+      auditStatus: editAuditForm.auditStatus,
+      id: editAuditForm.id,
+      formStatus: formAuditStatus,
+      projectType: editAuditProjectType,
+      projectName:
+        editAuditProjectType === 'false' ? editAuditForm.projectName : '',
+      ...(editAuditProjectType === 'true' && { projectId: selectProjectId }),
+      ...(editAuditProjectType === 'false' && {
+        projectManagerId: selectProjectMgrId,
+      }),
+      auditeeIds: editAuditeeName?.map((currentItem) => currentItem.id),
+      auditorIds: editAuditorName?.map((currentItem) => currentItem.id),
+      startTime: `${editAuditDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+      endTime: `${editAuditDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
+    }
+    const addNewAuditFormResultAction = await dispatch(
+      reduxServices.addNewAuditForm.saveNewAuditForm(prepareObject),
+    )
+    if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
+        addNewAuditFormResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(submitToastMessage))
+      history.push('/SQAAudit')
+    } else if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
+        addNewAuditFormResultAction,
+      ) &&
+      addNewAuditFormResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(auditExistsToastMessage))
+    }
+  }
 
   return (
     <>
@@ -318,24 +308,15 @@ const EditAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
-              <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-                  Project Name :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <span className="fw-bold">{editAuditForm.projectName}</span>
-                </CCol>
-              </CRow>
-            ))}
-          {formStatusSave && (
-            <SelectProjectName
-              projects={projects}
-              onSelectProject={onSelectProject}
-              projectValue={editAuditForm.projectName}
-            />
-          )}
+
+          <SelectProjectName
+            projects={projects}
+            onSelectProject={onSelectProject}
+            projectValue={editAuditForm.projectName}
+            isDisabled={isDisabled}
+            editAuditForm={editAuditForm.projectName}
+          />
+
           {formStatusSave && (
             <SelectProjectManager
               managers={managers}
@@ -356,54 +337,23 @@ const EditAudit = (): JSX.Element => {
                 </CCol>
               </CRow>
             ))}
-          <CRow className="mt-3 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Auditors:
-              <span
-                className={editAuditorName?.length ? TextWhite : TextDanger}
-              >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <Multiselect
-                className="ovh-multiselect"
-                data-testid="edit-auditors-option"
-                options={employeeNames?.map((employee) => employee) || []}
-                displayValue="fullName"
-                placeholder={editAuditorName?.length ? '' : 'Employees Name'}
-                selectedValues={editAuditorName}
-                onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelectAuditor(list)
-                }
-                onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedAuditorOption(selectedList)
-                }
-              />
-            </CCol>
-          </CRow>
-          <CRow className="mt-3 mb-4">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Auditees:
-              <span className={TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <Multiselect
-                className="ovh-multiselect"
-                data-testid="edit-auditees-option"
-                options={employeeNames?.map((employee) => employee) || []}
-                displayValue="fullName"
-                placeholder={editAuditeeName?.length ? '' : 'Employees Name'}
-                selectedValues={editAuditeeName}
-                onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelectAuditees(list)
-                }
-                onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedAuditeeOption(selectedList)
-                }
-              />
-            </CCol>
-          </CRow>
+          <AuditMembersDetails
+            auditLable="Auditors"
+            options={employeeNames}
+            placeholder={editAuditorName}
+            selectedValues={editAuditorName}
+            handleOnSelect={handleMultiSelectAuditor}
+            handleOnRemove={handleOnRemoveSelectedAuditorOption}
+          />
+
+          <AuditMembersDetails
+            auditLable="Auditees"
+            options={employeeNames}
+            placeholder={editAuditorName}
+            selectedValues={editAuditeeName}
+            handleOnSelect={handleMultiSelectAuditees}
+            handleOnRemove={handleOnRemoveSelectedAuditeeOption}
+          />
           <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Audit Date:
@@ -497,41 +447,13 @@ const EditAudit = (): JSX.Element => {
                 </CCol>
               </CRow>
             ))}
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
-              <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Upload File :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <input
-                    className="mt-1"
-                    data-testid="auditFile-upload"
-                    type="file"
-                    name="upload-form"
-                    accept=".doc, .docx, .xlsx"
-                    onChange={(element: SyntheticEvent) =>
-                      onChangeFileUploadHandler(
-                        element.currentTarget as HTMLInputElement,
-                      )
-                    }
-                  />
-                  {uploadErrorText && (
-                    <div id="error">
-                      <strong className="mt-3 text-danger">
-                        {uploadErrorText}
-                      </strong>
-                    </div>
-                  )}
-                </CCol>
-              </CRow>
-            ))}
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton
                 data-testid="newAudit-save-btn"
                 className="btn-ovh me-1"
                 color="success"
+                onClick={() => handleSubmitAuditForm('Submit')}
               >
                 {buttonText(selectedAuditDetails.formStatus)}
               </CButton>

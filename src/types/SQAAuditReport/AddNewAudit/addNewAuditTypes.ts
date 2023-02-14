@@ -13,6 +13,8 @@ export type SaveAuditForm = {
   auditorIds: number[]
   projectId?: number
   projectName: string
+  id?: number
+  auditStatus?: string
 }
 
 export type EditAuditFormData = {
@@ -62,6 +64,15 @@ export type Employee = {
   profilePicPath: string
 }
 
+export type UpdateSQAAudit = {
+  id: number
+  comments: string
+  containsFile: boolean
+  endTime: string
+  formStatus: string
+  auditeeIds: number[]
+  auditorIds: number[]
+}
 export type AddNewAuditSliceState = {
   saveAuditForm: SaveAuditForm
   editAuditForm: EditAuditFormData
