@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   CCol,
   CFormCheck,
@@ -28,6 +29,8 @@ const InitiateCycleTable = ({
   setCurrentPage,
   setCycleChecked,
   cycleChecked,
+  selChkBoxesFromApi,
+  checkList,
 }: InitiateCycleCheckBoxProps): JSX.Element => {
   const [isQuestionVisible, setIsQuestionVisible] = useState<boolean>(false)
   const [questionModal, setQuestionModal] = useState<string>('')
@@ -64,6 +67,13 @@ const InitiateCycleTable = ({
     () => currentPageData(allQuestions?.list, currentPage, pageSize),
     [allQuestions?.list, currentPage, pageSize],
   )
+
+  console.log('bbb currentTotalRecords ', currentTotalRecords)
+
+  console.log('ccc selChkBoxesFromApi ', selChkBoxesFromApi)
+
+  console.log('ccc checkList ', checkList)
+
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
@@ -87,6 +97,23 @@ const InitiateCycleTable = ({
                 removingSpaces && removingSpaces?.length > 30
                   ? `${removingSpaces.substring(0, 30)}...`
                   : removingSpaces
+
+              console.log('bbb item ', item);  
+              
+              let chkFlag = selChkBoxesFromApi?.find(el => el.id === item.id)
+              // let chkFlag2 = checkList.find(el => el.id === item.id)
+              console.log('ccc chkFlag ', chkFlag)
+              // console.log('ccc chkFlag2 ', chkFlag2)
+              // console.log('ccc item?.checkQuestion ', chkFlag2)
+
+              /*
+              selChkBoxesFromApi?.map((cb) => {
+                if(cb.id === item.id) {
+                  chkFlag = true
+                }
+              })
+              */
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getPageNo(index)}</CTableDataCell>
@@ -110,7 +137,7 @@ const InitiateCycleTable = ({
                       id="all"
                       type="checkbox"
                       name="checkQuestion"
-                      checked={item?.checkQuestion as boolean}
+                      checked={chkFlag ? true : item?.checkQuestion as boolean}
                       onChange={() => {
                         setCycleChecked((prevState) => {
                           return {

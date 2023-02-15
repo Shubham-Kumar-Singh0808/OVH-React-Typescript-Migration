@@ -78,4 +78,6 @@ export type InitiateCycleCheckBoxProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   cycleChecked: GetQuestion
   setCycleChecked: React.Dispatch<React.SetStateAction<GetQuestion | undefined>>
+  selChkBoxesFromApi: GetQuestion[]
+  checkList: GetQuestion[]
 }

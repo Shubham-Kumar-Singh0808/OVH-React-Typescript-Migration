@@ -25,6 +25,8 @@ const InitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
   const [checkList, setCheckList] = useState<GetQuestion[]>([])
+  const [cbFromApi, setCbFromApi] = useState<GetQuestion[]>([])
+
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
   )
@@ -55,17 +57,49 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     if (cycleChecked) {
+      console.log('ddd index cycleChecked ', cycleChecked)
+
+      // eslint-disable-next-line
+      console.log('ddd index in tmpArr 0 ', cbFromApi)
+
+      const tmpArr: GetQuestion[] = []
+      // const tmpArr = [...cbFromApi]
+      cbFromApi.map((item) => {
+        tmpArr.push(item)
+        return ''
+      })
+      // const tmpArr = cbFromApi.map((item) => item)
+      // tmpArr.shift()
+      // eslint-disable-next-line
+      console.log('ddd index in tmpArr 1 ', tmpArr)
+      let ndx = 999
+      tmpArr.map((el, i) => {
+        if (el.id === cycleChecked.id) {
+          ndx = i
+        }
+        return ''
+      })
+
+      tmpArr.splice(ndx, 1)
+      // eslint-disable-next-line
+      // console.log('ddd index in tmpArr 2 ', tmpArr.findIndex(v => v.id === cycleChecked.id))
+      // tmpArr.splice(tmpArr.findIndex(v => v.id === cycleChecked.id), 1)
+      setCbFromApi(tmpArr)
       setCheckList([...checkList, cycleChecked])
     }
   }, [cycleChecked])
-
-  console.log(checkList)
 
   useEffect(() => {
     if (ExistingPage) {
       setCurrentPage(ExistingPage)
     }
   }, [ExistingPage])
+
+  useEffect(() => {
+    if (activeCycle && activeCycle.nominationQuestionDto) {
+      setCbFromApi(activeCycle.nominationQuestionDto)
+    }
+  }, [activeCycle])
 
   const {
     paginationRange,
@@ -122,6 +156,14 @@ const InitiateCycle = (): JSX.Element => {
   }
 
   const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
+
+  console.log('aaa activeCycle ', activeCycle.nominationQuestionDto)
+
+  console.log('aaa cycleChecked ', cycleChecked)
+
+  console.log('aaa checkList ', checkList)
+
+  console.log('ddd index cbFromApi ', cbFromApi)
 
   return (
     <>
@@ -236,6 +278,8 @@ const InitiateCycle = (): JSX.Element => {
             pageSize={pageSize}
             cycleChecked={cycleChecked as GetQuestion}
             setCycleChecked={setCycleChecked}
+            selChkBoxesFromApi={cbFromApi}
+            checkList={checkList}
           />
         </OCard>
       )}
