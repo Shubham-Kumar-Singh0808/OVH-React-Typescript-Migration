@@ -36,6 +36,9 @@ const appSlice = createSlice({
     toggleSidebar: (state) => {
       state.sidebarShow = !state.sidebarShow
     },
+    toggleFoldable: (state) => {
+      state.sidebarUnfoldable = !state.sidebarUnfoldable
+    },
     setReRenderMenu: (state, action) => {
       return { ...state, reRenderMenu: action.payload }
     },

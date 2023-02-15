@@ -16,11 +16,12 @@ const AppSidebar = () => {
   const unfoldable = useTypedSelector((state) => state.app.sidebarUnfoldable)
   const sidebarShow = useTypedSelector((state) => state.app.sidebarShow)
 
+  /* eslint-disable */
   return (
     <CSidebar
-      className="main-sidebar"
+      className={`main-sidebar ${unfoldable || ('smin' in localStorage) ? 'side-nav-minified' : ''}`}
       position="fixed"
-      unfoldable={unfoldable}
+      unfoldable={('smin' in localStorage)}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
         dispatch({ type: 'set', sidebarShow: visible })
@@ -38,7 +39,9 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <UserProfile />
+          <div className={`${('smin' in localStorage) ? 'resize-me' : ''}`}>
+            <UserProfile />
+          </div>
           <AppSidebarNavItems />
         </SimpleBar>
       </CSidebarNav>

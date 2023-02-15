@@ -113,3 +113,41 @@
 html:not([dir='rtl']) .sidebar-nav .nav-icon:first-child {
   margin-top: -14px;
 }
+
+.sidebar-fixed.side-nav-minified {
+  margin-left: 0!important;
+  width: 60px!important;
+
+  ul.sidebar-nav {
+    .simplebar-content {
+      li.nav-group > a > span.nav-icon,
+      li.nav-item > a > span.nav-icon {
+        margin-right: 10px!important;
+      }
+
+      li > a {
+        padding-left: 24px!important;
+      }
+    }
+  }
+}
+
+.hide-me,
+.main-header .header-toggler.hide-me {
+  display: none!important;
+}
+
+.resize-me .user-profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin-top: 10px;
+  margin-left: -20px;
+}
+
+/*
+html:not([dir='rtl']) .sidebar-nav .nav-icon {
+  margin-right: 
+}
+*/
+

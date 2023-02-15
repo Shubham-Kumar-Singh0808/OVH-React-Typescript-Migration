@@ -21,6 +21,7 @@ import { logo } from '../assets/brand/logo'
 
 const AppHeader = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const unfoldable = useTypedSelector((state) => state.app.sidebarUnfoldable)
   const history = useHistory()
   const employeeListPath = '/employeeList'
   const [searchAutoCompleteTarget, setSearchAutoCompleteTarget] =
@@ -87,8 +88,22 @@ const AppHeader = (): JSX.Element => {
     <CHeader className="main-header mb-3">
       <CContainer fluid>
         <CHeaderToggler
-          className="ps-1 me-auto"
-          onClick={() => dispatch(reduxServices.app.actions.toggleSidebar())}
+          // eslint-disable-next-line
+          className={`ps-1 me-auto ${!unfoldable && !('smin' in localStorage) ? '' : 'hide-me'}`}
+          onClick={() => {
+            dispatch(reduxServices.app.actions.toggleFoldable())
+            window.localStorage.setItem('smin', '1')
+          }}
+        >
+          <CIcon icon={cilMenu} size="lg" />
+        </CHeaderToggler>
+        <CHeaderToggler
+          // eslint-disable-next-line
+          className={`ps-1 me-auto ${unfoldable || ('smin' in localStorage) ? '' : 'hide-me'}`}
+          onClick={() => {
+            dispatch(reduxServices.app.actions.toggleFoldable())
+            localStorage.removeItem('smin')
+          }}
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
