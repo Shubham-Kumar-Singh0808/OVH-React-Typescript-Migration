@@ -423,21 +423,23 @@ const NewEvent = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-
-            {projectMembers?.length > 0 && (
-              <ProjectMembersSelection
-                addEvent={addEvent}
-                projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-              />
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0 ? (
+              <>
+                <ProjectMembersSelection
+                  addEvent={addEvent}
+                  projectMembers={projectMembers}
+                  attendeesList={attendeesList}
+                  setAttendeesList={setAttendeesList}
+                  selectProjectMember={selectProjectMember}
+                  isErrorShow={isErrorShow}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                />
+              </>
+            ) : (
+              <></>
             )}
-
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
