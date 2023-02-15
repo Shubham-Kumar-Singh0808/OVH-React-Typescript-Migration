@@ -159,7 +159,7 @@ const ITClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{ItClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">{ItClearanceDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -262,7 +262,7 @@ const ITClearanceDetails = (): JSX.Element => {
                       onClick={SubmitItClearanceCertificateHandler}
                       disabled={
                         isEditActiveValue === true &&
-                        editItCCDetails?.comments === ''
+                        editItCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update

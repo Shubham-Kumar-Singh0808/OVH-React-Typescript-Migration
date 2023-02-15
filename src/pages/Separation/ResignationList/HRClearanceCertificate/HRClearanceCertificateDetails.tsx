@@ -177,7 +177,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{HrClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">{HrClearanceDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -185,7 +185,9 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                 Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{HrClearanceDetails[0]?.employeeName}</p>
+                <p className="mb-0">
+                  {HrClearanceDetails[0]?.seperationEmpName}
+                </p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -193,7 +195,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{HrClearanceDetails[0]?.seperationEmpId}</p>
+                <p className="mb-0">{HrClearanceDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -201,9 +203,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                 Submitted Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {HrClearanceDetails[0]?.seperationEmpName}
-                </p>
+                <p className="mb-0">{HrClearanceDetails[0]?.employeeName}</p>
               </CCol>
             </CRow>
 
@@ -280,7 +280,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                       onClick={SubmitHrClearanceCertificateHandler}
                       disabled={
                         isEditActiveValue === true &&
-                        editHrCCDetails?.comments === ''
+                        editHrCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update
