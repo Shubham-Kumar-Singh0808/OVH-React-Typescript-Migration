@@ -33,9 +33,9 @@ const EditAudit = (): JSX.Element => {
   const selectedAuditDetails = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
   )
-  console.log(selectedAuditDetails)
   const [editAuditForm, setEditAuditForm] = useState(initAuditFormData)
   const [editAuditDate, setEditAuditDate] = useState<string>('')
+  const [editFollowUpAuditDate, setEditFollowUpAuditDate] = useState<string>('')
   const [editAuditorName, setEditAuditorName] = useState<
     GetAllEmployeesNames[]
   >([])
@@ -49,9 +49,8 @@ const EditAudit = (): JSX.Element => {
   const [editAuditProjectType, setEditAuditProjectType] = useState<string>(
     selectedAuditDetails.projectType,
   )
-  const [isDisabled, setIsDisabled] = useState<boolean>(false)
 
-  const formStatusSave = editAuditForm.formStatus === 'Save'
+  const formStatusSave = selectedAuditDetails.formStatus === 'Save'
   const formStatusSubmit = selectedAuditDetails.formStatus === 'Submit'
   const formStatusPMUpdate = selectedAuditDetails.formStatus === 'PM Update'
   const dispatch = useAppDispatch()
@@ -81,13 +80,10 @@ const EditAudit = (): JSX.Element => {
       setEditAuditForm(selectedAuditDetails)
       setEditAuditDate(selectedAuditDetails.auditDate)
       setEditAuditProjectType(selectedAuditDetails.projectType)
-      // setEditAuditorName()
+      setEditAuditorName(selectedAuditDetails.auditors)
+      setEditAuditeeName(selectedAuditDetails.auditees)
     }
   }, [selectedAuditDetails])
-
-  // useEffect(() => {
-  //   setEditAuditeeName(selectedAuditDetails.auditees)
-  // }, [selectedAuditDetails])
 
   const handleSelectProjectType = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -105,6 +101,7 @@ const EditAudit = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
+    console.log(name, value)
     if (name === 'auditType') {
       const auditTypeVal = value.replace(/^\s*/, '')
       setEditAuditForm((prevState) => {
@@ -122,13 +119,6 @@ const EditAudit = (): JSX.Element => {
     }
   }
 
-  const onSelectProject = (value: string) => {
-    setEditAuditForm({ ...editAuditForm, projectName: value })
-    const selectedProjectResult = projects.find(
-      (item) => item.projectName === value,
-    )
-    setSelectProjectId(selectedProjectResult?.id)
-  }
   const onSelectManager = (value: string) => {
     setEditAuditForm({ ...editAuditForm, projectManager: value })
     const selectedProjectResult = projects.find(
@@ -226,6 +216,38 @@ const EditAudit = (): JSX.Element => {
     }
   }
 
+  const handleUpdateAuditForm = async (auditFormStatus: string) => {
+    const endTimeSplit = editAuditForm.endTime.split(':')
+    const prepareObject = {
+      id: editAuditForm.id,
+      comments: editAuditForm.comments,
+      containsFile: false,
+      followUpDate: editFollowUpAuditDate,
+      formStatus: auditFormStatus,
+      pci: editAuditForm.pci as string,
+      auditeeIds: editAuditeeName?.map((currentItem) => currentItem.id),
+      auditorIds: editAuditorName?.map((currentItem) => currentItem.id),
+      endTime: `${editAuditDate}/${endTimeSplit[0]}/${endTimeSplit[1]}`,
+    }
+    const updateAuditFormResultAction = await dispatch(
+      reduxServices.addNewAuditForm.updateSQAAuditForm(prepareObject),
+    )
+    if (
+      reduxServices.addNewAuditForm.updateSQAAuditForm.fulfilled.match(
+        updateAuditFormResultAction,
+      )
+    ) {
+      history.push('/SQAAudit')
+    } else if (
+      reduxServices.addNewAuditForm.updateSQAAuditForm.rejected.match(
+        updateAuditFormResultAction,
+      ) &&
+      updateAuditFormResultAction.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(auditExistsToastMessage))
+    }
+  }
+
   return (
     <>
       <OCard
@@ -289,6 +311,7 @@ const EditAudit = (): JSX.Element => {
                 label="Development "
                 value="true"
                 inline
+                disabled={formStatusSubmit || formStatusPMUpdate}
                 checked={!isProjectManagerVisible}
                 onChange={handleSelectProjectType}
               />
@@ -308,6 +331,7 @@ const EditAudit = (): JSX.Element => {
                 label="Support"
                 value="false"
                 inline
+                disabled={formStatusSubmit || formStatusPMUpdate}
                 checked={isProjectManagerVisible}
                 onChange={handleSelectProjectType}
               />
@@ -316,10 +340,8 @@ const EditAudit = (): JSX.Element => {
 
           <SelectProjectName
             projects={projects}
-            onSelectProject={onSelectProject}
             projectValue={editAuditForm.projectName}
-            isDisabled={isDisabled}
-            editAuditForm={editAuditForm.projectName}
+            setSelectProjectId={setSelectProjectId}
           />
 
           {formStatusSave && (
@@ -333,7 +355,7 @@ const EditAudit = (): JSX.Element => {
             (formStatusPMUpdate && (
               <CRow>
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Project Manager:
+                  Project Manager :
                 </CFormLabel>
                 <CCol sm={3}>
                   <span className="fw-bold">
@@ -343,7 +365,7 @@ const EditAudit = (): JSX.Element => {
               </CRow>
             ))}
           <AuditMembersDetails
-            auditLable="Auditors"
+            auditLabel="Auditors"
             options={employeeNames}
             placeholder={editAuditorName}
             selectedValues={editAuditorName}
@@ -352,16 +374,16 @@ const EditAudit = (): JSX.Element => {
           />
 
           <AuditMembersDetails
-            auditLable="Auditees"
+            auditLabel="Auditees"
             options={employeeNames}
             placeholder={editAuditorName}
             selectedValues={editAuditeeName}
             handleOnSelect={handleMultiSelectAuditees}
             handleOnRemove={handleOnRemoveSelectedAuditeeOption}
           />
-          <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+          <CRow className="mt-4 mb-4" data-testid="auditDateInput">
             <CFormLabel className="col-sm-3 col-form-label text-end">
-              Audit Date:
+              Audit Date :
               <span className={showIsRequired(editAuditDate)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
@@ -388,52 +410,80 @@ const EditAudit = (): JSX.Element => {
           <EditAuditStartTimeEndTime
             onSelectAuditStartAndEndTime={onSelectStartAndEndTime}
           />
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
-              <CRow className="mt-4 mb-4">
-                <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-                  Status :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <CFormInput
-                    data-testid="editAuditStatus-input"
-                    autoComplete="off"
-                    type="text"
-                    name="auditStatus"
-                    disabled={formStatusSubmit}
-                    value={editAuditForm.auditStatus}
-                  />
-                </CCol>
-              </CRow>
-            ))}
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              Status :
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                data-testid="editAuditStatus-input"
+                autoComplete="off"
+                type="text"
+                name="auditStatus"
+                disabled
+                value={editAuditForm.auditStatus}
+              />
+            </CCol>
+          </CRow>
+
           {formStatusSubmit ||
             (formStatusPMUpdate && (
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
                   PCI(%) :
                 </CFormLabel>
-                <CCol sm={3}>
+                <CCol sm={1}>
                   <CFormInput
                     data-testid="editAuditPCI-input"
                     autoComplete="off"
                     type="text"
+                    size="sm"
                     name="pci"
-                    value={editAuditForm.pci as number}
+                    maxLength={3}
+                    value={editAuditForm.pci}
                     onChange={onChangeInputHandler}
                   />
                 </CCol>
               </CRow>
             ))}
-          {formStatusPMUpdate && (
-            <CRow>
+          {formStatusSubmit && (
+            <CRow className="mt-4 mb-4" data-testid="followUpDateInput">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                PM Comments :
+                Follow-up Date :
+                <span className={showIsRequired(editFollowUpAuditDate)}>*</span>
               </CFormLabel>
               <CCol sm={3}>
-                <span className="fw-bold">{editAuditForm.pmComments}</span>
+                <ReactDatePicker
+                  id="followup-audit-date"
+                  data-testid="followUp-auditDate-Input"
+                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  placeholderText="dd/mm/yyyy"
+                  name="followUpDate"
+                  minDate={new Date()}
+                  value={editFollowUpAuditDate}
+                  onChange={(date: Date) => {
+                    setEditFollowUpAuditDate(moment(date).format('DD/MM/YYYY'))
+                  }}
+                />
               </CCol>
             </CRow>
           )}
+          {formStatusSubmit ||
+            (formStatusPMUpdate && (
+              <CRow>
+                <CFormLabel className="col-sm-3 col-form-label text-end">
+                  PM Comments :
+                </CFormLabel>
+                <CCol sm={3}>
+                  <span className="fw-bold">{editAuditForm.pmComments}</span>
+                </CCol>
+              </CRow>
+            ))}
           {formStatusSubmit ||
             (formStatusPMUpdate && (
               <CRow className="mt-4 mb-4">
@@ -458,13 +508,17 @@ const EditAudit = (): JSX.Element => {
                 data-testid="newAudit-save-btn"
                 className="btn-ovh me-1"
                 color="success"
-                onClick={() => handleSubmitAuditForm('Submit')}
+                onClick={() =>
+                  formStatusSave
+                    ? handleSubmitAuditForm('Submit')
+                    : handleUpdateAuditForm('Update')
+                }
               >
                 {buttonText(selectedAuditDetails.formStatus)}
               </CButton>
               <Link to={`/SQAAudit`}>
                 <CButton
-                  data-testid="newAudit-submit-btn"
+                  data-testid="editAudit-cancel-btn"
                   color="warning"
                   className="btn-ovh"
                 >

@@ -47,7 +47,7 @@ export type EditAuditFormData = {
   formStatus: string
   id: number
   isSQA: boolean
-  pci: null | number
+  pci: number | string
   pmComments: null
   pmFileName: null
   pmFilesPath: null
@@ -77,13 +77,16 @@ export type Employee = {
 
 export type UpdateSQAAudit = {
   id: number
+  pci: string
   comments: string
   containsFile: boolean
   endTime: string
   formStatus: string
   auditeeIds: number[]
   auditorIds: number[]
+  followUpDate: string
 }
+
 export type AddNewAuditSliceState = {
   saveAuditForm: SaveAuditForm
   editAuditForm: EditAuditFormData

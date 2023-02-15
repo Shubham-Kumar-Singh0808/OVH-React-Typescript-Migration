@@ -2,26 +2,24 @@ import { CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { GetAllProjects } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 const SelectProjectName = ({
   projects,
   projectValue,
-  onSelectProject,
-  isDisabled,
-  editAuditForm,
+  setSelectProjectId,
 }: {
   projects: GetAllProjects[]
-  onSelectProject: (value: string) => void
+  setSelectProjectId: React.Dispatch<React.SetStateAction<number | undefined>>
   projectValue: string
-  isDisabled: boolean
-  editAuditForm: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
+  const selectedAuditDetails = useTypedSelector(
+    reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
+  )
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>()
+    useState<string>(projectValue)
 
   useEffect(() => {
     if (projectsAutoCompleteTarget) {
@@ -31,10 +29,20 @@ const SelectProjectName = ({
         ),
       )
     }
-    setProjectsAutoCompleteTarget(projectValue)
-  }, [projectsAutoCompleteTarget, projectValue])
+  }, [projectsAutoCompleteTarget])
 
-  const onHandleSelectProject = (projectName: string) => {
+  useEffect(() => {
+    setProjectsAutoCompleteTarget(projectValue)
+  }, [projectValue])
+
+  // const onHandleSelectProject = (projectName: string) => {
+  //   setProjectsAutoCompleteTarget(projectName)
+  // }
+  const onHandleSelectProjectName = (projectName: string) => {
+    const selectedProjectResult = projects.find(
+      (value) => value.projectName === projectName,
+    )
+    setSelectProjectId(selectedProjectResult?.id)
     setProjectsAutoCompleteTarget(projectName)
   }
 
@@ -47,7 +55,7 @@ const SelectProjectName = ({
         selectedProject?.id as number,
       ),
     )
-    onSelectProject(selectedProject?.projectName as string)
+    // onSelectProject(selectedProject?.projectName as string)
     // setShowProjectManagerName(selectedProject?.managerName as string)
   }
 
@@ -57,7 +65,7 @@ const SelectProjectName = ({
         Project Name :
       </CFormLabel>
       <CCol sm={3}>
-        {isDisabled ? (
+        {selectedAuditDetails.formStatus === 'Save' ? (
           <>
             <Autocomplete
               inputProps={{
@@ -101,13 +109,13 @@ const SelectProjectName = ({
                 item.projectName.toLowerCase().indexOf(value.toLowerCase()) > -1
               }
               onChange={(e) => setProjectsAutoCompleteTarget(e.target.value)}
-              onSelect={(value) => onHandleSelectProject(value)}
+              onSelect={(value) => onHandleSelectProjectName(value)}
             />
           </>
         ) : (
           <>
             {' '}
-            <span className="fw-bold">{editAuditForm}</span>
+            <span className="fw-bold">{projectValue}</span>
           </>
         )}
       </CCol>
