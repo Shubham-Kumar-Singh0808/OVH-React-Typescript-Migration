@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { GetAllEmployeesNames } from '../../ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 export type SaveAuditForm = {
   auditDate: string
@@ -34,8 +35,8 @@ export type EditAuditFormData = {
   auditType: string
   auditeeIds: null
   auditorIds: null
-  auditees: Auditees[]
-  auditors: Auditors[]
+  auditees: GetAllEmployeesNames[]
+  auditors: GetAllEmployeesNames[]
   comments: string
   containsFile: null
   createdBy: string
