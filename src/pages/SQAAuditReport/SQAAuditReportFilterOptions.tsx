@@ -144,6 +144,20 @@ const SQAAuditReportFilterOptions = ({
 
     downloadFile(sqaAuditReportDownload, 'SQAAuditReport.csv')
   }
+  const searchButtonHandler = () => {
+    dispatch(
+      reduxServices.sqaAuditReport.getSQAAuditReport({
+        endIndex: pageSize * currentPage,
+        multiSearch: searchInput || '',
+        startIndex: pageSize * (currentPage - 1),
+        SQAAuditSelectionDate: '',
+        auditRescheduleStatus: '',
+        auditStatus: '',
+        from: '',
+        to: '',
+      }),
+    )
+  }
   return (
     <>
       <CRow>
@@ -324,7 +338,7 @@ const SQAAuditReportFilterOptions = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
-              onKeyDown={viewButtonHandler}
+              onKeyDown={searchButtonHandler}
             />
             <CButton
               disabled={!searchInput}
@@ -333,7 +347,7 @@ const SQAAuditReportFilterOptions = ({
               type="button"
               color="info"
               id="button-addon2"
-              onClick={viewButtonHandler}
+              onClick={searchButtonHandler}
             >
               <i className="fa fa-search"></i>
             </CButton>

@@ -123,6 +123,22 @@ const ResignationTimeLine = ({
       }),
     )
   }
+  const commentsEdit = showEditor ? (
+    <CCol sm={9}>
+      <CKEditor<{
+        onChange: CKEditorEventHandler<'change'>
+      }>
+        initData={comments}
+        config={ckeditorConfig}
+        debug={true}
+        onChange={({ editor }) => {
+          handleDescription(editor.getData().trim())
+        }}
+      />
+    </CCol>
+  ) : (
+    ''
+  )
   return (
     <>
       <CForm>
@@ -237,22 +253,7 @@ const ResignationTimeLine = ({
               <CFormLabel className="col-sm-4 col-form-label text-end p-1">
                 Comments:
               </CFormLabel>
-              {showEditor ? (
-                <CCol sm={9}>
-                  <CKEditor<{
-                    onChange: CKEditorEventHandler<'change'>
-                  }>
-                    initData={comments}
-                    config={ckeditorConfig}
-                    debug={true}
-                    onChange={({ editor }) => {
-                      handleDescription(editor.getData().trim())
-                    }}
-                  />
-                </CCol>
-              ) : (
-                ''
-              )}
+              {commentsEdit}
             </CRow>
             <CRow>
               <CCol md={{ span: 6, offset: 2 }}>
