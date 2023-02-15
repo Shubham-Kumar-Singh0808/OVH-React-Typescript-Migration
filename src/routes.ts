@@ -404,6 +404,10 @@ const PIPList = React.lazy(
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+
 const ClearnceCerticates = React.lazy(
   () =>
     import(
@@ -411,6 +415,24 @@ const ClearnceCerticates = React.lazy(
     ),
 )
 
+const EditEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
+)
+
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
+
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit'),
+)
+const SQAAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+
+const processAreaList = React.lazy(
+  () => import('./pages/Settings/ProcessArea/ProcessArea'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -891,6 +913,37 @@ const routes = [
     path: '/listofAppraisal',
     name: 'KRA',
     component: ReviewList,
+  },
+  {
+    path: '/editEvent/:eventId',
+    name: 'Edit Event',
+    component: EditEvent,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: 'appraisalTemplate',
+    component: AppraisalTemplate,
+  },
+  {
+    path: '/processAreaList',
+    name: 'processAreaList',
+    component: processAreaList,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
+  },
+
+  {
+    path: '/SQAAudit',
+    name: '/SQA Audit',
+    component: SQAAudit,
   },
 ]
 

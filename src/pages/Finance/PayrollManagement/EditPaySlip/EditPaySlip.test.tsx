@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import EditPaySlip from './EditPaySlip'
 import { render, screen } from '../../../../test/testUtils'
 
+const mockSetTogglePage = jest.fn()
 describe('Edit BankAccount without data', () => {
   beforeEach(() => {
     render(
@@ -57,6 +58,11 @@ describe('Edit BankAccount without data', () => {
           donation: '',
           specificDesignation: null,
         }}
+        setToggle={mockSetTogglePage}
+        currentPage={1}
+        pageSize={22}
+        selectMonth=""
+        selectYear=""
       />,
     )
   })
@@ -69,5 +75,11 @@ describe('Edit BankAccount without data', () => {
     const updateBtn = screen.getByRole('button', { name: 'Update' })
     userEvent.click(updateBtn)
     expect(updateBtn).toBeInTheDocument()
+  })
+  test('should render  Tracker List  screen and back button without crashing', () => {
+    const backButtonElement = screen.getByTestId('back-button')
+    expect(backButtonElement).toBeInTheDocument()
+    userEvent.click(backButtonElement)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
   })
 })

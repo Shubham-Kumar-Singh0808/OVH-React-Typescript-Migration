@@ -66,6 +66,10 @@ const EmployeePipListTable = ({
     setReasonModal(appraisalCycleInfo)
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -95,7 +99,9 @@ const EmployeePipListTable = ({
                   : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.startDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.endDate || 'N/A'}</CTableDataCell>
@@ -149,7 +155,7 @@ const EmployeePipListTable = ({
         </CTableBody>
       </CTable>
       <CRow>
-        <CCol md={3} className="no-records">
+        <CCol xs={4}>
           <strong>
             {pipListSizeRecords
               ? `Total Records: ${pipListSizeRecords}`

@@ -5,7 +5,6 @@ import {
   CTableBody,
   CTableHead,
   CTableHeaderCell,
-  CTableRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import KRATableItem from './KRATableItem'
@@ -69,20 +68,18 @@ const KRATable = (props: KRATableProps): JSX.Element => {
 
   return (
     <>
-      <CTable responsive striped align="middle">
+      <CTable responsive align="middle" className="table-layout-fixed w-100">
         <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-            <CTableHeaderCell scope="col">KRA Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-            <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              Actions
-            </CTableHeaderCell>
-          </CTableRow>
+          <CTableHeaderCell scope="col"></CTableHeaderCell>
+          <CTableHeaderCell scope="col">KRA Name</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+          <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="text-center">
+            Actions
+          </CTableHeaderCell>
         </CTableHead>
         <CTableBody>
           {kraData?.list.map((item, index) => (

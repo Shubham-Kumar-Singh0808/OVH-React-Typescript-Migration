@@ -41,8 +41,10 @@ const ProjectCreationRequestTable = ({
   userDeleteAction: boolean
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toDeleteProjectRequestId, setToDeleteProjectRequestId] = useState(0)
   const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
+  const [projectName, setProjectName] = useState<string>('')
   const dispatch = useAppDispatch()
   const [comments, setComments] = useState<string>('')
   const getAllProjectRequestList = useTypedSelector(
@@ -69,7 +71,7 @@ const ProjectCreationRequestTable = ({
   }
 
   useEffect(() => {
-    if (comments) {
+    if (comments?.replace(/^\s*/, '')) {
       setIsYesButtonEnabled(true)
     } else {
       setIsYesButtonEnabled(false)
@@ -111,14 +113,19 @@ const ProjectCreationRequestTable = ({
     setToggle('projectHistory')
   }
 
-  const handleShowDeleteModal = (requestId: number) => {
+  const handleShowDeleteModal = (
+    requestId: number,
+    projectRequestName: string,
+  ) => {
     setToDeleteProjectRequestId(requestId)
     setIsDeleteModalVisible(true)
+    setProjectName(projectRequestName)
   }
 
   const handleShowRejectModal = (id: number) => {
     setToDeleteProjectRequestId(id)
-    setIsDeleteModalVisible(true)
+    setIsCancelModalVisible(true)
+    setComments('')
   }
 
   const handleConfirmDeleteProjectRequestDetail = async () => {
@@ -167,7 +174,7 @@ const ProjectCreationRequestTable = ({
   }
 
   const handleConfirmRejectProjectRequestDetail = async () => {
-    setIsDeleteModalVisible(false)
+    setIsCancelModalVisible(false)
     const rejectProjectRequestResultAction = await dispatch(
       reduxServices.projectCreationRequest.rejectProjectRequest({
         comment: comments,
@@ -199,7 +206,7 @@ const ProjectCreationRequestTable = ({
 
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="projectCreation-request-table mt-3">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -293,7 +300,12 @@ const ProjectCreationRequestTable = ({
                         color="danger"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                         data-testid="delete-btn"
-                        onClick={() => handleShowDeleteModal(projectRequest.id)}
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            projectRequest.id,
+                            projectRequest.projectName,
+                          )
+                        }
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -347,18 +359,22 @@ const ProjectCreationRequestTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Project Request"
         modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
       >
-        {`Do you really want to delete this OVH-Test project request?`}
+        <>
+          Do you really want to delete this <span>{projectName}</span> project
+          request?
+        </>
       </OModal>
       <>
         <OModal
           alignment="center"
-          visible={isDeleteModalVisible}
-          setVisible={setIsDeleteModalVisible}
+          visible={isCancelModalVisible}
+          setVisible={setIsCancelModalVisible}
           modalHeaderClass="d-none"
           confirmButtonText="Yes"
           cancelButtonText="No"
@@ -371,7 +387,11 @@ const ProjectCreationRequestTable = ({
             <CRow className="mt-1 mb-0 align-items-center pt-4">
               <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
                 Comments:
-                <span className={comments ? 'text-white' : 'text-danger'}>
+                <span
+                  className={
+                    comments?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+                  }
+                >
                   *
                 </span>
               </CFormLabel>

@@ -88,7 +88,7 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Employee Name:
             </CFormLabel>
@@ -108,7 +108,7 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Start Date:
             </CFormLabel>
@@ -128,9 +128,9 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              End Date :
+              End Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -148,9 +148,9 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              Extend Date :
+              Extend Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput

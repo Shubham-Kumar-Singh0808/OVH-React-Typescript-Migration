@@ -1,4 +1,4 @@
-import { CRow, CCol, CFormInput, CButton } from '@coreui/react-pro'
+import { CRow, CCol, CFormTextarea, CButton } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ProjectNotesTimeLine from './ProjectNotesTimeLine'
@@ -14,6 +14,8 @@ const ProjectNotes = (): JSX.Element => {
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const { projectId } = useParams<{ projectId: string }>()
+  const [clearFile, setClearFile] = useState<string>('')
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -25,9 +27,15 @@ const ProjectNotes = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.projectNotes.selectors.isProjectNotesLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProjectNotes = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Notes',
+  )
 
   useEffect(() => {
-    if (notesLink) {
+    if (notesLink?.replace(/^\s*/, '')) {
       setIsPostButtonEnabled(true)
     } else {
       setIsPostButtonEnabled(false)
@@ -37,6 +45,7 @@ const ProjectNotes = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadFile(file[0])
+    setClearFile(element.value)
   }
 
   const postNotesHandler = async () => {
@@ -76,24 +85,26 @@ const ProjectNotes = (): JSX.Element => {
         ),
       )
       setNotesLink('')
-      setUploadFile(undefined)
+      setClearFile('')
       dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
+
   return (
     <>
       <CRow className="mt-4 mb-0">
         <CCol col-xs-12 mt-10>
-          <CFormInput
+          <CFormTextarea
             autoComplete="off"
             type="text"
             id="notesLink"
             name="notesLink"
             placeholder="What you are thinking?"
             data-testid="notes-link"
+            maxLength={250}
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
-          />
+          ></CFormTextarea>
           <p className="mt-1">{notesLink?.length}/250</p>
         </CCol>
       </CRow>
@@ -104,21 +115,25 @@ const ProjectNotes = (): JSX.Element => {
             type="file"
             data-testid="file-upload"
             id="fileUpload"
+            value={clearFile}
             onChange={(element: React.SyntheticEvent) =>
               onChangeFileEventHandler(
                 element.currentTarget as HTMLInputElement,
               )
             }
+            accept="image/*"
           />
         </CCol>
         <CCol className="text-end" md={9}>
-          <CButton
-            color="info btn-ovh me-1 pull-right"
-            disabled={!isPostButtonEnabled}
-            onClick={postNotesHandler}
-          >
-            <i className="fa fa-pencil fa-fw"></i>Post
-          </CButton>
+          {userAccessToProjectNotes?.createaccess && (
+            <CButton
+              color="info btn-ovh me-1 pull-right"
+              disabled={!isPostButtonEnabled}
+              onClick={postNotesHandler}
+            >
+              <i className="fa fa-pencil fa-fw"></i>Post
+            </CButton>
+          )}
         </CCol>
       </CRow>
       {isLoading !== ApiLoadingState.loading ? (

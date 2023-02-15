@@ -426,6 +426,10 @@ export interface BookingListApi extends ApiBase {
   getRoomsOfLocation: string
   getAllMeetingLocations: string
   getBookingsForSelection: string
+  cancelRoomBooking: string
+  editMeeting: string
+  confirmUpdateMeetingRequest: string
+  uniqueAttendee: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -456,6 +460,8 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+  editEvent: string
+  updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
@@ -756,4 +762,35 @@ export interface ReviewListApi extends ApiBase {
   getAppraisalCycles: string
   getDesignations: string
   exportReviewList: string
+}
+
+export interface AppraisalTemplateApi extends ApiBase {
+  cycle: string
+  activeCycle: string
+  getDesignationsUnderCycle: string
+}
+
+export interface ProjectStatusApi extends ApiBase {
+  statusReportLis: string
+  addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
+}
+export interface ProcessAreaListApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProcessAreas: string
+  createProcessArea: string
+  checkDuplicateProcess: string
+  saveProcessArea: string
+  incrementOrDecrementOrder: string
+  getOrderCountOfActiveProcesses: string
+}
+
+export interface AddNewAudit extends ApiBase {
+  saveNewAuditForm: string
+  getProjectEmployees: string
+}
+export interface SQAAuditReportApi extends ApiBase {
+  getSQAAuditReport: string
+  exportSqaAuditReport: string
 }

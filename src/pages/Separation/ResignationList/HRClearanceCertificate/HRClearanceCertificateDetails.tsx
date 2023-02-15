@@ -14,10 +14,11 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const HRClearanceCertificateDetails = (): JSX.Element => {
   const [isHrCCDetailsEdit, setIsHrCCDetailsEdit] = useState<boolean>(false)
-  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>()
+  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
   const initialHrCCDetails = {} as UpdateClearanceDetails
   const [editHrCCDetails, setEditHrCCDetails] = useState(initialHrCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +36,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
     setIsHrCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditHrCCDetails(updateClearanceDetails)
+    setIsEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditHrCCDetailsHandler = (
@@ -56,6 +58,13 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitHrClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -65,7 +74,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: HrClearanceDetails[0]?.employeeId,
         employeeName: HrClearanceDetails[0]?.employeeName,
-        isDue: isEditActiveValue as unknown as boolean,
+        isDue: isEditActiveValue,
         seperationEmpId: HrClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: HrClearanceDetails[0]?.seperationEmpName,
         seperationId: HrClearanceDetails[0]?.seperationId,
@@ -83,6 +92,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
           submittedBy: 'HR',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -213,7 +223,7 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditActiveValue as unknown as boolean}
+                    checked={isEditActiveValue}
                     onChange={handleEditHrCCDetailsHandler}
                   />
                   <CFormCheck
@@ -252,7 +262,8 @@ const HRClearanceCertificateDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {HrClearanceDetails[0]?.comments || 'N/A'}
+                    {HrClearanceDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}

@@ -5,7 +5,6 @@ import {
   CForm,
   CFormLabel,
   CFormSelect,
-  CFormText,
   CRow,
 } from '@coreui/react-pro'
 import moment from 'moment'
@@ -20,7 +19,7 @@ import {
   LeadershipListStatusFiltersEnums,
 } from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
-import { emptyString, getFullDateForamatted } from '../../AchievementConstants'
+import { emptyString } from '../../AchievementConstants'
 
 const dateFilterList: string[] = [
   String(LeadershipListDateFiltersEnums.currentMonth),
@@ -132,9 +131,9 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
 
   const showDateError = compareDates(fromDate, toDate) ? (
     <div data-testid="error-msg-date">
-      <CFormText className={TextDanger} style={{ fontWeight: 'bold' }}>
-        To date should be greater than From date
-      </CFormText>
+      <p className={TextDanger}>
+        <b>To date should be greater than From date</b>
+      </p>
     </div>
   ) : (
     <></>
@@ -176,7 +175,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
                 <ReactDatePicker
                   placeholderText="dd/mm/yyyy"
                   className="form-control form-control-sm sh-date-picker"
-                  value={getFullDateForamatted(fromDate)}
+                  value={fromDate}
                   onChange={(date: Date) => {
                     setFromDate(moment(date).format(commonDateFormat))
                   }}
@@ -190,7 +189,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
                 <ReactDatePicker
                   placeholderText="dd/mm/yyyy"
                   className="form-control form-control-sm sh-date-picker"
-                  value={getFullDateForamatted(toDate)}
+                  value={toDate}
                   onChange={(date: Date) => {
                     setToDate(moment(date).format(commonDateFormat))
                   }}

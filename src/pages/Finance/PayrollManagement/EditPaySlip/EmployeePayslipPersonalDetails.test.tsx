@@ -12,7 +12,7 @@ describe('Allocate Employee without data', () => {
   beforeEach(() => {
     render(
       <EmployeePayslipPersonalDetails
-        toEditPayslip={{
+        toEditPayslipCopy={{
           paySlipId: 0,
           employeeId: 0,
           designation: '',
@@ -62,9 +62,6 @@ describe('Allocate Employee without data', () => {
           specificDesignation: null,
         }}
         onChangeInputHandler={mockSetTogglePage}
-        designation={''}
-        accountNo={''}
-        setToggle={mockSetTogglePage}
       />,
       {
         preloadedState: {
@@ -95,12 +92,6 @@ describe('Allocate Employee without data', () => {
     expect(screen.getByText('Absent:')).toBeInTheDocument()
     expect(screen.getByText('LOP :')).toBeInTheDocument()
     expect(screen.getByText('Meals Card:')).toBeInTheDocument()
-  })
-  test('should render  Tracker List  screen and back button without crashing', () => {
-    const backButtonElement = screen.getByTestId('back-button')
-    expect(backButtonElement).toBeInTheDocument()
-    userEvent.click(backButtonElement)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
   })
   test('should able to designationInput field', () => {
     const designationInput = screen.getByTestId('designation-name')

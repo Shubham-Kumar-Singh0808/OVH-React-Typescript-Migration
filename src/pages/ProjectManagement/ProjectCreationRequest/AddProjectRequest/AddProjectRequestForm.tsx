@@ -590,7 +590,7 @@ const AddProjectRequestForm = ({
           <ProjectName
             onChange={setProjectName}
             onBlur={handleAddProjectName}
-            value={projectName}
+            value={projectName?.replace(/^\s*/, '')}
           />
           <OInputField
             onChangeHandler={setCustomerContactName}
@@ -601,6 +601,7 @@ const AddProjectRequestForm = ({
             name="projectContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setCustomerEmail}
@@ -612,6 +613,7 @@ const AddProjectRequestForm = ({
             name="projectContactEmail"
             placeholder="Email"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactName}
@@ -622,6 +624,7 @@ const AddProjectRequestForm = ({
             name="billingContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactEmail}
@@ -631,8 +634,9 @@ const AddProjectRequestForm = ({
             type="email"
             label="Billing Contact Email"
             name="billingContactPersonEmail"
-            placeholder="Name"
+            placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OSelectList
             list={priceModelList}
@@ -719,7 +723,7 @@ const AddProjectRequestForm = ({
                 showYearDropdown
                 dropdownMode="select"
                 data-testid="start-date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
                 name="addprojectstartdate"
                 value={projectRequest.startdate}
@@ -742,9 +746,9 @@ const AddProjectRequestForm = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 data-testid="end-date-picker"
-                dateFormat="dd/mm/yy"
+                dateFormat="dd/mm/yyyy"
                 name="addprojectenddate"
                 value={projectRequest.enddate}
                 onChange={(date: Date) => onHandleProjectRequestEndDate(date)}

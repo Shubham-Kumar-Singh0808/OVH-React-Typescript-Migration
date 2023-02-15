@@ -411,6 +411,7 @@ const EditProject = (): JSX.Element => {
                 name={'customerContactName'}
                 placeholder={'Name'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <OInputField
                 onChangeHandler={handleCustomerEmail}
@@ -421,6 +422,7 @@ const EditProject = (): JSX.Element => {
                 name={'customerEmail'}
                 placeholder={'Email'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <OInputField
                 onChangeHandler={handleBillingPerson}
@@ -430,6 +432,7 @@ const EditProject = (): JSX.Element => {
                 name={'billingContactPerson'}
                 placeholder={'Name'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <OInputField
                 onChangeHandler={handleBillingPersonEmail}
@@ -440,6 +443,7 @@ const EditProject = (): JSX.Element => {
                 name={'billingContactPersonEmail'}
                 placeholder={'Email Id'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <OSelectList
                 isRequired={true}
@@ -543,6 +547,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -569,6 +574,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>
@@ -622,6 +628,7 @@ const EditProject = (): JSX.Element => {
                 name="editHiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel

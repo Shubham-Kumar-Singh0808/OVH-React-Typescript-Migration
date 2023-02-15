@@ -8,7 +8,6 @@ import {
 import React, { useEffect, useState } from 'react'
 import AddQuestionTable from './AddQuestionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { TextLabelProps } from '../../../../constant/ClassName'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -96,16 +95,17 @@ const AddQuestion = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className={TextLabelProps}>
+          <CFormLabel className="form-label col-sm-2 col-form-label text-end">
             Question :
             <span className={addQuestion ? 'text-white' : 'text-danger'}>
               *
             </span>
           </CFormLabel>
-          <CCol sm={7} className="w-500">
+          <CCol sm={8}>
             <CFormTextarea
               data-testid="text-area"
               aria-label="textarea"
+              className="sh-question"
               id="Name"
               name="question"
               placeholder="Question ?"

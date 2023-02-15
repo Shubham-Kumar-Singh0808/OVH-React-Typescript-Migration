@@ -37,6 +37,7 @@ const PayrollManagementTable = (props: {
   setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
+  editPaySlipHandler: (payslipItem: CurrentPayslip) => void
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -62,7 +63,13 @@ const PayrollManagementTable = (props: {
           year: Number(props.selectYear),
         }),
       )
-  }, [dispatch, props.selectMonth, props.selectYear])
+  }, [
+    dispatch,
+    props.selectMonth,
+    props.selectYear,
+    props.pageSize,
+    props.currentPage,
+  ])
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Payslip Deleted Successfully" />
@@ -131,14 +138,18 @@ const PayrollManagementTable = (props: {
     ? `Total Records: ${PaySlipsListSize}`
     : `No Records found...`
 
+  const getItemNumber = (index: number) => {
+    return (props.currentPage - 1) * props.pageSize + index + 1
+  }
+
   return (
     <>
-      <CCol className="custom-scroll scroll-alignment">
+      <CCol className="custom-scroll scroll-alignment py-4">
         {renderingPayslipData?.length > 0 ? (
           <CTable
             striped
             responsive
-            className="text-start text-left align-middle alignment sh-adjustment"
+            className="text-start text-left align-middle alignment"
           >
             <CTableHead>
               <CTableRow>
@@ -204,7 +215,7 @@ const PayrollManagementTable = (props: {
               {renderingPayslipData?.length > 0 &&
                 renderingPayslipData?.map((payslipItem, index) => {
                   return (
-                    <CTableRow key={payslipItem.paySlipId}>
+                    <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
                           className="form-check-input form-select-not-allowed"
@@ -218,10 +229,12 @@ const PayrollManagementTable = (props: {
                           }
                         />
                       </CTableDataCell>
-                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                       <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
                       <CTableDataCell>{payslipItem.name}</CTableDataCell>
-                      <CTableDataCell>{payslipItem.designation}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.designation || 'N/A'}
+                      </CTableDataCell>
                       <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
                       <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
                       <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
@@ -261,6 +274,7 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
                       <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
                       <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
+
                       <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
                       <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
                       <CTableDataCell>{payslipItem.month}</CTableDataCell>
@@ -273,7 +287,7 @@ const PayrollManagementTable = (props: {
                               className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                               color="info btn-ovh me-1"
                               onClick={() => {
-                                editPaySlipHandler(payslipItem)
+                                props.editPaySlipHandler(payslipItem)
                               }}
                             >
                               <i className="fa fa-edit" aria-hidden="true"></i>

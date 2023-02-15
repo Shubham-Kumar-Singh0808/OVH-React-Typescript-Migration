@@ -356,6 +356,7 @@ const AddProject = (): JSX.Element => {
                     name="addprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -382,6 +383,7 @@ const AddProject = (): JSX.Element => {
                     name="addprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>
@@ -434,6 +436,7 @@ const AddProject = (): JSX.Element => {
                 name="hiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel

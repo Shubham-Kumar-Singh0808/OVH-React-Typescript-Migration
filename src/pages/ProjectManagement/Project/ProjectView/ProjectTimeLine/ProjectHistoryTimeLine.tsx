@@ -213,20 +213,6 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {history.isAllocated !== null ? (
-                        <>
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              Current Status
-                            </CFormLabel>
-                            {isProjectPrevValue(projectOldCurrentStatus)}
-                            &nbsp;
-                            {projectCurrentStatus}
-                          </div>
-                        </>
-                      ) : (
-                        <></>
-                      )}
                       {history.billable !== null ? (
                         <>
                           <div className="mb-1">
@@ -236,6 +222,20 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                             {isProjectPrevValue(projectOldBillable)}
                             &nbsp;
                             {projectBillable}
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {projectCurrentStatus !== null ? (
+                        <>
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              Current Status
+                            </CFormLabel>
+                            {isProjectPrevValue(projectOldCurrentStatus)}
+                            &nbsp;
+                            {projectCurrentStatus}
                           </div>
                         </>
                       ) : (

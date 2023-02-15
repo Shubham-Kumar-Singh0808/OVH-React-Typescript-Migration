@@ -16,6 +16,14 @@ const Proposal = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.projectProposals.selectors.isProjectProposalsLoading,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProjectProposal = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Proposals',
+  )
+
   useEffect(() => {
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }, [])
@@ -48,10 +56,10 @@ const Proposal = (): JSX.Element => {
         <CCol col-xs-12 mt-10>
           <CFormInput
             autoComplete="off"
-            type="text"
+            type="link"
             id="proposalLink"
             name="proposalLink"
-            placeholder="Please Enter Proposal link?"
+            placeholder="Please Enter Proposal link"
             data-testid="proposal-link"
             value={proposalLink}
             onChange={(e) =>
@@ -67,13 +75,17 @@ const Proposal = (): JSX.Element => {
       </CRow>
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
-          <CButton
-            color="info btn-ovh me-1 pull-right"
-            disabled={!isPostButtonEnabled}
-            onClick={postButtonHandler}
-          >
-            <i className="fa fa-pencil fa-fw"></i>Post
-          </CButton>
+          {userAccessToProjectProposal?.createaccess && (
+            <CButton
+              className="proposal-post-button"
+              color="info btn-ovh me-1 pull-right"
+              data-testid="post-btn"
+              disabled={!isPostButtonEnabled}
+              onClick={postButtonHandler}
+            >
+              <i className="fa fa-pencil fa-fw"></i>Post
+            </CButton>
+          )}
         </CCol>
       </CRow>
       {isLoading !== ApiLoadingState.loading ? (
