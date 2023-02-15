@@ -26,7 +26,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 
 const EventListTable = (
   props: EventListTableProps,
-  { dateSelection, searchFromDate, searchToDate }: EventListApiProps,
+  { searchFromDate, searchToDate }: EventListApiProps,
 ): JSX.Element => {
   const [selectedEventDetails, setSelectedEventDetails] = useState({} as Event)
   const [isEventSubjectModalVisible, setIsEventSubjectModalVisible] =
@@ -38,8 +38,12 @@ const EventListTable = (
   const eventListSize = useTypedSelector(
     reduxServices.eventList.selectors.listSize,
   )
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToEditEvent = userAccessToFeatures?.find(
+    (feature) => feature.name === 'New Event',
   )
   const history = useHistory()
   const dispatch = useAppDispatch()
@@ -78,7 +82,7 @@ const EventListTable = (
       reduxServices.eventList.cancelEvent(eventId),
     )
     if (
-      reduxServices.employeeLeaveSummary.cancelEmployeeLeave.fulfilled.match(
+      reduxServices.eventList.cancelEvent.fulfilled.match(
         cancelEventResultAction,
       )
     ) {
@@ -86,8 +90,8 @@ const EventListTable = (
         reduxServices.eventList.getAllEvents({
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
-          dateSelection,
-          eventTypeId: 0,
+          dateSelection: props.selectDate,
+          eventTypeId: selectedEventDetails.eventTypeId,
           searchFromDate,
           searchToDate,
         }),
@@ -186,7 +190,7 @@ const EventListTable = (
                   {event.authorName.fullName}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {role !== 'Employee' && (
+                  {userAccessToEditEvent?.updateaccess && (
                     <div className="buttons-events">
                       <CButton
                         color="info"

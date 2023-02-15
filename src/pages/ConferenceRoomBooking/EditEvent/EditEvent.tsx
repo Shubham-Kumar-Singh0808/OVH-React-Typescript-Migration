@@ -52,6 +52,19 @@ const EditEvent = (): JSX.Element => {
     useState<string>('')
   const [isProjectChange, setIsProjectChange] = useState<string>('')
 
+  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
+    {} as EditExistingEventDetails,
+  )
+  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
+    editExistingEvent?.description,
+  )
+  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
+    useState(true)
+  const [isErrorShow, setIsErrorShow] = useState(false)
+  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
+    useState<string>()
+  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
   )
@@ -70,19 +83,6 @@ const EditEvent = (): JSX.Element => {
     reduxServices.newEvent.selectors.roomsByLocation,
   )
 
-  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
-    {} as EditExistingEventDetails,
-  )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
-    editExistingEvent?.description,
-  )
-  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
-    useState(true)
-  const [isErrorShow, setIsErrorShow] = useState(false)
-  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
-    useState<string>()
-  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
-
   const eventStartTime = editEvent?.startTime
   const eventEndTime = editEvent?.endTime
 
@@ -91,6 +91,18 @@ const EditEvent = (): JSX.Element => {
 
   const eventEndHour = eventEndTime?.split(':')[0]
   const eventEndMinutesDay = eventEndTime?.split(':')[1]?.split(' ')[0]
+
+  useEffect(() => {
+    if (
+      trainerAutoCompleteTarget &&
+      editEvent.agenda &&
+      eventDescriptionValue?.length > 0
+    ) {
+      setIsUpdateButtonEnabled(true)
+    } else {
+      setIsUpdateButtonEnabled(false)
+    }
+  }, [editEvent.agenda, trainerAutoCompleteTarget, eventDescriptionValue])
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
@@ -125,6 +137,14 @@ const EditEvent = (): JSX.Element => {
       )
     }
   }, [projectAutoCompleteTarget])
+
+  useEffect(() => {
+    if (trainerAutoCompleteTarget)
+      dispatch(
+        reduxServices.newEvent.getAllEmployees(trainerAutoCompleteTarget),
+      )
+  }, [trainerAutoCompleteTarget])
+
   useEffect(() => {
     if (editEvent.startTime === '' && editEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -393,7 +413,10 @@ const EditEvent = (): JSX.Element => {
                   aria-label="textarea"
                   value={editEvent.agenda}
                   onChange={(e) => {
-                    setEditEvent({ ...editEvent, agenda: e.target.value })
+                    setEditEvent({
+                      ...editEvent,
+                      agenda: e.target.value.replace(/^\s*/, ''),
+                    })
                   }}
                 ></CFormTextarea>
               </CCol>
@@ -411,7 +434,7 @@ const EditEvent = (): JSX.Element => {
                   config={ckeditorConfig}
                   debug={true}
                   onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
+                    onHandleDescription(editor.getData().trim(''))
                   }}
                 />
               </CCol>
@@ -518,6 +541,7 @@ const EditEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
+                    disabled={!isUpdateButtonEnabled}
                     onClick={handleConfirmBtn}
                   >
                     Update
