@@ -44,6 +44,7 @@ const AddProject = (): JSX.Element => {
   const history = useHistory()
   const isLoading = ApiLoadingState.succeeded
   const classNameStyle = 'col-sm-3 col-form-label text-end'
+  const classNameStyleLabel = 'col-sm-3 col-form-label text-end pe-18'
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -273,7 +274,7 @@ const AddProject = (): JSX.Element => {
       {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/projectreport" name="back" />
+            <OBackButton destination="/projectreport" name="Back" />
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}
@@ -299,6 +300,7 @@ const AddProject = (): JSX.Element => {
                 <CCol sm={3} />
                 <CCol sm={3}>
                   <CFormCheck
+                    className="sh-formLabel"
                     inline
                     type="checkbox"
                     name="internalProject"
@@ -351,7 +353,7 @@ const AddProject = (): JSX.Element => {
                     showYearDropdown
                     dropdownMode="select"
                     data-testid="start-date-picker"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     dateFormat="dd/mm/yy"
                     name="addprojectstartdate"
                     value={project.startdate}
@@ -364,7 +366,7 @@ const AddProject = (): JSX.Element => {
                 <CFormLabel
                   {...dynamicFormLabelProps(
                     'addprojectenddate',
-                    classNameStyle,
+                    classNameStyleLabel,
                   )}
                 >
                   End Date:
@@ -377,7 +379,7 @@ const AddProject = (): JSX.Element => {
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
                     name="addprojectenddate"
@@ -398,9 +400,9 @@ const AddProject = (): JSX.Element => {
               <CRow className="mb-3">
                 <CFormLabel
                   data-testId="selectLabel"
-                  {...dynamicFormLabelProps('health', classNameStyle)}
+                  {...dynamicFormLabelProps('health', classNameStyleLabel)}
                 >
-                  Health: {project.health}
+                  Health:
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect

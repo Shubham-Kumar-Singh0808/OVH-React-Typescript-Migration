@@ -341,6 +341,7 @@ const AddNewAudit = (): JSX.Element => {
                 id="projectType"
                 data-testid="projType-support"
                 label="Support"
+                className="ms-3"
                 value="false"
                 inline
                 checked={isProjectManagerVisible}

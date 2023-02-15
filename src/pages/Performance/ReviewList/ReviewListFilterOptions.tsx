@@ -281,10 +281,10 @@ const ReviewListFilterOptions = ({
           </CFormSelect>
         </CCol>
       </CRow>
-      <CRow className="mt-4 justify-content-between">
+      <CRow className="mt-4">
         {cycle === 'Custom' && (
           <>
-            <CCol sm={2} className="ticket-from-date-col">
+            <CCol sm={3}>
               <CRow>
                 <CFormLabel>
                   From:
@@ -320,7 +320,7 @@ const ReviewListFilterOptions = ({
                 />
               </CRow>
             </CCol>
-            <CCol sm={2} className="justify-content-md-end">
+            <CCol sm={3} className="justify-content-md-end">
               <CRow>
                 <CFormLabel>
                   To:

@@ -308,7 +308,7 @@ const AddNewInvestment = ({
           >
             Required Documents :
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={3} className="mt-2">
             <CFormCheck
               type="radio"
               name="requiredDocs"
