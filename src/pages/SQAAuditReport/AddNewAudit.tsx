@@ -260,6 +260,7 @@ const AddNewAudit = (): JSX.Element => {
       addNewAuditFormResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -340,6 +341,7 @@ const AddNewAudit = (): JSX.Element => {
                 id="projectType"
                 data-testid="projType-support"
                 label="Support"
+                className="ms-3"
                 value="false"
                 inline
                 checked={isProjectManagerVisible}

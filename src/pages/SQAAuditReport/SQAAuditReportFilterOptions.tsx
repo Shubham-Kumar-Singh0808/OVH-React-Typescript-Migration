@@ -185,7 +185,7 @@ const SQAAuditReportFilterOptions = ({
             onChange={(e) => setStatus(e.target.value)}
           >
             <option value={''}>Select Status</option>
-            <option value="open">open</option>
+            <option value="open">Open</option>
             <option value="Closed">Closed</option>
           </CFormSelect>
         </CCol>
@@ -216,7 +216,7 @@ const SQAAuditReportFilterOptions = ({
         <>
           <CRow>
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel>
+              <CFormLabel className="mt-3">
                 From :
                 {(fromDate == null || fromDate === '') && (
                   <span className="text-danger">*</span>
@@ -234,7 +234,7 @@ const SQAAuditReportFilterOptions = ({
                 autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="fromDate"
                 value={fromDateValue}
                 onChange={(date: Date) =>
@@ -243,7 +243,7 @@ const SQAAuditReportFilterOptions = ({
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel>
+              <CFormLabel className="mt-3">
                 To :
                 {(toDate == null || toDate === '') && (
                   <span className="text-danger">*</span>
@@ -261,7 +261,7 @@ const SQAAuditReportFilterOptions = ({
                 autoComplete="off"
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="toDate"
                 value={toDateValue}
                 onChange={(date: Date) =>
@@ -274,7 +274,7 @@ const SQAAuditReportFilterOptions = ({
             <CRow className="mt-2">
               <CCol sm={{ span: 6, offset: 4 }}>
                 <span className="text-danger">
-                  To date should be greater than From date
+                  <b>To date should be greater than From date</b>
                 </span>
               </CCol>
             </CRow>
@@ -283,7 +283,7 @@ const SQAAuditReportFilterOptions = ({
       ) : (
         <></>
       )}
-      <CRow className="mt-5 mb-4">
+      <CRow className="mt-3 mb-4">
         <CCol sm={{ span: 6, offset: 3 }}>
           <CButton
             className="cursor-pointer"

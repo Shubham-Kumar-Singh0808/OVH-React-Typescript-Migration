@@ -79,35 +79,35 @@ const MileStoneTable = (): JSX.Element => {
       <CTable className="milestone-model-table">
         <CTableBody>
           <CTableRow>
-            <CTableDataCell>Project</CTableDataCell>
+            <CTableDataCell>Project:</CTableDataCell>
             <CTableDataCell>{title.project}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Client</CTableDataCell>
+            <CTableDataCell>Client:</CTableDataCell>
             <CTableDataCell>{title.client}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Milestone</CTableDataCell>
+            <CTableDataCell>Milestone:</CTableDataCell>
             <CTableDataCell>{title.title}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Percentage </CTableDataCell>
+            <CTableDataCell>Percentage:</CTableDataCell>
             <CTableDataCell>{title.milestonePercentage}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Effort</CTableDataCell>
+            <CTableDataCell>Effort:</CTableDataCell>
             <CTableDataCell>{title.effort || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Planned End Date</CTableDataCell>
+            <CTableDataCell>Planned End Date:</CTableDataCell>
             <CTableDataCell>{title.planedDate || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Actual End Date</CTableDataCell>
+            <CTableDataCell>Actual End Date:</CTableDataCell>
             <CTableDataCell>{title.actualDate || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Comments </CTableDataCell>
+            <CTableDataCell>Comments:</CTableDataCell>
             <CTableDataCell>{title.comments || 'N/A'}</CTableDataCell>
           </CTableRow>
         </CTableBody>

@@ -140,7 +140,7 @@ const MoreSections = ({
 
   return (
     <>
-      <div className="block-session clearfix widget_gap">
+      <div className="block-session clearfix widget_gap ms-3 me-3">
         <CButton
           color="warning"
           className="btn btn-warning close-btn"

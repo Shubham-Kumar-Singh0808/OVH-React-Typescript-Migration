@@ -36,6 +36,7 @@ const AddNewInvestment = ({
   const [requireDocuments, setRequiredDocuments] = useState<string>('')
   const [isDocumentsVisible, setIsDocumentsVisible] = useState<boolean>()
   const [investmentMaxLimit, setInvestmentMaxLimit] = useState<string>()
+  const [selectedOption, setSelectedOption] = useState('')
   const dispatch = useAppDispatch()
   const formLabelProps = {
     htmlFor: 'inputAddInvestment',
@@ -57,14 +58,11 @@ const AddNewInvestment = ({
     (feature) => feature.name === 'Investment',
   )
 
-  const handleSelectDocumentOption = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(event.target.value)
     if (event.target.value === 'yes') {
       setIsDocumentsVisible(true)
     } else if (event.target.value === 'no') {
-      setIsDocumentsVisible(false)
-    } else {
       setIsDocumentsVisible(false)
     }
   }
@@ -137,6 +135,7 @@ const AddNewInvestment = ({
       requiredDocs: '',
     })
     setRequiredDocuments('')
+    setSelectedOption('')
     setInvestmentMaxLimit('')
     setIsDocumentsVisible(false)
     setShowEditor(false)
@@ -309,26 +308,27 @@ const AddNewInvestment = ({
           >
             Required Documents :
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={3} className="mt-2">
             <CFormCheck
               type="radio"
-              name="requireDocs"
+              name="requiredDocs"
               id="requireDocsYes"
               data-testid="documentsReqYes"
               label="Yes"
               value="yes"
-              checked={isDocumentsVisible || false}
-              onChange={handleSelectDocumentOption}
+              checked={selectedOption === 'yes'}
+              onChange={handleOptionChange}
               inline
             />
             <CFormCheck
               type="radio"
-              name="requireDocs"
+              name="requiredDocs"
               id="requireDocsNo"
               data-testid="documentsReqNo"
               label="No"
               value="no"
-              onChange={handleSelectDocumentOption}
+              checked={selectedOption === 'no'}
+              onChange={handleOptionChange}
               inline
             />
           </CCol>
