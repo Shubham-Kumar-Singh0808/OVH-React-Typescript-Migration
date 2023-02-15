@@ -26,6 +26,7 @@ const PayrollManagement = (): JSX.Element => {
   const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
   const [toggle, setToggle] = useState('')
   const [excelTable, setExcelTable] = useState(false)
+  const [clearFile, setClearFile] = useState<string>('')
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
@@ -57,6 +58,7 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
+    setClearFile(element.value)
   }
 
   const dispatch = useAppDispatch()
@@ -286,6 +288,7 @@ const PayrollManagement = (): JSX.Element => {
                       data-testid="feedback-form"
                       type="file"
                       name="upload-form"
+                      value={clearFile}
                       accept=".xlsx, .xls"
                       onChange={(element: SyntheticEvent) =>
                         onChangeFileUploadHandler(
@@ -394,6 +397,7 @@ const PayrollManagement = (): JSX.Element => {
                   pageSize={pageSize}
                   setToggle={setToggle}
                   setExcelTable={setExcelTable}
+                  setClearFile={setClearFile}
                 />
               </>
             ) : (

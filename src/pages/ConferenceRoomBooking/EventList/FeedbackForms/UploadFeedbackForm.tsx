@@ -28,15 +28,11 @@ const UploadFeedbackForm = (): JSX.Element => {
       extension = file[0].name.split('.').pop() as string
     }
     if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText(
-        'File size exceeded. Please upload a file less than 2MB.',
-      )
+      setUploadErrorText('Please upload file lessthan 2MB.')
       return
     }
     if (!acceptedFileTypes.includes(extension)) {
-      setUploadErrorText(
-        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
-      )
+      setUploadErrorText('Please choose doc or docx or pdf.')
       return
     }
     setIsUploadBtnEnabled(true)
@@ -76,7 +72,7 @@ const UploadFeedbackForm = (): JSX.Element => {
         </CCol>
       </CRow>
       <CForm>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-4">
           <CFormLabel
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
@@ -100,8 +96,8 @@ const UploadFeedbackForm = (): JSX.Element => {
               }
             />
             {uploadErrorText && (
-              <div id="error">
-                <strong className="mt-3 text-danger">{uploadErrorText}</strong>
+              <div id="error" className="mt-1">
+                <strong className="text-danger">{uploadErrorText}</strong>
               </div>
             )}
           </CCol>

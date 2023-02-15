@@ -29,7 +29,7 @@ const EventEndDate = ({
           minDate={new Date()}
           dropdownMode="select"
           dateFormat="dd/mm/yy"
-          placeholderText="dd/mm/yy"
+          placeholderText="DD/MM/YYYY"
           name="toDate"
           value={toDateValue}
           onChange={(date: Date) => toDateChangeHandler(date)}

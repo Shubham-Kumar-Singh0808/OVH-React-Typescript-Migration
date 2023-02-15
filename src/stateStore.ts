@@ -123,6 +123,7 @@ import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
 import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/AppraisalTemplateSlice'
 import projectStatusReducer from './reducers/ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
+import processAreaReducer from './reducers/Settings/ProcessArea/ProcessAreaSlice'
 import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 
@@ -248,6 +249,7 @@ export const allReducers = {
   KRA: KRAReducer,
   appraisalTemplate: appraisalTemplateReducer,
   projectStatus: projectStatusReducer,
+  processArea: processAreaReducer,
   addNewAuditForm: addNewAuditFormReducer,
   sqaAuditReport: sqaAuditReportReducer,
   // add your slice reducers here

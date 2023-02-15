@@ -42,7 +42,7 @@ const EventList = (): JSX.Element => {
         searchToDate: eventToDate,
       }),
     )
-  }, [currentPage, dispatch, pageSize, selectDate])
+  }, [currentPage, dispatch, pageSize, selectDate, eventFromDate, eventToDate])
 
   return (
     <>
@@ -70,6 +70,7 @@ const EventList = (): JSX.Element => {
                     setCurrentPage={setCurrentPage}
                     currentPage={currentPage}
                     pageSize={pageSize}
+                    selectDate={selectDate}
                   />
                 </CCol>
               </CRow>

@@ -56,7 +56,7 @@ describe('Add Project Testing', () => {
     ).toBe(true)
     expect(screen.getByPlaceholderText('Project Manager')).toBeInTheDocument()
 
-    const dates = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
     expect(
@@ -94,7 +94,7 @@ describe('Add Project Testing', () => {
   })
 
   test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('back-btn')
+    const backBtn = screen.getAllByTestId('Back-btn')
     userEvent.click(backBtn[0])
 
     await waitFor(() => {
@@ -145,7 +145,7 @@ describe('Add Project Testing', () => {
     fireEvent.click(dropdownManagerOptions[2])
 
     // Start Date
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

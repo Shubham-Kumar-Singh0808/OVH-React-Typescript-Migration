@@ -7,6 +7,7 @@ export type EventListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  selectDate: string
 }
 
 export type EventListApiProps = {

@@ -774,9 +774,19 @@ export interface ProjectStatusApi extends ApiBase {
   deleteStatusReport: string
   updateStatusReport: string
 }
+export interface ProcessAreaListApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProcessAreas: string
+  createProcessArea: string
+  checkDuplicateProcess: string
+  saveProcessArea: string
+  incrementOrDecrementOrder: string
+  getOrderCountOfActiveProcesses: string
+}
 
 export interface AddNewAudit extends ApiBase {
   saveNewAuditForm: string
+  getProjectEmployees: string
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string

@@ -14,6 +14,8 @@ const ProjectNotes = (): JSX.Element => {
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const { projectId } = useParams<{ projectId: string }>()
+  const [clearFile, setClearFile] = useState<string>('')
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -43,6 +45,7 @@ const ProjectNotes = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadFile(file[0])
+    setClearFile(element.value)
   }
 
   const postNotesHandler = async () => {
@@ -82,7 +85,7 @@ const ProjectNotes = (): JSX.Element => {
         ),
       )
       setNotesLink('')
-      setUploadFile(undefined)
+      setClearFile('')
       dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
@@ -112,6 +115,7 @@ const ProjectNotes = (): JSX.Element => {
             type="file"
             data-testid="file-upload"
             id="fileUpload"
+            value={clearFile}
             onChange={(element: React.SyntheticEvent) =>
               onChangeFileEventHandler(
                 element.currentTarget as HTMLInputElement,

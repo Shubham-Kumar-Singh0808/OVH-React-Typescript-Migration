@@ -163,7 +163,9 @@ const AchievementTypeListEntries = (
               onChange={newAchievementTypeNameHandler}
             />
           </CCol>
-          <CCol sm={4}>{errorMessageNameTernary}</CCol>
+          <CCol sm={4} className="lineHeight">
+            {errorMessageNameTernary}
+          </CCol>
         </AchievementEntryContainer>
         <AchievementEntryContainer>
           <CFormLabel
@@ -172,11 +174,11 @@ const AchievementTypeListEntries = (
           >
             Status:<span className={TextWhite}>*</span>
           </CFormLabel>
-          <CCol sm={2} md={1} className="mt-2">
+          <CCol sm={1} md={1} className="mt-2">
             <CFormCheck
               type="radio"
+              id="achievementStatusActive"
               label="Active"
-              hitArea="full"
               value={NewAchievementStatus.Active}
               name="achievementStatusActive"
               data-testid="ach-status-input-active"
@@ -185,11 +187,11 @@ const AchievementTypeListEntries = (
               inline
             />
           </CCol>
-          <CCol sm={2} className="mt-2">
+          <CCol sm={1} className="mt-2">
             <CFormCheck
               type="radio"
+              id="achievementStatus"
               label="Inactive"
-              hitArea="full"
               value={NewAchievementStatus.Inactive}
               data-testid="ach-status-input-inactive"
               checked={newUserSelectedStatus === NewAchievementStatus.Inactive}

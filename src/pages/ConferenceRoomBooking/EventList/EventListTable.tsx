@@ -26,7 +26,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 
 const EventListTable = (
   props: EventListTableProps,
-  { dateSelection, searchFromDate, searchToDate }: EventListApiProps,
+  { searchFromDate, searchToDate }: EventListApiProps,
 ): JSX.Element => {
   const [selectedEventDetails, setSelectedEventDetails] = useState({} as Event)
   const [isEventSubjectModalVisible, setIsEventSubjectModalVisible] =
@@ -38,8 +38,12 @@ const EventListTable = (
   const eventListSize = useTypedSelector(
     reduxServices.eventList.selectors.listSize,
   )
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToEditEvent = userAccessToFeatures?.find(
+    (feature) => feature.name === 'New Event',
   )
   const history = useHistory()
   const dispatch = useAppDispatch()
@@ -78,7 +82,7 @@ const EventListTable = (
       reduxServices.eventList.cancelEvent(eventId),
     )
     if (
-      reduxServices.employeeLeaveSummary.cancelEmployeeLeave.fulfilled.match(
+      reduxServices.eventList.cancelEvent.fulfilled.match(
         cancelEventResultAction,
       )
     ) {
@@ -86,8 +90,8 @@ const EventListTable = (
         reduxServices.eventList.getAllEvents({
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
-          dateSelection,
-          eventTypeId: 0,
+          dateSelection: props.selectDate,
+          eventTypeId: selectedEventDetails.eventTypeId,
           searchFromDate,
           searchToDate,
         }),
@@ -121,11 +125,6 @@ const EventListTable = (
   const trainer =
     selectedEventDetails.trainerName?.fullName !== null
       ? `${selectedEventDetails.trainerName?.fullName} - ${selectedEventDetails.trainerName?.designation}`
-      : 'N/A'
-
-  const eventDescription =
-    selectedEventDetails.description !== null
-      ? selectedEventDetails.description
       : 'N/A'
 
   const editButtonHandler = (id: number) => {
@@ -191,7 +190,7 @@ const EventListTable = (
                   {event.authorName.fullName}
                 </CTableDataCell>
                 <CTableDataCell scope="row">
-                  {role !== 'Employee' && (
+                  {userAccessToEditEvent?.updateaccess && (
                     <div className="buttons-events">
                       <CButton
                         color="info"
@@ -269,7 +268,7 @@ const EventListTable = (
         modalHeaderClass="d-none"
       >
         <>
-          <h4 className="model-header-text mb-3">
+          <h4 className="model-header-text mb-3 ms-4 me-4">
             {selectedEventDetails.agenda}
           </h4>
           <p className="d-flex">
@@ -289,19 +288,21 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">Location :</span>
             {`${selectedEventDetails.roomName} in ${selectedEventDetails.locationName}`}
           </p>
-          <p className="d-flex">
+          <div className="d-flex mb-2">
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
-            {eventDescription}
-          </p>
+            {selectedEventDetails.description
+              ? parse(selectedEventDetails.description)
+              : 'N/A'}
+          </div>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Trainer :</span>
             {trainer}
           </p>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
-            {attendees}
+            <div className="col-sm-6">{attendees}</div>
           </p>
         </>
       </OModal>

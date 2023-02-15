@@ -24,6 +24,7 @@ describe('Payroll without data', () => {
         pageSize={0}
         setToggle={mockSetTogglePage}
         setExcelTable={mockSetTogglePage}
+        setClearFile={mockSetTogglePage}
       />,
       {
         preloadedState: {
@@ -71,6 +72,6 @@ describe('Payroll without data', () => {
     const clearButton = screen.getByTestId(clearButtonId)
     expect(clearButton).toBeInTheDocument()
     userEvent.click(clearButton)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(2)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(3)
   })
 })

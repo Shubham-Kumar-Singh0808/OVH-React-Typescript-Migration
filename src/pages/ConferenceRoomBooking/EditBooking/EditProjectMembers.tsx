@@ -136,7 +136,7 @@ const ProjectMembersSelection = ({
 
   return (
     <>
-      <CCol sm={4} md={4}>
+      <CCol sm={4}>
         <CTable responsive striped className="align-middle">
           <CTableHead>
             <CTableRow>
@@ -185,7 +185,7 @@ const ProjectMembersSelection = ({
         )}
       </CCol>
 
-      <CCol sm={2} md={2} className="meeting-bulk-add">
+      <CCol sm={2} className="meeting-bulk-add">
         <CButton
           color="info btn-ovh me-1"
           className="btn-ovh"

@@ -161,7 +161,7 @@ const BookingListTable = ({
             <CTableHeaderCell scope="col">Room</CTableHeaderCell>
             <CTableHeaderCell scope="col">Status</CTableHeaderCell>
             <CTableHeaderCell scope="col">Author</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
@@ -270,7 +270,7 @@ const BookingListTable = ({
         </CRow>
       ) : (
         <CCol>
-          <CRow className="mt-3 ms-3">
+          <CRow className="mt-2 ms-2">
             <p>
               <strong>No Records Found... </strong>
             </p>
@@ -298,7 +298,7 @@ const BookingListTable = ({
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Date :</span>
             <>
-              {`${modalAgenda.fromDate} to ${modalAgenda.toDate} from
+              {`${modalAgenda.fromDate} from
               ${modalAgenda.startTime} to ${modalAgenda.endTime}`}
             </>
           </p>
@@ -313,9 +313,7 @@ const BookingListTable = ({
             {modalAgenda.description !== null ? modalAgenda.description : 'N/A'}
           </p>
           <p className="d-flex">
-            <span className="col-sm-2 text-right fw-bold px-3 mt-2">
-              Attendees:
-            </span>
+            <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
             {modalAgenda.employeeDto?.length ? (
               <CTable align="middle" className="bookingList-model-table">
                 <CTableHead>

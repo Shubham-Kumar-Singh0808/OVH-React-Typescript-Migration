@@ -24,11 +24,6 @@ import { showIsRequired } from '../../../../utils/helper'
 
 const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
   const initialKPIData = {} as AddKPIData
-  const formLabelProps = {
-    htmlFor: 'inputNewKPI',
-    className: 'col-form-label addKpi-label',
-  }
-
   const [addNewKPi, setAddNewKPi] = useState(initialKPIData)
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectFrequency, setSelectFrequency] = useState<number | string>()
@@ -71,7 +66,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
       description: '',
       kraId: 0,
     })
-    setSelectFrequency(0)
+    setSelectFrequency('')
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,11 +125,8 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
       </CRow>
       <CForm>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            KRA Name:
+          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+            KRA Name :
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -148,11 +140,8 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Department:
+          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+            Department :
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -166,11 +155,8 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Designation:
+          <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+            Designation :
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -184,11 +170,8 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            KPI Name: <span className={showIsRequired(addNewKPi?.name)}>*</span>
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            KPI Name :<span className={showIsRequired(addNewKPi?.name)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -196,7 +179,9 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               autoComplete="off"
               type="text"
               name="name"
+              placeholder="KPI Name"
               value={addNewKPi.name}
+              maxLength={250}
               onChange={handleInputChange}
             />
           </CCol>
@@ -227,17 +212,15 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Target: <span className={showIsRequired(addNewKPi?.target)}>*</span>
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Target :<span className={showIsRequired(addNewKPi?.target)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
               data-testid="target-input"
               autoComplete="off"
               type="text"
+              placeholder="Target"
               name="target"
               value={addNewKPi.target}
               onChange={handleInputChange}
@@ -246,7 +229,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className={TextLabelProps}>
-            Description:
+            Description :
             <span className={showIsRequired(addNewKPi?.description)}>*</span>
           </CFormLabel>
           {showEditor ? (
@@ -263,7 +246,7 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
               />
             </CCol>
           ) : (
-            ''
+            'N/A'
           )}
         </CRow>
         <CRow>

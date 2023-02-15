@@ -135,7 +135,7 @@ const EmployeeUpdatePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Employee Name:
             </CFormLabel>
@@ -156,7 +156,7 @@ const EmployeeUpdatePIP = ({
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                Start Date :
+                Start Date:
                 <span className={startDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
@@ -189,7 +189,7 @@ const EmployeeUpdatePIP = ({
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                End Date :
+                End Date:
                 <span className={endDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
