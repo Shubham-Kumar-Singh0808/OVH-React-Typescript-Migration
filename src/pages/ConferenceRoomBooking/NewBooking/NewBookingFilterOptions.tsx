@@ -12,7 +12,10 @@ import NewBookingLocation from './NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from './NewBookingChildComponents/NewBookingRoom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { AddRoom } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import {
+  AddRoom,
+  ShouldResetNewBookingFields,
+} from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 import { Availability } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { Author } from '../../../types/Dashboard/TrainingsAndEvents/trainingsAndEventsTypes'
 import {
@@ -48,6 +51,12 @@ const NewBookingFilterOptions = ({
     startTime: '',
   } as AddRoom
   const dispatch = useAppDispatch()
+  const initResetFields = {
+    projectName: false,
+    startEndTime: false,
+  } as ShouldResetNewBookingFields
+
+  const [resetFields, setResetField] = useState(initResetFields)
 
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
@@ -72,6 +81,7 @@ const NewBookingFilterOptions = ({
   const projectMembers = useTypedSelector(
     reduxServices.newEvent.selectors.projectMembers,
   )
+  console.log(projectMembers)
   useEffect(() => {
     if (newRoomBooking.startTime === '' && newRoomBooking.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -112,12 +122,19 @@ const NewBookingFilterOptions = ({
     setNewRoomBooking({ ...newRoomBooking, authorName: value })
   }
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setResetField({ ...resetFields, startEndTime: false })
     setNewRoomBooking({ ...newRoomBooking, startTime: val1, endTime: val2 })
   }
 
   const onSelectProject = (value: string) => {
+    setResetField({ ...resetFields, projectName: false })
     setNewRoomBooking({ ...newRoomBooking, projectName: value })
   }
+  console.log(newRoomBooking.projectName)
+  // useEffect(() => {
+  //   if (newRoomBooking.projectName == null) {
+  //   }
+  // }, [])
 
   const checkIsAttendeeExists = (attendeeId: number) => {
     return attendeesList.some((attendee) => {
@@ -186,6 +203,9 @@ const NewBookingFilterOptions = ({
       }
     }
   }
+  const failureToastMessage = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
 
   const handleConfirmBtn = async () => {
     const startTimeSplit = newRoomBooking.startTime.split(':')
@@ -238,6 +258,12 @@ const NewBookingFilterOptions = ({
           roomId: 0,
           startTime: '',
         })
+        const shouldResetFields = {
+          projectName: true,
+          startEndTime: true,
+        } as ShouldResetNewBookingFields
+        setResetField(shouldResetFields)
+        setAttendeesAutoCompleteTarget('')
       } else if (
         reduxServices.newBooking.confirmNewMeetingAppointment.rejected.match(
           addBookingResult,
@@ -254,6 +280,25 @@ const NewBookingFilterOptions = ({
           ),
         )
       }
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Sorry, you missed the selected time..!!"
+          />,
+        ),
+      )
+    }
+  }
+  const validateBookingTimings = () => {
+    if (
+      newRoomBooking.startTime.split(':') < newRoomBooking.endTime.split(':')
+    ) {
+      handleConfirmBtn()
+    } else {
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
 
@@ -271,6 +316,12 @@ const NewBookingFilterOptions = ({
       roomId: 0,
       startTime: '',
     })
+    const shouldResetFields = {
+      projectName: true,
+      startEndTime: true,
+    } as ShouldResetNewBookingFields
+    setResetField(shouldResetFields)
+    setAttendeesAutoCompleteTarget('')
   }
 
   useEffect(() => {
@@ -332,6 +383,7 @@ const NewBookingFilterOptions = ({
             />
             <StartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
+              shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -363,6 +415,7 @@ const NewBookingFilterOptions = ({
               allProjects={allProjects}
               onSelectProject={onSelectProject}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+              shouldReset={resetFields.projectName}
             />
             <Attendees
               allEmployeesProfiles={allEmployeesProfiles}
@@ -377,18 +430,23 @@ const NewBookingFilterOptions = ({
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-            {projectMembers?.length > 0 && (
-              <ProjectMembersSelection
-                addEvent={newRoomBooking}
-                projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-              />
+            {projectMembers?.length > 0 &&
+            newRoomBooking.projectName.length > 0 ? (
+              <>
+                <ProjectMembersSelection
+                  addEvent={newRoomBooking}
+                  projectMembers={projectMembers}
+                  attendeesList={attendeesList}
+                  setAttendeesList={setAttendeesList}
+                  selectProjectMember={selectProjectMember}
+                  isErrorShow={isErrorShow}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                />
+              </>
+            ) : (
+              <></>
             )}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
@@ -397,7 +455,7 @@ const NewBookingFilterOptions = ({
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
+                    onClick={validateBookingTimings}
                     disabled={!isConfirmButtonEnabled}
                   >
                     Confirm
