@@ -47,7 +47,7 @@ const EditKRA = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (incomingKRAData) {
+    if (incomingKRAData !== null) {
       const descrip =
         incomingKRAData.description === null
           ? emptyString
@@ -127,7 +127,7 @@ const EditKRA = (): JSX.Element => {
         isPercentReadonly={isPercentReadonly}
         setPercentReadOnly={setPercentReadonly}
         setIsButtonEnabled={setUpdateButtonEnabled}
-        callDesignationEveryDepartment={false}
+        callDesignationEveryDepartment={true}
       />
       <CContainer>
         <CRow>

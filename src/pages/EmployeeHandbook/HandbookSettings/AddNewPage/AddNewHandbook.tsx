@@ -104,7 +104,17 @@ function AddNewHandbook({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    if (name === 'displayOrder') {
+    if (name === 'title') {
+      const pageTitle = value.replace(/^\s*/, '')
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: pageTitle } }
+      })
+    } else if (name === 'pageName') {
+      const pageNameValue = value.replace(/^\s*/, '')
+      setAddNewPage((prevState) => {
+        return { ...prevState, ...{ [name]: pageNameValue } }
+      })
+    } else if (name === 'displayOrder') {
       const newValue = value.replace(/[\D]/gi, '')
       setAddNewPage((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }

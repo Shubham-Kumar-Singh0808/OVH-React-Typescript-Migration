@@ -105,7 +105,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
       )
       setEnteredDesig(selectDesignation)
     }
-  }, [enteredDept])
+  }, [callDesignationEveryDepartment, enteredDept])
 
   useEffect(() => {
     if (enteredDesig === selectDesignation) {

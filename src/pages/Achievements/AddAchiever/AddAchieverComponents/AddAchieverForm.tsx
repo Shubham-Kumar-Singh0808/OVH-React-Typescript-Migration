@@ -371,7 +371,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="startDate"
-                placeholderText="mm-yyyy"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -409,7 +409,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 dateFormat="MMMM yyyy"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
-                placeholderText="mm-yyyy"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
