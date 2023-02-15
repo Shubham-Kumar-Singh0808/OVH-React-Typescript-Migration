@@ -9,15 +9,20 @@ const SelectProject = ({
   allProjects,
   onSelectProject,
   isProjectAndAttendeesEnable,
+  shouldReset,
 }: {
   allProjects: GetAllProjects[]
   onSelectProject: (value: string) => void
   isProjectAndAttendeesEnable: boolean
+  shouldReset: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [projectAutoCompleteTarget, setProjectAutoCompleteTarget] =
     useState<string>()
+  useEffect(() => {
+    if (shouldReset) setProjectAutoCompleteTarget('')
+  }, [shouldReset])
 
   useEffect(() => {
     if (projectAutoCompleteTarget) {

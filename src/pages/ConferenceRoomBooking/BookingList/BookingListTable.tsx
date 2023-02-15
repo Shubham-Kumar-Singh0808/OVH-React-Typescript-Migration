@@ -90,7 +90,9 @@ const BookingListTable = ({
       )
     } else if (bookingStatus === 'Cancelled') {
       return (
-        <CBadge className="rounded-pill label-warning">{bookingStatus}</CBadge>
+        <CBadge className="rounded-pill label-danger status-name">
+          {bookingStatus}
+        </CBadge>
       )
     } else if (bookingStatus === 'In Progress') {
       return (

@@ -136,9 +136,9 @@ const BookingListFilterOptions = ({
             }}
           >
             <option value="New">New</option>
-            <option value="true">In Progress</option>
-            <option value="false">Cancelled</option>
-            <option value="onBench">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
           </CFormSelect>
         </CCol>
       </CRow>

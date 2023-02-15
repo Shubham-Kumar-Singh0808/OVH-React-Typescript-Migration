@@ -10,6 +10,7 @@ const EventEndDate = ({
   toDateChangeHandler: (e: Date) => void
   toDateValue: string
 }): JSX.Element => {
+  const lastDateOfYear = `12/31/${new Date().getFullYear()}`
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -24,6 +25,7 @@ const EventEndDate = ({
           className="form-control form-control-sm sh-date-picker sh-leave-form-control"
           showMonthDropdown
           showYearDropdown
+          maxDate={new Date(lastDateOfYear)}
           minDate={new Date()}
           dropdownMode="select"
           dateFormat="dd/mm/yy"

@@ -14,7 +14,6 @@ import { useHistory } from 'react-router-dom'
 import EditAttendees from './EditAttendees'
 import EditProjectMembers from './EditProjectMembers'
 import EditStartTimeAndEndTime from './EditStartTimeAndEndTime'
-import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
@@ -439,13 +438,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
             <CRow className="mt-3">
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Name:
-                <span
-                  className={
-                    projectsAutoCompleteTarget ? TextWhite : TextDanger
-                  }
-                >
-                  *
-                </span>
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
@@ -551,7 +543,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     className="btn-ovh"
                     onClick={ClearButtonHandler}
                   >
-                    Clear
+                    Cancel
                   </CButton>
                 </>
               </CCol>

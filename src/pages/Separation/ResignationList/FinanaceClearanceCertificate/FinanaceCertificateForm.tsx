@@ -134,7 +134,10 @@ const FinanceCertificateForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitFinanceClearanceCertificateHandler}
-                disabled={isActiveValues === 'true' && textAreaValues === ''}
+                disabled={
+                  isActiveValues === 'true' &&
+                  textAreaValues?.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>
