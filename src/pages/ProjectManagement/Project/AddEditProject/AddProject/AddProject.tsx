@@ -234,11 +234,14 @@ const AddProject = (): JSX.Element => {
         ),
       )
 
-      history.push('/employeeList')
+      history.push('/projectreport')
     } else {
       dispatch(
         reduxServices.app.actions.addToast(
-          toastElement('Project Name Already Exist', 'danger'),
+          toastElement(
+            'Already a Project is existed with the given name.',
+            'danger',
+          ),
         ),
       )
     }
@@ -466,7 +469,7 @@ const AddProject = (): JSX.Element => {
                     color="success"
                     data-testid="add-project"
                     onClick={handleSubmit}
-                    disabled={!isAddBtnEnable}
+                    disabled={!isAddBtnEnable || isGreaterThanStart}
                   >
                     Add
                   </CButton>

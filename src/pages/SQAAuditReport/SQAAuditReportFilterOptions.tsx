@@ -116,6 +116,7 @@ const SQAAuditReportFilterOptions = ({
     setToDate('')
     setStatus('')
     setRescheduleStatus('')
+    setSearchInput('')
     dispatch(
       reduxServices.sqaAuditReport.getSQAAuditReport({
         endIndex: pageSize * currentPage,
