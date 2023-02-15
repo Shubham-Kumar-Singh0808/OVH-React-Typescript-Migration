@@ -160,7 +160,7 @@ const AddProjectMileStone = ({
             className="mt-2"
             name="effort"
             id="effort"
-            placeholder="effort"
+            placeholder="Effort"
             data-testid="effort-test"
           />
         </CTableDataCell>
