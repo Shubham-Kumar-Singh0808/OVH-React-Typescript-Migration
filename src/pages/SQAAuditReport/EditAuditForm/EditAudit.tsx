@@ -33,6 +33,7 @@ const EditAudit = (): JSX.Element => {
   const selectedAuditDetails = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
   )
+  console.log(selectedAuditDetails)
   const [editAuditForm, setEditAuditForm] = useState(initAuditFormData)
   const [editAuditDate, setEditAuditDate] = useState<string>('')
   const [editAuditorName, setEditAuditorName] = useState<
@@ -84,6 +85,20 @@ const EditAudit = (): JSX.Element => {
     }
   }, [selectedAuditDetails])
 
+  // useEffect(() => {
+  //   setEditAuditeeName(selectedAuditDetails.auditees)
+  // }, [selectedAuditDetails])
+
+  const handleSelectProjectType = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditAuditProjectType(event.target.value)
+    if (event.target.value === 'false') {
+      setIsProjectManagerVisible(true)
+    } else {
+      setIsProjectManagerVisible(false)
+    }
+  }
   const onChangeInputHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -145,16 +160,6 @@ const EditAudit = (): JSX.Element => {
   }
   const commentsHandler = (value: string) => {
     setEditAuditForm({ ...editAuditForm, comments: value })
-  }
-  const handleSelectProjectType = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setEditAuditProjectType(event.target.value)
-    if (event.target.value === 'false') {
-      setIsProjectManagerVisible(true)
-    } else {
-      setIsProjectManagerVisible(false)
-    }
   }
 
   const buttonText = (name: string) => {

@@ -17,6 +17,16 @@ export type SaveAuditForm = {
   auditStatus?: string
 }
 
+export type Auditees = {
+  id: number
+  fullName: string
+}
+
+export type Auditors = {
+  id: number
+  fullName: string
+}
+
 export type EditAuditFormData = {
   auditDate: string
   auditRescheduleStatus: boolean
@@ -24,8 +34,8 @@ export type EditAuditFormData = {
   auditType: string
   auditeeIds: null
   auditorIds: null
-  auditees: number[]
-  auditors: number[]
+  auditees: Auditees[]
+  auditors: Auditors[]
   comments: string
   containsFile: null
   createdBy: string
