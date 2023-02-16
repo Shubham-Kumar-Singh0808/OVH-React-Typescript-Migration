@@ -431,7 +431,6 @@ const NewEvent = (): JSX.Element => {
                   attendeesList={attendeesList}
                   setAttendeesList={setAttendeesList}
                   selectProjectMember={selectProjectMember}
-                  isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}

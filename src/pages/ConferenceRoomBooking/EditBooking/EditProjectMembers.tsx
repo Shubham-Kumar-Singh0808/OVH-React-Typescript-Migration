@@ -1,7 +1,6 @@
 import {
   CButton,
   CCol,
-  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -26,7 +25,6 @@ const ProjectMembersSelection = ({
   attendeeResponse,
   setAttendeeReport,
   selectEditProjectMember,
-  isErrorShow,
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
@@ -37,7 +35,6 @@ const ProjectMembersSelection = ({
   attendeeResponse: MeetingEditDTOList[]
   setAttendeeReport: (value: MeetingEditDTOList[]) => void
   selectEditProjectMember: (attendeeId: number, attendeeName: string) => void
-  isErrorShow: boolean
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
@@ -174,7 +171,7 @@ const ProjectMembersSelection = ({
               })}
           </CTableBody>
         </CTable>
-        {isErrorShow && (
+        {/* {isErrorShow && (
           <CRow>
             <CCol>
               <span className="sh-span-red">
@@ -182,7 +179,7 @@ const ProjectMembersSelection = ({
               </span>
             </CCol>
           </CRow>
-        )}
+        )} */}
       </CCol>
 
       <CCol sm={2} className="meeting-bulk-add">
