@@ -6,6 +6,7 @@ import {
   CFormLabel,
   CFormInput,
   CFormCheck,
+  CFormText,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -14,10 +15,13 @@ import moment from 'moment'
 // import Multiselect from 'multiselect-react-dropdown'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import parse from 'html-react-parser'
 import SelectProjectName from './SelectProjectName'
 import SelectProjectManager from './SelectProjectManager'
 import EditAuditStartTimeEndTime from './EditAuditStartTimeEndTime'
 import AuditMembersDetails from './AuditMembersDetails'
+import SQAAuditDate from './SQAAuditDate'
+import UploadAuditFile from './UploadAuditFile'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -67,11 +71,6 @@ const EditAudit = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(
-      reduxServices.addNewAuditForm.editAuditFormDetails(
-        selectedAuditDetails?.id,
-      ),
-    )
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
   }, [dispatch])
 
@@ -149,8 +148,39 @@ const EditAudit = (): JSX.Element => {
     setEditAuditeeName(selectedList)
   }
   const commentsHandler = (value: string) => {
-    setEditAuditForm({ ...editAuditForm, comments: value })
+    // setEditAuditForm({ ...editAuditForm, comments: value })
+    setEditAuditForm((prevState) => {
+      return { ...prevState, ...{ comments: value } }
+    })
   }
+
+  const compareDates = (sqaAuditDate: string, sqaFollowUpDate: string) => {
+    // const auditFollowupDate = Date.parse(sqaFollowUpDate)
+    // const auditMeetingDate = Date.parse(sqaAuditDate)
+    const dateFormate = 'L'
+    const auditFollowupDate = new Date(
+      moment(sqaFollowUpDate?.toString()).format(dateFormate),
+    )
+    const auditMeetingDate = new Date(
+      moment(sqaAuditDate?.toString()).format(dateFormate),
+    )
+    console.log(auditFollowupDate.getTime(), auditMeetingDate.getTime())
+
+    return auditFollowupDate.getTime() < auditMeetingDate.getTime()
+  }
+
+  const datesErrorMessage = compareDates(
+    editAuditDate,
+    editFollowUpAuditDate,
+  ) ? (
+    <div data-testid="error-msg-date">
+      <CFormText className={TextDanger}>
+        Followup Date should be greater than AuditDate
+      </CFormText>
+    </div>
+  ) : (
+    <></>
+  )
 
   const buttonText = (name: string) => {
     if (selectedAuditDetails.formStatus === 'Save') {
@@ -174,6 +204,7 @@ const EditAudit = (): JSX.Element => {
   const auditExistsToastMessage = (
     <OToast toastMessage="Audit Already Exists" toastColor="danger" />
   )
+
   const handleSubmitAuditForm = async (formAuditStatus: string) => {
     const startTimeSplit = editAuditForm.startTime.split(':')
     const endTimeSplit = editAuditForm.endTime.split(':')
@@ -215,15 +246,15 @@ const EditAudit = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(auditExistsToastMessage))
     }
   }
-
+  console.log(editAuditForm.comments)
   const handleUpdateAuditForm = async (auditFormStatus: string) => {
-    const endTimeSplit = editAuditForm.endTime.split(':')
+    const endTimeSplit = editAuditForm.endTime?.split(':')
     const prepareObject = {
       id: editAuditForm.id,
       comments: editAuditForm.comments,
       containsFile: false,
       followUpDate: editFollowUpAuditDate,
-      formStatus: auditFormStatus,
+      formStatus: '',
       pci: editAuditForm.pci as string,
       auditeeIds: editAuditeeName?.map((currentItem) => currentItem.id),
       auditorIds: editAuditorName?.map((currentItem) => currentItem.id),
@@ -292,13 +323,13 @@ const EditAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4 align-items-center">
             <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
               Project Type :
             </CFormLabel>
             <CCol
               className="mt-1"
-              sm={3}
+              sm={2}
               md={1}
               lg={1}
               data-testid="editProjectType-development"
@@ -318,7 +349,7 @@ const EditAudit = (): JSX.Element => {
             </CCol>
             <CCol
               className="mt-1"
-              sm={3}
+              sm={2}
               md={1}
               lg={1}
               data-testid="editProjectType-support"
@@ -328,6 +359,7 @@ const EditAudit = (): JSX.Element => {
                 name="projectType"
                 id="projectType"
                 data-testid="editProjType-support"
+                className="ms-3"
                 label="Support"
                 value="false"
                 inline
@@ -372,7 +404,6 @@ const EditAudit = (): JSX.Element => {
             handleOnSelect={handleMultiSelectAuditor}
             handleOnRemove={handleOnRemoveSelectedAuditorOption}
           />
-
           <AuditMembersDetails
             auditLabel="Auditees"
             options={employeeNames}
@@ -381,32 +412,10 @@ const EditAudit = (): JSX.Element => {
             handleOnSelect={handleMultiSelectAuditees}
             handleOnRemove={handleOnRemoveSelectedAuditeeOption}
           />
-          <CRow className="mt-4 mb-4" data-testid="auditDateInput">
-            <CFormLabel className="col-sm-3 col-form-label text-end">
-              Audit Date :
-              <span className={showIsRequired(editAuditDate)}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="holiday-date"
-                data-testid="auditDate-Input"
-                autoComplete="off"
-                className="form-control form-control-sm sh-date-picker"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="dd/mm/yyyy"
-                name="auditDate"
-                minDate={new Date()}
-                disabled={formStatusSubmit || formStatusPMUpdate}
-                value={editAuditDate}
-                onChange={(date: Date) => {
-                  setEditAuditDate(moment(date).format('DD/MM/YYYY'))
-                }}
-              />
-            </CCol>
-          </CRow>
+          <SQAAuditDate
+            editAuditDate={editAuditDate}
+            setEditAuditDate={setEditAuditDate}
+          />
           <EditAuditStartTimeEndTime
             onSelectAuditStartAndEndTime={onSelectStartAndEndTime}
           />
@@ -425,9 +434,8 @@ const EditAudit = (): JSX.Element => {
               />
             </CCol>
           </CRow>
-
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
+          {formStatusSubmit || formStatusPMUpdate ? (
+            <>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
                   PCI(%) :
@@ -440,52 +448,65 @@ const EditAudit = (): JSX.Element => {
                     size="sm"
                     name="pci"
                     maxLength={3}
+                    disabled={formStatusPMUpdate}
                     value={editAuditForm.pci}
                     onChange={onChangeInputHandler}
                   />
                 </CCol>
               </CRow>
-            ))}
-          {formStatusSubmit && (
-            <CRow className="mt-4 mb-4" data-testid="followUpDateInput">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Follow-up Date :
-                <span className={showIsRequired(editFollowUpAuditDate)}>*</span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <ReactDatePicker
-                  id="followup-audit-date"
-                  data-testid="followUp-auditDate-Input"
-                  autoComplete="off"
-                  className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="dd/mm/yyyy"
-                  name="followUpDate"
-                  minDate={new Date()}
-                  value={editFollowUpAuditDate}
-                  onChange={(date: Date) => {
-                    setEditFollowUpAuditDate(moment(date).format('DD/MM/YYYY'))
-                  }}
-                />
-              </CCol>
-            </CRow>
-          )}
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
-              <CRow>
-                <CFormLabel className="col-sm-3 col-form-label text-end">
-                  PM Comments :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <span className="fw-bold">{editAuditForm.pmComments}</span>
-                </CCol>
-              </CRow>
-            ))}
-          {formStatusSubmit ||
-            (formStatusPMUpdate && (
+              {formStatusSubmit ? (
+                <>
+                  <CRow className="mt-4 mb-4" data-testid="followUpDateInput">
+                    <CFormLabel className="col-sm-3 col-form-label text-end">
+                      Follow-up Date :
+                      <span className={showIsRequired(editFollowUpAuditDate)}>
+                        *
+                      </span>
+                    </CFormLabel>
+                    <CCol sm={3}>
+                      <ReactDatePicker
+                        id="followup-audit-date"
+                        data-testid="followUp-auditDate-Input"
+                        autoComplete="off"
+                        className="form-control form-control-sm sh-date-picker"
+                        peekNextMonth
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        placeholderText="dd/mm/yyyy"
+                        name="followUpDate"
+                        minDate={new Date()}
+                        value={editFollowUpAuditDate}
+                        onChange={(date: Date) => {
+                          setEditFollowUpAuditDate(
+                            moment(date).format('DD/MM/YYYY'),
+                          )
+                        }}
+                      />
+                      {datesErrorMessage}
+                    </CCol>
+                  </CRow>
+                </>
+              ) : (
+                <></>
+              )}
+              {editAuditForm.pmComments ? (
+                <>
+                  <CRow>
+                    <CFormLabel className="col-sm-3 col-form-label text-end">
+                      PM Comments :
+                    </CFormLabel>
+                    <CCol sm={3}>
+                      <span className="fw-bold">
+                        {editAuditForm.pmComments}
+                      </span>
+                    </CCol>
+                  </CRow>
+                </>
+              ) : (
+                <></>
+              )}
+
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Comments :
@@ -501,7 +522,12 @@ const EditAudit = (): JSX.Element => {
                   />
                 </CCol>
               </CRow>
-            ))}
+              <UploadAuditFile />
+            </>
+          ) : (
+            <></>
+          )}
+
           <CRow>
             <CCol md={{ span: 6, offset: 3 }}>
               <CButton

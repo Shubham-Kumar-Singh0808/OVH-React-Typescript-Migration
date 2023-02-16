@@ -48,7 +48,7 @@ export type EditAuditFormData = {
   id: number
   isSQA: boolean
   pci: number | string
-  pmComments: null
+  pmComments: string
   pmFileName: null
   pmFilesPath: null
   projectId: number

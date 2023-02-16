@@ -35,9 +35,6 @@ const SelectProjectName = ({
     setProjectsAutoCompleteTarget(projectValue)
   }, [projectValue])
 
-  // const onHandleSelectProject = (projectName: string) => {
-  //   setProjectsAutoCompleteTarget(projectName)
-  // }
   const onHandleSelectProjectName = (projectName: string) => {
     const selectedProjectResult = projects.find(
       (value) => value.projectName === projectName,
@@ -55,12 +52,10 @@ const SelectProjectName = ({
         selectedProject?.id as number,
       ),
     )
-    // onSelectProject(selectedProject?.projectName as string)
-    // setShowProjectManagerName(selectedProject?.managerName as string)
   }
 
   return (
-    <CRow className="mt-4 mb-4">
+    <CRow className="mt-4 mb-4 align-items-center">
       <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
         Project Name :
       </CFormLabel>

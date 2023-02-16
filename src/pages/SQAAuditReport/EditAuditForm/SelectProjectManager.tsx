@@ -38,15 +38,8 @@ const SelectProjectManager = ({
     setProjectManagerAutoComplete(projectManagerValue)
   }, [projectManagerValue])
 
-  // const onFocusOut = () => {
-  //   const selectedProjectManager = managers.find(
-  //     (value) => value.fullName === projectManagerAutoComplete,
-  //   )
-  //   onSelectManager(selectedProjectManager?.fullName as string)
-  // }
-
   return (
-    <CRow className="mt-1 mb-3">
+    <CRow className="mt-1 mb-3 align-items-center">
       <CFormLabel
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
