@@ -59,6 +59,8 @@ const ProjectStatusTable = ({
   const [subject, setSubject] = useState<string>('')
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const { projectId } = useParams<{ projectId: string }>()
+  const [taskName, setTaskName] = useState('')
+
   const projectStatusList = useTypedSelector(
     reduxServices.projectStatus.selectors.projectStatusReport,
   )
@@ -126,6 +128,11 @@ const ProjectStatusTable = ({
     setEditCurrentWeekStatus(item.prevstatus)
     setStatusId(item.id)
   }
+  const handleModalTask = (ticket: string, task: string) => {
+    setIsModalVisible(true)
+    setSubject(ticket)
+    setTaskName(task)
+  }
   const handleModal = (ticket: string) => {
     setIsModalVisible(true)
     setSubject(ticket)
@@ -155,7 +162,12 @@ const ProjectStatusTable = ({
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
                       data-testid={`subject-comments`}
-                      onClick={() => handleModal(statusReport.prevstatus)}
+                      onClick={() =>
+                        handleModalTask(
+                          statusReport.prevstatus,
+                          statusReport.prevDate,
+                        )
+                      }
                     >
                       <div
                         className="sh-hyperLink"
@@ -274,7 +286,7 @@ const ProjectStatusTable = ({
         setVisible={setIsModalVisible}
       >
         <>
-          <h4>Weekly status Report 02 Jan 2024</h4>
+          <h4>Weekly status Report {taskName}</h4>
           <div
             className="mt-3"
             dangerouslySetInnerHTML={{
