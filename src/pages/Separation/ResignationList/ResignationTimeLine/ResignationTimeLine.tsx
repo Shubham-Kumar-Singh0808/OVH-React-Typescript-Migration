@@ -75,7 +75,9 @@ const ResignationTimeLine = ({
         adminCcCss: null,
         canberevoked: false,
         certificate: null,
-        certificateDTO: [],
+        certificateDTO: getAllResignationHistory.certificateDTO.map((item) => {
+          return item
+        }),
         contractEndDate: null,
         contractExists: null,
         contractStartDate: null,

@@ -290,6 +290,16 @@ const NewEvent = (): JSX.Element => {
             />,
           ),
         )
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you missed the selected time..!!"
+            />,
+          ),
+        )
       }
     }
   }
