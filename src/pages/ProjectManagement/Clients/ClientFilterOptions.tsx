@@ -92,7 +92,7 @@ const ClientFilterOptions = ({
                 placeholder="Search here"
                 aria-label="Search here"
                 aria-describedby="button-addon2"
-                value={searchInput}
+                value={searchInput?.replace(/^\s*/, '')}
                 onChange={(e) => {
                   setSearchInput(e.target.value)
                 }}
@@ -104,7 +104,7 @@ const ClientFilterOptions = ({
                 color="info"
                 id="button-addon2"
                 onClick={searchButtonHandler}
-                disabled={!searchInput}
+                disabled={!searchInput?.replace(/^\s*/, '')}
               >
                 <i className="fa fa-search"></i>
               </CButton>
