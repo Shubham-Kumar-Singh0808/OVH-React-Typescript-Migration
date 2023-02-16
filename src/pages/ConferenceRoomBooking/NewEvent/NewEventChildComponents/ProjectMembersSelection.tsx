@@ -73,14 +73,12 @@ const ProjectMembersSelection = ({
     setAttendeesList([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const confirmDeleteAllAttendees = () => {
     setDeleteListModalVisible(false)
     setAttendeesList([])
     dispatch(reduxServices.app.actions.addToast(deleteAllAttendeesToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const newMember: Availability[] = []

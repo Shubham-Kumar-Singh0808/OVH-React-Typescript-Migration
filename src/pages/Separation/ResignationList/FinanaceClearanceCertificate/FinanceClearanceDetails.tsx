@@ -163,7 +163,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.employeeId}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -179,7 +179,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpId}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -264,7 +264,8 @@ const FinanceClearanceDetails = (): JSX.Element => {
                       onClick={SubmitFinanceClearanceCertificateHandler}
                       disabled={
                         isFinanceEditActiveValue === true &&
-                        editFinanceCCDetails?.comments === ''
+                        editFinanceCCDetails?.comments?.replace(/^\s*/, '') ===
+                          ''
                       }
                     >
                       Update

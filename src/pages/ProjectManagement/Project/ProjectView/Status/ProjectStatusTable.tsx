@@ -132,7 +132,7 @@ const ProjectStatusTable = ({
   }
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="mt-3 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -158,6 +158,7 @@ const ProjectStatusTable = ({
                       onClick={() => handleModal(statusReport.prevstatus)}
                     >
                       <div
+                        className="sh-hyperLink"
                         dangerouslySetInnerHTML={{
                           __html: statusReport.prevstatus,
                         }}
@@ -172,6 +173,7 @@ const ProjectStatusTable = ({
                       onClick={() => handleModal(statusReport.nextstatus)}
                     >
                       <div
+                        className="sh-hyperLink"
                         dangerouslySetInnerHTML={{
                           __html: statusReport.nextstatus,
                         }}
@@ -271,11 +273,15 @@ const ProjectStatusTable = ({
         visible={isModalVisible}
         setVisible={setIsModalVisible}
       >
-        <div
-          dangerouslySetInnerHTML={{
-            __html: subject,
-          }}
-        />
+        <>
+          <h4>Weekly status Report 02 Jan 2024</h4>
+          <div
+            className="mt-3"
+            dangerouslySetInnerHTML={{
+              __html: subject,
+            }}
+          />
+        </>
       </OModal>
     </>
   )
