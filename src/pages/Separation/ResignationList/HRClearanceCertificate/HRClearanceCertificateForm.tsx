@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const HRClearanceCertificateForm = (): JSX.Element => {
   const [hrIsActive, setIsHrActive] = useState<string>('false')
@@ -17,6 +18,13 @@ const HRClearanceCertificateForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getAllHRResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
   )
 
   const SubmitHRClearanceCertificateHandler = async () => {
@@ -41,6 +49,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           submittedBy: 'HR',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
