@@ -171,7 +171,7 @@ const AddProjectStatus = ({
       </CRow>
       <CForm>
         <CRow className="mt-2 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
             Current Week Date :
           </CFormLabel>
           <CCol sm={3}>
@@ -223,7 +223,7 @@ const AddProjectStatus = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
             Next Week Date:
           </CFormLabel>
           <CCol sm={3}>

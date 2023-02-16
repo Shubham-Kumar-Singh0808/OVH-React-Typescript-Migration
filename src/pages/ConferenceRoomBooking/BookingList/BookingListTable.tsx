@@ -307,12 +307,6 @@ const BookingListTable = ({
             {`${modalAgenda.roomName} in ${modalAgenda.locationName}`}
           </p>
           <p className="d-flex">
-            <span className="col-sm-2 text-right fw-bold px-3">
-              Description :
-            </span>
-            {modalAgenda.description !== null ? modalAgenda.description : 'N/A'}
-          </p>
-          <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
             {modalAgenda.employeeDto?.length ? (
               <CTable align="middle" className="bookingList-model-table">
