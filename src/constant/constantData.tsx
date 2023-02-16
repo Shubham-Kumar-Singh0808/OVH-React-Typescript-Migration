@@ -88,10 +88,6 @@ export const reviewRatings = [
     text: '6',
   },
   {
-    value: 6,
-    text: '6',
-  },
-  {
     value: 7,
     text: '7',
   },
