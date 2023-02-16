@@ -31,7 +31,7 @@ const AuditMembersDetails = ({
     <>
       <CRow className="mt-3 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          {auditLabel}:
+          {auditLabel} :
           <span className={placeholder?.length ? TextWhite : TextDanger}>
             *
           </span>

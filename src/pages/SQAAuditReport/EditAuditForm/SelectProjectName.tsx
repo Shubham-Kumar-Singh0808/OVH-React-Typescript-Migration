@@ -60,7 +60,7 @@ const SelectProjectName = ({
         Project Name :
       </CFormLabel>
       <CCol sm={3}>
-        {selectedAuditDetails.formStatus === 'Save' ? (
+        {selectedAuditDetails?.formStatus === 'Save' ? (
           <>
             <Autocomplete
               inputProps={{

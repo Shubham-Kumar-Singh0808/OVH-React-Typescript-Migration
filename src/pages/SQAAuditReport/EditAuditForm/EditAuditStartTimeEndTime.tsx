@@ -100,7 +100,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeHours"
                   id="startTimeHours"
-                  data-testid="startTimeHours"
+                  data-testid="editAudit-startTimeHours"
                   name="startTimeHours"
                   value={editAuditStartTime.hours}
                   disabled={fieldDisabled}
@@ -122,7 +122,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMin"
                   id="startTimeMin"
-                  data-testid="startTimeMin"
+                  data-testid="editAudit-startTimeMin"
                   name="startTimeMin"
                   value={editAuditStartTime.minutes}
                   disabled={fieldDisabled}
@@ -144,7 +144,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="startTimeMeridian"
                   id="startTimeMeridian"
-                  data-testid="startTimeMeridian"
+                  data-testid="editAudit-startTimeMeridian"
                   name="startTimeMeridian"
                   value={editAuditStartTime.meridian}
                   disabled={fieldDisabled}
@@ -175,7 +175,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeHours"
                   id="endTimeHours"
-                  data-testid="endTimeHours"
+                  data-testid="editAudit-endTimeHours"
                   name="endTimeHours"
                   value={editAuditEndTime.hours}
                   disabled={fieldDisabled}
@@ -197,7 +197,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMin"
                   id="endTimeMin"
-                  data-testid="endTimeMin"
+                  data-testid="editAudit-endTimeMin"
                   name="endTimeMin"
                   value={editAuditEndTime.minutes}
                   disabled={fieldDisabled}
@@ -219,7 +219,7 @@ const EditAuditStartTimeEndTime = ({
                 <CFormSelect
                   aria-label="endTimeMeridian"
                   id="endTimeMeridian"
-                  data-testid="endTimeMeridian"
+                  data-testid="editAudit-endTimeMeridian"
                   name="endTimeMeridian"
                   value={editAuditEndTime.meridian}
                   disabled={fieldDisabled}
