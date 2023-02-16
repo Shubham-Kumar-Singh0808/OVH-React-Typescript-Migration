@@ -57,33 +57,23 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     if (cycleChecked) {
-      console.log('ddd index cycleChecked ', cycleChecked)
-
-      // eslint-disable-next-line
-      console.log('ddd index in tmpArr 0 ', cbFromApi)
-
       const tmpArr: GetQuestion[] = []
-      // const tmpArr = [...cbFromApi]
       cbFromApi.map((item) => {
         tmpArr.push(item)
         return ''
       })
-      // const tmpArr = cbFromApi.map((item) => item)
-      // tmpArr.shift()
-      // eslint-disable-next-line
-      console.log('ddd index in tmpArr 1 ', tmpArr)
-      let ndx = 999
+      let ndx = 9999
       tmpArr.map((el, i) => {
         if (el.id === cycleChecked.id) {
           ndx = i
         }
         return ''
       })
-
-      tmpArr.splice(ndx, 1)
-      // eslint-disable-next-line
-      // console.log('ddd index in tmpArr 2 ', tmpArr.findIndex(v => v.id === cycleChecked.id))
-      // tmpArr.splice(tmpArr.findIndex(v => v.id === cycleChecked.id), 1)
+      if (ndx < 9999) {
+        tmpArr.splice(ndx, 1)
+      } else {
+        tmpArr.push(cycleChecked)
+      }
       setCbFromApi(tmpArr)
       setCheckList([...checkList, cycleChecked])
     }
@@ -130,8 +120,9 @@ const InitiateCycle = (): JSX.Element => {
         id: activeCycle.nominationCycleDto.id,
         toMonth: activeCycle.nominationCycleDto.toMonth,
       },
-      nominationQuestionDto: checkList,
+      nominationQuestionDto: cbFromApi,
     } as TotalResponse
+
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
     )
@@ -156,14 +147,6 @@ const InitiateCycle = (): JSX.Element => {
   }
 
   const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
-
-  console.log('aaa activeCycle ', activeCycle.nominationQuestionDto)
-
-  console.log('aaa cycleChecked ', cycleChecked)
-
-  console.log('aaa checkList ', checkList)
-
-  console.log('ddd index cbFromApi ', cbFromApi)
 
   return (
     <>
