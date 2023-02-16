@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   CCol,
   CFormCheck,
@@ -30,7 +29,6 @@ const InitiateCycleTable = ({
   setCycleChecked,
   cycleChecked,
   selChkBoxesFromApi,
-  checkList,
 }: InitiateCycleCheckBoxProps): JSX.Element => {
   const [isQuestionVisible, setIsQuestionVisible] = useState<boolean>(false)
   const [questionModal, setQuestionModal] = useState<string>('')
@@ -68,6 +66,17 @@ const InitiateCycleTable = ({
     [allQuestions?.list, currentPage, pageSize],
   )
 
+  const sortingId = useMemo(() => {
+    if (currentTotalRecords) {
+      return currentTotalRecords
+        ?.slice()
+        .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
+    }
+    return []
+  }, [currentTotalRecords])
+
+  console.log(sortingId)
+
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
@@ -81,8 +90,8 @@ const InitiateCycleTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentTotalRecords &&
-            currentTotalRecords?.map((item, index) => {
+          {sortingId &&
+            sortingId?.map((item, index) => {
               const removingSpaces = item.question
                 ?.replace(/\s+/g, ' ')
                 .trim()
@@ -93,7 +102,9 @@ const InitiateCycleTable = ({
                   : removingSpaces
 
               let flag = false
-              let chkFlag = selChkBoxesFromApi?.find(el => el.id === item.id)
+              const chkFlag = selChkBoxesFromApi?.find(
+                (el) => el.id === item.id,
+              )
               if (chkFlag) {
                 flag = true
               }
@@ -121,7 +132,6 @@ const InitiateCycleTable = ({
                       id="all"
                       type="checkbox"
                       name="checkQuestion"
-                      // checked={chkFlag ? true : item?.checkQuestion as boolean}
                       checked={flag}
                       onChange={() => {
                         setCycleChecked((prevState) => {

@@ -12,7 +12,7 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
@@ -86,6 +86,15 @@ const AddQuestionTable = ({
     }
   }
 
+  const sortingId = useMemo(() => {
+    if (allQuestionsList?.list) {
+      return allQuestionsList?.list
+        ?.slice()
+        .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
+    }
+    return []
+  }, [allQuestionsList?.list])
+
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
@@ -99,8 +108,8 @@ const AddQuestionTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {allQuestionsList?.list &&
-            allQuestionsList?.list?.map((currentItem, index) => {
+          {sortingId &&
+            sortingId?.map((currentItem, index) => {
               const removingSpacesOfText = currentItem.question
                 ?.replace(/\s+/g, ' ')
                 .trim()

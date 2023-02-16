@@ -31,7 +31,8 @@ const EditInitiateCycle = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState<boolean>(
     editInitiateCycle.activateFlag,
   )
-  const [isDateErrorMsg, setIsDateErrorMsg] = useState<boolean>(false)
+  const [isEditMonthError, setIsEditMonthError] = useState<boolean>(false)
+  const [isEditDateError, setIsEditDateError] = useState<boolean>(false)
 
   const editCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.editCycles,
@@ -50,18 +51,36 @@ const EditInitiateCycle = (): JSX.Element => {
   const commonFormatDate = 'L'
 
   useEffect(() => {
-    const tempCycleFromMonth = new Date(
+    const tempFromMonth = new Date(
       moment(cycleFromMonth?.toString()).format(commonFormatDate),
     )
-    const tempCycleToMonth = new Date(
+    const tempToMonth = new Date(
       moment(cycleToMonth?.toString()).format(commonFormatDate),
     )
-    if (tempCycleToMonth.getTime() < tempCycleFromMonth.getTime()) {
-      setIsDateErrorMsg(true)
+    if (tempToMonth.getTime() < tempFromMonth.getTime()) {
+      setIsEditMonthError(true)
     } else {
-      setIsDateErrorMsg(false)
+      setIsEditMonthError(false)
     }
   }, [cycleFromMonth, cycleToMonth])
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(cycleFromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(cycleToDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      cycleFromDate &&
+      cycleToDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setIsEditDateError(true)
+    } else {
+      setIsEditDateError(false)
+    }
+  }, [cycleFromDate, cycleToDate])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -254,7 +273,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 data-testid="cycleToMonth-input"
               />
             </CCol>
-            {isDateErrorMsg && (
+            {isEditMonthError && (
               <CCol sm={6}>
                 <span className="text-danger">
                   <b>To Month should be greater than From Month</b>
@@ -292,7 +311,7 @@ const EditInitiateCycle = (): JSX.Element => {
                   )
                 }
                 dateFormat="dd/mm/yyyy"
-                maxDate={new Date()}
+                minDate={new Date()}
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -332,7 +351,7 @@ const EditInitiateCycle = (): JSX.Element => {
                   )
                 }
                 dateFormat="dd/mm/yyyy"
-                maxDate={new Date()}
+                minDate={new Date()}
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -341,6 +360,13 @@ const EditInitiateCycle = (): JSX.Element => {
                 data-testid="cycleToDate-input"
               />
             </CCol>
+            {isEditDateError && (
+              <CCol sm={6}>
+                <span className="text-danger">
+                  <b>End Date should be greater than Start Date</b>
+                </span>
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
@@ -366,7 +392,7 @@ const EditInitiateCycle = (): JSX.Element => {
               data-testid="update-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isButtonEnabled}
+              disabled={!isButtonEnabled || isEditDateError || isEditMonthError}
               onClick={updateCycle}
             >
               Update

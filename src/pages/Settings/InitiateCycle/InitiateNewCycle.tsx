@@ -58,12 +58,12 @@ const InitiateCycle = (): JSX.Element => {
   useEffect(() => {
     if (cycleChecked) {
       const tmpArr: GetQuestion[] = []
-      cbFromApi.map((item) => {
+      cbFromApi.forEach((item) => {
         tmpArr.push(item)
         return ''
       })
       let ndx = 9999
-      tmpArr.map((el, i) => {
+      tmpArr.forEach((el, i) => {
         if (el.id === cycleChecked.id) {
           ndx = i
         }

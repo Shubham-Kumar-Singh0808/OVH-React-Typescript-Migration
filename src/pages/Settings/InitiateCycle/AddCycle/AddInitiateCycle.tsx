@@ -29,17 +29,25 @@ const AddInitiateCycle = (): JSX.Element => {
   const [endDate, setEndDate] = useState<string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [isMonthError, setIsMonthError] = useState<boolean>(false)
   const [isDateError, setIsDateError] = useState<boolean>(false)
 
   const commonFormatDate = 'L'
 
   useEffect(() => {
-    if (selectCycleName && toMonth && fromMonth && startDate && endDate) {
+    if (
+      selectCycleName &&
+      toMonth &&
+      fromMonth &&
+      startDate &&
+      endDate &&
+      isChecked
+    ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [selectCycleName, toMonth, fromMonth, startDate, endDate])
+  }, [selectCycleName, toMonth, fromMonth, startDate, endDate, isChecked])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -54,11 +62,25 @@ const AddInitiateCycle = (): JSX.Element => {
       moment(toMonth?.toString()).format(commonFormatDate),
     )
     if (tempToMonth.getTime() < tempFromMonth.getTime()) {
+      setIsMonthError(true)
+    } else {
+      setIsMonthError(false)
+    }
+  }, [fromMonth, toMonth])
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(startDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(endDate?.toString()).format(commonFormatDate),
+    )
+    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
       setIsDateError(true)
     } else {
       setIsDateError(false)
     }
-  }, [fromMonth, toMonth])
+  }, [startDate, endDate])
 
   const clearInputs = () => {
     setSelectCycleName('')
@@ -75,7 +97,7 @@ const AddInitiateCycle = (): JSX.Element => {
 
   const failedToastMessage = (
     <OToast
-      toastMessage="  Sorry, Cycle already exist for this duration"
+      toastMessage="Sorry, Cycle already exist for this duration"
       toastColor="danger"
       data-testid="failedToast"
     />
@@ -83,7 +105,7 @@ const AddInitiateCycle = (): JSX.Element => {
 
   const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
 
-  const addButttonHandler = async () => {
+  const addButtonHandler = async () => {
     const prepareObject = {
       activateFlag: isChecked,
       cycleName: selectCycleName,
@@ -259,7 +281,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   }}
                 />
               </CCol>
-              {isDateError && (
+              {isMonthError && (
                 <CCol sm={6}>
                   <span className="text-danger">
                     <b>To Month should be greater than From Month</b>
@@ -286,6 +308,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="dd/mm/yyyy"
                   placeholderText="dd/mm/yyyy"
                   name="cycleStartDate"
+                  minDate={new Date()}
                   value={
                     startDate
                       ? new Date(startDate).toLocaleDateString(deviceLocale, {
@@ -320,6 +343,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="dd/mm/yyyy"
                   placeholderText="dd/mm/yyyy"
                   name="cycleEndDate"
+                  minDate={new Date()}
                   value={
                     endDate
                       ? new Date(endDate).toLocaleDateString(deviceLocale, {
@@ -334,6 +358,13 @@ const AddInitiateCycle = (): JSX.Element => {
                   }
                 />
               </CCol>
+              {isDateError && (
+                <CCol sm={6}>
+                  <span className="text-danger">
+                    <b>End Date should be greater than Start Date</b>
+                  </span>
+                </CCol>
+              )}
             </CRow>
             <CRow className="mt-4 mb-4">
               <CFormLabel
@@ -359,8 +390,8 @@ const AddInitiateCycle = (): JSX.Element => {
                   data-testid="save-btn"
                   className="btn-ovh me-1 text-white"
                   color="success"
-                  disabled={!isButtonEnabled}
-                  onClick={addButttonHandler}
+                  disabled={!isButtonEnabled || isDateError || isMonthError}
+                  onClick={addButtonHandler}
                 >
                   Add
                 </CButton>

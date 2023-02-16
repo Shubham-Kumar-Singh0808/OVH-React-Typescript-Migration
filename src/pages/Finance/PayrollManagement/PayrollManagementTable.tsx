@@ -110,11 +110,6 @@ const PayrollManagementTable = (props: {
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
 
-  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToEditPayslip(payslipItem)
-    props.setToggle('editPaySlip')
-  }
-
   const handleModal = (payslipItem: CurrentPayslip) => {
     setIsViewModalVisible(true)
     setSelectedPaySlipDetails(payslipItem)
