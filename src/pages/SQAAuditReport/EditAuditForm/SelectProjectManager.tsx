@@ -44,7 +44,7 @@ const SelectProjectManager = ({
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
       >
-        Project Manager:
+        Project Manager :
       </CFormLabel>
       {selectedAuditDetails?.projectType === 'true' ? (
         <>

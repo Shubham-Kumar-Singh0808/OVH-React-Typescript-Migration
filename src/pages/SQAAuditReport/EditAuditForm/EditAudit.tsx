@@ -6,7 +6,6 @@ import {
   CFormLabel,
   CFormInput,
   CFormCheck,
-  CFormText,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
@@ -40,6 +39,7 @@ const EditAudit = (): JSX.Element => {
   const [editAuditForm, setEditAuditForm] = useState(initAuditFormData)
   const [editAuditDate, setEditAuditDate] = useState<string>('')
   const [editFollowUpAuditDate, setEditFollowUpAuditDate] = useState<string>('')
+  const [dateError, setDateError] = useState<boolean>(false)
   const [editAuditorName, setEditAuditorName] = useState<
     GetAllEmployeesNames[]
   >([])
@@ -51,12 +51,12 @@ const EditAudit = (): JSX.Element => {
   const [selectProjectId, setSelectProjectId] = useState<number>()
   const [selectProjectMgrId, setSelectProjectMgrId] = useState<number>()
   const [editAuditProjectType, setEditAuditProjectType] = useState<string>(
-    selectedAuditDetails.projectType,
+    selectedAuditDetails?.projectType,
   )
 
-  const formStatusSave = selectedAuditDetails.formStatus === 'Save'
-  const formStatusSubmit = selectedAuditDetails.formStatus === 'Submit'
-  const formStatusPMUpdate = selectedAuditDetails.formStatus === 'PM Update'
+  const formStatusSave = selectedAuditDetails?.formStatus === 'Save'
+  const formStatusSubmit = selectedAuditDetails?.formStatus === 'Submit'
+  const formStatusPMUpdate = selectedAuditDetails?.formStatus === 'PM Update'
   const dispatch = useAppDispatch()
   const history = useHistory()
   const projects = useTypedSelector(
@@ -84,6 +84,19 @@ const EditAudit = (): JSX.Element => {
     }
   }, [selectedAuditDetails])
 
+  const commonFormatDate = 'DD/MM/YYYY'
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(editFollowUpAuditDate).format(commonFormatDate),
+    )
+    const newToDate = new Date(moment(editAuditDate).format(commonFormatDate))
+    if (editAuditDate && newToDate > newFromDate) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [editFollowUpAuditDate])
+
   const handleSelectProjectType = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -100,7 +113,6 @@ const EditAudit = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    console.log(name, value)
     if (name === 'auditType') {
       const auditTypeVal = value.replace(/^\s*/, '')
       setEditAuditForm((prevState) => {
@@ -148,48 +160,19 @@ const EditAudit = (): JSX.Element => {
     setEditAuditeeName(selectedList)
   }
   const commentsHandler = (value: string) => {
-    // setEditAuditForm({ ...editAuditForm, comments: value })
     setEditAuditForm((prevState) => {
       return { ...prevState, ...{ comments: value } }
     })
   }
 
-  const compareDates = (sqaAuditDate: string, sqaFollowUpDate: string) => {
-    // const auditFollowupDate = Date.parse(sqaFollowUpDate)
-    // const auditMeetingDate = Date.parse(sqaAuditDate)
-    const dateFormate = 'L'
-    const auditFollowupDate = new Date(
-      moment(sqaFollowUpDate?.toString()).format(dateFormate),
-    )
-    const auditMeetingDate = new Date(
-      moment(sqaAuditDate?.toString()).format(dateFormate),
-    )
-    console.log(auditFollowupDate.getTime(), auditMeetingDate.getTime())
-
-    return auditFollowupDate.getTime() < auditMeetingDate.getTime()
-  }
-
-  const datesErrorMessage = compareDates(
-    editAuditDate,
-    editFollowUpAuditDate,
-  ) ? (
-    <div data-testid="error-msg-date">
-      <CFormText className={TextDanger}>
-        Followup Date should be greater than AuditDate
-      </CFormText>
-    </div>
-  ) : (
-    <></>
-  )
-
   const buttonText = (name: string) => {
-    if (selectedAuditDetails.formStatus === 'Save') {
+    if (selectedAuditDetails?.formStatus === 'Save') {
       name = 'Submit'
     }
-    if (selectedAuditDetails.formStatus === 'Submit') {
+    if (selectedAuditDetails?.formStatus === 'Submit') {
       name = 'Update'
     }
-    if (selectedAuditDetails.formStatus === 'PM Update') {
+    if (selectedAuditDetails?.formStatus === 'PM Update') {
       name = 'Update'
     }
     return name
@@ -246,7 +229,7 @@ const EditAudit = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(auditExistsToastMessage))
     }
   }
-  console.log(editAuditForm.comments)
+
   const handleUpdateAuditForm = async (auditFormStatus: string) => {
     const endTimeSplit = editAuditForm.endTime?.split(':')
     const prepareObject = {
@@ -254,7 +237,7 @@ const EditAudit = (): JSX.Element => {
       comments: editAuditForm.comments,
       containsFile: false,
       followUpDate: editFollowUpAuditDate,
-      formStatus: '',
+      formStatus: auditFormStatus,
       pci: editAuditForm.pci as string,
       auditeeIds: editAuditeeName?.map((currentItem) => currentItem.id),
       auditorIds: editAuditorName?.map((currentItem) => currentItem.id),
@@ -386,10 +369,10 @@ const EditAudit = (): JSX.Element => {
           {formStatusSubmit ||
             (formStatusPMUpdate && (
               <CRow>
-                <CFormLabel className="col-sm-3 col-form-label text-end">
+                <CFormLabel className="col-sm-3 col-form-label text-end align-items-center">
                   Project Manager :
                 </CFormLabel>
-                <CCol sm={3}>
+                <CCol sm={3} className="mt-2">
                   <span className="fw-bold">
                     {editAuditForm.projectManager}
                   </span>
@@ -483,7 +466,13 @@ const EditAudit = (): JSX.Element => {
                           )
                         }}
                       />
-                      {datesErrorMessage}
+                      {dateError && (
+                        <CCol sm={4} className="mt-1 pt-1">
+                          <span className="text-danger">
+                            Followup Date should be greater than AuditDate
+                          </span>
+                        </CCol>
+                      )}
                     </CCol>
                   </CRow>
                 </>
@@ -493,12 +482,12 @@ const EditAudit = (): JSX.Element => {
               {editAuditForm.pmComments ? (
                 <>
                   <CRow>
-                    <CFormLabel className="col-sm-3 col-form-label text-end">
+                    <CFormLabel className="col-sm-3 col-form-label text-end align-items-center">
                       PM Comments :
                     </CFormLabel>
-                    <CCol sm={3}>
+                    <CCol sm={3} className="mt-2">
                       <span className="fw-bold">
-                        {editAuditForm.pmComments}
+                        {parse(editAuditForm?.pmComments)}
                       </span>
                     </CCol>
                   </CRow>
@@ -540,7 +529,7 @@ const EditAudit = (): JSX.Element => {
                     : handleUpdateAuditForm('Update')
                 }
               >
-                {buttonText(selectedAuditDetails.formStatus)}
+                {buttonText(selectedAuditDetails?.formStatus)}
               </CButton>
               <Link to={`/SQAAudit`}>
                 <CButton

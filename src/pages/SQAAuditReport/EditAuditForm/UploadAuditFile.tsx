@@ -3,6 +3,7 @@ import React, { SyntheticEvent, useState } from 'react'
 
 const UploadAuditFile = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploadAuditFile, setUploadAuditFile] = useState<File | undefined>(
     undefined,
   )
