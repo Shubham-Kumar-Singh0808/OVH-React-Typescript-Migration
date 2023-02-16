@@ -24,7 +24,7 @@ const AuditMembersDetails = ({
   const selectedAuditDetails = useTypedSelector(
     reduxServices.addNewAuditForm.selectors.selectedAuditDetails,
   )
-  // const formStatusSave = selectedAuditDetails.formStatus === 'Save'
+
   const formStatusSubmit = selectedAuditDetails.formStatus === 'Submit'
   const formStatusPMUpdate = selectedAuditDetails.formStatus === 'PM Update'
   return (

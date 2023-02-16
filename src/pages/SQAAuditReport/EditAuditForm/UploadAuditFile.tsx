@@ -1,9 +1,8 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 
 const UploadAuditFile = (): JSX.Element => {
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploadAuditFile, setUploadAuditFile] = useState<File | undefined>(
     undefined,
   )
@@ -28,6 +27,12 @@ const UploadAuditFile = (): JSX.Element => {
     setUploadErrorText('')
     setUploadAuditFile(file[0])
   }
+
+  useEffect(() => {
+    if (uploadAuditFile) {
+      setUploadErrorText('')
+    }
+  }, [])
   return (
     <>
       <CRow className="mt-4 mb-4">
