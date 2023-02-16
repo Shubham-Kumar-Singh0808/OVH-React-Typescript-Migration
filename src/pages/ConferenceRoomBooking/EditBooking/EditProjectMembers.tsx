@@ -65,14 +65,12 @@ const ProjectMembersSelection = ({
     setAttendeeReport([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const confirmDeleteAllAttendeesList = () => {
     setDeleteListModalVisible(false)
     setAttendeeReport([])
     dispatch(reduxServices.app.actions.addToast(deleteAllAttendeesToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const newMember: MeetingEditDTOList[] = []
@@ -171,17 +169,7 @@ const ProjectMembersSelection = ({
               })}
           </CTableBody>
         </CTable>
-        {/* {isErrorShow && (
-          <CRow>
-            <CCol>
-              <span className="sh-span-red">
-                The employee already added to Attendees
-              </span>
-            </CCol>
-          </CRow>
-        )} */}
       </CCol>
-
       <CCol sm={2} className="meeting-bulk-add">
         <CButton
           color="info btn-ovh me-1"
