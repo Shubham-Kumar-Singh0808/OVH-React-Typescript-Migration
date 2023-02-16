@@ -288,7 +288,7 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">Location :</span>
             {`${selectedEventDetails.roomName} in ${selectedEventDetails.locationName}`}
           </p>
-          <div className="d-flex mb-2">
+          <div className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
