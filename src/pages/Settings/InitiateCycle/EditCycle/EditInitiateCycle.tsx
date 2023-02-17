@@ -225,7 +225,7 @@ const EditInitiateCycle = (): JSX.Element => {
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
-                From Month :
+                From Month:
                 <span
                   className={
                     editInitiateCycle?.fromMonth ? TextWhite : TextDanger
@@ -251,7 +251,7 @@ const EditInitiateCycle = (): JSX.Element => {
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
-                To Month :
+                To Month:
                 <span
                   className={
                     editInitiateCycle?.toMonth ? TextWhite : TextDanger
@@ -284,7 +284,7 @@ const EditInitiateCycle = (): JSX.Element => {
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                From Date :
+                From Date:
                 <span
                   className={
                     editInitiateCycle?.startDate ? TextWhite : TextDanger
@@ -324,7 +324,7 @@ const EditInitiateCycle = (): JSX.Element => {
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                To Date :
+                To Date:
                 <span
                   className={
                     editInitiateCycle?.endDate ? TextWhite : TextDanger
@@ -373,7 +373,7 @@ const EditInitiateCycle = (): JSX.Element => {
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
             >
-              Activate :
+              Activate:
             </CFormLabel>
             <CCol sm={3} className="pt-2">
               <CFormCheck
