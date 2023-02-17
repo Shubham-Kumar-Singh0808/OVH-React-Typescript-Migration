@@ -60,6 +60,7 @@ const ProjectStatusTable = ({
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const { projectId } = useParams<{ projectId: string }>()
   const [taskName, setTaskName] = useState('')
+  const [toDeleteVisaIdName, setToDeleteVisaIdName] = useState('')
 
   const projectStatusList = useTypedSelector(
     reduxServices.projectStatus.selectors.projectStatusReport,
@@ -87,9 +88,10 @@ const ProjectStatusTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const handleShowDeleteModal = (id: number) => {
+  const handleShowDeleteModal = (id: number, prevDate: string) => {
     setToDeleteVisaId(id)
     setIsDeleteModalVisible(true)
+    setToDeleteVisaIdName(prevDate)
   }
 
   const handleConfirmDeleteProjectStatus = async () => {
@@ -214,7 +216,12 @@ const ProjectStatusTable = ({
                           color="danger"
                           className="btn-ovh me-1 btn-ovh-employee-list"
                           data-testid="delete-btn"
-                          onClick={() => handleShowDeleteModal(statusReport.id)}
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              statusReport.id,
+                              statusReport.prevDate,
+                            )
+                          }
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
@@ -274,7 +281,7 @@ const ProjectStatusTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectStatus}
       >
-        {`Do you really want to delete this ?`}
+        {`Do you really want to delete this ? ${toDeleteVisaIdName}`}
       </OModal>
       <OModal
         modalSize="lg"
