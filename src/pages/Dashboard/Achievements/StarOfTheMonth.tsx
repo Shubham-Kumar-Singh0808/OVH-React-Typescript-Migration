@@ -1,7 +1,5 @@
 import { CCardFooter, CCol, CImage, CLink, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { createProxyMiddleware } from 'http-proxy-middleware'
-import axios from 'axios'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -31,19 +29,10 @@ const StarOfTheMonth = (): JSX.Element => {
 
   const [imageUrl, setImageUrl] = useState('')
 
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Access-Control-Allow-Headers': '*',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': '*',
-    },
-  }
-
   useEffect(() => {
     fetch(
       'https://ovh2.raybiztech.com/achieverprofilepics/acheiver105720-Dec-2022%2012:37:34:IST.jpeg',
+      { mode: 'no-cors' },
     )
       .then((response) => response.blob())
       .then((blob) => {
