@@ -40,16 +40,6 @@ const StarOfTheMonth = (): JSX.Element => {
       })
   }, [])
 
-  // module.exports = function (app) {
-  //   app.use(
-  //     '/api',
-  //     createProxyMiddleware({
-  //       target: 'https://example.com',
-  //       changeOrigin: true,
-  //     }),
-  //   )
-  // }
-
   return (
     <>
       <CRow>
