@@ -6,10 +6,11 @@ import {
   CTableDataCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
+  Invest,
   Investment,
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
@@ -62,14 +63,7 @@ const EditInvestmentTable = ({
   useEffect(() => {
     setEditMoreSections(editDeclarationForm)
   }, [editDeclarationForm])
-  // const filterInvestments = getSectionsHavingInvests.map((item) => {
-  //   return item.invests.filter(
-  //     childItem.investmentId ===
-  //     formSectionsDTOs.formInvestmentDTO?.map((dtoItem) => {
-  //       dtoItem.investmentId
-  //     }),
-  //   )
-  // })
+
   return (
     <>
       {formSectionsDTOs.formInvestmentDTO?.map((item, index) => {
@@ -86,7 +80,7 @@ const EditInvestmentTable = ({
                     size="sm"
                     id="investment"
                     name="investmentName"
-                    value={item.investmentName}
+                    value={item.investmentId}
                     onChange={(e) =>
                       onChangeInvestment(
                         secIndex,
@@ -95,12 +89,43 @@ const EditInvestmentTable = ({
                       )
                     }
                   >
-                    <option value="">{item.investmentName}</option>
-                    {getSectionsHavingInvests[index]?.invests?.map((item) => (
-                      <option key={item.investmentId} value={item.investmentId}>
-                        {item.investmentName}
-                      </option>
-                    ))}
+                    {getSectionsHavingInvests
+                      .filter(
+                        (getSecItem) =>
+                          getSecItem.sectionName ===
+                          formSectionsDTOs.sectionName,
+                      )
+                      .map((filteredSecItem) =>
+                        filteredSecItem.invests?.map((investItem) => (
+                          <option
+                            key={investItem.sectionId}
+                            value={investItem.investmentId}
+                          >
+                            {investItem.investmentName}
+                          </option>
+                        )),
+                      )}
+                    {/* {getSectionsHavingInvests.filter((getSecItem) => {
+                      return (
+                        <option
+                          key={getSecItem.sectionId}
+                          value={getSecItem.sectionId}
+                        >
+                          {getSecItem.sectionName}
+                          {formSectionsDTOs.sectionName}
+                        </option>
+                      )
+                    })} */}
+                    {/* {getSectionsHavingInvests[index]?.invests?.map(
+                      (childItem) => (
+                        <option
+                          key={childItem.investmentId}
+                          value={childItem.investmentId}
+                        >
+                          {childItem.investmentName}
+                        </option>
+                      ),
+                    )} */}
                     {/* {sectionList[index]?.invests.map((invest, investIndex) => (
                       <option key={investIndex} value={invest.investmentId}>
                         {invest.investmentName}
