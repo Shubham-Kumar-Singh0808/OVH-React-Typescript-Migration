@@ -36,7 +36,7 @@ const AddInitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      selectCycleName &&
+      selectCycleName?.replace(/^\s*/, '') &&
       toMonth &&
       fromMonth &&
       startDate &&
@@ -202,7 +202,13 @@ const AddInitiateCycle = (): JSX.Element => {
                 className="col-sm-3 col-form-label text-end"
               >
                 Cycle Name:
-                <span className={selectCycleName ? TextWhite : TextDanger}>
+                <span
+                  className={
+                    selectCycleName?.replace(/^\s*/, '')
+                      ? TextWhite
+                      : TextDanger
+                  }
+                >
                   *
                 </span>
               </CFormLabel>

@@ -206,13 +206,11 @@ const AddQuestionTable = ({
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: questionPopUp,
-            }}
-          />
-        </p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: questionPopUp,
+          }}
+        />
       </OModal>
       <OModal
         alignment="center"
