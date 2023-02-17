@@ -529,7 +529,7 @@ export const dashboardApiConfig: DashboardApi = {
   updateHoliday: apiPrefix + '/Employee/editHoliday',
   searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
   getLeaveSummary: apiPrefix + '/leave/leaveSummaryDashboard',
-  imageFix: 'https://ovh2.raybiztech.com/profilepics/1857-Thumb.jpg',
+  imageFix: apiPrefix + 'profilepics/1857-Thumb.jpg',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
