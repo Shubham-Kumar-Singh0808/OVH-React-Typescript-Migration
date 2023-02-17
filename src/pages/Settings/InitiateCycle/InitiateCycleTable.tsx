@@ -90,7 +90,7 @@ const InitiateCycleTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {sortingId &&
+          {sortingId?.length > 0 &&
             sortingId?.map((item, index) => {
               const removingSpaces = item.question
                 ?.replace(/\s+/g, ' ')

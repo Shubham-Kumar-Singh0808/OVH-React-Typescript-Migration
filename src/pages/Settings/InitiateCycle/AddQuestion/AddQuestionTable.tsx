@@ -20,6 +20,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
 import { InitiateCycleTableProps } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { currentPageData } from '../../../../utils/paginationUtils'
 
 const AddQuestionTable = ({
   paginationRange,
@@ -85,15 +86,23 @@ const AddQuestionTable = ({
       dispatch(reduxServices.initiateCycle.getAllQuestions())
     }
   }
+  const currentTotalRecords = useMemo(
+    () => currentPageData(allQuestionsList?.list, currentPage, pageSize),
+    [allQuestionsList?.list, currentPage, pageSize],
+  )
 
-  const sortingId = useMemo(() => {
-    if (allQuestionsList?.list) {
-      return allQuestionsList?.list
+  const getPageNo = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const sorting = useMemo(() => {
+    if (currentTotalRecords) {
+      return currentTotalRecords
         ?.slice()
         .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
     }
     return []
-  }, [allQuestionsList?.list])
+  }, [currentTotalRecords])
 
   return (
     <>
@@ -108,8 +117,8 @@ const AddQuestionTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {sortingId &&
-            sortingId?.map((currentItem, index) => {
+          {sorting?.length > 0 &&
+            sorting?.map((currentItem, index) => {
               const removingSpacesOfText = currentItem.question
                 ?.replace(/\s+/g, ' ')
                 .trim()
@@ -120,7 +129,7 @@ const AddQuestionTable = ({
                   : removingSpacesOfText
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell>{getPageNo(index)}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {currentItem.question ? (
                       <CLink
