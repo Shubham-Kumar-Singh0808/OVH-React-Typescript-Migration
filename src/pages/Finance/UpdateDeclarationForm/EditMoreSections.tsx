@@ -16,7 +16,11 @@ import {
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  FormInvestmentDTOProps,
+  FormSection,
+  ITForm,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const EditMoreSections = ({
   sectionItem,
@@ -27,7 +31,7 @@ const EditMoreSections = ({
   setFormSectionList,
   formSectionList,
 }: {
-  sectionItem: Sections
+  sectionItem: FormInvestmentDTOProps
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
   handleConfirmCancelSection: () => void
   setSectionList: (value: Sections[]) => void
@@ -84,15 +88,14 @@ const EditMoreSections = ({
     ])
   }
 
+  // const checkSectionId = sectionItem.map((item) => item.sectionId)
   const handleClickRemoveInvestment = (id: number) => {
     const newInvestmentList = investmentList.filter(
-      (investment) => investment.id !== id,
+      (investment) => investment.id !== sectionItem.sectionId,
     )
     setInvestmentList(newInvestmentList)
     if (newInvestmentList?.length === 0) {
-      const newList = sectionList.filter(
-        (section) => section.sectionId !== sectionItem.sectionId,
-      )
+      const newList = sectionList.filter((item) => item.sectionId !== id)
       setSectionList(newList)
     }
     console.log(newInvestmentList.length)
@@ -163,85 +166,72 @@ const EditMoreSections = ({
 
   return (
     <>
-      {editDeclaration.formSectionsDTOs?.map((item, index) => {
-        return (
-          <div className="block-session clearfix widget_gap" key={index}>
+      <div className="block-session clearfix widget_gap">
+        <CButton
+          color="warning"
+          className="btn btn-warning close-btn"
+          data-testid="df-cancel-btn"
+          size="sm"
+          onClick={() =>
+            handleShowRemoveSectionModal(
+              sectionItem.sectionId,
+              sectionItem.sectionName,
+            )
+          }
+        >
+          <i className="fa fa-times text-white"></i>
+        </CButton>
+        <CRow className="form-group">
+          <CRow className="col-sm-4">
+            <CFormLabel className="col-sm-3 txt-info">Sections:</CFormLabel>
+            <CCol className="col-sm-8">
+              <CFormLabel className="txt-info">
+                {sectionItem.sectionName}
+              </CFormLabel>
+            </CCol>
+          </CRow>
+          <div className="col-sm-2 ps-2">
             <CButton
-              color="warning"
-              className="btn btn-warning close-btn"
-              data-testid="df-cancel-btn"
+              color="info"
+              className="text-white btn-ovh"
               size="sm"
-              onClick={() =>
-                handleShowRemoveSectionModal(
-                  sectionItem.sectionId,
-                  sectionItem.sectionName,
-                )
-              }
+              onClick={handleClickInvestment}
+              disabled={isMoreInvestBtnEnable}
             >
-              <i className="fa fa-times text-white"></i>
+              <i className="fa fa-plus me-1"></i>
+              More Investments
             </CButton>
-            <CRow className="form-group">
-              <CRow className="col-sm-4">
-                <CFormLabel className="col-sm-3 txt-info">
-                  {' '}
-                  Sections:
-                </CFormLabel>
-                <CCol className="col-sm-8">
-                  <CFormLabel className="txt-info">
-                    {item.sectionName}
-                  </CFormLabel>
-                </CCol>
-              </CRow>
-              <div className="col-sm-2 ps-2">
-                <CButton
-                  color="info"
-                  className="text-white btn-ovh"
-                  size="sm"
-                  onClick={handleClickInvestment}
-                  disabled={isMoreInvestBtnEnable}
-                >
-                  <i className="fa fa-plus me-1"></i>
-                  More Investments
-                </CButton>
-              </div>
-              <div className="col-sm-6">
-                <b className="pull-right txt-info">
-                  Max Limit: <span className="txt-info">{item.maxLimit}</span>
-                </b>
-              </div>
-            </CRow>
-            <CTable striped responsive>
-              <CTableBody>
-                {investmentList?.map((currentSec, secIndex) => {
-                  return (
-                    <React.Fragment key={secIndex}>
-                      <EditInvestmentTable
-                        setShowSubTotalAmount={setShowSubTotalAmount}
-                        handleClickRemoveInvestment={
-                          handleClickRemoveInvestment
-                        }
-                        currentSec={currentSec}
-                        secIndex={secIndex}
-                        onChangeCustomAmount={onChangeCustomAmount}
-                        onChangeInvestment={onChangeInvestment}
-                        index={index}
-                        sectionList={sectionList}
-                        editMoreSections={editMoreSections}
-                        setEditMoreSections={setEditMoreSections}
-                      />
-                    </React.Fragment>
-                  )
-                })}
-              </CTableBody>
-            </CTable>
-            <div className="clearfix">
-              <p className="pull-right txt-subtotal">
-                Sub Total: <span>{showSubTotalAmount}</span>
-              </p>
-            </div>
           </div>
-        )
-      })}
+          <div className="col-sm-6">
+            <b className="pull-right txt-info">
+              Max Limit:
+              <span className="txt-info">{sectionItem.maxLimit}</span>
+            </b>
+          </div>
+        </CRow>
+
+        <CTable striped responsive>
+          <CTableBody>
+            <EditInvestmentTable
+              setShowSubTotalAmount={setShowSubTotalAmount}
+              handleClickRemoveInvestment={handleClickRemoveInvestment}
+              formSectionsDTOs={sectionItem}
+              secIndex={sectionItem.sectionId}
+              onChangeCustomAmount={onChangeCustomAmount}
+              onChangeInvestment={onChangeInvestment}
+              index={index}
+              sectionList={sectionList}
+              editMoreSections={editMoreSections}
+              setEditMoreSections={setEditMoreSections}
+            />
+          </CTableBody>
+        </CTable>
+        <div className="clearfix">
+          <p className="pull-right txt-subtotal">
+            Sub Total: <span>{showSubTotalAmount}</span>
+          </p>
+        </div>
+      </div>
     </>
   )
 }

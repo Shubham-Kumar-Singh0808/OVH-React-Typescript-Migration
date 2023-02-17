@@ -83,7 +83,7 @@ const ITDeclarationList = (): JSX.Element => {
     )
     history.push('/editItForm')
     // setIsEditITForm(true)
-    console.log(editForm)
+    console.log(editForm, 'itdeclarationlist')
     dispatch(
       reduxServices.itDeclarationList.actions.setEditDeclarationForm(editForm),
     )

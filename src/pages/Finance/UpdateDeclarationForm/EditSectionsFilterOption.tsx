@@ -16,7 +16,7 @@ const EditSectionsFilterOption = (): JSX.Element => {
   const [selectedSection, setSelectedSection] = useState<Sections>(
     {} as Sections,
   )
-  const [showInvestment, setShowInvestment] = useState<boolean>(false)
+  const [showInvestment, setShowInvestment] = useState<boolean>(true)
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
   const [sectionList, setSectionList] = useState<Sections[]>([])
@@ -31,6 +31,9 @@ const EditSectionsFilterOption = (): JSX.Element => {
 
   const section = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.sections,
+  )
+  const editDeclarationForm = useTypedSelector(
+    reduxServices.itDeclarationList.selectors.editDeclarationForm,
   )
 
   useEffect(() => {
@@ -192,26 +195,24 @@ const EditSectionsFilterOption = (): JSX.Element => {
           </CButton>
         </CCol>
       </CRow>
-      {showInvestment &&
-        sectionList.length > 0 &&
-        sectionList?.map((currentSec, index) => {
-          return (
-            <CRow key={index}>
-              <CCol>
-                <EditMoreSections
-                  index={index}
-                  sectionItem={currentSec}
-                  handleShowRemoveSectionModal={handleShowRemoveSectionModal}
-                  handleConfirmCancelSection={handleConfirmCancelSection}
-                  setSectionList={setSectionList}
-                  sectionList={sectionList}
-                  setFormSectionList={setFormSectionList}
-                  formSectionList={formSectionList}
-                />
-              </CCol>
-            </CRow>
-          )
-        })}
+      {editDeclarationForm.formSectionsDTOs?.map((currentSec, index) => {
+        return (
+          <CRow key={index}>
+            <CCol>
+              <EditMoreSections
+                index={index}
+                sectionItem={currentSec}
+                handleShowRemoveSectionModal={handleShowRemoveSectionModal}
+                handleConfirmCancelSection={handleConfirmCancelSection}
+                setSectionList={setSectionList}
+                sectionList={sectionList}
+                setFormSectionList={setFormSectionList}
+                formSectionList={formSectionList}
+              />
+            </CCol>
+          </CRow>
+        )
+      })}
       <OModal
         alignment="center"
         visible={isCancelModalVisible}

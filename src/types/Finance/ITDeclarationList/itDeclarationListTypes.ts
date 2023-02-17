@@ -16,6 +16,15 @@ export type FormInvestment = {
   customAmount: number
 }
 
+export type FormInvestmentDTOProps = {
+  formInvestmentDTO: FormInvestment[]
+  isOld: boolean
+  itSectionsId: number
+  maxLimit: number
+  sectionId: number
+  sectionName: string
+}
+
 export type FormSection = {
   isOld: boolean
   itSectionsId: number
