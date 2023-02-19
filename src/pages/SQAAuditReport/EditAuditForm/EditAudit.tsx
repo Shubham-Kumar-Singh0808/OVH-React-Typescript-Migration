@@ -262,6 +262,21 @@ const EditAudit = (): JSX.Element => {
     }
   }
 
+  const pmCommentsResult = editAuditForm.pmComments ? (
+    <>
+      <CRow>
+        <CFormLabel className="col-sm-3 col-form-label text-end align-items-center">
+          PM Comments :
+        </CFormLabel>
+        <CCol sm={3} className="mt-2">
+          <span className="fw-bold">{parse(editAuditForm?.pmComments)}</span>
+        </CCol>
+      </CRow>
+    </>
+  ) : (
+    <></>
+  )
+
   return (
     <>
       <OCard
@@ -437,7 +452,7 @@ const EditAudit = (): JSX.Element => {
                   />
                 </CCol>
               </CRow>
-              {formStatusSubmit ? (
+              {formStatusSubmit && (
                 <>
                   <CRow className="mt-4 mb-4" data-testid="followUpDateInput">
                     <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -476,26 +491,8 @@ const EditAudit = (): JSX.Element => {
                     </CCol>
                   </CRow>
                 </>
-              ) : (
-                <></>
               )}
-              {editAuditForm.pmComments ? (
-                <>
-                  <CRow>
-                    <CFormLabel className="col-sm-3 col-form-label text-end align-items-center">
-                      PM Comments :
-                    </CFormLabel>
-                    <CCol sm={3} className="mt-2">
-                      <span className="fw-bold">
-                        {parse(editAuditForm?.pmComments)}
-                      </span>
-                    </CCol>
-                  </CRow>
-                </>
-              ) : (
-                <></>
-              )}
-
+              {pmCommentsResult}
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Comments :
