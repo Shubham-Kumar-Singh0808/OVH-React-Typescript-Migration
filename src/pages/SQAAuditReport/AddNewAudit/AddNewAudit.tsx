@@ -67,7 +67,6 @@ const AddNewAudit = (): JSX.Element => {
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
-
   useEffect(() => {
     if (projectNameAutoCompleteTarget) {
       dispatch(
@@ -461,7 +460,7 @@ const AddNewAudit = (): JSX.Element => {
                     placeholder: 'Project Manager',
                   }}
                   getItemValue={(item) => item.firstName + ' ' + item.lastName}
-                  items={projectManagers ? projectManagers : []}
+                  items={projectManagers ?? []}
                   wrapperStyle={{ position: 'relative' }}
                   renderMenu={(children) => (
                     <div
