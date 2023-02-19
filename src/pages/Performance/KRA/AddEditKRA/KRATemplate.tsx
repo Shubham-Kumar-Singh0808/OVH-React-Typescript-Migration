@@ -103,7 +103,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           getDepartmentId(empDeptList, enteredDept),
         ),
       )
-      setEnteredDesig(selectDesignation)
+      // setEnteredDesig(selectDesignation)
     }
   }, [callDesignationEveryDepartment, enteredDept])
 

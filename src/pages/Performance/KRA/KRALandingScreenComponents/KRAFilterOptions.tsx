@@ -26,15 +26,18 @@ import {
 } from '../KRAConstants'
 
 const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
-  const { currentPage, pageSize } = props
+  const {
+    currentPage,
+    pageSize,
+    selectedDepartment,
+    selectedDesignation,
+    setSelectedDepartment,
+    setSelectedDesignation,
+  } = props
   const dispatch = useAppDispatch()
   const [isViewButtonEnabled, setViewButtonEnabled] = useState<boolean>(false)
   const [isSearchButtonEnabled, setSearchButtonEnabled] =
     useState<boolean>(false)
-  const [selectedDepartment, setSelectedDepartment] =
-    useState<string>(selectDepartment)
-  const [selectedDesignation, setSelectedDesignation] =
-    useState<string>(selectDesignation)
   const [multiSearchInput, setMultiSearchInput] = useState<string>(emptyString)
 
   const empDepartmentsList = useTypedSelector(
@@ -47,6 +50,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
   const userAccessToAddKRA = userAccessToFeatures?.find(
     (feature) => feature.name === 'KRA',
   )
+
   useEffect(() => {
     if (selectedDepartment !== selectDepartment) {
       dispatch(

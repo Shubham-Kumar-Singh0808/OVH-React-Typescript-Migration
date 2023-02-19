@@ -44,7 +44,7 @@ function AddNewHandbook({
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
   const totalHandbookList = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.totalHandbookList,
+    reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
   )
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newList = employeeCountries.map((item) => item.id)
@@ -119,6 +119,7 @@ function AddNewHandbook({
       setAddNewPage((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
+      console.log(displayOrderExists(value))
       if (displayOrderExists(value)) {
         setIsDisplayOrderExist(true)
       } else {
@@ -132,6 +133,7 @@ function AddNewHandbook({
   }
 
   const displayOrderExists = (id: string) => {
+    console.log(totalHandbookList)
     return totalHandbookList?.find((currentHandBook) => {
       return currentHandBook.displayOrder === Number(id)
     })

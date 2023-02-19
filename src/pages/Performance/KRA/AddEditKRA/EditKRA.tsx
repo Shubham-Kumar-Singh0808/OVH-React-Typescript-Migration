@@ -97,7 +97,7 @@ const EditKRA = (): JSX.Element => {
       )
       if (reduxServices.KRA.updateKRAThunk.fulfilled.match(result)) {
         dispatch(reduxServices.app.actions.addToast(successToast))
-        dispatch(reduxServices.KRA.actions.clearDesignationList())
+        // dispatch(reduxServices.KRA.actions.clearDesignationList())
         dispatch(
           reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList),
         )

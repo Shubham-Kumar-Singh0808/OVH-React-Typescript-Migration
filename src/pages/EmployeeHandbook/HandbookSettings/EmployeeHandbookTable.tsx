@@ -104,10 +104,15 @@ const EmployeeHandbookTable = (
         deleteHandbookResultAction,
       )
     ) {
+      let tempPageNum = currentPage
+      if (employeeHandbooks.length === 1 && currentPage !== 1) {
+        setCurrentPage((prevState) => prevState - 1)
+        tempPageNum = currentPage - 1
+      }
       dispatch(
         reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
+          startIndex: pageSize * (tempPageNum - 1),
+          endIndex: pageSize * tempPageNum,
         }),
       )
       dispatch(reduxServices.app.actions.addToast(toastElement))
