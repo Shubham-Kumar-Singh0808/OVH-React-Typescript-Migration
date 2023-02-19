@@ -870,7 +870,7 @@ const AddProjectRequestForm = ({
         </CCol>
         {projectRequest.type === 'Fixed Bid' && (
           <>
-            <label className="ps-5">
+            <label className="sh-title-milestone">
               <b>Milestone:</b>
             </label>
             <CRow className="mt-4 mb-4">
@@ -914,7 +914,7 @@ const AddProjectRequestForm = ({
                   })}
               </CTable>
               {showTotalEffort ? (
-                <span>
+                <span className="ps-2">
                   <strong>Total Effort: </strong>
                   {showTotalEffort}{' '}
                 </span>
