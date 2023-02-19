@@ -59,6 +59,9 @@ const ProjectStatusTable = ({
   const [subject, setSubject] = useState<string>('')
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
   const { projectId } = useParams<{ projectId: string }>()
+  const [taskName, setTaskName] = useState('')
+  const [toDeleteVisaIdName, setToDeleteVisaIdName] = useState('')
+
   const projectStatusList = useTypedSelector(
     reduxServices.projectStatus.selectors.projectStatusReport,
   )
@@ -85,9 +88,10 @@ const ProjectStatusTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const handleShowDeleteModal = (id: number) => {
+  const handleShowDeleteModal = (id: number, prevDate: string) => {
     setToDeleteVisaId(id)
     setIsDeleteModalVisible(true)
+    setToDeleteVisaIdName(prevDate)
   }
 
   const handleConfirmDeleteProjectStatus = async () => {
@@ -126,6 +130,11 @@ const ProjectStatusTable = ({
     setEditCurrentWeekStatus(item.prevstatus)
     setStatusId(item.id)
   }
+  const handleModalTask = (ticket: string, task: string) => {
+    setIsModalVisible(true)
+    setSubject(ticket)
+    setTaskName(task)
+  }
   const handleModal = (ticket: string) => {
     setIsModalVisible(true)
     setSubject(ticket)
@@ -155,7 +164,12 @@ const ProjectStatusTable = ({
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
                       data-testid={`subject-comments`}
-                      onClick={() => handleModal(statusReport.prevstatus)}
+                      onClick={() =>
+                        handleModalTask(
+                          statusReport.prevstatus,
+                          statusReport.prevDate,
+                        )
+                      }
                     >
                       <div
                         className="sh-hyperLink"
@@ -202,7 +216,12 @@ const ProjectStatusTable = ({
                           color="danger"
                           className="btn-ovh me-1 btn-ovh-employee-list"
                           data-testid="delete-btn"
-                          onClick={() => handleShowDeleteModal(statusReport.id)}
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              statusReport.id,
+                              statusReport.prevDate,
+                            )
+                          }
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
@@ -262,7 +281,7 @@ const ProjectStatusTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectStatus}
       >
-        {`Do you really want to delete this ?`}
+        {`Do you really want to delete this ? ${toDeleteVisaIdName}`}
       </OModal>
       <OModal
         modalSize="lg"
@@ -274,7 +293,7 @@ const ProjectStatusTable = ({
         setVisible={setIsModalVisible}
       >
         <>
-          <h4>Weekly status Report 02 Jan 2024</h4>
+          <h4>Weekly status Report {taskName}</h4>
           <div
             className="mt-3"
             dangerouslySetInnerHTML={{
