@@ -201,6 +201,28 @@ const uploadExitFeedBackFile = createAsyncThunk(
   },
 )
 
+const updateResignationTimeLine = createAsyncThunk<
+  number | undefined,
+  SeparationTimeLine,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/updateCCDetails',
+  async (updateSeparationTimeLine: SeparationTimeLine, thunkApi) => {
+    try {
+      return await resignationListApi.updateResignationTimeLine(
+        updateSeparationTimeLine,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -314,6 +336,7 @@ const resignationListThunk = {
   saveExitFeedBackForm,
   uploadRelievingLetter,
   uploadExitFeedBackFile,
+  updateResignationTimeLine,
 }
 
 const resignationListSelectors = {

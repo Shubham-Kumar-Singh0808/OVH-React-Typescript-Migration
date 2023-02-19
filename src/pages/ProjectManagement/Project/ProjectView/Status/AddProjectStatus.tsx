@@ -161,7 +161,7 @@ const AddProjectStatus = ({
         <CCol className="text-end" md={4}>
           <CButton
             color="info"
-            className="btn-ovh me-1 add-project-back-btn"
+            className="btn-ovh me-4 add-project-back-btn"
             data-testid="back-btn"
             onClick={() => setToggle('')}
           >
@@ -171,7 +171,7 @@ const AddProjectStatus = ({
       </CRow>
       <CForm>
         <CRow className="mt-2 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
             Current Week Date :
           </CFormLabel>
           <CCol sm={3}>
@@ -202,7 +202,7 @@ const AddProjectStatus = ({
           </CCol>
         </CRow>
         <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
             Current Week Status:
           </CFormLabel>
           <CCol sm={12} data-testid="ckEditor-component">
@@ -223,7 +223,7 @@ const AddProjectStatus = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
             Next Week Date:
           </CFormLabel>
           <CCol sm={3}>
@@ -255,17 +255,19 @@ const AddProjectStatus = ({
         </CRow>
         {dateError && (
           <CRow className="mt-2">
-            <CCol sm={{ span: 6, offset: 3 }}>
+            <CCol sm={{ span: 9, offset: 3 }}>
               <span className="text-danger" data-testid="errorMessage">
-                Next week date should be greater than current week date and
-                should be after one week from current week date
+                <b>
+                  Next week date should be greater than current week date and
+                  should be after one week from current week date
+                </b>
               </span>
             </CCol>
           </CRow>
         )}
         <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end">
-            Comments:{' '}
+          <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
+            Next Week Status:{' '}
           </CFormLabel>
           <CCol sm={12} data-testid="ckEditor-component">
             {showEditor ? (

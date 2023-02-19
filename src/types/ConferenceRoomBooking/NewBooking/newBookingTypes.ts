@@ -59,3 +59,8 @@ export type ConfirmNewMeetingAppointment = {
   roomId: number | string
   startTime: string
 }
+export type ShouldResetNewBookingFields = {
+  projectName: boolean
+  startEndTime: boolean
+  trainer?: boolean
+}

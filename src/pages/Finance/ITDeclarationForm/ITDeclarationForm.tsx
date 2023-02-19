@@ -106,7 +106,7 @@ const ITDeclarationForm = (): JSX.Element => {
         </CRow>
 
         <CRow className="mt-3 mb-3">
-          <CCol sm={12} className="mt-2">
+          <CCol sm={12} className="mt-2 ps-4 pe-4">
             <CFormCheck
               name="agree"
               data-testid="ch-agree"

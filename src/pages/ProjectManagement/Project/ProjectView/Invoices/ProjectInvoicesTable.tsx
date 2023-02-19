@@ -39,42 +39,51 @@ const ProjectInvoicesTable = (): JSX.Element => {
   }
 
   const milestoneTitle = (
-    <CTable className="milestone-model-table">
-      <CTableBody>
-        <CTableRow>
-          <CTableDataCell>Project:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.project}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Client:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.client}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.title}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Percentage:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.milestonePercentage}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Effort:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.effort || 'N/A'}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Planned End Date:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.planedDate || 'N/A'}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Actual End Date:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.actualDate || 'N/A'}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Comments:</CTableDataCell>
-          <CTableDataCell>{milestoneName?.comments || 'N/A'}</CTableDataCell>
-        </CTableRow>
-      </CTableBody>
-    </CTable>
+    <>
+      <h4 className="mb-4">Milestone Details</h4>
+      <CTable className="milestone-model-table">
+        <CTableBody>
+          <CTableRow>
+            <CTableDataCell>Project:</CTableDataCell>
+            <CTableDataCell>{milestoneName?.project}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Client:</CTableDataCell>
+            <CTableDataCell>{milestoneName?.client}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Milestone:</CTableDataCell>
+            <CTableDataCell>{milestoneName?.title}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Percentage:</CTableDataCell>
+            <CTableDataCell>
+              {milestoneName?.milestonePercentage}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Effort:</CTableDataCell>
+            <CTableDataCell>{milestoneName?.effort || 'N/A'}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Planned End Date:</CTableDataCell>
+            <CTableDataCell>
+              {milestoneName?.planedDate || 'N/A'}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Actual End Date:</CTableDataCell>
+            <CTableDataCell>
+              {milestoneName?.actualDate || 'N/A'}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Comments:</CTableDataCell>
+            <CTableDataCell>{milestoneName?.comments || 'N/A'}</CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+      </CTable>
+    </>
   )
   return (
     <>

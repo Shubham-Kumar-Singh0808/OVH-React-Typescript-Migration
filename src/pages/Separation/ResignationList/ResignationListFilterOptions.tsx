@@ -46,6 +46,9 @@ const ResignationListFilterOptions = ({
   const userAccessViewChart = userAccessToFeatures?.find(
     (feature) => feature.name === 'Separation Chart',
   )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   const dispatch = useAppDispatch()
   const {
@@ -55,6 +58,12 @@ const ResignationListFilterOptions = ({
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
   const commonFormatDate = 'l'
   const fromDateValue = selectFromDate
     ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
@@ -94,7 +103,7 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
         empStatus: (employeeStatus as string) || '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: selectFromDate
           ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -103,7 +112,7 @@ const ResignationListFilterOptions = ({
             })
           : '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status,
         to: selectToDate
           ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
@@ -120,10 +129,10 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: searchInputValue,
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),
@@ -139,10 +148,10 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),

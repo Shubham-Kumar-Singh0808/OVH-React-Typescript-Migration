@@ -88,7 +88,7 @@ describe('Edit Project Testing', () => {
   })
 
   test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('back-btn')
+    const backBtn = screen.getAllByTestId('Back-btn')
     userEvent.click(backBtn[0])
 
     await waitFor(() => {
