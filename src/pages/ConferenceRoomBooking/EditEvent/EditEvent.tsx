@@ -73,7 +73,8 @@ const EditEvent = (): JSX.Element => {
   const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
     {} as EditExistingEventDetails,
   )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
+  // const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
+  const [showDescription, setShowDescription] = useState<boolean>(true)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -102,14 +103,13 @@ const EditEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (editExistingEvent != null) {
-      const eventDesc =
-        editExistingEvent.description === null
-          ? ''
-          : editExistingEvent.description
       setEditEvent(editExistingEvent)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
-      setEventDescriptionValue(eventDesc)
+      setShowDescription(true)
+      setTimeout(() => {
+        setShowDescription(true)
+      }, 100)
     }
   }, [editExistingEvent])
 
@@ -136,8 +136,10 @@ const EditEvent = (): JSX.Element => {
     }
   }, [editEvent.startTime, editEvent.endTime])
 
-  const onHandleDescription = (value: string) => {
-    setEventDescriptionValue(value)
+  const handleDescription = (description: string) => {
+    setEditEvent((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
   }
   useEffect(() => {
     if (projectAutoCompleteTarget)
@@ -243,7 +245,7 @@ const EditEvent = (): JSX.Element => {
       availability: editEvent?.availability,
       availableDates: null,
       conferenceType: 'Event',
-      description: eventDescriptionValue,
+      description: editEvent?.description,
       disableEdit: null,
       empDesignations: null,
       employeeAvailability: null,
@@ -404,19 +406,25 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(eventDescriptionValue)}>*</span>
+                <span className={showIsRequired(editEvent?.description)}>
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={8}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={eventDescriptionValue}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
-                  }}
-                />
+                {showDescription ? (
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={editEvent?.description}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleDescription(editor.getData().trim())
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
               </CCol>
             </CRow>
             <CRow className="mt-3">
