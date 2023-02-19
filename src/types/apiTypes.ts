@@ -406,6 +406,7 @@ export interface DashboardApi extends ApiBase {
   updateHoliday: string
   searchEmployee: string
   getLeaveSummary: string
+  imageFix: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -694,6 +695,9 @@ export interface InitiateCycleApi extends ApiBase {
   initiateCycle: string
   deleteQuestion: string
   addQuestion: string
+  addCycle: string
+  editCycle: string
+  updateCycle: string
 }
 
 export interface MyKRAsApi extends ApiBase {

@@ -2,9 +2,9 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { waitFor } from '@testing-library/react'
-import AddQuestionTable from './AddQuestionTable'
+import AddInitiateCycleTable from './AddInitiateCycleTable'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { mockAllQuestions } from '../../../../test/data/initiateCycleData'
+import { mockAllCycles } from '../../../../test/data/initiateCycleData'
 import { render, screen } from '../../../../test/testUtils'
 
 const mockSetTogglePage = jest.fn()
@@ -12,7 +12,7 @@ const mockSetTogglePage = jest.fn()
 describe('InitiateCycle Table with data', () => {
   beforeEach(() => {
     render(
-      <AddQuestionTable
+      <AddInitiateCycleTable
         paginationRange={[]}
         currentPage={0}
         setCurrentPage={mockSetTogglePage}
@@ -24,24 +24,14 @@ describe('InitiateCycle Table with data', () => {
           initiateCycle: {
             isLoading: ApiLoadingState.succeeded,
             error: null,
-            allQuestions: mockAllQuestions,
-            listSize: mockAllQuestions?.size,
+            activeCycleData: [],
+            allCycles: mockAllCycles,
+            allQuestions: { size: 0, list: [] },
+            listSize: 31,
           },
         },
       },
     )
-  })
-
-  test('should render the correct headers', () => {
-    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Question' })).toBeTruthy()
-    expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy()
-    expect(screen.getAllByRole('columnheader')).toHaveLength(3)
-  })
-
-  test('should render the "Initiate Cycle" table ', () => {
-    const table = screen.getByRole('table')
-    expect(table).toBeTruthy()
   })
 
   test('should render first page data only', async () => {
@@ -57,5 +47,20 @@ describe('InitiateCycle Table with data', () => {
       expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
+  })
+
+  test('should render Initiate Cycle table component with  crashing', async () => {
+    await waitFor(() => {
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      const pageSizeSelect = screen.getByRole('option', {
+        name: '40',
+      }) as HTMLOptionElement
+      expect(pageSizeSelect.selected).toBe(false)
+      expect(screen.getAllByRole('row')).toHaveLength(1)
+    })
+  })
+
+  test('Should be able to see total of records', () => {
+    expect(screen.getByText('Total Records: 31')).toBeInTheDocument()
   })
 })

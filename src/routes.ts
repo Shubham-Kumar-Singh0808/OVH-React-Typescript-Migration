@@ -364,7 +364,7 @@ const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 const InitiateCycle = React.lazy(
-  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+  () => import('./pages/Settings/InitiateCycle/InitiateNewCycle'),
 )
 
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
