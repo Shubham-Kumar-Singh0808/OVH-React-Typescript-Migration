@@ -21,10 +21,7 @@ import EditEventAttendees from './EditEventChildComponents/EditEventAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  EditExistingEventDetails,
-  MeetingEditDTOList,
-} from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
+import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'

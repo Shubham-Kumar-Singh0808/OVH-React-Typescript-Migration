@@ -44,7 +44,7 @@ function AddNewHandbook({
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
   const totalHandbookList = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.employeeHandbooks,
+    reduxServices.employeeHandbookSettings.selectors.totalHandbookList,
   )
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newList = employeeCountries.map((item) => item.id)
