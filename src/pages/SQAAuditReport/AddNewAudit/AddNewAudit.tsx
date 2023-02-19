@@ -461,7 +461,7 @@ const AddNewAudit = (): JSX.Element => {
                     placeholder: 'Project Manager',
                   }}
                   getItemValue={(item) => item.firstName + ' ' + item.lastName}
-                  items={projectManagers?.length ? projectManagers : []}
+                  items={projectManagers ? projectManagers : []}
                   wrapperStyle={{ position: 'relative' }}
                   renderMenu={(children) => (
                     <div
