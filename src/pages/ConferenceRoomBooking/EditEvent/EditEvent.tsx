@@ -73,9 +73,7 @@ const EditEvent = (): JSX.Element => {
   const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
     {} as EditExistingEventDetails,
   )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
-    editExistingEvent?.description,
-  )
+  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [isErrorShow, setIsErrorShow] = useState(false)
@@ -104,9 +102,14 @@ const EditEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (editExistingEvent != null) {
+      const eventDesc =
+        editExistingEvent.description === null
+          ? ''
+          : editExistingEvent.description
       setEditEvent(editExistingEvent)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
+      setEventDescriptionValue(eventDesc)
     }
   }, [editExistingEvent])
 
@@ -240,7 +243,7 @@ const EditEvent = (): JSX.Element => {
       availability: editEvent?.availability,
       availableDates: null,
       conferenceType: 'Event',
-      description: editEvent.description,
+      description: eventDescriptionValue,
       disableEdit: null,
       empDesignations: null,
       employeeAvailability: null,
