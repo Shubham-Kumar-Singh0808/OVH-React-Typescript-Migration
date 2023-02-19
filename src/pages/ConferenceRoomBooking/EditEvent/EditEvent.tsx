@@ -52,18 +52,6 @@ const EditEvent = (): JSX.Element => {
     useState<string>('')
   const [isProjectChange, setIsProjectChange] = useState<string>('')
 
-  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
-    {} as EditExistingEventDetails,
-  )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
-    editExistingEvent?.description,
-  )
-  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
-    useState(true)
-  const [isErrorShow, setIsErrorShow] = useState(false)
-  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
-    useState<string>()
-  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
@@ -83,10 +71,7 @@ const EditEvent = (): JSX.Element => {
     reduxServices.newEvent.selectors.roomsByLocation,
   )
 
-  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
-    {} as EditExistingEventDetails,
-  )
-  // const [eventDescriptionValue, setEventDescriptionValue] = useState<string>('')
+  const [editEvent, setEditEvent] = useState(editExistingEvent)
   const [showDescription, setShowDescription] = useState<boolean>(true)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
@@ -108,13 +93,13 @@ const EditEvent = (): JSX.Element => {
     if (
       trainerAutoCompleteTarget &&
       editEvent.agenda &&
-      eventDescriptionValue?.length > 0
+      editEvent?.description
     ) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [editEvent.agenda, trainerAutoCompleteTarget, eventDescriptionValue])
+  }, [editEvent.agenda, trainerAutoCompleteTarget, editEvent?.description])
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
@@ -131,7 +116,7 @@ const EditEvent = (): JSX.Element => {
       setEditEvent(editExistingEvent)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
-      setShowDescription(true)
+      setShowDescription(false)
       setTimeout(() => {
         setShowDescription(true)
       }, 100)
