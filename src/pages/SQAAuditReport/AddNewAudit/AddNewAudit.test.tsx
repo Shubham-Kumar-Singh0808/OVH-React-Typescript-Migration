@@ -51,7 +51,7 @@ describe('render all inputs without crashing', () => {
   })
   test('should render projectName Input', () => {
     const projectTypeRbtn = screen.getByTestId(projectTypeSupport)
-    userEvent.click(projectTypeRbtn)
+    fireEvent.click(projectTypeRbtn)
     expect(projectTypeRbtn).toBeChecked()
     expect(screen.getByTestId(projectNameInputElement)).toBeTruthy()
   })
