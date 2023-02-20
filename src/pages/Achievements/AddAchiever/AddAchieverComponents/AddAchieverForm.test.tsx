@@ -45,6 +45,7 @@ const toRender = (
       setAddButton={mocksetAddButton}
       clearInfoButtonHandler={mockclearInfoButtonHandler}
       addButtonHandler={mockaddButtonHandler}
+      userAccessToAddAchiever={undefined}
     />
   </div>
 )

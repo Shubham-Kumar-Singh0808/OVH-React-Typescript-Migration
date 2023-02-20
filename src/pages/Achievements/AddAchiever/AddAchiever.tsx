@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AchievementTypeList from './AchievementTypeList/AchievementTypeList'
 import AddAchieverForm from './AddAchieverComponents/AddAchieverForm'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { initialNewAchieverState } from '../AchievementConstants'
 import {
@@ -21,6 +21,12 @@ const AddAchiever = (): JSX.Element => {
   const [newAchieverDetails, setNewAchieverDetails] =
     useState<NewAchieverInformation>(initialNewAchieverState)
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAddAchieverForm = userAccessToFeatures?.find(
+    (feature) => feature.name === "Add Achiever's",
+  )
   const addAchievementTypeButtonHandler = (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -84,6 +90,7 @@ const AddAchiever = (): JSX.Element => {
           setAddButton={setAddButton}
           clearInfoButtonHandler={clearNewAchieverButtonHandler}
           addButtonHandler={addNewAchieverHandler}
+          userAccessToAddAchiever={userAccessToAddAchieverForm}
         />
       )}
     </OCard>
