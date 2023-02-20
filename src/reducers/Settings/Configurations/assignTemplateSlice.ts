@@ -188,6 +188,7 @@ const initialAssignTemplateSliceState: AssignTemplateSliceState = {
   kpisForIndividualKra: [],
   isLoading: ApiLoadingState.idle,
   kraList: { size: 0, list: [] },
+  empDesignations: {} as Designations,
 }
 
 const assignTemplateSlice = createSlice({
@@ -199,6 +200,7 @@ const assignTemplateSlice = createSlice({
       .addCase(getAllEmpDepartmentNames.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.empDepartments = action.payload
+        state.empDesignations = action.payload as unknown as Designations
       })
       .addCase(getDesignations.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -237,6 +239,9 @@ const empDepartments = (state: RootState): EmpDepartments[] =>
 const empDesignations = (state: RootState): Designations[] =>
   state.assignTemplate.designationDeptIds
 
+const empDesignationsList = (state: RootState): Designations =>
+  state.assignTemplate.empDesignations
+
 const isLoading = (state: RootState): LoadingState =>
   state.assignTemplate.isLoading
 
@@ -264,6 +269,7 @@ const assignTemplateSelectors = {
   empDesignations,
   designationsWiseKRA,
   kraList,
+  empDesignationsList,
 }
 
 export const assignTemplateService = {

@@ -36,6 +36,7 @@ export type AssignTemplateSliceState = {
   isLoading: ApiLoadingState
   kpisForIndividualKra: KpiForIndividualKra[]
   kraList: SearchKRAData
+  empDesignations: Designations
 }
 
 export type KpiForIndividualKra = {

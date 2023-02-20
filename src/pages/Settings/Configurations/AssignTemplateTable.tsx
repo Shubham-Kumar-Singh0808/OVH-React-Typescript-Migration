@@ -39,7 +39,7 @@ const AssignTemplateTable = ({
     reduxServices.assignTemplate.selectors.designationsWiseKRA,
   )
   const designations = useTypedSelector(
-    reduxServices.assignTemplate.selectors.empDesignations,
+    reduxServices.assignTemplate.selectors.empDesignationsList,
   )
 
   const multiSearchBtnHandler = () => {
@@ -93,28 +93,47 @@ const AssignTemplateTable = ({
   )
 
   const appraisalCycle = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.appraisalCycle,
+    reduxServices.appraisalConfigurations.selectors.getEditAppraisal,
   )
 
-  // const saveButtonHandler = async () => {
-  //   const prepareObject = {
-  //     appraisalCycleDto: appraisalCycle,
-  //     designation: designations,
-  //     kraLookups: designationWiseKRA,
-  //   }
-  //   const saveKRAResultAction = await dispatch(
-  //     reduxServices.assignTemplate.designingMap(prepareObject),
-  //   )
-  //   if (
-  //     reduxServices.assignTemplate.designingMap.fulfilled.match(
-  //       saveKRAResultAction,
-  //     )
-  //   ) {
-  //     dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
-  //     dispatch(reduxServices.app.actions.addToast(successMsg))
-  //     dispatch(reduxServices.app.actions.addToast(undefined))
-  //   }
-  // }
+  const saveButtonHandler = async () => {
+    const prepareObject = {
+      appraisalCycleDto: {
+        active: appraisalCycle.active,
+        appraisalDuration: appraisalCycle.appraisalDuration,
+        appraisalEndDate: appraisalCycle.appraisalEndDate,
+        appraisalStartDate: appraisalCycle.appraisalStartDate,
+        appraisalType: appraisalCycle.appraisalType,
+        cycleStartedFlag: appraisalCycle.cycleStartedFlag,
+        description: appraisalCycle.description,
+        fromDate: appraisalCycle.fromDate,
+        id: appraisalCycle.id,
+        level: appraisalCycle.level,
+        name: appraisalCycle.name,
+        servicePeriod: appraisalCycle.servicePeriod,
+        toDate: appraisalCycle.toDate,
+      },
+      designation: {
+        code: designations.code,
+        departmentId: designations.departmentId,
+        departmentName: designations.departmentName,
+        id: designations.id,
+        name: designations.name,
+      },
+      kraLookups: designationWiseKRA,
+    }
+    const saveKRAResultAction = await dispatch(
+      reduxServices.assignTemplate.designingMap(prepareObject),
+    )
+    if (
+      reduxServices.assignTemplate.designingMap.fulfilled.match(
+        saveKRAResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successMsg))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
 
   return (
     <>
@@ -223,7 +242,7 @@ const AssignTemplateTable = ({
             className="btn-ovh me-1 text-white"
             color="success"
             disabled={!isSaveBtnEnabled}
-            // onClick={saveButtonHandler}
+            onClick={saveButtonHandler}
           >
             Save
           </CButton>
