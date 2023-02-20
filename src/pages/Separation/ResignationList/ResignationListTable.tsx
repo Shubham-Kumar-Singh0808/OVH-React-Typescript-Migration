@@ -104,6 +104,11 @@ const ResignationListTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const handleShowInitiateResignationModal = (separationId: number) => {
     setToInitiateSeparationId(separationId)
     setIsInitiateModalVisible(true)
@@ -344,7 +349,9 @@ const ResignationListTable = ({
               getAllResignationList?.map((resignationItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     <CTableDataCell>
                       {resignationItem.employeeId}
                     </CTableDataCell>

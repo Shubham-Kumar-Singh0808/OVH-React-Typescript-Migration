@@ -130,7 +130,10 @@ const HRClearanceCertificateForm = (): JSX.Element => {
                 data-testid="confirmBtn"
                 color="success"
                 onClick={SubmitHRClearanceCertificateHandler}
-                disabled={hrIsActive === 'true' && hrTextArea === ''}
+                disabled={
+                  hrIsActive === 'true' &&
+                  hrTextArea?.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>

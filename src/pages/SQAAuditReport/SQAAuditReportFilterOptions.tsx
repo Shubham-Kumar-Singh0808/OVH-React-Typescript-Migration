@@ -116,6 +116,7 @@ const SQAAuditReportFilterOptions = ({
     setToDate('')
     setStatus('')
     setRescheduleStatus('')
+    setSearchInput('')
     dispatch(
       reduxServices.sqaAuditReport.getSQAAuditReport({
         endIndex: pageSize * currentPage,
@@ -142,6 +143,20 @@ const SQAAuditReportFilterOptions = ({
     )
 
     downloadFile(sqaAuditReportDownload, 'SQAAuditReport.csv')
+  }
+  const searchButtonHandler = () => {
+    dispatch(
+      reduxServices.sqaAuditReport.getSQAAuditReport({
+        endIndex: pageSize * currentPage,
+        multiSearch: searchInput || '',
+        startIndex: pageSize * (currentPage - 1),
+        SQAAuditSelectionDate: '',
+        auditRescheduleStatus: '',
+        auditStatus: '',
+        from: '',
+        to: '',
+      }),
+    )
   }
   return (
     <>
@@ -216,7 +231,7 @@ const SQAAuditReportFilterOptions = ({
         <>
           <CRow>
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-3">
+              <CFormLabel className="mt-2">
                 From :
                 {(fromDate == null || fromDate === '') && (
                   <span className="text-danger">*</span>
@@ -227,7 +242,7 @@ const SQAAuditReportFilterOptions = ({
               <ReactDatePicker
                 id="fromDate"
                 data-testid="ticketReportFromDate"
-                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                className="form-control form-control-sm sh-date-picker"
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -243,7 +258,7 @@ const SQAAuditReportFilterOptions = ({
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-3">
+              <CFormLabel className="mt-2">
                 To :
                 {(toDate == null || toDate === '') && (
                   <span className="text-danger">*</span>
@@ -254,7 +269,7 @@ const SQAAuditReportFilterOptions = ({
               <ReactDatePicker
                 id="toDate"
                 data-testid="leaveApprovalFromDate"
-                className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                className="form-control form-control-sm sh-date-picker "
                 peekNextMonth
                 showMonthDropdown
                 showYearDropdown
@@ -330,7 +345,7 @@ const SQAAuditReportFilterOptions = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
-              onKeyDown={viewButtonHandler}
+              onKeyDown={searchButtonHandler}
             />
             <CButton
               disabled={!searchInput}
@@ -339,7 +354,7 @@ const SQAAuditReportFilterOptions = ({
               type="button"
               color="info"
               id="button-addon2"
-              onClick={viewButtonHandler}
+              onClick={searchButtonHandler}
             >
               <i className="fa fa-search"></i>
             </CButton>

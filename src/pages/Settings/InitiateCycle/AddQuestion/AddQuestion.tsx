@@ -10,14 +10,14 @@ import AddQuestionTable from './AddQuestionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
+const AddQuestion = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [addQuestion, setAddQuestion] = useState<string>('')
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
-
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getAllQuestions())
@@ -86,7 +86,9 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={setToggle}
+              onClick={() =>
+                dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+              }
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>

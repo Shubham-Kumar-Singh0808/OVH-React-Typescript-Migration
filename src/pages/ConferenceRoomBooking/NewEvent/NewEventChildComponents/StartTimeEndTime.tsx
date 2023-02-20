@@ -4,8 +4,10 @@ import { convertTime, showIsRequired } from '../../../../utils/helper'
 
 const StartTimeEndTime = ({
   onSelectStartAndEndTime,
+  shouldReset,
 }: {
   onSelectStartAndEndTime: (val1: string, val2: string) => void
+  shouldReset: boolean
 }): JSX.Element => {
   const hoursList = [
     { label: '00', value: '' },
@@ -29,7 +31,6 @@ const StartTimeEndTime = ({
     { label: '30', value: '30' },
     { label: '45', value: '45' },
   ]
-
   const [startTime, setStartTime] = useState({
     hours: '',
     minutes: '00',
@@ -40,6 +41,19 @@ const StartTimeEndTime = ({
     minutes: '00',
     meridian: 'AM',
   })
+  useEffect(() => {
+    if (shouldReset)
+      setStartTime({
+        hours: '',
+        minutes: '00',
+        meridian: 'AM',
+      })
+    setEndTime({
+      hours: '',
+      minutes: '00',
+      meridian: 'AM',
+    })
+  }, [shouldReset])
 
   useEffect(() => {
     if (startTime.hours && endTime.hours) {

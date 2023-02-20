@@ -90,7 +90,9 @@ const BookingListTable = ({
       )
     } else if (bookingStatus === 'Cancelled') {
       return (
-        <CBadge className="rounded-pill label-warning">{bookingStatus}</CBadge>
+        <CBadge className="rounded-pill label-danger status-name">
+          {bookingStatus}
+        </CBadge>
       )
     } else if (bookingStatus === 'In Progress') {
       return (
@@ -303,12 +305,6 @@ const BookingListTable = ({
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Location :</span>
             {`${modalAgenda.roomName} in ${modalAgenda.locationName}`}
-          </p>
-          <p className="d-flex">
-            <span className="col-sm-2 text-right fw-bold px-3">
-              Description :
-            </span>
-            {modalAgenda.description !== null ? modalAgenda.description : 'N/A'}
           </p>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>

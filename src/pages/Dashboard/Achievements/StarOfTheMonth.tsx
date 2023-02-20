@@ -1,5 +1,5 @@
 import { CCardFooter, CCol, CImage, CLink, CRow } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -27,6 +27,19 @@ const StarOfTheMonth = (): JSX.Element => {
     </CCardFooter>
   )
 
+  const [imageUrl, setImageUrl] = useState('')
+
+  useEffect(() => {
+    fetch(
+      'https://ovh2.raybiztech.com/achieverprofilepics/acheiver105720-Dec-2022%2012:37:34:IST.jpeg',
+      { mode: 'no-cors' },
+    )
+      .then((response) => response.blob())
+      .then((blob) => {
+        setImageUrl(URL.createObjectURL(blob))
+      })
+  }, [])
+
   return (
     <>
       <CRow>
@@ -53,6 +66,9 @@ const StarOfTheMonth = (): JSX.Element => {
                 )
               })}
           </CRow>
+          <CCol sm={3}>
+            {imageUrl && <img src={imageUrl} alt="API Image" />}
+          </CCol>
         </CCol>
         {userAccessToAchieversList?.viewaccess && (
           <>{starOfTheMonthFooterLink}</>

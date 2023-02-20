@@ -17,7 +17,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { InitiateCycleTableProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { InitiateCycleCheckBoxProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const InitiateCycleTable = ({
@@ -26,7 +26,10 @@ const InitiateCycleTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-}: InitiateCycleTableProps): JSX.Element => {
+  setCycleChecked,
+  cycleChecked,
+  selChkBoxesFromApi,
+}: InitiateCycleCheckBoxProps): JSX.Element => {
   const [isQuestionVisible, setIsQuestionVisible] = useState<boolean>(false)
   const [questionModal, setQuestionModal] = useState<string>('')
 
@@ -38,7 +41,7 @@ const InitiateCycleTable = ({
     reduxServices.initiateCycle.selectors.listSize,
   )
 
-  const allRecords = allQuestions?.list?.length
+  const allCycleRecords = allQuestions?.list?.length
     ? `Total Records: ${allQuestionsListSize}`
     : `No Records found...`
 
@@ -55,13 +58,25 @@ const InitiateCycleTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const getPageNumber = (index: number) => {
+  const getPageNo = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const currentTotalPageRecords = useMemo(
+  const currentTotalRecords = useMemo(
     () => currentPageData(allQuestions?.list, currentPage, pageSize),
     [allQuestions?.list, currentPage, pageSize],
   )
+
+  const sortingId = useMemo(() => {
+    if (currentTotalRecords) {
+      return currentTotalRecords
+        ?.slice()
+        .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
+    }
+    return []
+  }, [currentTotalRecords])
+
+  console.log(sortingId)
+
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
@@ -75,8 +90,8 @@ const InitiateCycleTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentTotalPageRecords &&
-            currentTotalPageRecords?.map((item, index) => {
+          {sortingId?.length > 0 &&
+            sortingId?.map((item, index) => {
               const removingSpaces = item.question
                 ?.replace(/\s+/g, ' ')
                 .trim()
@@ -85,9 +100,18 @@ const InitiateCycleTable = ({
                 removingSpaces && removingSpaces?.length > 30
                   ? `${removingSpaces.substring(0, 30)}...`
                   : removingSpaces
+
+              let flag = false
+              const chkFlag = selChkBoxesFromApi?.find(
+                (el) => el.id === item.id,
+              )
+              if (chkFlag) {
+                flag = true
+              }
+
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{getPageNumber(index)}</CTableDataCell>
+                  <CTableDataCell>{getPageNo(index)}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {item.question ? (
                       <CLink
@@ -103,9 +127,25 @@ const InitiateCycleTable = ({
                   </CTableDataCell>
                   <CTableDataCell className="text-middle ms-2">
                     <CFormCheck
-                      className="form-check-input form-select-not-allowed"
-                      name="active"
+                      key={index}
+                      data-testid="ch-All-countries"
+                      id="all"
                       type="checkbox"
+                      name="checkQuestion"
+                      checked={flag}
+                      onChange={() => {
+                        setCycleChecked((prevState) => {
+                          return {
+                            ...prevState,
+                            ...{
+                              id: item.id,
+                              checkQuestion: true,
+                              question: item.question,
+                            },
+                          }
+                        })
+                      }}
+                      value={cycleChecked as unknown as string}
                     />
                   </CTableDataCell>
                 </CTableRow>
@@ -116,7 +156,7 @@ const InitiateCycleTable = ({
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{allRecords}</strong>
+            <strong>{allCycleRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
@@ -151,13 +191,13 @@ const InitiateCycleTable = ({
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <p>
+        <>
           <div
             dangerouslySetInnerHTML={{
               __html: questionModal,
             }}
           />
-        </p>
+        </>
       </OModal>
     </>
   )
