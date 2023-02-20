@@ -368,12 +368,13 @@ const ResignationListFilterOptions = ({
               aria-label="Multiple Search"
               data-testid="search-input"
               aria-describedby="button-addon2"
-              value={searchInputValue}
+              value={searchInputValue?.replace(/^\s*/, '')}
               onChange={(e) => {
                 setSearchInputValue(e.target.value)
               }}
             />
             <CButton
+              disabled={!searchInputValue?.replace(/^\s*/, '')}
               data-testid="multi-search-btn"
               className="cursor-pointer"
               type="button"

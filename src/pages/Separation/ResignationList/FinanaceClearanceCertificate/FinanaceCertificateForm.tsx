@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const FinanceCertificateForm = (): JSX.Element => {
   const [isActiveValues, setIsActiveValues] = useState<string>('false')
@@ -17,6 +18,13 @@ const FinanceCertificateForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getAllFinanceResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
   )
 
   const SubmitFinanceClearanceCertificateHandler = async () => {
@@ -41,6 +49,7 @@ const FinanceCertificateForm = (): JSX.Element => {
           submittedBy: 'Finance',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
