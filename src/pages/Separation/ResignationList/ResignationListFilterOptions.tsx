@@ -39,6 +39,17 @@ const ResignationListFilterOptions = ({
     reduxServices.resignationList.selectors.resignationListSize,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessViewChart = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Separation Chart',
+  )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -47,6 +58,12 @@ const ResignationListFilterOptions = ({
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
   const commonFormatDate = 'l'
   const fromDateValue = selectFromDate
     ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
@@ -86,7 +103,7 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
         empStatus: (employeeStatus as string) || '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: selectFromDate
           ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
@@ -95,7 +112,7 @@ const ResignationListFilterOptions = ({
             })
           : '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status,
         to: selectToDate
           ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
@@ -112,10 +129,10 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: searchInputValue,
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),
@@ -131,10 +148,10 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),
@@ -238,15 +255,17 @@ const ResignationListFilterOptions = ({
       </CRow>
       <CRow className="mb-3">
         <CCol sm={{ span: 6, offset: 3 }}>
-          <Link to={`/separationChart`}>
-            <CButton
-              color="info btn-ovh me-3"
-              data-testid="view-btn"
-              onClick={viewChartHandler}
-            >
-              <i className="fa fa-eye"></i>View Chart
-            </CButton>
-          </Link>
+          {userAccessViewChart?.viewaccess && (
+            <Link to={`/separationChart`}>
+              <CButton
+                color="info btn-ovh me-3"
+                data-testid="view-btn"
+                onClick={viewChartHandler}
+              >
+                <i className="fa fa-eye"></i>View Chart
+              </CButton>
+            </Link>
+          )}
           <CButton
             color="info btn-ovh me-3"
             data-testid="export-btn"
@@ -349,12 +368,13 @@ const ResignationListFilterOptions = ({
               aria-label="Multiple Search"
               data-testid="search-input"
               aria-describedby="button-addon2"
-              value={searchInputValue}
+              value={searchInputValue?.replace(/^\s*/, '')}
               onChange={(e) => {
                 setSearchInputValue(e.target.value)
               }}
             />
             <CButton
+              disabled={!searchInputValue?.replace(/^\s*/, '')}
               data-testid="multi-search-btn"
               className="cursor-pointer"
               type="button"

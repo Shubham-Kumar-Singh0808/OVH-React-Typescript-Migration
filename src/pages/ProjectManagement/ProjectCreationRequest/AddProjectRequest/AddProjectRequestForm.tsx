@@ -590,7 +590,7 @@ const AddProjectRequestForm = ({
           <ProjectName
             onChange={setProjectName}
             onBlur={handleAddProjectName}
-            value={projectName}
+            value={projectName?.replace(/^\s*/, '')}
           />
           <OInputField
             onChangeHandler={setCustomerContactName}
@@ -601,6 +601,7 @@ const AddProjectRequestForm = ({
             name="projectContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setCustomerEmail}
@@ -612,6 +613,7 @@ const AddProjectRequestForm = ({
             name="projectContactEmail"
             placeholder="Email"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactName}
@@ -622,6 +624,7 @@ const AddProjectRequestForm = ({
             name="billingContactPerson"
             placeholder="Name"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OInputField
             onChangeHandler={setBillingContactEmail}
@@ -631,8 +634,9 @@ const AddProjectRequestForm = ({
             type="email"
             label="Billing Contact Email"
             name="billingContactPersonEmail"
-            placeholder="Name"
+            placeholder="Email Id"
             dynamicFormLabelProps={dynamicFormLabelProps}
+            autoComplete={'off'}
           />
           <OSelectList
             list={priceModelList}
@@ -649,6 +653,7 @@ const AddProjectRequestForm = ({
             <CCol sm={3}>
               <CFormCheck
                 inline
+                className="sh-formLabel"
                 type="checkbox"
                 name="internalProject"
                 id="internalProject"
@@ -719,7 +724,7 @@ const AddProjectRequestForm = ({
                 showYearDropdown
                 dropdownMode="select"
                 data-testid="start-date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
                 name="addprojectstartdate"
                 value={projectRequest.startdate}
@@ -742,9 +747,9 @@ const AddProjectRequestForm = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 data-testid="end-date-picker"
-                dateFormat="dd/mm/yy"
+                dateFormat="dd/mm/yyyy"
                 name="addprojectenddate"
                 value={projectRequest.enddate}
                 onChange={(date: Date) => onHandleProjectRequestEndDate(date)}
@@ -864,50 +869,60 @@ const AddProjectRequestForm = ({
           </CRow>
         </CCol>
         {projectRequest.type === 'Fixed Bid' && (
-          <CRow className="mt-4 mb-4">
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              {projectMileStone.length > 0 &&
-                projectMileStone?.map((item, index) => {
-                  return (
-                    <AddProjectMileStone
-                      item={item}
-                      key={index}
-                      index={index}
-                      emptyPercentage={emptyPercentage}
-                      setProjectMileStone={setProjectMileStone}
-                      projectMileStone={projectMileStone}
-                      titleOnChange={titleOnChange}
-                      commentsOnChange={commentOnChange}
-                      effortOnChange={effortOnChange}
-                      onChangeHandleFromDate={onChangeHandleFromDate}
-                      onChangeHandleToDate={onChangeHandleToDate}
-                      billableOnChange={billableOnChange}
-                      percentageOnChange={percentageOnChange}
-                      setIsAddMileStoneButtonEnabled={
-                        setIsAddMileStoneButtonEnabled
-                      }
-                      isAddMilestoneButtonEnabled={isAddMilestoneButtonEnabled}
-                    />
-                  )
-                })}
-            </CTable>
-            {showTotalEffort ? (
-              <span>Total Effort:{showTotalEffort} </span>
-            ) : (
-              <></>
-            )}
-          </CRow>
+          <>
+            <label className="sh-title-milestone">
+              <b>Milestone:</b>
+            </label>
+            <CRow className="mt-4 mb-4">
+              <CTable striped className="align-middle">
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                {projectMileStone.length > 0 &&
+                  projectMileStone?.map((item, index) => {
+                    return (
+                      <AddProjectMileStone
+                        item={item}
+                        key={index}
+                        index={index}
+                        emptyPercentage={emptyPercentage}
+                        setProjectMileStone={setProjectMileStone}
+                        projectMileStone={projectMileStone}
+                        titleOnChange={titleOnChange}
+                        commentsOnChange={commentOnChange}
+                        effortOnChange={effortOnChange}
+                        onChangeHandleFromDate={onChangeHandleFromDate}
+                        onChangeHandleToDate={onChangeHandleToDate}
+                        billableOnChange={billableOnChange}
+                        percentageOnChange={percentageOnChange}
+                        setIsAddMileStoneButtonEnabled={
+                          setIsAddMileStoneButtonEnabled
+                        }
+                        isAddMilestoneButtonEnabled={
+                          isAddMilestoneButtonEnabled
+                        }
+                      />
+                    )
+                  })}
+              </CTable>
+              {showTotalEffort ? (
+                <span className="ps-2">
+                  <strong>Total Effort: </strong>
+                  {showTotalEffort}{' '}
+                </span>
+              ) : (
+                <></>
+              )}
+            </CRow>
+          </>
         )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-3 col-form-label text-end">

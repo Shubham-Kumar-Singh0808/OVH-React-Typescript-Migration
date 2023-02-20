@@ -27,6 +27,13 @@ const ClientFilterOptions = ({
     reduxServices.clients.selectors.selectedClientStatus,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessAddClients = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Clients',
+  )
+
   const handleChangeSelectedClientStatus = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -71,10 +78,12 @@ const ClientFilterOptions = ({
         <CCol md={12} className="pe-0">
           <div className="form-group pull-right ms-4">
             <Link to="/addClient">
-              <CButton color="info" className="text-white btn-ovh" size="sm">
-                <i className="fa fa-plus me-1"></i>
-                Add Client
-              </CButton>
+              {userAccessAddClients?.createaccess && (
+                <CButton color="info" className="text-white btn-ovh" size="sm">
+                  <i className="fa fa-plus me-1"></i>
+                  Add Client
+                </CButton>
+              )}
             </Link>
           </div>
           <div className="col-sm-3 col-xs-12 pull-right me-2">
@@ -83,7 +92,7 @@ const ClientFilterOptions = ({
                 placeholder="Search here"
                 aria-label="Search here"
                 aria-describedby="button-addon2"
-                value={searchInput}
+                value={searchInput?.replace(/^\s*/, '')}
                 onChange={(e) => {
                   setSearchInput(e.target.value)
                 }}
@@ -95,7 +104,7 @@ const ClientFilterOptions = ({
                 color="info"
                 id="button-addon2"
                 onClick={searchButtonHandler}
-                disabled={!searchInput}
+                disabled={!searchInput?.replace(/^\s*/, '')}
               >
                 <i className="fa fa-search"></i>
               </CButton>

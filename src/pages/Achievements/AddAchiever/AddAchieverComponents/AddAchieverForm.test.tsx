@@ -16,6 +16,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { NewAchieverInformation } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { emptyString, selectAchievementType } from '../../AchievementConstants'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockaddAchievementTypeButtonHandler = jest.fn()
 const mocksetNewAchieverDetails = jest.fn()
@@ -66,6 +67,9 @@ describe('add achiever form', () => {
             isLoading: ApiLoadingState.succeeded,
             activeEmployeeList: mockActiveEmployeeList,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -90,7 +94,7 @@ describe('add achiever form', () => {
       userEvent.type(empName, 'Pradeep')
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
 
-      const dates = screen.getAllByPlaceholderText('MM-YYYY')
+      const dates = screen.getAllByPlaceholderText('mm-yyyy')
       fireEvent.click(dates[0])
       await waitFor(() =>
         fireEvent.change(dates[0], { target: { value: '02-2022' } }),
@@ -112,7 +116,7 @@ describe('add achiever form', () => {
       expect(screen.getAllByTestId('ach-name-opt')).toHaveLength(11)
       userEvent.selectOptions(achievementName, 'Test Achievement 1')
 
-      const dates = screen.getAllByPlaceholderText('MM-YYYY')
+      const dates = screen.getAllByPlaceholderText('mm-yyyy')
       fireEvent.click(dates[0])
       await waitFor(() =>
         fireEvent.change(dates[0], { target: { value: '02-2022' } }),

@@ -13,6 +13,7 @@ const NewBookingLocation = ({
   const meetingLocation = useTypedSelector(
     (state) => state.bookingList.meetingLocation,
   )
+
   return (
     <>
       <CFormLabel className="col-sm-3 col-form-label text-end">

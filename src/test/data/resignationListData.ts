@@ -72,7 +72,7 @@ export const mockResignationListHistory: SeparationTimeLine = {
     },
   ],
   employeeComments: 'test',
-  managerComments: null,
+  managerComments: '',
   withdrawComments: null,
   primaryReasonId: null,
   primaryReasonName: 'Career growth',

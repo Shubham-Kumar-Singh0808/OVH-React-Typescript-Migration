@@ -27,7 +27,6 @@ const ProjectMembersSelection = ({
   attendeesList,
   setAttendeesList,
   selectProjectMember,
-  isErrorShow,
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
@@ -37,7 +36,6 @@ const ProjectMembersSelection = ({
   attendeesList: Availability[]
   setAttendeesList: (value: Availability[]) => void
   selectProjectMember: (attendeeId: number, attendeeName: string) => void
-  isErrorShow: boolean
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
@@ -73,14 +71,12 @@ const ProjectMembersSelection = ({
     setAttendeesList([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const confirmDeleteAllAttendees = () => {
     setDeleteListModalVisible(false)
     setAttendeesList([])
     dispatch(reduxServices.app.actions.addToast(deleteAllAttendeesToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const newMember: Availability[] = []
@@ -89,8 +85,8 @@ const ProjectMembersSelection = ({
     setIsErrorShow(false)
     const newResult = await Promise.all(
       projectMembers.map(async (member) => {
-        const startTimeCopy = addEvent.startTime.split(':')
-        const endTimeCopy = addEvent.endTime.split(':')
+        const startTimeCopy = addEvent?.startTime.split(':')
+        const endTimeCopy = addEvent?.endTime.split(':')
         const prepareObj = {
           attendeeId: member.id,
           attendeeName: member.fullName,
@@ -182,17 +178,7 @@ const ProjectMembersSelection = ({
                     })}
                 </CTableBody>
               </CTable>
-              {isErrorShow && (
-                <CRow>
-                  <CCol>
-                    <span className="sh-span-red">
-                      The employee already added to Attendees
-                    </span>
-                  </CCol>
-                </CRow>
-              )}
             </CCol>
-
             <CCol sm={2} md={3} className="meeting-bulk-add">
               <CButton
                 color="info btn-ovh me-1"

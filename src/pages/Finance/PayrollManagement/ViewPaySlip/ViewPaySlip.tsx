@@ -20,7 +20,7 @@ const ViewPaySlip = ({
           <>
             <CTableRow>
               <CTableDataCell className="text-center" colSpan={5}>
-                <strong>Payslip</strong>
+                <strong>PAYSLIP</strong>
               </CTableDataCell>
             </CTableRow>
             <CTableRow>

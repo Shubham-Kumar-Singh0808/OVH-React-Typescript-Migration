@@ -36,6 +36,7 @@ import {
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { ShouldResetNewBookingFields } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -91,6 +92,14 @@ const NewEvent = (): JSX.Element => {
     trainerName: trainerDetails,
   } as AddEvent
 
+  const initResetFields = {
+    projectName: false,
+    startEndTime: false,
+    trainer: false,
+  } as ShouldResetNewBookingFields
+
+  const [resetFields, setResetField] = useState(initResetFields)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addEvent, setAddEvent] = useState(initEvent)
   const [descriptionValue, setDescriptionValue] = useState('')
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
@@ -100,6 +109,7 @@ const NewEvent = (): JSX.Element => {
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  console.log(attendeesList)
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -205,6 +215,7 @@ const NewEvent = (): JSX.Element => {
     setAddEvent({ ...addEvent, authorName: value })
   }
   const onSelectTrainer = (value: Author) => {
+    setResetField({ ...resetFields, trainer: false })
     setAddEvent({ ...addEvent, trainerName: value })
   }
   const onHandleEventType = (value: string) => {
@@ -223,12 +234,14 @@ const NewEvent = (): JSX.Element => {
     })
   }
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setResetField({ ...resetFields, startEndTime: false })
     setAddEvent({ ...addEvent, startTime: val1, endTime: val2 })
   }
   const onHandleDescription = (value: string) => {
     setDescriptionValue(value)
   }
   const onSelectProject = (value: string) => {
+    setResetField({ ...resetFields, projectName: false })
     setAddEvent({ ...addEvent, projectName: value })
   }
 
@@ -240,6 +253,7 @@ const NewEvent = (): JSX.Element => {
       setIsAttendeeErrorShow(false)
     }
   }
+  console.log(addEvent.startTime)
 
   const handleConfirmBtn = async () => {
     const startTimeSplit = addEvent.startTime.split(':')
@@ -251,7 +265,6 @@ const NewEvent = (): JSX.Element => {
     )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
-      console.log(name)
       return rest
     })
     const prepareObj = {
@@ -277,8 +290,32 @@ const NewEvent = (): JSX.Element => {
             />,
           ),
         )
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you missed the selected time..!!"
+            />,
+          ),
+        )
       }
     }
+  }
+
+  const clearBtnHandler = () => {
+    setAddEvent(initEvent)
+    const shouldResetFields = {
+      projectName: true,
+      startEndTime: true,
+      trainer: true,
+    } as ShouldResetNewBookingFields
+    setResetField(shouldResetFields)
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
   }
 
   return (
@@ -307,6 +344,7 @@ const NewEvent = (): JSX.Element => {
             <Trainer
               allEmployeesProfiles={allEmployeesProfiles}
               onSelectTrainer={onSelectTrainer}
+              shouldReset={resetFields.trainer as boolean}
             />
             <EventType
               eventTypeList={eventTypeList}
@@ -323,11 +361,18 @@ const NewEvent = (): JSX.Element => {
             />
             <StartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
+              shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Subject:
-                <span className={showIsRequired(addEvent.agenda)}>*</span>
+                <span
+                  className={showIsRequired(
+                    addEvent.agenda?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
@@ -344,25 +389,36 @@ const NewEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(descriptionValue)}>*</span>
+                <span
+                  className={showIsRequired(
+                    descriptionValue?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
-              <CCol sm={8}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={''}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
-                  }}
-                />
-              </CCol>
+              {showEditor ? (
+                <CCol sm={8}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={''}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      onHandleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
+              ) : (
+                ''
+              )}
             </CRow>
             <SelectProject
               allProjects={allProjects}
               onSelectProject={onSelectProject}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+              shouldReset={resetFields.projectName}
             />
             <Attendees
               allEmployeesProfiles={allEmployeesProfiles}
@@ -377,21 +433,22 @@ const NewEvent = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-
-            {projectMembers?.length > 0 && (
-              <ProjectMembersSelection
-                addEvent={addEvent}
-                projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-              />
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0 ? (
+              <>
+                <ProjectMembersSelection
+                  addEvent={addEvent}
+                  projectMembers={projectMembers}
+                  attendeesList={attendeesList}
+                  setAttendeesList={setAttendeesList}
+                  selectProjectMember={selectProjectMember}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                />
+              </>
+            ) : (
+              <></>
             )}
-
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
@@ -407,6 +464,7 @@ const NewEvent = (): JSX.Element => {
                     color="warning "
                     data-testid="clearBtn"
                     className="btn-ovh"
+                    onClick={clearBtnHandler}
                   >
                     Clear
                   </CButton>

@@ -7,6 +7,7 @@ import EventListTable from './EventListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockEventList } from '../../../test/data/eventListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -32,6 +33,7 @@ const toRender = (
         currentPage={1}
         pageSize={20}
         paginationRange={[1, 2, 3]}
+        selectDate={''}
       />
     </Router>
   </div>
@@ -46,16 +48,8 @@ describe('EventList', () => {
             isLoading: ApiLoadingState.succeeded,
             listSize: 41,
           },
-          authentication: {
-            authenticatedUser: {
-              employeeName: 'admin',
-              employeeId: '1983',
-              userName: 'admin',
-              role: 'admin',
-              tenantKey: 'abc',
-              token: 'test',
-              designation: 'developer',
-            },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

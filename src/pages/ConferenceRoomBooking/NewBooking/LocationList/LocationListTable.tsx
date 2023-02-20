@@ -104,8 +104,10 @@ const LocationListTable = ({
           {currentPageItems.length > 0 &&
             currentPageItems?.map((location, index) => {
               return (
-                <CTableRow key={getItemNumber(index)}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{location.locationName}</CTableDataCell>
                   <CTableDataCell>
                     {userDeleteAccess && (

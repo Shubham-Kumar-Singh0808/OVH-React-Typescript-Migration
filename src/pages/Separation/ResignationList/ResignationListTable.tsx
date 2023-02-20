@@ -104,6 +104,11 @@ const ResignationListTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const handleShowInitiateResignationModal = (separationId: number) => {
     setToInitiateSeparationId(separationId)
     setIsInitiateModalVisible(true)
@@ -228,7 +233,7 @@ const ResignationListTable = ({
               </Link>
             )}
             {userAccessITClearance?.viewaccess && (
-              <Link to={`/ClearanceCertificateManager`}>
+              <Link to={`/ClearanceCertificateIT`}>
                 <CTooltip content="IT">
                   <CButton
                     size="sm"
@@ -344,7 +349,9 @@ const ResignationListTable = ({
               getAllResignationList?.map((resignationItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     <CTableDataCell>
                       {resignationItem.employeeId}
                     </CTableDataCell>
@@ -377,7 +384,7 @@ const ResignationListTable = ({
                             <CTooltip content="Timeline">
                               <CButton
                                 color="info"
-                                className="btn-ovh me-2"
+                                className="btn-ovh-employee-list"
                                 data-testid="history-btn"
                                 onClick={() =>
                                   resignationHistoryButtonHandler(

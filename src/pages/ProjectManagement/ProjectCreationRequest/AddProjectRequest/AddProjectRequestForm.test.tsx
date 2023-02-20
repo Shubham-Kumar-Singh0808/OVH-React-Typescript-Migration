@@ -49,7 +49,7 @@ describe('ApproveProjectForm Testing', () => {
     expect(screen.getByRole('option', { name: 'Java' }).selected).toBe(false)
     expect(screen.getByRole('option', { name: 'Banking' }).selected).toBe(false)
 
-    const dates = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
   })
@@ -118,7 +118,7 @@ describe('ApproveProjectForm Testing', () => {
     userEvent.selectOptions(domainSelectList, ['Insurance'])
 
     // Start Date
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

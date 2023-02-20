@@ -10,7 +10,7 @@ const EmployeeRatingDetails = (): JSX.Element => {
   )
   return (
     <>
-      <CCardHeader>
+      <CCardHeader className="ms-4 me-4">
         <h4 className="h4">Performance Reviews</h4>
       </CCardHeader>
       <CCardBody className="ps-0 pe-0 mt-4 ms-4 me-4 rating-details-table">

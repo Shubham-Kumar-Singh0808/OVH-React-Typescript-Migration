@@ -12,6 +12,7 @@ import {
 } from '../../../../test/testUtils'
 import { mockAchievementTypeList } from '../../../../test/data/AchieverListData'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const mockBackButtonHandler = jest.fn()
 
@@ -38,6 +39,9 @@ describe('Achievement Type List Testing', () => {
           commonAchievements: {
             achievementTypeList: mockAchievementTypeList,
             isLoading: ApiLoadingState.succeeded,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

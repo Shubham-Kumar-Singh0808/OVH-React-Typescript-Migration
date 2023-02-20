@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import ClientsTable from './ClientsTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockClientsData } from '../../../test/data/clientsData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
@@ -62,6 +63,9 @@ describe('Clients Table Component Testing without data', () => {
         preloadedState: {
           clients: {
             clientsList: mockClientsData,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       })

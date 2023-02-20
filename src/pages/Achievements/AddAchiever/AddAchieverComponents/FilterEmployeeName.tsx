@@ -49,7 +49,8 @@ const FilterEmployeeName = ({
           className={
             employeeName === undefined ||
             employeeName === emptyString ||
-            employeeName.trim().length === 0
+            employeeName.trim().length === 0 ||
+            employeeName
               ? TextDanger
               : TextWhite
           }

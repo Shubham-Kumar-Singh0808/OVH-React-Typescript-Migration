@@ -35,44 +35,49 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     setInvoiceNumber(data)
   }
   const milestoneNameModel = (
-    <CTable className="milestone-model-table">
-      <CTableBody>
-        <CTableRow>
-          <CTableDataCell>Project:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.projectName}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Client:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.clientName}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Percentage:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestonePercentage}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Planned End Date:</CTableDataCell>
-          <CTableDataCell>
-            {invoiceNumber?.milestonePlannedEndDate || 'N/A'}
-          </CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Actual End Date:</CTableDataCell>
-          <CTableDataCell>
-            {invoiceNumber?.milestoneActualEndDate || 'N/A'}
-          </CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Comments:</CTableDataCell>
-          <CTableDataCell>
-            {invoiceNumber?.milestoneComments || 'N/A'}
-          </CTableDataCell>
-        </CTableRow>
-      </CTableBody>
-    </CTable>
+    <>
+      <h4 className="mb-4">Milestone Details</h4>
+      <CTable className="milestone-model-table">
+        <CTableBody>
+          <CTableRow>
+            <CTableDataCell>Project:</CTableDataCell>
+            <CTableDataCell>{invoiceNumber?.projectName}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Client:</CTableDataCell>
+            <CTableDataCell>{invoiceNumber?.clientName}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Milestone:</CTableDataCell>
+            <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Percentage:</CTableDataCell>
+            <CTableDataCell>
+              {invoiceNumber?.milestonePercentage}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Planned End Date:</CTableDataCell>
+            <CTableDataCell>
+              {invoiceNumber?.milestonePlannedEndDate || 'N/A'}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Actual End Date:</CTableDataCell>
+            <CTableDataCell>
+              {invoiceNumber?.milestoneActualEndDate || 'N/A'}
+            </CTableDataCell>
+          </CTableRow>
+          <CTableRow>
+            <CTableDataCell>Comments:</CTableDataCell>
+            <CTableDataCell>
+              {invoiceNumber?.milestoneComments || 'N/A'}
+            </CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+      </CTable>
+    </>
   )
   const invoiceModel = (
     <CTable className="milestone-model-table">
@@ -187,7 +192,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Edit">
                     <CButton
                       color="info"
-                      className="btn-ovh m-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
@@ -195,7 +200,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="View">
                     <CButton
                       color="info"
-                      className="btn-ovh m-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-eye text-white fa-fw"></i>
                     </CButton>
@@ -203,7 +208,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Timeline">
                     <CButton
                       color="info"
-                      className="btn-ovh m-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-bar-chart  fa-fw"></i>
                     </CButton>
@@ -211,7 +216,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                   <CTooltip content="Discussion">
                     <CButton
                       color="info"
-                      className="btn-ovh m-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-comments text-white"></i>
                     </CButton>

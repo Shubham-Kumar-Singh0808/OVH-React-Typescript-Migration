@@ -11,7 +11,7 @@ import {
   CTableBody,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
@@ -21,6 +21,7 @@ const PeopleTable = (): JSX.Element => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectViewDetails,
   )
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [isProjectAllocationEdit, setIsProjectAllocationEdit] =
     useState<boolean>(false)
   const [templateId, setTemplateId] = useState(0)
@@ -43,9 +44,17 @@ const PeopleTable = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditEmployeeAllocation((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'allocation') {
+      let targetValue = value.replace(/\D/g, '')
+      if (Number(targetValue) > 100) targetValue = '100'
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: targetValue } }
+      })
+    } else {
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const editProjectAllocationButtonHandler = (
@@ -86,6 +95,14 @@ const PeopleTable = (): JSX.Element => {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+
+  useEffect(() => {
+    if (editAllocateProject.allocation?.replace(/^\s*/, '')) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [editAllocateProject.allocation])
 
   return (
     <>
@@ -129,7 +146,7 @@ const PeopleTable = (): JSX.Element => {
         <CTableBody>
           {getProjectDetail?.length > 0 &&
             getProjectDetail?.map((project, i) => {
-              const billable = project.billable ? 'yes' : 'No'
+              const billable = project.billable ? 'Yes' : 'No'
               const allocated = project.isAllocated
                 ? 'Allocated'
                 : 'De-Allocated'
@@ -155,6 +172,8 @@ const PeopleTable = (): JSX.Element => {
                           data-testid="template-input"
                           name="allocation"
                           maxLength={3}
+                          max={100}
+                          autoComplete="off"
                           value={editAllocateProject.allocation}
                           onChange={handleEditProjectAllocationHandler}
                         />
@@ -180,7 +199,7 @@ const PeopleTable = (): JSX.Element => {
                           }
                           onChange={handleEditProjectAllocationHandler}
                         >
-                          <option value="true">yes</option>
+                          <option value="true">Yes</option>
                           <option value="false">No</option>
                         </CFormSelect>
                       </div>
@@ -220,6 +239,7 @@ const PeopleTable = (): JSX.Element => {
                             color="success"
                             className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                             onClick={saveProjectAllocationHandler}
+                            disabled={!isSaveButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"
@@ -241,8 +261,9 @@ const PeopleTable = (): JSX.Element => {
                     ) : (
                       <>
                         {userAccessEditPeople?.updateaccess && (
-                          <CTooltip content="Cancel">
+                          <CTooltip content="Edit">
                             <CButton
+                              className="btn-ovh-employee-list btn-ovh me-1 mb-1"
                               color="info btn-ovh me-2"
                               data-testid="edit-btn"
                               onClick={() => {
@@ -260,14 +281,12 @@ const PeopleTable = (): JSX.Element => {
               )
             })}
         </CTableBody>
-        <span>
-          <strong>
-            {getProjectDetail?.length
-              ? `Total Records: ${getProjectDetail?.length}`
-              : `No Records found`}
-          </strong>
-        </span>
       </CTable>
+      <strong>
+        {getProjectDetail?.length
+          ? `Total Records: ${getProjectDetail?.length}`
+          : `No Records found`}
+      </strong>
     </>
   )
 }

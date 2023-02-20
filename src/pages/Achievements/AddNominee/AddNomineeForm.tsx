@@ -310,7 +310,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       </CContainer>
       <CContainer className="mt-3 mb-3">
         {formDetails.nominationQuestionDataDtosId?.map((item, index) => (
-          <CContainer key={index} className="mb-5">
+          <CContainer key={index}>
             <CFormLabel data-testid="question-label">
               {index + 1}. {item.questions}
               <span
@@ -349,7 +349,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
       </CContainer>
       <CContainer>
         <div className="d-flex flex-row ms-3 flex-wrap-row">
-          <CCol md={{ span: 4, offset: 2 }}>
+          <CCol md={{ span: 4, offset: 0 }} className="mt-0">
             {userAccessToFeatures?.createaccess ? (
               <CButton
                 data-testid="add-btn-id"
