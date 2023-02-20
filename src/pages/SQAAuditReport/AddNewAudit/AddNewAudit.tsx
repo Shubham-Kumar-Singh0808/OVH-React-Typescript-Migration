@@ -14,14 +14,14 @@ import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import { Link, useHistory } from 'react-router-dom'
 import AuditStartTimeEndTime from './AuditStartTimeEndTime'
-import OCard from '../../components/ReusableComponent/OCard'
-import { TextWhite, TextDanger } from '../../constant/ClassName'
-import { reduxServices } from '../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import { GetAllEmployeesNames } from '../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
-import { showIsRequired } from '../../utils/helper'
-import { SaveAuditForm } from '../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
-import OToast from '../../components/ReusableComponent/OToast'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { showIsRequired } from '../../../utils/helper'
+import { SaveAuditForm } from '../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const AddNewAudit = (): JSX.Element => {
   const formLabelProps = {
@@ -67,7 +67,6 @@ const AddNewAudit = (): JSX.Element => {
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
-
   useEffect(() => {
     if (projectNameAutoCompleteTarget) {
       dispatch(
@@ -199,8 +198,14 @@ const AddNewAudit = (): JSX.Element => {
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
     setAddAudit({ ...addAudit, startTime: val1, endTime: val2 })
   }
-  const successToastMessage = (
+  const saveToastMessage = (
     <OToast toastMessage="Audit Form Saved Successfully" toastColor="success" />
+  )
+  const submitToastMessage = (
+    <OToast
+      toastMessage="Audit Form Submitted Successfully"
+      toastColor="success"
+    />
   )
   const warningToastMessage = (
     <OToast toastMessage="Audit Already Exists" toastColor="danger" />
@@ -221,14 +226,14 @@ const AddNewAudit = (): JSX.Element => {
     setAddAuditeeName(projectEmployees)
   }, [projectEmployees])
 
-  const handleAddNewAuditForm = async () => {
+  const handleAddNewAuditForm = async (auditFormStatus: string) => {
     const startTimeSplit = addAudit.startTime.split(':')
     const endTimeSplit = addAudit.endTime.split(':')
     const prepareObject = {
       ...addAudit,
       auditDate,
       auditRescheduleStatus: false,
-      formStatus: 'Save' || 'Submit',
+      formStatus: auditFormStatus,
       projectType: auditProjectType,
       projectName:
         auditProjectType === 'false'
@@ -249,9 +254,18 @@ const AddNewAudit = (): JSX.Element => {
     if (
       reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
         addNewAuditFormResultAction,
-      )
+      ) &&
+      auditFormStatus === 'Save'
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(saveToastMessage))
+      history.push('/SQAAudit')
+    } else if (
+      reduxServices.addNewAuditForm.saveNewAuditForm.fulfilled.match(
+        addNewAuditFormResultAction,
+      ) &&
+      auditFormStatus === 'Submit'
+    ) {
+      dispatch(reduxServices.app.actions.addToast(submitToastMessage))
       history.push('/SQAAudit')
     } else if (
       reduxServices.addNewAuditForm.saveNewAuditForm.rejected.match(
@@ -260,7 +274,6 @@ const AddNewAudit = (): JSX.Element => {
       addNewAuditFormResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -447,7 +460,7 @@ const AddNewAudit = (): JSX.Element => {
                     placeholder: 'Project Manager',
                   }}
                   getItemValue={(item) => item.firstName + ' ' + item.lastName}
-                  items={projectManagers ? projectManagers : []}
+                  items={projectManagers ?? []}
                   wrapperStyle={{ position: 'relative' }}
                   renderMenu={(children) => (
                     <div
@@ -571,7 +584,7 @@ const AddNewAudit = (): JSX.Element => {
                 className="btn-ovh me-1"
                 color="success"
                 disabled={!isButtonEnable}
-                onClick={handleAddNewAuditForm}
+                onClick={() => handleAddNewAuditForm('Save')}
               >
                 Save
               </CButton>
@@ -580,7 +593,7 @@ const AddNewAudit = (): JSX.Element => {
                 color="success "
                 className="btn-ovh"
                 disabled={!isButtonEnable}
-                onClick={handleAddNewAuditForm}
+                onClick={() => handleAddNewAuditForm('Submit')}
               >
                 Submit
               </CButton>
