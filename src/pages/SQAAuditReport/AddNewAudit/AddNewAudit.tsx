@@ -13,6 +13,7 @@ import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import ReactDatePicker from 'react-datepicker'
 import { Link, useHistory } from 'react-router-dom'
+import AuditStartTimeEndTime from './AuditStartTimeEndTime'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -21,7 +22,6 @@ import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateE
 import { showIsRequired } from '../../../utils/helper'
 import { SaveAuditForm } from '../../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-import AuditStartTimeEndTime from '../AuditStartTimeEndTime'
 
 const AddNewAudit = (): JSX.Element => {
   const formLabelProps = {
