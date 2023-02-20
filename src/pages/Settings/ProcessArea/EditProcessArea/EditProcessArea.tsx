@@ -123,6 +123,13 @@ const EditProcessArea = ({
       toastColor="danger"
     />
   )
+  const updatedOrderToastMessage = (
+    <OToast
+      toastMessage="order should be37or below37
+    "
+      toastColor="danger"
+    />
+  )
   const prepareObject = {
     categoryId: processArea.categoryId,
     documentName: processArea.documentName,
@@ -172,6 +179,18 @@ const EditProcessArea = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(updatedErrorToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+    if (processAreaDetails) {
+      const errorResult = processAreaDetails.order + 1
+      if (errorResult !== processAreaDetails.order) {
+        await dispatch(
+          reduxServices.processArea.getOrderCountOfActiveProcesses(
+            processArea.categoryId,
+          ),
+        )
+        dispatch(reduxServices.app.actions.addToast(updatedOrderToastMessage))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+      }
     }
   }
 
@@ -243,7 +262,6 @@ const EditProcessArea = ({
                 value={processArea.processSubHeadName}
                 onChange={onChangeInputHandler}
               >
-                {/* <option value={''}>Select Option</option> */}
                 {ProcessAreaList?.map((item, index) => (
                   <option key={index} value={item.id}>
                     {item.name}
