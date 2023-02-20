@@ -123,10 +123,18 @@ const ChangeRequestTable = ({
       <CTable striped className="mt-3 table-layout-fixed changeRequest-table">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Duration</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell className="sh-index" scope="col">
+              #
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-name" scope="col">
+              Name
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-Duration" scope="col">
+              Duration
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-description" scope="col">
+              Description
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>

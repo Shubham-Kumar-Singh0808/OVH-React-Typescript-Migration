@@ -695,6 +695,9 @@ export interface InitiateCycleApi extends ApiBase {
   initiateCycle: string
   deleteQuestion: string
   addQuestion: string
+  addCycle: string
+  editCycle: string
+  updateCycle: string
 }
 
 export interface MyKRAsApi extends ApiBase {
