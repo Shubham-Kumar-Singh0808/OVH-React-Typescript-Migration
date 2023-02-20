@@ -290,6 +290,16 @@ const NewEvent = (): JSX.Element => {
             />,
           ),
         )
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you missed the selected time..!!"
+            />,
+          ),
+        )
       }
     }
   }
@@ -431,7 +441,6 @@ const NewEvent = (): JSX.Element => {
                   attendeesList={attendeesList}
                   setAttendeesList={setAttendeesList}
                   selectProjectMember={selectProjectMember}
-                  isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}

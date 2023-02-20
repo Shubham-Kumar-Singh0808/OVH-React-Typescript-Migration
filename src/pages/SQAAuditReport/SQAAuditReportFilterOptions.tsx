@@ -148,7 +148,7 @@ const SQAAuditReportFilterOptions = ({
     dispatch(
       reduxServices.sqaAuditReport.getSQAAuditReport({
         endIndex: pageSize * currentPage,
-        multiSearch: searchInput || '',
+        multiSearch: searchInput?.replace(/^\s*/, '') || '',
         startIndex: pageSize * (currentPage - 1),
         SQAAuditSelectionDate: '',
         auditRescheduleStatus: '',
@@ -157,6 +157,24 @@ const SQAAuditReportFilterOptions = ({
         to: '',
       }),
     )
+  }
+  const searchKeyDownButtonHandler = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: searchInput?.replace(/^\s*/, '') || '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+    }
   }
   return (
     <>
@@ -341,14 +359,14 @@ const SQAAuditReportFilterOptions = ({
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
-              value={searchInput}
+              value={searchInput?.replace(/^\s*/, '')}
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
-              onKeyDown={searchButtonHandler}
+              onKeyDown={searchKeyDownButtonHandler}
             />
             <CButton
-              disabled={!searchInput}
+              disabled={!searchInput?.replace(/^\s*/, '')}
               data-testid="multi-search-btn"
               className="cursor-pointer"
               type="button"
