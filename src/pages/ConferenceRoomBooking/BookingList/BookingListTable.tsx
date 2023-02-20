@@ -338,16 +338,17 @@ const BookingListTable = ({
         </>
       </OModal>
       <OModal
-        modalTitle="Cancel Meeting Room"
         alignment="center"
         visible={isCancelModalVisible}
         setVisible={setIsCancelModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Cancel Meeting Room"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmCancelBookingDetails}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to cancel this Meeting ?`}
+        <>Do you really want to cancel this Meeting ?</>
       </OModal>
     </>
   )

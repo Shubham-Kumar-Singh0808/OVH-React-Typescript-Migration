@@ -274,13 +274,14 @@ const ProjectStatusTable = ({
       )}
       <OModal
         alignment="center"
-        modalTitle="Delete Status"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Status"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteProjectStatus}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this{' '}
