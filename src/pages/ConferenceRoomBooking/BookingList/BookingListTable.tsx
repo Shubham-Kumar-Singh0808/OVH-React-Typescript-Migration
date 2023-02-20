@@ -338,6 +338,7 @@ const BookingListTable = ({
         </>
       </OModal>
       <OModal
+        modalTitle="Cancel Meeting Room"
         alignment="center"
         visible={isCancelModalVisible}
         setVisible={setIsCancelModalVisible}

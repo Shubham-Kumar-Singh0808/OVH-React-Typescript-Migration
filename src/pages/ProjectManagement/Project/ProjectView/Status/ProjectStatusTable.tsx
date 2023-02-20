@@ -274,6 +274,7 @@ const ProjectStatusTable = ({
       )}
       <OModal
         alignment="center"
+        modalTitle="Delete Status"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalHeaderClass="d-none"
@@ -281,7 +282,10 @@ const ProjectStatusTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectStatus}
       >
-        {`Do you really want to delete this ? ${toDeleteVisaIdName}`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteVisaIdName}</strong>
+        </>
       </OModal>
       <OModal
         modalSize="lg"
