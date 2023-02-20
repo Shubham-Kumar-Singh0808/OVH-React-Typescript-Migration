@@ -64,7 +64,7 @@ const EditPaySlip = ({
       name === 'netSalary' ||
       name === 'donation'
     ) {
-      const newValue = value.replace(/[^0-9]/gi, '')
+      const newValue = value.replace(/\D/gi, '')
       setToEditPayslipCopy((prevState) => {
         return { ...prevState, ...{ [name]: newValue } }
       })
