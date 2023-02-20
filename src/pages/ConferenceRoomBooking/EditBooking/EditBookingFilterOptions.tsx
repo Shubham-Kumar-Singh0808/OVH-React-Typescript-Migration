@@ -507,7 +507,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
                   attendeeResponse={attendeeResponse}
                   setAttendeeReport={setAttendeeReport}
                   selectEditProjectMember={selectEditProjectMember}
-                  isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}

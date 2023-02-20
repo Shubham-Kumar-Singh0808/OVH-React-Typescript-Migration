@@ -384,7 +384,7 @@ const ResignationListTable = ({
                             <CTooltip content="Timeline">
                               <CButton
                                 color="info"
-                                className="btn-ovh me-2"
+                                className="btn-ovh-employee-list"
                                 data-testid="history-btn"
                                 onClick={() =>
                                   resignationHistoryButtonHandler(
