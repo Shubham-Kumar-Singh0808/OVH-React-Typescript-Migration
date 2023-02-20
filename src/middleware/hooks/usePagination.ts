@@ -23,12 +23,9 @@ export const usePagination = (
     return range(1, Math.ceil(totalItemCount / pageSize))
   }, [totalItemCount, pageSize])
 
-  console.log({ paginationRange, initialPage })
-
   if (!paginationRange.includes(initialPage) && initialPage !== 1) {
     initialPage = paginationRange[paginationRange.length - 1]
   }
-  console.log({ paginationRange, initialPage })
 
   const [currentPage, setCurrentPage] = useState(initialPage)
 

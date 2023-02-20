@@ -49,13 +49,13 @@ const EditKRA = (): JSX.Element => {
   useEffect(() => {
     if (incomingKRAData !== null) {
       const descrip =
-        incomingKRAData.description === null
+        incomingKRAData?.description === null
           ? emptyString
-          : incomingKRAData.description
-      setEnteredKraName(incomingKRAData.name)
-      setEnteredDepartment(incomingKRAData.departmentName)
+          : incomingKRAData?.description
+      setEnteredKraName(incomingKRAData?.name)
+      setEnteredDepartment(incomingKRAData?.departmentName)
       setEnteredDescription(descrip)
-      setEnteredDesignation(incomingKRAData.designationName)
+      setEnteredDesignation(incomingKRAData?.designationName)
       setShowDescription(false)
       setTimeout(() => {
         setShowDescription(true)

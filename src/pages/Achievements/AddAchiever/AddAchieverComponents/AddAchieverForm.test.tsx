@@ -94,7 +94,7 @@ describe('add achiever form', () => {
       userEvent.type(empName, 'Pradeep')
       expect(mocksetNewAchieverDetails).toHaveBeenCalled()
 
-      const dates = screen.getAllByPlaceholderText('mm-yyyy')
+      const dates = screen.getAllByPlaceholderText('mm/yyyy')
       fireEvent.click(dates[0])
       await waitFor(() =>
         fireEvent.change(dates[0], { target: { value: '02-2022' } }),
@@ -116,7 +116,7 @@ describe('add achiever form', () => {
       expect(screen.getAllByTestId('ach-name-opt')).toHaveLength(11)
       userEvent.selectOptions(achievementName, 'Test Achievement 1')
 
-      const dates = screen.getAllByPlaceholderText('mm-yyyy')
+      const dates = screen.getAllByPlaceholderText('mm/yyyy')
       fireEvent.click(dates[0])
       await waitFor(() =>
         fireEvent.change(dates[0], { target: { value: '02-2022' } }),

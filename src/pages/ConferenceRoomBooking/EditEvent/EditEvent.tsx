@@ -89,19 +89,19 @@ const EditEvent = (): JSX.Element => {
   useEffect(() => {
     if (
       trainerAutoCompleteTarget &&
-      editEvent.agenda &&
+      editEvent?.agenda &&
       editEvent?.description
     ) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [editEvent.agenda, trainerAutoCompleteTarget, editEvent?.description])
+  }, [editEvent?.agenda, trainerAutoCompleteTarget, editEvent?.description])
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
     dispatch(reduxServices.newEvent.getLoggedEmployee())
-    if (editEvent.roomId) {
+    if (editEvent?.roomId) {
       dispatch(
         reduxServices.newEvent.getRoomsByLocation(Number(editEvent.locationId)),
       )
@@ -144,12 +144,12 @@ const EditEvent = (): JSX.Element => {
   }, [trainerAutoCompleteTarget])
 
   useEffect(() => {
-    if (editEvent.startTime === '' && editEvent.endTime === '') {
+    if (editEvent?.startTime === '' && editEvent?.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
     } else {
       setIsProjectAndAttendeesEnable(false)
     }
-  }, [editEvent.startTime, editEvent.endTime])
+  }, [editEvent?.startTime, editEvent?.endTime])
 
   const handleDescription = (description: string) => {
     setEditEvent((prevState) => {
@@ -332,8 +332,8 @@ const EditEvent = (): JSX.Element => {
             <RoomAndLocation
               eventLocations={eventLocations}
               locationRooms={locationRooms}
-              eventLocationValue={editEvent.locationId}
-              eventRoomValue={editEvent.roomId}
+              eventLocationValue={editEvent?.locationId}
+              eventRoomValue={editEvent?.roomId}
             />
             <ReservedBy eventReservedBy={editEvent?.authorName?.fullName} />
             <CRow className="mt-1 mb-3">
@@ -404,14 +404,14 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Subject:
-                <span className={showIsRequired(editEvent.agenda)}>*</span>
+                <span className={showIsRequired(editEvent?.agenda)}>*</span>
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
-                  value={editEvent.agenda}
+                  value={editEvent?.agenda}
                   onChange={(e) => {
                     setEditEvent({
                       ...editEvent,
