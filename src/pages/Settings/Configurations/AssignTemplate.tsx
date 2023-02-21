@@ -42,10 +42,6 @@ const AssignTemplate = (): JSX.Element => {
     reduxServices.assignTemplate.selectors.empDesignations,
   )
 
-  // useEffect(() => {
-  //   dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
-  // }, [dispatch])
-
   useEffect(() => {
     dispatch(reduxServices.assignTemplate.getAllEmpDepartmentNames())
   }, [dispatch])

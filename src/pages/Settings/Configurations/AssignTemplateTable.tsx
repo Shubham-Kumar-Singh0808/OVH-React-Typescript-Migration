@@ -100,7 +100,7 @@ const AssignTemplateTable = ({
     const prepareObject = {
       appraisalCycleDto: {
         active: appraisalCycle.active,
-        appraisalDuration: appraisalCycle.appraisalDuration,
+        appraisalDuration: '',
         appraisalEndDate: appraisalCycle.appraisalEndDate,
         appraisalStartDate: appraisalCycle.appraisalStartDate,
         appraisalType: appraisalCycle.appraisalType,
