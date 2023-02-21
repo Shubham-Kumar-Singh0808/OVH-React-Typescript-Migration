@@ -1,5 +1,5 @@
 import { CCardFooter, CCol, CImage, CLink, CRow } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
