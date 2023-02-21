@@ -22,7 +22,7 @@ const FinanceCertificateForm = (): JSX.Element => {
 
   const successToastMessage = (
     <OToast
-      toastMessage="CC details updated Successfully."
+      toastMessage="CC details submitted Successfully"
       toastColor="success"
     />
   )

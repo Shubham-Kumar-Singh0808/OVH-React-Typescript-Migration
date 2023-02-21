@@ -705,6 +705,7 @@ const ApproveProjectForm = (): JSX.Element => {
               onClick={handleUpdateSubmit}
               disabled={
                 !isUpdateBtnEnable ||
+                isGreaterThanStart ||
                 (approveProject.type === 'FIXEDBID' &&
                   !isAddMilestoneButtonEnabled)
               }
