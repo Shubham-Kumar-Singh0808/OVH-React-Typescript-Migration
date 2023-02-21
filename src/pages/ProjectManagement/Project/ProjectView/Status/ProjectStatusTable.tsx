@@ -115,7 +115,7 @@ const ProjectStatusTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Status Deleted Successfully"
           />,
         ),
       )

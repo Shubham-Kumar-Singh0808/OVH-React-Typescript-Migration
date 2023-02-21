@@ -240,6 +240,29 @@ const ProjectReport = (): JSX.Element => {
     downloadFile(projectListDownload, 'ProjectList.csv')
   }
 
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      const payload =
+        params.projectDatePeriod === 'Custom'
+          ? {
+              ...params,
+              employeeId: Number(employeeId),
+            }
+          : {
+              ...params,
+              startdate: '',
+              enddate: '',
+              employeeId: Number(employeeId),
+            }
+
+      dispatch(
+        reduxServices.projectReport.getFetchSearchAllocationReport(payload),
+      )
+    }
+  }
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper project-report"
@@ -421,6 +444,7 @@ const ProjectReport = (): JSX.Element => {
                   data-testid="multi-search-input"
                   value={params.multiSearch}
                   onChange={(event) => handleMultipleSearch(event.target.value)}
+                  onKeyUp={handleSearchByEnter}
                 />
                 <CButton
                   data-testid="multi-search-btn"

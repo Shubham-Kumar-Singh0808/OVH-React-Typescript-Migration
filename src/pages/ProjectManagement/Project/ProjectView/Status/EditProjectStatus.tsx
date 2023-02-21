@@ -65,7 +65,7 @@ const EditProjectStatus = ({
         nextDate: editNextWeekDate
           ? new Date(editNextWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -73,7 +73,7 @@ const EditProjectStatus = ({
         prevDate: editCurrentWeekDate
           ? new Date(editCurrentWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -213,7 +213,7 @@ const EditProjectStatus = ({
                       deviceLocale,
                       {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       },
                     )
@@ -268,7 +268,7 @@ const EditProjectStatus = ({
                       deviceLocale,
                       {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       },
                     )

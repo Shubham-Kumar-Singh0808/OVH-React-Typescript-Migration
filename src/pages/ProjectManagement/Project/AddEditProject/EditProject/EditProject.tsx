@@ -423,7 +423,7 @@ const EditProject = (): JSX.Element => {
               <ProjectName
                 onChange={setProjectName}
                 onBlur={handleProjectName}
-                value={projectName}
+                value={projectName?.replace(/^\s*/, '')}
               />
               <OInputField
                 onChangeHandler={handleCustomerContactName}
