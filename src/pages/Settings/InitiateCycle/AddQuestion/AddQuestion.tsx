@@ -28,7 +28,7 @@ const AddQuestion = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (addQuestion) {
+    if (addQuestion?.replace(/^\s*/, '')) {
       setIsAddBtnEnabled(true)
     } else {
       setIsAddBtnEnabled(false)
@@ -97,7 +97,11 @@ const AddQuestion = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="form-label col-sm-2 col-form-label text-end">
             Question :
-            <span className={addQuestion ? 'text-white' : 'text-danger'}>
+            <span
+              className={
+                addQuestion?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+              }
+            >
               *
             </span>
           </CFormLabel>

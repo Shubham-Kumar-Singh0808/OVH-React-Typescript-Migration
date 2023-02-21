@@ -56,6 +56,12 @@ const InitiateCycle = (): JSX.Element => {
   )
 
   useEffect(() => {
+    if (window.location.pathname === '/initiateCycle') {
+      dispatch(reduxServices.initiateCycle.actions.clearInitiateCycle())
+    }
+  }, [])
+
+  useEffect(() => {
     if (cycleChecked) {
       const tmpArr: GetQuestion[] = []
       cbFromApi.forEach((item) => {

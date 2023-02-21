@@ -180,6 +180,10 @@ const initiateCycleSlice = createSlice({
     setToggle: (state, action) => {
       state.toggle = action.payload
     },
+    clearInitiateCycle: (state) => {
+      state.allQuestions.list = []
+      state.allCycles.list = []
+    },
   },
   extraReducers(builder) {
     builder
