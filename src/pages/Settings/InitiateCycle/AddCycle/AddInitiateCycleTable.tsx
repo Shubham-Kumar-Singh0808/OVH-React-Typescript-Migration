@@ -126,7 +126,7 @@ const AddInitiateCycleTable = ({
                   <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
                   <CTableDataCell>{cycle.toMonth}</CTableDataCell>
                   <CTableDataCell>
-                    {cycle.activateFlag === true ? 'Active' : 'Inactive'}
+                    {cycle.activateFlag === true ? 'Active' : 'In-Active'}
                   </CTableDataCell>
                   <CTableDataCell>{cycle.startDate}</CTableDataCell>
                   <CTableDataCell>{cycle.endDate}</CTableDataCell>
