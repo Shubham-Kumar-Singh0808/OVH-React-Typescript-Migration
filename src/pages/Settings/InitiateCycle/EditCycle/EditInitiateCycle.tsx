@@ -45,6 +45,7 @@ const EditInitiateCycle = (): JSX.Element => {
       setCycleToMonth(editCycle.toMonth)
       setCycleFromDate(editCycle.startDate)
       setCycleToDate(editCycle.endDate)
+      setIsChecked(editCycle.activateFlag)
     }
   }, [editCycle])
 
