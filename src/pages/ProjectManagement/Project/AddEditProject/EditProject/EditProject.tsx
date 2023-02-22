@@ -402,7 +402,12 @@ const EditProject = (): JSX.Element => {
       })
     }
   }
-
+  const projectContactEmail =
+    project.projectContactEmail && !emailError ? 'text-white' : 'text-danger'
+  const billingContactPersonEmail =
+    project.billingContactPersonEmail && !billingContactPersonEmailError
+      ? 'text-white'
+      : 'text-danger'
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -438,15 +443,7 @@ const EditProject = (): JSX.Element => {
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Customer Email:
-                  <span
-                    className={
-                      project.projectContactEmail && !emailError
-                        ? 'text-white'
-                        : 'text-danger'
-                    }
-                  >
-                    *
-                  </span>
+                  <span className={projectContactEmail}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
@@ -473,16 +470,7 @@ const EditProject = (): JSX.Element => {
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
                   Billing Contact Person Email:
-                  <span
-                    className={
-                      project.billingContactPersonEmail &&
-                      !billingContactPersonEmailError
-                        ? 'text-white'
-                        : 'text-danger'
-                    }
-                  >
-                    *
-                  </span>
+                  <span className={billingContactPersonEmail}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
