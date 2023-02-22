@@ -57,7 +57,7 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     if (window.location.pathname === '/initiateCycle') {
-      dispatch(reduxServices.initiateCycle.actions.clearInitiateCycle())
+      dispatch(reduxServices.initiateCycle.actions.setToggle(''))
     }
   }, [])
 
