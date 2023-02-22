@@ -143,13 +143,13 @@ const EditProjectStatus = ({
   }
   useEffect(() => {
     const newFromDate = new Date(
-      moment(editCurrentWeekStatus?.toString()).format(commonFormatDate),
+      moment(editCurrentWeekDate?.toString()).format(commonFormatDate),
     )
     const newToDate = new Date(
       moment(editNextWeekDate?.toString()).format(commonFormatDate),
     )
     if (
-      editCurrentWeekStatus &&
+      editCurrentWeekDate &&
       editNextWeekDate &&
       newToDate.getTime() < newFromDate.getTime()
     ) {
@@ -157,7 +157,7 @@ const EditProjectStatus = ({
     } else {
       setDateError(false)
     }
-  }, [editCurrentWeekStatus, editNextWeekDate])
+  }, [editCurrentWeekDate, editNextWeekDate])
   useEffect(() => {
     if (
       editCurrentWeekDate &&
@@ -316,7 +316,7 @@ const EditProjectStatus = ({
                 className="btn-ovh me-1"
                 color="success"
                 onClick={allocateButtonHandler}
-                disabled={!isUpdateButtonEnabled}
+                disabled={!isUpdateButtonEnabled || isUpdateButtonEnabled}
               >
                 Update
               </CButton>
