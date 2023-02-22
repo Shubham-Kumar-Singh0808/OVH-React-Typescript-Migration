@@ -192,14 +192,14 @@ const EditProjectStatus = ({
       </CRow>
       <CForm>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
             Current Week Date :
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
               id="fromDate"
               data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
               autoComplete="off"
@@ -247,14 +247,14 @@ const EditProjectStatus = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
             Next Week Date:
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
               id="fromDate"
               data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
               autoComplete="off"
