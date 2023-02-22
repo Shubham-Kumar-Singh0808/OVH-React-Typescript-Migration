@@ -433,7 +433,7 @@ const ApproveProjectForm = (): JSX.Element => {
               type="email"
               name="projectContactEmail"
               autoComplete="off"
-              placeholder="Contact Person Email"
+              placeholder="Email"
               value={approveProject.projectContactEmail}
               onChange={handleInputChange}
             />

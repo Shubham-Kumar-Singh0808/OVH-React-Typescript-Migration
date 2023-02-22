@@ -454,7 +454,7 @@ const EditProject = (): JSX.Element => {
                     type="email"
                     name="projectContactEmail"
                     autoComplete="off"
-                    placeholder="Email Id"
+                    placeholder="Email"
                     value={project.projectContactEmail}
                     onChange={handleInputChange}
                   />

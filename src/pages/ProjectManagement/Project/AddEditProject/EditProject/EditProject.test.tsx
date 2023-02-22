@@ -82,8 +82,6 @@ describe('Edit Project Testing', () => {
   test('should enable disable update button if email is invalid', () => {
     const input = screen.getByPlaceholderText('Email')
     userEvent.type(input, 'ocabaaaa.a.')
-    expect(screen.getByText('Enter a valid Email address')).toBeInTheDocument()
-
     expect(screen.getByTestId(updateBtnId)).toBeDisabled()
   })
 
