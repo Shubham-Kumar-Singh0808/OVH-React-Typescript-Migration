@@ -71,7 +71,11 @@ const AddQuestion = (): JSX.Element => {
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.initiateCycle.getAllQuestions())
   }
-
+  const backButtonHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
   return (
     <>
       <OCard
@@ -86,9 +90,7 @@ const AddQuestion = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={() =>
-                dispatch(reduxServices.initiateCycle.actions.setToggle(''))
-              }
+              onClick={backButtonHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>

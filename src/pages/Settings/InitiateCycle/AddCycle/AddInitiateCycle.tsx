@@ -186,6 +186,12 @@ const AddInitiateCycle = (): JSX.Element => {
   const onHandleEndDate = (value: Date) => {
     setEndDate(moment(value).format(dateFormat))
   }
+
+  const backBtnHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
   return (
     <>
       {toggle === 'addCycle' && (
@@ -201,9 +207,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="back-button"
-                onClick={() =>
-                  dispatch(reduxServices.initiateCycle.actions.setToggle(''))
-                }
+                onClick={backBtnHandler}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
@@ -329,6 +333,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   placeholderText="dd/mm/yyyy"
                   dateFormat="dd/mm/yy"
                   name="startDate"
+                  minDate={new Date()}
                   value={startDate}
                   onChange={(date: Date) => onHandleStartDate(date)}
                   autoComplete="off"
@@ -348,6 +353,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   peekNextMonth
                   showMonthDropdown
                   showYearDropdown
+                  minDate={new Date()}
                   dropdownMode="select"
                   data-testid="start-date-picker"
                   placeholderText="dd/mm/yyyy"
@@ -361,7 +367,7 @@ const AddInitiateCycle = (): JSX.Element => {
               {isDateError && (
                 <CCol sm={6}>
                   <span className="text-danger">
-                    <b>End Date should be greater than Start Date</b>
+                    <b>Start Date should be less than End Date</b>
                   </span>
                 </CCol>
               )}

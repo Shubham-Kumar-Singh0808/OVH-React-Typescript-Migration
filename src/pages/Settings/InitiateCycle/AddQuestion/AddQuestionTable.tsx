@@ -91,7 +91,7 @@ const AddQuestionTable = ({
     [allQuestionsList?.list, currentPage, pageSize],
   )
 
-  const getPageNo = (index: number) => {
+  const getPageIndex = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
@@ -129,7 +129,7 @@ const AddQuestionTable = ({
                   : removingSpacesOfText
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{getPageNo(index)}</CTableDataCell>
+                  <CTableDataCell>{getPageIndex(index)}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {currentItem.question ? (
                       <CLink
