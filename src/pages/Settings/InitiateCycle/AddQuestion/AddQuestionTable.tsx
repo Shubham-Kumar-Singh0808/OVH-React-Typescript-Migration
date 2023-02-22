@@ -69,7 +69,7 @@ const AddQuestionTable = ({
   }
 
   const deleteSuccessToastMessage = (
-    <OToast toastMessage="Tracker Deleted Successfully" toastColor="success" />
+    <OToast toastMessage="Question deleted successfully" toastColor="success" />
   )
 
   const confirmDeleteQuestion = async () => {
@@ -216,7 +216,7 @@ const AddQuestionTable = ({
         alignment="center"
         visible={isDeleteQuestionModalVisible}
         setVisible={setIsDeleteQuestionModalVisible}
-        modalTitle="Delete Tracker"
+        modalTitle="Delete Question"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"

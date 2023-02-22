@@ -112,6 +112,7 @@ const AddQuestion = (): JSX.Element => {
               className="sh-question"
               id="Name"
               name="question"
+              maxLength={300}
               placeholder="Question ?"
               value={addQuestion}
               onChange={(e) => setAddQuestion(e.target.value)}
