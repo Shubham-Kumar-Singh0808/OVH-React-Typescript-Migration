@@ -230,10 +230,11 @@ const PeopleTable = (): JSX.Element => {
                   ) : (
                     <CTableDataCell>{allocated}</CTableDataCell>
                   )}
-                  <CTableDataCell scope="row" style={{ width: '100px' }}>
-                    {isProjectAllocationEdit &&
-                    project.employeeId === templateId ? (
-                      <>
+
+                  {isProjectAllocationEdit &&
+                  project.employeeId === templateId ? (
+                    <>
+                      <CTableDataCell scope="row" style={{ width: '100px' }}>
                         <CTooltip content="Save">
                           <CButton
                             color="success"
@@ -257,10 +258,12 @@ const PeopleTable = (): JSX.Element => {
                             <i className="fa fa-times" aria-hidden="true"></i>
                           </CButton>
                         </CTooltip>
-                      </>
-                    ) : (
-                      <>
-                        {userAccessEditPeople?.updateaccess && (
+                      </CTableDataCell>
+                    </>
+                  ) : (
+                    <>
+                      {userAccessEditPeople?.updateaccess && (
+                        <CTableDataCell scope="row" style={{ width: '100px' }}>
                           <CTooltip content="Edit">
                             <CButton
                               className="btn-ovh-employee-list btn-ovh me-1 mb-1"
@@ -273,10 +276,10 @@ const PeopleTable = (): JSX.Element => {
                               <i className="fa fa-pencil-square-o"></i>
                             </CButton>
                           </CTooltip>
-                        )}
-                      </>
-                    )}
-                  </CTableDataCell>
+                        </CTableDataCell>
+                      )}
+                    </>
+                  )}
                 </CTableRow>
               )
             })}
