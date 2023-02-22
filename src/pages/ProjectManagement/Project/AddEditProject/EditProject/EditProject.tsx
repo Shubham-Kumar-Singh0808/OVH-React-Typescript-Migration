@@ -391,10 +391,10 @@ const EditProject = (): JSX.Element => {
         return { ...prevState, ...{ [name]: personalEmail } }
       })
     } else if (name === 'billingContactPersonEmail') {
-      const billingContactPersonEmail = value
-      validateBillingContactEmail(billingContactPersonEmail)
+      const billingPersonEmail = value
+      validateBillingContactEmail(billingPersonEmail)
       setProject((prevState) => {
-        return { ...prevState, ...{ [name]: billingContactPersonEmail } }
+        return { ...prevState, ...{ [name]: billingPersonEmail } }
       })
     } else {
       setProject((prevState) => {
