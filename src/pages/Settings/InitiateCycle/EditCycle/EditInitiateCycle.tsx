@@ -151,6 +151,7 @@ const EditInitiateCycle = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.initiateCycle.getActiveCycleData())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.initiateCycle.updateCycle.rejected.match(
