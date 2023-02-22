@@ -8,8 +8,8 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import AddInitiateCycleTable from './AddInitiateCycleTable'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { deviceLocale } from '../../../../utils/helper'
@@ -18,6 +18,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const AddInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -33,6 +34,13 @@ const AddInitiateCycle = (): JSX.Element => {
   const [isDateError, setIsDateError] = useState<boolean>(false)
 
   const commonFormatDate = 'L'
+  const classNameStyle = 'col-sm-3 col-form-label text-end'
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
 
   useEffect(() => {
     if (
@@ -69,17 +77,11 @@ const AddInitiateCycle = (): JSX.Element => {
   }, [fromMonth, toMonth])
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(startDate?.toString()).format(commonFormatDate),
-    )
-    const newToDate = new Date(
-      moment(endDate?.toString()).format(commonFormatDate),
-    )
-    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
-      setIsDateError(true)
-    } else {
-      setIsDateError(false)
-    }
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setIsDateError(moment(end).isBefore(start))
   }, [startDate, endDate])
 
   const clearInputs = () => {
@@ -123,6 +125,12 @@ const AddInitiateCycle = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToast))
+      setSelectCycleName('')
+      setToMonth('')
+      setFromMonth('')
+      setStartDate('')
+      setEndDate('')
+      setIsChecked(false)
       dispatch(reduxServices.initiateCycle.getAllCycles())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
@@ -172,6 +180,12 @@ const AddInitiateCycle = (): JSX.Element => {
     pageSize,
   } = usePagination(totalListSize, pageSizeFromState, pageFromState)
 
+  const onHandleStartDate = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+  const onHandleEndDate = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
   return (
     <>
       {toggle === 'addCycle' && (
@@ -234,7 +248,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CFormLabel>
               </CCol>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   autoComplete="off"
                   id="fromMonth"
                   data-testid="sh-date-picker"
@@ -265,7 +279,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CFormLabel>
               </CCol>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   autoComplete="off"
                   id="toMonth"
                   data-testid="sh-date-picker"
@@ -295,73 +309,53 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CCol>
               )}
             </CRow>
+
             <CRow className="mt-3">
-              <CCol sm={3} md={3} className="text-end">
-                <CFormLabel className="mt-1">
-                  Start Date :
-                  <span className={startDate ? TextWhite : TextDanger}>*</span>
-                </CFormLabel>
-              </CCol>
+              <CFormLabel
+                {...dynamicFormLabelProps('startDate', classNameStyle)}
+              >
+                Start Date:
+                <span className={startDate ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   id="startDate"
-                  data-testid="startDate"
-                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  dateFormat="dd/mm/yyyy"
+                  data-testid="start-date-picker"
                   placeholderText="dd/mm/yyyy"
-                  name="cycleStartDate"
-                  minDate={new Date()}
-                  value={
-                    startDate
-                      ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setStartDate(moment(date).format(commonFormatDate))
-                  }
+                  dateFormat="dd/mm/yy"
+                  name="startDate"
+                  value={startDate}
+                  onChange={(date: Date) => onHandleStartDate(date)}
+                  autoComplete="off"
                 />
               </CCol>
             </CRow>
+
             <CRow className="mt-3">
-              <CCol sm={3} md={3} className="text-end">
-                <CFormLabel className="mt-1">
-                  End Date :
-                  <span className={endDate ? TextWhite : TextDanger}>*</span>
-                </CFormLabel>
-              </CCol>
+              <CFormLabel {...dynamicFormLabelProps('endDate', classNameStyle)}>
+                End Date:
+                <span className={endDate ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   id="endDate"
-                  data-testid="endDate"
-                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  dateFormat="dd/mm/yyyy"
+                  data-testid="start-date-picker"
                   placeholderText="dd/mm/yyyy"
-                  name="cycleEndDate"
-                  minDate={new Date()}
-                  value={
-                    endDate
-                      ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setEndDate(moment(date).format(commonFormatDate))
-                  }
+                  dateFormat="dd/mm/yy"
+                  name="endDate"
+                  value={endDate}
+                  onChange={(date: Date) => onHandleEndDate(date)}
+                  autoComplete="off"
                 />
               </CCol>
               {isDateError && (
