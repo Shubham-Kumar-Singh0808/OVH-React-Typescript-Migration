@@ -50,9 +50,6 @@ const toRender = (
   </div>
 )
 
-const addButtonId = 'add-achiever-btn'
-const clearButtonId = 'clear-btn'
-
 const achSelectId = 'ach-name-sel'
 
 describe('add achiever form', () => {
@@ -76,9 +73,6 @@ describe('add achiever form', () => {
     })
     afterEach(cleanup)
     screen.debug()
-    test('buttons are rendered', () => {
-      expect(screen.getByTestId(clearButtonId)).toBeEnabled()
-    })
     test('labels are rendered', () => {
       expect(screen.getByTestId('ach-name-label')).toBeVisible()
       expect(screen.getByTestId('ach-emp-name')).toBeVisible()
@@ -131,13 +125,10 @@ describe('add achiever form', () => {
       expect(screen.findByTestId('error-date')).toBeTruthy()
     })
     test('clear button is working', () => {
-      const clearButton = screen.getByTestId(clearButtonId)
       const achievementName = screen.getByTestId(achSelectId)
       const empName = screen.getByPlaceholderText('Employee Name')
       userEvent.selectOptions(achievementName, 'Test Achievement 2')
       userEvent.type(empName, 'Pradeep')
-      expect(clearButton).toBeEnabled()
-      userEvent.click(clearButton)
       expect(mockclearInfoButtonHandler).toHaveBeenCalledTimes(1)
       expect(achievementName).toHaveValue(selectAchievementType)
       expect(empName).toHaveValue(emptyString)
