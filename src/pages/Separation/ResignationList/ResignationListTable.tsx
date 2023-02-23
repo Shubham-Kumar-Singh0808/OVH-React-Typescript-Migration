@@ -83,16 +83,19 @@ const ResignationListTable = ({
   const resignationListSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),

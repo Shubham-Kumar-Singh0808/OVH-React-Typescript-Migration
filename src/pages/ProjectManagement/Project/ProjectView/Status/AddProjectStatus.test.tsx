@@ -44,7 +44,7 @@ describe('AddProjectStatus Component Testing with data', () => {
       }),
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
-    expect(datePickers[1]).toHaveValue('1/10/2022')
+    expect(datePickers[1]).toHaveValue('01/10/2022')
 
     const Comments = screen.findByTestId('ckEditor-component')
     expect(Comments).toBeTruthy()

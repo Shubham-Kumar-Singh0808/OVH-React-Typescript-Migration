@@ -1,10 +1,4 @@
-import {
-  CTableRow,
-  CTableDataCell,
-  CButton,
-  CLink,
-  CTooltip,
-} from '@coreui/react-pro'
+import { CTableRow, CTableDataCell, CButton, CTooltip } from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ClientDetailsTable from './ClientDetailsTable'
@@ -73,16 +67,24 @@ const ClientsEntry = (props: {
         <CTableDataCell scope="row">{props.client.personName}</CTableDataCell>
         <CTableDataCell scope="row">{props.client.email}</CTableDataCell>
         <CTableDataCell scope="row">{props.client.country}</CTableDataCell>
-        <CTableDataCell scope="row" className="sh-organization-link">
-          <CLink className="cursor-pointer">
-            {props.client.totalFixedBids}
-          </CLink>
-        </CTableDataCell>
-        <CTableDataCell scope="row" className="sh-organization-link">
-          <CLink className="cursor-pointer">
-            {props.client.totalRetainers}
-          </CLink>
-        </CTableDataCell>
+        {props.client.totalFixedBids > 0 ? (
+          <CTableDataCell scope="row">
+            <Link to={`/projectreport`} className="employee-name">
+              {props.client.totalFixedBids}
+            </Link>
+          </CTableDataCell>
+        ) : (
+          <CTableDataCell>{props.client.totalFixedBids}</CTableDataCell>
+        )}
+        {props.client.totalRetainers > 0 ? (
+          <CTableDataCell scope="row">
+            <Link to={`/projectreport`} className="employee-name">
+              {props.client.totalRetainers}
+            </Link>
+          </CTableDataCell>
+        ) : (
+          <CTableDataCell>{props.client.totalFixedBids}</CTableDataCell>
+        )}
         <CTableDataCell scope="row">
           <div className="buttons-clients">
             <Link to={`/clientInfo/${props.client.id}`}>

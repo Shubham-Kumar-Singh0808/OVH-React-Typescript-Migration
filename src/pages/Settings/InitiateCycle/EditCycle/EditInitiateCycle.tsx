@@ -12,11 +12,11 @@ import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { NominationCycleDto } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const EditInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -45,6 +45,7 @@ const EditInitiateCycle = (): JSX.Element => {
       setCycleToMonth(editCycle.toMonth)
       setCycleFromDate(editCycle.startDate)
       setCycleToDate(editCycle.endDate)
+      setIsChecked(editCycle.activateFlag)
     }
   }, [editCycle])
 
@@ -150,6 +151,7 @@ const EditInitiateCycle = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.initiateCycle.getActiveCycleData())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.initiateCycle.updateCycle.rejected.match(
@@ -162,13 +164,18 @@ const EditInitiateCycle = (): JSX.Element => {
     }
   }
 
-  const onChangeDateHandler = (date: Date) => {
+  const onChangeFromMonthHandler = (date: Date) => {
     setCycleFromMonth(moment(date).format('MM/YYYY'))
   }
-  const onChangeMonthHandler = (date: Date) => {
+  const onChangeToMonthHandler = (date: Date) => {
     setCycleToMonth(moment(date).format('MM/YYYY'))
   }
-
+  const onHandleStartDate = (value: Date) => {
+    setCycleFromDate(moment(value).format(dateFormat))
+  }
+  const onHandleEndDate = (value: Date) => {
+    setCycleToDate(moment(value).format(dateFormat))
+  }
   return (
     <>
       <OCard
@@ -240,7 +247,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromMonth}
-                onChange={(date: Date) => onChangeDateHandler(date)}
+                onChange={(date: Date) => onChangeFromMonthHandler(date)}
                 dateFormat="MM/yyyy"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
@@ -266,7 +273,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToMonth}
-                onChange={(date: Date) => onChangeMonthHandler(date)}
+                onChange={(date: Date) => onChangeToMonthHandler(date)}
                 dateFormat="MM/yyyy"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
@@ -299,17 +306,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromDate}
-                onChange={(date: Date) =>
-                  setCycleFromDate(
-                    date
-                      ? new Date(date).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : '',
-                  )
-                }
+                onChange={(date: Date) => onHandleStartDate(date)}
                 dateFormat="dd/mm/yyyy"
                 minDate={new Date()}
                 showMonthDropdown
@@ -339,17 +336,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToDate}
-                onChange={(date: Date) =>
-                  setCycleToDate(
-                    date
-                      ? new Date(date).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : '',
-                  )
-                }
+                onChange={(date: Date) => onHandleEndDate(date)}
                 dateFormat="dd/mm/yyyy"
                 minDate={new Date()}
                 showMonthDropdown

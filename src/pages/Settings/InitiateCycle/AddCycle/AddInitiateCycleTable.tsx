@@ -1,6 +1,7 @@
 import {
   CButton,
   CCol,
+  CLink,
   CRow,
   CTable,
   CTableBody,
@@ -10,13 +11,15 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
+import parse from 'html-react-parser'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { InitiateCycleTableProps } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { currentPageData } from '../../../../utils/paginationUtils'
+import OModal from '../../../../components/ReusableComponent/OModal'
 
 const AddInitiateCycleTable = ({
   paginationRange,
@@ -25,6 +28,9 @@ const AddInitiateCycleTable = ({
   currentPage,
   setCurrentPage,
 }: InitiateCycleTableProps): JSX.Element => {
+  const [isCycleModalVisible, setIsCycleModalVisible] = useState<boolean>(false)
+  const [cyclePopUp, setCyclePopUp] = useState<string>('')
+
   const allCycles = useTypedSelector(
     reduxServices.initiateCycle.selectors.allCycles,
   )
@@ -57,7 +63,10 @@ const AddInitiateCycleTable = ({
     dispatch(reduxServices.initiateCycle.actions.setToggle('editCycle'))
     dispatch(reduxServices.initiateCycle.editCycle(id))
   }
-
+  const handleCycleDescriptionModal = (value: string) => {
+    setIsCycleModalVisible(true)
+    setCyclePopUp(value)
+  }
   return (
     <>
       <CTable striped responsive className="mt-5 align-middle alignment">
@@ -88,14 +97,36 @@ const AddInitiateCycleTable = ({
         <CTableBody>
           {currentTotalPageRecords?.length > 0 &&
             currentTotalPageRecords?.map((cycle, index) => {
+              const removingSpacesOfText = cycle.cycleName
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+              const limitOfQuestion =
+                removingSpacesOfText && removingSpacesOfText.length > 30
+                  ? `${removingSpacesOfText.substring(0, 30)}...`
+                  : removingSpacesOfText
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getPageNumber(index)}</CTableDataCell>
-                  <CTableDataCell>{cycle.cycleName}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    {cycle.cycleName ? (
+                      <CLink
+                        className="cursor-pointer text-decoration-none"
+                        data-testid="question-link"
+                        onClick={() =>
+                          handleCycleDescriptionModal(cycle.cycleName)
+                        }
+                      >
+                        {parse(limitOfQuestion)}
+                      </CLink>
+                    ) : (
+                      'N/A'
+                    )}
+                  </CTableDataCell>
                   <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
                   <CTableDataCell>{cycle.toMonth}</CTableDataCell>
                   <CTableDataCell>
-                    {cycle.activateFlag === true ? 'Active' : 'Inactive'}
+                    {cycle.activateFlag === true ? 'Active' : 'In-Active'}
                   </CTableDataCell>
                   <CTableDataCell>{cycle.startDate}</CTableDataCell>
                   <CTableDataCell>{cycle.endDate}</CTableDataCell>
@@ -144,6 +175,22 @@ const AddInitiateCycleTable = ({
           </CCol>
         )}
       </CRow>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        visible={isCycleModalVisible}
+        setVisible={setIsCycleModalVisible}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        <div
+          dangerouslySetInnerHTML={{
+            __html: cyclePopUp,
+          }}
+        />
+      </OModal>
     </>
   )
 }

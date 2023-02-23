@@ -93,6 +93,10 @@ export interface KRATableProps {
 export interface KRAFilterOptionsProps {
   currentPage: number
   pageSize: number
+  selectedDepartment: string
+  selectedDesignation: string
+  setSelectedDepartment: React.Dispatch<React.SetStateAction<string>>
+  setSelectedDesignation: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type Frequency = {

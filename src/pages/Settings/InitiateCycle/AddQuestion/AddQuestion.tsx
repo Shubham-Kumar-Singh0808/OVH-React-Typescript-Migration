@@ -28,7 +28,7 @@ const AddQuestion = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (addQuestion) {
+    if (addQuestion?.replace(/^\s*/, '')) {
       setIsAddBtnEnabled(true)
     } else {
       setIsAddBtnEnabled(false)
@@ -71,7 +71,11 @@ const AddQuestion = (): JSX.Element => {
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.initiateCycle.getAllQuestions())
   }
-
+  const backButtonHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
   return (
     <>
       <OCard
@@ -86,9 +90,7 @@ const AddQuestion = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={() =>
-                dispatch(reduxServices.initiateCycle.actions.setToggle(''))
-              }
+              onClick={backButtonHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -97,7 +99,11 @@ const AddQuestion = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="form-label col-sm-2 col-form-label text-end">
             Question :
-            <span className={addQuestion ? 'text-white' : 'text-danger'}>
+            <span
+              className={
+                addQuestion?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+              }
+            >
               *
             </span>
           </CFormLabel>
@@ -108,6 +114,7 @@ const AddQuestion = (): JSX.Element => {
               className="sh-question"
               id="Name"
               name="question"
+              maxLength={300}
               placeholder="Question ?"
               value={addQuestion}
               onChange={(e) => setAddQuestion(e.target.value)}

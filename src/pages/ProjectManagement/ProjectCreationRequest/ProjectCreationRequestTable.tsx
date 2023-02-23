@@ -359,14 +359,15 @@ const ProjectCreationRequestTable = ({
         </CCol>
       )}
       <OModal
+        closeButtonClass="d-none"
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Project Request"
-        modalHeaderClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteProjectRequestDetail}
+        modalBodyClass="mt-0"
       >
         <>
           Do you really want to delete this <span>{projectName}</span> project
