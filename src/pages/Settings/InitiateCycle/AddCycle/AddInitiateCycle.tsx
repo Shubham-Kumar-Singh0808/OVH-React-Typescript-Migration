@@ -12,7 +12,6 @@ import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import AddInitiateCycleTable from './AddInitiateCycleTable'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
-import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -92,7 +91,63 @@ const AddInitiateCycle = (): JSX.Element => {
     setEndDate('')
     setIsChecked(false)
   }
+  const pageFromState = useTypedSelector(
+    reduxServices.initiateCycle.selectors.pageFromState,
+  )
 
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.initiateCycle.selectors.pageSizeFromState,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.initiateCycle.getAllCycles())
+    dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
+    dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
+  }, [dispatch])
+
+  const totalListSize = useTypedSelector(
+    reduxServices.initiateCycle.selectors.listSize,
+  )
+
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(totalListSize, pageSizeFromState, pageFromState)
+
+  const onHandleStartDate = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleEndDate = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleFromMonth = (value: Date) => {
+    setFromMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const onHandleToMonth = (value: Date) => {
+    setToMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const backBtnHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
   const successToast = (
     <OToast toastMessage="Cycle Added Successfully" toastColor="success" />
   )
@@ -144,54 +199,6 @@ const AddInitiateCycle = (): JSX.Element => {
     }
   }
 
-  const pageFromState = useTypedSelector(
-    reduxServices.initiateCycle.selectors.pageFromState,
-  )
-
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.initiateCycle.selectors.pageSizeFromState,
-  )
-
-  useEffect(() => {
-    dispatch(reduxServices.initiateCycle.getAllCycles())
-    dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
-    dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
-  }, [dispatch])
-
-  const totalListSize = useTypedSelector(
-    reduxServices.initiateCycle.selectors.listSize,
-  )
-
-  const selectCurrentPage = useTypedSelector(
-    reduxServices.app.selectors.selectCurrentPage,
-  )
-
-  useEffect(() => {
-    if (selectCurrentPage) {
-      setCurrentPage(selectCurrentPage)
-    }
-  }, [selectCurrentPage])
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(totalListSize, pageSizeFromState, pageFromState)
-
-  const onHandleStartDate = (value: Date) => {
-    setStartDate(moment(value).format(dateFormat))
-  }
-  const onHandleEndDate = (value: Date) => {
-    setEndDate(moment(value).format(dateFormat))
-  }
-
-  const backBtnHandler = () => {
-    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
-    dispatch(reduxServices.initiateCycle.getActiveCycleData())
-    dispatch(reduxServices.initiateCycle.getAllQuestions())
-  }
   return (
     <>
       {toggle === 'addCycle' && (
@@ -261,17 +268,8 @@ const AddInitiateCycle = (): JSX.Element => {
                   placeholderText="mm/yyyy"
                   dateFormat="MM/yyyy"
                   name="selectFromMonth"
-                  value={
-                    fromMonth
-                      ? new Date(fromMonth).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) => {
-                    setFromMonth(moment(date).format(commonFormatDate))
-                  }}
+                  value={fromMonth}
+                  onChange={onHandleFromMonth}
                 />
               </CCol>
             </CRow>
@@ -292,17 +290,8 @@ const AddInitiateCycle = (): JSX.Element => {
                   placeholderText="mm/yyyy"
                   dateFormat="MM/yyyy"
                   name="selectToMonth"
-                  value={
-                    toMonth
-                      ? new Date(toMonth).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) => {
-                    setToMonth(moment(date).format(commonFormatDate))
-                  }}
+                  value={toMonth}
+                  onChange={onHandleToMonth}
                 />
               </CCol>
               {isMonthError && (

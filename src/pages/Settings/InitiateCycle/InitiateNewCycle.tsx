@@ -41,7 +41,6 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getActiveCycleData())
-    dispatch(reduxServices.initiateCycle.getAllCycles())
     dispatch(reduxServices.initiateCycle.getAllQuestions())
     dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
     dispatch(reduxServices.initiateCycle.actions.setPageSize(20))

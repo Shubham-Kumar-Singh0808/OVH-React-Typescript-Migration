@@ -164,10 +164,10 @@ const EditInitiateCycle = (): JSX.Element => {
     }
   }
 
-  const onChangeDateHandler = (date: Date) => {
+  const onChangeFromMonthHandler = (date: Date) => {
     setCycleFromMonth(moment(date).format('MM/YYYY'))
   }
-  const onChangeMonthHandler = (date: Date) => {
+  const onChangeToMonthHandler = (date: Date) => {
     setCycleToMonth(moment(date).format('MM/YYYY'))
   }
   const onHandleStartDate = (value: Date) => {
@@ -247,7 +247,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleFromMonth}
-                onChange={(date: Date) => onChangeDateHandler(date)}
+                onChange={(date: Date) => onChangeFromMonthHandler(date)}
                 dateFormat="MM/yyyy"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
@@ -273,7 +273,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={cycleToMonth}
-                onChange={(date: Date) => onChangeMonthHandler(date)}
+                onChange={(date: Date) => onChangeToMonthHandler(date)}
                 dateFormat="MM/yyyy"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
