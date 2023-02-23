@@ -8,16 +8,16 @@ import {
   CFormLabel,
   CRow,
 } from '@coreui/react-pro'
-import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import AddInitiateCycleTable from './AddInitiateCycleTable'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
-import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const AddInitiateCycle = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -33,6 +33,13 @@ const AddInitiateCycle = (): JSX.Element => {
   const [isDateError, setIsDateError] = useState<boolean>(false)
 
   const commonFormatDate = 'L'
+  const classNameStyle = 'col-sm-3 col-form-label text-end'
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
 
   useEffect(() => {
     if (
@@ -69,17 +76,11 @@ const AddInitiateCycle = (): JSX.Element => {
   }, [fromMonth, toMonth])
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(startDate?.toString()).format(commonFormatDate),
-    )
-    const newToDate = new Date(
-      moment(endDate?.toString()).format(commonFormatDate),
-    )
-    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
-      setIsDateError(true)
-    } else {
-      setIsDateError(false)
-    }
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setIsDateError(moment(end).isBefore(start))
   }, [startDate, endDate])
 
   const clearInputs = () => {
@@ -90,52 +91,6 @@ const AddInitiateCycle = (): JSX.Element => {
     setEndDate('')
     setIsChecked(false)
   }
-
-  const successToast = (
-    <OToast toastMessage="Cycle Added Successfully" toastColor="success" />
-  )
-
-  const failedToastMessage = (
-    <OToast
-      toastMessage="Sorry, Cycle already exist for this duration"
-      toastColor="danger"
-      data-testid="failedToast"
-    />
-  )
-
-  const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
-
-  const addButtonHandler = async () => {
-    const prepareObject = {
-      activateFlag: isChecked,
-      cycleName: selectCycleName,
-      endDate,
-      fromMonth,
-      startDate,
-      toMonth,
-    }
-    const initiateAddCycleResult = await dispatch(
-      reduxServices.initiateCycle.addCycle(prepareObject),
-    )
-    if (
-      reduxServices.initiateCycle.addCycle.fulfilled.match(
-        initiateAddCycleResult,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.initiateCycle.getAllCycles())
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    } else if (
-      reduxServices.initiateCycle.addCycle.rejected.match(
-        initiateAddCycleResult,
-      ) &&
-      initiateAddCycleResult.payload === 409
-    ) {
-      dispatch(reduxServices.app.actions.addToast(failedToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    }
-  }
-
   const pageFromState = useTypedSelector(
     reduxServices.initiateCycle.selectors.pageFromState,
   )
@@ -172,6 +127,78 @@ const AddInitiateCycle = (): JSX.Element => {
     pageSize,
   } = usePagination(totalListSize, pageSizeFromState, pageFromState)
 
+  const onHandleStartDate = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleEndDate = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleFromMonth = (value: Date) => {
+    setFromMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const onHandleToMonth = (value: Date) => {
+    setToMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const backBtnHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
+  const successToast = (
+    <OToast toastMessage="Cycle Added Successfully" toastColor="success" />
+  )
+
+  const failedToastMessage = (
+    <OToast
+      toastMessage="Sorry, Cycle already exist for this duration"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
+
+  const addButtonHandler = async () => {
+    const prepareObject = {
+      activateFlag: isChecked,
+      cycleName: selectCycleName,
+      endDate,
+      fromMonth,
+      startDate,
+      toMonth,
+    }
+    const initiateAddCycleResult = await dispatch(
+      reduxServices.initiateCycle.addCycle(prepareObject),
+    )
+    if (
+      reduxServices.initiateCycle.addCycle.fulfilled.match(
+        initiateAddCycleResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      setSelectCycleName('')
+      setToMonth('')
+      setFromMonth('')
+      setStartDate('')
+      setEndDate('')
+      setIsChecked(false)
+      dispatch(reduxServices.initiateCycle.getAllCycles())
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.initiateCycle.addCycle.rejected.match(
+        initiateAddCycleResult,
+      ) &&
+      initiateAddCycleResult.payload === 409
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
   return (
     <>
       {toggle === 'addCycle' && (
@@ -187,9 +214,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="back-button"
-                onClick={() =>
-                  dispatch(reduxServices.initiateCycle.actions.setToggle(''))
-                }
+                onClick={backBtnHandler}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
@@ -234,7 +259,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CFormLabel>
               </CCol>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   autoComplete="off"
                   id="fromMonth"
                   data-testid="sh-date-picker"
@@ -243,17 +268,8 @@ const AddInitiateCycle = (): JSX.Element => {
                   placeholderText="mm/yyyy"
                   dateFormat="MM/yyyy"
                   name="selectFromMonth"
-                  value={
-                    fromMonth
-                      ? new Date(fromMonth).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) => {
-                    setFromMonth(moment(date).format(commonFormatDate))
-                  }}
+                  value={fromMonth}
+                  onChange={onHandleFromMonth}
                 />
               </CCol>
             </CRow>
@@ -265,7 +281,7 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CFormLabel>
               </CCol>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   autoComplete="off"
                   id="toMonth"
                   data-testid="sh-date-picker"
@@ -274,17 +290,8 @@ const AddInitiateCycle = (): JSX.Element => {
                   placeholderText="mm/yyyy"
                   dateFormat="MM/yyyy"
                   name="selectToMonth"
-                  value={
-                    toMonth
-                      ? new Date(toMonth).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) => {
-                    setToMonth(moment(date).format(commonFormatDate))
-                  }}
+                  value={toMonth}
+                  onChange={onHandleToMonth}
                 />
               </CCol>
               {isMonthError && (
@@ -295,79 +302,61 @@ const AddInitiateCycle = (): JSX.Element => {
                 </CCol>
               )}
             </CRow>
+
             <CRow className="mt-3">
-              <CCol sm={3} md={3} className="text-end">
-                <CFormLabel className="mt-1">
-                  Start Date :
-                  <span className={startDate ? TextWhite : TextDanger}>*</span>
-                </CFormLabel>
-              </CCol>
+              <CFormLabel
+                {...dynamicFormLabelProps('startDate', classNameStyle)}
+              >
+                Start Date:
+                <span className={startDate ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   id="startDate"
-                  data-testid="startDate"
-                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
-                  dateFormat="dd/mm/yyyy"
+                  data-testid="start-date-picker"
                   placeholderText="dd/mm/yyyy"
-                  name="cycleStartDate"
+                  dateFormat="dd/mm/yy"
+                  name="startDate"
                   minDate={new Date()}
-                  value={
-                    startDate
-                      ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setStartDate(moment(date).format(commonFormatDate))
-                  }
+                  value={startDate}
+                  onChange={(date: Date) => onHandleStartDate(date)}
+                  autoComplete="off"
                 />
               </CCol>
             </CRow>
+
             <CRow className="mt-3">
-              <CCol sm={3} md={3} className="text-end">
-                <CFormLabel className="mt-1">
-                  End Date :
-                  <span className={endDate ? TextWhite : TextDanger}>*</span>
-                </CFormLabel>
-              </CCol>
+              <CFormLabel {...dynamicFormLabelProps('endDate', classNameStyle)}>
+                End Date:
+                <span className={endDate ? TextWhite : TextDanger}>*</span>
+              </CFormLabel>
               <CCol sm={3}>
-                <ReactDatePicker
+                <DatePicker
                   id="endDate"
-                  data-testid="endDate"
-                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                  autoComplete="off"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
-                  dropdownMode="select"
-                  dateFormat="dd/mm/yyyy"
-                  placeholderText="dd/mm/yyyy"
-                  name="cycleEndDate"
                   minDate={new Date()}
-                  value={
-                    endDate
-                      ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setEndDate(moment(date).format(commonFormatDate))
-                  }
+                  dropdownMode="select"
+                  data-testid="start-date-picker"
+                  placeholderText="dd/mm/yyyy"
+                  dateFormat="dd/mm/yy"
+                  name="endDate"
+                  value={endDate}
+                  onChange={(date: Date) => onHandleEndDate(date)}
+                  autoComplete="off"
                 />
               </CCol>
               {isDateError && (
                 <CCol sm={6}>
                   <span className="text-danger">
-                    <b>End Date should be greater than Start Date</b>
+                    <b>Start Date should be less than End Date</b>
                   </span>
                 </CCol>
               )}

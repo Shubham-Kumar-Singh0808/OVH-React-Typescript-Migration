@@ -75,8 +75,6 @@ const InitiateCycleTable = ({
     return []
   }, [currentTotalRecords])
 
-  console.log(sortingId)
-
   return (
     <>
       <CTable responsive className="mt-5 align-middle alignment">
