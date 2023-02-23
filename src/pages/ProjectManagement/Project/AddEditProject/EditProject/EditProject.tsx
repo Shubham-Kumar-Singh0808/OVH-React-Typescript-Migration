@@ -408,6 +408,7 @@ const EditProject = (): JSX.Element => {
     project.billingContactPersonEmail && !billingContactPersonEmailError
       ? 'text-white'
       : 'text-danger'
+  console.log(project.client)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"

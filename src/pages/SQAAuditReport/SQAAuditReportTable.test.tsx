@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import SQAAuditReportTable from './SQAAuditReportTable'
 import { render, screen, waitFor, cleanup } from '../../test/testUtils'
 import { mockSQAAuditReport } from '../../test/data/sqaAuditReportData'
+import { mockUserAccessToFeaturesData } from '../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -31,6 +32,9 @@ describe('SQAAuditReportTable Component Testing', () => {
       preloadedState: {
         sqaAuditReport: {
           getSQAAuditReport: mockSQAAuditReport,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
