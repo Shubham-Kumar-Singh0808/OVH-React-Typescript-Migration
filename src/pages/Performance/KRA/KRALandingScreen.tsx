@@ -5,6 +5,7 @@ import AddKRA from './AddEditKRA/AddKRA'
 import EditKRA from './AddEditKRA/EditKRA'
 import AddNewKPI from './AddKPI/AddNewKPI'
 import EditKPi from './EditKPI/EditKPi'
+import { selectDepartment, selectDesignation } from './KRAConstants'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -16,6 +17,10 @@ import {
 import { emptyString } from '../../Achievements/AchievementConstants'
 
 const KRALandingScreen = (): JSX.Element => {
+  const [selectedDepartment, setSelectedDepartment] =
+    useState<string>(selectDepartment)
+  const [selectedDesignation, setSelectedDesignation] =
+    useState<string>(selectDesignation)
   const [addKPI, setAddKPI] = useState<KRATableDataItem>({} as KRATableDataItem)
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
@@ -51,7 +56,14 @@ const KRALandingScreen = (): JSX.Element => {
     >
       {currentOnScreenPage === KRAPages.kraList && (
         <>
-          <KRAFilterOptions currentPage={currentPage} pageSize={pageSize} />
+          <KRAFilterOptions
+            currentPage={currentPage}
+            pageSize={pageSize}
+            selectedDepartment={selectedDepartment}
+            selectedDesignation={selectedDesignation}
+            setSelectedDepartment={setSelectedDepartment}
+            setSelectedDesignation={setSelectedDesignation}
+          />
           <KRATable
             paginationRange={paginationRange}
             setPageSize={setPageSize}

@@ -441,7 +441,7 @@ const ProjectReportsTable = ({
                             </CButton>
                           </Link>
                         )}
-                        {userAccess.updateaccess && (
+                        {userAccess.deleteaccess && (
                           <CButton
                             className="btn-ovh-employee-list cursor-pointer"
                             color="danger btn-ovh me-1"

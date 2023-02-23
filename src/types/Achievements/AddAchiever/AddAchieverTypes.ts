@@ -1,5 +1,6 @@
 import { EditedAchievementDetails } from '../../../pages/Achievements/AchievementConstants'
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import { AchievementType } from '../commonAchievementTypes'
 
 export enum NewAchievementStatus {
@@ -74,6 +75,7 @@ export interface AddAchieverFormProps {
   setAddButton: React.Dispatch<React.SetStateAction<boolean>>
   clearInfoButtonHandler: () => void
   addButtonHandler: (finalData: OutgoingNewAchiever) => Promise<void>
+  userAccessToAddAchiever: UserAccessToFeatures | undefined
 }
 
 export interface AddAchieverTypeTableProps {

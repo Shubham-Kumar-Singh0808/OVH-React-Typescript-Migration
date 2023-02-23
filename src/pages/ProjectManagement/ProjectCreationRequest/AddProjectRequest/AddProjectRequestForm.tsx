@@ -550,7 +550,7 @@ const AddProjectRequestForm = ({
   }, [checkList])
 
   const onHandleDescription = (description: string) => {
-    if (description.length > 156) {
+    if (description.length > 57) {
       setDescriptionError(false)
     } else {
       setDescriptionError(true)
@@ -835,7 +835,7 @@ const AddProjectRequestForm = ({
                 />
                 {descriptionError && (
                   <p className="text-danger" data-testid="error-msg">
-                    Please enter at least 150 characters.
+                    Please enter at least 50 characters.
                   </p>
                 )}
               </CCol>

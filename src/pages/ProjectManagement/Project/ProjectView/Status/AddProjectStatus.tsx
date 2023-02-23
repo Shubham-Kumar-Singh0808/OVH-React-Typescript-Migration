@@ -42,6 +42,8 @@ const AddProjectStatus = ({
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setCurrentWeekStatus('')
+    setNextWeekStatus('')
   }
   const toastElement = (
     <OToast toastMessage="Status Added Successfully" toastColor={'success'} />
@@ -52,7 +54,7 @@ const AddProjectStatus = ({
         nextDate: nextWeekDate
           ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -60,7 +62,7 @@ const AddProjectStatus = ({
         prevDate: currentWeekDate
           ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -190,7 +192,7 @@ const AddProjectStatus = ({
                 currentWeekDate
                   ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
                       year: 'numeric',
-                      month: 'numeric',
+                      month: '2-digit',
                       day: '2-digit',
                     })
                   : ''
@@ -242,7 +244,7 @@ const AddProjectStatus = ({
                 nextWeekDate
                   ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
                       year: 'numeric',
-                      month: 'numeric',
+                      month: '2-digit',
                       day: '2-digit',
                     })
                   : ''
