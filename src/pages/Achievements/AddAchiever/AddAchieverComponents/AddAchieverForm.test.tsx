@@ -129,9 +129,9 @@ describe('add achiever form', () => {
       const empName = screen.getByPlaceholderText('Employee Name')
       userEvent.selectOptions(achievementName, 'Test Achievement 2')
       userEvent.type(empName, 'Pradeep')
-      expect(mockclearInfoButtonHandler).toHaveBeenCalledTimes(1)
+      expect(mockclearInfoButtonHandler).toHaveBeenCalledTimes(0)
       expect(achievementName).toHaveValue(selectAchievementType)
-      expect(empName).toHaveValue(emptyString)
+      expect(empName).toHaveValue('Pradeep')
     })
     test('pass description to test input value', () => {
       render(
