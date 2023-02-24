@@ -164,8 +164,8 @@ const AddProjectRequestForm = ({
       projectRequest.domain != null &&
       projectRequest.technology !== '' &&
       projectRequest.technology != null &&
-      projectRequest.description?.length > 156 &&
-      projectRequest.description?.length > 156 != null &&
+      projectRequest.description?.length > 57 &&
+      projectRequest.description?.length > 57 != null &&
       checkListValid
     ) {
       setAddBtn(true)
@@ -365,11 +365,14 @@ const AddProjectRequestForm = ({
       bcc: projectRequestMailIds.bcc,
       cc: projectRequestMailIds.cc,
       chelist: checkList,
-      projectRequestMilestoneDTO: projectMileStone.map((item) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { buttonType, id, ...rest } = item
-        return { ...rest }
-      }),
+      projectRequestMilestoneDTO:
+        projectRequest.type === 'FixedBid'
+          ? projectMileStone.map((item) => {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { buttonType, id, ...rest } = item
+              return { ...rest }
+            })
+          : [],
     }
     const addProjectCreationRequestResultAction = await dispatch(
       reduxServices.addProjectCreationRequest.addProjectRequest(payload),
@@ -868,7 +871,7 @@ const AddProjectRequestForm = ({
             </CCol>
           </CRow>
         </CCol>
-        {projectRequest.type === 'Fixed Bid' && (
+        {projectRequest.type === 'FixedBid' && (
           <>
             <label className="sh-title-milestone">
               <b>Milestone:</b>
@@ -967,7 +970,7 @@ const AddProjectRequestForm = ({
               onClick={handleSubmitProjectRequest}
               disabled={
                 !isAddBtnEnable ||
-                (projectRequest.type === 'FIXEDBID' &&
+                (projectRequest.type === 'FixedBid' &&
                   !isAddMilestoneButtonEnabled)
               }
             >
