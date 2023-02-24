@@ -43,8 +43,24 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProjectRequestForm = ({
   setToggle,
+  projectRequest,
+  setProjectRequest,
+  checkList,
+  setCheckList,
+  projectMileStone,
+  setProjectMileStone,
 }: {
   setToggle: (value: string) => void
+  projectRequest: AddProjectRequestDetails
+  setProjectRequest: React.Dispatch<
+    React.SetStateAction<AddProjectRequestDetails>
+  >
+  checkList: Chelist[]
+  setCheckList: React.Dispatch<React.SetStateAction<Chelist[]>>
+  projectMileStone: ProjectRequestMilestoneDTO[]
+  setProjectMileStone: React.Dispatch<
+    React.SetStateAction<ProjectRequestMilestoneDTO[]>
+  >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [projectManager, setProjectManager] = useState<string>('')
@@ -59,23 +75,7 @@ const AddProjectRequestForm = ({
     useState(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const [showTotalEffort, setShowTotalEffort] = useState<number>(0)
-  const [projectMileStone, setProjectMileStone] = useState<
-    ProjectRequestMilestoneDTO[]
-  >([
-    {
-      id: Math.floor(Math.random() * 10000),
-      billable: '',
-      comments: '',
-      effort: '',
-      fromDate: '',
-      milestonePercentage: '',
-      title: '',
-      toDate: '',
-      buttonType: 'Add',
-    },
-  ])
-  const checkListDetails = {} as Chelist[]
-  const [checkList, setCheckList] = useState(checkListDetails)
+
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
     useState<string>('')
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
@@ -84,33 +84,7 @@ const AddProjectRequestForm = ({
   const projectRequestMailIds = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
   )
-  const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
-  const initProjectRequest = {
-    bcc: projectRequestMailIds.bcc,
-    billingContactPerson: '',
-    billingContactPersonEmail: '',
-    cc: projectRequestMailIds.cc,
-    chelist: checkListDetails,
-    client: '',
-    description: '',
-    domain: '',
-    enddate: '',
-    intrnalOrNot: false,
-    managerId: 0,
-    model: '',
-    platform: '',
-    projectContactEmail: '',
-    projectContactPerson: '',
-    projectName: '',
-    projectRequestMilestoneDTO: projectRequestMilestoneDTODetails,
-    requiredResources: '',
-    startdate: '',
-    status: 'Pending Approval',
-    technology: '',
-    type: '',
-  } as AddProjectRequestDetails
 
-  const [projectRequest, setProjectRequest] = useState(initProjectRequest)
   const [projectName, setProjectName] = useState<string>('')
   const [isAddBtnEnable, setAddBtn] = useState(false)
 
@@ -513,7 +487,7 @@ const AddProjectRequestForm = ({
     setProjectManager('')
     setProjectName('')
     onHandleDescription('')
-    setProjectRequest(initProjectRequest)
+    setProjectRequest(projectRequest)
     setShowEditor(false)
     setShowEditor(false)
     setTimeout(() => {
@@ -534,6 +508,7 @@ const AddProjectRequestForm = ({
   useEffect(() => {
     if (checkList) {
       const isValid =
+        // eslint-disable-next-line sonarjs/no-gratuitous-expressions
         checkList &&
         checkList?.length &&
         checkList?.every(
