@@ -113,33 +113,17 @@ const AddProjectRequestForm = ({
   const [projectRequest, setProjectRequest] = useState(initProjectRequest)
   const [projectName, setProjectName] = useState<string>('')
   const [isAddBtnEnable, setAddBtn] = useState(false)
-  console.log(projectRequestMailIds.bcc)
-  const [descriptionError, setDescriptionError] = useState(false)
 
+  const [descriptionError, setDescriptionError] = useState(false)
   const projectClients = useTypedSelector(
     reduxServices.projectManagement.selectors.projectClients,
   )
-
   const platforms = useTypedSelector(
     reduxServices.projectManagement.selectors.platForms,
   )
-
   const checkListItems = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.checkList,
   )
-
-  useEffect(() => {
-    dispatch(reduxServices.projectManagement.getProjectClients())
-    dispatch(reduxServices.projectManagement.getAllDomains())
-    dispatch(reduxServices.projectManagement.getAllManagers())
-    dispatch(reduxServices.projectManagement.getAllPlatforms())
-    dispatch(reduxServices.addProjectCreationRequest.getProjectRequestMailIds())
-    dispatch(reduxServices.addProjectCreationRequest.getCheckList())
-    dispatch(
-      reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
-    )
-  }, [dispatch])
-
   useEffect(() => {
     if (
       projectRequest.client !== '' &&
@@ -391,6 +375,13 @@ const AddProjectRequestForm = ({
             Project request added successfully"
           />,
         ),
+      )
+      dispatch(
+        reduxServices.projectCreationRequest.getAllProjectRequestList({
+          endIndex: 20,
+          multiSearch: '',
+          firstIndex: 0,
+        }),
       )
     }
   }
@@ -990,5 +981,4 @@ const AddProjectRequestForm = ({
     </>
   )
 }
-
 export default AddProjectRequestForm
