@@ -58,6 +58,13 @@ const ProjectCreationRequestTable = ({
   const isLoading = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.isLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessCreateAction = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project Creation Requests',
+  )
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -262,20 +269,22 @@ const ProjectCreationRequestTable = ({
                     >
                       <i className="fa fa-eye  text-white"></i>
                     </CButton>
-                    <CButton
-                      color="success"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                      onClick={() =>
-                        handleProjectRequestApproveClick(projectRequest.id)
-                      }
-                      disabled={
-                        projectRequest.status === 'Rejected' ||
-                        projectRequest.status === 'Approved'
-                      }
-                    >
-                      <i className="fa fa-check-circle-o"></i>
-                    </CButton>
+                    {userAccessCreateAction?.updateaccess && (
+                      <CButton
+                        color="success"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                        onClick={() =>
+                          handleProjectRequestApproveClick(projectRequest.id)
+                        }
+                        disabled={
+                          projectRequest.status === 'Rejected' ||
+                          projectRequest.status === 'Approved'
+                        }
+                      >
+                        <i className="fa fa-check-circle-o"></i>
+                      </CButton>
+                    )}
                     <CButton
                       color="info"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
@@ -286,18 +295,20 @@ const ProjectCreationRequestTable = ({
                     >
                       <i className="fa fa-bar-chart text-white"></i>
                     </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="reject-btn"
-                      disabled={
-                        projectRequest.status === 'Rejected' ||
-                        projectRequest.status === 'Approved'
-                      }
-                      onClick={() => handleShowRejectModal(projectRequest.id)}
-                    >
-                      <i className="fa fa-times text-white"></i>
-                    </CButton>
+                    {userAccessCreateAction?.updateaccess && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="reject-btn"
+                        disabled={
+                          projectRequest.status === 'Rejected' ||
+                          projectRequest.status === 'Approved'
+                        }
+                        onClick={() => handleShowRejectModal(projectRequest.id)}
+                      >
+                        <i className="fa fa-times text-white"></i>
+                      </CButton>
+                    )}
                     {userDeleteAction && (
                       <CButton
                         color="danger"
