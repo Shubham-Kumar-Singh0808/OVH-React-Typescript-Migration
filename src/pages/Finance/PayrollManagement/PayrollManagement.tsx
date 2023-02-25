@@ -150,6 +150,7 @@ const PayrollManagement = (): JSX.Element => {
           previewBtnActionResult.payload === 500) ||
         previewBtnActionResult.payload === ''
       ) {
+        setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
       }
     }
