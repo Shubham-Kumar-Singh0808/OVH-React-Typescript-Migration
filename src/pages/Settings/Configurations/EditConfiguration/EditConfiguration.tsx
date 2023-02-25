@@ -121,6 +121,7 @@ const EditConfiguration = (): JSX.Element => {
     }
 
     setTextEditor(false)
+    setIsActive(getEditAppraisal.active)
     setTimeout(() => {
       setTextEditor(true)
     }, 100)
