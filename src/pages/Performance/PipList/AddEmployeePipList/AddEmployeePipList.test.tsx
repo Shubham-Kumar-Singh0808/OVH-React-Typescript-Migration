@@ -61,7 +61,7 @@ describe('Employee Accounts Table Component Testing', () => {
         target: { value: '30 Aug, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('8/30/2022')
+    expect(datePickers[0]).toHaveValue('30/08/2022')
     userEvent.click(screen.getByTestId(clearButton))
     expect(datePickers[0]).toHaveValue('')
   })
@@ -74,7 +74,7 @@ describe('Employee Accounts Table Component Testing', () => {
         target: { value: '30 Aug, 2022' },
       }),
     )
-    expect(datePicker[0]).toHaveValue('8/30/2022')
+    expect(datePicker[0]).toHaveValue('30/08/2022')
     userEvent.click(screen.getByTestId(clearButton))
     expect(datePicker[0]).toHaveValue('')
   })
