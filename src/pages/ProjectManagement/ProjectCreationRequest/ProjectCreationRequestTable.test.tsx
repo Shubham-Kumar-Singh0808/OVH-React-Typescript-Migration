@@ -24,6 +24,7 @@ const toRender = (
       paginationRange={[1, 2, 3]}
       setToggle={mockSetToggle}
       userDeleteAction={true}
+      userRejectAction={true}
     />
     ,
   </div>

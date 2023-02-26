@@ -31,6 +31,7 @@ const ProjectCreationRequestTable = ({
   setPageSize,
   setToggle,
   userDeleteAction,
+  userRejectAction,
 }: {
   paginationRange: number[]
   currentPage: number
@@ -39,6 +40,7 @@ const ProjectCreationRequestTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: React.Dispatch<React.SetStateAction<string>>
   userDeleteAction: boolean
+  userRejectAction: boolean
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
@@ -295,7 +297,7 @@ const ProjectCreationRequestTable = ({
                     >
                       <i className="fa fa-bar-chart text-white"></i>
                     </CButton>
-                    {userAccessCreateAction?.updateaccess && (
+                    {userRejectAction && (
                       <CButton
                         color="danger"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
