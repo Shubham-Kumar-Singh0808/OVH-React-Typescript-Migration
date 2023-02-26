@@ -66,21 +66,13 @@ const EditInitiateCycle = (): JSX.Element => {
   }, [cycleFromMonth, cycleToMonth])
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(cycleFromDate?.toString()).format(commonFormatDate),
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(cycleFromDate, dateFormat).format(
+      newDateFormatForIsBefore,
     )
-    const newToDate = new Date(
-      moment(cycleToDate?.toString()).format(commonFormatDate),
-    )
-    if (
-      cycleFromDate &&
-      cycleToDate &&
-      newToDate.getTime() < newFromDate.getTime()
-    ) {
-      setIsEditDateError(true)
-    } else {
-      setIsEditDateError(false)
-    }
+    const end = moment(cycleToDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setIsEditDateError(moment(end).isBefore(start))
   }, [cycleFromDate, cycleToDate])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -176,6 +168,8 @@ const EditInitiateCycle = (): JSX.Element => {
   const onHandleEndDate = (value: Date) => {
     setCycleToDate(moment(value).format(dateFormat))
   }
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
   return (
     <>
       <OCard
@@ -309,6 +303,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 onChange={(date: Date) => onHandleStartDate(date)}
                 dateFormat="dd/mm/yyyy"
                 minDate={new Date()}
+                maxDate={disableAfterDate}
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -339,6 +334,7 @@ const EditInitiateCycle = (): JSX.Element => {
                 onChange={(date: Date) => onHandleEndDate(date)}
                 dateFormat="dd/mm/yyyy"
                 minDate={new Date()}
+                maxDate={disableAfterDate}
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
@@ -350,7 +346,7 @@ const EditInitiateCycle = (): JSX.Element => {
             {isEditDateError && (
               <CCol sm={6}>
                 <span className="text-danger">
-                  <b>End Date should be greater than Start Date</b>
+                  <b>To Date should be greater than From Date</b>
                 </span>
               </CCol>
             )}

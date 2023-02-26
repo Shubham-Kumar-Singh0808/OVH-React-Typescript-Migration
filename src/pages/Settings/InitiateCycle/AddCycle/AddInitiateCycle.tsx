@@ -32,7 +32,6 @@ const AddInitiateCycle = (): JSX.Element => {
   const [isMonthError, setIsMonthError] = useState<boolean>(false)
   const [isDateError, setIsDateError] = useState<boolean>(false)
 
-  const commonFormatDate = 'L'
   const classNameStyle = 'col-sm-3 col-form-label text-end'
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -62,17 +61,11 @@ const AddInitiateCycle = (): JSX.Element => {
   }
 
   useEffect(() => {
-    const tempFromMonth = new Date(
-      moment(fromMonth?.toString()).format(commonFormatDate),
-    )
-    const tempToMonth = new Date(
-      moment(toMonth?.toString()).format(commonFormatDate),
-    )
-    if (tempToMonth.getTime() < tempFromMonth.getTime()) {
-      setIsMonthError(true)
-    } else {
-      setIsMonthError(false)
-    }
+    const newDateFormatForIsBefore = 'MM'
+    const start = moment(fromMonth, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(toMonth, dateFormat).format(newDateFormatForIsBefore)
+
+    setIsMonthError(moment(end).isBefore(start))
   }, [fromMonth, toMonth])
 
   useEffect(() => {
@@ -199,6 +192,9 @@ const AddInitiateCycle = (): JSX.Element => {
     }
   }
 
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
   return (
     <>
       {toggle === 'addCycle' && (
@@ -269,6 +265,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="MM/yyyy"
                   name="selectFromMonth"
                   value={fromMonth}
+                  maxDate={disableAfterDate}
                   onChange={onHandleFromMonth}
                 />
               </CCol>
@@ -291,6 +288,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="MM/yyyy"
                   name="selectToMonth"
                   value={toMonth}
+                  maxDate={disableAfterDate}
                   onChange={onHandleToMonth}
                 />
               </CCol>
@@ -323,6 +321,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="dd/mm/yy"
                   name="startDate"
                   minDate={new Date()}
+                  maxDate={disableAfterDate}
                   value={startDate}
                   onChange={(date: Date) => onHandleStartDate(date)}
                   autoComplete="off"
@@ -343,6 +342,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   showMonthDropdown
                   showYearDropdown
                   minDate={new Date()}
+                  maxDate={disableAfterDate}
                   dropdownMode="select"
                   data-testid="start-date-picker"
                   placeholderText="dd/mm/yyyy"
