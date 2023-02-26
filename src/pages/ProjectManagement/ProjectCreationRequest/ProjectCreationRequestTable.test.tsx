@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import ProjectCreationRequestTable from './ProjectCreationRequestTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockProjectRequestList } from '../../../test/data/projectCreationRequestData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -34,6 +35,9 @@ describe('Employee ProjectCreationRequestTable Component Testing', () => {
       preloadedState: {
         projectCreationRequest: {
           getAllProjectRequestList: mockProjectRequestList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

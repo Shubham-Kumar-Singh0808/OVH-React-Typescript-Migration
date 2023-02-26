@@ -155,7 +155,7 @@ const AddProjectRequestForm = ({
     )
 
     setIsGreaterThanStart(moment(end).isBefore(start))
-  }, [projectRequest.startdate, projectRequest.enddate])
+  }, [projectRequest?.startdate, projectRequest?.enddate])
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {

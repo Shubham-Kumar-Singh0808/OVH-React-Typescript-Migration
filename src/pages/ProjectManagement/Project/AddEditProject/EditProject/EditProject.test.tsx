@@ -55,9 +55,7 @@ describe('Edit Project Testing', () => {
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
     expect(names[1]).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Email Id')).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: 'Fixed Bid' }).selected).toBe(
-      true,
-    )
+    expect(screen.getByRole('option', { name: 'FixedBid' }).selected).toBe(true)
     expect(screen.getByRole('option', { name: 'Development' }).selected).toBe(
       true,
     )

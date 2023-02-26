@@ -1973,4 +1973,13 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
     deleteaccess: true,
     childFeatures: null,
   },
+  {
+    featureId: 132,
+    name: 'Project Creation Requests',
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
 ]
