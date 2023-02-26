@@ -130,11 +130,6 @@ const NewBookingFilterOptions = ({
     setResetField({ ...resetFields, projectName: false })
     setNewRoomBooking({ ...newRoomBooking, projectName: value })
   }
-  console.log(newRoomBooking.projectName)
-  // useEffect(() => {
-  //   if (newRoomBooking.projectName == null) {
-  //   }
-  // }, [])
 
   const checkIsAttendeeExists = (attendeeId: number) => {
     return attendeesList.some((attendee) => {

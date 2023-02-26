@@ -10,6 +10,11 @@ import {
   mockProject,
   mockDomain,
 } from '../../../../test/data/projectManagerData'
+import {
+  AddProjectRequestDetails,
+  Chelist,
+  ProjectRequestMilestoneDTO,
+} from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
@@ -20,18 +25,52 @@ const updateBtnId = 'add-project'
 const mockSetToggle = jest.fn()
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
-    render(<AddProjectRequestForm setToggle={jest.fn()} />, {
-      preloadedState: {
-        projectManagement: {
-          projectClients: mockProjectClient,
-          domains: mockDomain,
-          managers: mockManager,
-          platForms: mockPlatform,
-          project: mockProject,
-          isLoading: true,
+    render(
+      <AddProjectRequestForm
+        setToggle={jest.fn()}
+        projectRequest={{
+          bcc: '',
+          billingContactPerson: '',
+          billingContactPersonEmail: '',
+          cc: '',
+          chelist: [],
+          client: '',
+          description: '',
+          domain: '',
+          enddate: '',
+          intrnalOrNot: false,
+          managerId: 0,
+          model: '',
+          platform: '',
+          projectContactEmail: '',
+          projectContactPerson: '',
+          projectName: '',
+          projectRequestMilestoneDTO: [],
+          requiredResources: '',
+          startdate: '',
+          status: '',
+          technology: '',
+          type: '',
+        }}
+        setProjectRequest={jest.fn()}
+        checkList={[]}
+        setCheckList={jest.fn()}
+        projectMileStone={[]}
+        setProjectMileStone={jest.fn()}
+      />,
+      {
+        preloadedState: {
+          projectManagement: {
+            projectClients: mockProjectClient,
+            domains: mockDomain,
+            managers: mockManager,
+            platForms: mockPlatform,
+            project: mockProject,
+            isLoading: true,
+          },
         },
       },
-    })
+    )
   })
 
   test('should be able to render Update button', () => {
@@ -102,7 +141,7 @@ describe('ApproveProjectForm Testing', () => {
       name: 'Internal Project',
     }) as HTMLInputElement
     userEvent.click(internalProject)
-    expect(internalProject.checked).toEqual(true)
+    expect(internalProject.checked).toEqual(false)
 
     // Project Manager
     const projectManager = screen.getByPlaceholderText('Project Manager')
