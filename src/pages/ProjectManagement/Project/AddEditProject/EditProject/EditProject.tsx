@@ -408,6 +408,7 @@ const EditProject = (): JSX.Element => {
     project.billingContactPersonEmail && !billingContactPersonEmailError
       ? 'text-white'
       : 'text-danger'
+  console.log(project.client)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -432,7 +433,7 @@ const EditProject = (): JSX.Element => {
               />
               <OInputField
                 onChangeHandler={handleCustomerContactName}
-                value={project.projectContactPerson}
+                value={project.projectContactPerson?.replace(/^\s*/, '')}
                 isRequired={true}
                 label={'Customer Contact Name'}
                 name={'customerContactName'}
@@ -459,7 +460,7 @@ const EditProject = (): JSX.Element => {
               </CRow>
               <OInputField
                 onChangeHandler={handleBillingPerson}
-                value={project.billingContactPerson}
+                value={project.billingContactPerson?.replace(/^\s*/, '')}
                 isRequired={true}
                 label={'Billing Contact Person'}
                 name={'billingContactPerson'}

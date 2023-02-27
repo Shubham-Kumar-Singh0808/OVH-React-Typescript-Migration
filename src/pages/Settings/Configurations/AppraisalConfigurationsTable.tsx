@@ -82,12 +82,13 @@ const AppraisalConfigurationsTable = ({
     if (appraisalCycle) {
       return appraisalCycle
         .slice()
-        .sort((sortNode1, sortNode2) =>
-          sortNode1.toDate.localeCompare(sortNode2.fromDate),
-        )
+        .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
     }
     return []
   }, [appraisalCycle])
+
+  console.log(sortedAppraisalDates)
+  console.log(appraisalCycle)
 
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1

@@ -282,12 +282,12 @@ const AddProject = (): JSX.Element => {
               <ClientOrganization
                 list={clientOrganizationList}
                 onSelectHandler={handleClientSelect}
-                value={project.client}
+                value={project.client?.replace(/^\s*/, '')}
               />
               <ProjectName
                 onChange={setProjectName}
                 onBlur={handleProjectName}
-                value={projectName}
+                value={projectName?.replace(/^\s*/, '')}
               />
               <OSelectList
                 isRequired={true}
