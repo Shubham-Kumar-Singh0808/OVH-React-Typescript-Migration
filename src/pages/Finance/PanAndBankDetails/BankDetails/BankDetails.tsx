@@ -78,7 +78,7 @@ const BankDetails = ({
       <CCardHeader>
         <h4 className="h4">Bank Details</h4>
       </CCardHeader>
-      <CCardBody>
+      <CCardBody className="px-0">
         {userAccess?.createaccess && (
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
@@ -95,7 +95,7 @@ const BankDetails = ({
             </CCol>
           </CRow>
         )}
-        <CTable striped responsive className="mt-5 align-middle alignment">
+        <CTable striped responsive className="mt-4 align-middle alignment">
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col">#</CTableHeaderCell>

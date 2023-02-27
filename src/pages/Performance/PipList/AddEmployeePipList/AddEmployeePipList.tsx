@@ -131,14 +131,13 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
-
+  const employeeDetails = allEmployeeDetails?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
+  )
+  console.log(employeeDetails[0]?.employeeId)
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
-
-  const empId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
 
   const successToast = (
     <OToast
@@ -162,7 +161,7 @@ const AddEmployeePipList = ({
   )
   const addButtonHandler = async () => {
     const prepareObject = {
-      empId: Number(empId),
+      empId: employeeDetails[0]?.employeeId,
       endDate: endDate as string,
       improvement: addImprovementPlan,
       rating: selectRating,
@@ -428,7 +427,7 @@ const AddEmployeePipList = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={!isAddButtonEnabled || dateErrorMsg}
                 onClick={addButtonHandler}
               >
                 Add
