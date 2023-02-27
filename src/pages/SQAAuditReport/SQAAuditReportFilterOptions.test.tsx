@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import SQAAuditReportFilterOptions from './SQAAuditReportFilterOptions'
 import { fireEvent, render, screen, waitFor } from '../../test/testUtils'
 import { mockSQAAuditReport } from '../../test/data/sqaAuditReportData'
+import { mockUserAccessToFeaturesData } from '../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -28,6 +29,9 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
       preloadedState: {
         sqaAuditReport: {
           getSQAAuditReport: mockSQAAuditReport,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

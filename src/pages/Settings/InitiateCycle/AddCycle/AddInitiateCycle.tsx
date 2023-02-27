@@ -32,7 +32,6 @@ const AddInitiateCycle = (): JSX.Element => {
   const [isMonthError, setIsMonthError] = useState<boolean>(false)
   const [isDateError, setIsDateError] = useState<boolean>(false)
 
-  // const commonFormatDate = 'L'
   const classNameStyle = 'col-sm-3 col-form-label text-end'
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {

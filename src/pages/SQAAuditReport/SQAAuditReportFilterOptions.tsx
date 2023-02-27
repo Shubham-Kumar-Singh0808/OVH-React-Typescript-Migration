@@ -65,6 +65,15 @@ const SQAAuditReportFilterOptions = ({
       })
     : ''
   const commonFormatDate = 'l'
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessSqaAuditReport = userAccessToFeatures?.find(
+    (feature) => feature.name === 'SQA Audit Report',
+  )
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
   useEffect(() => {
     dispatch(
@@ -269,6 +278,7 @@ const SQAAuditReportFilterOptions = ({
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yyyy"
                 name="fromDate"
+                maxDate={disableAfterDate}
                 value={fromDateValue}
                 onChange={(date: Date) =>
                   setFromDate(moment(date).format(commonFormatDate))
@@ -300,6 +310,7 @@ const SQAAuditReportFilterOptions = ({
                 onChange={(date: Date) =>
                   setToDate(moment(date).format(commonFormatDate))
                 }
+                maxDate={disableAfterDate}
               />
             </CCol>
           </CRow>
@@ -344,11 +355,13 @@ const SQAAuditReportFilterOptions = ({
           <CButton color="info btn-ovh me-1" onClick={handleExportSQAAuditData}>
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
-          <Link to={`/addAuditForm`}>
-            <CButton color="info btn-ovh me-0">
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </Link>
+          {userAccessSqaAuditReport?.createaccess && (
+            <Link to={`/addAuditForm`}>
+              <CButton color="info btn-ovh me-0">
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </Link>
+          )}
         </CCol>
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
