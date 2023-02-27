@@ -11,16 +11,19 @@ import React, { useEffect, useState } from 'react'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { SeparationTimeLine } from '../../../../types/Separation/ResignationList/resignationListTypes'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const ResignationTimeLine = ({
   editResignationTimeLine,
   setEditResignationTimeLine,
   resignationId,
   isResignationTimeLineEdit,
+  setIsResignationTimeLineEdit,
 }: {
   editResignationTimeLine: SeparationTimeLine
   resignationId: number
@@ -28,11 +31,13 @@ const ResignationTimeLine = ({
   setEditResignationTimeLine: React.Dispatch<
     React.SetStateAction<SeparationTimeLine>
   >
+  setIsResignationTimeLineEdit: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
   const dispatch = useAppDispatch()
+  const history = useHistory()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
@@ -68,6 +73,8 @@ const ResignationTimeLine = ({
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setComments('')
+    setIsResignationTimeLineEdit(false)
   }
   const updateTimeLineHandler = () => {
     dispatch(
@@ -124,6 +131,7 @@ const ResignationTimeLine = ({
         withdrawComments: null,
       }),
     )
+    history.push('/resignationList')
   }
   const commentsEdit = showEditor ? (
     <CCol sm={8}>
@@ -258,7 +266,6 @@ const ResignationTimeLine = ({
                   value={editResignationTimeLine.status}
                   onChange={handleEditResignationTimeLineHandler}
                 >
-                  <option value=""></option>
                   <option value="">Select Status</option>
                   <option value="Resigned">Resigned</option>
                   <option value="Absconding">Absconding</option>
@@ -275,6 +282,7 @@ const ResignationTimeLine = ({
             <CRow className="mt-1 mb-0">
               <CFormLabel className="col-sm-4 col-form-label text-end p-1">
                 Comments:
+                <span className={comments ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
               {commentsEdit}
             </CRow>
