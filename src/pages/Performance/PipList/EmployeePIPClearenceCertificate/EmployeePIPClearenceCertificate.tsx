@@ -42,10 +42,9 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
     setUploadRelievingLetter(undefined)
   }
 
-  const clearenceCertificate = useTypedSelector(
-    reduxServices.pipList.selectors.clearenceCertificate,
+  const viewEmployeePipDetails = useTypedSelector(
+    reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
-
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -126,7 +125,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
               Employee ID:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{clearenceCertificate.empId}</p>
+              <p className="mb-0">{viewEmployeePipDetails.empId}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
@@ -134,7 +133,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
               Employee Name:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{clearenceCertificate.employeeName}</p>
+              <p className="mb-0">{viewEmployeePipDetails.employeeName}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">

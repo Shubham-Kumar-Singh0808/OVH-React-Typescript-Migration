@@ -174,6 +174,11 @@ const EmployeePipList = (): JSX.Element => {
     )
   }
 
+  useEffect(() => {
+    if (window.location.pathname === '/PIPList') {
+      setToggle('')
+    }
+  }, [])
   return (
     <>
       {toggle === '' && (
