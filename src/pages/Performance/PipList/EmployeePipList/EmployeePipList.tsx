@@ -22,7 +22,8 @@ import { deviceLocale, showIsRequired } from '../../../../utils/helper'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 
 const EmployeePipList = (): JSX.Element => {
-  const [selectDate, setSelectDate] = useState<string>('Current Month')
+  const currentMonth = 'Current Month'
+  const [selectDate, setSelectDate] = useState<string>(currentMonth)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
@@ -71,7 +72,7 @@ const EmployeePipList = (): JSX.Element => {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
-    dateSelection: selectDate,
+    dateSelection: selectDate || '',
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -155,8 +156,29 @@ const EmployeePipList = (): JSX.Element => {
     setSelectDate('Current Month')
     setFromDate('')
     setToDate('')
+    setSearchByEmployee(false)
+    setSearchByAdded(false)
+    setSearchInput('')
+    dispatch(
+      reduxServices.pipList.getAllPIPList({
+        startIndex: pageSize * (selectCurrentPage - 1),
+        endIndex: pageSize * selectCurrentPage,
+        selectionStatus: selectedEmployeePipStatus,
+        dateSelection: currentMonth,
+        from: (fromDate as string) || '',
+        multiSearch: searchInput,
+        searchByAdded,
+        searchByEmployee,
+        to: (toDate as string) || '',
+      }),
+    )
   }
 
+  useEffect(() => {
+    if (window.location.pathname === '/PIPList') {
+      setToggle('')
+    }
+  }, [])
   return (
     <>
       {toggle === '' && (

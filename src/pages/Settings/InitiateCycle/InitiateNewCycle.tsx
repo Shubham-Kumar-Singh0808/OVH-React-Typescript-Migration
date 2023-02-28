@@ -41,7 +41,6 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getActiveCycleData())
-    dispatch(reduxServices.initiateCycle.getAllCycles())
     dispatch(reduxServices.initiateCycle.getAllQuestions())
     dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
     dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
@@ -54,6 +53,12 @@ const InitiateCycle = (): JSX.Element => {
   const ExistingPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
+
+  useEffect(() => {
+    if (window.location.pathname === '/initiateCycle') {
+      dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    }
+  }, [])
 
   useEffect(() => {
     if (cycleChecked) {
@@ -110,6 +115,12 @@ const InitiateCycle = (): JSX.Element => {
     />
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Initiate Cycle',
+  )
   const addBtnHandler = async () => {
     const prepareObject = {
       nominationCycleDto: {
@@ -157,37 +168,39 @@ const InitiateCycle = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
-          <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                onClick={() =>
-                  dispatch(
-                    reduxServices.initiateCycle.actions.setToggle('addCycle'),
-                  )
-                }
-              >
-                <i className="fa fa-plus me-1"></i>
-                Add Cycle
-              </CButton>
-              &nbsp;
-              <CButton
-                color="info"
-                className="text-white btn-ovh"
-                size="sm"
-                onClick={() =>
-                  dispatch(
-                    reduxServices.initiateCycle.actions.setToggle(
-                      'addQuestion',
-                    ),
-                  )
-                }
-              >
-                Add Question
-              </CButton>
-            </CCol>
-          </CRow>
+          {userAccess?.createaccess && (
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={() =>
+                    dispatch(
+                      reduxServices.initiateCycle.actions.setToggle('addCycle'),
+                    )
+                  }
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Add Cycle
+                </CButton>
+                &nbsp;
+                <CButton
+                  color="info"
+                  className="text-white btn-ovh"
+                  size="sm"
+                  onClick={() =>
+                    dispatch(
+                      reduxServices.initiateCycle.actions.setToggle(
+                        'addQuestion',
+                      ),
+                    )
+                  }
+                >
+                  Add Question
+                </CButton>
+              </CCol>
+            </CRow>
+          )}
           <CForm>
             <CRow className="mt-3 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -241,18 +254,20 @@ const InitiateCycle = (): JSX.Element => {
               </CCol>
             </CRow>
           </CForm>
-          <CRow>
-            <CCol md={{ span: 6, offset: 3 }}>
-              <CButton
-                data-testid="save-btn"
-                className="btn-ovh me-1 text-white"
-                color="success"
-                onClick={addBtnHandler}
-              >
-                Add
-              </CButton>
-            </CCol>
-          </CRow>
+          {userAccess?.createaccess && (
+            <CRow>
+              <CCol md={{ span: 6, offset: 10 }} className="ps-2">
+                <CButton
+                  data-testid="save-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={addBtnHandler}
+                >
+                  Add
+                </CButton>
+              </CCol>
+            </CRow>
+          )}
           <InitiateCycleTable
             paginationRange={paginationRange}
             setPageSize={setPageSize}

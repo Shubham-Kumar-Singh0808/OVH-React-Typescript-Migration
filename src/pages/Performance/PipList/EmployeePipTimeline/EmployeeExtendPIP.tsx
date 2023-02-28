@@ -69,7 +69,24 @@ const EmployeeExtendPIP = ({
   )
 
   const extendBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.extendPip(viewEmployeePipDetails))
+    await dispatch(
+      reduxServices.pipList.extendPip({
+        createdBy: viewEmployeePipDetails.createdBy,
+        createdDate: viewEmployeePipDetails.createdDate,
+        empId: viewEmployeePipDetails.empId,
+        employeeName: viewEmployeePipDetails.employeeName,
+        endDate: viewEmployeePipDetails.endDate,
+        extendDate,
+        id: viewEmployeePipDetails.id,
+        improvement: improvementPlan,
+        pipflag: viewEmployeePipDetails.pipflag,
+        rating: selectRating,
+        remarks: reasonForPIP,
+        startDate: viewEmployeePipDetails.startDate,
+        updatedBy: viewEmployeePipDetails.updatedBy,
+        updatedDate: viewEmployeePipDetails.updatedDate,
+      }),
+    )
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',

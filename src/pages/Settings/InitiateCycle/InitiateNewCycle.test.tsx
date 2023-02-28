@@ -6,6 +6,7 @@ import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockActiveCycleData } from '../../../test/data/initiateCycleData'
 import { NominationCycleDto } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('InitiateCycle without data', () => {
   beforeEach(() => {
@@ -22,6 +23,10 @@ describe('InitiateCycle without data', () => {
           pageSize: 20,
           toggle: '',
           editCycle: {} as NominationCycleDto,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

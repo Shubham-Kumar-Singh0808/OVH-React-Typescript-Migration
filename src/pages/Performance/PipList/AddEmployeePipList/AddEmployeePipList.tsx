@@ -19,10 +19,11 @@ import {
   TextLabelProps,
   TextWhite,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { showIsRequired } from '../../../../utils/helper'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -54,21 +55,14 @@ const AddEmployeePipList = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeName, setEmployeeName] = useState<string>('')
 
-  const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(startDate?.toString()).format(commonFormatDate),
-    )
-    const newToDate = new Date(
-      moment(endDate?.toString()).format(commonFormatDate),
-    )
-    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
-      setDateErrorMsg(true)
-    } else {
-      setDateErrorMsg(false)
-    }
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setDateErrorMsg(moment(end).isBefore(start))
   }, [startDate, endDate])
 
   const handleText = (comments: string) => {
@@ -137,14 +131,13 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
-
+  const employeeDetails = allEmployeeDetails?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
+  )
+  console.log(employeeDetails[0]?.employeeId)
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
-
-  const empId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
 
   const successToast = (
     <OToast
@@ -168,7 +161,7 @@ const AddEmployeePipList = ({
   )
   const addButtonHandler = async () => {
     const prepareObject = {
-      empId: Number(empId),
+      empId: employeeDetails[0]?.employeeId,
       endDate: endDate as string,
       improvement: addImprovementPlan,
       rating: selectRating,
@@ -204,6 +197,17 @@ const AddEmployeePipList = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const onHandleEndDatePicker = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+  const onHandleStartDatePicker = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
   return (
     <>
       <OCard
@@ -297,18 +301,9 @@ const AddEmployeePipList = ({
                 dateFormat="dd/mm/yy"
                 placeholderText="Start Date"
                 name="startDate"
-                value={
-                  startDate
-                    ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setStartDate(moment(date).format(commonFormatDate))
-                }
+                maxDate={disableAfterDate}
+                value={startDate}
+                onChange={(date: Date) => onHandleStartDatePicker(date)}
               />
             </CCol>
           </CRow>
@@ -327,19 +322,10 @@ const AddEmployeePipList = ({
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="End Date"
+                maxDate={disableAfterDate}
                 name="endDate"
-                value={
-                  endDate
-                    ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setEndDate(moment(date).format(commonFormatDate))
-                }
+                value={endDate}
+                onChange={(date: Date) => onHandleEndDatePicker(date)}
               />
               {dateErrorMsg && (
                 <span className="text-danger" data-testid="errorMessage">
@@ -441,7 +427,7 @@ const AddEmployeePipList = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={!isAddButtonEnabled || dateErrorMsg}
                 onClick={addButtonHandler}
               >
                 Add

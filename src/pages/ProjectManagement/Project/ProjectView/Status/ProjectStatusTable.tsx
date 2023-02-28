@@ -115,7 +115,7 @@ const ProjectStatusTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Status Deleted Successfully"
           />,
         ),
       )
@@ -276,12 +276,17 @@ const ProjectStatusTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Delete Status"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteProjectStatus}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to delete this ? ${toDeleteVisaIdName}`}
+        <>
+          Do you really want to delete this{' '}
+          <strong>{toDeleteVisaIdName}</strong>
+        </>
       </OModal>
       <OModal
         modalSize="lg"

@@ -34,6 +34,7 @@ const PayrollManagement = (): JSX.Element => {
   const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
+  const [isPercentageEnable, setPercentageEnable] = useState(false)
 
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
@@ -41,6 +42,16 @@ const PayrollManagement = (): JSX.Element => {
   for (let i = currentYear; i >= previousYears; i--) {
     years.push(i)
   }
+
+  useEffect(() => {
+    if (selectMonth) {
+      setPercentageEnable(true)
+    } else {
+      setPercentageEnable(false)
+      setSelectYear('')
+      dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
+    }
+  }, [selectMonth])
 
   const onChangeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
@@ -151,13 +162,27 @@ const PayrollManagement = (): JSX.Element => {
           previewBtnActionResult.payload === 500) ||
         previewBtnActionResult.payload === ''
       ) {
+        setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
       }
     }
   }
 
+  const deleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(10408),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedMessage))
+    }
+  }
+
   useEffect(() => {
-    if (isChecked && isAllChecked) {
+    if (isChecked || isAllChecked) {
       setIsAllDeleteBtn(true)
     } else {
       setIsAllDeleteBtn(false)
@@ -265,7 +290,7 @@ const PayrollManagement = (): JSX.Element => {
                   id="Year"
                   data-testid="form-select2"
                   name="Year"
-                  disabled={!selectMonth}
+                  disabled={!isPercentageEnable}
                   value={selectYear}
                   onChange={(e) => {
                     setSelectYear(e.target.value)
@@ -352,6 +377,7 @@ const PayrollManagement = (): JSX.Element => {
                           color="danger btn-ovh"
                           type="button"
                           disabled={!isAllDeleteBtn}
+                          onClick={deleteBtnHandler}
                           id="button-delete"
                         >
                           Delete
