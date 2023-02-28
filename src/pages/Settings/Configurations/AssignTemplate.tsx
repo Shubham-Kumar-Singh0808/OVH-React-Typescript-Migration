@@ -8,13 +8,14 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import AssignTemplateTable from './AssignTemplateTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { DesignationWiseKRA } from '../../../types/Settings/Configurations/assignTemplateTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const AssignTemplate = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState<number>()
@@ -22,8 +23,8 @@ const AssignTemplate = (): JSX.Element => {
   const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
   const [isCopyBtnEnabled, setIsCopyBtnEnabled] = useState<boolean>(false)
 
-  const [checkList, setCheckList] = useState<DesignationWiseKRA[]>([])
   const [cycleChecked, setCycleChecked] = useState<DesignationWiseKRA>()
+  const [checkList, setCheckList] = useState<DesignationWiseKRA[]>([])
   const [cbFromApi, setCbFromApi] = useState<DesignationWiseKRA[]>([])
 
   const { cycleId } = useParams<{ cycleId: string }>()
@@ -108,6 +109,41 @@ const AssignTemplate = (): JSX.Element => {
     }
   }, [selectPreviousCycle])
 
+  const designationsWiseKRA = useTypedSelector(
+    reduxServices.assignTemplate.selectors.designationsWiseKRA,
+  )
+  useEffect(() => {
+    if (designationsWiseKRA) {
+      setCbFromApi(designationsWiseKRA)
+    }
+  }, [designationsWiseKRA])
+
+  const successMsg = (
+    <OToast
+      toastMessage="KRA's are assigned to Designation."
+      toastColor="success"
+    />
+  )
+  const history = useHistory()
+
+  const copyBtnHandler = async () => {
+    const prepareObject = {
+      newCycleId: Number(cycleId),
+      oldCycleId: Number(selectPreviousCycle),
+    }
+    const copyResultAction = await dispatch(
+      reduxServices.assignTemplate.copyCycleData(prepareObject),
+    )
+    if (
+      reduxServices.assignTemplate.copyCycleData.fulfilled.match(
+        copyResultAction,
+      )
+    ) {
+      history.push('/appraisalCycle')
+      dispatch(reduxServices.app.actions.addToast(successMsg))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   return (
     <>
       <OCard
@@ -180,6 +216,7 @@ const AssignTemplate = (): JSX.Element => {
                 className="btn-ovh me-1 text-white"
                 color="success"
                 disabled={!isCopyBtnEnabled}
+                onClick={copyBtnHandler}
               >
                 Copy
               </CButton>
@@ -261,19 +298,7 @@ const AssignTemplate = (): JSX.Element => {
           selChkBoxesFromApi={cbFromApi}
           checkList={checkList}
           cbFromApi={cbFromApi}
-          cycleChecked={{
-            id: 0,
-            name: '',
-            description: '',
-            kpiLookps: null,
-            count: 0,
-            checkType: null,
-            designationName: '',
-            designationId: 0,
-            departmentName: '',
-            departmentId: 0,
-            designationKraPercentage: 0,
-          }}
+          cycleChecked={cycleChecked as DesignationWiseKRA}
         />
       </OCard>
     </>

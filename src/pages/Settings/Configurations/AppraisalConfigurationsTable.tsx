@@ -89,9 +89,6 @@ const AppraisalConfigurationsTable = ({
     return []
   }, [appraisalCycle])
 
-  console.log(sortedAppraisalDates)
-  console.log(appraisalCycle)
-
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }

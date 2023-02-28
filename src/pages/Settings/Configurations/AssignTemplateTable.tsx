@@ -183,8 +183,8 @@ const AssignTemplateTable = ({
                 designationKRA.name && designationKRA.name.length > 30
                   ? `${designationKRA.name.substring(0, 30)}...`
                   : designationKRA.name
-
               let flag = false
+
               const chkFlag = selChkBoxesFromApi?.find(
                 (el) => el.id === designationKRA.id,
               )
@@ -197,8 +197,6 @@ const AssignTemplateTable = ({
                     <CFormCheck
                       className="form-check-input"
                       name="checkType"
-                      checked={designationKRA.checkType as unknown as boolean}
-                      // onChange={(e) => setIsChecked(e.target.checked)}
                       onChange={() => {
                         setCycleChecked((prevState) => {
                           return {
@@ -220,6 +218,7 @@ const AssignTemplateTable = ({
                           }
                         })
                       }}
+                      checked={flag}
                       value={cycleChecked as unknown as string}
                     />
                   </CTableDataCell>
