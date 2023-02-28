@@ -422,3 +422,10 @@ input.capetalized {
 .lineHeight {
   line-height: 1;
 }
+.sh-initiateCheckBox .form-check-input{ 
+  width: 1.5em;
+    height: 1.5em;
+}
+.sh-initiateCheckBox .form-check-input:checked[type=checkbox]{
+  background-size: 24px;
+}

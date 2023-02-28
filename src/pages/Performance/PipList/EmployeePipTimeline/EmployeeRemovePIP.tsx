@@ -58,7 +58,30 @@ const EmployeeRemovePIP = ({
   )
 
   const extendBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.removeFromPip(viewPipDetails))
+    await dispatch(
+      reduxServices.pipList.removeFromPip({
+        createdBy: viewPipDetails.createdBy,
+        createdDate: viewPipDetails.createdDate,
+        empId: viewPipDetails.empId,
+        employeeName: viewPipDetails.employeeName,
+        endDate: viewPipDetails.endDate,
+        extendDate: viewPipDetails.extendDate,
+        id: viewPipDetails.id,
+        improvement: viewPipDetails.improvement,
+        pipflag: viewPipDetails.pipflag,
+        rating: selectRatingValue,
+        remarks: reasonForRemovePIP,
+        startDate: viewPipDetails.startDate,
+        updatedBy: viewPipDetails.updatedBy,
+        updatedDate: viewPipDetails.updatedDate,
+      }),
+    )
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: viewPipDetails.id as number,
+      }),
+    )
     dispatch(reduxServices.app.actions.addToast(successToastMsg))
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')

@@ -99,7 +99,24 @@ const EmployeeUpdatePIP = ({
   )
 
   const updateBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.updatePipDetails(viewEmployeePipData))
+    await dispatch(
+      reduxServices.pipList.updatePipDetails({
+        createdBy: viewEmployeePipData.createdBy,
+        createdDate: viewEmployeePipData.createdDate,
+        empId: viewEmployeePipData.empId,
+        employeeName: viewEmployeePipData.employeeName,
+        endDate,
+        extendDate: viewEmployeePipData.extendDate,
+        id: viewEmployeePipData.id,
+        improvement: improvementPlanText,
+        pipflag: viewEmployeePipData.pipflag,
+        rating: selectRatingNo,
+        remarks: reasonForPIPText,
+        startDate,
+        updatedBy: viewEmployeePipData.updatedBy,
+        updatedDate: viewEmployeePipData.updatedDate,
+      }),
+    )
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',
@@ -110,7 +127,7 @@ const EmployeeUpdatePIP = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
   }
-
+  console.log(selectRatingNo)
   return (
     <>
       <OCard
