@@ -39,7 +39,10 @@ const AssignTemplateTable = ({
     reduxServices.assignTemplate.selectors.designationsWiseKRA,
   )
   const designations = useTypedSelector(
-    reduxServices.assignTemplate.selectors.empDesignationsList,
+    reduxServices.assignTemplate.selectors.empDesignations,
+  )
+  const designationsMapping = designations.filter(
+    (item) => item.departmentId === selectDepartment,
   )
 
   const multiSearchBtnHandler = () => {
@@ -114,11 +117,11 @@ const AssignTemplateTable = ({
         toDate: appraisalCycle.toDate,
       },
       designation: {
-        code: designations.code,
-        departmentId: designations.departmentId,
-        departmentName: designations.departmentName,
-        id: designations.id,
-        name: designations.name,
+        code: designationsMapping[0].code,
+        departmentId: designationsMapping[0].departmentId,
+        departmentName: designationsMapping[0].departmentName,
+        id: designationsMapping[0].id,
+        name: designationsMapping[0].name,
       },
       kraLookups: designationWiseKRA,
     }

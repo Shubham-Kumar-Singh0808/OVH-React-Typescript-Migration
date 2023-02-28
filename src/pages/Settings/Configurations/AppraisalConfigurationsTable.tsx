@@ -29,6 +29,7 @@ const AppraisalConfigurationsTable = ({
 }): JSX.Element => {
   const [isAppraisalDescriptionVisible, setIsAppraisalDescriptionVisible] =
     useState<boolean>(false)
+
   const [descriptionModal, setDescriptionModal] = useState(
     {} as GetAppraisalCycle,
   )
@@ -98,6 +99,10 @@ const AppraisalConfigurationsTable = ({
   const totalRecords = appraisalCycle?.length
     ? `Total Records: ${appraisalCycleListSize}`
     : `No Records found...`
+
+  const assignTemplateBtnHandler = (id: number) => {
+    dispatch(reduxServices.appraisalConfigurations.getCycleToEdit(id))
+  }
   return (
     <>
       <CTable
@@ -188,6 +193,9 @@ const AppraisalConfigurationsTable = ({
                               size="sm"
                               className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer button"
                               disabled={appraisalCycle.cycleStartedFlag}
+                              onClick={() =>
+                                assignTemplateBtnHandler(appraisalCycle.id)
+                              }
                             >
                               <i className="fa fa-plus" aria-hidden="true"></i>
                             </CButton>

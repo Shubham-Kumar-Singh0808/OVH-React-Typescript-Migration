@@ -27,6 +27,9 @@ const AssignTemplate = (): JSX.Element => {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+  const getEditAppraisal = useTypedSelector(
+    reduxServices.appraisalConfigurations.selectors.getEditAppraisal,
+  )
 
   const dispatch = useAppDispatch()
 
@@ -115,6 +118,7 @@ const AssignTemplate = (): JSX.Element => {
                 size="sm"
                 name="name"
                 disabled={true}
+                value={getEditAppraisal.name}
               />
             </CCol>
           </CRow>
