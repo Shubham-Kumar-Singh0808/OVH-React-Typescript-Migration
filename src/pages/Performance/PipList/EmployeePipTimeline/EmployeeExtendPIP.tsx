@@ -115,8 +115,8 @@ const EmployeeExtendPIP = ({
     setIsExtendDateError(moment(start).isBefore(end))
   }, [
     extendDate,
-    viewEmployeePipDetails.startDate,
-    viewEmployeePipDetails.endDate,
+    viewEmployeePipDetails?.startDate,
+    viewEmployeePipDetails?.endDate,
   ])
 
   return (
