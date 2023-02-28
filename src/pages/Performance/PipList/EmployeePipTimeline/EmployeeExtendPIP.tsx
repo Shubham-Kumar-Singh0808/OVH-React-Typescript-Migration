@@ -108,7 +108,7 @@ const EmployeeExtendPIP = ({
       newDateFormatForIsBefore,
     )
     const end = moment(
-      viewEmployeePipDetails.startDate && viewEmployeePipDetails.endDate,
+      viewEmployeePipDetails?.startDate && viewEmployeePipDetails?.endDate,
       dateFormat,
     ).format(newDateFormatForIsBefore)
 
