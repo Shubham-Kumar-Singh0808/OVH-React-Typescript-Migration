@@ -71,4 +71,13 @@ export type SearchKRAData = {
 export type AssignTemplateOptions = {
   selectDepartment: number
   selectDesignation: number
+  cbFromApi: DesignationWiseKRA[]
+
+  cycleChecked: DesignationWiseKRA
+
+  setCycleChecked: React.Dispatch<
+    React.SetStateAction<DesignationWiseKRA | undefined>
+  >
+  selChkBoxesFromApi: DesignationWiseKRA[]
+  checkList: DesignationWiseKRA[]
 }

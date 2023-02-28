@@ -14,6 +14,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { DesignationWiseKRA } from '../../../types/Settings/Configurations/assignTemplateTypes'
 
 const AssignTemplate = (): JSX.Element => {
   const [selectDepartment, setSelectDepartment] = useState<number>()
@@ -21,7 +22,34 @@ const AssignTemplate = (): JSX.Element => {
   const [selectPreviousCycle, setSelectPreviousCycle] = useState('')
   const [isCopyBtnEnabled, setIsCopyBtnEnabled] = useState<boolean>(false)
 
+  const [checkList, setCheckList] = useState<DesignationWiseKRA[]>([])
+  const [cycleChecked, setCycleChecked] = useState<DesignationWiseKRA>()
+  const [cbFromApi, setCbFromApi] = useState<DesignationWiseKRA[]>([])
+
   const { cycleId } = useParams<{ cycleId: string }>()
+  useEffect(() => {
+    if (cycleChecked) {
+      const tmpArr: DesignationWiseKRA[] = []
+      cbFromApi.forEach((item) => {
+        tmpArr.push(item)
+        return ''
+      })
+      let ndx = 9999
+      tmpArr.forEach((el, i) => {
+        if (el.id === cycleChecked.id) {
+          ndx = i
+        }
+        return ''
+      })
+      if (ndx < 9999) {
+        tmpArr.splice(ndx, 1)
+      } else {
+        tmpArr.push(cycleChecked)
+      }
+      setCbFromApi(tmpArr)
+      setCheckList([...checkList, cycleChecked])
+    }
+  }, [cycleChecked])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -229,6 +257,23 @@ const AssignTemplate = (): JSX.Element => {
         <AssignTemplateTable
           selectDepartment={selectDepartment as number}
           selectDesignation={selectDesignation as number}
+          setCycleChecked={setCycleChecked}
+          selChkBoxesFromApi={cbFromApi}
+          checkList={checkList}
+          cbFromApi={cbFromApi}
+          cycleChecked={{
+            id: 0,
+            name: '',
+            description: '',
+            kpiLookps: null,
+            count: 0,
+            checkType: null,
+            designationName: '',
+            designationId: 0,
+            departmentName: '',
+            departmentId: 0,
+            designationKraPercentage: 0,
+          }}
         />
       </OCard>
     </>

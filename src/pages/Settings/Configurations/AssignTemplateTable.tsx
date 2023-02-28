@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CTable,
@@ -24,16 +24,17 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const AssignTemplateTable = ({
   selectDepartment,
   selectDesignation,
+  setCycleChecked,
+  cbFromApi,
+  cycleChecked,
+  selChkBoxesFromApi,
 }: AssignTemplateOptions): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [searchInput, setSearchInput] = useState<string>('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalVisibleData, setIsModalVisibleData] = useState(false)
-  const [isSaveBtnEnabled, setIsSaveBtnEnabled] = useState<boolean>(false)
   const [displayKra, setDisplayKra] = useState<string>('')
-  const [displayKraDetails, setDisplayKraDetails] = useState<string>('')
-  const [isChecked, setIsChecked] = useState<boolean>(false)
 
   const designationWiseKRA = useTypedSelector(
     reduxServices.assignTemplate.selectors.designationsWiseKRA,
@@ -80,13 +81,6 @@ const AssignTemplateTable = ({
     setIsModalVisibleData(true)
     dispatch(reduxServices.assignTemplate.kpiForIndividualKra(kraId))
   }
-  useEffect(() => {
-    if (isChecked) {
-      setIsSaveBtnEnabled(true)
-    } else {
-      setIsSaveBtnEnabled(false)
-    }
-  }, [isChecked])
 
   const successMsg = (
     <OToast
@@ -123,7 +117,7 @@ const AssignTemplateTable = ({
         id: designationsMapping[0].id,
         name: designationsMapping[0].name,
       },
-      kraLookups: designationWiseKRA,
+      kraLookups: cbFromApi,
     }
     const saveKRAResultAction = await dispatch(
       reduxServices.assignTemplate.designingMap(prepareObject),
@@ -189,6 +183,14 @@ const AssignTemplateTable = ({
                 designationKRA.name && designationKRA.name.length > 30
                   ? `${designationKRA.name.substring(0, 30)}...`
                   : designationKRA.name
+
+              let flag = false
+              const chkFlag = selChkBoxesFromApi?.find(
+                (el) => el.id === designationKRA.id,
+              )
+              if (chkFlag) {
+                flag = true
+              }
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>
@@ -196,7 +198,29 @@ const AssignTemplateTable = ({
                       className="form-check-input"
                       name="checkType"
                       checked={designationKRA.checkType as unknown as boolean}
-                      onChange={(e) => setIsChecked(e.target.checked)}
+                      // onChange={(e) => setIsChecked(e.target.checked)}
+                      onChange={() => {
+                        setCycleChecked((prevState) => {
+                          return {
+                            ...prevState,
+                            ...{
+                              id: designationKRA.id,
+                              name: designationKRA.name,
+                              description: designationKRA.description,
+                              kpiLookps: designationKRA.kpiLookps,
+                              count: designationKRA.count,
+                              checkType: designationKRA.checkType,
+                              designationName: designationKRA.designationName,
+                              designationId: designationKRA.designationId,
+                              departmentName: designationKRA.departmentName,
+                              departmentId: designationKRA.departmentId,
+                              designationKraPercentage:
+                                designationKRA.designationKraPercentage,
+                            },
+                          }
+                        })
+                      }}
+                      value={cycleChecked as unknown as string}
                     />
                   </CTableDataCell>
                   {kraLimit ? (
@@ -244,7 +268,7 @@ const AssignTemplateTable = ({
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
-            disabled={!isSaveBtnEnabled}
+            // disabled={!isSaveBtnEnabled}
             onClick={saveButtonHandler}
           >
             Save
@@ -271,7 +295,7 @@ const AssignTemplateTable = ({
         visible={isModalVisibleData}
         setVisible={setIsModalVisibleData}
       >
-        {displayKraDetails}
+        {'displayKraDetails'}
       </OModal>
     </>
   )
