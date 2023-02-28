@@ -19,10 +19,10 @@ import {
   TextDanger,
   TextLabelProps,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
 
 const EmployeeExtendPIP = ({
   setToggle,
@@ -34,8 +34,6 @@ const EmployeeExtendPIP = ({
   const [reasonForPIP, setReasonForPIP] = useState<string>('')
   const [improvementPlan, setImprovementPlan] = useState<string>('')
   const [isExtendBtnEnabled, setIsExtendBtnEnabled] = useState(false)
-
-  const commonFormatDate = 'L'
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -97,7 +95,11 @@ const EmployeeExtendPIP = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
   }
-
+  const onHandleExtendDatePicker = (value: Date) => {
+    setExtendDate(moment(value).format(dateFormat))
+  }
+  const disableExtendDate = new Date()
+  disableExtendDate.setFullYear(disableExtendDate.getFullYear() + 1)
   return (
     <>
       <OCard
@@ -197,18 +199,10 @@ const EmployeeExtendPIP = ({
                 dropdownMode="select"
                 placeholderText="Extend Date"
                 name="extendDate"
-                value={
-                  extendDate
-                    ? new Date(extendDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setExtendDate(moment(date).format(commonFormatDate))
-                }
+                minDate={new Date()}
+                maxDate={disableExtendDate}
+                value={extendDate}
+                onChange={(date: Date) => onHandleExtendDatePicker(date)}
               />
             </CCol>
           </CRow>

@@ -9,6 +9,7 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -18,11 +19,11 @@ import {
   TextDanger,
   TextLabelProps,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { GetPipList } from '../../../../types/Performance/PipList/pipListTypes'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
 
 const EmployeeUpdatePIP = ({
   setToggle,
@@ -38,6 +39,8 @@ const EmployeeUpdatePIP = ({
 
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
+  const [updateDateErrorMsg, setUpdateDateErrorMsg] = useState<boolean>(false)
+
   const [selectRatingNo, setSelectRatingNo] = useState<string>(
     viewEmployeePipData?.rating,
   )
@@ -48,6 +51,14 @@ const EmployeeUpdatePIP = ({
     viewEmployeePipData?.createdBy,
   )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setUpdateDateErrorMsg(moment(end).isBefore(start))
+  }, [startDate, endDate])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -127,7 +138,14 @@ const EmployeeUpdatePIP = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
   }
-  console.log(selectRatingNo)
+  const onHandleUpdateEndDatePicker = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+  const onHandleUpdateStartDatePicker = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+  const disableDate = new Date()
+  disableDate.setFullYear(disableDate.getFullYear() + 1)
   return (
     <>
       <OCard
@@ -182,17 +200,9 @@ const EmployeeUpdatePIP = ({
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={startDate}
-                onChange={(date: Date) =>
-                  setStartDate(
-                    date
-                      ? new Date(date).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : '',
-                  )
-                }
+                minDate={new Date()}
+                maxDate={disableDate}
+                onChange={(date: Date) => onHandleUpdateStartDatePicker(date)}
                 dateFormat="dd/mm/yyyy"
                 showMonthDropdown
                 showYearDropdown
@@ -215,17 +225,9 @@ const EmployeeUpdatePIP = ({
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 value={endDate}
-                onChange={(date: Date) =>
-                  setEndDate(
-                    date
-                      ? new Date(date).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        })
-                      : '',
-                  )
-                }
+                minDate={new Date()}
+                maxDate={disableDate}
+                onChange={(date: Date) => onHandleUpdateEndDatePicker(date)}
                 dateFormat="dd/mm/yyyy"
                 showMonthDropdown
                 showYearDropdown
@@ -234,6 +236,11 @@ const EmployeeUpdatePIP = ({
                 name="cycleToDate"
                 data-testid="cycleToDate-input"
               />
+              {updateDateErrorMsg && (
+                <span className="text-danger" data-testid="errorMessage">
+                  <b>End date should be greater than Start date</b>
+                </span>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-3">

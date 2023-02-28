@@ -329,7 +329,7 @@ const AddEmployeePipList = ({
               />
               {dateErrorMsg && (
                 <span className="text-danger" data-testid="errorMessage">
-                  End date should be greater than Start date
+                  <b>End date should be greater than Start date</b>
                 </span>
               )}
             </CCol>
