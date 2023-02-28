@@ -34,6 +34,7 @@ const EmployeeExtendPIP = ({
   const [reasonForPIP, setReasonForPIP] = useState<string>('')
   const [improvementPlan, setImprovementPlan] = useState<string>('')
   const [isExtendBtnEnabled, setIsExtendBtnEnabled] = useState(false)
+  const [isExtendDateError, setIsExtendDateError] = useState<boolean>(false)
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -100,6 +101,24 @@ const EmployeeExtendPIP = ({
   }
   const disableExtendDate = new Date()
   disableExtendDate.setFullYear(disableExtendDate.getFullYear() + 1)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(extendDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(
+      viewEmployeePipDetails.startDate && viewEmployeePipDetails.endDate,
+      dateFormat,
+    ).format(newDateFormatForIsBefore)
+
+    setIsExtendDateError(moment(start).isBefore(end))
+  }, [
+    extendDate,
+    viewEmployeePipDetails.startDate,
+    viewEmployeePipDetails.endDate,
+  ])
+
   return (
     <>
       <OCard
@@ -204,6 +223,16 @@ const EmployeeExtendPIP = ({
                 value={extendDate}
                 onChange={(date: Date) => onHandleExtendDatePicker(date)}
               />
+              {isExtendDateError && (
+                <CCol sm={6}>
+                  <span className="text-danger">
+                    <b>
+                      Extend date should be greater than Start date and should
+                      not be in between Start date and End date.
+                    </b>
+                  </span>
+                </CCol>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-3">
@@ -281,7 +310,7 @@ const EmployeeExtendPIP = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              disabled={!isExtendBtnEnabled}
+              disabled={!isExtendBtnEnabled || isExtendDateError}
               onClick={extendBtnHandler}
             >
               Extend

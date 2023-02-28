@@ -322,7 +322,7 @@ const EmployeeUpdatePIP = ({
               data-testid="save-btn"
               color="success"
               className="btn-ovh me-1 text-white"
-              disabled={!isUpdateBtnEnabled}
+              disabled={!isUpdateBtnEnabled || updateDateErrorMsg}
               onClick={updateBtnHandler}
             >
               Update
