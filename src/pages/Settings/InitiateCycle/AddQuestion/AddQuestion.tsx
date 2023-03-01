@@ -10,14 +10,14 @@ import AddQuestionTable from './AddQuestionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
+const AddQuestion = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [addQuestion, setAddQuestion] = useState<string>('')
   const [isAddBtnEnabled, setIsAddBtnEnabled] = useState(false)
-
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getAllQuestions())
@@ -28,7 +28,7 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
   }
 
   useEffect(() => {
-    if (addQuestion) {
+    if (addQuestion?.replace(/^\s*/, '')) {
       setIsAddBtnEnabled(true)
     } else {
       setIsAddBtnEnabled(false)
@@ -71,7 +71,11 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.initiateCycle.getAllQuestions())
   }
-
+  const backButtonHandler = () => {
+    dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    dispatch(reduxServices.initiateCycle.getActiveCycleData())
+    dispatch(reduxServices.initiateCycle.getAllQuestions())
+  }
   return (
     <>
       <OCard
@@ -86,7 +90,7 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={setToggle}
+              onClick={backButtonHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -95,7 +99,11 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CFormLabel className="form-label col-sm-2 col-form-label text-end">
             Question :
-            <span className={addQuestion ? 'text-white' : 'text-danger'}>
+            <span
+              className={
+                addQuestion?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+              }
+            >
               *
             </span>
           </CFormLabel>
@@ -106,6 +114,7 @@ const AddQuestion = ({ setToggle }: { setToggle: () => void }): JSX.Element => {
               className="sh-question"
               id="Name"
               name="question"
+              maxLength={300}
               placeholder="Question ?"
               value={addQuestion}
               onChange={(e) => setAddQuestion(e.target.value)}

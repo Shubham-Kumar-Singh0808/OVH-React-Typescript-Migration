@@ -406,6 +406,7 @@ export interface DashboardApi extends ApiBase {
   updateHoliday: string
   searchEmployee: string
   getLeaveSummary: string
+  imageFix: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -694,6 +695,9 @@ export interface InitiateCycleApi extends ApiBase {
   initiateCycle: string
   deleteQuestion: string
   addQuestion: string
+  addCycle: string
+  editCycle: string
+  updateCycle: string
 }
 
 export interface MyKRAsApi extends ApiBase {
@@ -786,7 +790,9 @@ export interface ProcessAreaListApi extends ApiBase {
 
 export interface AddNewAudit extends ApiBase {
   saveNewAuditForm: string
+  editAuditFormDetails: string
   getProjectEmployees: string
+  updateSQAAuditForm: string
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string

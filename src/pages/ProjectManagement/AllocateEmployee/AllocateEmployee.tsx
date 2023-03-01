@@ -128,7 +128,7 @@ const AllocateEmployee = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'allocation') {
-      let targetValue = value.replace(/\D/g, '')
+      let targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
       if (Number(targetValue) > 100) targetValue = '100'
       setAllocationValue(targetValue)
     }

@@ -16,11 +16,16 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
     File | undefined
   >(undefined)
   const [isSubmitBtn, setIsSubmitBtn] = useState(false)
+  const [clearFileRelievingLetter, setClearFileRelievingLetter] =
+    useState<string>('')
+  const [clearFileExitFeedbackForm, setClearFileExitFeedbackForm] =
+    useState<string>('')
 
   const onChangeExitFeedBackFormEventHandler = (element: HTMLInputElement) => {
     const file = element.files
     if (!file) return
     setUploadExitFeedbackForm(file[0])
+    setClearFileExitFeedbackForm(element.value)
   }
   const onChangeUploadRelievingLetterEventHandler = (
     element: HTMLInputElement,
@@ -28,6 +33,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadRelievingLetter(file[0])
+    setClearFileRelievingLetter(element.value)
   }
   useEffect(() => {
     if (uploadExitFeedbackForm && uploadRelievingLetter) {
@@ -40,19 +46,19 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
   const clearButtonHandler = () => {
     setUploadExitFeedbackForm(undefined)
     setUploadRelievingLetter(undefined)
+    setClearFileRelievingLetter('')
+    setClearFileExitFeedbackForm('')
   }
 
-  const clearenceCertificate = useTypedSelector(
-    reduxServices.pipList.selectors.clearenceCertificate,
-  )
-
-  const employeeId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
+  const viewEmployeePipDetails = useTypedSelector(
+    reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
 
   const handleSubmitExitFeedBackForm = async () => {
     const feedBackFormResultAction = await dispatch(
-      reduxServices.pipList.savePIPClearnceCertificate(employeeId),
+      reduxServices.pipList.savePIPClearnceCertificate(
+        viewEmployeePipDetails.empId,
+      ),
     )
     if (uploadExitFeedbackForm) {
       const formData = new FormData()
@@ -92,7 +98,10 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
-          <OToast toastColor="success" toastMessage="successfully" />,
+          <OToast
+            toastColor="success"
+            toastMessage="Exit form added Successfully"
+          />,
         ),
       )
     }
@@ -126,7 +135,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
               Employee ID:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{clearenceCertificate.empId}</p>
+              <p className="mb-0">{viewEmployeePipDetails.empId}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
@@ -134,7 +143,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
               Employee Name:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{clearenceCertificate.employeeName}</p>
+              <p className="mb-0">{viewEmployeePipDetails.employeeName}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
@@ -154,6 +163,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
                 type="file"
                 data-testid="file-upload"
                 id="fileUpload"
+                value={clearFileExitFeedbackForm}
                 onChange={(element: React.SyntheticEvent) =>
                   onChangeExitFeedBackFormEventHandler(
                     element.currentTarget as HTMLInputElement,
@@ -177,6 +187,7 @@ const EmployeePIPClearenceCertificate = (): JSX.Element => {
                 type="file"
                 data-testid="relievingFile-upload"
                 id="fileUpload"
+                value={clearFileRelievingLetter}
                 onChange={(element: React.SyntheticEvent) =>
                   onChangeUploadRelievingLetterEventHandler(
                     element.currentTarget as HTMLInputElement,

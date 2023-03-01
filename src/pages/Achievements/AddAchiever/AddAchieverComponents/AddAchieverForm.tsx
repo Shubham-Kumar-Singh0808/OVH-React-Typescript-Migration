@@ -6,16 +6,14 @@ import {
   CFormSelect,
   CFormInput,
   CButton,
-  CFormText,
   CContainer,
 } from '@coreui/react-pro'
-// eslint-disable-next-line import/named
-import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import FilterEmployeeName from './FilterEmployeeName'
 import AchieverImage from './AchieverImage'
+import AchieverDescription from './AchieverDescription'
 import {
   base64Extension,
   emptyString,
@@ -32,7 +30,6 @@ import {
   OutgoingNewAchiever,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -69,6 +66,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     setAddButton,
     clearInfoButtonHandler,
     addButtonHandler,
+    userAccessToAddAchiever,
   } = props
   const achievementTypeDetailsAscendingList = useTypedSelector(
     (state) => state.commonAchievements.achievementTypeList,
@@ -104,9 +102,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     newAchieverDetails.endDate,
   ) ? (
     <div data-testid="error-msg-date">
-      <CFormText data-testid="error-date" className={TextDanger}>
+      <strong data-testid="error-date" className={TextDanger}>
         {fromToDateError}
-      </CFormText>
+      </strong>
     </div>
   ) : (
     <></>
@@ -371,7 +369,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="startDate"
-                placeholderText="mm-yyyy"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -409,7 +407,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 dateFormat="MMMM yyyy"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
-                placeholderText="mm-yyyy"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -425,28 +423,11 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             </CCol>
           </AchievementEntryContainer>
         )}
-        <AchievementEntryContainer>
-          <CFormLabel
-            data-testid="ach-desc"
-            className={`${newAchievementLabelClass} align-self-start`}
-          >
-            Description :<span className={TextWhite}>*</span>
-          </CFormLabel>
-          <CCol sm={8}>
-            {showEditor ? (
-              <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
-                initData={achievementDescription}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  descriptionHandler(editor.getData().trim())
-                }}
-              />
-            ) : (
-              <></>
-            )}
-          </CCol>
-        </AchievementEntryContainer>
+        <AchieverDescription
+          showEditor={showEditor}
+          achievementDescription={achievementDescription}
+          descriptionHandler={descriptionHandler}
+        />
         <AchievementEntryContainer>
           <CFormLabel
             data-testid="ach-pic"
@@ -466,24 +447,28 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
       <CRow>
         <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="add-achiever-btn"
-            disabled={!isAddButtonEnabled}
-          >
-            Add
-          </CButton>
-          <CButton
-            color="warning"
-            role="addNewAchiever"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
+          {userAccessToAddAchiever?.createaccess && (
+            <>
+              <CButton
+                type="submit"
+                color="success"
+                className="btn-ovh me-1"
+                data-testid="add-achiever-btn"
+                disabled={!isAddButtonEnabled}
+              >
+                Add
+              </CButton>
+              <CButton
+                color="warning"
+                role="addNewAchiever"
+                data-testid="clear-btn"
+                className="btn-ovh me-1"
+                onClick={clearButtonHandler}
+              >
+                Clear
+              </CButton>
+            </>
+          )}
         </CCol>
       </CRow>
     </CForm>

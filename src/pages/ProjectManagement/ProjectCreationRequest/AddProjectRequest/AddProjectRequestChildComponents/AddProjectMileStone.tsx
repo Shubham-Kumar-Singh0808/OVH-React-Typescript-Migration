@@ -147,7 +147,7 @@ const AddProjectMileStone = ({
           <CFormInput
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
-            value={item.title}
+            value={item.title?.replace(/^\s*/, '')}
             name="title"
             placeholder="Title"
             data-testid="title-testing"
@@ -156,10 +156,11 @@ const AddProjectMileStone = ({
         <CTableDataCell className="col-sm-1 ps-2 pe-2">
           <CFormInput
             onChange={(e) => effortOnChange(e, index)}
-            value={item.effort}
+            value={item.effort?.replace(/^\s*/, '')}
             className="mt-2"
             name="effort"
             id="effort"
+            autoComplete="off"
             placeholder="Effort"
             data-testid="effort-test"
           />
@@ -176,6 +177,7 @@ const AddProjectMileStone = ({
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
             name="editProjectEndDate"
+            autoComplete="off"
             value={item.fromDate}
             onChange={(date: Date) => onChangeHandleFromDate(date, index)}
           />
@@ -192,6 +194,7 @@ const AddProjectMileStone = ({
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
             name="editProjectEndDate"
+            autoComplete="off"
             value={item.toDate}
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
@@ -229,7 +232,7 @@ const AddProjectMileStone = ({
             id="comments"
             name="comments"
             data-testid="text-area"
-            value={item.comments}
+            value={item.comments?.replace(/^\s*/, '')}
             onChange={(e) => commentsOnChange(e, index)}
           ></CFormTextarea>
         </CTableDataCell>

@@ -102,6 +102,7 @@ const NewEvent = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addEvent, setAddEvent] = useState(initEvent)
   const [descriptionValue, setDescriptionValue] = useState('')
+  const [dateError, setDateError] = useState<boolean>(false)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
@@ -290,6 +291,16 @@ const NewEvent = (): JSX.Element => {
             />,
           ),
         )
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you missed the selected time..!!"
+            />,
+          ),
+        )
       }
     }
   }
@@ -307,7 +318,27 @@ const NewEvent = (): JSX.Element => {
       setShowEditor(true)
     }, 100)
   }
+  const commonFormatDate = 'l'
 
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(addEvent.fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(addEvent.toDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      addEvent.fromDate &&
+      addEvent.toDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [addEvent.fromDate, addEvent.toDate])
+  console.log(addEvent.toDate)
+  console.log(addEvent.fromDate)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -349,6 +380,15 @@ const NewEvent = (): JSX.Element => {
               toDateValue={addEvent.toDate as string}
               toDateChangeHandler={toDateChangeHandler}
             />
+            {dateError && (
+              <CRow className="mt-2">
+                <CCol sm={{ span: 6, offset: 4 }}>
+                  <span className="text-danger" data-testid="errorMessage">
+                    To date should be greater than From date
+                  </span>
+                </CCol>
+              </CRow>
+            )}
             <StartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
               shouldReset={resetFields.startEndTime}
@@ -431,7 +471,6 @@ const NewEvent = (): JSX.Element => {
                   attendeesList={attendeesList}
                   setAttendeesList={setAttendeesList}
                   selectProjectMember={selectProjectMember}
-                  isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}

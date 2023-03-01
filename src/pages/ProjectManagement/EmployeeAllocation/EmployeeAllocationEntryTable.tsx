@@ -107,6 +107,7 @@ const EmployeeAllocationEntryTable = (props: {
         saveProjectAllocationResultAction,
       )
     ) {
+      setIsProjectAllocationEdit(false)
       dispatch(
         reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
           Billingtype: billingStatus,
@@ -133,7 +134,28 @@ const EmployeeAllocationEntryTable = (props: {
           technology: '',
         }),
       )
-      setIsProjectAllocationEdit(false)
+      dispatch(
+        reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
+          dateSelection: Select,
+          employeeid: editEmployeeAllocation.employeeId,
+          enddate: toDate
+            ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          isAllocated: allocationStatus,
+          isBillale: billingStatus,
+          startdate: fromDate
+            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+        }),
+      )
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast

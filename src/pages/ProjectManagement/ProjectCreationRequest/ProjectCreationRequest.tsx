@@ -123,6 +123,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               pageSize={pageSize}
               setToggle={setToggle}
               userDeleteAction={userAccessCreateAction?.deleteaccess as boolean}
+              userRejectAction={userAccessCreateAction?.updateaccess as boolean}
             />
           </OCard>
         </>

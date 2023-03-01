@@ -8,6 +8,7 @@ import {
   CFormCheck,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
@@ -17,6 +18,13 @@ const AdminClearanceForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getAllAdminResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC Details Submitted Successfully"
+      toastColor="success"
+    />
   )
 
   const SubmitAdminClearanceCertificateHandler = async () => {
@@ -41,6 +49,7 @@ const AdminClearanceForm = (): JSX.Element => {
           submittedBy: 'Admin',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 

@@ -109,7 +109,7 @@ import {
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
-const apiPrefix = baseUrl + '/hrm-ws'
+const apiPrefix = baseUrl + '/hrm-ws/'
 
 export enum AllowedHttpMethods {
   get = 'get',
@@ -529,6 +529,7 @@ export const dashboardApiConfig: DashboardApi = {
   updateHoliday: apiPrefix + '/Employee/editHoliday',
   searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
   getLeaveSummary: apiPrefix + '/leave/leaveSummaryDashboard',
+  imageFix: apiPrefix + 'profilepics/1857-Thumb.jpg',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
@@ -867,6 +868,9 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
   initiateCycle: apiPrefix + '/nominationController/initiateCycle',
   deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
   addQuestion: apiPrefix + '/nominationController/addQuestion',
+  addCycle: apiPrefix + '/nominationController/addCycle',
+  editCycle: apiPrefix + '/nominationController/editCycle',
+  updateCycle: apiPrefix + '/nominationController/updateCycle',
 }
 
 export const myKRAsApiConfig: MyKRAsApi = {
@@ -957,7 +961,9 @@ export const processAreaApiConfig: ProcessAreaListApi = {
 }
 export const addNewAuditApiConfig: AddNewAudit = {
   saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  editAuditFormDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
   getProjectEmployees: apiPrefix + '/allocation-mgmt/getProjectEmployees',
+  updateSQAAuditForm: apiPrefix + '/sqaAuditController/updateAuditForm',
 }
 
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {

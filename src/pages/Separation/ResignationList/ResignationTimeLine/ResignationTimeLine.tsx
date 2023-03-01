@@ -75,7 +75,9 @@ const ResignationTimeLine = ({
         adminCcCss: null,
         canberevoked: false,
         certificate: null,
-        certificateDTO: [],
+        certificateDTO: getAllResignationHistory.certificateDTO.map((item) => {
+          return item
+        }),
         contractEndDate: null,
         contractExists: null,
         contractStartDate: null,
@@ -124,7 +126,7 @@ const ResignationTimeLine = ({
     )
   }
   const commentsEdit = showEditor ? (
-    <CCol sm={9}>
+    <CCol sm={8}>
       <CKEditor<{
         onChange: CKEditorEventHandler<'change'>
       }>
@@ -135,6 +137,27 @@ const ResignationTimeLine = ({
           handleDescription(editor.getData().trim())
         }}
       />
+      <CCol md={{ span: 6 }} className="mt-2">
+        <>
+          <CButton
+            className="btn-ovh me-1"
+            data-testid="create-btn"
+            color="success"
+            onClick={updateTimeLineHandler}
+            disabled={!isSubmitButtonEnabled}
+          >
+            Submit
+          </CButton>
+          <CButton
+            color="warning "
+            data-testid="clear-btn"
+            className="btn-ovh"
+            onClick={clearBtnHandler}
+          >
+            Clear
+          </CButton>
+        </>
+      </CCol>
     </CCol>
   ) : (
     ''
@@ -249,34 +272,11 @@ const ResignationTimeLine = ({
         </CRow>
         {getAllResignationHistory.status === 'Resigned' ? (
           <>
-            <CRow className="mt-1 mb-0 align-items-center">
+            <CRow className="mt-1 mb-0">
               <CFormLabel className="col-sm-4 col-form-label text-end p-1">
                 Comments:
               </CFormLabel>
               {commentsEdit}
-            </CRow>
-            <CRow>
-              <CCol md={{ span: 6, offset: 2 }}>
-                <>
-                  <CButton
-                    className="btn-ovh me-1"
-                    data-testid="create-btn"
-                    color="success"
-                    onClick={updateTimeLineHandler}
-                    disabled={!isSubmitButtonEnabled}
-                  >
-                    Submit
-                  </CButton>
-                  <CButton
-                    color="warning "
-                    data-testid="clear-btn"
-                    className="btn-ovh"
-                    onClick={clearBtnHandler}
-                  >
-                    Clear
-                  </CButton>
-                </>
-              </CCol>
             </CRow>
           </>
         ) : (

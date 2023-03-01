@@ -84,7 +84,7 @@ const EditKPi = (): JSX.Element => {
   const updateKPIHandler = async () => {
     const prepareObject = {
       ...editKPICopy,
-      frequencyId: selectFrequency as number,
+      // frequencyId: selectFrequency as number,
     }
     const editKPIResultAction = await dispatch(
       reduxServices.KRA.updateKPI(prepareObject),

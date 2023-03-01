@@ -1,0 +1,60 @@
+import { EditAuditFormData } from '../../types/SQAAuditReport/AddNewAudit/addNewAuditTypes'
+
+export const mockGetAuditDetails: EditAuditFormData = {
+  id: 113,
+  auditType: 'testing16 j',
+  projectType: 'true',
+  projectId: 88,
+  projectManager: 'Mamatha Thunam',
+  auditorIds: null,
+  auditeeIds: null,
+  auditors: [
+    {
+      id: 1000,
+      fullName: 'Admin Rbt',
+    },
+    {
+      id: 1826,
+      fullName: 'Sai Jagadeeswari',
+    },
+  ],
+  auditees: [
+    {
+      id: 2044,
+      fullName: 'Sai Prasad Janga',
+    },
+    {
+      id: 1738,
+      fullName: 'Mamatha Thunam',
+    },
+    {
+      id: 1047,
+      fullName: 'Ajit Pradhan',
+    },
+  ],
+  auditDate: '17/02/2023',
+  startTime: '08:00 AM',
+  endTime: '09:00 AM',
+  auditStatus: 'Open',
+  formStatus: 'Save',
+  auditRescheduleStatus: false,
+  pci: '',
+  followUpDate: null,
+  sqaComments: null,
+  sqaFileName: null,
+  sqaFilesPath: null,
+  pmComments: '',
+  pmFileName: null,
+  pmFilesPath: null,
+  createdBy: 'Mohd Basheer',
+  createdDate: '16/02/2023',
+  updatedBy: null,
+  updatedDate: null,
+  disableEditButton: false,
+  projectName: 'ABS CBN Support',
+  projectManagerId: 1738,
+  showEditButton: true,
+  comments: '',
+  containsFile: null,
+  isSQA: false,
+}

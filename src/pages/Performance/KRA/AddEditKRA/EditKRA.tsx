@@ -47,15 +47,15 @@ const EditKRA = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (incomingKRAData) {
+    if (incomingKRAData !== null) {
       const descrip =
-        incomingKRAData.description === null
+        incomingKRAData?.description === null
           ? emptyString
-          : incomingKRAData.description
-      setEnteredKraName(incomingKRAData.name)
-      setEnteredDepartment(incomingKRAData.departmentName)
+          : incomingKRAData?.description
+      setEnteredKraName(incomingKRAData?.name)
+      setEnteredDepartment(incomingKRAData?.departmentName)
       setEnteredDescription(descrip)
-      setEnteredDesignation(incomingKRAData.designationName)
+      setEnteredDesignation(incomingKRAData?.designationName)
       setShowDescription(false)
       setTimeout(() => {
         setShowDescription(true)
@@ -97,7 +97,7 @@ const EditKRA = (): JSX.Element => {
       )
       if (reduxServices.KRA.updateKRAThunk.fulfilled.match(result)) {
         dispatch(reduxServices.app.actions.addToast(successToast))
-        dispatch(reduxServices.KRA.actions.clearDesignationList())
+        // dispatch(reduxServices.KRA.actions.clearDesignationList())
         dispatch(
           reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList),
         )
@@ -127,7 +127,7 @@ const EditKRA = (): JSX.Element => {
         isPercentReadonly={isPercentReadonly}
         setPercentReadOnly={setPercentReadonly}
         setIsButtonEnabled={setUpdateButtonEnabled}
-        callDesignationEveryDepartment={false}
+        callDesignationEveryDepartment={true}
       />
       <CContainer>
         <CRow>
