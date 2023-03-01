@@ -107,6 +107,7 @@ const EditEvent = (): JSX.Element => {
       )
     }
   }, [dispatch, editEvent])
+  console.log(trainerAutoCompleteTarget)
 
   useEffect(() => {
     if (editExistingEvent != null) {
@@ -286,7 +287,9 @@ const EditEvent = (): JSX.Element => {
       startTime: `${editEvent.fromDate}/${eventStartHour}/${eventStartMinutesDay}`,
       timeFomrat: null,
       toDate: editEvent?.toDate,
-      trainerName: editEvent?.trainerName,
+      trainerName: allEmployeesProfiles?.filter(
+        (trainer) => trainer.fullName === trainerAutoCompleteTarget,
+      )[0],
     }
     const updateEventResult = await dispatch(
       reduxServices.eventList.updateEvent(prepareObj),
