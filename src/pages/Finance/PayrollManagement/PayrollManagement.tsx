@@ -34,12 +34,24 @@ const PayrollManagement = (): JSX.Element => {
   const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
+  const [isPercentageEnable, setPercentageEnable] = useState(false)
+
   const currentYear = new Date().getFullYear()
   const previousYears = currentYear - 4
   const years = []
   for (let i = currentYear; i >= previousYears; i--) {
     years.push(i)
   }
+
+  useEffect(() => {
+    if (selectMonth) {
+      setPercentageEnable(true)
+    } else {
+      setPercentageEnable(false)
+      setSelectYear('')
+      dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
+    }
+  }, [selectMonth])
 
   const onChangeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
@@ -278,7 +290,7 @@ const PayrollManagement = (): JSX.Element => {
                   id="Year"
                   data-testid="form-select2"
                   name="Year"
-                  disabled={!selectMonth}
+                  disabled={!isPercentageEnable}
                   value={selectYear}
                   onChange={(e) => {
                     setSelectYear(e.target.value)

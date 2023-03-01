@@ -256,7 +256,7 @@ const InitiateCycle = (): JSX.Element => {
           </CForm>
           {userAccess?.createaccess && (
             <CRow>
-              <CCol md={{ span: 6, offset: 3 }}>
+              <CCol md={{ span: 6, offset: 10 }} className="ps-2">
                 <CButton
                   data-testid="save-btn"
                   className="btn-ovh me-1 text-white"
