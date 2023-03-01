@@ -698,6 +698,7 @@ const AddProjectRequestForm = ({
                 name="addprojectstartdate"
                 value={projectRequest.startdate}
                 onChange={(date: Date) => onHandleProjectRequestStartDate(date)}
+                autoComplete={'off'}
               />
             </CCol>
           </CRow>
@@ -722,6 +723,7 @@ const AddProjectRequestForm = ({
                 name="addprojectenddate"
                 value={projectRequest.enddate}
                 onChange={(date: Date) => onHandleProjectRequestEndDate(date)}
+                autoComplete={'off'}
               />
               <span></span>
             </CCol>
