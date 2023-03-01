@@ -26,7 +26,7 @@ const EditKPi = (): JSX.Element => {
   const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
   const [editKPICopy, setEditKPiCopy] = useState(editKpi)
   const [selectFrequency, setSelectFrequency] = useState<number | string>(
-    editKpi.frequencyId,
+    editKpi?.frequencyId,
   )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>()
   const [showEditor, setShowEditor] = useState<boolean>(true)

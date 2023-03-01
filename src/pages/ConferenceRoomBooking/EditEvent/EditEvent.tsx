@@ -24,7 +24,6 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditEvent = (): JSX.Element => {
@@ -345,11 +344,12 @@ const EditEvent = (): JSX.Element => {
                 data-testid="pmLabel"
               >
                 Trainer:
-                <span
-                  className={trainerAutoCompleteTarget ? TextWhite : TextDanger}
-                >
-                  *
-                </span>
+                {trainerAutoCompleteTarget === undefined ||
+                trainerAutoCompleteTarget?.trim() === '' ? (
+                  <span className="text-danger">*</span>
+                ) : (
+                  <span className="text-white"></span>
+                )}
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
@@ -451,11 +451,12 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-3">
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Name:
-                <span
-                  className={projectAutoCompleteTarget ? TextWhite : TextDanger}
-                >
-                  *
-                </span>
+                {projectAutoCompleteTarget === undefined ||
+                projectAutoCompleteTarget?.trim() === '' ? (
+                  <span className="text-danger">*</span>
+                ) : (
+                  <span className="text-white"></span>
+                )}
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
