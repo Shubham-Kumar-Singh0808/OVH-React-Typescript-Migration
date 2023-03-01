@@ -12,6 +12,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import parse from 'html-react-parser'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
@@ -156,6 +157,25 @@ const ProjectStatusTable = ({
           {isLoading !== ApiLoadingState.loading ? (
             projectStatusList &&
             projectStatusList?.map((statusReport, index) => {
+              const removeTag = '/(<([^>]+)>)/gi'
+              const removeSpaces = statusReport.prevstatus
+                .replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+                .replace(removeTag, '')
+              const removeSpacesNextStatus = statusReport.nextstatus
+                .replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+                .replace(removeTag, '')
+              const descriptionLimit =
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
+              const nextStatus =
+                removeSpacesNextStatus && removeSpacesNextStatus.length > 15
+                  ? `${removeSpacesNextStatus.substring(0, 15)}...`
+                  : removeSpacesNextStatus
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -171,12 +191,7 @@ const ProjectStatusTable = ({
                         )
                       }
                     >
-                      <div
-                        className="sh-hyperLink"
-                        dangerouslySetInnerHTML={{
-                          __html: statusReport.prevstatus,
-                        }}
-                      />
+                      {parse(descriptionLimit)}
                     </CLink>
                   </CTableDataCell>
                   <CTableDataCell>{statusReport.nextDate}</CTableDataCell>
@@ -186,12 +201,7 @@ const ProjectStatusTable = ({
                       data-testid={`dsc-comments`}
                       onClick={() => handleModal(statusReport.nextstatus)}
                     >
-                      <div
-                        className="sh-hyperLink"
-                        dangerouslySetInnerHTML={{
-                          __html: statusReport.nextstatus,
-                        }}
-                      />
+                      {parse(nextStatus)}
                     </CLink>
                   </CTableDataCell>
                   <CTableDataCell>

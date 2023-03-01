@@ -538,7 +538,11 @@ const AddConfiguration = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isButtonEnabled}
+                disabled={
+                  !isButtonEnabled ||
+                  isDateErrorValidation ||
+                  isDateErrorValidation
+                }
                 onClick={handleAddNewCycle}
               >
                 Add

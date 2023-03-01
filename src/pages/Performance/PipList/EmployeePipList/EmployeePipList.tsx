@@ -11,15 +11,16 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import DatePicker from 'react-datepicker'
+import ReactDatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { showIsRequired } from '../../../../utils/helper'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const EmployeePipList = (): JSX.Element => {
   const currentMonth = 'Current Month'
@@ -34,7 +35,6 @@ const EmployeePipList = (): JSX.Element => {
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
 
   const dispatch = useAppDispatch()
-  const commonFormatDate = 'l'
 
   const selectCurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
@@ -103,38 +103,14 @@ const EmployeePipList = (): JSX.Element => {
       )
     }
   }
-  useEffect(() => {
-    const employeeFromDate = new Date(
-      moment(fromDate?.toString()).format(commonFormatDate),
-    )
-    const employeeToDate = new Date(
-      moment(toDate?.toString()).format(commonFormatDate),
-    )
-    if (
-      fromDate &&
-      toDate &&
-      employeeToDate.getTime() < employeeFromDate.getTime()
-    ) {
-      setDateError(true)
-    } else {
-      setDateError(false)
-    }
-  }, [fromDate, toDate])
 
-  const empFromDateValue = fromDate
-    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
-  const empToDateValue = toDate
-    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(fromDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(toDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setDateError(moment(end).isBefore(start))
+  }, [fromDate, toDate])
 
   const pipListObject = {
     dateSelection: selectDate,
@@ -151,6 +127,13 @@ const EmployeePipList = (): JSX.Element => {
   const viewButtonHandler = () => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
   }
+
+  useEffect(() => {
+    if (selectDate !== 'Custom') {
+      setFromDate('')
+      setToDate('')
+    }
+  }, [selectDate])
 
   const clearButtonHandler = () => {
     setSelectDate('Current Month')
@@ -179,6 +162,18 @@ const EmployeePipList = (): JSX.Element => {
       setToggle('')
     }
   }, [])
+
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const onHandleToDatePicker = (value: Date) => {
+    setToDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleFromDatePicker = (value: Date) => {
+    setFromDate(moment(value).format(dateFormat))
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -196,9 +191,9 @@ const EmployeePipList = (): JSX.Element => {
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
-                id="Select"
+                id="selectDate"
                 data-testid="form-select1"
-                name="Select"
+                name="selectDate"
                 value={selectDate}
                 onChange={(e) => {
                   setSelectDate(e.target.value)
@@ -243,7 +238,7 @@ const EmployeePipList = (): JSX.Element => {
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
-                  <DatePicker
+                  <ReactDatePicker
                     id="fromDate"
                     data-testid="leaveApplyFromDate"
                     className="form-control form-control-sm sh-date-picker form-control-not-allowed"
@@ -254,10 +249,9 @@ const EmployeePipList = (): JSX.Element => {
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yyyy"
                     name="fromDate"
-                    value={empFromDateValue}
-                    onChange={(date: Date) =>
-                      setFromDate(moment(date).format(commonFormatDate))
-                    }
+                    maxDate={disableAfterDate}
+                    value={fromDate}
+                    onChange={(date: Date) => onHandleFromDatePicker(date)}
                   />
                 </CCol>
                 <CCol sm={2} md={1} className="text-end">
@@ -267,7 +261,7 @@ const EmployeePipList = (): JSX.Element => {
                   </CFormLabel>
                 </CCol>
                 <CCol sm={2}>
-                  <DatePicker
+                  <ReactDatePicker
                     id="toDate"
                     data-testid="leaveApprovalFromDate"
                     className="form-control form-control-sm sh-date-picker form-control-not-allowed"
@@ -278,14 +272,13 @@ const EmployeePipList = (): JSX.Element => {
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yyyy"
                     name="toDate"
-                    value={empToDateValue}
-                    onChange={(date: Date) =>
-                      setToDate(moment(date).format(commonFormatDate))
-                    }
+                    maxDate={disableAfterDate}
+                    value={toDate}
+                    onChange={(date: Date) => onHandleToDatePicker(date)}
                   />
                   {dateError && (
                     <span className="text-danger" data-testid="errorMessage">
-                      To date should be greater than From date
+                      <b>To date should be greater than From date</b>
                     </span>
                   )}
                 </CCol>
@@ -302,7 +295,9 @@ const EmployeePipList = (): JSX.Element => {
                 data-testid="view-btn"
                 onClick={viewButtonHandler}
                 disabled={
-                  selectDate === 'Custom' && !(fromDate !== '' && toDate !== '')
+                  (selectDate === 'Custom' &&
+                    !(fromDate !== '' && toDate !== '')) ||
+                  dateError
                 }
               >
                 View
