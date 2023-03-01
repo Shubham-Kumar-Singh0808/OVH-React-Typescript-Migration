@@ -382,7 +382,7 @@ const NewEvent = (): JSX.Element => {
             />
             {dateError && (
               <CRow className="mt-2">
-                <CCol sm={{ span: 6, offset: 4 }}>
+                <CCol sm={{ span: 6, offset: 3 }}>
                   <span className="text-danger" data-testid="errorMessage">
                     To date should be greater than From date
                   </span>
@@ -487,6 +487,7 @@ const NewEvent = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
+                    disabled={dateError}
                   >
                     Confirm
                   </CButton>
