@@ -13,8 +13,7 @@ const EventFromDate = ({
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        From Date:
-        <span className={showIsRequired(fromDateValue)}>*</span>
+        From Date :<span className={showIsRequired(fromDateValue)}>*</span>
       </CFormLabel>
       <CCol sm={6}>
         <ReactDatePicker

@@ -395,7 +395,7 @@ const NewEvent = (): JSX.Element => {
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Subject:
+                Subject :
                 <span
                   className={showIsRequired(
                     addEvent.agenda?.replace(/^\s*/, ''),
@@ -417,8 +417,8 @@ const NewEvent = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Description:
+              <CFormLabel className="col-sm-3 col-form-label text-end p-18">
+                Description :
                 <span
                   className={showIsRequired(
                     descriptionValue?.replace(/^\s*/, ''),
@@ -487,6 +487,7 @@ const NewEvent = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
+                    disabled={dateError}
                   >
                     Confirm
                   </CButton>

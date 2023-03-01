@@ -16,7 +16,7 @@ const EventType = ({
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        EventType:
+        EventType :
         <span className={eventTypeValue ? TextWhite : TextDanger}>*</span>
       </CFormLabel>
       <CCol sm={6}>

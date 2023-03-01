@@ -50,7 +50,7 @@ const Trainer = ({
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
       >
-        Trainer:
+        Trainer :
         <span className={trainerAutoCompleteTarget ? TextWhite : TextDanger}>
           *
         </span>

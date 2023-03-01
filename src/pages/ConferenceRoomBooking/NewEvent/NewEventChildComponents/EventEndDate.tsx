@@ -15,8 +15,7 @@ const EventEndDate = ({
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        End Date:
-        <span className={showIsRequired(toDateValue)}>*</span>
+        End Date :<span className={showIsRequired(toDateValue)}>*</span>
       </CFormLabel>
       <CCol sm={6}>
         <ReactDatePicker
