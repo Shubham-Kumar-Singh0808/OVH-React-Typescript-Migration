@@ -58,10 +58,9 @@ const AddConfiguration = ({
     reduxServices.addConfigurations.selectors.selectError,
   )
 
-  const remainingDays = moment(reviewEndDate).diff(
-    moment(reviewStartDate),
-    'days',
-  )
+  const admission = moment(reviewStartDate, 'DD-MM-YYYY')
+  const discharge = moment(reviewEndDate, 'DD-MM-YYYY')
+  const totalDays = discharge.diff(admission, 'days')
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -114,12 +113,12 @@ const AddConfiguration = ({
   ])
 
   useEffect(() => {
-    if (remainingDays > 0) {
-      setReviewDuration(String(remainingDays))
+    if (totalDays >= 0) {
+      setReviewDuration(String(totalDays))
     } else {
       setReviewDuration(String(''))
     }
-  }, [remainingDays])
+  }, [totalDays])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -538,7 +537,11 @@ const AddConfiguration = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isButtonEnabled}
+                disabled={
+                  !isButtonEnabled ||
+                  isDateErrorValidation ||
+                  isDateErrorValidation
+                }
                 onClick={handleAddNewCycle}
               >
                 Add

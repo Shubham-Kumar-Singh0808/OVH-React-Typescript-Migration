@@ -221,7 +221,13 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for Removing:
-              <span className={reasonForRemovePIP ? TextWhite : TextDanger}>
+              <span
+                className={
+                  reasonForRemovePIP?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
