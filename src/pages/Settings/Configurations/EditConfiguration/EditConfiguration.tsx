@@ -168,6 +168,12 @@ const EditConfiguration = (): JSX.Element => {
   const updateFailedToastMessage = (
     <OToast toastMessage="Cycle name should be unique." toastColor="danger" />
   )
+  const failedToast = (
+    <OToast
+      toastMessage="Only one cycle activated at a time."
+      toastColor="danger"
+    />
+  )
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -190,7 +196,7 @@ const EditConfiguration = (): JSX.Element => {
 
   const updateAppraisalCycleAction = async () => {
     const prepareObject = {
-      active: cycle.active,
+      active: isActive,
       appraisalDuration: editReviewDuration,
       appraisalEndDate: editToDate,
       appraisalStartDate: editFromDate,
@@ -220,6 +226,14 @@ const EditConfiguration = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.appraisalConfigurations.updateAppraisalCycle.rejected.match(
+        updateAppraisalCycleResultAction,
+      ) &&
+      updateAppraisalCycleResultAction.payload === 412
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
