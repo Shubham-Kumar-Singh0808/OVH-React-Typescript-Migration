@@ -913,6 +913,7 @@ export const KRAApiConfig: KRAApi = {
   getFrequency: apiPrefix + '/kra/frequencyList',
   addKPI: apiPrefix + '/kra/',
   updateKPI: apiPrefix + '/kra/updateKpi',
+  checkIfNewKpiDuplicate: apiPrefix + '/kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

@@ -92,22 +92,55 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
     <OToast toastColor="success" toastMessage="KPI added successfully." />
   )
 
-  const addKPIHandler = async () => {
-    const prepareObject = {
-      ...addNewKPi,
-      frequencyId: Number(selectFrequency),
-      kraId: addKPI.id,
-    }
-    console.log(addNewKPi)
-    const addKPIResultAction = await dispatch(
-      reduxServices.KRA.addKPI(prepareObject),
-    )
+  // const addKPIHandler = async () => {
+  //   const prepareObject = {
+  //     ...addNewKPi,
+  //     frequencyId: Number(selectFrequency),
+  //     kraId: addKPI.id,
+  //   }
 
-    if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
-      dispatch(reduxServices.app.actions.addToast(toastElement))
-      handleClearInputs()
-    }
-  }
+  //   const addKPIResultAction = await dispatch(
+  //     reduxServices.KRA.addKPI(prepareObject),
+  //   )
+
+  //   if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
+  //     dispatch(reduxServices.app.actions.addToast(toastElement))
+  //     handleClearInputs()
+  //   }
+  // }
+
+  //   const duplicateKRAResponse = await dispatch(
+  //     reduxServices.KRA.checkNewKRADuplicacyThunk({
+  //       kraName: enteredKraName,
+  //       departmentId: deptId,
+  //       designationId: desigId,
+  //     }),
+  //   )
+  //   if (duplicateKRAResponse.payload === false) {
+  //     const newKRAData: NewKRABody = {
+  //       name: enteredKraName,
+  //       departmentId: deptId,
+  //       designationId: desigId,
+  //       description: enteredDescription,
+  //       designationKraPercentage: enteredPercentage,
+  //     }
+  //     const successToast = (
+  //       <OToast toastColor="success" toastMessage="KRA Added Successfully" />
+  //     )
+  //     const result = await dispatch(
+  //       reduxServices.KRA.addNewKRAThunk(newKRAData),
+  //     )
+  //     if (reduxServices.KRA.addNewKRAThunk.fulfilled.match(result)) {
+  //       dispatch(reduxServices.app.actions.addToast(successToast))
+  //       dispatch(reduxServices.KRA.searchKRADataThunk(currentQueries))
+  //     }
+  //   } else {
+  //     const errorToast = (
+  //       <OToast toastColor="danger" toastMessage="KRA Already Exists" />
+  //     )
+  //     dispatch(reduxServices.app.actions.addToast(errorToast))
+  //   }
+  // }
 
   return (
     <>
