@@ -282,7 +282,7 @@ const AddProject = (): JSX.Element => {
                   <CButton
                     color="info"
                     className="btn-ovh me-1 add-project-back-btn"
-                    data-testid="toggle-back-button"
+                    data-testid="Back-btn"
                   >
                     <i className="fa fa-arrow-left  me-1"></i>Back
                   </CButton>

@@ -24,7 +24,7 @@ describe('Attendees Component', () => {
     })
 
     test('should be able to render Attendees Component Title', () => {
-      expect(screen.getByText('Attendees:')).toBeInTheDocument()
+      expect(screen.getByText('Attendees :')).toBeInTheDocument()
     })
 
     test('should be able to render Attendees Component label', () => {
