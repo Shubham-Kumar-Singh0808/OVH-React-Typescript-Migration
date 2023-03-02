@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import KRAFilterOptions from './KRALandingScreenComponents/KRAFilterOptions'
 import KRATable from './KRALandingScreenComponents/KRATable'
 import AddKRA from './AddEditKRA/AddKRA'
@@ -22,6 +23,7 @@ const KRALandingScreen = (): JSX.Element => {
   const [selectedDesignation, setSelectedDesignation] =
     useState<string>(selectDesignation)
   const [addKPI, setAddKPI] = useState<KRATableDataItem>({} as KRATableDataItem)
+  const kraList = useParams<{ kraListPage: string }>()
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,
@@ -46,6 +48,14 @@ const KRALandingScreen = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(kraTableSize, pageSizeFromState, pageFromState)
+
+  useEffect(() => {
+    if (kraList) {
+      dispatch(
+        reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList),
+      )
+    }
+  }, [kraList])
 
   return (
     <OCard
