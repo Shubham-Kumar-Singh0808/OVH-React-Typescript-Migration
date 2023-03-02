@@ -220,10 +220,12 @@ const EditConfiguration = (): JSX.Element => {
     ) {
       history.push('/appraisalCycle')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
-      reduxServices.appraisalConfigurations.validateAppraisalCycle.fulfilled.match(
+      reduxServices.appraisalConfigurations.updateAppraisalCycle.rejected.match(
         updateAppraisalCycleResultAction,
-      )
+      ) &&
+      updateAppraisalCycleResultAction.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
