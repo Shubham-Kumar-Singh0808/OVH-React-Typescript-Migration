@@ -104,7 +104,7 @@ const ProjectDetailsTable = ({
               <CTableBody>
                 {projectClients?.map((project, i) => {
                   return (
-                    <CTableRow col-span={7} key={i}>
+                    <CTableRow col-span={7} key={i} className="align-middle">
                       <CTableDataCell>
                         <CLink className="text-decoration-none">
                           {project.employeeId}
@@ -129,7 +129,7 @@ const ProjectDetailsTable = ({
                               onChange={handleOnChangeAllocation}
                             />
                             &nbsp;
-                            <span>%</span>
+                            <span className="pt-1">%</span>
                           </div>
                         ) : (
                           <span>{project.allocation}%</span>
@@ -147,7 +147,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="billable"
                               data-testid="formBillable"
-                              className="input-xs eventType-editInput"
+                              className="input-xs eventType-editInput pt-1"
                               name="billable"
                               defaultValue={getConditionValue(
                                 project.billable,
@@ -183,7 +183,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="allocated"
                               data-testid="formallocated"
-                              className="input-xs eventType-editInput"
+                              className="input-xs eventType-editInput pt-1"
                               name="allocated"
                               defaultValue={getConditionValue(
                                 project.isAllocated,
