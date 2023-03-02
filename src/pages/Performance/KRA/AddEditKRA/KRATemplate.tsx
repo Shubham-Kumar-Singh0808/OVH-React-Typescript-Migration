@@ -63,6 +63,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const deptNameChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setEnteredDept(e.target.value)
+    setEnteredDesig(selectDesignation)
   }
 
   const designationChangeHandler = (
@@ -122,7 +123,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    // dispatch(reduxServices.KRA.actions.clearDesignationList())
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
   }
 

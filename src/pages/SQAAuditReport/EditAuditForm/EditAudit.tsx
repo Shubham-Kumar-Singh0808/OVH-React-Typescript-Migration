@@ -481,14 +481,14 @@ const EditAudit = (): JSX.Element => {
                           )
                         }}
                       />
-                      {dateError && (
-                        <CCol sm={4} className="mt-1 pt-1">
-                          <span className="text-danger">
-                            Followup Date should be greater than AuditDate
-                          </span>
-                        </CCol>
-                      )}
                     </CCol>
+                    {dateError && (
+                      <CCol sm={6} className="pt-2 px-0">
+                        <strong className="text-danger">
+                          Followup Date should be greater than AuditDate
+                        </strong>
+                      </CCol>
+                    )}
                   </CRow>
                 </>
               )}
