@@ -63,6 +63,10 @@ const ProjectStatusTable = ({
   const [taskName, setTaskName] = useState('')
   const [toDeleteVisaIdName, setToDeleteVisaIdName] = useState('')
 
+  const [modalSubject, setModalSubject] = useState<string>('')
+  const [modalTaskName, setModalTaskName] = useState('')
+  const [isSubjectModalVisible, setIsSubjectModalVisible] = useState(false)
+
   const projectStatusList = useTypedSelector(
     reduxServices.projectStatus.selectors.projectStatusReport,
   )
@@ -136,9 +140,10 @@ const ProjectStatusTable = ({
     setSubject(ticket)
     setTaskName(task)
   }
-  const handleModal = (ticket: string) => {
-    setIsModalVisible(true)
-    setSubject(ticket)
+  const handleModal = (ticket: string, task: string) => {
+    setIsSubjectModalVisible(true)
+    setModalSubject(ticket)
+    setModalTaskName(task)
   }
   return (
     <>
@@ -199,7 +204,12 @@ const ProjectStatusTable = ({
                     <CLink
                       className="cursor-pointer text-decoration-none text-primary"
                       data-testid={`dsc-comments`}
-                      onClick={() => handleModal(statusReport.nextstatus)}
+                      onClick={() =>
+                        handleModal(
+                          statusReport.nextstatus,
+                          statusReport.nextDate,
+                        )
+                      }
                     >
                       {parse(nextStatus)}
                     </CLink>
@@ -313,6 +323,25 @@ const ProjectStatusTable = ({
             className="mt-3"
             dangerouslySetInnerHTML={{
               __html: subject,
+            }}
+          />
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        modalBodyClass="model-body-text-alinement"
+        visible={isSubjectModalVisible}
+        setVisible={setIsSubjectModalVisible}
+      >
+        <>
+          <h4>Weekly status Report {modalTaskName}</h4>
+          <div
+            className="mt-3"
+            dangerouslySetInnerHTML={{
+              __html: modalSubject,
             }}
           />
         </>

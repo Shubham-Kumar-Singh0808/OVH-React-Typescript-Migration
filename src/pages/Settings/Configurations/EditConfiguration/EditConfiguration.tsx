@@ -143,6 +143,7 @@ const EditConfiguration = (): JSX.Element => {
     setIsActive(getEditAppraisal.active)
     setEditFromDate(getEditAppraisal.appraisalStartDate)
     setEditToDate(getEditAppraisal.appraisalEndDate)
+    setEditReviewDuration(getEditAppraisal.appraisalDuration)
     setTimeout(() => {
       setTextEditor(true)
     }, 100)
@@ -190,7 +191,7 @@ const EditConfiguration = (): JSX.Element => {
   const updateAppraisalCycleAction = async () => {
     const prepareObject = {
       active: cycle.active,
-      appraisalDuration: cycle.appraisalDuration,
+      appraisalDuration: editReviewDuration,
       appraisalEndDate: editToDate,
       appraisalStartDate: editFromDate,
       appraisalType: cycle.appraisalType,
@@ -223,6 +224,14 @@ const EditConfiguration = (): JSX.Element => {
     }
   }
 
+  const onChangeDurationHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditReviewDuration(e.target.value)
+  }
+
   const onChangeFromMonthHandler = (date: Date) => {
     setEditFromDate(moment(date).format('MM/YYYY'))
   }
@@ -238,6 +247,7 @@ const EditConfiguration = (): JSX.Element => {
   }
 
   const remainingDays = moment(editEndDate).diff(moment(editStartDate), 'days')
+  console.log(remainingDays)
 
   useEffect(() => {
     if (remainingDays > 0) {
@@ -500,6 +510,7 @@ const EditConfiguration = (): JSX.Element => {
                   size="sm"
                   name="appraisalDuration"
                   disabled={true}
+                  onChange={onChangeDurationHandler}
                   value={editReviewDuration}
                 />
               </CCol>

@@ -4,7 +4,6 @@ import {
   CFormLabel,
   CFormSelect,
   CButton,
-  CForm,
   CFormInput,
   CInputGroup,
   CFormCheck,
@@ -21,6 +20,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { showIsRequired } from '../../../../utils/helper'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 import { dateFormat } from '../../../../constant/DateFormat'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EmployeePipList = (): JSX.Element => {
   const currentMonth = 'Current Month'
@@ -82,25 +82,34 @@ const EmployeePipList = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
   }, [selectCurrentPage, dispatch, pageSize, selectedEmployeePipStatus])
-  const multiSearchBtnHandler = () => {
-    dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
+
+  const failureToast = (
+    <OToast toastMessage="Enter Vaild Name !" toastColor="danger" />
+  )
+
+  const multiSearchBtnHandler = async () => {
+    const searchBtnResultAction = await dispatch(
+      reduxServices.pipList.getAllPIPList(pipListObj),
+    )
+
+    if (
+      reduxServices.pipList.getAllPIPList.fulfilled.match(searchBtnResultAction)
+    ) {
+      dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
+    } else if (
+      reduxServices.pipList.getAllPIPList.rejected.match(
+        searchBtnResultAction,
+      ) &&
+      searchBtnResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failureToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
   }
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.pipList.getAllPIPList({
-          startIndex: pageSize * (selectCurrentPage - 1),
-          endIndex: pageSize * selectCurrentPage,
-          selectionStatus: selectedEmployeePipStatus,
-          dateSelection: selectDate,
-          from: (fromDate as string) || '',
-          multiSearch: searchInput,
-          searchByAdded,
-          searchByEmployee,
-          to: (toDate as string) || '',
-        }),
-      )
+      dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
     }
   }
 
@@ -338,36 +347,33 @@ const EmployeePipList = (): JSX.Element => {
               </label>
             </CCol>
           </CRow>
-
           <CRow className="gap-2 d-md-flex justify-content-md-end">
             <CCol sm={3} md={3}>
-              <CForm>
-                <CInputGroup className="global-search me-0">
-                  <CFormInput
-                    disabled={!isMultiSearchBtn}
-                    placeholder="Employee Search"
-                    aria-label="Multiple Search"
-                    aria-describedby="button-addon2"
-                    data-testid="searchField"
-                    value={searchInput}
-                    onChange={(e) => {
-                      setSearchInput(e.target.value)
-                    }}
-                    onKeyDown={handleSearchBtn}
-                  />
-                  <CButton
-                    disabled={!searchInput}
-                    data-testid="multi-search-btn"
-                    className="cursor-pointer"
-                    type="button"
-                    color="info"
-                    id="button-addon2"
-                    onClick={multiSearchBtnHandler}
-                  >
-                    <i className="fa fa-search"></i>
-                  </CButton>
-                </CInputGroup>
-              </CForm>
+              <CInputGroup className="global-search me-0">
+                <CFormInput
+                  disabled={!isMultiSearchBtn}
+                  data-testid="searchField"
+                  placeholder="Employee Search"
+                  aria-label="Multiple Search"
+                  aria-describedby="button-addon2"
+                  value={searchInput?.replace(/^\s*/, '')}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value)
+                  }}
+                  onKeyDown={handleSearchBtn}
+                />
+                <CButton
+                  disabled={!searchInput?.replace(/^\s*/, '')}
+                  data-testid="multi-search-btn"
+                  className="cursor-pointer"
+                  type="button"
+                  color="info"
+                  id="button-addon2"
+                  onClick={multiSearchBtnHandler}
+                >
+                  <i className="fa fa-search"></i>
+                </CButton>
+              </CInputGroup>
             </CCol>
           </CRow>
           <EmployeePipListTable
