@@ -156,7 +156,7 @@ const checkIfNewKpiDuplicate = async (
   query: NewKPiDuplicateCheckQuery,
 ): Promise<boolean> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: KRAApiConfig.checkIfNewKpiDuplicate + query.id + query.name,
+    url: KRAApiConfig.checkIfNewKpiDuplicate + `${query.id + '/' + query.name}`,
     method: AllowedHttpMethods.get,
   })
 
