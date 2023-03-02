@@ -885,6 +885,8 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+  getAllMeetingAppointmentList:
+    apiPrefix + '/meetingRequest/getAllMeetingAppointmentList',
 }
 
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {

@@ -203,7 +203,6 @@ const NewEvent = (): JSX.Element => {
       }
     }
   }
-  // console.log(attendeesList)
 
   // onchange handlers
   const onHandleLocation = (value: string) => {
@@ -337,8 +336,7 @@ const NewEvent = (): JSX.Element => {
       setDateError(false)
     }
   }, [addEvent.fromDate, addEvent.toDate])
-  console.log(addEvent.toDate)
-  console.log(addEvent.fromDate)
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
