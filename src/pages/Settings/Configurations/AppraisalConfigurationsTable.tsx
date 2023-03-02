@@ -141,8 +141,8 @@ const AppraisalConfigurationsTable = ({
                   <CTableDataCell>
                     {appraisalCycle.appraisalType}
                   </CTableDataCell>
-                  <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
                   <CTableDataCell>{appraisalCycle.fromDate}</CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
                   <CTableDataCell>
                     {appraisalCycle.appraisalDuration}
                   </CTableDataCell>

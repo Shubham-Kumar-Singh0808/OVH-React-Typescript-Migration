@@ -134,7 +134,7 @@ const AddEmployeePipList = ({
   const employeeDetails = allEmployeeDetails?.filter(
     (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
   )
-  console.log(employeeDetails[0]?.employeeId)
+
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
