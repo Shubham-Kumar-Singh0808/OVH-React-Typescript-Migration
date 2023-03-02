@@ -6,7 +6,6 @@ import {
   CFormSelect,
   CFormInput,
   CButton,
-  CFormText,
   CContainer,
 } from '@coreui/react-pro'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -103,9 +102,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     newAchieverDetails.endDate,
   ) ? (
     <div data-testid="error-msg-date">
-      <CFormText data-testid="error-date" className={TextDanger}>
+      <strong data-testid="error-date" className={TextDanger}>
         {fromToDateError}
-      </CFormText>
+      </strong>
     </div>
   ) : (
     <></>

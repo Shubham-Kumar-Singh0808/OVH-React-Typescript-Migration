@@ -59,7 +59,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
         ),
       )
     }
-    setSelectedDesignation(selectDesignation)
+    setSelectedDesignation(selectedDesignation)
   }, [selectedDepartment])
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
 
   const addKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    // dispatch(reduxServices.KRA.actions.clearDesignationList())
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKra))
   }
 

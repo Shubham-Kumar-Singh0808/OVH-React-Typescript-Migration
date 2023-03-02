@@ -93,6 +93,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   }
 
   const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
+    console.log(editKPI)
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
     dispatch(reduxServices.KRA.actions.setEditKpi(editKPI))
   }
