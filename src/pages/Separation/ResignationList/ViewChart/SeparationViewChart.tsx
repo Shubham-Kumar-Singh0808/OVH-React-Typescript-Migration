@@ -184,7 +184,7 @@ const SeparationViewChart = (): JSX.Element => {
                 />
                 {dateError && (
                   <span className="text-danger">
-                    To date should be greater than From date
+                    <b>To date should be greater than From date</b>
                   </span>
                 )}
               </CCol>
