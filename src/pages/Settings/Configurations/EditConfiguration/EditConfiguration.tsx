@@ -246,16 +246,17 @@ const EditConfiguration = (): JSX.Element => {
     setEditEndDate(moment(value).format(dateFormat))
   }
 
-  const remainingDays = moment(editEndDate).diff(moment(editStartDate), 'days')
-  console.log(remainingDays)
+  const admission = moment(editStartDate, 'DD-MM-YYYY')
+  const discharge = moment(editEndDate, 'DD-MM-YYYY')
+  const totalDays = discharge.diff(admission, 'days')
 
   useEffect(() => {
-    if (remainingDays > 0) {
-      setEditReviewDuration(String(remainingDays))
+    if (totalDays >= 0) {
+      setEditReviewDuration(String(totalDays))
     } else {
       setEditReviewDuration(String(''))
     }
-  }, [remainingDays])
+  }, [totalDays])
 
   return (
     <>
