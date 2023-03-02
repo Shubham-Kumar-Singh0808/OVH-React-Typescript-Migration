@@ -150,14 +150,8 @@ const PersonalInfoTab = ({
 
   useEffect(() => {
     if (
-      employeeContactDetails?.mobile &&
-      employeeContactDetails.mobile.length > 9 &&
-      employeeEmergencyContactDetails?.emergencyContactName &&
-      employeeEmergencyContactDetails?.emergencyPhone &&
-      employeeEmergencyContactDetails?.emergencyPhone.length > 9 &&
-      employeeEmergencyContactDetails?.emergencyRelationShip &&
       employeePresenetAddressDetails.presentAddress &&
-      employeePresenetAddressDetails.presentCity &&
+      employeePresenetAddressDetails?.presentCity &&
       employeePresenetAddressDetails.presentZip
     ) {
       setSaveButtonEnabled(true)
@@ -165,35 +159,9 @@ const PersonalInfoTab = ({
       setSaveButtonEnabled(false)
     }
   }, [
-    employeeContactDetails?.mobile,
-    employeeEmergencyContactDetails?.emergencyContactName,
-    employeeEmergencyContactDetails?.emergencyPhone,
-    employeeEmergencyContactDetails?.emergencyRelationShip,
     employeePresenetAddressDetails.presentAddress,
-    employeePresenetAddressDetails.presentCity,
+    employeePresenetAddressDetails?.presentCity,
     employeePresenetAddressDetails.presentZip,
-  ])
-
-  useEffect(() => {
-    if (
-      employeePassportDetails?.passportNumber &&
-      employeePassportDetails?.passportIssuedPlace &&
-      employeePassportDetails?.passportIssuedDate &&
-      employeePassportDetails?.passportExpDate &&
-      frontUpload &&
-      backUpload
-    ) {
-      setSaveButtonEnabled(true)
-    } else {
-      setSaveButtonEnabled(false)
-    }
-  }, [
-    employeePassportDetails?.passportNumber,
-    employeePassportDetails?.passportIssuedPlace,
-    employeePassportDetails?.passportIssuedDate,
-    employeePassportDetails?.passportExpDate,
-    frontUpload,
-    backUpload,
   ])
 
   const onChangePresenetAddressHandler = (
@@ -365,6 +333,7 @@ const PersonalInfoTab = ({
                 changeEmergencyContactDetails={
                   changeEmergencyContactDetailsHandler
                 }
+                setSaveButtonEnabled={setSaveButtonEnabled}
               />
               <CCardHeader>
                 <h4 className="h4">Present Address</h4>

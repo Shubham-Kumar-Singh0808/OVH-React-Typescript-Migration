@@ -20,6 +20,7 @@ const ContactNumberDetails = (props: {
   changeEmergencyContactDetails?: (
     emergencyContactDetails: EmployeeEmergencyContactInformation,
   ) => void
+  setSaveButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -87,6 +88,24 @@ const ContactNumberDetails = (props: {
       })
     }
   }
+
+  useEffect(() => {
+    if (
+      employeeContactDetails.mobile &&
+      employeeEmergencyContactDetails.emergencyContactName &&
+      employeeEmergencyContactDetails.emergencyPhone &&
+      employeeEmergencyContactDetails.emergencyRelationShip
+    ) {
+      props.setSaveButtonEnabled(true)
+    } else {
+      props.setSaveButtonEnabled(false)
+    }
+  }, [
+    employeeContactDetails.mobile,
+    employeeEmergencyContactDetails.emergencyContactName,
+    employeeEmergencyContactDetails.emergencyPhone,
+    employeeEmergencyContactDetails.emergencyRelationShip,
+  ])
 
   const onChangeContactDetailsHandler = (
     e:
