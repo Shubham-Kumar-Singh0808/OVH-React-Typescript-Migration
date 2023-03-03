@@ -6,15 +6,18 @@ import BookingListTable from './BookingListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockBookingsForSelection } from '../../../test/data/bookingListData'
 
-const mockSetCurrentPage = jest.fn()
-const mockSetPageSize = jest.fn()
-
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <BookingListTable />
+    <BookingListTable
+      location={''}
+      room={''}
+      meetingStatus={''}
+      selectDateOptions={''}
+      selectDate={''}
+    />
   </div>
 )
 
