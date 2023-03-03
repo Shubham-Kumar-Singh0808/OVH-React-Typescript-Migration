@@ -61,10 +61,6 @@ function AddEditEmployeeSkill({
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
 
-  const SkillsDetails = useTypedSelector(
-    reduxServices.employeeSkill.selectors.employeeSkillDetails,
-  )
-
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())

@@ -55,8 +55,7 @@ const newBookingSlice = createSlice({
     builder
       .addCase(getAllBookedDetailsForRoom.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.getBookingsForSelection =
-          action.payload as GetBookingsForSelection[]
+        state.getBookingsForSelection = action.payload
       })
       .addCase(getAllBookedDetailsForRoom.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
