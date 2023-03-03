@@ -41,6 +41,7 @@ const MyProfile = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
+                data-testid="back-button"
                 onClick={handleClick}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back

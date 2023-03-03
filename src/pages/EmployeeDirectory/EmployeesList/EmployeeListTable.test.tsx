@@ -2,8 +2,10 @@ import '@testing-library/jest-dom'
 
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 import EmployeeListTable from './EmployeeListTable'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { Employee } from '../../../types/EmployeeDirectory/EmployeesList/employeeListTypes'
 import { mockEmployeeList } from '../../../test/data/employeeListData'
 
@@ -16,16 +18,19 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
+const history = createMemoryHistory()
 describe('Employee List Table Component Testing', () => {
-  test('should render Personal info tab component with out crashing', async () => {
+  beforeEach(() => {
     render(
-      <EmployeeListTable
-        setCurrentPage={mockSetCurrentPage}
-        setPageSize={mockSetPageSize}
-        currentPage={1}
-        pageSize={20}
-        paginationRange={[1, 2, 3]}
-      />,
+      <Router history={history}>
+        <EmployeeListTable
+          setCurrentPage={mockSetCurrentPage}
+          setPageSize={mockSetPageSize}
+          currentPage={1}
+          pageSize={20}
+          paginationRange={[1, 2, 3]}
+        />
+      </Router>,
       {
         preloadedState: {
           employeeList: {
@@ -35,20 +40,22 @@ describe('Employee List Table Component Testing', () => {
         },
       },
     )
-
+  })
+  test('should render EmployeeList Table component without crashing', async () => {
     expectPageSizeToBeRendered(20)
 
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-
-      //   const pageSizeSelect = screen.getByRole('option', {
-      //     name: '40',
-      //   }) as HTMLOptionElement
-      //   expect(pageSizeSelect.selected).toBe(true)
-
       expect(mockSetPageSize).toHaveBeenCalledTimes(1)
       expect(mockSetCurrentPage).toHaveBeenCalledTimes(1)
     })
+  })
+
+  test('should redirect to My Profile Page', () => {
+    const linkElement = screen.getByTestId('employee-profile-link2')
+    fireEvent.click(linkElement)
+
+    expect(history.location.pathname).toBe('/employeeProfile/1004')
   })
 
   test('should be able to see table action header if updateaccess is true', () => {
@@ -94,7 +101,7 @@ describe('Employee List Table Component Testing', () => {
       },
     )
 
-    expect(screen.getByTestId('no-action-header')).toBeInTheDocument()
+    expect(screen.getAllByTestId('no-action-header')[0]).toBeInTheDocument()
   })
 
   test('should be able to see table action cell if updateaccess is true', () => {
