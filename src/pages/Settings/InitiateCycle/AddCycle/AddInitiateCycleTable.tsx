@@ -74,24 +74,12 @@ const AddInitiateCycleTable = ({
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Cycle Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-middle">
-              From Month
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              To Month
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              Status
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              Start Date
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              End Date
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              Action
-            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">From Month</CTableHeaderCell>
+            <CTableHeaderCell scope="col">To Month</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Start Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Action</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>

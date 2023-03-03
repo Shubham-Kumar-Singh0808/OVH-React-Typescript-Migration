@@ -72,8 +72,7 @@ const StartTimeEndTime = ({
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          Start Time:
-          <span className={showIsRequired(startTime.hours)}>*</span>
+          Start Time :<span className={showIsRequired(startTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={6}>
           <CCol sm={12}>
@@ -135,8 +134,7 @@ const StartTimeEndTime = ({
       </CRow>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          End Time:
-          <span className={showIsRequired(endTime.hours)}>*</span>
+          End Time :<span className={showIsRequired(endTime.hours)}>*</span>
         </CFormLabel>
         <CCol sm={6}>
           <CCol sm={12}>

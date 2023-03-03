@@ -266,7 +266,13 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={reasonForPIP ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  reasonForPIP?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={9}>
               <CKEditor<{
@@ -285,7 +291,11 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={improvementPlan ? TextWhite : TextDanger}>
+              <span
+                className={
+                  improvementPlan?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>

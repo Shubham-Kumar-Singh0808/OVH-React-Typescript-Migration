@@ -276,7 +276,11 @@ const EmployeeUpdatePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={reasonForPIPText ? TextWhite : TextDanger}>
+              <span
+                className={
+                  reasonForPIPText?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -297,7 +301,13 @@ const EmployeeUpdatePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={improvementPlanText ? TextWhite : TextDanger}>
+              <span
+                className={
+                  improvementPlanText?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>

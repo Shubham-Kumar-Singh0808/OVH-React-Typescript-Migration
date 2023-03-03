@@ -31,7 +31,7 @@ const LocationAndRoom = ({
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          Location:
+          Location :
           <span className={locationValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
         <CCol sm={6}>
@@ -55,8 +55,8 @@ const LocationAndRoom = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
-          Room:
+        <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          Room :
         </CFormLabel>
         <CCol sm={6}>
           <CFormSelect
