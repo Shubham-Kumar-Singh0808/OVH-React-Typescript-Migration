@@ -38,7 +38,6 @@ const MyProfile = (): JSX.Element => {
                   <i className="fa fa-pencil-square-o  me-1"></i>Edit
                 </CButton>
               </Link>
-              {/* <Link to={'/employeeList'}> */}
               <CButton
                 color="info"
                 className="btn-ovh me-1"
@@ -46,7 +45,6 @@ const MyProfile = (): JSX.Element => {
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
-              {/* </Link> */}
             </CCol>
           </CRow>
         ) : (
