@@ -165,7 +165,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                         )
                       }
                     >
-                      {dottedContent(item.description)}
+                      {parse(dottedContent(item.description))}
                     </CLink>
                   </CTableDataCell>
                 ) : (
