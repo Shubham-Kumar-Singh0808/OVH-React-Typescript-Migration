@@ -66,7 +66,7 @@ const OAutoComplete = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          {label}:
+          {label} :
           {autoCompleteTarget === undefined ||
           autoCompleteTarget?.trim() === '' ? (
             <span className="text-danger">*</span>

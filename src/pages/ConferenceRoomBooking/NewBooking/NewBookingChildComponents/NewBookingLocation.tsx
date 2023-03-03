@@ -17,7 +17,7 @@ const NewBookingLocation = ({
   return (
     <>
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        Location:
+        Location :
         <span className={locationValue ? TextWhite : TextDanger}>*</span>
       </CFormLabel>
       <CCol sm={6}>

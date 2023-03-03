@@ -20,6 +20,7 @@ const ContactNumberDetails = (props: {
   changeEmergencyContactDetails?: (
     emergencyContactDetails: EmployeeEmergencyContactInformation,
   ) => void
+  setSaveButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -87,6 +88,24 @@ const ContactNumberDetails = (props: {
       })
     }
   }
+
+  useEffect(() => {
+    if (
+      employeeContactDetails.mobile &&
+      employeeEmergencyContactDetails.emergencyContactName &&
+      employeeEmergencyContactDetails.emergencyPhone &&
+      employeeEmergencyContactDetails.emergencyRelationShip
+    ) {
+      props?.setSaveButtonEnabled(true)
+    } else {
+      props?.setSaveButtonEnabled(false)
+    }
+  }, [
+    employeeContactDetails.mobile,
+    employeeEmergencyContactDetails.emergencyContactName,
+    employeeEmergencyContactDetails.emergencyPhone,
+    employeeEmergencyContactDetails.emergencyRelationShip,
+  ])
 
   const onChangeContactDetailsHandler = (
     e:
@@ -196,7 +215,8 @@ const ContactNumberDetails = (props: {
             data-testid="mobileNumberLabel"
             {...dynamicFormLabelProps('employeeId', formLabelClass)}
           >
-            Mobile: <span className={employeeMobileNumber}>*</span>
+            Mobile:{' '}
+            <span className={employeeMobileNumber?.replace(/^\s*/, '')}>*</span>
           </CFormLabel>
           <CCol sm={1}>
             <CFormInput
@@ -279,6 +299,7 @@ const ContactNumberDetails = (props: {
               value={employeeContactDetails.homeCode}
               onChange={onChangeContactDetailsHandler}
               maxLength={4}
+              autoComplete="off"
             />
           </CCol>
           <CCol sm={3}>
@@ -290,6 +311,7 @@ const ContactNumberDetails = (props: {
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.homeNumber}
               maxLength={8}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
@@ -319,6 +341,7 @@ const ContactNumberDetails = (props: {
               value={employeeContactDetails.workCode}
               name="workCode"
               maxLength={4}
+              autoComplete="off"
             />
           </CCol>
           <CCol sm={3}>
@@ -330,6 +353,7 @@ const ContactNumberDetails = (props: {
               onChange={onChangeContactDetailsHandler}
               value={employeeContactDetails.workNumber}
               maxLength={8}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
@@ -346,7 +370,10 @@ const ContactNumberDetails = (props: {
             Name:{' '}
             <span
               className={
-                employeeEmergencyContactDetails?.emergencyContactName
+                employeeEmergencyContactDetails?.emergencyContactName?.replace(
+                  /^\s*/,
+                  '',
+                )
                   ? valid
                   : invalid
               }
@@ -364,6 +391,7 @@ const ContactNumberDetails = (props: {
               placeholder="Name"
               onChange={onChangeEmergencyContactDetailsHandler}
               value={employeeEmergencyContactDetails.emergencyContactName}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
@@ -372,7 +400,10 @@ const ContactNumberDetails = (props: {
             data-testid="emergencyMobileLabel"
             className={formLabelClass}
           >
-            Mobile: <span className={employeeEmergencyPhoneNumber}>*</span>
+            Mobile:{' '}
+            <span className={employeeEmergencyPhoneNumber?.replace(/^\s*/, '')}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={1}>
             <CFormInput
@@ -395,6 +426,7 @@ const ContactNumberDetails = (props: {
               onChange={onChangeEmergencyContactDetailsHandler}
               value={employeeEmergencyContactDetails.emergencyPhone}
               maxLength={10}
+              autoComplete="off"
             />
           </CCol>
         </CRow>
@@ -406,7 +438,10 @@ const ContactNumberDetails = (props: {
             Relationship:
             <span
               className={
-                employeeEmergencyContactDetails.emergencyRelationShip
+                employeeEmergencyContactDetails.emergencyRelationShip?.replace(
+                  /^\s*/,
+                  '',
+                )
                   ? valid
                   : invalid
               }

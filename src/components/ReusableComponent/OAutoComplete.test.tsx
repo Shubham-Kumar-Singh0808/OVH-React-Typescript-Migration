@@ -28,7 +28,7 @@ describe('AutoComplete component', () => {
     })
 
     test('should be able to render OAutoComplete Component Title', () => {
-      expect(screen.getByText('Test Label:')).toBeInTheDocument()
+      expect(screen.getByText('Test Label :')).toBeInTheDocument()
     })
 
     test('should be able to render OAutoComplete Component placeholder', () => {

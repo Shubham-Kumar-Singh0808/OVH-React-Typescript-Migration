@@ -718,7 +718,7 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/saveExitFeedBackForm',
   uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
   uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
-  updateTimeLine: apiPrefix + '/separationController/update',
+  updateTimeLine: apiPrefix + '/separationController/updateSeparation',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
@@ -885,6 +885,8 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+  getAllMeetingAppointmentList:
+    apiPrefix + '/meetingRequest/getAllMeetingAppointmentList',
 }
 
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
@@ -913,6 +915,7 @@ export const KRAApiConfig: KRAApi = {
   getFrequency: apiPrefix + '/kra/frequencyList',
   addKPI: apiPrefix + '/kra/',
   updateKPI: apiPrefix + '/kra/updateKpi',
+  checkIfNewKpiDuplicate: apiPrefix + 'kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {

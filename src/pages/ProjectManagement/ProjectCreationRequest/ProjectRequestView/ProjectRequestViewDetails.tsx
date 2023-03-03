@@ -77,7 +77,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">
-              {projectViewDetails.billingContactPersonEmail || 'N/A'}
+              {projectViewDetails?.billingContactPersonEmail || 'N/A'}
             </p>
           </CCol>
         </CRow>
@@ -86,7 +86,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project Name:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.projectName}</p>
+            <p className="mb-0">{projectViewDetails?.projectName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -94,7 +94,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Requested by:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.managerName}</p>
+            <p className="mb-0">{projectViewDetails?.managerName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -102,7 +102,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Pricing Model:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.type}</p>
+            <p className="mb-0">{projectViewDetails?.type}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -110,7 +110,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project type:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.model}</p>
+            <p className="mb-0">{projectViewDetails?.model}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -118,7 +118,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project Manager:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.managerName}</p>
+            <p className="mb-0">{projectViewDetails?.managerName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -126,7 +126,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Platform:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.platform}</p>
+            <p className="mb-0">{projectViewDetails?.platform}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -134,7 +134,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Domain:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.domain}</p>
+            <p className="mb-0">{projectViewDetails?.domain}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -142,7 +142,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Start Date:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.startdate}</p>
+            <p className="mb-0">{projectViewDetails?.startdate}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -150,7 +150,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             End Date:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.enddate}</p>
+            <p className="mb-0">{projectViewDetails?.enddate}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -212,12 +212,12 @@ const ProjectRequestViewDetails = (): JSX.Element => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.name}</CTableDataCell>
+                      <CTableDataCell scope="row">{item?.name}</CTableDataCell>
                       <CTableDataCell scope="row">
-                        {item.answer || 'N/A'}
+                        {item?.answer || 'N/A'}
                       </CTableDataCell>
                       <CTableDataCell scope="row">
-                        {item.comments || 'N/A'}
+                        {item?.comments || 'N/A'}
                       </CTableDataCell>
                     </CTableRow>
                   )

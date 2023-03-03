@@ -8,16 +8,14 @@ const UploadAuditFile = (): JSX.Element => {
   )
   const onChangeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
-    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    const acceptedFileTypes = ['xlsx']
     let extension = ''
     if (!file) return
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
     if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText(
-        'File size exceeded. Please upload a file less than 2MB.',
-      )
+      setUploadErrorText('Please upload a file less than 2MB.')
       return
     }
     if (!acceptedFileTypes.includes(extension)) {

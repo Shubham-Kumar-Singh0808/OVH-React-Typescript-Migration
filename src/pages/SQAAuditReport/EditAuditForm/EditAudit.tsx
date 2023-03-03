@@ -277,6 +277,7 @@ const EditAudit = (): JSX.Element => {
     <></>
   )
 
+  const pciAsterisk = editAuditForm.pci ? TextWhite : TextDanger
   return (
     <>
       <OCard
@@ -436,7 +437,7 @@ const EditAudit = (): JSX.Element => {
             <>
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
-                  PCI(%) :
+                  PCI(%) :<span className={pciAsterisk}>*</span>
                 </CFormLabel>
                 <CCol sm={1}>
                   <CFormInput

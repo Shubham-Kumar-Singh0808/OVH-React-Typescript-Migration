@@ -13,12 +13,13 @@ describe('Trainer Component', () => {
           allProjects={[]}
           onSelectProject={jest.fn()}
           isProjectAndAttendeesEnable={false}
+          shouldReset={false}
         />,
       )
     })
 
     test('should be able to render ProjectManager Component Title', () => {
-      expect(screen.getByText('Project:')).toBeInTheDocument()
+      expect(screen.getByText('Project :')).toBeInTheDocument()
     })
 
     test('should be able to render ProjectManager Component label', () => {
@@ -55,6 +56,7 @@ describe('Trainer Component', () => {
           allProjects={mockAllProjects}
           onSelectProject={jest.fn()}
           isProjectAndAttendeesEnable={false}
+          shouldReset={false}
         />,
       )
     })
