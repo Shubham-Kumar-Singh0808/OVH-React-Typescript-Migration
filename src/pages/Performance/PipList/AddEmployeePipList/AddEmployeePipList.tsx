@@ -112,10 +112,6 @@ const AddEmployeePipList = ({
     employeeName,
   ])
 
-  const ratings = useTypedSelector(
-    reduxServices.pipList.selectors.performanceRatings,
-  )
-
   useEffect(() => {
     dispatch(reduxServices.pipList.activeEmployee())
     dispatch(reduxServices.pipList.getPerformanceRatings())
@@ -352,12 +348,11 @@ const AddEmployeePipList = ({
                 }}
               >
                 <option value={''}>Select Rating</option>
-                {ratings.length > 0 &&
-                  ratings?.map((item, index) => (
-                    <option key={index} value={item.id}>
-                      {item.rating}
-                    </option>
-                  ))}
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
               </CFormSelect>
             </CCol>
           </CRow>
