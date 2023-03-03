@@ -13,6 +13,7 @@ import {
   KRAInitialState,
   KRAPages,
   KRATableDataItem,
+  NewKPiDuplicateCheckQuery,
   NewKRABody,
   NewKRADuplicateCheckQuery,
   UpdateKRABody,
@@ -55,6 +56,7 @@ const initialState: KRAInitialState = {
   currentOnScreenPage: KRAPages.kraList,
   frequency: [],
   editThisKpi: {} as IncomingKPIDataItem,
+  isNewKpiDuplicate: false,
 }
 
 const getEmpDepartmentThunk = createAsyncThunk(
@@ -177,6 +179,18 @@ const checkNewKRADuplicacyThunk = createAsyncThunk(
   },
 )
 
+const checkIfNewKpiDuplicate = createAsyncThunk(
+  'KRA/checkIfNewKpiDuplicate',
+  async (query: NewKPiDuplicateCheckQuery, thunkApi) => {
+    try {
+      return await KRAApi.checkIfNewKpiDuplicate(query)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const addNewKRAThunk = createAsyncThunk(
   'KRA/addNewKRAThunk',
   async (body: NewKRABody, thunkApi) => {
@@ -267,6 +281,9 @@ const KRASlice = createSlice({
     builder.addCase(checkNewKRADuplicacyThunk.fulfilled, (state, action) => {
       state.isNewKRADuplicate = action.payload
     })
+    builder.addCase(checkIfNewKpiDuplicate.fulfilled, (state, action) => {
+      state.isNewKpiDuplicate = action.payload
+    })
     builder.addCase(editThisKraThunk.fulfilled, (state, action) => {
       state.editThisKra = action.payload
     })
@@ -304,6 +321,7 @@ const KRASlice = createSlice({
         addNewKRAThunk.pending,
         getKRADesigPercentageThunk.pending,
         checkNewKRADuplicacyThunk.pending,
+        checkIfNewKpiDuplicate.pending,
         editThisKraThunk.pending,
         updateKRAThunk.pending,
         getFrequency.pending,
@@ -325,6 +343,7 @@ const KRASlice = createSlice({
         addNewKRAThunk.rejected,
         getKRADesigPercentageThunk.rejected,
         checkNewKRADuplicacyThunk.rejected,
+        checkIfNewKpiDuplicate.rejected,
         editThisKraThunk.rejected,
         updateKRAThunk.rejected,
         getFrequency.rejected,
@@ -347,6 +366,7 @@ const KRAThunk = {
   deleteKPIThunk,
   getKRADesigPercentageThunk,
   checkNewKRADuplicacyThunk,
+  checkIfNewKpiDuplicate,
   addNewKRAThunk,
   editThisKraThunk,
   updateKRAThunk,

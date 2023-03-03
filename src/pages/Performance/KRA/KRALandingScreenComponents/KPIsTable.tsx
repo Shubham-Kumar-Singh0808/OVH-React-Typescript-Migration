@@ -1,6 +1,8 @@
 import {
   CButton,
+  CCol,
   CLink,
+  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -163,7 +165,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                         )
                       }
                     >
-                      {dottedContent(item.description)}
+                      {parse(dottedContent(item.description))}
                     </CLink>
                   </CTableDataCell>
                 ) : (
@@ -249,6 +251,13 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
+      {!kpiList?.length && (
+        <CCol className="text-start ms-4">
+          <CRow>
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
