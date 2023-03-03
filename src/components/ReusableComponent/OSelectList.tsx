@@ -29,7 +29,7 @@ const OSelect = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          {label}:
+          {label} :
           {isRequired && (
             <span className={showIsRequired(selectedValue)}>*</span>
           )}

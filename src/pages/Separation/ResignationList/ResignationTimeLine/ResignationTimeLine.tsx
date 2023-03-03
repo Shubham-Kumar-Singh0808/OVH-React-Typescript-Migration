@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { useHistory } from 'react-router-dom'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
@@ -32,6 +33,7 @@ const ResignationTimeLine = ({
   const getAllResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
+  const history = useHistory()
   const dispatch = useAppDispatch()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
@@ -124,6 +126,7 @@ const ResignationTimeLine = ({
         withdrawComments: null,
       }),
     )
+    history.push('/resignationList')
   }
   const commentsEdit = showEditor ? (
     <CCol sm={8}>

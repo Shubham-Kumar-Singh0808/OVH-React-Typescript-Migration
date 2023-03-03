@@ -17,7 +17,7 @@ describe('EventEndDate Component', () => {
   })
 
   test('should be able to render EventEndDate label', () => {
-    expect(screen.getByText('End Date:')).toBeInTheDocument()
+    expect(screen.getByText('End Date :')).toBeInTheDocument()
   })
 
   test('should render date picker', () => {

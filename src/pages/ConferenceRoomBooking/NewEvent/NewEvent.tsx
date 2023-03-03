@@ -203,7 +203,6 @@ const NewEvent = (): JSX.Element => {
       }
     }
   }
-  // console.log(attendeesList)
 
   // onchange handlers
   const onHandleLocation = (value: string) => {
@@ -337,8 +336,7 @@ const NewEvent = (): JSX.Element => {
       setDateError(false)
     }
   }, [addEvent.fromDate, addEvent.toDate])
-  console.log(addEvent.toDate)
-  console.log(addEvent.fromDate)
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -382,9 +380,9 @@ const NewEvent = (): JSX.Element => {
             />
             {dateError && (
               <CRow className="mt-2">
-                <CCol sm={{ span: 6, offset: 4 }}>
+                <CCol sm={{ span: 6, offset: 3 }}>
                   <span className="text-danger" data-testid="errorMessage">
-                    To date should be greater than From date
+                    <b>To date should be greater than From date</b>
                   </span>
                 </CCol>
               </CRow>
@@ -395,7 +393,7 @@ const NewEvent = (): JSX.Element => {
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Subject:
+                Subject :
                 <span
                   className={showIsRequired(
                     addEvent.agenda?.replace(/^\s*/, ''),
@@ -417,8 +415,8 @@ const NewEvent = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Description:
+              <CFormLabel className="col-sm-3 col-form-label text-end p-18">
+                Description :
                 <span
                   className={showIsRequired(
                     descriptionValue?.replace(/^\s*/, ''),
@@ -487,6 +485,7 @@ const NewEvent = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
+                    disabled={dateError}
                   >
                     Confirm
                   </CButton>

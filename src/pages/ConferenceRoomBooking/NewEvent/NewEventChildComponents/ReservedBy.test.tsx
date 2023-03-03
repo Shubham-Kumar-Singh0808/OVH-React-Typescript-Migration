@@ -20,7 +20,7 @@ describe('ReservedBy Component', () => {
     })
 
     test('should be able to render ReservedBy Component Title', () => {
-      expect(screen.getByText('Reserved by:')).toBeInTheDocument()
+      expect(screen.getByText('Reserved by :')).toBeInTheDocument()
     })
 
     test('should be able to render ReservedBy Component label', () => {
