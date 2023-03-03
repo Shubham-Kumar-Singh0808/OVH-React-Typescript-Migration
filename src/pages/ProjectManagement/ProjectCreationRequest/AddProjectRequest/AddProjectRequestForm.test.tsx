@@ -27,7 +27,6 @@ describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
     render(
       <AddProjectRequestForm
-        setToggle={jest.fn()}
         projectRequest={{
           bcc: '',
           billingContactPerson: '',
@@ -57,6 +56,26 @@ describe('ApproveProjectForm Testing', () => {
         setCheckList={jest.fn()}
         projectMileStone={[]}
         setProjectMileStone={jest.fn()}
+        projectManager={''}
+        setProjectManager={jest.fn()}
+        projectName={''}
+        setProjectName={jest.fn()}
+        showEditor={false}
+        setShowEditor={jest.fn()}
+        descriptionError={false}
+        customerContactName={''}
+        setCustomerContactName={jest.fn()}
+        setEmailError={jest.fn()}
+        setBillingContactPersonEmailError={jest.fn()}
+        billingContactName={''}
+        setBillingContactName={jest.fn()}
+        setCheckListValid={jest.fn()}
+        setDescriptionError={jest.fn()}
+        setIsAddMileStoneButtonEnabled={jest.fn()}
+        checkListValid={false}
+        isAddMilestoneButtonEnabled={false}
+        emailError={false}
+        billingContactPersonEmailError={false}
       />,
       {
         preloadedState: {

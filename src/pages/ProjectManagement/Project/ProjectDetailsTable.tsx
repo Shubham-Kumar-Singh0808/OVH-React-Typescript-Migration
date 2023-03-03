@@ -124,7 +124,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               type="number"
                               name={project.employeeId.toString()}
-                              className="input-xs eventType-editInput ps-1"
+                              className="input-xs eventType-editInput pt-1"
                               defaultValue={project.allocation}
                               onChange={handleOnChangeAllocation}
                             />

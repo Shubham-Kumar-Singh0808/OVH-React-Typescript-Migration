@@ -344,7 +344,10 @@ const PersonalInfoTab = ({
                     Address:
                     <span
                       className={
-                        employeePresenetAddressDetails?.presentAddress
+                        employeePresenetAddressDetails?.presentAddress?.replace(
+                          /^\s*/,
+                          '',
+                        )
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -360,6 +363,7 @@ const PersonalInfoTab = ({
                       size="sm"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentAddress}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -368,7 +372,10 @@ const PersonalInfoTab = ({
                     City/Town:{' '}
                     <span
                       className={
-                        employeePresenetAddressDetails?.presentCity
+                        employeePresenetAddressDetails?.presentCity?.replace(
+                          /^\s*/,
+                          '',
+                        )
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -384,12 +391,18 @@ const PersonalInfoTab = ({
                       name="presentCity"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentCity}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
                   <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Zip: <span className={employeePresentZipNumber}>*</span>
+                    Zip:{' '}
+                    <span
+                      className={employeePresentZipNumber?.replace(/^\s*/, '')}
+                    >
+                      *
+                    </span>
                   </CFormLabel>
                   <CCol sm={3}>
                     <CFormInput
@@ -400,6 +413,7 @@ const PersonalInfoTab = ({
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentZip}
                       maxLength={6}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -415,6 +429,7 @@ const PersonalInfoTab = ({
                       name="presentLandMark"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentLandMark}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -447,6 +462,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentAddress
                           : employeePermanentAddressDetails.permanentAddress
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -467,6 +483,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentCity
                           : employeePermanentAddressDetails.permanentCity
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -488,6 +505,7 @@ const PersonalInfoTab = ({
                           : employeePermanentAddressDetails.permanentZip
                       }
                       maxLength={6}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -508,6 +526,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentLandMark
                           : employeePermanentAddressDetails.permanentLandMark
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
