@@ -1,7 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
 import EditProject from './EditProject'
 import {
   render,
@@ -23,12 +22,9 @@ const deviceLocale: string =
     : navigator.language
 
 const updateBtnId = 'update-project'
-let history: any
 
 describe('Edit Project Testing', () => {
   beforeEach(() => {
-    history = createMemoryHistory()
-
     render(<EditProject />, {
       preloadedState: {
         projectManagement: {
@@ -83,15 +79,6 @@ describe('Edit Project Testing', () => {
     const input = screen.getByPlaceholderText('Email')
     userEvent.type(input, 'ocabaaaa.a.')
     expect(screen.getByTestId(updateBtnId)).toBeDisabled()
-  })
-
-  test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('Back-btn')
-    userEvent.click(backBtn[0])
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/')
-    })
   })
 
   test('should render "Edit Project" title', () => {

@@ -61,9 +61,9 @@ const AddInitiateCycle = (): JSX.Element => {
   }
 
   useEffect(() => {
-    const newDateFormatForIsBefore = 'MM'
-    const start = moment(fromMonth, dateFormat).format(newDateFormatForIsBefore)
-    const end = moment(toMonth, dateFormat).format(newDateFormatForIsBefore)
+    const newDateFormatForIsBefore = 'YYYY-MM'
+    const start = moment(fromMonth, 'MM-YYYY').format(newDateFormatForIsBefore)
+    const end = moment(toMonth, 'MM-YYYY').format(newDateFormatForIsBefore)
 
     setIsMonthError(moment(end).isBefore(start))
   }, [fromMonth, toMonth])
@@ -217,7 +217,7 @@ const AddInitiateCycle = (): JSX.Element => {
             </CCol>
           </CRow>
           <CForm>
-            <CRow className="mt-4 mb-4">
+            <CRow className="mt-4 mb-3">
               <CFormLabel
                 {...formLabelProps}
                 className="col-sm-3 col-form-label text-end"
@@ -250,7 +250,7 @@ const AddInitiateCycle = (): JSX.Element => {
             <CRow className="mt-3">
               <CCol sm={3} md={3} className="text-end">
                 <CFormLabel className="mt-2 text-decoration-none">
-                  From Month :
+                  From Month:
                   <span className={fromMonth ? TextWhite : TextDanger}>*</span>
                 </CFormLabel>
               </CCol>
@@ -273,7 +273,7 @@ const AddInitiateCycle = (): JSX.Element => {
             <CRow className="mt-3">
               <CCol sm={3} md={3} className="text-end">
                 <CFormLabel className="mt-2 text-decoration-none">
-                  To Month :
+                  To Month:
                   <span className={toMonth ? TextWhite : TextDanger}>*</span>
                 </CFormLabel>
               </CCol>
@@ -291,14 +291,12 @@ const AddInitiateCycle = (): JSX.Element => {
                   maxDate={disableAfterDate}
                   onChange={onHandleToMonth}
                 />
-              </CCol>
-              {isMonthError && (
-                <CCol sm={6}>
+                {isMonthError && (
                   <span className="text-danger">
                     <b>To Month should be greater than From Month</b>
                   </span>
-                </CCol>
-              )}
+                )}
+              </CCol>
             </CRow>
 
             <CRow className="mt-3">
@@ -352,21 +350,19 @@ const AddInitiateCycle = (): JSX.Element => {
                   onChange={(date: Date) => onHandleEndDate(date)}
                   autoComplete="off"
                 />
-              </CCol>
-              {isDateError && (
-                <CCol sm={6}>
+                {isDateError && (
                   <span className="text-danger">
-                    <b>Start Date should be less than End Date</b>
+                    <b>End Date should be greater than Start Date</b>
                   </span>
-                </CCol>
-              )}
+                )}
+              </CCol>
             </CRow>
-            <CRow className="mt-4 mb-4">
+            <CRow className="mt-3 mb-4">
               <CFormLabel
                 {...formLabelProps}
                 className="col-sm-3 col-form-label text-end"
               >
-                Activate :
+                Activate:
                 <span className={isChecked ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
               <CCol sm={3} className="pt-2">

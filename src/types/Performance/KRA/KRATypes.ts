@@ -114,6 +114,7 @@ export interface KRAInitialState {
   krasQuery: KRADataQueryBody
   kraDesigPercentage: number
   isNewKRADuplicate: boolean
+  isNewKpiDuplicate: boolean
   editThisKra: KRATableDataItem
   editThisKpi: IncomingKPIDataItem
   currentOnScreenPage: KRAPages
@@ -166,6 +167,10 @@ export interface KRADesignationPercentageQuery {
 export interface NewKRADuplicateCheckQuery
   extends KRADesignationPercentageQuery {
   kraName: string
+}
+export type NewKPiDuplicateCheckQuery = {
+  id: number
+  name: string
 }
 
 export interface NewKRABody {

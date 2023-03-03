@@ -316,7 +316,7 @@ const EditProjectStatus = ({
                 className="btn-ovh me-1"
                 color="success"
                 onClick={allocateButtonHandler}
-                disabled={!isUpdateButtonEnabled || isUpdateButtonEnabled}
+                disabled={!isUpdateButtonEnabled || dateError}
               >
                 Update
               </CButton>

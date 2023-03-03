@@ -10,6 +10,7 @@ import {
 import moment from 'moment'
 import NewBookingLocation from './NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from './NewBookingChildComponents/NewBookingRoom'
+import SlotsBookedForRoom from './NewBookingChildComponents/SlotsBookedForRoom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
@@ -81,7 +82,14 @@ const NewBookingFilterOptions = ({
   const projectMembers = useTypedSelector(
     reduxServices.newEvent.selectors.projectMembers,
   )
-  console.log(projectMembers)
+  const BookingsForSelection = useTypedSelector(
+    reduxServices.bookingList.selectors.bookingsForSelection,
+  )
+
+  const slotBooked = BookingsForSelection?.filter(
+    (item) => item.roomId === newRoomBooking.roomId,
+  )
+
   useEffect(() => {
     if (newRoomBooking.startTime === '' && newRoomBooking.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -332,6 +340,17 @@ const NewBookingFilterOptions = ({
     }
   }, [newRoomBooking])
 
+  useEffect(() => {
+    if ((newRoomBooking.roomId, newRoomBooking.fromDate)) {
+      dispatch(
+        reduxServices.newBooking.getAllBookedDetailsForRoom({
+          date: newRoomBooking.fromDate,
+          roomid: newRoomBooking.roomId,
+        }),
+      )
+    }
+  }, [newRoomBooking.roomId, newRoomBooking.fromDate])
+
   return (
     <>
       <CRow>
@@ -381,8 +400,8 @@ const NewBookingFilterOptions = ({
               shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Agenda:
+              <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+                Agenda :
                 <span
                   className={showIsRequired(
                     newRoomBooking.agenda.replace(/^\s*/, ''),
@@ -467,6 +486,13 @@ const NewBookingFilterOptions = ({
             </CRow>
           </CForm>
         </CCol>
+        {slotBooked.length > 0 && newRoomBooking.fromDate ? (
+          <CCol sm={4}>
+            <SlotsBookedForRoom />
+          </CCol>
+        ) : (
+          <></>
+        )}
       </CRow>
     </>
   )

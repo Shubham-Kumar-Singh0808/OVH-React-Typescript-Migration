@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -35,7 +35,6 @@ import {
   healthList,
   priceModelList,
 } from '../../../../../constant/constantData'
-import OBackButton from '../../../../../components/ReusableComponent/OBackButton'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
 
@@ -419,7 +418,19 @@ const EditProject = (): JSX.Element => {
       {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/projectreport" name="Back" />
+            <CRow className="justify-content-end">
+              <CCol md={4}>
+                <Link to="/projectreport">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1 add-project-back-btn"
+                    data-testid="toggle-back-button"
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
+            </CRow>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}
@@ -443,8 +454,7 @@ const EditProject = (): JSX.Element => {
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Customer Email:
-                  <span className={projectContactEmail}>*</span>
+                  Customer Email :<span className={projectContactEmail}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormInput
@@ -470,7 +480,7 @@ const EditProject = (): JSX.Element => {
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel className="col-sm-3 col-form-label text-end">
-                  Billing Contact Person Email:
+                  Billing Contact Person Email :
                   <span className={billingContactPersonEmail}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
@@ -570,7 +580,7 @@ const EditProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  Start Date:
+                  Start Date :
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
@@ -598,7 +608,7 @@ const EditProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  End Date:
+                  End Date :
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
@@ -631,7 +641,7 @@ const EditProject = (): JSX.Element => {
                   data-testId="editHealthLabel"
                   {...dynamicFormLabelProps('health', classNameStyle)}
                 >
-                  Health:
+                  Health :
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
@@ -675,7 +685,7 @@ const EditProject = (): JSX.Element => {
                   data-testId="descriptionLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
-                  Description:
+                  Description :
                 </CFormLabel>
                 <CCol sm={9}>
                   <CKEditor<{

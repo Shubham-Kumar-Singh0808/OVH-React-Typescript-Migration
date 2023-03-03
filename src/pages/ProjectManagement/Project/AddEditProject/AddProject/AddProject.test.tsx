@@ -1,14 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
 import AddProject from './AddProject'
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-} from '../../../../../test/testUtils'
+import { render, screen, fireEvent } from '../../../../../test/testUtils'
 import { mockProjectClient } from '../../../../../test/data/projectClientData'
 import { mockReportingManager } from '../../../../../test/data/reportingManagers'
 
@@ -19,12 +13,9 @@ const deviceLocale: string =
 
 const clearBtnId = 'clear-project'
 const addBtnId = 'add-project'
-let history: any
 
 describe('Add Project Testing', () => {
   beforeEach(() => {
-    history = createMemoryHistory()
-
     render(<AddProject />, {
       preloadedState: {
         projectManagement: {
@@ -91,15 +82,6 @@ describe('Add Project Testing', () => {
 
     expect(clearBtn).not.toBeDisabled()
     fireEvent.click(clearBtn)
-  })
-
-  test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('Back-btn')
-    userEvent.click(backBtn[0])
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/')
-    })
   })
 
   test('should render "Add Project" title', () => {

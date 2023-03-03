@@ -1,5 +1,6 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetAllProjects } from '../../ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { GetBookingsForSelection } from '../BookingList/bookingListTypes'
 
 export type NewBookingLoggedEmployeeName = {
   id: number
@@ -30,6 +31,7 @@ export type newBookingSliceState = {
   isLoading: ApiLoadingState
   allEmployeesProfiles: NewBookingLoggedEmployeeName[]
   toggle: ''
+  getBookingsForSelection: GetBookingsForSelection[]
 }
 
 export type AddRoom = {
@@ -63,4 +65,9 @@ export type ShouldResetNewBookingFields = {
   projectName: boolean
   startEndTime: boolean
   trainer?: boolean
+}
+
+export type GetBookedRoomParams = {
+  date: string
+  roomid: number
 }
