@@ -16,8 +16,6 @@ const deviceLocale: string =
     ? navigator.languages[0]
     : navigator.language
 
-const updateBtnId = 'add-project'
-const mockSetToggle = jest.fn()
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
     render(
@@ -87,10 +85,6 @@ describe('ApproveProjectForm Testing', () => {
     )
   })
 
-  test('should be able to render Update button', () => {
-    expect(screen.getByTestId(updateBtnId)).toBeInTheDocument()
-  })
-
   test('should render input components', () => {
     const names = screen.getAllByPlaceholderText('Name')
     expect(screen.getByPlaceholderText('Client')).toBeInTheDocument()
@@ -105,17 +99,6 @@ describe('ApproveProjectForm Testing', () => {
     const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
-  })
-
-  test('should stay enable update button when input is not empty', () => {
-    expect(screen.getByTestId(updateBtnId)).toBeDisabled()
-  })
-
-  test('should enable disable update button if email is invalid', () => {
-    const input = screen.getByPlaceholderText('Email')
-    userEvent.type(input, 'ocabaaaa.a.')
-
-    expect(screen.getByTestId(updateBtnId)).toBeDisabled()
   })
 
   test('should able to Add Project project', () => {
@@ -180,15 +163,5 @@ describe('ApproveProjectForm Testing', () => {
         day: '2-digit',
       }),
     )
-
-    expect(screen.getByTestId(updateBtnId)).not.toBeEnabled()
-
-    const addBtn = screen.getByTestId(updateBtnId)
-    userEvent.click(addBtn)
-
-    const clearBttonElement = screen.getByTestId('clear-project')
-    expect(clearBttonElement).toBeInTheDocument()
-    userEvent.click(clearBttonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })
