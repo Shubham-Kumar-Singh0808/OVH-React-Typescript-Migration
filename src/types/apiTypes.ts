@@ -710,6 +710,7 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+  getAllMeetingAppointmentList: string
 }
 
 export interface LeadershipEnrollmentListApi extends ApiBase {

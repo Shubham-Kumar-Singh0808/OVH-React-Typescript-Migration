@@ -7,7 +7,7 @@ import { render, screen } from '../../../test/testUtils'
 describe('Employee Passport Details', () => {
   describe('Without data', () => {
     beforeEach(() => {
-      render(<ContactNumberDetails />)
+      render(<ContactNumberDetails setSaveButtonEnabled={jest.fn()} />)
     })
     test('should render "Contact Details" title', () => {
       const contactHeader = screen.getByRole('heading', {

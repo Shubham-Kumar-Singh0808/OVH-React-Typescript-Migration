@@ -8,11 +8,17 @@ import { mockTrainerDataList } from '../../../../test/data/newEventData'
 describe('Trainer Component', () => {
   describe('Empty value of  Trainer Component', () => {
     beforeEach(() => {
-      render(<Trainer allEmployeesProfiles={[]} onSelectTrainer={jest.fn()} />)
+      render(
+        <Trainer
+          allEmployeesProfiles={[]}
+          onSelectTrainer={jest.fn()}
+          shouldReset={false}
+        />,
+      )
     })
 
     test('should be able to render ProjectManager Component Title', () => {
-      expect(screen.getByText('Trainer:')).toBeInTheDocument()
+      expect(screen.getByText('Trainer :')).toBeInTheDocument()
     })
 
     test('should be able to render ProjectManager Component label', () => {
@@ -25,8 +31,15 @@ describe('Trainer Component', () => {
   })
 
   describe('Should be able to select ProjectManager Component value', () => {
+    // eslint-disable-next-line sonarjs/no-identical-functions
     beforeEach(() => {
-      render(<Trainer allEmployeesProfiles={[]} onSelectTrainer={jest.fn()} />)
+      render(
+        <Trainer
+          allEmployeesProfiles={[]}
+          onSelectTrainer={jest.fn()}
+          shouldReset={false}
+        />,
+      )
     })
 
     test('should be able to enter in input field', () => {
@@ -54,6 +67,7 @@ describe('Trainer Component', () => {
         <Trainer
           allEmployeesProfiles={mockTrainerDataList}
           onSelectTrainer={jest.fn()}
+          shouldReset={false}
         />,
       )
     })
