@@ -48,7 +48,7 @@ const EmployeeUpdatePIP = ({
     viewEmployeePipData?.remarks,
   )
   const [improvementPlanText, setImprovementPlanText] = useState<string>(
-    viewEmployeePipData?.createdBy,
+    viewEmployeePipData?.improvement,
   )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState(false)
 
@@ -88,7 +88,7 @@ const EmployeeUpdatePIP = ({
       setEndDate(viewEmployeePipData.endDate)
       setSelectRatingNo(viewEmployeePipData.rating)
       setReasonForPIPText(viewEmployeePipData.remarks)
-      setImprovementPlanText(viewEmployeePipData.createdBy)
+      setImprovementPlanText(viewEmployeePipData.improvement)
     }
   }, [viewEmployeePipData])
 

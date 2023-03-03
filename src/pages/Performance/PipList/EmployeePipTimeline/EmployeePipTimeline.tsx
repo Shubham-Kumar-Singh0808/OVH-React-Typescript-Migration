@@ -7,7 +7,7 @@ import EmployeeRemovePIP from './EmployeeRemovePIP'
 import EmployeeUpdatePIP from './EmployeeUpdatePIP'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch } from '../../../../stateStore'
 
 const EmployeePipTimeline = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
@@ -24,10 +24,6 @@ const EmployeePipTimeline = (): JSX.Element => {
     )
   }, [dispatch])
 
-  const viewPipDetails = useTypedSelector(
-    reduxServices.pipList.selectors.viewEmployeePipDetails,
-  )
-
   return (
     <>
       {toggle === '' && (
@@ -39,45 +35,41 @@ const EmployeePipTimeline = (): JSX.Element => {
         >
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
-              {viewPipDetails.pipflag ? (
-                <>
+              <>
+                <CButton
+                  data-testid="update-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={() => setToggle('employeeUpdatePIP')}
+                >
+                  Update
+                </CButton>
+                <CButton
+                  data-testid="Extend-btn"
+                  color="warning"
+                  className="btn-ovh me-1 text-white"
+                  onClick={() => setToggle('employeeExtendPIP')}
+                >
+                  Extend PIP
+                </CButton>
+                <CButton
+                  data-testid="Remove-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={() => setToggle('employeeRemovePIP')}
+                >
+                  Remove From PIP
+                </CButton>
+                <Link to={`/PIPList`}>
                   <CButton
-                    data-testid="update-btn"
-                    className="btn-ovh me-1 text-white"
-                    color="success"
-                    onClick={() => setToggle('employeeUpdatePIP')}
+                    color="info"
+                    className="btn-ovh me-1"
+                    data-testid="toggle-back-btn"
                   >
-                    Update
+                    <i className="fa fa-arrow-left  me-1"></i>Back
                   </CButton>
-                  <CButton
-                    data-testid="Extend-btn"
-                    color="warning"
-                    className="btn-ovh me-1 text-white"
-                    onClick={() => setToggle('employeeExtendPIP')}
-                  >
-                    Extend PIP
-                  </CButton>
-                  <CButton
-                    data-testid="Remove-btn"
-                    className="btn-ovh me-1 text-white"
-                    color="success"
-                    onClick={() => setToggle('employeeRemovePIP')}
-                  >
-                    Remove From PIP
-                  </CButton>
-                  <Link to={`/PIPList`}>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1"
-                      data-testid="toggle-back-btn"
-                    >
-                      <i className="fa fa-arrow-left  me-1"></i>Back
-                    </CButton>
-                  </Link>
-                </>
-              ) : (
-                <></>
-              )}
+                </Link>
+              </>
             </CCol>
           </CRow>
           <EmployeePipTimelineOptions />
