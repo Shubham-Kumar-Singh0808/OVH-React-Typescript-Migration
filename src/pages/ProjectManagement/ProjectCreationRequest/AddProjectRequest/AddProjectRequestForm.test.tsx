@@ -10,11 +10,6 @@ import {
   mockProject,
   mockDomain,
 } from '../../../../test/data/projectManagerData'
-import {
-  AddProjectRequestDetails,
-  Chelist,
-  ProjectRequestMilestoneDTO,
-} from '../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
 
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
