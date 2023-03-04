@@ -40,18 +40,6 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setIsIconVisible(true)
   }
 
-  // const descriptionClickHandler = (
-  //   e: React.MouseEvent<HTMLElement>,
-  //   content: string | null | Element,
-  // ) => {
-  //   e.preventDefault()
-  //   if (content === null) {
-  //     return
-  //   }
-  //   setModalDescription(content)
-  //   setModalVisible(true)
-  // }
-
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
     content: ModalContent,
