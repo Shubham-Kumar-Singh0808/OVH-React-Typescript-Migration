@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { CRow, CCol, CButton, CFormLabel } from '@coreui/react-pro'
 import moment from 'moment'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -83,6 +83,10 @@ const EditEmployee = (): JSX.Element => {
       htmlFor,
       className,
     }
+  }
+
+  const handleClick = () => {
+    history.goBack()
   }
 
   // Start - Field handler
@@ -357,15 +361,14 @@ const EditEmployee = (): JSX.Element => {
         <>
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
-              <Link to="/employeeList">
-                <CButton
-                  data-testid="back-btn"
-                  color="info"
-                  className="btn-ovh me-1"
-                >
-                  <i className="fa fa-arrow-left me-1"></i>Back
-                </CButton>
-              </Link>
+              <CButton
+                data-testid="back-btn"
+                color="info"
+                className="btn-ovh me-1"
+                onClick={handleClick}
+              >
+                <i className="fa fa-arrow-left me-1"></i>Back
+              </CButton>
             </CCol>
           </CRow>
           <CRow className="mb-3">

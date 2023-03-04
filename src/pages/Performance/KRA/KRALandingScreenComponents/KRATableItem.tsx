@@ -32,7 +32,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   } = props
 
   const dispatch = useAppDispatch()
-
+  type ModalContent = string | JSX.Element | JSX.Element[]
   const rowExpandHandler = (e: React.MouseEvent<HTMLElement>, id: number) => {
     e.preventDefault()
     setSelectedKRAId(id)
@@ -40,14 +40,11 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
     setIsIconVisible(true)
   }
 
-  const descriptionClickHandler = (
+  const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
-    content: string | null,
+    content: ModalContent,
   ) => {
     e.preventDefault()
-    if (content === null) {
-      return
-    }
     setModalDescription(content)
     setModalVisible(true)
   }
@@ -101,7 +98,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
             <CLink
               className="cursor-pointer text-primary centerAlignment-text"
               data-testid="kra-Name"
-              onClick={(e) => descriptionClickHandler(e, selectedKRA.name)}
+              onClick={(e) => descriptionHandler(e, selectedKRA.name)}
             >
               {selectedKRA.name}
             </CLink>
@@ -112,7 +109,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                 className="cursor-pointer text-primary centerAlignment-text"
                 data-testid="kra-description"
                 onClick={(e) =>
-                  descriptionClickHandler(e, selectedKRA.description)
+                  descriptionHandler(e, selectedKRA.description as string)
                 }
               >
                 {parse(selectedKRA.description)}

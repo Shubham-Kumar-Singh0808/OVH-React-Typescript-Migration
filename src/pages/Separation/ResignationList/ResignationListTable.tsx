@@ -362,6 +362,7 @@ const ResignationListTable = ({
                       <Link
                         to={`/employeeProfile/${resignationItem.employeeId}`}
                         className="employee-name"
+                        data-testid={`employee-profile-link${index}`}
                       >
                         {resignationItem.employeeName}
                       </Link>
