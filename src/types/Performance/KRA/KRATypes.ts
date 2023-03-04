@@ -1,4 +1,5 @@
 import React from 'react'
+import { ModalContent } from '../../../pages/Performance/KRA/KRAConstants'
 import { LoadingState } from '../../commonTypes'
 
 export interface KRATableItemProps {
@@ -7,7 +8,7 @@ export interface KRATableItemProps {
   selectedKRA: KRATableDataItem
   setIsIconVisible: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
-  setModalDescription: React.Dispatch<React.SetStateAction<string>>
+  setModalDescription: React.Dispatch<React.SetStateAction<ModalContent>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
