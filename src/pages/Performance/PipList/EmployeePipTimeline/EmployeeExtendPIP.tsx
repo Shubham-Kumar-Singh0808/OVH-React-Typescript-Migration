@@ -133,6 +133,13 @@ const EmployeeExtendPIP = ({
     viewEmployeePipDetails?.endDate,
   ])
 
+  const extendDateMandatory = (
+    <span className={extendDate ? TextWhite : TextDanger}>*</span>
+  )
+
+  const disableExtendDateMandatory = (
+    <span className={disabledExtendedDate ? TextWhite : TextDanger}>*</span>
+  )
   return (
     <>
       <OCard
@@ -220,9 +227,7 @@ const EmployeeExtendPIP = ({
                 <CCol sm={3} md={3} className="text-end">
                   <CFormLabel className="mt-1">
                     Extend Date:
-                    <span className={extendDate ? TextWhite : TextDanger}>
-                      *
-                    </span>
+                    {extendDateMandatory}
                   </CFormLabel>
                 </CCol>
                 <CCol sm={3}>
@@ -256,11 +261,7 @@ const EmployeeExtendPIP = ({
                 <CCol sm={3} md={3} className="text-end">
                   <CFormLabel className="mt-1">
                     Extend Date:
-                    <span
-                      className={disabledExtendedDate ? TextWhite : TextDanger}
-                    >
-                      *
-                    </span>
+                    {disableExtendDateMandatory}
                   </CFormLabel>
                 </CCol>
                 <CCol sm={3}>
