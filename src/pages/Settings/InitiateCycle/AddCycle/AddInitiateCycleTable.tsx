@@ -111,13 +111,13 @@ const AddInitiateCycleTable = ({
                       'N/A'
                     )}
                   </CTableDataCell>
-                  <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
-                  <CTableDataCell>{cycle.toMonth}</CTableDataCell>
+                  <CTableDataCell>{cycle?.fromMonth || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{cycle?.toMonth || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
-                    {cycle.activateFlag === true ? 'Active' : 'In-Active'}
+                    {cycle?.activateFlag === true ? 'Active' : 'In-Active'}
                   </CTableDataCell>
-                  <CTableDataCell>{cycle.startDate}</CTableDataCell>
-                  <CTableDataCell>{cycle.endDate}</CTableDataCell>
+                  <CTableDataCell>{cycle.startDate || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{cycle.endDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="Edit">
                       <CButton
