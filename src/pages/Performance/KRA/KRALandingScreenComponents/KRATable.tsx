@@ -26,6 +26,7 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     pageSize,
     setAddKPI,
   } = props
+  type ModalContent = string | JSX.Element | JSX.Element[]
   const dispatch = useAppDispatch()
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const kraData = useTypedSelector((state) => state.KRA.kraData)
@@ -35,7 +36,8 @@ const KRATable = (props: KRATableProps): JSX.Element => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] =
     useState<boolean>(false)
-  const [modalDescription, setModalDescription] = useState<string>(emptyString)
+  const [modalDescription, setModalDescription] =
+    useState<ModalContent>(emptyString)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
   const [deleteThisKRAName, setDeleteThisKRAName] = useState<string>('')
   const handlePageSizeSelectChange = (
@@ -149,7 +151,14 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         visible={isModalVisible}
         setVisible={setModalVisible}
       >
-        <div data-testid="modal-cnt-kpi">{modalDescription}</div>
+        {/* <div data-testid="modal-cnt-kpi">{modalDescription}</div> */}
+        <p>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: String(modalDescription),
+            }}
+          />
+        </p>
       </OModal>
     </>
   )
