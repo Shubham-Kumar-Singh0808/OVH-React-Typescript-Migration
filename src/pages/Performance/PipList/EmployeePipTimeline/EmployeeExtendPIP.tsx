@@ -57,7 +57,7 @@ const EmployeeExtendPIP = ({
   }
 
   useEffect(() => {
-    setDisabledExtendedDate(viewEmployeePipDetails.extendDate as string)
+    setDisabledExtendedDate(viewEmployeePipDetails?.extendDate as string)
   }, [viewEmployeePipDetails])
 
   useEffect(() => {
@@ -75,13 +75,13 @@ const EmployeeExtendPIP = ({
   const extendBtnHandler = async () => {
     await dispatch(
       reduxServices.pipList.extendPip({
-        createdBy: viewEmployeePipDetails.createdBy,
-        createdDate: viewEmployeePipDetails.createdDate,
-        empId: viewEmployeePipDetails.empId,
-        employeeName: viewEmployeePipDetails.employeeName,
-        endDate: viewEmployeePipDetails.endDate,
+        createdBy: viewEmployeePipDetails?.createdBy,
+        createdDate: viewEmployeePipDetails?.createdDate,
+        empId: viewEmployeePipDetails?.empId,
+        employeeName: viewEmployeePipDetails?.employeeName,
+        endDate: viewEmployeePipDetails?.endDate,
         extendDate:
-          viewEmployeePipDetails.extendDate === null
+          viewEmployeePipDetails?.extendDate === null
             ? extendDate
             : disabledExtendedDate,
         id: viewEmployeePipDetails.id,
@@ -215,7 +215,7 @@ const EmployeeExtendPIP = ({
             </CCol>
           </CRow>
           <CRow className="mt-3">
-            {viewEmployeePipDetails.extendDate === null ? (
+            {viewEmployeePipDetails?.extendDate === null ? (
               <>
                 <CCol sm={3} md={3} className="text-end">
                   <CFormLabel className="mt-1">
@@ -373,7 +373,7 @@ const EmployeeExtendPIP = ({
               disabled={
                 !isExtendBtnEnabled ||
                 isExtendDateError ||
-                (viewEmployeePipDetails.extendDate === null && !extendDate)
+                (viewEmployeePipDetails?.extendDate === null && !extendDate)
               }
               onClick={extendBtnHandler}
             >
