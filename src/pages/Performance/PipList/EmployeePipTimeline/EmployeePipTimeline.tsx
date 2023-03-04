@@ -35,39 +35,41 @@ const EmployeePipTimeline = (): JSX.Element => {
         >
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
-              <CButton
-                data-testid="update-btn"
-                className="btn-ovh me-1 text-white"
-                color="success"
-                onClick={() => setToggle('employeeUpdatePIP')}
-              >
-                Update
-              </CButton>
-              <CButton
-                data-testid="Extend-btn"
-                color="warning"
-                className="btn-ovh me-1 text-white"
-                onClick={() => setToggle('employeeExtendPIP')}
-              >
-                Extend PIP
-              </CButton>
-              <CButton
-                data-testid="Remove-btn"
-                className="btn-ovh me-1 text-white"
-                color="success"
-                onClick={() => setToggle('employeeRemovePIP')}
-              >
-                Remove From PIP
-              </CButton>
-              <Link to={`/PIPList`}>
+              <>
                 <CButton
-                  color="info"
-                  className="btn-ovh me-1"
-                  data-testid="toggle-back-btn"
+                  data-testid="update-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={() => setToggle('employeeUpdatePIP')}
                 >
-                  <i className="fa fa-arrow-left  me-1"></i>Back
+                  Update
                 </CButton>
-              </Link>
+                <CButton
+                  data-testid="Extend-btn"
+                  color="warning"
+                  className="btn-ovh me-1 text-white"
+                  onClick={() => setToggle('employeeExtendPIP')}
+                >
+                  Extend PIP
+                </CButton>
+                <CButton
+                  data-testid="Remove-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={() => setToggle('employeeRemovePIP')}
+                >
+                  Remove From PIP
+                </CButton>
+                <Link to={`/PIPList`}>
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1"
+                    data-testid="toggle-back-btn"
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </>
             </CCol>
           </CRow>
           <EmployeePipTimelineOptions />
