@@ -88,7 +88,7 @@ const AddProjectStatus = ({
   }
   const failureToastMessage = (
     <OToast
-      toastMessage="Add an employee within project date limits."
+      toastMessage="Current Week Date should be in between project start date and end date"
       toastColor="danger"
     />
   )
