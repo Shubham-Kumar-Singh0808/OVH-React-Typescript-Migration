@@ -12,6 +12,8 @@ import {
 import { Link, useHistory, useParams } from 'react-router-dom'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import ReactDatePicker from 'react-datepicker'
+import moment from 'moment'
 import { GetAppraisalCycle } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -20,6 +22,7 @@ import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { showIsRequired } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const EditConfiguration = (): JSX.Element => {
   const { cycleId } = useParams<{ cycleId: string }>()
@@ -30,6 +33,21 @@ const EditConfiguration = (): JSX.Element => {
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
   const [isActive, setIsActive] = useState(false)
+
+  const [editStartDate, setEditStartDate] = useState<string>(cycle.fromDate)
+  const [editEndDate, setEditEndDate] = useState<string>(cycle.toDate)
+  const [editFromDate, setEditFromDate] = useState<string>(
+    cycle.appraisalStartDate,
+  )
+  const [editToDate, setEditToDate] = useState<string>(cycle.appraisalEndDate)
+
+  const [editDateErrorMsg, setEditDateErrorMsg] = useState<boolean>(false)
+  const [isDateErrorValidation, setIsDateErrorValidation] =
+    useState<boolean>(false)
+
+  const [editReviewDuration, setEditReviewDuration] = useState<string>(
+    cycle.appraisalDuration,
+  )
 
   const dispatch = useAppDispatch()
 
@@ -92,6 +110,10 @@ const EditConfiguration = (): JSX.Element => {
       setCycle((values) => {
         return { ...values, ...{ [name]: Number(servicePeriodDays) } }
       })
+    } else {
+      setCycle((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
     }
   }
 
@@ -115,8 +137,13 @@ const EditConfiguration = (): JSX.Element => {
         servicePeriod: getEditAppraisal.servicePeriod,
       })
     }
-
+    setEditStartDate(getEditAppraisal.fromDate)
+    setEditEndDate(getEditAppraisal.toDate)
     setTextEditor(false)
+    setIsActive(getEditAppraisal.active)
+    setEditFromDate(getEditAppraisal.appraisalStartDate)
+    setEditToDate(getEditAppraisal.appraisalEndDate)
+    setEditReviewDuration(getEditAppraisal.appraisalDuration)
     setTimeout(() => {
       setTextEditor(true)
     }, 100)
@@ -141,10 +168,47 @@ const EditConfiguration = (): JSX.Element => {
   const updateFailedToastMessage = (
     <OToast toastMessage="Cycle name should be unique." toastColor="danger" />
   )
+  const failedToast = (
+    <OToast
+      toastMessage="Only one cycle activated at a time."
+      toastColor="danger"
+    />
+  )
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(editStartDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(editEndDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setEditDateErrorMsg(moment(end).isBefore(start))
+  }, [editStartDate, editEndDate])
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM'
+    const start = moment(editFromDate, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(editToDate, 'MM-YYYY').format(newDateFormatForIsBefore)
+    setIsDateErrorValidation(moment(end).isBefore(start))
+  }, [editFromDate, editToDate])
 
   const updateAppraisalCycleAction = async () => {
     const prepareObject = {
-      ...cycle,
+      active: isActive,
+      appraisalDuration: editReviewDuration,
+      appraisalEndDate: editToDate,
+      appraisalStartDate: editFromDate,
+      appraisalType: cycle.appraisalType,
+      cycleStartedFlag: cycle.cycleStartedFlag,
+      description: cycle.description,
+      fromDate: editStartDate,
+      id: cycle.id,
+      level: cycle.level,
+      name: cycle.name,
+      servicePeriod: cycle.servicePeriod,
+      toDate: editEndDate,
     }
     const updateAppraisalCycleResultAction = await dispatch(
       reduxServices.appraisalConfigurations.updateAppraisalCycle(prepareObject),
@@ -156,15 +220,59 @@ const EditConfiguration = (): JSX.Element => {
     ) {
       history.push('/appraisalCycle')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
-      reduxServices.appraisalConfigurations.validateAppraisalCycle.fulfilled.match(
+      reduxServices.appraisalConfigurations.updateAppraisalCycle.rejected.match(
         updateAppraisalCycleResultAction,
-      )
+      ) &&
+      updateAppraisalCycleResultAction.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(updateFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.appraisalConfigurations.updateAppraisalCycle.rejected.match(
+        updateAppraisalCycleResultAction,
+      ) &&
+      updateAppraisalCycleResultAction.payload === 412
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const onChangeDurationHandler = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEditReviewDuration(e.target.value)
+  }
+
+  const onChangeFromMonthHandler = (date: Date) => {
+    setEditFromDate(moment(date).format('MM/YYYY'))
+  }
+  const onChangeToMonthHandler = (date: Date) => {
+    setEditToDate(moment(date).format('MM/YYYY'))
+  }
+
+  const onHandleStartDatePicker = (value: Date) => {
+    setEditStartDate(moment(value).format(dateFormat))
+  }
+  const onHandleEndDatePicker = (value: Date) => {
+    setEditEndDate(moment(value).format(dateFormat))
+  }
+
+  const admission = moment(editStartDate, 'DD-MM-YYYY')
+  const discharge = moment(editEndDate, 'DD-MM-YYYY')
+  const totalDays = discharge.diff(admission, 'days')
+
+  useEffect(() => {
+    if (totalDays >= 0) {
+      setEditReviewDuration(String(totalDays))
+    } else {
+      setEditReviewDuration(String(''))
+    }
+  }, [totalDays])
 
   return (
     <>
@@ -211,16 +319,18 @@ const EditConfiguration = (): JSX.Element => {
             </CCol>
           </CRow>
           <CRow className="mt-3 ">
-            <CFormLabel {...dynamicFormLabelProps('editReviewType', formLabel)}>
+            <CFormLabel {...dynamicFormLabelProps('appraisalType', formLabel)}>
               Review Type:
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
-                id="editReviewType"
+                id="appraisalType"
                 data-testid="form-select1"
                 size="sm"
                 aria-label="editReviewType"
-                name="editReviewType"
+                name="appraisalType"
+                value={cycle.appraisalType}
+                onChange={onChangeInputHandler}
               >
                 <option>Monthly</option>
                 <option>Annual</option>
@@ -235,18 +345,35 @@ const EditConfiguration = (): JSX.Element => {
                 Review Period From:
               </CFormLabel>
             </CCol>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control form-control-not-allowed"
-                data-testid="reviewPeriodFrom"
-                id="reviewPeriodFrom"
-                size="sm"
-                placeholder="mm/yyyy"
-                name="fromDate"
-                value={cycle.fromDate}
-                disabled={true}
-              />
-            </CCol>
+            {cycle.cycleStartedFlag === true ? (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="appraisalStartDate"
+                  id="appraisalStartDate"
+                  size="sm"
+                  placeholder="mm/yyyy"
+                  name="appraisalStartDate"
+                  value={editFromDate}
+                  disabled={true}
+                />
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="appraisalStartDate"
+                  data-testid="sh-date-picker"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  dateFormat="MM/yyyy"
+                  name="appraisalStartDate"
+                  value={editFromDate}
+                  onChange={(date: Date) => onChangeFromMonthHandler(date)}
+                />
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -254,18 +381,42 @@ const EditConfiguration = (): JSX.Element => {
                 Review Period To:
               </CFormLabel>
             </CCol>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control form-control-not-allowed"
-                data-testid="reviewPeriodTo"
-                id="reviewPeriodTo"
-                size="sm"
-                name="toDate"
-                placeholder="mm/yyyy"
-                value={cycle.toDate}
-                disabled={true}
-              />
-            </CCol>
+            {cycle.cycleStartedFlag === true ? (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="appraisalEndDate"
+                  id="appraisalEndDate"
+                  size="sm"
+                  name="appraisalEndDate"
+                  placeholder="mm/yyyy"
+                  value={editToDate}
+                  disabled={true}
+                />
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <ReactDatePicker
+                  autoComplete="off"
+                  id="appraisalEndDate"
+                  data-testid="sh-date-picker"
+                  className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                  showMonthYearPicker
+                  placeholderText="mm/yyyy"
+                  dateFormat="MM/yyyy"
+                  name="appraisalEndDate"
+                  value={editToDate}
+                  onChange={(date: Date) => onChangeToMonthHandler(date)}
+                />
+                {isDateErrorValidation && (
+                  <span className="text-danger">
+                    <b>
+                      Review Period From should be greater than Review Period To
+                    </b>
+                  </span>
+                )}
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -273,18 +424,36 @@ const EditConfiguration = (): JSX.Element => {
                 Review Start Date:
               </CFormLabel>
             </CCol>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control form-control-not-allowed"
-                data-testid="reviewStartDate"
-                id="reviewStartDate"
-                size="sm"
-                placeholder="dd/mm/yyyy"
-                name="appraisalStartDate"
-                value={cycle.appraisalStartDate}
-                disabled={true}
-              />
-            </CCol>
+            {cycle.cycleStartedFlag === true ? (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="fromDate"
+                  id="fromDate"
+                  size="sm"
+                  placeholder="dd/mm/yyyy"
+                  name="fromDate"
+                  value={editStartDate}
+                  disabled={true}
+                />
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="fromDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  showMonthDropdown
+                  showYearDropdown
+                  autoComplete="off"
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yyyy"
+                  name="fromDate"
+                  value={editStartDate}
+                  onChange={(date: Date) => onHandleStartDatePicker(date)}
+                />
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -292,18 +461,43 @@ const EditConfiguration = (): JSX.Element => {
                 Review End Date:
               </CFormLabel>
             </CCol>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control form-control-not-allowed"
-                data-testid="reviewEndDate"
-                id="reviewEndDate"
-                size="sm"
-                name="appraisalEndDate"
-                placeholder="dd/mm/yyyy"
-                value={cycle.appraisalEndDate}
-                disabled={true}
-              />
-            </CCol>
+            {cycle.cycleStartedFlag === true ? (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="toDate"
+                  id="toDate"
+                  size="sm"
+                  name="toDate"
+                  placeholder="dd/mm/yyyy"
+                  value={editEndDate}
+                  disabled={true}
+                />
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="toDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  showMonthDropdown
+                  showYearDropdown
+                  autoComplete="off"
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yyyy"
+                  name="toDate"
+                  value={editEndDate}
+                  onChange={(date: Date) => onHandleEndDatePicker(date)}
+                />
+                {editDateErrorMsg && (
+                  <span className="text-danger" data-testid="errorMessage">
+                    <b>
+                      Review End Date should be greater than Review Start Date
+                    </b>
+                  </span>
+                )}
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
@@ -312,17 +506,32 @@ const EditConfiguration = (): JSX.Element => {
             >
               Review Duration (days):
             </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                className="form-control form-control-not-allowed"
-                data-testid="reviewDuration"
-                id="reviewDuration"
-                size="sm"
-                name="appraisalDuration"
-                disabled={true}
-                value={cycle.appraisalDuration}
-              />
-            </CCol>
+            {cycle.cycleStartedFlag === true ? (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="reviewDuration"
+                  id="reviewDuration"
+                  size="sm"
+                  name="appraisalDuration"
+                  disabled={true}
+                  value={cycle.appraisalDuration}
+                />
+              </CCol>
+            ) : (
+              <CCol sm={3}>
+                <CFormInput
+                  className="form-control form-control-not-allowed"
+                  data-testid="reviewDuration"
+                  id="reviewDuration"
+                  size="sm"
+                  name="appraisalDuration"
+                  disabled={true}
+                  onChange={onChangeDurationHandler}
+                  value={editReviewDuration}
+                />
+              </CCol>
+            )}
           </CRow>
           <CRow className="mt-4 mb-4">
             <CFormLabel
@@ -433,7 +642,11 @@ const EditConfiguration = (): JSX.Element => {
                 data-testid="updateBtn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isUpdateButtonEnabled}
+                disabled={
+                  !isUpdateButtonEnabled ||
+                  editDateErrorMsg ||
+                  isDateErrorValidation
+                }
                 onClick={updateAppraisalCycleAction}
               >
                 Update

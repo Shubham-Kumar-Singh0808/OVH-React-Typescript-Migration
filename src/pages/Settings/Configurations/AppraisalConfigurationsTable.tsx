@@ -16,11 +16,11 @@ import parse from 'html-react-parser'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import OPagination from '../../../components/ReusableComponent/OPagination'
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { GetAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 
 const AppraisalConfigurationsTable = ({
   userEditAccess,
@@ -40,14 +40,11 @@ const AppraisalConfigurationsTable = ({
   const appraisalCycleListSize = useTypedSelector(
     reduxServices.appraisalConfigurations.selectors.listSize,
   )
-  const presentPage = useTypedSelector(
+
+  const selectCurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
-  useEffect(() => {
-    if (presentPage) {
-      setCurrentPage(presentPage)
-    }
-  }, [presentPage])
+
   const {
     paginationRange,
     setPageSize,
@@ -57,14 +54,24 @@ const AppraisalConfigurationsTable = ({
   } = usePagination(appraisalCycleListSize, 20)
 
   useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+
+  useEffect(() => {
     dispatch(
       reduxServices.appraisalConfigurations.getAppraisalCycle({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (selectCurrentPage - 1),
+        endIndex: pageSize * selectCurrentPage,
       }),
     )
-  }, [currentPage, dispatch, pageSize])
+  }, [selectCurrentPage, dispatch, pageSize])
 
+  const handleAgendaModal = (appraisalCycleInfo: GetAppraisalCycle) => {
+    setIsAppraisalDescriptionVisible(true)
+    setDescriptionModal(appraisalCycleInfo)
+  }
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -72,22 +79,21 @@ const AppraisalConfigurationsTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
-
-  const handleAgendaModal = (appraisalCycleInfo: GetAppraisalCycle) => {
-    setIsAppraisalDescriptionVisible(true)
-    setDescriptionModal(appraisalCycleInfo)
-  }
-
   const sortedAppraisalDates = useMemo(() => {
     if (appraisalCycle) {
       return appraisalCycle
         .slice()
-        .sort((sortNode1, sortNode2) =>
-          sortNode1.toDate.localeCompare(sortNode2.fromDate),
-        )
+        .sort((sortNode1, sortNode2) => sortNode2.id - sortNode1.id)
     }
     return []
   }, [appraisalCycle])
+
+  console.log(sortedAppraisalDates)
+  console.log(appraisalCycle)
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
 
   const totalRecords = appraisalCycle?.length
     ? `Total Records: ${appraisalCycleListSize}`
@@ -128,13 +134,15 @@ const AppraisalConfigurationsTable = ({
                   : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{appraisalCycle.name}</CTableDataCell>
                   <CTableDataCell>
                     {appraisalCycle.appraisalType}
                   </CTableDataCell>
-                  <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
                   <CTableDataCell>{appraisalCycle.fromDate}</CTableDataCell>
+                  <CTableDataCell>{appraisalCycle.toDate}</CTableDataCell>
                   <CTableDataCell>
                     {appraisalCycle.appraisalDuration}
                   </CTableDataCell>
@@ -144,7 +152,10 @@ const AppraisalConfigurationsTable = ({
                   <CTableDataCell>
                     {appraisalCycle.active ? 'Yes' : 'No'}
                   </CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
+                  <CTableDataCell
+                    scope="row"
+                    className="sh-organization-link sh-comment"
+                  >
                     {appraisalCycle.description ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
@@ -189,16 +200,14 @@ const AppraisalConfigurationsTable = ({
         </CTableBody>
       </CTable>
       <CRow>
-        <CCol xs={4}>
-          <p className="mt-2">
-            <strong>{totalRecords}</strong>
-          </p>
+        <CCol md={3} className="no-records">
+          <strong>{totalRecords}</strong>
         </CCol>
         <CCol xs={3}>
           {appraisalCycleListSize > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
@@ -206,7 +215,7 @@ const AppraisalConfigurationsTable = ({
         {appraisalCycleListSize > 20 && (
           <CCol
             xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
+            className="gap-1 d-grid d-md-flex justify-content-md-end"
           >
             <OPagination
               currentPage={currentPage}
@@ -227,7 +236,7 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: descriptionModal.description as string,
             }}

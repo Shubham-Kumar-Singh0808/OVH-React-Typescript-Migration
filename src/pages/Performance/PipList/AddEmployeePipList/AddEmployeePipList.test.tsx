@@ -53,7 +53,7 @@ describe('Employee Accounts Table Component Testing', () => {
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
   })
   test('should render on Dates AllocateEmployee', async () => {
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    const datePickers = screen.getAllByPlaceholderText('Start Date')
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>
@@ -61,17 +61,22 @@ describe('Employee Accounts Table Component Testing', () => {
         target: { value: '30 Aug, 2022' },
       }),
     )
-    fireEvent.click(datePickers[1])
-    await waitFor(() =>
-      fireEvent.change(datePickers[1], {
-        target: { value: '07 Sep, 2022' },
-      }),
-    )
-    expect(datePickers[0]).toHaveValue('8/30/2022')
-    expect(datePickers[1]).toHaveValue('9/07/2022')
+    expect(datePickers[0]).toHaveValue('30/08/2022')
     userEvent.click(screen.getByTestId(clearButton))
     expect(datePickers[0]).toHaveValue('')
-    expect(datePickers[1]).toHaveValue('')
+  })
+  test('should render on Dates AllocateEmployee', async () => {
+    const datePicker = screen.getAllByPlaceholderText('End Date')
+    fireEvent.click(datePicker[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePicker[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
+    expect(datePicker[0]).toHaveValue('30/08/2022')
+    userEvent.click(screen.getByTestId(clearButton))
+    expect(datePicker[0]).toHaveValue('')
   })
   test('pass comments to test input value', () => {
     render(

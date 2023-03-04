@@ -148,7 +148,7 @@ const SectionsFilterOptions = (): JSX.Element => {
 
   return (
     <>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-4 mb-4 ms-2">
         <CCol sm={1}>
           <CFormLabel {...formLabelProps}>
             Sections:

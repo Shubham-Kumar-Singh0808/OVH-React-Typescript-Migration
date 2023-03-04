@@ -23,6 +23,8 @@ describe('Payroll without data', () => {
         currentPage={0}
         pageSize={0}
         setToggle={mockSetTogglePage}
+        setExcelTable={mockSetTogglePage}
+        setClearFile={mockSetTogglePage}
       />,
       {
         preloadedState: {
@@ -64,12 +66,12 @@ describe('Payroll without data', () => {
     const uploadButton = screen.getByTestId(uploadBtnId)
     expect(uploadButton).toBeInTheDocument()
     userEvent.click(uploadButton)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(2)
   })
   test('should render  Configuration  screen and Allocate button without crashing', () => {
     const clearButton = screen.getByTestId(clearButtonId)
     expect(clearButton).toBeInTheDocument()
     userEvent.click(clearButton)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(3)
   })
 })

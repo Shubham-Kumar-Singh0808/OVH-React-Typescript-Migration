@@ -23,7 +23,7 @@ const AddNewSubCategory = (): JSX.Element => {
     ...initialSubCategoryDetails,
     workFlow: false,
   })
-  const [selectDepartment, setSelectDepartment] = useState<number | string>()
+  const [selectDepartment, setSelectDepartment] = useState<number | string>('')
   const [selectCategory, setSelectCategory] = useState<number | string>()
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
@@ -78,9 +78,10 @@ const AddNewSubCategory = (): JSX.Element => {
   }, [selectDepartment, selectCategory, addNewSubCategory])
 
   const validateSubCategoryName = (name: string) => {
-    return subCategoryList.list?.find((subCategoryItem) => {
+    return subCategoryList?.list?.find((subCategoryItem) => {
       return (
-        subCategoryItem.subCategoryName.toLowerCase() === name.toLowerCase()
+        subCategoryItem.subCategoryName.trim().toLowerCase() ===
+        name.trim().toLowerCase()
       )
     })
   }
@@ -131,8 +132,18 @@ const AddNewSubCategory = (): JSX.Element => {
     })
     setEstimatedHours('')
     setEstimatedMins('')
+    setIsSubCategoryNameExist('')
     setIsChecked(false)
   }
+
+  // useEffect(() => {
+  //   if (addNewSubCategory.workFlow === true) {
+  //     setIsChecked(true)
+  //   } else {
+  //     setIsChecked(false)
+  //   }
+  // }, [addNewSubCategory.workFlow])
+
   const successToastMessage = (
     <OToast
       toastMessage="Sub-Category added successfully"
@@ -291,10 +302,12 @@ const AddNewSubCategory = (): JSX.Element => {
               />
             </CCol>
             <CCol sm={3} className="mt-2">
-              {isSubCategoryNameExist && (
+              {isSubCategoryNameExist ? (
                 <p className={TextDanger} data-testid="categoryName-exist">
                   Sub-Category Name Already Exist
                 </p>
+              ) : (
+                <></>
               )}
             </CCol>
           </CRow>
@@ -339,7 +352,13 @@ const AddNewSubCategory = (): JSX.Element => {
               <CFormCheck
                 name="workFlow"
                 data-testid="ch-workFlow"
-                onChange={() => setIsChecked(!isChecked)}
+                onChange={() => {
+                  setIsChecked(!isChecked)
+                  setAddNewSubCategory({
+                    ...addNewSubCategory,
+                    levelOfHierarchy: 1,
+                  })
+                }}
                 checked={isChecked}
               />
             </CCol>

@@ -52,17 +52,17 @@ const Attendees = ({
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel
-        className="col-sm-3 col-form-label text-end"
+        className="col-sm-3 col-form-label text-end  pe-18"
         data-testid="pmLabel"
       >
-        Attendees:
+        Attendees :
       </CFormLabel>
       <CCol sm={6}>
         <Autocomplete
           inputProps={{
             className: 'form-control form-control-sm',
             id: 'trainer-autocomplete',
-            placeholder: 'Trainer',
+            placeholder: 'Attendee Name',
             disabled: isProjectAndAttendeesEnable,
             onBlur: onAttendeeFocusOut,
           }}

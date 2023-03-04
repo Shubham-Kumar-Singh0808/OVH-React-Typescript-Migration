@@ -14,6 +14,8 @@ const ProjectNotes = (): JSX.Element => {
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const { projectId } = useParams<{ projectId: string }>()
+  const [clearFile, setClearFile] = useState<string>('')
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -25,9 +27,15 @@ const ProjectNotes = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.projectNotes.selectors.isProjectNotesLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProjectNotes = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Notes',
+  )
 
   useEffect(() => {
-    if (notesLink) {
+    if (notesLink?.replace(/^\s*/, '')) {
       setIsPostButtonEnabled(true)
     } else {
       setIsPostButtonEnabled(false)
@@ -37,6 +45,7 @@ const ProjectNotes = (): JSX.Element => {
     const file = element.files
     if (!file) return
     setUploadFile(file[0])
+    setClearFile(element.value)
   }
 
   const postNotesHandler = async () => {
@@ -76,10 +85,11 @@ const ProjectNotes = (): JSX.Element => {
         ),
       )
       setNotesLink('')
-      setUploadFile(undefined)
+      setClearFile('')
       dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
+
   return (
     <>
       <CRow className="mt-4 mb-0">
@@ -105,6 +115,7 @@ const ProjectNotes = (): JSX.Element => {
             type="file"
             data-testid="file-upload"
             id="fileUpload"
+            value={clearFile}
             onChange={(element: React.SyntheticEvent) =>
               onChangeFileEventHandler(
                 element.currentTarget as HTMLInputElement,
@@ -114,13 +125,15 @@ const ProjectNotes = (): JSX.Element => {
           />
         </CCol>
         <CCol className="text-end" md={9}>
-          <CButton
-            color="info btn-ovh me-1 pull-right"
-            disabled={!isPostButtonEnabled}
-            onClick={postNotesHandler}
-          >
-            <i className="fa fa-pencil fa-fw"></i>Post
-          </CButton>
+          {userAccessToProjectNotes?.createaccess && (
+            <CButton
+              color="info btn-ovh me-1 pull-right"
+              disabled={!isPostButtonEnabled}
+              onClick={postNotesHandler}
+            >
+              <i className="fa fa-pencil fa-fw"></i>Post
+            </CButton>
+          )}
         </CCol>
       </CRow>
       {isLoading !== ApiLoadingState.loading ? (

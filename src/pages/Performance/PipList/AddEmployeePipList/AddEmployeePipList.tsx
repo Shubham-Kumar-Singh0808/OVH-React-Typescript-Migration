@@ -11,7 +11,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -19,10 +19,11 @@ import {
   TextLabelProps,
   TextWhite,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { showIsRequired } from '../../../../utils/helper'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -43,8 +44,8 @@ const AddEmployeePipList = ({
   fromDate: Date | string
   toDate: Date | string
 }): JSX.Element => {
-  const [startDate, setStartDate] = useState<Date | string>()
-  const [endDate, setEndDate] = useState<Date | string>()
+  const [startDate, setStartDate] = useState<string>()
+  const [endDate, setEndDate] = useState<string>()
   const [dateErrorMsg, setDateErrorMsg] = useState<boolean>(false)
   const [selectRating, setSelectRating] = useState<string>('')
   const [isReasonForPIP, setIsReasonForPIP] = useState<boolean>(true)
@@ -54,38 +55,15 @@ const AddEmployeePipList = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeName, setEmployeeName] = useState<string>('')
 
-  const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(startDate?.toString()).format(commonFormatDate),
-    )
-    const newToDate = new Date(
-      moment(endDate?.toString()).format(commonFormatDate),
-    )
-    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
-      setDateErrorMsg(true)
-    } else {
-      setDateErrorMsg(false)
-    }
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setDateErrorMsg(moment(end).isBefore(start))
   }, [startDate, endDate])
-
-  const endDateValue = endDate
-    ? new Date(endDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
-
-  const startDateValue = startDate
-    ? new Date(startDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
 
   const handleText = (comments: string) => {
     setAddReasonForPIP(comments)
@@ -153,23 +131,13 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
-
-  const onFocusOut = () => {
-    const selectedEmployee = allEmployeeDetails.find(
-      (value) => value.empFirstName + ' ' + value.empLastName === employeeName,
-    )
-    const selEmpName =
-      selectedEmployee?.empFirstName + ' ' + selectedEmployee?.empLastName
-    setEmployeeName(selEmpName)
-  }
+  const employeeDetails = allEmployeeDetails?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
+  )
 
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
-
-  const empId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
 
   const successToast = (
     <OToast
@@ -193,7 +161,7 @@ const AddEmployeePipList = ({
   )
   const addButtonHandler = async () => {
     const prepareObject = {
-      empId: Number(empId),
+      empId: employeeDetails[0]?.employeeId,
       endDate: endDate as string,
       improvement: addImprovementPlan,
       rating: selectRating,
@@ -229,6 +197,17 @@ const AddEmployeePipList = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const onHandleEndDatePicker = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+  const onHandleStartDatePicker = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
   return (
     <>
       <OCard
@@ -253,7 +232,13 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel {...formLabelProps} className={formLabel}>
               Employee Name:
-              <span className={employeeName ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  employeeName?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol md={3}>
               <Autocomplete
@@ -261,7 +246,6 @@ const AddEmployeePipList = ({
                   className: 'form-control form-control-sm',
                   autoComplete: 'on',
                   placeholder: 'Employee Name',
-                  onBlur: onFocusOut,
                 }}
                 wrapperStyle={{ position: 'relative' }}
                 items={allEmployeeDetails}
@@ -304,48 +288,48 @@ const AddEmployeePipList = ({
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               Start Date :
-              <span className={showIsRequired(startDate as string)}>*</span>
+              <span className={startDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
-              <ReactDatePicker
+            <CCol sm={3}>
+              <DatePicker
+                id="startDate"
                 className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="fromDate"
-                autoComplete="off"
-                id="fromDate"
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
-                value={startDateValue}
-                onChange={(date: Date) => setStartDate(date)}
-                selected={startDate as Date}
+                dateFormat="dd/mm/yy"
+                placeholderText="Start Date"
+                name="startDate"
+                maxDate={disableAfterDate}
+                value={startDate}
+                onChange={(date: Date) => onHandleStartDatePicker(date)}
               />
             </CCol>
           </CRow>
           <CRow className="mt-3">
             <CFormLabel className={formLabel}>
               End Date :
-              <span className={showIsRequired(endDate as string)}>*</span>
+              <span className={endDate ? TextWhite : TextDanger}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
-              <ReactDatePicker
+            <CCol sm={3}>
+              <DatePicker
+                id="endDate"
                 className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="toDate"
-                id="toDate"
-                autoComplete="off"
                 showMonthDropdown
                 showYearDropdown
+                autoComplete="off"
                 dropdownMode="select"
-                value={endDateValue}
-                onChange={(date: Date) => setEndDate(date)}
-                selected={endDate as Date}
+                dateFormat="dd/mm/yy"
+                placeholderText="End Date"
+                maxDate={disableAfterDate}
+                name="endDate"
+                value={endDate}
+                onChange={(date: Date) => onHandleEndDatePicker(date)}
               />
               {dateErrorMsg && (
                 <span className="text-danger" data-testid="errorMessage">
-                  End date should be greater than Start date
+                  <b>End date should be greater than Start date</b>
                 </span>
               )}
             </CCol>
@@ -355,7 +339,7 @@ const AddEmployeePipList = ({
               Rating:
               <span className={showIsRequired(selectRating)}>*</span>
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <CFormSelect
                 aria-label="Default select example"
                 size="sm"
@@ -380,7 +364,11 @@ const AddEmployeePipList = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={addReasonForPIP ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addReasonForPIP?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -405,7 +393,13 @@ const AddEmployeePipList = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={addImprovementPlan ? TextWhite : TextDanger}>
+              <span
+                className={
+                  addImprovementPlan?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -433,7 +427,7 @@ const AddEmployeePipList = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={!isAddButtonEnabled || dateErrorMsg}
                 onClick={addButtonHandler}
               >
                 Add

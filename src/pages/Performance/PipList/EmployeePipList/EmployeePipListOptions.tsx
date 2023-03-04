@@ -1,4 +1,4 @@
-import { CFormCheck, CButton, CCol, CRow } from '@coreui/react-pro'
+import { CFormCheck, CButton } from '@coreui/react-pro'
 import React from 'react'
 import pipListApi from '../../../../middleware/api/Performance/PIPList/pipListApi'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -10,8 +10,6 @@ import {
 import { downloadFile } from '../../../../utils/helper'
 
 const EmployeePipListOptions = ({
-  pageSize,
-  currentPage,
   selectDate,
   toDate,
   fromDate,
@@ -19,9 +17,6 @@ const EmployeePipListOptions = ({
   searchByAdded,
   searchByEmployee,
   setToggle,
-  setSelectDate,
-  setFromDate,
-  setToDate,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -50,27 +45,6 @@ const EmployeePipListOptions = ({
       to: (toDate as string) || '',
     })
     downloadFile(employeePipListDownload, 'PIPList.csv')
-  }
-
-  const pipListObject = {
-    dateSelection: selectDate,
-    from: (fromDate as string) || '',
-    multiSearch: searchInput as string,
-    searchByAdded: searchByAdded as boolean,
-    searchByEmployee: searchByEmployee as boolean,
-    selectionStatus: selectedEmployeePipStatus,
-    to: (toDate as string) || '',
-    endIndex: pageSize * currentPage,
-    startIndex: pageSize * (currentPage - 1),
-  }
-  const viewButtonHandler = () => {
-    dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
-  }
-
-  const clearButtonHandler = () => {
-    setSelectDate('Current Month')
-    setFromDate('')
-    setToDate('')
   }
 
   return (
@@ -140,29 +114,6 @@ const EmployeePipListOptions = ({
           </CButton>
         </div>
       </div>
-      <CRow className="mt-5 mb-4">
-        <CCol sm={{ span: 6 }}>
-          <CButton
-            className="cursor-pointer"
-            color="success btn-ovh me-1"
-            data-testid="view-btn"
-            onClick={viewButtonHandler}
-            disabled={
-              selectDate === 'Custom' && !(fromDate !== '' && toDate !== '')
-            }
-          >
-            View
-          </CButton>
-          <CButton
-            className="cursor-pointer"
-            disabled={false}
-            color="warning btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
     </>
   )
 }

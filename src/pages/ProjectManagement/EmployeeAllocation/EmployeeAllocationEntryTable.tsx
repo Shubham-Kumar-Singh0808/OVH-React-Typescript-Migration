@@ -50,8 +50,7 @@ const EmployeeAllocationEntryTable = (props: {
   )
 
   const dispatch = useAppDispatch()
-  const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
-    props
+  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
 
   const allocationStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'New') {
@@ -108,10 +107,37 @@ const EmployeeAllocationEntryTable = (props: {
         saveProjectAllocationResultAction,
       )
     ) {
+      setIsProjectAllocationEdit(false)
+      dispatch(
+        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
+          Billingtype: billingStatus,
+          EmployeeStatus: allocationStatus,
+          dateSelection: Select,
+          departmentNames: [],
+          employeeName: '',
+          endIndex: 20,
+          enddate: toDate
+            ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          firstIndex: 0,
+          startdate: fromDate
+            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          technology: '',
+        }),
+      )
       dispatch(
         reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
           dateSelection: Select,
-          employeeid: id,
+          employeeid: editEmployeeAllocation.employeeId,
           enddate: toDate
             ? new Date(toDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -130,21 +156,6 @@ const EmployeeAllocationEntryTable = (props: {
             : '',
         }),
       )
-      dispatch(
-        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
-          Billingtype: billingStatus,
-          EmployeeStatus: '',
-          dateSelection: Select,
-          departmentNames: [],
-          employeeName: '',
-          endIndex: 20,
-          enddate: '',
-          firstIndex: 0,
-          startdate: '',
-          technology: '',
-        }),
-      )
-      setIsProjectAllocationEdit(false)
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast

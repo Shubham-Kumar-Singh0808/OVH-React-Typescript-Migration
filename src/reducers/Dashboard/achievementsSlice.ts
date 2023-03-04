@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import achievementsApi from '../../middleware/api/Dashboard/achievementsApi'
+import dashboardApi from '../../middleware/api/Dashboard/dashboardApi'
 import { RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
@@ -14,6 +15,18 @@ const getAllAchievements = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await achievementsApi.getAllAchievements()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const imageFix = createAsyncThunk(
+  'achievements/imageFix',
+  async (_, thunkApi) => {
+    try {
+      return await dashboardApi.imageFix()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -36,6 +49,9 @@ const achievementsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.achievementsData = action.payload
       })
+      .addCase(imageFix.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(isAnyOf(getAllAchievements.rejected), (state, action) => {
         state.isLoading = ApiLoadingState.failed
         state.error = action.payload as ValidationError
@@ -54,6 +70,7 @@ const achievements = (state: RootState): EmployeeAchievementsApiResponse =>
 
 export const employeeAchievementsThunk = {
   getAllAchievements,
+  imageFix,
 }
 
 export const employeeAchievementsSelectors = {

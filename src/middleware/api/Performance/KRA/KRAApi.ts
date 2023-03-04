@@ -9,6 +9,7 @@ import {
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRATableDataItem,
+  NewKPiDuplicateCheckQuery,
   NewKRABody,
   NewKRADuplicateCheckQuery,
   UpdateKRABody,
@@ -151,6 +152,18 @@ const checkIfNewKraDuplicate = async (
   return response.data
 }
 
+const checkIfNewKpiDuplicate = async (
+  query: NewKPiDuplicateCheckQuery,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.checkIfNewKpiDuplicate + `${query.id + '/' + query.name}`,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const addNewKRA = async (body: NewKRABody): Promise<void> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: KRAApiConfig.addNewKRA,
@@ -208,6 +221,7 @@ const KRAApi = {
   getFrequency,
   addKPI,
   updateKPI,
+  checkIfNewKpiDuplicate,
 }
 
 export default KRAApi

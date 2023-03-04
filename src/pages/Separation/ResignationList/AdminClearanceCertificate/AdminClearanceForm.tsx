@@ -8,6 +8,7 @@ import {
   CFormCheck,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
@@ -17,6 +18,13 @@ const AdminClearanceForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getAllAdminResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC Details Submitted Successfully"
+      toastColor="success"
+    />
   )
 
   const SubmitAdminClearanceCertificateHandler = async () => {
@@ -41,6 +49,7 @@ const AdminClearanceForm = (): JSX.Element => {
           submittedBy: 'Admin',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -70,7 +79,7 @@ const AdminClearanceForm = (): JSX.Element => {
           </CCol>
         </CRow>
 
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 mb-3 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Due:
           </CFormLabel>
@@ -101,7 +110,7 @@ const AdminClearanceForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 sh-clearance">
             Comments:
             <span
               className={
@@ -116,7 +125,6 @@ const AdminClearanceForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6} className="w-500">
             <CFormTextarea
-              placeholder="Purpose"
               aria-label="textarea"
               id="textArea"
               name="textArea"
@@ -126,7 +134,7 @@ const AdminClearanceForm = (): JSX.Element => {
             ></CFormTextarea>
           </CCol>
         </CRow>
-        <CRow className="mt-5 mb-4">
+        <CRow className="mb-4 mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             <>
               <CButton

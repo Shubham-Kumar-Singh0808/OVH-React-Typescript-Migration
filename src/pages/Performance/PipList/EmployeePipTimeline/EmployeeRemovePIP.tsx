@@ -58,7 +58,30 @@ const EmployeeRemovePIP = ({
   )
 
   const extendBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.removeFromPip(viewPipDetails))
+    await dispatch(
+      reduxServices.pipList.removeFromPip({
+        createdBy: viewPipDetails.createdBy,
+        createdDate: viewPipDetails.createdDate,
+        empId: viewPipDetails.empId,
+        employeeName: viewPipDetails.employeeName,
+        endDate: viewPipDetails.endDate,
+        extendDate: viewPipDetails.extendDate,
+        id: viewPipDetails.id,
+        improvement: viewPipDetails.improvement,
+        pipflag: viewPipDetails.pipflag,
+        rating: selectRatingValue,
+        remarks: reasonForRemovePIP,
+        startDate: viewPipDetails.startDate,
+        updatedBy: viewPipDetails.updatedBy,
+        updatedDate: viewPipDetails.updatedDate,
+      }),
+    )
+    dispatch(
+      reduxServices.pipList.getPIPHistory({
+        filterName: 'PIP',
+        pipId: viewPipDetails.id as number,
+      }),
+    )
     dispatch(reduxServices.app.actions.addToast(successToastMsg))
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
@@ -88,7 +111,7 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Employee Name:
             </CFormLabel>
@@ -108,7 +131,7 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Start Date:
             </CFormLabel>
@@ -128,9 +151,9 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              End Date :
+              End Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -148,9 +171,9 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              Extend Date :
+              Extend Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -198,7 +221,13 @@ const EmployeeRemovePIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for Removing:
-              <span className={reasonForRemovePIP ? TextWhite : TextDanger}>
+              <span
+                className={
+                  reasonForRemovePIP?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>

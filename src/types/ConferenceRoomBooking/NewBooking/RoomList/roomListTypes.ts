@@ -10,4 +10,6 @@ export type getAllMeetingRooms = {
 export type AddRoomListSliceState = {
   meetingRooms: getAllMeetingRooms[]
   isLoading: ApiLoadingState
+  currentPage: number
+  pageSize: number
 }

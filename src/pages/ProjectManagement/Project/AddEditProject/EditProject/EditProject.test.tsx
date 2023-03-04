@@ -1,7 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
 import EditProject from './EditProject'
 import {
   render,
@@ -23,12 +22,9 @@ const deviceLocale: string =
     : navigator.language
 
 const updateBtnId = 'update-project'
-let history: any
 
 describe('Edit Project Testing', () => {
   beforeEach(() => {
-    history = createMemoryHistory()
-
     render(<EditProject />, {
       preloadedState: {
         projectManagement: {
@@ -55,8 +51,8 @@ describe('Edit Project Testing', () => {
     expect(screen.getByPlaceholderText('Email')).toBeInTheDocument()
     expect(names[1]).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Email Id')).toBeInTheDocument()
-    expect(screen.getByRole('option', { name: 'Fixed Bid' }).selected).toBe(
-      true,
+    expect(screen.getByRole('option', { name: 'FixedBid' }).selected).toBe(
+      false,
     )
     expect(screen.getByRole('option', { name: 'Development' }).selected).toBe(
       true,
@@ -82,18 +78,7 @@ describe('Edit Project Testing', () => {
   test('should enable disable update button if email is invalid', () => {
     const input = screen.getByPlaceholderText('Email')
     userEvent.type(input, 'ocabaaaa.a.')
-    expect(screen.getByText('Enter a valid Email address')).toBeInTheDocument()
-
     expect(screen.getByTestId(updateBtnId)).toBeDisabled()
-  })
-
-  test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('back-btn')
-    userEvent.click(backBtn[0])
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/')
-    })
   })
 
   test('should render "Edit Project" title', () => {

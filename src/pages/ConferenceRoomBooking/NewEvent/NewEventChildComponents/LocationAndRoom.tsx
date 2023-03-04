@@ -24,14 +24,14 @@ const LocationAndRoom = ({
   onHandleRoom: (value: string) => void
   locationRooms: RoomsByLocation[]
   locationValue: number
-  roomValue: number
+  roomValue: number | boolean
 }): JSX.Element => {
   const [otherPlaceShown, setOtherPlaceShown] = useState(false)
   return (
     <>
       <CRow className="mt-1 mb-3">
         <CFormLabel className="col-sm-3 col-form-label text-end">
-          Location:
+          Location :
           <span className={locationValue ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
         <CCol sm={6}>
@@ -55,9 +55,8 @@ const LocationAndRoom = ({
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-3">
-        <CFormLabel className="col-sm-3 col-form-label text-end">
-          Room:
-          <span className={roomValue ? TextWhite : TextDanger}>*</span>
+        <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+          Room :
         </CFormLabel>
         <CCol sm={6}>
           <CFormSelect
@@ -66,7 +65,7 @@ const LocationAndRoom = ({
             id="room"
             data-testid="roomSelect"
             name="roomId"
-            value={roomValue}
+            value={roomValue as number}
             disabled={otherPlaceShown}
             onChange={(e) => {
               onHandleRoom(e.target.value)
@@ -85,6 +84,7 @@ const LocationAndRoom = ({
             label="Other Place"
             checked={otherPlaceShown}
             onChange={() => setOtherPlaceShown(!otherPlaceShown)}
+            disabled={roomValue as boolean}
           />
         </CCol>
       </CRow>

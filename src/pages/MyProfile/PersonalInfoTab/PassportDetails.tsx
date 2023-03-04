@@ -135,17 +135,6 @@ export const PassportDetails = (props: {
     }
   }, [frontUpload, backUpload])
 
-  // useEffect(() => {
-  //   if (
-  //     employeePassportDetails?.passportIssuedDate &&
-  //     employeePassportDetails?.passportExpDate
-  //   )
-  //     setIsDateSelected(true)
-  // }, [
-  //   employeePassportDetails?.passportIssuedDate,
-  //   employeePassportDetails?.passportExpDate,
-  // ])
-
   useEffect(() => {
     if (employeePassportDetails?.passportNumber) {
       setIsPassportButtonEnabled(true)

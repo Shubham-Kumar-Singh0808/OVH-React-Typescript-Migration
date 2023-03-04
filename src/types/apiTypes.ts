@@ -406,6 +406,7 @@ export interface DashboardApi extends ApiBase {
   updateHoliday: string
   searchEmployee: string
   getLeaveSummary: string
+  imageFix: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -426,6 +427,10 @@ export interface BookingListApi extends ApiBase {
   getRoomsOfLocation: string
   getAllMeetingLocations: string
   getBookingsForSelection: string
+  cancelRoomBooking: string
+  editMeeting: string
+  confirmUpdateMeetingRequest: string
+  uniqueAttendee: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -456,6 +461,8 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+  editEvent: string
+  updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
   getAppraisalCycle: string
@@ -545,6 +552,7 @@ export interface ResignationListApi extends ApiBase {
   saveExitFeedBackForm: string
   uploadExitFeedBackFile: string
   uploadRelievingLetter: string
+  updateTimeLine: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {
@@ -687,6 +695,9 @@ export interface InitiateCycleApi extends ApiBase {
   initiateCycle: string
   deleteQuestion: string
   addQuestion: string
+  addCycle: string
+  editCycle: string
+  updateCycle: string
 }
 
 export interface MyKRAsApi extends ApiBase {
@@ -699,6 +710,7 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+  getAllMeetingAppointmentList: string
 }
 
 export interface LeadershipEnrollmentListApi extends ApiBase {
@@ -727,6 +739,7 @@ export interface KRAApi extends ApiBase {
   getFrequency: string
   addKPI: string
   updateKPI: string
+  checkIfNewKpiDuplicate: string
 }
 
 export interface MyReviewApi extends ApiBase {
@@ -762,4 +775,31 @@ export interface AppraisalTemplateApi extends ApiBase {
   getDesignationWiseKRAs: string
   51: string
   searchKRAData: string
+}
+
+export interface ProjectStatusApi extends ApiBase {
+  statusReportLis: string
+  addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
+}
+export interface ProcessAreaListApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProcessAreas: string
+  createProcessArea: string
+  checkDuplicateProcess: string
+  saveProcessArea: string
+  incrementOrDecrementOrder: string
+  getOrderCountOfActiveProcesses: string
+}
+
+export interface AddNewAudit extends ApiBase {
+  saveNewAuditForm: string
+  editAuditFormDetails: string
+  getProjectEmployees: string
+  updateSQAAuditForm: string
+}
+export interface SQAAuditReportApi extends ApiBase {
+  getSQAAuditReport: string
+  exportSqaAuditReport: string
 }

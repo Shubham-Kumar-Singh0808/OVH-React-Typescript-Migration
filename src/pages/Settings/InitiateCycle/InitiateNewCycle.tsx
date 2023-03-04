@@ -9,17 +9,23 @@ import {
 import React, { useEffect, useState } from 'react'
 import InitiateCycleTable from './InitiateCycleTable'
 import AddQuestion from './AddQuestion/AddQuestion'
+import AddInitiateCycle from './AddCycle/AddInitiateCycle'
+import EditInitiateCycle from './EditCycle/EditInitiateCycle'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { TotalResponse } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import {
+  GetQuestion,
+  TotalResponse,
+} from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
 const InitiateCycle = (): JSX.Element => {
-  const [toggle, setToggle] = useState<string>('')
-
   const dispatch = useAppDispatch()
+  const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
+  const [checkList, setCheckList] = useState<GetQuestion[]>([])
+  const [cbFromApi, setCbFromApi] = useState<GetQuestion[]>([])
 
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
@@ -35,7 +41,6 @@ const InitiateCycle = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.initiateCycle.getActiveCycleData())
-    dispatch(reduxServices.initiateCycle.getAllCycles())
     dispatch(reduxServices.initiateCycle.getAllQuestions())
     dispatch(reduxServices.initiateCycle.actions.setCurrentPage(1))
     dispatch(reduxServices.initiateCycle.actions.setPageSize(20))
@@ -50,10 +55,46 @@ const InitiateCycle = (): JSX.Element => {
   )
 
   useEffect(() => {
+    if (window.location.pathname === '/initiateCycle') {
+      dispatch(reduxServices.initiateCycle.actions.setToggle(''))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (cycleChecked) {
+      const tmpArr: GetQuestion[] = []
+      cbFromApi.forEach((item) => {
+        tmpArr.push(item)
+        return ''
+      })
+      let ndx = 9999
+      tmpArr.forEach((el, i) => {
+        if (el.id === cycleChecked.id) {
+          ndx = i
+        }
+        return ''
+      })
+      if (ndx < 9999) {
+        tmpArr.splice(ndx, 1)
+      } else {
+        tmpArr.push(cycleChecked)
+      }
+      setCbFromApi(tmpArr)
+      setCheckList([...checkList, cycleChecked])
+    }
+  }, [cycleChecked])
+
+  useEffect(() => {
     if (ExistingPage) {
       setCurrentPage(ExistingPage)
     }
   }, [ExistingPage])
+
+  useEffect(() => {
+    if (activeCycle && activeCycle.nominationQuestionDto) {
+      setCbFromApi(activeCycle.nominationQuestionDto)
+    }
+  }, [activeCycle])
 
   const {
     paginationRange,
@@ -73,6 +114,13 @@ const InitiateCycle = (): JSX.Element => {
       toastColor="danger"
     />
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Initiate Cycle',
+  )
   const addBtnHandler = async () => {
     const prepareObject = {
       nominationCycleDto: {
@@ -83,27 +131,34 @@ const InitiateCycle = (): JSX.Element => {
         id: activeCycle.nominationCycleDto.id,
         toMonth: activeCycle.nominationCycleDto.toMonth,
       },
-      nominationQuestionDto: [{}],
-    } as unknown as TotalResponse
+      nominationQuestionDto: cbFromApi,
+    } as TotalResponse
+
     const initiateCycleResultAction = await dispatch(
       reduxServices.initiateCycle.initiateCycle(prepareObject),
     )
     if (
       reduxServices.initiateCycle.initiateCycle.fulfilled.match(
         initiateCycleResultAction,
-      )
+      ) &&
+      prepareObject.nominationQuestionDto.length !== 0
     ) {
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.initiateCycle.getActiveCycleData())
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.initiateCycle.initiateCycle.rejected.match(
         initiateCycleResultAction,
-      )
+      ) ||
+      prepareObject.nominationQuestionDto.length === 0
     ) {
       dispatch(reduxServices.app.actions.addToast(failedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const toggle = useTypedSelector(reduxServices.initiateCycle.selectors.toggle)
+
   return (
     <>
       {toggle === '' && (
@@ -113,23 +168,39 @@ const InitiateCycle = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
-          <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              <CButton color="info" className="btn-ovh me-1">
-                <i className="fa fa-plus me-1"></i>
-                Add Cycle
-              </CButton>
-              &nbsp;
-              <CButton
-                color="info"
-                className="text-white btn-ovh"
-                size="sm"
-                onClick={() => setToggle('addQuestion')}
-              >
-                Add Question
-              </CButton>
-            </CCol>
-          </CRow>
+          {userAccess?.createaccess && (
+            <CRow className="justify-content-end">
+              <CCol className="text-end" md={4}>
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={() =>
+                    dispatch(
+                      reduxServices.initiateCycle.actions.setToggle('addCycle'),
+                    )
+                  }
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Add Cycle
+                </CButton>
+                &nbsp;
+                <CButton
+                  color="info"
+                  className="text-white btn-ovh"
+                  size="sm"
+                  onClick={() =>
+                    dispatch(
+                      reduxServices.initiateCycle.actions.setToggle(
+                        'addQuestion',
+                      ),
+                    )
+                  }
+                >
+                  Add Question
+                </CButton>
+              </CCol>
+            </CRow>
+          )}
           <CForm>
             <CRow className="mt-3 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
@@ -143,7 +214,7 @@ const InitiateCycle = (): JSX.Element => {
                   id="Name"
                   size="sm"
                   name="cycleName"
-                  value={activeCycle?.nominationCycleDto?.cycleName}
+                  value={activeCycle?.nominationCycleDto?.cycleName || ''}
                   disabled
                 />
               </CCol>
@@ -161,7 +232,7 @@ const InitiateCycle = (): JSX.Element => {
                   size="sm"
                   name="fromMonth"
                   disabled
-                  value={activeCycle?.nominationCycleDto?.fromMonth}
+                  value={activeCycle?.nominationCycleDto?.fromMonth || ''}
                 />
               </CCol>
             </CRow>
@@ -178,39 +249,41 @@ const InitiateCycle = (): JSX.Element => {
                   size="sm"
                   name="toMonth"
                   disabled
-                  value={activeCycle?.nominationCycleDto?.toMonth}
+                  value={activeCycle?.nominationCycleDto?.toMonth || ''}
                 />
               </CCol>
             </CRow>
           </CForm>
+          {userAccess?.createaccess && (
+            <CRow>
+              <CCol md={{ span: 6, offset: 10 }} className="ps-2">
+                <CButton
+                  data-testid="save-btn"
+                  className="btn-ovh me-1 text-white"
+                  color="success"
+                  onClick={addBtnHandler}
+                >
+                  Add
+                </CButton>
+              </CCol>
+            </CRow>
+          )}
           <InitiateCycleTable
             paginationRange={paginationRange}
             setPageSize={setPageSize}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
+            cycleChecked={cycleChecked as GetQuestion}
+            setCycleChecked={setCycleChecked}
+            selChkBoxesFromApi={cbFromApi}
+            checkList={checkList}
           />
-          <CRow>
-            <CCol md={{ span: 6, offset: 3 }}>
-              <CButton
-                data-testid="save-btn"
-                className="btn-ovh me-1 text-white"
-                color="success"
-                onClick={addBtnHandler}
-              >
-                Add
-              </CButton>
-            </CCol>
-          </CRow>
         </OCard>
       )}
-      {toggle === 'addQuestion' && (
-        <AddQuestion
-          setToggle={() => {
-            setToggle('')
-          }}
-        />
-      )}
+      {toggle === 'addQuestion' && <AddQuestion />}
+      {toggle === 'addCycle' && <AddInitiateCycle />}
+      {toggle === 'editCycle' && <EditInitiateCycle />}
     </>
   )
 }

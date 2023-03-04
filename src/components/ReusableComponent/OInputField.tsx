@@ -34,7 +34,7 @@ const OInputField = ({
           data-testid={name}
           {...dynamicFormLabelProps(name, 'col-sm-3 col-form-label text-end')}
         >
-          {label}:
+          {label} :
           {isRequired && <span className={showIsRequired(value)}>*</span>}
         </CFormLabel>
         <CCol sm={3}>
@@ -48,6 +48,7 @@ const OInputField = ({
             value={value}
             onBlur={handleOnBlurInput}
             onChange={handleOnChangeInput}
+            autoComplete={'off'}
           />
           {inputType === 'email' && isInvalid ? (
             <span style={{ color: 'red' }}>Enter a valid Email address</span>

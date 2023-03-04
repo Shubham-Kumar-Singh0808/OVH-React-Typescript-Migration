@@ -60,10 +60,17 @@ const EmployeePipListTable = ({
       }),
     )
   }
+  const clearanceBtnHandler = (id: number) => {
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
 
   const handleAgendaModal = (appraisalCycleInfo: GetPipList) => {
     setIsReasonForPIPVisible(true)
     setReasonModal(appraisalCycleInfo)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
   }
 
   return (
@@ -95,7 +102,9 @@ const EmployeePipListTable = ({
                   : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.startDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.endDate || 'N/A'}</CTableDataCell>
@@ -137,6 +146,7 @@ const EmployeePipListTable = ({
                           className="btn-ovh me-2"
                           color="info"
                           type="button"
+                          onClick={() => clearanceBtnHandler(item.id as number)}
                         >
                           <i className="fa fa-user-circle text-white"></i>
                         </CButton>
@@ -149,7 +159,7 @@ const EmployeePipListTable = ({
         </CTableBody>
       </CTable>
       <CRow>
-        <CCol md={3} className="no-records">
+        <CCol xs={4}>
           <strong>
             {pipListSizeRecords
               ? `Total Records: ${pipListSizeRecords}`

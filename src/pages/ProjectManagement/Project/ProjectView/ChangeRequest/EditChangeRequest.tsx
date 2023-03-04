@@ -63,12 +63,12 @@ const EditChangeRequest = ({
         descripition: editDescription as string,
       },
     }
-    const updatechangeRequestsultAction = await dispatch(
+    const updateChangeRequestResultAction = await dispatch(
       reduxServices.projectChangeRequest.updateChangeRequest(prepareObject),
     )
     if (
       reduxServices.projectChangeRequest.updateChangeRequest.fulfilled.match(
-        updatechangeRequestsultAction,
+        updateChangeRequestResultAction,
       )
     ) {
       setToggle('')
@@ -112,7 +112,13 @@ const EditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(editChangeRequest?.name)}>*</span>
+            <span
+              className={showIsRequired(
+                editChangeRequest?.name?.replace(/^\s*/, ''),
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -174,7 +180,7 @@ const EditChangeRequest = ({
               maxLength={150}
               onChange={(e) => setEditDescription(e.target.value)}
             ></CFormTextarea>
-            <p>{editChangeRequest.descripition?.length}/150</p>
+            <p>{editDescription?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>

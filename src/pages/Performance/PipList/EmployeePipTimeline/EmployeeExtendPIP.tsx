@@ -19,10 +19,10 @@ import {
   TextDanger,
   TextLabelProps,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
 
 const EmployeeExtendPIP = ({
   setToggle,
@@ -34,8 +34,7 @@ const EmployeeExtendPIP = ({
   const [reasonForPIP, setReasonForPIP] = useState<string>('')
   const [improvementPlan, setImprovementPlan] = useState<string>('')
   const [isExtendBtnEnabled, setIsExtendBtnEnabled] = useState(false)
-
-  const commonFormatDate = 'L'
+  const [isExtendDateError, setIsExtendDateError] = useState<boolean>(false)
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -69,7 +68,24 @@ const EmployeeExtendPIP = ({
   )
 
   const extendBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.extendPip(viewEmployeePipDetails))
+    await dispatch(
+      reduxServices.pipList.extendPip({
+        createdBy: viewEmployeePipDetails.createdBy,
+        createdDate: viewEmployeePipDetails.createdDate,
+        empId: viewEmployeePipDetails.empId,
+        employeeName: viewEmployeePipDetails.employeeName,
+        endDate: viewEmployeePipDetails.endDate,
+        extendDate,
+        id: viewEmployeePipDetails.id,
+        improvement: improvementPlan,
+        pipflag: viewEmployeePipDetails.pipflag,
+        rating: selectRating,
+        remarks: reasonForPIP,
+        startDate: viewEmployeePipDetails.startDate,
+        updatedBy: viewEmployeePipDetails.updatedBy,
+        updatedDate: viewEmployeePipDetails.updatedDate,
+      }),
+    )
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',
@@ -80,6 +96,28 @@ const EmployeeExtendPIP = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
   }
+  const onHandleExtendDatePicker = (value: Date) => {
+    setExtendDate(moment(value).format(dateFormat))
+  }
+  const disableExtendDate = new Date()
+  disableExtendDate.setFullYear(disableExtendDate.getFullYear() + 1)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(extendDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(
+      viewEmployeePipDetails?.startDate && viewEmployeePipDetails?.endDate,
+      dateFormat,
+    ).format(newDateFormatForIsBefore)
+
+    setIsExtendDateError(moment(start).isBefore(end))
+  }, [
+    extendDate,
+    viewEmployeePipDetails?.startDate,
+    viewEmployeePipDetails?.endDate,
+  ])
 
   return (
     <>
@@ -105,7 +143,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Employee Name:
             </CFormLabel>
@@ -125,7 +163,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
               Start Date:
             </CFormLabel>
@@ -145,9 +183,9 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-3 col-form-label text-end pe-3"
             >
-              End Date :
+              End Date:
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -165,7 +203,7 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
-                Extend Date :
+                Extend Date:
                 <span className={extendDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
@@ -180,19 +218,21 @@ const EmployeeExtendPIP = ({
                 dropdownMode="select"
                 placeholderText="Extend Date"
                 name="extendDate"
-                value={
-                  extendDate
-                    ? new Date(extendDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setExtendDate(moment(date).format(commonFormatDate))
-                }
+                minDate={new Date()}
+                maxDate={disableExtendDate}
+                value={extendDate}
+                onChange={(date: Date) => onHandleExtendDatePicker(date)}
               />
+              {isExtendDateError && (
+                <CCol sm={6}>
+                  <span className="text-danger">
+                    <b>
+                      Extend date should be greater than Start date and should
+                      not be in between Start date and End date.
+                    </b>
+                  </span>
+                </CCol>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-3">
@@ -226,7 +266,13 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={reasonForPIP ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  reasonForPIP?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={9}>
               <CKEditor<{
@@ -245,7 +291,11 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={improvementPlan ? TextWhite : TextDanger}>
+              <span
+                className={
+                  improvementPlan?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -270,7 +320,7 @@ const EmployeeExtendPIP = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              disabled={!isExtendBtnEnabled}
+              disabled={!isExtendBtnEnabled || isExtendDateError}
               onClick={extendBtnHandler}
             >
               Extend

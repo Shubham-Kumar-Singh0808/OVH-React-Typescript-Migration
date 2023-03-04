@@ -102,10 +102,14 @@ import {
   PayrollManagementApi,
   ReviewListApi,
   AppraisalTemplateApi,
+  ProjectStatusApi,
+  ProcessAreaListApi,
+  AddNewAudit,
+  SQAAuditReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
-const apiPrefix = baseUrl + '/hrm-ws'
+const apiPrefix = baseUrl + '/hrm-ws/'
 
 export enum AllowedHttpMethods {
   get = 'get',
@@ -525,6 +529,7 @@ export const dashboardApiConfig: DashboardApi = {
   updateHoliday: apiPrefix + '/Employee/editHoliday',
   searchEmployee: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
   getLeaveSummary: apiPrefix + '/leave/leaveSummaryDashboard',
+  imageFix: apiPrefix + 'profilepics/1857-Thumb.jpg',
 }
 
 export const addLocationListApiConfig: AddLocationListApi = {
@@ -550,6 +555,12 @@ export const bookingListApiConfig: BookingListApi = {
   getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
   getBookingsForSelection:
     apiPrefix + '/meetingRequest/getBookingsForSelection',
+  cancelRoomBooking: apiPrefix + '/meetingRequest/changeMeetingStatus/',
+  editMeeting: apiPrefix + '/meetingRequest/editmeeting',
+  confirmUpdateMeetingRequest:
+    apiPrefix + '/meetingRequest/confirmupdateMeetingRequest',
+  uniqueAttendee:
+    apiPrefix + '/meetingRequest/uniqueAttendeeuniqueAttendeeWithId',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {
@@ -587,6 +598,8 @@ export const eventListApiConfig: EventListApi = {
   downloadFeedbackForm: apiPrefix + '/meetingRequest/downloadFeedbackForm',
   uploadFeedbackForm:
     apiPrefix + '/fileUpload/uploadMeetingRequestFeedbackForm',
+  editEvent: apiPrefix + '/meetingRequest/editmeeting',
+  updateEvent: apiPrefix + '/meetingRequest/updateEvent',
 }
 
 export const addTrackerApiConfig: AddTrackerApi = {
@@ -705,6 +718,7 @@ export const resignationListApiConfig: ResignationListApi = {
     apiPrefix + '/separationController/saveExitFeedBackForm',
   uploadRelievingLetter: apiPrefix + '/fileUpload/uploadrelievingletter',
   uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
+  updateTimeLine: apiPrefix + '/separationController/updateSeparation',
 }
 
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
@@ -854,6 +868,9 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
   initiateCycle: apiPrefix + '/nominationController/initiateCycle',
   deleteQuestion: apiPrefix + '/nominationController/deleteQuestion',
   addQuestion: apiPrefix + '/nominationController/addQuestion',
+  addCycle: apiPrefix + '/nominationController/addCycle',
+  editCycle: apiPrefix + '/nominationController/editCycle',
+  updateCycle: apiPrefix + '/nominationController/updateCycle',
 }
 
 export const myKRAsApiConfig: MyKRAsApi = {
@@ -868,6 +885,8 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllProjectSearch: apiPrefix + '/allocation-mgmt/getAllProjectSearch',
   confirmNewMeetingAppointment:
     apiPrefix + '/meetingRequest/confirmNewMeetingAppointment',
+  getAllMeetingAppointmentList:
+    apiPrefix + '/meetingRequest/getAllMeetingAppointmentList',
 }
 
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
@@ -896,6 +915,7 @@ export const KRAApiConfig: KRAApi = {
   getFrequency: apiPrefix + '/kra/frequencyList',
   addKPI: apiPrefix + '/kra/',
   updateKPI: apiPrefix + '/kra/updateKpi',
+  checkIfNewKpiDuplicate: apiPrefix + 'kra/',
 }
 
 export const myReviewApiConfig: MyReviewApi = {
@@ -924,4 +944,35 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   getDesignationWiseKRAs: apiPrefix + '/kra/getDesignationWiseKRAs',
   51: apiPrefix + '/appraisal/underKras/23/51',
   searchKRAData: apiPrefix + '/kra/searchKRAData',
+}
+
+export const projectStatusApiConfig: ProjectStatusApi = {
+  statusReportLis: apiPrefix + '/project-mgmt/statusReportList',
+  addStatusReport: apiPrefix + '/project-mgmt/statusReports',
+  deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
+  updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
+}
+
+export const processAreaApiConfig: ProcessAreaListApi = {
+  getProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/getProjectTailoringDocument',
+  getProcessAreas: apiPrefix + '/projectTailoring/getProcessAreas',
+  createProcessArea: apiPrefix + '/projectTailoring/createProcessArea',
+  checkDuplicateProcess: apiPrefix + '/projectTailoring/checkDuplicateProcess',
+  saveProcessArea: apiPrefix + '/projectTailoring/saveProcessArea',
+  incrementOrDecrementOrder:
+    apiPrefix + '/projectTailoring/incrementOrDecrementOrder',
+  getOrderCountOfActiveProcesses:
+    apiPrefix + '/projectTailoring/getOrderCountOfActiveProcesses',
+}
+export const addNewAuditApiConfig: AddNewAudit = {
+  saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  editAuditFormDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
+  getProjectEmployees: apiPrefix + '/allocation-mgmt/getProjectEmployees',
+  updateSQAAuditForm: apiPrefix + '/sqaAuditController/updateAuditForm',
+}
+
+export const sqaAuditReportApiConfig: SQAAuditReportApi = {
+  getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
+  exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
 }

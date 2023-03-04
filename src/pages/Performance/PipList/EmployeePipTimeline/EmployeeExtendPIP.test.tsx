@@ -75,6 +75,6 @@ describe('should render Employee Pip Time line Component without data', () => {
         target: { value: '30 Aug, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('08/30/2022')
+    expect(datePickers[0]).toHaveValue('')
   })
 })

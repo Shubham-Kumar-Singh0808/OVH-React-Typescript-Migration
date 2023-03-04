@@ -5,13 +5,11 @@ import {
   GetProjectManager,
   ManagerProps,
 } from '../../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { showIsRequired } from '../../../../../../utils/helper'
 
 const ProjectManager = ({
   dynamicFormLabelProps,
   managersList,
   onSelectManager,
-  isRequired,
   shouldReset,
   projectValue,
 }: ManagerProps): JSX.Element => {

@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import { cleanup } from '@testing-library/react'
-import InitiateCycle from './InitiateCycle'
+import InitiateCycle from './InitiateNewCycle'
 import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockActiveCycleData } from '../../../test/data/initiateCycleData'
+import { NominationCycleDto } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 describe('InitiateCycle without data', () => {
   beforeEach(() => {
@@ -17,6 +19,14 @@ describe('InitiateCycle without data', () => {
           allCycles: { size: 0, list: [] },
           allQuestions: { size: 0, list: [] },
           listSize: 0,
+          currentPage: 1,
+          pageSize: 20,
+          toggle: '',
+          editCycle: {} as NominationCycleDto,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

@@ -12,9 +12,11 @@ import {
 const Trainer = ({
   allEmployeesProfiles,
   onSelectTrainer,
+  shouldReset,
 }: {
   allEmployeesProfiles: LoggedEmployee[]
   onSelectTrainer: (value: TrainerDetails) => void
+  shouldReset: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -28,6 +30,10 @@ const Trainer = ({
       )
     }
   }, [trainerAutoCompleteTarget])
+
+  useEffect(() => {
+    if (shouldReset) setTrainerAutoCompleteTarget('')
+  }, [shouldReset])
 
   const onHandleSelectTrainer = (fullName: string) => {
     setTrainerAutoCompleteTarget(fullName)
@@ -44,7 +50,7 @@ const Trainer = ({
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
       >
-        Trainer:
+        Trainer :
         <span className={trainerAutoCompleteTarget ? TextWhite : TextDanger}>
           *
         </span>

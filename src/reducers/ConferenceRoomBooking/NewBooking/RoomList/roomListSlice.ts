@@ -93,12 +93,21 @@ const updateRoom = createAsyncThunk(
 const initialAddRoomListState: AddRoomListSliceState = {
   meetingRooms: [],
   isLoading: ApiLoadingState.idle,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const roomListSlice = createSlice({
   name: 'roomList',
   initialState: initialAddRoomListState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -156,6 +165,9 @@ const updateRoomNames = (state: RootState): getAllMeetingRooms[] =>
 
 const isLoading = (state: RootState): LoadingState => state.roomList.isLoading
 
+const pageFromState = (state: RootState): number => state.roomList.currentPage
+const pageSizeFromState = (state: RootState): number => state.roomList.pageSize
+
 const roomListThunk = {
   getMeetingRooms,
   addRoom,
@@ -169,6 +181,8 @@ const roomListSelectors = {
   addRoomNames,
   deleteRoomNames,
   updateRoomNames,
+  pageSizeFromState,
+  pageFromState,
 }
 
 export const roomListService = {
