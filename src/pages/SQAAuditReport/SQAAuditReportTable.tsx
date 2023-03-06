@@ -9,15 +9,16 @@ import {
   CRow,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
+import OToast from '../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { reduxServices } from '../../reducers/reduxServices'
-import { useTypedSelector } from '../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const SQAAuditReportTable = ({
@@ -33,7 +34,11 @@ const SQAAuditReportTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const [toDeleteSQAAuditId, setToDeleteSQAAuditId] = useState(0)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [auditType, setAuditType] = useState<string>('')
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false)
   const sqaAuditReportResponse = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReport,
   )
@@ -64,6 +69,86 @@ const SQAAuditReportTable = ({
 
   const editButtonHandler = (id: number) => {
     dispatch(reduxServices.addNewAuditForm.editAuditFormDetails(id))
+  }
+
+  const handleShowDeleteModal = (auditId: number, auditType: string) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsDeleteModalVisible(true)
+    setAuditType(auditType)
+  }
+
+  const handleShowCancelModal = (auditId: number, auditType: string) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsRejectModalVisible(true)
+    setAuditType(auditType)
+  }
+
+  const handleConfirmDeleteSQAAudit = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteSQAAuditResultAction = await dispatch(
+      reduxServices.sqaAuditReport.deleteProjectAuditDetails(
+        toDeleteSQAAuditId,
+      ),
+    )
+    if (
+      reduxServices.sqaAuditReport.deleteProjectAuditDetails.fulfilled.match(
+        deleteSQAAuditResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Audit Deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const handleConfirmCancelSQAAudit = async () => {
+    setIsRejectModalVisible(false)
+    const cancelSQAAuditResultAction = await dispatch(
+      reduxServices.sqaAuditReport.closeProjectAuditDetails(toDeleteSQAAuditId),
+    )
+    if (
+      reduxServices.sqaAuditReport.closeProjectAuditDetails.fulfilled.match(
+        cancelSQAAuditResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Audit Deleted successfully"
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -148,6 +233,16 @@ const SQAAuditReportTable = ({
                       color="danger"
                       className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
+                      onClick={() =>
+                        handleShowCancelModal(
+                          auditReport.id,
+                          auditReport.auditType,
+                        )
+                      }
+                      disabled={
+                        auditReport.formStatus === 'Save' ||
+                        auditReport.auditStatus === 'Closed'
+                      }
                     >
                       <i
                         className="fa fa-times text-white"
@@ -159,6 +254,13 @@ const SQAAuditReportTable = ({
                         color="danger"
                         className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="edit-btn"
+                        onClick={() =>
+                          handleShowDeleteModal(
+                            auditReport.id,
+                            auditReport.auditType,
+                          )
+                        }
+                        disabled={auditReport.formStatus !== 'Save'}
                       >
                         <i
                           className="fa fa-trash-o text-white"
@@ -221,6 +323,37 @@ const SQAAuditReportTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete SQA Audit"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteSQAAudit}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this <b>{auditType}</b> audit?
+        </>
+      </OModal>
+
+      <OModal
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isRejectModalVisible}
+        setVisible={setIsRejectModalVisible}
+        modalTitle="Close SQA Audit"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCancelSQAAudit}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this <b>{auditType}</b> audit?
+        </>
+      </OModal>
     </>
   )
 }

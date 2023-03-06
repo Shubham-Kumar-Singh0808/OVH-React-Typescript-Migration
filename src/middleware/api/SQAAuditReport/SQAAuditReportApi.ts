@@ -2,6 +2,7 @@ import {
   GetSQAAuditReportProps,
   GetSQAAuditReport,
   ExportSQAAuditReportProps,
+  SQAAuditTimelineDetails,
 } from '../../../types/SQAAuditReport/sqaAuditReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -52,9 +53,56 @@ const exportSqaAuditReport = async (
   return response.data
 }
 
+const deleteProjectAuditDetails = async (
+  auditId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.deleteProjectAuditDetails,
+    method: AllowedHttpMethods.delete,
+    params: {
+      auditId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const closeProjectAuditDetails = async (
+  auditId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.closeAudit,
+    method: AllowedHttpMethods.delete,
+    params: {
+      auditId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getNewSQAAuditTimelineDetails = async (
+  auditId: number,
+): Promise<SQAAuditTimelineDetails[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.getNewSQAAuditTimelineDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      auditId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const sqaAuditReportApi = {
   getSQAAuditReport,
   exportSqaAuditReport,
+  deleteProjectAuditDetails,
+  closeProjectAuditDetails,
+  getNewSQAAuditTimelineDetails,
 }
 
 export default sqaAuditReportApi

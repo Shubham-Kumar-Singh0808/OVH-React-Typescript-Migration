@@ -55,6 +55,7 @@ export type sqaAuditReportSliceState = {
   getSQAAuditReport: GetSQAAuditReport
   sqaAuditReportList: SQAAuditReportList[]
   isLoading: ApiLoadingState
+  sqaAuditTimelineDetails: SQAAuditTimelineDetails[]
 }
 
 export type GetSQAAuditReportProps = {
@@ -75,4 +76,55 @@ export type ExportSQAAuditReportProps = {
   startdate: string
   enddate: string
   multiSearch: string
+}
+export type SQAAuditTimelineDetails = {
+  id: null
+  auditId: null
+  auditType: string
+  projectType: string
+  projectId: string
+  projectName: string
+  projectManager: string
+  auditors: string
+  auditees: string
+  auditDate: string
+  startTime: string
+  endTime: string
+  auditStatus: string
+  formStatus: string
+  auditRescheduleStatus: string
+  pci: null
+  followUpDate: null
+  sqaComments: null
+  sqaFileName: null
+  sqaFilesPath: null
+  pmComments: null
+  pmFileName: null
+  pmFilesPath: null
+  modifiedBy: string
+  modifiedDate: string
+  persistType: string
+  oldAuditType: null
+  oldProjectType: null
+  oldProjectId: null
+  oldProjectName: null
+  oldProjectManager: null
+  oldAuditors: null
+  oldAuditees: null
+  oldAuditDate: null
+  oldStartTime: null
+  oldEndTime: null
+  oldAuditStatus: null
+  oldFormStatus: null
+  oldPci: null
+  oldFollowUpDate: null
+  oldSqaComments: null
+  oldSqaFileName: null
+  oldSqaFilesPath: null
+  oldPmComments: null
+  oldPmFileName: null
+  oldPmFilesPath: null
+  oldModifiedBy: null
+  oldModifiedDate: null
+  oldPersistType: null
 }

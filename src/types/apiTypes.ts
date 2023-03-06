@@ -799,4 +799,7 @@ export interface AddNewAudit extends ApiBase {
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
   exportSqaAuditReport: string
+  deleteProjectAuditDetails: string
+  closeAudit: string
+  getNewSQAAuditTimelineDetails: string
 }
