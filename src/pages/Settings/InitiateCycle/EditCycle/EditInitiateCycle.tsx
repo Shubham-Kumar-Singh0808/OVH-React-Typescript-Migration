@@ -49,20 +49,14 @@ const EditInitiateCycle = (): JSX.Element => {
     }
   }, [editCycle])
 
-  const commonFormatDate = 'L'
-
   useEffect(() => {
-    const tempFromMonth = new Date(
-      moment(cycleFromMonth?.toString()).format(commonFormatDate),
+    const newDateFormatForIsBefore = 'YYYY-MM'
+    const start = moment(cycleFromMonth, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
     )
-    const tempToMonth = new Date(
-      moment(cycleToMonth?.toString()).format(commonFormatDate),
-    )
-    if (tempToMonth.getTime() < tempFromMonth.getTime()) {
-      setIsEditMonthError(true)
-    } else {
-      setIsEditMonthError(false)
-    }
+    const end = moment(cycleToMonth, 'MM-YYYY').format(newDateFormatForIsBefore)
+
+    setIsEditMonthError(moment(end).isBefore(start))
   }, [cycleFromMonth, cycleToMonth])
 
   useEffect(() => {
@@ -195,7 +189,7 @@ const EditInitiateCycle = (): JSX.Element => {
           </CCol>
         </CRow>
         <CForm>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-3">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
@@ -273,14 +267,12 @@ const EditInitiateCycle = (): JSX.Element => {
                 placeholderText="mm/yyyy"
                 data-testid="cycleToMonth-input"
               />
-            </CCol>
-            {isEditMonthError && (
-              <CCol sm={6}>
+              {isEditMonthError && (
                 <span className="text-danger">
                   <b>To Month should be greater than From Month</b>
                 </span>
-              </CCol>
-            )}
+              )}
+            </CCol>
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -342,16 +334,14 @@ const EditInitiateCycle = (): JSX.Element => {
                 name="cycleToDate"
                 data-testid="cycleToDate-input"
               />
-            </CCol>
-            {isEditDateError && (
-              <CCol sm={6}>
+              {isEditDateError && (
                 <span className="text-danger">
                   <b>To Date should be greater than From Date</b>
                 </span>
-              </CCol>
-            )}
+              )}
+            </CCol>
           </CRow>
-          <CRow className="mt-4 mb-4">
+          <CRow className="mt-3 mb-4">
             <CFormLabel
               {...formLabelProps}
               className="col-sm-3 col-form-label text-end"
