@@ -346,7 +346,7 @@ const EditEmployee = (): JSX.Element => {
         newEmployeeResponse,
       )
     ) {
-      history.push('/employeeList')
+      history.goBack()
     }
   }
 
