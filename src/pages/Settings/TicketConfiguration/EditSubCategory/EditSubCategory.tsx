@@ -48,7 +48,10 @@ const EditSubCategory = ({
   }
   const validateSubCategoryName = (name: string) => {
     return subCategoryList.list?.find((subCategory) => {
-      return subCategory.subCategoryName.toLowerCase() === name.toLowerCase()
+      return (
+        subCategory.subCategoryName.trim().toLowerCase() ===
+        name.trim().toLowerCase()
+      )
     })
   }
   const estimatedTimeRegexReplace = /\D/g
@@ -122,6 +125,7 @@ const EditSubCategory = ({
       setIsWorkFlowChecked(false)
     }
   }, [editSubCategoryCopy.workFlow])
+
   useEffect(() => {
     if (editSubCategoryCopy.subCategoryName && !subCategoryNameExist) {
       setIsUpdateButtonEnabled(true)

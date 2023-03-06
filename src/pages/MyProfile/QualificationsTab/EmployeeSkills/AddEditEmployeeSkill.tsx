@@ -53,9 +53,14 @@ function AddEditEmployeeSkill({
     reduxServices.employeeSkill.selectors.selectCategorySkillList,
   )
 
+  const employeeSkillsData = useTypedSelector((state) =>
+    reduxServices.employeeSkill.selectors.employeeSkillDetails(state),
+  )
+
   const editFetchSkillsDetails = useTypedSelector(
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
@@ -232,6 +237,26 @@ function AddEditEmployeeSkill({
     return ''
   }, [employeeSkill.categoryType, sortedCategoryDetails])
 
+  const skillFilter = employeeSkillsData?.filter(
+    (item) => item?.skillType === employeeSkill?.skillType,
+  )
+  const clientOrgAlreadyExistsToast = (
+    <OToast
+      toastMessage="Category and Skill combination already exist"
+      toastColor="danger"
+    />
+  )
+
+  const isSkillExists = () => {
+    if (skillFilter[0]?.skillType) {
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
+      setEmployeeSkill((prevState) => {
+        return { ...prevState, ...{ skillType: '' } }
+      })
+      dispatch(reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast))
+    }
+  }
+
   return (
     <>
       {toggle === '' && (
@@ -315,6 +340,7 @@ function AddEditEmployeeSkill({
                     value={employeeSkill?.skillType}
                     onChange={employeeSkillHandler}
                     disabled={!isSkillAddButtonEnabled}
+                    onBlur={() => isSkillExists()}
                   >
                     <option value={''}>Skill</option>
                     {getCategorySkillDetails?.length > 0 &&

@@ -58,21 +58,20 @@ const AddConfiguration = ({
     reduxServices.addConfigurations.selectors.selectError,
   )
 
-  const remainingDays = moment(reviewEndDate).diff(
-    moment(reviewStartDate),
-    'days',
-  )
+  const admission = moment(reviewStartDate, 'DD-MM-YYYY')
+  const discharge = moment(reviewEndDate, 'DD-MM-YYYY')
+  const totalDays = discharge.diff(admission, 'days')
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const PeriodFromDate = moment(reviewStartDate, dateFormat).format(
+    const start = moment(reviewStartDate, dateFormat).format(
       newDateFormatForIsBefore,
     )
-    const PeriodToDate = moment(reviewEndDate, dateFormat).format(
+    const end = moment(reviewEndDate, dateFormat).format(
       newDateFormatForIsBefore,
     )
 
-    setIsDateValidation(moment(PeriodToDate).isBefore(PeriodFromDate))
+    setIsDateValidation(moment(end).isBefore(start))
   }, [reviewStartDate, reviewEndDate])
 
   useEffect(() => {
@@ -114,12 +113,12 @@ const AddConfiguration = ({
   ])
 
   useEffect(() => {
-    if (remainingDays > 0) {
-      setReviewDuration(String(remainingDays))
+    if (totalDays >= 0) {
+      setReviewDuration(String(totalDays))
     } else {
       setReviewDuration(String(''))
     }
-  }, [remainingDays])
+  }, [totalDays])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -258,6 +257,14 @@ const AddConfiguration = ({
       dispatch(reduxServices.app.actions.addToast(cycleNameWarningToastMsg))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
+  }
+
+  const onHandleStartDate = (value: Date) => {
+    setReviewStartDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleEndDate = (value: Date) => {
+    setReviewEndDate(moment(value).format(dateFormat))
   }
 
   return (
@@ -434,21 +441,8 @@ const AddConfiguration = ({
                 dateFormat="dd/mm/yyyy"
                 placeholderText="dd/mm/yyyy"
                 name="reviewStartDate"
-                value={
-                  reviewStartDate
-                    ? new Date(reviewStartDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewStartDate(moment(date).format(commonFormatDate))
-                }
+                value={reviewStartDate}
+                onChange={(date: Date) => onHandleStartDate(date)}
               />
             </CCol>
           </CRow>
@@ -473,18 +467,8 @@ const AddConfiguration = ({
                 dateFormat="dd/mm/yyyy"
                 placeholderText="dd/mm/yyyy"
                 name="reviewEndDate"
-                value={
-                  reviewEndDate
-                    ? new Date(reviewEndDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewEndDate(moment(date).format(commonFormatDate))
-                }
+                value={reviewEndDate}
+                onChange={(date: Date) => onHandleEndDate(date)}
               />
             </CCol>
             {isDateValidation && (
@@ -553,7 +537,11 @@ const AddConfiguration = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isButtonEnabled}
+                disabled={
+                  !isButtonEnabled ||
+                  isDateErrorValidation ||
+                  isDateErrorValidation
+                }
                 onClick={handleAddNewCycle}
               >
                 Add

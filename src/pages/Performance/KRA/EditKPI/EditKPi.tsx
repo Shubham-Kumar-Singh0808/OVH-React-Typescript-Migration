@@ -25,7 +25,9 @@ const EditKPi = (): JSX.Element => {
   }
   const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
   const [editKPICopy, setEditKPiCopy] = useState(editKpi)
-  const [selectFrequency, setSelectFrequency] = useState<number | string>()
+  const [selectFrequency, setSelectFrequency] = useState<number | string>(
+    editKpi?.frequencyId,
+  )
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const dispatch = useAppDispatch()
@@ -84,7 +86,9 @@ const EditKPi = (): JSX.Element => {
   const updateKPIHandler = async () => {
     const prepareObject = {
       ...editKPICopy,
-      frequencyId: selectFrequency as number,
+      frequencyId: selectFrequency,
+      frequency: frequency?.filter((freq) => freq.id === selectFrequency)[0]
+        ?.frequencyname,
     }
     const editKPIResultAction = await dispatch(
       reduxServices.KRA.updateKPI(prepareObject),

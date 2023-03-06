@@ -10,12 +10,12 @@ const EventEndDate = ({
   toDateChangeHandler: (e: Date) => void
   toDateValue: string
 }): JSX.Element => {
-  const lastDateOfYear = `12/31/${new Date().getFullYear()}`
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        End Date:
-        <span className={showIsRequired(toDateValue)}>*</span>
+        End Date :<span className={showIsRequired(toDateValue)}>*</span>
       </CFormLabel>
       <CCol sm={6}>
         <ReactDatePicker
@@ -25,7 +25,7 @@ const EventEndDate = ({
           className="form-control form-control-sm sh-date-picker sh-leave-form-control"
           showMonthDropdown
           showYearDropdown
-          maxDate={new Date(lastDateOfYear)}
+          maxDate={disableAfterDate}
           minDate={new Date()}
           dropdownMode="select"
           dateFormat="dd/mm/yy"

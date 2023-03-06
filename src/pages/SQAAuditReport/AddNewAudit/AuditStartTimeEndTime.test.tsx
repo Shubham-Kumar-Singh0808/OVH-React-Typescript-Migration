@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import AuditStartTimeEndTime from './AuditStartTimeEndTime'
-import { render, screen } from '../../test/testUtils'
+import { render, screen } from '../../../test/testUtils'
 
 const startTimeHrsInput = 'audit-startTimeHours'
 const endTimeHrsInput = 'audit-endTimeHours'

@@ -69,7 +69,7 @@ const AddQuestionTable = ({
   }
 
   const deleteSuccessToastMessage = (
-    <OToast toastMessage="Tracker Deleted Successfully" toastColor="success" />
+    <OToast toastMessage="Question deleted successfully" toastColor="success" />
   )
 
   const confirmDeleteQuestion = async () => {
@@ -91,7 +91,7 @@ const AddQuestionTable = ({
     [allQuestionsList?.list, currentPage, pageSize],
   )
 
-  const getPageNo = (index: number) => {
+  const getPageIndex = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
@@ -129,7 +129,7 @@ const AddQuestionTable = ({
                   : removingSpacesOfText
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell>{getPageNo(index)}</CTableDataCell>
+                  <CTableDataCell>{getPageIndex(index)}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
                     {currentItem.question ? (
                       <CLink
@@ -216,7 +216,7 @@ const AddQuestionTable = ({
         alignment="center"
         visible={isDeleteQuestionModalVisible}
         setVisible={setIsDeleteQuestionModalVisible}
-        modalTitle="Delete Tracker"
+        modalTitle="Delete Question"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"

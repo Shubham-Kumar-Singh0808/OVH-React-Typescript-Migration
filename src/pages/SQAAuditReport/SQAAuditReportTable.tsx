@@ -10,6 +10,8 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
@@ -31,6 +33,7 @@ const SQAAuditReportTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
+  const dispatch = useDispatch()
   const sqaAuditReportResponse = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReport,
   )
@@ -42,7 +45,13 @@ const SQAAuditReportTable = ({
   const isLoading = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.isLoading,
   )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
 
+  const userAccessSqaAuditReport = userAccessToFeatures?.find(
+    (feature) => feature.name === 'SQA Audit Report',
+  )
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -52,6 +61,11 @@ const SQAAuditReportTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  const editButtonHandler = (id: number) => {
+    dispatch(reduxServices.addNewAuditForm.editAuditFormDetails(id))
+  }
+
   return (
     <>
       <CTable striped className="mt-3">
@@ -115,16 +129,21 @@ const SQAAuditReportTable = ({
                         aria-hidden="true"
                       ></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-edit text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    {userAccessSqaAuditReport?.updateaccess && (
+                      <Link to={`editAuditForm/${auditReport.id}`}>
+                        <CButton
+                          color="info"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="edit-btn"
+                          onClick={() => editButtonHandler(auditReport.id)}
+                        >
+                          <i
+                            className="fa fa-edit text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </Link>
+                    )}
                     <CButton
                       color="danger"
                       className="btn-ovh-employee-list me-1 mt-1"
@@ -135,16 +154,18 @@ const SQAAuditReportTable = ({
                         aria-hidden="true"
                       ></i>
                     </CButton>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-trash-o text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    {userAccessSqaAuditReport?.deleteaccess && (
+                      <CButton
+                        color="danger"
+                        className="btn-ovh-employee-list me-1 mt-1"
+                        data-testid="edit-btn"
+                      >
+                        <i
+                          className="fa fa-trash-o text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    )}
                     <CButton
                       color="info"
                       className="btn-ovh-employee-list me-1 mt-1"

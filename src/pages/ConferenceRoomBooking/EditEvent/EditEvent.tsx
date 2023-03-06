@@ -21,13 +21,9 @@ import EditEventAttendees from './EditEventChildComponents/EditEventAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  EditExistingEventDetails,
-  MeetingEditDTOList,
-} from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
+import { MeetingEditDTOList } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
-import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EditEvent = (): JSX.Element => {
@@ -52,18 +48,6 @@ const EditEvent = (): JSX.Element => {
     useState<string>('')
   const [isProjectChange, setIsProjectChange] = useState<string>('')
 
-  const [editEvent, setEditEvent] = useState<EditExistingEventDetails>(
-    {} as EditExistingEventDetails,
-  )
-  const [eventDescriptionValue, setEventDescriptionValue] = useState<string>(
-    editExistingEvent?.description,
-  )
-  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
-    useState(true)
-  const [isErrorShow, setIsErrorShow] = useState(false)
-  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
-    useState<string>()
-  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
   const allProjectNames = useTypedSelector(
     reduxServices.allocateEmployee.selectors.allProjects,
@@ -83,6 +67,15 @@ const EditEvent = (): JSX.Element => {
     reduxServices.newEvent.selectors.roomsByLocation,
   )
 
+  const [editEvent, setEditEvent] = useState(editExistingEvent)
+  const [showDescription, setShowDescription] = useState<boolean>(true)
+  const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
+    useState(true)
+  const [isErrorShow, setIsErrorShow] = useState(false)
+  const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
+    useState<string>()
+  const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
+
   const eventStartTime = editEvent?.startTime
   const eventEndTime = editEvent?.endTime
 
@@ -94,31 +87,36 @@ const EditEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      trainerAutoCompleteTarget &&
-      editEvent.agenda &&
-      eventDescriptionValue?.length > 0
+      trainerAutoCompleteTarget?.trim() &&
+      editEvent?.agenda &&
+      editEvent?.description
     ) {
       setIsUpdateButtonEnabled(true)
     } else {
       setIsUpdateButtonEnabled(false)
     }
-  }, [editEvent.agenda, trainerAutoCompleteTarget, eventDescriptionValue])
+  }, [editEvent?.agenda, trainerAutoCompleteTarget, editEvent?.description])
 
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
     dispatch(reduxServices.newEvent.getLoggedEmployee())
-    if (editEvent.roomId) {
+    if (editEvent?.roomId) {
       dispatch(
         reduxServices.newEvent.getRoomsByLocation(Number(editEvent.locationId)),
       )
     }
   }, [dispatch, editEvent])
+  console.log(trainerAutoCompleteTarget)
 
   useEffect(() => {
     if (editExistingEvent != null) {
       setEditEvent(editExistingEvent)
       setProjectAutoCompleteTarget(editExistingEvent.projectName)
       setTrainerAutoCompleteTarget(editExistingEvent?.trainerName?.fullName)
+      setShowDescription(false)
+      setTimeout(() => {
+        setShowDescription(true)
+      }, 100)
     }
   }, [editExistingEvent])
 
@@ -146,15 +144,17 @@ const EditEvent = (): JSX.Element => {
   }, [trainerAutoCompleteTarget])
 
   useEffect(() => {
-    if (editEvent.startTime === '' && editEvent.endTime === '') {
+    if (editEvent?.startTime === '' && editEvent?.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
     } else {
       setIsProjectAndAttendeesEnable(false)
     }
-  }, [editEvent.startTime, editEvent.endTime])
+  }, [editEvent?.startTime, editEvent?.endTime])
 
-  const onHandleDescription = (value: string) => {
-    setEventDescriptionValue(value)
+  const handleDescription = (description: string) => {
+    setEditEvent((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
   }
   useEffect(() => {
     if (projectAutoCompleteTarget)
@@ -260,7 +260,7 @@ const EditEvent = (): JSX.Element => {
       availability: editEvent?.availability,
       availableDates: null,
       conferenceType: 'Event',
-      description: editEvent.description,
+      description: editEvent?.description,
       disableEdit: null,
       empDesignations: null,
       employeeAvailability: null,
@@ -286,7 +286,9 @@ const EditEvent = (): JSX.Element => {
       startTime: `${editEvent.fromDate}/${eventStartHour}/${eventStartMinutesDay}`,
       timeFomrat: null,
       toDate: editEvent?.toDate,
-      trainerName: editEvent?.trainerName,
+      trainerName: allEmployeesProfiles?.filter(
+        (trainer) => trainer.fullName === trainerAutoCompleteTarget,
+      )[0],
     }
     const updateEventResult = await dispatch(
       reduxServices.eventList.updateEvent(prepareObj),
@@ -332,8 +334,8 @@ const EditEvent = (): JSX.Element => {
             <RoomAndLocation
               eventLocations={eventLocations}
               locationRooms={locationRooms}
-              eventLocationValue={editEvent.locationId}
-              eventRoomValue={editEvent.roomId}
+              eventLocationValue={editEvent?.locationId}
+              eventRoomValue={editEvent?.roomId}
             />
             <ReservedBy eventReservedBy={editEvent?.authorName?.fullName} />
             <CRow className="mt-1 mb-3">
@@ -342,11 +344,12 @@ const EditEvent = (): JSX.Element => {
                 data-testid="pmLabel"
               >
                 Trainer:
-                <span
-                  className={trainerAutoCompleteTarget ? TextWhite : TextDanger}
-                >
-                  *
-                </span>
+                {trainerAutoCompleteTarget === undefined ||
+                trainerAutoCompleteTarget?.trim() === '' ? (
+                  <span className="text-danger">*</span>
+                ) : (
+                  <span className="text-white"></span>
+                )}
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
@@ -404,14 +407,14 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Subject:
-                <span className={showIsRequired(editEvent.agenda)}>*</span>
+                <span className={showIsRequired(editEvent?.agenda)}>*</span>
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
-                  value={editEvent.agenda}
+                  value={editEvent?.agenda}
                   onChange={(e) => {
                     setEditEvent({
                       ...editEvent,
@@ -424,29 +427,36 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
                 Description:
-                <span className={showIsRequired(eventDescriptionValue)}>*</span>
+                <span className={showIsRequired(editEvent?.description)}>
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={8}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={eventDescriptionValue}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim(''))
-                  }}
-                />
+                {showDescription ? (
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={editEvent?.description}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleDescription(editor.getData().trim())
+                    }}
+                  />
+                ) : (
+                  <></>
+                )}
               </CCol>
             </CRow>
             <CRow className="mt-3">
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Name:
-                <span
-                  className={projectAutoCompleteTarget ? TextWhite : TextDanger}
-                >
-                  *
-                </span>
+                {projectAutoCompleteTarget === undefined ||
+                projectAutoCompleteTarget?.trim() === '' ? (
+                  <span className="text-danger">*</span>
+                ) : (
+                  <span className="text-white"></span>
+                )}
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete

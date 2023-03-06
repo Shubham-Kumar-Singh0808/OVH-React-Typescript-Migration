@@ -710,6 +710,7 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+  getAllMeetingAppointmentList: string
 }
 
 export interface LeadershipEnrollmentListApi extends ApiBase {
@@ -738,6 +739,7 @@ export interface KRAApi extends ApiBase {
   getFrequency: string
   addKPI: string
   updateKPI: string
+  checkIfNewKpiDuplicate: string
 }
 
 export interface MyReviewApi extends ApiBase {
@@ -791,7 +793,9 @@ export interface ProcessAreaListApi extends ApiBase {
 
 export interface AddNewAudit extends ApiBase {
   saveNewAuditForm: string
+  editAuditFormDetails: string
   getProjectEmployees: string
+  updateSQAAuditForm: string
 }
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string

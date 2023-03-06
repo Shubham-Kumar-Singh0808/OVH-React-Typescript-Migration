@@ -45,7 +45,6 @@ const EditAttendees = ({
     setAttendeeReport([...newList])
     setDeleteAttendeeModalVisible(false)
     dispatch(reduxServices.app.actions.addToast(deleteAttendeeSuccessToast))
-    dispatch(reduxServices.app.actions.addToast(undefined))
   }
   return (
     <>

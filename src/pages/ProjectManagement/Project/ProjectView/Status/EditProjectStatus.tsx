@@ -65,7 +65,7 @@ const EditProjectStatus = ({
         nextDate: editNextWeekDate
           ? new Date(editNextWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -73,7 +73,7 @@ const EditProjectStatus = ({
         prevDate: editCurrentWeekDate
           ? new Date(editCurrentWeekDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
-              month: 'numeric',
+              month: '2-digit',
               day: '2-digit',
             })
           : '',
@@ -143,13 +143,13 @@ const EditProjectStatus = ({
   }
   useEffect(() => {
     const newFromDate = new Date(
-      moment(editCurrentWeekStatus?.toString()).format(commonFormatDate),
+      moment(editCurrentWeekDate?.toString()).format(commonFormatDate),
     )
     const newToDate = new Date(
       moment(editNextWeekDate?.toString()).format(commonFormatDate),
     )
     if (
-      editCurrentWeekStatus &&
+      editCurrentWeekDate &&
       editNextWeekDate &&
       newToDate.getTime() < newFromDate.getTime()
     ) {
@@ -157,7 +157,7 @@ const EditProjectStatus = ({
     } else {
       setDateError(false)
     }
-  }, [editCurrentWeekStatus, editNextWeekDate])
+  }, [editCurrentWeekDate, editNextWeekDate])
   useEffect(() => {
     if (
       editCurrentWeekDate &&
@@ -192,14 +192,14 @@ const EditProjectStatus = ({
       </CRow>
       <CForm>
         <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
             Current Week Date :
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
               id="fromDate"
               data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
               autoComplete="off"
@@ -213,7 +213,7 @@ const EditProjectStatus = ({
                       deviceLocale,
                       {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       },
                     )
@@ -247,14 +247,14 @@ const EditProjectStatus = ({
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-2">
+          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
             Next Week Date:
           </CFormLabel>
           <CCol sm={3}>
             <DatePicker
               id="fromDate"
               data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
               autoComplete="off"
@@ -268,7 +268,7 @@ const EditProjectStatus = ({
                       deviceLocale,
                       {
                         year: 'numeric',
-                        month: 'numeric',
+                        month: '2-digit',
                         day: '2-digit',
                       },
                     )
@@ -316,7 +316,7 @@ const EditProjectStatus = ({
                 className="btn-ovh me-1"
                 color="success"
                 onClick={allocateButtonHandler}
-                disabled={!isUpdateButtonEnabled}
+                disabled={!isUpdateButtonEnabled || dateError}
               >
                 Update
               </CButton>

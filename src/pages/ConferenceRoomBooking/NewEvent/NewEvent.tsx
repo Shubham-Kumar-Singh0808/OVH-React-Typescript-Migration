@@ -102,6 +102,7 @@ const NewEvent = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addEvent, setAddEvent] = useState(initEvent)
   const [descriptionValue, setDescriptionValue] = useState('')
+  const [dateError, setDateError] = useState<boolean>(false)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
@@ -202,7 +203,6 @@ const NewEvent = (): JSX.Element => {
       }
     }
   }
-  // console.log(attendeesList)
 
   // onchange handlers
   const onHandleLocation = (value: string) => {
@@ -290,6 +290,16 @@ const NewEvent = (): JSX.Element => {
             />,
           ),
         )
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you missed the selected time..!!"
+            />,
+          ),
+        )
       }
     }
   }
@@ -307,6 +317,25 @@ const NewEvent = (): JSX.Element => {
       setShowEditor(true)
     }, 100)
   }
+  const commonFormatDate = 'l'
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(addEvent.fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(addEvent.toDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      addEvent.fromDate &&
+      addEvent.toDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [addEvent.fromDate, addEvent.toDate])
 
   return (
     <OCard
@@ -349,13 +378,22 @@ const NewEvent = (): JSX.Element => {
               toDateValue={addEvent.toDate as string}
               toDateChangeHandler={toDateChangeHandler}
             />
+            {dateError && (
+              <CRow className="mt-2">
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <span className="text-danger" data-testid="errorMessage">
+                    <b>To date should be greater than From date</b>
+                  </span>
+                </CCol>
+              </CRow>
+            )}
             <StartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
               shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Subject:
+                Subject :
                 <span
                   className={showIsRequired(
                     addEvent.agenda?.replace(/^\s*/, ''),
@@ -377,8 +415,8 @@ const NewEvent = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Description:
+              <CFormLabel className="col-sm-3 col-form-label text-end p-18">
+                Description :
                 <span
                   className={showIsRequired(
                     descriptionValue?.replace(/^\s*/, ''),
@@ -431,7 +469,6 @@ const NewEvent = (): JSX.Element => {
                   attendeesList={attendeesList}
                   setAttendeesList={setAttendeesList}
                   selectProjectMember={selectProjectMember}
-                  isErrorShow={isErrorShow}
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
@@ -448,6 +485,7 @@ const NewEvent = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
+                    disabled={dateError}
                   >
                     Confirm
                   </CButton>

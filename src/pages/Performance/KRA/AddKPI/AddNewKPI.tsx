@@ -88,24 +88,34 @@ const AddNewKPI = ({ addKPI }: { addKPI: KRATableDataItem }): JSX.Element => {
     }
   }
 
-  const toastElement = (
-    <OToast toastColor="success" toastMessage="KPI added successfully." />
-  )
-
   const addKPIHandler = async () => {
-    const prepareObject = {
-      ...addNewKPi,
-      frequencyId: Number(selectFrequency),
-      kraId: addKPI.id,
-    }
-    console.log(addNewKPi)
-    const addKPIResultAction = await dispatch(
-      reduxServices.KRA.addKPI(prepareObject),
+    const duplicateKPIResponse = await dispatch(
+      reduxServices.KRA.checkIfNewKpiDuplicate({
+        id: addKPI.id,
+        name: addNewKPi.name,
+      }),
     )
-
-    if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
-      dispatch(reduxServices.app.actions.addToast(toastElement))
-      handleClearInputs()
+    if (duplicateKPIResponse.payload === false) {
+      const prepareObject = {
+        ...addNewKPi,
+        frequencyId: Number(selectFrequency),
+        kraId: addKPI.id,
+      }
+      const successToast = (
+        <OToast toastColor="success" toastMessage="KPI added successfully." />
+      )
+      const addKPIResultAction = await dispatch(
+        reduxServices.KRA.addKPI(prepareObject),
+      )
+      if (reduxServices.KRA.addKPI.fulfilled.match(addKPIResultAction)) {
+        dispatch(reduxServices.app.actions.addToast(successToast))
+        handleClearInputs()
+      }
+    } else {
+      const errorToast = (
+        <OToast toastColor="danger" toastMessage="KPI already exist." />
+      )
+      dispatch(reduxServices.app.actions.addToast(errorToast))
     }
   }
 

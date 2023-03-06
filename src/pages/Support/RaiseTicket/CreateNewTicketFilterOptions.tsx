@@ -67,6 +67,7 @@ const CreateNewTicketFilterOptions = ({
     }
     if (categoryId) {
       dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
+      setSubCategoryIdValue(0)
     }
   }, [deptId, categoryId])
   const commonFormatDate = 'l'
@@ -207,18 +208,11 @@ const CreateNewTicketFilterOptions = ({
   }
 
   useEffect(() => {
-    if (categoryId === 0 && subCategoryIdValue === 0) {
+    if (deptId === 0) {
       dispatch(reduxServices.ticketApprovals.actions.clearCategory())
       dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
     }
-  }, [dispatch, categoryId])
-
-  useEffect(() => {
-    if (categoryId === 0 || deptId === 0) {
-      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
-      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
-    }
-  }, [dispatch, categoryId, deptId])
+  }, [dispatch, deptId])
 
   return (
     <>

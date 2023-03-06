@@ -63,6 +63,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const deptNameChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setEnteredDept(e.target.value)
+    setEnteredDesig(selectDesignation)
   }
 
   const designationChangeHandler = (
@@ -103,9 +104,8 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           getDepartmentId(empDeptList, enteredDept),
         ),
       )
-      setEnteredDesig(selectDesignation)
     }
-  }, [enteredDept])
+  }, [callDesignationEveryDepartment, enteredDept])
 
   useEffect(() => {
     if (enteredDesig === selectDesignation) {
@@ -123,18 +123,18 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    // dispatch(reduxServices.KRA.actions.clearDesignationList())
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
   }
 
   useEffect(() => {
     if (
-      enteredKraName.trim().length === 0 ||
-      !enteredKraName.match(regexAlphanumeric) ||
+      enteredKraName?.trim().length === 0 ||
+      !enteredKraName?.match(regexAlphanumeric) ||
       enteredDept === selectDepartment ||
       enteredDesig === selectDesignation ||
-      enteredDescription.trim().length === 0 ||
-      enteredPercentage.trim().length === 0 ||
+      enteredDescription?.trim().length === 0 ||
+      enteredPercentage?.trim().length === 0 ||
       enteredPercentage === '0' ||
       enteredPercentage === '00' ||
       enteredPercentage === '000' ||
@@ -172,8 +172,8 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <span
             data-testid="kra-name-asterix"
             className={
-              enteredKraName.trim().length === 0 ||
-              !enteredKraName.match(regexAlphanumeric)
+              enteredKraName?.trim().length === 0 ||
+              !enteredKraName?.match(regexAlphanumeric)
                 ? TextDanger
                 : TextWhite
             }
@@ -306,7 +306,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <span
             data-testid="descrip-asterix"
             className={
-              enteredDescription.trim().length === 0 ? TextDanger : TextWhite
+              enteredDescription?.trim().length === 0 ? TextDanger : TextWhite
             }
           >
             *

@@ -42,20 +42,17 @@ const EditKRA = (): JSX.Element => {
   const incomingKRAData = useTypedSelector((state) => state.KRA.editThisKra)
   const empDeptList = useTypedSelector((state) => state.KRA.empDepartments)
   const desigList = useTypedSelector((state) => state.KRA.designations)
-  const isNewKraDuplicate = useTypedSelector(
-    (state) => state.KRA.isNewKRADuplicate,
-  )
 
   useEffect(() => {
-    if (incomingKRAData) {
+    if (incomingKRAData !== null) {
       const descrip =
-        incomingKRAData.description === null
+        incomingKRAData?.description === null
           ? emptyString
-          : incomingKRAData.description
-      setEnteredKraName(incomingKRAData.name)
-      setEnteredDepartment(incomingKRAData.departmentName)
+          : incomingKRAData?.description
+      setEnteredKraName(incomingKRAData?.name)
+      setEnteredDepartment(incomingKRAData?.departmentName)
       setEnteredDescription(descrip)
-      setEnteredDesignation(incomingKRAData.designationName)
+      setEnteredDesignation(incomingKRAData?.designationName)
       setShowDescription(false)
       setTimeout(() => {
         setShowDescription(true)
@@ -70,14 +67,14 @@ const EditKRA = (): JSX.Element => {
     e.preventDefault()
     const deptId = getDepartmentId(empDeptList, enteredDepartment)
     const desigId = +getDesignationId(desigList, enteredDesignation)
-    await dispatch(
+    const isNewKraDuplicate = await dispatch(
       reduxServices.KRA.checkNewKRADuplicacyThunk({
         kraName: enteredKraName,
         departmentId: deptId,
         designationId: desigId,
       }),
     )
-    if (isNewKraDuplicate === false) {
+    if (isNewKraDuplicate.payload === false) {
       const newKRAData: UpdateKRABody = {
         ...incomingKRAData,
         name: enteredKraName,
@@ -97,7 +94,6 @@ const EditKRA = (): JSX.Element => {
       )
       if (reduxServices.KRA.updateKRAThunk.fulfilled.match(result)) {
         dispatch(reduxServices.app.actions.addToast(successToast))
-        dispatch(reduxServices.KRA.actions.clearDesignationList())
         dispatch(
           reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList),
         )
@@ -127,7 +123,7 @@ const EditKRA = (): JSX.Element => {
         isPercentReadonly={isPercentReadonly}
         setPercentReadOnly={setPercentReadonly}
         setIsButtonEnabled={setUpdateButtonEnabled}
-        callDesignationEveryDepartment={false}
+        callDesignationEveryDepartment={true}
       />
       <CContainer>
         <CRow>

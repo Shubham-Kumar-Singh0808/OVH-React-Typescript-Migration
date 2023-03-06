@@ -19,10 +19,10 @@ import {
   TextDanger,
   TextLabelProps,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
 
 const EmployeeExtendPIP = ({
   setToggle,
@@ -34,8 +34,7 @@ const EmployeeExtendPIP = ({
   const [reasonForPIP, setReasonForPIP] = useState<string>('')
   const [improvementPlan, setImprovementPlan] = useState<string>('')
   const [isExtendBtnEnabled, setIsExtendBtnEnabled] = useState(false)
-
-  const commonFormatDate = 'L'
+  const [isExtendDateError, setIsExtendDateError] = useState<boolean>(false)
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -45,6 +44,7 @@ const EmployeeExtendPIP = ({
   const viewEmployeePipDetails = useTypedSelector(
     reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
+  const [disabledExtendedDate, setDisabledExtendedDate] = useState<string>('')
 
   const handleReasonForPIP = (reason: string) => {
     setReasonForPIP(reason)
@@ -57,19 +57,43 @@ const EmployeeExtendPIP = ({
   }
 
   useEffect(() => {
-    if (extendDate && selectRating && reasonForPIP && improvementPlan) {
+    setDisabledExtendedDate(viewEmployeePipDetails?.extendDate as string)
+  }, [viewEmployeePipDetails])
+
+  useEffect(() => {
+    if (selectRating && reasonForPIP && improvementPlan) {
       setIsExtendBtnEnabled(true)
     } else {
       setIsExtendBtnEnabled(false)
     }
-  }, [extendDate, selectRating, reasonForPIP, improvementPlan])
+  }, [selectRating, reasonForPIP, improvementPlan])
 
   const successToast = (
     <OToast toastMessage="PIP extend successfully" toastColor="success" />
   )
 
   const extendBtnHandler = async () => {
-    await dispatch(reduxServices.pipList.extendPip(viewEmployeePipDetails))
+    await dispatch(
+      reduxServices.pipList.extendPip({
+        createdBy: viewEmployeePipDetails?.createdBy,
+        createdDate: viewEmployeePipDetails?.createdDate,
+        empId: viewEmployeePipDetails?.empId,
+        employeeName: viewEmployeePipDetails?.employeeName,
+        endDate: viewEmployeePipDetails?.endDate,
+        extendDate:
+          viewEmployeePipDetails?.extendDate === null
+            ? extendDate
+            : disabledExtendedDate,
+        id: viewEmployeePipDetails.id,
+        improvement: improvementPlan,
+        pipflag: viewEmployeePipDetails.pipflag,
+        rating: selectRating,
+        remarks: reasonForPIP,
+        startDate: viewEmployeePipDetails.startDate,
+        updatedBy: viewEmployeePipDetails.updatedBy,
+        updatedDate: viewEmployeePipDetails.updatedDate,
+      }),
+    )
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',
@@ -81,6 +105,41 @@ const EmployeeExtendPIP = ({
     setToggle('')
   }
 
+  const onHandleExtendDatePicker = (value: Date) => {
+    setExtendDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleDisableExtendDatePicker = (value: Date) => {
+    setDisabledExtendedDate(moment(value).format(dateFormat))
+  }
+
+  const disableExtendDate = new Date()
+  disableExtendDate.setFullYear(disableExtendDate.getFullYear() + 1)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(extendDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(
+      viewEmployeePipDetails?.startDate && viewEmployeePipDetails?.endDate,
+      dateFormat,
+    ).format(newDateFormatForIsBefore)
+
+    setIsExtendDateError(moment(start).isBefore(end))
+  }, [
+    extendDate,
+    viewEmployeePipDetails?.startDate,
+    viewEmployeePipDetails?.endDate,
+  ])
+
+  const extendDateMandatory = (
+    <span className={extendDate ? TextWhite : TextDanger}>*</span>
+  )
+
+  const disableExtendDateMandatory = (
+    <span className={disabledExtendedDate ? TextWhite : TextDanger}>*</span>
+  )
   return (
     <>
       <OCard
@@ -163,37 +222,69 @@ const EmployeeExtendPIP = ({
             </CCol>
           </CRow>
           <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-1">
-                Extend Date:
-                <span className={extendDate ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="extend-date"
-                data-testid="extendDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="Extend Date"
-                name="extendDate"
-                value={
-                  extendDate
-                    ? new Date(extendDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setExtendDate(moment(date).format(commonFormatDate))
-                }
-              />
-            </CCol>
+            {viewEmployeePipDetails?.extendDate === null ? (
+              <>
+                <CCol sm={3} md={3} className="text-end">
+                  <CFormLabel className="mt-1">
+                    Extend Date:
+                    {extendDateMandatory}
+                  </CFormLabel>
+                </CCol>
+                <CCol sm={3}>
+                  <ReactDatePicker
+                    id="extend-date"
+                    data-testid="extendDate"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                    autoComplete="off"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Extend Date"
+                    name="extendDate"
+                    minDate={new Date()}
+                    maxDate={disableExtendDate}
+                    value={extendDate}
+                    onChange={(date: Date) => onHandleExtendDatePicker(date)}
+                  />
+                  {isExtendDateError && (
+                    <span className="text-danger">
+                      <b>
+                        Extend date should be greater than Start date and should
+                        not be in between Start date and End date.
+                      </b>
+                    </span>
+                  )}
+                </CCol>
+              </>
+            ) : (
+              <>
+                <CCol sm={3} md={3} className="text-end">
+                  <CFormLabel className="mt-1">
+                    Extend Date:
+                    {disableExtendDateMandatory}
+                  </CFormLabel>
+                </CCol>
+                <CCol sm={3}>
+                  <ReactDatePicker
+                    id="extend-date"
+                    data-testid="extendDate"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                    autoComplete="off"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Extend Date"
+                    name="extendDate"
+                    minDate={new Date()}
+                    maxDate={disableExtendDate}
+                    value={disabledExtendedDate}
+                    onChange={(date: Date) =>
+                      onHandleDisableExtendDatePicker(date)
+                    }
+                  />
+                </CCol>
+              </>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -226,7 +317,13 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Reason for PIP:
-              <span className={reasonForPIP ? TextWhite : TextDanger}>*</span>
+              <span
+                className={
+                  reasonForPIP?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={9}>
               <CKEditor<{
@@ -245,7 +342,11 @@ const EmployeeExtendPIP = ({
           <CRow className="mt-4 mb-4">
             <CFormLabel className={TextLabelProps}>
               Improvement Plan:
-              <span className={improvementPlan ? TextWhite : TextDanger}>
+              <span
+                className={
+                  improvementPlan?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                }
+              >
                 *
               </span>
             </CFormLabel>
@@ -270,7 +371,11 @@ const EmployeeExtendPIP = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              disabled={!isExtendBtnEnabled}
+              disabled={
+                !isExtendBtnEnabled ||
+                isExtendDateError ||
+                (viewEmployeePipDetails?.extendDate === null && !extendDate)
+              }
               onClick={extendBtnHandler}
             >
               Extend

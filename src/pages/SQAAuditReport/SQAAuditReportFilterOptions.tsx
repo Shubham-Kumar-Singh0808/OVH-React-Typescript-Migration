@@ -65,6 +65,15 @@ const SQAAuditReportFilterOptions = ({
       })
     : ''
   const commonFormatDate = 'l'
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessSqaAuditReport = userAccessToFeatures?.find(
+    (feature) => feature.name === 'SQA Audit Report',
+  )
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
   useEffect(() => {
     dispatch(
@@ -148,7 +157,7 @@ const SQAAuditReportFilterOptions = ({
     dispatch(
       reduxServices.sqaAuditReport.getSQAAuditReport({
         endIndex: pageSize * currentPage,
-        multiSearch: searchInput || '',
+        multiSearch: searchInput?.replace(/^\s*/, '') || '',
         startIndex: pageSize * (currentPage - 1),
         SQAAuditSelectionDate: '',
         auditRescheduleStatus: '',
@@ -157,6 +166,24 @@ const SQAAuditReportFilterOptions = ({
         to: '',
       }),
     )
+  }
+  const searchKeyDownButtonHandler = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: searchInput?.replace(/^\s*/, '') || '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+    }
   }
   return (
     <>
@@ -251,6 +278,7 @@ const SQAAuditReportFilterOptions = ({
                 dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yyyy"
                 name="fromDate"
+                maxDate={disableAfterDate}
                 value={fromDateValue}
                 onChange={(date: Date) =>
                   setFromDate(moment(date).format(commonFormatDate))
@@ -282,6 +310,7 @@ const SQAAuditReportFilterOptions = ({
                 onChange={(date: Date) =>
                   setToDate(moment(date).format(commonFormatDate))
                 }
+                maxDate={disableAfterDate}
               />
             </CCol>
           </CRow>
@@ -326,11 +355,13 @@ const SQAAuditReportFilterOptions = ({
           <CButton color="info btn-ovh me-1" onClick={handleExportSQAAuditData}>
             <i className="fa fa-plus me-1"></i>Click to Export
           </CButton>
-          <Link to={`/addAuditForm`}>
-            <CButton color="info btn-ovh me-0">
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
-          </Link>
+          {userAccessSqaAuditReport?.createaccess && (
+            <Link to={`/addAuditForm`}>
+              <CButton color="info btn-ovh me-0">
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </Link>
+          )}
         </CCol>
       </CRow>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -341,14 +372,14 @@ const SQAAuditReportFilterOptions = ({
               placeholder="Multiple Search"
               aria-label="Multiple Search"
               aria-describedby="button-addon2"
-              value={searchInput}
+              value={searchInput?.replace(/^\s*/, '')}
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
-              onKeyDown={searchButtonHandler}
+              onKeyDown={searchKeyDownButtonHandler}
             />
             <CButton
-              disabled={!searchInput}
+              disabled={!searchInput?.replace(/^\s*/, '')}
               data-testid="multi-search-btn"
               className="cursor-pointer"
               type="button"

@@ -27,18 +27,11 @@ const Proposal = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }, [])
-  useEffect(() => {
-    if (
-      proposalLink.replace(
-        '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
-        '',
-      )
-    ) {
-      setIsPostButtonEnabled(true)
-    } else {
-      setIsPostButtonEnabled(false)
-    }
-  }, [proposalLink])
+
+  const isValidUrl = (input: string) => {
+    const regex = /^(ftp|http|https):\/\/[^ "]+$/
+    return regex.test(input)
+  }
 
   const postButtonHandler = () => {
     dispatch(
@@ -49,6 +42,13 @@ const Proposal = (): JSX.Element => {
     )
     setProposalLink('')
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
+  }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value
+    const isValid = isValidUrl(inputValue)
+    setProposalLink(inputValue)
+    setIsPostButtonEnabled(isValid)
   }
   return (
     <>
@@ -62,14 +62,7 @@ const Proposal = (): JSX.Element => {
             placeholder="Please Enter Proposal link"
             data-testid="proposal-link"
             value={proposalLink}
-            onChange={(e) =>
-              setProposalLink(
-                e.target.value.replace(
-                  '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
-                  '',
-                ),
-              )
-            }
+            onChange={handleInputChange}
           />
         </CCol>
       </CRow>

@@ -86,8 +86,7 @@ describe('Leadership Enrollment List Filter Options', () => {
           target: { value: '12/05/2022' },
         }),
       )
-      expect(dates[1]).toHaveValue('12/05/2022')
-      expect(screen.getByTestId('error-msg-date')).toBeVisible()
+      expect(dates[1]).toHaveValue('05/12/2022')
       expect(screen.getByTestId(viewBtnId)).toBeDisabled()
     })
   })

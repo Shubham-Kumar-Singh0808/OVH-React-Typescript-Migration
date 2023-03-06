@@ -13,7 +13,7 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -145,8 +145,9 @@ const BookingListTable = ({
       )
     }
   }
-
+  const history = useHistory()
   const editButtonHandler = (id: number) => {
+    history.push(`/MeetingRequestEdit/${id}`)
     dispatch(reduxServices.bookingList.editMeetingRequest(id))
   }
 
@@ -207,19 +208,20 @@ const BookingListTable = ({
                   <CTableDataCell scope="row">
                     {bookingItem.isAuthorisedUser ? (
                       <>
-                        <Link to={`/MeetingRequestEdit/${bookingItem.id}`}>
-                          <CButton
-                            color="info"
-                            className="btn-ovh me-2"
-                            onClick={() => editButtonHandler(bookingItem.id)}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </Link>
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-2"
+                          onClick={() => editButtonHandler(bookingItem.id)}
+                          disabled={bookingItem?.disableEdit === true}
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+
                         <CButton
                           color="btn btn-warning"
                           className="btn-ovh me-2"
                           onClick={() => handleShowCancelModal(bookingItem.id)}
+                          disabled={bookingItem.disableEdit === true}
                         >
                           <i
                             className="fa fa-times text-white"
@@ -341,12 +343,14 @@ const BookingListTable = ({
         alignment="center"
         visible={isCancelModalVisible}
         setVisible={setIsCancelModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Cancel Meeting Room"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmCancelBookingDetails}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to cancel this Meeting ?`}
+        <>Do you really want to cancel this Meeting ?</>
       </OModal>
     </>
   )

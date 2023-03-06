@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const ITClearanceCertificateForm = (): JSX.Element => {
   const [isActiveValue, setIsActiveValue] = useState<string>('false')
@@ -17,6 +18,13 @@ const ITClearanceCertificateForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const getAllITResignationHistory = useTypedSelector(
     reduxServices.resignationList.selectors.resignationTimeLine,
+  )
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details submitted Successfully."
+      toastColor="success"
+    />
   )
 
   const SubmitITClearanceCertificateHandler = async () => {
@@ -41,6 +49,7 @@ const ITClearanceCertificateForm = (): JSX.Element => {
           submittedBy: 'IT',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 

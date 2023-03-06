@@ -271,7 +271,7 @@ input.capetalized {
   padding-right: 18px;
 }
 
-.resignation-initiate-btn{
+.resignation-initiate-btn,.resignation-initiate-btn:hover,.resignation-initiate-btn:active,.resignation-initiate-btn:focus{
   background-color: $blue-btnBg;
     border-color:$blue-btnBg;
     color: $white;
@@ -367,11 +367,11 @@ input.capetalized {
 }
 
 .add-project-request-icon {
-   padding: 4px 8px !important;
-    margin-top: 18px;
-    background-color: #428bca;
-    border-color: #357ebd;
-    color: #fff;
+  padding: 4px 8px !important;
+   margin-top: 18px;
+   background-color: #428bca !important;
+   border-color: #357ebd;
+   color: #fff !important;
 }
 
 .was-validated .form-check-input:valid, .form-check-input.is-valid, .form-check-input.ng-valid{
@@ -421,4 +421,11 @@ input.capetalized {
 
 .lineHeight {
   line-height: 1;
+}
+.sh-initiateCheckBox .form-check-input{ 
+  width: 1.5em;
+    height: 1.5em;
+}
+.sh-initiateCheckBox .form-check-input:checked[type=checkbox]{
+  background-size: 24px;
 }

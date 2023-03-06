@@ -26,15 +26,18 @@ import {
 } from '../KRAConstants'
 
 const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
-  const { currentPage, pageSize } = props
+  const {
+    currentPage,
+    pageSize,
+    selectedDepartment,
+    selectedDesignation,
+    setSelectedDepartment,
+    setSelectedDesignation,
+  } = props
   const dispatch = useAppDispatch()
   const [isViewButtonEnabled, setViewButtonEnabled] = useState<boolean>(false)
   const [isSearchButtonEnabled, setSearchButtonEnabled] =
     useState<boolean>(false)
-  const [selectedDepartment, setSelectedDepartment] =
-    useState<string>(selectDepartment)
-  const [selectedDesignation, setSelectedDesignation] =
-    useState<string>(selectDesignation)
   const [multiSearchInput, setMultiSearchInput] = useState<string>(emptyString)
 
   const empDepartmentsList = useTypedSelector(
@@ -47,6 +50,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
   const userAccessToAddKRA = userAccessToFeatures?.find(
     (feature) => feature.name === 'KRA',
   )
+
   useEffect(() => {
     if (selectedDepartment !== selectDepartment) {
       dispatch(
@@ -55,7 +59,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
         ),
       )
     }
-    setSelectedDesignation(selectDesignation)
+    setSelectedDesignation(selectedDesignation)
   }, [selectedDepartment])
 
   useEffect(() => {
@@ -103,7 +107,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
 
   const addKRAButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    // dispatch(reduxServices.KRA.actions.clearDesignationList())
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.addKra))
   }
 

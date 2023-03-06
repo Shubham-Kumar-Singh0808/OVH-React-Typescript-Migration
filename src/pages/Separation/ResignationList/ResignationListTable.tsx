@@ -83,16 +83,19 @@ const ResignationListTable = ({
   const resignationListSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
 
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * currentPage,
+        endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: pageSize * (selectCurrentPage - 1),
         status: 'ALL',
         to: '',
       }),
@@ -359,6 +362,7 @@ const ResignationListTable = ({
                       <Link
                         to={`/employeeProfile/${resignationItem.employeeId}`}
                         className="employee-name"
+                        data-testid={`employee-profile-link${index}`}
                       >
                         {resignationItem.employeeName}
                       </Link>
@@ -384,7 +388,7 @@ const ResignationListTable = ({
                             <CTooltip content="Timeline">
                               <CButton
                                 color="info"
-                                className="btn-ovh me-2"
+                                className="btn-ovh-employee-list"
                                 data-testid="history-btn"
                                 onClick={() =>
                                   resignationHistoryButtonHandler(

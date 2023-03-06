@@ -75,11 +75,12 @@ const InitiateCycleTable = ({
     return []
   }, [currentTotalRecords])
 
-  console.log(sortingId)
-
   return (
     <>
-      <CTable responsive className="mt-5 align-middle alignment">
+      <CTable
+        responsive
+        className="mt-5 align-middle alignment sh-initiateCheckBox"
+      >
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>

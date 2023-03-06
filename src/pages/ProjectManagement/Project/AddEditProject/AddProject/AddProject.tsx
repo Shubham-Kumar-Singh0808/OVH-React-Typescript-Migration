@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -35,7 +35,6 @@ import {
   healthList,
   priceModelList,
 } from '../../../../../constant/constantData'
-import OBackButton from '../../../../../components/ReusableComponent/OBackButton'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
 
@@ -277,17 +276,29 @@ const AddProject = (): JSX.Element => {
       {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/projectreport" name="Back" />
+            <CRow className="justify-content-end">
+              <CCol md={4}>
+                <Link to="/projectreport">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1 add-project-back-btn"
+                    data-testid="Back-btn"
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
+            </CRow>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}
                 onSelectHandler={handleClientSelect}
-                value={project.client}
+                value={project.client?.replace(/^\s*/, '')}
               />
               <ProjectName
                 onChange={setProjectName}
                 onBlur={handleProjectName}
-                value={projectName}
+                value={projectName?.replace(/^\s*/, '')}
               />
               <OSelectList
                 isRequired={true}
@@ -344,7 +355,7 @@ const AddProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  Start Date:
+                  Start Date :
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
@@ -372,7 +383,7 @@ const AddProject = (): JSX.Element => {
                     classNameStyleLabel,
                   )}
                 >
-                  End Date:
+                  End Date :
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
@@ -405,7 +416,7 @@ const AddProject = (): JSX.Element => {
                   data-testId="selectLabel"
                   {...dynamicFormLabelProps('health', classNameStyleLabel)}
                 >
-                  Health:
+                  Health :
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
@@ -448,7 +459,7 @@ const AddProject = (): JSX.Element => {
                   data-testId="selectLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
-                  Description:
+                  Description :
                 </CFormLabel>
                 {showEditor && (
                   <CCol sm={9}>

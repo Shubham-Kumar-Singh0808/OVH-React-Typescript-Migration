@@ -19,10 +19,11 @@ import {
   TextLabelProps,
   TextWhite,
 } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { deviceLocale, showIsRequired } from '../../../../utils/helper'
+import { showIsRequired } from '../../../../utils/helper'
 
 const AddEmployeePipList = ({
   pageSize,
@@ -46,7 +47,7 @@ const AddEmployeePipList = ({
   const [startDate, setStartDate] = useState<string>()
   const [endDate, setEndDate] = useState<string>()
   const [dateErrorMsg, setDateErrorMsg] = useState<boolean>(false)
-  const [selectRating, setSelectRating] = useState<string>('')
+  const [addRating, setAddRating] = useState<string>('')
   const [isReasonForPIP, setIsReasonForPIP] = useState<boolean>(true)
   const [addReasonForPIP, setAddReasonForPIP] = useState<string>('')
   const [isImprovementPlan, setIsImprovementPlan] = useState<boolean>(true)
@@ -54,21 +55,14 @@ const AddEmployeePipList = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeName, setEmployeeName] = useState<string>('')
 
-  const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(startDate?.toString()).format(commonFormatDate),
-    )
-    const newToDate = new Date(
-      moment(endDate?.toString()).format(commonFormatDate),
-    )
-    if (startDate && endDate && newToDate.getTime() < newFromDate.getTime()) {
-      setDateErrorMsg(true)
-    } else {
-      setDateErrorMsg(false)
-    }
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setDateErrorMsg(moment(end).isBefore(start))
   }, [startDate, endDate])
 
   const handleText = (comments: string) => {
@@ -91,7 +85,7 @@ const AddEmployeePipList = ({
     setTimeout(() => {
       setIsImprovementPlan(true)
     }, 0)
-    setSelectRating('')
+    setAddRating('')
     setEndDate('')
     setStartDate('')
   }
@@ -100,7 +94,7 @@ const AddEmployeePipList = ({
     if (
       startDate &&
       endDate &&
-      selectRating &&
+      addRating &&
       addReasonForPIP &&
       addImprovementPlan &&
       employeeName
@@ -112,15 +106,11 @@ const AddEmployeePipList = ({
   }, [
     startDate,
     endDate,
-    selectRating,
+    addRating,
     addReasonForPIP,
     addImprovementPlan,
     employeeName,
   ])
-
-  const ratings = useTypedSelector(
-    reduxServices.pipList.selectors.performanceRatings,
-  )
 
   useEffect(() => {
     dispatch(reduxServices.pipList.activeEmployee())
@@ -137,14 +127,13 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
+  const employeeDetails = allEmployeeDetails?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
+  )
 
   const selectEmployeeHandler = (empName: string) => {
     setEmployeeName(empName)
   }
-
-  const empId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
-  )
 
   const successToast = (
     <OToast
@@ -168,10 +157,10 @@ const AddEmployeePipList = ({
   )
   const addButtonHandler = async () => {
     const prepareObject = {
-      empId: Number(empId),
+      empId: employeeDetails[0]?.employeeId,
       endDate: endDate as string,
       improvement: addImprovementPlan,
-      rating: selectRating,
+      rating: addRating,
       remarks: addReasonForPIP,
       startDate: startDate as string,
     }
@@ -204,6 +193,17 @@ const AddEmployeePipList = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const onHandleEndDatePicker = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+  const onHandleStartDatePicker = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
   return (
     <>
       <OCard
@@ -297,18 +297,9 @@ const AddEmployeePipList = ({
                 dateFormat="dd/mm/yy"
                 placeholderText="Start Date"
                 name="startDate"
-                value={
-                  startDate
-                    ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setStartDate(moment(date).format(commonFormatDate))
-                }
+                maxDate={disableAfterDate}
+                value={startDate}
+                onChange={(date: Date) => onHandleStartDatePicker(date)}
               />
             </CCol>
           </CRow>
@@ -327,23 +318,14 @@ const AddEmployeePipList = ({
                 dropdownMode="select"
                 dateFormat="dd/mm/yy"
                 placeholderText="End Date"
+                maxDate={disableAfterDate}
                 name="endDate"
-                value={
-                  endDate
-                    ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setEndDate(moment(date).format(commonFormatDate))
-                }
+                value={endDate}
+                onChange={(date: Date) => onHandleEndDatePicker(date)}
               />
               {dateErrorMsg && (
                 <span className="text-danger" data-testid="errorMessage">
-                  End date should be greater than Start date
+                  <b>End date should be greater than Start date</b>
                 </span>
               )}
             </CCol>
@@ -351,7 +333,7 @@ const AddEmployeePipList = ({
           <CRow className="employeeAllocation-form mt-3">
             <CFormLabel className={formLabel}>
               Rating:
-              <span className={showIsRequired(selectRating)}>*</span>
+              <span className={showIsRequired(addRating)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -360,18 +342,17 @@ const AddEmployeePipList = ({
                 id="Select"
                 data-testid="form-select1"
                 name="Select"
-                value={selectRating}
+                value={addRating}
                 onChange={(e) => {
-                  setSelectRating(e.target.value)
+                  setAddRating(e.target.value)
                 }}
               >
                 <option value={''}>Select Rating</option>
-                {ratings.length > 0 &&
-                  ratings?.map((item, index) => (
-                    <option key={index} value={item.id}>
-                      {item.rating}
-                    </option>
-                  ))}
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
               </CFormSelect>
             </CCol>
           </CRow>
@@ -441,7 +422,7 @@ const AddEmployeePipList = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={!isAddButtonEnabled || dateErrorMsg}
                 onClick={addButtonHandler}
               >
                 Add
