@@ -87,7 +87,9 @@ const EditEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      trainerAutoCompleteTarget &&
+      trainerAutoCompleteTarget?.length > 0 &&
+      trainerAutoCompleteTarget?.replace(/^\s*/, '') !== '' &&
+      trainerAutoCompleteTarget?.replace(/^\s*/, '') != null &&
       editEvent?.agenda &&
       editEvent?.description
     ) {
@@ -106,7 +108,6 @@ const EditEvent = (): JSX.Element => {
       )
     }
   }, [dispatch, editEvent])
-  console.log(trainerAutoCompleteTarget)
 
   useEffect(() => {
     if (editExistingEvent != null) {
@@ -451,12 +452,6 @@ const EditEvent = (): JSX.Element => {
             <CRow className="mt-3">
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Name:
-                {projectAutoCompleteTarget === undefined ||
-                projectAutoCompleteTarget?.trim() === '' ? (
-                  <span className="text-danger">*</span>
-                ) : (
-                  <span className="text-white"></span>
-                )}
               </CFormLabel>
               <CCol sm={6}>
                 <Autocomplete
