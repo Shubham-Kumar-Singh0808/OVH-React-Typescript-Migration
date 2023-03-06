@@ -1,15 +1,15 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import SQAAuditTimeLine from './SQAAuditTimeLine'
+import SQAReportDetails from './SQAReportDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
-const SQAAuditHistory = (): JSX.Element => {
+const SQAViewReport = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.isLoading,
   )
@@ -17,7 +17,7 @@ const SQAAuditHistory = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="SQA Audit New Details"
+        title="Audit Details"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -35,9 +35,7 @@ const SQAAuditHistory = (): JSX.Element => {
           </CCol>
         </CRow>
         {isLoading !== ApiLoadingState.loading ? (
-          <>
-            <SQAAuditTimeLine />
-          </>
+          <SQAReportDetails />
         ) : (
           <OLoadingSpinner type={LoadingType.PAGE} />
         )}
@@ -45,4 +43,5 @@ const SQAAuditHistory = (): JSX.Element => {
     </>
   )
 }
-export default SQAAuditHistory
+
+export default SQAViewReport

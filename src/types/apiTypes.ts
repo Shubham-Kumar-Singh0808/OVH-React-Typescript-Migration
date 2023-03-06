@@ -802,4 +802,5 @@ export interface SQAAuditReportApi extends ApiBase {
   deleteProjectAuditDetails: string
   closeAudit: string
   getNewSQAAuditTimelineDetails: string
+  getAuditDetails: string
 }

@@ -977,4 +977,5 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   closeAudit: apiPrefix + '/sqaAuditController/closeAudit',
   getNewSQAAuditTimelineDetails:
     apiPrefix + '/sqaAuditController/getNewSQAAuditTimelineDetails',
+  getAuditDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
 }

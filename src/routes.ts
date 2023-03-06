@@ -435,6 +435,9 @@ const EditAudit = React.lazy(
 const SQAAuditTimeLine = React.lazy(
   () => import('./pages/SQAAuditReport/SQAAuditTimeLine/SQAAuditHistory'),
 )
+const SQAAuditViewReport = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAViewReport/SQAViewReport'),
+)
 const processAreaList = React.lazy(
   () => import('./pages/Settings/ProcessArea/ProcessArea'),
 )
@@ -958,6 +961,11 @@ const routes = [
     path: '/newProjectAuditTimeline',
     name: 'SQA Audit TimeLine',
     component: SQAAuditTimeLine,
+  },
+  {
+    path: '/viewProjectAudit',
+    name: 'SQA Audit View',
+    component: SQAAuditViewReport,
   },
 ]
 

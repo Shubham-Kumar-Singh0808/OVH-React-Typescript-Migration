@@ -3,6 +3,7 @@ import {
   GetSQAAuditReport,
   ExportSQAAuditReportProps,
   GetSQAAuditHistory,
+  GetAuditDetails,
 } from '../../../types/SQAAuditReport/sqaAuditReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -97,12 +98,27 @@ const getNewSQAAuditTimelineDetails = async (
   return response.data
 }
 
+const getSQAAuditDetails = async (
+  auditId: number,
+): Promise<GetAuditDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.getAuditDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      auditId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const sqaAuditReportApi = {
   getSQAAuditReport,
   exportSqaAuditReport,
   deleteProjectAuditDetails,
   closeProjectAuditDetails,
   getNewSQAAuditTimelineDetails,
+  getSQAAuditDetails,
 }
 
 export default sqaAuditReportApi

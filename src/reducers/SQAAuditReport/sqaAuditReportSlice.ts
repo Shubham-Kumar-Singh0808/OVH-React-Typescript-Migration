@@ -5,6 +5,7 @@ import sqaAuditReportApi from '../../middleware/api/SQAAuditReport/SQAAuditRepor
 import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
+  GetAuditDetails,
   GetSQAAuditHistory,
   GetSQAAuditReportProps,
   SQAAuditReportList,
@@ -84,11 +85,32 @@ const getNewSQAAuditTimelineDetails = createAsyncThunk<
   },
 )
 
+const getSQAAuditDetails = createAsyncThunk<
+  GetAuditDetails | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectCreationRequest/getSQAAuditDetails',
+  async (auditId: number, thunkApi) => {
+    try {
+      return await sqaAuditReportApi.getSQAAuditDetails(auditId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialSQAAuditReportState: sqaAuditReportSliceState = {
   getSQAAuditReport: { size: 0, list: [] },
   sqaAuditReportList: [],
   isLoading: ApiLoadingState.idle,
   sqaAuditHistory: { size: 0, list: [] },
+  getAuditDetails: {} as GetAuditDetails,
 }
 
 const sqaAuditReportSlice = createSlice({
@@ -111,6 +133,13 @@ const sqaAuditReportSlice = createSlice({
       .addCase(getNewSQAAuditTimelineDetails.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
+      .addCase(getSQAAuditDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getAuditDetails = action.payload as GetAuditDetails
+      })
+      .addCase(getSQAAuditDetails.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
   },
 })
 
@@ -126,11 +155,15 @@ const sqaAuditReportListSize = (state: RootState): number =>
 const sqaAuditReportTimeLine = (state: RootState): SQAAuditTimelineDetails[] =>
   state.sqaAuditReport.sqaAuditHistory.list
 
+const sqaAuditReportDetails = (state: RootState): GetAuditDetails =>
+  state.sqaAuditReport.getAuditDetails
+
 const sqaAuditReportThunk = {
   getSQAAuditReport,
   deleteProjectAuditDetails,
   closeProjectAuditDetails,
   getNewSQAAuditTimelineDetails,
+  getSQAAuditDetails,
 }
 
 const myTicketsSelectors = {
@@ -138,6 +171,7 @@ const myTicketsSelectors = {
   sqaAuditReport,
   sqaAuditReportListSize,
   sqaAuditReportTimeLine,
+  sqaAuditReportDetails,
 }
 
 export const sqaAuditReportService = {
