@@ -29,6 +29,7 @@ const AddNewSubCategory = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [estimatedHours, setEstimatedHours] = useState('')
   const [estimatedMins, setEstimatedMins] = useState('')
+  const [subCategoryLevel, setSubCategoryLevel] = useState<string | number>(1)
   const [isSubCategoryNameExist, setIsSubCategoryNameExist] = useState('')
   const dispatch = useAppDispatch()
   const subCategoryList = useTypedSelector(
@@ -96,11 +97,6 @@ const AddNewSubCategory = (): JSX.Element => {
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: subCategoryName } }
       })
-    } else if (name === 'levelOfHierarchy') {
-      const level = value.replace(estimatedTimeRegexReplace, '')
-      setAddNewSubCategory((prevState) => {
-        return { ...prevState, ...{ [name]: level } }
-      })
     } else {
       setAddNewSubCategory((prevState) => {
         return { ...prevState, ...{ [name]: value } }
@@ -112,6 +108,13 @@ const AddNewSubCategory = (): JSX.Element => {
       setIsSubCategoryNameExist('')
     }
   }
+
+  const handleLevelOfHierarchyChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setSubCategoryLevel(e.target.value.replace(estimatedTimeRegexReplace, ''))
+  }
+
   const handleEstimatedTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     if (name === 'estimatedTimeHours') {
@@ -136,13 +139,13 @@ const AddNewSubCategory = (): JSX.Element => {
     setIsChecked(false)
   }
 
-  // useEffect(() => {
-  //   if (addNewSubCategory.workFlow === true) {
-  //     setIsChecked(true)
-  //   } else {
-  //     setIsChecked(false)
-  //   }
-  // }, [addNewSubCategory.workFlow])
+  useEffect(() => {
+    if (addNewSubCategory.workFlow === true) {
+      setIsChecked(true)
+    } else {
+      setIsChecked(false)
+    }
+  }, [addNewSubCategory.workFlow])
 
   const successToastMessage = (
     <OToast
@@ -301,11 +304,11 @@ const AddNewSubCategory = (): JSX.Element => {
                 onChange={handleInputChange}
               />
             </CCol>
-            <CCol sm={3} className="mt-2">
+            <CCol sm={3} className="mt-2 px-0">
               {isSubCategoryNameExist ? (
-                <p className={TextDanger} data-testid="categoryName-exist">
+                <strong className={TextDanger} data-testid="categoryName-exist">
                   Sub-Category Name Already Exist
-                </p>
+                </strong>
               ) : (
                 <></>
               )}
@@ -354,10 +357,7 @@ const AddNewSubCategory = (): JSX.Element => {
                 data-testid="ch-workFlow"
                 onChange={() => {
                   setIsChecked(!isChecked)
-                  setAddNewSubCategory({
-                    ...addNewSubCategory,
-                    levelOfHierarchy: 1,
-                  })
+                  setSubCategoryLevel(1)
                 }}
                 checked={isChecked}
               />
@@ -377,8 +377,8 @@ const AddNewSubCategory = (): JSX.Element => {
                     autoComplete="off"
                     defaultValue={1}
                     maxLength={2}
-                    onChange={handleInputChange}
-                    value={addNewSubCategory.levelOfHierarchy}
+                    onChange={handleLevelOfHierarchyChange}
+                    value={subCategoryLevel}
                   />
                 </CCol>
               </>
