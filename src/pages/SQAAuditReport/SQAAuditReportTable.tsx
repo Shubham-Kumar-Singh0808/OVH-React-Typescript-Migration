@@ -151,6 +151,10 @@ const SQAAuditReportTable = ({
     }
   }
 
+  const handleSQAAuditHistoryClick = (id: number) => {
+    dispatch(reduxServices.sqaAuditReport.getNewSQAAuditTimelineDetails(id))
+  }
+
   return (
     <>
       <CTable striped className="mt-3">
@@ -268,16 +272,21 @@ const SQAAuditReportTable = ({
                         ></i>
                       </CButton>
                     )}
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-bar-chart text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <Link to={`/newProjectAuditTimeline`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh-employee-list me-1 mt-1"
+                        data-testid="edit-btn"
+                        onClick={() =>
+                          handleSQAAuditHistoryClick(auditReport?.id)
+                        }
+                      >
+                        <i
+                          className="fa fa-bar-chart text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </Link>
                   </CTableDataCell>
                 </CTableRow>
               )

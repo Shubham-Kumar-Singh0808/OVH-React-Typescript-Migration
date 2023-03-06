@@ -2,7 +2,7 @@ import {
   GetSQAAuditReportProps,
   GetSQAAuditReport,
   ExportSQAAuditReportProps,
-  SQAAuditTimelineDetails,
+  GetSQAAuditHistory,
 } from '../../../types/SQAAuditReport/sqaAuditReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -85,7 +85,7 @@ const closeProjectAuditDetails = async (
 
 const getNewSQAAuditTimelineDetails = async (
   auditId: number,
-): Promise<SQAAuditTimelineDetails[]> => {
+): Promise<GetSQAAuditHistory> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: sqaAuditReportApiConfig.getNewSQAAuditTimelineDetails,
     method: AllowedHttpMethods.get,

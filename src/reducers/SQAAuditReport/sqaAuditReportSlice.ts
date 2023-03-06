@@ -5,6 +5,7 @@ import sqaAuditReportApi from '../../middleware/api/SQAAuditReport/SQAAuditRepor
 import { AppDispatch, RootState } from '../../stateStore'
 import { LoadingState, ValidationError } from '../../types/commonTypes'
 import {
+  GetSQAAuditHistory,
   GetSQAAuditReportProps,
   SQAAuditReportList,
   sqaAuditReportSliceState,
@@ -64,7 +65,7 @@ const closeProjectAuditDetails = createAsyncThunk<
 )
 
 const getNewSQAAuditTimelineDetails = createAsyncThunk<
-  SQAAuditTimelineDetails[] | undefined,
+  GetSQAAuditHistory,
   number,
   {
     dispatch: AppDispatch
@@ -87,7 +88,7 @@ const initialSQAAuditReportState: sqaAuditReportSliceState = {
   getSQAAuditReport: { size: 0, list: [] },
   sqaAuditReportList: [],
   isLoading: ApiLoadingState.idle,
-  sqaAuditTimelineDetails: [],
+  sqaAuditHistory: { size: 0, list: [] },
 }
 
 const sqaAuditReportSlice = createSlice({
@@ -105,8 +106,7 @@ const sqaAuditReportSlice = createSlice({
       })
       .addCase(getNewSQAAuditTimelineDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.sqaAuditTimelineDetails =
-          action.payload as SQAAuditTimelineDetails[]
+        state.sqaAuditHistory = action.payload
       })
       .addCase(getNewSQAAuditTimelineDetails.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -124,7 +124,7 @@ const sqaAuditReportListSize = (state: RootState): number =>
   state.sqaAuditReport.getSQAAuditReport.size
 
 const sqaAuditReportTimeLine = (state: RootState): SQAAuditTimelineDetails[] =>
-  state.sqaAuditReport.sqaAuditTimelineDetails
+  state.sqaAuditReport.sqaAuditHistory.list
 
 const sqaAuditReportThunk = {
   getSQAAuditReport,
