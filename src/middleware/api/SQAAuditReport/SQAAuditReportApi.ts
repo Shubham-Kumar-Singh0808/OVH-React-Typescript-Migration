@@ -73,7 +73,7 @@ const closeProjectAuditDetails = async (
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: sqaAuditReportApiConfig.closeAudit,
-    method: AllowedHttpMethods.delete,
+    method: AllowedHttpMethods.put,
     params: {
       auditId,
     },
