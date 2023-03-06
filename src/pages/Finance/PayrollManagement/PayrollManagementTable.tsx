@@ -20,6 +20,9 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
@@ -136,7 +139,9 @@ const PayrollManagementTable = (props: {
   const getItemNumber = (index: number) => {
     return (props.currentPage - 1) * props.pageSize + index + 1
   }
-
+  const isLoading = useTypedSelector(
+    reduxServices.payrollManagement.selectors.isLoading,
+  )
   return (
     <>
       <CCol className="custom-scroll scroll-alignment py-4">
@@ -207,7 +212,7 @@ const PayrollManagementTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {renderingPayslipData?.length > 0 &&
+              {isLoading !== ApiLoadingState.loading ? (
                 renderingPayslipData?.map((payslipItem, index) => {
                   return (
                     <CTableRow key={index}>
@@ -324,7 +329,10 @@ const PayrollManagementTable = (props: {
                       </CTableDataCell>
                     </CTableRow>
                   )
-                })}
+                })
+              ) : (
+                <OLoadingSpinner type={LoadingType.PAGE} />
+              )}
             </CTableBody>
           </CTable>
         ) : (

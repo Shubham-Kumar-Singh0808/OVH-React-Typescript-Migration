@@ -414,7 +414,7 @@ const AddConfiguration = ({
               <CCol sm={6}>
                 <span className="text-danger">
                   <b>
-                    Review Period From should be greater than Review Period To
+                    Review Period To should be greater than Review Period From
                   </b>
                 </span>
               </CCol>

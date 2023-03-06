@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   CRow,
   CCol,
@@ -76,6 +77,9 @@ const PayrollManagement = (): JSX.Element => {
 
   const PaySlipsListSize = useTypedSelector(
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
+  )
+  const excelData = useTypedSelector(
+    reduxServices.payrollManagement.selectors.excelData,
   )
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
@@ -208,20 +212,21 @@ const PayrollManagement = (): JSX.Element => {
       )
   }, [dispatch, selectMonth, selectYear])
 
-  const previewButton = previewBtn ? (
-    <CButton
-      className="btn btn-download text-decoration-none btn btn-ovh"
-      size="sm"
-      color="info"
-      type="submit"
-      data-testid="preview-btn"
-      onClick={previewBtnHandler}
-    >
-      Preview
-    </CButton>
-  ) : (
-    ''
-  )
+  const previewButton =
+    previewBtn && excelData.length === 0 ? (
+      <CButton
+        className="btn btn-download text-decoration-none btn btn-ovh"
+        size="sm"
+        color="info"
+        type="submit"
+        data-testid="preview-btn"
+        onClick={previewBtnHandler}
+      >
+        Preview
+      </CButton>
+    ) : (
+      ''
+    )
 
   useEffect(() => {
     if (window.location.pathname === '/payslipUpload') {
@@ -321,9 +326,13 @@ const PayrollManagement = (): JSX.Element => {
                         )
                       }
                     />
-                    <span className="textColor-shade" ng-show="MsgFlag">
-                      Note: Please upload file either xls or xlsx format.
-                    </span>
+                    {excelData.length === 0 ? (
+                      <span className="textColor-shade" ng-show="MsgFlag">
+                        Note: Please upload file either xls or xlsx format.
+                      </span>
+                    ) : (
+                      <></>
+                    )}
                   </label>
                   {fileUploadErrorText && (
                     <div id="error">
