@@ -144,7 +144,7 @@ const SQAAuditReportTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Audit Deleted successfully"
+            toastMessage="Audit Closed Successfully"
           />,
         ),
       )

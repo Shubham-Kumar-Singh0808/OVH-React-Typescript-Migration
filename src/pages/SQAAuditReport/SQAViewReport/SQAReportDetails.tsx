@@ -82,35 +82,47 @@ const SQAReportDetails = (): JSX.Element => {
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Auditors:
           </CFormLabel>
-          <CTable className="checkList-table">
-            {SQAViewDetails.auditors.map((item, index) => {
-              return (
-                <CTableBody key={index}>
-                  <CTableRow>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{item.fullName}</CTableDataCell>
-                  </CTableRow>
-                </CTableBody>
-              )
-            })}
-          </CTable>
+          <CCol sm={6}>
+            <CTable className="checkList-table">
+              {SQAViewDetails.auditors.map((item, index) => {
+                return (
+                  <CTableBody key={index}>
+                    <CTableRow>
+                      <CTableDataCell className="p-0">
+                        {index + 1}
+                      </CTableDataCell>
+                      <CTableDataCell className="p-0">
+                        {item.fullName}
+                      </CTableDataCell>
+                    </CTableRow>
+                  </CTableBody>
+                )
+              })}
+            </CTable>
+          </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Auditees:
           </CFormLabel>
-          <CTable className="checkList-table">
-            {SQAViewDetails.auditees.map((auditees, index) => {
-              return (
-                <CTableBody key={index}>
-                  <CTableRow>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
-                    <CTableDataCell>{auditees.fullName}</CTableDataCell>
-                  </CTableRow>
-                </CTableBody>
-              )
-            })}
-          </CTable>
+          <CCol sm={6}>
+            <CTable className="checkList-table">
+              {SQAViewDetails.auditees.map((auditees, index) => {
+                return (
+                  <CTableBody key={index}>
+                    <CTableRow>
+                      <CTableDataCell className="p-0">
+                        {index + 1}
+                      </CTableDataCell>
+                      <CTableDataCell className="p-0">
+                        {auditees.fullName}
+                      </CTableDataCell>
+                    </CTableRow>
+                  </CTableBody>
+                )
+              })}
+            </CTable>
+          </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
