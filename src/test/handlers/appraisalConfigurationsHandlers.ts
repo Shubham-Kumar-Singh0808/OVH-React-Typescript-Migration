@@ -4,7 +4,7 @@ import { mockAppraisalCycle } from '../data/appraisalConfigurationsData'
 
 export const addRoomListHandlers = [
   rest.get(
-    appraisalConfigurationsApiConfig.getAppraisalCycle,
+    appraisalConfigurationsApiConfig.cycle,
     (_req, res, ctx) => {
       return res(
         ctx.json({

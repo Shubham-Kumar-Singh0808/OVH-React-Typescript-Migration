@@ -26,7 +26,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { dateFormat } from '../../../../constant/DateFormat'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const AddConfiguration = ({
   setToggle,
@@ -188,10 +187,6 @@ const AddConfiguration = ({
   const cycleNameWarningToastMsg = (
     <OToast toastColor="danger" toastMessage="Cycle name sholud be unique." />
   )
-  const appraisalCycleListSize = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.listSize,
-  )
-  const { currentPage, pageSize } = usePagination(appraisalCycleListSize, 20)
 
   const handleAddNewCycle = async () => {
     const prepareObject = {
@@ -238,12 +233,7 @@ const AddConfiguration = ({
         addCycleResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.appraisalConfigurations.getAppraisalCycle({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
+      dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
       dispatch(reduxServices.app.actions.addToast(successMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
       setToggle()

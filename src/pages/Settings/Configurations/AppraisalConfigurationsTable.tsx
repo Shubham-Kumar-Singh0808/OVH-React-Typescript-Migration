@@ -16,11 +16,8 @@ import parse from 'html-react-parser'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 import { GetAppraisalCycle } from '../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import OModal from '../../../components/ReusableComponent/OModal'
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../components/ReusableComponent/OPagination'
 
 const AppraisalConfigurationsTable = ({
   userEditAccess,
@@ -37,48 +34,18 @@ const AppraisalConfigurationsTable = ({
   const appraisalCycle = useTypedSelector(
     reduxServices.appraisalConfigurations.selectors.appraisalCycle,
   )
-  const appraisalCycleListSize = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.listSize,
-  )
-
-  const selectCurrentPage = useTypedSelector(
-    reduxServices.app.selectors.selectCurrentPage,
-  )
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(appraisalCycleListSize, 20)
 
   useEffect(() => {
-    if (selectCurrentPage) {
-      setCurrentPage(selectCurrentPage)
-    }
-  }, [selectCurrentPage])
-
-  useEffect(() => {
-    dispatch(
-      reduxServices.appraisalConfigurations.getAppraisalCycle({
-        startIndex: pageSize * (selectCurrentPage - 1),
-        endIndex: pageSize * selectCurrentPage,
-      }),
-    )
-  }, [selectCurrentPage, dispatch, pageSize])
+    dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
+  }, [dispatch])
 
   const handleAgendaModal = (appraisalCycleInfo: GetAppraisalCycle) => {
     setIsAppraisalDescriptionVisible(true)
     setDescriptionModal(appraisalCycleInfo)
   }
-  const handlePageSizeSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setPageSize(Number(event.target.value))
-    setCurrentPage(1)
-    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
-  }
+
+  console.log(appraisalCycle)
+
   const sortedAppraisalDates = useMemo(() => {
     if (appraisalCycle) {
       return appraisalCycle
@@ -91,12 +58,8 @@ const AppraisalConfigurationsTable = ({
   console.log(sortedAppraisalDates)
   console.log(appraisalCycle)
 
-  const getItemNumber = (index: number) => {
-    return (currentPage - 1) * pageSize + index + 1
-  }
-
   const totalRecords = appraisalCycle?.length
-    ? `Total Records: ${appraisalCycleListSize}`
+    ? `Total Records: ${appraisalCycle?.length}`
     : `No Records found...`
   return (
     <>
@@ -134,9 +97,7 @@ const AppraisalConfigurationsTable = ({
                   : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">
-                    {getItemNumber(index)}
-                  </CTableDataCell>
+                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
                   <CTableDataCell>{appraisalCycle.name}</CTableDataCell>
                   <CTableDataCell>
                     {appraisalCycle.appraisalType}
@@ -203,27 +164,6 @@ const AppraisalConfigurationsTable = ({
         <CCol md={3} className="no-records">
           <strong>{totalRecords}</strong>
         </CCol>
-        <CCol xs={3}>
-          {appraisalCycleListSize > 20 && (
-            <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80, 100]}
-              selectedPageSize={pageSize}
-            />
-          )}
-        </CCol>
-        {appraisalCycleListSize > 20 && (
-          <CCol
-            xs={5}
-            className="gap-1 d-grid d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
-          </CCol>
-        )}
       </CRow>
       <OModal
         modalSize="lg"

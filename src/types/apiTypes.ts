@@ -465,7 +465,7 @@ export interface EventListApi extends ApiBase {
   updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
-  getAppraisalCycle: string
+  cycle: string
   editAppraisalCycle: string
   updateAppraisalCycle: string
   validateCycle: string
