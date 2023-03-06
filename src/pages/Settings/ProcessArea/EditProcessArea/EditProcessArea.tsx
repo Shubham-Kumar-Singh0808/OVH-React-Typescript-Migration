@@ -47,26 +47,6 @@ const EditProcessArea = ({
   const ProcessAreaList = useTypedSelector(
     reduxServices.processArea.selectors.ProcessArea,
   )
-
-  useEffect(() => {
-    if (processArea.categoryId)
-      dispatch(
-        reduxServices.processArea.getProcessAreas(processArea.categoryId),
-      )
-  }, [dispatch, processArea.categoryId])
-
-  useEffect(() => {
-    if (processAreaDetails != null) {
-      setProcessArea(processAreaDetails)
-    }
-  }, [processAreaDetails])
-
-  useEffect(() => {
-    if (processAreaDetails?.id === '') {
-      dispatch(reduxServices.processArea.actions.clearCategoryId())
-    }
-  }, [dispatch, processAreaDetails?.id])
-
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -86,6 +66,28 @@ const EditProcessArea = ({
       })
     }
   }
+
+  useEffect(() => {
+    if (processArea.categoryId)
+      dispatch(
+        reduxServices.processArea.getProcessAreas(processArea.categoryId),
+      )
+  }, [dispatch, processArea.categoryId])
+
+  useEffect(() => {
+    if (processAreaDetails != null) {
+      setProcessArea(processAreaDetails)
+    }
+    setIsActiveValue(processAreaDetails.status as boolean)
+    setRequiredOrder(processAreaDetails.order)
+  }, [processAreaDetails])
+
+  useEffect(() => {
+    if (processAreaDetails?.id === '') {
+      dispatch(reduxServices.processArea.actions.clearCategoryId())
+    }
+  }, [dispatch, processAreaDetails?.id])
+
   useEffect(() => {
     if (
       processArea.documentName &&
@@ -116,28 +118,15 @@ const EditProcessArea = ({
       toastColor="success"
     />
   )
-  const updatedErrorToastMessage = (
-    <OToast
-      toastMessage="Document Name already exists.
-    "
-      toastColor="danger"
-    />
-  )
-  const updatedOrderToastMessage = (
-    <OToast
-      toastMessage="order should be37or below37
-    "
-      toastColor="danger"
-    />
-  )
+
   const prepareObject = {
     categoryId: processArea.categoryId,
     documentName: processArea.documentName,
     link: processArea.link,
-    order: processArea.order,
+    order: requireOrder,
     processAreaId: processArea.processAreaId,
     responsible: processArea.responsible,
-    status: processArea.status,
+    status: isActiveValue,
     comments: processArea.comments,
     common: processArea.common,
     id: processArea.id,
@@ -171,26 +160,6 @@ const EditProcessArea = ({
       dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(undefined))
-    } else if (
-      reduxServices.processArea.saveProcessArea.rejected.match(
-        updateProcessNameResultAction,
-      ) &&
-      updateProcessNameResultAction.payload === 409
-    ) {
-      dispatch(reduxServices.app.actions.addToast(updatedErrorToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    }
-    if (processAreaDetails) {
-      const errorResult = processAreaDetails.order + 1
-      if (errorResult !== processAreaDetails.order) {
-        await dispatch(
-          reduxServices.processArea.getOrderCountOfActiveProcesses(
-            processArea.categoryId,
-          ),
-        )
-        dispatch(reduxServices.app.actions.addToast(updatedOrderToastMessage))
-        dispatch(reduxServices.app.actions.addToast(undefined))
-      }
     }
   }
 

@@ -83,6 +83,6 @@ export type GetProcessAreaDetails = {
   sqaComments: null
   sqaApproval: null
   link: string
-  status: string
+  status: boolean | string
   order: number
 }
