@@ -44,6 +44,7 @@ const EmployeeExtendPIP = ({
   const viewEmployeePipDetails = useTypedSelector(
     reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
+  const [disabledExtendedDate, setDisabledExtendedDate] = useState<string>('')
 
   const handleReasonForPIP = (reason: string) => {
     setReasonForPIP(reason)
@@ -56,12 +57,16 @@ const EmployeeExtendPIP = ({
   }
 
   useEffect(() => {
-    if (extendDate && selectRating && reasonForPIP && improvementPlan) {
+    setDisabledExtendedDate(viewEmployeePipDetails?.extendDate as string)
+  }, [viewEmployeePipDetails])
+
+  useEffect(() => {
+    if (selectRating && reasonForPIP && improvementPlan) {
       setIsExtendBtnEnabled(true)
     } else {
       setIsExtendBtnEnabled(false)
     }
-  }, [extendDate, selectRating, reasonForPIP, improvementPlan])
+  }, [selectRating, reasonForPIP, improvementPlan])
 
   const successToast = (
     <OToast toastMessage="PIP extend successfully" toastColor="success" />
@@ -70,12 +75,15 @@ const EmployeeExtendPIP = ({
   const extendBtnHandler = async () => {
     await dispatch(
       reduxServices.pipList.extendPip({
-        createdBy: viewEmployeePipDetails.createdBy,
-        createdDate: viewEmployeePipDetails.createdDate,
-        empId: viewEmployeePipDetails.empId,
-        employeeName: viewEmployeePipDetails.employeeName,
-        endDate: viewEmployeePipDetails.endDate,
-        extendDate,
+        createdBy: viewEmployeePipDetails?.createdBy,
+        createdDate: viewEmployeePipDetails?.createdDate,
+        empId: viewEmployeePipDetails?.empId,
+        employeeName: viewEmployeePipDetails?.employeeName,
+        endDate: viewEmployeePipDetails?.endDate,
+        extendDate:
+          viewEmployeePipDetails?.extendDate === null
+            ? extendDate
+            : disabledExtendedDate,
         id: viewEmployeePipDetails.id,
         improvement: improvementPlan,
         pipflag: viewEmployeePipDetails.pipflag,
@@ -96,9 +104,15 @@ const EmployeeExtendPIP = ({
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
   }
+
   const onHandleExtendDatePicker = (value: Date) => {
     setExtendDate(moment(value).format(dateFormat))
   }
+
+  const onHandleDisableExtendDatePicker = (value: Date) => {
+    setDisabledExtendedDate(moment(value).format(dateFormat))
+  }
+
   const disableExtendDate = new Date()
   disableExtendDate.setFullYear(disableExtendDate.getFullYear() + 1)
 
@@ -119,6 +133,13 @@ const EmployeeExtendPIP = ({
     viewEmployeePipDetails?.endDate,
   ])
 
+  const extendDateMandatory = (
+    <span className={extendDate ? TextWhite : TextDanger}>*</span>
+  )
+
+  const disableExtendDateMandatory = (
+    <span className={disabledExtendedDate ? TextWhite : TextDanger}>*</span>
+  )
   return (
     <>
       <OCard
@@ -201,39 +222,69 @@ const EmployeeExtendPIP = ({
             </CCol>
           </CRow>
           <CRow className="mt-3">
-            <CCol sm={3} md={3} className="text-end">
-              <CFormLabel className="mt-1">
-                Extend Date:
-                <span className={extendDate ? TextWhite : TextDanger}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="extend-date"
-                data-testid="extendDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                placeholderText="Extend Date"
-                name="extendDate"
-                minDate={new Date()}
-                maxDate={disableExtendDate}
-                value={extendDate}
-                onChange={(date: Date) => onHandleExtendDatePicker(date)}
-              />
-              {isExtendDateError && (
-                <CCol sm={6}>
-                  <span className="text-danger">
-                    <b>
-                      Extend date should be greater than Start date and should
-                      not be in between Start date and End date.
-                    </b>
-                  </span>
+            {viewEmployeePipDetails?.extendDate === null ? (
+              <>
+                <CCol sm={3} md={3} className="text-end">
+                  <CFormLabel className="mt-1">
+                    Extend Date:
+                    {extendDateMandatory}
+                  </CFormLabel>
                 </CCol>
-              )}
-            </CCol>
+                <CCol sm={3}>
+                  <ReactDatePicker
+                    id="extend-date"
+                    data-testid="extendDate"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                    autoComplete="off"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Extend Date"
+                    name="extendDate"
+                    minDate={new Date()}
+                    maxDate={disableExtendDate}
+                    value={extendDate}
+                    onChange={(date: Date) => onHandleExtendDatePicker(date)}
+                  />
+                  {isExtendDateError && (
+                    <span className="text-danger">
+                      <b>
+                        Extend date should be greater than Start date and should
+                        not be in between Start date and End date.
+                      </b>
+                    </span>
+                  )}
+                </CCol>
+              </>
+            ) : (
+              <>
+                <CCol sm={3} md={3} className="text-end">
+                  <CFormLabel className="mt-1">
+                    Extend Date:
+                    {disableExtendDateMandatory}
+                  </CFormLabel>
+                </CCol>
+                <CCol sm={3}>
+                  <ReactDatePicker
+                    id="extend-date"
+                    data-testid="extendDate"
+                    className="form-control form-control-sm sh-date-picker form-control-not-allowed"
+                    autoComplete="off"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
+                    placeholderText="Extend Date"
+                    name="extendDate"
+                    minDate={new Date()}
+                    maxDate={disableExtendDate}
+                    value={disabledExtendedDate}
+                    onChange={(date: Date) =>
+                      onHandleDisableExtendDatePicker(date)
+                    }
+                  />
+                </CCol>
+              </>
+            )}
           </CRow>
           <CRow className="mt-3">
             <CCol sm={3} md={3} className="text-end">
@@ -320,7 +371,11 @@ const EmployeeExtendPIP = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              disabled={!isExtendBtnEnabled || isExtendDateError}
+              disabled={
+                !isExtendBtnEnabled ||
+                isExtendDateError ||
+                (viewEmployeePipDetails?.extendDate === null && !extendDate)
+              }
               onClick={extendBtnHandler}
             >
               Extend

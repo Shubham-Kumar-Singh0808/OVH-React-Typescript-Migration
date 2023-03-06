@@ -87,7 +87,7 @@ const EditEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      trainerAutoCompleteTarget &&
+      trainerAutoCompleteTarget?.trim() &&
       editEvent?.agenda &&
       editEvent?.description
     ) {

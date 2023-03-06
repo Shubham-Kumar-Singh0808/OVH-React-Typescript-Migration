@@ -47,7 +47,7 @@ const AddEmployeePipList = ({
   const [startDate, setStartDate] = useState<string>()
   const [endDate, setEndDate] = useState<string>()
   const [dateErrorMsg, setDateErrorMsg] = useState<boolean>(false)
-  const [selectRating, setSelectRating] = useState<string>('')
+  const [addRating, setAddRating] = useState<string>('')
   const [isReasonForPIP, setIsReasonForPIP] = useState<boolean>(true)
   const [addReasonForPIP, setAddReasonForPIP] = useState<string>('')
   const [isImprovementPlan, setIsImprovementPlan] = useState<boolean>(true)
@@ -85,7 +85,7 @@ const AddEmployeePipList = ({
     setTimeout(() => {
       setIsImprovementPlan(true)
     }, 0)
-    setSelectRating('')
+    setAddRating('')
     setEndDate('')
     setStartDate('')
   }
@@ -94,7 +94,7 @@ const AddEmployeePipList = ({
     if (
       startDate &&
       endDate &&
-      selectRating &&
+      addRating &&
       addReasonForPIP &&
       addImprovementPlan &&
       employeeName
@@ -106,15 +106,11 @@ const AddEmployeePipList = ({
   }, [
     startDate,
     endDate,
-    selectRating,
+    addRating,
     addReasonForPIP,
     addImprovementPlan,
     employeeName,
   ])
-
-  const ratings = useTypedSelector(
-    reduxServices.pipList.selectors.performanceRatings,
-  )
 
   useEffect(() => {
     dispatch(reduxServices.pipList.activeEmployee())
@@ -164,7 +160,7 @@ const AddEmployeePipList = ({
       empId: employeeDetails[0]?.employeeId,
       endDate: endDate as string,
       improvement: addImprovementPlan,
-      rating: selectRating,
+      rating: addRating,
       remarks: addReasonForPIP,
       startDate: startDate as string,
     }
@@ -337,7 +333,7 @@ const AddEmployeePipList = ({
           <CRow className="employeeAllocation-form mt-3">
             <CFormLabel className={formLabel}>
               Rating:
-              <span className={showIsRequired(selectRating)}>*</span>
+              <span className={showIsRequired(addRating)}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
@@ -346,18 +342,17 @@ const AddEmployeePipList = ({
                 id="Select"
                 data-testid="form-select1"
                 name="Select"
-                value={selectRating}
+                value={addRating}
                 onChange={(e) => {
-                  setSelectRating(e.target.value)
+                  setAddRating(e.target.value)
                 }}
               >
                 <option value={''}>Select Rating</option>
-                {ratings.length > 0 &&
-                  ratings?.map((item, index) => (
-                    <option key={index} value={item.id}>
-                      {item.rating}
-                    </option>
-                  ))}
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
               </CFormSelect>
             </CCol>
           </CRow>
