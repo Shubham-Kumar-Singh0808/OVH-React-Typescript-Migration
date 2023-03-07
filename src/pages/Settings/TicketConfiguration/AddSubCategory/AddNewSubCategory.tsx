@@ -160,6 +160,7 @@ const AddNewSubCategory = (): JSX.Element => {
       categoryId: selectCategory as string,
       estimatedTime: `${estimatedHours || '0'}.${estimatedMins || '00'}`,
       workFlow: isChecked,
+      levelOfHierarchy: subCategoryLevel,
     }
     const addSubCategoryResultAction = await dispatch(
       reduxServices.ticketConfiguration.addSubCategory(prepareObject),

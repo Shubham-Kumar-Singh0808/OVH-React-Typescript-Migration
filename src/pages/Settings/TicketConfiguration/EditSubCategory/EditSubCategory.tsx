@@ -39,6 +39,9 @@ const EditSubCategory = ({
   const [estimatedTimeHours, setEstimateTimeHours] = useState('')
   const [estimatedTimeMinutes, setEstimatedTimeMinutes] = useState('')
   const [subCategoryNameExist, setSubCategoryNameExist] = useState('')
+  const [level, setLevel] = useState<string | number>(
+    editSubCategory.levelOfHierarchy,
+  )
   const dispatch = useAppDispatch()
   const subCategoryList = useTypedSelector(
     reduxServices.ticketConfiguration.selectors.subCategoryList,
@@ -64,11 +67,6 @@ const EditSubCategory = ({
       setEditSubCategoryCopy((prevState) => {
         return { ...prevState, ...{ [name]: subCategoryName } }
       })
-    } else if (name === 'levelOfHierarchy') {
-      const level = value.replace(estimatedTimeRegexReplace, '')
-      setEditSubCategoryCopy((prevState) => {
-        return { ...prevState, ...{ [name]: level } }
-      })
     } else {
       setEditSubCategoryCopy((prevState) => {
         return { ...prevState, ...{ [name]: value } }
@@ -93,6 +91,12 @@ const EditSubCategory = ({
     }
   }
 
+  const handleLevelOfHierarchyChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setLevel(e.target.value.replace(estimatedTimeRegexReplace, ''))
+  }
+
   const updateToastMessage = (
     <OToast
       toastMessage="Sub-Category updated successfully"
@@ -111,7 +115,7 @@ const EditSubCategory = ({
         categoryName: editSubCategory.categoryName,
         departmentName: editSubCategory.departmentName,
         departmentId: editSubCategory.departmentId,
-        levelOfHierarchy: editSubCategory.levelOfHierarchy,
+        levelOfHierarchy: level,
       })
       setEstimateTimeHours(editSubCategory.estimatedTime.split('.')[0])
       setEstimatedTimeMinutes(editSubCategory.estimatedTime.split('.')[1])
@@ -141,6 +145,7 @@ const EditSubCategory = ({
         estimatedTimeMinutes || '00'
       }`,
       workFlow: isWorkFlowChecked,
+      levelOfHierarchy: level,
     }
     const updateSubCategoryResultAction = await dispatch(
       reduxServices.ticketConfiguration.updateSubCategory(prepareObject),
@@ -267,10 +272,7 @@ const EditSubCategory = ({
                 data-testid="chk-workFlow"
                 onChange={() => {
                   setIsWorkFlowChecked(!isWorkFlowChecked)
-                  setEditSubCategoryCopy({
-                    ...editSubCategoryCopy,
-                    levelOfHierarchy: 1,
-                  })
+                  setLevel(1)
                 }}
                 checked={isWorkFlowChecked}
               />
@@ -290,8 +292,8 @@ const EditSubCategory = ({
                     autoComplete="off"
                     defaultValue={1}
                     maxLength={2}
-                    onChange={onChangeInputHandler}
-                    value={editSubCategoryCopy.levelOfHierarchy}
+                    onChange={handleLevelOfHierarchyChange}
+                    value={level}
                   />
                 </CCol>
               </>
