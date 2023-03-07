@@ -231,6 +231,7 @@ const PayrollManagement = (): JSX.Element => {
       dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
     }
   }, [])
+
   const note =
     excelData.length === 0 ? (
       <span className="textColor-shade" ng-show="MsgFlag">
@@ -239,6 +240,17 @@ const PayrollManagement = (): JSX.Element => {
     ) : (
       <></>
     )
+
+  const Delete = userAccess?.deleteaccess && (
+    <CButton
+      color="danger btn-ovh"
+      type="button"
+      disabled={!isAllDeleteBtn}
+      id="button-delete"
+    >
+      Delete
+    </CButton>
+  )
   return (
     <>
       {toggle === '' && (
@@ -322,16 +334,7 @@ const PayrollManagement = (): JSX.Element => {
                         Search
                       </CButton>
                       &nbsp;
-                      {userAccess?.deleteaccess && (
-                        <CButton
-                          color="danger btn-ovh"
-                          type="button"
-                          disabled={!isAllDeleteBtn}
-                          id="button-delete"
-                        >
-                          Delete
-                        </CButton>
-                      )}
+                      {Delete}
                     </CInputGroup>
                   </CCol>
                 )}
