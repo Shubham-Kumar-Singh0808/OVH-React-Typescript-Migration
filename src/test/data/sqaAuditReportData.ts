@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import {
+  GetAuditDetails,
   GetSQAAuditHistory,
   GetSQAAuditReport,
 } from '../../types/SQAAuditReport/sqaAuditReportTypes'
@@ -1480,4 +1481,46 @@ export const mockSQAAuditHistoryDetails: GetSQAAuditHistory = {
       oldPersistType: null,
     },
   ],
+}
+
+export const mockSQAAuditViewReport: GetAuditDetails = {
+  id: 39,
+  auditType: 'test3',
+  projectType: 'true',
+  projectId: 403,
+  projectManager: 'Vineh Merugu',
+  auditorIds: '',
+  auditeeIds: '',
+  auditors: [],
+  auditees: [
+    {
+      id: 1057,
+      fullName: 'Pradeep Namburu',
+    },
+  ],
+  auditDate: '13/02/2023',
+  startTime: '07:00 PM',
+  endTime: '08:00 PM',
+  auditStatus: 'Open',
+  formStatus: 'Save',
+  auditRescheduleStatus: false,
+  pci: '',
+  followUpDate: '',
+  sqaComments: '',
+  sqaFileName: '',
+  sqaFilesPath: '',
+  pmComments: '',
+  pmFileName: '',
+  pmFilesPath: '',
+  createdBy: 'Rajesh',
+  createdDate: '09/02/2023',
+  updatedBy: null,
+  updatedDate: null,
+  disableEditButton: false,
+  projectName: 'java spring boot',
+  projectManagerId: 1985,
+  showEditButton: true,
+  comments: null,
+  containsFile: null,
+  isSQA: false,
 }

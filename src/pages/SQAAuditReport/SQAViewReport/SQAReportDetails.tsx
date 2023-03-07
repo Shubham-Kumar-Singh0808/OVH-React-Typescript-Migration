@@ -84,7 +84,7 @@ const SQAReportDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6}>
             <CTable className="checkList-table">
-              {SQAViewDetails.auditors.map((item, index) => {
+              {SQAViewDetails.auditors?.map((item, index) => {
                 return (
                   <CTableBody key={index}>
                     <CTableRow>
@@ -107,7 +107,7 @@ const SQAReportDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6}>
             <CTable className="checkList-table">
-              {SQAViewDetails.auditees.map((auditees, index) => {
+              {SQAViewDetails.auditees?.map((auditees, index) => {
                 return (
                   <CTableBody key={index}>
                     <CTableRow>
