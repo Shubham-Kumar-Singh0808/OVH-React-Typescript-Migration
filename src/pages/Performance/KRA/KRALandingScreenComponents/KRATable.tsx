@@ -151,7 +151,6 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         visible={isModalVisible}
         setVisible={setModalVisible}
       >
-        {/* <div data-testid="modal-cnt-kpi">{modalDescription}</div> */}
         <p>
           <div
             dangerouslySetInnerHTML={{
