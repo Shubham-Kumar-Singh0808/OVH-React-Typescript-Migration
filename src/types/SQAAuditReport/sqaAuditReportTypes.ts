@@ -180,3 +180,11 @@ export type SQAAuditees = {
   id: number
   fullName: string
 }
+export type RescheduleMeetingProps = {
+  auditDate: string
+  auditRescheduleStatus: boolean
+  endTime: string
+  id: number
+  projectId: number
+  startTime: string
+}

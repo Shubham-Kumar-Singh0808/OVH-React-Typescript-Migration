@@ -16,6 +16,7 @@ const SQAReportDetails = (): JSX.Element => {
   const SQAViewDetails = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportDetails,
   )
+
   const auditRescheduleStatus = SQAViewDetails.auditRescheduleStatus
     ? 'Yes'
     : 'No'

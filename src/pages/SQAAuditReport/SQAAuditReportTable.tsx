@@ -11,6 +11,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SQAAuditReschedule from './SQAAuditReschedule'
 import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
@@ -39,6 +40,9 @@ const SQAAuditReportTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [auditType, setAuditType] = useState<string>('')
   const [isRejectModalVisible, setIsRejectModalVisible] = useState(false)
+  const [isRescheduleModalVisible, setIsRescheduleModalVisible] =
+    useState(false)
+
   const sqaAuditReportResponse = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReport,
   )
@@ -57,6 +61,7 @@ const SQAAuditReportTable = ({
   const userAccessSqaAuditReport = userAccessToFeatures?.find(
     (feature) => feature.name === 'SQA Audit Report',
   )
+
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -81,6 +86,11 @@ const SQAAuditReportTable = ({
     setToDeleteSQAAuditId(auditId)
     setIsRejectModalVisible(true)
     setAuditType(auditType)
+  }
+
+  const handleShowRescheduleModal = (auditId: number) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsRescheduleModalVisible(true)
   }
 
   const handleConfirmDeleteSQAAudit = async () => {
@@ -209,6 +219,8 @@ const SQAAuditReportTable = ({
                       color="success"
                       className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
+                      onClick={() => handleShowRescheduleModal(auditReport.id)}
+                      disabled={auditReport.formStatus !== 'Submit'}
                     >
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
@@ -356,7 +368,6 @@ const SQAAuditReportTable = ({
           Do you really want to delete this <b>{auditType}</b> audit?
         </>
       </OModal>
-
       <OModal
         closeButtonClass="d-none"
         alignment="center"
@@ -370,6 +381,19 @@ const SQAAuditReportTable = ({
       >
         <>
           Do you really want to delete this <b>{auditType}</b> audit?
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isRescheduleModalVisible}
+        setVisible={setIsRescheduleModalVisible}
+        modalBodyClass="mt-0"
+        modalFooterClass="d-none"
+      >
+        <>
+          <SQAAuditReschedule />
         </>
       </OModal>
     </>

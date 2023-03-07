@@ -21,7 +21,7 @@ const SQAAuditHistory = (): JSX.Element => {
         Number(auditId),
       ),
     )
-  }, [])
+  }, [dispatch])
   return (
     <>
       <OCard

@@ -8,6 +8,7 @@ import {
   GetAuditDetails,
   GetSQAAuditHistory,
   GetSQAAuditReportProps,
+  RescheduleMeetingProps,
   SQAAuditReportList,
   sqaAuditReportSliceState,
   SQAAuditTimelineDetails,
@@ -93,11 +94,28 @@ const getSQAAuditDetails = createAsyncThunk<
     state: RootState
     rejectValue: ValidationError
   }
+>('sqaAuditReport/getSQAAuditDetails', async (auditId: number, thunkApi) => {
+  try {
+    return await sqaAuditReportApi.getSQAAuditDetails(auditId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const saveOrSubmitAuditForm = createAsyncThunk<
+  number,
+  RescheduleMeetingProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
 >(
-  'projectCreationRequest/getSQAAuditDetails',
-  async (auditId: number, thunkApi) => {
+  'sqaAuditReport/saveOrSubmitAuditForm',
+  async (rescheduleMeeting: RescheduleMeetingProps, thunkApi) => {
     try {
-      return await sqaAuditReportApi.getSQAAuditDetails(auditId)
+      return await sqaAuditReportApi.saveOrSubmitAuditForm(rescheduleMeeting)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -164,6 +182,7 @@ const sqaAuditReportThunk = {
   closeProjectAuditDetails,
   getNewSQAAuditTimelineDetails,
   getSQAAuditDetails,
+  saveOrSubmitAuditForm,
 }
 
 const myTicketsSelectors = {

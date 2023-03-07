@@ -4,6 +4,7 @@ import {
   ExportSQAAuditReportProps,
   GetSQAAuditHistory,
   GetAuditDetails,
+  RescheduleMeetingProps,
 } from '../../../types/SQAAuditReport/sqaAuditReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -112,6 +113,18 @@ const getSQAAuditDetails = async (
   return response.data
 }
 
+const saveOrSubmitAuditForm = async (
+  rescheduleMeeting: RescheduleMeetingProps,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.saveOrSubmitAuditForm,
+    method: AllowedHttpMethods.post,
+    data: rescheduleMeeting,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const sqaAuditReportApi = {
   getSQAAuditReport,
   exportSqaAuditReport,
@@ -119,6 +132,7 @@ const sqaAuditReportApi = {
   closeProjectAuditDetails,
   getNewSQAAuditTimelineDetails,
   getSQAAuditDetails,
+  saveOrSubmitAuditForm,
 }
 
 export default sqaAuditReportApi

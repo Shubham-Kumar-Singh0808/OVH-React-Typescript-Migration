@@ -1,18 +1,23 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import SQAReportDetails from './SQAReportDetails'
 import OCard from '../../../components/ReusableComponent/OCard'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const SQAViewReport = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.isLoading,
   )
+  const { auditId } = useParams<{ auditId: string }>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.sqaAuditReport.getSQAAuditDetails(Number(auditId)))
+  }, [])
   return (
     <>
       <OCard
