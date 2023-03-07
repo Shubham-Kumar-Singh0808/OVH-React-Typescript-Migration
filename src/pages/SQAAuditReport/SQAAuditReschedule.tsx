@@ -1,8 +1,7 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
-import { useParams } from 'react-router-dom'
 import OToast from '../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -11,7 +10,7 @@ const SQAAuditReschedule = (): JSX.Element => {
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
   const [rescheduleAuditDate, setRescheduleAuditDate] = useState<string>('')
-  const { auditId } = useParams<{ auditId: string }>()
+
   const SQAViewDetails = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportDetails,
   )
