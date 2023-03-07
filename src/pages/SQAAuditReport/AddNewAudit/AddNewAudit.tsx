@@ -274,6 +274,7 @@ const AddNewAudit = (): JSX.Element => {
       addNewAuditFormResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -332,9 +333,9 @@ const AddNewAudit = (): JSX.Element => {
               <CFormCheck
                 type="radio"
                 name="projectType"
-                id="projectType"
+                id="true"
                 data-testid="projType-dev"
-                label="Development "
+                label="Development"
                 value="true"
                 inline
                 checked={!isProjectManagerVisible}
@@ -351,7 +352,7 @@ const AddNewAudit = (): JSX.Element => {
               <CFormCheck
                 type="radio"
                 name="projectType"
-                id="projectType"
+                id="false"
                 data-testid="projType-support"
                 label="Support"
                 className="ms-3"

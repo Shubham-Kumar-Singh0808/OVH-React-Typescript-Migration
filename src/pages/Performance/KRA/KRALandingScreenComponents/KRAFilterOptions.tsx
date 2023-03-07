@@ -132,6 +132,16 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
     dispatch(reduxServices.KRA.searchKRADataThunk(getFinalBody(start, end)))
   }, [currentPage, pageSize])
 
+  useEffect(() => {
+    if (designationList) {
+      dispatch(
+        reduxServices.KRA.getDesignationThunk(
+          getDepartmentId(empDepartmentsList, selectedDepartment),
+        ),
+      )
+    }
+  }, [designationList, selectedDepartment])
+
   const submitFormHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     dispatch(reduxServices.KRA.searchKRADataThunk(getFinalBody(0, 20)))
