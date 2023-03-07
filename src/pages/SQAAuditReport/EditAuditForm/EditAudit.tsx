@@ -227,6 +227,7 @@ const EditAudit = (): JSX.Element => {
       addNewAuditFormResultAction.payload === 409
     ) {
       dispatch(reduxServices.app.actions.addToast(auditExistsToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -336,7 +337,7 @@ const EditAudit = (): JSX.Element => {
               <CFormCheck
                 type="radio"
                 name="projectType"
-                id="projectType"
+                id="true"
                 data-testid="editProjType-dev"
                 label="Development "
                 value="true"
@@ -356,7 +357,7 @@ const EditAudit = (): JSX.Element => {
               <CFormCheck
                 type="radio"
                 name="projectType"
-                id="projectType"
+                id="false"
                 data-testid="editProjType-support"
                 className="ms-3"
                 label="Support"
