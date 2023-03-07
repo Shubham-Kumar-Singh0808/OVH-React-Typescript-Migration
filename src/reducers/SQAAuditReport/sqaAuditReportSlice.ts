@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import sqaAuditReportApi from '../../middleware/api/SQAAuditReport/SQAAuditReportApi'
@@ -141,23 +141,24 @@ const sqaAuditReportSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getSQAAuditReport = action.payload
       })
-      .addCase(getSQAAuditReport.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(getNewSQAAuditTimelineDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.sqaAuditHistory = action.payload
-      })
-      .addCase(getNewSQAAuditTimelineDetails.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
       })
       .addCase(getSQAAuditDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.getAuditDetails = action.payload as GetAuditDetails
       })
-      .addCase(getSQAAuditDetails.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(
+          getSQAAuditDetails.pending,
+          getNewSQAAuditTimelineDetails.pending,
+          getSQAAuditReport.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
