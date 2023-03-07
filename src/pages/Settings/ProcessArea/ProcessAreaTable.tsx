@@ -35,6 +35,19 @@ const ProcessAreaTable = ({
     dispatch(reduxServices.processArea.getProcessAreaDetails(processSubHeadId))
   }
 
+  const sorting = result?.map((results) => {
+    const arrayForSort = [...results.processSubHeadsDto]
+    return arrayForSort?.sort((a, b) => {
+      if (a.order === null) {
+        return 1
+      } else if (b.order === null) {
+        return -1
+      } else {
+        return Number(a?.order) - Number(b?.order)
+      }
+    })
+  })
+
   return (
     <>
       <CTable
@@ -55,62 +68,48 @@ const ProcessAreaTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {result?.length > 0 &&
-            result?.map((cycle) => {
+          {sorting?.length > 0 &&
+            sorting[0]?.map((count, index) => {
               return (
                 <>
-                  {cycle.processSubHeadsDto.length > 0 &&
-                    cycle.processSubHeadsDto?.map((count, index) => {
-                      return (
-                        <>
-                          <CTableRow key={index}>
-                            <CTableDataCell scope="row">
-                              {index + 1}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count.processSubHeadName || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count?.documentName || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count?.responsible || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count?.link || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count.status === 'true'
-                                ? 'Active'
-                                : 'Inactive' || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              {count?.order || 'N/A'}
-                            </CTableDataCell>
-                            <CTableDataCell>
-                              <CTooltip content="Edit">
-                                <CButton
-                                  size="sm"
-                                  className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                                  color="info btn-ovh me-1"
-                                  onClick={() =>
-                                    editButtonHandler(
-                                      count.categoryId,
-                                      count.processSubHeadId,
-                                    )
-                                  }
-                                >
-                                  <i
-                                    className="fa fa-edit"
-                                    aria-hidden="true"
-                                  ></i>
-                                </CButton>
-                              </CTooltip>
-                            </CTableDataCell>
-                          </CTableRow>
-                        </>
-                      )
-                    })}
+                  <>
+                    <CTableRow key={index}>
+                      <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                      <CTableDataCell>
+                        {count.processSubHeadName || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {count?.documentName || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {count?.responsible || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell>{count?.link || 'N/A'}</CTableDataCell>
+                      <CTableDataCell>
+                        {count.status === 'true'
+                          ? 'Active'
+                          : 'Inactive' || 'N/A'}
+                      </CTableDataCell>
+                      <CTableDataCell>{count?.order || 'N/A'}</CTableDataCell>
+                      <CTableDataCell>
+                        <CTooltip content="Edit">
+                          <CButton
+                            size="sm"
+                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="info btn-ovh me-1"
+                            onClick={() =>
+                              editButtonHandler(
+                                count.categoryId,
+                                count.processSubHeadId,
+                              )
+                            }
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      </CTableDataCell>
+                    </CTableRow>
+                  </>
                 </>
               )
             })}
