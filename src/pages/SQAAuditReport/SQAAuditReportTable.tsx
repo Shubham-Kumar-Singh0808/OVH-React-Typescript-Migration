@@ -82,10 +82,10 @@ const SQAAuditReportTable = ({
     setAuditType(auditType)
   }
 
-  const handleShowCancelModal = (auditId: number, auditType: string) => {
+  const handleShowCancelModal = (auditId: number, sqaAuditType: string) => {
     setToDeleteSQAAuditId(auditId)
     setIsRejectModalVisible(true)
-    setAuditType(auditType)
+    setAuditType(sqaAuditType)
   }
 
   const handleShowRescheduleModal = (auditId: number) => {
