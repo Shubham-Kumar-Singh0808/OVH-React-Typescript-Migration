@@ -171,7 +171,33 @@ const PayrollManagement = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Payroll Management',
   )
-
+  const ExcelTable =
+    excelTable === false ? (
+      <>
+        {renderingPayslipData?.length > 0 && (
+          <PayrollManagementTable
+            selectMonth={selectMonth}
+            selectYear={selectYear}
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            setToggle={setToggle}
+            setToEditPayslip={setToEditPayslip}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            isAllChecked={isAllChecked}
+            setIsAllChecked={setIsAllChecked}
+            userDeleteAccess={userAccess?.deleteaccess as boolean}
+            userEditAccess={userAccess?.updateaccess as boolean}
+            editPaySlipHandler={editPaySlipHandler}
+          />
+        )}
+      </>
+    ) : (
+      <></>
+    )
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(
@@ -310,32 +336,7 @@ const PayrollManagement = (): JSX.Element => {
                   </CCol>
                 )}
               </CRow>
-              {excelTable === false ? (
-                <>
-                  {renderingPayslipData?.length > 0 && (
-                    <PayrollManagementTable
-                      selectMonth={selectMonth}
-                      selectYear={selectYear}
-                      paginationRange={paginationRange}
-                      setPageSize={setPageSize}
-                      setCurrentPage={setCurrentPage}
-                      currentPage={currentPage}
-                      pageSize={pageSize}
-                      setToggle={setToggle}
-                      setToEditPayslip={setToEditPayslip}
-                      isChecked={isChecked}
-                      setIsChecked={setIsChecked}
-                      isAllChecked={isAllChecked}
-                      setIsAllChecked={setIsAllChecked}
-                      userDeleteAccess={userAccess?.deleteaccess as boolean}
-                      userEditAccess={userAccess?.updateaccess as boolean}
-                      editPaySlipHandler={editPaySlipHandler}
-                    />
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
+              {ExcelTable}
             </>
             {excelTable ? (
               <>
