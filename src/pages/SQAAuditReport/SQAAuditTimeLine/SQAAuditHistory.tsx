@@ -36,7 +36,7 @@ const SQAAuditHistory = (): JSX.Element => {
               <CButton
                 color="info"
                 className="btn-ovh me-1"
-                data-testid="toggle-back-button"
+                data-testid="back-button"
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>

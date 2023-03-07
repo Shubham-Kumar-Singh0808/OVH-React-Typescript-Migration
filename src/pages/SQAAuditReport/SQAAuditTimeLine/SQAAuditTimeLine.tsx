@@ -28,7 +28,11 @@ const SQAAuditTimeLine = (): JSX.Element => {
       )
     } else if (persistType === 'UPDATED') {
       return (
-        <CBadge className="rounded-pill" color="info">
+        <CBadge
+          className="rounded-pill"
+          color="info"
+          data-testid="sqa-update-btn"
+        >
           Updated
         </CBadge>
       )
@@ -63,11 +67,6 @@ const SQAAuditTimeLine = (): JSX.Element => {
               auditHistory?.oldProjectType === 'true'
                 ? 'Development'
                 : 'Support'
-            const oldStartEndTime =
-              Number(auditHistory.oldStartTime) -
-              Number(auditHistory.oldEndTime)
-            console.log(oldStartEndTime)
-
             return (
               <div key={index} className="sh-timeline-card">
                 <div
