@@ -5,8 +5,13 @@ import ReactDatePicker from 'react-datepicker'
 import OToast from '../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
+import { deviceLocale } from '../../utils/dateFormatUtils'
 
-const SQAAuditReschedule = (): JSX.Element => {
+const SQAAuditReschedule = ({
+  setIsRescheduleModalVisible,
+}: {
+  setIsRescheduleModalVisible: React.Dispatch<React.SetStateAction<boolean>>
+}): JSX.Element => {
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
   const [rescheduleAuditDate, setRescheduleAuditDate] = useState<string>('')
@@ -50,10 +55,18 @@ const SQAAuditReschedule = (): JSX.Element => {
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
 
+  const rescheduleDateValue = rescheduleAuditDate
+    ? new Date(rescheduleAuditDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
+
   const saveRescheduleMeetingHandler = async () => {
     const saveRescheduleMeetingResultAction = await dispatch(
       reduxServices.sqaAuditReport.saveOrSubmitAuditForm({
-        auditDate: rescheduleAuditDate,
+        auditDate: rescheduleDateValue,
         auditRescheduleStatus: true,
         endTime: `${rescheduleAuditDate}/${endTime.hours}/${endTime.minutes}`,
         id: SQAViewDetails.id,
@@ -81,13 +94,13 @@ const SQAAuditReschedule = (): JSX.Element => {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
-            toastColor="danger"
+            toastColor="success"
             toastMessage="            
-            Leave cannot be applied on non working days."
+            Audit Rescheduled Successfully"
           />,
         ),
       )
-      // dispatch(reduxServices.addNewMailTemplateType.getMailTemplateTypes())
+      setIsRescheduleModalVisible(false)
     }
   }
   return (
@@ -112,10 +125,10 @@ const SQAAuditReschedule = (): JSX.Element => {
               dropdownMode="select"
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
-              name="fromDate"
+              name="rescheduleAuditDate"
               maxDate={disableAfterDate}
               minDate={new Date()}
-              value={rescheduleAuditDate}
+              value={rescheduleDateValue}
               onChange={(date: Date) =>
                 setRescheduleAuditDate(moment(date).format(commonFormatDate))
               }

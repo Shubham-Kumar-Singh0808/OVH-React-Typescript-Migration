@@ -91,6 +91,7 @@ const SQAAuditReportTable = ({
   const handleShowRescheduleModal = (auditId: number) => {
     setToDeleteSQAAuditId(auditId)
     setIsRescheduleModalVisible(true)
+    dispatch(reduxServices.sqaAuditReport.getSQAAuditDetails(auditId))
   }
 
   const handleConfirmDeleteSQAAudit = async () => {
@@ -393,7 +394,9 @@ const SQAAuditReportTable = ({
         modalFooterClass="d-none"
       >
         <>
-          <SQAAuditReschedule />
+          <SQAAuditReschedule
+            setIsRescheduleModalVisible={setIsRescheduleModalVisible}
+          />
         </>
       </OModal>
     </>
