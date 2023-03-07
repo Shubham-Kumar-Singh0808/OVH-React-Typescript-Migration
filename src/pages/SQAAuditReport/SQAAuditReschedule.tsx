@@ -1,6 +1,6 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import OToast from '../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -15,6 +15,7 @@ const SQAAuditReschedule = ({
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
   const [rescheduleAuditDate, setRescheduleAuditDate] = useState<string>('')
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
 
   const SQAViewDetails = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportDetails,
@@ -103,6 +104,16 @@ const SQAAuditReschedule = ({
       setIsRescheduleModalVisible(false)
     }
   }
+
+  useEffect(() => {
+    if (rescheduleAuditDate && endTime.hours && startTime.hours) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [rescheduleAuditDate, endTime.hours, startTime.hours])
+  const textWhite = 'text-white'
+  const textDanger = 'text-danger'
   return (
     <>
       <div className='modal-header"'>
@@ -112,6 +123,9 @@ const SQAAuditReschedule = ({
         <div className="form-group row">
           <CFormLabel className="col-sm-3 control-label">
             Reschedule Audit Date :
+            <span className={rescheduleDateValue ? textWhite : textDanger}>
+              *
+            </span>
           </CFormLabel>
           <div className="col-sm-3">
             <ReactDatePicker
@@ -138,6 +152,7 @@ const SQAAuditReschedule = ({
         <div className="form-group row">
           <CFormLabel className="col-sm-3 control-label">
             Reschedule Start Time :
+            <span className={startTime.hours ? textWhite : textDanger}>*</span>
           </CFormLabel>
           <div className="col-sm-9">
             <CRow>
@@ -198,6 +213,7 @@ const SQAAuditReschedule = ({
         <div className="form-group row">
           <CFormLabel className="col-sm-3 control-label">
             Reschedule End Time :
+            <span className={endTime.hours ? textWhite : textDanger}>*</span>
           </CFormLabel>
           <div className="col-sm-9">
             <CRow>
@@ -262,6 +278,7 @@ const SQAAuditReschedule = ({
               data-testid="confirmBtn"
               color="success"
               onClick={saveRescheduleMeetingHandler}
+              disabled={!isSaveButtonEnabled}
             >
               Save
             </CButton>
