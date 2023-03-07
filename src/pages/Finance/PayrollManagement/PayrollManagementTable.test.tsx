@@ -12,40 +12,47 @@ const mockSetTogglePage = jest.fn()
 const deleteButton = 'btn-delete1'
 const viewButton = 'btn-view1'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <PayrollManagementTable
+      paginationRange={[]}
+      currentPage={1}
+      setCurrentPage={mockSetTogglePage}
+      pageSize={22}
+      setPageSize={mockSetTogglePage}
+      selectMonth=""
+      selectYear=""
+      setToggle={mockSetTogglePage}
+      setToEditPayslip={mockSetTogglePage}
+      isAllChecked={true}
+      isChecked={false}
+      setIsChecked={mockSetTogglePage}
+      setIsAllChecked={mockSetTogglePage}
+      userDeleteAccess={true}
+      userEditAccess={true}
+      editPaySlipHandler={mockSetTogglePage}
+    />
+    ,
+  </div>
+)
+
 describe('Payroll Management Table Component Testing', () => {
   beforeEach(() => {
-    render(
-      <PayrollManagementTable
-        paginationRange={[]}
-        currentPage={1}
-        setCurrentPage={mockSetTogglePage}
-        pageSize={22}
-        setPageSize={mockSetTogglePage}
-        selectMonth=""
-        selectYear=""
-        setToggle={mockSetTogglePage}
-        setToEditPayslip={mockSetTogglePage}
-        isAllChecked={true}
-        isChecked={false}
-        setIsChecked={mockSetTogglePage}
-        setIsAllChecked={mockSetTogglePage}
-        userDeleteAccess={true}
-        userEditAccess={true}
-        editPaySlipHandler={mockSetTogglePage}
-      />,
-      {
-        preloadedState: {
-          payrollManagement: {
-            listSize: 22,
-            isLoading: ApiLoadingState.succeeded,
-            paySlipList: mockCurrentPayslip,
-          },
-          userAccessToFeatures: {
-            userAccessToFeatures: mockUserAccessToFeaturesData,
-          },
+    render(toRender, {
+      preloadedState: {
+        payrollManagement: {
+          listSize: 22,
+          isLoading: ApiLoadingState.succeeded,
+          paySlipList: mockCurrentPayslip,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
-    )
+    })
   })
 
   test('should render the Payroll Management Table ', () => {
