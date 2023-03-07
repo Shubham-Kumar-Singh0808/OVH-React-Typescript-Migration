@@ -958,12 +958,12 @@ const routes = [
     component: EditAudit,
   },
   {
-    path: '/newProjectAuditTimeline',
+    path: '/newProjectAuditTimeline/:auditId',
     name: 'SQA Audit TimeLine',
     component: SQAAuditTimeLine,
   },
   {
-    path: '/viewProjectAudit',
+    path: '/viewProjectAudit/:auditId',
     name: 'SQA Audit View',
     component: SQAAuditViewReport,
   },

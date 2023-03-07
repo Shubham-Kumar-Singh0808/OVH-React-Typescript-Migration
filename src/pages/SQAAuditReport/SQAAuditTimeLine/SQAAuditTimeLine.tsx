@@ -63,6 +63,11 @@ const SQAAuditTimeLine = (): JSX.Element => {
               auditHistory?.oldProjectType === 'true'
                 ? 'Development'
                 : 'Support'
+            const oldStartEndTime =
+              Number(auditHistory.oldStartTime) -
+              Number(auditHistory.oldEndTime)
+            console.log(oldStartEndTime)
+
             return (
               <div key={index} className="sh-timeline-card">
                 <div
@@ -99,7 +104,7 @@ const SQAAuditTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {projectType ? (
+                      {auditHistory?.projectType !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -165,7 +170,7 @@ const SQAAuditTimeLine = (): JSX.Element => {
                             </CFormLabel>
                             {isSQAAuditPrevValue(auditHistory.oldStartTime)}
                             &nbsp;
-                            {auditHistory.startTime} to {auditHistory.endTime}
+                            {auditHistory.startTime} - {auditHistory.endTime}
                           </div>
                         </>
                       ) : (

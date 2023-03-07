@@ -114,7 +114,7 @@ export type SQAAuditTimelineDetails = {
   oldAuditees: string
   oldAuditDate: string
   oldStartTime: string
-  oldEndTime: null
+  oldEndTime: string
   oldAuditStatus: string
   oldFormStatus: null
   oldPci: null

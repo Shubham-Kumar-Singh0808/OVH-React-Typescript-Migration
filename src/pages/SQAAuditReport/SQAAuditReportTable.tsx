@@ -245,7 +245,7 @@ const SQAAuditReportTable = ({
                     <CButton
                       color="danger"
                       className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
+                      data-testid="cancel-btn"
                       onClick={() =>
                         handleShowCancelModal(
                           auditReport.id,
@@ -266,7 +266,7 @@ const SQAAuditReportTable = ({
                       <CButton
                         color="danger"
                         className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="edit-btn"
+                        data-testid="delete-btn"
                         onClick={() =>
                           handleShowDeleteModal(
                             auditReport.id,
@@ -281,7 +281,7 @@ const SQAAuditReportTable = ({
                         ></i>
                       </CButton>
                     )}
-                    <Link to={`/newProjectAuditTimeline`}>
+                    <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
                       <CButton
                         color="info"
                         className="btn-ovh-employee-list me-1 mt-1"

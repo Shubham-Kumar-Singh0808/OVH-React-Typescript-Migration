@@ -1,9 +1,9 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import SQAAuditTimeLine from './SQAAuditTimeLine'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
@@ -13,6 +13,15 @@ const SQAAuditHistory = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.isLoading,
   )
+  const { auditId } = useParams<{ auditId: string }>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(
+      reduxServices.sqaAuditReport.getNewSQAAuditTimelineDetails(
+        Number(auditId),
+      ),
+    )
+  }, [])
   return (
     <>
       <OCard
