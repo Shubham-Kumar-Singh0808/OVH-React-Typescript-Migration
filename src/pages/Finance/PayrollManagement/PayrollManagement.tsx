@@ -1,17 +1,10 @@
-import {
-  CRow,
-  CCol,
-  CFormLabel,
-  CFormSelect,
-  CButton,
-  CFormInput,
-  CInputGroup,
-} from '@coreui/react-pro'
+import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
 import PaySlipExcelFileTable from './PaySlipExcelFileTable/PaySlipExcelFileTable'
+import PayrollManagementFilterOptions from './PayrollManagementFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -35,13 +28,6 @@ const PayrollManagement = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
-
-  const currentYear = new Date().getFullYear()
-  const previousYears = currentYear - 4
-  const years = []
-  for (let i = currentYear; i >= previousYears; i--) {
-    years.push(i)
-  }
 
   useEffect(() => {
     if (selectMonth) {
@@ -76,6 +62,9 @@ const PayrollManagement = (): JSX.Element => {
 
   const PaySlipsListSize = useTypedSelector(
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
+  )
+  const excelData = useTypedSelector(
+    reduxServices.payrollManagement.selectors.excelData,
   )
 
   const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
@@ -168,19 +157,6 @@ const PayrollManagement = (): JSX.Element => {
     }
   }
 
-  const deleteBtnHandler = async () => {
-    const previewBtnActionResult = await dispatch(
-      reduxServices.payrollManagement.deleteCheckedPayslips(10408),
-    )
-    if (
-      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
-        previewBtnActionResult,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(failedMessage))
-    }
-  }
-
   useEffect(() => {
     if (isChecked || isAllChecked) {
       setIsAllDeleteBtn(true)
@@ -195,7 +171,33 @@ const PayrollManagement = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Payroll Management',
   )
-
+  const ExcelTable =
+    excelTable === false ? (
+      <>
+        {renderingPayslipData?.length > 0 && (
+          <PayrollManagementTable
+            selectMonth={selectMonth}
+            selectYear={selectYear}
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            setToggle={setToggle}
+            setToEditPayslip={setToEditPayslip}
+            isChecked={isChecked}
+            setIsChecked={setIsChecked}
+            isAllChecked={isAllChecked}
+            setIsAllChecked={setIsAllChecked}
+            userDeleteAccess={userAccess?.deleteaccess as boolean}
+            userEditAccess={userAccess?.updateaccess as boolean}
+            editPaySlipHandler={editPaySlipHandler}
+          />
+        )}
+      </>
+    ) : (
+      <></>
+    )
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(
@@ -208,20 +210,21 @@ const PayrollManagement = (): JSX.Element => {
       )
   }, [dispatch, selectMonth, selectYear])
 
-  const previewButton = previewBtn ? (
-    <CButton
-      className="btn btn-download text-decoration-none btn btn-ovh"
-      size="sm"
-      color="info"
-      type="submit"
-      data-testid="preview-btn"
-      onClick={previewBtnHandler}
-    >
-      Preview
-    </CButton>
-  ) : (
-    ''
-  )
+  const previewButton =
+    previewBtn && excelData.length === 0 ? (
+      <CButton
+        className="btn btn-download text-decoration-none btn btn-ovh"
+        size="sm"
+        color="info"
+        type="submit"
+        data-testid="preview-btn"
+        onClick={previewBtnHandler}
+      >
+        Preview
+      </CButton>
+    ) : (
+      ''
+    )
 
   useEffect(() => {
     if (window.location.pathname === '/payslipUpload') {
@@ -229,6 +232,25 @@ const PayrollManagement = (): JSX.Element => {
     }
   }, [])
 
+  const note =
+    excelData.length === 0 ? (
+      <span className="textColor-shade" ng-show="MsgFlag">
+        Note: Please upload file either xls or xlsx format.
+      </span>
+    ) : (
+      <></>
+    )
+
+  const Delete = userAccess?.deleteaccess && (
+    <CButton
+      color="danger btn-ovh"
+      type="button"
+      disabled={!isAllDeleteBtn}
+      id="button-delete"
+    >
+      Delete
+    </CButton>
+  )
   return (
     <>
       {toggle === '' && (
@@ -239,71 +261,13 @@ const PayrollManagement = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <CRow className="mb-3">
-              <CCol className="col-sm-2 control-label text-left">
-                <CFormLabel className="mt-2">
-                  Select Month:{' '}
-                  <span className={selectMonth ? 'text-white' : 'text-danger'}>
-                    *
-                  </span>
-                </CFormLabel>
-              </CCol>
-              <CCol sm={2}>
-                <CFormSelect
-                  aria-label="Default select example"
-                  size="sm"
-                  id="Month"
-                  data-testid="form-select1"
-                  name="Month"
-                  value={selectMonth}
-                  onChange={(e) => {
-                    setSelectMonth(e.target.value)
-                  }}
-                >
-                  <option value={''}>Select Month</option>
-                  <option>January</option>
-                  <option>February</option>
-                  <option>March</option>
-                  <option>April</option>
-                  <option>May</option>
-                  <option>June</option>
-                  <option>July</option>
-                  <option>August</option>
-                  <option>September</option>
-                  <option>October</option>
-                  <option>November</option>
-                  <option>December</option>
-                </CFormSelect>
-              </CCol>
-              <CCol className="col-sm-2 control-label text-left">
-                <CFormLabel className="mt-1" data-testid="form-select2">
-                  Select Year:{' '}
-                  <span className={selectYear ? 'text-white' : 'text-danger'}>
-                    *
-                  </span>
-                </CFormLabel>
-              </CCol>
-              <CCol sm={2}>
-                <CFormSelect
-                  aria-label="Default select example"
-                  size="sm"
-                  id="Year"
-                  data-testid="form-select2"
-                  name="Year"
-                  disabled={!isPercentageEnable}
-                  value={selectYear}
-                  onChange={(e) => {
-                    setSelectYear(e.target.value)
-                  }}
-                >
-                  <option value={''}>Select Year</option>
-                  {years.length > 0 &&
-                    years?.map((year, index) => (
-                      <option key={index}>{year}</option>
-                    ))}
-                </CFormSelect>
-              </CCol>
-            </CRow>
+            <PayrollManagementFilterOptions
+              selectMonth={selectMonth}
+              setSelectMonth={setSelectMonth}
+              selectYear={selectYear}
+              setSelectYear={setSelectYear}
+              isPercentageEnable={isPercentageEnable}
+            />
             {selectMonth && selectYear ? (
               <CRow className="mt-3 sh-previewBtn">
                 <CCol sm={4} className="mt-4 mb-4">
@@ -321,9 +285,7 @@ const PayrollManagement = (): JSX.Element => {
                         )
                       }
                     />
-                    <span className="textColor-shade" ng-show="MsgFlag">
-                      Note: Please upload file either xls or xlsx format.
-                    </span>
+                    {note}
                   </label>
                   {fileUploadErrorText && (
                     <div id="error">
@@ -372,47 +334,12 @@ const PayrollManagement = (): JSX.Element => {
                         Search
                       </CButton>
                       &nbsp;
-                      {userAccess?.deleteaccess && (
-                        <CButton
-                          color="danger btn-ovh"
-                          type="button"
-                          disabled={!isAllDeleteBtn}
-                          onClick={deleteBtnHandler}
-                          id="button-delete"
-                        >
-                          Delete
-                        </CButton>
-                      )}
+                      {Delete}
                     </CInputGroup>
                   </CCol>
                 )}
               </CRow>
-              {excelTable === false ? (
-                <>
-                  {renderingPayslipData?.length > 0 && (
-                    <PayrollManagementTable
-                      selectMonth={selectMonth}
-                      selectYear={selectYear}
-                      paginationRange={paginationRange}
-                      setPageSize={setPageSize}
-                      setCurrentPage={setCurrentPage}
-                      currentPage={currentPage}
-                      pageSize={pageSize}
-                      setToggle={setToggle}
-                      setToEditPayslip={setToEditPayslip}
-                      isChecked={isChecked}
-                      setIsChecked={setIsChecked}
-                      isAllChecked={isAllChecked}
-                      setIsAllChecked={setIsAllChecked}
-                      userDeleteAccess={userAccess?.deleteaccess as boolean}
-                      userEditAccess={userAccess?.updateaccess as boolean}
-                      editPaySlipHandler={editPaySlipHandler}
-                    />
-                  )}
-                </>
-              ) : (
-                <></>
-              )}
+              {ExcelTable}
             </>
             {excelTable ? (
               <>

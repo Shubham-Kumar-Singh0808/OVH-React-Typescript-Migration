@@ -38,6 +38,10 @@ const ResignationTimeLine = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
   const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] = useState(false)
+
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
   const handleDescription = (description: string) => {
     setComments(description)
   }
@@ -211,6 +215,7 @@ const ResignationTimeLine = ({
                   dropdownMode="select"
                   value={editResignationTimeLine?.relievingDate}
                   onChange={(date: Date) => onStartDateChangeHandler(date)}
+                  maxDate={disableAfterDate}
                 />
               </div>
             ) : (

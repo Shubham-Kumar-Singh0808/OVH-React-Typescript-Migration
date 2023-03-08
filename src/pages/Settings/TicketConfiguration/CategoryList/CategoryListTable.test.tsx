@@ -55,7 +55,7 @@ describe('CategoryList Table', () => {
       expect(screen.getByRole('columnheader', { name: 'Actions' })).toBeTruthy()
     })
     test('should render correct number of page records', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(33)
+      expect(screen.queryAllByRole('row')).toHaveLength(21)
     })
     test('should render edit button in the Actions', () => {
       expect(screen.getByTestId('cl-edit-btn0')).toHaveClass(

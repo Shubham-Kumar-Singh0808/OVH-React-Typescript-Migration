@@ -465,7 +465,7 @@ export interface EventListApi extends ApiBase {
   updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
-  getAppraisalCycle: string
+  cycle: string
   editAppraisalCycle: string
   updateAppraisalCycle: string
   validateCycle: string
@@ -799,4 +799,9 @@ export interface AddNewAudit extends ApiBase {
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
   exportSqaAuditReport: string
+  deleteProjectAuditDetails: string
+  closeAudit: string
+  getNewSQAAuditTimelineDetails: string
+  getAuditDetails: string
+  saveOrSubmitAuditForm: string
 }

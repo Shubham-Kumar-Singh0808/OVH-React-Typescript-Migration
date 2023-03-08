@@ -5,7 +5,6 @@ import appraisalConfigurationsApi from '../../../middleware/api/Settings/Configu
 import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
-  AppraisalCycleApiProps,
   AppraisalCycleSliceState,
   GetAppraisalCycle,
   GetCycle,
@@ -13,9 +12,9 @@ import {
 
 const getAppraisalCycle = createAsyncThunk(
   'appraisalConfigurations/getAllAppraisalCycle',
-  async (props: AppraisalCycleApiProps, thunkApi) => {
+  async (_, thunkApi) => {
     try {
-      return await appraisalConfigurationsApi.getAppraisalCycle(props)
+      return await appraisalConfigurationsApi.getAppraisalCycle()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -83,8 +82,7 @@ const appraisalCycleSlice = createSlice({
       })
       .addCase(getAppraisalCycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.appraisalCycle = action.payload.list
-        state.listSize = action.payload.size
+        state.appraisalCycle = action.payload
       })
       .addMatcher(
         isAnyOf(

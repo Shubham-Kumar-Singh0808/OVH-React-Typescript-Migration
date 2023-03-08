@@ -311,7 +311,7 @@ const EmployeeAllocationEntryTable = (props: {
                               }
                               onChange={handleEditProjectAllocationHandler}
                             >
-                              <option value="true">yes</option>
+                              <option value="true">Yes</option>
                               <option value="false">No</option>
                             </CFormSelect>
                           </div>

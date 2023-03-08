@@ -49,7 +49,6 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
     isPercentReadonly,
     setPercentReadOnly,
     setIsButtonEnabled,
-    callDesignationEveryDepartment,
   } = props
   const empDeptList = useTypedSelector((state) => state.KRA.empDepartments)
   const desigList = useTypedSelector((state) => state.KRA.designations)
@@ -97,15 +96,15 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
     setEnteredDescription(value)
   }
 
-  useEffect(() => {
-    if (callDesignationEveryDepartment) {
-      dispatch(
-        reduxServices.KRA.getDesignationThunk(
-          getDepartmentId(empDeptList, enteredDept),
-        ),
-      )
-    }
-  }, [callDesignationEveryDepartment, enteredDept])
+  // useEffect(() => {
+  //   if (callDesignationEveryDepartment) {
+  //     dispatch(
+  //       reduxServices.KRA.getDesignationThunk(
+  //         getDepartmentId(empDeptList, enteredDept),
+  //       ),
+  //     )
+  //   }
+  // }, [callDesignationEveryDepartment, enteredDept])
 
   useEffect(() => {
     if (enteredDesig === selectDesignation) {
