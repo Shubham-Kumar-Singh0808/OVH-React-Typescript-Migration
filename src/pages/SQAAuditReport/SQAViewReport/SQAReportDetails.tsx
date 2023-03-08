@@ -141,6 +141,30 @@ const SQAReportDetails = (): JSX.Element => {
             <p className="mb-0">{auditRescheduleStatus}</p>
           </CCol>
         </CRow>
+        {SQAViewDetails.pmComments ? (
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Audit Rescheduled:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{SQAViewDetails.pmComments}</p>
+            </CCol>
+          </CRow>
+        ) : (
+          <></>
+        )}
+        {SQAViewDetails.pmFileName ? (
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              NC `s Closure Report:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{SQAViewDetails.pmFileName}</p>
+            </CCol>
+          </CRow>
+        ) : (
+          <></>
+        )}
       </CForm>
     </>
   )

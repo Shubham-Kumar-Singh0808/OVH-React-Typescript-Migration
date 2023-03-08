@@ -32,6 +32,8 @@ describe('sqaAuditReportSlice', () => {
         isLoading: ApiLoadingState.loading,
         getSQAAuditReport: { size: 0, list: [] },
         sqaAuditReportList: [],
+        sqaAuditHistory: {},
+        getAuditDetails: {},
       })
     })
 
@@ -45,6 +47,8 @@ describe('sqaAuditReportSlice', () => {
         isLoading: ApiLoadingState.succeeded,
         getSQAAuditReport: mockSQAAuditReport,
         sqaAuditReportList: [],
+        sqaAuditHistory: {},
+        getAuditDetails: {},
       })
     })
 
