@@ -15,6 +15,7 @@ import {
 } from '../../../../types/Performance/KRA/KRATypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { dottedContent } from '../KRAConstants'
 
 const KRATableItem = (props: KRATableItemProps): JSX.Element => {
   const {
@@ -112,7 +113,7 @@ const KRATableItem = (props: KRATableItemProps): JSX.Element => {
                   descriptionHandler(e, selectedKRA.description as string)
                 }
               >
-                {parse(selectedKRA.description)}
+                {parse(dottedContent(selectedKRA.description))}
               </CLink>
             ) : (
               'N/A'

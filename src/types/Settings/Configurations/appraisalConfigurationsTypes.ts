@@ -40,11 +40,6 @@ export type AppraisalCycleSliceState = {
   listSize: number
 }
 
-export type GetAppraisalCycleResponse = {
-  list: GetAppraisalCycle[]
-  size: number
-}
-
 export type AppraisalCycleTableProps = {
   paginationRange: number[]
   currentPage: number
