@@ -55,6 +55,8 @@ export type sqaAuditReportSliceState = {
   getSQAAuditReport: GetSQAAuditReport
   sqaAuditReportList: SQAAuditReportList[]
   isLoading: ApiLoadingState
+  sqaAuditHistory: GetSQAAuditHistory
+  getAuditDetails: GetAuditDetails
 }
 
 export type GetSQAAuditReportProps = {
@@ -75,4 +77,114 @@ export type ExportSQAAuditReportProps = {
   startdate: string
   enddate: string
   multiSearch: string
+}
+export type SQAAuditTimelineDetails = {
+  id: null
+  auditId: null
+  auditType: string
+  projectType: string
+  projectId: string
+  projectName: string
+  projectManager: string
+  auditors: string
+  auditees: string
+  auditDate: string
+  startTime: string
+  endTime: string
+  auditStatus: string
+  formStatus: string
+  auditRescheduleStatus: string
+  pci: null
+  followUpDate: null
+  sqaComments: null
+  sqaFileName: null
+  sqaFilesPath: null
+  pmComments: null
+  pmFileName: null
+  pmFilesPath: null
+  modifiedBy: string
+  modifiedDate: string
+  persistType: string
+  oldAuditType: string
+  oldProjectType: string
+  oldProjectId: null
+  oldProjectName: string
+  oldProjectManager: string
+  oldAuditors: string
+  oldAuditees: string
+  oldAuditDate: string
+  oldStartTime: string
+  oldEndTime: string
+  oldAuditStatus: string
+  oldFormStatus: null
+  oldPci: null
+  oldFollowUpDate: null
+  oldSqaComments: null
+  oldSqaFileName: null
+  oldSqaFilesPath: null
+  oldPmComments: null
+  oldPmFileName: null
+  oldPmFilesPath: null
+  oldModifiedBy: null
+  oldModifiedDate: null
+  oldPersistType: null
+}
+
+export type GetSQAAuditHistory = {
+  size: number
+  list: SQAAuditTimelineDetails[]
+}
+
+export type GetAuditDetails = {
+  id: number
+  auditType: string
+  projectType: string
+  projectId: number
+  projectManager: string
+  auditorIds: string
+  auditeeIds: string
+  auditors: SQAAuditors[]
+  auditees: SQAAuditees[]
+  auditDate: string
+  startTime: string
+  endTime: string
+  auditStatus: string
+  formStatus: string
+  auditRescheduleStatus: boolean
+  pci: string
+  followUpDate: string
+  sqaComments: string
+  sqaFileName: string
+  sqaFilesPath: string
+  pmComments: string
+  pmFileName: string
+  pmFilesPath: string
+  createdBy: string
+  createdDate: string
+  updatedBy: null
+  updatedDate: null
+  disableEditButton: boolean
+  projectName: string
+  projectManagerId: number
+  showEditButton: boolean
+  comments: null
+  containsFile: null
+  isSQA: boolean
+}
+
+export type SQAAuditors = {
+  id: number
+  fullName: string
+}
+export type SQAAuditees = {
+  id: number
+  fullName: string
+}
+export type RescheduleMeetingProps = {
+  auditDate: string
+  auditRescheduleStatus: boolean
+  endTime: string
+  id: number
+  projectId: number
+  startTime: string
 }
