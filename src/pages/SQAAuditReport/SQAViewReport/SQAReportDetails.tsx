@@ -20,6 +20,7 @@ const SQAReportDetails = (): JSX.Element => {
   const auditRescheduleStatus = SQAViewDetails.auditRescheduleStatus
     ? 'Yes'
     : 'No'
+  const projectType = SQAViewDetails.projectType ? 'Development' : 'Support'
   return (
     <>
       <CForm>
@@ -44,7 +45,7 @@ const SQAReportDetails = (): JSX.Element => {
             Project Type:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{SQAViewDetails.projectType}</p>
+            <p className="mb-0">{projectType}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
