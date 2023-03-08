@@ -76,10 +76,10 @@ const SQAAuditReportTable = ({
     dispatch(reduxServices.addNewAuditForm.editAuditFormDetails(id))
   }
 
-  const handleShowDeleteModal = (auditId: number, auditType: string) => {
+  const handleShowDeleteModal = (auditId: number, auditSQAType: string) => {
     setToDeleteSQAAuditId(auditId)
     setIsDeleteModalVisible(true)
-    setAuditType(auditType)
+    setAuditType(auditSQAType)
   }
 
   const handleShowCancelModal = (auditId: number, sqaAuditType: string) => {
