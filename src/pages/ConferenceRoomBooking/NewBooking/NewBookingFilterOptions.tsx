@@ -400,7 +400,7 @@ const NewBookingFilterOptions = ({
               shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
                 Agenda :
                 <span
                   className={showIsRequired(

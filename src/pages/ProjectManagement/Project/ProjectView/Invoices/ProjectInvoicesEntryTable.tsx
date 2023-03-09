@@ -126,15 +126,19 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            <CTableHeaderCell>
-              {invoiceSummary.invoiceAmountSentDate}
-            </CTableHeaderCell>
-            <CTableHeaderCell>
-              {invoiceSummary.amountAfterDiscount}
-            </CTableHeaderCell>
-            <CTableHeaderCell>{invoiceSummary.writeoffAmount}</CTableHeaderCell>
-            <CTableHeaderCell>{invoiceSummary.discount}</CTableHeaderCell>
-            <CTableHeaderCell>{invoiceSummary.totalAmount}</CTableHeaderCell>
+            <CTableRow>
+              <CTableHeaderCell>
+                {invoiceSummary.invoiceAmountSentDate}
+              </CTableHeaderCell>
+              <CTableHeaderCell>
+                {invoiceSummary.amountAfterDiscount}
+              </CTableHeaderCell>
+              <CTableHeaderCell>
+                {invoiceSummary.writeoffAmount}
+              </CTableHeaderCell>
+              <CTableHeaderCell>{invoiceSummary.discount}</CTableHeaderCell>
+              <CTableHeaderCell>{invoiceSummary.totalAmount}</CTableHeaderCell>
+            </CTableRow>
           </CTableBody>
         </CTable>
       </div>
