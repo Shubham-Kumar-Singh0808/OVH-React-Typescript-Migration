@@ -1,6 +1,7 @@
 import {
   InvoicesOfMilestoneList,
   InvoicesList,
+  InvoiceSummary,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/Invoices/invoicesTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -38,9 +39,25 @@ const getInvoicesOfMilestone = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const getInvoiceSummary = async (
+  invoiceId: number,
+): Promise<InvoiceSummary> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectInvoicesApiConfig.getInvoiceSummary,
+    method: AllowedHttpMethods.get,
+    params: {
+      invoiceId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const invoicesApi = {
   getClosedMilestonesAndCRs,
   getInvoicesOfMilestone,
+  getInvoiceSummary,
 }
 
 export default invoicesApi

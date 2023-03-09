@@ -841,6 +841,7 @@ export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+  getInvoiceSummary: apiPrefix + '/invoice/getInvoiceSummary',
 }
 
 export const projectTailoringApiConfig: ProjectTailoringApi = {

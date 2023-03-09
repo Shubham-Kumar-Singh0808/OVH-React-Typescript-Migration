@@ -10,9 +10,10 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
+import OCard from '../../../../../components/ReusableComponent/OCard'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { InvoicesOfMilestone } from '../../../../../types/ProjectManagement/Project/ProjectView/Invoices/invoicesTypes'
 
 const ProjectInvoicesEntryTable = (): JSX.Element => {
@@ -25,9 +26,14 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     reduxServices.projectInvoices.selectors.invoicesOfMilestoneList,
   )
 
+  const invoiceSummary = useTypedSelector(
+    reduxServices.projectInvoices.selectors.invoiceSummary,
+  )
+  const dispatch = useAppDispatch()
   const handleModal = (data: InvoicesOfMilestone) => {
     setIsInvoiceNumberModalVisible(true)
     setInvoiceNumber(data)
+    dispatch(reduxServices.projectInvoices.getInvoiceSummary(data.invoiceId))
   }
 
   const handleMileStoneModal = (data: InvoicesOfMilestone) => {
@@ -80,50 +86,59 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     </>
   )
   const invoiceModel = (
-    <CTable className="milestone-model-table">
-      <CTableBody>
-        <CTableRow>
-          <CTableDataCell>Serial Number:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.invoicNumber}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell> Invoice Number:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.number}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Invoice Percentage:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestonePercentage}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell> Status:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.invoiceStatus}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Sent Date:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.raisedDate || 'N/A'}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Sent Amount</CTableDataCell>
-          <CTableDataCell>&{invoiceNumber?.totalAmount}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Discount:</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.discount}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Tax:</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.discountRate}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Total Sent Amount (AUD):</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.totalAmount}</CTableDataCell>
-        </CTableRow>
-      </CTableBody>
-    </CTable>
+    <OCard
+      className="mb-4 myprofile-wrapper project-report"
+      title="Invoice Details"
+      CBodyClassName="ps-0 pe-0"
+      CFooterClassName="d-none"
+    >
+      <div className="form-group">
+        <div className=" bs-none milstonehs">
+          <p className="ng-binding">
+            <span className="text-info">Serial Number :</span>
+            &nbsp;{invoiceSummary.number}
+            <span className="text-info">Invoice Number :</span>&nbsp;
+            {invoiceSummary.invoiceNumber}
+          </p>
+          <p className="ng-binding">
+            <span className="text-info">Milestone:</span>&nbsp;
+            {invoiceSummary.mileStoneName}
+          </p>
+          <p className="ng-binding">
+            <span className="text-info">Invoice Percentage:</span>&nbsp;
+            {invoiceSummary.milestonePercentage}
+          </p>
+          <p className="ng-binding">
+            <span className="text-info">Status:</span>&nbsp;
+            {invoiceSummary.invoiceStatus}
+          </p>
+        </div>
+        <CTable className="table table-striped invoice-table headings-align">
+          <CTableHead>
+            <CTableRow>
+              <CTableHead>Sent Date</CTableHead>
+              <CTableHead>Sent Amount</CTableHead>
+              <CTableHead>Discount</CTableHead>
+              <CTableHead>Tax</CTableHead>
+              <CTableHead className="ng-binding">
+                Total Sent Amount (AUD)
+              </CTableHead>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            <CTableHeaderCell>
+              {invoiceSummary.invoiceAmountSentDate}
+            </CTableHeaderCell>
+            <CTableHeaderCell>
+              {invoiceSummary.amountAfterDiscount}
+            </CTableHeaderCell>
+            <CTableHeaderCell>{invoiceSummary.writeoffAmount}</CTableHeaderCell>
+            <CTableHeaderCell>{invoiceSummary.discount}</CTableHeaderCell>
+            <CTableHeaderCell>{invoiceSummary.totalAmount}</CTableHeaderCell>
+          </CTableBody>
+        </CTable>
+      </div>
+    </OCard>
   )
   return (
     <>
