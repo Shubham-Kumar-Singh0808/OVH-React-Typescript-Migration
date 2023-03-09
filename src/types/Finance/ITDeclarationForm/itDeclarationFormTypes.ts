@@ -11,7 +11,7 @@ export type EmployeeDetails = {
 
 export type Investment = {
   id?: number
-  investmentId: string
+  investmentId: string | number
   customAmount: string
 }
 

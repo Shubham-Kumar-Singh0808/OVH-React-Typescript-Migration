@@ -197,7 +197,7 @@ const EditSectionsFilterOption = (): JSX.Element => {
       </CRow>
       {editDeclarationForm.formSectionsDTOs?.map((currentSec, index) => {
         return (
-          <CRow key={index}>
+          <CRow key={currentSec.sectionId + index}>
             <CCol>
               <EditMoreSections
                 index={index}

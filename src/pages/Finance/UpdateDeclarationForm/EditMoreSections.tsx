@@ -41,6 +41,7 @@ const EditMoreSections = ({
   formSectionList: itDeclarationFormSectionList[]
 }): JSX.Element => {
   const [counter, setCounter] = useState(1)
+  const [investId, setInvestId] = useState<number>()
   const editDeclaration = useTypedSelector(
     reduxServices.itDeclarationList.selectors.editDeclarationForm,
   )
@@ -62,7 +63,7 @@ const EditMoreSections = ({
   useEffect(() => {
     setEditMoreSections(editDeclaration)
   }, [])
-  console.log(editDeclaration)
+  // console.log(editDeclaration)
   const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(false)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
     {
@@ -105,6 +106,7 @@ const EditMoreSections = ({
     customAmtIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
+    e.preventDefault()
     const newInvestmentList: Investment[] = JSON.parse(
       JSON.stringify(investmentList),
     )
@@ -130,7 +132,8 @@ const EditMoreSections = ({
     const isInvestmentExists = newInvestmentCopy.find(
       (currInvestment) => currInvestment.investmentId === e.target.value,
     )
-
+    console.log(e.target.value, 'e.target.value')
+    setInvestId(Number(e.target.value))
     newInvestmentCopy[investIndex].investmentId = e.target.value
     setInvestmentList(newInvestmentCopy)
     if (isInvestmentExists !== undefined) {
@@ -152,7 +155,7 @@ const EditMoreSections = ({
   }, [investmentList])
 
   useEffect(() => {
-    console.log({ formSectionList })
+    // console.log({ formSectionList })
     setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {
@@ -223,6 +226,7 @@ const EditMoreSections = ({
               sectionList={sectionList}
               editMoreSections={editMoreSections}
               setEditMoreSections={setEditMoreSections}
+              investId={investId}
             />
           </CTableBody>
         </CTable>
