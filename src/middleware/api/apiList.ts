@@ -981,4 +981,5 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getAuditDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
   saveOrSubmitAuditForm:
     apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  downloadSQAAuditFile: '/sqaAuditController/downloadSQAAuditFile',
 }

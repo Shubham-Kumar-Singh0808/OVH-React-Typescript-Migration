@@ -7,10 +7,13 @@ import {
   CTableBody,
   CTableRow,
   CTableDataCell,
+  CLink,
 } from '@coreui/react-pro'
 import React from 'react'
+import sqaAuditReportApi from '../../../middleware/api/SQAAuditReport/SQAAuditReportApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { downloadFile } from '../../../utils/helper'
 
 const SQAReportDetails = (): JSX.Element => {
   const SQAViewDetails = useTypedSelector(
@@ -21,6 +24,19 @@ const SQAReportDetails = (): JSX.Element => {
     ? 'Yes'
     : 'No'
   const projectType = SQAViewDetails.projectType ? 'Development' : 'Support'
+  const fileAttachment = (
+    <i className="fa fa-paperclip me-1">{SQAViewDetails.pmFileName}</i>
+  )
+
+  console.log(SQAViewDetails.pmFileName)
+
+  const handleSqaFile = async () => {
+    const sqaFileDownload = await sqaAuditReportApi.downloadSQAAuditFile({
+      fileName: SQAViewDetails.pmFileName as string,
+    })
+
+    downloadFile(sqaFileDownload, `${SQAViewDetails.pmFileName}`)
+  }
   return (
     <>
       <CForm>
@@ -160,7 +176,12 @@ const SQAReportDetails = (): JSX.Element => {
               NC `s Closure Report:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{SQAViewDetails.pmFileName}</p>
+              <CLink
+                className="cursor-pointer sh-hive-activity-link"
+                onClick={handleSqaFile}
+              >
+                {fileAttachment}
+              </CLink>
             </CCol>
           </CRow>
         ) : (

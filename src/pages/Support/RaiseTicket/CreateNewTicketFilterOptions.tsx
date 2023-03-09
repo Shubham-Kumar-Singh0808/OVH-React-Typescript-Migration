@@ -63,11 +63,11 @@ const CreateNewTicketFilterOptions = ({
   useEffect(() => {
     if (deptId) {
       dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
-      setSubCategoryIdValue(0)
+      // setSubCategoryIdValue(0)
     }
     if (categoryId) {
       dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
-      setSubCategoryIdValue(0)
+      // setSubCategoryIdValue(0)
     }
   }, [deptId, categoryId])
   const commonFormatDate = 'l'
@@ -206,13 +206,32 @@ const CreateNewTicketFilterOptions = ({
     if (!file) return
     setUploadFile(file[0])
   }
-
   useEffect(() => {
-    if (deptId === 0) {
-      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+    if (categoryId === 0) {
       dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
     }
+  }, [dispatch, categoryId])
+
+  useEffect(() => {
+    if (!deptId) {
+      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
+      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
+      setSubCategoryIdValue(0)
+    }
   }, [dispatch, deptId])
+
+  useEffect(() => {
+    if (!deptId) {
+      setCategoryId(undefined)
+      setSubCategoryIdValue(undefined)
+    }
+  }, [deptId])
+
+  useEffect(() => {
+    if (!categoryId) {
+      setSubCategoryIdValue(undefined)
+    }
+  }, [categoryId])
 
   return (
     <>
@@ -266,6 +285,7 @@ const CreateNewTicketFilterOptions = ({
               value={deptId}
               onChange={(e) => {
                 setDeptId(Number(e.target.value))
+                setSubCategoryIdValue(0)
               }}
             >
               <option value="">Select Department</option>
