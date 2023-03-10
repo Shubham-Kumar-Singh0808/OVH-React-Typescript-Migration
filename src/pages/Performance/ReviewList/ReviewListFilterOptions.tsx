@@ -35,6 +35,13 @@ const ReviewListFilterOptions = ({
   const activeCycle = useTypedSelector(
     reduxServices.reviewList.selectors.isActiveCycle,
   )
+
+  type Option = {
+    label: string
+    value: string
+    text: string
+  }
+
   const [cycle, setCycle] = useState<number | string>()
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
@@ -42,7 +49,7 @@ const ReviewListFilterOptions = ({
   const [selectEmpstatus, setSelectEmpStatus] = useState<string>('')
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
-  // const [selectedRating, setSelectedRating] = useState([])
+  const [selectedRating, setSelectedRating] = useState<Option[]>([])
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [dateError, setDateError] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
@@ -66,6 +73,17 @@ const ReviewListFilterOptions = ({
   )
 
   const dispatch = useAppDispatch()
+
+  const ratingOptions: Option[] = [
+    { label: 'Option 1', value: 'option1', text: 'Option 1' },
+    { label: 'Option 2', value: 'option2', text: 'Option 2' },
+    { label: 'Option 3', value: 'option3', text: 'Option 3' },
+    // add more options as needed
+  ]
+
+  const handleRatingsChange = (value: Option[]) => {
+    setSelectedRating(value)
+  }
 
   useEffect(() => {
     if (cycle) {
@@ -175,6 +193,7 @@ const ReviewListFilterOptions = ({
     setSearchValue('')
     setShowExportButton(false)
     setIsChecked(false)
+    setSelectedRating([])
   }
 
   const handleExportReviewList = async () => {
@@ -381,7 +400,8 @@ const ReviewListFilterOptions = ({
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
           <CMultiSelect
-            options={reviewRatings}
+            options={selectedRating ? ratingOptions : selectedRating}
+            onChange={() => handleRatingsChange}
             selectionType="counter"
             data-testid="ratings"
           />
