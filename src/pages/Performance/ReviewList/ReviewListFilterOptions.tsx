@@ -43,6 +43,7 @@ const ReviewListFilterOptions = ({
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
   // const [selectedRating, setSelectedRating] = useState([])
+  const [isChecked, setIsChecked] = useState<boolean>(false)
   const [dateError, setDateError] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
   const [selectRadio, setSelectRadio] = useState<string>('')
@@ -57,9 +58,9 @@ const ReviewListFilterOptions = ({
   const departments = useTypedSelector(
     reduxServices.reviewList.selectors.departments,
   )
-  const role = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.role,
-  )
+  // const role = useTypedSelector(
+  //   (state) => state.authentication.authenticatedUser.role,
+  // )
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -113,7 +114,7 @@ const ReviewListFilterOptions = ({
     return dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: '',
-        cycleId: cycle as number,
+        cycleId: activeCycle?.id,
         departmentName: (selectDepartment as string) || '',
         designationName: (selectDesignation as string) || '',
         empStatus: selectEmpstatus,
@@ -173,6 +174,7 @@ const ReviewListFilterOptions = ({
     setDateError(false)
     setSearchValue('')
     setShowExportButton(false)
+    setIsChecked(false)
   }
 
   const handleExportReviewList = async () => {
@@ -205,7 +207,7 @@ const ReviewListFilterOptions = ({
             id="configurations"
             data-testid="select-configurations"
             name="configurations"
-            value={cycle as string}
+            value={cycle}
             onChange={(e) => {
               setCycle(e.target.value)
             }}
@@ -442,6 +444,8 @@ const ReviewListFilterOptions = ({
         </CCol>
       </CRow>
       <ReviewListSearchFilterOptions
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
         setSelectRadio={setSelectRadio}
         selectRadio={selectRadio}
         searchValue={searchValue}
