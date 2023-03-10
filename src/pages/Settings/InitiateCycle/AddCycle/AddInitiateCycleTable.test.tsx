@@ -34,21 +34,6 @@ describe('InitiateCycle Table with data', () => {
     )
   })
 
-  test('should render first page data only', async () => {
-    await waitFor(() => {
-      userEvent.click(screen.getByText('Next ›', { exact: true }))
-      expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
-    })
-  })
-
-  test('should disable first and prev in pagination if first page', async () => {
-    await waitFor(() => {
-      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
-    })
-  })
-
   test('should render Initiate Cycle table component with  crashing', async () => {
     await waitFor(() => {
       userEvent.selectOptions(screen.getByRole('combobox'), ['40'])

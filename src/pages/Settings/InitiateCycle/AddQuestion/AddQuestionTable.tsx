@@ -15,7 +15,6 @@ import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
@@ -23,7 +22,6 @@ import { InitiateCycleTableProps } from '../../../../types/Settings/InitiateCycl
 import { currentPageData } from '../../../../utils/paginationUtils'
 
 const AddQuestionTable = ({
-  paginationRange,
   pageSize,
   setPageSize,
   currentPage,
@@ -183,18 +181,6 @@ const AddQuestionTable = ({
             />
           )}
         </CCol>
-        {questionsListSize > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
-          </CCol>
-        )}
       </CRow>
       <OModal
         modalSize="lg"
