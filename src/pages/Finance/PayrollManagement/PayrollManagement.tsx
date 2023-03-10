@@ -198,17 +198,6 @@ const PayrollManagement = (): JSX.Element => {
     ) : (
       <></>
     )
-  useEffect(() => {
-    if (selectMonth && selectYear)
-      dispatch(
-        reduxServices.payrollManagement.getCurrentPayslip({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          month: selectMonth,
-          year: Number(selectYear),
-        }),
-      )
-  }, [dispatch, selectMonth, selectYear])
 
   const previewButton =
     previewBtn && excelData.length === 0 ? (
@@ -251,6 +240,17 @@ const PayrollManagement = (): JSX.Element => {
       Delete
     </CButton>
   )
+  useEffect(() => {
+    if (selectMonth && selectYear)
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          year: Number(selectYear),
+          month: selectMonth,
+        }),
+      )
+  }, [dispatch, selectMonth, selectYear])
   return (
     <>
       {toggle === '' && (
