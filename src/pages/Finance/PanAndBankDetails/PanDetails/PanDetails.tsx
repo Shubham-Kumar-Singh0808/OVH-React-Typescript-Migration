@@ -84,6 +84,9 @@ const PanDetails = (): JSX.Element => {
   }
   const history = useHistory()
 
+  const isCheckedVIsible = isChecked
+    ? bankDetail.finance?.pfAccountNumber
+    : 'N/A'
   return (
     <>
       {userAccess?.updateaccess && (
@@ -150,7 +153,7 @@ const PanDetails = (): JSX.Element => {
             </CCol>
           ) : (
             <CCol sm={5} className="sh-alignment">
-              {isChecked ? bankDetail.finance?.pfAccountNumber : 'N/A'}
+              {isCheckedVIsible}
             </CCol>
           )}
         </CRow>
