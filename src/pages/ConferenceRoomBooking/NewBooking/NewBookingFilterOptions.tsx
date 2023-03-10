@@ -317,7 +317,6 @@ const NewBookingFilterOptions = ({
 
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
-      console.log(durationInMs, durationInHours)
       if (durationInHours > 2) {
         dispatch(
           reduxServices.app.actions.addToast(
