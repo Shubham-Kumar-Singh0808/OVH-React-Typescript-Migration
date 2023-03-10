@@ -67,29 +67,6 @@ const TicketConfiguration = (): JSX.Element => {
     pageSize,
   } = usePagination(subCategoryListSize, 20)
 
-  useEffect(() => {
-    if (filterByDepartment) {
-      dispatch(
-        reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
-          {
-            startIndex: pageSize * (currentPage - 1),
-            endIndex: pageSize * currentPage,
-            departmentId: (filterByDepartment as string) ?? '',
-            categoryId: (filterByCategory as string) ?? '',
-            subCategoryId: (filterBySubCategory as string) ?? '',
-          },
-        ),
-      )
-    }
-  }, [
-    currentPage,
-    pageSize,
-    filterByDepartment,
-    filterByCategory,
-    filterBySubCategory,
-    toggle,
-  ])
-
   const editSubCategoryButtonHandler = (
     editSubCategoryData: TicketConfigurationList,
   ): void => {

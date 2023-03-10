@@ -32,13 +32,17 @@ const ReviewListFilterOptions = ({
   setIsTableView: (value: boolean) => void
   initialReviewList: ReviewListData
 }): JSX.Element => {
+  const activeCycle = useTypedSelector(
+    reduxServices.reviewList.selectors.isActiveCycle,
+  )
   const [cycle, setCycle] = useState<number | string>()
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
-  const [selectEmpstatus, setSelectEmpStatus] = useState<string>('Active')
+  const [selectEmpstatus, setSelectEmpStatus] = useState<string>('')
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
+  // const [selectedRating, setSelectedRating] = useState([])
   const [dateError, setDateError] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
   const [selectRadio, setSelectRadio] = useState<string>('')
@@ -50,11 +54,12 @@ const ReviewListFilterOptions = ({
   const designations = useTypedSelector(
     reduxServices.reviewList.selectors.designations,
   )
-
   const departments = useTypedSelector(
     reduxServices.reviewList.selectors.departments,
   )
-
+  const role = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.role,
+  )
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -68,6 +73,12 @@ const ReviewListFilterOptions = ({
       setIsButtonEnabled(false)
     }
   }, [cycle])
+
+  useEffect(() => {
+    if (activeCycle?.active === true) {
+      setCycle(String(activeCycle.id))
+    }
+  }, [activeCycle])
 
   useEffect(() => {
     if (!departments)
@@ -194,7 +205,7 @@ const ReviewListFilterOptions = ({
             id="configurations"
             data-testid="select-configurations"
             name="configurations"
-            value={cycle}
+            value={cycle as string}
             onChange={(e) => {
               setCycle(e.target.value)
             }}

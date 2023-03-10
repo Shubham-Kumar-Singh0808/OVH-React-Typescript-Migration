@@ -7,6 +7,11 @@ export type EmpDepartments = {
   allocationSupportFlag: boolean
 }
 
+export interface RatingOptions {
+  value: string
+  label: string
+}
+
 export type ReviewListData = {
   appraisalFormStatus: string
   cycleId: number
@@ -94,6 +99,22 @@ export type ReviewListTableProps = {
   isTableView: boolean
 }
 
+export type ActiveCycle = {
+  id: number
+  name: string
+  description: null
+  toDate: string
+  fromDate: string
+  active: boolean
+  appraisalType: string
+  appraisalDuration: string
+  level: number
+  cycleStartedFlag: boolean
+  appraisalStartDate: string
+  appraisalEndDate: string
+  servicePeriod: number
+}
+
 export type ReviewListSliceState = {
   employeeDepartments: EmpDepartments[]
   appraisalCycle: AppraisalCycle[]
@@ -101,6 +122,7 @@ export type ReviewListSliceState = {
   designations: Designation[]
   employeeReviewList: ReviewListResponse
   listSize: number
+  activeCycle: ActiveCycle
   isLoading: LoadingState
   error: ValidationError
 }
