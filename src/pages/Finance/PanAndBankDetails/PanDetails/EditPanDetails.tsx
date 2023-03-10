@@ -1,6 +1,7 @@
 import {
   CButton,
   CCol,
+  CFormInput,
   CFormLabel,
   CLink,
   CRow,
@@ -19,11 +20,18 @@ const EditPanDetails = ({
   setIsEditPanData,
   editPanData,
   financeId,
+  onChangeInputHandler,
 }: {
   isEditPanData: boolean
   setIsEditPanData: React.Dispatch<React.SetStateAction<boolean>>
   financeId: number
   editPanData: Finance
+  onChangeInputHandler: (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -106,6 +114,38 @@ const EditPanDetails = ({
   )
   return (
     <>
+      <CCol sm={5}>
+        <CRow>
+          <CFormLabel
+            className="col-sm-4 col-form-label"
+            data-testid="aadharNumber"
+          >
+            <b>Aadhar Card No</b>
+          </CFormLabel>
+          <CCol sm={1} className="sh-alignment">
+            :
+          </CCol>
+          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+            <CCol sm={5}>
+              <CFormInput
+                className="eventType-editInput"
+                data-testid="aadharNumber"
+                type="text"
+                id="aadharNumber"
+                size="sm"
+                name="aadharCardNumber"
+                autoComplete="off"
+                value={editPanData.aadharCardNumber}
+                onChange={onChangeInputHandler}
+              />
+            </CCol>
+          ) : (
+            <CCol sm={5} className="sh-alignment">
+              {bankDetail.finance?.aadharCardNumber || 'N/A'}
+            </CCol>
+          )}
+        </CRow>
+      </CCol>
       <CCol sm={5}>
         <CRow>
           <CFormLabel className="col-sm-4 col-form-label">
