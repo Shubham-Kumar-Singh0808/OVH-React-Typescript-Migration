@@ -24,6 +24,11 @@ const PayrollManagement = (): JSX.Element => {
     {} as CurrentPayslip,
   )
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
+
+  const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
+    undefined,
+  )
+
   const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
@@ -55,6 +60,7 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
+    setIsNoteVisible(file[0])
     setClearFile(element.value)
   }
 
@@ -136,6 +142,7 @@ const PayrollManagement = (): JSX.Element => {
       const previewBtnActionResult = await dispatch(
         reduxServices.payrollManagement.readExcelFile(formData),
       )
+
       if (
         (reduxServices.payrollManagement.readExcelFile.fulfilled.match(
           previewBtnActionResult,
@@ -143,16 +150,22 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(failedMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
-        ) &&
-          previewBtnActionResult.payload === 500) ||
-        previewBtnActionResult.payload === ''
+        ),
+        previewBtnActionResult.payload === 500)
       ) {
         setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
+      } else if (
+        reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+          previewBtnActionResult,
+        ) &&
+        previewBtnActionResult.type ===
+          'payrollManagement/readExcelFile/fulfilled'
+      ) {
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
       }
     }
   }
@@ -222,7 +235,7 @@ const PayrollManagement = (): JSX.Element => {
   }, [])
 
   const note =
-    excelData.length === 0 ? (
+    !isNoteVisible && excelData.length === 0 ? (
       <span className="textColor-shade" ng-show="MsgFlag">
         Note: Please upload file either xls or xlsx format.
       </span>
