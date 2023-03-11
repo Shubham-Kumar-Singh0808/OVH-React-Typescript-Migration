@@ -23,6 +23,8 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
+
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
 
   const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
@@ -184,11 +186,14 @@ const PayrollManagement = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Payroll Management',
   )
+
   const ExcelTable =
     excelTable === false ? (
       <>
         {renderingPayslipData?.length > 0 && (
           <PayrollManagementTable
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
             selectMonth={selectMonth}
             selectYear={selectYear}
             paginationRange={paginationRange}
@@ -242,17 +247,33 @@ const PayrollManagement = (): JSX.Element => {
     ) : (
       <></>
     )
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(
+        selectedIds as number,
+      ),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedMessage))
+    }
+  }
 
   const Delete = userAccess?.deleteaccess && (
     <CButton
       color="danger btn-ovh"
       type="button"
       disabled={!isAllDeleteBtn}
+      onClick={allDeleteBtnHandler}
       id="button-delete"
     >
       Delete
     </CButton>
   )
+
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(
