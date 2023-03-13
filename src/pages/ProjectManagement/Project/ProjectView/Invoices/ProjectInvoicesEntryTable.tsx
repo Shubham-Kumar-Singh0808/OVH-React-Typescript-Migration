@@ -91,47 +91,27 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     <>
       <h4 className="model-header-text mb-3">Invoice Details</h4>
       <div className="form-group">
-        {/* <div className=" bs-none milstonehs">
-          <p className="ng-binding">
-            <span className="text-info">Serial Number :</span>
-            &nbsp;{invoiceSummary.number}
-            <span className="text-info">Invoice Number :</span>&nbsp;
-            {invoiceSummary.invoiceNumber}
-          </p>
-          <p className="ng-binding">
-            <span className="text-info">Milestone:</span>&nbsp;
-            {invoiceSummary.mileStoneName}
-          </p>
-          <p className="ng-binding">
-            <span className="text-info">Invoice Percentage:</span>&nbsp;
-            {invoiceSummary.milestonePercentage}
-          </p>
-          <p className="ng-binding">
-            <span className="text-info">Status:</span>&nbsp;
-            {invoiceSummary.invoiceStatus}
-          </p>
-        </div> */}
         <CRow className="employeeAllocation-form">
-          <CCol sm={4}>
+          <CCol sm={4} className="pe-0">
             <CFormLabel className="text-info mt-2 col">
               Serial Number :
             </CFormLabel>
             <span className="col-sm-6">{invoiceSummary.number}</span>
             &nbsp;
           </CCol>
-          <CCol sm={4}>
+          <CCol sm={4} className="p-0">
             <CFormLabel className="text-info mt-2 col">
               Invoice Number :
             </CFormLabel>
             <span className="col-sm-6">{invoiceSummary.invoiceNumber}</span>
             &nbsp;
           </CCol>
-          <CCol sm={4}>
+          <CCol sm={4} className="p-0">
             <CFormLabel className="text-info mt-2 col">Milestone :</CFormLabel>
             <span className="col-sm-6">{invoiceSummary.mileStoneName}</span>
             &nbsp;
           </CCol>
-          <CCol sm={4}>
+          <CCol sm={4} className="pe-0">
             <CFormLabel className="text-info mt-2 col">
               Invoice Percentage:
             </CFormLabel>
@@ -140,7 +120,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
             </span>
             &nbsp;
           </CCol>
-          <CCol sm={4}>
+          <CCol sm={4} className="p-0">
             <CFormLabel className="text-info mt-2 col">Status:</CFormLabel>
             <span className="col-sm-6">{invoiceSummary.invoiceStatus}</span>
             &nbsp;
@@ -164,11 +144,11 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                 {invoiceSummary.invoiceAmountSentDate}
               </CTableDataCell>
               <CTableDataCell>
-                {invoiceSummary.amountAfterDiscount}
+                ${invoiceSummary.amountAfterDiscount}
               </CTableDataCell>
               <CTableDataCell>{invoiceSummary.writeoffAmount}</CTableDataCell>
               <CTableDataCell>{invoiceSummary.discount}</CTableDataCell>
-              <CTableDataCell>{invoiceSummary.totalAmount}</CTableDataCell>
+              <CTableDataCell>${invoiceSummary.totalAmount}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>
