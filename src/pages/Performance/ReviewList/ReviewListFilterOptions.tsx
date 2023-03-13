@@ -371,6 +371,7 @@ const ReviewListFilterOptions = ({
             options={reviewRatings}
             selectionType="counter"
             data-testid="ratings"
+            className="py-1"
           />
         </CCol>
         <CCol sm={3}>

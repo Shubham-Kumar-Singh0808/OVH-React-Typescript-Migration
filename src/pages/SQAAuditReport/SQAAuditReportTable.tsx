@@ -255,44 +255,46 @@ const SQAAuditReportTable = ({
                         </CButton>
                       </Link>
                     )}
-                    <CButton
-                      color="danger"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="cancel-btn"
-                      onClick={() =>
-                        handleShowCancelModal(
-                          auditReport.id,
-                          auditReport.auditType,
-                        )
-                      }
-                      disabled={
-                        auditReport.formStatus === 'Save' ||
-                        auditReport.auditStatus === 'Closed'
-                      }
-                    >
-                      <i
-                        className="fa fa-times text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
                     {userAccessSqaAuditReport?.deleteaccess && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="delete-btn"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            auditReport.id,
-                            auditReport.auditType,
-                          )
-                        }
-                        disabled={auditReport.formStatus !== 'Save'}
-                      >
-                        <i
-                          className="fa fa-trash-o text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="cancel-btn"
+                          onClick={() =>
+                            handleShowCancelModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={
+                            auditReport.formStatus === 'Save' ||
+                            auditReport.auditStatus === 'Closed'
+                          }
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="delete-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={auditReport.formStatus !== 'Save'}
+                        >
+                          <i
+                            className="fa fa-trash-o text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
                     )}
                     <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
                       <CButton
