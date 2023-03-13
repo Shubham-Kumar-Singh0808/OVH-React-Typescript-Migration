@@ -47,6 +47,12 @@ const EmployeePipList = (): JSX.Element => {
   )
 
   useEffect(() => {
+    if (localStorage.getItem("fmonth")) {
+      setSelectDate(localStorage.getItem("fmonth") ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
     if (searchByAdded || searchByEmployee) {
       setIsMultiSearchBtn(true)
     } else {
@@ -72,13 +78,14 @@ const EmployeePipList = (): JSX.Element => {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
-    dateSelection: selectDate || '',
+    dateSelection: (localStorage.getItem('fmonth') ? localStorage.getItem('fmonth') : selectDate) || '',
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
     to: (toDate as string) || '',
   }
+
   useEffect(() => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
   }, [selectCurrentPage, dispatch, pageSize, selectedEmployeePipStatus])
@@ -145,6 +152,7 @@ const EmployeePipList = (): JSX.Element => {
   }, [selectDate])
 
   const clearButtonHandler = () => {
+    localStorage.removeItem("fmonth")
     setSelectDate('Current Month')
     setFromDate('')
     setToDate('')
@@ -184,6 +192,8 @@ const EmployeePipList = (): JSX.Element => {
     setFromDate(moment(value).format(dateFormat))
   }
 
+  console.log('selectDate: ', selectDate)
+
   return (
     <>
       {toggle === '' && (
@@ -207,6 +217,9 @@ const EmployeePipList = (): JSX.Element => {
                 value={selectDate}
                 onChange={(e) => {
                   setSelectDate(e.target.value)
+                  if(!localStorage.getItem("fmonth")) {
+                    localStorage.setItem("fmonth", e.target.value)
+                  }
                 }}
               >
                 <option value="Today">Today</option>
