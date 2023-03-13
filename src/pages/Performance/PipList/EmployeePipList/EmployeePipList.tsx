@@ -47,8 +47,8 @@ const EmployeePipList = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (localStorage.getItem("fmonth")) {
-      setSelectDate(localStorage.getItem("fmonth") ?? '')
+    if (localStorage.getItem('fmonth')) {
+      setSelectDate(localStorage.getItem('fmonth') ?? '')
     }
   }, [])
 
@@ -78,7 +78,10 @@ const EmployeePipList = (): JSX.Element => {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
-    dateSelection: (localStorage.getItem('fmonth') ? localStorage.getItem('fmonth') : selectDate) || '',
+    dateSelection:
+      (localStorage.getItem('fmonth')
+        ? localStorage.getItem('fmonth')
+        : selectDate) || '',
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -152,7 +155,7 @@ const EmployeePipList = (): JSX.Element => {
   }, [selectDate])
 
   const clearButtonHandler = () => {
-    localStorage.removeItem("fmonth")
+    localStorage.removeItem('fmonth')
     setSelectDate('Current Month')
     setFromDate('')
     setToDate('')
@@ -178,6 +181,7 @@ const EmployeePipList = (): JSX.Element => {
   useEffect(() => {
     if (window.location.pathname === '/PIPList') {
       setToggle('')
+      localStorage.removeItem('fmonth')
     }
   }, [])
 
@@ -217,8 +221,8 @@ const EmployeePipList = (): JSX.Element => {
                 value={selectDate}
                 onChange={(e) => {
                   setSelectDate(e.target.value)
-                  if(!localStorage.getItem("fmonth")) {
-                    localStorage.setItem("fmonth", e.target.value)
+                  if (!localStorage.getItem('fmonth')) {
+                    localStorage.setItem('fmonth', e.target.value)
                   }
                 }}
               >
