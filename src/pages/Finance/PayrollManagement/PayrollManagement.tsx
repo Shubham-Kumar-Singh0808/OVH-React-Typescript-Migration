@@ -28,6 +28,9 @@ const PayrollManagement = (): JSX.Element => {
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
+  const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
+    undefined,
+  )
 
   useEffect(() => {
     if (selectMonth) {
@@ -56,6 +59,7 @@ const PayrollManagement = (): JSX.Element => {
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
     setClearFile(element.value)
+    setIsNoteVisible(file[0])
   }
 
   const dispatch = useAppDispatch()
@@ -222,7 +226,7 @@ const PayrollManagement = (): JSX.Element => {
   }, [])
 
   const note =
-    excelData.length === 0 ? (
+    !isNoteVisible && excelData.length === 0 ? (
       <span className="textColor-shade" ng-show="MsgFlag">
         Note: Please upload file either xls or xlsx format.
       </span>
