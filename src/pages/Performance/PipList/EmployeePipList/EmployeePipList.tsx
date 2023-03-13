@@ -34,6 +34,8 @@ const EmployeePipList = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
 
+  const [selectRadioAction, setSelectRadioAction] = useState<string>('PIP')
+
   const dispatch = useAppDispatch()
 
   const selectCurrentPage = useTypedSelector(
@@ -41,10 +43,6 @@ const EmployeePipList = (): JSX.Element => {
   )
 
   const listSize = useTypedSelector(reduxServices.pipList.selectors.listSize)
-
-  const selectedEmployeePipStatus = useTypedSelector(
-    reduxServices.pipList.selectors.selectedEmployeePipStatus,
-  )
 
   useEffect(() => {
     if (searchByAdded || searchByEmployee) {
@@ -71,7 +69,7 @@ const EmployeePipList = (): JSX.Element => {
   const pipListObj = {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
-    selectionStatus: selectedEmployeePipStatus,
+    selectionStatus: selectRadioAction,
     dateSelection: selectDate || '',
     from: (fromDate as string) || '',
     multiSearch: searchInput,
@@ -81,7 +79,7 @@ const EmployeePipList = (): JSX.Element => {
   }
   useEffect(() => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
-  }, [selectCurrentPage, dispatch, pageSize, selectedEmployeePipStatus])
+  }, [selectCurrentPage, dispatch, pageSize, selectRadioAction])
 
   const failureToast = (
     <OToast toastMessage="Enter Vaild Name !" toastColor="danger" />
@@ -127,7 +125,7 @@ const EmployeePipList = (): JSX.Element => {
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
-    selectionStatus: selectedEmployeePipStatus,
+    selectionStatus: selectRadioAction,
     to: (toDate as string) || '',
     endIndex: pageSize * currentPage,
     startIndex: pageSize * (currentPage - 1),
@@ -151,12 +149,12 @@ const EmployeePipList = (): JSX.Element => {
     setSearchByEmployee(false)
     setSearchByAdded(false)
     setSearchInput('')
-    dispatch(reduxServices.pipList.actions.changeSelectedEmployeePipStatus(''))
+    setSelectRadioAction('PIP')
     dispatch(
       reduxServices.pipList.getAllPIPList({
         startIndex: pageSize * (selectCurrentPage - 1),
         endIndex: pageSize * selectCurrentPage,
-        selectionStatus: selectedEmployeePipStatus,
+        selectionStatus: selectRadioAction,
         dateSelection: currentMonth,
         from: (fromDate as string) || '',
         multiSearch: searchInput,
@@ -235,6 +233,8 @@ const EmployeePipList = (): JSX.Element => {
                 setSelectDate={setSelectDate}
                 setFromDate={setFromDate}
                 setToDate={setToDate}
+                selectRadioAction={selectRadioAction}
+                setSelectRadioAction={setSelectRadioAction}
               />
             </CCol>
             {selectDate === 'Custom' ? (
@@ -388,6 +388,8 @@ const EmployeePipList = (): JSX.Element => {
             setSelectDate={setSelectDate}
             setFromDate={setFromDate}
             setToDate={setToDate}
+            selectRadioAction={selectRadioAction}
+            setSelectRadioAction={setSelectRadioAction}
           />
         </OCard>
       )}
