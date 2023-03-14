@@ -67,6 +67,8 @@ const SQAAuditTimeLine = (): JSX.Element => {
               auditHistory?.oldProjectType === 'true'
                 ? 'Development'
                 : 'Support'
+            console.log(oldSQAProjectType)
+
             return (
               <div key={index} className="sh-timeline-card">
                 <div
@@ -103,13 +105,15 @@ const SQAAuditTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {auditHistory?.projectType !== null ? (
+                      {projectType || auditHistory.oldProjectType !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
                               Project Type:
                             </CFormLabel>
-                            {isSQAAuditPrevValue(oldSQAProjectType)}
+                            {auditHistory.oldProjectType === null
+                              ? ''
+                              : isSQAAuditPrevValue(oldSQAProjectType)}
                             &nbsp;
                             {projectType}
                           </div>
@@ -117,6 +121,7 @@ const SQAAuditTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
+
                       {auditHistory.projectName ? (
                         <>
                           <div className="mb-1">
