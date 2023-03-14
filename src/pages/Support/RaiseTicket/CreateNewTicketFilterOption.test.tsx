@@ -90,7 +90,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     expect(departmentSelect).toHaveValue('3')
 
     const categoryName = screen.getByTestId('categoryNameSelect')
-    userEvent.selectOptions(categoryName, ['Access'])
+    userEvent.selectOptions(categoryName, [''])
     expect(categoryName).toHaveValue('9')
 
     const subCategoryName = screen.getByTestId('subCategoryNameSelect')

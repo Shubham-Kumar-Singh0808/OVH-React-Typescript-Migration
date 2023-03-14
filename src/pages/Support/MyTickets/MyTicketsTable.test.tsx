@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import MyTicketsTable from './MyTicketsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -39,6 +40,9 @@ describe('MyTickets component with data', () => {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
@@ -82,6 +86,9 @@ describe('My Tickets Table Component Testing', () => {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })
