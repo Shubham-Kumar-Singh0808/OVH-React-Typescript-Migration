@@ -247,6 +247,7 @@ const SQAAuditReportTable = ({
                           className="btn-ovh-employee-list me-1 mt-1"
                           data-testid="edit-btn"
                           onClick={() => editButtonHandler(auditReport.id)}
+                          disabled={auditReport.disableEditButton === true}
                         >
                           <i
                             className="fa fa-edit text-white"
@@ -383,7 +384,7 @@ const SQAAuditReportTable = ({
         modalBodyClass="mt-0"
       >
         <>
-          Do you really want to delete this <b>{auditType}</b> audit?
+          Do you really want to close this <b>{auditType}</b> audit?
         </>
       </OModal>
       <OModal
