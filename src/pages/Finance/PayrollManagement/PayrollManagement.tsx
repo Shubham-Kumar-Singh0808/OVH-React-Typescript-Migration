@@ -24,13 +24,14 @@ const PayrollManagement = (): JSX.Element => {
     {} as CurrentPayslip,
   )
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
-  const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
   const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
     undefined,
   )
+
+  const [selectedIds, setSelectedIds] = useState<[]>([])
 
   useEffect(() => {
     if (selectMonth) {
@@ -161,14 +162,6 @@ const PayrollManagement = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    if (isChecked || isAllChecked) {
-      setIsAllDeleteBtn(true)
-    } else {
-      setIsAllDeleteBtn(false)
-    }
-  }, [isChecked, isAllChecked])
-
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -196,6 +189,8 @@ const PayrollManagement = (): JSX.Element => {
             userDeleteAccess={userAccess?.deleteaccess as boolean}
             userEditAccess={userAccess?.updateaccess as boolean}
             editPaySlipHandler={editPaySlipHandler}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
           />
         )}
       </>
@@ -234,11 +229,28 @@ const PayrollManagement = (): JSX.Element => {
       <></>
     )
 
+  console.log(selectedIds)
+
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(
+        selectedIds as unknown as number,
+      ),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedMessage))
+    }
+  }
+
   const Delete = userAccess?.deleteaccess && (
     <CButton
       color="danger btn-ovh"
       type="button"
-      disabled={!isAllDeleteBtn}
+      onClick={allDeleteBtnHandler}
       id="button-delete"
     >
       Delete
