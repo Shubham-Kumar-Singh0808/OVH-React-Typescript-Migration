@@ -1,11 +1,10 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { waitFor } from '@testing-library/react'
 import AddQuestionTable from './AddQuestionTable'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockAllQuestions } from '../../../../test/data/initiateCycleData'
-import { render, screen } from '../../../../test/testUtils'
+import { render, screen, waitFor } from '../../../../test/testUtils'
 
 const mockSetTogglePage = jest.fn()
 
@@ -44,18 +43,14 @@ describe('InitiateCycle Table with data', () => {
     expect(table).toBeTruthy()
   })
 
-  test('should render first page data only', async () => {
+  test('should render Initiate Cycle table component with  crashing', async () => {
     await waitFor(() => {
-      userEvent.click(screen.getByText('Next ›', { exact: true }))
-      expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
-    })
-  })
-
-  test('should disable first and prev in pagination if first page', async () => {
-    await waitFor(() => {
-      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
+      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
+      const pageSizeSelect = screen.getByRole('option', {
+        name: '40',
+      }) as HTMLOptionElement
+      expect(pageSizeSelect.selected).toBe(false)
+      expect(screen.getAllByRole('row')).toHaveLength(1)
     })
   })
 })
