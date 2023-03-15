@@ -13,6 +13,7 @@ import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const PanDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -32,6 +33,9 @@ const PanDetails = (): JSX.Element => {
   const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+
   useEffect(() => {
     if (location.pathname === '/myFinance') {
       dispatch(
@@ -64,6 +68,9 @@ const PanDetails = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'PF,PAN&Bank Details',
   )
+  const userAccessForBackButton = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Finance-Bank Details',
+  )
 
   const onChangeInputHandler = (
     e:
@@ -83,18 +90,21 @@ const PanDetails = (): JSX.Element => {
       })
   }
   const history = useHistory()
+  const handleClick = () => {
+    history.goBack()
+  }
 
   const isCheckedVIsible = isChecked
     ? bankDetail.finance?.pfAccountNumber
     : 'N/A'
   return (
     <>
-      {userAccess?.updateaccess && (
-        <CRow className="justify-content-end">
-          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            ''
-          ) : (
-            <CCol className="text-end" md={4}>
+      <CRow className="justify-content-end">
+        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+          ''
+        ) : (
+          <CCol className="text-end" md={4}>
+            {userAccess?.updateaccess && (
               <CTooltip content="Edit">
                 <CButton
                   className="btn-ovh me-1"
@@ -107,18 +117,23 @@ const PanDetails = (): JSX.Element => {
                   &nbsp; Edit
                 </CButton>
               </CTooltip>
+            )}
+            {isViewingAnotherEmployee &&
+            userAccessForBackButton?.createaccess ? (
               <CButton
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="back-button"
-                onClick={() => history.push('/financeList')}
+                onClick={handleClick}
               >
                 <i className="fa fa-arrow-left  me-1"></i>Back
               </CButton>
-            </CCol>
-          )}
-        </CRow>
-      )}
+            ) : (
+              <></>
+            )}
+          </CCol>
+        )}
+      </CRow>
       <CCol sm={5}>
         <CRow>
           <CFormLabel
