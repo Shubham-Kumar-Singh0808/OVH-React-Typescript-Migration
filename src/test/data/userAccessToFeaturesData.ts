@@ -1982,4 +1982,13 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
     deleteaccess: true,
     childFeatures: null,
   },
+  {
+    featureId: 193,
+    name: 'My Tickets',
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
 ]

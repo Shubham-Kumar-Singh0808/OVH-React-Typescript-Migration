@@ -51,6 +51,13 @@ const MyTicketsTable = ({
     reduxServices.tickets.selectors.allTicketsListSize,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToMyTickets = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Tickets',
+  )
+
   const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
 
   const handleModal = (subject: string) => {
@@ -178,9 +185,9 @@ const MyTicketsTable = ({
                   <CTableDataCell>{ticket.approvalStatus}</CTableDataCell>
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>
-                    {userEditAccess && (
-                      <>
-                        <Link to={`/updateTicket/${ticket.id}`}>
+                    <>
+                      <Link to={`/updateTicket/${ticket.id}`}>
+                        {userEditAccess && (
                           <CButton
                             color="info"
                             className="btn-ovh me-2"
@@ -192,7 +199,9 @@ const MyTicketsTable = ({
                               aria-hidden="true"
                             ></i>
                           </CButton>
-                        </Link>
+                        )}
+                      </Link>
+                      {userAccessToMyTickets?.deleteaccess && (
                         <CButton
                           color="btn btn-warning"
                           className="btn-ovh me-2"
@@ -205,8 +214,8 @@ const MyTicketsTable = ({
                             aria-hidden="true"
                           ></i>
                         </CButton>
-                      </>
-                    )}
+                      )}
+                    </>
                     <CButton
                       color="info"
                       className="btn-ovh me-2"

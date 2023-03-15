@@ -247,6 +247,7 @@ const SQAAuditReportTable = ({
                           className="btn-ovh-employee-list me-1 mt-1"
                           data-testid="edit-btn"
                           onClick={() => editButtonHandler(auditReport.id)}
+                          disabled={auditReport.disableEditButton === true}
                         >
                           <i
                             className="fa fa-edit text-white"
@@ -255,44 +256,46 @@ const SQAAuditReportTable = ({
                         </CButton>
                       </Link>
                     )}
-                    <CButton
-                      color="danger"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="cancel-btn"
-                      onClick={() =>
-                        handleShowCancelModal(
-                          auditReport.id,
-                          auditReport.auditType,
-                        )
-                      }
-                      disabled={
-                        auditReport.formStatus === 'Save' ||
-                        auditReport.auditStatus === 'Closed'
-                      }
-                    >
-                      <i
-                        className="fa fa-times text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
                     {userAccessSqaAuditReport?.deleteaccess && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="delete-btn"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            auditReport.id,
-                            auditReport.auditType,
-                          )
-                        }
-                        disabled={auditReport.formStatus !== 'Save'}
-                      >
-                        <i
-                          className="fa fa-trash-o text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="cancel-btn"
+                          onClick={() =>
+                            handleShowCancelModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={
+                            auditReport.formStatus === 'Save' ||
+                            auditReport.auditStatus === 'Closed'
+                          }
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="delete-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={auditReport.formStatus !== 'Save'}
+                        >
+                          <i
+                            className="fa fa-trash-o text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
                     )}
                     <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
                       <CButton
@@ -381,7 +384,7 @@ const SQAAuditReportTable = ({
         modalBodyClass="mt-0"
       >
         <>
-          Do you really want to delete this <b>{auditType}</b> audit?
+          Do you really want to close this <b>{auditType}</b> audit?
         </>
       </OModal>
       <OModal

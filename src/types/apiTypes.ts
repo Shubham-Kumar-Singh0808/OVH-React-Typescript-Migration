@@ -237,6 +237,7 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
 export interface TimeInOfficeReportApi extends ApiBase {
   getTimeInOfficeEmployeeReport: string
   getTimeInOfficeManagerReport: string
+  exportAttendanceReport: string
 }
 
 export interface EmployeeLeaveSettingsApi extends ApiBase {
@@ -664,6 +665,7 @@ export interface ProjectMilestoneApi extends ApiBase {
 export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
   getInvoicesOfMilestone: string
+  getInvoiceSummary: string
 }
 
 export interface ProjectTailoringApi extends ApiBase {
@@ -805,4 +807,5 @@ export interface SQAAuditReportApi extends ApiBase {
   getNewSQAAuditTimelineDetails: string
   getAuditDetails: string
   saveOrSubmitAuditForm: string
+  downloadSQAAuditFile: string
 }

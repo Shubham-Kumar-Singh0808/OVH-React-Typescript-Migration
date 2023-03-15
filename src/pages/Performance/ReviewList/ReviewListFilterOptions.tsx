@@ -404,6 +404,7 @@ const ReviewListFilterOptions = ({
             onChange={() => handleRatingsChange}
             selectionType="counter"
             data-testid="ratings"
+            className="py-1"
           />
         </CCol>
         <CCol sm={3}>

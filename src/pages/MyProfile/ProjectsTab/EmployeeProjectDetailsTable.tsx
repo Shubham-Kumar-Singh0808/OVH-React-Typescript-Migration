@@ -53,7 +53,7 @@ const EmployeeProjectsDetail = (
 
   return (
     <>
-      <CTable className="mt-2 text-center profile-tab-table-size">
+      <CTable className="mt-2 text-left profile-tab-table-size">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
