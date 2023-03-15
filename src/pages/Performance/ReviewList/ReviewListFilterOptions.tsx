@@ -10,7 +10,11 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
-import { employeeStatus, reviewRatings } from '../../../constant/constantData'
+import {
+  reviewListStatus,
+  employeeStatus,
+  reviewRatings,
+} from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
@@ -56,13 +60,6 @@ const ReviewListFilterOptions = ({
   )
 
   const dispatch = useAppDispatch()
-  const selectedItem = departments.filter(
-    (item) => item.departmentId === Number(selectDepartment),
-  )
-
-  const selectedDesignationItem = designations.filter(
-    (item) => item.id === Number(selectDesignation),
-  )
 
   useEffect(() => {
     if (cycle) {
@@ -104,10 +101,10 @@ const ReviewListFilterOptions = ({
   const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
     return dispatch(
       reduxServices.reviewList.getReviewList({
-        appraisalFormStatus: (selectStatus as string) || '',
-        cycleId: cycle === 'Custom' ? -1 : Number(cycle),
-        departmentName: selectedItem[0]?.departmentName || '',
-        designationName: selectedDesignationItem[0]?.name || '',
+        appraisalFormStatus: '',
+        cycleId: cycle as number,
+        departmentName: (selectDepartment as string) || '',
+        designationName: (selectDesignation as string) || '',
         empStatus: selectEmpstatus,
         employeeID: employeeId,
         endIndex: 20,
@@ -115,6 +112,7 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
+              day: '2-digit',
             })
           : '',
         ratings: [],
@@ -125,6 +123,7 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
+              day: '2-digit',
             })
           : '',
       }),
@@ -274,15 +273,11 @@ const ReviewListFilterOptions = ({
               setSelectStatus(e.target.value)
             }}
           >
-            <option value="" selected>
-              Select Status
-            </option>
-            <option value="COMPLETED">Completed</option>
-            <option value="CLOSED">Closed</option>
-            <option value="OPENFORDISCUSSION">Needs Discussion</option>
-            <option value="PENDINGAGREEMENT">Needs Acknowledgement</option>
-            <option value="PENDING">Review Pending</option>
-            <option value="SAVE">Not-Submitted</option>
+            {reviewListStatus?.map((status, index) => (
+              <option key={index} value={status.label}>
+                {status.name}
+              </option>
+            ))}
           </CFormSelect>
         </CCol>
       </CRow>
@@ -314,6 +309,7 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
+                            day: '2-digit',
                           },
                         )
                       : ''
@@ -349,6 +345,7 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
+                            day: '2-digit',
                           },
                         )
                       : ''
