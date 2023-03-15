@@ -10,6 +10,7 @@ import {
   InvoicesOfMilestoneList,
   InvoicesList,
   MilestoneList,
+  InvoiceSummary,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/Invoices/invoicesTypes'
 
 const getClosedMilestonesAndCRs = createAsyncThunk<
@@ -52,11 +53,29 @@ const getInvoicesOfMilestone = createAsyncThunk<
   },
 )
 
+const getInvoiceSummary = createAsyncThunk<
+  InvoiceSummary,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectView/getInvoiceSummary', async (invoiceId: number, thunkApi) => {
+  try {
+    return await invoicesApi.getInvoiceSummary(invoiceId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialInvoicesState: invoicesListSlice = {
   invoicesList: { CRList: [], milestoneList: [] },
   milestoneList: [],
   isLoading: ApiLoadingState.idle,
   invoicesOfMilestoneList: { listSize: 0, list: [] },
+  invoiceSummary: {} as InvoiceSummary,
 }
 
 const invoiceSlice = createSlice({
@@ -73,10 +92,15 @@ const invoiceSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.invoicesOfMilestoneList = action.payload
       })
+      .addCase(getInvoiceSummary.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.invoiceSummary = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getClosedMilestonesAndCRs.pending,
           getInvoicesOfMilestone.pending,
+          getInvoiceSummary.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -97,9 +121,13 @@ const invoicesOfMilestoneList = (state: RootState): InvoicesOfMilestone[] =>
 const invoicesOfMilestoneSize = (state: RootState): number =>
   state.projectInvoices.invoicesOfMilestoneList.listSize
 
+const invoiceSummary = (state: RootState): InvoiceSummary =>
+  state.projectInvoices.invoiceSummary
+
 const invoicesThunk = {
   getClosedMilestonesAndCRs,
   getInvoicesOfMilestone,
+  getInvoiceSummary,
 }
 
 const inVoicesSelectors = {
@@ -107,6 +135,7 @@ const inVoicesSelectors = {
   allMilestoneList,
   invoicesOfMilestoneList,
   invoicesOfMilestoneSize,
+  invoiceSummary,
 }
 
 export const invoicesService = {
