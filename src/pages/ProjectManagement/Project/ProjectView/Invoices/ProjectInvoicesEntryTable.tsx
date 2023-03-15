@@ -141,14 +141,14 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
           <CTableBody>
             <CTableRow>
               <CTableDataCell>
-                {invoiceSummary.invoiceAmountSentDate}
+                {invoiceSummary?.invoiceAmountSentDate}
               </CTableDataCell>
               <CTableDataCell>
-                ${invoiceSummary.amountAfterDiscount}
+                ${invoiceSummary?.amountAfterDiscount}
               </CTableDataCell>
-              <CTableDataCell>{invoiceSummary.writeoffAmount}</CTableDataCell>
-              <CTableDataCell>{invoiceSummary.discount}</CTableDataCell>
-              <CTableDataCell>${invoiceSummary.totalAmount}</CTableDataCell>
+              <CTableDataCell>{invoiceSummary?.writeoffAmount}</CTableDataCell>
+              <CTableDataCell>{invoiceSummary?.discount}</CTableDataCell>
+              <CTableDataCell>${invoiceSummary?.totalAmount}</CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>
