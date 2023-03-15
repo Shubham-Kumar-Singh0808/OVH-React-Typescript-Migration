@@ -68,9 +68,6 @@ const PanDetails = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'PF,PAN&Bank Details',
   )
-  const userAccessForBackButton = userAccessToFeatures?.find(
-    (feature) => feature.name === 'My Profile-Finance-Bank Details',
-  )
 
   const onChangeInputHandler = (
     e:
@@ -118,8 +115,7 @@ const PanDetails = (): JSX.Element => {
                 </CButton>
               </CTooltip>
             )}
-            {isViewingAnotherEmployee &&
-            userAccessForBackButton?.createaccess ? (
+            {isViewingAnotherEmployee ? (
               <CButton
                 color="info"
                 className="btn-ovh me-1"
