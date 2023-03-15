@@ -210,6 +210,13 @@ const NewBookingFilterOptions = ({
     <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
   )
 
+  const failureValidationErrorToastMessage = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
   const handleConfirmBtn = async () => {
     const startTimeSplit = newRoomBooking.startTime.split(':')
     const endTimeSplit = newRoomBooking.endTime.split(':')
@@ -299,7 +306,26 @@ const NewBookingFilterOptions = ({
     if (
       newRoomBooking.startTime.split(':') < newRoomBooking.endTime.split(':')
     ) {
-      handleConfirmBtn()
+      const startTimeSplit = newRoomBooking.startTime.split(':')
+      const endTimeSplit = newRoomBooking.endTime.split(':')
+      const start = new Date(
+        `${newRoomBooking.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${newRoomBooking.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            failureValidationErrorToastMessage,
+          ),
+        )
+      } else {
+        handleConfirmBtn()
+      }
     } else {
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
@@ -400,7 +426,7 @@ const NewBookingFilterOptions = ({
               shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end pe-18">
+              <CFormLabel className="col-sm-3 col-form-label text-end">
                 Agenda :
                 <span
                   className={showIsRequired(

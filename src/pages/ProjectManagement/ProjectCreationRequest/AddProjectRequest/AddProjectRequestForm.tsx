@@ -453,7 +453,7 @@ const AddProjectRequestForm = ({
   }, [checkList])
 
   const onHandleDescription = (description: string) => {
-    if (description.length > 57) {
+    if (description.length > 56) {
       setDescriptionError(false)
     } else {
       setDescriptionError(true)

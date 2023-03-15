@@ -71,7 +71,7 @@ const OAutoComplete = ({
           autoCompleteTarget?.trim() === '' ? (
             <span className="text-danger">*</span>
           ) : (
-            <span className="text-white"></span>
+            <span className="text-white">*</span>
           )}
         </CFormLabel>
         <CCol sm={3}>
