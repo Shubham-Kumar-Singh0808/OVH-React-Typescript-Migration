@@ -1,16 +1,8 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import ReviewListFilterOptions from './ReviewListFilterOptions'
 import { cleanup, render, screen } from '../../../test/testUtils'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  mockConfigurationCycle,
-  mockDesignations,
-  mockEmployeeDepartments,
-  mockReviewList,
-} from '../../../test/data/reviewListData'
 
 const configurationsInput = 'select-configurations'
 const deptNameInput = 'dept-name'
