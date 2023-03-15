@@ -84,6 +84,9 @@ const PanDetails = (): JSX.Element => {
   }
   const history = useHistory()
 
+  const isCheckedVIsible = isChecked
+    ? bankDetail.finance?.pfAccountNumber
+    : 'N/A'
   return (
     <>
       {userAccess?.updateaccess && (
@@ -150,7 +153,7 @@ const PanDetails = (): JSX.Element => {
             </CCol>
           ) : (
             <CCol sm={5} className="sh-alignment">
-              {bankDetail.finance?.pfAccountNumber || 'N/A'}
+              {isCheckedVIsible}
             </CCol>
           )}
         </CRow>
@@ -219,43 +222,12 @@ const PanDetails = (): JSX.Element => {
           )}
         </CRow>
       </CCol>
-      <CCol sm={5}>
-        <CRow>
-          <CFormLabel
-            className="col-sm-4 col-form-label"
-            data-testid="aadharNumber"
-          >
-            <b>Aadhar Card No</b>
-          </CFormLabel>
-          <CCol sm={1} className="sh-alignment">
-            :
-          </CCol>
-          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            <CCol sm={5}>
-              <CFormInput
-                className="eventType-editInput"
-                data-testid="aadharNumber"
-                type="text"
-                id="aadharNumber"
-                size="sm"
-                name="aadharCardNumber"
-                autoComplete="off"
-                value={editPanData.aadharCardNumber}
-                onChange={onChangeInputHandler}
-              />
-            </CCol>
-          ) : (
-            <CCol sm={5} className="sh-alignment">
-              {bankDetail.finance?.aadharCardNumber || 'N/A'}
-            </CCol>
-          )}
-        </CRow>
-      </CCol>
       <EditPanDetails
         isEditPanData={isEditPanData}
         setIsEditPanData={setIsEditPanData}
         financeId={financeId}
         editPanData={editPanData}
+        onChangeInputHandler={onChangeInputHandler}
       />
     </>
   )

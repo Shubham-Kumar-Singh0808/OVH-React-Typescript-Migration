@@ -342,6 +342,7 @@ export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
     apiPrefix + '/timeInOffice/getTimeInOfficeEmployeeReport',
   getTimeInOfficeManagerReport:
     apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
+  exportAttendanceReport: apiPrefix + '/timeInOffice/exportAttendanceReport',
 }
 
 export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
@@ -841,6 +842,7 @@ export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+  getInvoiceSummary: apiPrefix + '/invoice/getInvoiceSummary',
 }
 
 export const projectTailoringApiConfig: ProjectTailoringApi = {
@@ -980,4 +982,5 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getAuditDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
   saveOrSubmitAuditForm:
     apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  downloadSQAAuditFile: '/sqaAuditController/downloadSQAAuditFile',
 }

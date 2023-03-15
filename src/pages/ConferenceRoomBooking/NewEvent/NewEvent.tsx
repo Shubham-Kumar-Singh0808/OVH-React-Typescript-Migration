@@ -382,7 +382,7 @@ const NewEvent = (): JSX.Element => {
               <CRow className="mt-2">
                 <CCol sm={{ span: 6, offset: 3 }}>
                   <span className="text-danger" data-testid="errorMessage">
-                    <b>End Date can `t be greater than Start Date</b>
+                    <b>End Date should be greater than Start Date</b>
                   </span>
                 </CCol>
               </CRow>

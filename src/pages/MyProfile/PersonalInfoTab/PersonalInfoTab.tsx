@@ -18,6 +18,7 @@ import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
 import ContactNumberDetails from './ContactNumberDetails'
 import { PassportDetails } from './PassportDetails'
+import PersonalInfoOptions from './PersonalInfoOptions'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -301,11 +302,10 @@ const PersonalInfoTab = ({
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              {!isViewingAnotherEmployee ? (
-                <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
-              ) : (
-                <></>
-              )}
+              <PersonalInfoOptions
+                isViewingAnotherEmployee={isViewingAnotherEmployee}
+                setToggle={setToggle}
+              />
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
                 isFieldDisabled={true}

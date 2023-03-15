@@ -1,3 +1,4 @@
+import { DownloadPaySlips } from '../../../types/Finance/PanDetails/panDetailsTypes'
 import {
   GetSQAAuditReportProps,
   GetSQAAuditReport,
@@ -125,6 +126,23 @@ const saveOrSubmitAuditForm = async (
   return response.data
 }
 
+const downloadSQAAuditFile = async (
+  prepareObject: DownloadPaySlips,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: sqaAuditReportApiConfig.downloadSQAAuditFile,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName: prepareObject.fileName,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const sqaAuditReportApi = {
   getSQAAuditReport,
   exportSqaAuditReport,
@@ -133,6 +151,7 @@ const sqaAuditReportApi = {
   getNewSQAAuditTimelineDetails,
   getSQAAuditDetails,
   saveOrSubmitAuditForm,
+  downloadSQAAuditFile,
 }
 
 export default sqaAuditReportApi

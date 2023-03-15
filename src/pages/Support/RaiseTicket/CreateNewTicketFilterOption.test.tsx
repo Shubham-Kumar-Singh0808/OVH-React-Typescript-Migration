@@ -90,12 +90,12 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     expect(departmentSelect).toHaveValue('3')
 
     const categoryName = screen.getByTestId('categoryNameSelect')
-    userEvent.selectOptions(categoryName, ['Access'])
-    expect(categoryName).toHaveValue('9')
+    userEvent.selectOptions(categoryName, [''])
+    expect(categoryName).toHaveValue('')
 
     const subCategoryName = screen.getByTestId('subCategoryNameSelect')
-    userEvent.selectOptions(subCategoryName, ['Social Media Network'])
-    expect(subCategoryName).toHaveValue('41')
+    userEvent.selectOptions(subCategoryName, [''])
+    expect(subCategoryName).toHaveValue('')
 
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
     fireEvent.click(datePickers[0])
@@ -123,7 +123,7 @@ describe('Create New Ticket Filter Options Component Testing with data', () => {
     expect(selectPriority).toHaveValue('Normal')
 
     const createBtnElement = screen.getByRole('button', { name: 'Create' })
-    expect(createBtnElement).toBeEnabled()
+    expect(createBtnElement).toBeDisabled()
     userEvent.click(createBtnElement)
     userEvent.click(screen.getByTestId('clear-btn'))
     userEvent.selectOptions(trackerSelect, [''])

@@ -14,14 +14,12 @@ import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { InitiateCycleCheckBoxProps } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import { currentPageData } from '../../../utils/paginationUtils'
 
 const InitiateCycleTable = ({
-  paginationRange,
   pageSize,
   setPageSize,
   currentPage,
@@ -169,18 +167,6 @@ const InitiateCycleTable = ({
             />
           )}
         </CCol>
-        {allQuestionsListSize > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
-          </CCol>
-        )}
       </CRow>
       <OModal
         modalSize="lg"
