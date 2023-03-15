@@ -94,6 +94,19 @@ const PanDetails = (): JSX.Element => {
   const isCheckedVIsible = isChecked
     ? bankDetail.finance?.pfAccountNumber
     : 'N/A'
+  const backBtnToggle = isViewingAnotherEmployee ? (
+    <CButton
+      color="info"
+      className="btn-ovh me-1"
+      data-testid="back-button"
+      onClick={handleClick}
+    >
+      <i className="fa fa-arrow-left  me-1"></i>Back
+    </CButton>
+  ) : (
+    <></>
+  )
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -115,18 +128,7 @@ const PanDetails = (): JSX.Element => {
                 </CButton>
               </CTooltip>
             )}
-            {isViewingAnotherEmployee ? (
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-                onClick={handleClick}
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            ) : (
-              <></>
-            )}
+            {backBtnToggle}
           </CCol>
         )}
       </CRow>
