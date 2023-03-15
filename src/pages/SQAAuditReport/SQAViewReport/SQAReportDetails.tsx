@@ -32,7 +32,7 @@ const SQAReportDetails = (): JSX.Element => {
 
   const handleSqaFile = async () => {
     const sqaFileDownload = await sqaAuditReportApi.downloadSQAAuditFile({
-      fileName: SQAViewDetails.pmFileName as string,
+      fileName: SQAViewDetails.pmFileName,
     })
 
     downloadFile(sqaFileDownload, `${SQAViewDetails.pmFileName}`)

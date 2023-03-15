@@ -87,7 +87,7 @@ const ReportOptions = ({
   const handleExportAttendance = async () => {
     const timeInOfficeListDownload =
       await timeInOfficeReportApi.exportAttendanceReport({
-        hiveDate: selectedDate as string,
+        hiveDate: selectedDate,
         search: '',
       })
     downloadFile(timeInOfficeListDownload, 'timeInOfficeList.csv')
