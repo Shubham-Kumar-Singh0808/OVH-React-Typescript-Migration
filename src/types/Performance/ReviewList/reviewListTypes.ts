@@ -24,8 +24,8 @@ export type ReviewListData = {
   role: string
   searchString: string
   startIndex: number
-  toDate: string
-  fromDate: string
+  toDate?: string
+  fromDate?: string
 }
 
 export type Appraisal = {

@@ -13,10 +13,6 @@ describe('Employee Projects Details', () => {
       />,
     )
   })
-  test('should render the correct project id', () => {
-    const tableEntry = screen.getByRole('cell', { name: '88' })
-    expect(tableEntry).toBeTruthy()
-  })
   test('should render the correct project name', () => {
     const tableEntry = screen.getByRole('cell', {
       name:

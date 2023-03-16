@@ -169,11 +169,13 @@ const EmployeePipListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <strong>
-            {pipListSizeRecords
-              ? `Total Records: ${pipListSizeRecords}`
-              : `No Records Found...`}
-          </strong>
+          <p className="mt-2">
+            <strong>
+              {pipListSizeRecords
+                ? `Total Records: ${pipListSizeRecords}`
+                : `No Records Found...`}
+            </strong>
+          </p>
         </CCol>
         <CCol xs={3}>
           {pipListSizeRecords > 20 && (
