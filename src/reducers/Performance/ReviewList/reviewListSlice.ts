@@ -99,7 +99,10 @@ const reviewListSlice = createSlice({
   initialState: initialReviewListState,
   reducers: {
     clearReviewList: (state) => {
-      state.appraisal = []
+      state.employeeReviewList = {
+        list: [],
+        size: 0,
+      }
     },
   },
   extraReducers: (builder) => {

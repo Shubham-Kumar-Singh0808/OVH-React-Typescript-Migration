@@ -194,6 +194,7 @@ const ReviewListFilterOptions = ({
     setShowExportButton(false)
     setIsChecked(false)
     setSelectedRating([])
+    dispatch(reduxServices.reviewList.actions.clearReviewList())
   }
 
   const handleExportReviewList = async () => {
