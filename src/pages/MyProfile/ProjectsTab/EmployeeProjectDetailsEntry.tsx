@@ -8,7 +8,9 @@ const EmployeeProjectDetailsEntry = (
 ): JSX.Element => {
   return (
     <CTableRow>
-      <CTableDataCell scope="row">{props.id}</CTableDataCell>
+      <CTableDataCell scope="row">
+        {props.projectDetails.employeeId}
+      </CTableDataCell>
       <CTableDataCell scope="row">
         {props.projectDetails.empFirstName +
           ' ' +
