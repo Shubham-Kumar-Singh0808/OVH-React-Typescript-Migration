@@ -87,6 +87,7 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
       </CTable>
     </>
   )
+
   const invoiceModel = (
     <>
       <h4 className="model-header-text mb-3">Invoice Details</h4>
@@ -94,14 +95,14 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
         <CRow className="employeeAllocation-form">
           <CCol sm={4} className="pe-0">
             <CFormLabel className="text-info mt-2 col">
-              Serial Number :
+              Serial Number:
             </CFormLabel>
             <span className="col-sm-6">{invoiceSummary?.number}</span>
             &nbsp;
           </CCol>
           <CCol sm={4} className="p-0">
             <CFormLabel className="text-info mt-2 col">
-              Invoice Number :
+              Invoice Number:
             </CFormLabel>
             <span className="col-sm-6">{invoiceSummary?.invoiceNumber}</span>
             &nbsp;
@@ -144,11 +145,16 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                 {invoiceSummary?.invoiceAmountSentDate}
               </CTableDataCell>
               <CTableDataCell>
-                ${invoiceSummary?.amountAfterDiscount}
+                $
+                {Number(invoiceSummary?.amountAfterDiscount)?.toLocaleString(
+                  'en-IN',
+                )}
               </CTableDataCell>
               <CTableDataCell>{invoiceSummary?.writeoffAmount}</CTableDataCell>
               <CTableDataCell>{invoiceSummary?.discount}</CTableDataCell>
-              <CTableDataCell>${invoiceSummary?.totalAmount}</CTableDataCell>
+              <CTableDataCell>
+                ${Number(invoiceSummary?.totalAmount)?.toLocaleString('en-IN')}
+              </CTableDataCell>
             </CTableRow>
           </CTableBody>
         </CTable>

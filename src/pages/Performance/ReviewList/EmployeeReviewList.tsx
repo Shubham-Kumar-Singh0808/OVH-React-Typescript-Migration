@@ -49,10 +49,17 @@ const EmployeeReviewList = (): JSX.Element => {
     dispatch(reduxServices.reviewList.getAppraisalCycles())
     dispatch(
       reduxServices.reviewList.getReviewList({
-        ...initialReviewList,
-        employeeID: String(employeeId),
-        startIndex: pageSize * (currentPage - 1),
+        appraisalFormStatus: '',
+        cycleId: 75,
+        departmentName: '',
+        designationName: '',
+        empStatus: 'Active',
+        employeeID: employeeId,
         endIndex: pageSize * currentPage,
+        ratings: [],
+        role: '',
+        searchString: '',
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
   }, [dispatch, pageSize, currentPage])
