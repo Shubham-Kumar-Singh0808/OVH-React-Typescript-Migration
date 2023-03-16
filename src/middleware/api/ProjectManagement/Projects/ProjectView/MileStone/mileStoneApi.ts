@@ -1,5 +1,8 @@
 import { ChangeRequestProps } from '../../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
-import { MileStonesList } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
+import {
+  GetMilestone,
+  MileStonesList,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -26,8 +29,23 @@ const getProjectMileStone = async (
   return response.data
 }
 
+const editProjectMilestone = async (
+  milestoneId: number,
+): Promise<GetMilestone> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.editMilestone,
+    method: AllowedHttpMethods.get,
+    params: {
+      milestoneId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const mileStoneApi = {
   getProjectMileStone,
+  editProjectMilestone,
 }
 
 export default mileStoneApi

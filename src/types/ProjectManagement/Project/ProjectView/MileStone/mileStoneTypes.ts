@@ -70,4 +70,44 @@ export type MileStoneSliceState = {
   isLoading: ApiLoadingState
   currentPage: number
   pageSize: number
+  getMilestone: GetMilestone
+}
+
+export type GetMilestone = {
+  actualDate: string
+  allocatedMilestonePeople: AllocatedMilestonePeople[]
+  billable: boolean
+  client: null
+  comments: string
+  crDuration: null
+  crId: null
+  crName: null
+  effort: null
+  enableReopenFlag: null
+  id: number
+  invoiceExits: null
+  invoiceReopenFlag: null
+  invoiceStatus: boolean
+  isClosed: boolean
+  milestoneAmount: null
+  milestoneNumber: string
+  milestonePeopleDTO: null
+  milestonePercentage: string
+  milestoneTypeFlag: boolean
+  planedDate: string
+  project: null
+  projectId: null
+  projectType: null
+  raisedInvoicePercentage: null
+  remainingPercentage: null
+  title: string
+}
+
+export type EditInvoiceDetails = {
+  title: string
+  milestoneNumber: string
+  planedDate: string
+  actualDate: string
+  billable: boolean
+  comments: string
 }

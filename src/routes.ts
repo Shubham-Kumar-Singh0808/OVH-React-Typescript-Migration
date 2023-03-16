@@ -256,6 +256,13 @@ const PfPanDetails = React.lazy(
   () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
 )
 
+const editMilestone = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/EditMileStone/EditMileStone'
+    ),
+)
+
 const ResignationTimeLine = React.lazy(
   () =>
     import(
@@ -966,6 +973,12 @@ const routes = [
     path: '/viewProjectAudit/:auditId',
     name: 'SQA Audit View',
     component: SQAAuditViewReport,
+  },
+
+  {
+    path: '/editRetainerMilestone',
+    name: 'Edit mileStone',
+    component: editMilestone,
   },
 ]
 

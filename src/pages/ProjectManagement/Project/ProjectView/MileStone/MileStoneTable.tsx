@@ -12,7 +12,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
@@ -72,6 +72,10 @@ const MileStoneTable = (): JSX.Element => {
       }),
     )
   }, [dispatch])
+
+  const editButtonHandler = (id: number) => {
+    dispatch(reduxServices.projectMileStone.editProjectMilestone(id))
+  }
 
   const result = (
     <>
@@ -188,12 +192,15 @@ const MileStoneTable = (): JSX.Element => {
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-pencil-square-o"></i>
-                    </CButton>
+                    <Link to={`/editRetainerMilestone`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() => editButtonHandler(item.id)}
+                      >
+                        <i className="fa fa-pencil-square-o"></i>
+                      </CButton>
+                    </Link>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
