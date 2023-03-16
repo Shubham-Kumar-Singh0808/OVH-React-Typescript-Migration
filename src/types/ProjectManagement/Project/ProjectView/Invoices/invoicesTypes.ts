@@ -174,7 +174,7 @@ export type InvoiceSummary = {
   showNotesOnInvoice: boolean
   subTotal: string
   amount: string
-  totalAmount: string
+  totalAmount: number
   paymentTerm: string
   invoiceDate: string
   dueDate: string
@@ -213,7 +213,7 @@ export type InvoiceSummary = {
   roleAndNameCount: []
   resourcesName: []
   countTypeToDisplay: string
-  amountAfterDiscount: string
+  amountAfterDiscount: number | string
   percentage: string
   invoiceAmountSentDate: string
   poNumber: null

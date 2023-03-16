@@ -596,8 +596,8 @@ const ApproveProjectForm = (): JSX.Element => {
             <span></span>
           </CCol>
           {isGreaterThanStart && (
-            <CCol sm={3}>
-              <p style={{ color: 'red' }}>
+            <CCol sm={5} className="pt-2">
+              <p style={{ color: 'red' }} className="mb-0">
                 <b>End date should be greater than Start date</b>
               </p>
             </CCol>
