@@ -84,9 +84,10 @@ const PanDetails = (): JSX.Element => {
   }
   const history = useHistory()
 
-  const isCheckedVIsible = isChecked
-    ? bankDetail.finance?.pfAccountNumber
-    : 'N/A'
+  const isCheckedVIsible =
+    isChecked && bankDetail.finance?.pfAccountNumber
+      ? isChecked && bankDetail.finance?.pfAccountNumber
+      : 'N/A'
   return (
     <>
       {userAccess?.updateaccess && (

@@ -132,6 +132,23 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
+  console.log(selectedIds)
+
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(
+        selectedIds as unknown as number,
+      ),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(failedMessage))
+    }
+  }
+
   const previewBtnHandler = async () => {
     setExcelTable(true)
     if (previewBtn) {
@@ -228,23 +245,6 @@ const PayrollManagement = (): JSX.Element => {
     ) : (
       <></>
     )
-
-  console.log(selectedIds)
-
-  const allDeleteBtnHandler = async () => {
-    const previewBtnActionResult = await dispatch(
-      reduxServices.payrollManagement.deleteCheckedPayslips(
-        selectedIds as unknown as number,
-      ),
-    )
-    if (
-      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
-        previewBtnActionResult,
-      )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(failedMessage))
-    }
-  }
 
   const Delete = userAccess?.deleteaccess && (
     <CButton
