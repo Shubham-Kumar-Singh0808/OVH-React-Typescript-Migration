@@ -1,6 +1,6 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import EditMileStoneForm from './EditMileStoneForm'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
@@ -10,6 +10,12 @@ const EditMileStone = (): JSX.Element => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
+
+  const history = useHistory()
+
+  const backButtonHandler = () => {
+    history.goBack()
+  }
 
   return (
     <>
@@ -21,15 +27,14 @@ const EditMileStone = (): JSX.Element => {
       >
         <CRow className="justify-content-end ">
           <CCol md={4} className="text-end position-absolute pe-0">
-            <Link to={`/viewProject`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1 add-project-back-btn"
-                data-testid="toggle-back-button"
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
+            <CButton
+              color="info"
+              className="btn-ovh me-1 add-project-back-btn"
+              data-testid="toggle-back-button"
+              onClick={backButtonHandler}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
         </CRow>
         <div className="col-sm-3 project-view-text-header">
