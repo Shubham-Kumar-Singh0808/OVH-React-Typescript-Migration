@@ -8,11 +8,12 @@ import {
   CInputGroup,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
+import EmployeePIPListContext, { MyContext } from './EmployeePIPListContext'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -24,7 +25,8 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EmployeePipList = (): JSX.Element => {
   const currentMonth = 'Current Month'
-  const [selectDate, setSelectDate] = useState<string>(currentMonth)
+  // const [selectDate, setSelectDate] = useState<string>(currentMonth)
+
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
@@ -33,6 +35,12 @@ const EmployeePipList = (): JSX.Element => {
   const [dateError, setDateError] = useState<boolean>(false)
   const [toggle, setToggle] = useState<string>('')
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
+  const myContext = useContext(MyContext)
+
+  const [selectDate, setSelectDate] =
+    (myContext && myContext.menu) || currentMonth
+
+  console.log(selectDate, 'context')
 
   const dispatch = useAppDispatch()
 
@@ -132,7 +140,7 @@ const EmployeePipList = (): JSX.Element => {
   }, [fromDate, toDate])
 
   const pipListObject = {
-    dateSelection: selectDate,
+    dateSelection: selectDate as string,
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -196,7 +204,7 @@ const EmployeePipList = (): JSX.Element => {
     setFromDate(moment(value).format(dateFormat))
   }
 
-  console.log('selectDate: ', selectDate)
+  // console.log('selectDate: ', selectDate)
 
   return (
     <>
@@ -237,7 +245,7 @@ const EmployeePipList = (): JSX.Element => {
             </CCol>
             <CCol sm={12} md={9}>
               <EmployeePipListOptions
-                selectDate={selectDate}
+                selectDate={selectDate as string}
                 paginationRange={paginationRange}
                 setPageSize={setPageSize}
                 setCurrentPage={setCurrentPage}
@@ -400,7 +408,7 @@ const EmployeePipList = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            selectDate={selectDate}
+            selectDate={selectDate as string}
             setToggle={setToggle}
             setSelectDate={setSelectDate}
             setFromDate={setFromDate}
@@ -414,7 +422,7 @@ const EmployeePipList = (): JSX.Element => {
           searchByAdded={searchByAdded}
           searchByEmployee={searchByEmployee}
           searchInput={searchInput}
-          selectDate={selectDate}
+          selectDate={selectDate as string}
           fromDate={fromDate as string}
           toDate={toDate as string}
           setToggle={() => {
