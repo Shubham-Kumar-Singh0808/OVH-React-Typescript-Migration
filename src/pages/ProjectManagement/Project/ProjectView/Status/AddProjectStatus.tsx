@@ -135,10 +135,14 @@ const AddProjectStatus = ({
     const newToDate = new Date(
       moment(nextWeekDate?.toString()).format(commonFormatDate),
     )
+    const diffInDays =
+      (newToDate.getTime() - newFromDate.getTime()) / (1000 * 3600 * 24)
+
     if (
-      currentWeekDate &&
-      nextWeekDate &&
-      newToDate.getTime() < newFromDate.getTime()
+      (currentWeekDate &&
+        nextWeekDate &&
+        newToDate.getTime() < newFromDate.getTime()) ||
+      (currentWeekDate && nextWeekDate && diffInDays < 7)
     ) {
       setDateError(true)
     } else {

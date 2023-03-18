@@ -12,10 +12,11 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { Link } from 'react-router-dom'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../constant/DateFormat'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { UpdateEmployeeAllocationProject } from '../../../types/ProjectManagement/EmployeeAllocation/employeeAllocationTypes'
@@ -30,6 +31,7 @@ const EmployeeAllocationEntryTable = (props: {
   fromDate: string
 }): JSX.Element => {
   const initialEmployeeAllocation = {} as UpdateEmployeeAllocationProject
+  const [dateError, setDateError] = useState<boolean>(false)
   const [editEmployeeAllocation, setEditEmployeeAllocation] = useState(
     initialEmployeeAllocation,
   )
@@ -82,10 +84,10 @@ const EmployeeAllocationEntryTable = (props: {
     })
   }
   const onEndDateChangeHandler = (date: Date) => {
-    const formatDate = moment(date).format('DD/MM/YYYY')
-    const name = 'endDate'
+    const toDate = moment(date).format('DD/MM/YYYY')
+    const name = 'enddate'
     setEditEmployeeAllocation((prevState) => {
-      return { ...prevState, ...{ [name]: formatDate } }
+      return { ...prevState, ...{ [name]: toDate } }
     })
   }
   const onStartDateChangeHandler = (date: Date) => {
@@ -170,6 +172,31 @@ const EmployeeAllocationEntryTable = (props: {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(editEmployeeAllocation?.startdate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(editEmployeeAllocation?.enddate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setDateError(moment(end).isBefore(start))
+  }, [editEmployeeAllocation?.startdate, editEmployeeAllocation?.enddate])
+
+  useEffect(() => {
+    if (dateError) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="End date should be greater than allocation date"
+          />,
+        ),
+      )
+    }
+  }, [dispatch, dateError])
 
   return (
     <>
@@ -259,8 +286,8 @@ const EmployeeAllocationEntryTable = (props: {
                             <DatePicker
                               className="form-control form-control-sm sh-date-picker"
                               placeholderText="dd/mm/yy"
-                              name="endDate"
-                              id="endDate"
+                              name="enddate"
+                              id="enddate"
                               peekNextMonth
                               showMonthDropdown
                               showYearDropdown
@@ -270,6 +297,16 @@ const EmployeeAllocationEntryTable = (props: {
                                 onEndDateChangeHandler(date)
                               }
                             />
+                            {dateError && (
+                              <span
+                                className="text-danger"
+                                data-testid="errorMessage"
+                              >
+                                <b>
+                                  End date should be greater than Start date
+                                </b>
+                              </span>
+                            )}
                           </div>
                         </CTableDataCell>
                       ) : (
@@ -350,6 +387,7 @@ const EmployeeAllocationEntryTable = (props: {
                               color="success"
                               className="btn-ovh me-1 mb-1"
                               onClick={saveProjectAllocationHandler}
+                              disabled={dateError}
                             >
                               <i
                                 className="fa fa-floppy-o"

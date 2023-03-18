@@ -62,7 +62,7 @@ const AddProjectMileStone = ({
 }): JSX.Element => {
   const [error, setError] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
-
+  const [previousName, setPreviousName] = useState<string>('')
   const handleClickMileStone = (milestoneIndex: number) => {
     const projectMileStoneCopy: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
@@ -119,17 +119,17 @@ const AddProjectMileStone = ({
   }, [item?.title, item?.effort, item?.fromDate, item?.toDate, item?.comments])
 
   useEffect(() => {
-    if (error)
+    if (error) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
-            toastMessage="            
-            MileStone FromDate less than ToDate"
+            toastMessage="MileStone FromDate less than ToDate"
           />,
         ),
       )
-  }, [error])
+    }
+  }, [dispatch, error])
 
   useEffect(() => {
     if (item.billable === 'true') {
@@ -139,6 +139,20 @@ const AddProjectMileStone = ({
       emptyPercentage('', index)
     }
   }, [item.billable])
+
+  useEffect(() => {
+    setPreviousName(item?.title)
+    if (item?.title === previousName) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="MileStone Title Already Exist"
+          />,
+        ),
+      )
+    }
+  }, [item?.title, previousName])
 
   return (
     <>
@@ -245,7 +259,7 @@ const AddProjectMileStone = ({
               type="button"
               id="button-addon2"
               onClick={() => handleClickMileStone(index)}
-              disabled={!isAddMilestoneButtonEnabled}
+              disabled={!isAddMilestoneButtonEnabled || error}
             >
               <i className="fa fa-plus"></i>
             </CButton>

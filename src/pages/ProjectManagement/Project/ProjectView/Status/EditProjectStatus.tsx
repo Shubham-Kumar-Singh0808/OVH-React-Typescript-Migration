@@ -148,10 +148,14 @@ const EditProjectStatus = ({
     const newToDate = new Date(
       moment(editNextWeekDate?.toString()).format(commonFormatDate),
     )
+    const diffInDays =
+      (newToDate.getTime() - newFromDate.getTime()) / (1000 * 3600 * 24)
+
     if (
-      editCurrentWeekDate &&
-      editNextWeekDate &&
-      newToDate.getTime() < newFromDate.getTime()
+      (editCurrentWeekDate &&
+        editNextWeekDate &&
+        newToDate.getTime() < newFromDate.getTime()) ||
+      (editCurrentWeekDate && editNextWeekDate && diffInDays < 7)
     ) {
       setDateError(true)
     } else {

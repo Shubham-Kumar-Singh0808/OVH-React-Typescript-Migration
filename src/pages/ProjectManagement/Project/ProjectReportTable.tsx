@@ -99,6 +99,14 @@ const ProjectReportsTable = ({
     reduxServices.projectReport.selectors.projectClients,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessProjectClose = userAccessToFeatures?.find(
+    (feature) => feature.name === 'ProjectClose',
+  )
+
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -397,21 +405,25 @@ const ProjectReportsTable = ({
                         </span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        {isCloseBtnVisible && (
-                          <CButton
-                            className="btn-ovh-employee-list cursor-pointer"
-                            color="danger btn-ovh me-1"
-                            data-testid="close-btn"
-                            onClick={() =>
-                              handleShowCloseModal(value.id, value.projectName)
-                            }
-                          >
-                            <i
-                              className="fa fa-times text-white sh-fa-times"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                        )}
+                        {isCloseBtnVisible &&
+                          userAccessProjectClose?.viewaccess && (
+                            <CButton
+                              className="btn-ovh-employee-list cursor-pointer"
+                              color="danger btn-ovh me-1"
+                              data-testid="close-btn"
+                              onClick={() =>
+                                handleShowCloseModal(
+                                  value.id,
+                                  value.projectName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-times text-white sh-fa-times"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
                         <Link to={`/viewProject/${value.id}`}>
