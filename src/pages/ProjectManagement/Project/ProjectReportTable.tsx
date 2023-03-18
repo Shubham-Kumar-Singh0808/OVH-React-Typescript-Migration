@@ -369,7 +369,7 @@ const ProjectReportsTable = ({
                   <React.Fragment key={index}>
                     <CTableRow>
                       <CTableDataCell className="text-center">
-                        {isShow && selectedProject === value.id ? (
+                        {isShow && selectedProject === value?.id ? (
                           <i
                             className="fa fa-minus-circle cursor-pointer"
                             onClick={() => setIsShow(false)}
@@ -378,21 +378,21 @@ const ProjectReportsTable = ({
                         ) : (
                           <i
                             className="fa fa-plus-circle cursor-pointer"
-                            onClick={() => handleShowProject(value.id)}
+                            onClick={() => handleShowProject(value?.id)}
                             data-testid="plus-btn"
                           />
                         )}
                       </CTableDataCell>
 
-                      <CTableDataCell>{value.projectCode}</CTableDataCell>
-                      <CTableDataCell>{value.projectName}</CTableDataCell>
-                      <CTableDataCell>{value.type}</CTableDataCell>
-                      <CTableDataCell>{value.client}</CTableDataCell>
-                      <CTableDataCell>{value.count}</CTableDataCell>
-                      <CTableDataCell>{value.managerName}</CTableDataCell>
-                      <CTableDataCell>{value.deliveryManager}</CTableDataCell>
-                      <CTableDataCell>{value.startdate}</CTableDataCell>
-                      <CTableDataCell>{value.enddate}</CTableDataCell>
+                      <CTableDataCell>{value?.projectCode}</CTableDataCell>
+                      <CTableDataCell>{value?.projectName}</CTableDataCell>
+                      <CTableDataCell>{value?.type}</CTableDataCell>
+                      <CTableDataCell>{value?.client}</CTableDataCell>
+                      <CTableDataCell>{value?.count}</CTableDataCell>
+                      <CTableDataCell>{value?.managerName}</CTableDataCell>
+                      <CTableDataCell>{value?.deliveryManager}</CTableDataCell>
+                      <CTableDataCell>{value?.startdate}</CTableDataCell>
+                      <CTableDataCell>{value?.enddate}</CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
                         <span
                           className={`label label-table ${
@@ -401,7 +401,7 @@ const ProjectReportsTable = ({
                               : 'label-gray'
                           }`}
                         >
-                          {value.status}
+                          {value?.status}
                         </span>
                       </CTableDataCell>
                       <CTableDataCell>
