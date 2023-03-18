@@ -91,9 +91,11 @@ const PanDetails = (): JSX.Element => {
     history.goBack()
   }
 
-  const isCheckedVIsible = isChecked
-    ? bankDetail.finance?.pfAccountNumber
-    : 'N/A'
+  const isCheckedVIsible =
+    isChecked && bankDetail.finance?.pfAccountNumber
+      ? isChecked && bankDetail.finance?.pfAccountNumber
+      : 'N/A'
+
   const backBtnToggle = isViewingAnotherEmployee ? (
     <CButton
       color="info"
