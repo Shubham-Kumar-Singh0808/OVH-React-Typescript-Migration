@@ -140,6 +140,7 @@ const AppraisalTemplateViewAction = ({
           setCycleChecked={setCycleChecked}
           selChkBoxesFromApi={cbFromApi}
           checkList={checkList}
+          editAppraisalId={editAppraisalId}
         />
       </OCard>
     </>

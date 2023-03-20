@@ -16,7 +16,7 @@ import {
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { AppraisalTemplateCheckBoxProps } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
@@ -24,6 +24,7 @@ const AppraisalTemplateViewActionTable = ({
   setCycleChecked,
   cycleChecked,
   selChkBoxesFromApi,
+  editAppraisalId,
 }: AppraisalTemplateCheckBoxProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -46,6 +47,33 @@ const AppraisalTemplateViewActionTable = ({
     setIsModalDescriptionVisible(true)
     setDisplayDescriptionKra(name)
   }
+  const dispatch = useAppDispatch()
+
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.appraisalTemplate.searchKRAList({
+          endIndex: 20,
+          startIndex: 0,
+          departmentId: Number(editAppraisalId?.designation.departmentId),
+          designationId: Number(editAppraisalId?.designation.id),
+          multipleSearch: searchInput,
+        }),
+      )
+    }
+  }
+
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.appraisalTemplate.searchKRAList({
+        endIndex: 20,
+        startIndex: 0,
+        departmentId: Number(editAppraisalId?.designation.departmentId),
+        designationId: Number(editAppraisalId?.designation.id),
+        multipleSearch: searchInput,
+      }),
+    )
+  }
 
   return (
     <>
@@ -61,6 +89,7 @@ const AppraisalTemplateViewActionTable = ({
               onChange={(e) => {
                 setSearchInput(e.target.value)
               }}
+              onKeyDown={handleSearchBtn}
             />
             <CButton
               disabled={!searchInput}
@@ -69,6 +98,7 @@ const AppraisalTemplateViewActionTable = ({
               type="button"
               color="info"
               id="button-addon2"
+              onClick={multiSearchBtnHandler}
             >
               <i className="fa fa-search"></i>
             </CButton>
@@ -196,7 +226,7 @@ const AppraisalTemplateViewActionTable = ({
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
-            // disabled={true}
+            disabled={true}
           >
             Save
           </CButton>

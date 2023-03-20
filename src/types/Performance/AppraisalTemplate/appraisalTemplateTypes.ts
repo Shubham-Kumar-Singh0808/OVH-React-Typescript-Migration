@@ -168,4 +168,5 @@ export type AppraisalTemplateCheckBoxProps = {
   >
   selChkBoxesFromApi: GetDesignationWiseKRAs[]
   checkList: GetDesignationWiseKRAs[]
+  editAppraisalId: GetDesignationsUnderCycle | undefined
 }
