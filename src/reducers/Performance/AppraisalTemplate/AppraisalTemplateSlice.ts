@@ -10,6 +10,8 @@ import {
   DesignationWiseKRAsProps,
   GetCycleList,
   GetDesignationsUnderCycle,
+  GetDesignationWiseKRAs,
+  KpiForIndividualKra,
 } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const activeCycle = createAsyncThunk(
@@ -93,6 +95,27 @@ const searchKRAList = createAsyncThunk(
   },
 )
 
+const kpisForIndividualKra = createAsyncThunk(
+  'assignTemplate/kpisForIndividualKra',
+  async (
+    {
+      kraId,
+    }: {
+      kraId: number
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await AppraisalTemplateApi.kpisForIndividualKra({
+        kraId,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -103,6 +126,7 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   pageSize: 20,
   designationsUnderCycleProps: { size: 0, list: [] },
   designationWiseKRAs: [],
+  kpiForIndividualKra: [],
   searchKRAData: { size: 0, list: [] },
 }
 
@@ -125,6 +149,14 @@ const appraisalTemplateSlice = createSlice({
       .addCase(cycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.cycleList = action.payload
+      })
+      .addCase(getDesignationWiseKRAs.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.designationWiseKRAs = action.payload
+      })
+      .addCase(kpisForIndividualKra.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.kpiForIndividualKra = action.payload
       })
       .addCase(getDesignationsUnderCycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -162,6 +194,12 @@ const listSize = (state: RootState): number => state.appraisalTemplate.listSize
 const cycleList = (state: RootState): GetCycleList[] =>
   state.appraisalTemplate.cycleList
 
+const designationWiseKRAs = (state: RootState): GetDesignationWiseKRAs[] =>
+  state.appraisalTemplate.designationWiseKRAs
+
+const kpiForIndividualKra = (state: RootState): KpiForIndividualKra[] =>
+  state.appraisalTemplate.kpiForIndividualKra
+
 const pageFromState = (state: RootState): number =>
   state.appraisalTemplate.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -178,6 +216,7 @@ export const appraisalTemplateThunk = {
   getDesignationsUnderCycle,
   getDesignationWiseKRAs,
   searchKRAList,
+  kpisForIndividualKra,
 }
 
 export const appraisalTemplateSelectors = {
@@ -187,6 +226,8 @@ export const appraisalTemplateSelectors = {
   designationsUnderCycle,
   pageFromState,
   pageSizeFromState,
+  designationWiseKRAs,
+  kpiForIndividualKra,
 }
 
 export const appraisalTemplateService = {

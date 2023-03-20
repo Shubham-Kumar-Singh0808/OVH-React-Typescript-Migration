@@ -28,6 +28,7 @@ export type AppraisalTemplateSliceState = {
   designationsUnderCycleProps: DesignationsUnderCycleResponse
   designationWiseKRAs: GetDesignationWiseKRAs[]
   searchKRAData: SearchKRAList
+  kpiForIndividualKra: KpiForIndividualKra[]
 }
 
 export type AppraisalCycleDto = {
@@ -134,4 +135,28 @@ export type SearchKRA = {
 export type SearchKRAList = {
   size: number
   list: SearchKRA[]
+}
+
+export type KpiForIndividualKra = {
+  id: number
+  name: string
+  description: string
+  frequencyId: number
+  frequency: string
+  target: string
+  kraDto: kraDto
+}
+
+export type kraDto = {
+  id: number
+  name: string
+  description: null
+  kpiLookps: null
+  count: number
+  checkType: null
+  designationName: null
+  designationId: null
+  departmentName: null
+  departmentId: null
+  designationKraPercentage: null
 }

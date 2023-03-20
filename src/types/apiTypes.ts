@@ -775,6 +775,7 @@ export interface AppraisalTemplateApi extends ApiBase {
   getDesignationWiseKRAs: string
   51: string
   searchKRAData: string
+  kpisForIndividualKra: string
 }
 
 export interface ProjectStatusApi extends ApiBase {

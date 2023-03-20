@@ -126,8 +126,8 @@ const AppraisalTemplateTable = ({
                         className="btn-ovh btn-ovh-employee-list me-1 sh-eye-btn-color"
                         onClick={() =>
                           editCycleHandler(
-                            cycle.designation?.departmentId,
-                            cycle.kraLookups[0].designationId,
+                            cycle.designation.departmentId,
+                            cycle.designation?.id,
                             cycle,
                           )
                         }

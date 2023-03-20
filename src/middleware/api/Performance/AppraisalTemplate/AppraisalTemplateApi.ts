@@ -5,6 +5,7 @@ import {
   DesignationWiseKRAsProps,
   GetDesignationWiseKRAs,
   SearchKRAList,
+  KpiForIndividualKra,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -51,7 +52,7 @@ const getDesignationsUnderCycle = async (
 
 const getDesignationWiseKRAs = async (
   props: DesignationWiseKRAsProps,
-): Promise<GetDesignationWiseKRAs> => {
+): Promise<GetDesignationWiseKRAs[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AppraisalTemplateApiConfig.getDesignationWiseKRAs,
     method: AllowedHttpMethods.get,
@@ -93,12 +94,30 @@ const searchKRAList = async ({
   return response.data
 }
 
+const kpisForIndividualKra = async ({
+  kraId,
+}: {
+  kraId: number
+}): Promise<KpiForIndividualKra[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AppraisalTemplateApiConfig.kpisForIndividualKra,
+    method: AllowedHttpMethods.get,
+    params: {
+      kraId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AppraisalTemplateApi = {
   activeCycle,
   cycle,
   getDesignationsUnderCycle,
   getDesignationWiseKRAs,
   searchKRAList,
+  kpisForIndividualKra,
 }
 
 export default AppraisalTemplateApi
