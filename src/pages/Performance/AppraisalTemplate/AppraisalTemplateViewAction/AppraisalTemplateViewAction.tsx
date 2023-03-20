@@ -1,8 +1,13 @@
 import { CRow, CCol, CButton, CFormInput, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
+import AppraisalTemplateViewActionTable from './AppraisalTemplateViewActionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 
-const AppraisalTemplateViewAction = (): JSX.Element => {
+const AppraisalTemplateViewAction = ({
+  setToggle,
+}: {
+  setToggle: () => void
+}): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
@@ -21,6 +26,7 @@ const AppraisalTemplateViewAction = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={setToggle}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -80,6 +86,7 @@ const AppraisalTemplateViewAction = (): JSX.Element => {
             />
           </CCol>
         </CRow>
+        <AppraisalTemplateViewActionTable />
       </OCard>
     </>
   )

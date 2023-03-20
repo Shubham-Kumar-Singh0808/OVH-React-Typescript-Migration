@@ -19,8 +19,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const AppraisalTemplateTable = ({
   selectAppraisalId,
+  setToggle,
 }: {
   selectAppraisalId: string
+  setToggle: (value: string) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -31,6 +33,8 @@ const AppraisalTemplateTable = ({
   const appraisalTemplateListSize = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.listSize,
   )
+  console.log(designationsUnderCycle)
+  console.log(appraisalTemplateListSize)
 
   useEffect(() => {
     if (selectAppraisalId)
@@ -70,6 +74,7 @@ const AppraisalTemplateTable = ({
   }
 
   const editCycleHandler = (departmentId: number, designationId: number) => {
+    setToggle('editViewAppraisalTemplate')
     dispatch(
       reduxServices.appraisalTemplate.getDesignationWiseKRAs({
         departmentId,
@@ -83,6 +88,7 @@ const AppraisalTemplateTable = ({
       <CTable striped responsive className="mt-5 align-middle alignment">
         <CTableHead>
           <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Appraisal Title</CTableHeaderCell>
             <CTableHeaderCell scope="col">Department</CTableHeaderCell>
             <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
@@ -95,38 +101,32 @@ const AppraisalTemplateTable = ({
           {designationsUnderCycle?.length > 0 &&
             designationsUnderCycle?.map((cycle, index) => {
               return (
-                <CTableRow key={getItemNumber(index)}>
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>
                     {cycle?.appraisalCycleDto?.name}
                   </CTableDataCell>
-                  {cycle?.kraLookups.map((item) => {
-                    return (
-                      <>
-                        <CTableDataCell>{item?.departmentName}</CTableDataCell>
-                        <CTableDataCell>{item?.designationName}</CTableDataCell>
-                        <CTableDataCell>
-                          <CTooltip content="view">
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="info-light btn-ovh me-1"
-                              data-testid="view-btn"
-                              onClick={() =>
-                                editCycleHandler(
-                                  item?.departmentId,
-                                  item?.designationId,
-                                )
-                              }
-                            >
-                              <i
-                                aria-hidden="true"
-                                className="fa fa-eye text-white"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
-                        </CTableDataCell>
-                      </>
-                    )
-                  })}
+                  <CTableDataCell>
+                    {cycle.designation.departmentName}
+                  </CTableDataCell>
+                  <CTableDataCell>{cycle.designation.name}</CTableDataCell>
+                  <CTableDataCell>
+                    <CTooltip content="View">
+                      <CButton
+                        className="btn-ovh btn-ovh-employee-list me-1 sh-eye-btn-color"
+                        onClick={() =>
+                          editCycleHandler(
+                            cycle.designation?.departmentId,
+                            cycle.kraLookups[0].designationId,
+                          )
+                        }
+                      >
+                        <i className="fa fa-eye" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </CTableDataCell>
                 </CTableRow>
               )
             })}

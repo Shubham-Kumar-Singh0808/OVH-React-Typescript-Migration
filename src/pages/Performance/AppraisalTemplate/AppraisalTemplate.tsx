@@ -62,11 +62,18 @@ const AppraisalTemplate = (): JSX.Element => {
               </CFormSelect>
             </CCol>
           </CRow>
-          <AppraisalTemplateTable selectAppraisalId={selectAppraisalId} />
+          <AppraisalTemplateTable
+            selectAppraisalId={selectAppraisalId}
+            setToggle={setToggle}
+          />
         </OCard>
       )}
       {toggle === 'editViewAppraisalTemplate' && (
-        <AppraisalTemplateViewAction />
+        <AppraisalTemplateViewAction
+          setToggle={() => {
+            setToggle('')
+          }}
+        />
       )}
     </>
   )
