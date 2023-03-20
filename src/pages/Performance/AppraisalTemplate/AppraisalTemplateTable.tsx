@@ -16,13 +16,18 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { GetDesignationsUnderCycle } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const AppraisalTemplateTable = ({
   selectAppraisalId,
   setToggle,
+  setEditAppraisalId,
 }: {
   selectAppraisalId: string
   setToggle: (value: string) => void
+  setEditAppraisalId: React.Dispatch<
+    React.SetStateAction<GetDesignationsUnderCycle | undefined>
+  >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -33,8 +38,6 @@ const AppraisalTemplateTable = ({
   const appraisalTemplateListSize = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.listSize,
   )
-  console.log(designationsUnderCycle)
-  console.log(appraisalTemplateListSize)
 
   useEffect(() => {
     if (selectAppraisalId)
@@ -73,7 +76,11 @@ const AppraisalTemplateTable = ({
     return (currentPage - 1) * pageSize + index + 1
   }
 
-  const editCycleHandler = (departmentId: number, designationId: number) => {
+  const editCycleHandler = (
+    departmentId: number,
+    designationId: number,
+    cycle: GetDesignationsUnderCycle,
+  ) => {
     setToggle('editViewAppraisalTemplate')
     dispatch(
       reduxServices.appraisalTemplate.getDesignationWiseKRAs({
@@ -81,6 +88,7 @@ const AppraisalTemplateTable = ({
         designationId,
       }),
     )
+    setEditAppraisalId(cycle)
   }
 
   return (
@@ -120,6 +128,7 @@ const AppraisalTemplateTable = ({
                           editCycleHandler(
                             cycle.designation?.departmentId,
                             cycle.kraLookups[0].designationId,
+                            cycle,
                           )
                         }
                       >

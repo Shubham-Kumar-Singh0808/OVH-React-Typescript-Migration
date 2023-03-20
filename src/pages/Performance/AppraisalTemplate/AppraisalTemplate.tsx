@@ -6,10 +6,14 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { GetDesignationsUnderCycle } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const AppraisalTemplate = (): JSX.Element => {
   const [selectAppraisalId, setSelectAppraisalId] = useState<string>('')
   const [toggle, setToggle] = useState('')
+
+  const [editAppraisalId, setEditAppraisalId] =
+    useState<GetDesignationsUnderCycle>()
 
   const cycleList = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.cycleList,
@@ -63,6 +67,7 @@ const AppraisalTemplate = (): JSX.Element => {
             </CCol>
           </CRow>
           <AppraisalTemplateTable
+            setEditAppraisalId={setEditAppraisalId}
             selectAppraisalId={selectAppraisalId}
             setToggle={setToggle}
           />
@@ -70,6 +75,7 @@ const AppraisalTemplate = (): JSX.Element => {
       )}
       {toggle === 'editViewAppraisalTemplate' && (
         <AppraisalTemplateViewAction
+          editAppraisalId={editAppraisalId}
           setToggle={() => {
             setToggle('')
           }}

@@ -2,16 +2,20 @@ import { CRow, CCol, CButton, CFormInput, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import AppraisalTemplateViewActionTable from './AppraisalTemplateViewActionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import { GetDesignationsUnderCycle } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const AppraisalTemplateViewAction = ({
   setToggle,
+  editAppraisalId,
 }: {
   setToggle: () => void
+  editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+
   return (
     <>
       <OCard
@@ -47,6 +51,7 @@ const AppraisalTemplateViewAction = ({
               size="sm"
               name="title"
               disabled={true}
+              value={editAppraisalId?.appraisalCycleDto.name}
             />
           </CCol>
         </CRow>
@@ -65,6 +70,7 @@ const AppraisalTemplateViewAction = ({
               size="sm"
               name="department"
               disabled={true}
+              value={editAppraisalId?.designation.departmentName}
             />
           </CCol>
         </CRow>
@@ -83,6 +89,7 @@ const AppraisalTemplateViewAction = ({
               size="sm"
               name="designation"
               disabled={true}
+              value={editAppraisalId?.designation.name}
             />
           </CCol>
         </CRow>
