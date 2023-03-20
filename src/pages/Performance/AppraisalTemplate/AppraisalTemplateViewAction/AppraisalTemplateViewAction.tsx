@@ -1,8 +1,13 @@
 import { CRow, CCol, CButton, CFormInput, CFormLabel } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AppraisalTemplateViewActionTable from './AppraisalTemplateViewActionTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { GetDesignationsUnderCycle } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import {
+  GetDesignationsUnderCycle,
+  GetDesignationWiseKRAs,
+} from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
 const AppraisalTemplateViewAction = ({
   setToggle,
@@ -11,10 +16,47 @@ const AppraisalTemplateViewAction = ({
   setToggle: () => void
   editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
+  const [cycleChecked, setCycleChecked] = useState<GetDesignationWiseKRAs>()
+  const [checkList, setCheckList] = useState<GetDesignationWiseKRAs[]>([])
+  const [cbFromApi, setCbFromApi] = useState<GetDesignationWiseKRAs[]>([])
+
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
+  console.log(cbFromApi)
+  useEffect(() => {
+    if (cycleChecked) {
+      const tmpArr: GetDesignationWiseKRAs[] = []
+      cbFromApi.forEach((item) => {
+        tmpArr.push(item)
+        return ''
+      })
+      let ndx = 9999
+      tmpArr.forEach((el, i) => {
+        if (el.id === cycleChecked.id) {
+          ndx = i
+        }
+        return ''
+      })
+      if (ndx < 9999) {
+        tmpArr.splice(ndx, 1)
+      } else {
+        tmpArr.push(cycleChecked)
+      }
+      setCbFromApi(tmpArr)
+      setCheckList([...checkList, cycleChecked])
+    }
+  }, [cycleChecked])
+
+  const designationWiseKRAs = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.designationWiseKRAs,
+  )
+  useEffect(() => {
+    if (designationWiseKRAs) {
+      setCbFromApi(designationWiseKRAs)
+    }
+  }, [designationWiseKRAs])
 
   return (
     <>
@@ -93,7 +135,12 @@ const AppraisalTemplateViewAction = ({
             />
           </CCol>
         </CRow>
-        <AppraisalTemplateViewActionTable />
+        <AppraisalTemplateViewActionTable
+          cycleChecked={cycleChecked as GetDesignationWiseKRAs}
+          setCycleChecked={setCycleChecked}
+          selChkBoxesFromApi={cbFromApi}
+          checkList={checkList}
+        />
       </OCard>
     </>
   )

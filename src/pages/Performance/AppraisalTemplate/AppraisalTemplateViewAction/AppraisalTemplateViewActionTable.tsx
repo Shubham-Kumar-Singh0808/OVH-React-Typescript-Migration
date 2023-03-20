@@ -18,8 +18,13 @@ import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
+import { AppraisalTemplateCheckBoxProps } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
-const AppraisalTemplateViewActionTable = (): JSX.Element => {
+const AppraisalTemplateViewActionTable = ({
+  setCycleChecked,
+  cycleChecked,
+  selChkBoxesFromApi,
+}: AppraisalTemplateCheckBoxProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalDescriptionVisible, setIsModalDescriptionVisible] =
@@ -95,10 +100,44 @@ const AppraisalTemplateViewActionTable = (): JSX.Element => {
                 cycle.description && cycle.description.length > 30
                   ? `${cycle.description.substring(0, 30)}...`
                   : cycle.description
+
+              let flag = false
+              const chkFlag = selChkBoxesFromApi?.find(
+                (el) => el.id === cycle.id,
+              )
+              if (chkFlag) {
+                flag = true
+              }
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>
-                    <CFormCheck className="form-check-input" name="checkType" />
+                    <CFormCheck
+                      className="form-check-input"
+                      name="checkType"
+                      checked={flag}
+                      onChange={() => {
+                        setCycleChecked((prevState) => {
+                          return {
+                            ...prevState,
+                            ...{
+                              id: cycle.id,
+                              name: cycle.name,
+                              description: cycle.description,
+                              kpiLookps: cycle.kpiLookps,
+                              count: cycle.count,
+                              checkType: cycle.checkType,
+                              designationName: cycle.designationName,
+                              designationId: cycle.designationId,
+                              departmentName: cycle.departmentName,
+                              departmentId: cycle.departmentId,
+                              designationKraPercentage:
+                                cycle.designationKraPercentage,
+                            },
+                          }
+                        })
+                      }}
+                      value={cycleChecked as unknown as string}
+                    />
                   </CTableDataCell>
                   {kraName ? (
                     <CTableDataCell>
@@ -157,6 +196,7 @@ const AppraisalTemplateViewActionTable = (): JSX.Element => {
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
+            // disabled={true}
           >
             Save
           </CButton>

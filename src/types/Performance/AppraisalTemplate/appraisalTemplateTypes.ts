@@ -160,3 +160,12 @@ export type kraDto = {
   departmentId: null
   designationKraPercentage: null
 }
+
+export type AppraisalTemplateCheckBoxProps = {
+  cycleChecked: GetDesignationWiseKRAs
+  setCycleChecked: React.Dispatch<
+    React.SetStateAction<GetDesignationWiseKRAs | undefined>
+  >
+  selChkBoxesFromApi: GetDesignationWiseKRAs[]
+  checkList: GetDesignationWiseKRAs[]
+}
