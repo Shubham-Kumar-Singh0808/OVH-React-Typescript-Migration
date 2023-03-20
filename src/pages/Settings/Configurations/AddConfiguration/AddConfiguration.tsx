@@ -71,18 +71,26 @@ const AddConfiguration = ({
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM'
-    const start = moment(fromMonth, 'MM-YYYY').format(newDateFormatForIsBefore)
-    const end = moment(toMonth, 'MM-YYYY').format(newDateFormatForIsBefore)
+    const fromMonthValidation = moment(fromMonth, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+    const toMonthValidation = moment(toMonth, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
 
-    setIsMonthError(moment(end).isBefore(start))
+    setIsMonthError(moment(toMonthValidation).isBefore(fromMonthValidation))
   }, [fromMonth, toMonth])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const start = moment(startDate, dateFormat).format(newDateFormatForIsBefore)
-    const end = moment(endDate, dateFormat).format(newDateFormatForIsBefore)
+    const startDateValidation = moment(startDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const endDateValidation = moment(endDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
 
-    setIsDateError(moment(end).isBefore(start))
+    setIsDateError(moment(endDateValidation).isBefore(startDateValidation))
   }, [startDate, endDate])
 
   const errorMsgs = useTypedSelector(
