@@ -367,7 +367,12 @@ const ReviewListFilterOptions = ({
         )}
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
-          <CMultiSelect options={reviewRatings} data-testid="ratings" />
+          <CMultiSelect
+            options={reviewRatings}
+            selectionType="counter"
+            data-testid="ratings"
+            className="py-1"
+          />
         </CCol>
         <CCol sm={3}>
           <CFormLabel>Employee Status :</CFormLabel>

@@ -21,8 +21,6 @@ const FamilyDetailsTable = ({
   striped = true,
   bordered = true,
   tableClassName = '',
-  userEditAccess = true,
-  userDeleteAccess = true,
 }: EmployeeFamilyDetailsTableProps): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -103,6 +101,14 @@ const FamilyDetailsTable = ({
     <></>
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-PersonalInfo-Family Details',
+  )
+
   return (
     <>
       <CTable
@@ -176,7 +182,7 @@ const FamilyDetailsTable = ({
                 )}
                 {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
-                    {userEditAccess && (
+                    {userAccess?.updateaccess && (
                       <CButton
                         color="info"
                         className="btn-ovh me-1 btn-ovh-employee-list"
@@ -189,7 +195,7 @@ const FamilyDetailsTable = ({
                         ></i>
                       </CButton>
                     )}
-                    {userDeleteAccess && (
+                    {userAccess?.deleteaccess && (
                       <CButton
                         color="danger"
                         className="btn-ovh me-1 btn-ovh-employee-list"

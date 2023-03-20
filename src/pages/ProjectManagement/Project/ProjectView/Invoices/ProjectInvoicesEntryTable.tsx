@@ -8,11 +8,14 @@ import {
   CButton,
   CTooltip,
   CLink,
+  CCol,
+  CFormLabel,
+  CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { InvoicesOfMilestone } from '../../../../../types/ProjectManagement/Project/ProjectView/Invoices/invoicesTypes'
 
 const ProjectInvoicesEntryTable = (): JSX.Element => {
@@ -25,9 +28,14 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
     reduxServices.projectInvoices.selectors.invoicesOfMilestoneList,
   )
 
+  const invoiceSummary = useTypedSelector(
+    reduxServices.projectInvoices.selectors.invoiceSummary,
+  )
+  const dispatch = useAppDispatch()
   const handleModal = (data: InvoicesOfMilestone) => {
     setIsInvoiceNumberModalVisible(true)
     setInvoiceNumber(data)
+    dispatch(reduxServices.projectInvoices.getInvoiceSummary(data.invoiceId))
   }
 
   const handleMileStoneModal = (data: InvoicesOfMilestone) => {
@@ -79,51 +87,79 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
       </CTable>
     </>
   )
+
   const invoiceModel = (
-    <CTable className="milestone-model-table">
-      <CTableBody>
-        <CTableRow>
-          <CTableDataCell>Serial Number:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.invoicNumber}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell> Invoice Number:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.number}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Milestone:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestoneName}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Invoice Percentage:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.milestonePercentage}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell> Status:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.invoiceStatus}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Sent Date:</CTableDataCell>
-          <CTableDataCell>{invoiceNumber?.raisedDate || 'N/A'}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Sent Amount</CTableDataCell>
-          <CTableDataCell>&{invoiceNumber?.totalAmount}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Discount:</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.discount}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Tax:</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.discountRate}</CTableDataCell>
-        </CTableRow>
-        <CTableRow>
-          <CTableDataCell>Total Sent Amount (AUD):</CTableDataCell>
-          <CTableDataCell>${invoiceNumber?.totalAmount}</CTableDataCell>
-        </CTableRow>
-      </CTableBody>
-    </CTable>
+    <>
+      <h4 className="model-header-text mb-3">Invoice Details</h4>
+      <div className="form-group">
+        <CRow className="employeeAllocation-form">
+          <CCol sm={4} className="pe-0">
+            <CFormLabel className="text-info mt-2 col">
+              Serial Number:
+            </CFormLabel>
+            <span className="col-sm-6">{invoiceSummary?.number}</span>
+            &nbsp;
+          </CCol>
+          <CCol sm={4} className="p-0">
+            <CFormLabel className="text-info mt-2 col">
+              Invoice Number:
+            </CFormLabel>
+            <span className="col-sm-6">{invoiceSummary?.invoiceNumber}</span>
+            &nbsp;
+          </CCol>
+          <CCol sm={4} className="p-0">
+            <CFormLabel className="text-info mt-2 col">Milestone :</CFormLabel>
+            <span className="col-sm-6">{invoiceSummary?.mileStoneName}</span>
+            &nbsp;
+          </CCol>
+          <CCol sm={4} className="pe-0">
+            <CFormLabel className="text-info mt-2 col">
+              Invoice Percentage:
+            </CFormLabel>
+            <span className="col-sm-6">
+              {invoiceSummary?.milestonePercentage}
+            </span>
+            &nbsp;
+          </CCol>
+          <CCol sm={4} className="p-0">
+            <CFormLabel className="text-info mt-2 col">Status:</CFormLabel>
+            <span className="col-sm-6">{invoiceSummary?.invoiceStatus}</span>
+            &nbsp;
+          </CCol>
+        </CRow>
+        <CTable striped responsive align="middle" className="text-center">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell>Sent Date</CTableHeaderCell>
+              <CTableHeaderCell>Sent Amount</CTableHeaderCell>
+              <CTableHeaderCell>Discount</CTableHeaderCell>
+              <CTableHeaderCell>Tax</CTableHeaderCell>
+              <CTableHeaderCell className="ng-binding">
+                Total Sent Amount (AUD)
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+            <CTableRow>
+              <CTableDataCell>
+                {invoiceSummary?.invoiceAmountSentDate}
+              </CTableDataCell>
+              <CTableDataCell>
+                $
+                {Number(invoiceSummary?.amountAfterDiscount)?.toLocaleString(
+                  'en-IN',
+                )}
+              </CTableDataCell>
+              <CTableDataCell>{invoiceSummary?.writeoffAmount}</CTableDataCell>
+              <CTableDataCell>{invoiceSummary?.discount}</CTableDataCell>
+              <CTableDataCell>
+                ${Number(invoiceSummary?.totalAmount)?.toLocaleString('en-IN')}
+              </CTableDataCell>
+            </CTableRow>
+          </CTableBody>
+        </CTable>
+      </div>
+    </>
   )
   return (
     <>

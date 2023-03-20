@@ -30,6 +30,7 @@ const EmployeePipListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  selectRadioAction,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isReasonForPIPVisible, setIsReasonForPIPVisible] =
@@ -72,6 +73,8 @@ const EmployeePipListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  console.log(selectRadioAction)
 
   return (
     <>
@@ -140,18 +143,24 @@ const EmployeePipListTable = ({
                         </CButton>
                       </Link>
                     </CTooltip>
-                    <CTooltip content="Clearence Certificate">
-                      <Link to={`/PIPClearnceCerticates`}>
-                        <CButton
-                          className="btn-ovh me-2"
-                          color="info"
-                          type="button"
-                          onClick={() => clearanceBtnHandler(item.id as number)}
-                        >
-                          <i className="fa fa-user-circle text-white"></i>
-                        </CButton>
-                      </Link>
-                    </CTooltip>
+                    {selectRadioAction !== 'Inactive' ? (
+                      <CTooltip content="Clearence Certificate">
+                        <Link to={`/PIPClearnceCerticates`}>
+                          <CButton
+                            className="btn-ovh me-2"
+                            color="info"
+                            type="button"
+                            onClick={() =>
+                              clearanceBtnHandler(item.id as number)
+                            }
+                          >
+                            <i className="fa fa-user-circle text-white"></i>
+                          </CButton>
+                        </Link>
+                      </CTooltip>
+                    ) : (
+                      ''
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -160,11 +169,13 @@ const EmployeePipListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <strong>
-            {pipListSizeRecords
-              ? `Total Records: ${pipListSizeRecords}`
-              : `No Records Found...`}
-          </strong>
+          <p className="mt-2">
+            <strong>
+              {pipListSizeRecords
+                ? `Total Records: ${pipListSizeRecords}`
+                : `No Records Found...`}
+            </strong>
+          </p>
         </CCol>
         <CCol xs={3}>
           {pipListSizeRecords > 20 && (

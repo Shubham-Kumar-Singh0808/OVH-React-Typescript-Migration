@@ -342,6 +342,7 @@ export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
     apiPrefix + '/timeInOffice/getTimeInOfficeEmployeeReport',
   getTimeInOfficeManagerReport:
     apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
+  exportAttendanceReport: apiPrefix + '/timeInOffice/exportAttendanceReport',
 }
 
 export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
@@ -608,7 +609,7 @@ export const addTrackerApiConfig: AddTrackerApi = {
 }
 
 export const appraisalConfigurationsApiConfig: AppraisalConfigurationsApi = {
-  getAppraisalCycle: apiPrefix + '/appraisal/getAllAppraisalCycles',
+  cycle: apiPrefix + '/appraisal/cycle',
   editAppraisalCycle: apiPrefix + '/appraisal/getCycle',
   updateAppraisalCycle: apiPrefix + '/appraisal/updateCycle',
   validateCycle: apiPrefix + '/appraisal/validateCycle',
@@ -841,6 +842,7 @@ export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+  getInvoiceSummary: apiPrefix + '/invoice/getInvoiceSummary',
 }
 
 export const projectTailoringApiConfig: ProjectTailoringApi = {
@@ -976,4 +978,13 @@ export const addNewAuditApiConfig: AddNewAudit = {
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
   exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
+  deleteProjectAuditDetails:
+    apiPrefix + '/sqaAuditController/deleteProjectAuditDetails',
+  closeAudit: apiPrefix + '/sqaAuditController/closeAudit',
+  getNewSQAAuditTimelineDetails:
+    apiPrefix + '/sqaAuditController/getNewSQAAuditTimelineDetails',
+  getAuditDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
+  saveOrSubmitAuditForm:
+    apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  downloadSQAAuditFile: '/sqaAuditController/downloadSQAAuditFile',
 }

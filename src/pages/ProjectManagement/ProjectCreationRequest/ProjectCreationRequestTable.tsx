@@ -383,7 +383,7 @@ const ProjectCreationRequestTable = ({
         modalBodyClass="mt-0"
       >
         <>
-          Do you really want to delete this <span>{projectName}</span> project
+          Do you really want to delete this <b>{projectName}</b> project
           request?
         </>
       </OModal>

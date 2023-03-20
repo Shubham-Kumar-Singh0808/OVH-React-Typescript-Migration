@@ -237,6 +237,7 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
 export interface TimeInOfficeReportApi extends ApiBase {
   getTimeInOfficeEmployeeReport: string
   getTimeInOfficeManagerReport: string
+  exportAttendanceReport: string
 }
 
 export interface EmployeeLeaveSettingsApi extends ApiBase {
@@ -465,7 +466,7 @@ export interface EventListApi extends ApiBase {
   updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
-  getAppraisalCycle: string
+  cycle: string
   editAppraisalCycle: string
   updateAppraisalCycle: string
   validateCycle: string
@@ -664,6 +665,7 @@ export interface ProjectMilestoneApi extends ApiBase {
 export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
   getInvoicesOfMilestone: string
+  getInvoiceSummary: string
 }
 
 export interface ProjectTailoringApi extends ApiBase {
@@ -803,4 +805,10 @@ export interface AddNewAudit extends ApiBase {
 export interface SQAAuditReportApi extends ApiBase {
   getSQAAuditReport: string
   exportSqaAuditReport: string
+  deleteProjectAuditDetails: string
+  closeAudit: string
+  getNewSQAAuditTimelineDetails: string
+  getAuditDetails: string
+  saveOrSubmitAuditForm: string
+  downloadSQAAuditFile: string
 }

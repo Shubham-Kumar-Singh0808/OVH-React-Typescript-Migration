@@ -9,15 +9,17 @@ import {
   CRow,
   CButton,
 } from '@coreui/react-pro'
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SQAAuditReschedule from './SQAAuditReschedule'
 import OLoadingSpinner from '../../components/ReusableComponent/OLoadingSpinner'
+import OModal from '../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
+import OToast from '../../components/ReusableComponent/OToast'
 import { ApiLoadingState } from '../../middleware/api/apiList'
 import { reduxServices } from '../../reducers/reduxServices'
-import { useTypedSelector } from '../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { LoadingType } from '../../types/Components/loadingScreenTypes'
 
 const SQAAuditReportTable = ({
@@ -33,7 +35,14 @@ const SQAAuditReportTable = ({
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const [toDeleteSQAAuditId, setToDeleteSQAAuditId] = useState(0)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [auditType, setAuditType] = useState<string>('')
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false)
+  const [isRescheduleModalVisible, setIsRescheduleModalVisible] =
+    useState(false)
+
   const sqaAuditReportResponse = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReport,
   )
@@ -52,6 +61,7 @@ const SQAAuditReportTable = ({
   const userAccessSqaAuditReport = userAccessToFeatures?.find(
     (feature) => feature.name === 'SQA Audit Report',
   )
+
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -64,6 +74,100 @@ const SQAAuditReportTable = ({
 
   const editButtonHandler = (id: number) => {
     dispatch(reduxServices.addNewAuditForm.editAuditFormDetails(id))
+  }
+
+  const handleShowDeleteModal = (auditId: number, auditSQAType: string) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsDeleteModalVisible(true)
+    setAuditType(auditSQAType)
+  }
+
+  const handleShowCancelModal = (auditId: number, sqaAuditType: string) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsRejectModalVisible(true)
+    setAuditType(sqaAuditType)
+  }
+
+  const handleShowRescheduleModal = (auditId: number) => {
+    setToDeleteSQAAuditId(auditId)
+    setIsRescheduleModalVisible(true)
+    dispatch(reduxServices.sqaAuditReport.getSQAAuditDetails(auditId))
+  }
+
+  const handleConfirmDeleteSQAAudit = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteSQAAuditResultAction = await dispatch(
+      reduxServices.sqaAuditReport.deleteProjectAuditDetails(
+        toDeleteSQAAuditId,
+      ),
+    )
+    if (
+      reduxServices.sqaAuditReport.deleteProjectAuditDetails.fulfilled.match(
+        deleteSQAAuditResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Audit Deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const handleConfirmCancelSQAAudit = async () => {
+    setIsRejectModalVisible(false)
+    const cancelSQAAuditResultAction = await dispatch(
+      reduxServices.sqaAuditReport.closeProjectAuditDetails(toDeleteSQAAuditId),
+    )
+    if (
+      reduxServices.sqaAuditReport.closeProjectAuditDetails.fulfilled.match(
+        cancelSQAAuditResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.sqaAuditReport.getSQAAuditReport({
+          endIndex: pageSize * currentPage,
+          multiSearch: '',
+          startIndex: pageSize * (currentPage - 1),
+          SQAAuditSelectionDate: '',
+          auditRescheduleStatus: '',
+          auditStatus: '',
+          from: '',
+          to: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Audit Closed Successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  const handleSQAAuditHistoryClick = (id: number) => {
+    dispatch(reduxServices.sqaAuditReport.getNewSQAAuditTimelineDetails(id))
+  }
+
+  const handleClickSQAAuditViewReport = (id: number) => {
+    dispatch(reduxServices.sqaAuditReport.getSQAAuditDetails(id))
   }
 
   return (
@@ -116,19 +220,26 @@ const SQAAuditReportTable = ({
                       color="success"
                       className="btn-ovh-employee-list me-1 mt-1"
                       data-testid="edit-btn"
+                      onClick={() => handleShowRescheduleModal(auditReport.id)}
+                      disabled={auditReport.formStatus !== 'Submit'}
                     >
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-eye  text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <Link to={`/viewProjectAudit/${auditReport.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh-employee-list me-1 mt-1"
+                        data-testid="edit-btn"
+                        onClick={() =>
+                          handleClickSQAAuditViewReport(auditReport?.id)
+                        }
+                      >
+                        <i
+                          className="fa fa-eye  text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </Link>
                     {userAccessSqaAuditReport?.updateaccess && (
                       <Link to={`editAuditForm/${auditReport.id}`}>
                         <CButton
@@ -136,6 +247,7 @@ const SQAAuditReportTable = ({
                           className="btn-ovh-employee-list me-1 mt-1"
                           data-testid="edit-btn"
                           onClick={() => editButtonHandler(auditReport.id)}
+                          disabled={auditReport.disableEditButton === true}
                         >
                           <i
                             className="fa fa-edit text-white"
@@ -144,38 +256,62 @@ const SQAAuditReportTable = ({
                         </CButton>
                       </Link>
                     )}
-                    <CButton
-                      color="danger"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-times text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
                     {userAccessSqaAuditReport?.deleteaccess && (
+                      <>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="cancel-btn"
+                          onClick={() =>
+                            handleShowCancelModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={
+                            auditReport.formStatus === 'Save' ||
+                            auditReport.auditStatus === 'Closed'
+                          }
+                        >
+                          <i
+                            className="fa fa-times text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                        <CButton
+                          color="danger"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="delete-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              auditReport.id,
+                              auditReport.auditType,
+                            )
+                          }
+                          disabled={auditReport.formStatus !== 'Save'}
+                        >
+                          <i
+                            className="fa fa-trash-o text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </>
+                    )}
+                    <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
                       <CButton
-                        color="danger"
+                        color="info"
                         className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="edit-btn"
+                        onClick={() =>
+                          handleSQAAuditHistoryClick(auditReport?.id)
+                        }
                       >
                         <i
-                          className="fa fa-trash-o text-white"
+                          className="fa fa-bar-chart text-white"
                           aria-hidden="true"
                         ></i>
                       </CButton>
-                    )}
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                    >
-                      <i
-                        className="fa fa-bar-chart text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    </Link>
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -221,6 +357,51 @@ const SQAAuditReportTable = ({
           </CRow>
         </CCol>
       )}
+      <OModal
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete SQA Audit"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmDeleteSQAAudit}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this <b>{auditType}</b> audit?
+        </>
+      </OModal>
+      <OModal
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isRejectModalVisible}
+        setVisible={setIsRejectModalVisible}
+        modalTitle="Close SQA Audit"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleConfirmCancelSQAAudit}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to close this <b>{auditType}</b> audit?
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        closeButtonClass="d-none"
+        alignment="center"
+        visible={isRescheduleModalVisible}
+        setVisible={setIsRescheduleModalVisible}
+        modalBodyClass="mt-0"
+        modalFooterClass="d-none"
+      >
+        <>
+          <SQAAuditReschedule
+            setIsRescheduleModalVisible={setIsRescheduleModalVisible}
+          />
+        </>
+      </OModal>
     </>
   )
 }

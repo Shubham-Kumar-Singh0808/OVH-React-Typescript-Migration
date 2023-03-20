@@ -14,7 +14,6 @@ import {
 import React, { useMemo, useState } from 'react'
 import parse from 'html-react-parser'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { InitiateCycleTableProps } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
@@ -22,7 +21,6 @@ import { currentPageData } from '../../../../utils/paginationUtils'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
 const AddInitiateCycleTable = ({
-  paginationRange,
   pageSize,
   setPageSize,
   currentPage,
@@ -111,13 +109,13 @@ const AddInitiateCycleTable = ({
                       'N/A'
                     )}
                   </CTableDataCell>
-                  <CTableDataCell>{cycle.fromMonth}</CTableDataCell>
-                  <CTableDataCell>{cycle.toMonth}</CTableDataCell>
+                  <CTableDataCell>{cycle?.fromMonth || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{cycle?.toMonth || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
-                    {cycle.activateFlag === true ? 'Active' : 'In-Active'}
+                    {cycle?.activateFlag === true ? 'Active' : 'In-Active'}
                   </CTableDataCell>
-                  <CTableDataCell>{cycle.startDate}</CTableDataCell>
-                  <CTableDataCell>{cycle.endDate}</CTableDataCell>
+                  <CTableDataCell>{cycle.startDate || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{cycle.endDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="Edit">
                       <CButton
@@ -150,18 +148,6 @@ const AddInitiateCycleTable = ({
             />
           )}
         </CCol>
-        {allQuestionsSize > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
-          </CCol>
-        )}
       </CRow>
       <OModal
         modalSize="lg"

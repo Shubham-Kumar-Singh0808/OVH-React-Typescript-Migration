@@ -23,6 +23,8 @@ describe('Employee Accounts Table Component Testing', () => {
         setSelectDate={mockSetTogglePage}
         setFromDate={mockSetTogglePage}
         setToDate={mockSetTogglePage}
+        selectRadioAction={''}
+        setSelectRadioAction={mockSetTogglePage}
       />,
       {
         preloadedState: {
@@ -44,7 +46,7 @@ describe('Employee Accounts Table Component Testing', () => {
       name: EmployeePipStatus.pip,
     }) as HTMLInputElement
 
-    expect(pipRadio.checked).toEqual(true)
+    expect(pipRadio.checked).toEqual(false)
     userEvent.click(pipRadio)
 
     const removedFromPIP = screen.getByRole('radio', {
@@ -61,7 +63,7 @@ describe('Employee Accounts Table Component Testing', () => {
 
     expect(pipRadio.checked).toEqual(false)
     expect(removedFromPIP.checked).toEqual(false)
-    expect(inactiveRadio.checked).toEqual(true)
+    expect(inactiveRadio.checked).toEqual(false)
   })
   test('should render add PIP component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()

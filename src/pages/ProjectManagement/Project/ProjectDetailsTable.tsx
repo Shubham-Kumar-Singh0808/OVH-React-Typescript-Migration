@@ -61,6 +61,13 @@ const ProjectDetailsTable = ({
     reduxServices.projectReport.selectors.projectClients,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProject = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Allocation',
+  )
+
   return (
     <>
       <CTableRow>
@@ -249,33 +256,37 @@ const ProjectDetailsTable = ({
                           </>
                         ) : (
                           <>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="primary btn-ovh me-1"
-                              data-testid="edit-sub-project-btn"
-                              onClick={() =>
-                                handleAllocationModal(project, value.id)
-                              }
-                            >
-                              <i
-                                className="fa fa-edit text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="delete-sub-btn"
-                              disabled={!project.isAllocated}
-                              onClick={() =>
-                                handleShowDeallocationModal(project, value.id)
-                              }
-                            >
-                              <i
-                                className="fa fa-trash-o text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            {userAccessToProject?.updateaccess && (
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="primary btn-ovh me-1"
+                                data-testid="edit-sub-project-btn"
+                                onClick={() =>
+                                  handleAllocationModal(project, value.id)
+                                }
+                              >
+                                <i
+                                  className="fa fa-edit text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            )}
+                            {userAccessToProject?.deleteaccess && (
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="delete-sub-btn"
+                                disabled={!project.isAllocated}
+                                onClick={() =>
+                                  handleShowDeallocationModal(project, value.id)
+                                }
+                              >
+                                <i
+                                  className="fa fa-trash-o text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            )}
                           </>
                         )}
                       </CTableDataCell>

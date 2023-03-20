@@ -7,7 +7,7 @@ const ProjectNotesTimeLine = (): JSX.Element => {
   const projectNotesTimeLine = useTypedSelector(
     reduxServices.projectNotes.selectors.projectNotesTimeLine,
   )
-  console.log(projectNotesTimeLine)
+
   return (
     <>
       <div className="sh-timeline-container">

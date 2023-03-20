@@ -16,8 +16,8 @@ const AddProjectStatus = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
-  const [currentWeekDate, setCurrentWeekDate] = useState<string>()
-  const [nextWeekDate, setNextWeekDate] = useState<string>()
+  const [currentWeekDate, setCurrentWeekDate] = useState<string | Date>()
+  const [nextWeekDate, setNextWeekDate] = useState<string | Date>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [currentWeekStatus, setCurrentWeekStatus] = useState<string>()
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
@@ -88,7 +88,7 @@ const AddProjectStatus = ({
   }
   const failureToastMessage = (
     <OToast
-      toastMessage="Add an employee within project date limits."
+      toastMessage="Current Week Date should be in between project start date and end date"
       toastColor="danger"
     />
   )
