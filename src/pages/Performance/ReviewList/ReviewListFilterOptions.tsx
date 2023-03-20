@@ -10,11 +10,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
-import {
-  reviewListStatus,
-  employeeStatus,
-  reviewRatings,
-} from '../../../constant/constantData'
+import { employeeStatus, reviewRatings } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
@@ -24,66 +20,46 @@ import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/re
 
 const ReviewListFilterOptions = ({
   setIsTableView,
-  setFilterByDepartment,
-  setFilterByDesignation,
 }: {
-  setFilterByDepartment: (value: string) => void
-  setFilterByDesignation: (value: string) => void
   setIsTableView: (value: boolean) => void
   initialReviewList: ReviewListData
 }): JSX.Element => {
-  const activeCycle = useTypedSelector(
-    reduxServices.reviewList.selectors.isActiveCycle,
-  )
-
-  type Option = {
-    label: string
-    value: string
-    text: string
-  }
-
   const [cycle, setCycle] = useState<number | string>()
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
-  const [selectEmpstatus, setSelectEmpStatus] = useState<string>('')
+  const [selectEmpstatus, setSelectEmpStatus] = useState<string>('Active')
   const [reviewFromDate, setReviewFromDate] = useState<string>('')
   const [reviewToDate, setReviewToDate] = useState<string>('')
-  const [selectedRating, setSelectedRating] = useState<Option[]>([])
-  const [isChecked, setIsChecked] = useState<boolean>(false)
   const [dateError, setDateError] = useState<boolean>(false)
   const [searchValue, setSearchValue] = useState<string>('')
   const [selectRadio, setSelectRadio] = useState<string>('')
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
+  const [isChecked, setIsChecked] = useState<boolean>(false)
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
   const designations = useTypedSelector(
     reduxServices.reviewList.selectors.designations,
   )
+
   const departments = useTypedSelector(
     reduxServices.reviewList.selectors.departments,
   )
-  // const role = useTypedSelector(
-  //   (state) => state.authentication.authenticatedUser.role,
-  // )
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
   const dispatch = useAppDispatch()
+  const selectedItem = departments.filter(
+    (item) => item.departmentId === Number(selectDepartment),
+  )
 
-  const ratingOptions: Option[] = [
-    { label: 'Option 1', value: 'option1', text: 'Option 1' },
-    { label: 'Option 2', value: 'option2', text: 'Option 2' },
-    { label: 'Option 3', value: 'option3', text: 'Option 3' },
-    // add more options as needed
-  ]
-
-  const handleRatingsChange = (value: Option[]) => {
-    setSelectedRating(value)
-  }
+  const selectedDesignationItem = designations.filter(
+    (item) => item.id === Number(selectDesignation),
+  )
 
   useEffect(() => {
     if (cycle) {
@@ -92,12 +68,6 @@ const ReviewListFilterOptions = ({
       setIsButtonEnabled(false)
     }
   }, [cycle])
-
-  useEffect(() => {
-    if (activeCycle?.active === true) {
-      setCycle(String(activeCycle.id))
-    }
-  }, [activeCycle])
 
   useEffect(() => {
     if (!departments)
@@ -131,10 +101,10 @@ const ReviewListFilterOptions = ({
   const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
     return dispatch(
       reduxServices.reviewList.getReviewList({
-        appraisalFormStatus: '',
-        cycleId: activeCycle?.id,
-        departmentName: (selectDepartment as string) || '',
-        designationName: (selectDesignation as string) || '',
+        appraisalFormStatus: (selectStatus as string) || '',
+        cycleId: cycle === 'Custom' ? -1 : Number(cycle),
+        departmentName: selectedItem[0]?.departmentName || '',
+        designationName: selectedDesignationItem[0]?.name || '',
         empStatus: selectEmpstatus,
         employeeID: employeeId,
         endIndex: 20,
@@ -142,7 +112,6 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
-              day: '2-digit',
             })
           : '',
         ratings: [],
@@ -153,7 +122,6 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
-              day: '2-digit',
             })
           : '',
       }),
@@ -161,8 +129,8 @@ const ReviewListFilterOptions = ({
   }
 
   const onViewHandler = () => {
-    setFilterByDepartment(selectDepartment as string)
-    setFilterByDesignation(selectDesignation as string)
+    setSelectedDepartment(selectDepartment as string)
+    setSelectDesignation(selectDesignation as string)
     setIsTableView(true)
     setShowExportButton(true)
     dispatchApiCall()
@@ -193,8 +161,6 @@ const ReviewListFilterOptions = ({
     setSearchValue('')
     setShowExportButton(false)
     setIsChecked(false)
-    setSelectedRating([])
-    dispatch(reduxServices.reviewList.actions.clearReviewList())
   }
 
   const handleExportReviewList = async () => {
@@ -306,11 +272,15 @@ const ReviewListFilterOptions = ({
               setSelectStatus(e.target.value)
             }}
           >
-            {reviewListStatus?.map((status, index) => (
-              <option key={index} value={status.label}>
-                {status.name}
-              </option>
-            ))}
+            <option value="" selected>
+              Select Status
+            </option>
+            <option value="COMPLETED">Completed</option>
+            <option value="CLOSED">Closed</option>
+            <option value="OPENFORDISCUSSION">Needs Discussion</option>
+            <option value="PENDINGAGREEMENT">Needs Acknowledgement</option>
+            <option value="PENDING">Review Pending</option>
+            <option value="SAVE">Not-Submitted</option>
           </CFormSelect>
         </CCol>
       </CRow>
@@ -342,7 +312,6 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
-                            day: '2-digit',
                           },
                         )
                       : ''
@@ -378,7 +347,6 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
-                            day: '2-digit',
                           },
                         )
                       : ''
@@ -401,8 +369,7 @@ const ReviewListFilterOptions = ({
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
           <CMultiSelect
-            options={selectedRating ? ratingOptions : selectedRating}
-            onChange={() => handleRatingsChange}
+            options={reviewRatings}
             selectionType="counter"
             data-testid="ratings"
             className="py-1"
@@ -466,14 +433,14 @@ const ReviewListFilterOptions = ({
         </CCol>
       </CRow>
       <ReviewListSearchFilterOptions
-        isChecked={isChecked}
-        setIsChecked={setIsChecked}
         setSelectRadio={setSelectRadio}
         selectRadio={selectRadio}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         searchButtonOnKeyDown={searchButtonOnKeyDown}
         searchBtnHandler={searchBtnHandler}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
       />
     </>
   )
