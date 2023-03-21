@@ -327,8 +327,8 @@ const EmployeeAllocationFilterOptions = ({
           </CFormSelect>
         </CCol>
 
-        {userAccessAllocationFeature?.viewaccess &&
-          userAccessIndividualAllocationFeature?.viewaccess && (
+        {!userAccessAllocationFeature?.viewaccess &&
+          !userAccessIndividualAllocationFeature?.viewaccess && (
             <>
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">Department:</CFormLabel>

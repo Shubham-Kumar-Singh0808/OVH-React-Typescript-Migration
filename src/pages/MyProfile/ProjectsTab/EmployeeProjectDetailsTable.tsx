@@ -81,10 +81,7 @@ const EmployeeProjectsDetail = (
         </CTableHead>
         <CTableBody>
           {projectDetails ? (
-            <EmployeeProjectDetailsEntry
-              id={props.projectId}
-              projectDetails={projectDetails}
-            />
+            <EmployeeProjectDetailsEntry />
           ) : (
             <CTableRow color="default" className="text-center">
               <CTableDataCell colSpan={7}>
