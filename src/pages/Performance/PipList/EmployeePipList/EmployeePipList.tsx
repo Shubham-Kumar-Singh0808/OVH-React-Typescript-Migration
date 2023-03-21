@@ -8,12 +8,11 @@ import {
   CInputGroup,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
-import EmployeePIPListContext, { MyContext } from './EmployeePIPListContext'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -25,8 +24,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EmployeePipList = (): JSX.Element => {
   const currentMonth = 'Current Month'
-  // const [selectDate, setSelectDate] = useState<string>(currentMonth)
-
+  const [selectDate, setSelectDate] = useState<string>(currentMonth)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
@@ -35,12 +33,6 @@ const EmployeePipList = (): JSX.Element => {
   const [dateError, setDateError] = useState<boolean>(false)
   const [toggle, setToggle] = useState<string>('')
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
-  const myContext = useContext(MyContext)
-
-  const [selectDate, setSelectDate] =
-    (myContext && myContext.menu) || currentMonth
-
-  console.log(selectDate, 'context')
 
   const dispatch = useAppDispatch()
 
@@ -57,6 +49,18 @@ const EmployeePipList = (): JSX.Element => {
   useEffect(() => {
     if (localStorage.getItem('fmonth')) {
       setSelectDate(localStorage.getItem('fmonth') ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('fromMonth')) {
+      setFromDate(localStorage.getItem('fromMonth') ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('toMonth')) {
+      setToDate(localStorage.getItem('toMonth') ?? '')
     }
   }, [])
 
@@ -90,11 +94,17 @@ const EmployeePipList = (): JSX.Element => {
       (localStorage.getItem('fmonth')
         ? localStorage.getItem('fmonth')
         : selectDate) || '',
-    from: (fromDate as string) || '',
+    from:
+      (localStorage.getItem('fromMonth')
+        ? localStorage.getItem('fromMonth')
+        : fromDate) || '',
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
-    to: (toDate as string) || '',
+    to:
+      (localStorage.getItem('toMonth')
+        ? localStorage.getItem('toMonth')
+        : toDate) || '',
   }
 
   useEffect(() => {
@@ -137,10 +147,18 @@ const EmployeePipList = (): JSX.Element => {
     const end = moment(toDate, dateFormat).format(newDateFormatForIsBefore)
 
     setDateError(moment(end).isBefore(start))
+    return () => {
+      const win = window.location.href
+      if (!win.toLowerCase().includes('pip')) {
+        localStorage.removeItem('fmonth')
+        localStorage.removeItem('fromMonth')
+        localStorage.removeItem('toMonth')
+      }
+    }
   }, [fromDate, toDate])
 
   const pipListObject = {
-    dateSelection: selectDate as string,
+    dateSelection: selectDate,
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -154,13 +172,6 @@ const EmployeePipList = (): JSX.Element => {
   const viewButtonHandler = () => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
   }
-
-  useEffect(() => {
-    if (selectDate !== 'Custom') {
-      setFromDate('')
-      setToDate('')
-    }
-  }, [selectDate])
 
   const clearButtonHandler = () => {
     localStorage.removeItem('fmonth')
@@ -189,7 +200,6 @@ const EmployeePipList = (): JSX.Element => {
   useEffect(() => {
     if (window.location.pathname === '/PIPList') {
       setToggle('')
-      localStorage.removeItem('fmonth')
     }
   }, [])
 
@@ -198,13 +208,17 @@ const EmployeePipList = (): JSX.Element => {
 
   const onHandleToDatePicker = (value: Date) => {
     setToDate(moment(value).format(dateFormat))
+    if (!localStorage.getItem('toMonth')) {
+      localStorage.setItem('toMonth', moment(value).format(dateFormat))
+    }
   }
 
   const onHandleFromDatePicker = (value: Date) => {
     setFromDate(moment(value).format(dateFormat))
+    if (!localStorage.getItem('fromMonth')) {
+      localStorage.setItem('fromMonth', moment(value).format(dateFormat))
+    }
   }
-
-  // console.log('selectDate: ', selectDate)
 
   return (
     <>
@@ -245,7 +259,7 @@ const EmployeePipList = (): JSX.Element => {
             </CCol>
             <CCol sm={12} md={9}>
               <EmployeePipListOptions
-                selectDate={selectDate as string}
+                selectDate={selectDate}
                 paginationRange={paginationRange}
                 setPageSize={setPageSize}
                 setCurrentPage={setCurrentPage}
@@ -408,7 +422,7 @@ const EmployeePipList = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            selectDate={selectDate as string}
+            selectDate={selectDate}
             setToggle={setToggle}
             setSelectDate={setSelectDate}
             setFromDate={setFromDate}
@@ -422,7 +436,7 @@ const EmployeePipList = (): JSX.Element => {
           searchByAdded={searchByAdded}
           searchByEmployee={searchByEmployee}
           searchInput={searchInput}
-          selectDate={selectDate as string}
+          selectDate={selectDate}
           fromDate={fromDate as string}
           toDate={toDate as string}
           setToggle={() => {
