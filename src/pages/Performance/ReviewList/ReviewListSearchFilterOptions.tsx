@@ -15,6 +15,8 @@ const ReviewListSearchFilterOptions = ({
   setSearchValue,
   searchButtonOnKeyDown,
   searchBtnHandler,
+  isChecked,
+  setIsChecked,
 }: {
   setSelectRadio: (value: string) => void
   selectRadio: string
@@ -22,9 +24,12 @@ const ReviewListSearchFilterOptions = ({
   setSearchValue: React.Dispatch<React.SetStateAction<string>>
   searchButtonOnKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void
   searchBtnHandler: () => void
+  isChecked: boolean
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const handleRadio = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectRadio(e.target.value)
+    setIsChecked(true)
   }
   return (
     <>
@@ -58,10 +63,12 @@ const ReviewListSearchFilterOptions = ({
             <CCol sm={6} md={4} lg={5} xl={4} xxl={3}>
               <CInputGroup className="global-search me-0 flex-nowrap">
                 <CFormInput
+                  className={!isChecked ? 'hidden-block' : ''}
                   placeholder="Search here"
                   aria-label="Multiple Search"
                   aria-describedby="search-field"
                   data-testid="multi-search-input"
+                  disabled={!isChecked}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onKeyDown={searchButtonOnKeyDown}

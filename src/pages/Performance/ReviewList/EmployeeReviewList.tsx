@@ -47,6 +47,7 @@ const EmployeeReviewList = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.reviewList.getEmployeeDepartments())
     dispatch(reduxServices.reviewList.getAppraisalCycles())
+    dispatch(reduxServices.reviewList.activeCycle())
     dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: '',
