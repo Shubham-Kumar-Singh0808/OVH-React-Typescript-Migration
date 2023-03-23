@@ -35,7 +35,8 @@ const EmployeeReviewList = (): JSX.Element => {
   const [filterByDepartment, setFilterByDepartment] = useState<string>()
   const [filterByDesignation, setFilterByDesignation] = useState<string>()
   const [isTableView, setIsTableView] = useState(false)
-
+  console.log(setFilterByDepartment)
+  console.log(setFilterByDesignation)
   const {
     paginationRange,
     setPageSize,
@@ -74,8 +75,6 @@ const EmployeeReviewList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <ReviewListFilterOptions
-          setFilterByDepartment={setFilterByDepartment}
-          setFilterByDesignation={setFilterByDesignation}
           setIsTableView={setIsTableView}
           initialReviewList={initialReviewList}
         />
