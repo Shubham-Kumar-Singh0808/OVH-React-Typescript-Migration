@@ -17,8 +17,6 @@ describe('ReviewList Filter Options Component Testing', () => {
   beforeEach(() => {
     render(
       <ReviewListFilterOptions
-        setFilterByDepartment={jest.fn()}
-        setFilterByDesignation={jest.fn()}
         setIsTableView={jest.fn()}
         initialReviewList={{
           appraisalFormStatus: 'COMPLETED',
