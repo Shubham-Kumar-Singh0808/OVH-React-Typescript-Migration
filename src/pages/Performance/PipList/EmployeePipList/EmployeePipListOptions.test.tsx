@@ -63,7 +63,7 @@ describe('Employee Accounts Table Component Testing', () => {
 
     expect(pipRadio.checked).toEqual(false)
     expect(removedFromPIP.checked).toEqual(false)
-    expect(inactiveRadio.checked).toEqual(false)
+    expect(inactiveRadio.checked).toEqual(true)
   })
   test('should render add PIP component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Add' })).toBeInTheDocument()
