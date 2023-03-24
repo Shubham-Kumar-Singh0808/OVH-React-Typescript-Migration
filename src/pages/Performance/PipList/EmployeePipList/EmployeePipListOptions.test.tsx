@@ -46,7 +46,7 @@ describe('Employee Accounts Table Component Testing', () => {
       name: EmployeePipStatus.pip,
     }) as HTMLInputElement
 
-    expect(pipRadio.checked).toEqual(false)
+    expect(pipRadio.checked).toEqual(true)
     userEvent.click(pipRadio)
 
     const removedFromPIP = screen.getByRole('radio', {
