@@ -68,8 +68,6 @@ export type EmployeePIPListTableProps = {
   setSelectDate: (value: string) => void
   setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
   setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  selectRadioAction: string
-  setSelectRadioAction: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type PerformanceRatings = {
