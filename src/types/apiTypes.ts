@@ -779,6 +779,7 @@ export interface AppraisalTemplateApi extends ApiBase {
   51: string
   searchKRAData: string
   kpisForIndividualKra: string
+  designingmaping: string
 }
 
 export interface ProjectStatusApi extends ApiBase {

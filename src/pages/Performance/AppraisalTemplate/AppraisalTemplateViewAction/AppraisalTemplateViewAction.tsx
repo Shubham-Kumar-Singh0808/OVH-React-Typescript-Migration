@@ -141,6 +141,7 @@ const AppraisalTemplateViewAction = ({
           selChkBoxesFromApi={cbFromApi}
           checkList={checkList}
           editAppraisalId={editAppraisalId}
+          cbFromApi={cbFromApi}
         />
       </OCard>
     </>

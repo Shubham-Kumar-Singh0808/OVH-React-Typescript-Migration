@@ -18,13 +18,18 @@ import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
-import { AppraisalTemplateCheckBoxProps } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import {
+  AppraisalTemplateCheckBoxProps,
+  GetDesignationsUnderCycle,
+} from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AppraisalTemplateViewActionTable = ({
   setCycleChecked,
   cycleChecked,
   selChkBoxesFromApi,
   editAppraisalId,
+  cbFromApi,
 }: AppraisalTemplateCheckBoxProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -73,6 +78,55 @@ const AppraisalTemplateViewActionTable = ({
         multipleSearch: searchInput,
       }),
     )
+  }
+
+  const successToast = (
+    <OToast
+      toastMessage="KRA's are assigned to Designation."
+      toastColor="success"
+    />
+  )
+
+  const saveBtnHandler = async () => {
+    const prepareObject = {
+      appraisalCycleDto: {
+        active: editAppraisalId?.appraisalCycleDto.active,
+        appraisalDuration: editAppraisalId?.appraisalCycleDto.appraisalDuration,
+        appraisalEndDate: editAppraisalId?.appraisalCycleDto.appraisalEndDate,
+        appraisalStartDate:
+          editAppraisalId?.appraisalCycleDto.appraisalStartDate,
+        appraisalType: editAppraisalId?.appraisalCycleDto.appraisalType,
+        cycleStartedFlag: editAppraisalId?.appraisalCycleDto.cycleStartedFlag,
+        description: editAppraisalId?.appraisalCycleDto.description,
+        fromDate: editAppraisalId?.appraisalCycleDto.fromDate,
+        id: editAppraisalId?.appraisalCycleDto.id,
+        level: editAppraisalId?.appraisalCycleDto.level,
+        name: editAppraisalId?.appraisalCycleDto.name,
+        servicePeriod: editAppraisalId?.appraisalCycleDto.servicePeriod,
+        toDate: editAppraisalId?.appraisalCycleDto.toDate,
+      },
+      designation: {
+        code: editAppraisalId?.designation.code,
+        departmentId: editAppraisalId?.designation.departmentId,
+        departmentName: editAppraisalId?.designation.departmentName,
+        id: editAppraisalId?.designation.id,
+        name: editAppraisalId?.designation.name,
+      },
+      id: editAppraisalId?.id,
+      kraLookups: cbFromApi,
+    } as unknown as GetDesignationsUnderCycle
+
+    const appraisalTemplateResultAction = await dispatch(
+      reduxServices.appraisalTemplate.designingmaping(prepareObject),
+    )
+    if (
+      reduxServices.appraisalTemplate.designingmaping.fulfilled.match(
+        appraisalTemplateResultAction,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
   }
 
   return (
@@ -226,7 +280,8 @@ const AppraisalTemplateViewActionTable = ({
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
-            disabled={true}
+            // disabled={true}
+            onClick={saveBtnHandler}
           >
             Save
           </CButton>

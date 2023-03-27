@@ -116,6 +116,18 @@ const kpisForIndividualKra = createAsyncThunk(
   },
 )
 
+const designingmaping = createAsyncThunk(
+  'assignTemplate/designingmaping',
+  async (data: GetDesignationsUnderCycle, thunkApi) => {
+    try {
+      return await AppraisalTemplateApi.designingmaping(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -217,6 +229,7 @@ export const appraisalTemplateThunk = {
   getDesignationWiseKRAs,
   searchKRAList,
   kpisForIndividualKra,
+  designingmaping,
 }
 
 export const appraisalTemplateSelectors = {

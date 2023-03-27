@@ -948,6 +948,7 @@ export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   51: apiPrefix + '/appraisal/underKras/23/51',
   searchKRAData: apiPrefix + '/kra/searchKRAData',
   kpisForIndividualKra: apiPrefix + '/kra/kpisForIndividualKra',
+  designingmaping: apiPrefix + '/kra/designingmaping',
 }
 
 export const projectStatusApiConfig: ProjectStatusApi = {
