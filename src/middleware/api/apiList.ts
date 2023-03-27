@@ -754,6 +754,7 @@ export const reviewListApiConfig: ReviewListApi = {
   getAppraisalCycles: apiPrefix + '/appraisal/cycle',
   getDesignations: apiPrefix + '/kra/designation',
   exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
+  activeCycle: apiPrefix + '/appraisal/activeCycle',
 }
 
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
