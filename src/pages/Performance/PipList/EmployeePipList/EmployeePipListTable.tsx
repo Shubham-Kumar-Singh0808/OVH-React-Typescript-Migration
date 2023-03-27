@@ -30,7 +30,6 @@ const EmployeePipListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-  selectRadioAction,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isReasonForPIPVisible, setIsReasonForPIPVisible] =
@@ -73,8 +72,6 @@ const EmployeePipListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
-  console.log(selectRadioAction)
 
   return (
     <>
@@ -143,24 +140,18 @@ const EmployeePipListTable = ({
                         </CButton>
                       </Link>
                     </CTooltip>
-                    {selectRadioAction !== 'Inactive' ? (
-                      <CTooltip content="Clearence Certificate">
-                        <Link to={`/PIPClearnceCerticates`}>
-                          <CButton
-                            className="btn-ovh me-2"
-                            color="info"
-                            type="button"
-                            onClick={() =>
-                              clearanceBtnHandler(item.id as number)
-                            }
-                          >
-                            <i className="fa fa-user-circle text-white"></i>
-                          </CButton>
-                        </Link>
-                      </CTooltip>
-                    ) : (
-                      ''
-                    )}
+                    <CTooltip content="Clearence Certificate">
+                      <Link to={`/PIPClearnceCerticates`}>
+                        <CButton
+                          className="btn-ovh me-2"
+                          color="info"
+                          type="button"
+                          onClick={() => clearanceBtnHandler(item.id as number)}
+                        >
+                          <i className="fa fa-user-circle text-white"></i>
+                        </CButton>
+                      </Link>
+                    </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
               )

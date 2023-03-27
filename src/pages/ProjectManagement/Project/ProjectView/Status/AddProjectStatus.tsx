@@ -16,8 +16,8 @@ const AddProjectStatus = ({
 }: {
   setToggle: (value: string) => void
 }): JSX.Element => {
-  const [currentWeekDate, setCurrentWeekDate] = useState<string>()
-  const [nextWeekDate, setNextWeekDate] = useState<string>()
+  const [currentWeekDate, setCurrentWeekDate] = useState<string | Date>()
+  const [nextWeekDate, setNextWeekDate] = useState<string | Date>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [currentWeekStatus, setCurrentWeekStatus] = useState<string>()
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
@@ -135,10 +135,13 @@ const AddProjectStatus = ({
     const newToDate = new Date(
       moment(nextWeekDate?.toString()).format(commonFormatDate),
     )
+    const diffInDays =
+      (newToDate.getTime() - newFromDate.getTime()) / (1000 * 3600 * 24)
     if (
-      currentWeekDate &&
-      nextWeekDate &&
-      newToDate.getTime() < newFromDate.getTime()
+      (currentWeekDate &&
+        nextWeekDate &&
+        newToDate.getTime() < newFromDate.getTime()) ||
+      (currentWeekDate && nextWeekDate && diffInDays < 7)
     ) {
       setDateError(true)
     } else {

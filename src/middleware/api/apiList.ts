@@ -342,6 +342,7 @@ export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
     apiPrefix + '/timeInOffice/getTimeInOfficeEmployeeReport',
   getTimeInOfficeManagerReport:
     apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
+  exportAttendanceReport: apiPrefix + '/timeInOffice/exportAttendanceReport',
 }
 
 export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {
@@ -753,6 +754,7 @@ export const reviewListApiConfig: ReviewListApi = {
   getAppraisalCycles: apiPrefix + '/appraisal/cycle',
   getDesignations: apiPrefix + '/kra/designation',
   exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
+  activeCycle: apiPrefix + '/appraisal/activeCycle',
 }
 
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
@@ -841,6 +843,7 @@ export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
+  getInvoiceSummary: apiPrefix + '/invoice/getInvoiceSummary',
 }
 
 export const projectTailoringApiConfig: ProjectTailoringApi = {
@@ -980,4 +983,5 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getAuditDetails: apiPrefix + '/sqaAuditController/getAuditDetails',
   saveOrSubmitAuditForm:
     apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
+  downloadSQAAuditFile: '/sqaAuditController/downloadSQAAuditFile',
 }

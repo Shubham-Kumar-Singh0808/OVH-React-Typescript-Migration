@@ -53,7 +53,7 @@ const EmployeeProjectsDetail = (
 
   return (
     <>
-      <CTable className="mt-2 text-center profile-tab-table-size">
+      <CTable className="mt-2 text-left profile-tab-table-size">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
@@ -81,10 +81,7 @@ const EmployeeProjectsDetail = (
         </CTableHead>
         <CTableBody>
           {projectDetails ? (
-            <EmployeeProjectDetailsEntry
-              id={props.projectId}
-              projectDetails={projectDetails}
-            />
+            <EmployeeProjectDetailsEntry />
           ) : (
             <CTableRow color="default" className="text-center">
               <CTableDataCell colSpan={7}>

@@ -5,6 +5,7 @@ import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/re
 import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
+  ActiveCycle,
   AppraisalCycle,
   Designation,
   EmpDepartments,
@@ -25,6 +26,7 @@ const initialReviewListState: ReviewListSliceState = {
     list: [],
     size: 0,
   },
+  activeCycle: {} as ActiveCycle,
 }
 
 const getEmployeeDepartments = createAsyncThunk(
@@ -32,6 +34,18 @@ const getEmployeeDepartments = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await reviewListApi.getEmployeeDepartments()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const activeCycle = createAsyncThunk(
+  'reviewList/activeCycle',
+  async (_, thunkApi) => {
+    try {
+      return await reviewListApi.activeCycle()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -85,7 +99,10 @@ const reviewListSlice = createSlice({
   initialState: initialReviewListState,
   reducers: {
     clearReviewList: (state) => {
-      state.appraisal = []
+      state.employeeReviewList = {
+        list: [],
+        size: 0,
+      }
     },
   },
   extraReducers: (builder) => {
@@ -107,12 +124,17 @@ const reviewListSlice = createSlice({
         state.employeeReviewList = action.payload
         state.listSize = action.payload.size
       })
+      .addCase(activeCycle.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.activeCycle = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getEmployeeDepartments.pending,
           getReviewList.pending,
           getAppraisalCycles.pending,
           getDesignations.pending,
+          activeCycle.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -124,6 +146,7 @@ const reviewListSlice = createSlice({
           getReviewList.rejected,
           getAppraisalCycles.rejected,
           getDesignations.rejected,
+          activeCycle.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -134,6 +157,8 @@ const reviewListSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState => state.reviewList.isLoading
+const isActiveCycle = (state: RootState): ActiveCycle =>
+  state.reviewList.activeCycle
 const departments = (state: RootState): EmpDepartments[] =>
   state.reviewList.employeeDepartments
 const designations = (state: RootState): Designation[] =>
@@ -149,6 +174,7 @@ const reviewListThunk = {
   getReviewList,
   getAppraisalCycles,
   getDesignations,
+  activeCycle,
 }
 
 const reviewListSelectors = {
@@ -158,6 +184,7 @@ const reviewListSelectors = {
   appraisalReviews,
   listSize,
   designations,
+  isActiveCycle,
 }
 
 export const reviewListService = {

@@ -1,7 +1,12 @@
 import { CFormCheck, CButton } from '@coreui/react-pro'
 import React from 'react'
 import pipListApi from '../../../../middleware/api/Performance/PIPList/pipListApi'
-import { EmployeePIPListTableProps } from '../../../../types/Performance/PipList/pipListTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import {
+  EmployeePIPListTableProps,
+  EmployeePipStatus,
+} from '../../../../types/Performance/PipList/pipListTypes'
 import { downloadFile } from '../../../../utils/helper'
 
 const EmployeePipListOptions = ({
@@ -12,12 +17,26 @@ const EmployeePipListOptions = ({
   searchByAdded,
   searchByEmployee,
   setToggle,
-  selectRadioAction,
-  setSelectRadioAction,
 }: EmployeePIPListTableProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+
+  const selectedEmployeePipStatus = useTypedSelector(
+    reduxServices.pipList.selectors.selectedEmployeePipStatus,
+  )
+
+  const handleChangeSelectedEmployeePIPStatus = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    dispatch(
+      reduxServices.pipList.actions.changeSelectedEmployeePipStatus(
+        event.target.value,
+      ),
+    )
+  }
+
   const handleExportEmployeePIPListData = async () => {
     const employeePipListDownload = await pipListApi.exportPIPList({
-      selectionStatus: selectRadioAction,
+      selectionStatus: selectedEmployeePipStatus,
       dateSelection: selectDate,
       from: (fromDate as string) || '',
       multiSearch: searchInput as string,
@@ -36,32 +55,38 @@ const EmployeePipListOptions = ({
             <CFormCheck
               type="radio"
               name="EmployeePipStatus"
-              value="PIP"
+              value={EmployeePipStatus.pip}
               id="employmentActive"
               label="PIP"
               inline
-              checked={selectRadioAction === 'PIP'}
-              onChange={(e) => setSelectRadioAction(e.target.value)}
+              defaultChecked={
+                selectedEmployeePipStatus === EmployeePipStatus.pip
+              }
+              onChange={handleChangeSelectedEmployeePIPStatus}
             />
             <CFormCheck
               type="radio"
               name="EmployeePipStatus"
-              value="Removed From PIP"
+              value={EmployeePipStatus.RemovedFromPIP}
               id="RemovedFromPIP"
-              inline
               label="Removed From PIP"
-              checked={selectRadioAction === 'Removed From PIP'}
-              onChange={(e) => setSelectRadioAction(e.target.value)}
+              inline
+              defaultChecked={
+                selectedEmployeePipStatus === EmployeePipStatus.RemovedFromPIP
+              }
+              onChange={handleChangeSelectedEmployeePIPStatus}
             />
             <CFormCheck
               type="radio"
               name="EmployeePipStatus"
-              value="Inactive"
+              value={EmployeePipStatus.inactive}
               id="inactive"
               label="Inactive"
               inline
-              checked={selectRadioAction === 'Inactive'}
-              onChange={(e) => setSelectRadioAction(e.target.value)}
+              defaultChecked={
+                selectedEmployeePipStatus === EmployeePipStatus.inactive
+              }
+              onChange={handleChangeSelectedEmployeePIPStatus}
             />
           </>
         </div>
