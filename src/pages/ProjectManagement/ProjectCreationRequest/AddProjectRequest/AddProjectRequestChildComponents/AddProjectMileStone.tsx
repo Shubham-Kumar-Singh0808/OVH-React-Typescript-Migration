@@ -245,7 +245,7 @@ const AddProjectMileStone = ({
               type="button"
               id="button-addon2"
               onClick={() => handleClickMileStone(index)}
-              disabled={!isAddMilestoneButtonEnabled}
+              disabled={!isAddMilestoneButtonEnabled || error}
             >
               <i className="fa fa-plus"></i>
             </CButton>
