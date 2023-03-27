@@ -13,6 +13,7 @@ import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const PanDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -32,6 +33,9 @@ const PanDetails = (): JSX.Element => {
   const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+
   useEffect(() => {
     if (location.pathname === '/myFinance') {
       dispatch(
@@ -83,18 +87,36 @@ const PanDetails = (): JSX.Element => {
       })
   }
   const history = useHistory()
+  const handleClick = () => {
+    history.goBack()
+  }
 
-  const isCheckedVIsible = isChecked
-    ? bankDetail.finance?.pfAccountNumber
-    : 'N/A'
+  const isCheckedVIsible =
+    isChecked && bankDetail.finance?.pfAccountNumber
+      ? isChecked && bankDetail.finance?.pfAccountNumber
+      : 'N/A'
+
+  const backBtnToggle = isViewingAnotherEmployee ? (
+    <CButton
+      color="info"
+      className="btn-ovh me-1"
+      data-testid="back-button"
+      onClick={handleClick}
+    >
+      <i className="fa fa-arrow-left  me-1"></i>Back
+    </CButton>
+  ) : (
+    <></>
+  )
+
   return (
     <>
-      {userAccess?.updateaccess && (
-        <CRow className="justify-content-end">
-          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            ''
-          ) : (
-            <CCol className="text-end" md={4}>
+      <CRow className="justify-content-end">
+        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+          ''
+        ) : (
+          <CCol className="text-end" md={4}>
+            {userAccess?.updateaccess && (
               <CTooltip content="Edit">
                 <CButton
                   className="btn-ovh me-1"
@@ -107,18 +129,11 @@ const PanDetails = (): JSX.Element => {
                   &nbsp; Edit
                 </CButton>
               </CTooltip>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-                onClick={() => history.push('/financeList')}
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </CCol>
-          )}
-        </CRow>
-      )}
+            )}
+            {backBtnToggle}
+          </CCol>
+        )}
+      </CRow>
       <CCol sm={5}>
         <CRow>
           <CFormLabel
