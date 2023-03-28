@@ -28,7 +28,7 @@ export type ProcessSubHeadsDto = {
   sqaApproval: null
   link: string
   status: string
-  order: number | string | null
+  order: number | string
 }
 
 export type ProcessAreaSliceState = {

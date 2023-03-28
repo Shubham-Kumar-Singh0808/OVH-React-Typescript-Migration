@@ -168,7 +168,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/3232',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -258,7 +258,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cotm/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -330,7 +330,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cohkm/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -384,7 +384,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cgjom/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -420,7 +420,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documgjents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -456,7 +456,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -564,7 +564,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -654,7 +654,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -762,7 +762,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,

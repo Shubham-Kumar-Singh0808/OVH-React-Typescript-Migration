@@ -119,6 +119,19 @@ const AddProcessArea = ({
     setSelectProcessAreaName('')
   }
 
+  const maxObjectProject = ProjectTailoringList[0].processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxObjEng = ProjectTailoringList[1].processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxObjSupport = ProjectTailoringList[2].processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxOrderProject = Number(maxObjectProject.order) + 1
+  const maxOrderEng = Number(maxObjEng.order) + 1
+  const maxOrderSupport = Number(maxObjSupport.order) + 1
+
   const addedToastMessage = (
     <OToast
       toastMessage="Process Area saved successfully.
@@ -126,16 +139,36 @@ const AddProcessArea = ({
       toastColor="success"
     />
   )
-  const addedErrorToastMessage = (
+
+  const orderErrorToastMessage = (
     <OToast
-      toastMessage="Document Name already exists.
-    "
+      toastMessage={`order should be ${maxOrderProject} or below ${maxOrderProject}`}
       toastColor="danger"
     />
   )
 
-  const addButtonHandler = async () => {
-    const addProcessNameResultAction = await dispatch(
+  console.log(maxOrderProject + 'maxOrderProject')
+  console.log(maxOrderEng + 'maxOrderEng')
+  console.log(maxOrderSupport + 'maxOrderSup')
+
+  const dispatchFunctions = () => {
+    dispatch(
+      reduxServices.processArea.getOrderCountOfActiveProcesses(
+        Number(selectCategory),
+      ),
+    )
+    dispatch(
+      reduxServices.processArea.incrementOrDecrementOrder({
+        categoryId: Number(selectCategory),
+        documentName,
+        link: documentLink,
+        order: selectOrder,
+        processAreaId: Number(selectProcessAreaName),
+        responsible,
+        status: selectActiveStatus,
+      }),
+    )
+    dispatch(
       reduxServices.processArea.saveProcessArea({
         categoryId: Number(selectCategory),
         documentName,
@@ -146,42 +179,39 @@ const AddProcessArea = ({
         status: selectActiveStatus,
       }),
     )
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
+    dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+    setToggle('')
+  }
+
+  const addButtonHandler = async () => {
     if (
-      reduxServices.processArea.saveProcessArea.fulfilled.match(
-        addProcessNameResultAction,
-      )
+      selectCategory === 'Project Management' &&
+      Number(selectOrder) <= maxOrderProject
     ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
+    } else if (
+      selectCategory === 'Engineering' &&
+      Number(selectOrder) <= maxOrderEng
+    ) {
+      dispatchFunctions()
+    } else if (
+      selectCategory === 'Support' &&
+      Number(selectOrder) <= maxOrderSupport
+    ) {
+      dispatchFunctions()
+    } else {
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
         ),
       )
-      dispatch(
-        reduxServices.processArea.incrementOrDecrementOrder({
-          categoryId: Number(selectCategory),
-          documentName,
-          link: documentLink,
-          order: selectOrder,
-          processAreaId: Number(selectProcessAreaName),
-          responsible,
-          status: selectActiveStatus,
-        }),
-      )
-      dispatch(
-        reduxServices.processArea.getProjectTailoringDocument('totalList'),
-      )
-      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
-      setToggle('')
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    } else if (
-      reduxServices.processArea.saveProcessArea.rejected.match(
-        addProcessNameResultAction,
-      ) &&
-      addProcessNameResultAction.payload === 409
-    ) {
-      dispatch(reduxServices.app.actions.addToast(addedErrorToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-      setDocumentName('')
+      dispatch(reduxServices.app.actions.addToast(orderErrorToastMessage))
     }
   }
 
