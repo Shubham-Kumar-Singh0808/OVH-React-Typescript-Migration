@@ -8,8 +8,6 @@ describe('App Footer Component Testing', () => {
     render(<AppFooter />, {
       preloadedState: {},
     })
-    expect(
-      screen.getByText('Copyright © Ray Business Technologies 2023'),
-    ).toBeInTheDocument()
+    expect(screen.getByText('Copyright © AIBridgeML2023')).toBeInTheDocument()
   })
 })
