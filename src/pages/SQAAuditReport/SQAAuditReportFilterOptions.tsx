@@ -40,6 +40,24 @@ const SQAAuditReportFilterOptions = ({
   const sqaAuditReportListSize = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportListSize,
   )
+
+  useEffect(() => {
+    if (localStorage.getItem('status')) {
+      setStatus(localStorage.getItem('status') ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('rescheduleStatus')) {
+      setRescheduleStatus(localStorage.getItem('rescheduleStatus') ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('selectDate')) {
+      setSelectDate(localStorage.getItem('selectDate') ?? '')
+    }
+  }, [])
   const dispatch = useAppDispatch()
   const {
     paginationRange,
@@ -81,9 +99,18 @@ const SQAAuditReportFilterOptions = ({
         endIndex: pageSize * currentPage,
         multiSearch: '',
         startIndex: pageSize * (currentPage - 1),
-        SQAAuditSelectionDate: '',
-        auditRescheduleStatus: '',
-        auditStatus: '',
+        SQAAuditSelectionDate:
+          (localStorage.getItem('selectDate')
+            ? localStorage.getItem('selectDate')
+            : selectDate) || '',
+        auditRescheduleStatus:
+          (localStorage.getItem('rescheduleStatus')
+            ? localStorage.getItem('rescheduleStatus')
+            : rescheduleStatus) || '',
+        auditStatus:
+          (localStorage.getItem('status')
+            ? localStorage.getItem('status')
+            : status) || '',
         from: '',
         to: '',
       }),
@@ -200,7 +227,12 @@ const SQAAuditReportFilterOptions = ({
             data-testid="selectDate"
             name="selectDate"
             value={selectDate}
-            onChange={(e) => setSelectDate(e.target.value)}
+            onChange={(e) => {
+              setSelectDate(e.target.value)
+              if (!localStorage.getItem('selectDate')) {
+                localStorage.setItem('selectDate', e.target.value)
+              }
+            }}
           >
             <option value={''}>Select Date</option>
             <option value="Today">Today</option>
@@ -224,7 +256,12 @@ const SQAAuditReportFilterOptions = ({
             data-testid="status"
             name="status"
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
+            onChange={(e) => {
+              setStatus(e.target.value)
+              if (!localStorage.getItem('status')) {
+                localStorage.setItem('status', e.target.value)
+              }
+            }}
           >
             <option value={''}>Select Status</option>
             <option value="open">Open</option>
@@ -244,7 +281,12 @@ const SQAAuditReportFilterOptions = ({
                 data-testid="rescheduleStatus"
                 name="rescheduleStatus"
                 value={rescheduleStatus}
-                onChange={(e) => setRescheduleStatus(e.target.value)}
+                onChange={(e) => {
+                  setRescheduleStatus(e.target.value)
+                  if (!localStorage.getItem('rescheduleStatus')) {
+                    localStorage.setItem('rescheduleStatus', e.target.value)
+                  }
+                }}
               >
                 <option value={''}>Select Reschedule Status</option>
                 <option value="Yes">Yes</option>
