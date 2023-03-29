@@ -26,7 +26,10 @@ const EditProcessArea = ({
   const initialProcessAreaDetails = {} as GetProcessAreaDetails
   const [processArea, setProcessArea] = useState(initialProcessAreaDetails)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
-  const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
+  // const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
+
+  const [isActive, setIsActive] = useState(false)
+
   const [requireOrder, setRequiredOrder] = useState<string | number>(
     processArea.order,
   )
@@ -55,7 +58,7 @@ const EditProcessArea = ({
   ) => {
     const { name, value } = event.target
     if (name === 'activeState') {
-      setIsActiveValue(value === 'true')
+      setIsActive(value === 'true')
       const activeStatus = value === 'true'
       setProcessArea((values) => {
         return { ...values, ...{ [name]: activeStatus } }
@@ -78,7 +81,7 @@ const EditProcessArea = ({
     if (processAreaDetails != null) {
       setProcessArea(processAreaDetails)
     }
-    setIsActiveValue(processAreaDetails.status as boolean)
+    setIsActive(processAreaDetails.status as boolean)
     setRequiredOrder(processAreaDetails.order)
   }, [processAreaDetails])
 
@@ -94,7 +97,7 @@ const EditProcessArea = ({
       processArea.responsible &&
       processArea.link &&
       processArea.processSubHeadName &&
-      !isActiveValue
+      !isActive
     ) {
       setIsUpdateBtnEnabled(true)
     } else if (
@@ -102,14 +105,14 @@ const EditProcessArea = ({
       processArea.responsible &&
       processArea.link &&
       processArea.processSubHeadName &&
-      isActiveValue &&
+      isActive &&
       requireOrder
     ) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
-  }, [processArea, isActiveValue, requireOrder])
+  }, [processArea, isActive, requireOrder])
 
   const updatedToastMessage = (
     <OToast
@@ -126,7 +129,7 @@ const EditProcessArea = ({
     order: requireOrder,
     processAreaId: processArea.processAreaId,
     responsible: processArea.responsible,
-    status: isActiveValue,
+    status: isActive,
     comments: processArea.comments,
     common: processArea.common,
     id: processArea.id,
@@ -330,9 +333,9 @@ const EditProcessArea = ({
                 name="activeState"
                 id="yes"
                 value="true"
-                label="Active "
+                label="Active"
                 inline
-                checked={isActiveValue}
+                checked={isActive}
                 onChange={onChangeInputHandler}
               />
               <CFormCheck
@@ -343,12 +346,12 @@ const EditProcessArea = ({
                 label="Inactive"
                 value="false"
                 inline
-                checked={!isActiveValue}
+                checked={!isActive}
                 onChange={onChangeInputHandler}
               />
             </CCol>
           </CRow>
-          {isActiveValue === true && (
+          {isActive === true && (
             <CRow className="mt-4 mb-4">
               <CFormLabel
                 {...formLabelProps}
