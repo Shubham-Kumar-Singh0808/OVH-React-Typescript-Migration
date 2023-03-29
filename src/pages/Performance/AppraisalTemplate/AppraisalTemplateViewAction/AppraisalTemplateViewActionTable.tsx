@@ -39,9 +39,6 @@ const AppraisalTemplateViewActionTable = ({
 
   const [displayKra, setDisplayKra] = useState<string>('')
 
-  const designationWiseKRAs = useTypedSelector(
-    reduxServices.appraisalTemplate.selectors.designationWiseKRAs,
-  )
   const kraLookups = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.kraLookups,
   )
@@ -270,8 +267,8 @@ const AppraisalTemplateViewActionTable = ({
       <CRow>
         <CCol xs={4}>
           <strong>
-            {designationWiseKRAs?.length
-              ? `Total Records: ${designationWiseKRAs?.length}`
+            {kraLookups?.length
+              ? `Total Records: ${kraLookups?.length}`
               : `No Records found...`}
           </strong>
         </CCol>
