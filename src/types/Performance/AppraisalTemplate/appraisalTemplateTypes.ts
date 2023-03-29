@@ -23,14 +23,12 @@ export type AppraisalTemplateSliceState = {
   listSize: number
   cycleList: GetCycleList[]
   designationsUnderCycle: GetDesignationsUnderCycle[]
-  activeCycleData: GetDesignationsUnderCycle
   currentPage: number
   pageSize: number
   designationsUnderCycleProps: DesignationsUnderCycleResponse
   designationWiseKRAs: GetDesignationWiseKRAs[]
   searchKRAData: SearchKRAList
   kpiForIndividualKra: KpiForIndividualKra[]
-  kraLookups: KraLookups[]
 }
 
 export type AppraisalCycleDto = {

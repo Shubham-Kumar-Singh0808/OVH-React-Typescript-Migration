@@ -86,36 +86,34 @@ const AppraisalTemplateViewActionTable = ({
       toastColor="success"
     />
   )
-  const activeCycle = useTypedSelector(
-    reduxServices.appraisalTemplate.selectors.activeCycleData,
-  )
   const saveBtnHandler = async () => {
     const prepareObject = {
       appraisalCycleDto: {
-        active: activeCycle?.appraisalCycleDto.active,
-        appraisalDuration: activeCycle?.appraisalCycleDto.appraisalDuration,
-        appraisalEndDate: activeCycle?.appraisalCycleDto.appraisalEndDate,
-        appraisalStartDate: activeCycle?.appraisalCycleDto.appraisalStartDate,
-        appraisalType: activeCycle?.appraisalCycleDto.appraisalType,
-        cycleStartedFlag: activeCycle?.appraisalCycleDto.cycleStartedFlag,
-        description: activeCycle?.appraisalCycleDto.description,
-        fromDate: activeCycle?.appraisalCycleDto.fromDate,
-        id: activeCycle?.appraisalCycleDto.id,
-        level: activeCycle?.appraisalCycleDto.level,
-        name: activeCycle?.appraisalCycleDto.name,
-        servicePeriod: activeCycle?.appraisalCycleDto.servicePeriod,
-        toDate: activeCycle?.appraisalCycleDto.toDate,
+        active: editAppraisalId?.appraisalCycleDto.active,
+        appraisalDuration: editAppraisalId?.appraisalCycleDto.appraisalDuration,
+        appraisalEndDate: editAppraisalId?.appraisalCycleDto.appraisalEndDate,
+        appraisalStartDate:
+          editAppraisalId?.appraisalCycleDto.appraisalStartDate,
+        appraisalType: editAppraisalId?.appraisalCycleDto.appraisalType,
+        cycleStartedFlag: editAppraisalId?.appraisalCycleDto.cycleStartedFlag,
+        description: editAppraisalId?.appraisalCycleDto.description,
+        fromDate: editAppraisalId?.appraisalCycleDto.fromDate,
+        id: editAppraisalId?.appraisalCycleDto.id,
+        level: editAppraisalId?.appraisalCycleDto.level,
+        name: editAppraisalId?.appraisalCycleDto.name,
+        servicePeriod: editAppraisalId?.appraisalCycleDto.servicePeriod,
+        toDate: editAppraisalId?.appraisalCycleDto.toDate,
       },
       designation: {
-        code: activeCycle?.designation.code,
-        departmentId: activeCycle?.designation.departmentId,
-        departmentName: activeCycle?.designation.departmentName,
-        id: activeCycle?.designation.id,
-        name: activeCycle?.designation.name,
+        code: editAppraisalId?.designation.code,
+        departmentId: editAppraisalId?.designation.departmentId,
+        departmentName: editAppraisalId?.designation.departmentName,
+        id: editAppraisalId?.designation.id,
+        name: editAppraisalId?.designation.name,
       },
-      id: activeCycle?.id,
+      id: editAppraisalId?.id,
       kraLookups: cbFromApi,
-    }
+    } as GetDesignationsUnderCycle
     const appraisalTemplateResultAction = await dispatch(
       reduxServices.appraisalTemplate.designingmaping(prepareObject),
     )
