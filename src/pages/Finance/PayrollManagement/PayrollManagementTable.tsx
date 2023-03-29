@@ -42,11 +42,11 @@ const PayrollManagementTable = (props: {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
-  const [selectedPaySlipId, setSelectedPaySlipId] = useState<string | number>()
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
     {} as CurrentPayslip,
   )
   const [deletePayslip, setDeletePayslip] = useState('')
+
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipList,
   )
@@ -114,27 +114,18 @@ const PayrollManagementTable = (props: {
     setIsViewModalVisible(true)
     setSelectedPaySlipDetails(payslipItem)
   }
-
-  const handleCheckbox = (value: boolean, paySlipId: string | number) => {
-    setSelectedPaySlipId(paySlipId)
-    props.setIsChecked(value)
-  }
-
-  const manageCheckboxes = (paySlipId: number) => {
-    if (props.isAllChecked) {
-      return props.isAllChecked
-    } else if (selectedPaySlipId === paySlipId) {
-      return props.isChecked
-    }
-    return false
-  }
-
   const totalNoOfRecords = renderingPayslipData?.length
     ? `Total Records: ${PaySlipsListSize}`
     : `No Records found...`
 
   const getItemNumber = (index: number) => {
     return (props.currentPage - 1) * props.pageSize + index + 1
+  }
+
+  const getVisibleRecords = (pageNumber: number) => {
+    const startIndex = (pageNumber - 1) * 20
+    const endIndex = startIndex + 20
+    return renderingPayslipData.slice(startIndex, endIndex)
   }
 
   return (
@@ -207,21 +198,14 @@ const PayrollManagementTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {renderingPayslipData?.length > 0 &&
-                renderingPayslipData?.map((payslipItem, index) => {
+              {getVisibleRecords(1)?.length > 0 &&
+                getVisibleRecords(1)?.map((payslipItem, index) => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
                           className="form-check-input form-select-not-allowed"
                           name="deleteCheckbox"
-                          checked={manageCheckboxes(payslipItem.paySlipId)}
-                          onChange={(e) =>
-                            handleCheckbox(
-                              e.target.checked,
-                              payslipItem.paySlipId,
-                            )
-                          }
                         />
                       </CTableDataCell>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
