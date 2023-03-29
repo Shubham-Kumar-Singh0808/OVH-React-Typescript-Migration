@@ -140,6 +140,7 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   designationWiseKRAs: [],
   kpiForIndividualKra: [],
   searchKRAData: { size: 0, list: [] },
+  activeCycleData: {} as GetDesignationsUnderCycle,
 }
 
 const appraisalTemplateSlice = createSlice({
@@ -212,6 +213,9 @@ const designationWiseKRAs = (state: RootState): GetDesignationWiseKRAs[] =>
 const kpiForIndividualKra = (state: RootState): KpiForIndividualKra[] =>
   state.appraisalTemplate.kpiForIndividualKra
 
+const activeCycleData = (state: RootState): GetDesignationsUnderCycle =>
+  state.appraisalTemplate.activeCycleData
+
 const pageFromState = (state: RootState): number =>
   state.appraisalTemplate.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -241,6 +245,7 @@ export const appraisalTemplateSelectors = {
   pageSizeFromState,
   designationWiseKRAs,
   kpiForIndividualKra,
+  activeCycleData,
 }
 
 export const appraisalTemplateService = {

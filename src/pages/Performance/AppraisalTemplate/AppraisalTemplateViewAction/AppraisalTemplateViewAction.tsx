@@ -49,13 +49,13 @@ const AppraisalTemplateViewAction = ({
   }, [cycleChecked])
 
   const activeCycle = useTypedSelector(
-    reduxServices.appraisalTemplate.selectors.designationWiseKRAs,
+    reduxServices.appraisalTemplate.selectors.activeCycleData,
   )
   console.log(activeCycle)
 
   useEffect(() => {
-    if (activeCycle) {
-      setCbFromApi(activeCycle)
+    if (activeCycle && activeCycle.kraLookups) {
+      setCbFromApi(activeCycle.kraLookups)
     }
   }, [activeCycle])
 
