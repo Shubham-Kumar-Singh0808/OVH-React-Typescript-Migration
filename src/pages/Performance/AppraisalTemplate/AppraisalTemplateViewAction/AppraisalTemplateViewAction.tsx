@@ -4,7 +4,7 @@ import AppraisalTemplateViewActionTable from './AppraisalTemplateViewActionTable
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
   GetDesignationsUnderCycle,
-  GetDesignationWiseKRAs,
+  KraLookups,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
@@ -16,18 +16,17 @@ const AppraisalTemplateViewAction = ({
   setToggle: () => void
   editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
-  const [cycleChecked, setCycleChecked] = useState<GetDesignationWiseKRAs>()
-  const [checkList, setCheckList] = useState<GetDesignationWiseKRAs[]>([])
-  const [cbFromApi, setCbFromApi] = useState<GetDesignationWiseKRAs[]>([])
+  const [cycleChecked, setCycleChecked] = useState<KraLookups>()
+  const [checkList, setCheckList] = useState<KraLookups[]>([])
+  const [cbFromApi, setCbFromApi] = useState<KraLookups[]>([])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
-  console.log(cbFromApi)
   useEffect(() => {
     if (cycleChecked) {
-      const tmpArr: GetDesignationWiseKRAs[] = []
+      const tmpArr: KraLookups[] = []
       cbFromApi.forEach((item) => {
         tmpArr.push(item)
         return ''
@@ -49,14 +48,16 @@ const AppraisalTemplateViewAction = ({
     }
   }, [cycleChecked])
 
-  const designationWiseKRAs = useTypedSelector(
-    reduxServices.appraisalTemplate.selectors.designationWiseKRAs,
+  const activeCycle = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.activeCycleData,
   )
+  console.log(activeCycle)
+
   useEffect(() => {
-    if (designationWiseKRAs) {
-      setCbFromApi(designationWiseKRAs)
+    if (activeCycle && activeCycle.kraLookups) {
+      setCbFromApi(activeCycle.kraLookups)
     }
-  }, [designationWiseKRAs])
+  }, [activeCycle])
 
   return (
     <>
@@ -136,7 +137,7 @@ const AppraisalTemplateViewAction = ({
           </CCol>
         </CRow>
         <AppraisalTemplateViewActionTable
-          cycleChecked={cycleChecked as GetDesignationWiseKRAs}
+          cycleChecked={cycleChecked as KraLookups}
           setCycleChecked={setCycleChecked}
           selChkBoxesFromApi={cbFromApi}
           checkList={checkList}

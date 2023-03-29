@@ -23,12 +23,14 @@ export type AppraisalTemplateSliceState = {
   listSize: number
   cycleList: GetCycleList[]
   designationsUnderCycle: GetDesignationsUnderCycle[]
+  activeCycleData: GetDesignationsUnderCycle
   currentPage: number
   pageSize: number
   designationsUnderCycleProps: DesignationsUnderCycleResponse
   designationWiseKRAs: GetDesignationWiseKRAs[]
   searchKRAData: SearchKRAList
   kpiForIndividualKra: KpiForIndividualKra[]
+  kraLookups: KraLookups[]
 }
 
 export type AppraisalCycleDto = {
@@ -56,10 +58,10 @@ export type Designation = {
 export type KraLookups = {
   id: number
   name: string
-  description: null
+  description: null | string
   kpiLookps: null
-  count: 1
-  checkType: null
+  count: number
+  checkType: null | boolean
   designationName: string
   designationId: number
   departmentName: string
@@ -72,6 +74,11 @@ export type GetDesignationsUnderCycle = {
   designation: Designation
   appraisalCycleDto: AppraisalCycleDto
   kraLookups: KraLookups[]
+}
+
+export type TotalResponseData = {
+  nominationCycleDto: AppraisalCycleDto
+  nominationQuestionDto: KraLookups[]
 }
 
 export type DesignationsUnderCycleProps = {
@@ -105,17 +112,17 @@ export type DesignationWiseKRAsProps = {
 }
 
 export type DesignationWiseKRAsWithNumber = {
-  id: 153
-  name: 'Bankers and Lawyer Management'
+  id: number
+  name: string
   description: null
   kpiLookps: null
-  count: 1
+  count: number
   checkType: null
-  designationName: 'Finance and Account Executive '
-  designationId: 51
-  departmentName: 'Accounts'
-  departmentId: 4
-  designationKraPercentage: 5.0
+  designationName: string
+  designationId: number
+  departmentName: string
+  departmentId: number
+  designationKraPercentage: number
 }
 
 export type SearchKRA = {
@@ -162,12 +169,10 @@ export type kraDto = {
 }
 
 export type AppraisalTemplateCheckBoxProps = {
-  cycleChecked: GetDesignationWiseKRAs
-  setCycleChecked: React.Dispatch<
-    React.SetStateAction<GetDesignationWiseKRAs | undefined>
-  >
-  selChkBoxesFromApi: GetDesignationWiseKRAs[]
-  checkList: GetDesignationWiseKRAs[]
+  cycleChecked: KraLookups
+  setCycleChecked: React.Dispatch<React.SetStateAction<KraLookups | undefined>>
+  selChkBoxesFromApi: KraLookups[]
+  checkList: KraLookups[]
   editAppraisalId: GetDesignationsUnderCycle | undefined
-  cbFromApi: GetDesignationWiseKRAs[]
+  cbFromApi: KraLookups[]
 }
