@@ -38,8 +38,8 @@ const PayrollManagementTable = (props: {
   userDeleteAccess: boolean
   userEditAccess: boolean
   editPaySlipHandler: (payslipItem: CurrentPayslip) => void
-  selectedIds: []
-  setSelectedIds: React.Dispatch<React.SetStateAction<[]>>
+  selectedIds: number[]
+  setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -132,13 +132,17 @@ const PayrollManagementTable = (props: {
 
   const handleSelect = (paySlipId: number) => {
     const newSelectedIds = [...props.selectedIds]
-    if (newSelectedIds.includes(paySlipId as never)) {
-      newSelectedIds.splice(newSelectedIds.indexOf(paySlipId as never), 1)
+    if (newSelectedIds.includes(paySlipId)) {
+      newSelectedIds.splice(newSelectedIds.indexOf(paySlipId), 1)
     } else {
-      newSelectedIds.push(paySlipId as never)
+      newSelectedIds.push(paySlipId)
     }
-    props.setSelectedIds(newSelectedIds as never)
+    props.setSelectedIds(newSelectedIds)
   }
+
+  // const handleRowSelect = (id: number) => {
+  //   props.setSelectedIds([...props.selectedIds, id])
+  // }
 
   return (
     <>
@@ -219,7 +223,7 @@ const PayrollManagementTable = (props: {
                           className="form-check-input form-select-not-allowed"
                           name="deleteCheckbox"
                           checked={props.selectedIds.includes(
-                            payslipItem.paySlipId as never,
+                            payslipItem.paySlipId,
                           )}
                           onChange={() => handleSelect(payslipItem.paySlipId)}
                         />

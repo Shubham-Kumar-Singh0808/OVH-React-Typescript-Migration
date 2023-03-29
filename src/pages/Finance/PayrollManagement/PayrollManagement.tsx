@@ -31,7 +31,7 @@ const PayrollManagement = (): JSX.Element => {
     undefined,
   )
 
-  const [selectedIds, setSelectedIds] = useState<[]>([])
+  const [selectedIds, setSelectedIds] = useState<number[]>([])
 
   useEffect(() => {
     if (selectMonth) {
