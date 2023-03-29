@@ -4,13 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import ResignationListTable from './ResignationListTable'
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../test/testUtils'
+import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockResignationList } from '../../../test/data/resignationListData'
 
 const mockSetCurrentPage = jest.fn()
@@ -59,7 +53,7 @@ describe('Resignation List Table Component Testing', () => {
         name: '40',
       }) as HTMLOptionElement
       expect(pageSizeSelect.selected).toBe(false)
-      expect(screen.getAllByRole('row')).toHaveLength(1)
+      expect(screen.getAllByRole('row')).toHaveLength(2)
     })
   })
 })

@@ -87,20 +87,20 @@ const ResignationListTable = ({
     reduxServices.app.selectors.selectCurrentPage,
   )
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.resignationList.getResignationList({
-        dateSelection: '',
-        empStatus: '',
-        endIndex: pageSize * selectCurrentPage,
-        from: '',
-        multiplesearch: '',
-        startIndex: pageSize * (selectCurrentPage - 1),
-        status: 'ALL',
-        to: '',
-      }),
-    )
-  }, [dispatch, pageSize, currentPage])
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.resignationList.getResignationList({
+  //       dateSelection: '',
+  //       empStatus: '',
+  //       endIndex: pageSize * selectCurrentPage,
+  //       from: '',
+  //       multiplesearch: '',
+  //       startIndex: pageSize * (selectCurrentPage - 1),
+  //       status: 'ALL',
+  //       to: '',
+  //     }),
+  //   )
+  // }, [dispatch, pageSize, currentPage])
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
