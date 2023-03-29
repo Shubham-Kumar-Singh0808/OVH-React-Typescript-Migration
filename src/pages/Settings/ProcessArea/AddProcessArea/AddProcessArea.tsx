@@ -147,6 +147,14 @@ const AddProcessArea = ({
     />
   )
 
+  const highestOrderValue = ProjectTailoringList.map((item) =>
+    item.processSubHeadsDto.reduce((highestOrder, record) => {
+      return Math.max(highestOrder, Number(record.order))
+    }, 0),
+  )
+
+  console.log(highestOrderValue + 'highestOrderValue')
+
   console.log(maxOrderProject + 'maxOrderProject')
   console.log(maxOrderEng + 'maxOrderEng')
   console.log(maxOrderSupport + 'maxOrderSup')
