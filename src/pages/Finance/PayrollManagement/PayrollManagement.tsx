@@ -23,14 +23,17 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
+
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
+
+  const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
+    undefined,
+  )
+
   const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
   const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
-  const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
-    undefined,
-  )
 
   useEffect(() => {
     if (selectMonth) {
@@ -58,8 +61,8 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
-    setClearFile(element.value)
     setIsNoteVisible(file[0])
+    setClearFile(element.value)
   }
 
   const dispatch = useAppDispatch()
@@ -140,6 +143,7 @@ const PayrollManagement = (): JSX.Element => {
       const previewBtnActionResult = await dispatch(
         reduxServices.payrollManagement.readExcelFile(formData),
       )
+
       if (
         (reduxServices.payrollManagement.readExcelFile.fulfilled.match(
           previewBtnActionResult,
@@ -147,16 +151,22 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(failedMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
-        ) &&
-          previewBtnActionResult.payload === 500) ||
-        previewBtnActionResult.payload === ''
+        ),
+        previewBtnActionResult.payload === 500)
       ) {
         setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
+      } else if (
+        reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+          previewBtnActionResult,
+        ) &&
+        previewBtnActionResult.type ===
+          'payrollManagement/readExcelFile/fulfilled'
+      ) {
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
       }
     }
   }
@@ -175,6 +185,7 @@ const PayrollManagement = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Payroll Management',
   )
+
   const ExcelTable =
     excelTable === false ? (
       <>
@@ -244,6 +255,7 @@ const PayrollManagement = (): JSX.Element => {
       Delete
     </CButton>
   )
+
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(
