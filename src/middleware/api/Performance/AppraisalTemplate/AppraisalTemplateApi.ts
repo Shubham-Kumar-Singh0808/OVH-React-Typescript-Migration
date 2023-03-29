@@ -3,10 +3,10 @@ import {
   GetCycleList,
   DesignationsUnderCycleResponse,
   DesignationWiseKRAsProps,
-  GetDesignationWiseKRAs,
   SearchKRAList,
   KpiForIndividualKra,
   GetDesignationsUnderCycle,
+  KraLookups,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -53,7 +53,7 @@ const getDesignationsUnderCycle = async (
 
 const getDesignationWiseKRAs = async (
   props: DesignationWiseKRAsProps,
-): Promise<GetDesignationWiseKRAs[]> => {
+): Promise<KraLookups[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AppraisalTemplateApiConfig.getDesignationWiseKRAs,
     method: AllowedHttpMethods.get,

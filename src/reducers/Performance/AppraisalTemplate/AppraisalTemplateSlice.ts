@@ -12,6 +12,7 @@ import {
   GetDesignationsUnderCycle,
   GetDesignationWiseKRAs,
   KpiForIndividualKra,
+  KraLookups,
 } from '../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 
 const activeCycle = createAsyncThunk(
@@ -141,6 +142,7 @@ export const initialAppraisalTemplateState: AppraisalTemplateSliceState = {
   kpiForIndividualKra: [],
   searchKRAData: { size: 0, list: [] },
   activeCycleData: {} as GetDesignationsUnderCycle,
+  kraLookups: [],
 }
 
 const appraisalTemplateSlice = createSlice({
@@ -165,7 +167,7 @@ const appraisalTemplateSlice = createSlice({
       })
       .addCase(getDesignationWiseKRAs.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.designationWiseKRAs = action.payload
+        state.kraLookups = action.payload
       })
       .addCase(kpisForIndividualKra.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -216,6 +218,9 @@ const kpiForIndividualKra = (state: RootState): KpiForIndividualKra[] =>
 const activeCycleData = (state: RootState): GetDesignationsUnderCycle =>
   state.appraisalTemplate.activeCycleData
 
+const kraLookups = (state: RootState): KraLookups[] =>
+  state.appraisalTemplate.kraLookups
+
 const pageFromState = (state: RootState): number =>
   state.appraisalTemplate.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -246,6 +251,7 @@ export const appraisalTemplateSelectors = {
   designationWiseKRAs,
   kpiForIndividualKra,
   activeCycleData,
+  kraLookups,
 }
 
 export const appraisalTemplateService = {

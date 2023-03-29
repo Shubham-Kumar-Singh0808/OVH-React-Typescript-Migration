@@ -30,6 +30,7 @@ export type AppraisalTemplateSliceState = {
   searchKRAData: SearchKRAList
   kpiForIndividualKra: KpiForIndividualKra[]
   activeCycleData: GetDesignationsUnderCycle
+  kraLookups: KraLookups[]
 }
 
 export type AppraisalCycleDto = {

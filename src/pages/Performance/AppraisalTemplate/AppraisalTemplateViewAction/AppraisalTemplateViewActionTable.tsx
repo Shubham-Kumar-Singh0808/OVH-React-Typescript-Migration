@@ -42,6 +42,10 @@ const AppraisalTemplateViewActionTable = ({
   const designationWiseKRAs = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.designationWiseKRAs,
   )
+  const kraLookups = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.kraLookups,
+  )
+  console.log(kraLookups)
 
   const handleModal = (name: string) => {
     setIsModalVisible(true)
@@ -171,8 +175,8 @@ const AppraisalTemplateViewActionTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {designationWiseKRAs?.length > 0 &&
-            designationWiseKRAs?.map((cycle, index) => {
+          {kraLookups?.length > 0 &&
+            kraLookups?.map((cycle, index) => {
               const kraName =
                 cycle.name && cycle.name.length > 30
                   ? `${cycle.name.substring(0, 30)}...`
@@ -241,7 +245,7 @@ const AppraisalTemplateViewActionTable = ({
                         className="cursor-pointer text-decoration-none text-primary"
                         data-testid={`subject-comments${index}`}
                         onClick={() =>
-                          handleDescriptionModal(cycle.description)
+                          handleDescriptionModal(cycle.description as string)
                         }
                       >
                         {parse(KraDescription)}
