@@ -130,18 +130,18 @@ const AddProcessArea = ({
     setSelectProcessAreaName('')
   }
 
-  const maxObjectProject = ProjectTailoringList[0].processSubHeadsDto.reduce(
+  const maxObjectProject = ProjectTailoringList[0]?.processSubHeadsDto.reduce(
     (prev, current) => (prev.order > current.order ? prev : current),
   )
-  const maxObjEng = ProjectTailoringList[1].processSubHeadsDto.reduce(
+  const maxObjEng = ProjectTailoringList[1]?.processSubHeadsDto.reduce(
     (prev, current) => (prev.order > current.order ? prev : current),
   )
-  const maxObjSupport = ProjectTailoringList[2].processSubHeadsDto.reduce(
+  const maxObjSupport = ProjectTailoringList[2]?.processSubHeadsDto.reduce(
     (prev, current) => (prev.order > current.order ? prev : current),
   )
-  const maxOrderProject = Number(maxObjectProject.order) + 1
-  const maxOrderEng = Number(maxObjEng.order) + 1
-  const maxOrderSupport = Number(maxObjSupport.order) + 1
+  const maxOrderProject = Number(maxObjectProject?.order) + 1
+  const maxOrderEng = Number(maxObjEng?.order) + 1
+  const maxOrderSupport = Number(maxObjSupport?.order) + 1
 
   const addedToastMessage = (
     <OToast

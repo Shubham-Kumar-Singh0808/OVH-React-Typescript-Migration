@@ -71,8 +71,8 @@ describe('New Process Areas without data', () => {
     const inactiveState = screen.getByRole('radio', {
       name: 'Inactive',
     }) as HTMLInputElement
-    expect(activeState.checked).toEqual(false)
-    expect(inactiveState.checked).toEqual(true)
+    expect(activeState.checked).toEqual(true)
+    expect(inactiveState.checked).toEqual(false)
     fireEvent.click(inactiveState)
     expect(activeState.checked).toEqual(false)
 

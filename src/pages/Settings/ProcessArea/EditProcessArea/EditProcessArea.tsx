@@ -26,7 +26,6 @@ const EditProcessArea = ({
   const initialProcessAreaDetails = {} as GetProcessAreaDetails
   const [processArea, setProcessArea] = useState(initialProcessAreaDetails)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
-  // const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
 
   const [isActive, setIsActive] = useState(false)
 
@@ -121,51 +120,136 @@ const EditProcessArea = ({
       toastColor="success"
     />
   )
+  const editProjectTailoringList = useTypedSelector(
+    reduxServices.processArea.selectors.ProjectTailoringList,
+  )
+  const editObjectProject =
+    editProjectTailoringList[0]?.processSubHeadsDto.reduce((prev, current) =>
+      prev.order > current.order ? prev : current,
+    )
+  const editObjEng = editProjectTailoringList[1]?.processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const editObjSupport = editProjectTailoringList[2]?.processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const editOrderProject = Number(editObjectProject?.order) + 1
+  const editOrderEng = Number(editObjEng?.order) + 1
+  const editOrderSupport = Number(editObjSupport?.order) + 1
 
-  const prepareObject = {
-    categoryId: processArea.categoryId,
-    documentName: processArea.documentName,
-    link: processArea.link,
-    order: requireOrder,
-    processAreaId: processArea.processAreaId,
-    responsible: processArea.responsible,
-    status: isActive,
-    comments: processArea.comments,
-    common: processArea.common,
-    id: processArea.id,
-    processName: processArea.processName,
-    processSubHeadId: processArea.processSubHeadId,
-    processSubHeadName: processArea.processSubHeadName,
-    specificToProject: processArea.specificToProject,
-    sqaApproval: processArea.sqaApproval,
-    sqaComments: processArea.sqaComments,
+  const editOrderErrorToastMessage = (maxOrder: number) => (
+    <OToast
+      toastMessage={`order should be ${maxOrder} or below ${maxOrder}`}
+      toastColor="danger"
+    />
+  )
+
+  const dispatchFunctions = () => {
+    dispatch(
+      reduxServices.processArea.getOrderCountOfActiveProcesses(
+        Number(processArea.categoryId),
+      ),
+    )
+    dispatch(
+      reduxServices.processArea.incrementOrDecrementOrder({
+        categoryId: Number(processArea.categoryId),
+        documentName: processArea.documentName,
+        link: processArea.link,
+        order: requireOrder,
+        processAreaId: Number(processArea.processSubHeadName),
+        responsible: processArea.responsible,
+        status: isActive,
+      }),
+    )
+    dispatch(
+      reduxServices.processArea.saveProcessArea({
+        categoryId: Number(processArea.categoryId),
+        documentName: processArea.documentName,
+        link: processArea.link,
+        order: requireOrder,
+        processAreaId: Number(processArea.processSubHeadName),
+        responsible: processArea.responsible,
+        status: isActive,
+      }),
+    )
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
+    dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
+    setToggle('')
   }
   const updateButtonHandler = async () => {
-    const updateProcessNameResultAction = await dispatch(
-      reduxServices.processArea.saveProcessArea(prepareObject),
-    )
     if (
-      reduxServices.processArea.saveProcessArea.fulfilled.match(
-        updateProcessNameResultAction,
-      )
+      processArea.categoryId === 1 &&
+      Number(requireOrder) > editOrderProject
     ) {
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
-          processArea.categoryId,
+          Number(processArea.categoryId),
         ),
       )
       dispatch(
-        reduxServices.processArea.incrementOrDecrementOrder(prepareObject),
+        reduxServices.app.actions.addToast(
+          editOrderErrorToastMessage(editOrderProject),
+        ),
+      )
+    } else if (
+      processArea.categoryId === 1 &&
+      Number(requireOrder) <= editOrderProject
+    ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(processArea.categoryId),
+        ),
+      )
+      dispatchFunctions()
+    }
+    if (processArea.categoryId === 2 && Number(requireOrder) > editOrderEng) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(processArea.categoryId),
+        ),
       )
       dispatch(
-        reduxServices.processArea.getProjectTailoringDocument('totalList'),
+        reduxServices.app.actions.addToast(
+          editOrderErrorToastMessage(editOrderEng),
+        ),
       )
-      dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
-      setToggle('')
-      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      processArea.categoryId === 2 &&
+      Number(requireOrder) <= editOrderEng
+    ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(processArea.categoryId),
+        ),
+      )
+      dispatchFunctions()
+    }
+    if (
+      processArea.categoryId === 3 &&
+      Number(requireOrder) > editOrderSupport
+    ) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(processArea.categoryId),
+        ),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          editOrderErrorToastMessage(editOrderSupport),
+        ),
+      )
+    } else if (
+      processArea.categoryId === 3 &&
+      Number(requireOrder) <= editOrderSupport
+    ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(processArea.categoryId),
+        ),
+      )
+      dispatchFunctions()
     }
   }
-
   return (
     <>
       <OCard
