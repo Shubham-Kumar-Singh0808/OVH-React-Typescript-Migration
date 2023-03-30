@@ -158,12 +158,17 @@ const appraisalTemplateSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(activeCycle.fulfilled, (state) => {
+      .addCase(activeCycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.activeCycleData = action.payload
       })
       .addCase(cycle.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.cycleList = action.payload
+      })
+      .addCase(designingmaping.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.activeCycleData = action.payload
       })
       .addCase(getDesignationWiseKRAs.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded

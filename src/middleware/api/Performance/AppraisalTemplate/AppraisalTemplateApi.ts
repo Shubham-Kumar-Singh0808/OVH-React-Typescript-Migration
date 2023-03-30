@@ -14,7 +14,7 @@ import {
 } from '../../../../utils/apiUtils'
 import { AppraisalTemplateApiConfig, AllowedHttpMethods } from '../../apiList'
 
-const activeCycle = async (): Promise<number | string> => {
+const activeCycle = async (): Promise<GetDesignationsUnderCycle> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: AppraisalTemplateApiConfig.activeCycle,
     method: AllowedHttpMethods.get,

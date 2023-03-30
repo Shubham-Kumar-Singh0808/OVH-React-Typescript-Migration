@@ -13,7 +13,7 @@ import {
   CFormCheck,
   CLink,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -36,6 +36,7 @@ const AppraisalTemplateViewActionTable = ({
   const [isModalDescriptionVisible, setIsModalDescriptionVisible] =
     useState(false)
   const [displayDescriptionKra, setDisplayDescriptionKra] = useState<string>('')
+  const dispatch = useAppDispatch()
 
   const [displayKra, setDisplayKra] = useState<string>('')
 
@@ -44,16 +45,29 @@ const AppraisalTemplateViewActionTable = ({
   )
   console.log(kraLookups)
 
+  const activeCycle = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.activeCycleData,
+  )
+  console.log(activeCycle)
+
   const handleModal = (name: string) => {
     setIsModalVisible(true)
     setDisplayKra(name)
   }
 
+  useEffect(() => {
+    dispatch(
+      reduxServices.appraisalTemplate.getDesignationWiseKRAs({
+        departmentId: Number(editAppraisalId?.designation.departmentId),
+        designationId: Number(editAppraisalId?.designation.id),
+      }),
+    )
+  }, [dispatch])
+
   const handleDescriptionModal = (name: string) => {
     setIsModalDescriptionVisible(true)
     setDisplayDescriptionKra(name)
   }
-  const dispatch = useAppDispatch()
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -115,6 +129,7 @@ const AppraisalTemplateViewActionTable = ({
       id: editAppraisalId?.id,
       kraLookups: cbFromApi,
     } as GetDesignationsUnderCycle
+
     const appraisalTemplateResultAction = await dispatch(
       reduxServices.appraisalTemplate.designingmaping(prepareObject),
     )
