@@ -30,6 +30,7 @@ const AddProcessArea = ({
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [documentNameExist, setDocumentNameExist] = useState('')
 
   useEffect(() => {
     if (
@@ -86,6 +87,11 @@ const AddProcessArea = ({
       )
   }, [dispatch, selectCategory])
 
+  const trackerNameExists = (name: string) => {
+    return ProcessArea?.find((trackerName) => {
+      return trackerName.name.toLowerCase() === name.toLowerCase()
+    })
+  }
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -106,6 +112,11 @@ const AddProcessArea = ({
       setSelectOrder(newValue)
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
+    }
+    if (trackerNameExists(value)) {
+      setDocumentNameExist(value)
+    } else {
+      setDocumentNameExist('')
     }
   }
 
@@ -349,6 +360,13 @@ const AddProcessArea = ({
                 onChange={handleInputChange}
                 required
               />
+            </CCol>
+            <CCol sm={3}>
+              {documentNameExist && (
+                <p className={TextDanger} data-testid="nameAlreadyExist">
+                  Document Name Already Exists
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
