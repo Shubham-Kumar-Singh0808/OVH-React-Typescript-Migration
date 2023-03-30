@@ -147,18 +147,6 @@ const AddProcessArea = ({
     />
   )
 
-  const highestOrderValue = ProjectTailoringList.map((item) =>
-    item.processSubHeadsDto.reduce((highestOrder, record) => {
-      return Math.max(highestOrder, Number(record.order))
-    }, 0),
-  )
-
-  console.log(highestOrderValue + 'highestOrderValue')
-
-  console.log(maxOrderProject + 'maxOrderProject')
-  console.log(maxOrderEng + 'maxOrderEng')
-  console.log(maxOrderSupport + 'maxOrderSup')
-
   const dispatchFunctions = () => {
     dispatch(
       reduxServices.processArea.getOrderCountOfActiveProcesses(
@@ -194,7 +182,6 @@ const AddProcessArea = ({
 
   const addButtonHandler = async () => {
     if (selectCategory === '1' && Number(selectOrder) > maxOrderProject) {
-      console.log('I am projects')
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
@@ -217,7 +204,6 @@ const AddProcessArea = ({
       dispatchFunctions()
     }
     if (selectCategory === '2' && Number(selectOrder) > maxOrderEng) {
-      console.log('I am Eng')
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
@@ -235,7 +221,6 @@ const AddProcessArea = ({
       dispatchFunctions()
     }
     if (selectCategory === '3' && Number(selectOrder) > maxOrderSupport) {
-      console.log('I am support')
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
@@ -257,21 +242,6 @@ const AddProcessArea = ({
       )
       dispatchFunctions()
     }
-    // if (selectCategory === '2' && Number(selectOrder) <= maxOrderEng) {
-    //   console.log('I am eng')
-    //   dispatchFunctions()
-    // }
-    // if (selectCategory === '3' && Number(selectOrder) <= maxOrderSupport) {
-    //   console.log('I am Support')
-    //   dispatchFunctions()
-    // } else {
-    //   dispatch(
-    //     reduxServices.processArea.getOrderCountOfActiveProcesses(
-    //       Number(selectCategory),
-    //     ),
-    //   )
-    //   dispatch(reduxServices.app.actions.addToast(orderErrorToastMessage))
-    // }
   }
 
   return (
