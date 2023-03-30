@@ -140,9 +140,9 @@ const AddProcessArea = ({
     />
   )
 
-  const orderErrorToastMessage = (
+  const orderErrorToastMessage = (maxOrder: number) => (
     <OToast
-      toastMessage={`order should be ${maxOrderProject} or below ${maxOrderProject}`}
+      toastMessage={`order should be ${maxOrder} or below ${maxOrder}`}
       toastColor="danger"
     />
   )
@@ -193,8 +193,20 @@ const AddProcessArea = ({
   }
 
   const addButtonHandler = async () => {
-    if (
-      selectCategory === 'Project Management' &&
+    if (selectCategory === '1' && Number(selectOrder) > maxOrderProject) {
+      console.log('I am projects')
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          orderErrorToastMessage(maxOrderProject),
+        ),
+      )
+    } else if (
+      selectCategory === '1' &&
       Number(selectOrder) <= maxOrderProject
     ) {
       await dispatch(
@@ -203,24 +215,63 @@ const AddProcessArea = ({
         ),
       )
       dispatchFunctions()
-    } else if (
-      selectCategory === 'Engineering' &&
-      Number(selectOrder) <= maxOrderEng
-    ) {
-      dispatchFunctions()
-    } else if (
-      selectCategory === 'Support' &&
-      Number(selectOrder) <= maxOrderSupport
-    ) {
-      dispatchFunctions()
-    } else {
+    }
+    if (selectCategory === '2' && Number(selectOrder) > maxOrderEng) {
+      console.log('I am Eng')
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
         ),
       )
-      dispatch(reduxServices.app.actions.addToast(orderErrorToastMessage))
+      dispatch(
+        reduxServices.app.actions.addToast(orderErrorToastMessage(maxOrderEng)),
+      )
+    } else if (selectCategory === '2' && Number(selectOrder) <= maxOrderEng) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
     }
+    if (selectCategory === '3' && Number(selectOrder) > maxOrderSupport) {
+      console.log('I am support')
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          orderErrorToastMessage(maxOrderSupport),
+        ),
+      )
+    } else if (
+      selectCategory === '3' &&
+      Number(selectOrder) <= maxOrderSupport
+    ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
+    }
+    // if (selectCategory === '2' && Number(selectOrder) <= maxOrderEng) {
+    //   console.log('I am eng')
+    //   dispatchFunctions()
+    // }
+    // if (selectCategory === '3' && Number(selectOrder) <= maxOrderSupport) {
+    //   console.log('I am Support')
+    //   dispatchFunctions()
+    // } else {
+    //   dispatch(
+    //     reduxServices.processArea.getOrderCountOfActiveProcesses(
+    //       Number(selectCategory),
+    //     ),
+    //   )
+    //   dispatch(reduxServices.app.actions.addToast(orderErrorToastMessage))
+    // }
   }
 
   return (
