@@ -108,7 +108,7 @@ const AddProcessArea = ({
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setDocumentLink(newValue)
     } else if (name === 'selectOrder') {
-      const newValue = value.replace(/[\D]/gi, '')
+      const newValue = value.replace(/\D/g, '').replace(/^0+/, '')
       setSelectOrder(newValue)
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
