@@ -478,7 +478,11 @@ const AddProcessArea = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && documentNameExist?.length > 0
+                    : !isAddButtonEnabled
+                }
                 onClick={addButtonHandler}
               >
                 Add
