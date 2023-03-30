@@ -962,6 +962,7 @@ export const processAreaApiConfig: ProcessAreaListApi = {
   getOrderCountOfActiveProcesses:
     apiPrefix + '/projectTailoring/getOrderCountOfActiveProcesses',
   getProcessAreaDetails: apiPrefix + '/projectTailoring/getProcessAreaDetails',
+  checkforDuplicateDoc: apiPrefix + '/projectTailoring/checkforDuplicateDoc',
 }
 export const addNewAuditApiConfig: AddNewAudit = {
   saveNewAuditForm: apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',

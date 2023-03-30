@@ -789,6 +789,7 @@ export interface ProcessAreaListApi extends ApiBase {
   incrementOrDecrementOrder: string
   getOrderCountOfActiveProcesses: string
   getProcessAreaDetails: string
+  checkforDuplicateDoc: string
 }
 
 export interface AddNewAudit extends ApiBase {

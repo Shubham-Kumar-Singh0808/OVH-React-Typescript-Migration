@@ -121,6 +121,18 @@ const getProcessAreaDetails = createAsyncThunk(
   },
 )
 
+const checkForDuplicateDoc = createAsyncThunk(
+  'processArea/checkForDuplicateDoc',
+  async (docName: string, thunkApi) => {
+    try {
+      return await ProcessAreaApi.checkForDuplicateDoc(docName)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialProcessAreaState: ProcessAreaSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -161,6 +173,9 @@ const ProcessAreaSlice = createSlice({
       .addCase(getProcessAreaDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.processAreaDetails = action.payload
+      })
+      .addCase(checkForDuplicateDoc.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(
@@ -214,6 +229,7 @@ const processAreaThunk = {
   incrementOrDecrementOrder,
   getOrderCountOfActiveProcesses,
   getProcessAreaDetails,
+  checkForDuplicateDoc,
 }
 
 const processAreaSelectors = {

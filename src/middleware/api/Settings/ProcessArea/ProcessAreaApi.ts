@@ -129,6 +129,20 @@ const getProcessAreaDetails = async (
   return response.data
 }
 
+const checkForDuplicateDoc = async (
+  docName: string,
+): Promise<string | number | boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: processAreaApiConfig.checkforDuplicateDoc,
+    method: AllowedHttpMethods.get,
+    params: {
+      docName,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ProcessAreaApi = {
   getProjectTailoringDocument,
   getProcessAreas,
@@ -138,6 +152,7 @@ const ProcessAreaApi = {
   incrementOrDecrementOrder,
   getOrderCountOfActiveProcesses,
   getProcessAreaDetails,
+  checkForDuplicateDoc,
 }
 
 export default ProcessAreaApi
