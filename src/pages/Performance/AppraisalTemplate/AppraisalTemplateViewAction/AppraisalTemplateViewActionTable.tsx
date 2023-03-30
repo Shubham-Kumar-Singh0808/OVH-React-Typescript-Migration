@@ -203,9 +203,13 @@ const AppraisalTemplateViewActionTable = ({
               const chkFlag = selChkBoxesFromApi?.find(
                 (el) => el.id === cycle.id,
               )
+              console.log(chkFlag + 'chkFlag')
+
               if (chkFlag) {
                 flag = true
               }
+              console.log(flag + 'flag')
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>
