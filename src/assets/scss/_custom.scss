@@ -55,7 +55,7 @@ body {
   border-radius: 0.15em;
 }
 .form-check-input:checked {
-  background-color: $info-base !important;
+  background-color: $info-base;
   border-color: $info-base;
 }
 .form-check-input:checked[type='checkbox'] {
