@@ -127,6 +127,17 @@ const EditBookingFilterOptions = (): JSX.Element => {
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
 
+  const failureValidationErrorToastMessage = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
+  const failureToastMessage = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
+
   useEffect(() => {
     if (editExistingMeetingRequest != null) {
       setEditMeetingRequest(editExistingMeetingRequest)
@@ -365,6 +376,36 @@ const EditBookingFilterOptions = (): JSX.Element => {
     history.push('/meetingList')
   }
 
+  const validateBookingTimings = () => {
+    if (
+      editMeetingRequest.startTime.split(':') <
+      editMeetingRequest.endTime.split(':')
+    ) {
+      const startTimeSplit = editMeetingRequest.startTime.split(':')
+      const endTimeSplit = editMeetingRequest.endTime.split(':')
+      const start = new Date(
+        `${editMeetingRequest.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${editMeetingRequest.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            failureValidationErrorToastMessage,
+          ),
+        )
+      } else {
+        handleConfirmBtn()
+      }
+    } else {
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+    }
+  }
+
   return (
     <>
       <CRow>
@@ -532,7 +573,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
+                    onClick={validateBookingTimings}
                   >
                     Update
                   </CButton>
