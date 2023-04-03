@@ -132,11 +132,7 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
-  console.log(selectedIds)
-
-  // const myArray: number[] = selectedIds
-  // const myNumber: number = parseInt(myArray.toString(), 10)
-  // console.log(myNumber)
+  console.log(selectedIds + 'selectedIds')
 
   const allDeleteBtnHandler = async () => {
     const previewBtnActionResult = await dispatch(
