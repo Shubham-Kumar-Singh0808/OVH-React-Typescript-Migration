@@ -140,10 +140,6 @@ const PayrollManagementTable = (props: {
     props.setSelectedIds(newSelectedIds)
   }
 
-  // const handleRowSelect = (id: number) => {
-  //   props.setSelectedIds([...props.selectedIds, id])
-  // }
-
   return (
     <>
       <CCol className="custom-scroll scroll-alignment py-4">
