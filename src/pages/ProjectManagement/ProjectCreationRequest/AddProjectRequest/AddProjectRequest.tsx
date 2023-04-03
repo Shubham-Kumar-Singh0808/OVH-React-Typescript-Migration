@@ -39,7 +39,7 @@ const AddProjectRequest = ({
   const [descriptionError, setDescriptionError] = useState(false)
   const [customerContactName, setCustomerContactName] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
-  const [isAddBtnEnable, setAddBtn] = useState(false)
+  const [isAddBtnEnable, setIsAddBtnEnable] = useState(false)
   const [checkListValid, setCheckListValid] = useState<boolean>(false)
   const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
     useState(false)
@@ -116,13 +116,13 @@ const AddProjectRequest = ({
       projectRequest.technology != null &&
       projectRequest.description?.length > 57 &&
       projectRequest.description?.length > 57 != null &&
-      checkListValid &&
+      // checkListValid
       !emailError &&
       !billingContactPersonEmailError
     ) {
-      setAddBtn(true)
+      setIsAddBtnEnable(true)
     } else {
-      setAddBtn(false)
+      setIsAddBtnEnable(false)
     }
   }, [projectRequest])
 
