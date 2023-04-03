@@ -134,10 +134,14 @@ const PayrollManagement = (): JSX.Element => {
 
   console.log(selectedIds)
 
+  // const myArray: number[] = selectedIds
+  // const myNumber: number = parseInt(myArray.toString(), 10)
+  // console.log(myNumber)
+
   const allDeleteBtnHandler = async () => {
     const previewBtnActionResult = await dispatch(
       reduxServices.payrollManagement.deleteCheckedPayslips(
-        selectedIds as unknown as number,
+        selectedIds as unknown as string,
       ),
     )
     if (
