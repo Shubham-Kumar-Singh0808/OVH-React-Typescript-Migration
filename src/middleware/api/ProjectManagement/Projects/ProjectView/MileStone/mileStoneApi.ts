@@ -1,6 +1,8 @@
 import { ChangeRequestProps } from '../../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
 import {
+  GetCRListForMilestone,
   GetMilestone,
+  GetPeopleForMilestone,
   MileStonesList,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import {
@@ -43,9 +45,54 @@ const editProjectMilestone = async (
   return response.data
 }
 
+const getPeopleForMilestone = async (
+  projectId: number | string,
+): Promise<GetPeopleForMilestone[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.getPeopleForMilestone,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getMilestoneNumber = async (
+  projectId: number | string,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.getMilestoneNumber,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getCRListForMilestone = async (
+  projectid: number | string,
+): Promise<GetCRListForMilestone[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.getCRListForMilestone,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectid,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const mileStoneApi = {
   getProjectMileStone,
   editProjectMilestone,
+  getPeopleForMilestone,
+  getMilestoneNumber,
+  getCRListForMilestone,
 }
 
 export default mileStoneApi

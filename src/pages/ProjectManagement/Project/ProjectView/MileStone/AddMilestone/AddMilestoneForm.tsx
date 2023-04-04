@@ -22,7 +22,7 @@ const EditMileStoneForm = (): JSX.Element => {
   const [mileStoneCRDetails, setMileStoneCRDetails] = useState<string>()
   const [plannedEndDate, setPlannedDate] = useState<string>()
   const [actualEndDate, setActualDate] = useState<string>()
-  const [billable, setBillable] = useState<boolean>()
+  const [billable, setBillable] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
   const commonFormatDate = 'l'
@@ -32,10 +32,16 @@ const EditMileStoneForm = (): JSX.Element => {
   const handleDescription = (comment: string) => {
     setComments(comment)
   }
-  const getProjectDetail = useTypedSelector(
-    reduxServices.projectMileStone.selectors.getMilestone,
+  console.log(setShowEditor)
+  const milestoneNumber = useTypedSelector(
+    reduxServices.projectMileStone.selectors.milestoneNumber,
   )
 
+  const getCRListMilestone = useTypedSelector(
+    reduxServices.projectMileStone.selectors.getCRListMilestone,
+  )
+
+  console.log(actualEndDate)
   return (
     <>
       <CForm>
@@ -66,7 +72,7 @@ const EditMileStoneForm = (): JSX.Element => {
               data-testid="selectSubject"
               id="subjectValue"
               name="subjectValue"
-              value={getProjectDetail.milestoneNumber}
+              value={milestoneNumber}
               disabled
             />
           </CCol>
@@ -87,6 +93,10 @@ const EditMileStoneForm = (): JSX.Element => {
               }}
             >
               <option value="">Select Tracker</option>
+              {getCRListMilestone.length > 0 &&
+                getCRListMilestone.map((item, index) => {
+                  return <option key={index}>{item.name}</option>
+                })}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -161,15 +171,17 @@ const EditMileStoneForm = (): JSX.Element => {
           <CCol sm={3}>
             <CFormSelect
               aria-label="tracker"
-              id="tracker"
+              id="billable"
               data-testid="trackerSelect"
-              name="tracker"
-              // value={billable as boolean}
-              // onChange={(e) => {
-              //   setBillable(e.target.value)
-              // }}
+              name="billable"
+              value={billable}
+              onChange={(e) => {
+                setBillable(e.target.value)
+              }}
             >
-              <option value="">Select Tracker</option>
+              <option value="">Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </CFormSelect>
           </CCol>
         </CRow>

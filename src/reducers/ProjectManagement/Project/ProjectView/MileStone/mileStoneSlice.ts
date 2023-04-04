@@ -6,7 +6,9 @@ import { AppDispatch, RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import { ChangeRequestProps } from '../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
 import {
+  GetCRListForMilestone,
   GetMilestone,
+  GetPeopleForMilestone,
   MileStoneResponse,
   MileStoneSliceState,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
@@ -40,12 +42,73 @@ const editProjectMilestone = createAsyncThunk<
   }
 })
 
+const getPeopleForMilestone = createAsyncThunk<
+  GetPeopleForMilestone[] | undefined,
+  number | string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectNotes/GetPeopleForMilestone',
+  async (projectId: number | string, thunkApi) => {
+    try {
+      return await mileStoneApi.getPeopleForMilestone(projectId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getMilestoneNumber = createAsyncThunk<
+  number | undefined,
+  number | string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectNotes/getMilestoneNumber',
+  async (projectId: number | string, thunkApi) => {
+    try {
+      return await mileStoneApi.getMilestoneNumber(projectId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const getCRListForMilestone = createAsyncThunk<
+  GetCRListForMilestone[] | undefined,
+  number | string,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectNotes/GetCRListForMilestone',
+  async (projectid: number | string, thunkApi) => {
+    try {
+      return await mileStoneApi.getCRListForMilestone(projectid)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialMileStoneState: MileStoneSliceState = {
   mileStonesList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
   getMilestone: {} as GetMilestone,
+  getPeopleForMilestone: [],
+  milestoneNumber: 0,
+  getCRListForMilestone: [],
 }
 
 const mileStoneSlice = createSlice({
@@ -65,6 +128,18 @@ const mileStoneSlice = createSlice({
       .addCase(editProjectMilestone.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
+      .addCase(getPeopleForMilestone.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getPeopleForMilestone = action.payload as GetPeopleForMilestone[]
+      })
+      .addCase(getMilestoneNumber.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.milestoneNumber = action.payload as number
+      })
+      .addCase(getCRListForMilestone.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getCRListForMilestone = action.payload as GetCRListForMilestone[]
+      })
   },
 })
 
@@ -80,9 +155,21 @@ const projectMileStoneSize = (state: RootState): number =>
 const getMilestone = (state: RootState): GetMilestone =>
   state.projectMileStone.getMilestone
 
+const getPeopleMilestone = (state: RootState): GetPeopleForMilestone[] =>
+  state.projectMileStone.getPeopleForMilestone
+
+const milestoneNumber = (state: RootState): number =>
+  state.projectMileStone.milestoneNumber
+
+const getCRListMilestone = (state: RootState): GetCRListForMilestone[] =>
+  state.projectMileStone.getCRListForMilestone
+
 const mileStoneThunk = {
   getProjectMileStone,
   editProjectMilestone,
+  getPeopleForMilestone,
+  getMilestoneNumber,
+  getCRListForMilestone,
 }
 
 const mileStoneSelectors = {
@@ -90,6 +177,9 @@ const mileStoneSelectors = {
   projectMileStone,
   projectMileStoneSize,
   getMilestone,
+  getPeopleMilestone,
+  milestoneNumber,
+  getCRListMilestone,
 }
 
 export const mileStoneService = {

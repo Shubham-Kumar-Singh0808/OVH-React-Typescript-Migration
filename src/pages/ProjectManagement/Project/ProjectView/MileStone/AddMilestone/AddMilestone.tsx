@@ -1,17 +1,26 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import AddMilestoneForm from './AddMilestoneForm'
 import MilestonePeopleList from './MilestonePeopleList'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 
 const AddMilestone = (): JSX.Element => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
 
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectMileStone.getMilestoneNumber(getProjectDetail.id),
+    )
+    dispatch(
+      reduxServices.projectMileStone.getCRListForMilestone(getProjectDetail.id),
+    )
+  }, [dispatch])
   const history = useHistory()
 
   const backButtonHandler = () => {
