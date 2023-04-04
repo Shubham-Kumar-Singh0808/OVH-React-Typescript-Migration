@@ -31,6 +31,7 @@ const MileStoneTable = (): JSX.Element => {
   const [subject, setSubject] = useState<string>()
   const [title, setTitle] = useState({} as MileStoneResponse)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false)
   const [toDeleteMilestoneId, setToDeleteMilestoneId] = useState(0)
   const mileStoneList = useTypedSelector(
     reduxServices.projectMileStone.selectors.projectMileStone,
@@ -154,6 +155,39 @@ const MileStoneTable = (): JSX.Element => {
       )
     }
   }
+
+  const handleShowRejectModal = (id: number) => {
+    setToDeleteMilestoneId(id)
+    setIsRejectModalVisible(true)
+  }
+
+  const handleConfirmCloseMilestone = async () => {
+    setIsRejectModalVisible(false)
+    const rejectMilestoneResultAction = await dispatch(
+      reduxServices.projectMileStone.closeMilestone(toDeleteMilestoneId),
+    )
+    if (
+      reduxServices.projectMileStone.closeMilestone.fulfilled.match(
+        rejectMilestoneResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectMileStone.getProjectMileStone({
+          endIndex: pageSize * currentPage,
+          firstIndex: pageSize * (currentPage - 1),
+          projectid: projectId,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Milestone rejected successfully"
+          />,
+        ),
+      )
+    }
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -225,6 +259,8 @@ const MileStoneTable = (): JSX.Element => {
                       color="danger"
                       className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      disabled={item.isClosed === true}
+                      onClick={() => handleShowRejectModal(item.id)}
                     >
                       <i className="fa fa-times text-white"></i>
                     </CButton>
@@ -253,6 +289,7 @@ const MileStoneTable = (): JSX.Element => {
                       color="danger"
                       className="btn-ovh me-1 btn-ovh-employee-list"
                       onClick={() => handleShowDeleteModal(item.id)}
+                      disabled={item.isClosed === true}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -344,6 +381,17 @@ const MileStoneTable = (): JSX.Element => {
           confirmButtonAction={handleConfirmDeleteMilestone}
         >
           {`Do you really want to delete this ?`}
+        </OModal>
+        <OModal
+          alignment="center"
+          visible={isRejectModalVisible}
+          setVisible={setIsRejectModalVisible}
+          modalHeaderClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          confirmButtonAction={handleConfirmCloseMilestone}
+        >
+          {`Do you really want to reject this ?`}
         </OModal>
       </>
     </>

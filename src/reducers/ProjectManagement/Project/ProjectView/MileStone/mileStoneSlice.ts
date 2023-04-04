@@ -153,6 +153,23 @@ const milestoneDelete = createAsyncThunk<
   }
 })
 
+const closeMilestone = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectView/closeMilestone', async (milestoneId, thunkApi) => {
+  try {
+    return await mileStoneApi.closeMilestone(milestoneId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialMileStoneState: MileStoneSliceState = {
   mileStonesList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -234,6 +251,7 @@ const mileStoneThunk = {
   getWorkDetails,
   addProjectMilestone,
   milestoneDelete,
+  closeMilestone,
 }
 
 const mileStoneSelectors = {
