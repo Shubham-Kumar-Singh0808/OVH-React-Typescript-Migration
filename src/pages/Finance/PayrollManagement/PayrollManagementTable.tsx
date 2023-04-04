@@ -124,22 +124,22 @@ const PayrollManagementTable = (props: {
 
   const handleSelect = (paySlipId: number) => {
     const newSelectedIds = [...props.selectedIds]
-    if (newSelectedIds.includes(paySlipId)) {
-      newSelectedIds.splice(newSelectedIds.indexOf(paySlipId), 1)
+    if (newSelectedIds?.includes(paySlipId)) {
+      newSelectedIds?.splice(newSelectedIds?.indexOf(paySlipId), 1)
     } else {
-      newSelectedIds.push(paySlipId)
+      newSelectedIds?.push(paySlipId)
     }
     props.setSelectedIds(newSelectedIds)
   }
 
   const handleSelectAllClick = () => {
-    if (props.isAllChecked) {
-      props.setSelectedIds([])
-      props.setIsAllChecked(false)
+    if (props?.isAllChecked) {
+      props?.setSelectedIds([])
+      props?.setIsAllChecked(false)
     } else {
-      const allRowIds = renderingPayslipData?.map((row) => row.paySlipId)
-      props.setSelectedIds(allRowIds)
-      props.setIsAllChecked(true)
+      const allRowIds = renderingPayslipData?.map((row) => row?.paySlipId)
+      props?.setSelectedIds(allRowIds)
+      props?.setIsAllChecked(true)
     }
   }
 
@@ -222,10 +222,10 @@ const PayrollManagementTable = (props: {
                         <CFormCheck
                           className="form-check-input form-select-not-allowed"
                           name="deleteCheckbox"
-                          checked={props.selectedIds.includes(
-                            payslipItem.paySlipId,
+                          checked={props?.selectedIds?.includes(
+                            payslipItem?.paySlipId,
                           )}
-                          onChange={() => handleSelect(payslipItem.paySlipId)}
+                          onChange={() => handleSelect(payslipItem?.paySlipId)}
                         />
                       </CTableDataCell>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>

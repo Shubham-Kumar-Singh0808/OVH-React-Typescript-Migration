@@ -153,7 +153,7 @@ const PayrollManagement = (): JSX.Element => {
         )
       } else if (isAllChecked) {
         dispatch(reduxServices.payrollManagement.deleteCheckedPayslips(item))
-        setIsAllChecked(true)
+        setIsAllChecked(false)
       }
     })
   }
