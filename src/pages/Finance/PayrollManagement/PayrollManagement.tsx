@@ -24,7 +24,6 @@ const PayrollManagement = (): JSX.Element => {
     {} as CurrentPayslip,
   )
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
-  const [isChecked, setIsChecked] = useState(false)
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
   const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
@@ -124,8 +123,12 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
-  const SuccessToastMessage = (
-    <OToast toastColor="success" toastMessage="Deleted Successfully" />
+  const failedMessage = (
+    <OToast
+      toastMessage="File uploaded is either empty or is in invalid format"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
   )
 
   const allDeleteBtnHandler = () => {
@@ -138,8 +141,6 @@ const PayrollManagement = (): JSX.Element => {
           previewBtnActionResult,
         )
       ) {
-        dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
-        dispatch(reduxServices.app.actions.addToast(undefined))
         dispatch(
           reduxServices.payrollManagement.getCurrentPayslip({
             startIndex: pageSize * (currentPage - 1),
@@ -148,6 +149,9 @@ const PayrollManagement = (): JSX.Element => {
             month: selectMonth,
           }),
         )
+      } else if (isAllChecked) {
+        dispatch(reduxServices.payrollManagement.deleteCheckedPayslips(item))
+        setIsAllChecked(true)
       }
     })
   }
@@ -168,7 +172,7 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
@@ -202,8 +206,6 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
             setToEditPayslip={setToEditPayslip}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
             isAllChecked={isAllChecked}
             setIsAllChecked={setIsAllChecked}
             userDeleteAccess={userAccess?.deleteaccess as boolean}

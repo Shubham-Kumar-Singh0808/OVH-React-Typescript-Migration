@@ -31,8 +31,6 @@ const PayrollManagementTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setToEditPayslip: (value: CurrentPayslip) => void
-  isChecked: boolean
-  setIsChecked: (value: boolean) => void
   isAllChecked: boolean
   setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
@@ -124,12 +122,6 @@ const PayrollManagementTable = (props: {
     return (props.currentPage - 1) * props.pageSize + index + 1
   }
 
-  const getVisibleRecords = (pageNumber: number) => {
-    const startIndex = (pageNumber - 1) * 20
-    const endIndex = startIndex + 20
-    return renderingPayslipData.slice(startIndex, endIndex)
-  }
-
   const handleSelect = (paySlipId: number) => {
     const newSelectedIds = [...props.selectedIds]
     if (newSelectedIds.includes(paySlipId)) {
@@ -138,6 +130,17 @@ const PayrollManagementTable = (props: {
       newSelectedIds.push(paySlipId)
     }
     props.setSelectedIds(newSelectedIds)
+  }
+
+  const handleSelectAllClick = () => {
+    if (props.isAllChecked) {
+      props.setSelectedIds([])
+      props.setIsAllChecked(false)
+    } else {
+      const allRowIds = renderingPayslipData?.map((row) => row.paySlipId)
+      props.setSelectedIds(allRowIds)
+      props.setIsAllChecked(true)
+    }
   }
 
   return (
@@ -158,6 +161,7 @@ const PayrollManagementTable = (props: {
                     name="deleteCheckbox"
                     checked={props.isAllChecked}
                     onChange={(e) => props.setIsAllChecked(e.target.checked)}
+                    onClick={handleSelectAllClick}
                     data-testid="ch-All"
                   />
                 </CTableHeaderCell>
@@ -210,8 +214,8 @@ const PayrollManagementTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {getVisibleRecords(1)?.length > 0 &&
-                getVisibleRecords(1)?.map((payslipItem, index) => {
+              {renderingPayslipData?.length > 0 &&
+                renderingPayslipData?.map((payslipItem, index) => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
