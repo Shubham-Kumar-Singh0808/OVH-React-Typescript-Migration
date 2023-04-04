@@ -207,7 +207,7 @@ const EditMileStoneForm = (): JSX.Element => {
                 // onClick={handleApplyTicket}
                 // disabled={!isCreateButtonEnabled || dateError}
               >
-                Update
+                Add
               </CButton>
             </>
           </CCol>

@@ -2,6 +2,7 @@ import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import AddMilestoneForm from './AddMilestoneForm'
+import MilestonePeopleList from './MilestonePeopleList'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../../stateStore'
@@ -73,6 +74,7 @@ const AddMilestone = (): JSX.Element => {
           </dl>
         </div>
         <AddMilestoneForm />
+        <MilestonePeopleList />
       </OCard>
     </>
   )
