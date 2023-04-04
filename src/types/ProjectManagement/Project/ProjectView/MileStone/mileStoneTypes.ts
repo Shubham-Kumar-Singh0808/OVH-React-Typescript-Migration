@@ -74,7 +74,7 @@ export type MileStoneSliceState = {
   getPeopleForMilestone: GetPeopleForMilestone[]
   milestoneNumber: number
   getCRListForMilestone: GetCRListForMilestone[]
-  getWorkDetails: GetWorkDetails[]
+  getWorkDetails: GetWorkDetails
 }
 
 export type GetMilestone = {

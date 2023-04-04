@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
+import { GetWorkDetails } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
 
 const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
@@ -25,6 +26,7 @@ const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
+  const [workDetails, setMilestoneWorkDetails] = useState<GetWorkDetails>()
   const dispatch = useAppDispatch()
   const commonFormatDate = 'l'
   useEffect(() => {

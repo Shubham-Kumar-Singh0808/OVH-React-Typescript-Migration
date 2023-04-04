@@ -92,7 +92,7 @@ const getCRListForMilestone = async (
 
 const getWorkDetails = async (
   props: GetWorkDetailsProps,
-): Promise<GetWorkDetails[]> => {
+): Promise<GetWorkDetails> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectMileStoneApiConfig.getWorkDetails,
     method: AllowedHttpMethods.get,

@@ -179,7 +179,7 @@ const initialMileStoneState: MileStoneSliceState = {
   getPeopleForMilestone: [],
   milestoneNumber: 0,
   getCRListForMilestone: [],
-  getWorkDetails: [],
+  getWorkDetails: {} as GetWorkDetails,
 }
 
 const mileStoneSlice = createSlice({
@@ -213,7 +213,7 @@ const mileStoneSlice = createSlice({
       })
       .addCase(getWorkDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.getWorkDetails = action.payload as GetWorkDetails[]
+        state.getWorkDetails = action.payload as GetWorkDetails
       })
   },
 })
@@ -239,7 +239,7 @@ const milestoneNumber = (state: RootState): number =>
 const getCRListMilestone = (state: RootState): GetCRListForMilestone[] =>
   state.projectMileStone.getCRListForMilestone
 
-const milestoneWorkDetails = (state: RootState): GetWorkDetails[] =>
+const milestoneWorkDetails = (state: RootState): GetWorkDetails =>
   state.projectMileStone.getWorkDetails
 
 const mileStoneThunk = {
