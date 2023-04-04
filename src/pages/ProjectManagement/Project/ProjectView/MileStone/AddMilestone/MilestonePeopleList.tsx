@@ -52,14 +52,15 @@ const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
   console.log(milestoneWorkDetails)
   return (
     <>
-      <div className="table-scroll">
-        <div className="table-responsive colorTable">
-          WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
-          <span style={{ color: 'red' }}>*</span> = Holidays , TD
-          <span style={{ color: 'red' }}>*</span> = Total Days , THrs
-          <span style={{ color: 'red' }}>*</span> = Total Hours.
-        </div>
-        {getPeopleMilestone.length > 0 ? (
+      {getPeopleMilestone.length > 0 ? (
+        <div className="table-scroll">
+          <div className="table-responsive colorTable">
+            WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
+            <span style={{ color: 'red' }}>*</span> = Holidays , TD
+            <span style={{ color: 'red' }}>*</span> = Total Days , THrs
+            <span style={{ color: 'red' }}>*</span> = Total Hours.
+          </div>
+
           <CTable striped responsive className="sh-project-report-details">
             <CTableHead className="profile-tab-header">
               <CTableRow>
@@ -271,10 +272,10 @@ const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
               )
             })}
           </CTable>
-        ) : (
-          ''
-        )}
-      </div>
+        </div>
+      ) : (
+        ''
+      )}
     </>
   )
 }

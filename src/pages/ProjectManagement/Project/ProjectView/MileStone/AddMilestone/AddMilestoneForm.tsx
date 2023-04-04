@@ -28,6 +28,7 @@ const EditMileStoneForm = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
   const [isDateEnabled, setIsDateButtonEnabled] = useState(false)
+  const [isAddEnabled, setIsAddButtonEnabled] = useState(false)
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
   const whiteText = 'text-white'
@@ -54,6 +55,14 @@ const EditMileStoneForm = (): JSX.Element => {
     }
   }, [plannedEndDate])
 
+  useEffect(() => {
+    if (title && plannedEndDate && billable && comments) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [plannedEndDate, plannedEndDate, comments, billable])
+
   console.log(actualEndDate)
 
   const handleAddMilestone = async () => {
@@ -79,6 +88,13 @@ const EditMileStoneForm = (): JSX.Element => {
       history.push(`/viewProject/${getProjectDetail.id}`)
       console.log('test')
     }
+  }
+  const handleClearDetails = () => {
+    setTitle('')
+    setPlannedDate('')
+    setActualDate('')
+    setBillable('')
+    setComments('')
   }
   return (
     <>
@@ -140,7 +156,8 @@ const EditMileStoneForm = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Planned End Date: :
+            Planned End Date:
+            <span className={plannedEndDate ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -204,7 +221,8 @@ const EditMileStoneForm = (): JSX.Element => {
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Billable:: :
+            Billable:{' '}
+            <span className={billable ? whiteText : dangerText}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -228,7 +246,8 @@ const EditMileStoneForm = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
             data-testid="ckEditor-component"
           >
-            Comments: :
+            Comments:
+            <span className={comments ? whiteText : dangerText}>*</span>
           </CFormLabel>
           {showEditor ? (
             <CCol sm={8}>
@@ -255,9 +274,16 @@ const EditMileStoneForm = (): JSX.Element => {
                 data-testid="create-btn"
                 color="success"
                 onClick={handleAddMilestone}
-                // disabled={!isCreateButtonEnabled || dateError}
+                disabled={!isAddEnabled}
               >
                 Add
+              </CButton>
+              <CButton
+                color="warning "
+                className="btn-ovh"
+                onClick={handleClearDetails}
+              >
+                Clear
               </CButton>
             </>
           </CCol>
