@@ -131,7 +131,7 @@ describe('Payroll Management Table Component Testing', () => {
         name: '40',
       }) as HTMLOptionElement
       expect(pageSizeSelect.selected).toBe(false)
-      expect(screen.getAllByRole('row')).toHaveLength(23)
+      expect(screen.getAllByRole('row')).toHaveLength(21)
     })
   })
   it('should render Delete modal popup on clicking delete button from Actions', async () => {

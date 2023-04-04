@@ -142,6 +142,11 @@ const PayrollManagementTable = (props: {
       props.setIsAllChecked(true)
     }
   }
+  const getVisibleRecords = (pageNumber: number) => {
+    const startIndex = (pageNumber - 1) * 20
+    const endIndex = startIndex + 20
+    return renderingPayslipData.slice(startIndex, endIndex)
+  }
 
   return (
     <>
@@ -214,8 +219,8 @@ const PayrollManagementTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {renderingPayslipData?.length > 0 &&
-                renderingPayslipData?.map((payslipItem, index) => {
+              {getVisibleRecords(1)?.length > 0 &&
+                getVisibleRecords(1)?.map((payslipItem, index) => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
