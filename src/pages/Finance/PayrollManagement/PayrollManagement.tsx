@@ -124,29 +124,32 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
-  const failedMessage = (
-    <OToast
-      toastMessage="File uploaded is either empty or is in invalid format"
-      toastColor="danger"
-      data-testid="failedToast"
-    />
+  const SuccessToastMessage = (
+    <OToast toastColor="success" toastMessage="Deleted Successfully" />
   )
 
-  console.log(selectedIds + 'selectedIds')
-
-  const allDeleteBtnHandler = async () => {
-    const previewBtnActionResult = await dispatch(
-      reduxServices.payrollManagement.deleteCheckedPayslips(
-        selectedIds as unknown as string,
-      ),
-    )
-    if (
-      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
-        previewBtnActionResult,
+  const allDeleteBtnHandler = () => {
+    selectedIds?.map(async (item) => {
+      const previewBtnActionResult = await dispatch(
+        reduxServices.payrollManagement.deleteCheckedPayslips(item),
       )
-    ) {
-      dispatch(reduxServices.app.actions.addToast(failedMessage))
-    }
+      if (
+        reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+          previewBtnActionResult,
+        )
+      ) {
+        dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+        dispatch(reduxServices.app.actions.addToast(undefined))
+        dispatch(
+          reduxServices.payrollManagement.getCurrentPayslip({
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+            year: Number(selectYear),
+            month: selectMonth,
+          }),
+        )
+      }
+    })
   }
 
   const previewBtnHandler = async () => {
@@ -165,7 +168,7 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(failedMessage))
+        dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
