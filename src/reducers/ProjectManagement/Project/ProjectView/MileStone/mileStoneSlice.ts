@@ -136,6 +136,23 @@ const addProjectMilestone = createAsyncThunk<
   },
 )
 
+const milestoneDelete = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('projectView/milestoneDelete', async (milestoneId, thunkApi) => {
+  try {
+    return await mileStoneApi.milestoneDelete(milestoneId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const initialMileStoneState: MileStoneSliceState = {
   mileStonesList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -216,6 +233,7 @@ const mileStoneThunk = {
   getCRListForMilestone,
   getWorkDetails,
   addProjectMilestone,
+  milestoneDelete,
 }
 
 const mileStoneSelectors = {

@@ -23,12 +23,15 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 import OModal from '../../../../../components/ReusableComponent/OModal'
 import { MileStoneResponse } from '../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 
 const MileStoneTable = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isModalCommentVisible, setIsModalCommentsVisible] = useState(false)
   const [subject, setSubject] = useState<string>()
   const [title, setTitle] = useState({} as MileStoneResponse)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteMilestoneId, setToDeleteMilestoneId] = useState(0)
   const mileStoneList = useTypedSelector(
     reduxServices.projectMileStone.selectors.projectMileStone,
   )
@@ -77,6 +80,11 @@ const MileStoneTable = (): JSX.Element => {
     dispatch(reduxServices.projectMileStone.editProjectMilestone(id))
   }
 
+  const handleShowDeleteModal = (milestoneId: number) => {
+    setIsDeleteModalVisible(true)
+    setToDeleteMilestoneId(milestoneId)
+  }
+
   const result = (
     <>
       <h4 className="mb-4">Milestone Details</h4>
@@ -118,6 +126,34 @@ const MileStoneTable = (): JSX.Element => {
       </CTable>
     </>
   )
+
+  const handleConfirmDeleteMilestone = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteMilestoneResultAction = await dispatch(
+      reduxServices.projectMileStone.milestoneDelete(toDeleteMilestoneId),
+    )
+    if (
+      reduxServices.projectMileStone.milestoneDelete.fulfilled.match(
+        deleteMilestoneResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.projectMileStone.getProjectMileStone({
+          endIndex: pageSize * currentPage,
+          firstIndex: pageSize * (currentPage - 1),
+          projectid: projectId,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Milestone Details deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -216,6 +252,7 @@ const MileStoneTable = (): JSX.Element => {
                     <CButton
                       color="danger"
                       className="btn-ovh me-1 btn-ovh-employee-list"
+                      onClick={() => handleShowDeleteModal(item.id)}
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -296,6 +333,17 @@ const MileStoneTable = (): JSX.Element => {
           setVisible={setIsModalVisible}
         >
           {result}
+        </OModal>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalHeaderClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          confirmButtonAction={handleConfirmDeleteMilestone}
+        >
+          {`Do you really want to delete this ?`}
         </OModal>
       </>
     </>

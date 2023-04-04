@@ -842,6 +842,7 @@ export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   getCRListForMilestone: apiPrefix + '/project-mgmt/getCRListForMilestone',
   getWorkDetails: apiPrefix + '/project-mgmt/getWorkDetails',
   mileStones: apiPrefix + '/project-mgmt/mileStones',
+  milestoneDelete: apiPrefix + '/project-mgmt/milestoneDelete',
 }
 
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {

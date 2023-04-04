@@ -119,6 +119,20 @@ const addProjectMilestone = async (
   return response.data
 }
 
+const milestoneDelete = async (
+  milestoneId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.milestoneDelete,
+    method: AllowedHttpMethods.get,
+    params: {
+      milestoneId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const mileStoneApi = {
   getProjectMileStone,
   editProjectMilestone,
@@ -127,6 +141,7 @@ const mileStoneApi = {
   getCRListForMilestone,
   getWorkDetails,
   addProjectMilestone,
+  milestoneDelete,
 }
 
 export default mileStoneApi
