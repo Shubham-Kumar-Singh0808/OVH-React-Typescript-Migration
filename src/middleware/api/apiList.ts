@@ -840,6 +840,8 @@ export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   getPeopleForMilestone: apiPrefix + '/allocation-mgmt/getPeopleForMilestone',
   getMilestoneNumber: apiPrefix + '/project-mgmt/getMilestoneNumber',
   getCRListForMilestone: apiPrefix + '/project-mgmt/getCRListForMilestone',
+  getWorkDetails: apiPrefix + '/project-mgmt/getWorkDetails',
+  mileStones: apiPrefix + '/project-mgmt/mileStones',
 }
 
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {

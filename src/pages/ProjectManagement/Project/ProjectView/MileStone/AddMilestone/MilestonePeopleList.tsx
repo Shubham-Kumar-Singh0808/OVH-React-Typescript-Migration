@@ -9,12 +9,16 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
+import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
 
-const MilestonePeopleList = () => {
+const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
@@ -22,14 +26,30 @@ const MilestonePeopleList = () => {
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
   const dispatch = useAppDispatch()
-
+  const commonFormatDate = 'l'
   useEffect(() => {
     dispatch(
       reduxServices.projectMileStone.getPeopleForMilestone(getProjectDetail.id),
     )
   }, [dispatch])
 
-  console.log(getPeopleMilestone)
+  useEffect(() => {
+    if (toDate) {
+      dispatch(
+        reduxServices.projectMileStone.getWorkDetails({
+          empId: Number(getProjectDetail.employeeId),
+          fromdate: fromDate as string,
+          todate: toDate as string,
+        }),
+      )
+    }
+  }, [toDate])
+
+  const milestoneWorkDetails = useTypedSelector(
+    reduxServices.projectMileStone.selectors.milestoneWorkDetails,
+  )
+
+  console.log(milestoneWorkDetails)
   return (
     <>
       <div className="table-scroll">
@@ -94,42 +114,68 @@ const MilestonePeopleList = () => {
                     <CTableDataCell scope="row">{item.empName}</CTableDataCell>
                     <CTableDataCell scope="row">
                       <DatePicker
-                        id="editProjectEndDate"
-                        className="form-control form-control-sm sh-date-picker"
-                        peekNextMonth
+                        id="fromDate"
+                        data-testid="leaveApplyFromDate"
+                        className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                         showMonthDropdown
                         showYearDropdown
-                        dropdownMode="select"
-                        placeholderText="dd/mm/yy"
-                        data-testid="end-date-picker"
-                        dateFormat="dd/mm/yy"
-                        name="editProjectEndDate"
                         autoComplete="off"
-                        // value={item.fromDate}
-                        onChange={(date: Date) => console.log('test')}
+                        dropdownMode="select"
+                        dateFormat="dd/mm/yy"
+                        placeholderText="dd/mm/yy"
+                        name="fromDate"
+                        value={
+                          fromDate
+                            ? new Date(fromDate).toLocaleDateString(
+                                deviceLocale,
+                                {
+                                  year: 'numeric',
+                                  month: 'numeric',
+                                  day: '2-digit',
+                                },
+                              )
+                            : ''
+                        }
+                        onChange={(date: Date) =>
+                          setFromDate(moment(date).format(commonFormatDate))
+                        }
+                        disabled={!isDateEnabled}
                       />
                     </CTableDataCell>
                     <CTableDataCell scope="row">
                       <DatePicker
-                        id="editProjectEndDate"
-                        className="form-control form-control-sm sh-date-picker"
-                        peekNextMonth
+                        id="toDate"
+                        data-testid="leaveApprovalFromDate"
+                        className="form-control form-control-sm sh-date-picker sh-leave-form-control"
                         showMonthDropdown
+                        autoComplete="off"
                         showYearDropdown
                         dropdownMode="select"
-                        placeholderText="dd/mm/yy"
-                        data-testid="end-date-picker"
                         dateFormat="dd/mm/yy"
-                        name="editProjectEndDate"
-                        autoComplete="off"
-                        // value={item.fromDate}
-                        onChange={(date: Date) => console.log('test')}
+                        placeholderText="dd/mm/yy"
+                        name="toDate"
+                        value={
+                          toDate
+                            ? new Date(toDate).toLocaleDateString(
+                                deviceLocale,
+                                {
+                                  year: 'numeric',
+                                  month: 'numeric',
+                                  day: '2-digit',
+                                },
+                              )
+                            : ''
+                        }
+                        onChange={(date: Date) =>
+                          setToDate(moment(date).format(commonFormatDate))
+                        }
+                        disabled={!isDateEnabled}
                       />
                     </CTableDataCell>
                     <CTableDataCell className="col-sm-1 ps-2 pe-2">
                       <CFormInput
                         // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
+                        // value={milestoneWorkDetails.workingDays}
                         className="mt-2"
                         name="effort"
                         id="effort"

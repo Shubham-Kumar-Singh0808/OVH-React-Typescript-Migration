@@ -74,6 +74,7 @@ export type MileStoneSliceState = {
   getPeopleForMilestone: GetPeopleForMilestone[]
   milestoneNumber: number
   getCRListForMilestone: GetCRListForMilestone[]
+  getWorkDetails: GetWorkDetails[]
 }
 
 export type GetMilestone = {
@@ -153,4 +154,32 @@ export type GetCRListForMilestone = {
   projectId: number
   numbersStatus: boolean
   milestoneStatus: boolean
+}
+
+export type GetWorkDetailsProps = {
+  empId: number
+  fromdate: string
+  todate: string
+}
+
+export type GetWorkDetails = {
+  totalValue: number
+  Leaves: number
+  hours: number
+  holidays: number
+  totalDays: number
+  workingDays: number
+  employeeId: number
+}
+export type AddMilestoneProps = {
+  actualDate: string
+  billable: string
+  comments: string
+  crId: number
+  milestoneNumber: string
+  milestonePercentage?: string
+  milestoneTypeFlag: string
+  planedDate: string
+  projectId: number
+  title: string
 }

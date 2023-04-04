@@ -1,5 +1,5 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import AddMilestoneForm from './AddMilestoneForm'
 import MilestonePeopleList from './MilestonePeopleList'
@@ -83,7 +83,6 @@ const AddMilestone = (): JSX.Element => {
           </dl>
         </div>
         <AddMilestoneForm />
-        <MilestonePeopleList />
       </OCard>
     </>
   )

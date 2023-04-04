@@ -1,8 +1,11 @@
 import { ChangeRequestProps } from '../../../../../../types/ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestTypes'
 import {
+  AddMilestoneProps,
   GetCRListForMilestone,
   GetMilestone,
   GetPeopleForMilestone,
+  GetWorkDetails,
+  GetWorkDetailsProps,
   MileStonesList,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import {
@@ -87,12 +90,43 @@ const getCRListForMilestone = async (
   return response.data
 }
 
+const getWorkDetails = async (
+  props: GetWorkDetailsProps,
+): Promise<GetWorkDetails[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.getWorkDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      empId: props.empId,
+      fromdate: props.fromdate,
+      todate: props.todate,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addProjectMilestone = async (
+  milestone: AddMilestoneProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.mileStones,
+    method: AllowedHttpMethods.post,
+    data: milestone,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const mileStoneApi = {
   getProjectMileStone,
   editProjectMilestone,
   getPeopleForMilestone,
   getMilestoneNumber,
   getCRListForMilestone,
+  getWorkDetails,
+  addProjectMilestone,
 }
 
 export default mileStoneApi

@@ -12,8 +12,10 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { useHistory } from 'react-router-dom'
+import MilestonePeopleList from './MilestonePeopleList'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 import { ckeditorConfig } from '../../../../../../utils/ckEditorUtils'
 import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
 
@@ -25,8 +27,9 @@ const EditMileStoneForm = (): JSX.Element => {
   const [billable, setBillable] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [comments, setComments] = useState<string>()
+  const [isDateEnabled, setIsDateButtonEnabled] = useState(false)
   const commonFormatDate = 'l'
-
+  const dispatch = useAppDispatch()
   const whiteText = 'text-white'
   const dangerText = 'text-danger'
   const handleDescription = (comment: string) => {
@@ -36,12 +39,47 @@ const EditMileStoneForm = (): JSX.Element => {
   const milestoneNumber = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneNumber,
   )
-
+  const getProjectDetail = useTypedSelector(
+    reduxServices.projectViewDetails.selectors.projectDetail,
+  )
   const getCRListMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getCRListMilestone,
   )
+  const history = useHistory()
+  useEffect(() => {
+    if (plannedEndDate) {
+      setIsDateButtonEnabled(true)
+    } else {
+      setIsDateButtonEnabled(false)
+    }
+  }, [plannedEndDate])
 
   console.log(actualEndDate)
+
+  const handleAddMilestone = async () => {
+    const addMilestoneResultAction = await dispatch(
+      reduxServices.projectMileStone.addProjectMilestone({
+        actualDate: actualEndDate as string,
+        billable: billable as string,
+        comments: comments as string,
+        crId: 263,
+        milestoneNumber: String(milestoneNumber),
+        milestonePercentage: '',
+        milestoneTypeFlag: 'false',
+        planedDate: plannedEndDate as string,
+        projectId: getProjectDetail.id,
+        title,
+      }),
+    )
+    if (
+      reduxServices.projectMileStone.addProjectMilestone.fulfilled.match(
+        addMilestoneResultAction,
+      )
+    ) {
+      history.push(`/viewProject/${getProjectDetail.id}`)
+      console.log('test')
+    }
+  }
   return (
     <>
       <CForm>
@@ -180,8 +218,8 @@ const EditMileStoneForm = (): JSX.Element => {
               }}
             >
               <option value="">Select</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
             </CFormSelect>
           </CCol>
         </CRow>
@@ -216,7 +254,7 @@ const EditMileStoneForm = (): JSX.Element => {
                 className="btn-ovh me-1"
                 data-testid="create-btn"
                 color="success"
-                // onClick={handleApplyTicket}
+                onClick={handleAddMilestone}
                 // disabled={!isCreateButtonEnabled || dateError}
               >
                 Add
@@ -225,6 +263,11 @@ const EditMileStoneForm = (): JSX.Element => {
           </CCol>
         </CRow>
       </CForm>
+      {getProjectDetail.type === 'FIXEDBID' ? (
+        ''
+      ) : (
+        <MilestonePeopleList isDateEnabled={isDateEnabled} />
+      )}
     </>
   )
 }
