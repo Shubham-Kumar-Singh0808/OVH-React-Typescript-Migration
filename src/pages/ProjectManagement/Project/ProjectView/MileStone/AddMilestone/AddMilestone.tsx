@@ -19,6 +19,9 @@ const AddMilestone = (): JSX.Element => {
     dispatch(
       reduxServices.projectMileStone.getCRListForMilestone(getProjectDetail.id),
     )
+    dispatch(
+      reduxServices.projectMileStone.getPeopleForMilestone(getProjectDetail.id),
+    )
   }, [dispatch])
   const history = useHistory()
 

@@ -87,6 +87,7 @@ const EditMileStoneForm = (): JSX.Element => {
         milestoneTypeFlag: 'false',
         planedDate: plannedEndDate as string,
         projectId: getProjectDetail.id,
+        allocatedMilestonePeople: checkList,
         title,
       }),
     )
@@ -120,6 +121,17 @@ const EditMileStoneForm = (): JSX.Element => {
     newMileStone[index].endDate = moment(date).format('DD/MM/YYYY')
     setCheckList(newMileStone)
   }
+  const holidaysOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].holidays = e.target.value
+    setCheckList(newMileStone)
+  }
+
   const workingDaysOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -130,6 +142,73 @@ const EditMileStoneForm = (): JSX.Element => {
     newMileStone[index].monthWorkingDays = e.target.value
     setCheckList(newMileStone)
   }
+
+  const leavesOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].leaves = e.target.value
+    setCheckList(newMileStone)
+  }
+
+  const totalDaysOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].totalDays = e.target.value
+    setCheckList(newMileStone)
+  }
+
+  const hoursOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].hours = e.target.value
+    setCheckList(newMileStone)
+  }
+
+  const totalHoursOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].totalValue = e.target.value
+    setCheckList(newMileStone)
+  }
+
+  const roleOnChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].desigination = e.target.value
+    setCheckList(newMileStone)
+  }
+
+  const billableOnChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].billable = e.target.value
+    setCheckList(newMileStone)
+  }
+
   useEffect(() => {
     if (getPeopleMilestone) setCheckList(getPeopleMilestone)
   }, [getPeopleMilestone])
@@ -332,75 +411,125 @@ const EditMileStoneForm = (): JSX.Element => {
         // <MilestonePeopleList isDateEnabled={isDateEnabled} />
         <>
           {/* // <MilestonePeopleList isDateEnabled={isDateEnabled} /> */}
-          <div className="table-scroll">
-            <div className="table-responsive colorTable">
-              WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
-              <span style={{ color: 'red' }}>*</span> = Holidays , TD
-              <span style={{ color: 'red' }}>*</span> = Total Days , THrs
-              <span style={{ color: 'red' }}>*</span> = Total Hours.
-            </div>
-          </div>
-          <CTable striped responsive className="sh-project-report-details">
-            <CTableHead className="profile-tab-header">
-              <CTableRow>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  ID
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  From Date
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  To Date
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  WD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  HD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Leaves
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  TD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Hours
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  THrs
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Role
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Billable
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Comments
-                </CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            {checkList.length > 0 &&
-              checkList.map((item, index) => {
-                console.log(item.startDate)
-                return (
-                  <MilestonePeopleList
-                    // onChangeHandleFromDate={onChangeHandleFromDate}
-                    // commentsOnChange={commentsOnChange}
-                    onChangeHandleToDate={onChangeHandleToDate}
-                    onChangeHandleFromDate={onChangeHandleFromDate}
-                    workingDaysOnChange={workingDaysOnChange}
-                    item={item}
-                    index={index}
-                    key={index}
-                  />
-                )
-              })}
-          </CTable>
+          {checkList.length > 0 ? (
+            <>
+              <div className="table-scroll">
+                <div className="table-responsive colorTable">
+                  WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
+                  <span style={{ color: 'red' }}>*</span> = Holidays , TD
+                  <span style={{ color: 'red' }}>*</span> = Total Days , THrs
+                  <span style={{ color: 'red' }}>*</span> = Total Hours.
+                </div>
+              </div>
+              <CTable striped responsive className="sh-project-report-details">
+                <CTableHead className="profile-tab-header">
+                  <CTableRow>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      ID
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Name
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      From Date
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      To Date
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      WD
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      HD
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Leaves
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      TD
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Hours
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      THrs
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Role
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Billable
+                    </CTableHeaderCell>
+                    <CTableHeaderCell
+                      scope="col"
+                      className="profile-tab-content"
+                    >
+                      Comments
+                    </CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                {checkList.length > 0 &&
+                  checkList.map((item, index) => {
+                    console.log(item.startDate)
+                    return (
+                      <MilestonePeopleList
+                        onChangeHandleToDate={onChangeHandleToDate}
+                        onChangeHandleFromDate={onChangeHandleFromDate}
+                        workingDaysOnChange={workingDaysOnChange}
+                        holidaysOnChange={holidaysOnChange}
+                        leavesOnChange={leavesOnChange}
+                        totalDaysOnChange={totalDaysOnChange}
+                        hoursOnChange={hoursOnChange}
+                        totalHoursOnChange={totalHoursOnChange}
+                        roleOnChange={roleOnChange}
+                        billableOnChange={billableOnChange}
+                        item={item}
+                        index={index}
+                        key={index}
+                      />
+                    )
+                  })}
+              </CTable>
+            </>
+          ) : (
+            ''
+          )}
         </>
       )}
     </>

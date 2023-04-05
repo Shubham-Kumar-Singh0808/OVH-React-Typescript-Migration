@@ -178,8 +178,9 @@ export type AddMilestoneProps = {
   crId: number
   milestoneNumber: string
   milestonePercentage?: string
-  milestoneTypeFlag: string
+  milestoneTypeFlag?: string
   planedDate: string
   projectId: number
   title: string
+  allocatedMilestonePeople?: GetPeopleForMilestone[]
 }

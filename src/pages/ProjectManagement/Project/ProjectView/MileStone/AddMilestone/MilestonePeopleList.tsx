@@ -24,19 +24,44 @@ const MilestonePeopleList = ({
   onChangeHandleFromDate,
   onChangeHandleToDate,
   workingDaysOnChange,
+  holidaysOnChange,
+  leavesOnChange,
+  totalDaysOnChange,
+  hoursOnChange,
+  totalHoursOnChange,
+  roleOnChange,
+  billableOnChange,
   item,
   index,
 }: {
   onChangeHandleFromDate: (date: Date, index: number) => void
   onChangeHandleToDate: (date: Date, index: number) => void
+  holidaysOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
   workingDaysOnChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => void
-  // commentsOnChange: (
-  //   e: React.ChangeEvent<HTMLTextAreaElement>,
-  //   index: number,
-  // ) => void
+  leavesOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
+  totalDaysOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
+  hoursOnChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  totalHoursOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
+  roleOnChange: (e: React.ChangeEvent<HTMLSelectElement>, index: number) => void
+  billableOnChange: (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => void
   item: GetPeopleForMilestone
   index: number
 }) => {
@@ -45,10 +70,18 @@ const MilestonePeopleList = ({
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
+  const [employeeName, setEmployeeName] = useState<string>()
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
-  const [workDetails, setMilestoneWorkDetails] = useState<GetWorkDetails>()
+
+  const [workDays, setWorkDays] = useState<number>()
+  const [holiDays, setHoliDays] = useState<number>()
+
+  useEffect(() => {
+    if (item?.empName) setEmployeeName(item?.empName)
+  }, [item?.empName])
+
   // const checkListDetails = {} as GetPeopleForMilestone[]
   // const [checkList, setCheckList] = useState(checkListDetails)
   const dispatch = useAppDispatch()
@@ -63,23 +96,37 @@ const MilestonePeopleList = ({
     reduxServices.projectMileStone.selectors.milestoneWorkDetails,
   )
 
-  console.log(milestoneWorkDetails)
+  useEffect(() => {
+    if (milestoneWorkDetails) setWorkDays(milestoneWorkDetails?.workingDays)
+    setHoliDays(milestoneWorkDetails?.holidays)
+    // setMilestoneMonthWorkDetails(Number(item.monthWorkingDays))
+  }, [milestoneWorkDetails])
 
   useEffect(() => {
-    if (milestoneWorkDetails) setMilestoneWorkDetails(milestoneWorkDetails)
-  }, [milestoneWorkDetails])
+    if (item.monthWorkingDays && item.holidays) {
+      setWorkDays(Number(item?.monthWorkingDays))
+      setHoliDays(Number(item?.holidays))
+    }
+  }, [item.monthWorkingDays, item.holidays])
+
+  const employeeData = getPeopleMilestone?.filter(
+    (items) => items?.empName === employeeName,
+  )
 
   useEffect(() => {
     if (item.endDate) {
       dispatch(
         reduxServices.projectMileStone.getWorkDetails({
-          empId: Number(getProjectDetail.employeeId),
-          fromdate: item.startDate as string,
-          todate: item.endDate as string,
+          empId: employeeData[0].employeeId,
+          fromdate: item.startDate || '',
+          todate: item.endDate || '',
         }),
       )
     }
-  }, [toDate])
+  }, [item.endDate])
+  console.log(item.monthWorkingDays)
+  console.log(milestoneWorkDetails)
+  console.log(employeeData[0]?.employeeId)
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
@@ -87,7 +134,7 @@ const MilestonePeopleList = ({
           <CTableBody>
             <CTableRow>
               <CTableDataCell scope="row">{item.employeeId}</CTableDataCell>
-              <CTableDataCell scope="row">{item.empName}</CTableDataCell>
+              <CTableDataCell scope="row">{employeeName}</CTableDataCell>
               <CTableDataCell scope="row">
                 <DatePicker
                   id="editProjectEndDate"
@@ -125,26 +172,116 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => workingDaysOnChange(e, index)}
-                  value={item.monthWorkingDays}
+                  value={workDays}
                   className="mt-2"
                   name="effort"
                   id="effort"
                   autoComplete="off"
-                  placeholder="Effort"
+                  data-testid="effort-test"
+                  disabled
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormInput
+                  onChange={(e) => holidaysOnChange(e, index)}
+                  value={holiDays}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
+                  data-testid="effort-test"
+                  disabled
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormInput
+                  onChange={(e) => leavesOnChange(e, index)}
+                  value={item.leaves}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
                   data-testid="effort-test"
                 />
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {/* <CFormTextarea
-                  placeholder="Purpose"
-                  aria-label="textarea"
-                  id="textArea"
-                  className="checklist-textarea"
-                  name="textArea "
-                  data-testid="text-area"
-                  value={item.comments}
-                  onChange={(e) => commentsOnChange(e, index)}
-                ></CFormTextarea> */}
+                <CFormInput
+                  onChange={(e) => totalDaysOnChange(e, index)}
+                  value={item.totalDays}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
+                  data-testid="effort-test"
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormInput
+                  onChange={(e) => hoursOnChange(e, index)}
+                  value={item.hours}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
+                  data-testid="effort-test"
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormInput
+                  onChange={(e) => totalHoursOnChange(e, index)}
+                  value={item.totalValue}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
+                  data-testid="effort-test"
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormSelect
+                  className="mt-2"
+                  aria-label="Default select example"
+                  size="sm"
+                  id="billable"
+                  data-testid="billable-select"
+                  name="billable"
+                  value={item.desigination}
+                  onChange={(e) => roleOnChange(e, index)}
+                >
+                  <option value="">Select</option>
+                  <option value="true">Developer</option>
+                  <option value="false">Designer</option>
+                  <option value="true">Tester</option>
+                  <option value="false">Project Manager</option>
+                  <option value="true">Business Analyst</option>
+                </CFormSelect>
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormSelect
+                  className="mt-2"
+                  aria-label="Default select example"
+                  size="sm"
+                  id="billable"
+                  data-testid="billable-select"
+                  name="billable"
+                  value={item.billable}
+                  onChange={(e) => billableOnChange(e, index)}
+                >
+                  <option value="">Select</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </CFormSelect>
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <button
+                  data-original-title="Comments"
+                  ng-click="addCommentPOP(milestone)"
+                  data-placement="top"
+                  className="btn btn-primary pull-right"
+                  type="submit"
+                >
+                  <i className="fa fa-comments fa-lg text-white"></i>
+                </button>
               </CTableDataCell>
             </CTableRow>
           </CTableBody>
