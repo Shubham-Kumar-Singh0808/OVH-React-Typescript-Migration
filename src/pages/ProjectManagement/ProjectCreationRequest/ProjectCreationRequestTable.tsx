@@ -234,7 +234,7 @@ const ProjectCreationRequestTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {isLoading !== ApiLoadingState.loading ? (
+          {isLoading !== ApiLoadingState?.loading ? (
             getAllProjectRequestList &&
             getAllProjectRequestList?.map((projectRequest, index) => {
               return (
@@ -250,8 +250,8 @@ const ProjectCreationRequestTable = ({
                       projectRequest.type.slice(1).toLowerCase()}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {projectRequest.model.charAt(0).toUpperCase() +
-                      projectRequest.model.slice(1).toLowerCase()}
+                    {projectRequest?.model?.charAt(0).toUpperCase() +
+                      projectRequest?.model?.slice(1).toLowerCase()}
                   </CTableDataCell>
                   <CTableDataCell>{projectRequest.client}</CTableDataCell>
                   <CTableDataCell>{projectRequest.managerName}</CTableDataCell>

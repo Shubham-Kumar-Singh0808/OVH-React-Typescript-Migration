@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "description": "CoreUI PRO React Admin Template Typescript Starter",
   "homepage": ".",
-  "proxy": "https://ovhqa3.raybiztech.com",
+  "proxy": "https://ovh2.raybiztech.com",
   "bugs": {
     "url": "https://github.com/coreui/coreui-pro-react-admin-template/issues"
   },

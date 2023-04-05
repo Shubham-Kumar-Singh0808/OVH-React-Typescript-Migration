@@ -39,7 +39,7 @@ const AddProjectRequest = ({
   const [descriptionError, setDescriptionError] = useState(false)
   const [customerContactName, setCustomerContactName] = useState<string>('')
   const [billingContactName, setBillingContactName] = useState<string>('')
-  const [isAddBtnEnable, setAddBtn] = useState(false)
+  const [isAddBtnEnable, setIsAddBtnEnable] = useState(false)
   const [checkListValid, setCheckListValid] = useState<boolean>(false)
   const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
     useState(false)
@@ -100,8 +100,6 @@ const AddProjectRequest = ({
       projectRequest.projectContactPerson !== null &&
       projectRequest.projectContactEmail !== null &&
       projectRequest.projectContactEmail !== '' &&
-      projectRequest.model !== '' &&
-      projectRequest.model != null &&
       projectRequest.type !== '' &&
       projectRequest.type != null &&
       projectRequest.managerId !== -1 &&
@@ -116,15 +114,16 @@ const AddProjectRequest = ({
       projectRequest.technology != null &&
       projectRequest.description?.length > 57 &&
       projectRequest.description?.length > 57 != null &&
-      checkListValid &&
       !emailError &&
       !billingContactPersonEmailError
     ) {
-      setAddBtn(true)
+      setIsAddBtnEnable(true)
     } else {
-      setAddBtn(false)
+      setIsAddBtnEnable(false)
     }
   }, [projectRequest])
+
+  console.log(checkListValid)
 
   const handleClear = () => {
     setProjectManager('')
@@ -189,6 +188,7 @@ const AddProjectRequest = ({
       )
     }
   }
+
   return (
     <>
       <OCard
@@ -251,7 +251,8 @@ const AddProjectRequest = ({
                 disabled={
                   !isAddBtnEnable ||
                   (projectRequest.type === 'FixedBid' &&
-                    !isAddMilestoneButtonEnabled)
+                    !isAddMilestoneButtonEnabled) ||
+                  checkListValid === false
                 }
               >
                 Add
