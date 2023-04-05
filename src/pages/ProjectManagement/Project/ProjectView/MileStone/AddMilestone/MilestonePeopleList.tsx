@@ -65,32 +65,29 @@ const MilestonePeopleList = ({
   item: GetPeopleForMilestone
   index: number
 }) => {
-  const [fromDate, setFromDate] = useState<string>()
-  const [toDate, setToDate] = useState<string>()
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
   const [employeeName, setEmployeeName] = useState<string>()
-  const getProjectDetail = useTypedSelector(
-    reduxServices.projectViewDetails.selectors.projectDetail,
-  )
 
   const [workDays, setWorkDays] = useState<number>()
   const [holiDays, setHoliDays] = useState<number>()
-
+  const [leaves, setLeaves] = useState<number>()
+  const [totalDays, setTotalDays] = useState<number>()
+  const [hours, setHours] = useState<number>()
+  const [totalHours, setTotalHours] = useState<number>()
+  const totalHoursCalculations = Number(totalDays) * Number(hours)
   useEffect(() => {
     if (item?.empName) setEmployeeName(item?.empName)
   }, [item?.empName])
 
-  // const checkListDetails = {} as GetPeopleForMilestone[]
-  // const [checkList, setCheckList] = useState(checkListDetails)
-  const dispatch = useAppDispatch()
-  const commonFormatDate = 'l'
   useEffect(() => {
-    dispatch(
-      reduxServices.projectMileStone.getPeopleForMilestone(getProjectDetail.id),
-    )
-  }, [dispatch])
+    if (totalHoursCalculations) {
+      setTotalHours(totalHoursCalculations)
+    }
+  }, [totalHoursCalculations])
+
+  const dispatch = useAppDispatch()
 
   const milestoneWorkDetails = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneWorkDetails,
@@ -99,15 +96,26 @@ const MilestonePeopleList = ({
   useEffect(() => {
     if (milestoneWorkDetails) setWorkDays(milestoneWorkDetails?.workingDays)
     setHoliDays(milestoneWorkDetails?.holidays)
-    // setMilestoneMonthWorkDetails(Number(item.monthWorkingDays))
+    setLeaves(milestoneWorkDetails?.Leaves)
+    setTotalDays(milestoneWorkDetails.totalDays)
+    setHours(milestoneWorkDetails?.hours)
   }, [milestoneWorkDetails])
 
   useEffect(() => {
-    if (item.monthWorkingDays && item.holidays) {
+    if (
+      item.monthWorkingDays &&
+      item.holidays &&
+      item?.leaves &&
+      item?.totalDays &&
+      item?.hours
+    ) {
       setWorkDays(Number(item?.monthWorkingDays))
       setHoliDays(Number(item?.holidays))
+      setLeaves(Number(item?.leaves))
+      setTotalDays(Number(item?.totalDays))
+      setHours(Number(item?.hours))
     }
-  }, [item.monthWorkingDays, item.holidays])
+  }, [item.monthWorkingDays, item.holidays, item?.leaves])
 
   const employeeData = getPeopleMilestone?.filter(
     (items) => items?.empName === employeeName,
@@ -124,9 +132,7 @@ const MilestonePeopleList = ({
       )
     }
   }, [item.endDate])
-  console.log(item.monthWorkingDays)
-  console.log(milestoneWorkDetails)
-  console.log(employeeData[0]?.employeeId)
+
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
@@ -196,7 +202,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => leavesOnChange(e, index)}
-                  value={item.leaves}
+                  value={leaves}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -207,7 +213,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => totalDaysOnChange(e, index)}
-                  value={item.totalDays}
+                  value={totalDays}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -218,7 +224,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => hoursOnChange(e, index)}
-                  value={item.hours}
+                  value={hours}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -229,7 +235,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => totalHoursOnChange(e, index)}
-                  value={item.totalValue}
+                  value={totalHours}
                   className="mt-2"
                   name="effort"
                   id="effort"
