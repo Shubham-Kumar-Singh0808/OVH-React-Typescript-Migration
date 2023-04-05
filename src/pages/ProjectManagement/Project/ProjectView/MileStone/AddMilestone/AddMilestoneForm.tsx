@@ -6,6 +6,10 @@ import {
   CFormSelect,
   CFormInput,
   CButton,
+  CTable,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -18,6 +22,7 @@ import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 import { ckeditorConfig } from '../../../../../../utils/ckEditorUtils'
 import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
+import { GetPeopleForMilestone } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const EditMileStoneForm = (): JSX.Element => {
   const [title, setTitle] = useState<string>('')
@@ -37,6 +42,8 @@ const EditMileStoneForm = (): JSX.Element => {
     setComments(comment)
   }
   console.log(setShowEditor)
+  const checkListDetails = {} as GetPeopleForMilestone[]
+  const [checkList, setCheckList] = useState(checkListDetails)
   const milestoneNumber = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneNumber,
   )
@@ -45,6 +52,9 @@ const EditMileStoneForm = (): JSX.Element => {
   )
   const getCRListMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getCRListMilestone,
+  )
+  const getPeopleMilestone = useTypedSelector(
+    reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
   const history = useHistory()
   useEffect(() => {
@@ -96,6 +106,33 @@ const EditMileStoneForm = (): JSX.Element => {
     setBillable('')
     setComments('')
   }
+  const onChangeHandleFromDate = (date: Date, index: number) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].startDate = moment(date).format('DD/MM/YYYY')
+    setCheckList(newMileStone)
+  }
+  const onChangeHandleToDate = (date: Date, index: number) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].endDate = moment(date).format('DD/MM/YYYY')
+    setCheckList(newMileStone)
+  }
+  const workingDaysOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].monthWorkingDays = e.target.value
+    setCheckList(newMileStone)
+  }
+  useEffect(() => {
+    if (getPeopleMilestone) setCheckList(getPeopleMilestone)
+  }, [getPeopleMilestone])
   return (
     <>
       <CForm>
@@ -292,7 +329,79 @@ const EditMileStoneForm = (): JSX.Element => {
       {getProjectDetail.type === 'FIXEDBID' ? (
         ''
       ) : (
-        <MilestonePeopleList isDateEnabled={isDateEnabled} />
+        // <MilestonePeopleList isDateEnabled={isDateEnabled} />
+        <>
+          {/* // <MilestonePeopleList isDateEnabled={isDateEnabled} /> */}
+          <div className="table-scroll">
+            <div className="table-responsive colorTable">
+              WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
+              <span style={{ color: 'red' }}>*</span> = Holidays , TD
+              <span style={{ color: 'red' }}>*</span> = Total Days , THrs
+              <span style={{ color: 'red' }}>*</span> = Total Hours.
+            </div>
+          </div>
+          <CTable striped responsive className="sh-project-report-details">
+            <CTableHead className="profile-tab-header">
+              <CTableRow>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  ID
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Name
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  From Date
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  To Date
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  WD
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  HD
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Leaves
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  TD
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Hours
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  THrs
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Role
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Billable
+                </CTableHeaderCell>
+                <CTableHeaderCell scope="col" className="profile-tab-content">
+                  Comments
+                </CTableHeaderCell>
+              </CTableRow>
+            </CTableHead>
+            {checkList.length > 0 &&
+              checkList.map((item, index) => {
+                console.log(item.startDate)
+                return (
+                  <MilestonePeopleList
+                    // onChangeHandleFromDate={onChangeHandleFromDate}
+                    // commentsOnChange={commentsOnChange}
+                    onChangeHandleToDate={onChangeHandleToDate}
+                    onChangeHandleFromDate={onChangeHandleFromDate}
+                    workingDaysOnChange={workingDaysOnChange}
+                    item={item}
+                    index={index}
+                    key={index}
+                  />
+                )
+              })}
+          </CTable>
+        </>
       )}
     </>
   )

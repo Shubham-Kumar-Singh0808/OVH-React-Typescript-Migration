@@ -118,31 +118,31 @@ export type EditInvoiceDetails = {
 
 export type GetPeopleForMilestone = {
   employeeId: number
-  empFirstName: null
-  empLastName: null
-  projectName: null
-  projectId: null
-  startDate: null
-  endDate: null
-  billable: true
-  comments: null
-  department: null
+  empFirstName: string
+  empLastName: string
+  projectName: string
+  projectId: number
+  startDate: string
+  endDate: string
+  billable: string
+  comments: string
+  department: string
   desigination: string
   userName: string
-  isAllocated: true
-  duration: null
-  count: null
-  rate: null
-  role: null
-  amount: null
+  isAllocated: string
+  duration: string
+  count: string
+  rate: string
+  role: string
+  amount: string
   empName: string
-  status: null
-  monthWorkingDays: null
-  holidays: null
-  leaves: null
-  totalDays: null
-  hours: null
-  totalValue: null
+  status: string
+  monthWorkingDays: string
+  holidays: string
+  leaves: string
+  totalDays: string
+  hours: string
+  totalValue: string
   allocation: string
 }
 

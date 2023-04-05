@@ -14,10 +14,32 @@ import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
-import { GetWorkDetails } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
+import {
+  GetPeopleForMilestone,
+  GetWorkDetails,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
 
-const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
+const MilestonePeopleList = ({
+  onChangeHandleFromDate,
+  onChangeHandleToDate,
+  workingDaysOnChange,
+  item,
+  index,
+}: {
+  onChangeHandleFromDate: (date: Date, index: number) => void
+  onChangeHandleToDate: (date: Date, index: number) => void
+  workingDaysOnChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void
+  // commentsOnChange: (
+  //   e: React.ChangeEvent<HTMLTextAreaElement>,
+  //   index: number,
+  // ) => void
+  item: GetPeopleForMilestone
+  index: number
+}) => {
   const [fromDate, setFromDate] = useState<string>()
   const [toDate, setToDate] = useState<string>()
   const getPeopleMilestone = useTypedSelector(
@@ -27,6 +49,8 @@ const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
   const [workDetails, setMilestoneWorkDetails] = useState<GetWorkDetails>()
+  // const checkListDetails = {} as GetPeopleForMilestone[]
+  // const [checkList, setCheckList] = useState(checkListDetails)
   const dispatch = useAppDispatch()
   const commonFormatDate = 'l'
   useEffect(() => {
@@ -35,246 +59,96 @@ const MilestonePeopleList = ({ isDateEnabled }: { isDateEnabled: boolean }) => {
     )
   }, [dispatch])
 
-  useEffect(() => {
-    if (toDate) {
-      dispatch(
-        reduxServices.projectMileStone.getWorkDetails({
-          empId: Number(getProjectDetail.employeeId),
-          fromdate: fromDate as string,
-          todate: toDate as string,
-        }),
-      )
-    }
-  }, [toDate])
-
   const milestoneWorkDetails = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneWorkDetails,
   )
 
   console.log(milestoneWorkDetails)
+
+  useEffect(() => {
+    if (milestoneWorkDetails) setMilestoneWorkDetails(milestoneWorkDetails)
+  }, [milestoneWorkDetails])
+
+  useEffect(() => {
+    if (item.endDate) {
+      dispatch(
+        reduxServices.projectMileStone.getWorkDetails({
+          empId: Number(getProjectDetail.employeeId),
+          fromdate: item.startDate as string,
+          todate: item.endDate as string,
+        }),
+      )
+    }
+  }, [toDate])
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
-        <div className="table-scroll">
-          <div className="table-responsive colorTable">
-            WD<span style={{ color: 'red' }}>*</span> = Working Days , HD
-            <span style={{ color: 'red' }}>*</span> = Holidays , TD
-            <span style={{ color: 'red' }}>*</span> = Total Days , THrs
-            <span style={{ color: 'red' }}>*</span> = Total Hours.
-          </div>
-
-          <CTable striped responsive className="sh-project-report-details">
-            <CTableHead className="profile-tab-header">
-              <CTableRow>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  ID
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  From Date
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  To Date
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  WD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  HD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Leaves
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  TD
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Hours
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  THrs
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Role
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Billable
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="profile-tab-content">
-                  Comments
-                </CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            {getPeopleMilestone.map((item, index) => {
-              return (
-                <CTableBody key={index}>
-                  <CTableRow>
-                    <CTableDataCell scope="row">
-                      {item.employeeId}
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">{item.empName}</CTableDataCell>
-                    <CTableDataCell scope="row">
-                      <DatePicker
-                        id="fromDate"
-                        data-testid="leaveApplyFromDate"
-                        className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                        showMonthDropdown
-                        showYearDropdown
-                        autoComplete="off"
-                        dropdownMode="select"
-                        dateFormat="dd/mm/yy"
-                        placeholderText="dd/mm/yy"
-                        name="fromDate"
-                        value={
-                          fromDate
-                            ? new Date(fromDate).toLocaleDateString(
-                                deviceLocale,
-                                {
-                                  year: 'numeric',
-                                  month: 'numeric',
-                                  day: '2-digit',
-                                },
-                              )
-                            : ''
-                        }
-                        onChange={(date: Date) =>
-                          setFromDate(moment(date).format(commonFormatDate))
-                        }
-                        disabled={!isDateEnabled}
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell scope="row">
-                      <DatePicker
-                        id="toDate"
-                        data-testid="leaveApprovalFromDate"
-                        className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                        showMonthDropdown
-                        autoComplete="off"
-                        showYearDropdown
-                        dropdownMode="select"
-                        dateFormat="dd/mm/yy"
-                        placeholderText="dd/mm/yy"
-                        name="toDate"
-                        value={
-                          toDate
-                            ? new Date(toDate).toLocaleDateString(
-                                deviceLocale,
-                                {
-                                  year: 'numeric',
-                                  month: 'numeric',
-                                  day: '2-digit',
-                                },
-                              )
-                            : ''
-                        }
-                        onChange={(date: Date) =>
-                          setToDate(moment(date).format(commonFormatDate))
-                        }
-                        disabled={!isDateEnabled}
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={milestoneWorkDetails.workingDays}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormInput
-                        // onChange={(e) => effortOnChange(e, index)}
-                        // value={item.effort?.replace(/^\s*/, '')}
-                        className="mt-2"
-                        name="effort"
-                        id="effort"
-                        autoComplete="off"
-                        data-testid="effort-test"
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CFormSelect
-                        aria-label="Default select example"
-                        size="sm"
-                        id="isAllocated"
-                        data-testid="form-select2"
-                        name="isAllocated"
-                      >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </CFormSelect>
-                    </CTableDataCell>
-                    <CTableDataCell className="col-sm-1 ps-2 pe-2">
-                      <CButton>
-                        <i className="fa fa-comments fa-lg text-white"></i>
-                      </CButton>
-                    </CTableDataCell>
-                  </CTableRow>
-                </CTableBody>
-              )
-            })}
-          </CTable>
-        </div>
+        <>
+          <CTableBody>
+            <CTableRow>
+              <CTableDataCell scope="row">{item.employeeId}</CTableDataCell>
+              <CTableDataCell scope="row">{item.empName}</CTableDataCell>
+              <CTableDataCell scope="row">
+                <DatePicker
+                  id="editProjectEndDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  placeholderText="dd/mm/yy"
+                  data-testid="end-date-picker"
+                  dateFormat="dd/mm/yy"
+                  name="editProjectEndDate"
+                  autoComplete="off"
+                  value={item.startDate}
+                  onChange={(date: Date) => onChangeHandleFromDate(date, index)}
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <DatePicker
+                  id="editProjectEndDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  placeholderText="dd/mm/yy"
+                  data-testid="end-date-picker"
+                  dateFormat="dd/mm/yy"
+                  name="editProjectEndDate"
+                  autoComplete="off"
+                  value={item.endDate}
+                  onChange={(date: Date) => onChangeHandleToDate(date, index)}
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                <CFormInput
+                  onChange={(e) => workingDaysOnChange(e, index)}
+                  value={item.monthWorkingDays}
+                  className="mt-2"
+                  name="effort"
+                  id="effort"
+                  autoComplete="off"
+                  placeholder="Effort"
+                  data-testid="effort-test"
+                />
+              </CTableDataCell>
+              <CTableDataCell scope="row">
+                {/* <CFormTextarea
+                  placeholder="Purpose"
+                  aria-label="textarea"
+                  id="textArea"
+                  className="checklist-textarea"
+                  name="textArea "
+                  data-testid="text-area"
+                  value={item.comments}
+                  onChange={(e) => commentsOnChange(e, index)}
+                ></CFormTextarea> */}
+              </CTableDataCell>
+            </CTableRow>
+          </CTableBody>
+        </>
       ) : (
         ''
       )}
