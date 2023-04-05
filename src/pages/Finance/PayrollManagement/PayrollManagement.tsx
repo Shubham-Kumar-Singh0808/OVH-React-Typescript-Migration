@@ -9,7 +9,10 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import {
+  AddPayslipId,
+  CurrentPayslip,
+} from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const PayrollManagement = (): JSX.Element => {
@@ -23,7 +26,6 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
 
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
 
@@ -33,6 +35,10 @@ const PayrollManagement = (): JSX.Element => {
 
   const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
+
+  const initialHandbookDetails = {} as AddPayslipId
+
+  const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
 
   useEffect(() => {
     if (selectMonth) {
@@ -132,30 +138,26 @@ const PayrollManagement = (): JSX.Element => {
       data-testid="failedToast"
     />
   )
+  console.log(addNewPage + 'addNewPage')
 
-  const allDeleteBtnHandler = () => {
-    selectedIds?.map(async (item) => {
-      const previewBtnActionResult = await dispatch(
-        reduxServices.payrollManagement.deleteCheckedPayslips(item),
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(addNewPage),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
       )
-      if (
-        reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
-          previewBtnActionResult,
-        )
-      ) {
-        dispatch(
-          reduxServices.payrollManagement.getCurrentPayslip({
-            startIndex: pageSize * (currentPage - 1),
-            endIndex: pageSize * currentPage,
-            year: Number(selectYear),
-            month: selectMonth,
-          }),
-        )
-      } else if (isAllChecked) {
-        dispatch(reduxServices.payrollManagement.deleteCheckedPayslips(item))
-        setIsAllChecked(false)
-      }
-    })
+    ) {
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          year: Number(selectYear),
+          month: selectMonth,
+        }),
+      )
+    }
   }
 
   const previewBtnHandler = async () => {
@@ -221,8 +223,8 @@ const PayrollManagement = (): JSX.Element => {
             userDeleteAccess={userAccess?.deleteaccess as boolean}
             userEditAccess={userAccess?.updateaccess as boolean}
             editPaySlipHandler={editPaySlipHandler}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
+            addNewPage={addNewPage}
+            setAddNewPage={setAddNewPage}
           />
         )}
       </>

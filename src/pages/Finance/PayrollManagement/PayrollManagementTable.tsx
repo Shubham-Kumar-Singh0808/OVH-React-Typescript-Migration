@@ -19,7 +19,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import {
+  AddPayslipId,
+  CurrentPayslip,
+} from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
@@ -36,8 +39,8 @@ const PayrollManagementTable = (props: {
   userDeleteAccess: boolean
   userEditAccess: boolean
   editPaySlipHandler: (payslipItem: CurrentPayslip) => void
-  selectedIds: number[]
-  setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>
+  addNewPage: AddPayslipId
+  setAddNewPage: React.Dispatch<React.SetStateAction<AddPayslipId>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -52,6 +55,49 @@ const PayrollManagementTable = (props: {
   )
 
   const dispatch = useAppDispatch()
+
+  const [allChecked, setAllChecked] = useState<boolean>(false)
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = renderingPayslipData.map((item) => item.paySlipId)
+    const { checked } = e.target
+    setAllChecked(e.target.checked)
+    if (checked) {
+      props.setAddNewPage((prevState) => {
+        return {
+          ...prevState,
+          ...{ list: newList },
+        }
+      })
+    } else {
+      props.setAddNewPage((prevState) => {
+        return { ...prevState, ...{ list: [] } }
+      })
+    }
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target
+    const value1 = +value
+    if (props.addNewPage.paySlipId?.includes(value1)) {
+      setAllChecked(checked)
+      const list = [...props.addNewPage.paySlipId]
+      const index = list.indexOf(value1)
+      if (index !== undefined) {
+        list.splice(index, 1)
+        props.setAddNewPage((prevState) => {
+          return { ...prevState, ...{ list } }
+        })
+      }
+    } else {
+      const list = props.addNewPage.paySlipId || []
+      list?.push(value1)
+      if (list.length === renderingPayslipData.length) setAllChecked(checked)
+      props.setAddNewPage((prevState) => {
+        return { ...prevState, ...{ list } }
+      })
+    }
+  }
 
   useEffect(() => {
     if (props.selectMonth && props.selectYear)
@@ -122,27 +168,6 @@ const PayrollManagementTable = (props: {
     return (props.currentPage - 1) * props.pageSize + index + 1
   }
 
-  const handleSelect = (paySlipId: number) => {
-    const newSelectedIds = [...props.selectedIds]
-    if (newSelectedIds?.includes(paySlipId)) {
-      newSelectedIds?.splice(newSelectedIds?.indexOf(paySlipId), 1)
-    } else {
-      newSelectedIds?.push(paySlipId)
-    }
-    props.setSelectedIds(newSelectedIds)
-  }
-
-  const handleSelectAllClick = () => {
-    if (props?.isAllChecked) {
-      props?.setSelectedIds([])
-      props?.setIsAllChecked(false)
-    } else {
-      const allRowIds = renderingPayslipData?.map((row) => row?.paySlipId)
-      props?.setSelectedIds(allRowIds)
-      props?.setIsAllChecked(true)
-    }
-  }
-
   return (
     <>
       <CCol className="custom-scroll scroll-alignment py-4">
@@ -159,9 +184,8 @@ const PayrollManagementTable = (props: {
                   <CFormCheck
                     className="form-check-input form-select-not-allowed"
                     name="deleteCheckbox"
-                    checked={props.isAllChecked}
-                    onChange={(e) => props.setIsAllChecked(e.target.checked)}
-                    onClick={handleSelectAllClick}
+                    checked={allChecked}
+                    onChange={handleAllCheck}
                     data-testid="ch-All"
                   />
                 </CTableHeaderCell>
@@ -222,10 +246,13 @@ const PayrollManagementTable = (props: {
                         <CFormCheck
                           className="form-check-input form-select-not-allowed"
                           name="deleteCheckbox"
-                          checked={props?.selectedIds?.includes(
-                            payslipItem?.paySlipId,
-                          )}
-                          onChange={() => handleSelect(payslipItem?.paySlipId)}
+                          checked={
+                            !!props.addNewPage.paySlipId?.includes(
+                              payslipItem.paySlipId,
+                            )
+                          }
+                          value={payslipItem.paySlipId}
+                          onChange={handleSingleCheck}
                         />
                       </CTableDataCell>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
