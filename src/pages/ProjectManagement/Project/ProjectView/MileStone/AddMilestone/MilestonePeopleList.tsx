@@ -313,7 +313,6 @@ const MilestonePeopleList = ({
                 </CFormLabel>
                 <CCol sm={6} className="w-100">
                   <CFormTextarea
-                    placeholder="Purpose"
                     aria-label="textarea"
                     id="textArea"
                     name="textArea"
