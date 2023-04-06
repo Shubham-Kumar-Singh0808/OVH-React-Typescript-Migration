@@ -23,6 +23,7 @@ import {
   GetDesignationsUnderCycle,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const AppraisalTemplateViewActionTable = ({
   setCycleChecked,
@@ -54,6 +55,30 @@ const AppraisalTemplateViewActionTable = ({
     setIsModalVisible(true)
     setDisplayKra(name)
   }
+  const appraisalTemplateListSize = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.listSize,
+  )
+  const pageFromState = useTypedSelector(
+    reduxServices.category.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.category.selectors.pageSizeFromState,
+  )
+  const { currentPage, pageSize } = usePagination(
+    appraisalTemplateListSize,
+    pageSizeFromState,
+    pageFromState,
+  )
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.appraisalTemplate.getDesignationsUnderCycle({
+        cycleId: Number(editAppraisalId?.appraisalCycleDto.id),
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(
