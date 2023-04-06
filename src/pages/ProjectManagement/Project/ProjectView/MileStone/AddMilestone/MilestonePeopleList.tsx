@@ -1,24 +1,20 @@
 import {
-  CButton,
+  CCol,
   CFormInput,
+  CFormLabel,
   CFormSelect,
-  CTable,
+  CFormTextarea,
+  CRow,
   CTableBody,
   CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import OModal from '../../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
-import {
-  GetPeopleForMilestone,
-  GetWorkDetails,
-} from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
-import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
+import { GetPeopleForMilestone } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const MilestonePeopleList = ({
   onChangeHandleFromDate,
@@ -76,6 +72,10 @@ const MilestonePeopleList = ({
   const [totalDays, setTotalDays] = useState<number>()
   const [hours, setHours] = useState<number>()
   const [totalHours, setTotalHours] = useState<number>()
+  const [comments, setComments] = useState<string>()
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
+
   const totalHoursCalculations = Number(totalDays) * Number(hours)
   useEffect(() => {
     if (item?.empName) setEmployeeName(item?.empName)
@@ -133,6 +133,11 @@ const MilestonePeopleList = ({
     }
   }, [item.endDate])
 
+  const handleShowDeleteModal = (id: number) => {
+    setIsDeleteModalVisible(true)
+    setToDeleteFamilyId(id)
+  }
+  console.log(toDeleteFamilyId)
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
@@ -285,12 +290,41 @@ const MilestonePeopleList = ({
                   data-placement="top"
                   className="btn btn-primary pull-right"
                   type="submit"
+                  onClick={() => handleShowDeleteModal(item.projectId)}
                 >
                   <i className="fa fa-comments fa-lg text-white"></i>
                 </button>
               </CTableDataCell>
             </CTableRow>
           </CTableBody>
+          <OModal
+            alignment="center"
+            visible={isDeleteModalVisible}
+            setVisible={setIsDeleteModalVisible}
+            modalHeaderClass="d-none"
+            confirmButtonText="Yes"
+            cancelButtonText="No"
+            modalFooterClass="d-none"
+          >
+            <div>
+              <CRow className="mt-1 mb-0 align-items-center pt-4">
+                <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
+                  <b>Add Comments</b>
+                </CFormLabel>
+                <CCol sm={6} className="w-100">
+                  <CFormTextarea
+                    placeholder="Purpose"
+                    aria-label="textarea"
+                    id="textArea"
+                    name="textArea"
+                    data-testid="text-area"
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                  ></CFormTextarea>
+                </CCol>
+              </CRow>
+            </div>
+          </OModal>
         </>
       ) : (
         ''
