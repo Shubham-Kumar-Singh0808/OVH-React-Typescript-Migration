@@ -9,10 +9,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import {
-  AddPayslipId,
-  CurrentPayslip,
-} from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const PayrollManagement = (): JSX.Element => {
@@ -33,12 +30,9 @@ const PayrollManagement = (): JSX.Element => {
     undefined,
   )
 
-  const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
 
-  const initialHandbookDetails = {} as AddPayslipId
-
-  const [addNewPage, setAddNewPage] = useState(initialHandbookDetails)
+  const [paySlipId, setPaySlipId] = useState<number[]>([])
 
   useEffect(() => {
     if (selectMonth) {
@@ -138,11 +132,14 @@ const PayrollManagement = (): JSX.Element => {
       data-testid="failedToast"
     />
   )
-  console.log(addNewPage + 'addNewPage')
+
+  const successToastMessage = (
+    <OToast toastMessage="Deleted successfully" toastColor="success" />
+  )
 
   const allDeleteBtnHandler = async () => {
     const previewBtnActionResult = await dispatch(
-      reduxServices.payrollManagement.deleteCheckedPayslips(addNewPage),
+      reduxServices.payrollManagement.deleteCheckedPayslips(paySlipId),
     )
     if (
       reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
@@ -157,6 +154,7 @@ const PayrollManagement = (): JSX.Element => {
           month: selectMonth,
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -218,13 +216,11 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
             setToEditPayslip={setToEditPayslip}
-            isAllChecked={isAllChecked}
-            setIsAllChecked={setIsAllChecked}
             userDeleteAccess={userAccess?.deleteaccess as boolean}
             userEditAccess={userAccess?.updateaccess as boolean}
             editPaySlipHandler={editPaySlipHandler}
-            addNewPage={addNewPage}
-            setAddNewPage={setAddNewPage}
+            paySlipId={paySlipId}
+            setPaySlipId={setPaySlipId}
           />
         )}
       </>

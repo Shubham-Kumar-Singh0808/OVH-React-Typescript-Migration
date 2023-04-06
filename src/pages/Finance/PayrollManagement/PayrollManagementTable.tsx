@@ -19,10 +19,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import {
-  AddPayslipId,
-  CurrentPayslip,
-} from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
+import { CurrentPayslip } from '../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const PayrollManagementTable = (props: {
   selectMonth: string
@@ -34,13 +31,11 @@ const PayrollManagementTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setToEditPayslip: (value: CurrentPayslip) => void
-  isAllChecked: boolean
-  setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
   editPaySlipHandler: (payslipItem: CurrentPayslip) => void
-  addNewPage: AddPayslipId
-  setAddNewPage: React.Dispatch<React.SetStateAction<AddPayslipId>>
+  paySlipId: number[]
+  setPaySlipId: React.Dispatch<React.SetStateAction<number[]>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -53,51 +48,11 @@ const PayrollManagementTable = (props: {
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipList,
   )
+  console.log(renderingPayslipData)
 
   const dispatch = useAppDispatch()
 
   const [allChecked, setAllChecked] = useState<boolean>(false)
-
-  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newList = renderingPayslipData.map((item) => item.paySlipId)
-    const { checked } = e.target
-    setAllChecked(e.target.checked)
-    if (checked) {
-      props.setAddNewPage((prevState) => {
-        return {
-          ...prevState,
-          ...{ list: newList },
-        }
-      })
-    } else {
-      props.setAddNewPage((prevState) => {
-        return { ...prevState, ...{ list: [] } }
-      })
-    }
-  }
-
-  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target
-    const value1 = +value
-    if (props.addNewPage.paySlipId?.includes(value1)) {
-      setAllChecked(checked)
-      const list = [...props.addNewPage.paySlipId]
-      const index = list.indexOf(value1)
-      if (index !== undefined) {
-        list.splice(index, 1)
-        props.setAddNewPage((prevState) => {
-          return { ...prevState, ...{ list } }
-        })
-      }
-    } else {
-      const list = props.addNewPage.paySlipId || []
-      list?.push(value1)
-      if (list.length === renderingPayslipData.length) setAllChecked(checked)
-      props.setAddNewPage((prevState) => {
-        return { ...prevState, ...{ list } }
-      })
-    }
-  }
 
   useEffect(() => {
     if (props.selectMonth && props.selectYear)
@@ -166,6 +121,35 @@ const PayrollManagementTable = (props: {
 
   const getItemNumber = (index: number) => {
     return (props.currentPage - 1) * props.pageSize + index + 1
+  }
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = renderingPayslipData.map((item) => item.paySlipId)
+    const { checked } = e.target
+    setAllChecked(e.target.checked)
+    if (checked) {
+      props.setPaySlipId(newList)
+    } else {
+      props.setPaySlipId([])
+    }
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target
+    const value1 = +value
+    if (props.paySlipId?.includes(value1)) {
+      setAllChecked(checked)
+      const index = props.paySlipId.indexOf(value1)
+      if (index !== undefined) {
+        props.paySlipId.splice(index, 1)
+        props.setPaySlipId(props.paySlipId)
+      }
+    } else {
+      const list = props.paySlipId || []
+      list?.push(value1)
+      if (list.length === renderingPayslipData.length) setAllChecked(checked)
+      props.setPaySlipId(list)
+    }
   }
 
   return (
@@ -244,12 +228,10 @@ const PayrollManagementTable = (props: {
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
-                          className="form-check-input form-select-not-allowed"
-                          name="deleteCheckbox"
+                          data-testid={`ch-countries${index}`}
+                          className="mt-1"
                           checked={
-                            !!props.addNewPage.paySlipId?.includes(
-                              payslipItem.paySlipId,
-                            )
+                            !!props.paySlipId?.includes(payslipItem?.paySlipId)
                           }
                           value={payslipItem.paySlipId}
                           onChange={handleSingleCheck}

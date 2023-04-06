@@ -2,10 +2,9 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import PayrollManagementApi from '../../../middleware/api/Finance/PayrollManagement/PayrollManagementApi'
-import { AppDispatch, RootState } from '../../../stateStore'
+import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
-  AddPayslipId,
   CurrentPayslip,
   DownloadExcelFile,
   GetPayRollProps,
@@ -75,21 +74,11 @@ const updatePayslip = createAsyncThunk(
   },
 )
 
-const deleteCheckedPayslips = createAsyncThunk<
-  number | undefined,
-  AddPayslipId,
-  {
-    dispatch: AppDispatch
-    state: RootState
-    rejectValue: ValidationError
-  }
->(
+const deleteCheckedPayslips = createAsyncThunk(
   'payrollManagement/deleteCheckedPayslips',
-  async (addEmployeeHandbook: AddPayslipId, thunkApi) => {
+  async (paySlipId: number[], thunkApi) => {
     try {
-      return await PayrollManagementApi.deleteCheckedPayslips(
-        addEmployeeHandbook,
-      )
+      return await PayrollManagementApi.deleteCheckedPayslips(paySlipId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -377,6 +377,17 @@ const NewBookingFilterOptions = ({
     }
   }, [newRoomBooking.roomId, newRoomBooking.fromDate])
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessLocationList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Location',
+  )
+
+  const userAccessRoomList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Rooms',
+  )
+
   return (
     <>
       <CRow>
@@ -388,13 +399,15 @@ const NewBookingFilterOptions = ({
                 locationValue={newRoomBooking.locationId}
               />
               <CCol className="col-sm-3">
-                <CButton
-                  color="info btn-ovh me-1"
-                  data-testid="locationAdd-btn"
-                  onClick={() => setToggle('addLocation')}
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
+                {userAccessLocationList?.viewaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    data-testid="locationAdd-btn"
+                    onClick={() => setToggle('addLocation')}
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
@@ -403,13 +416,15 @@ const NewBookingFilterOptions = ({
                 roomValue={newRoomBooking.roomId}
               />
               <CCol className="col-sm-3">
-                <CButton
-                  color="info btn-ovh me-1"
-                  onClick={() => setToggle('addRoom')}
-                  data-testid="roomAdd-btn"
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
+                {userAccessRoomList?.viewaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    onClick={() => setToggle('addRoom')}
+                    data-testid="roomAdd-btn"
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <ReservedBy

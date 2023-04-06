@@ -1,6 +1,5 @@
 import qs from 'qs'
 import {
-  AddPayslipId,
   CurrentPayslip,
   DownloadExcelFile,
   GetPayRollProps,
@@ -92,16 +91,15 @@ const updatePayslip = async (data: CurrentPayslip): Promise<CurrentPayslip> => {
 }
 
 const deleteCheckedPayslips = async (
-  prepareObject: AddPayslipId,
+  paySlipId: number[],
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: payrollManagementApiConfig.deleteCheckedPayslips,
     method: AllowedHttpMethods.delete,
-    params: { list: prepareObject.paySlipId },
+    params: { paySlipId },
     paramsSerializer: (params: ApiParams) =>
       qs.stringify(params, { arrayFormat: 'repeat' }),
   })
-
   const response = await useAxios(requestConfig)
   return response.data
 }
