@@ -351,6 +351,7 @@ const NewBookingFilterOptions = ({
     } as ShouldResetNewBookingFields
     setResetField(shouldResetFields)
     setAttendeesAutoCompleteTarget('')
+    setIsAttendeeErrorShow(false)
   }
 
   useEffect(() => {

@@ -49,6 +49,18 @@ const Attendees = ({
     }
   }
 
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const selectedProject = allEmployeesProfiles.find(
+        (value) => value.fullName === attendeesAutoCompleteTarget,
+      )
+      if (selectedProject) {
+        onSelectAttendee(selectedProject?.id, selectedProject?.fullName)
+        setIsErrorShow(false)
+      }
+    }
+  }
+
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel
@@ -65,6 +77,7 @@ const Attendees = ({
             placeholder: 'Attendee Name',
             disabled: isProjectAndAttendeesEnable,
             onBlur: onAttendeeFocusOut,
+            onKeyDown: handleSearchBtn,
           }}
           getItemValue={(item) => item.fullName}
           items={allEmployeesProfiles}
@@ -118,5 +131,4 @@ const Attendees = ({
     </CRow>
   )
 }
-
 export default Attendees
