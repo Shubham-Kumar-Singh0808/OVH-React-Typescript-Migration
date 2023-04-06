@@ -65,7 +65,6 @@ const MilestonePeopleList = ({
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
   const [employeeName, setEmployeeName] = useState<string>()
-
   const [workDays, setWorkDays] = useState<number>()
   const [holiDays, setHoliDays] = useState<number>()
   const [leaves, setLeaves] = useState<number>()
@@ -115,7 +114,13 @@ const MilestonePeopleList = ({
       setTotalDays(Number(item?.totalDays))
       setHours(Number(item?.hours))
     }
-  }, [item.monthWorkingDays, item.holidays, item?.leaves])
+  }, [
+    item.monthWorkingDays,
+    item.holidays,
+    item?.leaves,
+    item?.totalDays,
+    item?.hours,
+  ])
 
   const employeeData = getPeopleMilestone?.filter(
     (items) => items?.empName === employeeName,
