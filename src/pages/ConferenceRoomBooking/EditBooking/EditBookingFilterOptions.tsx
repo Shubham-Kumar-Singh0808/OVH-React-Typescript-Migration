@@ -486,6 +486,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                 />
               </CCol>
             </CRow>
+            {/* <CRow className="mt-3"> */}
             <Attendees
               allEmployeesProfiles={allEmployeesProfiles}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
@@ -499,6 +500,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
+            {/* </CRow> */}
             <CRow className="row d-flex justify-content-center">
               {projectMembers?.length > 0 && isProjectChange && (
                 <EditProjectMembers
