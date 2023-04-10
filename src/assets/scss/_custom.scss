@@ -429,3 +429,10 @@ input.capetalized {
 .sh-initiateCheckBox .form-check-input:checked[type=checkbox]{
   background-size: 24px;
 }
+.table-slots-booked.table tr:last-child td{
+  border: none;
+}
+.sh-agenda{
+  height: 60px;
+  resize: both;
+}

@@ -1,16 +1,9 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import EventListFilterOptions from './EventListFilterOptions'
-import {
-  fireEvent,
-  getByTestId,
-  render,
-  screen,
-  waitFor,
-} from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockEventList } from '../../../test/data/eventListData'
 
@@ -37,6 +30,8 @@ const toRender = (
     </Router>
   </div>
 )
+const DateFormat = '10 Sep, 2022'
+const DateFromFormat = '30 Sep, 2022'
 
 const toRenderCustomDate = (
   <div>
@@ -46,8 +41,8 @@ const toRenderCustomDate = (
     <Router history={history}>
       <EventListFilterOptions
         selectDate={'Custom'}
-        eventFromDate={'10 Sep, 2022'}
-        eventToDate={'30 Sep, 2022'}
+        eventFromDate={DateFormat}
+        eventToDate={DateFromFormat}
         setSelectDate={mockSetSelectDate}
         setEventFromDate={mockSetFromDate}
         setEventToDate={mockSetToDate}
@@ -108,8 +103,8 @@ describe('Filter Options Component Testing', () => {
         fireEvent.change(datePickerElements[1], {
           target: { value: '30 Sep, 2022' },
         })
-        expect(datePickerElements[0]).toHaveValue('09/10/2022')
-        expect(datePickerElements[1]).toHaveValue('09/30/2022')
+        expect(datePickerElements[0]).toHaveValue(DateFormat)
+        expect(datePickerElements[1]).toHaveValue(DateFromFormat)
       })
     })
   })

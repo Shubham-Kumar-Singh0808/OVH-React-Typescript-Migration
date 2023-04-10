@@ -110,6 +110,7 @@ const NewEvent = (): JSX.Element => {
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   console.log(attendeesList)
 
   useEffect(() => {
@@ -312,6 +313,7 @@ const NewEvent = (): JSX.Element => {
       trainer: true,
     } as ShouldResetNewBookingFields
     setResetField(shouldResetFields)
+    setIsAttendeeErrorShow(false)
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
@@ -336,6 +338,20 @@ const NewEvent = (): JSX.Element => {
       setDateError(false)
     }
   }, [addEvent.fromDate, addEvent.toDate])
+
+  useEffect(() => {
+    if (
+      addEvent?.trainerName &&
+      addEvent?.startTime &&
+      addEvent?.endTime &&
+      addEvent?.toDate &&
+      addEvent?.agenda?.replace(/^\s*/, '')
+    ) {
+      setIsConfirmButtonEnabled(true)
+    } else {
+      setIsConfirmButtonEnabled(false)
+    }
+  }, [addEvent])
 
   return (
     <OCard
@@ -404,6 +420,7 @@ const NewEvent = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
@@ -472,6 +489,7 @@ const NewEvent = (): JSX.Element => {
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
                 />
               </>
             ) : (
@@ -485,7 +503,7 @@ const NewEvent = (): JSX.Element => {
                     data-testid="confirmBtn"
                     color="success"
                     onClick={handleConfirmBtn}
-                    disabled={dateError}
+                    disabled={!isConfirmButtonEnabled || dateError}
                   >
                     Confirm
                   </CButton>

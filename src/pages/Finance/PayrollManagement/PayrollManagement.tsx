@@ -30,10 +30,9 @@ const PayrollManagement = (): JSX.Element => {
     undefined,
   )
 
-  const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
-  const [isAllChecked, setIsAllChecked] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
+
+  const [paySlipId, setPaySlipId] = useState<number[]>([])
 
   useEffect(() => {
     if (selectMonth) {
@@ -134,6 +133,31 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
+  const successToastMessage = (
+    <OToast toastMessage="Deleted successfully" toastColor="success" />
+  )
+
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(paySlipId),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          year: Number(selectYear),
+          month: selectMonth,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
+
   const previewBtnHandler = async () => {
     setExcelTable(true)
     if (previewBtn) {
@@ -171,14 +195,6 @@ const PayrollManagement = (): JSX.Element => {
     }
   }
 
-  useEffect(() => {
-    if (isChecked || isAllChecked) {
-      setIsAllDeleteBtn(true)
-    } else {
-      setIsAllDeleteBtn(false)
-    }
-  }, [isChecked, isAllChecked])
-
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -200,13 +216,11 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
             setToEditPayslip={setToEditPayslip}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
-            isAllChecked={isAllChecked}
-            setIsAllChecked={setIsAllChecked}
             userDeleteAccess={userAccess?.deleteaccess as boolean}
             userEditAccess={userAccess?.updateaccess as boolean}
             editPaySlipHandler={editPaySlipHandler}
+            paySlipId={paySlipId}
+            setPaySlipId={setPaySlipId}
           />
         )}
       </>
@@ -249,7 +263,7 @@ const PayrollManagement = (): JSX.Element => {
     <CButton
       color="danger btn-ovh"
       type="button"
-      disabled={!isAllDeleteBtn}
+      onClick={allDeleteBtnHandler}
       id="button-delete"
     >
       Delete

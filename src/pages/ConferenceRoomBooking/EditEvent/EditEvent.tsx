@@ -412,6 +412,7 @@ const EditEvent = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"

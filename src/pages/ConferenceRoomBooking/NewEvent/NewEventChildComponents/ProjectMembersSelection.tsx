@@ -30,6 +30,7 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
+  isErrorShow,
 }: {
   addEvent: AddEvent
   projectMembers: ProjectMember[]
@@ -39,6 +40,7 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
+  isErrorShow: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -178,6 +180,15 @@ const ProjectMembersSelection = ({
                     })}
                 </CTableBody>
               </CTable>
+              {isErrorShow && (
+                <CRow>
+                  <CCol>
+                    <span className="sh-span-red">
+                      The employee already added to Attendees
+                    </span>
+                  </CCol>
+                </CRow>
+              )}
             </CCol>
             <CCol sm={2} md={3} className="meeting-bulk-add">
               <CButton

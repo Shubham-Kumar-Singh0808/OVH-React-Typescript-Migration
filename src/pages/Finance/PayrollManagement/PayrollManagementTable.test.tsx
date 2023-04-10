@@ -27,13 +27,11 @@ const toRender = (
       selectYear=""
       setToggle={mockSetTogglePage}
       setToEditPayslip={mockSetTogglePage}
-      isAllChecked={true}
-      isChecked={false}
-      setIsChecked={mockSetTogglePage}
-      setIsAllChecked={mockSetTogglePage}
       userDeleteAccess={true}
       userEditAccess={true}
       editPaySlipHandler={mockSetTogglePage}
+      paySlipId={[]}
+      setPaySlipId={mockSetTogglePage}
     />
     ,
   </div>
@@ -131,7 +129,7 @@ describe('Payroll Management Table Component Testing', () => {
         name: '40',
       }) as HTMLOptionElement
       expect(pageSizeSelect.selected).toBe(false)
-      expect(screen.getAllByRole('row')).toHaveLength(21)
+      expect(screen.getAllByRole('row')).toHaveLength(23)
     })
   })
   it('should render Delete modal popup on clicking delete button from Actions', async () => {

@@ -103,7 +103,9 @@ const EventListTable = (
     <CTable align="middle" className="bookingList-model-table">
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell className="pt-0">Name of Employee</CTableHeaderCell>
+          <CTableHeaderCell className="pt-0 ps-0">
+            Name of Employee
+          </CTableHeaderCell>
           <CTableHeaderCell className="pt-0">Designation</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
@@ -292,9 +294,12 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
-            {selectedEventDetails.description
-              ? parse(selectedEventDetails.description)
-              : 'N/A'}
+
+            <span className="descriptionField">
+              {(selectedEventDetails.description &&
+                parse(selectedEventDetails.description)) ||
+                'N/A'}
+            </span>
           </div>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Trainer :</span>
