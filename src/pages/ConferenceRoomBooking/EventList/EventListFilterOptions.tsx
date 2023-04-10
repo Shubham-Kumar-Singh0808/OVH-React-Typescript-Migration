@@ -65,6 +65,10 @@ const EventListFilterOptions = ({
   const onHandleFromDate = (value: Date) => {
     setEventFromDate(moment(value).format(dateFormat))
   }
+  const fromDate = (
+    <span className={eventFromDate ? TextWhite : TextDanger}>*</span>
+  )
+  const toDate = <span className={eventToDate ? TextWhite : TextDanger}>*</span>
   return (
     <>
       <CCol sm={2} md={2}>
@@ -91,12 +95,7 @@ const EventListFilterOptions = ({
           <CCol sm={6}>
             <CRow>
               <CCol sm={4} md={4}>
-                <CFormLabel className="mb0">
-                  From :
-                  <span className={eventFromDate ? TextWhite : TextDanger}>
-                    *
-                  </span>
-                </CFormLabel>
+                <CFormLabel className="mb0">From :{fromDate}</CFormLabel>
                 <ReactDatePicker
                   id="eventFromDate"
                   data-testid="eventList-eventFromDate"
@@ -113,12 +112,7 @@ const EventListFilterOptions = ({
                 />
               </CCol>
               <CCol sm={4} md={4}>
-                <CFormLabel className="mb0">
-                  To :
-                  <span className={eventToDate ? TextWhite : TextDanger}>
-                    *
-                  </span>
-                </CFormLabel>
+                <CFormLabel className="mb0">To :{toDate}</CFormLabel>
                 <ReactDatePicker
                   id="eventToDate"
                   data-testid="eventList-FromDate"

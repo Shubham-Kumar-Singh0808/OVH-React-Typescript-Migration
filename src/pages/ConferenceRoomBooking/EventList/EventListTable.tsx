@@ -103,7 +103,9 @@ const EventListTable = (
     <CTable align="middle" className="bookingList-model-table">
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell className="pt-0">Name of Employee</CTableHeaderCell>
+          <CTableHeaderCell className="pt-0 ps-0">
+            Name of Employee
+          </CTableHeaderCell>
           <CTableHeaderCell className="pt-0">Designation</CTableHeaderCell>
         </CTableRow>
       </CTableHead>

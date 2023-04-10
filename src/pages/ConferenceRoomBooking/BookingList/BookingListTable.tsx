@@ -311,28 +311,30 @@ const BookingListTable = ({
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
             {modalAgenda.employeeDto?.length ? (
-              <CTable align="middle" className="bookingList-model-table">
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell className="pt-0">
-                      Name of Employee
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="pt-0">
-                      Designation
-                    </CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {modalAgenda?.employeeDto?.map((emp, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell>{emp.fullName}</CTableDataCell>
-                        <CTableDataCell>{emp.designation}</CTableDataCell>
-                      </CTableRow>
-                    )
-                  })}
-                </CTableBody>
-              </CTable>
+              <CCol sm={5}>
+                <CTable align="middle" className="bookingList-model-table">
+                  <CTableHead>
+                    <CTableRow>
+                      <CTableHeaderCell className="pt-0 ps-0">
+                        Name of Employee
+                      </CTableHeaderCell>
+                      <CTableHeaderCell className="pt-0">
+                        Designation
+                      </CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>
+                    {modalAgenda?.employeeDto?.map((emp, index) => {
+                      return (
+                        <CTableRow key={index}>
+                          <CTableDataCell>{emp.fullName}</CTableDataCell>
+                          <CTableDataCell>{emp.designation}</CTableDataCell>
+                        </CTableRow>
+                      )
+                    })}
+                  </CTableBody>
+                </CTable>
+              </CCol>
             ) : (
               <>N/A</>
             )}
