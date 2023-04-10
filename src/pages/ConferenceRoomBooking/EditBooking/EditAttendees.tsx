@@ -48,7 +48,7 @@ const EditAttendees = ({
   }
   return (
     <>
-      <CCol sm={4} className="fixed-height pe-0 ps-0">
+      <CCol sm={6} className="fixed-height">
         <CTable responsive striped className="align-middle">
           <CTableHead>
             <CTableRow>

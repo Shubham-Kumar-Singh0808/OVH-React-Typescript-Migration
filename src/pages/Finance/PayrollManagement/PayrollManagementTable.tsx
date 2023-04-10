@@ -31,13 +31,11 @@ const PayrollManagementTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setToEditPayslip: (value: CurrentPayslip) => void
-  isChecked: boolean
-  setIsChecked: (value: boolean) => void
-  isAllChecked: boolean
-  setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
   editPaySlipHandler: (payslipItem: CurrentPayslip) => void
+  paySlipId: number[]
+  setPaySlipId: React.Dispatch<React.SetStateAction<number[]>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -50,8 +48,11 @@ const PayrollManagementTable = (props: {
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipList,
   )
+  console.log(renderingPayslipData)
 
   const dispatch = useAppDispatch()
+
+  const [allChecked, setAllChecked] = useState<boolean>(false)
 
   useEffect(() => {
     if (props.selectMonth && props.selectYear)
@@ -122,10 +123,33 @@ const PayrollManagementTable = (props: {
     return (props.currentPage - 1) * props.pageSize + index + 1
   }
 
-  const getVisibleRecords = (pageNumber: number) => {
-    const startIndex = (pageNumber - 1) * 20
-    const endIndex = startIndex + 20
-    return renderingPayslipData.slice(startIndex, endIndex)
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = renderingPayslipData.map((item) => item.paySlipId)
+    const { checked } = e.target
+    setAllChecked(e.target.checked)
+    if (checked) {
+      props.setPaySlipId(newList)
+    } else {
+      props.setPaySlipId([])
+    }
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target
+    const value1 = +value
+    if (props.paySlipId?.includes(value1)) {
+      setAllChecked(checked)
+      const index = props.paySlipId.indexOf(value1)
+      if (index !== undefined) {
+        props.paySlipId.splice(index, 1)
+        props.setPaySlipId(props.paySlipId)
+      }
+    } else {
+      const list = props.paySlipId || []
+      list?.push(value1)
+      if (list.length === renderingPayslipData.length) setAllChecked(checked)
+      props.setPaySlipId(list)
+    }
   }
 
   return (
@@ -144,8 +168,8 @@ const PayrollManagementTable = (props: {
                   <CFormCheck
                     className="form-check-input form-select-not-allowed"
                     name="deleteCheckbox"
-                    checked={props.isAllChecked}
-                    onChange={(e) => props.setIsAllChecked(e.target.checked)}
+                    checked={allChecked}
+                    onChange={handleAllCheck}
                     data-testid="ch-All"
                   />
                 </CTableHeaderCell>
@@ -198,14 +222,19 @@ const PayrollManagementTable = (props: {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {getVisibleRecords(1)?.length > 0 &&
-                getVisibleRecords(1)?.map((payslipItem, index) => {
+              {renderingPayslipData?.length > 0 &&
+                renderingPayslipData?.map((payslipItem, index) => {
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
-                          className="form-check-input form-select-not-allowed"
-                          name="deleteCheckbox"
+                          data-testid={`ch-countries${index}`}
+                          className="mt-1"
+                          checked={
+                            !!props.paySlipId?.includes(payslipItem?.paySlipId)
+                          }
+                          value={payslipItem.paySlipId}
+                          onChange={handleSingleCheck}
                         />
                       </CTableDataCell>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>

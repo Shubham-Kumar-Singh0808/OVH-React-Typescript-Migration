@@ -76,7 +76,7 @@ const updatePayslip = createAsyncThunk(
 
 const deleteCheckedPayslips = createAsyncThunk(
   'payrollManagement/deleteCheckedPayslips',
-  async (paySlipId: number | string, thunkApi) => {
+  async (paySlipId: number[], thunkApi) => {
     try {
       return await PayrollManagementApi.deleteCheckedPayslips(paySlipId)
     } catch (error) {

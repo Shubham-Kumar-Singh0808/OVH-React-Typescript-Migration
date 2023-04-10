@@ -140,7 +140,7 @@ const PanDetails = (): JSX.Element => {
             className="col-sm-4 col-form-label"
             data-testid="pfNumber"
           >
-            <b>P.F. A/C No</b>
+            P.F. A/C No
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :
@@ -179,7 +179,7 @@ const PanDetails = (): JSX.Element => {
             className="col-sm-4 col-form-label"
             data-testid="uanNumber"
           >
-            <b>UAN</b>
+            UAN
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :
@@ -211,7 +211,7 @@ const PanDetails = (): JSX.Element => {
             className="col-sm-4 col-form-label"
             data-testid="panCardNumber"
           >
-            <b>Pan Card No</b>
+            Pan Card No
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :

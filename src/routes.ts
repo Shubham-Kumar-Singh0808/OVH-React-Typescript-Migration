@@ -399,7 +399,7 @@ const LeadershipEnrollmentForm = React.lazy(
 )
 
 const PIPList = React.lazy(
-  () => import('./pages/Performance/PipList/EmployeePipList/EmployeePipList'),
+  () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
 )
 
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
