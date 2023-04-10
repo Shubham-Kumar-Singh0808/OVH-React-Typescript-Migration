@@ -4,9 +4,10 @@ import ProcessAreaReducer, {
 } from './ProcessAreaSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
+  mockProcessAreaDetails,
   mockProcessAreas,
-  mockProjectTailoring,
 } from '../../../test/data/processAreaData'
+import { GetProcessAreaDetails } from '../../../types/Settings/ProcessAreas/processAreaTypes'
 
 describe('Process Area Slice', () => {
   describe('checkDuplicateProcess test', () => {
@@ -23,6 +24,7 @@ describe('Process Area Slice', () => {
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
+        processAreaDetails: {} as GetProcessAreaDetails,
       })
     })
 
@@ -38,6 +40,7 @@ describe('Process Area Slice', () => {
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
+        processAreaDetails: {} as GetProcessAreaDetails,
         pageSize: 20,
       })
     })
@@ -53,6 +56,7 @@ describe('Process Area Slice', () => {
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
         ProcessAreas: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
         pageSize: 20,
       })
@@ -72,6 +76,7 @@ describe('Process Area Slice', () => {
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
+        processAreaDetails: {} as GetProcessAreaDetails,
         pageSize: 20,
       })
     })
@@ -79,15 +84,15 @@ describe('Process Area Slice', () => {
     it('Should be able to set isLoading to "success" if getProjectTailoringDocument is fulfilled', () => {
       const action = {
         type: processAreaService.getProjectTailoringDocument.fulfilled.type,
-        payload: mockProjectTailoring,
       }
       const state = ProcessAreaReducer(initialProcessAreaState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         error: null,
-        getProjectTailoringDocument: mockProjectTailoring,
-        ProcessSubHeads: [],
+        getProjectTailoringDocument: undefined,
+        ProcessSubHeads: undefined,
         ProcessAreas: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
         pageSize: 20,
       })
@@ -103,6 +108,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -123,6 +129,7 @@ describe('Process Area Slice', () => {
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
+        processAreaDetails: {} as GetProcessAreaDetails,
         pageSize: 20,
       })
     })
@@ -140,6 +147,7 @@ describe('Process Area Slice', () => {
         ProcessSubHeads: [],
         ProcessAreas: mockProcessAreas,
         currentPage: 1,
+        processAreaDetails: {} as GetProcessAreaDetails,
         pageSize: 20,
       })
     })
@@ -155,6 +163,7 @@ describe('Process Area Slice', () => {
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
         ProcessAreas: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
         pageSize: 20,
       })
@@ -173,6 +182,7 @@ describe('Process Area Slice', () => {
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
         ProcessAreas: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
         pageSize: 20,
       })
@@ -189,6 +199,7 @@ describe('Process Area Slice', () => {
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
         ProcessAreas: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         currentPage: 1,
         pageSize: 20,
       })
@@ -204,6 +215,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -222,6 +234,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -238,6 +251,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -253,6 +267,7 @@ describe('Process Area Slice', () => {
         isLoading: ApiLoadingState.idle,
         error: null,
         getProjectTailoringDocument: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
@@ -271,6 +286,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -286,6 +302,7 @@ describe('Process Area Slice', () => {
         isLoading: ApiLoadingState.idle,
         error: null,
         getProjectTailoringDocument: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
@@ -303,6 +320,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -321,6 +339,7 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
@@ -336,6 +355,7 @@ describe('Process Area Slice', () => {
         isLoading: ApiLoadingState.idle,
         error: null,
         getProjectTailoringDocument: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessSubHeads: [],
         ProcessAreas: [],
         currentPage: 1,
@@ -353,9 +373,63 @@ describe('Process Area Slice', () => {
         error: null,
         getProjectTailoringDocument: [],
         ProcessSubHeads: [],
+        processAreaDetails: {} as GetProcessAreaDetails,
         ProcessAreas: [],
         currentPage: 1,
         pageSize: 20,
+      })
+    })
+  })
+  describe('getProcessAreaDetails test', () => {
+    it('Should be able to set isLoading to "loading" if getProcessAreaDetails is pending', () => {
+      const action = {
+        type: processAreaService.getProcessAreaDetails.pending.type,
+      }
+      const state = ProcessAreaReducer(initialProcessAreaState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.loading,
+        error: null,
+        getProjectTailoringDocument: [],
+        ProcessSubHeads: [],
+        ProcessAreas: [],
+        currentPage: 1,
+        pageSize: 20,
+        processAreaDetails: {} as GetProcessAreaDetails,
+      })
+    })
+
+    it('Should be able to set isLoading to "success" if getProcessAreaDetails is fulfilled', () => {
+      const action = {
+        type: processAreaService.getProcessAreaDetails.fulfilled.type,
+        payload: mockProcessAreaDetails,
+      }
+      const state = ProcessAreaReducer(initialProcessAreaState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.succeeded,
+        error: null,
+        getProjectTailoringDocument: [],
+        ProcessSubHeads: [],
+        ProcessAreas: [],
+        currentPage: 1,
+        pageSize: 20,
+        processAreaDetails: mockProcessAreaDetails,
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if getProcessAreaDetails is rejected', () => {
+      const action = {
+        type: processAreaService.getProcessAreaDetails.rejected.type,
+      }
+      const state = ProcessAreaReducer(initialProcessAreaState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        error: null,
+        getProjectTailoringDocument: [],
+        ProcessSubHeads: [],
+        ProcessAreas: [],
+        currentPage: 1,
+        pageSize: 20,
+        processAreaDetails: {} as GetProcessAreaDetails,
       })
     })
   })
