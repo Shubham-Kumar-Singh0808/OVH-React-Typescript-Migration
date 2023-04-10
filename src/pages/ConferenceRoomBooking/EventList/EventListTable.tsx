@@ -294,9 +294,12 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
-            {selectedEventDetails.description
-              ? parse(selectedEventDetails.description)
-              : 'N/A'}
+
+            <span className="descriptionField">
+              {(selectedEventDetails.description &&
+                parse(selectedEventDetails.description)) ||
+                'N/A'}
+            </span>
           </div>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Trainer :</span>
