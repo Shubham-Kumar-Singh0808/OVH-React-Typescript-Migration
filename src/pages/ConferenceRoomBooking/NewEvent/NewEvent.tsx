@@ -472,6 +472,7 @@ const NewEvent = (): JSX.Element => {
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
                 />
               </>
             ) : (

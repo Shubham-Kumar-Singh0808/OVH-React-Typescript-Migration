@@ -498,6 +498,7 @@ const NewBookingFilterOptions = ({
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
                 />
               </>
             ) : (
