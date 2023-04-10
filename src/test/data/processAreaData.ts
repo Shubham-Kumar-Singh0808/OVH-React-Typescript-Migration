@@ -1,4 +1,5 @@
 import {
+  GetProcessAreaDetails,
   ProcessAreas,
   ProcessSubHeadsDto,
   ProjectTailoringDocument,
@@ -167,7 +168,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/3232',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -257,7 +258,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cotm/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -329,7 +330,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cohkm/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -383,7 +384,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.cgjom/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -419,7 +420,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documgjents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -455,7 +456,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -563,7 +564,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -653,7 +654,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/322',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -761,7 +762,7 @@ export const mockProjectTailoring: ProjectTailoringDocument[] = [
         sqaApproval: null,
         link: 'https://hive.raybiztech.com/documents/323',
         status: 'false',
-        order: null,
+        order: 0,
       },
       {
         id: null,
@@ -864,3 +865,22 @@ export const mockProcessSubHeadsDto: ProcessSubHeadsDto[] = [
     order: 8,
   },
 ]
+
+export const mockProcessAreaDetails: GetProcessAreaDetails = {
+  id: null,
+  categoryId: 3,
+  processSubHeadId: 81,
+  processAreaId: 10,
+  processSubHeadName: 'Configuration Management',
+  processName: null,
+  documentName: 'Configuration Status Accounting Register',
+  responsible: 'Lead / CC',
+  common: null,
+  specificToProject: 'No',
+  comments: null,
+  sqaComments: null,
+  sqaApproval: null,
+  link: 'https://hive.raybiztech.com/projects/qms-v6-0/wiki/configuration-management',
+  status: 'true',
+  order: 1,
+}
