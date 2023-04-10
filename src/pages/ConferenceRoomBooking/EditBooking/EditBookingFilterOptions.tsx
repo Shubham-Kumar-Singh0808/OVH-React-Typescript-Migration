@@ -422,6 +422,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={6}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"

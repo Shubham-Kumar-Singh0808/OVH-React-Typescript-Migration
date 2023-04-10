@@ -455,6 +455,7 @@ const NewBookingFilterOptions = ({
               <CCol sm={6}>
                 <CFormTextarea
                   placeholder="Purpose"
+                  className="sh-agenda"
                   data-testid="text-area"
                   aria-label="textarea"
                   value={newRoomBooking.agenda}
