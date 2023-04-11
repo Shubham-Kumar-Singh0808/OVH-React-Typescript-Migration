@@ -170,6 +170,7 @@ const RoomList = ({
               placeholder="Enter Name"
               value={selectRoomName}
               onChange={handledInputChange}
+              maxLength={30}
             />
             {roomNameExist && (
               <span className={TextDanger} data-testid="nameAlreadyExist">
