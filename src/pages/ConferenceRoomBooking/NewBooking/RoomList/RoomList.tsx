@@ -80,7 +80,22 @@ const RoomList = ({
     dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.app.actions.addToast(successToast))
   }
+  const handleEnterKeyWord = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (isAddButtonEnabled && event.key === 'Enter') {
+      const prepareObj = {
+        roomName: selectRoomName,
+        locationId: Number(selectLocationId),
+      }
+      await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
+      setSelectRoomName('')
+      setSelectLocationId('')
+      dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(reduxServices.app.actions.addToast(successToast))
+    }
+  }
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -170,6 +185,7 @@ const RoomList = ({
               placeholder="Enter Name"
               value={selectRoomName}
               onChange={handledInputChange}
+              onKeyDown={handleEnterKeyWord}
               maxLength={30}
             />
             {roomNameExist && (
