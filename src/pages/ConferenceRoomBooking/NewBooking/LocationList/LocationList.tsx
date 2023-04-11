@@ -138,6 +138,7 @@ const LocationList = ({
                 placeholder="Enter Location Name"
                 value={selectLocationName}
                 onChange={handledInputChange}
+                maxLength={25}
               />
               {locationNameExist && (
                 <span
