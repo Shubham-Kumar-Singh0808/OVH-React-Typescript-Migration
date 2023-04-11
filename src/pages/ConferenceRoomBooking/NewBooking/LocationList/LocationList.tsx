@@ -1,12 +1,4 @@
-import {
-  CButton,
-  CCol,
-  CForm,
-  CFormInput,
-  CFormLabel,
-  CRow,
-  CSpinner,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import LocationListTable from './LocationListTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -14,7 +6,6 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const LocationList = ({
   setToggle,
@@ -35,9 +26,7 @@ const LocationList = ({
   const locationNames = useTypedSelector(
     reduxServices.addLocationList.selectors.locationNames,
   )
-  const isLoading = useTypedSelector(
-    reduxServices.scheduledInterviews.selectors.isLoading,
-  )
+
   useEffect(() => {
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
@@ -54,7 +43,7 @@ const LocationList = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'locationName') {
+    if (name === 'LocationName') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectLocationName(newValue)
     }
@@ -80,7 +69,7 @@ const LocationList = ({
   const handleEnterKeyword = async (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (event.key === 'Enter') {
+    if (isAddButtonEnabled && event.key === 'Enter') {
       const isAddLocation = await dispatch(
         reduxServices.addLocationList.addLocation(selectLocationName),
       )
@@ -135,66 +124,55 @@ const LocationList = ({
             </CButton>
           </CCol>
         </CRow>
-        <CForm>
-          <CRow className="mt-3 mb-3">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-            >
-              Name of the Location:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CFormInput
-                className="mb-2"
-                data-testid="locationName"
-                type="text"
-                id="locationName"
-                size="sm"
-                name="locationName"
-                autoComplete="off"
-                placeholder="Enter Location Name"
-                value={selectLocationName}
-                onChange={handledInputChange}
-                onKeyDown={handleEnterKeyword}
-                maxLength={30}
-              />
-              {locationNameExist && (
-                <span
-                  className={TextDanger}
-                  data-testid="LocationNameAlreadyExist"
-                >
-                  <b>Location name already exist</b>
-                </span>
-              )}
-            </CCol>
-            {userAccess?.createaccess && (
-              <CCol sm={3}>
-                <CButton
-                  data-testid="designationButton"
-                  color="info"
-                  className="btn-ovh me-1"
-                  onClick={addLocationNameButtonHandler}
-                  disabled={
-                    isAddButtonEnabled
-                      ? isAddButtonEnabled && locationNameExist.length > 0
-                      : !isAddButtonEnabled
-                  }
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
-              </CCol>
+        <CRow className="mt-3 mb-3">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Name of the Location:
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              className="mb-2"
+              data-testid="LocationName"
+              type="text"
+              id="LocationName"
+              size="sm"
+              name="LocationName"
+              autoComplete="off"
+              placeholder="Enter Location Name"
+              value={selectLocationName}
+              onChange={handledInputChange}
+              onKeyDown={handleEnterKeyword}
+              maxLength={30}
+            />
+            {locationNameExist && (
+              <span className={TextDanger} data-testid="nameAlreadyExist">
+                <b>Room name already exist</b>
+              </span>
             )}
-          </CRow>
-        </CForm>
-        {isLoading !== ApiLoadingState.loading ? (
-          <LocationListTable
-            userDeleteAccess={userAccess?.deleteaccess as boolean}
-          />
-        ) : (
-          <>
-            <CSpinner />
-          </>
-        )}
+          </CCol>
+          {userAccess?.createaccess && (
+            <CCol sm={3}>
+              <CButton
+                data-testid="designationButton"
+                color="info"
+                className="btn-ovh me-1"
+                onClick={addLocationNameButtonHandler}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && locationNameExist.length > 0
+                    : !isAddButtonEnabled
+                }
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            </CCol>
+          )}
+        </CRow>
+        <LocationListTable
+          userDeleteAccess={userAccess?.deleteaccess as boolean}
+        />
       </OCard>
     </>
   )
