@@ -112,6 +112,8 @@ const NewEvent = (): JSX.Element => {
     useState<string>()
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   console.log(attendeesList)
+  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
+    useState<string>()
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -255,6 +257,7 @@ const NewEvent = (): JSX.Element => {
     }
   }
   console.log(addEvent.startTime)
+  console.log(descriptionValue)
 
   const handleConfirmBtn = async () => {
     const startTimeSplit = addEvent.startTime.split(':')
@@ -341,7 +344,8 @@ const NewEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      addEvent?.trainerName &&
+      trainerAutoCompleteTarget &&
+      addEvent.eventTypeId &&
       addEvent?.startTime &&
       addEvent?.endTime &&
       addEvent?.toDate &&
@@ -380,6 +384,8 @@ const NewEvent = (): JSX.Element => {
               allEmployeesProfiles={allEmployeesProfiles}
               onSelectTrainer={onSelectTrainer}
               shouldReset={resetFields.trainer as boolean}
+              trainerAutoCompleteTarget={trainerAutoCompleteTarget}
+              setTrainerAutoCompleteTarget={setTrainerAutoCompleteTarget}
             />
             <EventType
               eventTypeList={eventTypeList}
