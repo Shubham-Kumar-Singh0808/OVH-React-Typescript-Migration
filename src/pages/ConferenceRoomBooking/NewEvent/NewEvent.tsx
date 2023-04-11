@@ -257,7 +257,6 @@ const NewEvent = (): JSX.Element => {
     }
   }
   console.log(addEvent.startTime)
-  console.log(descriptionValue)
 
   const failureValidationErrorToastMsg = (
     <OToast
