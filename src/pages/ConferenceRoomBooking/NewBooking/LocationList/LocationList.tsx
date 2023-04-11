@@ -77,6 +77,23 @@ const LocationList = ({
     }
   }, [selectLocationName])
 
+  const handleEnterKeyword = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      const isAddLocation = await dispatch(
+        reduxServices.addLocationList.addLocation(selectLocationName),
+      )
+      if (
+        reduxServices.addLocationList.addLocation.fulfilled.match(isAddLocation)
+      ) {
+        dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+        setSelectLocationName('')
+        dispatch(reduxServices.app.actions.addToast(successToast))
+      }
+    }
+  }
+
   const addLocationNameButtonHandler = async () => {
     const isAddLocation = await dispatch(
       reduxServices.addLocationList.addLocation(selectLocationName),
@@ -138,6 +155,7 @@ const LocationList = ({
                 placeholder="Enter Location Name"
                 value={selectLocationName}
                 onChange={handledInputChange}
+                onKeyDown={handleEnterKeyword}
                 maxLength={30}
               />
               {locationNameExist && (
