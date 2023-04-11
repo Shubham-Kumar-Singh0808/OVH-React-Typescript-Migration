@@ -26,6 +26,7 @@ import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBooki
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
 import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
+import SlotsBookedForRoom from '../NewBooking/NewBookingChildComponents/SlotsBookedForRoom'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const trainerDetails = {} as TrainerDetails
@@ -368,7 +369,32 @@ const EditBookingFilterOptions = (): JSX.Element => {
             />,
           ),
         )
+      } else if (
+        reduxServices.bookingList.confirmUpdateMeetingRequest.rejected.match(
+          addEventResult,
+        ) &&
+        addEventResult.payload === 409
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you are late this room is already reserved..!"
+            />,
+          ),
+        )
       }
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Sorry, you missed the selected time..!!"
+          />,
+        ),
+      )
     }
   }
 
@@ -405,6 +431,25 @@ const EditBookingFilterOptions = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
+
+  useEffect(() => {
+    if ((editMeetingRequest.roomId, editMeetingRequest.fromDate)) {
+      dispatch(
+        reduxServices.newBooking.getAllBookedDetailsForRoom({
+          date: editMeetingRequest.fromDate,
+          roomid: editMeetingRequest.roomId,
+        }),
+      )
+    }
+  }, [editMeetingRequest.roomId, editMeetingRequest.fromDate])
+
+  const BookingsForSelection = useTypedSelector(
+    reduxServices.bookingList.selectors.bookingsForSelection,
+  )
+
+  const slotBooked = BookingsForSelection?.filter(
+    (item) => item.roomId === editMeetingRequest.roomId,
+  )
 
   return (
     <>
@@ -591,6 +636,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
             </CRow>
           </CForm>
         </CCol>
+        {slotBooked.length > 0 && editMeetingRequest.fromDate ? (
+          <CCol sm={4}>
+            <SlotsBookedForRoom />
+          </CCol>
+        ) : (
+          <></>
+        )}
       </CRow>
     </>
   )

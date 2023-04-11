@@ -1,5 +1,5 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -13,15 +13,18 @@ const Trainer = ({
   allEmployeesProfiles,
   onSelectTrainer,
   shouldReset,
+  trainerAutoCompleteTarget,
+  setTrainerAutoCompleteTarget,
 }: {
   allEmployeesProfiles: LoggedEmployee[]
   onSelectTrainer: (value: TrainerDetails) => void
   shouldReset: boolean
+  trainerAutoCompleteTarget: string | undefined
+  setTrainerAutoCompleteTarget: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
-  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
-    useState<string>()
 
   useEffect(() => {
     if (trainerAutoCompleteTarget) {
