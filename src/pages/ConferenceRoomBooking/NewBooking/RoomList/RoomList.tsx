@@ -57,7 +57,7 @@ const RoomList = ({
   )
 
   const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Meeting-Location',
+    (feature) => feature.name === 'Meeting-Rooms',
   )
 
   useEffect(() => {
