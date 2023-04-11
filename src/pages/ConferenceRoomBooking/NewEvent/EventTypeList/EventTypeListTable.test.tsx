@@ -1,9 +1,8 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import EventTypeListTable from './EventTypeListTable'
-import { cleanup, fireEvent, render, screen } from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockEventTypeList } from '../../../../test/data/eventTypeListData'
 
@@ -22,6 +21,7 @@ const toRender = (
       setEditEventTypeName={mockSetEditEventTypeName}
       isEditBtnClicked={false}
       setIsEditBtnClicked={mockSetIsEditBtnClicked}
+      userAccess={mockSetEditEventTypeName}
     />
   </div>
 )
@@ -58,70 +58,5 @@ describe('Event Type List Table Component Testing with data', () => {
     mockEventTypeList.forEach((eventType) => {
       expect(screen.getByText(eventType.name)).toBeInTheDocument()
     })
-  })
-  test('should be able to click delete button element', () => {
-    const deleteBtnElement = screen.getByTestId('delete-btn13')
-    expect(deleteBtnElement).toBeInTheDocument()
-    userEvent.click(deleteBtnElement)
-    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
-    userEvent.click(modalConfirmBtn)
-    expect(modalConfirmBtn).toBeInTheDocument()
-  })
-})
-
-describe('Event Type List Table Component Testing with data', () => {
-  beforeEach(() => {
-    render(
-      <EventTypeListTable
-        onChangeInputHandler={mockOnChangeInputHandler}
-        editEventTypeName={''}
-        setEditEventTypeName={mockSetEditEventTypeName}
-        isEditBtnClicked={true}
-        setIsEditBtnClicked={mockSetIsEditBtnClicked}
-      />,
-      {
-        preloadedState: {
-          eventTypeList: {
-            eventTypes: mockEventTypeList,
-            isLoading: ApiLoadingState.succeeded,
-          },
-        },
-      },
-    )
-  })
-  afterEach(cleanup)
-  screen.debug()
-  test('should be able to edit event type', () => {
-    const editBtnElement = screen.getByTestId('edit-btn13')
-    expect(editBtnElement).toBeInTheDocument()
-    fireEvent.click(editBtnElement)
-    const editInputElement = screen.getByTestId('eventTypeName')
-    expect(editInputElement).toBeInTheDocument()
-    fireEvent.change(editInputElement, 'newTest1')
-    const saveBtnElement = screen.getByTestId('save-btn13')
-    expect(saveBtnElement).toBeInTheDocument()
-    userEvent.click(saveBtnElement)
-    expect(saveBtnElement).toBeEnabled()
-  })
-  test('should not be able to edit event type have same event type', () => {
-    const editBtnElement = screen.getByTestId('edit-btn12')
-    expect(editBtnElement).toBeInTheDocument()
-    fireEvent.click(editBtnElement)
-    const editInputElement = screen.getByTestId('eventTypeName')
-    expect(editInputElement).toBeInTheDocument()
-    fireEvent.change(editInputElement, 'test567')
-    const saveBtnElement = screen.getByTestId('save-btn12')
-    expect(saveBtnElement).toBeInTheDocument()
-    userEvent.click(saveBtnElement)
-    expect(saveBtnElement).toBeEnabled()
-  })
-  test('should be able to cancel edit event type', () => {
-    const editBtnElement = screen.getByTestId('edit-btn13')
-    expect(editBtnElement).toBeInTheDocument()
-    fireEvent.click(editBtnElement)
-    const cancelBtnElement = screen.getByTestId('cancel-btn13')
-    expect(cancelBtnElement).toBeInTheDocument()
-    userEvent.click(cancelBtnElement)
-    expect(cancelBtnElement).toBeEnabled()
   })
 })

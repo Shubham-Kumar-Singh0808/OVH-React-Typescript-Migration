@@ -112,6 +112,8 @@ const NewEvent = (): JSX.Element => {
     useState<string>()
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   console.log(attendeesList)
+  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
+    useState<string>()
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -255,6 +257,18 @@ const NewEvent = (): JSX.Element => {
     }
   }
   console.log(addEvent.startTime)
+  console.log(descriptionValue)
+
+  const failureValidationErrorToastMsg = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
+  const failureToastMsg = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
 
   const handleConfirmBtn = async () => {
     const startTimeSplit = addEvent.startTime.split(':')
@@ -305,6 +319,31 @@ const NewEvent = (): JSX.Element => {
     }
   }
 
+  const validateBookingTimings = () => {
+    if (addEvent.startTime.split(':') < addEvent.endTime.split(':')) {
+      const startTimeSplit = addEvent.startTime.split(':')
+      const endTimeSplit = addEvent.endTime.split(':')
+      const start = new Date(
+        `${addEvent.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${addEvent.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        dispatch(
+          reduxServices.app.actions.addToast(failureValidationErrorToastMsg),
+        )
+      } else {
+        handleConfirmBtn()
+      }
+    } else {
+      dispatch(reduxServices.app.actions.addToast(failureToastMsg))
+    }
+  }
+
   const clearBtnHandler = () => {
     setAddEvent(initEvent)
     const shouldResetFields = {
@@ -341,7 +380,8 @@ const NewEvent = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      addEvent?.trainerName &&
+      trainerAutoCompleteTarget &&
+      addEvent.eventTypeId &&
       addEvent?.startTime &&
       addEvent?.endTime &&
       addEvent?.toDate &&
@@ -380,6 +420,8 @@ const NewEvent = (): JSX.Element => {
               allEmployeesProfiles={allEmployeesProfiles}
               onSelectTrainer={onSelectTrainer}
               shouldReset={resetFields.trainer as boolean}
+              trainerAutoCompleteTarget={trainerAutoCompleteTarget}
+              setTrainerAutoCompleteTarget={setTrainerAutoCompleteTarget}
             />
             <EventType
               eventTypeList={eventTypeList}
@@ -502,7 +544,7 @@ const NewEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
+                    onClick={validateBookingTimings}
                     disabled={!isConfirmButtonEnabled || dateError}
                   >
                     Confirm
