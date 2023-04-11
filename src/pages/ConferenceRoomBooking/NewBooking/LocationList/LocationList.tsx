@@ -54,12 +54,12 @@ const LocationList = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'name') {
+    if (name === 'locationName') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectLocationName(newValue)
     }
-    if (locationNameExists(value)) {
-      setLocationNameExist(value)
+    if (locationNameExists(value.trim())) {
+      setLocationNameExist(value.trim())
     } else {
       setLocationNameExist('')
     }
@@ -148,9 +148,9 @@ const LocationList = ({
                 className="mb-2"
                 data-testid="locationName"
                 type="text"
-                id="Name"
+                id="locationName"
                 size="sm"
-                name="name"
+                name="locationName"
                 autoComplete="off"
                 placeholder="Enter Location Name"
                 value={selectLocationName}
