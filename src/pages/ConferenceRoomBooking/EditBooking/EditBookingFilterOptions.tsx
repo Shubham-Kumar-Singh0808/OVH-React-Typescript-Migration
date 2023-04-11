@@ -369,7 +369,32 @@ const EditBookingFilterOptions = (): JSX.Element => {
             />,
           ),
         )
+      } else if (
+        reduxServices.bookingList.confirmUpdateMeetingRequest.rejected.match(
+          addEventResult,
+        ) &&
+        addEventResult.payload === 409
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you are late this room is already reserved..!"
+            />,
+          ),
+        )
       }
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Sorry, you missed the selected time..!!"
+          />,
+        ),
+      )
     }
   }
 
