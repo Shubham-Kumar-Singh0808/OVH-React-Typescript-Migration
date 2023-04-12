@@ -38,9 +38,17 @@ const RoomList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
+
+  useEffect(() => {
+    if (selectLocationId) {
+      dispatch(
+        reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
+      )
+      dispatch(reduxServices.roomLists.getMeetingRooms())
+    }
+  }, [dispatch, selectLocationId])
 
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
@@ -78,12 +86,15 @@ const RoomList = ({
     setSelectRoomName('')
     setSelectLocationId('')
     dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(
+      reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
+    )
     dispatch(reduxServices.app.actions.addToast(successToast))
   }
   const handleEnterKeyWord = async (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (isAddButtonEnabled && event.key === 'Enter') {
+    if (isAddButtonEnabled && event.key === 'Enter' && !roomNameExist) {
       const prepareObj = {
         roomName: selectRoomName,
         locationId: Number(selectLocationId),
@@ -93,6 +104,9 @@ const RoomList = ({
       setSelectRoomName('')
       setSelectLocationId('')
       dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(
+        reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
+      )
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
@@ -113,6 +127,12 @@ const RoomList = ({
     }
   }
 
+  useEffect(() => {
+    if (selectLocationId === '') {
+      dispatch(reduxServices.bookingList.actions.clearRoomTable())
+    }
+  }, [])
+  console.log(selectLocationId)
   return (
     <>
       <OCard
@@ -182,7 +202,7 @@ const RoomList = ({
               size="sm"
               name="roomName"
               autoComplete="off"
-              placeholder="Enter Name"
+              placeholder="Enter Room Name"
               value={selectRoomName}
               onChange={handledInputChange}
               onKeyDown={handleEnterKeyWord}

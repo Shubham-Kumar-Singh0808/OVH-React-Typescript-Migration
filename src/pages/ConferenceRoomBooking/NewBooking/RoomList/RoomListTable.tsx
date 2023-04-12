@@ -32,7 +32,11 @@ const RoomListTable = ({
   const [selectedRoomName, setSelectedRoomName] = useState('')
   const [deleteLocationId, setDeleteLocationId] = useState(0)
 
-  const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
+  // const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
+
+  const roomsOfLocation = useTypedSelector(
+    (state) => state.bookingList.roomsOfLocation,
+  )
 
   const pageFromState = useTypedSelector(
     reduxServices.roomLists.selectors.pageFromState,
@@ -47,7 +51,7 @@ const RoomListTable = ({
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(roomList?.length, pageSizeFromState, pageFromState)
+  } = usePagination(roomsOfLocation?.length, pageSizeFromState, pageFromState)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -62,8 +66,8 @@ const RoomListTable = ({
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(roomList, currentPage, pageSize),
-    [roomList, currentPage, pageSize],
+    () => currentPageData(roomsOfLocation, currentPage, pageSize),
+    [roomsOfLocation, currentPage, pageSize],
   )
 
   const deletedToastElement = (
@@ -103,6 +107,7 @@ const RoomListTable = ({
     width: '9%',
     scope: 'col',
   }
+
   return (
     <>
       <CTable
@@ -160,20 +165,20 @@ const RoomListTable = ({
       <CRow>
         <CCol xs={4}>
           <strong>
-            {roomList?.length
-              ? `Total Records: ${roomList?.length}`
+            {roomsOfLocation?.length
+              ? `Total Records: ${roomsOfLocation?.length}`
               : `No Records Found`}
           </strong>
         </CCol>
         <CCol xs={3}>
-          {roomList?.length > 20 && (
+          {roomsOfLocation?.length > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {roomList?.length > 20 && (
+        {roomsOfLocation?.length > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
