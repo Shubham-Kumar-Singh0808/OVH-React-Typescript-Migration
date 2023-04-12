@@ -432,6 +432,8 @@ export interface BookingListApi extends ApiBase {
   editMeeting: string
   confirmUpdateMeetingRequest: string
   uniqueAttendee: string
+  Completed: string
+  InProgress: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
