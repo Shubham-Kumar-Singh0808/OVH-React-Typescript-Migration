@@ -148,7 +148,7 @@ const LocationList = ({
             />
             {locationNameExist && (
               <span className={TextDanger} data-testid="nameAlreadyExist">
-                <b>Room name already exist</b>
+                <b>Location name already exist</b>
               </span>
             )}
           </CCol>
