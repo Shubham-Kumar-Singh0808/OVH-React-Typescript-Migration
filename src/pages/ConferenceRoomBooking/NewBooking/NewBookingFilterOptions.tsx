@@ -295,8 +295,8 @@ const NewBookingFilterOptions = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
-            toastMessage="            
-            Sorry, you missed the selected time..!!"
+            toastMessage="
+              Sorry, you missed the selected time..!!"
           />,
         ),
       )
