@@ -46,7 +46,7 @@ describe('RoomList without data', () => {
   })
 
   test('should render on every input of RoomList', () => {
-    const roomNameInput = screen.getByPlaceholderText('Enter Name')
+    const roomNameInput = screen.getByPlaceholderText('Enter Room Name')
     userEvent.type(roomNameInput, 'Aurobindo')
     expect(roomNameInput).toHaveValue('Aurobindo')
   })
@@ -56,7 +56,7 @@ describe('RoomList without data', () => {
     expect(addBtnElement).toBeInTheDocument()
     userEvent.click(addBtnElement)
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('Enter Name')).toHaveValue('')
+      expect(screen.getByPlaceholderText('Enter Room Name')).toHaveValue('')
     })
   })
   test('should render click on back button ', () => {
