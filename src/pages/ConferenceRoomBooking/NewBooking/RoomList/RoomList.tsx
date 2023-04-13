@@ -129,6 +129,10 @@ const RoomList = ({
       setRoomNameExist('')
     }
   }
+  const clearInputs = () => {
+    setSelectRoomName('')
+    setSelectLocationId('')
+  }
 
   return (
     <>
@@ -211,8 +215,8 @@ const RoomList = ({
               </span>
             )}
           </CCol>
-          {userAccess?.createaccess && (
-            <CCol sm={2}>
+          <CCol sm={2}>
+            {userAccess?.createaccess && (
               <CButton
                 data-testid="designationButton"
                 color="info"
@@ -226,8 +230,16 @@ const RoomList = ({
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
-            </CCol>
-          )}
+            )}
+            <CButton
+              data-testid="clear-btn"
+              color="warning"
+              className="btn-ovh text-white"
+              onClick={clearInputs}
+            >
+              Clear
+            </CButton>
+          </CCol>
         </CRow>
         <RoomListTable
           selectLocationId={selectLocationId}
