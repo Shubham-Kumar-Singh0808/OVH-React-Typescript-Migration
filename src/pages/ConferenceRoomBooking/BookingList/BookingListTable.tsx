@@ -212,7 +212,10 @@ const BookingListTable = ({
                           color="info"
                           className="btn-ovh me-2"
                           onClick={() => editButtonHandler(bookingItem.id)}
-                          disabled={bookingItem?.disableEdit === true}
+                          disabled={
+                            bookingItem?.disableEdit ||
+                            bookingItem.meetingStatus !== 'New'
+                          }
                         >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
@@ -221,7 +224,10 @@ const BookingListTable = ({
                           color="btn btn-warning"
                           className="btn-ovh me-2"
                           onClick={() => handleShowCancelModal(bookingItem.id)}
-                          disabled={bookingItem.disableEdit === true}
+                          disabled={
+                            bookingItem?.disableEdit ||
+                            bookingItem.meetingStatus !== 'New'
+                          }
                         >
                           <i
                             className="fa fa-times text-white"

@@ -69,7 +69,7 @@ const LocationList = ({
   const handleEnterKeyword = async (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (isAddButtonEnabled && event.key === 'Enter') {
+    if (isAddButtonEnabled && event.key === 'Enter' && !locationNameExist) {
       const isAddLocation = await dispatch(
         reduxServices.addLocationList.addLocation(selectLocationName),
       )
@@ -79,6 +79,7 @@ const LocationList = ({
         dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
         setSelectLocationName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
+        dispatch(reduxServices.app.actions.addToast(undefined))
       }
     }
   }
@@ -93,6 +94,7 @@ const LocationList = ({
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
       setSelectLocationName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 

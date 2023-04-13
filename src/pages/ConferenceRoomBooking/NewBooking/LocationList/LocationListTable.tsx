@@ -58,6 +58,7 @@ const LocationListTable = ({
     ) {
       dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.addLocationList.deleteLocation.rejected.match(
         deleteLocationResult,
@@ -65,6 +66,7 @@ const LocationListTable = ({
       deleteLocationResult.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
