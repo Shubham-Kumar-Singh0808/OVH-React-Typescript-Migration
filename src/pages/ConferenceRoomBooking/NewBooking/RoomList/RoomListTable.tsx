@@ -78,19 +78,38 @@ const RoomListTable = ({
     setSelectedRoomName(roomName)
   }
 
+  const deleteFailedToast = (
+    <OToast
+      toastMessage="Already meeting was booked in this room, so you cannot delete this room"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
   const confirmDeleteRoom = async () => {
     setIsDeleteModalVisible(false)
-    await dispatch(reduxServices.roomLists.deleteRoom(deleteLocationId))
-    dispatch(
-      reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+    const deleteRoomResult = await dispatch(
+      reduxServices.roomLists.deleteRoom(deleteLocationId),
     )
-    dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    if (reduxServices.roomLists.deleteRoom.fulfilled.match(deleteRoomResult)) {
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.roomLists.deleteRoom.rejected.match(deleteRoomResult) &&
+      deleteRoomResult.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
   }
-
   const tableHeaderToggleCell = {
     width: '9%',
     scope: 'col',
   }
+
   return (
     <>
       <CTable

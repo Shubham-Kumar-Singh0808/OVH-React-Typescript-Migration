@@ -93,11 +93,12 @@ const RoomList = ({
       reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
     )
     dispatch(reduxServices.app.actions.addToast(successToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
   }
   const handleEnterKeyWord = async (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (isAddButtonEnabled && event.key === 'Enter') {
+    if (isAddButtonEnabled && event.key === 'Enter' && !roomNameExist) {
       const prepareObj = {
         roomName: selectRoomName,
         locationId: Number(selectLocationId),
@@ -109,6 +110,7 @@ const RoomList = ({
         reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
       )
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   const handledInputChange = (
@@ -197,7 +199,7 @@ const RoomList = ({
               size="sm"
               name="roomName"
               autoComplete="off"
-              placeholder="Enter Name"
+              placeholder="Enter Room Name"
               value={selectRoomName}
               onChange={handledInputChange}
               onKeyDown={handleEnterKeyWord}

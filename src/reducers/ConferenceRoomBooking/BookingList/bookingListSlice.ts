@@ -139,6 +139,9 @@ const bookingListSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
+    clearRoomTable: (state) => {
+      state.roomsOfLocation = []
+    },
   },
 
   extraReducers: (builder) => {
