@@ -38,9 +38,22 @@ const RoomList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
+
+  useEffect(() => {
+    if (selectLocationId) {
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
+    }
+  }, [selectLocationId, dispatch])
+
+  useEffect(() => {
+    if (selectLocationId === '') {
+      dispatch(reduxServices.roomLists.getMeetingRooms())
+    }
+  }, [selectLocationId, dispatch])
 
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
@@ -76,8 +89,9 @@ const RoomList = ({
     await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
     setSelectRoomName('')
-    setSelectLocationId('')
-    dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(
+      reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+    )
     dispatch(reduxServices.app.actions.addToast(successToast))
   }
   const handleEnterKeyWord = async (
@@ -91,8 +105,9 @@ const RoomList = ({
       await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
       setSelectRoomName('')
-      setSelectLocationId('')
-      dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
   }
@@ -212,7 +227,10 @@ const RoomList = ({
             </CCol>
           )}
         </CRow>
-        <RoomListTable userDeleteAccess={userAccess?.deleteaccess as boolean} />
+        <RoomListTable
+          selectLocationId={selectLocationId}
+          userDeleteAccess={userAccess?.deleteaccess as boolean}
+        />
       </OCard>
     </>
   )
