@@ -38,17 +38,9 @@ const RoomList = ({
   )
 
   useEffect(() => {
+    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
-
-  useEffect(() => {
-    if (selectLocationId) {
-      dispatch(
-        reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
-      )
-      dispatch(reduxServices.roomLists.getMeetingRooms())
-    }
-  }, [dispatch, selectLocationId])
 
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
@@ -86,10 +78,8 @@ const RoomList = ({
     setSelectRoomName('')
     setSelectLocationId('')
     dispatch(reduxServices.roomLists.getMeetingRooms())
-    dispatch(
-      reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
-    )
     dispatch(reduxServices.app.actions.addToast(successToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
   }
   const handleEnterKeyWord = async (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -104,10 +94,8 @@ const RoomList = ({
       setSelectRoomName('')
       setSelectLocationId('')
       dispatch(reduxServices.roomLists.getMeetingRooms())
-      dispatch(
-        reduxServices.bookingList.getRoomsOfLocation(Number(selectLocationId)),
-      )
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   const handledInputChange = (
@@ -127,12 +115,6 @@ const RoomList = ({
     }
   }
 
-  useEffect(() => {
-    if (selectLocationId === '') {
-      dispatch(reduxServices.bookingList.actions.clearRoomTable())
-    }
-  }, [])
-  console.log(selectLocationId)
   return (
     <>
       <OCard

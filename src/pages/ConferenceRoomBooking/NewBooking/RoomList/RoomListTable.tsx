@@ -32,11 +32,7 @@ const RoomListTable = ({
   const [selectedRoomName, setSelectedRoomName] = useState('')
   const [deleteLocationId, setDeleteLocationId] = useState(0)
 
-  // const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
-
-  const roomsOfLocation = useTypedSelector(
-    (state) => state.bookingList.roomsOfLocation,
-  )
+  const roomList = useTypedSelector(reduxServices.roomLists.selectors.roomNames)
 
   const pageFromState = useTypedSelector(
     reduxServices.roomLists.selectors.pageFromState,
@@ -51,7 +47,7 @@ const RoomListTable = ({
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(roomsOfLocation?.length, pageSizeFromState, pageFromState)
+  } = usePagination(roomList?.length, pageSizeFromState, pageFromState)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -66,8 +62,8 @@ const RoomListTable = ({
   }
 
   const currentPageItems = useMemo(
-    () => currentPageData(roomsOfLocation, currentPage, pageSize),
-    [roomsOfLocation, currentPage, pageSize],
+    () => currentPageData(roomList, currentPage, pageSize),
+    [roomList, currentPage, pageSize],
   )
 
   const deletedToastElement = (
@@ -96,11 +92,13 @@ const RoomListTable = ({
     if (reduxServices.roomLists.deleteRoom.fulfilled.match(deleteRoomResult)) {
       dispatch(reduxServices.roomLists.getMeetingRooms())
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.roomLists.deleteRoom.rejected.match(deleteRoomResult) &&
       deleteRoomResult.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   const tableHeaderToggleCell = {
@@ -165,20 +163,20 @@ const RoomListTable = ({
       <CRow>
         <CCol xs={4}>
           <strong>
-            {roomsOfLocation?.length
-              ? `Total Records: ${roomsOfLocation?.length}`
+            {roomList?.length
+              ? `Total Records: ${roomList?.length}`
               : `No Records Found`}
           </strong>
         </CCol>
         <CCol xs={3}>
-          {roomsOfLocation?.length > 20 && (
+          {roomList?.length > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {roomsOfLocation?.length > 20 && (
+        {roomList?.length > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
