@@ -13,8 +13,6 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -22,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -70,10 +69,15 @@ const SkillListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
   }
 
+  const SuccessToastMessage = (
+    <OToast toastMessage="Skill Deleted Successfully" toastColor="success" />
+  )
+
   const handleConfirmDelete = async (skillId: number) => {
     setIsDeleteModalVisible(false)
 
     dispatch(reduxServices.skill.deleteSkill(skillId))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const currentPageItems = useMemo(() => {

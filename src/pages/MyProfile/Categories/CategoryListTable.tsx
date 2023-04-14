@@ -20,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const CategoryListTable = (): JSX.Element => {
   const categories = useTypedSelector(
@@ -62,12 +63,18 @@ const CategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
   }
 
+  const SuccessToastMessage = (
+    <OToast toastMessage="Category Deleted Successfully" toastColor="success" />
+  )
+
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
     dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
     dispatch(reduxServices.category.actions.setPageSize(pageSize))
     dispatch(reduxServices.category.deleteCategory(categoryId))
+    dispatch(reduxServices.category.getAllCategories())
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const currentPageItems = useMemo(

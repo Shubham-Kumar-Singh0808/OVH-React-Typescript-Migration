@@ -257,6 +257,18 @@ function AddEditEmployeeSkill({
     }
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessAddSkills = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddSkills',
+  )
+
+  const userAccessAddCategory = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddCategory',
+  )
+
   return (
     <>
       {toggle === '' && (

@@ -28,6 +28,31 @@ const AddNewCategory = (): JSX.Element => {
     }
   }, [newCategoryName])
 
+  const handleEnterKeyword = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isAddCategoryBtnEnabled && event.key === 'Enter') {
+      const toAddCategoryName = newCategoryName
+
+      if (
+        categories.length > 0 &&
+        categories.filter(
+          (category) =>
+            category.categoryType.toLowerCase() ===
+            newCategoryName.toLowerCase(),
+        ).length > 0
+      ) {
+        dispatch(reduxServices.app.actions.addToast(toastElement))
+        setNewCategoryName('')
+        return
+      }
+
+      setNewCategoryName('')
+
+      dispatch(reduxServices.category.createCategory(toAddCategoryName))
+      dispatch(reduxServices.category.getAllCategories())
+      dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+    }
+  }
+
   const handleAddCategory = () => {
     const toAddCategoryName = newCategoryName
 
@@ -39,7 +64,6 @@ const AddNewCategory = (): JSX.Element => {
       ).length > 0
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
-      // dispatch(reduxServices.app.actions.addToast(undefined))
       setNewCategoryName('')
       return
     }
@@ -48,7 +72,6 @@ const AddNewCategory = (): JSX.Element => {
 
     dispatch(reduxServices.category.createCategory(toAddCategoryName))
     dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
-    // dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const formLabelProps = {
@@ -68,6 +91,7 @@ const AddNewCategory = (): JSX.Element => {
             id="inputNewCategory"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
+            onKeyDown={handleEnterKeyword}
             placeholder={'Category Name'}
           />
         </CCol>
