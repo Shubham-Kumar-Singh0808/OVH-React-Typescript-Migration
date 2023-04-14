@@ -626,6 +626,8 @@ export const roomListApiConfig: RoomListApi = {
   addRoom: apiPrefix + '/meetingRequest/addRoom',
   deleteRoom: apiPrefix + '/meetingRequest/deleteRoom',
   updateRoom: apiPrefix + '/meetingRequest/updateRoom',
+  getRoomsOfLocation: apiPrefix + '/meetingRequest/getRoomsOfLocation',
+  getAllMeetingLocations: apiPrefix + '/meetingRequest/getAllMeetingLocations',
 }
 
 export const ticketConfigurationApiConfig: TicketConfigurationApi = {

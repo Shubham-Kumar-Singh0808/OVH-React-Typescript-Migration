@@ -38,9 +38,22 @@ const RoomList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
+
+  useEffect(() => {
+    if (selectLocationId) {
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
+    }
+  }, [selectLocationId, dispatch])
+
+  useEffect(() => {
+    if (selectLocationId === '') {
+      dispatch(reduxServices.roomLists.getMeetingRooms())
+    }
+  }, [selectLocationId, dispatch])
 
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
@@ -76,8 +89,9 @@ const RoomList = ({
     await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
     setSelectRoomName('')
-    setSelectLocationId('')
-    dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(
+      reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+    )
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
   }
@@ -92,8 +106,9 @@ const RoomList = ({
       await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
       setSelectRoomName('')
-      setSelectLocationId('')
-      dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -113,6 +128,10 @@ const RoomList = ({
     } else {
       setRoomNameExist('')
     }
+  }
+  const clearInputs = () => {
+    setSelectRoomName('')
+    setSelectLocationId('')
   }
 
   return (
@@ -196,8 +215,8 @@ const RoomList = ({
               </span>
             )}
           </CCol>
-          {userAccess?.createaccess && (
-            <CCol sm={2}>
+          <CCol sm={2}>
+            {userAccess?.createaccess && (
               <CButton
                 data-testid="designationButton"
                 color="info"
@@ -211,10 +230,21 @@ const RoomList = ({
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
-            </CCol>
-          )}
+            )}
+            <CButton
+              data-testid="clear-btn"
+              color="warning"
+              className="btn-ovh text-white"
+              onClick={clearInputs}
+            >
+              Clear
+            </CButton>
+          </CCol>
         </CRow>
-        <RoomListTable userDeleteAccess={userAccess?.deleteaccess as boolean} />
+        <RoomListTable
+          selectLocationId={selectLocationId}
+          userDeleteAccess={userAccess?.deleteaccess as boolean}
+        />
       </OCard>
     </>
   )
