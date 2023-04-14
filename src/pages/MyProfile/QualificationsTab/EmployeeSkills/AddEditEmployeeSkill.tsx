@@ -376,10 +376,7 @@ function AddEditEmployeeSkill({
                         <CButton
                           color="info btn-ovh me-1"
                           disabled={!isSkillAddButtonEnabled}
-                          onClick={
-                            (addButtonHandler = () =>
-                              setToggle('skillListSection'))
-                          }
+                          onClick={() => setToggle('skillListSection')}
                         >
                           <i className="fa fa-plus me-1"></i>Add
                         </CButton>
