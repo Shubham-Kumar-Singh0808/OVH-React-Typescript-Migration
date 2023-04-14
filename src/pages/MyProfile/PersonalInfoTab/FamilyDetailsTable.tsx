@@ -202,7 +202,7 @@ const FamilyDetailsTable = ({
                     {userAccess?.deleteaccess && (
                       <CTooltip content="Delete">
                         <CButton
-                          data-testid={`btn-delete${index}`}
+                          data-testid="delete-family"
                           size="sm"
                           color="danger btn-ovh me-1"
                           className="btn-ovh-employee-list"
