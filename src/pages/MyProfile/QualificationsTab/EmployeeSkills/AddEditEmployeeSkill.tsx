@@ -324,10 +324,7 @@ function AddEditEmployeeSkill({
                       {userAccessAddCategory?.createaccess && (
                         <CButton
                           color="info btn-ovh me-1"
-                          onClick={
-                            (addButtonHandler = () =>
-                              setToggle('categoryListSection'))
-                          }
+                          onClick={() => setToggle('categoryListSection')}
                         >
                           <i className="fa fa-plus me-1"></i>Add
                         </CButton>
