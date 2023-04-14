@@ -10,10 +10,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -101,19 +100,22 @@ const CategoryListTable = (): JSX.Element => {
                 </CTableHeaderCell>
                 <CTableDataCell>{category.categoryType}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    data-testid={`category-delete-btn${index}`}
-                    onClick={() =>
-                      handleShowDeleteModal(
-                        category.categoryType,
-                        category.categoryId,
-                      )
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`category-delete-btn${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowDeleteModal(
+                          category.categoryType,
+                          category.categoryId,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )
@@ -157,7 +159,10 @@ const CategoryListTable = (): JSX.Element => {
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
       >
-        {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}
+        <>
+          Are you sure you want to delete this{' '}
+          <strong>{toDeleteCategoryName}</strong> category item?
+        </>
       </OModal>
     </>
   )

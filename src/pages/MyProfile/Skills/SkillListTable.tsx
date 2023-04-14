@@ -10,6 +10,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
@@ -110,15 +111,22 @@ const SkillListTable = (): JSX.Element => {
                 </CTableHeaderCell>
                 <CTableDataCell>{skillItem.skill}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    onClick={() =>
-                      handleShowDeleteModal(skillItem.skill, skillItem.skillId)
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`category-delete-btn${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowDeleteModal(
+                          skillItem.skill,
+                          skillItem.skillId,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )

@@ -16,6 +16,9 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
   const toastElement = (
     <OToast toastMessage="Skill already exists!" toastColor="danger" />
   )
+  const SuccessToastMessage = (
+    <OToast toastMessage="Skill Added Successfully" toastColor="success" />
+  )
 
   useEffect(() => {
     if (newSkillName) {
@@ -36,12 +39,17 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
       ).length > 0
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      // dispatch(reduxServices.app.actions.addToast(undefined))
+
+      setNewSkillName('')
       return
     }
 
     setNewSkillName('')
 
     dispatch(reduxServices.skill.createSkill({ categoryId, toAddSkillName }))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+    // dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const formLabelProps = {

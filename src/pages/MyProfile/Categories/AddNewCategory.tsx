@@ -16,6 +16,9 @@ const AddNewCategory = (): JSX.Element => {
   const toastElement = (
     <OToast toastMessage="Category already exists!" toastColor="danger" />
   )
+  const SuccessToastMessage = (
+    <OToast toastMessage="Category Added Successfully" toastColor="success" />
+  )
 
   useEffect(() => {
     if (newCategoryName) {
@@ -36,12 +39,16 @@ const AddNewCategory = (): JSX.Element => {
       ).length > 0
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      // dispatch(reduxServices.app.actions.addToast(undefined))
+      setNewCategoryName('')
       return
     }
 
     setNewCategoryName('')
 
     dispatch(reduxServices.category.createCategory(toAddCategoryName))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+    // dispatch(reduxServices.app.actions.addToast(undefined))
   }
 
   const formLabelProps = {

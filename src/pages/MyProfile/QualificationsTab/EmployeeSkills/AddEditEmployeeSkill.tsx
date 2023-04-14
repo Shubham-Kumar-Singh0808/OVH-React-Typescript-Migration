@@ -296,7 +296,7 @@ function AddEditEmployeeSkill({
                     value={employeeSkill?.categoryType}
                     onChange={employeeSkillHandler}
                   >
-                    <option value={''}>category</option>
+                    <option value={''}>Category</option>
                     {sortedCategoryDetails?.map((categories, index) => (
                       <option key={index} value={categories.categoryId}>
                         {categories.categoryType}
