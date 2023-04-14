@@ -320,15 +320,19 @@ function AddEditEmployeeSkill({
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      onClick={
-                        (addButtonHandler = () =>
-                          setToggle('categoryListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddCategory?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          onClick={
+                            (addButtonHandler = () =>
+                              setToggle('categoryListSection'))
+                          }
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>
@@ -367,15 +371,20 @@ function AddEditEmployeeSkill({
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      disabled={!isSkillAddButtonEnabled}
-                      onClick={
-                        (addButtonHandler = () => setToggle('skillListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddSkills?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          disabled={!isSkillAddButtonEnabled}
+                          onClick={
+                            (addButtonHandler = () =>
+                              setToggle('skillListSection'))
+                          }
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>
