@@ -51,7 +51,8 @@ const QualificationDetails = (): JSX.Element => {
             </CCardHeader>
           )}
           <CCardBody className="ps-0 pe-0">
-            {!isViewingAnotherEmployee ? (
+            {!isViewingAnotherEmployee &&
+            userAccessToCertifications?.createaccess ? (
               <OAddButton
                 addButtonHandler={() => setToggle('addQualificationSection')}
               />
