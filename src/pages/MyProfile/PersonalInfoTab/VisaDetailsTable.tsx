@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -24,6 +25,7 @@ const VisaDetailsTable = ({
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -107,27 +109,33 @@ const VisaDetailsTable = ({
               </CTableDataCell>
               <CTableDataCell scope="row">{visaItem.visaType}</CTableDataCell>
               <CTableDataCell scope="row">
-                {localeDateFormat(visaItem.dateOfIssue as string)}
+                {localeDateFormat(visaItem.dateOfIssue)}
               </CTableDataCell>
               <CTableDataCell scope="row">
-                {localeDateFormat(visaItem.dateOfExpire as string)}
+                {localeDateFormat(visaItem.dateOfExpire)}
               </CTableDataCell>
               {!isViewingAnotherEmployee ? (
                 <CTableDataCell scope="row">
-                  <CButton
-                    color="info"
-                    className="btn-ovh me-1 btn-ovh-employee-list"
-                    onClick={() => editVisaButtonHandler(visaItem.id)}
-                  >
-                    <i className="fa fa-pencil-square-o"></i>
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    className="btn-ovh me-1 btn-ovh-employee-list"
-                    onClick={() => handleShowDeleteModal(visaItem.id)}
-                  >
-                    <i className="fa fa-trash-o" aria-hidden="true"></i>
-                  </CButton>
+                  <CTooltip content="Edit">
+                    <CButton
+                      color="info"
+                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      onClick={() => editVisaButtonHandler(visaItem.id)}
+                    >
+                      <i className="fa fa-pencil-square-o"></i>
+                    </CButton>
+                  </CTooltip>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`btn-delete${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() => handleShowDeleteModal(visaItem.id)}
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               ) : (
                 <></>
@@ -145,12 +153,14 @@ const VisaDetailsTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalHeaderClass="d-none"
+        modalTitle="Visa Details"
         confirmButtonText="Yes"
         cancelButtonText="No"
+        closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteVisaDetails}
+        modalBodyClass="mt-0"
       >
-        {`Do you really want to delete this ?`}
+        <>Do you really want to delete this ?</>
       </OModal>
     </>
   )

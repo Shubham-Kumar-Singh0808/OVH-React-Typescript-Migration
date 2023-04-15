@@ -162,22 +162,24 @@ const CertificateTypeTable = (): JSX.Element => {
                           {!isEditCertificateType && (
                             <>
                               {userAccessToAddCertificateTypeActions?.updateaccess && (
-                                <CButton
-                                  data-testid={`btn-edit${index}`}
-                                  color="info"
-                                  size="sm"
-                                  className="btn-ovh me-1 btn-ovh-employee-list"
-                                  onClick={() => {
-                                    editCertificateTypeButtonHandler(
-                                      certificateTypeItem.id as number,
-                                    )
-                                  }}
-                                >
-                                  <i
-                                    className="fa fa-pencil-square-o"
-                                    aria-hidden="true"
-                                  ></i>
-                                </CButton>
+                                <CTooltip content="Edit">
+                                  <CButton
+                                    data-testid={`btn-edit${index}`}
+                                    color="info"
+                                    size="sm"
+                                    className="btn-ovh me-1 btn-ovh-employee-list"
+                                    onClick={() => {
+                                      editCertificateTypeButtonHandler(
+                                        certificateTypeItem.id as number,
+                                      )
+                                    }}
+                                  >
+                                    <i
+                                      className="fa fa-pencil-square-o"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </CButton>
+                                </CTooltip>
                               )}
                               {userAccessToAddCertificateTypeActions?.deleteaccess && (
                                 <CTooltip content="Delete">
