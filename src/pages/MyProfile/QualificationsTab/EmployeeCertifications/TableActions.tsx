@@ -1,4 +1,4 @@
-import { CButton, CTableDataCell } from '@coreui/react-pro'
+import { CButton, CTableDataCell, CTooltip } from '@coreui/react-pro'
 import React from 'react'
 import { TableActionsType } from '../../../../types/MyProfile/QualificationsTab/EmployeeCertifications/employeeCertificationTypes'
 
@@ -21,28 +21,32 @@ const TableActions = ({
         <CTableDataCell scope="row">
           <>
             {userAccess?.updateaccess && (
-              <CButton
-                data-testid="edotCertBtn"
-                color="info"
-                className="btn-ovh me-1 btn-ovh-employee-list"
-                onClick={() =>
-                  editCertificateButtonHandler(certificateItemId as number)
-                }
-              >
-                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
-              </CButton>
+              <CTooltip content="Edit">
+                <CButton
+                  data-testid="edotCertBtn"
+                  color="info"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
+                  onClick={() =>
+                    editCertificateButtonHandler(certificateItemId as number)
+                  }
+                >
+                  <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
             )}
             {userAccess?.deleteaccess && (
-              <CButton
-                data-testid="showAlertBtn"
-                color="danger"
-                className="btn-ovh me-1 btn-ovh-employee-list"
-                onClick={() =>
-                  handleShowDeleteModal(certificateItemId as number)
-                }
-              >
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </CButton>
+              <CTooltip content="Delete">
+                <CButton
+                  data-testid="showAlertBtn"
+                  color="danger"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
+                  onClick={() =>
+                    handleShowDeleteModal(certificateItemId as number)
+                  }
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
             )}
           </>
         </CTableDataCell>

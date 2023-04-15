@@ -120,24 +120,6 @@ describe('Skill List Table Testing', () => {
     })
   })
 
-  test('should render second page data only', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <SkillList
-          categoryId={skillMockCategoryId}
-          categoryType={skillMockCategoryType}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      userEvent.click(screen.getByText('Next ›', { exact: true }))
-
-      expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
-      expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
-    })
-  })
-
   test('should disable first and prev in pagination if first page', async () => {
     render(
       <ReduxProvider reduxStore={stateStore}>

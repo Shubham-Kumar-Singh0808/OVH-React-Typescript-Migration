@@ -257,6 +257,18 @@ function AddEditEmployeeSkill({
     }
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessAddSkills = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddSkills',
+  )
+
+  const userAccessAddCategory = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddCategory',
+  )
+
   return (
     <>
       {toggle === '' && (
@@ -296,7 +308,7 @@ function AddEditEmployeeSkill({
                     value={employeeSkill?.categoryType}
                     onChange={employeeSkillHandler}
                   >
-                    <option value={''}>category</option>
+                    <option value={''}>Category</option>
                     {sortedCategoryDetails?.map((categories, index) => (
                       <option key={index} value={categories.categoryId}>
                         {categories.categoryType}
@@ -308,15 +320,16 @@ function AddEditEmployeeSkill({
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      onClick={
-                        (addButtonHandler = () =>
-                          setToggle('categoryListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddCategory?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          onClick={() => setToggle('categoryListSection')}
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>
@@ -355,15 +368,17 @@ function AddEditEmployeeSkill({
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      disabled={!isSkillAddButtonEnabled}
-                      onClick={
-                        (addButtonHandler = () => setToggle('skillListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddSkills?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          disabled={!isSkillAddButtonEnabled}
+                          onClick={() => setToggle('skillListSection')}
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>
