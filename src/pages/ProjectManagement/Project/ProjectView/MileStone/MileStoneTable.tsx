@@ -9,6 +9,7 @@ import {
   CRow,
   CCol,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
@@ -181,13 +182,15 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
                   <CTableDataCell>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                    >
-                      <i className="fa fa-times text-white"></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                      >
+                        <i className="fa fa-times text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"

@@ -61,6 +61,10 @@ function AddEditEmployeeSkill({
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
 
+  const skillFilter = employeeSkillsData?.filter(
+    (item) => item?.skillType === employeeSkill?.skillType,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
@@ -201,6 +205,13 @@ function AddEditEmployeeSkill({
   }
 
   const handleUpdateSkill = async () => {
+    if (skillFilter[0]?.skillType) {
+      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
+      setEmployeeSkill((prevState) => {
+        return { ...prevState, ...{ skillType: employeeSkill?.skillType } }
+      })
+      dispatch(reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast))
+    }
     const temp = employeeSkill.categoryId as number
     const prepareObject = {
       ...employeeSkill,
@@ -237,9 +248,6 @@ function AddEditEmployeeSkill({
     return ''
   }, [employeeSkill.categoryType, sortedCategoryDetails])
 
-  const skillFilter = employeeSkillsData?.filter(
-    (item) => item?.skillType === employeeSkill?.skillType,
-  )
   const clientOrgAlreadyExistsToast = (
     <OToast
       toastMessage="Category and Skill combination already exist"
@@ -345,24 +353,50 @@ function AddEditEmployeeSkill({
                   </span>
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormSelect
-                    aria-label="Default select example"
-                    size="sm"
-                    name="skillType"
-                    id=" skillType"
-                    value={employeeSkill?.skillType}
-                    onChange={employeeSkillHandler}
-                    disabled={!isSkillAddButtonEnabled}
-                    onBlur={() => isSkillExists()}
-                  >
-                    <option value={''}>Skill</option>
-                    {getCategorySkillDetails?.length > 0 &&
-                      getCategorySkillDetails?.map((categoriesSkill, index) => (
-                        <option key={index} value={categoriesSkill?.skillType}>
-                          {categoriesSkill?.skill}
-                        </option>
-                      ))}
-                  </CFormSelect>
+                  {isEditSkillsDetails ? (
+                    <CFormSelect
+                      aria-label="Default select example"
+                      size="sm"
+                      name="skillType"
+                      id=" skillType"
+                      value={employeeSkill?.skillType}
+                      onChange={employeeSkillHandler}
+                      disabled={!isSkillAddButtonEnabled}
+                      // onBlur={() => isUpdateSkillExists()}
+                    >
+                      <option value={''}>Skill</option>
+                      {getCategorySkillDetails?.length > 0 &&
+                        getCategorySkillDetails?.map(
+                          (categoriesSkill, index) => (
+                            <option
+                              key={index}
+                              value={categoriesSkill?.skillType}
+                            >
+                              {categoriesSkill?.skill}
+                            </option>
+                          ),
+                        )}
+                    </CFormSelect>
+                  ) : (
+                    <CFormSelect
+                      aria-label="Default select example"
+                      size="sm"
+                      name="skillType"
+                      id=" skillType"
+                      value={employeeSkill?.skillType}
+                      onChange={employeeSkillHandler}
+                      disabled={!isSkillAddButtonEnabled}
+                      onClick={() => isSkillExists()}
+                    >
+                      <option value={''}>Skill</option>
+                      {getCategorySkillDetails?.length > 0 &&
+                        getCategorySkillDetails?.map((categorie, index) => (
+                          <option key={index} value={categorie?.skillType}>
+                            {categorie?.skill}
+                          </option>
+                        ))}
+                    </CFormSelect>
+                  )}
                 </CCol>
                 <CCol className="col-sm-3">
                   {isEditSkillsDetails ? (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -120,7 +120,18 @@ const AddProject = (): JSX.Element => {
     } as GetAutoCompleteList
   })
 
-  const clientOrganizationList = projectClients
+  const sortedFamilyDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedFamilyDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {

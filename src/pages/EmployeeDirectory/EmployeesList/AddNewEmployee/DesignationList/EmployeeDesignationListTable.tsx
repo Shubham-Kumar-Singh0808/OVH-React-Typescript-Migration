@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
@@ -143,20 +144,22 @@ const EmployeeDesignationListTable = ({
           <CTableDataCell>{designation.name}</CTableDataCell>
           <CTableDataCell>
             {userAccessToDesignationListActions?.deleteaccess && (
-              <CButton
-                data-testid={`btn-delete${index}`}
-                color="danger"
-                size="sm"
-                className="btn-ovh me-1 btn-ovh-employee-list"
-                onClick={() =>
-                  handleShowDeleteModal(
-                    designation.id as number,
-                    designation.name,
-                  )
-                }
-              >
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </CButton>
+              <CTooltip content="Delete">
+                <CButton
+                  data-testid={`btn-delete${index}`}
+                  color="danger"
+                  size="sm"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
+                  onClick={() =>
+                    handleShowDeleteModal(
+                      designation.id as number,
+                      designation.name,
+                    )
+                  }
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
             )}
           </CTableDataCell>
         </CTableRow>
