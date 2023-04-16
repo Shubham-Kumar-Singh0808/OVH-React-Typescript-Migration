@@ -224,7 +224,8 @@ function AddEditEmployeeSkill({
     if (
       reduxServices.employeeSkill.updateEmployeeSkill.fulfilled.match(
         updateSkillMemberResultAction,
-      )
+      ) &&
+      !skillFilter[0]?.skillType
     ) {
       backButtonHandler()
       dispatch(
