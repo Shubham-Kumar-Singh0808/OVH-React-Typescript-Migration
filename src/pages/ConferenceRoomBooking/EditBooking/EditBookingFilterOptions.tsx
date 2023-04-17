@@ -290,8 +290,11 @@ const EditBookingFilterOptions = (): JSX.Element => {
       }
     }
   }
+  const startTimeSplit = editMeetingRequest.startTime?.split(':')
+  console.log(startTimeSplit)
   const handleConfirmBtn = async () => {
     const startTimeSplit = editMeetingRequest.startTime.split(':')
+    console.log(startTimeSplit)
     const timeCheckResult = await dispatch(
       reduxServices.newEvent.timeCheck(
         `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,

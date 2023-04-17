@@ -237,8 +237,8 @@ const MileStoneTable = (): JSX.Element => {
                   )}
                   <CTableDataCell>{item.crName || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{item.effort || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{item.planedDate}</CTableDataCell>
-                  <CTableDataCell>{item.actualDate}</CTableDataCell>
+                  <CTableDataCell>{item.planedDate || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.actualDate || 'N/A'}</CTableDataCell>
                   <CTableDataCell>{billable}</CTableDataCell>
                   <CTableDataCell>{item.milestonePercentage}%</CTableDataCell>
                   {commentsLimit ? (

@@ -117,33 +117,21 @@ export type EditInvoiceDetails = {
 }
 
 export type GetPeopleForMilestone = {
+  billable?: string
+  comments?: null
+  count?: null
+  desigination?: string
+  empName?: string
   employeeId: number
-  empFirstName: string
-  empLastName: string
-  projectName: string
-  projectId: number
-  startDate: string
-  endDate: string
-  billable: string
-  comments: string
-  department: string
-  desigination: string
-  userName: string
-  isAllocated: string
-  duration: string
-  count: string
-  rate: string
-  role: string
-  amount: string
-  empName: string
-  status: string
-  monthWorkingDays: string
+  endDate?: string
   holidays: string
-  leaves: string
-  totalDays: string
   hours: string
+  leaves: string
+  monthWorkingDays: string
+  role?: string
+  startDate?: string
+  totalDays: string
   totalValue: string
-  allocation: string
 }
 
 export type GetCRListForMilestone = {
@@ -164,11 +152,11 @@ export type GetWorkDetailsProps = {
 
 export type GetWorkDetails = {
   totalValue: number
-  Leaves: number
-  hours: number
+  Leaves: string
+  hours: string
   holidays: number
-  totalDays: number
-  workingDays: number
+  totalDays: string
+  workingDays: string
   employeeId: number
 }
 export type AddMilestoneProps = {

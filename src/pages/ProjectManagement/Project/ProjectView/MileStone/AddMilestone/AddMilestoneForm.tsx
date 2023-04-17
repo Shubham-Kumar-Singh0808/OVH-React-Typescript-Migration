@@ -24,7 +24,7 @@ import { ckeditorConfig } from '../../../../../../utils/ckEditorUtils'
 import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
 import { GetPeopleForMilestone } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
-const EditMileStoneForm = (): JSX.Element => {
+const AddMileStoneForm = (): JSX.Element => {
   const [title, setTitle] = useState<string>('')
   const [mileStoneCRDetails, setMileStoneCRDetails] = useState<string>()
   const [plannedEndDate, setPlannedDate] = useState<string>()
@@ -212,6 +212,7 @@ const EditMileStoneForm = (): JSX.Element => {
   useEffect(() => {
     if (getPeopleMilestone) setCheckList(getPeopleMilestone)
   }, [getPeopleMilestone])
+
   return (
     <>
       <CForm>
@@ -536,4 +537,4 @@ const EditMileStoneForm = (): JSX.Element => {
   )
 }
 
-export default EditMileStoneForm
+export default AddMileStoneForm

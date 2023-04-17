@@ -65,12 +65,12 @@ const MilestonePeopleList = ({
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
   const [employeeName, setEmployeeName] = useState<string>()
-  const [workDays, setWorkDays] = useState<number>()
+  const [workDays, setWorkDays] = useState<string>()
   const [holiDays, setHoliDays] = useState<number>()
-  const [leaves, setLeaves] = useState<number>()
-  const [totalDays, setTotalDays] = useState<number>()
-  const [hours, setHours] = useState<number>()
-  const [totalHours, setTotalHours] = useState<number>()
+  const [leaves, setLeaves] = useState<string>()
+  const [totalDays, setTotalDays] = useState<string>()
+  const [hours, setHours] = useState<string>()
+  const [totalHours, setTotalHours] = useState<string>()
   const [comments, setComments] = useState<string>()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
@@ -82,7 +82,7 @@ const MilestonePeopleList = ({
 
   useEffect(() => {
     if (totalHoursCalculations) {
-      setTotalHours(totalHoursCalculations)
+      setTotalHours(String(totalHoursCalculations))
     }
   }, [totalHoursCalculations])
 
@@ -91,7 +91,7 @@ const MilestonePeopleList = ({
   const milestoneWorkDetails = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneWorkDetails,
   )
-
+  console.log(milestoneWorkDetails)
   useEffect(() => {
     if (milestoneWorkDetails) setWorkDays(milestoneWorkDetails?.workingDays)
     setHoliDays(milestoneWorkDetails?.holidays)
@@ -108,11 +108,11 @@ const MilestonePeopleList = ({
       item?.totalDays &&
       item?.hours
     ) {
-      setWorkDays(Number(item?.monthWorkingDays))
+      setWorkDays(item?.monthWorkingDays)
       setHoliDays(Number(item?.holidays))
-      setLeaves(Number(item?.leaves))
-      setTotalDays(Number(item?.totalDays))
-      setHours(Number(item?.hours))
+      setLeaves(item?.leaves)
+      setTotalDays(item?.totalDays)
+      setHours(item?.hours)
     }
   }, [
     item.monthWorkingDays,
@@ -143,6 +143,9 @@ const MilestonePeopleList = ({
     setToDeleteFamilyId(id)
   }
   console.log(toDeleteFamilyId)
+
+  console.log(leaves)
+
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
@@ -187,7 +190,7 @@ const MilestonePeopleList = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
-                  onChange={(e) => workingDaysOnChange(e, index)}
+                  onChange={(e) => setWorkDays(e.target.value)}
                   value={workDays}
                   className="mt-2"
                   name="effort"
@@ -200,7 +203,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => holidaysOnChange(e, index)}
-                  value={holiDays}
+                  value={item.holidays}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -212,7 +215,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => leavesOnChange(e, index)}
-                  value={leaves}
+                  value={item.leaves}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -223,7 +226,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => totalDaysOnChange(e, index)}
-                  value={totalDays}
+                  value={item.totalDays}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -234,7 +237,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => hoursOnChange(e, index)}
-                  value={hours}
+                  value={item.hours}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -245,7 +248,7 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => totalHoursOnChange(e, index)}
-                  value={totalHours}
+                  value={item?.totalValue}
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -295,7 +298,7 @@ const MilestonePeopleList = ({
                   data-placement="top"
                   className="btn btn-primary pull-right"
                   type="submit"
-                  onClick={() => handleShowDeleteModal(item.projectId)}
+                  onClick={() => handleShowDeleteModal(item.employeeId)}
                 >
                   <i className="fa fa-comments fa-lg text-white"></i>
                 </button>
