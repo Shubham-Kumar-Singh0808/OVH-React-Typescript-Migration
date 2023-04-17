@@ -3,7 +3,10 @@ import React, { useEffect } from 'react'
 import AddNewSkill from './AddNewSkill'
 import SkillListTable from './SkillListTable'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const SkillList = ({
   categoryId,
@@ -15,6 +18,7 @@ const SkillList = ({
   backButtonHandler?: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
+  const isLoading = useTypedSelector(reduxServices.skill.selectors.isLoading)
   const refreshList = useTypedSelector(
     reduxServices.skill.selectors.refreshList,
   )
@@ -34,26 +38,30 @@ const SkillList = ({
 
   return (
     <>
-      <>
-        <CCardHeader>
-          <h4 className="h4">Skill List for {categoryType} Category</h4>
-        </CCardHeader>
-        <CCardBody className="ps-0 pe-0">
-          <CRow>
-            <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
-              <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </CCol>
-            <CCol xs={12}>
-              <AddNewSkill categoryId={categoryId} />
-            </CCol>
-            <CCol xs={12}>
-              <SkillListTable />
-            </CCol>
-          </CRow>
-        </CCardBody>
-      </>
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <CCardHeader>
+            <h4 className="h4">Skill List for {categoryType} Category</h4>
+          </CCardHeader>
+          <CCardBody className="ps-0 pe-0">
+            <CRow>
+              <CCol xs={12} className="gap-2 d-md-flex justify-content-md-end">
+                <CButton color="info btn-ovh me-1" onClick={backButtonHandler}>
+                  <i className="fa fa-arrow-left  me-1"></i>Back
+                </CButton>
+              </CCol>
+              <CCol xs={12}>
+                <AddNewSkill categoryId={categoryId} />
+              </CCol>
+              <CCol xs={12}>
+                <SkillListTable />
+              </CCol>
+            </CRow>
+          </CCardBody>
+        </>
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }
