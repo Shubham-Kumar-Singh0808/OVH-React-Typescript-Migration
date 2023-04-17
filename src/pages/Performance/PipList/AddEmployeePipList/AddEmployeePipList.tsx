@@ -9,7 +9,7 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import DatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -127,7 +127,21 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
-  const employeeDetails = allEmployeeDetails?.filter(
+
+  const sortedFamilyDetails = useMemo(() => {
+    if (allEmployeeDetails) {
+      return allEmployeeDetails
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          (sortNode1.empFirstName + ' ' + sortNode1.empLastName).localeCompare(
+            sortNode2.empFirstName + ' ' + sortNode2.empLastName,
+          ),
+        )
+    }
+    return []
+  }, [allEmployeeDetails])
+
+  const employeeDetails = sortedFamilyDetails?.filter(
     (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
   )
 

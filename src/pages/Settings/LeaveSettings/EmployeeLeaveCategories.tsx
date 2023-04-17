@@ -15,6 +15,7 @@ import {
   CCol,
   CFormInput,
   CFormSelect,
+  CTooltip,
 } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -268,33 +269,37 @@ const EmployeeLeaveCategories = ({
                   ) : (
                     <>
                       {userAccess?.updateaccess && (
-                        <CButton
-                          color="info"
-                          data-testid={`sh-edit-btn${index}`}
-                          className="btn-ovh me-1"
-                          onClick={() => {
-                            editLeaveCategoryButtonHandler(
-                              leaveCategory.id,
-                              leaveCategory.name,
-                              leaveCategory.leaveType,
-                            )
-                          }}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            data-testid={`sh-edit-btn${index}`}
+                            className="btn-ovh me-1"
+                            onClick={() => {
+                              editLeaveCategoryButtonHandler(
+                                leaveCategory.id,
+                                leaveCategory.name,
+                                leaveCategory.leaveType,
+                              )
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                       {userAccess?.deleteaccess && (
-                        <CButton
-                          color="danger btn-ovh me-2"
-                          onClick={() =>
-                            handleShowDeleteModal(leaveCategory.id)
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger btn-ovh me-2"
+                            onClick={() =>
+                              handleShowDeleteModal(leaveCategory.id)
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                     </>
                   )}

@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -453,20 +454,25 @@ const ProjectReportsTable = ({
                           </Link>
                         )}
                         {userAccess.deleteaccess && (
-                          <CButton
-                            className="btn-ovh-employee-list cursor-pointer"
-                            color="danger btn-ovh me-1"
-                            data-testid="delete-btn"
-                            disabled={value.count > 0}
-                            onClick={() =>
-                              handleShowDeleteModal(value.id, value.projectName)
-                            }
-                          >
-                            <i
-                              className="fa fa-trash-o text-white"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
+                          <CTooltip content="Delete">
+                            <CButton
+                              className="btn-ovh-employee-list cursor-pointer"
+                              color="danger btn-ovh me-1"
+                              data-testid="delete-btn"
+                              disabled={value.count > 0}
+                              onClick={() =>
+                                handleShowDeleteModal(
+                                  value.id,
+                                  value.projectName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o text-white"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
                         )}
                       </CTableDataCell>
                     </CTableRow>

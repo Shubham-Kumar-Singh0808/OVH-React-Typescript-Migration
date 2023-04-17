@@ -174,8 +174,13 @@ const SkillListTable = (): JSX.Element => {
         confirmButtonText="Delete"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteSkillId)}
+        modalBodyClass="mt-0"
+        alignment="center"
       >
-        {`Are you sure you want to delete this ${toDeleteSkillName} skill item?`}
+        <>
+          Are you sure you want to delete this{' '}
+          <strong>{toDeleteSkillName}</strong> skill item?
+        </>
       </OModal>
     </>
   )

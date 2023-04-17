@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import React from 'react'
@@ -116,13 +117,15 @@ const EmployeeListTable = ({
                             </Link>
                             &nbsp;
                             <Link to={`/editEmployee/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-pencil-square-o"></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                           </div>
                         )}

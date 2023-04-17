@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import CIcon from '@coreui/icons-react'
@@ -216,41 +217,47 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     >
                       <i className="fa fa-times" aria-hidden="true"></i>
                     </CButton>
-                    <CButton
-                      color="danger"
-                      size="sm"
-                      data-testid={`btn-delete${index}`}
-                      onClick={() => handleShowDeleteModal(templateType.id)}
-                    >
-                      <CIcon className="text-white" icon={cilTrash} />
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        data-testid={`btn-delete${index}`}
+                        onClick={() => handleShowDeleteModal(templateType.id)}
+                      >
+                        <CIcon className="text-white" icon={cilTrash} />
+                      </CButton>
+                    </CTooltip>
                   </>
                 ) : (
                   <>
-                    <CButton
-                      color="info"
-                      data-testid={`sh-edit-btn${index}`}
-                      className="btn-ovh me-1"
-                      onClick={() => {
-                        editTemplateTypeButtonHandler(
-                          templateType.id,
-                          templateType.name,
-                        )
-                      }}
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      size="sm"
-                      data-testid={`btn-delete${index}`}
-                      onClick={() => handleShowDeleteModal(templateType.id)}
-                    >
-                      <CIcon className="text-white" icon={cilTrash} />
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info"
+                        data-testid={`sh-edit-btn${index}`}
+                        className="btn-ovh me-1"
+                        onClick={() => {
+                          editTemplateTypeButtonHandler(
+                            templateType.id,
+                            templateType.name,
+                          )
+                        }}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger"
+                        size="sm"
+                        data-testid={`btn-delete${index}`}
+                        onClick={() => handleShowDeleteModal(templateType.id)}
+                      >
+                        <CIcon className="text-white" icon={cilTrash} />
+                      </CButton>
+                    </CTooltip>
                   </>
                 )}
               </CTableDataCell>
