@@ -14,6 +14,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
 import {
@@ -338,43 +339,47 @@ const ShiftListTable = ({
                   ) : (
                     userAccessShiftConfigurationActions?.updateaccess && (
                       <>
-                        <CButton
-                          color="info"
-                          data-testid={`sh-edit-btn${index}`}
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          onClick={() => {
-                            editShiftDetailsButtonHandler(
-                              employeeShift.id,
-                              employeeShift.startTimeHour,
-                              employeeShift.startTimeMinutes,
-                              employeeShift.endTimeHour,
-                              employeeShift.endTimeMinutes,
-                              employeeShift.graceTime,
-                            )
-                          }}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            data-testid={`sh-edit-btn${index}`}
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            onClick={() => {
+                              editShiftDetailsButtonHandler(
+                                employeeShift.id,
+                                employeeShift.startTimeHour,
+                                employeeShift.startTimeMinutes,
+                                employeeShift.endTimeHour,
+                                employeeShift.endTimeMinutes,
+                                employeeShift.graceTime,
+                              )
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     )
                   )}
                   {userAccessShiftConfigurationActions?.deleteaccess && (
-                    <CButton
-                      color="danger"
-                      data-testid={`sh-delete-btn${index}`}
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                      onClick={() => {
-                        deleteShiftDetailButtonHandler(
-                          employeeShift.id,
-                          employeeShift.name,
-                        )
-                      }}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger"
+                        data-testid={`sh-delete-btn${index}`}
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        onClick={() => {
+                          deleteShiftDetailButtonHandler(
+                            employeeShift.id,
+                            employeeShift.name,
+                          )
+                        }}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                   )}
                 </CTableDataCell>
               </CTableRow>

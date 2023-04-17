@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import SelectedAttendees from './SelectedAttendees'
@@ -191,29 +192,33 @@ const ProjectMembersSelection = ({
               )}
             </CCol>
             <CCol sm={2} md={3} className="meeting-bulk-add">
-              <CButton
-                color="info btn-ovh me-1"
-                className="btn-ovh"
-                data-testid="delete-btn"
-                onClick={() => setAddListModalVisible(true)}
-              >
-                <i
-                  className="fa fa-arrow-right text-white"
-                  aria-hidden="true"
-                ></i>
-              </CButton>
-              {attendeesList?.length > 0 && (
+              <CTooltip content="Delete">
                 <CButton
-                  color="danger btn-ovh me-1"
+                  color="info btn-ovh me-1"
                   className="btn-ovh"
-                  data-testid="delete-button"
-                  onClick={() => setDeleteListModalVisible(true)}
+                  data-testid="delete-btn"
+                  onClick={() => setAddListModalVisible(true)}
                 >
                   <i
-                    className="fa fa-trash-o text-white"
+                    className="fa fa-arrow-right text-white"
                     aria-hidden="true"
                   ></i>
                 </CButton>
+              </CTooltip>
+              {attendeesList?.length > 0 && (
+                <CTooltip content="Delete">
+                  <CButton
+                    color="danger btn-ovh me-1"
+                    className="btn-ovh"
+                    data-testid="delete-button"
+                    onClick={() => setDeleteListModalVisible(true)}
+                  >
+                    <i
+                      className="fa fa-trash-o text-white"
+                      aria-hidden="true"
+                    ></i>
+                  </CButton>
+                </CTooltip>
               )}
             </CCol>
             <SelectedAttendees

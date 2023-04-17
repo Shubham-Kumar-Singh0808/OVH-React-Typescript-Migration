@@ -11,7 +11,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -129,7 +129,18 @@ const AddProjectRequestForm = ({
     if (checkListItems) setCheckList(checkListItems)
   }, [checkListItems])
 
-  const clientOrganizationList = projectClients
+  const sortedDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {

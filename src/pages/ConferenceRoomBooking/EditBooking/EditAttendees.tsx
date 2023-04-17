@@ -7,6 +7,7 @@ import {
   CTableDataCell,
   CButton,
   CCol,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -70,17 +71,19 @@ const EditAttendees = ({
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="danger btn-ovh me-1"
-                      className="btn-ovh-employee-list"
-                      data-testid="delete-btn"
-                      onClick={() => deleteButtonHandler(item.id)}
-                    >
-                      <i
-                        className="fa fa-trash-o text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        data-testid="delete-btn"
+                        onClick={() => deleteButtonHandler(item.id)}
+                      >
+                        <i
+                          className="fa fa-trash-o text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
               )

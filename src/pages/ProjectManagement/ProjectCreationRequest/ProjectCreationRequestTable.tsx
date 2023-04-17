@@ -12,6 +12,7 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
+  CTooltip,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -312,19 +313,21 @@ const ProjectCreationRequestTable = ({
                       </CButton>
                     )}
                     {userDeleteAction && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="delete-btn"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            projectRequest.id,
-                            projectRequest.projectName,
-                          )
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="delete-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              projectRequest.id,
+                              projectRequest.projectName,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>

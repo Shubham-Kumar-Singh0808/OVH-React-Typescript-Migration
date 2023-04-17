@@ -1,4 +1,11 @@
-import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
+import {
+  CRow,
+  CCol,
+  CButton,
+  CFormInput,
+  CInputGroup,
+  CTooltip,
+} from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
@@ -260,14 +267,16 @@ const PayrollManagement = (): JSX.Element => {
     )
 
   const Delete = userAccess?.deleteaccess && (
-    <CButton
-      color="danger btn-ovh"
-      type="button"
-      onClick={allDeleteBtnHandler}
-      id="button-delete"
-    >
-      Delete
-    </CButton>
+    <CTooltip content="Delete">
+      <CButton
+        color="danger btn-ovh"
+        type="button"
+        onClick={allDeleteBtnHandler}
+        id="button-delete"
+      >
+        Delete
+      </CButton>
+    </CTooltip>
   )
 
   useEffect(() => {

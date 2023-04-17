@@ -8,6 +8,7 @@ import {
   CTableBody,
   CTableDataCell,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -173,13 +174,17 @@ const EmployeeEmailTemplateTable = ({
                       </CButton>
                     )}
                     {userDeleteAccess && (
-                      <CButton
-                        data-testid={`btn-delete${index}`}
-                        color="danger btn-ovh me-2"
-                        onClick={() => handleShowDeleteModal(emailTemplate.id)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`btn-delete${index}`}
+                          color="danger btn-ovh me-2"
+                          onClick={() =>
+                            handleShowDeleteModal(emailTemplate.id)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>
