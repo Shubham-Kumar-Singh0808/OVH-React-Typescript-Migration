@@ -120,7 +120,7 @@ const AddProject = (): JSX.Element => {
     } as GetAutoCompleteList
   })
 
-  const sortedFamilyDetails = useMemo(() => {
+  const sortedProjectDetails = useMemo(() => {
     if (projectClients) {
       return projectClients
         .slice()
@@ -131,7 +131,7 @@ const AddProject = (): JSX.Element => {
     return []
   }, [projectClients])
 
-  const clientOrganizationList = sortedFamilyDetails
+  const clientOrganizationList = sortedProjectDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {
