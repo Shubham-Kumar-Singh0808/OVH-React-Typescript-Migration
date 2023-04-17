@@ -1,45 +1,19 @@
 import '@testing-library/jest-dom'
-
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import CategoryListTable from './CategoryListTable'
+import SkillListTable from './SkillListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
-import { mockCategories } from '../../../test/data/categoryListData'
+import { mockSkills } from '../../../test/data/skillListData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <CategoryListTable />
+    <SkillListTable />
   </div>
 )
-
-const expectPageSizeToBeRendered = (pageSize: number) => {
-  for (let i = 0; i < pageSize; i++) {
-    expect(screen.getByText(mockCategories[i].categoryType)).toBeInTheDocument()
-  }
-}
-
-describe('Category List Table Component Testing', () => {
-  test('should render Category List Tableb component with out crashing', () => {
-    render(toRender, {
-      preloadedState: {
-        category: {
-          categories: mockCategories,
-          listSize: 45,
-        },
-      },
-    })
-
-    expectPageSizeToBeRendered(20)
-
-    const deleteBtn = screen.getByTestId('category-delete-btn0')
-    userEvent.click(deleteBtn)
-
-    expect(screen.getByText('Delete Category'))
-  })
-})
 
 describe('Tracker List Component Testing', () => {
   beforeEach(() => {
@@ -61,19 +35,29 @@ describe('Add Tracker List Table without data', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {
-        category: {
-          categories: mockCategories,
-          listSize: 45,
+        skill: {
+          skills: mockSkills,
+          isLoading: ApiLoadingState.succeeded,
         },
       },
     })
   })
   afterEach(cleanup)
   test('should render with data ', () => {
-    expect(screen.getByText('Testing')).toBeInTheDocument()
+    expect(screen.getByText('skillMock1')).toBeInTheDocument()
+  })
+  test('should be able to click delete button element', () => {
+    const deleteBtnElement = screen.getByTestId('category-delete-btn1')
+    expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Delete' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
   })
   test('should render number of records', () => {
-    expect(screen.getByText('Total Records: 40')).toBeInTheDocument()
+    expect(
+      screen.getByText('Total Records: ' + mockSkills.length),
+    ).toBeInTheDocument()
   })
   test('should render first page data only', () => {
     waitFor(() => {
