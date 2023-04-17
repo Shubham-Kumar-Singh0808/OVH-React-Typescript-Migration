@@ -171,11 +171,12 @@ const SkillListTable = (): JSX.Element => {
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Skill"
-        confirmButtonText="Delete"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteSkillId)}
         modalBodyClass="mt-0"
         alignment="center"
+        confirmButtonText="Delete"
+        cancelButtonText="Cancel"
       >
         <>
           Are you sure you want to delete this{' '}
