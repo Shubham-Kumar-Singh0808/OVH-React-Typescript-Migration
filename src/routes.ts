@@ -441,6 +441,7 @@ const SQAAuditViewReport = React.lazy(
 const processAreaList = React.lazy(
   () => import('./pages/Settings/ProcessArea/ProcessArea'),
 )
+// const ErrorPage = React.lazy(() => import('./pages/ErrorPage/ErrorPage'))
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -967,6 +968,11 @@ const routes = [
     name: 'SQA Audit View',
     component: SQAAuditViewReport,
   },
+  // {
+  //   path: '/forbidden',
+  //   name: 'Error Page',
+  //   component: ErrorPage,
+  // },
 ]
 
 export default routes

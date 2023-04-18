@@ -409,20 +409,6 @@ const EmployeePipList = ({
           />
         </>
       )}
-      {toggle === 'addPIP' && !IndividualUserAccess?.viewaccess && (
-        <AddEmployeePipList
-          pageSize={pageSize}
-          searchByAdded={searchByAdded}
-          searchByEmployee={searchByEmployee}
-          searchInput={searchInput}
-          selectDate={selectDate}
-          fromDate={fromDate as string}
-          toDate={toDate as string}
-          setToggle={() => {
-            setToggle('')
-          }}
-        />
-      )}
     </>
   )
 }
