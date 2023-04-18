@@ -152,11 +152,13 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         setVisible={setModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: String(modalDescription),
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: String(modalDescription),
+              }}
+            />
+          </span>
         </p>
       </OModal>
     </>

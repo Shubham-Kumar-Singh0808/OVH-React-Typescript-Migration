@@ -344,11 +344,13 @@ const TicketApprovalsTable = ({
         modalBodyClass="pt-0 pb-5"
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: modalDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: modalDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal

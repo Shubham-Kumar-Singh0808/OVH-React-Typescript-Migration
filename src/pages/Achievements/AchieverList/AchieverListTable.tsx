@@ -217,12 +217,13 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
           modalHeaderClass="d-none"
         >
           {/* <div data-testid="modal-txt">{descriptionContentTernary}</div> */}
-
-          <div
-            dangerouslySetInnerHTML={{
-              __html: descriptionContent,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: descriptionContent,
+              }}
+            />
+          </span>
         </OModal>
       </>
     </>

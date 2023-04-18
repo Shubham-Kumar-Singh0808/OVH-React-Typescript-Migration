@@ -179,11 +179,13 @@ const InitiateCycleTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: questionModal,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: questionModal,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>

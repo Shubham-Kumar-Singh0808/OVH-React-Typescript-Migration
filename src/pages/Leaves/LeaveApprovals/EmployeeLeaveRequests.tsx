@@ -283,11 +283,13 @@ const EmployeeLeaveRequests = (props: {
                             handleModal(employeeLeaveItem.employeeComments)
                           }
                         >
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: employeeCommentsLimit,
-                            }}
-                          />
+                          <span className="descriptionField">
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: employeeCommentsLimit,
+                              }}
+                            />
+                          </span>
                         </CLink>
                       ) : (
                         'N/A'

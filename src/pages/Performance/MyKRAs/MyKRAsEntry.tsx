@@ -97,11 +97,13 @@ const MyKRAsEntry = (props: {
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: kraDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: kraDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
     </>

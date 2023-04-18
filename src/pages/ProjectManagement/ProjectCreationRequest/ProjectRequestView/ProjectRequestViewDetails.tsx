@@ -176,11 +176,13 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Description:
           </CFormLabel>
           <CCol sm={10}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.description,
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.description,
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0">
