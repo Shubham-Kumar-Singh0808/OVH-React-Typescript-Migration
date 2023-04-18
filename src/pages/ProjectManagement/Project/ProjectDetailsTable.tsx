@@ -243,17 +243,19 @@ const ProjectDetailsTable = ({
                                 aria-hidden="true"
                               ></i>
                             </CButton>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="cancel-sub-btn"
-                              onClick={handleCancelUpdate}
-                            >
-                              <i
-                                className="fa fa-times text-white sh-fa-times"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Cancel">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="cancel-sub-btn"
+                                onClick={handleCancelUpdate}
+                              >
+                                <i
+                                  className="fa fa-times text-white sh-fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </>
                         ) : (
                           <>

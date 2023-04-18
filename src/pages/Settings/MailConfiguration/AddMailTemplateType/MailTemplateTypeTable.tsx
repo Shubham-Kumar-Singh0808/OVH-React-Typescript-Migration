@@ -209,14 +209,16 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
-                    <CButton
-                      data-testid={`btn-remove${index}`}
-                      color="warning"
-                      className="btn-ovh me-1"
-                      onClick={cancelMailTemplateTypeButtonHandler}
-                    >
-                      <i className="fa fa-times" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Cancel">
+                      <CButton
+                        data-testid={`btn-remove${index}`}
+                        color="warning"
+                        className="btn-ovh me-1"
+                        onClick={cancelMailTemplateTypeButtonHandler}
+                      >
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                     <CTooltip content="Delete">
                       <CButton
                         color="danger"

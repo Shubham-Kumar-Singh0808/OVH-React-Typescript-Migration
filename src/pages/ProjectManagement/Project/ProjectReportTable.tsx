@@ -407,50 +407,56 @@ const ProjectReportsTable = ({
                       <CTableDataCell>
                         {isCloseBtnVisible &&
                           userAccessProjectClose?.viewaccess && (
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="close-btn"
-                              onClick={() =>
-                                handleShowCloseModal(
-                                  value.id,
-                                  value.projectName,
-                                )
-                              }
-                            >
-                              <i
-                                className="fa fa-times text-white sh-fa-times"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Close">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="close-btn"
+                                onClick={() =>
+                                  handleShowCloseModal(
+                                    value.id,
+                                    value.projectName,
+                                  )
+                                }
+                              >
+                                <i
+                                  className="fa fa-times text-white sh-fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
                         <Link to={`/viewProject/${value.id}`}>
-                          <CButton
-                            className="btn-ovh-employee-list cursor-pointer"
-                            color="info-light btn-ovh me-1"
-                            data-testid="view-btn"
-                            onClick={() => handleViewModel(value.id)}
-                          >
-                            <i
-                              className="fa fa-eye text-white"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                        </Link>
-                        {userAccess.updateaccess && (
-                          <Link to={`/editproject/${value.id}`}>
+                          <CTooltip content="View">
                             <CButton
                               className="btn-ovh-employee-list cursor-pointer"
-                              color="primary btn-ovh me-1"
-                              data-testid="edit-btn"
+                              color="info-light btn-ovh me-1"
+                              data-testid="view-btn"
+                              onClick={() => handleViewModel(value.id)}
                             >
                               <i
-                                className="fa fa-edit text-white"
+                                className="fa fa-eye text-white"
                                 aria-hidden="true"
                               ></i>
                             </CButton>
+                          </CTooltip>
+                        </Link>
+                        {userAccess.updateaccess && (
+                          <Link to={`/editproject/${value.id}`}>
+                            <CTooltip content="Edit">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="primary btn-ovh me-1"
+                                data-testid="edit-btn"
+                              >
+                                <i
+                                  className="fa fa-edit text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </Link>
                         )}
                         {userAccess.deleteaccess && (

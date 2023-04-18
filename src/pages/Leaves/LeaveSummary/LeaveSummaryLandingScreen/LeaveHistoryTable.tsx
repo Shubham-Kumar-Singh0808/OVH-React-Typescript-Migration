@@ -9,6 +9,7 @@ import {
   CRow,
   CLink,
   CButton,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -197,15 +198,19 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
                     <CTableDataCell>
                       {leaveHistory.status === 'PendingApproval' ? (
-                        <CButton
-                          color="warning"
-                          size="sm"
-                          className="btn-ovh btn-ovh-employee-list"
-                          data-testid={`cancel-btn${index}`}
-                          onClick={() => handleShowCancelModal(leaveHistory.id)}
-                        >
-                          <i className="fa fa-times" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="warning"
+                            size="sm"
+                            className="btn-ovh btn-ovh-employee-list"
+                            data-testid={`cancel-btn${index}`}
+                            onClick={() =>
+                              handleShowCancelModal(leaveHistory.id)
+                            }
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       ) : (
                         <></>
                       )}

@@ -197,12 +197,14 @@ const MileStoneTable = (): JSX.Element => {
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
+                    <CTooltip content="Timeline">
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                      >
+                        <i className="fa fa-bar-chart text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"

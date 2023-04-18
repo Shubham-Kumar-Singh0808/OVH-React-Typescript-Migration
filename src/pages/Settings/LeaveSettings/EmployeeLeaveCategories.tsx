@@ -258,13 +258,15 @@ const EmployeeLeaveCategories = ({
                       >
                         <i className="fa fa-floppy-o" aria-hidden="true"></i>
                       </CButton>
-                      <CButton
-                        color="warning"
-                        className="btn-ovh me-1"
-                        onClick={cancelLeaveCategoryButtonHandler}
-                      >
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Cancel">
+                        <CButton
+                          color="warning"
+                          className="btn-ovh me-1"
+                          onClick={cancelLeaveCategoryButtonHandler}
+                        >
+                          <i className="fa fa-times" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     </>
                   ) : (
                     <>
