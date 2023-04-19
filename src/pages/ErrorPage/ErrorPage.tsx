@@ -38,7 +38,7 @@ const ErrorPage = (): JSX.Element => {
           </p>
           <CButton
             color="info"
-            className="btn-ovh me-1"
+            className="btn-ovh me-1 btn-primary "
             data-testid="removeBack-button"
             onClick={() => history.push('/dashboard')}
           >
