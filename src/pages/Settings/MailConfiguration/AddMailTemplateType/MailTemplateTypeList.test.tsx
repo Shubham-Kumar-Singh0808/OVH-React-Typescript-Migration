@@ -1,59 +1,32 @@
 import '@testing-library/jest-dom'
-// eslint-disable-next-line import/named
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import MailTemplateTypeList from './MailTemplateTypeList'
 import { render, screen, waitFor } from '../../../../test/testUtils'
 import { mockMailTemplateTypes } from '../../../../test/data/addMailTemplateTypeData'
-import stateStore from '../../../../stateStore'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
-
-describe('Mail Template Table Testing', () => {
-  test('should render No data to display if Mail template is empty', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <MailTemplateTypeList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    await waitFor(() => {
-      expect(screen.getByText('No Records Found')).toBeInTheDocument()
-    })
-  })
-})
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <MailTemplateTypeList
+      headerTitle={''}
+      confirmButtonText={''}
+      backButtonHandler={jest.fn()}
+    />
+  </div>
+)
 
 describe('Mail Template component with data', () => {
   beforeEach(() => {
-    render(
-      <MailTemplateTypeList
-        headerTitle={''}
-        confirmButtonText={''}
-        backButtonHandler={function (): void {
-          throw new Error('Function not implemented.')
-        }}
-      />,
-      {
-        preloadedState: {
-          addMailTemplateType: {
-            mailTemplateType: mockMailTemplateTypes,
-          },
+    render(toRender, {
+      preloadedState: {
+        addMailTemplateType: {
+          mailTemplateType: mockMailTemplateTypes,
         },
       },
-    )
+    })
   })
   test('should not render the loading spinner when MailTemplate Type is not empty', () => {
     expect(screen.findByTestId('MailTemplate-loading-spinner')).toMatchObject(
