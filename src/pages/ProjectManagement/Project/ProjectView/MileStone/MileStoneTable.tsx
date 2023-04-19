@@ -274,11 +274,13 @@ const MileStoneTable = (): JSX.Element => {
         >
           <>
             <p>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: subject as string,
-                }}
-              />
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: subject as string,
+                  }}
+                />
+              </span>
             </p>
           </>
         </OModal>

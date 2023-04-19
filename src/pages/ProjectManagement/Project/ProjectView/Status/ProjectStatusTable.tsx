@@ -324,12 +324,14 @@ const ProjectStatusTable = ({
       >
         <>
           <h4>Weekly status Report {taskName}</h4>
-          <div
-            className="mt-3"
-            dangerouslySetInnerHTML={{
-              __html: subject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              className="mt-3"
+              dangerouslySetInnerHTML={{
+                __html: subject,
+              }}
+            />
+          </span>
         </>
       </OModal>
       <OModal
@@ -343,12 +345,14 @@ const ProjectStatusTable = ({
       >
         <>
           <h4>Weekly status Report {modalTaskName}</h4>
-          <div
-            className="mt-3"
-            dangerouslySetInnerHTML={{
-              __html: modalSubject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              className="mt-3"
+              dangerouslySetInnerHTML={{
+                __html: modalSubject,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>

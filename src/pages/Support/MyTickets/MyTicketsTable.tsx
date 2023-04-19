@@ -289,11 +289,13 @@ const MyTicketsTable = ({
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: ticketSubject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: ticketSubject,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal

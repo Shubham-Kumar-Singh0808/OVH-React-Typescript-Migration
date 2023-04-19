@@ -152,11 +152,13 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Technology:
           </CFormLabel>
           <CCol sm={3}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.technology,
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.technology,
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -164,11 +166,13 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Required Resources:
           </CFormLabel>
           <CCol sm={3}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.requiredResources || 'N/A',
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.requiredResources || 'N/A',
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">

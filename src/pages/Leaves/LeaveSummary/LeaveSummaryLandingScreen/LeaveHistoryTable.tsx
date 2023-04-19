@@ -266,11 +266,13 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: comments,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: comments,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal
