@@ -136,21 +136,24 @@ const PayrollManagementTable = (props: {
 
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
-    const value1 = +value
-    if (props.paySlipId?.includes(value1)) {
+    // const value1 = +value
+    // console.log(e.target)
+    console.log(checked)
+    if (props.paySlipId?.includes(Number(value))) {
       setAllChecked(checked)
-      const index = props.paySlipId.indexOf(value1)
+      const index = props.paySlipId.indexOf(Number(value))
       if (index !== undefined) {
         props.paySlipId.splice(index, 1)
         props.setPaySlipId(props.paySlipId)
       }
     } else {
-      const list = props.paySlipId || []
-      list?.push(value1)
+      const list = [...props.paySlipId] || []
+      list?.push(Number(value))
       if (list.length === renderingPayslipData.length) setAllChecked(checked)
       props.setPaySlipId(list)
     }
   }
+  console.log(props.paySlipId)
 
   return (
     <>
@@ -224,6 +227,8 @@ const PayrollManagementTable = (props: {
             <CTableBody>
               {renderingPayslipData?.length > 0 &&
                 renderingPayslipData?.map((payslipItem, index) => {
+                  console.log(props.paySlipId, payslipItem?.paySlipId)
+
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">

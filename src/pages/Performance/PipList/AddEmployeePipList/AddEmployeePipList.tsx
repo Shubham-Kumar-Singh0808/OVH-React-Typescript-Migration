@@ -30,19 +30,21 @@ const AddEmployeePipList = ({
   searchByAdded,
   searchByEmployee,
   searchInput,
-  selectDate,
+  // selectDate,
   fromDate,
   toDate,
   setToggle,
+  getPIPValue,
 }: {
   setToggle: () => void
   pageSize: number
   searchByAdded: boolean
   searchByEmployee: boolean
   searchInput: string
-  selectDate: string
+  // selectDate: string
   fromDate: Date | string
   toDate: Date | string
+  getPIPValue: string
 }): JSX.Element => {
   const [startDate, setStartDate] = useState<string>()
   const [endDate, setEndDate] = useState<string>()
@@ -176,7 +178,7 @@ const AddEmployeePipList = ({
           startIndex: pageSize * (selectCurrentPage - 1),
           endIndex: pageSize * selectCurrentPage,
           selectionStatus: selectedEmployeePipStatus,
-          dateSelection: selectDate,
+          dateSelection: getPIPValue,
           from: (fromDate as string) || '',
           multiSearch: searchInput,
           searchByAdded,

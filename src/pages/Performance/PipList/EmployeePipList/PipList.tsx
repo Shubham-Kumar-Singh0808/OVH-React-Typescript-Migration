@@ -3,13 +3,13 @@ import moment from 'moment'
 import EmployeePipList from './EmployeePipList'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const PipList = (): JSX.Element => {
-  const currentMonth = 'Current Month'
-  const [selectDate, setSelectDate] = useState<string>(currentMonth)
+  // const currentMonth = 'Current Month'
+  // const [selectDate, setSelectDate] = useState<string>(currentMonth)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
@@ -20,11 +20,20 @@ const PipList = (): JSX.Element => {
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
   const [toggle, setToggle] = useState<string>('')
 
-  useEffect(() => {
-    if (localStorage.getItem('fmonth')) {
-      setSelectDate(localStorage.getItem('fmonth') ?? '')
-    }
-  }, [])
+  const getPIPValue = useTypedSelector(
+    reduxServices.pipList.selectors.getPIPValue,
+  )
+  const dispatch = useAppDispatch()
+
+  // useEffect(() => {
+  //   if (localStorage.getItem('fmonth')) {
+  //     setSelectDate(localStorage.getItem('fmonth') ?? '')
+  //   }
+  //   // return () => {
+  //   //   localStorage.removeItem('fmonth')
+  //   // }
+  //   // dispatch(reduxServices.pipList.actions.setMonthValue(selectDate))
+  // }, [selectDate])
 
   useEffect(() => {
     if (localStorage.getItem('fromMonth')) {
@@ -103,14 +112,17 @@ const PipList = (): JSX.Element => {
     }
   }, [selectCurrentPage])
 
+  console.log(getPIPValue + 'getPIPValue')
+
   const pipListObj = {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
-    dateSelection:
-      (localStorage.getItem('fmonth')
-        ? localStorage.getItem('fmonth')
-        : selectDate) || '',
+    // dateSelection:
+    //   (localStorage.getItem('fmonth')
+    //     ? localStorage.getItem('fmonth')
+    //     : selectDate) || '',
+    dateSelection: getPIPValue || '',
     from:
       (localStorage.getItem('fromMonth')
         ? localStorage.getItem('fromMonth')
@@ -124,6 +136,12 @@ const PipList = (): JSX.Element => {
         : toDate) || '',
   }
 
+  // useEffect(() => {
+  //   if (window.location.pathname === '/PIPList') {
+  //     dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
+  //   }
+  // }, [])
+
   return (
     <>
       <OCard
@@ -133,8 +151,9 @@ const PipList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <EmployeePipList
-          selectDate={selectDate}
-          setSelectDate={setSelectDate}
+          // selectDate={selectDate}
+          // setSelectDate={setSelectDate}
+          getPIPValue={getPIPValue}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           searchByAdded={searchByAdded}
@@ -147,7 +166,7 @@ const PipList = (): JSX.Element => {
           setToDate={setToDate}
           dateError={dateError}
           isMultiSearchBtn={isMultiSearchBtn}
-          currentMonth={currentMonth}
+          // currentMonth={currentMonth}
           toggle={toggle}
           setToggle={setToggle}
           HierarchyUserAccess={HierarchyUserAccess}

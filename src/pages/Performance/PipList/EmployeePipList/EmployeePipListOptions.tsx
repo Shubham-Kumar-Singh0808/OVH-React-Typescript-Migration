@@ -10,13 +10,14 @@ import {
 import { downloadFile } from '../../../../utils/helper'
 
 const EmployeePipListOptions = ({
-  selectDate,
+  // selectDate,
   toDate,
   fromDate,
   searchInput,
   searchByAdded,
   searchByEmployee,
   setToggle,
+  getPIPValue,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -37,7 +38,7 @@ const EmployeePipListOptions = ({
   const handleExportEmployeePIPListData = async () => {
     const employeePipListDownload = await pipListApi.exportPIPList({
       selectionStatus: selectedEmployeePipStatus,
-      dateSelection: selectDate,
+      dateSelection: getPIPValue,
       from: (fromDate as string) || '',
       multiSearch: searchInput as string,
       searchByAdded: searchByAdded as boolean,

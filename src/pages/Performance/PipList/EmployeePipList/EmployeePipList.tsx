@@ -23,8 +23,8 @@ import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfig
 import { EmployeePipStatus } from '../../../../types/Performance/PipList/pipListTypes'
 
 const EmployeePipList = ({
-  selectDate,
-  setSelectDate,
+  // selectDate,
+  // setSelectDate,
   searchInput,
   setSearchInput,
   searchByAdded,
@@ -37,7 +37,7 @@ const EmployeePipList = ({
   setToDate,
   dateError,
   isMultiSearchBtn,
-  currentMonth,
+  // currentMonth,
   toggle,
   setToggle,
   HierarchyUserAccess,
@@ -48,9 +48,10 @@ const EmployeePipList = ({
   pageSize,
   pipListObj,
   setCurrentPage,
+  getPIPValue,
 }: {
-  selectDate: string
-  setSelectDate: React.Dispatch<React.SetStateAction<string>>
+  // selectDate: string
+  // setSelectDate: React.Dispatch<React.SetStateAction<string>>
   searchInput: string
   setSearchInput: React.Dispatch<React.SetStateAction<string>>
   searchByAdded: boolean
@@ -63,7 +64,7 @@ const EmployeePipList = ({
   setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
   dateError: boolean
   isMultiSearchBtn: boolean
-  currentMonth: string
+  // currentMonth: string
   toggle: string
   setToggle: React.Dispatch<React.SetStateAction<string>>
   IndividualUserAccess: UserAccessToFeatures | undefined
@@ -84,6 +85,7 @@ const EmployeePipList = ({
     searchByEmployee: boolean
     to: string
   }
+  getPIPValue: string | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -130,7 +132,7 @@ const EmployeePipList = ({
   }
 
   const pipListObject = {
-    dateSelection: selectDate,
+    dateSelection: String(getPIPValue),
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -145,9 +147,14 @@ const EmployeePipList = ({
     dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
   }
 
+  // const getPIPValue = useTypedSelector(
+  //   reduxServices.pipList.selectors.getPIPValue,
+  // )
+
   const clearButtonHandler = () => {
     localStorage.removeItem('fmonth')
-    setSelectDate('Current Month')
+    // setSelectDate('Current Month')
+    dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
     setFromDate('')
     setToDate('')
     setSearchByEmployee(false)
@@ -159,7 +166,7 @@ const EmployeePipList = ({
         startIndex: pageSize * (selectCurrentPage - 1),
         endIndex: pageSize * selectCurrentPage,
         selectionStatus: selectedEmployeePipStatus,
-        dateSelection: currentMonth,
+        dateSelection: 'Current Month',
         from: (fromDate as string) || '',
         multiSearch: searchInput,
         searchByAdded,
@@ -185,6 +192,12 @@ const EmployeePipList = ({
       localStorage.setItem('fromMonth', moment(value).format(dateFormat))
     }
   }
+  useEffect(() => {
+    if (getPIPValue === 'Custom') {
+      setFromDate('')
+      setToDate('')
+    }
+  }, [getPIPValue])
 
   return (
     <>
@@ -203,12 +216,17 @@ const EmployeePipList = ({
                     id="selectDate"
                     data-testid="form-select1"
                     name="selectDate"
-                    value={selectDate}
+                    value={getPIPValue}
                     onChange={(e) => {
-                      setSelectDate(e.target.value)
-                      if (!localStorage.getItem('fmonth')) {
-                        localStorage.setItem('fmonth', e.target.value)
-                      }
+                      // setSelectDate(e.target.value)
+                      // if (!localStorage.getItem('fmonth')) {
+                      //   localStorage.setItem('fmonth', e.target.value)
+                      // }
+                      dispatch(
+                        reduxServices.pipList.actions.setMonthValue(
+                          e.target.value,
+                        ),
+                      )
                     }}
                   >
                     <option value="Today">Today</option>
@@ -222,7 +240,7 @@ const EmployeePipList = ({
                 </CCol>
                 <CCol sm={12} md={9}>
                   <EmployeePipListOptions
-                    selectDate={selectDate}
+                    // selectDate={selectDate}
                     paginationRange={paginationRange}
                     setPageSize={setPageSize}
                     setCurrentPage={setCurrentPage}
@@ -234,12 +252,13 @@ const EmployeePipList = ({
                     searchByAdded={searchByAdded}
                     searchByEmployee={searchByEmployee}
                     setToggle={setToggle}
-                    setSelectDate={setSelectDate}
+                    // setSelectDate={setSelectDate}
                     setFromDate={setFromDate}
                     setToDate={setToDate}
+                    getPIPValue={getPIPValue as string}
                   />
                 </CCol>
-                {selectDate === 'Custom' ? (
+                {getPIPValue === 'Custom' ? (
                   <>
                     <CCol sm={2} md={1} className="text-end">
                       <CFormLabel className="mt-1">
@@ -316,7 +335,7 @@ const EmployeePipList = ({
                     data-testid="view-btn"
                     onClick={viewButtonHandler}
                     disabled={
-                      (selectDate === 'Custom' &&
+                      (getPIPValue === 'Custom' &&
                         !(fromDate !== '' && toDate !== '')) ||
                       dateError
                     }
@@ -401,11 +420,12 @@ const EmployeePipList = ({
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            selectDate={selectDate}
+            // selectDate={selectDate}
             setToggle={setToggle}
-            setSelectDate={setSelectDate}
+            // setSelectDate={setSelectDate}
             setFromDate={setFromDate}
             setToDate={setToDate}
+            getPIPValue={''}
           />
         </>
       )}
@@ -415,12 +435,13 @@ const EmployeePipList = ({
           searchByAdded={searchByAdded}
           searchByEmployee={searchByEmployee}
           searchInput={searchInput}
-          selectDate={selectDate}
+          // selectDate={selectDate}
           fromDate={fromDate as string}
           toDate={toDate as string}
           setToggle={() => {
             setToggle('')
           }}
+          getPIPValue={getPIPValue as string}
         />
       )}
     </>
