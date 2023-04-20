@@ -136,24 +136,22 @@ const PayrollManagementTable = (props: {
 
   const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
-    // const value1 = +value
-    // console.log(e.target)
-    console.log(checked)
-    if (props.paySlipId?.includes(Number(value))) {
+    const value1 = +value
+    if (props.paySlipId?.includes(value1)) {
       setAllChecked(checked)
-      const index = props.paySlipId.indexOf(Number(value))
+      const list = [...props.paySlipId]
+      const index = list.indexOf(value1)
       if (index !== undefined) {
-        props.paySlipId.splice(index, 1)
-        props.setPaySlipId(props.paySlipId)
+        list.splice(index, 1)
+        props.setPaySlipId(list)
       }
     } else {
       const list = [...props.paySlipId] || []
-      list?.push(Number(value))
+      list?.push(value1)
       if (list.length === renderingPayslipData.length) setAllChecked(checked)
       props.setPaySlipId(list)
     }
   }
-  console.log(props.paySlipId)
 
   return (
     <>
