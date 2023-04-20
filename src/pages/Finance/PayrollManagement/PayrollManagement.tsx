@@ -32,6 +32,9 @@ const PayrollManagement = (): JSX.Element => {
 
   const [isPercentageEnable, setPercentageEnable] = useState(false)
 
+  const [isDeleteBtnDisable, setIsDeleteBtnDisable] = useState(false)
+  const [allChecked, setAllChecked] = useState<boolean>(false)
+
   const [paySlipId, setPaySlipId] = useState<number[]>([])
 
   useEffect(() => {
@@ -77,6 +80,13 @@ const PayrollManagement = (): JSX.Element => {
     setToEditPayslip(payslipItem)
     setToggle('editPaySlip')
   }
+  useEffect(() => {
+    if (allChecked) {
+      setIsDeleteBtnDisable(true)
+    } else {
+      setIsDeleteBtnDisable(false)
+    }
+  }, [allChecked])
 
   const {
     paginationRange,
@@ -221,6 +231,8 @@ const PayrollManagement = (): JSX.Element => {
             editPaySlipHandler={editPaySlipHandler}
             paySlipId={paySlipId}
             setPaySlipId={setPaySlipId}
+            allChecked={allChecked}
+            setAllChecked={setAllChecked}
           />
         )}
       </>
@@ -265,6 +277,7 @@ const PayrollManagement = (): JSX.Element => {
       type="button"
       onClick={allDeleteBtnHandler}
       id="button-delete"
+      disabled={!isDeleteBtnDisable}
     >
       Delete
     </CButton>

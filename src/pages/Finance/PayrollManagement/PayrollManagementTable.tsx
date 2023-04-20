@@ -36,6 +36,8 @@ const PayrollManagementTable = (props: {
   editPaySlipHandler: (payslipItem: CurrentPayslip) => void
   paySlipId: number[]
   setPaySlipId: React.Dispatch<React.SetStateAction<number[]>>
+  allChecked: boolean
+  setAllChecked: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
@@ -51,8 +53,6 @@ const PayrollManagementTable = (props: {
   console.log(renderingPayslipData)
 
   const dispatch = useAppDispatch()
-
-  const [allChecked, setAllChecked] = useState<boolean>(false)
 
   useEffect(() => {
     if (props.selectMonth && props.selectYear)
@@ -126,7 +126,7 @@ const PayrollManagementTable = (props: {
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newList = renderingPayslipData.map((item) => item.paySlipId)
     const { checked } = e.target
-    setAllChecked(e.target.checked)
+    props.setAllChecked(e.target.checked)
     if (checked) {
       props.setPaySlipId(newList)
     } else {
@@ -138,7 +138,7 @@ const PayrollManagementTable = (props: {
     const { value, checked } = e.target
     const value1 = +value
     if (props.paySlipId?.includes(value1)) {
-      setAllChecked(checked)
+      props.setAllChecked(checked)
       const list = [...props.paySlipId]
       const index = list.indexOf(value1)
       if (index !== undefined) {
@@ -148,7 +148,8 @@ const PayrollManagementTable = (props: {
     } else {
       const list = [...props.paySlipId] || []
       list?.push(value1)
-      if (list.length === renderingPayslipData.length) setAllChecked(checked)
+      if (list.length === renderingPayslipData.length)
+        props.setAllChecked(checked)
       props.setPaySlipId(list)
     }
   }
@@ -169,7 +170,7 @@ const PayrollManagementTable = (props: {
                   <CFormCheck
                     className="form-check-input form-select-not-allowed"
                     name="deleteCheckbox"
-                    checked={allChecked}
+                    checked={props.allChecked}
                     onChange={handleAllCheck}
                     data-testid="ch-All"
                   />
