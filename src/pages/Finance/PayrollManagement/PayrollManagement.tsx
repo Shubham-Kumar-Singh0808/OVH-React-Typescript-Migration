@@ -277,7 +277,7 @@ const PayrollManagement = (): JSX.Element => {
       type="button"
       onClick={allDeleteBtnHandler}
       id="button-delete"
-      disabled={!isDeleteBtnDisable}
+      // disabled={!isDeleteBtnDisable}
     >
       Delete
     </CButton>
