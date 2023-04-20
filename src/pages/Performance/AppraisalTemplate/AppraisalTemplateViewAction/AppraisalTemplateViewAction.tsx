@@ -10,9 +10,11 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
 const AppraisalTemplateViewAction = ({
+  recData,
   setToggle,
   editAppraisalId,
 }: {
+  recData: GetDesignationsUnderCycle[]
   setToggle: () => void
   editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
@@ -58,6 +60,9 @@ const AppraisalTemplateViewAction = ({
       setCbFromApi(activeCycle.kraLookups)
     }
   }, [activeCycle])
+
+  console.log('# aa recData ', recData)
+  console.log('# aa editAppraisalId ', editAppraisalId)
 
   return (
     <>

@@ -21,10 +21,18 @@ const AppraisalTemplate = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
+  const tmpData = useTypedSelector(
+    reduxServices.appraisalTemplate.selectors.designationsUnderCycle,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.appraisalTemplate.activeCycle())
     dispatch(reduxServices.appraisalTemplate.cycle())
   }, [dispatch])
+
+  console.log('# editAppraisalId ', editAppraisalId)
+  console.log('# cycleList ', cycleList)
+  console.log('# tmpData ', tmpData)
 
   return (
     <>
@@ -75,6 +83,7 @@ const AppraisalTemplate = (): JSX.Element => {
       )}
       {toggle === 'editViewAppraisalTemplate' && (
         <AppraisalTemplateViewAction
+          recData={tmpData}
           editAppraisalId={editAppraisalId}
           setToggle={() => {
             setToggle('')

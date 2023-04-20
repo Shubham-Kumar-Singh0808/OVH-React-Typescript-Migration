@@ -124,6 +124,7 @@ const AppraisalTemplateTable = ({
                     <CTooltip content="View">
                       <CButton
                         className="btn-ovh btn-ovh-employee-list me-1 sh-eye-btn-color"
+                        title="View Cycle Values"
                         onClick={() =>
                           editCycleHandler(
                             cycle.designation.departmentId,

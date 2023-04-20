@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import {
   CRow,
   CCol,
@@ -158,6 +160,12 @@ const AppraisalTemplateViewActionTable = ({
     const appraisalTemplateResultAction = await dispatch(
       reduxServices.appraisalTemplate.designingmaping(prepareObject),
     )
+
+    console.log(
+      '# appraisalTemplateResultAction ',
+      appraisalTemplateResultAction,
+    )
+
     if (
       reduxServices.appraisalTemplate.designingmaping.fulfilled.match(
         appraisalTemplateResultAction,
@@ -167,6 +175,11 @@ const AppraisalTemplateViewActionTable = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
+  console.log(
+    '# editAppraisalId.kraLookups ',
+    editAppraisalId && editAppraisalId.kraLookups,
+  )
 
   return (
     <>
