@@ -283,11 +283,13 @@ const EmployeeLeaveRequests = (props: {
                             handleModal(employeeLeaveItem.employeeComments)
                           }
                         >
-                          <div
-                            dangerouslySetInnerHTML={{
-                              __html: employeeCommentsLimit,
-                            }}
-                          />
+                          <span className="descriptionField">
+                            <div
+                              dangerouslySetInnerHTML={{
+                                __html: employeeCommentsLimit,
+                              }}
+                            />
+                          </span>
                         </CLink>
                       ) : (
                         'N/A'
@@ -386,11 +388,13 @@ const EmployeeLeaveRequests = (props: {
         modalHeaderClass="d-none"
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: modalText,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: modalText,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal
@@ -410,9 +414,15 @@ const EmployeeLeaveRequests = (props: {
             </CFormLabel>
             <CCol sm={6}>
               <CFormTextarea
-                {...dynamicFormLabelProps('2', 'sh-text-area')}
+                data-testid="text-area"
+                aria-label="textarea"
+                autoComplete="off"
+                maxLength={150}
+                value={approveLeaveComment}
+                className="sh-question"
                 onChange={(e) => setApproveLeaveComment(e.target.value)}
               ></CFormTextarea>
+              <p>{approveLeaveComment?.length}/150</p>
             </CCol>
           </CRow>
         </>

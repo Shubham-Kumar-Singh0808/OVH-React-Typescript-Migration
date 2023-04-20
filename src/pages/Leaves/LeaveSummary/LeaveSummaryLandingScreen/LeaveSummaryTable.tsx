@@ -29,7 +29,7 @@ const LeaveSummaryTable = (): JSX.Element => {
           <CTableRow className="text-center">
             <CTableHeaderCell scope="col">Type</CTableHeaderCell>
             <CTableHeaderCell scope="col">Credited</CTableHeaderCell>
-            <CTableHeaderCell scope="col">approved</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Approved</CTableHeaderCell>
             <CTableHeaderCell scope="col">Scheduled</CTableHeaderCell>
             <CTableHeaderCell scope="col">Pending</CTableHeaderCell>
             <CTableHeaderCell scope="col">

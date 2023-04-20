@@ -6,6 +6,7 @@ import {
   CButton,
   CFormInput,
   CInputGroup,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
@@ -307,13 +308,15 @@ const ResignationListFilterOptions = ({
         <CCol sm={{ span: 6, offset: 3 }}>
           {userAccessViewChart?.viewaccess && (
             <Link to={`/separationChart`}>
-              <CButton
-                color="info btn-ovh me-3"
-                data-testid="view-btn"
-                onClick={viewChartHandler}
-              >
-                <i className="fa fa-eye"></i>View Chart
-              </CButton>
+              <CTooltip content="View">
+                <CButton
+                  color="info btn-ovh me-3"
+                  data-testid="view-btn"
+                  onClick={viewChartHandler}
+                >
+                  <i className="fa fa-eye"></i>View Chart
+                </CButton>
+              </CTooltip>
             </Link>
           )}
           <CButton

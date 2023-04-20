@@ -107,13 +107,15 @@ const EmployeeListTable = ({
                         {userEditAccess && (
                           <div className="sh-btn-group">
                             <Link to={`/employeeProfile/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-eye"></i>
-                              </CButton>
+                              <CTooltip content="View">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-eye"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                             &nbsp;
                             <Link to={`/editEmployee/${employee.id}`}>

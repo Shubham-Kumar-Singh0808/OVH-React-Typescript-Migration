@@ -165,6 +165,8 @@ const CategoryListTable = (): JSX.Element => {
         confirmButtonText="Delete"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
+        alignment="center"
+        modalBodyClass="mt-0"
       >
         <>
           Are you sure you want to delete this{' '}

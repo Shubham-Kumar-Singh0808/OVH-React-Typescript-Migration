@@ -16,7 +16,6 @@ import EmployeePipListTable from './EmployeePipListTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { showIsRequired } from '../../../../utils/helper'
-import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
@@ -408,20 +407,6 @@ const EmployeePipList = ({
             setToDate={setToDate}
           />
         </>
-      )}
-      {toggle === 'addPIP' && !IndividualUserAccess?.viewaccess && (
-        <AddEmployeePipList
-          pageSize={pageSize}
-          searchByAdded={searchByAdded}
-          searchByEmployee={searchByEmployee}
-          searchInput={searchInput}
-          selectDate={selectDate}
-          fromDate={fromDate as string}
-          toDate={toDate as string}
-          setToggle={() => {
-            setToggle('')
-          }}
-        />
       )}
     </>
   )

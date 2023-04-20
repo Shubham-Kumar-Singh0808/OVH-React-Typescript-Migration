@@ -262,55 +262,65 @@ const ProjectCreationRequestTable = ({
                     {projectRequestStatusLabelColor(projectRequest.status)}
                   </CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="info"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="view-btn"
-                      onClick={() =>
-                        handleProjectRequestViewClick(projectRequest.id)
-                      }
-                    >
-                      <i className="fa fa-eye  text-white"></i>
-                    </CButton>
-                    {userAccessCreateAction?.updateaccess && (
+                    <CTooltip content="View">
                       <CButton
-                        color="success"
+                        color="info"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="edit-btn"
+                        data-testid="view-btn"
                         onClick={() =>
-                          handleProjectRequestApproveClick(projectRequest.id)
-                        }
-                        disabled={
-                          projectRequest.status === 'Rejected' ||
-                          projectRequest.status === 'Approved'
+                          handleProjectRequestViewClick(projectRequest.id)
                         }
                       >
-                        <i className="fa fa-check-circle-o"></i>
+                        <i className="fa fa-eye  text-white"></i>
                       </CButton>
+                    </CTooltip>
+                    {userAccessCreateAction?.updateaccess && (
+                      <CTooltip content="Approve Project">
+                        <CButton
+                          color="success"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="edit-btn"
+                          onClick={() =>
+                            handleProjectRequestApproveClick(projectRequest.id)
+                          }
+                          disabled={
+                            projectRequest.status === 'Rejected' ||
+                            projectRequest.status === 'Approved'
+                          }
+                        >
+                          <i className="fa fa-check-circle-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
-                    <CButton
-                      color="info"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="history-btn"
-                      onClick={() =>
-                        handleProjectRequestHistoryClick(projectRequest.id)
-                      }
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
-                    {userRejectAction && (
+                    <CTooltip content="Timeline">
                       <CButton
-                        color="danger"
+                        color="info"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="reject-btn"
-                        disabled={
-                          projectRequest.status === 'Rejected' ||
-                          projectRequest.status === 'Approved'
+                        data-testid="history-btn"
+                        onClick={() =>
+                          handleProjectRequestHistoryClick(projectRequest.id)
                         }
-                        onClick={() => handleShowRejectModal(projectRequest.id)}
                       >
-                        <i className="fa fa-times text-white"></i>
+                        <i className="fa fa-bar-chart text-white"></i>
                       </CButton>
+                    </CTooltip>
+                    {userRejectAction && (
+                      <CTooltip content="Cancel">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="reject-btn"
+                          disabled={
+                            projectRequest.status === 'Rejected' ||
+                            projectRequest.status === 'Approved'
+                          }
+                          onClick={() =>
+                            handleShowRejectModal(projectRequest.id)
+                          }
+                        >
+                          <i className="fa fa-times text-white"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userDeleteAction && (
                       <CTooltip content="Delete">

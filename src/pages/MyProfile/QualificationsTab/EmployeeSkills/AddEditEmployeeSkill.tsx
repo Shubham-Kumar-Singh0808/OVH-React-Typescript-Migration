@@ -205,13 +205,6 @@ function AddEditEmployeeSkill({
   }
 
   const handleUpdateSkill = async () => {
-    if (skillFilter[0]?.skillType) {
-      dispatch(reduxServices.employeeSkill.getEmployeeSkills())
-      setEmployeeSkill((prevState) => {
-        return { ...prevState, ...{ skillType: employeeSkill?.skillType } }
-      })
-      dispatch(reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast))
-    }
     const temp = employeeSkill.categoryId as number
     const prepareObject = {
       ...employeeSkill,
@@ -224,8 +217,7 @@ function AddEditEmployeeSkill({
     if (
       reduxServices.employeeSkill.updateEmployeeSkill.fulfilled.match(
         updateSkillMemberResultAction,
-      ) &&
-      !skillFilter[0]?.skillType
+      )
     ) {
       backButtonHandler()
       dispatch(
@@ -363,7 +355,7 @@ function AddEditEmployeeSkill({
                       value={employeeSkill?.skillType}
                       onChange={employeeSkillHandler}
                       disabled={!isSkillAddButtonEnabled}
-                      // onBlur={() => isUpdateSkillExists()}
+                      onBlur={() => isSkillExists()}
                     >
                       <option value={''}>Skill</option>
                       {getCategorySkillDetails?.length > 0 &&

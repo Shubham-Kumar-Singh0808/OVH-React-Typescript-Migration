@@ -199,11 +199,13 @@ const EmployeePipListTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: reasonModal.remarks,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: reasonModal.remarks,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>
