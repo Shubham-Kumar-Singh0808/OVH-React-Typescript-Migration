@@ -6,7 +6,6 @@ import {
   CRow,
   CCol,
   CButton,
-  CSpinner,
   CFormCheck,
   CFormLabel,
   CFormSelect,
@@ -37,6 +36,8 @@ import {
 } from '../../../../../constant/constantData'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -512,11 +513,7 @@ const AddProject = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol data-testid="spinner">
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </OCard>
   )

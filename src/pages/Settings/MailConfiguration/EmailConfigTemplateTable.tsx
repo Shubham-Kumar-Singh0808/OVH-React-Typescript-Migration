@@ -154,24 +154,26 @@ const EmployeeEmailTemplateTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {userEditAccess && (
-                      <CButton
-                        color="info btn-ovh me-2"
-                        data-testid="edit-btn22"
-                        onClick={() => {
-                          editTemplateButtonHandler({
-                            id: emailTemplate.id,
-                            templateName: emailTemplate.templateName,
-                            template: emailTemplate.template,
-                            templateTypeId: emailTemplate.templateTypeId,
-                            templateType: emailTemplate.templateType,
-                            assetTypeId: emailTemplate.assetTypeId,
-                            assetType: emailTemplate.assetType,
-                            email: emailTemplate.email,
-                          })
-                        }}
-                      >
-                        <i className="fa fa-pencil-square-o"></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-2"
+                          data-testid="edit-btn22"
+                          onClick={() => {
+                            editTemplateButtonHandler({
+                              id: emailTemplate.id,
+                              templateName: emailTemplate.templateName,
+                              template: emailTemplate.template,
+                              templateTypeId: emailTemplate.templateTypeId,
+                              templateType: emailTemplate.templateType,
+                              assetTypeId: emailTemplate.assetTypeId,
+                              assetType: emailTemplate.assetType,
+                              email: emailTemplate.email,
+                            })
+                          }}
+                        >
+                          <i className="fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userDeleteAccess && (
                       <CTooltip content="Delete">

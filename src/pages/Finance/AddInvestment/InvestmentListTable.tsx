@@ -318,13 +318,13 @@ const InvestmentListTable = ({
         visible={isDescModalVisible}
         setVisible={setIsDescModalVisible}
       >
-        <p>
+        <span className="descriptionField">
           <div
             dangerouslySetInnerHTML={{
               __html: description,
             }}
           />
-        </p>
+        </span>
       </OModal>
     </>
   )

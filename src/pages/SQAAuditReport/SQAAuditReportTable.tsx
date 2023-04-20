@@ -227,19 +227,21 @@ const SQAAuditReportTable = ({
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
                     <Link to={`/viewProjectAudit/${auditReport.id}`}>
-                      <CButton
-                        color="info"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="edit-btn"
-                        onClick={() =>
-                          handleClickSQAAuditViewReport(auditReport?.id)
-                        }
-                      >
-                        <i
-                          className="fa fa-eye  text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <CTooltip content="View">
+                        <CButton
+                          color="info"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="edit-btn"
+                          onClick={() =>
+                            handleClickSQAAuditViewReport(auditReport?.id)
+                          }
+                        >
+                          <i
+                            className="fa fa-eye  text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
                     </Link>
                     {userAccessSqaAuditReport?.updateaccess && (
                       <Link to={`editAuditForm/${auditReport.id}`}>
@@ -305,19 +307,21 @@ const SQAAuditReportTable = ({
                       </>
                     )}
                     <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
-                      <CButton
-                        color="info"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="edit-btn"
-                        onClick={() =>
-                          handleSQAAuditHistoryClick(auditReport?.id)
-                        }
-                      >
-                        <i
-                          className="fa fa-bar-chart text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <CTooltip content="Timeline">
+                        <CButton
+                          color="info"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="edit-btn"
+                          onClick={() =>
+                            handleSQAAuditHistoryClick(auditReport?.id)
+                          }
+                        >
+                          <i
+                            className="fa fa-bar-chart text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
                     </Link>
                   </CTableDataCell>
                 </CTableRow>
