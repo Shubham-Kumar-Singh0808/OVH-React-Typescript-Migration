@@ -61,7 +61,6 @@ const AppraisalTemplateViewAction = ({
     }
   }, [activeCycle])
 
-  console.log('# aa recData ', recData)
   console.log('# aa editAppraisalId ', editAppraisalId)
 
   return (
