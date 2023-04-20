@@ -815,3 +815,7 @@ export interface SQAAuditReportApi extends ApiBase {
   saveOrSubmitAuditForm: string
   downloadSQAAuditFile: string
 }
+
+export interface NotificationsApi extends ApiBase {
+  allAlerts: string
+}
