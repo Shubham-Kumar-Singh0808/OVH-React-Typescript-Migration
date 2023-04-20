@@ -36,8 +36,8 @@ describe('should render Employee Pip Time line Component without data', () => {
   })
   test('should select rating', () => {
     const selectRating = screen.getByTestId('form-select1')
-    userEvent.selectOptions(selectRating, ['10'])
-    expect(selectRating).toHaveValue('10')
+    userEvent.selectOptions(selectRating, ['5'])
+    expect(selectRating).toHaveValue('5')
   })
   test('should render with RemoveEmployeeName ', () => {
     const subject = screen.getByTestId('RemoveEmployeeName')
