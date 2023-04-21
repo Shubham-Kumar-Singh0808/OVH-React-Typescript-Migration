@@ -14,8 +14,6 @@ const projectTypeDevelopment = 'projType-dev'
 const projectTypeSupport = 'projType-support'
 const projectNameInputElement = 'projectName-input'
 const employeeNames = 'Employees Name'
-const auditorsOptions = 'auditors-option'
-const auditeesOptions = 'auditees-option'
 
 describe('render all inputs without crashing', () => {
   beforeEach(() => {
