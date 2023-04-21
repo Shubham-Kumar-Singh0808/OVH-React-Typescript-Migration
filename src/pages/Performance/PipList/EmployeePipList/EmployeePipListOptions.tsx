@@ -10,14 +10,13 @@ import {
 import { downloadFile } from '../../../../utils/helper'
 
 const EmployeePipListOptions = ({
-  // selectDate,
   toDate,
   fromDate,
   searchInput,
   searchByAdded,
   searchByEmployee,
   setToggle,
-  // getPIPValue,
+
   selectDay,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()

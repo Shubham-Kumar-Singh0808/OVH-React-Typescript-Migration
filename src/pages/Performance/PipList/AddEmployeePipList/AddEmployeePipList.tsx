@@ -31,11 +31,9 @@ const AddEmployeePipList = ({
   searchByAdded,
   searchByEmployee,
   searchInput,
-  // selectDate,
   fromDate,
   toDate,
   setToggle,
-  // getPIPValue,
   selectDay,
 }: {
   setToggle: () => void
@@ -43,10 +41,8 @@ const AddEmployeePipList = ({
   searchByAdded: boolean
   searchByEmployee: boolean
   searchInput: string
-  // selectDate: string
   fromDate: Date | string
   toDate: Date | string
-  // getPIPValue: string
   selectDay: string
 }): JSX.Element => {
   const [startDate, setStartDate] = useState<string>()

@@ -184,26 +184,11 @@ export const initialPipListState: PipListSliceState = {
   pipListValue: curMonth,
 }
 
-// const location = window.location.pathname
-
-// const isChildPage: boolean =
-//   location.split('/')[1] !== 'ViewPIPDetail' ||
-//   location !== '/PIPClearnceCerticates' ||
-//   location !== '/PIPList'
-// console.log(isChildPage + '   Slice Logic')
-
 const pipListSlice = createSlice({
   name: 'pipList',
   initialState: initialPipListState,
   reducers: {
     setMonthValue: (state, action) => {
-      // if (isChildPage) {
-      //   state.pipListValue = action.payload
-      //   console.log(action.payload, 'slice')
-      // } else {
-      //   state.pipListValue = curMonth
-      //   console.log(action.payload, 'cust')
-      // }
       state.pipListValue = action.payload
       console.log(action.payload, 'slice')
     },

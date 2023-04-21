@@ -21,10 +21,6 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const EmployeePipList = ({
-  // selectDate,
-  // setSelectDate,
-  // selectDay,
-  // setSelectDay,
   searchInput,
   setSearchInput,
   searchByAdded,
@@ -37,7 +33,6 @@ const EmployeePipList = ({
   setToDate,
   dateError,
   isMultiSearchBtn,
-  // currentMonth,
   toggle,
   setToggle,
   HierarchyUserAccess,
@@ -46,14 +41,8 @@ const EmployeePipList = ({
   setPageSize,
   currentPage,
   pageSize,
-  // pipListObj,
   setCurrentPage,
-}: // getPIPValue,
-{
-  // selectDate: string
-  // setSelectDate: React.Dispatch<React.SetStateAction<string>>
-  // selectDay: string | undefined
-  // setSelectDay: React.Dispatch<React.SetStateAction<string>>
+}: {
   searchInput: string
   setSearchInput: React.Dispatch<React.SetStateAction<string>>
   searchByAdded: boolean
@@ -66,7 +55,6 @@ const EmployeePipList = ({
   setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
   dateError: boolean
   isMultiSearchBtn: boolean
-  // currentMonth: string
   toggle: string
   setToggle: React.Dispatch<React.SetStateAction<string>>
   IndividualUserAccess: UserAccessToFeatures | undefined
@@ -76,18 +64,6 @@ const EmployeePipList = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  // pipListObj: {
-  //   startIndex: number
-  //   endIndex: number
-  //   selectionStatus: EmployeePipStatus
-  //   dateSelection: string
-  //   from: string
-  //   multiSearch: string
-  //   searchByAdded: boolean
-  //   searchByEmployee: boolean
-  //   to: string
-  // }
-  // getPIPValue: string | undefined
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -115,10 +91,6 @@ const EmployeePipList = ({
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
-    // dateSelection:
-    //   (localStorage.getItem('fmonth')
-    //     ? localStorage.getItem('fmonth')
-    //     : selectDate) || '',
     dateSelection: selectDay || '',
     from:
       (localStorage.getItem('fromMonth')
@@ -175,13 +147,8 @@ const EmployeePipList = ({
     dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
   }
 
-  // const getPIPValue = useTypedSelector(
-  //   reduxServices.pipList.selectors.getPIPValue,
-  // )
-
   const clearButtonHandler = () => {
     localStorage.removeItem('fmonth')
-    // setSelectDate('Current Month')
     dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
     setFromDate('')
     setToDate('')
@@ -220,12 +187,6 @@ const EmployeePipList = ({
       localStorage.setItem('fromMonth', moment(value).format(dateFormat))
     }
   }
-  // useEffect(() => {
-  //   if (getPIPValue === 'Custom') {
-  //     setFromDate('')
-  //     setToDate('')
-  //   }
-  // }, [getPIPValue])
 
   useEffect(() => {
     if (selectDay === 'Custom') {
@@ -255,24 +216,14 @@ const EmployeePipList = ({
                     id="selectDate"
                     data-testid="form-select1"
                     name="selectDate"
-                    // value={getPIPValue}
                     value={selectDay}
                     onChange={(e) => {
-                      // setSelectDate(e.target.value)
-                      // if (!localStorage.getItem('fmonth')) {
-                      //   localStorage.setItem('fmonth', e.target.value)
-                      // }
                       dispatch(
                         reduxServices.pipList.actions.setMonthValue(
                           e.target.value,
                         ),
                       )
                       setSelectDay(e.target.value)
-                      // dispatch(
-                      //   reduxServices.pipList.actions.setMonthValue(
-                      //     e.target.value,
-                      //   ),
-                      // )
                     }}
                   >
                     <option value="Today">Today</option>
@@ -286,7 +237,6 @@ const EmployeePipList = ({
                 </CCol>
                 <CCol sm={12} md={9}>
                   <EmployeePipListOptions
-                    // selectDate={selectDate}
                     paginationRange={paginationRange}
                     setPageSize={setPageSize}
                     setCurrentPage={setCurrentPage}
@@ -298,10 +248,8 @@ const EmployeePipList = ({
                     searchByAdded={searchByAdded}
                     searchByEmployee={searchByEmployee}
                     setToggle={setToggle}
-                    // setSelectDate={setSelectDate}
                     setFromDate={setFromDate}
                     setToDate={setToDate}
-                    // getPIPValue={getPIPValue as string}
                     selectDay={selectDay as string}
                   />
                 </CCol>
@@ -467,12 +415,9 @@ const EmployeePipList = ({
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
-            // selectDate={selectDate}
             setToggle={setToggle}
-            // setSelectDate={setSelectDate}
             setFromDate={setFromDate}
             setToDate={setToDate}
-            // getPIPValue={''}
             selectDay={''}
           />
         </>
