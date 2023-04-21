@@ -17,7 +17,8 @@ const EmployeePipListOptions = ({
   searchByAdded,
   searchByEmployee,
   setToggle,
-  getPIPValue,
+  // getPIPValue,
+  selectDay,
 }: EmployeePIPListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -38,7 +39,7 @@ const EmployeePipListOptions = ({
   const handleExportEmployeePIPListData = async () => {
     const employeePipListDownload = await pipListApi.exportPIPList({
       selectionStatus: selectedEmployeePipStatus,
-      dateSelection: getPIPValue,
+      dateSelection: selectDay,
       from: (fromDate as string) || '',
       multiSearch: searchInput as string,
       searchByAdded: searchByAdded as boolean,

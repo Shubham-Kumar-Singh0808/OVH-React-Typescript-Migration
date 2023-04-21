@@ -20,9 +20,11 @@ const PipList = (): JSX.Element => {
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
   const [toggle, setToggle] = useState<string>('')
 
-  const getPIPValue = useTypedSelector(
-    reduxServices.pipList.selectors.getPIPValue,
-  )
+  // const getPIPValue = useTypedSelector(
+  //   reduxServices.pipList.selectors.getPIPValue,
+  // )
+  // const [selectDay, setSelectDay] = useState<string>(getPIPValue as string)
+
   const dispatch = useAppDispatch()
 
   // useEffect(() => {
@@ -32,7 +34,7 @@ const PipList = (): JSX.Element => {
   //   // return () => {
   //   //   localStorage.removeItem('fmonth')
   //   // }
-  //   // dispatch(reduxServices.pipList.actions.setMonthValue(selectDate))
+  //   // dispatch(reduxServices.pipList.actions.setMonthValu e(selectDate))
   // }, [selectDate])
 
   useEffect(() => {
@@ -112,35 +114,54 @@ const PipList = (): JSX.Element => {
     }
   }, [selectCurrentPage])
 
-  console.log(getPIPValue + 'getPIPValue')
-
-  const pipListObj = {
-    startIndex: pageSize * (selectCurrentPage - 1),
-    endIndex: pageSize * selectCurrentPage,
-    selectionStatus: selectedEmployeePipStatus,
-    // dateSelection:
-    //   (localStorage.getItem('fmonth')
-    //     ? localStorage.getItem('fmonth')
-    //     : selectDate) || '',
-    dateSelection: getPIPValue || '',
-    from:
-      (localStorage.getItem('fromMonth')
-        ? localStorage.getItem('fromMonth')
-        : fromDate) || '',
-    multiSearch: searchInput,
-    searchByAdded,
-    searchByEmployee,
-    to:
-      (localStorage.getItem('toMonth')
-        ? localStorage.getItem('toMonth')
-        : toDate) || '',
-  }
+  // const pipListObj = {
+  //   startIndex: pageSize * (selectCurrentPage - 1),
+  //   endIndex: pageSize * selectCurrentPage,
+  //   selectionStatus: selectedEmployeePipStatus,
+  //   // dateSelection:
+  //   //   (localStorage.getItem('fmonth')
+  //   //     ? localStorage.getItem('fmonth')
+  //   //     : selectDate) || '',
+  //   dateSelection: selectDay || '',
+  //   from:
+  //     (localStorage.getItem('fromMonth')
+  //       ? localStorage.getItem('fromMonth')
+  //       : fromDate) || '',
+  //   multiSearch: searchInput,
+  //   searchByAdded,
+  //   searchByEmployee,
+  //   to:
+  //     (localStorage.getItem('toMonth')
+  //       ? localStorage.getItem('toMonth')
+  //       : toDate) || '',
+  // }
 
   // useEffect(() => {
   //   if (window.location.pathname === '/PIPList') {
   //     dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
   //   }
   // }, [])
+
+  // const isChildPage: boolean =
+  // location.split('/')[1] !== 'ViewPIPDetail' ||
+  // location !== '/PIPClearnceCerticates' ||
+  // location !== '/PIPList'
+
+  // useEffect(() => {
+  //   if (location.pathname === '/PIPList' && !getPIPValue) {
+  //     dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
+  //   }
+  // }, [dispatch, location.pathname, getPIPValue])
+
+  // useEffect(() => {
+  //   if (getPIPValue != null) {
+  //     setSelectDay(getPIPValue)
+  //   }
+  // }, [getPIPValue])
+
+  // useEffect(() => {
+  //   dispatch(reduxServices.pipList.actions.setMonthValue(selectDay))
+  // }, [selectDay])
 
   return (
     <>
@@ -153,7 +174,9 @@ const PipList = (): JSX.Element => {
         <EmployeePipList
           // selectDate={selectDate}
           // setSelectDate={setSelectDate}
-          getPIPValue={getPIPValue}
+          // selectDay={selectDay}
+          // setSelectDay={setSelectDay}
+          // getPIPValue={getPIPValue}
           searchInput={searchInput}
           setSearchInput={setSearchInput}
           searchByAdded={searchByAdded}
@@ -175,7 +198,7 @@ const PipList = (): JSX.Element => {
           setPageSize={setPageSize}
           currentPage={currentPage}
           pageSize={pageSize}
-          pipListObj={pipListObj}
+          // pipListObj={pipListObj}
           setCurrentPage={setCurrentPage}
         />
       </OCard>

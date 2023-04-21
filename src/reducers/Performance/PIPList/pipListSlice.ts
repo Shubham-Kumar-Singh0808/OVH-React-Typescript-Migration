@@ -170,7 +170,7 @@ const savePIPClearnceCertificate = createAsyncThunk(
     }
   },
 )
-
+const curMonth = 'Current Month'
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -181,15 +181,31 @@ export const initialPipListState: PipListSliceState = {
   activeEmployee: [],
   employeePIPTimeline: { size: 0, list: [] },
   list: {} as GetPipList,
-  pipListValue: 'Current Month',
+  pipListValue: curMonth,
 }
+
+// const location = window.location.pathname
+
+// const isChildPage: boolean =
+//   location.split('/')[1] !== 'ViewPIPDetail' ||
+//   location !== '/PIPClearnceCerticates' ||
+//   location !== '/PIPList'
+// console.log(isChildPage + '   Slice Logic')
 
 const pipListSlice = createSlice({
   name: 'pipList',
   initialState: initialPipListState,
   reducers: {
     setMonthValue: (state, action) => {
+      // if (isChildPage) {
+      //   state.pipListValue = action.payload
+      //   console.log(action.payload, 'slice')
+      // } else {
+      //   state.pipListValue = curMonth
+      //   console.log(action.payload, 'cust')
+      // }
       state.pipListValue = action.payload
+      console.log(action.payload, 'slice')
     },
     changeSelectedEmployeePipStatus: (state, action) => {
       state.selectedEmployeePipStatus = action.payload as EmployeePipStatus

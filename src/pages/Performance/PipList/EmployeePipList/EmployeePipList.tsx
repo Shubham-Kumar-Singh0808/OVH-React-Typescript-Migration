@@ -8,7 +8,7 @@ import {
   CInputGroup,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
@@ -25,6 +25,8 @@ import { EmployeePipStatus } from '../../../../types/Performance/PipList/pipList
 const EmployeePipList = ({
   // selectDate,
   // setSelectDate,
+  // selectDay,
+  // setSelectDay,
   searchInput,
   setSearchInput,
   searchByAdded,
@@ -46,12 +48,14 @@ const EmployeePipList = ({
   setPageSize,
   currentPage,
   pageSize,
-  pipListObj,
+  // pipListObj,
   setCurrentPage,
-  getPIPValue,
-}: {
+}: // getPIPValue,
+{
   // selectDate: string
   // setSelectDate: React.Dispatch<React.SetStateAction<string>>
+  // selectDay: string | undefined
+  // setSelectDay: React.Dispatch<React.SetStateAction<string>>
   searchInput: string
   setSearchInput: React.Dispatch<React.SetStateAction<string>>
   searchByAdded: boolean
@@ -74,21 +78,20 @@ const EmployeePipList = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  pipListObj: {
-    startIndex: number
-    endIndex: number
-    selectionStatus: EmployeePipStatus
-    dateSelection: string
-    from: string
-    multiSearch: string
-    searchByAdded: boolean
-    searchByEmployee: boolean
-    to: string
-  }
-  getPIPValue: string | undefined
+  // pipListObj: {
+  //   startIndex: number
+  //   endIndex: number
+  //   selectionStatus: EmployeePipStatus
+  //   dateSelection: string
+  //   from: string
+  //   multiSearch: string
+  //   searchByAdded: boolean
+  //   searchByEmployee: boolean
+  //   to: string
+  // }
+  // getPIPValue: string | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
   const selectCurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
@@ -96,6 +99,10 @@ const EmployeePipList = ({
   const selectedEmployeePipStatus = useTypedSelector(
     reduxServices.pipList.selectors.selectedEmployeePipStatus,
   )
+  const getPIPValue = useTypedSelector(
+    reduxServices.pipList.selectors.getPIPValue,
+  )
+  const [selectDay, setSelectDay] = useState<string>(getPIPValue as string)
 
   useEffect(() => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObj))
@@ -104,6 +111,28 @@ const EmployeePipList = ({
   const failureToast = (
     <OToast toastMessage="Enter Vaild Name !" toastColor="danger" />
   )
+
+  const pipListObj = {
+    startIndex: pageSize * (selectCurrentPage - 1),
+    endIndex: pageSize * selectCurrentPage,
+    selectionStatus: selectedEmployeePipStatus,
+    // dateSelection:
+    //   (localStorage.getItem('fmonth')
+    //     ? localStorage.getItem('fmonth')
+    //     : selectDate) || '',
+    dateSelection: selectDay || '',
+    from:
+      (localStorage.getItem('fromMonth')
+        ? localStorage.getItem('fromMonth')
+        : fromDate) || '',
+    multiSearch: searchInput,
+    searchByAdded,
+    searchByEmployee,
+    to:
+      (localStorage.getItem('toMonth')
+        ? localStorage.getItem('toMonth')
+        : toDate) || '',
+  }
 
   const multiSearchBtnHandler = async () => {
     const searchBtnResultAction = await dispatch(
@@ -132,7 +161,7 @@ const EmployeePipList = ({
   }
 
   const pipListObject = {
-    dateSelection: String(getPIPValue),
+    dateSelection: String(selectDay),
     from: (fromDate as string) || '',
     multiSearch: searchInput,
     searchByAdded,
@@ -192,12 +221,23 @@ const EmployeePipList = ({
       localStorage.setItem('fromMonth', moment(value).format(dateFormat))
     }
   }
+  // useEffect(() => {
+  //   if (getPIPValue === 'Custom') {
+  //     setFromDate('')
+  //     setToDate('')
+  //   }
+  // }, [getPIPValue])
+
   useEffect(() => {
-    if (getPIPValue === 'Custom') {
+    if (selectDay === 'Custom') {
       setFromDate('')
       setToDate('')
     }
-  }, [getPIPValue])
+  }, [selectDay])
+
+  useEffect(() => {
+    dispatch(reduxServices.pipList.actions.setMonthValue(selectDay))
+  }, [selectDay])
 
   return (
     <>
@@ -216,7 +256,8 @@ const EmployeePipList = ({
                     id="selectDate"
                     data-testid="form-select1"
                     name="selectDate"
-                    value={getPIPValue}
+                    // value={getPIPValue}
+                    value={selectDay}
                     onChange={(e) => {
                       // setSelectDate(e.target.value)
                       // if (!localStorage.getItem('fmonth')) {
@@ -227,6 +268,12 @@ const EmployeePipList = ({
                           e.target.value,
                         ),
                       )
+                      setSelectDay(e.target.value)
+                      // dispatch(
+                      //   reduxServices.pipList.actions.setMonthValue(
+                      //     e.target.value,
+                      //   ),
+                      // )
                     }}
                   >
                     <option value="Today">Today</option>
@@ -255,10 +302,11 @@ const EmployeePipList = ({
                     // setSelectDate={setSelectDate}
                     setFromDate={setFromDate}
                     setToDate={setToDate}
-                    getPIPValue={getPIPValue as string}
+                    // getPIPValue={getPIPValue as string}
+                    selectDay={selectDay as string}
                   />
                 </CCol>
-                {getPIPValue === 'Custom' ? (
+                {selectDay === 'Custom' ? (
                   <>
                     <CCol sm={2} md={1} className="text-end">
                       <CFormLabel className="mt-1">
@@ -335,7 +383,7 @@ const EmployeePipList = ({
                     data-testid="view-btn"
                     onClick={viewButtonHandler}
                     disabled={
-                      (getPIPValue === 'Custom' &&
+                      (selectDay === 'Custom' &&
                         !(fromDate !== '' && toDate !== '')) ||
                       dateError
                     }
@@ -425,7 +473,8 @@ const EmployeePipList = ({
             // setSelectDate={setSelectDate}
             setFromDate={setFromDate}
             setToDate={setToDate}
-            getPIPValue={''}
+            // getPIPValue={''}
+            selectDay={''}
           />
         </>
       )}
@@ -441,7 +490,8 @@ const EmployeePipList = ({
           setToggle={() => {
             setToggle('')
           }}
-          getPIPValue={getPIPValue as string}
+          // getPIPValue={getPIPValue as string}
+          selectDay={selectDay as string}
         />
       )}
     </>
