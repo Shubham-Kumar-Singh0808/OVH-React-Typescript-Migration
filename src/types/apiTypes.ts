@@ -481,6 +481,8 @@ export interface RoomListApi extends ApiBase {
   addRoom: string
   deleteRoom: string
   updateRoom: string
+  getRoomsOfLocation: string
+  getAllMeetingLocations: string
 }
 
 export interface TicketConfigurationApi extends ApiBase {

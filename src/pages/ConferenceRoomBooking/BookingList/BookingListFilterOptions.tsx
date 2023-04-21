@@ -5,7 +5,6 @@ import ReactDatePicker from 'react-datepicker'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale } from '../../../utils/dateFormatUtils'
 import { dateFormat } from '../../../constant/DateFormat'
 
 const BookingListFilterOptions = ({
@@ -45,6 +44,7 @@ const BookingListFilterOptions = ({
       dispatch(reduxServices.bookingList.getRoomsOfLocation(Number(location)))
     }
   }, [dispatch, location])
+
   useEffect(() => {
     if (location || meetingStatus || room || selectDate || selectDateOptions) {
       dispatch(
@@ -52,13 +52,7 @@ const BookingListFilterOptions = ({
           location: Number(location),
           meetingStatus,
           room,
-          status: selectDate
-            ? new Date(selectDate).toLocaleDateString(deviceLocale, {
-                year: 'numeric',
-                month: 'numeric',
-                day: '2-digit',
-              })
-            : '' || selectDateOptions,
+          status: selectDate || selectDateOptions,
         }),
       )
       dispatch(reduxServices.bookingList.actions.setCurrentPage(1))

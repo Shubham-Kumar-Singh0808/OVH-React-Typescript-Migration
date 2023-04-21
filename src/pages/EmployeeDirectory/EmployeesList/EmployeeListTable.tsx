@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import React from 'react'
@@ -106,23 +107,27 @@ const EmployeeListTable = ({
                         {userEditAccess && (
                           <div className="sh-btn-group">
                             <Link to={`/employeeProfile/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-eye"></i>
-                              </CButton>
+                              <CTooltip content="View">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-eye"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                             &nbsp;
                             <Link to={`/editEmployee/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-pencil-square-o"></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                           </div>
                         )}

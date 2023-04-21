@@ -9,6 +9,7 @@ import {
   CButton,
   CInputGroup,
   CFormInput,
+  CTooltip,
 } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -157,9 +158,11 @@ const FilterOptions = ({
           data-testid="designationLinkButton"
         >
           <Link to={`/report2`}>
-            <CButton color="info btn-ovh me-0">
-              <i className="fa fa-eye  me-1"></i>Employee Designation info
-            </CButton>
+            <CTooltip content="View">
+              <CButton color="info btn-ovh me-0">
+                <i className="fa fa-eye  me-1"></i>Employee Designation info
+              </CButton>
+            </CTooltip>
           </Link>
         </CCol>
       </CRow>

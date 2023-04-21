@@ -9,6 +9,7 @@ import {
   CRow,
   CCol,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
@@ -181,25 +182,29 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
                   <CTableDataCell>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                    >
-                      <i className="fa fa-times text-white"></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                      >
+                        <i className="fa fa-times text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
+                    <CTooltip content="Timeline">
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list"
+                      >
+                        <i className="fa fa-bar-chart text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
@@ -269,11 +274,13 @@ const MileStoneTable = (): JSX.Element => {
         >
           <>
             <p>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: subject as string,
-                }}
-              />
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: subject as string,
+                  }}
+                />
+              </span>
             </p>
           </>
         </OModal>

@@ -23,8 +23,10 @@ import OPagination from '../../../../components/ReusableComponent/OPagination'
 
 const RoomListTable = ({
   userDeleteAccess,
+  selectLocationId,
 }: {
   userDeleteAccess: boolean
+  selectLocationId: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -90,7 +92,9 @@ const RoomListTable = ({
       reduxServices.roomLists.deleteRoom(deleteLocationId),
     )
     if (reduxServices.roomLists.deleteRoom.fulfilled.match(deleteRoomResult)) {
-      dispatch(reduxServices.roomLists.getMeetingRooms())
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (

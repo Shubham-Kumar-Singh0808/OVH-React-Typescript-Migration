@@ -6,6 +6,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
+import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 
 const PipList = (): JSX.Element => {
   // const currentMonth = 'Current Month'
@@ -165,43 +166,57 @@ const PipList = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title={'PIP List'}
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <EmployeePipList
-          // selectDate={selectDate}
-          // setSelectDate={setSelectDate}
-          // selectDay={selectDay}
-          // setSelectDay={setSelectDay}
-          // getPIPValue={getPIPValue}
-          searchInput={searchInput}
-          setSearchInput={setSearchInput}
-          searchByAdded={searchByAdded}
-          setSearchByAdded={setSearchByAdded}
-          searchByEmployee={searchByEmployee}
-          setSearchByEmployee={setSearchByEmployee}
-          fromDate={fromDate}
-          setFromDate={setFromDate}
-          toDate={toDate}
-          setToDate={setToDate}
-          dateError={dateError}
-          isMultiSearchBtn={isMultiSearchBtn}
-          // currentMonth={currentMonth}
-          toggle={toggle}
-          setToggle={setToggle}
-          HierarchyUserAccess={HierarchyUserAccess}
-          IndividualUserAccess={IndividualUserAccess}
-          paginationRange={paginationRange}
-          setPageSize={setPageSize}
-          currentPage={currentPage}
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title={'PIP List'}
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <EmployeePipList
+            // selectDate={selectDate}
+            // setSelectDate={setSelectDate}
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            searchByAdded={searchByAdded}
+            setSearchByAdded={setSearchByAdded}
+            searchByEmployee={searchByEmployee}
+            setSearchByEmployee={setSearchByEmployee}
+            fromDate={fromDate}
+            setFromDate={setFromDate}
+            toDate={toDate}
+            setToDate={setToDate}
+            dateError={dateError}
+            isMultiSearchBtn={isMultiSearchBtn}
+            // currentMonth={currentMonth}
+            toggle={toggle}
+            setToggle={setToggle}
+            HierarchyUserAccess={HierarchyUserAccess}
+            IndividualUserAccess={IndividualUserAccess}
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            // pipListObj={pipListObj}
+            setCurrentPage={setCurrentPage}
+          />
+        </OCard>
+      )}
+      {toggle === 'addPIP' && !IndividualUserAccess?.viewaccess && (
+        <AddEmployeePipList
           pageSize={pageSize}
-          // pipListObj={pipListObj}
-          setCurrentPage={setCurrentPage}
+          searchByAdded={searchByAdded}
+          searchByEmployee={searchByEmployee}
+          searchInput={searchInput}
+          // selectDate={selectDate}
+          fromDate={fromDate as string}
+          toDate={toDate as string}
+          setToggle={() => {
+            setToggle('')
+          }}
+          selectDay={''}
         />
-      </OCard>
+      )}
     </>
   )
 }

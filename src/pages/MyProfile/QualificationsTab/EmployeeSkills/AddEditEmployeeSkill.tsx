@@ -61,6 +61,10 @@ function AddEditEmployeeSkill({
     reduxServices.employeeSkill.selectors.selectEditSkillDetails,
   )
 
+  const skillFilter = employeeSkillsData?.filter(
+    (item) => item?.skillType === employeeSkill?.skillType,
+  )
+
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.category.getAllCategories())
@@ -237,9 +241,6 @@ function AddEditEmployeeSkill({
     return ''
   }, [employeeSkill.categoryType, sortedCategoryDetails])
 
-  const skillFilter = employeeSkillsData?.filter(
-    (item) => item?.skillType === employeeSkill?.skillType,
-  )
   const clientOrgAlreadyExistsToast = (
     <OToast
       toastMessage="Category and Skill combination already exist"
@@ -256,6 +257,18 @@ function AddEditEmployeeSkill({
       dispatch(reduxServices.app.actions.addToast(clientOrgAlreadyExistsToast))
     }
   }
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccessAddSkills = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddSkills',
+  )
+
+  const userAccessAddCategory = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Profile-Skills-AddCategory',
+  )
 
   return (
     <>
@@ -296,7 +309,7 @@ function AddEditEmployeeSkill({
                     value={employeeSkill?.categoryType}
                     onChange={employeeSkillHandler}
                   >
-                    <option value={''}>category</option>
+                    <option value={''}>Category</option>
                     {sortedCategoryDetails?.map((categories, index) => (
                       <option key={index} value={categories.categoryId}>
                         {categories.categoryType}
@@ -308,15 +321,16 @@ function AddEditEmployeeSkill({
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      onClick={
-                        (addButtonHandler = () =>
-                          setToggle('categoryListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddCategory?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          onClick={() => setToggle('categoryListSection')}
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>
@@ -332,38 +346,66 @@ function AddEditEmployeeSkill({
                   </span>
                 </CFormLabel>
                 <CCol sm={3}>
-                  <CFormSelect
-                    aria-label="Default select example"
-                    size="sm"
-                    name="skillType"
-                    id=" skillType"
-                    value={employeeSkill?.skillType}
-                    onChange={employeeSkillHandler}
-                    disabled={!isSkillAddButtonEnabled}
-                    onBlur={() => isSkillExists()}
-                  >
-                    <option value={''}>Skill</option>
-                    {getCategorySkillDetails?.length > 0 &&
-                      getCategorySkillDetails?.map((categoriesSkill, index) => (
-                        <option key={index} value={categoriesSkill?.skillType}>
-                          {categoriesSkill?.skill}
-                        </option>
-                      ))}
-                  </CFormSelect>
+                  {isEditSkillsDetails ? (
+                    <CFormSelect
+                      aria-label="Default select example"
+                      size="sm"
+                      name="skillType"
+                      id=" skillType"
+                      value={employeeSkill?.skillType}
+                      onChange={employeeSkillHandler}
+                      disabled={!isSkillAddButtonEnabled}
+                      onBlur={() => isSkillExists()}
+                    >
+                      <option value={''}>Skill</option>
+                      {getCategorySkillDetails?.length > 0 &&
+                        getCategorySkillDetails?.map(
+                          (categoriesSkill, index) => (
+                            <option
+                              key={index}
+                              value={categoriesSkill?.skillType}
+                            >
+                              {categoriesSkill?.skill}
+                            </option>
+                          ),
+                        )}
+                    </CFormSelect>
+                  ) : (
+                    <CFormSelect
+                      aria-label="Default select example"
+                      size="sm"
+                      name="skillType"
+                      id=" skillType"
+                      value={employeeSkill?.skillType}
+                      onChange={employeeSkillHandler}
+                      disabled={!isSkillAddButtonEnabled}
+                      onClick={() => isSkillExists()}
+                    >
+                      <option value={''}>Skill</option>
+                      {getCategorySkillDetails?.length > 0 &&
+                        getCategorySkillDetails?.map((categorie, index) => (
+                          <option key={index} value={categorie?.skillType}>
+                            {categorie?.skill}
+                          </option>
+                        ))}
+                    </CFormSelect>
+                  )}
                 </CCol>
                 <CCol className="col-sm-3">
                   {isEditSkillsDetails ? (
                     ''
                   ) : (
-                    <CButton
-                      color="info btn-ovh me-1"
-                      disabled={!isSkillAddButtonEnabled}
-                      onClick={
-                        (addButtonHandler = () => setToggle('skillListSection'))
-                      }
-                    >
-                      <i className="fa fa-plus me-1"></i>Add
-                    </CButton>
+                    <>
+                      {userAccessAddSkills?.createaccess && (
+                        <CButton
+                          color="info btn-ovh me-1"
+                          disabled={!isSkillAddButtonEnabled}
+                          onClick={() => setToggle('skillListSection')}
+                        >
+                          <i className="fa fa-plus me-1"></i>Add
+                        </CButton>
+                      )}
+                    </>
                   )}
                 </CCol>
               </CRow>

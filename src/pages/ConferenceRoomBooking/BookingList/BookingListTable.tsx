@@ -10,6 +10,7 @@ import {
   CRow,
   CLink,
   CBadge,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -208,32 +209,37 @@ const BookingListTable = ({
                   <CTableDataCell scope="row">
                     {bookingItem.isAuthorisedUser ? (
                       <>
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-2"
-                          onClick={() => editButtonHandler(bookingItem.id)}
-                          disabled={
-                            bookingItem?.disableEdit ||
-                            bookingItem.meetingStatus !== 'New'
-                          }
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-
-                        <CButton
-                          color="btn btn-warning"
-                          className="btn-ovh me-2"
-                          onClick={() => handleShowCancelModal(bookingItem.id)}
-                          disabled={
-                            bookingItem?.disableEdit ||
-                            bookingItem.meetingStatus !== 'New'
-                          }
-                        >
-                          <i
-                            className="fa fa-times text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            onClick={() => editButtonHandler(bookingItem.id)}
+                            disabled={
+                              bookingItem?.disableEdit ||
+                              bookingItem.meetingStatus !== 'New'
+                            }
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="btn btn-warning"
+                            className="btn-ovh me-2"
+                            onClick={() =>
+                              handleShowCancelModal(bookingItem.id)
+                            }
+                            disabled={
+                              bookingItem?.disableEdit ||
+                              bookingItem.meetingStatus !== 'New'
+                            }
+                          >
+                            <i
+                              className="fa fa-times text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     ) : (
                       ''

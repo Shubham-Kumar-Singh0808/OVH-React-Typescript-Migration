@@ -9,6 +9,7 @@ import {
   CCol,
   CRow,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -242,43 +243,49 @@ const TicketApprovalsTable = ({
                     <div className="buttons-clients">
                       {userAccess && (
                         <Link to={`/updateTicketInApprovals/${ticketItem.id}`}>
-                          <CButton
-                            color="info btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
                         </Link>
                       )}
-                      <CButton
-                        color="danger btn-ovh me-1"
-                        className="btn-ovh-employee-list"
-                        data-testid="ticket-reject-btn"
-                        disabled={
-                          ticketItem.approvalStatus === 'Approved' ||
-                          ticketItem.approvalStatus === 'Rejected' ||
-                          ticketItem.approvalStatus === 'Cancelled' ||
-                          !ticketItem.disableApprove
-                        }
-                        onClick={() =>
-                          handleRejectModal(
-                            ticketItem.subCategoryName,
-                            ticketItem.id,
-                          )
-                        }
-                      >
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </CButton>
-                      <CButton
-                        color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list"
-                        data-testid="ticketTimelineBtn"
-                        onClick={() =>
-                          handleTicketApprovalsHistory(ticketItem.id)
-                        }
-                      >
-                        <i className="fa fa-bar-chart" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Cancel">
+                        <CButton
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                          data-testid="ticket-reject-btn"
+                          disabled={
+                            ticketItem.approvalStatus === 'Approved' ||
+                            ticketItem.approvalStatus === 'Rejected' ||
+                            ticketItem.approvalStatus === 'Cancelled' ||
+                            !ticketItem.disableApprove
+                          }
+                          onClick={() =>
+                            handleRejectModal(
+                              ticketItem.subCategoryName,
+                              ticketItem.id,
+                            )
+                          }
+                        >
+                          <i className="fa fa-times" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                      <CTooltip content="Timeline">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                          data-testid="ticketTimelineBtn"
+                          onClick={() =>
+                            handleTicketApprovalsHistory(ticketItem.id)
+                          }
+                        >
+                          <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     </div>
                   </CTableDataCell>
                 </CTableRow>
@@ -337,11 +344,13 @@ const TicketApprovalsTable = ({
         modalBodyClass="pt-0 pb-5"
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: modalDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: modalDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal

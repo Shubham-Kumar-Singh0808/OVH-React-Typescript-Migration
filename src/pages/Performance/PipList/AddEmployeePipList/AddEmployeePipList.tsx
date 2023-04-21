@@ -9,9 +9,10 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import DatePicker from 'react-datepicker'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -60,6 +61,7 @@ const AddEmployeePipList = ({
   const [employeeName, setEmployeeName] = useState<string>('')
 
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -131,7 +133,21 @@ const AddEmployeePipList = ({
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
   )
-  const employeeDetails = allEmployeeDetails?.filter(
+
+  const sortedFamilyDetails = useMemo(() => {
+    if (allEmployeeDetails) {
+      return allEmployeeDetails
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          (sortNode1.empFirstName + ' ' + sortNode1.empLastName).localeCompare(
+            sortNode2.empFirstName + ' ' + sortNode2.empLastName,
+          ),
+        )
+    }
+    return []
+  }, [allEmployeeDetails])
+
+  const employeeDetails = sortedFamilyDetails?.filter(
     (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
   )
 
@@ -195,6 +211,11 @@ const AddEmployeePipList = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(failureToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.pipList.addPIP.rejected.match(addPIPResultAction) &&
+      addPIPResultAction.payload === 403
+    ) {
+      history.push('/forbidden')
     }
   }
 

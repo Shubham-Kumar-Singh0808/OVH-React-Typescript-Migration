@@ -8,6 +8,7 @@ import {
   CCol,
   CRow,
   CButton,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -226,91 +227,101 @@ const SQAAuditReportTable = ({
                       <i className="fa fa-calendar" aria-hidden="true"></i>
                     </CButton>
                     <Link to={`/viewProjectAudit/${auditReport.id}`}>
-                      <CButton
-                        color="info"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="edit-btn"
-                        onClick={() =>
-                          handleClickSQAAuditViewReport(auditReport?.id)
-                        }
-                      >
-                        <i
-                          className="fa fa-eye  text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    </Link>
-                    {userAccessSqaAuditReport?.updateaccess && (
-                      <Link to={`editAuditForm/${auditReport.id}`}>
+                      <CTooltip content="View">
                         <CButton
                           color="info"
                           className="btn-ovh-employee-list me-1 mt-1"
                           data-testid="edit-btn"
-                          onClick={() => editButtonHandler(auditReport.id)}
-                          disabled={auditReport.disableEditButton === true}
+                          onClick={() =>
+                            handleClickSQAAuditViewReport(auditReport?.id)
+                          }
                         >
                           <i
-                            className="fa fa-edit text-white"
+                            className="fa fa-eye  text-white"
                             aria-hidden="true"
                           ></i>
                         </CButton>
+                      </CTooltip>
+                    </Link>
+                    {userAccessSqaAuditReport?.updateaccess && (
+                      <Link to={`editAuditForm/${auditReport.id}`}>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh-employee-list me-1 mt-1"
+                            data-testid="edit-btn"
+                            onClick={() => editButtonHandler(auditReport.id)}
+                            disabled={auditReport.disableEditButton === true}
+                          >
+                            <i
+                              className="fa fa-edit text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       </Link>
                     )}
                     {userAccessSqaAuditReport?.deleteaccess && (
                       <>
-                        <CButton
-                          color="danger"
-                          className="btn-ovh-employee-list me-1 mt-1"
-                          data-testid="cancel-btn"
-                          onClick={() =>
-                            handleShowCancelModal(
-                              auditReport.id,
-                              auditReport.auditType,
-                            )
-                          }
-                          disabled={
-                            auditReport.formStatus === 'Save' ||
-                            auditReport.auditStatus === 'Closed'
-                          }
-                        >
-                          <i
-                            className="fa fa-times text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
-                        <CButton
-                          color="danger"
-                          className="btn-ovh-employee-list me-1 mt-1"
-                          data-testid="delete-btn"
-                          onClick={() =>
-                            handleShowDeleteModal(
-                              auditReport.id,
-                              auditReport.auditType,
-                            )
-                          }
-                          disabled={auditReport.formStatus !== 'Save'}
-                        >
-                          <i
-                            className="fa fa-trash-o text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="danger"
+                            className="btn-ovh-employee-list me-1 mt-1"
+                            data-testid="cancel-btn"
+                            onClick={() =>
+                              handleShowCancelModal(
+                                auditReport.id,
+                                auditReport.auditType,
+                              )
+                            }
+                            disabled={
+                              auditReport.formStatus === 'Save' ||
+                              auditReport.auditStatus === 'Closed'
+                            }
+                          >
+                            <i
+                              className="fa fa-times text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger"
+                            className="btn-ovh-employee-list me-1 mt-1"
+                            data-testid="delete-btn"
+                            onClick={() =>
+                              handleShowDeleteModal(
+                                auditReport.id,
+                                auditReport.auditType,
+                              )
+                            }
+                            disabled={auditReport.formStatus !== 'Save'}
+                          >
+                            <i
+                              className="fa fa-trash-o text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     )}
                     <Link to={`/newProjectAuditTimeline/${auditReport.id}`}>
-                      <CButton
-                        color="info"
-                        className="btn-ovh-employee-list me-1 mt-1"
-                        data-testid="edit-btn"
-                        onClick={() =>
-                          handleSQAAuditHistoryClick(auditReport?.id)
-                        }
-                      >
-                        <i
-                          className="fa fa-bar-chart text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <CTooltip content="Timeline">
+                        <CButton
+                          color="info"
+                          className="btn-ovh-employee-list me-1 mt-1"
+                          data-testid="edit-btn"
+                          onClick={() =>
+                            handleSQAAuditHistoryClick(auditReport?.id)
+                          }
+                        >
+                          <i
+                            className="fa fa-bar-chart text-white"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
                     </Link>
                   </CTableDataCell>
                 </CTableRow>

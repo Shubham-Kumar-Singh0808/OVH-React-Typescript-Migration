@@ -10,6 +10,7 @@ import {
   CFormSelect,
   CButton,
   CRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -242,50 +243,59 @@ const ProjectDetailsTable = ({
                                 aria-hidden="true"
                               ></i>
                             </CButton>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="cancel-sub-btn"
-                              onClick={handleCancelUpdate}
-                            >
-                              <i
-                                className="fa fa-times text-white sh-fa-times"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Cancel">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="cancel-sub-btn"
+                                onClick={handleCancelUpdate}
+                              >
+                                <i
+                                  className="fa fa-times text-white sh-fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </>
                         ) : (
                           <>
                             {userAccessToProject?.updateaccess && (
-                              <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
-                                color="primary btn-ovh me-1"
-                                data-testid="edit-sub-project-btn"
-                                onClick={() =>
-                                  handleAllocationModal(project, value.id)
-                                }
-                              >
-                                <i
-                                  className="fa fa-edit text-white"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  className="btn-ovh-employee-list cursor-pointer"
+                                  color="primary btn-ovh me-1"
+                                  data-testid="edit-sub-project-btn"
+                                  onClick={() =>
+                                    handleAllocationModal(project, value.id)
+                                  }
+                                >
+                                  <i
+                                    className="fa fa-edit text-white"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
                             )}
                             {userAccessToProject?.deleteaccess && (
-                              <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
-                                color="danger btn-ovh me-1"
-                                data-testid="delete-sub-btn"
-                                disabled={!project.isAllocated}
-                                onClick={() =>
-                                  handleShowDeallocationModal(project, value.id)
-                                }
-                              >
-                                <i
-                                  className="fa fa-trash-o text-white"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
+                              <CTooltip content="Delete">
+                                <CButton
+                                  className="btn-ovh-employee-list cursor-pointer"
+                                  color="danger btn-ovh me-1"
+                                  data-testid="delete-sub-btn"
+                                  disabled={!project.isAllocated}
+                                  onClick={() =>
+                                    handleShowDeallocationModal(
+                                      project,
+                                      value.id,
+                                    )
+                                  }
+                                >
+                                  <i
+                                    className="fa fa-trash-o text-white"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
                             )}
                           </>
                         )}

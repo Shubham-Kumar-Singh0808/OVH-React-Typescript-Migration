@@ -10,10 +10,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -21,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const SkillListTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -69,10 +69,15 @@ const SkillListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
   }
 
+  const SuccessToastMessage = (
+    <OToast toastMessage="Skill Deleted Successfully" toastColor="success" />
+  )
+
   const handleConfirmDelete = async (skillId: number) => {
     setIsDeleteModalVisible(false)
 
     dispatch(reduxServices.skill.deleteSkill(skillId))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const currentPageItems = useMemo(() => {
@@ -110,15 +115,22 @@ const SkillListTable = (): JSX.Element => {
                 </CTableHeaderCell>
                 <CTableDataCell>{skillItem.skill}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    onClick={() =>
-                      handleShowDeleteModal(skillItem.skill, skillItem.skillId)
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`category-delete-btn${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowDeleteModal(
+                          skillItem.skill,
+                          skillItem.skillId,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )
@@ -159,11 +171,17 @@ const SkillListTable = (): JSX.Element => {
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
         modalTitle="Delete Skill"
-        confirmButtonText="Delete"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteSkillId)}
+        modalBodyClass="mt-0"
+        alignment="center"
+        confirmButtonText="Delete"
+        cancelButtonText="Cancel"
       >
-        {`Are you sure you want to delete this ${toDeleteSkillName} skill item?`}
+        <>
+          Are you sure you want to delete this{' '}
+          <strong>{toDeleteSkillName}</strong> skill item?
+        </>
       </OModal>
     </>
   )

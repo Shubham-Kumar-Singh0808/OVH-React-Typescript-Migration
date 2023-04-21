@@ -1,4 +1,7 @@
-import { getAllMeetingRooms } from '../../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
+import {
+  getAllMeetingLocations,
+  getAllMeetingRooms,
+} from '../../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -57,11 +60,38 @@ const updateRoom = async (
   return response.data
 }
 
+const getRoomsOfLocation = async (
+  locationId: number,
+): Promise<getAllMeetingRooms[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: roomListApiConfig.getRoomsOfLocation,
+    method: AllowedHttpMethods.get,
+    params: {
+      locationId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getMeetingLocations = async (): Promise<getAllMeetingLocations[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: roomListApiConfig.getAllMeetingLocations,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const roomListApi = {
   getMeetingRooms,
   addRoom,
   deleteRoom,
   updateRoom,
+  getRoomsOfLocation,
+  getMeetingLocations,
 }
 
 export default roomListApi
