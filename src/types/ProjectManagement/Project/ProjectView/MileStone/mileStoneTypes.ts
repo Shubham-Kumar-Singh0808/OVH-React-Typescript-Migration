@@ -122,7 +122,7 @@ export type GetPeopleForMilestone = {
   count?: null
   desigination?: string
   empName?: string
-  employeeId: number
+  employeeId: string
   endDate?: string
   holidays: string
   hours: string
@@ -157,7 +157,7 @@ export type GetWorkDetails = {
   holidays: number
   totalDays: string
   workingDays: string
-  employeeId: number
+  employeeId: string
 }
 export type AddMilestoneProps = {
   actualDate: string

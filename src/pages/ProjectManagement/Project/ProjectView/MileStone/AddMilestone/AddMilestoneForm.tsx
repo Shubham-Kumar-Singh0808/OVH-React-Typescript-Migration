@@ -34,6 +34,10 @@ const AddMileStoneForm = (): JSX.Element => {
   const [comments, setComments] = useState<string>()
   const [isDateEnabled, setIsDateButtonEnabled] = useState(false)
   const [isAddEnabled, setIsAddButtonEnabled] = useState(false)
+  const [employeeName, setEmployeeName] = useState<string>()
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
+
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
   const whiteText = 'text-white'
@@ -55,6 +59,9 @@ const AddMileStoneForm = (): JSX.Element => {
   )
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
+  )
+  const milestoneWorkDetails = useTypedSelector(
+    reduxServices.projectMileStone.selectors.milestoneWorkDetails,
   )
   const history = useHistory()
   useEffect(() => {
@@ -212,7 +219,20 @@ const AddMileStoneForm = (): JSX.Element => {
   useEffect(() => {
     if (getPeopleMilestone) setCheckList(getPeopleMilestone)
   }, [getPeopleMilestone])
-
+  const employeeData = getPeopleMilestone?.filter(
+    (items) => items?.empName === employeeName,
+  )
+  useEffect(() => {
+    if (toDate) {
+      dispatch(
+        reduxServices.projectMileStone.getWorkDetails({
+          empId: Number(employeeData[0].employeeId),
+          fromdate: fromDate || '',
+          todate: toDate || '',
+        }),
+      )
+    }
+  }, [toDate])
   return (
     <>
       <CForm>
@@ -507,7 +527,6 @@ const AddMileStoneForm = (): JSX.Element => {
                 </CTableHead>
                 {checkList.length > 0 &&
                   checkList.map((item, index) => {
-                    console.log(item.startDate)
                     return (
                       <MilestonePeopleList
                         onChangeHandleToDate={onChangeHandleToDate}
@@ -523,6 +542,12 @@ const AddMileStoneForm = (): JSX.Element => {
                         item={item}
                         index={index}
                         key={index}
+                        // fromDate={fromDate as string}
+                        // setFromDate={setFromDate}
+                        // toDate={toDate as string}
+                        // setToDate={setToDate}
+                        employeeName={employeeName as string}
+                        setEmployeeName={setEmployeeName}
                       />
                     )
                   })}
