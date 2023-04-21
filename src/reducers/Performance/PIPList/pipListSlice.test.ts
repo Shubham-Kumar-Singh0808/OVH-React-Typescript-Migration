@@ -8,6 +8,8 @@ import {
   GetPipList,
 } from '../../../types/Performance/PipList/pipListTypes'
 
+const currentMonth = 'Current Month'
+
 describe('PIP List Slice', () => {
   describe('getAllPIPList test', () => {
     it('Should be able to set isLoading to "loading" if getAllPIPList is pending', () => {
@@ -24,6 +26,7 @@ describe('PIP List Slice', () => {
         performanceRatings: [],
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
+        pipListValue: currentMonth,
         list: {} as GetPipList,
       })
     })
@@ -43,6 +46,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -61,6 +65,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -81,6 +86,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -99,6 +105,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -117,6 +124,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -137,6 +145,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -155,6 +164,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -173,6 +183,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -192,6 +203,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -210,6 +222,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: undefined,
+        pipListValue: currentMonth,
       })
     })
 
@@ -228,6 +241,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -247,6 +261,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -265,6 +280,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: undefined,
+        pipListValue: currentMonth,
       })
     })
 
@@ -283,6 +299,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -303,6 +320,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -321,6 +339,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: undefined,
+        pipListValue: currentMonth,
       })
     })
 
@@ -339,6 +358,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })
@@ -359,6 +379,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
 
@@ -377,6 +398,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: undefined,
+        pipListValue: currentMonth,
       })
     })
 
@@ -395,6 +417,7 @@ describe('PIP List Slice', () => {
         activeEmployee: [],
         employeePIPTimeline: { size: 0, list: [] },
         list: {} as GetPipList,
+        pipListValue: currentMonth,
       })
     })
   })

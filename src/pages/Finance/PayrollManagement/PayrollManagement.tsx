@@ -43,7 +43,7 @@ const PayrollManagement = (): JSX.Element => {
   const [allChecked, setAllChecked] = useState<boolean>(false)
 
   const [paySlipId, setPaySlipId] = useState<number[]>([])
-
+  console.log(isDeleteBtnDisable)
   useEffect(() => {
     if (selectMonth) {
       setPercentageEnable(true)

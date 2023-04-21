@@ -3,7 +3,7 @@ import moment from 'moment'
 import EmployeePipList from './EmployeePipList'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { useTypedSelector } from '../../../../stateStore'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
@@ -25,8 +25,6 @@ const PipList = (): JSX.Element => {
   //   reduxServices.pipList.selectors.getPIPValue,
   // )
   // const [selectDay, setSelectDay] = useState<string>(getPIPValue as string)
-
-  const dispatch = useAppDispatch()
 
   // useEffect(() => {
   //   if (localStorage.getItem('fmonth')) {
@@ -97,9 +95,6 @@ const PipList = (): JSX.Element => {
   )
 
   const listSize = useTypedSelector(reduxServices.pipList.selectors.listSize)
-  const selectedEmployeePipStatus = useTypedSelector(
-    reduxServices.pipList.selectors.selectedEmployeePipStatus,
-  )
 
   const {
     paginationRange,

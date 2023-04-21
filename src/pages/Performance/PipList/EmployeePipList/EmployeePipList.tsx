@@ -19,7 +19,6 @@ import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
-import { EmployeePipStatus } from '../../../../types/Performance/PipList/pipListTypes'
 
 const EmployeePipList = ({
   // selectDate,
@@ -89,6 +88,7 @@ const EmployeePipList = ({
   //   to: string
   // }
   // getPIPValue: string | undefined
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const selectCurrentPage = useTypedSelector(
