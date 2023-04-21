@@ -50,6 +50,7 @@ export type PipListSliceState = {
   activeEmployee: ActiveEmployee[]
   employeePIPTimeline: GetPIPHistory
   list: GetPipList
+  pipListValue?: string
 }
 
 export type EmployeePIPListTableProps = {
@@ -58,16 +59,18 @@ export type EmployeePIPListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  selectDate: string
+  // selectDate: string
   toDate?: Date | string
   fromDate?: Date | string
   searchInput?: string
   searchByAdded?: boolean
   setToggle: (value: string) => void
   searchByEmployee?: boolean
-  setSelectDate: (value: string) => void
+  // setSelectDate: (value: string) => void
   setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
   setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  // getPIPValue: string
+  selectDay: string
 }
 
 export type PerformanceRatings = {

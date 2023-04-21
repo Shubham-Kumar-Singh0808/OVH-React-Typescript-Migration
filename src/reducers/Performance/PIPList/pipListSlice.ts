@@ -170,7 +170,7 @@ const savePIPClearnceCertificate = createAsyncThunk(
     }
   },
 )
-
+const curMonth = 'Current Month'
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -181,14 +181,22 @@ export const initialPipListState: PipListSliceState = {
   activeEmployee: [],
   employeePIPTimeline: { size: 0, list: [] },
   list: {} as GetPipList,
+  pipListValue: curMonth,
 }
 
 const pipListSlice = createSlice({
   name: 'pipList',
   initialState: initialPipListState,
   reducers: {
+    setMonthValue: (state, action) => {
+      state.pipListValue = action.payload
+      console.log(action.payload, 'slice')
+    },
     changeSelectedEmployeePipStatus: (state, action) => {
       state.selectedEmployeePipStatus = action.payload as EmployeePipStatus
+    },
+    clearPIPList: (state) => {
+      state.pipListValue = 'Current Month'
     },
   },
   extraReducers: (builder) => {
@@ -284,6 +292,9 @@ const viewEmployeePipDetails = (state: RootState): GetPipList =>
 const clearenceCertificate = (state: RootState): GetPipList =>
   state.pipList.list
 
+const getPIPValue = (state: RootState): string | undefined =>
+  state.pipList.pipListValue
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -308,6 +319,7 @@ export const pipListSelectors = {
   employeePIPTimeline,
   viewEmployeePipDetails,
   clearenceCertificate,
+  getPIPValue,
 }
 
 export const pipListService = {

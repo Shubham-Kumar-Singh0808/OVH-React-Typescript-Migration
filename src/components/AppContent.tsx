@@ -1,12 +1,34 @@
-import React, { Suspense } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import React, { Suspense, useEffect } from 'react'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import { CContainer } from '@coreui/react-pro'
 // routes config
 import OLoadingSpinner from './ReusableComponent/OLoadingSpinner'
 import routes from '../routes'
 import { LoadingType } from '../types/Components/loadingScreenTypes'
+import { reduxServices } from '../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../stateStore'
 
 const AppContent = () => {
+  const dispatch = useAppDispatch()
+  const location = useLocation()
+
+  const getPIPValue = useTypedSelector(
+    reduxServices.pipList.selectors.getPIPValue,
+  )
+  console.log(location.pathname.split('/')[1] === 'ViewPIPDetail')
+
+  useEffect(() => {
+    if (
+      location.pathname === '/PIPList' ||
+      location.pathname === '/PIPClearnceCerticates' ||
+      location.pathname.split('/')[1] === 'ViewPIPDetail'
+    ) {
+      dispatch(reduxServices.pipList.actions.setMonthValue(getPIPValue))
+    } else {
+      dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
+    }
+  }, [dispatch, location, getPIPValue])
+
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
