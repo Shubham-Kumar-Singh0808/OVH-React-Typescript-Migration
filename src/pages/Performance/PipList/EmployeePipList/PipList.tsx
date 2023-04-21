@@ -9,8 +9,6 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 
 const PipList = (): JSX.Element => {
-  const currentMonth = 'Current Month'
-  const [selectDate, setSelectDate] = useState<string>(currentMonth)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
@@ -20,12 +18,6 @@ const PipList = (): JSX.Element => {
 
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
   const [toggle, setToggle] = useState<string>('')
-
-  useEffect(() => {
-    if (localStorage.getItem('fmonth')) {
-      setSelectDate(localStorage.getItem('fmonth') ?? '')
-    }
-  }, [])
 
   useEffect(() => {
     if (localStorage.getItem('fromMonth')) {
@@ -86,9 +78,6 @@ const PipList = (): JSX.Element => {
   )
 
   const listSize = useTypedSelector(reduxServices.pipList.selectors.listSize)
-  const selectedEmployeePipStatus = useTypedSelector(
-    reduxServices.pipList.selectors.selectedEmployeePipStatus,
-  )
 
   const {
     paginationRange,
@@ -104,27 +93,6 @@ const PipList = (): JSX.Element => {
     }
   }, [selectCurrentPage])
 
-  const pipListObj = {
-    startIndex: pageSize * (selectCurrentPage - 1),
-    endIndex: pageSize * selectCurrentPage,
-    selectionStatus: selectedEmployeePipStatus,
-    dateSelection:
-      (localStorage.getItem('fmonth')
-        ? localStorage.getItem('fmonth')
-        : selectDate) || '',
-    from:
-      (localStorage.getItem('fromMonth')
-        ? localStorage.getItem('fromMonth')
-        : fromDate) || '',
-    multiSearch: searchInput,
-    searchByAdded,
-    searchByEmployee,
-    to:
-      (localStorage.getItem('toMonth')
-        ? localStorage.getItem('toMonth')
-        : toDate) || '',
-  }
-
   return (
     <>
       {toggle === '' && (
@@ -135,8 +103,6 @@ const PipList = (): JSX.Element => {
           CFooterClassName="d-none"
         >
           <EmployeePipList
-            selectDate={selectDate}
-            setSelectDate={setSelectDate}
             searchInput={searchInput}
             setSearchInput={setSearchInput}
             searchByAdded={searchByAdded}
@@ -149,7 +115,6 @@ const PipList = (): JSX.Element => {
             setToDate={setToDate}
             dateError={dateError}
             isMultiSearchBtn={isMultiSearchBtn}
-            currentMonth={currentMonth}
             toggle={toggle}
             setToggle={setToggle}
             HierarchyUserAccess={HierarchyUserAccess}
@@ -158,7 +123,6 @@ const PipList = (): JSX.Element => {
             setPageSize={setPageSize}
             currentPage={currentPage}
             pageSize={pageSize}
-            pipListObj={pipListObj}
             setCurrentPage={setCurrentPage}
           />
         </OCard>
@@ -169,12 +133,12 @@ const PipList = (): JSX.Element => {
           searchByAdded={searchByAdded}
           searchByEmployee={searchByEmployee}
           searchInput={searchInput}
-          selectDate={selectDate}
           fromDate={fromDate as string}
           toDate={toDate as string}
           setToggle={() => {
             setToggle('')
           }}
+          selectDay={''}
         />
       )}
     </>
