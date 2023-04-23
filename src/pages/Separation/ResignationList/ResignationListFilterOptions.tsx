@@ -33,9 +33,18 @@ const ResignationListFilterOptions = ({
   const [dateError, setDateError] = useState<boolean>(false)
   const [selectFromDate, setSelectFromDate] = useState<Date | string>()
   const [selectToDate, setSelectToDate] = useState<Date | string>()
-  const [status, setStatus] = useState<string>('All')
-  const [employeeStatus, setEmployeeStatus] = useState<string>()
+  const getSelectedStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedStatusValue,
+  )
+  const getSelectedEmployeeStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedEmployeeStatusValue,
+  )
+  const [status, setStatus] = useState<string>(getSelectedStatusValue)
+  const [employeeStatus, setEmployeeStatus] = useState<string>(
+    getSelectedEmployeeStatusValue,
+  )
   const [searchInputValue, setSearchInputValue] = useState<string>('')
+
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
   )
@@ -102,44 +111,35 @@ const ResignationListFilterOptions = ({
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
-        dateSelection:
-          (localStorage.getItem('selectData')
-            ? localStorage.getItem('selectData')
-            : Select) || '',
-        empStatus:
-          (localStorage.getItem('employeeStatus')
-            ? localStorage.getItem('employeeStatus')
-            : employeeStatus) || '',
+        dateSelection: Select || '',
+        empStatus: employeeStatus || '',
         endIndex: pageSize * selectCurrentPage,
         from: '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
-        status:
-          (localStorage.getItem('status')
-            ? localStorage.getItem('status')
-            : status) || 'All',
+        status: status || 'All',
         to: '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
 
-  useEffect(() => {
-    if (localStorage.getItem('selectData')) {
-      setSelect(localStorage.getItem('selectData') ?? '')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem('selectData')) {
+  //     setSelect(localStorage.getItem('selectData') ?? '')
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (localStorage.getItem('status')) {
-      setStatus(localStorage.getItem('status') ?? '')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem('status')) {
+  //     setStatus(localStorage.getItem('status') ?? '')
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (localStorage.getItem('employeeStatus')) {
-      setEmployeeStatus(localStorage.getItem('employeeStatus') ?? '')
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (localStorage.getItem('employeeStatus')) {
+  //     setEmployeeStatus(localStorage.getItem('employeeStatus') ?? '')
+  //   }
+  // }, [])
   const handleViewButtonHandler = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
@@ -223,6 +223,15 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
+  useEffect(() => {
+    dispatch(reduxServices.resignationList.actions.setMonthValue(Select))
+    dispatch(reduxServices.resignationList.actions.setStatusValue(status))
+    dispatch(
+      reduxServices.resignationList.actions.setEmployeeStatusValue(
+        employeeStatus,
+      ),
+    )
+  }, [Select, status, employeeStatus])
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
@@ -237,11 +246,20 @@ const ResignationListFilterOptions = ({
             data-testid="form-select1"
             name="Select"
             value={Select}
+            // onChange={(e) => {
+            //   setSelect(e.target.value)
+            //   if (!localStorage.getItem('selectData')) {
+            //     localStorage.setItem('selectData', e.target.value)
+            //   }
+            // }}
+
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setMonthValue(
+                  e.target.value,
+                ),
+              )
               setSelect(e.target.value)
-              if (!localStorage.getItem('selectData')) {
-                localStorage.setItem('selectData', e.target.value)
-              }
             }}
           >
             <option value="">Select Month</option>
@@ -261,11 +279,19 @@ const ResignationListFilterOptions = ({
             data-testid="form-select2"
             name="status"
             value={status}
+            // onChange={(e) => {
+            //   setStatus(e.target.value)
+            //   if (!localStorage.getItem('status')) {
+            //     localStorage.setItem('status', e.target.value)
+            //   }
+            // }}
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setStatusValue(
+                  e.target.value,
+                ),
+              )
               setStatus(e.target.value)
-              if (!localStorage.getItem('status')) {
-                localStorage.setItem('status', e.target.value)
-              }
             }}
           >
             <option value="All" selected>
@@ -291,11 +317,19 @@ const ResignationListFilterOptions = ({
             data-testid="form-select3"
             name="employeeStatus"
             value={employeeStatus}
+            // onChange={(e) => {
+            //   setEmployeeStatus(e.target.value)
+            //   if (!localStorage.getItem('employeeStatus')) {
+            //     localStorage.setItem('employeeStatus', e.target.value)
+            //   }
+            // }}
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setEmployeeStatusValue(
+                  e.target.value,
+                ),
+              )
               setEmployeeStatus(e.target.value)
-              if (!localStorage.getItem('employeeStatus')) {
-                localStorage.setItem('employeeStatus', e.target.value)
-              }
             }}
           >
             <option value="">Employee Status</option>

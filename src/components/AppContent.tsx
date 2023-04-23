@@ -15,6 +15,16 @@ const AppContent = () => {
   const getPIPValue = useTypedSelector(
     reduxServices.pipList.selectors.getPIPValue,
   )
+
+  const getSelectedMonthValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedMonthValue,
+  )
+  const getSelectedStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedStatusValue,
+  )
+  const getSelectedEmployeeStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedEmployeeStatusValue,
+  )
   console.log(location.pathname.split('/')[1] === 'ViewPIPDetail')
 
   useEffect(() => {
@@ -28,6 +38,43 @@ const AppContent = () => {
       dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
     }
   }, [dispatch, location, getPIPValue])
+
+  useEffect(() => {
+    if (
+      location.pathname === '/resignationList' ||
+      location.pathname === '/managerComments' ||
+      location.pathname === '/separationChart' ||
+      location.pathname === '/ClearanceCertificateIT' ||
+      location.pathname === '/ClearanceCertificateFinance' ||
+      location.pathname === '/ClearanceCertificateAdmin'
+    ) {
+      dispatch(
+        reduxServices.resignationList.actions.setMonthValue(
+          getSelectedMonthValue,
+        ),
+      )
+      dispatch(
+        reduxServices.resignationList.actions.setStatusValue(
+          getSelectedStatusValue,
+        ),
+      )
+      dispatch(
+        reduxServices.resignationList.actions.setEmployeeStatusValue(
+          getSelectedEmployeeStatusValue,
+        ),
+      )
+    } else {
+      dispatch(reduxServices.resignationList.actions.setMonthValue(''))
+      dispatch(reduxServices.resignationList.actions.setStatusValue('All'))
+      dispatch(reduxServices.resignationList.actions.setEmployeeStatusValue(''))
+    }
+  }, [
+    dispatch,
+    location,
+    getPIPValue,
+    getSelectedStatusValue,
+    getSelectedEmployeeStatusValue,
+  ])
 
   return (
     <CContainer fluid>
