@@ -9,7 +9,7 @@ import {
   CFormSelect,
   CFormTextarea,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -24,10 +24,13 @@ const ReviewFormDetailsTable = ({
 }: {
   kpiData: KPI[]
 }): JSX.Element => {
+  const [KPIDetails, setKPIDetails] = useState<KPI[]>()
   const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
     useState<boolean>(false)
   const [kpiDetails, setKpiDetails] = useState({} as KPI)
-
+  const appraisalForm = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalForm,
+  )
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
@@ -35,6 +38,7 @@ const ReviewFormDetailsTable = ({
     setIsKPIDetailsModalVisible(true)
     setKpiDetails(descKpi)
   }
+
   const dynamicFormLabelProps = (rows: string, className: string) => {
     return {
       rows,
@@ -58,6 +62,12 @@ const ReviewFormDetailsTable = ({
     width: '90px',
     scope: 'col',
   }
+  useEffect(() => {
+    if (kpiData) {
+      setKPIDetails(kpiData)
+      // setKPIDetails(appraisalForm.kra.)
+    }
+  }, [kpiData])
 
   const managerCommentExist = (kpi: KPI) => {
     const isManagerCmmntExist = kpi?.managerCommentsDtos?.length > 0
@@ -126,8 +136,8 @@ const ReviewFormDetailsTable = ({
         </CTableHead>
         <CTableBody>
           {isLoading !== ApiLoadingState.loading ? (
-            kpiData &&
-            kpiData?.map((kpi, index) => {
+            KPIDetails &&
+            KPIDetails?.map((kpi, index) => {
               const removeTag = '/(<([^>]+)>)/gi'
               const removeSpaces = kpi?.name.replace(removeTag, '')
               const kpiNameLimit =
@@ -151,43 +161,43 @@ const ReviewFormDetailsTable = ({
                       </CLink>
                     </CTableDataCell>
                   )}
-                  {kpi.employeeRating === null ? (
-                    <CTableDataCell>
-                      <CFormSelect
-                        aria-label="Default select example"
-                        key={index}
-                        size="sm"
-                        name="rating"
-                        id="empRating"
-                        value={kpi.employeeRating}
-                        onChange={(e) => onChangeSelfRating(e)}
-                      >
-                        <option value={''}>Select Rating</option>
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
-                      </CFormSelect>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
-                  )}
-                  {kpi.employeeFeedback === null ? (
-                    <CTableDataCell>
-                      <CFormTextarea
-                        {...dynamicFormLabelProps(
-                          '2',
-                          'reviewForm-text-area documentWidth',
-                        )}
-                        value={kpi.employeeFeedback}
-                        onChange={(e) => onChangeSelfRating(e)}
-                      ></CFormTextarea>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
-                  )}
+                  {/* {kpi.employeeRating === null ? ( */}
+                  <CTableDataCell>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      key={index}
+                      size="sm"
+                      name="rating"
+                      id="empRating"
+                      value={kpi.employeeRating}
+                      onChange={(e) => onChangeSelfRating(e)}
+                    >
+                      <option value={''}>Select Rating</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">0</option>
+                    </CFormSelect>
+                  </CTableDataCell>
+                  {/* // ) : (
+                  //   <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
+                  // )} */}
+                  {/* {kpi.employeeFeedback === null ? ( */}
+                  <CTableDataCell>
+                    <CFormTextarea
+                      {...dynamicFormLabelProps(
+                        '2',
+                        'reviewForm-text-area documentWidth',
+                      )}
+                      value={kpi.employeeFeedback}
+                      onChange={(e) => onChangeSelfRating(e)}
+                    ></CFormTextarea>
+                  </CTableDataCell>
+                  {/* // ) : (
+                  //   <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
+                  // )} */}
                   {kpi?.managerCommentsDtos &&
                     kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
                       <>
