@@ -128,6 +128,15 @@ const AddMileStoneForm = (): JSX.Element => {
     newMileStone[index].endDate = moment(date).format('DD/MM/YYYY')
     setCheckList(newMileStone)
   }
+
+  const monthWorkingOnChange = (value: string, index: number) => {
+    const newMileStone: GetPeopleForMilestone[] = JSON.parse(
+      JSON.stringify(checkList),
+    )
+    newMileStone[index].monthWorkingDays = value
+    setCheckList(newMileStone)
+  }
+
   const holidaysOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -539,6 +548,7 @@ const AddMileStoneForm = (): JSX.Element => {
                         totalHoursOnChange={totalHoursOnChange}
                         roleOnChange={roleOnChange}
                         billableOnChange={billableOnChange}
+                        monthWorkingOnChange={monthWorkingOnChange}
                         item={item}
                         index={index}
                         key={index}

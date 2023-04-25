@@ -37,6 +37,7 @@ const MilestonePeopleList = ({
   // setToDate,
   employeeName,
   setEmployeeName,
+  monthWorkingOnChange,
 }: {
   onChangeHandleFromDate: (date: Date, index: number) => void
   onChangeHandleToDate: (date: Date, index: number) => void
@@ -57,6 +58,7 @@ const MilestonePeopleList = ({
     index: number,
   ) => void
   hoursOnChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  monthWorkingOnChange: (value: string, index: number) => void
   totalHoursOnChange: (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
@@ -88,6 +90,7 @@ const MilestonePeopleList = ({
   const [comments, setComments] = useState<string>()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
+  const [referenceIndex, setReferenceIndex] = useState<string>()
   const commonFormatDate = 'l'
   const totalHoursCalculations = Number(totalDays) * Number(hours)
   useEffect(() => {
@@ -100,10 +103,6 @@ const MilestonePeopleList = ({
     (items) => items?.empName === employeeName,
   )
 
-  const result = getPeopleMilestone?.filter(
-    (items) => items?.empName === milestoneWorkDetails?.employeeId,
-  )
-  console.log(result[0]?.employeeId)
   useEffect(() => {
     if (totalHoursCalculations) {
       setTotalHours(String(totalHoursCalculations))
@@ -130,6 +129,7 @@ const MilestonePeopleList = ({
       item?.hours
     ) {
       setWorkDays(item?.monthWorkingDays)
+      // setReferenceIndex(index)
       setHoliDays(Number(item?.holidays))
       setLeaves(item?.leaves)
       setTotalDays(item?.totalDays)
@@ -147,11 +147,13 @@ const MilestonePeopleList = ({
     if (item.endDate) {
       dispatch(
         reduxServices.projectMileStone.getWorkDetails({
-          empId: Number(employeeData[0]?.employeeId),
+          empId: Number(item.employeeId),
           fromdate: item.startDate || '',
           todate: item.endDate || '',
         }),
       )
+      setReferenceIndex(item.employeeId)
+      monthWorkingOnChange(workDays as string, index)
     }
   }, [item.endDate])
 
@@ -170,7 +172,7 @@ const MilestonePeopleList = ({
           <CTableBody>
             <CTableRow>
               <CTableDataCell scope="row">{item.employeeId}</CTableDataCell>
-              <CTableDataCell scope="row">{employeeName}</CTableDataCell>
+              <CTableDataCell scope="row">{item.empName}</CTableDataCell>
               <CTableDataCell scope="row">
                 <DatePicker
                   id="editProjectEndDate"
@@ -212,7 +214,12 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   // onChange={(e) => setWorkDays(e.target.value)}
-                  value={workDays}
+                  // value={workDays}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? workDays
+                      : item.monthWorkingDays
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
