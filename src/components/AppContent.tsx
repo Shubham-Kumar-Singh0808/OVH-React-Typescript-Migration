@@ -46,7 +46,8 @@ const AppContent = () => {
       location.pathname === '/separationChart' ||
       location.pathname === '/ClearanceCertificateIT' ||
       location.pathname === '/ClearanceCertificateFinance' ||
-      location.pathname === '/ClearanceCertificateAdmin'
+      location.pathname === '/ClearanceCertificateAdmin' ||
+      location.pathname === '/ClearanceCertificateHR'
     ) {
       dispatch(
         reduxServices.resignationList.actions.setMonthValue(

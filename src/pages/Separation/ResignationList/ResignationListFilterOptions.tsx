@@ -22,6 +22,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import resignationListApi from '../../../middleware/api/Separation/ResignationList/resignationListApi'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const ResignationListFilterOptions = ({
   Select,
@@ -59,6 +60,17 @@ const ResignationListFilterOptions = ({
   const selectCurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
+  useEffect(() => {
+    if (localStorage.getItem('fromMonth')) {
+      setSelectFromDate(localStorage.getItem('fromMonth') ?? '')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (localStorage.getItem('toMonth')) {
+      setSelectToDate(localStorage.getItem('toMonth') ?? '')
+    }
+  }, [])
 
   const dispatch = useAppDispatch()
   const {
@@ -108,61 +120,59 @@ const ResignationListFilterOptions = ({
     }
   }, [selectFromDate, selectToDate])
 
+  const selectFromDateValue = selectFromDate
+    ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
+  const selectToDateValue = selectToDate
+    ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: Select || '',
         empStatus: employeeStatus || '',
         endIndex: pageSize * selectCurrentPage,
-        from: '',
+        from:
+          (localStorage.getItem('fromMonth')
+            ? localStorage.getItem('fromMonth')
+            : (selectFromDate as string)) || '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
         status: status || 'All',
-        to: '',
+        to:
+          (localStorage.getItem('toMonth')
+            ? localStorage.getItem('toMonth')
+            : (selectToDate as string)) || '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('selectData')) {
-  //     setSelect(localStorage.getItem('selectData') ?? '')
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('status')) {
-  //     setStatus(localStorage.getItem('status') ?? '')
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (localStorage.getItem('employeeStatus')) {
-  //     setEmployeeStatus(localStorage.getItem('employeeStatus') ?? '')
-  //   }
-  // }, [])
   const handleViewButtonHandler = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
         dateSelection: Select,
         empStatus: (employeeStatus as string) || '',
         endIndex: pageSize * selectCurrentPage,
-        from: selectFromDate
-          ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
+        from:
+          (localStorage.getItem('fromMonth')
+            ? localStorage.getItem('fromMonth')
+            : (selectFromDate as string)) || '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
         status,
-        to: selectToDate
-          ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
+        to:
+          (localStorage.getItem('toMonth')
+            ? localStorage.getItem('toMonth')
+            : (selectToDate as string)) || '',
       }),
     )
   }
@@ -232,6 +242,34 @@ const ResignationListFilterOptions = ({
       ),
     )
   }, [Select, status, employeeStatus])
+  const onHandleFromDatePicker = (value: Date) => {
+    setSelectFromDate(moment(value).format(dateFormat))
+    if (!localStorage.getItem('fromMonth')) {
+      localStorage.setItem('fromMonth', moment(value).format(dateFormat))
+    }
+  }
+  const onHandleToDatePicker = (value: Date) => {
+    setSelectToDate(moment(value).format(dateFormat))
+    if (!localStorage.getItem('toMonth')) {
+      localStorage.setItem('toMonth', moment(value).format(dateFormat))
+    }
+  }
+  // useEffect(() => {
+  //   return () => {
+  //     const win = window.location.href
+  //     if (!win.toLowerCase().includes('pip')) {
+  //       localStorage.removeItem('fmonth')
+  //       localStorage.removeItem('fromMonth')
+  //       localStorage.removeItem('toMonth')
+  //     }
+  //   }
+  // }, [])
+  useEffect(() => {
+    if (Select === 'Custom') {
+      setSelectFromDate('')
+      setSelectToDate('')
+    }
+  }, [Select])
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
@@ -246,13 +284,6 @@ const ResignationListFilterOptions = ({
             data-testid="form-select1"
             name="Select"
             value={Select}
-            // onChange={(e) => {
-            //   setSelect(e.target.value)
-            //   if (!localStorage.getItem('selectData')) {
-            //     localStorage.setItem('selectData', e.target.value)
-            //   }
-            // }}
-
             onChange={(e) => {
               dispatch(
                 reduxServices.resignationList.actions.setMonthValue(
@@ -279,12 +310,6 @@ const ResignationListFilterOptions = ({
             data-testid="form-select2"
             name="status"
             value={status}
-            // onChange={(e) => {
-            //   setStatus(e.target.value)
-            //   if (!localStorage.getItem('status')) {
-            //     localStorage.setItem('status', e.target.value)
-            //   }
-            // }}
             onChange={(e) => {
               dispatch(
                 reduxServices.resignationList.actions.setStatusValue(
@@ -317,12 +342,6 @@ const ResignationListFilterOptions = ({
             data-testid="form-select3"
             name="employeeStatus"
             value={employeeStatus}
-            // onChange={(e) => {
-            //   setEmployeeStatus(e.target.value)
-            //   if (!localStorage.getItem('employeeStatus')) {
-            //     localStorage.setItem('employeeStatus', e.target.value)
-            //   }
-            // }}
             onChange={(e) => {
               dispatch(
                 reduxServices.resignationList.actions.setEmployeeStatusValue(
@@ -386,9 +405,10 @@ const ResignationListFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={fromDateValue}
-                onChange={(date: Date) => setSelectFromDate(date)}
-                selected={selectFromDate as Date}
+                value={selectFromDate as string}
+                onChange={(date: Date) => onHandleFromDatePicker(date)}
+                // onChange={(date: Date) => setSelectFromDate(date)}
+                // selected={selectFromDate as Date}
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
@@ -411,9 +431,10 @@ const ResignationListFilterOptions = ({
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                value={toDateValue}
-                onChange={(date: Date) => setSelectToDate(date)}
-                selected={selectToDate as Date}
+                value={selectToDate as string}
+                // onChange={(date: Date) => setSelectToDate(date)}
+                // selected={selectToDate as Date}
+                onChange={(date: Date) => onHandleToDatePicker(date)}
               />
               {dateError && (
                 <span className="text-danger" data-testid="errorMessage">
