@@ -173,7 +173,7 @@ export type ManagerCommentsDTO = {
 
 export type KPI = {
   description: string
-  employeeFeedback: null
+  employeeFeedback: string
   employeeRating: string
   employeeRatingName: null
   frequency: string

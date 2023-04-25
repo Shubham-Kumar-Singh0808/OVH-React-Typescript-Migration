@@ -68,7 +68,11 @@ const ReviewFormDetailsTable = ({
     }
   }
 
-  const onChangeSelfRating = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeSelfRating = (
+    e:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     console.log(e.target.value)
   }
   console.log(kpiData)
@@ -132,6 +136,7 @@ const ReviewFormDetailsTable = ({
                   : removeSpaces
               managerCommentExist(kpi)
               console.log(kpi.employeeRating)
+              console.log(kpi.employeeFeedback)
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
@@ -176,6 +181,8 @@ const ReviewFormDetailsTable = ({
                           '2',
                           'reviewForm-text-area documentWidth',
                         )}
+                        value={kpi.employeeFeedback}
+                        onChange={(e) => onChangeSelfRating(e)}
                       ></CFormTextarea>
                     </CTableDataCell>
                   ) : (
