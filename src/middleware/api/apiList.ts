@@ -837,6 +837,13 @@ export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
   editMilestone: apiPrefix + '/project-mgmt/getMilestone',
+  getPeopleForMilestone: apiPrefix + '/allocation-mgmt/getPeopleForMilestone',
+  getMilestoneNumber: apiPrefix + '/project-mgmt/getMilestoneNumber',
+  getCRListForMilestone: apiPrefix + '/project-mgmt/getCRListForMilestone',
+  getWorkDetails: apiPrefix + '/project-mgmt/getWorkDetails',
+  mileStones: apiPrefix + '/project-mgmt/mileStones',
+  milestoneDelete: apiPrefix + '/project-mgmt/milestoneDelete',
+  closeMilestone: apiPrefix + '/project-mgmt/closeMilestone',
 }
 
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {

@@ -23,7 +23,9 @@ const AddProjectStatus = ({
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [reRenderCount, setRerenderCount] = useState<number>(0)
   const commonFormatDate = 'l'
+  console.log(reRenderCount)
   const dispatch = useAppDispatch()
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
@@ -125,6 +127,7 @@ const AddProjectStatus = ({
     ) {
       addProjectStatusHandler()
     } else {
+      setRerenderCount((reRenderCount) => reRenderCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }

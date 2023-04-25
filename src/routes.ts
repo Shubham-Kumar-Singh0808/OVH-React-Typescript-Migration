@@ -263,6 +263,13 @@ const editMilestone = React.lazy(
     ),
 )
 
+const addMilestone = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/AddMilestone/AddMilestone'
+    ),
+)
+
 const ResignationTimeLine = React.lazy(
   () =>
     import(
@@ -979,6 +986,11 @@ const routes = [
     path: '/editRetainerMilestone',
     name: 'Edit mileStone',
     component: editMilestone,
+  },
+  {
+    path: '/retainerMilestone',
+    name: 'Add mileStone',
+    component: addMilestone,
   },
 ]
 
