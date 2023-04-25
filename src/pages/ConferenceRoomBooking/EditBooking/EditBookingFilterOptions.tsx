@@ -37,6 +37,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isProjectChange, setIsProjectChange] = useState<string>('')
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
@@ -401,7 +402,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const ClearButtonHandler = () => {
     history.push('/meetingList')
   }
-
+  console.log(errorMessageCount)
   const validateBookingTimings = () => {
     if (
       editMeetingRequest.startTime.split(':') <
@@ -419,6 +420,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
       if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
         dispatch(
           reduxServices.app.actions.addToast(
             failureValidationErrorToastMessage,
@@ -428,6 +430,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
         handleConfirmBtn()
       }
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
