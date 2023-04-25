@@ -139,7 +139,7 @@ const EditProjectStatus = ({
     ) {
       updateProjectStatusHandler()
     } else {
-      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }

@@ -237,7 +237,7 @@ const AllocateEmployee = (): JSX.Element => {
     ) {
       postAllocateEmployee()
     } else {
-      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
+      setErrorMessageCount((errorCount) => errorCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }

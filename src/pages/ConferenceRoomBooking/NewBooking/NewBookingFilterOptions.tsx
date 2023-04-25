@@ -318,7 +318,7 @@ const NewBookingFilterOptions = ({
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
       if (durationInHours > 2) {
-        setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
+        setErrorMessageCount((messageCount) => messageCount + 1)
         dispatch(
           reduxServices.app.actions.addToast(
             failureValidationErrorToastMessage,
@@ -328,7 +328,7 @@ const NewBookingFilterOptions = ({
         handleConfirmBtn()
       }
     } else {
-      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }

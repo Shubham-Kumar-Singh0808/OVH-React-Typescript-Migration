@@ -85,7 +85,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           newQualificationCategory.qualificationName.toLowerCase(),
       ).length > 0
     ) {
-      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       return
     }
