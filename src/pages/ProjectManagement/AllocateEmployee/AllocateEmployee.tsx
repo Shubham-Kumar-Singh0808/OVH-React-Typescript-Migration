@@ -64,6 +64,7 @@ const AllocateEmployee = (): JSX.Element => {
   const [allocationEndDate, setAllocationEndDate] = useState<string>()
   const [isDateError, setIsDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
+  const [reRenderCount, setRerenderCount] = useState<number>(0)
   const [isEnable, setIsEnable] = useState(false)
 
   const allEmployeeProfiles = useTypedSelector(
@@ -77,7 +78,7 @@ const AllocateEmployee = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
   }, [dispatch])
-
+  console.log(reRenderCount)
   useEffect(() => {
     if (projectsAutoCompleteTarget) {
       dispatch(
@@ -179,7 +180,7 @@ const AllocateEmployee = (): JSX.Element => {
   )
   const failureToastMessage = (
     <OToast
-      toastMessage="Add an employee within project date limits."
+      toastMessage="Add an employee within project date limits"
       toastColor="danger"
     />
   )
@@ -202,6 +203,7 @@ const AllocateEmployee = (): JSX.Element => {
     dispatch(reduxServices.app.actions.addToast(successToastMessage))
     history.push('/projectreport')
   }
+
   const allocateButtonHandler = () => {
     const tempAllocationDate = new Date(
       moment(allocationDate).format(commonFormatDate),
@@ -226,7 +228,14 @@ const AllocateEmployee = (): JSX.Element => {
       Number(endDateParts[1]) - 1,
       Number(endDateParts[0]),
     )
-
+    console.log(
+      tempAllocationDate <= tempEndDate,
+      tempAllocationDate >= tempProjectStartDate,
+      tempAllocationDate <= tempProjectEndDate,
+      tempEndDate <= tempProjectEndDate,
+      tempEndDate >= tempProjectStartDate,
+      'testing',
+    )
     if (
       tempAllocationDate <= tempEndDate &&
       tempAllocationDate >= tempProjectStartDate &&
@@ -236,6 +245,8 @@ const AllocateEmployee = (): JSX.Element => {
     ) {
       postAllocateEmployee()
     } else {
+      console.log('testing')
+      setRerenderCount((reRenderCount) => reRenderCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
