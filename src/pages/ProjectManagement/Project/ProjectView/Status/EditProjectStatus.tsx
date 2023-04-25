@@ -43,6 +43,7 @@ const EditProjectStatus = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [dateError, setDateError] = useState<boolean>(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
@@ -138,6 +139,7 @@ const EditProjectStatus = ({
     ) {
       updateProjectStatusHandler()
     } else {
+      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -180,6 +182,7 @@ const EditProjectStatus = ({
     editNextWeekStatus,
   ])
   console.log(setShowEditor)
+  console.log(errorMessageCount)
   return (
     <>
       <CRow className="justify-content-end">

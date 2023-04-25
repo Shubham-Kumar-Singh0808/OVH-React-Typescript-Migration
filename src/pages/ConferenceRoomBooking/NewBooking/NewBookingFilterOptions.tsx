@@ -58,7 +58,7 @@ const NewBookingFilterOptions = ({
   } as ShouldResetNewBookingFields
 
   const [resetFields, setResetField] = useState(initResetFields)
-
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [newRoomBooking, setNewRoomBooking] = useState(initNewBooking)
@@ -318,6 +318,7 @@ const NewBookingFilterOptions = ({
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
       if (durationInHours > 2) {
+        setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
         dispatch(
           reduxServices.app.actions.addToast(
             failureValidationErrorToastMessage,
@@ -327,6 +328,7 @@ const NewBookingFilterOptions = ({
         handleConfirmBtn()
       }
     } else {
+      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -388,7 +390,7 @@ const NewBookingFilterOptions = ({
   const userAccessRoomList = userAccessToFeatures?.find(
     (feature) => feature.name === 'Meeting-Rooms',
   )
-
+  console.log(errorMessageCount)
   return (
     <>
       <CRow>

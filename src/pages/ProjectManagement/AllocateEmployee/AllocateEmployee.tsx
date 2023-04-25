@@ -64,8 +64,9 @@ const AllocateEmployee = (): JSX.Element => {
   const [allocationEndDate, setAllocationEndDate] = useState<string>()
   const [isDateError, setIsDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isEnable, setIsEnable] = useState(false)
-
+  console.log(errorMessageCount)
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -236,6 +237,7 @@ const AllocateEmployee = (): JSX.Element => {
     ) {
       postAllocateEmployee()
     } else {
+      setErrorMessageCount((errorMessageCount) => errorMessageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
