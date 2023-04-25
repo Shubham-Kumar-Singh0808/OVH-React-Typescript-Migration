@@ -71,7 +71,7 @@ const ReviewFormDetailsTable = ({
   const onChangeSelfRating = (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value)
   }
-
+  console.log(kpiData)
   return (
     <>
       <CTable
@@ -131,6 +131,7 @@ const ReviewFormDetailsTable = ({
                   ? `${removeSpaces.substring(0, 30)}...`
                   : removeSpaces
               managerCommentExist(kpi)
+              console.log(kpi.employeeRating)
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>

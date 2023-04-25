@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   EmployeeAppraisalForm,
+  GetPerformanceRatings,
   MyReviewSliceState,
   PageDetails,
   ReviewComments,
@@ -22,6 +23,7 @@ const initialMyReviewState: MyReviewSliceState = {
   appraisalFormId: 0,
   isReviewCommentsLoading: ApiLoadingState.idle,
   isButtonsVisible: undefined,
+  getPerformanceRatings: [],
 }
 
 const getEmployeePerformanceReview = createAsyncThunk<
@@ -82,6 +84,18 @@ const getReviewComments = createAsyncThunk(
   },
 )
 
+const getPerformanceRatings = createAsyncThunk(
+  'myReview/getPerformanceRatings',
+  async (_, thunkApi) => {
+    try {
+      return await myReviewApi.getPerformanceRatings()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -108,11 +122,16 @@ const myReviewSlice = createSlice({
       .addCase(getReviewComments.pending, (state) => {
         state.isReviewCommentsLoading = ApiLoadingState.loading
       })
+      .addCase(getPerformanceRatings.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getPerformanceRatings = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getEmployeePerformanceReview.pending,
           getEmployeeReviewForm.pending,
           saveAppraisalForm.pending,
+          getPerformanceRatings.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -124,6 +143,7 @@ const myReviewSlice = createSlice({
           getEmployeeReviewForm.rejected,
           saveAppraisalForm.rejected,
           getReviewComments.rejected,
+          getPerformanceRatings.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -147,11 +167,15 @@ const listSize = (state: RootState): number => state.myReview.listSize
 const appraisalFormId = (state: RootState): number =>
   state.myReview.employeeAppraisalForm.id
 
+const performanceRatings = (state: RootState): GetPerformanceRatings[] =>
+  state.myReview.getPerformanceRatings
+
 const myReviewThunk = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
   saveAppraisalForm,
   getReviewComments,
+  getPerformanceRatings,
 }
 
 const myReviewSelectors = {
@@ -163,6 +187,7 @@ const myReviewSelectors = {
   appraisalFormId,
   isReviewCommentsLoading,
   isButtonsVisible,
+  performanceRatings,
 }
 
 export const myReviewService = {

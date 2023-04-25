@@ -271,4 +271,11 @@ export type MyReviewSliceState = {
   isReviewCommentsLoading: LoadingState
   error: ValidationError
   isButtonsVisible?: boolean
+  getPerformanceRatings: GetPerformanceRatings[]
+}
+
+export type GetPerformanceRatings = {
+  id: number
+  rating: number
+  label: string
 }

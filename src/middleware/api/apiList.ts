@@ -815,4 +815,5 @@ export const myReviewApiConfig: MyReviewApi = {
   getEmployeeAppraisalRating:
     apiPrefix + '/appraisal/employeeAppraisalFormForRating',
   getReviewComments: apiPrefix + '/appraisal/getReviewComments',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
 }

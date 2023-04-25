@@ -673,4 +673,5 @@ export interface MyReviewApi extends ApiBase {
   saveAppraisalForm: string
   getEmployeeAppraisalRating: string
   getReviewComments: string
+  getPerformanceRatings: string
 }
