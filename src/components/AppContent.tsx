@@ -319,6 +319,34 @@ const AppContent = () => {
     FromDateValue,
   ])
 
+  const SelectCustomEventList = useTypedSelector(
+    reduxServices.eventList.selectors.SelectCustom,
+  )
+  const FromDateFilter = useTypedSelector(
+    reduxServices.eventList.selectors.FromDateFilter,
+  )
+  const ToDateFilter = useTypedSelector(
+    reduxServices.eventList.selectors.ToDateFilter,
+  )
+
+  useEffect(() => {
+    if (
+      location.pathname === '/eventList' ||
+      location.pathname.split('/')[1] === 'ViewPIPDetail'
+    ) {
+      dispatch(
+        reduxServices.eventList.actions.setFromDateFilter(FromDateFilter),
+      )
+      dispatch(reduxServices.eventList.actions.setToDateFilter(ToDateFilter))
+      dispatch(
+        reduxServices.eventList.actions.setSelectCustom(SelectCustomEventList),
+      )
+    } else {
+      dispatch(reduxServices.eventList.actions.setFromDateFilter(''))
+      dispatch(reduxServices.eventList.actions.setToDateFilter(''))
+      dispatch(reduxServices.eventList.actions.setSelectCustom('Current Month'))
+    }
+  }, [dispatch, location, getPIPValue])
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
