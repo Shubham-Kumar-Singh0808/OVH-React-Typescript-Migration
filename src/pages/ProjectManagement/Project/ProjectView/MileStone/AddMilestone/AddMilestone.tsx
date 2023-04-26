@@ -1,28 +1,16 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import AddMilestoneForm from './AddMilestoneForm'
+import React from 'react'
+import { Link, useHistory } from 'react-router-dom'
+import AddMileStoneForm from './AddMileStoneForm'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
+import { useTypedSelector } from '../../../../../../stateStore'
 
-const AddMilestone = (): JSX.Element => {
+const AddMileStone = (): JSX.Element => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
 
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(
-      reduxServices.projectMileStone.getMilestoneNumber(getProjectDetail.id),
-    )
-    dispatch(
-      reduxServices.projectMileStone.getCRListForMilestone(getProjectDetail.id),
-    )
-    dispatch(
-      reduxServices.projectMileStone.getPeopleForMilestone(getProjectDetail.id),
-    )
-  }, [dispatch])
   const history = useHistory()
 
   const backButtonHandler = () => {
@@ -33,7 +21,7 @@ const AddMilestone = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Project Details"
+        title="Add MileStone"
         CBodyClassName="ps-0 pe-0 row"
         CFooterClassName="d-none"
       >
@@ -84,10 +72,10 @@ const AddMilestone = (): JSX.Element => {
             </dd>
           </dl>
         </div>
-        <AddMilestoneForm />
+        <AddMileStoneForm />
       </OCard>
     </>
   )
 }
 
-export default AddMilestone
+export default AddMileStone
