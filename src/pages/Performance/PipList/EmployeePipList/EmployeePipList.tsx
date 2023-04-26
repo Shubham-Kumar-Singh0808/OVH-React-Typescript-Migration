@@ -10,7 +10,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -49,10 +49,10 @@ const EmployeePipList = ({
   setSearchByAdded: React.Dispatch<React.SetStateAction<boolean>>
   searchByEmployee: boolean
   setSearchByEmployee: React.Dispatch<React.SetStateAction<boolean>>
-  fromDate: string | undefined
-  setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  toDate: string | undefined
-  setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  fromDate: string | Date | undefined
+  setFromDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
+  toDate: string | Date | undefined
+  setToDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
   dateError: boolean
   isMultiSearchBtn: boolean
   toggle: string
@@ -95,14 +95,14 @@ const EmployeePipList = ({
     from:
       (localStorage.getItem('fromMonth')
         ? localStorage.getItem('fromMonth')
-        : fromDate) || '',
+        : (fromDate as string)) || '',
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
     to:
       (localStorage.getItem('toMonth')
         ? localStorage.getItem('toMonth')
-        : toDate) || '',
+        : (toDate as string)) || '',
   }
 
   const multiSearchBtnHandler = async () => {
@@ -250,7 +250,7 @@ const EmployeePipList = ({
                     setToggle={setToggle}
                     setFromDate={setFromDate}
                     setToDate={setToDate}
-                    selectDay={selectDay as string}
+                    selectDay={selectDay}
                   />
                 </CCol>
                 {selectDay === 'Custom' ? (
@@ -264,20 +264,21 @@ const EmployeePipList = ({
                       </CFormLabel>
                     </CCol>
                     <CCol sm={2}>
-                      <ReactDatePicker
-                        id="fromDate"
-                        data-testid="leaveApplyFromDate"
-                        className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                        showMonthDropdown
-                        showYearDropdown
-                        autoComplete="off"
-                        dropdownMode="select"
-                        dateFormat="dd/mm/yy"
+                      <DatePicker
+                        className="form-control form-control-sm sh-date-picker"
+                        data-testid="date-picker"
                         placeholderText="dd/mm/yyyy"
                         name="fromDate"
-                        maxDate={disableAfterDate}
-                        value={fromDate}
-                        onChange={(date: Date) => onHandleFromDatePicker(date)}
+                        id="fromDate"
+                        autoComplete="off"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        value={fromDate as string}
+                        onChange={(date: Date) => {
+                          setFromDate(date)
+                        }}
+                        selected={fromDate as Date}
                       />
                     </CCol>
                     <CCol sm={2} md={1} className="text-end">
@@ -289,20 +290,21 @@ const EmployeePipList = ({
                       </CFormLabel>
                     </CCol>
                     <CCol sm={2}>
-                      <ReactDatePicker
-                        id="toDate"
-                        data-testid="leaveApprovalFromDate"
-                        className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                        showMonthDropdown
-                        autoComplete="off"
-                        showYearDropdown
-                        dropdownMode="select"
-                        dateFormat="dd/mm/yy"
+                      <DatePicker
+                        className="form-control form-control-sm sh-date-picker"
+                        data-testid="date-picker"
                         placeholderText="dd/mm/yyyy"
                         name="toDate"
-                        maxDate={disableAfterDate}
-                        value={toDate}
-                        onChange={(date: Date) => onHandleToDatePicker(date)}
+                        id="toDate"
+                        autoComplete="off"
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        value={toDate as string}
+                        onChange={(date: Date) => {
+                          setToDate(date)
+                        }}
+                        selected={toDate as Date}
                       />
                       {dateError && (
                         <span
