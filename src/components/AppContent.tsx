@@ -38,6 +38,13 @@ const AppContent = () => {
     }
   }, [dispatch, location, getPIPValue])
 
+  const getFromDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getToDateValue,
+  )
+
   useEffect(() => {
     if (
       location.pathname === '/resignationList' ||
@@ -63,10 +70,16 @@ const AppContent = () => {
           getSelectedEmployeeStatusValue,
         ),
       )
+      dispatch(
+        reduxServices.resignationList.actions.setFromDate(getFromDateValue),
+      )
+      dispatch(reduxServices.resignationList.actions.setToDate(getToDateValue))
     } else {
       dispatch(reduxServices.resignationList.actions.setMonthValue(''))
       dispatch(reduxServices.resignationList.actions.setStatusValue('All'))
       dispatch(reduxServices.resignationList.actions.setEmployeeStatusValue(''))
+      dispatch(reduxServices.resignationList.actions.setFromDate(''))
+      dispatch(reduxServices.resignationList.actions.setToDate(''))
     }
   }, [
     dispatch,

@@ -30,9 +30,25 @@ const ResignationListFilterOptions = ({
   Select: string
   setSelect: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const getFromDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getToDateValue,
+  )
   const [dateError, setDateError] = useState<boolean>(false)
-  const [selectFromDate, setSelectFromDate] = useState<Date | string>()
-  const [selectToDate, setSelectToDate] = useState<Date | string>()
+  const [selectFromDate, setSelectFromDate] = useState<Date | string>(
+    getFromDateValue,
+  )
+  const [selectToDate, setSelectToDate] = useState<Date | string>(
+    getToDateValue,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.resignationList.actions.setFromDate(selectFromDate))
+    dispatch(reduxServices.resignationList.actions.setToDate(selectToDate))
+  }, [dispatch, selectFromDate, selectToDate])
 
   const getSelectedStatusValue = useTypedSelector(
     reduxServices.resignationList.selectors.getSelectedStatusValue,
@@ -61,7 +77,6 @@ const ResignationListFilterOptions = ({
     reduxServices.app.selectors.selectCurrentPage,
   )
 
-  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -343,7 +358,12 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={fromDateValue}
-                onChange={(date: Date) => setSelectFromDate(date)}
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.resignationList.actions.setFromDate(date),
+                  )
+                  setSelectFromDate(date)
+                }}
                 selected={selectFromDate as Date}
               />
             </CCol>
@@ -368,7 +388,12 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={toDateValue}
-                onChange={(date: Date) => setSelectToDate(date)}
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.resignationList.actions.setToDate(date),
+                  )
+                  setSelectToDate(date)
+                }}
                 selected={selectToDate as Date}
               />
               {dateError && (
