@@ -12,10 +12,6 @@ import {
 import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import ProjectApi from '../../../middleware/api/ProjectManagement/Project'
 
-const initialProjectsState = {
-  listSize: 0,
-} as ProjectsReportSliceState
-
 const getFetchActiveProjectReports = createAsyncThunk<
   ProjectDetails,
   ProjectReportQueryParams,
@@ -150,10 +146,31 @@ const updateProjectReport = createAsyncThunk<
   },
 )
 
+const initialProjectsState = {
+  listSize: 0,
+  SelectValue: '',
+  StatusValue: 'INPROGRESS',
+  PricingModel: 'All',
+  ProjectHealth: 'All',
+} as ProjectsReportSliceState
+
 const projectReportsSlice = createSlice({
   name: 'projectReports',
   initialState: initialProjectsState,
-  reducers: {},
+  reducers: {
+    setSelectValue: (state, action) => {
+      state.SelectValue = action.payload
+    },
+    setStatusValue: (state, action) => {
+      state.StatusValue = action.payload
+    },
+    setPricingModel: (state, action) => {
+      state.PricingModel = action.payload
+    },
+    setProjectHealth: (state, action) => {
+      state.ProjectHealth = action.payload
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getFetchProjectClients.fulfilled, (state, action) => {
@@ -232,6 +249,18 @@ const isProjectLoading = (state: RootState): LoadingState =>
 const isClientProjectLoading = (state: RootState): LoadingState =>
   state.projectReport.isClientProjectLoading
 
+const getSelectValue = (state: RootState): string | undefined =>
+  state.projectReport.SelectValue
+
+const getStatusValue = (state: RootState): string | undefined =>
+  state.projectReport.StatusValue
+
+const getPricingModel = (state: RootState): string | undefined =>
+  state.projectReport.PricingModel
+
+const getProjectHealth = (state: RootState): string | undefined =>
+  state.projectReport.ProjectHealth
+
 const projectsThunk = {
   closeProjectReport,
   deallocateProjectReport,
@@ -248,6 +277,10 @@ const projectsSelectors = {
   projectClients,
   projectReports,
   listSize,
+  getSelectValue,
+  getStatusValue,
+  getPricingModel,
+  getProjectHealth,
 }
 
 export const projectReportsService = {

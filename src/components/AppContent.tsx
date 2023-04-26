@@ -165,6 +165,56 @@ const AppContent = () => {
     SubCategoryNameValue,
   ])
 
+  const getSelectValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getSelectValue,
+  )
+  const getStatusValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getStatusValue,
+  )
+  const getPricingModel = useTypedSelector(
+    reduxServices.projectReport.selectors.getPricingModel,
+  )
+  const getProjectHealth = useTypedSelector(
+    reduxServices.projectReport.selectors.getProjectHealth,
+  )
+
+  useEffect(() => {
+    if (
+      location.pathname === '/projectreport' ||
+      location.pathname.split('/')[1] === 'viewProject' ||
+      location.pathname.split('/')[1] === 'editproject'
+    ) {
+      dispatch(
+        reduxServices.projectReport.actions.setPricingModel(getPricingModel),
+      )
+      dispatch(
+        reduxServices.projectReport.actions.setProjectHealth(getProjectHealth),
+      )
+
+      dispatch(
+        reduxServices.projectReport.actions.setSelectValue(getSelectValue),
+      )
+
+      dispatch(
+        reduxServices.projectReport.actions.setStatusValue(getStatusValue),
+      )
+    } else {
+      dispatch(reduxServices.projectReport.actions.setProjectHealth('All'))
+      dispatch(reduxServices.projectReport.actions.setPricingModel('All'))
+
+      dispatch(reduxServices.projectReport.actions.setSelectValue('INPROGRESS'))
+
+      dispatch(reduxServices.projectReport.actions.setStatusValue(''))
+    }
+  }, [
+    dispatch,
+    location,
+    getSelectValue,
+    getProjectHealth,
+    getPricingModel,
+    getStatusValue,
+  ])
+
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>

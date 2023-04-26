@@ -105,6 +105,10 @@ export type ProjectsReportSliceState = {
   isClientProjectLoading: LoadingState
   listSize: number
   error: ValidationError
+  SelectValue: string
+  StatusValue: string
+  PricingModel: string
+  ProjectHealth: string
 }
 
 export type CloseProjectType = {
