@@ -190,7 +190,6 @@ const pipListSlice = createSlice({
   reducers: {
     setMonthValue: (state, action) => {
       state.pipListValue = action.payload
-      console.log(action.payload, 'slice')
     },
     changeSelectedEmployeePipStatus: (state, action) => {
       state.selectedEmployeePipStatus = action.payload as EmployeePipStatus
