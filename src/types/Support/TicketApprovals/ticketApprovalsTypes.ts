@@ -50,6 +50,8 @@ export type TicketApprovalsSliceState = {
   SubCategoryNameValue: string
   DateValue: string
   TrackerValue: string
+  FormDate: string | Date
+  ToDate: string | Date
 }
 
 export type GetAllTicketsForApprovalProps = {

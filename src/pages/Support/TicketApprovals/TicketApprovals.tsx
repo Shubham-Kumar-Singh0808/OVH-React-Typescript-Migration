@@ -14,6 +14,18 @@ import TicketHistoryDetails from '../MyTickets/TicketHistory.tsx/TicketHistoryDe
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const location = useLocation()
+
+  const FormDateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.FormDateValue,
+  )
+  const ToDateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ToDateValue,
+  )
+  const [ticketFromDate, setTicketFromDate] = useState<string | Date>(
+    FormDateValue,
+  )
+  const [ticketToDate, setTicketToDate] = useState<string | Date>(ToDateValue)
+
   const DepartmentNameValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.DepartmentNameValue,
   )
@@ -23,21 +35,32 @@ const TicketApprovals = (): JSX.Element => {
   const SubCategoryNameValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
   )
-
+  const TicketStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TicketStatusValue,
+  )
+  const ApprovalStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ApprovalStatusValue,
+  )
+  const DateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DateValue,
+  )
+  const TrackerValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TrackerValue,
+  )
   const initialState: GetAllTicketsForApprovalProps = {
     categoryId: undefined,
-    dateSelection: 'Today',
+    dateSelection: DateValue,
     departmentId: undefined,
     endIndex: 20,
-    fromDate: undefined,
+    fromDate: (ticketFromDate as string) || '',
     multiSearch: '',
-    progressStatus: 'New',
+    progressStatus: TicketStatusValue,
     searchByAssigneeName: false,
     searchByEmpName: false,
     startIndex: 0,
     subCategoryId: undefined,
-    ticketStatus: 'Pending Approval',
-    toDate: undefined,
+    ticketStatus: ApprovalStatusValue,
+    toDate: (ticketToDate as string) || '',
     trackerID: undefined,
   }
 
@@ -135,6 +158,7 @@ const TicketApprovals = (): JSX.Element => {
       ),
     )
   }, [deptId, categoryId, subCategoryIdValue])
+
   return (
     <>
       {toggleValue === '' && (
@@ -155,6 +179,10 @@ const TicketApprovals = (): JSX.Element => {
               setSubCategoryIdValue={setSubCategoryIdValue}
               initialState={initialState}
               handleExportTicketApprovalList={handleExportTicketApprovalList}
+              ticketFromDate={ticketFromDate}
+              setTicketFromDate={setTicketFromDate}
+              ticketToDate={ticketToDate}
+              setTicketToDate={setTicketToDate}
             />
 
             <TicketApprovalsTable

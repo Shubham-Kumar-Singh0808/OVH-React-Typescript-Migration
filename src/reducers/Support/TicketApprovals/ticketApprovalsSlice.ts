@@ -112,12 +112,14 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   routePath: '',
 
   TicketStatusValue: 'New',
-  ApprovalStatusValue: 'pending Approval',
+  ApprovalStatusValue: 'Pending Approval',
   DepartmentNameValue: 'All',
   CategoryNameValue: 'All',
   SubCategoryNameValue: 'All',
   DateValue: 'Today',
   TrackerValue: 'All',
+  FormDate: '',
+  ToDate: '',
 }
 
 const ticketApprovalsSlice = createSlice({
@@ -161,6 +163,12 @@ const ticketApprovalsSlice = createSlice({
     },
     setTrackerValue: (state, action) => {
       state.TrackerValue = action.payload
+    },
+    setFormDataValue: (state, action) => {
+      state.FormDate = action.payload
+    },
+    setToDateValue: (state, action) => {
+      state.ToDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -255,7 +263,10 @@ const SubCategoryNameValue = (state: RootState): string =>
 const DateValue = (state: RootState): string => state.ticketApprovals.DateValue
 const TrackerValue = (state: RootState): string =>
   state.ticketApprovals.TrackerValue
-
+const FormDateValue = (state: RootState): string | Date =>
+  state.ticketApprovals.FormDate
+const ToDateValue = (state: RootState): string | Date =>
+  state.ticketApprovals.ToDate
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -279,6 +290,8 @@ const ticketApprovalsSelectors = {
   SubCategoryNameValue,
   DateValue,
   TrackerValue,
+  FormDateValue,
+  ToDateValue,
 }
 
 export const ticketApprovalsService = {

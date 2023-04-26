@@ -97,7 +97,12 @@ const AppContent = () => {
   const SubCategoryNameValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
   )
-
+  const FormDateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.FormDateValue,
+  )
+  const ToDateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ToDateValue,
+  )
   useEffect(() => {
     if (
       location.pathname === '/ticketApprovals' ||
@@ -132,6 +137,12 @@ const AppContent = () => {
           SubCategoryNameValue,
         ),
       )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setFormDataValue(FormDateValue),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setToDateValue(ToDateValue),
+      )
     } else {
       dispatch(
         reduxServices.ticketApprovals.actions.setTicketStatusValue('New'),
@@ -152,6 +163,8 @@ const AppContent = () => {
       dispatch(
         reduxServices.ticketApprovals.actions.setSubCategoryNameValue('All'),
       )
+      dispatch(reduxServices.ticketApprovals.actions.setFormDataValue(''))
+      dispatch(reduxServices.ticketApprovals.actions.setToDateValue(''))
     }
   }, [
     dispatch,
@@ -163,6 +176,8 @@ const AppContent = () => {
     DepartmentNameValue,
     CategoryNameValue,
     SubCategoryNameValue,
+    FormDateValue,
+    ToDateValue,
   ])
 
   const getSelectValue = useTypedSelector(
