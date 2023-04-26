@@ -14,6 +14,15 @@ import TicketHistoryDetails from '../MyTickets/TicketHistory.tsx/TicketHistoryDe
 const TicketApprovals = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const location = useLocation()
+  const DepartmentNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DepartmentNameValue,
+  )
+  const CategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.CategoryNameValue,
+  )
+  const SubCategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
+  )
 
   const initialState: GetAllTicketsForApprovalProps = {
     categoryId: undefined,
@@ -33,9 +42,13 @@ const TicketApprovals = (): JSX.Element => {
   }
 
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
-  const [deptId, setDeptId] = useState<number>()
-  const [categoryId, setCategoryId] = useState<number>()
-  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
+  const [deptId, setDeptId] = useState<string | number>(DepartmentNameValue)
+  const [categoryId, setCategoryId] = useState<string | number>(
+    CategoryNameValue,
+  )
+  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number | string>(
+    SubCategoryNameValue,
+  )
   const [renderTicketApprovals, setRenderTicketApprovals] =
     useState<boolean>(false)
 
@@ -46,6 +59,8 @@ const TicketApprovals = (): JSX.Element => {
   const toggleValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.toggleValue,
   )
+
+  console.log(deptId + 'deptId')
 
   const {
     paginationRange,
@@ -82,11 +97,15 @@ const TicketApprovals = (): JSX.Element => {
 
   useEffect(() => {
     if (deptId) {
-      dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
+      dispatch(
+        reduxServices.ticketApprovals.getDepartmentCategoryList(Number(deptId)),
+      )
       setSubCategoryIdValue(0)
     }
     if (categoryId) {
-      dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
+      dispatch(
+        reduxServices.ticketApprovals.getSubCategoryList(Number(categoryId)),
+      )
     }
   }, [deptId, categoryId])
 
@@ -110,6 +129,24 @@ const TicketApprovals = (): JSX.Element => {
     (feature) => feature.name === 'Ticket Approvals',
   )
 
+  useEffect(() => {
+    dispatch(
+      reduxServices.ticketApprovals.actions.setDepartmentNameValue(
+        Number(deptId),
+      ),
+    )
+    dispatch(
+      reduxServices.ticketApprovals.actions.setCategoryNameValue(
+        Number(categoryId),
+      ),
+    )
+    dispatch(
+      reduxServices.ticketApprovals.actions.setSubCategoryNameValue(
+        Number(subCategoryIdValue),
+      ),
+    )
+  }, [deptId, categoryId, subCategoryIdValue])
+
   return (
     <>
       {toggleValue === '' && (
@@ -122,11 +159,11 @@ const TicketApprovals = (): JSX.Element => {
           >
             <TicketApprovalsFilterOptions
               setTicketApprovalParams={setTicketApprovalParams}
-              deptId={deptId as number}
+              deptId={Number(deptId)}
               setDeptId={setDeptId}
-              categoryId={categoryId as number}
+              categoryId={Number(categoryId)}
               setCategoryId={setCategoryId}
-              subCategoryIdValue={subCategoryIdValue as number}
+              subCategoryIdValue={Number(subCategoryIdValue)}
               setSubCategoryIdValue={setSubCategoryIdValue}
               initialState={initialState}
               handleExportTicketApprovalList={handleExportTicketApprovalList}

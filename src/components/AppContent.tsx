@@ -76,6 +76,94 @@ const AppContent = () => {
     getSelectedStatusValue,
     getSelectedEmployeeStatusValue,
   ])
+  const TicketStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TicketStatusValue,
+  )
+  const ApprovalStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ApprovalStatusValue,
+  )
+  const DateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DateValue,
+  )
+  const TrackerValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TrackerValue,
+  )
+  const DepartmentNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DepartmentNameValue,
+  )
+  const CategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.CategoryNameValue,
+  )
+  const SubCategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
+  )
+
+  useEffect(() => {
+    if (
+      location.pathname === '/ticketApprovals' ||
+      location.pathname.split('/')[1] === 'updateTicketInApprovals'
+    ) {
+      dispatch(
+        reduxServices.ticketApprovals.actions.setTicketStatusValue(
+          TicketStatusValue,
+        ),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+          ApprovalStatusValue,
+        ),
+      )
+      dispatch(reduxServices.ticketApprovals.actions.setDateValue(DateValue))
+      dispatch(
+        reduxServices.ticketApprovals.actions.setTrackerValue(TrackerValue),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setDepartmentNameValue(
+          DepartmentNameValue,
+        ),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setCategoryNameValue(
+          CategoryNameValue,
+        ),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setSubCategoryNameValue(
+          SubCategoryNameValue,
+        ),
+      )
+    } else {
+      dispatch(
+        reduxServices.ticketApprovals.actions.setTicketStatusValue('New'),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+          'pending Approval',
+        ),
+      )
+      dispatch(reduxServices.ticketApprovals.actions.setDateValue('Today'))
+      dispatch(reduxServices.ticketApprovals.actions.setTrackerValue('All'))
+      dispatch(
+        reduxServices.ticketApprovals.actions.setDepartmentNameValue('All'),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setCategoryNameValue('All'),
+      )
+      dispatch(
+        reduxServices.ticketApprovals.actions.setSubCategoryNameValue('All'),
+      )
+    }
+  }, [
+    dispatch,
+    location,
+    TicketStatusValue,
+    ApprovalStatusValue,
+    DateValue,
+    TrackerValue,
+    DepartmentNameValue,
+    CategoryNameValue,
+    SubCategoryNameValue,
+  ])
 
   return (
     <CContainer fluid>

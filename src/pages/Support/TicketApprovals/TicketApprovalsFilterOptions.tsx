@@ -9,7 +9,7 @@ import {
   ticketStatusList,
 } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { GetAllTicketsForApprovalProps } from '../../../types/Support/TicketApprovals/ticketApprovalsTypes'
 import { commonDateFormat, deviceLocale } from '../../../utils/dateFormatUtils'
 
@@ -28,19 +28,36 @@ const TicketApprovalsFilterOptions = ({
     React.SetStateAction<GetAllTicketsForApprovalProps>
   >
   deptId: number
-  setDeptId: (value: number) => void
+  setDeptId: (value: string) => void
   categoryId: number
-  setCategoryId: (value: number) => void
+  setCategoryId: (value: number | string) => void
   subCategoryIdValue: number
-  setSubCategoryIdValue: (value: number) => void
+  setSubCategoryIdValue: (value: number | string) => void
   initialState: GetAllTicketsForApprovalProps
   handleExportTicketApprovalList: (value: GetAllTicketsForApprovalProps) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
+  const TicketStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TicketStatusValue,
+  )
+  const ApprovalStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ApprovalStatusValue,
+  )
+  const DateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DateValue,
+  )
+  const TrackerValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TrackerValue,
+  )
+
   const pendingApproval = 'Pending Approval'
-  const [ticketStatusState, setTicketStatusState] = useState<string>('New')
-  const [approvalStatus, setApprovalStatus] = useState<string>(pendingApproval)
-  const [dateOption, setDateOption] = useState<string>('Today')
-  const [trackerValue, setTrackerValue] = useState<number>()
+  const [ticketStatusState, setTicketStatusState] =
+    useState<string>(TicketStatusValue)
+  const [approvalStatus, setApprovalStatus] =
+    useState<string>(ApprovalStatusValue)
+  const [dateOption, setDateOption] = useState<string>(DateValue)
+  const [trackerValue, setTrackerValue] = useState<string>(TrackerValue)
   const [ticketFromDate, setTicketFromDate] = useState<string>('')
   const [ticketToDate, setTicketToDate] = useState<string>('')
   const [employeeNameCheckbox, setEmployeeNameCheckbox] =
@@ -78,6 +95,23 @@ const TicketApprovalsFilterOptions = ({
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
   )
 
+  useEffect(() => {
+    dispatch(
+      reduxServices.ticketApprovals.actions.setTicketStatusValue(
+        ticketStatusState,
+      ),
+    )
+    dispatch(
+      reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+        approvalStatus,
+      ),
+    )
+    dispatch(reduxServices.ticketApprovals.actions.setDateValue(dateOption))
+    dispatch(
+      reduxServices.ticketApprovals.actions.setTrackerValue(trackerValue),
+    )
+  }, [ticketStatusState, approvalStatus, dateOption, trackerValue])
+
   const prepareObject = {
     categoryId,
     dateSelection: dateOption,
@@ -104,7 +138,7 @@ const TicketApprovalsFilterOptions = ({
           day: '2-digit',
         })
       : '',
-    trackerID: trackerValue,
+    trackerID: Number(trackerValue),
   }
 
   const viewButtonHandler = () => {
@@ -127,13 +161,13 @@ const TicketApprovalsFilterOptions = ({
   }
 
   const clearBtnHandler = () => {
-    setDeptId(0)
-    setCategoryId(0)
-    setSubCategoryIdValue(0)
+    setDeptId('')
+    setCategoryId('')
+    setSubCategoryIdValue('')
     setTicketStatusState('New')
     setApprovalStatus(pendingApproval)
     setDateOption('Today')
-    setTrackerValue(undefined)
+    setTrackerValue('')
     setTicketFromDate('')
     setTicketToDate('')
     setEmployeeNameCheckbox(false)
@@ -168,6 +202,11 @@ const TicketApprovalsFilterOptions = ({
             value={ticketStatusState}
             onChange={(e) => {
               setTicketStatusState(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setTicketStatusValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {ticketStatusList.map((ticketItem, index) => (
@@ -189,6 +228,11 @@ const TicketApprovalsFilterOptions = ({
             value={approvalStatus}
             onChange={(e) => {
               setApprovalStatus(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {approvalStatusList.map((approvalItem, index) => (
@@ -210,7 +254,12 @@ const TicketApprovalsFilterOptions = ({
               name="departmentName"
               value={deptId}
               onChange={(e) => {
-                setDeptId(Number(e.target.value))
+                setDeptId(e.target.value)
+                dispatch(
+                  reduxServices.ticketApprovals.actions.setDepartmentNameValue(
+                    e.target.value,
+                  ),
+                )
               }}
             >
               <option value="">All</option>
@@ -237,7 +286,12 @@ const TicketApprovalsFilterOptions = ({
             name="categoryName"
             value={categoryId}
             onChange={(e) => {
-              setCategoryId(Number(e.target.value))
+              setCategoryId(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setCategoryNameValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="">All</option>
@@ -263,7 +317,12 @@ const TicketApprovalsFilterOptions = ({
             name="subCategoryName"
             value={subCategoryIdValue}
             onChange={(e) => {
-              setSubCategoryIdValue(Number(e.target.value))
+              setSubCategoryIdValue(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setSubCategoryNameValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="">All</option>
@@ -295,6 +354,11 @@ const TicketApprovalsFilterOptions = ({
             value={dateOption}
             onChange={(e) => {
               setDateOption(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setDateValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {dateOptionsList.map((currentOption, index) => (
@@ -316,7 +380,12 @@ const TicketApprovalsFilterOptions = ({
             name="tracker"
             value={trackerValue}
             onChange={(e) => {
-              setTrackerValue(Number(e.target.value))
+              setTrackerValue(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setTrackerValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="">All</option>

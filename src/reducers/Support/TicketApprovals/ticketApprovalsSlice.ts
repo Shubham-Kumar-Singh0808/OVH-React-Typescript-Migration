@@ -110,6 +110,14 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   selectedTicketId: 0,
   toggleValue: '',
   routePath: '',
+
+  TicketStatusValue: 'New',
+  ApprovalStatusValue: 'pending Approval',
+  DepartmentNameValue: 'All',
+  CategoryNameValue: 'All',
+  SubCategoryNameValue: 'All',
+  DateValue: 'Today',
+  TrackerValue: 'All',
 }
 
 const ticketApprovalsSlice = createSlice({
@@ -130,6 +138,29 @@ const ticketApprovalsSlice = createSlice({
     },
     clearSubCategory: (state) => {
       state.subCategoryList = []
+    },
+    setTicketStatusValue: (state, action) => {
+      state.TicketStatusValue = action.payload
+    },
+    setApprovalStatusValue: (state, action) => {
+      state.ApprovalStatusValue = action.payload
+    },
+    setDepartmentNameValue: (state, action) => {
+      state.DepartmentNameValue = action.payload
+    },
+
+    setCategoryNameValue: (state, action) => {
+      state.CategoryNameValue = action.payload
+    },
+
+    setSubCategoryNameValue: (state, action) => {
+      state.SubCategoryNameValue = action.payload
+    },
+    setDateValue: (state, action) => {
+      state.DateValue = action.payload
+    },
+    setTrackerValue: (state, action) => {
+      state.TrackerValue = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -210,6 +241,21 @@ const toggleValue = (state: RootState): string =>
 
 const routePath = (state: RootState): string => state.ticketApprovals.routePath
 
+const TicketStatusValue = (state: RootState): string =>
+  state.ticketApprovals.TicketStatusValue
+
+const ApprovalStatusValue = (state: RootState): string =>
+  state.ticketApprovals.ApprovalStatusValue
+const DepartmentNameValue = (state: RootState): string =>
+  state.ticketApprovals.DepartmentNameValue
+const CategoryNameValue = (state: RootState): string =>
+  state.ticketApprovals.CategoryNameValue
+const SubCategoryNameValue = (state: RootState): string =>
+  state.ticketApprovals.SubCategoryNameValue
+const DateValue = (state: RootState): string => state.ticketApprovals.DateValue
+const TrackerValue = (state: RootState): string =>
+  state.ticketApprovals.TrackerValue
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -225,6 +271,14 @@ const ticketApprovalsSelectors = {
   selectTicketId,
   toggleValue,
   routePath,
+
+  TicketStatusValue,
+  ApprovalStatusValue,
+  DepartmentNameValue,
+  CategoryNameValue,
+  SubCategoryNameValue,
+  DateValue,
+  TrackerValue,
 }
 
 export const ticketApprovalsService = {
