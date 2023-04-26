@@ -25,7 +25,6 @@ const AppContent = () => {
   const getSelectedEmployeeStatusValue = useTypedSelector(
     reduxServices.resignationList.selectors.getSelectedEmployeeStatusValue,
   )
-  console.log(location.pathname.split('/')[1] === 'ViewPIPDetail')
 
   useEffect(() => {
     if (
@@ -230,6 +229,45 @@ const AppContent = () => {
     getStatusValue,
   ])
 
+  const getDepartmentName = useTypedSelector(
+    reduxServices.ticketReport.selectors.getDepartmentName,
+  )
+  const getDateValue = useTypedSelector(
+    reduxServices.ticketReport.selectors.getDateValue,
+  )
+  const getFromDate = useTypedSelector(
+    reduxServices.ticketReport.selectors.getFromDate,
+  )
+  const getToDate = useTypedSelector(
+    reduxServices.ticketReport.selectors.getToDate,
+  )
+
+  useEffect(() => {
+    if (location.pathname === '/ticketReport') {
+      dispatch(
+        reduxServices.ticketReport.actions.setDepartmentName(getDepartmentName),
+      )
+      dispatch(reduxServices.ticketReport.actions.setDateValue(getDateValue))
+
+      dispatch(reduxServices.ticketReport.actions.setFromDate(getFromDate))
+
+      dispatch(reduxServices.ticketReport.actions.setToDate(getToDate))
+    } else {
+      dispatch(reduxServices.ticketReport.actions.setDepartmentName('All'))
+      dispatch(reduxServices.ticketReport.actions.setDateValue('Today'))
+
+      dispatch(reduxServices.ticketReport.actions.setFromDate(''))
+
+      dispatch(reduxServices.ticketReport.actions.setToDate(''))
+    }
+  }, [
+    dispatch,
+    location,
+    getDepartmentName,
+    getDateValue,
+    getFromDate,
+    getToDate,
+  ])
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>
