@@ -71,6 +71,9 @@ export type ResignationListSliceState = {
   checkExitFeedBackForm: CheckExitFeedBackForm
   getEmpDetailsType: GetEmpDetailsType
   submitExitFeedBackForm: SubmitExitFeedBackForm
+  selectMonthValue: string
+  statusValue: string
+  employeeStatusValue: string
 }
 
 export type ExportResignationListDataProps = {
