@@ -268,6 +268,57 @@ const AppContent = () => {
     getFromDate,
     getToDate,
   ])
+
+  const LocationValue = useTypedSelector(
+    reduxServices.bookingList.selectors.LocationValue,
+  )
+  const MeetingStatus = useTypedSelector(
+    reduxServices.bookingList.selectors.MeetingStatus,
+  )
+  const RoomValue = useTypedSelector(
+    reduxServices.bookingList.selectors.RoomValue,
+  )
+  const SelectCustom = useTypedSelector(
+    reduxServices.bookingList.selectors.SelectCustom,
+  )
+  const FromDateValue = useTypedSelector(
+    reduxServices.bookingList.selectors.FromDateValue,
+  )
+
+  useEffect(() => {
+    if (location.pathname === '/meetingList') {
+      dispatch(
+        reduxServices.bookingList.actions.setLocationValue(LocationValue),
+      )
+      dispatch(reduxServices.bookingList.actions.setRoomValue(RoomValue))
+
+      dispatch(
+        reduxServices.bookingList.actions.setMeetingStatus(MeetingStatus),
+      )
+
+      dispatch(reduxServices.bookingList.actions.setSelectCustom(SelectCustom))
+      dispatch(
+        reduxServices.bookingList.actions.setFromDateValue(FromDateValue),
+      )
+    } else {
+      dispatch(reduxServices.bookingList.actions.setLocationValue('1'))
+      dispatch(reduxServices.bookingList.actions.setRoomValue(''))
+
+      dispatch(reduxServices.bookingList.actions.setMeetingStatus('New'))
+
+      dispatch(reduxServices.bookingList.actions.setSelectCustom('Today'))
+      dispatch(reduxServices.bookingList.actions.setFromDateValue(''))
+    }
+  }, [
+    dispatch,
+    location,
+    LocationValue,
+    RoomValue,
+    MeetingStatus,
+    SelectCustom,
+    FromDateValue,
+  ])
+
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>

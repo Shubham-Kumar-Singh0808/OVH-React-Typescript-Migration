@@ -127,6 +127,12 @@ const initialBookingListState: BookingListSliceState = {
   currentPage: 1,
   pageSize: 20,
   editMeetingRequest: {} as EditMeetingRequest,
+
+  LocationValue: '1',
+  RoomValue: '',
+  MeetingStatus: 'New',
+  SelectCustom: 'Today',
+  FromDateValue: '',
 }
 
 const bookingListSlice = createSlice({
@@ -141,6 +147,21 @@ const bookingListSlice = createSlice({
     },
     clearRoomTable: (state) => {
       state.roomsOfLocation = []
+    },
+    setLocationValue: (state, action) => {
+      state.LocationValue = action.payload
+    },
+    setRoomValue: (state, action) => {
+      state.RoomValue = action.payload
+    },
+    setMeetingStatus: (state, action) => {
+      state.MeetingStatus = action.payload
+    },
+    setSelectCustom: (state, action) => {
+      state.SelectCustom = action.payload
+    },
+    setFromDateValue: (state, action) => {
+      state.FromDateValue = action.payload
     },
   },
 
@@ -199,6 +220,16 @@ const bookingsForSelection = (state: RootState): GetBookingsForSelection[] =>
 const editExistingMeetingRequest = (state: RootState): EditMeetingRequest =>
   state.bookingList.editMeetingRequest
 
+const LocationValue = (state: RootState): string =>
+  state.bookingList.LocationValue
+const RoomValue = (state: RootState): string => state.bookingList.RoomValue
+const MeetingStatus = (state: RootState): string =>
+  state.bookingList.MeetingStatus
+const SelectCustom = (state: RootState): string =>
+  state.bookingList.SelectCustom
+const FromDateValue = (state: RootState): string | Date =>
+  state.bookingList.FromDateValue
+
 const bookingListSelectors = {
   isLoading,
   roomsOfLocationResponse,
@@ -207,6 +238,11 @@ const bookingListSelectors = {
   pageFromState,
   pageSizeFromState,
   editExistingMeetingRequest,
+  LocationValue,
+  RoomValue,
+  MeetingStatus,
+  SelectCustom,
+  FromDateValue,
 }
 
 const bookingListThunk = {

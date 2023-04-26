@@ -24,6 +24,12 @@ export type BookingListSliceState = {
   currentPage: number
   pageSize: number
   editMeetingRequest: EditMeetingRequest
+
+  LocationValue: string
+  RoomValue: string
+  MeetingStatus: string
+  SelectCustom: string
+  FromDateValue: string | Date
 }
 
 export type GetBookingsForSelectionProps = {
