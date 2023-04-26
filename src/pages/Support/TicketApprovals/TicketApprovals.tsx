@@ -42,13 +42,9 @@ const TicketApprovals = (): JSX.Element => {
   }
 
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
-  const [deptId, setDeptId] = useState<string | number>(DepartmentNameValue)
-  const [categoryId, setCategoryId] = useState<string | number>(
-    CategoryNameValue,
-  )
-  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number | string>(
-    SubCategoryNameValue,
-  )
+  const [deptId, setDeptId] = useState<number>()
+  const [categoryId, setCategoryId] = useState<number>()
+  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
   const [renderTicketApprovals, setRenderTicketApprovals] =
     useState<boolean>(false)
 
@@ -59,8 +55,6 @@ const TicketApprovals = (): JSX.Element => {
   const toggleValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.toggleValue,
   )
-
-  console.log(deptId + 'deptId')
 
   const {
     paginationRange,
@@ -97,15 +91,11 @@ const TicketApprovals = (): JSX.Element => {
 
   useEffect(() => {
     if (deptId) {
-      dispatch(
-        reduxServices.ticketApprovals.getDepartmentCategoryList(Number(deptId)),
-      )
+      dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
       setSubCategoryIdValue(0)
     }
     if (categoryId) {
-      dispatch(
-        reduxServices.ticketApprovals.getSubCategoryList(Number(categoryId)),
-      )
+      dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
     }
   }, [deptId, categoryId])
 
@@ -128,7 +118,6 @@ const TicketApprovals = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Ticket Approvals',
   )
-
   useEffect(() => {
     dispatch(
       reduxServices.ticketApprovals.actions.setDepartmentNameValue(
@@ -146,7 +135,6 @@ const TicketApprovals = (): JSX.Element => {
       ),
     )
   }, [deptId, categoryId, subCategoryIdValue])
-
   return (
     <>
       {toggleValue === '' && (
@@ -159,11 +147,11 @@ const TicketApprovals = (): JSX.Element => {
           >
             <TicketApprovalsFilterOptions
               setTicketApprovalParams={setTicketApprovalParams}
-              deptId={Number(deptId)}
+              deptId={deptId as number}
               setDeptId={setDeptId}
-              categoryId={Number(categoryId)}
+              categoryId={categoryId as number}
               setCategoryId={setCategoryId}
-              subCategoryIdValue={Number(subCategoryIdValue)}
+              subCategoryIdValue={subCategoryIdValue as number}
               setSubCategoryIdValue={setSubCategoryIdValue}
               initialState={initialState}
               handleExportTicketApprovalList={handleExportTicketApprovalList}
