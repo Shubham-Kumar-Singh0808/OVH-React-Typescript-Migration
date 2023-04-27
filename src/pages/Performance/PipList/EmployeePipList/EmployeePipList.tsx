@@ -47,9 +47,9 @@ const EmployeePipList = ({
   setSearchByAdded: React.Dispatch<React.SetStateAction<boolean>>
   searchByEmployee: boolean
   setSearchByEmployee: React.Dispatch<React.SetStateAction<boolean>>
-  fromDate: string | Date | undefined
+  fromDate: string | Date
   setFromDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
-  toDate: string | Date | undefined
+  toDate: string | Date
   setToDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
   dateError: boolean
   isMultiSearchBtn: boolean

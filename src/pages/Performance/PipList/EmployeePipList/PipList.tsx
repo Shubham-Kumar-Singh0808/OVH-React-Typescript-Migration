@@ -109,9 +109,9 @@ const PipList = (): JSX.Element => {
             setSearchByAdded={setSearchByAdded}
             searchByEmployee={searchByEmployee}
             setSearchByEmployee={setSearchByEmployee}
-            fromDate={fromDate}
+            fromDate={fromDate as string}
             setFromDate={setFromDate}
-            toDate={toDate}
+            toDate={toDate as string}
             setToDate={setToDate}
             dateError={dateError}
             isMultiSearchBtn={isMultiSearchBtn}

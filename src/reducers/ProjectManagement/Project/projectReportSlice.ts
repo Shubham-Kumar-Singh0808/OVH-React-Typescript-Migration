@@ -152,6 +152,8 @@ const initialProjectsState = {
   StatusValue: 'INPROGRESS',
   PricingModel: 'All',
   ProjectHealth: 'All',
+  customFromValue: '',
+  customToValue: '',
 } as ProjectsReportSliceState
 
 const projectReportsSlice = createSlice({
@@ -169,6 +171,12 @@ const projectReportsSlice = createSlice({
     },
     setProjectHealth: (state, action) => {
       state.ProjectHealth = action.payload
+    },
+    setCustomFromValue: (state, action) => {
+      state.customFromValue = action.payload
+    },
+    setCustomToValue: (state, action) => {
+      state.customToValue = action.payload
     },
   },
   extraReducers(builder) {
@@ -261,6 +269,12 @@ const getPricingModel = (state: RootState): string | undefined =>
 const getProjectHealth = (state: RootState): string | undefined =>
   state.projectReport.ProjectHealth
 
+const getCustomFromValue = (state: RootState): string | Date =>
+  state.projectReport.customFromValue
+
+const getCustomToValue = (state: RootState): string | Date =>
+  state.projectReport.customToValue
+
 const projectsThunk = {
   closeProjectReport,
   deallocateProjectReport,
@@ -281,6 +295,8 @@ const projectsSelectors = {
   getStatusValue,
   getPricingModel,
   getProjectHealth,
+  getCustomFromValue,
+  getCustomToValue,
 }
 
 export const projectReportsService = {

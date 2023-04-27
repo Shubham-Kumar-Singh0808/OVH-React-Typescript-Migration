@@ -87,6 +87,8 @@ const AppContent = () => {
     getPIPValue,
     getSelectedStatusValue,
     getSelectedEmployeeStatusValue,
+    getFromDateValue,
+    getToDateValue,
   ])
   const TicketStatusValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.TicketStatusValue,
@@ -204,6 +206,12 @@ const AppContent = () => {
   const getProjectHealth = useTypedSelector(
     reduxServices.projectReport.selectors.getProjectHealth,
   )
+  const getCustomFromValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomFromValue,
+  )
+  const getCustomToValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomToValue,
+  )
 
   useEffect(() => {
     if (
@@ -217,21 +225,27 @@ const AppContent = () => {
       dispatch(
         reduxServices.projectReport.actions.setProjectHealth(getProjectHealth),
       )
-
       dispatch(
         reduxServices.projectReport.actions.setSelectValue(getSelectValue),
       )
-
       dispatch(
         reduxServices.projectReport.actions.setStatusValue(getStatusValue),
+      )
+      dispatch(
+        reduxServices.projectReport.actions.setCustomFromValue(
+          getCustomFromValue,
+        ),
+      )
+      dispatch(
+        reduxServices.projectReport.actions.setCustomToValue(getCustomToValue),
       )
     } else {
       dispatch(reduxServices.projectReport.actions.setProjectHealth('All'))
       dispatch(reduxServices.projectReport.actions.setPricingModel('All'))
-
       dispatch(reduxServices.projectReport.actions.setSelectValue('INPROGRESS'))
-
       dispatch(reduxServices.projectReport.actions.setStatusValue(''))
+      dispatch(reduxServices.projectReport.actions.setCustomFromValue(''))
+      dispatch(reduxServices.projectReport.actions.setCustomToValue(''))
     }
   }, [
     dispatch,
@@ -240,6 +254,8 @@ const AppContent = () => {
     getProjectHealth,
     getPricingModel,
     getStatusValue,
+    getCustomFromValue,
+    getCustomToValue,
   ])
 
   const getDepartmentName = useTypedSelector(

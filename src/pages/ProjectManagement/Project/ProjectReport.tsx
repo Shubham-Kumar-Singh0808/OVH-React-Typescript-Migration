@@ -41,16 +41,36 @@ const ProjectReport = (): JSX.Element => {
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
+  const getPricingModel = useTypedSelector(
+    reduxServices.projectReport.selectors.getPricingModel,
+  )
+  const getSelectValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getSelectValue,
+  )
+  const getStatusValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getStatusValue,
+  )
+  const getProjectHealth = useTypedSelector(
+    reduxServices.projectReport.selectors.getProjectHealth,
+  )
+  const getCustomFromValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomFromValue,
+  )
+  const getCustomToValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomToValue,
+  )
 
   const initValue = {
     endIndex: 20,
     firstIndex: 0,
-    health: 'All',
-    projectStatus: 'INPROGRESS',
-    type: 'All',
-    projectDatePeriod: '',
+    health: getProjectHealth as string,
+    projectStatus: getStatusValue as string,
+    type: getPricingModel as string,
+    projectDatePeriod: getSelectValue as string,
     intrnalOrNot: false,
     multiSearch: '',
+    startdate: (getCustomFromValue as string) || '',
+    enddate: (getCustomToValue as string) || '',
   }
 
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
@@ -161,6 +181,11 @@ const ProjectReport = (): JSX.Element => {
 
   const handleStartDate = (value: Date) => {
     setParams({ ...params, startdate: moment(value).format(dateFormat) })
+    dispatch(
+      reduxServices.projectReport.actions.setCustomFromValue(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   const handleEndDate = (value: Date) => {
@@ -173,6 +198,11 @@ const ProjectReport = (): JSX.Element => {
       setViewBtnEnable(false)
     }
     setParams({ ...params, enddate: moment(value).format(dateFormat) })
+    dispatch(
+      reduxServices.projectReport.actions.setCustomToValue(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   const handleIsInternalStatus = (value: boolean) => {
@@ -196,7 +226,13 @@ const ProjectReport = (): JSX.Element => {
     dispatch(
       reduxServices.projectReport.actions.setStatusValue(params.projectStatus),
     )
-  }, [params])
+    dispatch(
+      reduxServices.projectReport.actions.setCustomFromValue(params.startdate),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setCustomToValue(params.enddate),
+    )
+  }, [dispatch, params, params.enddate, params.startdate])
 
   const viewHandler = () => {
     const payload =
