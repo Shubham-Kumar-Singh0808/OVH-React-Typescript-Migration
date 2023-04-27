@@ -38,11 +38,21 @@ const TicketApprovals = (): JSX.Element => {
   const TrackerValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.TrackerValue,
   )
+  const DepartmentNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DepartmentNameValue,
+  )
+  const CategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.CategoryNameValue,
+  )
+  const SubCategoryNameValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
+  )
+  console.log(DepartmentNameValue + 'DepartmentNameValue')
 
   const initialState: GetAllTicketsForApprovalProps = {
-    categoryId: undefined,
+    categoryId: Number(CategoryNameValue) || undefined,
     dateSelection: DateValue,
-    departmentId: undefined,
+    departmentId: Number(DepartmentNameValue) || undefined,
     endIndex: 20,
     fromDate: (ticketFromDate as string) || '',
     multiSearch: '',
@@ -50,18 +60,24 @@ const TicketApprovals = (): JSX.Element => {
     searchByAssigneeName: false,
     searchByEmpName: false,
     startIndex: 0,
-    subCategoryId: undefined,
+    subCategoryId: Number(SubCategoryNameValue) || undefined,
     ticketStatus: ApprovalStatusValue,
     toDate: (ticketToDate as string) || '',
-    trackerID: Number(TrackerValue),
+    trackerID: Number(TrackerValue) || undefined,
   }
 
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
-  const [deptId, setDeptId] = useState<number>()
-  const [categoryId, setCategoryId] = useState<number>()
-  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
+  const [deptId, setDeptId] = useState<number>(Number(DepartmentNameValue))
+  const [categoryId, setCategoryId] = useState<number>(
+    Number(CategoryNameValue),
+  )
+  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>(
+    Number(SubCategoryNameValue),
+  )
   const [renderTicketApprovals, setRenderTicketApprovals] =
     useState<boolean>(false)
+
+  console.log(deptId + 'deptId')
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,

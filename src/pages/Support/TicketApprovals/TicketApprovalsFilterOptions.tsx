@@ -69,7 +69,7 @@ const TicketApprovalsFilterOptions = ({
 
   const [dateOption, setDateOption] = useState<string>(DateValue)
   const [trackerValue, setTrackerValue] = useState<number | string>(
-    TrackerValue,
+    Number(TrackerValue),
   )
 
   const [employeeNameCheckbox, setEmployeeNameCheckbox] =

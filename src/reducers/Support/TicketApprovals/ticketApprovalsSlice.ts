@@ -254,19 +254,27 @@ const TicketStatusValue = (state: RootState): string =>
 
 const ApprovalStatusValue = (state: RootState): string =>
   state.ticketApprovals.ApprovalStatusValue
-const DepartmentNameValue = (state: RootState): string =>
+
+const DepartmentNameValue = (state: RootState): string | number =>
   state.ticketApprovals.DepartmentNameValue
-const CategoryNameValue = (state: RootState): string =>
+
+const CategoryNameValue = (state: RootState): string | number =>
   state.ticketApprovals.CategoryNameValue
-const SubCategoryNameValue = (state: RootState): string =>
+
+const SubCategoryNameValue = (state: RootState): string | number =>
   state.ticketApprovals.SubCategoryNameValue
+
 const DateValue = (state: RootState): string => state.ticketApprovals.DateValue
-const TrackerValue = (state: RootState): string =>
+
+const TrackerValue = (state: RootState): string | number =>
   state.ticketApprovals.TrackerValue
+
 const FormDateValue = (state: RootState): string | Date =>
   state.ticketApprovals.FormDate
+
 const ToDateValue = (state: RootState): string | Date =>
   state.ticketApprovals.ToDate
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval

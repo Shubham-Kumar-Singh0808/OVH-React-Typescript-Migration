@@ -45,11 +45,11 @@ export type TicketApprovalsSliceState = {
 
   TicketStatusValue: string
   ApprovalStatusValue: string
-  DepartmentNameValue: string
-  CategoryNameValue: string
-  SubCategoryNameValue: string
+  DepartmentNameValue: string | number
+  CategoryNameValue: string | number
+  SubCategoryNameValue: string | number
   DateValue: string
-  TrackerValue: string
+  TrackerValue: string | number
   FormDate: string | Date
   ToDate: string | Date
 }
