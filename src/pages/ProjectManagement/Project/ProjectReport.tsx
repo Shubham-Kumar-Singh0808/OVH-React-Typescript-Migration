@@ -141,18 +141,22 @@ const ProjectReport = (): JSX.Element => {
     }
 
     setParams({ ...params, projectDatePeriod: value })
+    dispatch(reduxServices.projectReport.actions.setSelectValue(value))
   }
 
   const handleStatus = (value: string) => {
     setParams({ ...params, projectStatus: value })
+    dispatch(reduxServices.projectReport.actions.setStatusValue(value))
   }
 
   const handlePriceModel = (value: string) => {
     setParams({ ...params, type: value })
+    dispatch(reduxServices.projectReport.actions.setPricingModel(value))
   }
 
   const handleProjectHealth = (value: string) => {
     setParams({ ...params, health: value })
+    dispatch(reduxServices.projectReport.actions.setProjectHealth(value))
   }
 
   const handleStartDate = (value: Date) => {
@@ -178,6 +182,21 @@ const ProjectReport = (): JSX.Element => {
   const handleMultipleSearch = (value: string) => {
     setParams({ ...params, multiSearch: value })
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.projectReport.actions.setPricingModel(params.type))
+    dispatch(
+      reduxServices.projectReport.actions.setSelectValue(
+        params.projectDatePeriod,
+      ),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setProjectHealth(params.health),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setStatusValue(params.projectStatus),
+    )
+  }, [params])
 
   const viewHandler = () => {
     const payload =
