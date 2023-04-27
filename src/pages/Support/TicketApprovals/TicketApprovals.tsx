@@ -26,15 +26,6 @@ const TicketApprovals = (): JSX.Element => {
   )
   const [ticketToDate, setTicketToDate] = useState<string | Date>(ToDateValue)
 
-  const DepartmentNameValue = useTypedSelector(
-    reduxServices.ticketApprovals.selectors.DepartmentNameValue,
-  )
-  const CategoryNameValue = useTypedSelector(
-    reduxServices.ticketApprovals.selectors.CategoryNameValue,
-  )
-  const SubCategoryNameValue = useTypedSelector(
-    reduxServices.ticketApprovals.selectors.SubCategoryNameValue,
-  )
   const TicketStatusValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.TicketStatusValue,
   )
@@ -47,6 +38,7 @@ const TicketApprovals = (): JSX.Element => {
   const TrackerValue = useTypedSelector(
     reduxServices.ticketApprovals.selectors.TrackerValue,
   )
+
   const initialState: GetAllTicketsForApprovalProps = {
     categoryId: undefined,
     dateSelection: DateValue,
@@ -61,7 +53,7 @@ const TicketApprovals = (): JSX.Element => {
     subCategoryId: undefined,
     ticketStatus: ApprovalStatusValue,
     toDate: (ticketToDate as string) || '',
-    trackerID: undefined,
+    trackerID: Number(TrackerValue),
   }
 
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)

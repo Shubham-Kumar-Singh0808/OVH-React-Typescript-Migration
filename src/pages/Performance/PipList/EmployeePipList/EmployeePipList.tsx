@@ -9,14 +9,12 @@ import {
   CFormCheck,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { showIsRequired } from '../../../../utils/helper'
-import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
@@ -173,20 +171,6 @@ const EmployeePipList = ({
 
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
-
-  const onHandleToDatePicker = (value: Date) => {
-    setToDate(moment(value).format(dateFormat))
-    if (!localStorage.getItem('toMonth')) {
-      localStorage.setItem('toMonth', moment(value).format(dateFormat))
-    }
-  }
-
-  const onHandleFromDatePicker = (value: Date) => {
-    setFromDate(moment(value).format(dateFormat))
-    if (!localStorage.getItem('fromMonth')) {
-      localStorage.setItem('fromMonth', moment(value).format(dateFormat))
-    }
-  }
 
   useEffect(() => {
     if (selectDay === 'Custom') {

@@ -5,7 +5,7 @@ import ReactDatePicker from 'react-datepicker'
 import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale, downloadFile } from '../../../utils/helper'
+import { downloadFile } from '../../../utils/helper'
 
 const TicketReportFilterOptions = ({
   selectDate,

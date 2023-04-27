@@ -68,9 +68,10 @@ const TicketApprovalsFilterOptions = ({
     useState<string>(ApprovalStatusValue)
 
   const [dateOption, setDateOption] = useState<string>(DateValue)
-  const [trackerValue, setTrackerValue] = useState<number>()
-  // const [ticketFromDate, setTicketFromDate] = useState<string>('')
-  // const [ticketToDate, setTicketToDate] = useState<string>('')
+  const [trackerValue, setTrackerValue] = useState<number | string>(
+    TrackerValue,
+  )
+
   const [employeeNameCheckbox, setEmployeeNameCheckbox] =
     useState<boolean>(false)
   const [assigneeNameCheckbox, setAssigneeNameCheckbox] =
@@ -150,7 +151,7 @@ const TicketApprovalsFilterOptions = ({
     subCategoryId: subCategoryIdValue,
     ticketStatus: approvalStatus,
     toDate: (ticketToDate as string) || '',
-    trackerID: trackerValue,
+    trackerID: Number(trackerValue),
   }
 
   const viewButtonHandler = () => {
@@ -179,7 +180,7 @@ const TicketApprovalsFilterOptions = ({
     setTicketStatusState('New')
     setApprovalStatus(pendingApproval)
     setDateOption('Today')
-    setTrackerValue(undefined)
+    setTrackerValue(0)
     setTicketFromDate('')
     setTicketToDate('')
     setEmployeeNameCheckbox(false)
