@@ -123,6 +123,9 @@ const initialEventListState: EventListSliceState = {
   feedbackFormListSize: 0,
   editExistingEventData: {} as EditExistingEventDetails,
   updateEventData: {} as UpdateEventDetails,
+  SelectCustom: 'Current Month',
+  FromDateFilter: '',
+  ToDateFilter: '',
 }
 const eventListSlice = createSlice({
   name: 'eventList',
@@ -130,6 +133,15 @@ const eventListSlice = createSlice({
   reducers: {
     changeSelectedMonth: (state, action) => {
       state.selectedMonth = action.payload as string
+    },
+    setSelectCustom: (state, action) => {
+      state.SelectCustom = action.payload as string
+    },
+    setFromDateFilter: (state, action) => {
+      state.FromDateFilter = action.payload as string
+    },
+    setToDateFilter: (state, action) => {
+      state.ToDateFilter = action.payload as string
     },
   },
   extraReducers: (builder) => {
@@ -185,6 +197,12 @@ const feedbackFormListSize = (state: RootState): number =>
 const editExistingEventData = (state: RootState): EditExistingEventDetails =>
   state.eventList.editExistingEventData
 
+const SelectCustom = (state: RootState): string => state.eventList.SelectCustom
+const FromDateFilter = (state: RootState): string | Date =>
+  state.eventList.FromDateFilter
+const ToDateFilter = (state: RootState): string | Date =>
+  state.eventList.ToDateFilter
+
 export const eventListThunk = {
   getAllEvents,
   cancelEvent,
@@ -202,6 +220,9 @@ export const eventListSelectors = {
   feedbackForms,
   feedbackFormListSize,
   editExistingEventData,
+  SelectCustom,
+  FromDateFilter,
+  ToDateFilter,
 }
 
 export const eventListService = {

@@ -60,6 +60,11 @@ const initialTicketReportState: TicketReportSliceState = {
   isLoading: ApiLoadingState.idle,
   ticketsDetailsList: [],
   getTicketDetails: { list: [], size: 0 },
+
+  DepartmentName: 'All',
+  DateValue: 'Today',
+  FromDate: '',
+  ToDate: '',
 }
 
 const ticketReportSlice = createSlice({
@@ -71,6 +76,18 @@ const ticketReportSlice = createSlice({
     },
     setPageSize: (state, action) => {
       state.pageSize = action.payload
+    },
+    setDepartmentName: (state, action) => {
+      state.DepartmentName = action.payload
+    },
+    setDateValue: (state, action) => {
+      state.DateValue = action.payload
+    },
+    setFromDate: (state, action) => {
+      state.FromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.ToDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -123,6 +140,16 @@ const pageSizeFromState = (state: RootState): number =>
 const ticketsDetails = (state: RootState): GetTicketsDetailsList[] =>
   state.ticketReport.ticketsDetailsList
 
+const getDepartmentName = (state: RootState): string =>
+  state.ticketReport.DepartmentName
+
+const getDateValue = (state: RootState): string => state.ticketReport.DateValue
+
+const getFromDate = (state: RootState): string | Date =>
+  state.ticketReport.FromDate
+
+const getToDate = (state: RootState): string | Date => state.ticketReport.ToDate
+
 const ticketReportSelectors = {
   isLoading,
   departmentNameList,
@@ -131,6 +158,11 @@ const ticketReportSelectors = {
   pageFromState,
   pageSizeFromState,
   ticketsDetails,
+
+  getDepartmentName,
+  getDateValue,
+  getFromDate,
+  getToDate,
 }
 
 export const ticketReportService = {

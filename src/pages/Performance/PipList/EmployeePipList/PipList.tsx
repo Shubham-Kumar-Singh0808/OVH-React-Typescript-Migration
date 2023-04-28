@@ -12,8 +12,8 @@ const PipList = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
-  const [fromDate, setFromDate] = useState<string>()
-  const [toDate, setToDate] = useState<string>()
+  const [fromDate, setFromDate] = useState<string | Date>()
+  const [toDate, setToDate] = useState<string | Date>()
   const [dateError, setDateError] = useState<boolean>(false)
 
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
@@ -109,9 +109,9 @@ const PipList = (): JSX.Element => {
             setSearchByAdded={setSearchByAdded}
             searchByEmployee={searchByEmployee}
             setSearchByEmployee={setSearchByEmployee}
-            fromDate={fromDate}
+            fromDate={fromDate as string}
             setFromDate={setFromDate}
-            toDate={toDate}
+            toDate={toDate as string}
             setToDate={setToDate}
             dateError={dateError}
             isMultiSearchBtn={isMultiSearchBtn}

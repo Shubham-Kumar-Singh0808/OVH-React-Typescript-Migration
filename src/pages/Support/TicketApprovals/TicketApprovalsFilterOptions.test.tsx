@@ -54,6 +54,10 @@ const toRender = (
       setSubCategoryIdValue={mockSetSubCategoryIdValue}
       initialState={mockInitialState}
       handleExportTicketApprovalList={mockHandleExportTicketApprovalList}
+      ticketFromDate={''}
+      setTicketFromDate={mockSetCategoryId}
+      ticketToDate={''}
+      setTicketToDate={mockSetCategoryId}
     />
   </div>
 )
@@ -147,12 +151,12 @@ describe('Ticket Approvals Filter Options Component Testing with data', () => {
         target: { value: '10 Jan, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('10/29/2019')
-    expect(datePickers[1]).toHaveValue('01/10/2022')
+    expect(datePickers[0]).toHaveValue('')
+    expect(datePickers[1]).toHaveValue('')
 
     const viewBtnElement = screen.getByRole('button', { name: 'View' })
     userEvent.click(viewBtnElement)
-    expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(1)
+    expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
   })
 
   test('should enable search button upon providing search value', () => {

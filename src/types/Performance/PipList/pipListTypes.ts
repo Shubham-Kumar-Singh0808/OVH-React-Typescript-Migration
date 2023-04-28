@@ -67,8 +67,8 @@ export type EmployeePIPListTableProps = {
   setToggle: (value: string) => void
   searchByEmployee?: boolean
   // setSelectDate: (value: string) => void
-  setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setFromDate: React.Dispatch<React.SetStateAction<string | undefined | Date>>
+  setToDate: React.Dispatch<React.SetStateAction<string | undefined | Date>>
   // getPIPValue: string
   selectDay: string
 }
