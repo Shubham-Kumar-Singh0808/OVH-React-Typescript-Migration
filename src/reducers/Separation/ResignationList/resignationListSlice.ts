@@ -241,6 +241,8 @@ const initialResignationListState: ResignationListSliceState = {
   selectMonthValue: curMonth,
   statusValue: status,
   employeeStatusValue: employeeStatus,
+  fromDate: '',
+  toDate: '',
 }
 
 const resignationListSlice = createSlice({
@@ -276,6 +278,12 @@ const resignationListSlice = createSlice({
     },
     clearEmployeeStatusValue: (state) => {
       state.employeeStatusValue = ''
+    },
+    setFromDate: (state, action) => {
+      state.fromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.toDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -357,6 +365,12 @@ const getSelectedStatusValue = (state: RootState): string =>
 const getSelectedEmployeeStatusValue = (state: RootState): string =>
   state.resignationList.employeeStatusValue
 
+const getFromDateValue = (state: RootState): string | Date =>
+  state.resignationList.fromDate
+
+const getToDateValue = (state: RootState): string | Date =>
+  state.resignationList.toDate
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
@@ -386,6 +400,8 @@ const resignationListSelectors = {
   getSelectedMonthValue,
   getSelectedStatusValue,
   getSelectedEmployeeStatusValue,
+  getFromDateValue,
+  getToDateValue,
 }
 
 export const resignationListService = {

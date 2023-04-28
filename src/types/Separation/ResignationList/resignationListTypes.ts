@@ -74,6 +74,8 @@ export type ResignationListSliceState = {
   selectMonthValue: string
   statusValue: string
   employeeStatusValue: string
+  fromDate: string | Date
+  toDate: string | Date
 }
 
 export type ExportResignationListDataProps = {
