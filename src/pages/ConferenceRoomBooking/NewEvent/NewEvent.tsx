@@ -24,6 +24,7 @@ import {
 } from './NewEventChildComponents'
 import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
 import SlotsBooked from './NewEventChildComponents/SlotsBooked'
+import SelectedAttendees from './NewEventChildComponents/SelectedAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -487,6 +488,20 @@ const NewEvent = (): JSX.Element => {
               </>
             ) : (
               <></>
+            )}
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0 ? (
+              ''
+            ) : (
+              <CRow className="row d-flex justify-content-center">
+                {attendeesList.length > 0 ? (
+                  <SelectedAttendees
+                    attendeesList={attendeesList}
+                    deleteBtnHandler={deleteBtnHandler}
+                  />
+                ) : (
+                  <></>
+                )}
+              </CRow>
             )}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
