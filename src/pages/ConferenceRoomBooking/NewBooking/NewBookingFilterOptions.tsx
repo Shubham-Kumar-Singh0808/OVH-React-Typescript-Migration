@@ -29,6 +29,7 @@ import {
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
+import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
 
 const NewBookingFilterOptions = ({
   setToggle,
@@ -67,6 +68,16 @@ const NewBookingFilterOptions = ({
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
+
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
@@ -482,8 +493,20 @@ const NewBookingFilterOptions = ({
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
                 />
               </>
+            ) : (
+              <></>
+            )}
+            {attendeesList.length > 0 ? (
+              <SelectedAttendees
+                attendeesList={attendeesList}
+                deleteBtnHandler={deleteBtnHandler}
+              />
             ) : (
               <></>
             )}

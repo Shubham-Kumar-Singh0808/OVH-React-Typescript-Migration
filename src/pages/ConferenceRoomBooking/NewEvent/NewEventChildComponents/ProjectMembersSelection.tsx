@@ -30,6 +30,10 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
+  deleteAttendeeId,
+  deleteAttendeeModalVisible,
+  deleteBtnHandler,
+  setDeleteAttendeeModalVisible,
 }: {
   addEvent: AddEvent
   projectMembers: ProjectMember[]
@@ -39,19 +43,23 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
+  deleteAttendeeId: number
+  deleteAttendeeModalVisible: boolean
+  deleteBtnHandler: (id: number) => void
+  setDeleteAttendeeModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
-    useState(false)
+  // const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+  //   useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  // const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [addListModalVisible, setAddListModalVisible] = useState(false)
 
-  const deleteBtnHandler = (id: number) => {
-    setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
-  }
+  // const deleteBtnHandler = (id: number) => {
+  //   setDeleteAttendeeId(id)
+  //   setDeleteAttendeeModalVisible(true)
+  // }
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
