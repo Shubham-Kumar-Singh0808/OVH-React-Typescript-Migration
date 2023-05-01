@@ -126,6 +126,7 @@ import projectStatusReducer from './reducers/ProjectManagement/Project/ProjectVi
 import processAreaReducer from './reducers/Settings/ProcessArea/ProcessAreaSlice'
 import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
+import notificationReducer from './reducers/Notifications/notificationSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -252,6 +253,7 @@ export const allReducers = {
   processArea: processAreaReducer,
   addNewAuditForm: addNewAuditFormReducer,
   sqaAuditReport: sqaAuditReportReducer,
+  notification: notificationReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

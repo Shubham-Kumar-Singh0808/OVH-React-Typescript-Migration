@@ -441,6 +441,9 @@ const SQAAuditViewReport = React.lazy(
 const processAreaList = React.lazy(
   () => import('./pages/Settings/ProcessArea/ProcessArea'),
 )
+const Notifications = React.lazy(
+  () => import('./pages/Notifications/Notifications'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -966,6 +969,11 @@ const routes = [
     path: '/viewProjectAudit/:auditId',
     name: 'SQA Audit View',
     component: SQAAuditViewReport,
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: Notifications,
   },
 ]
 
