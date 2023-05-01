@@ -368,6 +368,7 @@ const NewEvent = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setAttendeesList([])
   }
   const commonFormatDate = 'l'
 

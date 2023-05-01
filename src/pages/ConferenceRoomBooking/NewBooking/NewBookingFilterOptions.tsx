@@ -283,6 +283,7 @@ const NewBookingFilterOptions = ({
         } as ShouldResetNewBookingFields
         setResetField(shouldResetFields)
         setAttendeesAutoCompleteTarget('')
+        setAttendeesList([])
       } else if (
         reduxServices.newBooking.confirmNewMeetingAppointment.rejected.match(
           addBookingResult,
@@ -363,6 +364,7 @@ const NewBookingFilterOptions = ({
     setResetField(shouldResetFields)
     setAttendeesAutoCompleteTarget('')
     setIsAttendeeErrorShow(false)
+    setAttendeesList([])
   }
 
   useEffect(() => {
