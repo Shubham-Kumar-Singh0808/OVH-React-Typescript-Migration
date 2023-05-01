@@ -46,7 +46,7 @@ const ReservedBy = ({
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
       >
-        Reserved by:
+        Reserved by :
         <span className={autoCompleteTarget ? TextWhite : TextDanger}>*</span>
       </CFormLabel>
       <CCol sm={6}>

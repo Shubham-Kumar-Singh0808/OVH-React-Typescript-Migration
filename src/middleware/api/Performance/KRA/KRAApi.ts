@@ -1,5 +1,7 @@
 import {
+  AddKPIData,
   DeleteKPIParams,
+  Frequency,
   IncomingEmployeeDepartment,
   IncomingKPIDataItem,
   IncomingKRADataList,
@@ -7,6 +9,7 @@ import {
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRATableDataItem,
+  NewKPiDuplicateCheckQuery,
   NewKRABody,
   NewKRADuplicateCheckQuery,
   UpdateKRABody,
@@ -83,6 +86,29 @@ const deleteKRA = async (kraid: number): Promise<void> => {
   return response.data
 }
 
+const addKPI = async (body: AddKPIData): Promise<AddKPIData> => {
+  const { kraId, ...rest } = body
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.addKPI + kraId + '/kpi',
+    method: AllowedHttpMethods.post,
+    data: rest,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateKPI = async (body: IncomingKPIDataItem): Promise<AddKPIData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.updateKPI,
+    method: AllowedHttpMethods.put,
+    data: body,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const deleteKPI = async (query: DeleteKPIParams): Promise<void> => {
   const { kraId, kpiId } = query
   const requestConfig = getAuthenticatedRequestConfig({
@@ -126,6 +152,18 @@ const checkIfNewKraDuplicate = async (
   return response.data
 }
 
+const checkIfNewKpiDuplicate = async (
+  query: NewKPiDuplicateCheckQuery,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.checkIfNewKpiDuplicate + `${query.id + '/' + query.name}`,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const addNewKRA = async (body: NewKRABody): Promise<void> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: KRAApiConfig.addNewKRA,
@@ -158,6 +196,16 @@ const updateKRA = async (body: UpdateKRABody): Promise<void> => {
   return response.data
 }
 
+const getFrequency = async (): Promise<Frequency[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: KRAApiConfig.getFrequency,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const KRAApi = {
   getEmpDepartments,
   getDesignation,
@@ -170,6 +218,10 @@ const KRAApi = {
   addNewKRA,
   editThisKra,
   updateKRA,
+  getFrequency,
+  addKPI,
+  updateKPI,
+  checkIfNewKpiDuplicate,
 }
 
 export default KRAApi

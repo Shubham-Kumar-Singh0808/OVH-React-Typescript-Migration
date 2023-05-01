@@ -18,6 +18,7 @@ import FamilyDetailsTable from './FamilyDetailsTable'
 import VisaDetailsTable from './VisaDetailsTable'
 import ContactNumberDetails from './ContactNumberDetails'
 import { PassportDetails } from './PassportDetails'
+import PersonalInfoOptions from './PersonalInfoOptions'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OAddButton from '../../../components/ReusableComponent/OAddButton'
 import OToast from '../../../components/ReusableComponent/OToast'
@@ -150,14 +151,8 @@ const PersonalInfoTab = ({
 
   useEffect(() => {
     if (
-      employeeContactDetails?.mobile &&
-      employeeContactDetails.mobile.length > 9 &&
-      employeeEmergencyContactDetails?.emergencyContactName &&
-      employeeEmergencyContactDetails?.emergencyPhone &&
-      employeeEmergencyContactDetails?.emergencyPhone.length > 9 &&
-      employeeEmergencyContactDetails?.emergencyRelationShip &&
       employeePresenetAddressDetails.presentAddress &&
-      employeePresenetAddressDetails.presentCity &&
+      employeePresenetAddressDetails?.presentCity &&
       employeePresenetAddressDetails.presentZip
     ) {
       setSaveButtonEnabled(true)
@@ -165,35 +160,9 @@ const PersonalInfoTab = ({
       setSaveButtonEnabled(false)
     }
   }, [
-    employeeContactDetails?.mobile,
-    employeeEmergencyContactDetails?.emergencyContactName,
-    employeeEmergencyContactDetails?.emergencyPhone,
-    employeeEmergencyContactDetails?.emergencyRelationShip,
     employeePresenetAddressDetails.presentAddress,
-    employeePresenetAddressDetails.presentCity,
+    employeePresenetAddressDetails?.presentCity,
     employeePresenetAddressDetails.presentZip,
-  ])
-
-  useEffect(() => {
-    if (
-      employeePassportDetails?.passportNumber &&
-      employeePassportDetails?.passportIssuedPlace &&
-      employeePassportDetails?.passportIssuedDate &&
-      employeePassportDetails?.passportExpDate &&
-      frontUpload &&
-      backUpload
-    ) {
-      setSaveButtonEnabled(true)
-    } else {
-      setSaveButtonEnabled(false)
-    }
-  }, [
-    employeePassportDetails?.passportNumber,
-    employeePassportDetails?.passportIssuedPlace,
-    employeePassportDetails?.passportIssuedDate,
-    employeePassportDetails?.passportExpDate,
-    frontUpload,
-    backUpload,
   ])
 
   const onChangePresenetAddressHandler = (
@@ -333,11 +302,10 @@ const PersonalInfoTab = ({
               <h4 className="h4">Family Details</h4>
             </CCardHeader>
             <CCardBody className="ps-0 pe-0">
-              {!isViewingAnotherEmployee ? (
-                <OAddButton addButtonHandler={() => setToggle('AddFamily')} />
-              ) : (
-                <></>
-              )}
+              <PersonalInfoOptions
+                isViewingAnotherEmployee={isViewingAnotherEmployee}
+                setToggle={setToggle}
+              />
               <FamilyDetailsTable
                 editButtonHandler={editButtonHandler}
                 isFieldDisabled={true}
@@ -365,6 +333,7 @@ const PersonalInfoTab = ({
                 changeEmergencyContactDetails={
                   changeEmergencyContactDetailsHandler
                 }
+                setSaveButtonEnabled={setSaveButtonEnabled}
               />
               <CCardHeader>
                 <h4 className="h4">Present Address</h4>
@@ -375,7 +344,10 @@ const PersonalInfoTab = ({
                     Address:
                     <span
                       className={
-                        employeePresenetAddressDetails?.presentAddress
+                        employeePresenetAddressDetails?.presentAddress?.replace(
+                          /^\s*/,
+                          '',
+                        )
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -391,6 +363,7 @@ const PersonalInfoTab = ({
                       size="sm"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentAddress}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -399,7 +372,10 @@ const PersonalInfoTab = ({
                     City/Town:{' '}
                     <span
                       className={
-                        employeePresenetAddressDetails?.presentCity
+                        employeePresenetAddressDetails?.presentCity?.replace(
+                          /^\s*/,
+                          '',
+                        )
                           ? 'text-white'
                           : 'text-danger'
                       }
@@ -415,12 +391,18 @@ const PersonalInfoTab = ({
                       name="presentCity"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentCity}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
                 <CRow className="mt-4 mb-4">
                   <CFormLabel className="col-sm-3 col-form-label text-end">
-                    Zip: <span className={employeePresentZipNumber}>*</span>
+                    Zip:{' '}
+                    <span
+                      className={employeePresentZipNumber?.replace(/^\s*/, '')}
+                    >
+                      *
+                    </span>
                   </CFormLabel>
                   <CCol sm={3}>
                     <CFormInput
@@ -431,6 +413,7 @@ const PersonalInfoTab = ({
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentZip}
                       maxLength={6}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -446,6 +429,7 @@ const PersonalInfoTab = ({
                       name="presentLandMark"
                       onChange={onChangePresenetAddressHandler}
                       value={employeePresenetAddressDetails.presentLandMark}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -478,6 +462,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentAddress
                           : employeePermanentAddressDetails.permanentAddress
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -498,6 +483,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentCity
                           : employeePermanentAddressDetails.permanentCity
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -519,6 +505,7 @@ const PersonalInfoTab = ({
                           : employeePermanentAddressDetails.permanentZip
                       }
                       maxLength={6}
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>
@@ -539,6 +526,7 @@ const PersonalInfoTab = ({
                           ? employeePresenetAddressDetails.presentLandMark
                           : employeePermanentAddressDetails.permanentLandMark
                       }
+                      autoComplete="off"
                     />
                   </CCol>
                 </CRow>

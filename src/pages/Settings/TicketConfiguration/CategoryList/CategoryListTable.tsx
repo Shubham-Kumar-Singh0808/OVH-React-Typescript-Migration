@@ -12,7 +12,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -22,6 +22,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import { Category } from '../../../../types/Settings/TicketConfiguration/ticketConfigurationTypes'
 import { TextDanger } from '../../../../constant/ClassName'
+import { currentPageData } from '../../../../utils/paginationUtils'
 
 const CategoryListTable = (): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -89,6 +90,11 @@ const CategoryListTable = (): JSX.Element => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
+  const currentPageItems = useMemo(
+    () => currentPageData(ticketCategories, currentPage, pageSize),
+    [ticketCategories, currentPage, pageSize],
+  )
+
   const handleShowCategoryDeleteModal = (
     categoryName: string,
     categoryId: number,
@@ -132,6 +138,10 @@ const CategoryListTable = (): JSX.Element => {
           getToastMessage(actionMapping.deleted),
         ),
       )
+      dispatch(
+        reduxServices.ticketConfiguration.actions.setCurrentPage(currentPage),
+      )
+      dispatch(reduxServices.ticketConfiguration.actions.setPageSize(pageSize))
       dispatch(reduxServices.ticketConfiguration.getAllCategory())
     }
   }
@@ -210,7 +220,7 @@ const CategoryListTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {ticketCategories?.map((ticketCategory, index) => {
+          {currentPageItems?.map((ticketCategory, index) => {
             return (
               <CTableRow key={index}>
                 <CTableHeaderCell scope="row">

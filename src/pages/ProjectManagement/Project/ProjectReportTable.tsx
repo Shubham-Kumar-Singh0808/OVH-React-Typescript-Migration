@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -97,6 +98,13 @@ const ProjectReportsTable = ({
 
   const projectClients = useTypedSelector(
     reduxServices.projectReport.selectors.projectClients,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessProjectClose = userAccessToFeatures?.find(
+    (feature) => feature.name === 'ProjectClose',
   )
 
   const handlePageSizeSelectChange = (
@@ -296,6 +304,27 @@ const ProjectReportsTable = ({
     })
   }
 
+  const handleViewModel = (projectId: number) => {
+    dispatch(reduxServices.projectViewDetails.getProjectDetails(projectId))
+    dispatch(reduxServices.projectViewDetails.getProject(projectId))
+    dispatch(reduxServices.projectTimeLine.projectHistoryDetails(projectId))
+    dispatch(
+      reduxServices.projectChangeRequest.getProjectChangeRequestList({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(
+      reduxServices.projectMileStone.getProjectMileStone({
+        endIndex: pageSize * currentPage,
+        firstIndex: pageSize * (currentPage - 1),
+        projectid: String(projectId),
+      }),
+    )
+    dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
+  }
+
   const totalRecordsToDisplay = projectReports?.length
     ? `Total Records: ${listSize}`
     : `No Records found...`
@@ -376,62 +405,80 @@ const ProjectReportsTable = ({
                         </span>
                       </CTableDataCell>
                       <CTableDataCell>
-                        {isCloseBtnVisible && (
-                          <CButton
-                            className="btn-ovh-employee-list cursor-pointer"
-                            color="danger btn-ovh me-1"
-                            data-testid="close-btn"
-                            onClick={() =>
-                              handleShowCloseModal(value.id, value.projectName)
-                            }
-                          >
-                            <i
-                              className="fa fa-times text-white sh-fa-times"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
-                        )}
+                        {isCloseBtnVisible &&
+                          userAccessProjectClose?.viewaccess && (
+                            <CTooltip content="Close">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="close-btn"
+                                onClick={() =>
+                                  handleShowCloseModal(
+                                    value.id,
+                                    value.projectName,
+                                  )
+                                }
+                              >
+                                <i
+                                  className="fa fa-times text-white sh-fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
+                          )}
                       </CTableDataCell>
                       <CTableDataCell style={{ width: '120px' }}>
-                        <CButton
-                          className="btn-ovh-employee-list cursor-pointer"
-                          color="info-light btn-ovh me-1"
-                          data-testid="view-btn"
-                        >
-                          <i
-                            className="fa fa-eye text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
-                        {userAccess.updateaccess && (
-                          <Link to={`/editproject/${value.id}`}>
+                        <Link to={`/viewProject/${value.id}`}>
+                          <CTooltip content="View">
                             <CButton
                               className="btn-ovh-employee-list cursor-pointer"
-                              color="primary btn-ovh me-1"
-                              data-testid="edit-btn"
+                              color="info-light btn-ovh me-1"
+                              data-testid="view-btn"
+                              onClick={() => handleViewModel(value.id)}
                             >
                               <i
-                                className="fa fa-edit text-white"
+                                className="fa fa-eye text-white"
                                 aria-hidden="true"
                               ></i>
                             </CButton>
+                          </CTooltip>
+                        </Link>
+                        {userAccess.updateaccess && (
+                          <Link to={`/editproject/${value.id}`}>
+                            <CTooltip content="Edit">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="primary btn-ovh me-1"
+                                data-testid="edit-btn"
+                              >
+                                <i
+                                  className="fa fa-edit text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </Link>
                         )}
-                        {userAccess.updateaccess && (
-                          <CButton
-                            className="btn-ovh-employee-list cursor-pointer"
-                            color="danger btn-ovh me-1"
-                            data-testid="delete-btn"
-                            disabled={value.count > 0}
-                            onClick={() =>
-                              handleShowDeleteModal(value.id, value.projectName)
-                            }
-                          >
-                            <i
-                              className="fa fa-trash-o text-white"
-                              aria-hidden="true"
-                            ></i>
-                          </CButton>
+                        {userAccess.deleteaccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              className="btn-ovh-employee-list cursor-pointer"
+                              color="danger btn-ovh me-1"
+                              data-testid="delete-btn"
+                              disabled={value.count > 0}
+                              onClick={() =>
+                                handleShowDeleteModal(
+                                  value.id,
+                                  value.projectName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o text-white"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
                         )}
                       </CTableDataCell>
                     </CTableRow>

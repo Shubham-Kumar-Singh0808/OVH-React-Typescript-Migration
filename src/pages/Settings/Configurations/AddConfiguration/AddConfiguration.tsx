@@ -8,7 +8,7 @@ import {
   CFormSelect,
   CRow,
 } from '@coreui/react-pro'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -18,7 +18,6 @@ import {
   TextLabelProps,
   TextWhite,
 } from '../../../../constant/ClassName'
-import { deviceLocale } from '../../../../utils/helper'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { AddCycle } from '../../../../types/Settings/Configurations/AddConfiguration/addConfigurationTypes'
@@ -26,7 +25,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { dateFormat } from '../../../../constant/DateFormat'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const AddConfiguration = ({
   setToggle,
@@ -35,68 +33,84 @@ const AddConfiguration = ({
 }): JSX.Element => {
   const [selectReviewTitle, setSelectReviewTitle] = useState('')
   const [selectReviewType, setSelectReviewType] = useState('')
-  const [reviewPeriodFromDate, setReviewPeriodFromDate] = useState<string>()
-  const [reviewPeriodToDate, setReviewPeriodToDate] = useState<string>()
+
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
   const [addingDescription, setAddingDescription] = useState<string>('')
   const [servicePeriod, setServicePeriod] = useState<number | string>()
   const [level, setLevel] = useState<number | string>(1)
-  const [reviewStartDate, setReviewStartDate] = useState<string>()
-  const [reviewEndDate, setReviewEndDate] = useState<string>()
-  const [isDateValidation, setIsDateValidation] = useState<boolean>(false)
-  const [isDateErrorValidation, setIsDateErrorValidation] =
-    useState<boolean>(false)
+
+  const [fromMonth, setFromMonth] = useState<string>()
+  const [toMonth, setToMonth] = useState<string>()
+  const [startDate, setStartDate] = useState<string>()
+  const [endDate, setEndDate] = useState<string>()
+
+  const [isMonthError, setIsMonthError] = useState<boolean>(false)
+  const [isDateError, setIsDateError] = useState<boolean>(false)
+
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [selectActiveStatus, setSelectActiveStatus] = useState<string>('')
   const [reviewDuration, setReviewDuration] = useState<string>('')
 
   const dispatch = useAppDispatch()
 
-  const commonFormatDate = 'L'
+  const onHandleFromMonth = (value: Date) => {
+    setFromMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const onHandleToMonth = (value: Date) => {
+    setToMonth(moment(value).format('MM/yyyy'))
+  }
+
+  const onHandleStartDate = (value: Date) => {
+    setStartDate(moment(value).format(dateFormat))
+  }
+
+  const onHandleEndDate = (value: Date) => {
+    setEndDate(moment(value).format(dateFormat))
+  }
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM'
+    const fromMonthValidation = moment(fromMonth, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+    const toMonthValidation = moment(toMonth, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsMonthError(moment(toMonthValidation).isBefore(fromMonthValidation))
+  }, [fromMonth, toMonth])
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const startDateValidation = moment(startDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const endDateValidation = moment(endDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsDateError(moment(endDateValidation).isBefore(startDateValidation))
+  }, [startDate, endDate])
 
   const errorMsgs = useTypedSelector(
     reduxServices.addConfigurations.selectors.selectError,
   )
 
-  const remainingDays = moment(reviewEndDate).diff(
-    moment(reviewStartDate),
-    'days',
-  )
-
-  useEffect(() => {
-    const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const PeriodFromDate = moment(reviewStartDate, dateFormat).format(
-      newDateFormatForIsBefore,
-    )
-    const PeriodToDate = moment(reviewEndDate, dateFormat).format(
-      newDateFormatForIsBefore,
-    )
-
-    setIsDateValidation(moment(PeriodToDate).isBefore(PeriodFromDate))
-  }, [reviewStartDate, reviewEndDate])
-
-  useEffect(() => {
-    const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const start = moment(reviewPeriodFromDate, dateFormat).format(
-      newDateFormatForIsBefore,
-    )
-    const end = moment(reviewPeriodToDate, dateFormat).format(
-      newDateFormatForIsBefore,
-    )
-
-    setIsDateErrorValidation(moment(end).isBefore(start))
-  }, [reviewPeriodFromDate, reviewPeriodToDate])
+  const admission = moment(startDate, 'DD-MM-YYYY')
+  const discharge = moment(endDate, 'DD-MM-YYYY')
+  const totalDays = discharge.diff(admission, 'days')
 
   useEffect(() => {
     if (
       selectReviewTitle?.length > 0 &&
       selectReviewType &&
-      reviewPeriodToDate &&
-      reviewPeriodFromDate &&
       servicePeriod &&
-      reviewStartDate &&
-      reviewEndDate &&
-      level
+      level &&
+      toMonth &&
+      fromMonth &&
+      startDate &&
+      endDate
     ) {
       setIsButtonEnabled(true)
     } else {
@@ -105,21 +119,21 @@ const AddConfiguration = ({
   }, [
     selectReviewTitle,
     selectReviewType,
-    reviewPeriodToDate,
-    reviewPeriodFromDate,
-    reviewStartDate,
-    reviewEndDate,
     servicePeriod,
     level,
+    toMonth,
+    fromMonth,
+    startDate,
+    endDate,
   ])
 
   useEffect(() => {
-    if (remainingDays > 0) {
-      setReviewDuration(String(remainingDays))
+    if (totalDays >= 0) {
+      setReviewDuration(String(totalDays))
     } else {
       setReviewDuration(String(''))
     }
-  }, [remainingDays])
+  }, [totalDays])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -154,15 +168,15 @@ const AddConfiguration = ({
   const clearInputs = () => {
     setSelectReviewTitle('')
     setSelectReviewType('')
-    setReviewPeriodToDate('')
-    setReviewPeriodFromDate('')
     setServicePeriod('')
     setAddingDescription('')
     setIsShowDescription(false)
-    setReviewStartDate('')
-    setReviewEndDate('')
     setSelectActiveStatus('')
     setLevel('')
+    setToMonth('')
+    setFromMonth('')
+    setStartDate('')
+    setEndDate('')
     setReviewDuration('')
     setTimeout(() => {
       setIsShowDescription(true)
@@ -189,46 +203,20 @@ const AddConfiguration = ({
   const cycleNameWarningToastMsg = (
     <OToast toastColor="danger" toastMessage="Cycle name sholud be unique." />
   )
-  const appraisalCycleListSize = useTypedSelector(
-    reduxServices.appraisalConfigurations.selectors.listSize,
-  )
-  const { currentPage, pageSize } = usePagination(appraisalCycleListSize, 20)
 
   const handleAddNewCycle = async () => {
     const prepareObject = {
       active: selectActiveStatus,
       appraisalDuration: Number(reviewDuration),
-      appraisalEndDate: reviewPeriodToDate
-        ? new Date(reviewPeriodToDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: '2-digit',
-          })
-        : '',
-      appraisalStartDate: reviewPeriodFromDate
-        ? new Date(reviewPeriodFromDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: '2-digit',
-          })
-        : '',
+      appraisalEndDate: toMonth,
+      appraisalStartDate: fromMonth,
       appraisalType: selectReviewType,
       description: addingDescription,
-      fromDate: reviewStartDate
-        ? new Date(reviewStartDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          })
-        : '',
+      fromDate: startDate,
       level,
       name: selectReviewTitle,
       servicePeriod,
-      toDate: reviewEndDate
-        ? new Date(reviewEndDate).toLocaleDateString(deviceLocale, {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          })
-        : '',
+      toDate: endDate,
     } as AddCycle
 
     const addCycleResultAction = await dispatch(
@@ -239,12 +227,7 @@ const AddConfiguration = ({
         addCycleResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.appraisalConfigurations.getAppraisalCycle({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
+      dispatch(reduxServices.appraisalConfigurations.getAppraisalCycle())
       dispatch(reduxServices.app.actions.addToast(successMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
       setToggle()
@@ -336,35 +319,21 @@ const AddConfiguration = ({
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
                 Review Period From:
-                <span className={reviewPeriodFromDate ? TextWhite : TextDanger}>
-                  *
-                </span>
+                <span className={fromMonth ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
+              <DatePicker
                 autoComplete="off"
-                id="employeeRealBirthday"
+                id="fromMonth"
                 data-testid="sh-date-picker"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
                 dateFormat="MM/yyyy"
-                name="selectMonth"
-                value={
-                  reviewPeriodFromDate
-                    ? new Date(reviewPeriodFromDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) => {
-                  setReviewPeriodFromDate(moment(date).format(commonFormatDate))
-                }}
+                name="fromMonth"
+                value={fromMonth}
+                onChange={onHandleFromMonth}
               />
             </CCol>
           </CRow>
@@ -372,42 +341,28 @@ const AddConfiguration = ({
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-2 text-decoration-none">
                 Review Period To:
-                <span className={reviewPeriodToDate ? TextWhite : TextDanger}>
-                  *
-                </span>
+                <span className={toMonth ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
+              <DatePicker
                 autoComplete="off"
-                id="employeeRealBirthday"
+                id="toMonth"
                 data-testid="sh-date-picker"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 showMonthYearPicker
                 placeholderText="mm/yyyy"
                 dateFormat="MM/yyyy"
-                name="selectMonth"
-                value={
-                  reviewPeriodToDate
-                    ? new Date(reviewPeriodToDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) => {
-                  setReviewPeriodToDate(moment(date).format(commonFormatDate))
-                }}
+                name="toMonth"
+                value={toMonth}
+                onChange={onHandleToMonth}
               />
             </CCol>
-            {isDateErrorValidation && (
+            {isMonthError && (
               <CCol sm={6}>
                 <span className="text-danger">
                   <b>
-                    Review Period From should be greater than Review Period To
+                    Review Period To should be greater than Review Period From
                   </b>
                 </span>
               </CCol>
@@ -417,38 +372,24 @@ const AddConfiguration = ({
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 Review Start Date:
-                <span className={reviewStartDate ? TextWhite : TextDanger}>
-                  *
-                </span>
+                <span className={startDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
-                id="reviewStartDate"
-                data-testid="reviewStartDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
+              <DatePicker
+                id="startDate"
+                className="form-control form-control-sm sh-date-picker"
+                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                dateFormat="dd/mm/yyyy"
+                data-testid="start-date-picker"
                 placeholderText="dd/mm/yyyy"
-                name="reviewStartDate"
-                value={
-                  reviewStartDate
-                    ? new Date(reviewStartDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewStartDate(moment(date).format(commonFormatDate))
-                }
+                dateFormat="dd/mm/yy"
+                name="startDate"
+                value={startDate}
+                onChange={(date: Date) => onHandleStartDate(date)}
+                autoComplete="off"
               />
             </CCol>
           </CRow>
@@ -456,38 +397,27 @@ const AddConfiguration = ({
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 Review End Date:
-                <span className={reviewEndDate ? TextWhite : TextDanger}>
-                  *
-                </span>
+                <span className={endDate ? TextWhite : TextDanger}>*</span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
-                id="reviewEndDate"
-                data-testid="reviewEndDate"
-                className="form-control form-control-sm sh-date-picker form-control-not-allowed"
-                autoComplete="off"
+              <DatePicker
+                id="endDate"
+                className="form-control form-control-sm sh-date-picker"
+                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                dateFormat="dd/mm/yyyy"
+                data-testid="start-date-picker"
                 placeholderText="dd/mm/yyyy"
-                name="reviewEndDate"
-                value={
-                  reviewEndDate
-                    ? new Date(reviewEndDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setReviewEndDate(moment(date).format(commonFormatDate))
-                }
+                dateFormat="dd/mm/yy"
+                name="endDate"
+                value={endDate}
+                onChange={(date: Date) => onHandleEndDate(date)}
+                autoComplete="off"
               />
             </CCol>
-            {isDateValidation && (
+            {isDateError && (
               <CCol sm={6}>
                 <span className="text-danger">
                   <b>
@@ -553,7 +483,7 @@ const AddConfiguration = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isButtonEnabled}
+                disabled={!isButtonEnabled || isDateError || isMonthError}
                 onClick={handleAddNewCycle}
               >
                 Add

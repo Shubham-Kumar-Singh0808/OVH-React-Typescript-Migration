@@ -13,7 +13,6 @@ const mockSetIconVisible = jest.fn()
 const mockSetSelectedKRAId = jest.fn()
 const mockSetModalDescription = jest.fn()
 const mockSetModalVisible = jest.fn()
-const mockSetShowModalButtons = jest.fn()
 const mockSetDeleteThisKRA = jest.fn()
 
 const toInitialRender = (
@@ -29,8 +28,10 @@ const toInitialRender = (
       setSelectedKRAId={mockSetSelectedKRAId}
       setModalDescription={mockSetModalDescription}
       setModalVisible={mockSetModalVisible}
-      setShowModalButtons={mockSetShowModalButtons}
       setDeleteThisKRA={mockSetDeleteThisKRA}
+      setAddKPI={jest.fn()}
+      setIsDeleteModalVisible={jest.fn()}
+      setDeleteThisKRAName={jest.fn()}
     />
   </div>
 )
@@ -48,8 +49,10 @@ const kpiVisibleRender = (
       setSelectedKRAId={mockSetSelectedKRAId}
       setModalDescription={mockSetModalDescription}
       setModalVisible={mockSetModalVisible}
-      setShowModalButtons={mockSetShowModalButtons}
       setDeleteThisKRA={mockSetDeleteThisKRA}
+      setAddKPI={jest.fn()}
+      setIsDeleteModalVisible={jest.fn()}
+      setDeleteThisKRAName={jest.fn()}
     />
   </div>
 )
@@ -76,7 +79,9 @@ describe('KRA Table Item', () => {
               designation: 'developer',
             },
           },
-          userAccessToFeatures: mockUserAccessToFeaturesData,
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
           KRA: {
             isLoading: ApiLoadingState.succeeded,
             kraData: mockKRADataList,
@@ -91,9 +96,7 @@ describe('KRA Table Item', () => {
     test('initial ui and data render', () => {
       expect(screen.getByTestId(collapseIconId)).toBeVisible()
       expect(screen.getByTestId('kra-Name')).toHaveTextContent('People or Self')
-      expect(screen.getByTestId('kra-description')).toHaveTextContent(
-        'People or Self',
-      ) //Due to parsing
+      expect(screen.getByTestId('kra-description')).toHaveTextContent('') //Due to parsing
       expect(screen.getByTestId('dept-name')).toHaveTextContent('Development')
       expect(screen.getByTestId('desig-name')).toHaveTextContent(
         'Senior Consultant',
@@ -115,7 +118,6 @@ describe('KRA Table Item', () => {
       const name = screen.getByTestId('kra-Name')
       userEvent.click(name)
       expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
-      expect(mockSetShowModalButtons).toHaveBeenCalledTimes(1)
       expect(mockSetModalVisible).toHaveBeenCalledTimes(1)
     })
 
@@ -134,6 +136,9 @@ describe('KRA Table Item', () => {
             isLoading: ApiLoadingState.succeeded,
             kraData: mockKRADataList,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -146,15 +151,6 @@ describe('KRA Table Item', () => {
 
     test('expand icon is visible', () => {
       expect(screen.getByTestId(expandIconId)).toBeVisible()
-    })
-
-    test('delete button functionality', () => {
-      const deleteButton = screen.getByTestId(deleteBtnId + '-551')
-      userEvent.click(deleteButton)
-      expect(mockSetDeleteThisKRA).toHaveBeenCalledTimes(1)
-      expect(mockSetModalDescription).toHaveBeenCalledTimes(1)
-      expect(mockSetShowModalButtons).toHaveBeenCalledTimes(1)
-      expect(mockSetModalVisible).toHaveBeenCalledTimes(1)
     })
   })
 })

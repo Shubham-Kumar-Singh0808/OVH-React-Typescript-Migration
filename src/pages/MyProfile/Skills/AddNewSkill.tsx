@@ -16,6 +16,9 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
   const toastElement = (
     <OToast toastMessage="Skill already exists!" toastColor="danger" />
   )
+  const SuccessToastMessage = (
+    <OToast toastMessage="Skill Added Successfully" toastColor="success" />
+  )
 
   useEffect(() => {
     if (newSkillName) {
@@ -24,6 +27,31 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
       setIsAddSkillBtnEnabled(false)
     }
   }, [newSkillName])
+
+  const handleEnterKeyword = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (isAddSkillBtnEnabled && event.key === 'Enter') {
+      const toAddSkillName = newSkillName
+
+      if (
+        skills.length > 0 &&
+        skills.filter(
+          (skillItem) =>
+            skillItem.skill.toLowerCase() === newSkillName.toLowerCase(),
+        ).length > 0
+      ) {
+        dispatch(reduxServices.app.actions.addToast(toastElement))
+        setNewSkillName('')
+        return
+      }
+
+      setNewSkillName('')
+
+      dispatch(reduxServices.skill.createSkill({ categoryId, toAddSkillName }))
+      dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+    }
+  }
 
   const handleAddSkill = async () => {
     const toAddSkillName = newSkillName
@@ -36,12 +64,15 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
       ).length > 0
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+
+      setNewSkillName('')
       return
     }
 
     setNewSkillName('')
 
     dispatch(reduxServices.skill.createSkill({ categoryId, toAddSkillName }))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const formLabelProps = {
@@ -61,6 +92,7 @@ const AddNewSkill = ({ categoryId }: { categoryId: number }): JSX.Element => {
             id="inputNewSkill"
             value={newSkillName}
             onChange={(e) => setNewSkillName(e.target.value)}
+            onKeyDown={handleEnterKeyword}
             placeholder={'Skill'}
           />
         </CCol>

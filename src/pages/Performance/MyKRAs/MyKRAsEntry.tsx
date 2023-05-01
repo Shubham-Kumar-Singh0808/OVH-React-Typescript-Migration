@@ -80,9 +80,11 @@ const MyKRAsEntry = (props: {
         <CTableDataCell scope="row">{props.employeeKRA.count}</CTableDataCell>
       </CTableRow>
       {props.isIconVisible && props.selectedPersonId === props.id ? (
-        <CTableDataCell colSpan={10}>
-          <KRAsDetailsTable />
-        </CTableDataCell>
+        <CTableRow>
+          <CTableDataCell className="p-0" colSpan={5}>
+            <KRAsDetailsTable />
+          </CTableDataCell>
+        </CTableRow>
       ) : (
         <></>
       )}
@@ -95,11 +97,13 @@ const MyKRAsEntry = (props: {
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: kraDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: kraDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
     </>

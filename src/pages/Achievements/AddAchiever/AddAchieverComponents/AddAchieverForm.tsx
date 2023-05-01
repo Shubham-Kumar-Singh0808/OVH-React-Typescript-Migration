@@ -1,5 +1,4 @@
 import {
-  CContainer,
   CFormLabel,
   CForm,
   CRow,
@@ -7,15 +6,14 @@ import {
   CFormSelect,
   CFormInput,
   CButton,
-  CFormText,
+  CContainer,
 } from '@coreui/react-pro'
-// eslint-disable-next-line import/named
-import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useCallback, useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import FilterEmployeeName from './FilterEmployeeName'
 import AchieverImage from './AchieverImage'
+import AchieverDescription from './AchieverDescription'
 import {
   base64Extension,
   emptyString,
@@ -32,7 +30,6 @@ import {
   OutgoingNewAchiever,
 } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { AchievementType } from '../../../../types/Achievements/commonAchievementTypes'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -69,15 +66,14 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     setAddButton,
     clearInfoButtonHandler,
     addButtonHandler,
+    userAccessToAddAchiever,
   } = props
   const achievementTypeDetailsAscendingList = useTypedSelector(
     (state) => state.commonAchievements.achievementTypeList,
   )
-
   const selectedEmployee = useTypedSelector(
     (state) => state.addAchiever.employeeData,
   )
-
   const allActiveEmployees = useTypedSelector(
     (state) => state.addAchiever.activeEmployeeList,
   )
@@ -85,7 +81,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     useState<AchievementType>()
 
   const [achievementDescription, setAchievementDescription] =
-    useState<string>(emptyString)
+    useState<string>('')
 
   const [imageDescription, setImageDescription] = useState<string>()
 
@@ -99,7 +95,6 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     achievementTypeDetails && achievementTypeDetails.timeperiodrequired
 
   const fromDate = getDateForamatted(newAchieverDetails.startDate)
-
   const toDate = getDateForamatted(newAchieverDetails.endDate)
 
   const datesErrorMessage = compareTheDates(
@@ -107,9 +102,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     newAchieverDetails.endDate,
   ) ? (
     <div data-testid="error-msg-date">
-      <CFormText data-testid="error-date" className={TextDanger}>
+      <strong data-testid="error-date" className={TextDanger}>
         {fromToDateError}
-      </CFormText>
+      </strong>
     </div>
   ) : (
     <></>
@@ -122,9 +117,9 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     setNewAchieverDetails({
       ...newAchieverDetails,
       achievementName: value,
-      timePeriod: emptyString,
-      startDate: emptyString,
-      endDate: emptyString,
+      timePeriod: '',
+      startDate: '',
+      endDate: '',
     })
     const achievement = achievementTypeDetailsAscendingList.list.find(
       (item) => item.typeName === value,
@@ -161,16 +156,16 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   useEffect(() => {
     if (
       newAchieverDetails.achievementName === selectAchievementType ||
-      newAchieverDetails.employeeName === emptyString ||
-      employeeFilterName === emptyString
+      newAchieverDetails.employeeName === '' ||
+      employeeFilterName === ''
     ) {
       setAddButton(false)
     } else {
       setAddButton(true)
       if (
         showDates &&
-        (newAchieverDetails.startDate === emptyString ||
-          newAchieverDetails.endDate === emptyString ||
+        (newAchieverDetails.startDate === '' ||
+          newAchieverDetails.endDate === '' ||
           compareTheDates(
             newAchieverDetails.startDate,
             newAchieverDetails.endDate,
@@ -180,7 +175,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
       }
       if (
         showTimePeriod &&
-        (newAchieverDetails.timePeriod === emptyString ||
+        (newAchieverDetails.timePeriod === '' ||
           newAchieverDetails.timePeriod === '0' ||
           newAchieverDetails.timePeriod.trim().length === 0 ||
           !Number(newAchieverDetails.timePeriod))
@@ -196,7 +191,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     ) {
       setNewAchieverDetails({
         ...newAchieverDetails,
-        employeeName: emptyString,
+        employeeName: '',
       })
       setEmployeeFilterName(undefined)
     }
@@ -205,7 +200,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
   const clearLocalDetails = () => {
     clearInfoButtonHandler()
     setShowEditor(false)
-    setAchievementDescription(emptyString)
+    setAchievementDescription('')
     setAchievementTypeDetails(undefined)
     setEmployeeFilterName(undefined)
     setImageDescription(undefined)
@@ -265,7 +260,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             data-testid="ach-name-label"
             className={newAchievementLabelClass}
           >
-            Achievement Type:
+            Achievement Type :
             <span
               className={
                 newAchieverDetails.achievementName === null ||
@@ -323,7 +318,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               className={newAchievementLabelClass}
               data-testid="ach-timep-label"
             >
-              Time Period (year&apos;s):
+              Time Period (year&apos;s) :
               <span
                 className={
                   newAchieverDetails.timePeriod === null ||
@@ -356,7 +351,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="from-date"
               className={newAchievementLabelClass}
             >
-              From Date:
+              From Month :
               <span
                 className={
                   newAchieverDetails.startDate === null ||
@@ -374,7 +369,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="startDate"
-                placeholderText="MM-YYYY"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -395,7 +390,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               data-testid="to-date"
               className={newAchievementLabelClass}
             >
-              To Date:
+              To Month :
               <span
                 className={
                   newAchieverDetails.endDate === null ||
@@ -412,7 +407,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
                 dateFormat="MMMM yyyy"
                 autoComplete="off"
                 className="form-control form-control-sm sh-date-picker"
-                placeholderText="MM-YYYY"
+                placeholderText="mm/yyyy"
                 peekNextMonth
                 showMonthYearPicker
                 dropdownMode="select"
@@ -428,36 +423,17 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
             </CCol>
           </AchievementEntryContainer>
         )}
-        <AchievementEntryContainer>
-          <CFormLabel
-            data-testid="ach-desc"
-            className={`${newAchievementLabelClass} align-self-start`}
-          >
-            Description:
-            <span className={TextWhite}>*</span>
-          </CFormLabel>
-          <CCol sm={8}>
-            {showEditor ? (
-              <CKEditor<{ onChange: CKEditorEventHandler<'change'> }>
-                initData={achievementDescription}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  descriptionHandler(editor.getData().trim())
-                }}
-              />
-            ) : (
-              <></>
-            )}
-          </CCol>
-        </AchievementEntryContainer>
+        <AchieverDescription
+          showEditor={showEditor}
+          achievementDescription={achievementDescription}
+          descriptionHandler={descriptionHandler}
+        />
         <AchievementEntryContainer>
           <CFormLabel
             data-testid="ach-pic"
             className={newAchievementLabelClass}
           >
-            Picture:
-            <span className={TextWhite}>*</span>
+            Picture :<span className={TextWhite}>*</span>
           </CFormLabel>
           <CCol sm={12} md={3}>
             <AchieverImage
@@ -471,24 +447,28 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
       <CRow>
         <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
         <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="add-achiever-btn"
-            disabled={!isAddButtonEnabled}
-          >
-            Add
-          </CButton>
-          <CButton
-            color="warning"
-            role="addNewAchiever"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
+          {userAccessToAddAchiever?.createaccess && (
+            <>
+              <CButton
+                type="submit"
+                color="success"
+                className="btn-ovh me-1"
+                data-testid="add-achiever-btn"
+                disabled={!isAddButtonEnabled}
+              >
+                Add
+              </CButton>
+              <CButton
+                color="warning"
+                role="addNewAchiever"
+                data-testid="clear-btn"
+                className="btn-ovh me-1"
+                onClick={clearButtonHandler}
+              >
+                Clear
+              </CButton>
+            </>
+          )}
         </CCol>
       </CRow>
     </CForm>

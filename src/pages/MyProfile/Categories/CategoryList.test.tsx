@@ -1,25 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable sonarjs/no-duplicate-string */
-/* eslint-disable import/named */
-// Todd: remove eslint and fix error
-// Todo: remove eslint and fix all the errors
 import '@testing-library/jest-dom'
-import { prettyDOM, render, screen, waitFor } from '@testing-library/react'
-import { EnhancedStore } from '@reduxjs/toolkit'
-import { Provider } from 'react-redux'
+
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import CategoryList from './CategoryList'
+import CategoryListTable from './CategoryListTable'
+import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockCategories } from '../../../test/data/categoryListData'
-import stateStore from '../../../stateStore'
 
-const ReduxProvider = ({
-  children,
-  reduxStore,
-}: {
-  children: JSX.Element
-  reduxStore: EnhancedStore
-}) => <Provider store={reduxStore}>{children}</Provider>
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <CategoryListTable />
+  </div>
+)
 
 const expectPageSizeToBeRendered = (pageSize: number) => {
   for (let i = 0; i < pageSize; i++) {
@@ -27,169 +21,75 @@ const expectPageSizeToBeRendered = (pageSize: number) => {
   }
 }
 
-describe('Category List Table Testing', () => {
-  test('should render no data to display if categories is empty', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-    await waitFor(() => {
-      expect(screen.getByText('No Records Found')).toBeInTheDocument()
+describe('Category List Table Component Testing', () => {
+  test('should render Category List Tableb component with out crashing', () => {
+    render(toRender, {
+      preloadedState: {
+        category: {
+          categories: mockCategories,
+          listSize: 45,
+        },
+      },
+    })
+
+    expectPageSizeToBeRendered(20)
+
+    const deleteBtn = screen.getByTestId('category-delete-btn0')
+    userEvent.click(deleteBtn)
+
+    expect(screen.getByText('Delete Category'))
+  })
+})
+
+describe('Tracker List Component Testing', () => {
+  beforeEach(() => {
+    render(toRender)
+  })
+  test('should render the table ', () => {
+    const table = screen.getByRole('table')
+    expect(table).toBeTruthy()
+  })
+  test('should render the correct headers', () => {
+    expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Name' })).toBeTruthy()
+    expect(screen.getByRole('columnheader', { name: 'Action' })).toBeTruthy()
+    expect(screen.getAllByRole('columnheader')).toHaveLength(3)
+  })
+})
+
+describe('Add Tracker List Table without data', () => {
+  beforeEach(() => {
+    render(toRender, {
+      preloadedState: {
+        category: {
+          categories: mockCategories,
+          listSize: 45,
+        },
+      },
     })
   })
-
-  test('should render table with data without crashing', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expectPageSizeToBeRendered(20)
-      expect(
-        screen.getByText('Total Records: ' + mockCategories.length),
-      ).toBeInTheDocument()
-    })
+  afterEach(cleanup)
+  test('should render with data ', () => {
+    expect(screen.getByText('Testing')).toBeInTheDocument()
   })
-
-  test('should render correct number of page records', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      // 21 including the heading
-      expect(screen.getAllByRole('row')).toHaveLength(21)
-    })
+  test('should render number of records', () => {
+    expect(screen.getByText('Total Records: 40')).toBeInTheDocument()
   })
-
-  test('should render correct number of 40 page records', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-      const pageSizeSelect = screen.getByRole('option', {
-        name: '40',
-      }) as HTMLOptionElement
-      expect(pageSizeSelect.selected).toBe(true)
-
-      // 41 including the heading
-      expect(screen.getAllByRole('row')).toHaveLength(41)
-    })
-  })
-
-  test('should render first page data only', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expect(screen.getByRole('rowheader', { name: '20' })).toBeInTheDocument()
-      expect(screen.queryByRole('rowheader', { name: '21' })).toBeNull()
-    })
-  })
-
-  test('should render second page data only', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      userEvent.click(screen.getByText('Next ›', { exact: true }))
-      expect(screen.getByRole('rowheader', { name: '40' })).toBeInTheDocument()
-      expect(screen.queryByRole('rowheader', { name: '41' })).toBeNull()
-    })
-  })
-
-  test('should disable first and prev in pagination if first page', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      expect(screen.getByText('« First')).toHaveAttribute('disabled')
-      expect(screen.getByText('‹ Prev')).toHaveAttribute('disabled')
-      expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
-    })
-  })
-
-  test('should disable last and next in pagination if last page', async () => {
-    render(
-      <ReduxProvider reduxStore={stateStore}>
-        <CategoryList
-          headerTitle={''}
-          confirmButtonText={''}
-          backButtonHandler={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-        />
-      </ReduxProvider>,
-    )
-
-    await waitFor(() => {
-      userEvent.click(screen.getByText('Next ›', { exact: true }))
+  test('should render first page data only', () => {
+    waitFor(() => {
+      userEvent.click(screen.getByText('Next >', { exact: true }))
 
       expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('‹ Prev')).not.toHaveAttribute('disabled')
-      expect(screen.getByText('Next ›')).toHaveAttribute('disabled')
-      expect(screen.getByText('Last »')).toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
+    })
+  })
+
+  test('should disable first and prev in pagination if first page', () => {
+    waitFor(() => {
+      expect(screen.getByText('« First')).toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
 })

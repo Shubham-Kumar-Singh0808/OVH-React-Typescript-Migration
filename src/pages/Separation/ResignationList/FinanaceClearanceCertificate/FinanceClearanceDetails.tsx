@@ -14,12 +14,13 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const FinanceClearanceDetails = (): JSX.Element => {
   const [isFinanceCCDetailsEdit, setIsFinanceCCDetailsEdit] =
     useState<boolean>(false)
   const [isFinanceEditActiveValue, setIsEditFinanceActiveValue] =
-    useState<boolean>()
+    useState<boolean>(false)
   const initialFinanceCCDetails = {} as UpdateClearanceDetails
   const [editFinanceCCDetails, setEditFinanceCCDetails] = useState(
     initialFinanceCCDetails,
@@ -39,6 +40,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
     setIsFinanceCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditFinanceCCDetails(updateClearanceDetails)
+    setIsEditFinanceActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditFinanceCCDetailsHandler = (
@@ -60,10 +62,17 @@ const FinanceClearanceDetails = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitFinanceClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
-        addedBy: 'HR',
+        addedBy: 'Finance',
         ccId: FinanceCCDetails[0].ccId,
         comments: editFinanceCCDetails?.comments,
         createdDate: new Date(),
@@ -72,7 +81,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
         isDue: isFinanceEditActiveValue as unknown as boolean,
         seperationEmpId: FinanceCCDetails[0]?.seperationEmpId,
         seperationEmpName: FinanceCCDetails[0]?.seperationEmpName,
-        seperationId: FinanceCCDetails[0]?.seperationId,
+        seperationId: getAllResignationHistory.separationId,
       }),
     )
     if (
@@ -84,9 +93,10 @@ const FinanceClearanceDetails = (): JSX.Element => {
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
-          submittedBy: 'HR',
+          submittedBy: 'Finance',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -153,7 +163,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.employeeId}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -161,7 +171,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.employeeName}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpName}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -169,7 +179,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpId}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -177,7 +187,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                 Submitted Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{FinanceCCDetails[0]?.seperationEmpName}</p>
+                <p className="mb-0">{FinanceCCDetails[0]?.employeeName}</p>
               </CCol>
             </CRow>
 
@@ -197,7 +207,7 @@ const FinanceClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isFinanceEditActiveValue as unknown as boolean}
+                    checked={isFinanceEditActiveValue}
                     onChange={handleEditFinanceCCDetailsHandler}
                   />
                   <CFormCheck
@@ -236,7 +246,8 @@ const FinanceClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {FinanceCCDetails[0]?.comments || 'N/A'}
+                    {FinanceCCDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}
@@ -253,7 +264,8 @@ const FinanceClearanceDetails = (): JSX.Element => {
                       onClick={SubmitFinanceClearanceCertificateHandler}
                       disabled={
                         isFinanceEditActiveValue === true &&
-                        editFinanceCCDetails?.comments === ''
+                        editFinanceCCDetails?.comments?.replace(/^\s*/, '') ===
+                          ''
                       }
                     >
                       Update

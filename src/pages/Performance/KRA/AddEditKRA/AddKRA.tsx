@@ -38,13 +38,9 @@ const AddKRA = (props: AddKRAProps): JSX.Element => {
 
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
 
-  const isNewKraDuplicate = useTypedSelector(
-    (state) => state.KRA.isNewKRADuplicate,
-  )
   const empDeptList = useTypedSelector((state) => state.KRA.empDepartments)
   const desigList = useTypedSelector((state) => state.KRA.designations)
   const currentQueries = useTypedSelector((state) => state.KRA.krasQuery)
-
   const clearHandler = () => {
     setEnteredKraName(emptyString)
     setEnteredDepartment(selectDepartment)
@@ -66,14 +62,14 @@ const AddKRA = (props: AddKRAProps): JSX.Element => {
     e.preventDefault()
     const deptId = getDepartmentId(empDeptList, enteredDepartment)
     const desigId = +getDesignationId(desigList, enteredDesignation)
-    await dispatch(
+    const duplicateKRAResponse = await dispatch(
       reduxServices.KRA.checkNewKRADuplicacyThunk({
         kraName: enteredKraName,
         departmentId: deptId,
         designationId: desigId,
       }),
     )
-    if (isNewKraDuplicate === false) {
+    if (duplicateKRAResponse.payload === false) {
       const newKRAData: NewKRABody = {
         name: enteredKraName,
         departmentId: deptId,

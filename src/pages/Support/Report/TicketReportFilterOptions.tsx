@@ -5,7 +5,7 @@ import ReactDatePicker from 'react-datepicker'
 import ticketReportApi from '../../../middleware/api/Support/Report/ticketReportsApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale, downloadFile } from '../../../utils/helper'
+import { downloadFile } from '../../../utils/helper'
 
 const TicketReportFilterOptions = ({
   selectDate,
@@ -41,17 +41,9 @@ const TicketReportFilterOptions = ({
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: '',
-        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        from: fromDate || '',
         ticketStatus: null,
-        to: new Date(toDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        to: toDate || '',
       }),
     )
     dispatch(reduxServices.ticketReport.actions.setCurrentPage(1))
@@ -77,17 +69,9 @@ const TicketReportFilterOptions = ({
       reduxServices.ticketReport.getTicketsReport({
         dateSelection: selectDate,
         departmentId: selectDepartment,
-        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        from: fromDate || '',
         ticketStatus: null,
-        to: new Date(toDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        to: toDate || '',
       }),
     )
   }
@@ -144,37 +128,15 @@ const TicketReportFilterOptions = ({
         departmentId: selectDepartment,
         startIndex: 0,
         endIndex: 20,
-        from: new Date(fromDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
-        to: new Date(toDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        from: fromDate || '',
+        to: toDate || '',
         ticketStatus: null,
         dateSelection: selectDate,
       })
 
     downloadFile(employeeTicketReportDownload, 'MailTemplateList.csv')
   }
-  const toDateValue = toDate
-    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
 
-  const fromDateValue = fromDate
-    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
   const commonFormatDate = 'l'
   return (
     <>
@@ -188,7 +150,14 @@ const TicketReportFilterOptions = ({
             data-testid="dept-select1"
             name="selectDepartment"
             value={selectDepartment}
-            onChange={(e) => setSelectDepartment(e.target.value)}
+            onChange={(e) => {
+              dispatch(
+                reduxServices.ticketReport.actions.setDepartmentName(
+                  e.target.value,
+                ),
+              )
+              setSelectDepartment(e.target.value)
+            }}
           >
             <option value={''}>All</option>
             {sortedDepartmentNames?.map((department, index) => (
@@ -207,7 +176,12 @@ const TicketReportFilterOptions = ({
             id="selectDate"
             name="selectDate"
             value={selectDate}
-            onChange={(e) => setSelectDate(e.target.value)}
+            onChange={(e) => {
+              dispatch(
+                reduxServices.ticketReport.actions.setToDate(e.target.value),
+              )
+              setSelectDate(e.target.value)
+            }}
           >
             {dateOptionsList.map((currentOption, index) => (
               <option key={index} value={currentOption.label}>
@@ -231,17 +205,22 @@ const TicketReportFilterOptions = ({
                     id="fromDate"
                     data-testid="ticketReportFromDate"
                     className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    peekNextMonth
                     showMonthDropdown
+                    autoComplete="off"
                     showYearDropdown
                     dropdownMode="select"
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="fromDate"
-                    value={fromDateValue}
-                    onChange={(date: Date) =>
+                    value={fromDate}
+                    onChange={(date: Date) => {
+                      dispatch(
+                        reduxServices.ticketReport.actions.setFromDate(
+                          moment(date).format(commonFormatDate),
+                        ),
+                      )
                       setFromDate(moment(date).format(commonFormatDate))
-                    }
+                    }}
                   />
                 </CCol>
                 <CCol sm={4} md={4}>
@@ -255,17 +234,22 @@ const TicketReportFilterOptions = ({
                     id="toDate"
                     data-testid="leaveApprovalFromDate"
                     className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    peekNextMonth
                     showMonthDropdown
                     showYearDropdown
+                    autoComplete="off"
                     dropdownMode="select"
                     dateFormat="dd/mm/yy"
                     placeholderText="dd/mm/yy"
                     name="toDate"
-                    value={toDateValue}
-                    onChange={(date: Date) =>
+                    value={toDate}
+                    onChange={(date: Date) => {
+                      dispatch(
+                        reduxServices.ticketReport.actions.setToDate(
+                          moment(date).format(commonFormatDate),
+                        ),
+                      )
                       setToDate(moment(date).format(commonFormatDate))
-                    }
+                    }}
                   />
                 </CCol>
               </CRow>

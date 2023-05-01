@@ -10,12 +10,14 @@ import {
   CBadge,
   CFormInput,
   CFormSelect,
+  CTooltip,
 } from '@coreui/react-pro'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DatePicker from 'react-datepicker'
 import { Link } from 'react-router-dom'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { dateFormat } from '../../../constant/DateFormat'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { UpdateEmployeeAllocationProject } from '../../../types/ProjectManagement/EmployeeAllocation/employeeAllocationTypes'
@@ -33,6 +35,7 @@ const EmployeeAllocationEntryTable = (props: {
   const [editEmployeeAllocation, setEditEmployeeAllocation] = useState(
     initialEmployeeAllocation,
   )
+  const [dateError, setDateError] = useState<boolean>(false)
   const [templateId, setTemplateId] = useState(0)
   const [isProjectAllocationEdit, setIsProjectAllocationEdit] =
     useState<boolean>(false)
@@ -50,8 +53,7 @@ const EmployeeAllocationEntryTable = (props: {
   )
 
   const dispatch = useAppDispatch()
-  const { Select, toDate, allocationStatus, billingStatus, fromDate, id } =
-    props
+  const { Select, toDate, allocationStatus, billingStatus, fromDate } = props
 
   const allocationStatusLabelColor = (status: string): JSX.Element => {
     if (status === 'New') {
@@ -83,10 +85,10 @@ const EmployeeAllocationEntryTable = (props: {
     })
   }
   const onEndDateChangeHandler = (date: Date) => {
-    const formatDate = moment(date).format('DD/MM/YYYY')
-    const name = 'endDate'
+    const toDateValue = moment(date).format('DD/MM/YYYY')
+    const name = 'enddate'
     setEditEmployeeAllocation((prevState) => {
-      return { ...prevState, ...{ [name]: formatDate } }
+      return { ...prevState, ...{ [name]: toDateValue } }
     })
   }
   const onStartDateChangeHandler = (date: Date) => {
@@ -108,10 +110,37 @@ const EmployeeAllocationEntryTable = (props: {
         saveProjectAllocationResultAction,
       )
     ) {
+      setIsProjectAllocationEdit(false)
+      dispatch(
+        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
+          Billingtype: billingStatus,
+          EmployeeStatus: allocationStatus,
+          dateSelection: Select,
+          departmentNames: [],
+          employeeName: '',
+          endIndex: 20,
+          enddate: toDate
+            ? new Date(toDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          firstIndex: 0,
+          startdate: fromDate
+            ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
+          technology: '',
+        }),
+      )
       dispatch(
         reduxServices.employeeAllocationReport.projectUnderEmployeesReport({
           dateSelection: Select,
-          employeeid: id,
+          employeeid: editEmployeeAllocation.employeeId,
           enddate: toDate
             ? new Date(toDate).toLocaleDateString(deviceLocale, {
                 year: 'numeric',
@@ -131,21 +160,6 @@ const EmployeeAllocationEntryTable = (props: {
         }),
       )
       dispatch(
-        reduxServices.employeeAllocationReport.getEmployeeAllocationReport({
-          Billingtype: billingStatus,
-          EmployeeStatus: '',
-          dateSelection: Select,
-          departmentNames: [],
-          employeeName: '',
-          endIndex: 20,
-          enddate: '',
-          firstIndex: 0,
-          startdate: '',
-          technology: '',
-        }),
-      )
-      setIsProjectAllocationEdit(false)
-      dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
@@ -156,9 +170,34 @@ const EmployeeAllocationEntryTable = (props: {
     }
   }
 
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(editEmployeeAllocation?.startdate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(editEmployeeAllocation?.enddate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setDateError(moment(end).isBefore(start))
+  }, [editEmployeeAllocation?.startdate, editEmployeeAllocation?.enddate])
+
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+
+  useEffect(() => {
+    if (dateError) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="End date should be greater than allocation date"
+          />,
+        ),
+      )
+    }
+  }, [dispatch, dateError])
 
   return (
     <>
@@ -248,8 +287,8 @@ const EmployeeAllocationEntryTable = (props: {
                             <DatePicker
                               className="form-control form-control-sm sh-date-picker"
                               placeholderText="dd/mm/yy"
-                              name="endDate"
-                              id="endDate"
+                              name="enddate"
+                              id="enddate"
                               peekNextMonth
                               showMonthDropdown
                               showYearDropdown
@@ -287,7 +326,7 @@ const EmployeeAllocationEntryTable = (props: {
                       )}
                       {isProjectAllocationEdit &&
                       projectReport.id === templateId ? (
-                        <CTableDataCell scope="row">
+                        <CTableDataCell scope="row" style={{ width: '90px' }}>
                           <div className="edit-time-control">
                             <CFormSelect
                               aria-label="Default select example"
@@ -300,7 +339,7 @@ const EmployeeAllocationEntryTable = (props: {
                               }
                               onChange={handleEditProjectAllocationHandler}
                             >
-                              <option value="true">yes</option>
+                              <option value="true">Yes</option>
                               <option value="false">No</option>
                             </CFormSelect>
                           </div>
@@ -310,7 +349,7 @@ const EmployeeAllocationEntryTable = (props: {
                       )}
                       {isProjectAllocationEdit &&
                       projectReport.id === templateId ? (
-                        <CTableDataCell scope="row">
+                        <CTableDataCell scope="row" style={{ width: '150px' }}>
                           <div className="edit-time-control">
                             <CFormSelect
                               aria-label="Default select example"
@@ -339,35 +378,43 @@ const EmployeeAllocationEntryTable = (props: {
                               color="success"
                               className="btn-ovh me-1 mb-1"
                               onClick={saveProjectAllocationHandler}
+                              disabled={dateError}
                             >
                               <i
                                 className="fa fa-floppy-o"
                                 aria-hidden="true"
                               ></i>
                             </CButton>
-                            <CButton
-                              color="warning"
-                              data-testid="cancel-btn"
-                              className="btn-ovh me-1 mb-1"
-                              onClick={cancelProjectAllocationButtonHandler}
-                            >
-                              <i className="fa fa-times" aria-hidden="true"></i>
-                            </CButton>
+                            <CTooltip content="Cancel">
+                              <CButton
+                                color="warning"
+                                data-testid="cancel-btn"
+                                className="btn-ovh me-1 mb-1"
+                                onClick={cancelProjectAllocationButtonHandler}
+                              >
+                                <i
+                                  className="fa fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </>
                         ) : (
                           <>
                             {userAccess?.updateaccess && (
-                              <CButton
-                                color="info btn-ovh me-2"
-                                data-testid="edit-btn"
-                                onClick={() => {
-                                  editProjectAllocationButtonHandler(
-                                    projectReport,
-                                  )
-                                }}
-                              >
-                                <i className="fa fa-pencil-square-o"></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info btn-ovh me-2"
+                                  data-testid="edit-btn"
+                                  onClick={() => {
+                                    editProjectAllocationButtonHandler(
+                                      projectReport,
+                                    )
+                                  }}
+                                >
+                                  <i className="fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </CTooltip>
                             )}
                           </>
                         )}

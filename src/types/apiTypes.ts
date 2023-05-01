@@ -237,6 +237,7 @@ export interface EmployeeHandbookSettingsApi extends ApiBase {
 export interface TimeInOfficeReportApi extends ApiBase {
   getTimeInOfficeEmployeeReport: string
   getTimeInOfficeManagerReport: string
+  exportAttendanceReport: string
 }
 
 export interface EmployeeLeaveSettingsApi extends ApiBase {
@@ -406,6 +407,7 @@ export interface DashboardApi extends ApiBase {
   updateHoliday: string
   searchEmployee: string
   getLeaveSummary: string
+  imageFix: string
 }
 export interface AddLocationListApi extends ApiBase {
   getAllMeetingLocations: string
@@ -426,6 +428,12 @@ export interface BookingListApi extends ApiBase {
   getRoomsOfLocation: string
   getAllMeetingLocations: string
   getBookingsForSelection: string
+  cancelRoomBooking: string
+  editMeeting: string
+  confirmUpdateMeetingRequest: string
+  uniqueAttendee: string
+  Completed: string
+  InProgress: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -456,9 +464,11 @@ export interface EventListApi extends ApiBase {
   getFeedbackFormList: string
   downloadFeedbackForm: string
   uploadFeedbackForm: string
+  editEvent: string
+  updateEvent: string
 }
 export interface AppraisalConfigurationsApi extends ApiBase {
-  getAppraisalCycle: string
+  cycle: string
   editAppraisalCycle: string
   updateAppraisalCycle: string
   validateCycle: string
@@ -471,6 +481,8 @@ export interface RoomListApi extends ApiBase {
   addRoom: string
   deleteRoom: string
   updateRoom: string
+  getRoomsOfLocation: string
+  getAllMeetingLocations: string
 }
 
 export interface TicketConfigurationApi extends ApiBase {
@@ -545,6 +557,7 @@ export interface ResignationListApi extends ApiBase {
   saveExitFeedBackForm: string
   uploadExitFeedBackFile: string
   uploadRelievingLetter: string
+  updateTimeLine: string
 }
 
 export interface ITDeclarationListApi extends ApiBase {
@@ -571,6 +584,18 @@ export interface ITDeclarationListApi extends ApiBase {
 export interface InvestmentCheckListApi extends ApiBase {
   getInvestments: string
   getSections: string
+}
+
+export interface PayrollManagementApi extends ApiBase {
+  getCurrentPayslip: string
+  downloadExcelFile: string
+  searchEmployee: string
+  deletePayslip: string
+  updatePayslip: string
+  deleteCheckedPayslips: string
+  readExcelFile: string
+  saveExcelFile: string
+  clearDirectory: string
 }
 
 export interface CommonAchievementsApi extends ApiBase {
@@ -621,6 +646,54 @@ export interface EmployeeAccountsApi extends ApiBase {
   exportFinanceList: string
 }
 
+export interface ProjectDetailsApi extends ApiBase {
+  getProjects: string
+  getProject: string
+  updateProjectDetails: string
+}
+
+export interface ProjectTimeLineApi extends ApiBase {
+  getProjectHistory: string
+}
+
+export interface ProjectChangeRequestApi extends ApiBase {
+  getCRList: string
+  changeRequest: string
+  deleteCR: string
+  updateChangeRequest: string
+}
+
+export interface ProjectMilestoneApi extends ApiBase {
+  mileStonesList: string
+}
+export interface ProjectInvoiceApi extends ApiBase {
+  getClosedMilestonesAndCRs: string
+  getInvoicesOfMilestone: string
+  getInvoiceSummary: string
+}
+
+export interface ProjectTailoringApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProjectTailoring: string
+}
+
+export interface ProjectTimeSheetApi extends ApiBase {
+  getProjectTimeSheet: string
+}
+
+export interface ProjectProposalApi extends ApiBase {
+  projectProposal: string
+}
+
+export interface ProjectNotesApi extends ApiBase {
+  projectNotesTimeLine: string
+  uploadImage: string
+}
+export interface AddProjectCreationRequestApi extends ApiBase {
+  getCheckList: string
+  getProjectRequestMailIds: string
+  addProjectRequest: string
+}
 export interface InitiateCycleApi extends ApiBase {
   getActiveCycleData: string
   getallcycles: string
@@ -628,6 +701,9 @@ export interface InitiateCycleApi extends ApiBase {
   initiateCycle: string
   deleteQuestion: string
   addQuestion: string
+  addCycle: string
+  editCycle: string
+  updateCycle: string
 }
 
 export interface MyKRAsApi extends ApiBase {
@@ -640,6 +716,7 @@ export interface NewBookingApi extends ApiBase {
   getAllProfileEmployeesData: string
   getAllProjectSearch: string
   confirmNewMeetingAppointment: string
+  getAllMeetingAppointmentList: string
 }
 
 export interface LeadershipEnrollmentListApi extends ApiBase {
@@ -665,6 +742,10 @@ export interface KRAApi extends ApiBase {
   addNewKRA: string
   editThisKra: string
   updateKRA: string
+  getFrequency: string
+  addKPI: string
+  updateKPI: string
+  checkIfNewKpiDuplicate: string
 }
 
 export interface MyReviewApi extends ApiBase {
@@ -674,4 +755,68 @@ export interface MyReviewApi extends ApiBase {
   getEmployeeAppraisalRating: string
   getReviewComments: string
   getPerformanceRatings: string
+}
+
+export interface PIPListApi extends ApiBase {
+  getAllPIPList: string
+  exportPIPList: string
+  getPerformanceRatings: string
+  activeEmployee: string
+  addPIP: string
+  viewPipDetails: string
+  getPIPHistory: string
+  extendPip: string
+  removeFromPip: string
+  updatePipDetails: string
+  savePIPClearnceCertificate: string
+}
+
+export interface ReviewListApi extends ApiBase {
+  getEmployeeDepartments: string
+  getReviewList: string
+  getAppraisalCycles: string
+  getDesignations: string
+  exportReviewList: string
+  activeCycle: string
+}
+
+export interface AppraisalTemplateApi extends ApiBase {
+  cycle: string
+  activeCycle: string
+  getDesignationsUnderCycle: string
+}
+
+export interface ProjectStatusApi extends ApiBase {
+  statusReportLis: string
+  addStatusReport: string
+  deleteStatusReport: string
+  updateStatusReport: string
+}
+export interface ProcessAreaListApi extends ApiBase {
+  getProjectTailoringDocument: string
+  getProcessAreas: string
+  createProcessArea: string
+  checkDuplicateProcess: string
+  saveProcessArea: string
+  incrementOrDecrementOrder: string
+  getOrderCountOfActiveProcesses: string
+  getProcessAreaDetails: string
+  checkforDuplicateDoc: string
+}
+
+export interface AddNewAudit extends ApiBase {
+  saveNewAuditForm: string
+  editAuditFormDetails: string
+  getProjectEmployees: string
+  updateSQAAuditForm: string
+}
+export interface SQAAuditReportApi extends ApiBase {
+  getSQAAuditReport: string
+  exportSqaAuditReport: string
+  deleteProjectAuditDetails: string
+  closeAudit: string
+  getNewSQAAuditTimelineDetails: string
+  getAuditDetails: string
+  saveOrSubmitAuditForm: string
+  downloadSQAAuditFile: string
 }

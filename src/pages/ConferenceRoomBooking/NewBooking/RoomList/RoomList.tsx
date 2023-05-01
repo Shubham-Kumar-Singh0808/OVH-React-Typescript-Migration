@@ -38,9 +38,22 @@ const RoomList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.roomLists.getMeetingRooms())
     dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
   }, [dispatch])
+
+  useEffect(() => {
+    if (selectLocationId) {
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
+    }
+  }, [selectLocationId, dispatch])
+
+  useEffect(() => {
+    if (selectLocationId === '') {
+      dispatch(reduxServices.roomLists.getMeetingRooms())
+    }
+  }, [selectLocationId, dispatch])
 
   const roomNameExists = (name: string) => {
     return roomList?.find((roomName) => {
@@ -57,7 +70,7 @@ const RoomList = ({
   )
 
   const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Meeting-Location',
+    (feature) => feature.name === 'Meeting-Rooms',
   )
 
   useEffect(() => {
@@ -76,11 +89,30 @@ const RoomList = ({
     await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
     setSelectRoomName('')
-    setSelectLocationId('')
-    dispatch(reduxServices.roomLists.getMeetingRooms())
+    dispatch(
+      reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+    )
     dispatch(reduxServices.app.actions.addToast(successToast))
+    dispatch(reduxServices.app.actions.addToast(undefined))
   }
+  const handleEnterKeyWord = async (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (isAddButtonEnabled && event.key === 'Enter' && !roomNameExist) {
+      const prepareObj = {
+        roomName: selectRoomName,
+        locationId: Number(selectLocationId),
+      }
+      await dispatch(reduxServices.roomLists.addRoom(prepareObj))
 
+      setSelectRoomName('')
+      dispatch(
+        reduxServices.roomLists.getRoomsOfLocation(Number(selectLocationId)),
+      )
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -96,6 +128,10 @@ const RoomList = ({
     } else {
       setRoomNameExist('')
     }
+  }
+  const clearInputs = () => {
+    setSelectRoomName('')
+    setSelectLocationId('')
   }
 
   return (
@@ -167,9 +203,11 @@ const RoomList = ({
               size="sm"
               name="roomName"
               autoComplete="off"
-              placeholder="Enter Name"
+              placeholder="Enter Room Name"
               value={selectRoomName}
               onChange={handledInputChange}
+              onKeyDown={handleEnterKeyWord}
+              maxLength={30}
             />
             {roomNameExist && (
               <span className={TextDanger} data-testid="nameAlreadyExist">
@@ -177,8 +215,8 @@ const RoomList = ({
               </span>
             )}
           </CCol>
-          {userAccess?.createaccess && (
-            <CCol sm={2}>
+          <CCol sm={2}>
+            {userAccess?.createaccess && (
               <CButton
                 data-testid="designationButton"
                 color="info"
@@ -192,10 +230,21 @@ const RoomList = ({
               >
                 <i className="fa fa-plus me-1"></i>Add
               </CButton>
-            </CCol>
-          )}
+            )}
+            <CButton
+              data-testid="clear-btn"
+              color="warning"
+              className="btn-ovh text-white"
+              onClick={clearInputs}
+            >
+              Clear
+            </CButton>
+          </CCol>
         </CRow>
-        <RoomListTable userDeleteAccess={userAccess?.deleteaccess as boolean} />
+        <RoomListTable
+          selectLocationId={selectLocationId}
+          userDeleteAccess={userAccess?.deleteaccess as boolean}
+        />
       </OCard>
     </>
   )

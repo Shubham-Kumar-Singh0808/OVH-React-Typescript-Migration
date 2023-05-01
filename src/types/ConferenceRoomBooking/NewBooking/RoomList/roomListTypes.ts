@@ -7,7 +7,15 @@ export type getAllMeetingRooms = {
   locationName: string
   roomStatus: boolean
 }
+export type getAllMeetingLocations = {
+  id: number
+  locationName: string
+  locationStatus: null
+}
 export type AddRoomListSliceState = {
   meetingRooms: getAllMeetingRooms[]
+  meetingLocations: getAllMeetingLocations[]
   isLoading: ApiLoadingState
+  currentPage: number
+  pageSize: number
 }

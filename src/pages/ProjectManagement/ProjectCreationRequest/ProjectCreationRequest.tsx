@@ -4,6 +4,7 @@ import ProjectCreationRequestTable from './ProjectCreationRequestTable'
 import ProjectRequestView from './ProjectRequestView/ProjectRequestView'
 import ProjectRequestHistoryDetails from './ProjectRequestHistory/ProjectRequestHistoryDetails'
 import ApproveProjectRequest from './ApproveProject/ApproveProjectRequest'
+import AddProjectRequest from './AddProjectRequest/AddProjectRequest'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -104,11 +105,14 @@ const ProjectCreationRequest = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
               <CCol sm={3} className="d-md-flex justify-content-end">
-                {userAccessCreateAction?.createaccess && (
-                  <CButton color="info btn-ovh me-1" className="text-white">
-                    <i className="fa fa-plus"></i> Project Request
-                  </CButton>
-                )}
+                <CButton
+                  color="info btn-ovh me-1"
+                  className="text-white"
+                  onClick={() => setToggle('addProjectRequest')}
+                  data-testid="add-project-test"
+                >
+                  <i className="fa fa-plus"></i> Project Request
+                </CButton>
               </CCol>
             </CRow>
             <ProjectCreationRequestTable
@@ -119,6 +123,7 @@ const ProjectCreationRequest = (): JSX.Element => {
               pageSize={pageSize}
               setToggle={setToggle}
               userDeleteAction={userAccessCreateAction?.deleteaccess as boolean}
+              userRejectAction={userAccessCreateAction?.updateaccess as boolean}
             />
           </OCard>
         </>
@@ -130,8 +135,10 @@ const ProjectCreationRequest = (): JSX.Element => {
       {toggle === 'approvalProjectHistory' && (
         <ApproveProjectRequest setToggle={setToggle} />
       )}
+      {toggle === 'addProjectRequest' && (
+        <AddProjectRequest setToggle={setToggle} />
+      )}
     </>
   )
 }
-
 export default ProjectCreationRequest

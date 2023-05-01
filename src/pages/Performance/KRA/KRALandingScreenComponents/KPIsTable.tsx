@@ -1,12 +1,15 @@
 import {
   CButton,
+  CCol,
   CLink,
+  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -16,7 +19,9 @@ import { emptyString } from '../../../Achievements/AchievementConstants'
 import { dottedContent } from '../KRAConstants'
 import {
   DeleteKPIParams,
+  IncomingKPIDataItem,
   KPIsTableProps,
+  KRAPages,
 } from '../../../../types/Performance/KRA/KRATypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -31,15 +36,19 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   )
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] =
+    useState<boolean>(false)
   const [modalDescription, setModalDescription] =
     useState<ModalContent>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
 
   const [deleteThisKPI, setDeleteThisKPI] = useState<number>()
-
+  const [deleteKPIName, setDeleteKPIName] = useState('')
   const userAccessToFeatures = useTypedSelector(
-    (state) => state.userAccessToFeatures.userAccessToFeatures,
-  ).find((item) => item.featureId === 34)
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToKPI = userAccessToFeatures?.find(
+    (feature) => feature.name === 'KRA',
+  )
 
   const descriptionHandler = (
     e: React.MouseEvent<HTMLElement>,
@@ -47,7 +56,6 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   ) => {
     e.preventDefault()
     setModalDescription(content)
-    setShowModalButtons(false)
     setModalVisible(true)
   }
 
@@ -61,10 +69,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     name: string,
   ) => {
     e.preventDefault()
-    setModalDescription('Do you want to delete this ' + name + '?')
-    setShowModalButtons(true)
-    setModalVisible(true)
+    setIsDeleteModalVisible(true)
     setDeleteThisKPI(id)
+    setDeleteKPIName(name)
   }
 
   const modalDeleteButtonHandler = async () => {
@@ -78,7 +85,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         <OToast toastColor="success" toastMessage="KPI Deleted Successfully" />
       )
       if (reduxServices.KRA.deleteKPIThunk.fulfilled.match(result)) {
-        setModalVisible(false)
+        setIsDeleteModalVisible(false)
         dispatch(reduxServices.app.actions.addToast(successMessage))
         dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
         dispatch(reduxServices.KRA.kpisForIndividualKraThunk(kraId))
@@ -87,7 +94,11 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
     }
   }
 
-  const modalBtnTernary = showModalButtons ? emptyString : 'd-none'
+  const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
+    console.log(editKPI)
+    dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
+    dispatch(reduxServices.KRA.actions.setEditKpi(editKPI))
+  }
 
   return (
     <>
@@ -95,144 +106,179 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         responsive
         striped
         align="middle"
-        className="mt-0 text-start profile-tab-table-size w-100"
+        className="mt-0 text-start profile-tab-table-size w-100 table-layout-fixed"
       >
         <CTableHead className="profile-tab-header">
-          <CTableRow>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              #
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              KPI Name
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Description
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Frequency
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Target
-            </CTableHeaderCell>
-            <CTableHeaderCell
-              scope="col"
-              className="profile-tab-content text-center"
-            >
-              Actions
-            </CTableHeaderCell>
-          </CTableRow>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            #
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            KPI Name
+          </CTableHeaderCell>
+          <CTableHeaderCell
+            colSpan={3}
+            scope="col"
+            className="profile-tab-content"
+          >
+            Description
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            Frequency
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            Target
+          </CTableHeaderCell>
+          <CTableHeaderCell
+            scope="col"
+            className="profile-tab-content text-center"
+          >
+            Actions
+          </CTableHeaderCell>
         </CTableHead>
         <CTableBody>
-          {kpiList?.map((item, index) => (
-            <CTableRow key={index}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
-              <CTableDataCell scope="row" className="commentWidth">
-                <CLink
-                  className="cursor-pointer text-primary centerAlignment-text"
-                  data-testid={`kpi-Name-${index}`}
-                  onClick={(e) => descriptionHandler(e, item.name)}
-                >
-                  {dottedContent(item.name)}
-                </CLink>
-              </CTableDataCell>
-              {item.description !== null ? (
-                <CTableDataCell scope="row" className="commentWidth">
-                  <CLink
-                    className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
-                    data-testid={`kpi-description-${index}`}
-                    onClick={(e) =>
-                      descriptionHandler(
-                        e,
-                        parse(modalContentCheck(item.description)),
-                      )
-                    }
-                  >
-                    {dottedContent(item.description)}
-                  </CLink>
-                </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              {item.frequency !== null ? (
+          {kpiList &&
+            kpiList?.map((item, index) => (
+              <CTableRow key={index}>
+                <CTableDataCell>{index + 1}</CTableDataCell>
                 <CTableDataCell scope="row" className="commentWidth">
                   <CLink
                     className="cursor-pointer text-primary centerAlignment-text"
-                    data-testid="kpi-Name"
-                    onClick={(e) =>
-                      descriptionHandler(e, modalContentCheck(item.frequency))
-                    }
+                    data-testid={`kpi-Name-${index}`}
+                    onClick={(e) => descriptionHandler(e, item.name)}
                   >
-                    {item.frequency}
+                    {dottedContent(item.name)}
                   </CLink>
                 </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              {item.target !== null ? (
-                <CTableDataCell scope="row" className="commentWidth">
-                  <CLink
-                    className="cursor-pointer text-primary centerAlignment-text"
-                    data-testid="kpi-Name"
-                    onClick={(e) =>
-                      descriptionHandler(
-                        e,
-                        parse(modalContentCheck(item.target)),
-                      )
-                    }
+                {item.description !== null ? (
+                  <CTableDataCell
+                    colSpan={3}
+                    scope="row"
+                    className="commentWidth"
                   >
-                    {dottedContent(item.target)}
-                  </CLink>
-                </CTableDataCell>
-              ) : (
-                <CTableDataCell>N/A</CTableDataCell>
-              )}
-              <CTableDataCell>
-                <div className="d-flex flex-row align-items-center justify-content-end">
-                  <div className="button-events">
-                    {userAccessToFeatures?.updateaccess && (
-                      <CButton
-                        size="sm"
-                        color="info"
-                        className="btn-ovh me-1"
-                        title="Edit"
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                    )}
-                    {userAccessToFeatures?.deleteaccess && (
-                      <CButton
-                        size="sm"
-                        color="danger"
-                        className="btn-ovh me-1"
-                        data-testid={`del-btn-${index}`}
-                        title="Delete"
-                        onClick={(e) => {
-                          deleteButtonHandler(e, item.id, item.name)
-                        }}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
-                    )}
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
+                      data-testid={`kpi-description-${index}`}
+                      onClick={(e) =>
+                        descriptionHandler(
+                          e,
+                          parse(modalContentCheck(item.description)),
+                        )
+                      }
+                    >
+                      {parse(dottedContent(item.description))}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                {item.frequency !== null ? (
+                  <CTableDataCell scope="row" className="commentWidth">
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid="kpi-Name"
+                      onClick={(e) =>
+                        descriptionHandler(e, modalContentCheck(item.frequency))
+                      }
+                    >
+                      {item.frequency}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                {item.target !== null ? (
+                  <CTableDataCell scope="row" className="commentWidth">
+                    <CLink
+                      className="cursor-pointer text-primary centerAlignment-text"
+                      data-testid="kpi-Name"
+                      onClick={(e) =>
+                        descriptionHandler(
+                          e,
+                          parse(modalContentCheck(item.target)),
+                        )
+                      }
+                    >
+                      {dottedContent(item.target)}
+                    </CLink>
+                  </CTableDataCell>
+                ) : (
+                  <CTableDataCell>N/A</CTableDataCell>
+                )}
+                <CTableDataCell>
+                  <div className="d-flex flex-row align-items-center justify-content-end">
+                    <div className="button-events">
+                      {userAccessToKPI?.updateaccess && (
+                        <>
+                          <CTooltip content="Edit">
+                            <CButton
+                              size="sm"
+                              color="info"
+                              className="btn-ovh me-1 btn-ovh-employee-list"
+                              onClick={() => editKPIButtonHandler(item)}
+                            >
+                              <i
+                                className="fa fa-pencil-square-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        </>
+                      )}
+                      {userAccessToKPI?.deleteaccess && (
+                        <>
+                          <CTooltip content="Delete">
+                            <CButton
+                              size="sm"
+                              color="danger"
+                              className="btn-ovh me-1 btn-ovh-employee-list"
+                              data-testid={`del-btn-${index}`}
+                              onClick={(e) => {
+                                deleteButtonHandler(e, item.id, item.name)
+                              }}
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        </>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </CTableDataCell>
-            </CTableRow>
-          ))}
+                </CTableDataCell>
+              </CTableRow>
+            ))}
         </CTableBody>
       </CTable>
+      {!kpiList?.length && (
+        <CCol className="text-start ms-4">
+          <CRow>
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
       <OModal
-        visible={isModalVisible}
-        setVisible={setModalVisible}
-        modalSize="lg"
-        alignment="center"
-        modalFooterClass={modalBtnTernary}
-        modalHeaderClass="d-none"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete KPI"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}
+      >
+        <>
+          Do you want to delete this <strong>{deleteKPIName}</strong> ?
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setModalVisible}
       >
         <div data-testid="modal-cnt-kpi">{modalDescription}</div>
       </OModal>

@@ -223,6 +223,14 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -260,6 +268,10 @@ const ResignationFeedBackForm = React.lazy(
     import(
       './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
     ),
+)
+
+const ReviewList = React.lazy(
+  () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
 )
 
 const ResignationManagerClearanceCertificate = React.lazy(
@@ -330,6 +342,13 @@ const AddSection = React.lazy(
   () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
 )
 
+const ViewProjectDetails = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/ProjectViewLandingPage/ProjectView'
+    ),
+)
+
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
@@ -345,7 +364,7 @@ const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 const InitiateCycle = React.lazy(
-  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+  () => import('./pages/Settings/InitiateCycle/InitiateNewCycle'),
 )
 
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
@@ -362,6 +381,9 @@ const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
 
+const PayrollManagement = React.lazy(
+  () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
+)
 const LeadershipEnrollmentList = React.lazy(
   () =>
     import(
@@ -376,8 +398,49 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
+)
+
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
+    ),
+)
+
+const EditEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
+)
+
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
+
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit/AddNewAudit'),
+)
+const SQAAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+const EditAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/EditAuditForm/EditAudit'),
+)
+const SQAAuditTimeLine = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditTimeLine/SQAAuditHistory'),
+)
+const SQAAuditViewReport = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAViewReport/SQAViewReport'),
+)
+const processAreaList = React.lazy(
+  () => import('./pages/Settings/ProcessArea/ProcessArea'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -765,6 +828,11 @@ const routes = [
     component: InvestmentCheckList,
   },
   {
+    path: '/payslipUpload',
+    name: 'Payroll Management',
+    component: PayrollManagement,
+  },
+  {
     path: '/achievementList',
     name: 'Achievements List',
     component: AchieverList,
@@ -788,6 +856,11 @@ const routes = [
     path: '/addAchievement',
     name: 'Add Achiever',
     component: AddAchiever,
+  },
+  {
+    path: '/viewProject/:projectId',
+    name: 'View Project',
+    component: ViewProjectDetails,
   },
   {
     path: '/initiateCycle',
@@ -825,9 +898,74 @@ const routes = [
     component: LeadershipEnrollmentForm,
   },
   {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
+  },
+  {
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
+  },
+  {
+    path: '/listofAppraisal',
+    name: 'KRA',
+    component: ReviewList,
+  },
+  {
+    path: '/editEvent/:eventId',
+    name: 'Edit Event',
+    component: EditEvent,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: 'appraisalTemplate',
+    component: AppraisalTemplate,
+  },
+  {
+    path: '/processAreaList',
+    name: 'processAreaList',
+    component: processAreaList,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
+  },
+  {
+    path: '/SQAAudit',
+    name: '/SQA Audit',
+    component: SQAAudit,
+  },
+  {
+    path: '/editAuditForm/:auditId',
+    name: 'Edit Audit Form',
+    component: EditAudit,
+  },
+  {
+    path: '/newProjectAuditTimeline/:auditId',
+    name: 'SQA Audit TimeLine',
+    component: SQAAuditTimeLine,
+  },
+  {
+    path: '/viewProjectAudit/:auditId',
+    name: 'SQA Audit View',
+    component: SQAAuditViewReport,
   },
 ]
 

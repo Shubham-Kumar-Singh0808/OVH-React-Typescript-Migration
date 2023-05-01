@@ -9,10 +9,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -208,49 +207,59 @@ const MailTemplateTypeTable = (): JSX.Element => {
                     >
                       <i className="fa fa-floppy-o" aria-hidden="true"></i>
                     </CButton>
-                    <CButton
-                      data-testid={`btn-remove${index}`}
-                      color="warning"
-                      className="btn-ovh me-1"
-                      onClick={cancelMailTemplateTypeButtonHandler}
-                    >
-                      <i className="fa fa-times" aria-hidden="true"></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      size="sm"
-                      data-testid={`btn-delete${index}`}
-                      onClick={() => handleShowDeleteModal(templateType.id)}
-                    >
-                      <CIcon className="text-white" icon={cilTrash} />
-                    </CButton>
+                    <CTooltip content="Cancel">
+                      <CButton
+                        data-testid={`btn-remove${index}`}
+                        color="warning"
+                        className="btn-ovh me-1"
+                        onClick={cancelMailTemplateTypeButtonHandler}
+                      >
+                        <i className="fa fa-times" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Delete">
+                      <CButton
+                        data-testid={`btn-delete${index}`}
+                        size="sm"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        onClick={() => handleShowDeleteModal(templateType.id)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                   </>
                 ) : (
                   <>
-                    <CButton
-                      color="info"
-                      data-testid={`sh-edit-btn${index}`}
-                      className="btn-ovh me-1"
-                      onClick={() => {
-                        editTemplateTypeButtonHandler(
-                          templateType.id,
-                          templateType.name,
-                        )
-                      }}
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                    <CButton
-                      color="danger"
-                      size="sm"
-                      data-testid={`btn-delete${index}`}
-                      onClick={() => handleShowDeleteModal(templateType.id)}
-                    >
-                      <CIcon className="text-white" icon={cilTrash} />
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info"
+                        data-testid={`sh-edit-btn${index}`}
+                        className="btn-ovh me-1"
+                        onClick={() => {
+                          editTemplateTypeButtonHandler(
+                            templateType.id,
+                            templateType.name,
+                          )
+                        }}
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Delete">
+                      <CButton
+                        data-testid={`btn-delete${index}`}
+                        size="sm"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        onClick={() => handleShowDeleteModal(templateType.id)}
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                   </>
                 )}
               </CTableDataCell>

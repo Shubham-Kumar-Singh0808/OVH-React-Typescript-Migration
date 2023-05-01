@@ -10,6 +10,7 @@ import {
   CFormSelect,
   CButton,
   CRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -61,6 +62,13 @@ const ProjectDetailsTable = ({
     reduxServices.projectReport.selectors.projectClients,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProject = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Allocation',
+  )
+
   return (
     <>
       <CTableRow>
@@ -104,7 +112,7 @@ const ProjectDetailsTable = ({
               <CTableBody>
                 {projectClients?.map((project, i) => {
                   return (
-                    <CTableRow col-span={7} key={i}>
+                    <CTableRow col-span={7} key={i} className="align-middle">
                       <CTableDataCell>
                         <CLink className="text-decoration-none">
                           {project.employeeId}
@@ -124,12 +132,12 @@ const ProjectDetailsTable = ({
                               size="sm"
                               type="number"
                               name={project.employeeId.toString()}
-                              className="input-xs eventType-editInput ps-1"
+                              className="input-xs eventType-editInput pt-1"
                               defaultValue={project.allocation}
                               onChange={handleOnChangeAllocation}
                             />
                             &nbsp;
-                            <span>%</span>
+                            <span className="pt-1">%</span>
                           </div>
                         ) : (
                           <span>{project.allocation}%</span>
@@ -147,7 +155,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="billable"
                               data-testid="formBillable"
-                              className="input-xs eventType-editInput"
+                              className="input-xs eventType-editInput pt-1"
                               name="billable"
                               defaultValue={getConditionValue(
                                 project.billable,
@@ -183,7 +191,7 @@ const ProjectDetailsTable = ({
                               size="sm"
                               aria-label="allocated"
                               data-testid="formallocated"
-                              className="input-xs eventType-editInput"
+                              className="input-xs eventType-editInput pt-1"
                               name="allocated"
                               defaultValue={getConditionValue(
                                 project.isAllocated,
@@ -235,47 +243,60 @@ const ProjectDetailsTable = ({
                                 aria-hidden="true"
                               ></i>
                             </CButton>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="cancel-sub-btn"
-                              onClick={handleCancelUpdate}
-                            >
-                              <i
-                                className="fa fa-times text-white sh-fa-times"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Cancel">
+                              <CButton
+                                className="btn-ovh-employee-list cursor-pointer"
+                                color="danger btn-ovh me-1"
+                                data-testid="cancel-sub-btn"
+                                onClick={handleCancelUpdate}
+                              >
+                                <i
+                                  className="fa fa-times text-white sh-fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </>
                         ) : (
                           <>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="primary btn-ovh me-1"
-                              data-testid="edit-sub-project-btn"
-                              onClick={() =>
-                                handleAllocationModal(project, value.id)
-                              }
-                            >
-                              <i
-                                className="fa fa-edit text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                            <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-1"
-                              data-testid="delete-sub-btn"
-                              disabled={!project.isAllocated}
-                              onClick={() =>
-                                handleShowDeallocationModal(project, value.id)
-                              }
-                            >
-                              <i
-                                className="fa fa-trash-o text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            {userAccessToProject?.updateaccess && (
+                              <CTooltip content="Edit">
+                                <CButton
+                                  className="btn-ovh-employee-list cursor-pointer"
+                                  color="primary btn-ovh me-1"
+                                  data-testid="edit-sub-project-btn"
+                                  onClick={() =>
+                                    handleAllocationModal(project, value.id)
+                                  }
+                                >
+                                  <i
+                                    className="fa fa-edit text-white"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
+                            )}
+                            {userAccessToProject?.deleteaccess && (
+                              <CTooltip content="Delete">
+                                <CButton
+                                  className="btn-ovh-employee-list cursor-pointer"
+                                  color="danger btn-ovh me-1"
+                                  data-testid="delete-sub-btn"
+                                  disabled={!project.isAllocated}
+                                  onClick={() =>
+                                    handleShowDeallocationModal(
+                                      project,
+                                      value.id,
+                                    )
+                                  }
+                                >
+                                  <i
+                                    className="fa fa-trash-o text-white"
+                                    aria-hidden="true"
+                                  ></i>
+                                </CButton>
+                              </CTooltip>
+                            )}
                           </>
                         )}
                       </CTableDataCell>

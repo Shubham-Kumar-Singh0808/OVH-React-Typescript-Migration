@@ -5,7 +5,6 @@ import {
   CFormInput,
   CFormLabel,
   CFormSelect,
-  CFormText,
   CRow,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
@@ -28,7 +27,6 @@ import {
   getDesignationId,
   KRAFormLabelClass,
   regexAlphanumeric,
-  regexNumberOnly,
   selectDepartment,
   selectDesignation,
 } from '../KRAConstants'
@@ -51,7 +49,6 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
     isPercentReadonly,
     setPercentReadOnly,
     setIsButtonEnabled,
-    callDesignationEveryDepartment,
   } = props
   const empDeptList = useTypedSelector((state) => state.KRA.empDepartments)
   const desigList = useTypedSelector((state) => state.KRA.designations)
@@ -65,21 +62,13 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const deptNameChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setEnteredDept(e.target.value)
+    setEnteredDesig(selectDesignation)
   }
 
   const designationChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setEnteredDesig(e.target.value)
-  }
-
-  const percentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const orderValue = e.target.value.replace(regexNumberOnly, '')
-    setEnteredPercentage(orderValue)
-  }
-
-  const descriptionChangeHandler = (value: string) => {
-    setEnteredDescription(value)
   }
 
   const currentPage = useTypedSelector((state) => state.KRA.currentOnScreenPage)
@@ -95,16 +84,27 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
         )
       : canPercentageBeAdded(percentageDone, +enteredPercentage)
 
-  useEffect(() => {
-    if (callDesignationEveryDepartment) {
-      dispatch(
-        reduxServices.KRA.getDesignationThunk(
-          getDepartmentId(empDeptList, enteredDept),
-        ),
-      )
-      setEnteredDesig(selectDesignation)
+  const percentChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let orderValue = e.target.value.replace(/\D/g, '')
+    if (Number(orderValue) > 100) {
+      orderValue = '100'
     }
-  }, [enteredDept])
+    setEnteredPercentage(orderValue)
+  }
+
+  const descriptionChangeHandler = (value: string) => {
+    setEnteredDescription(value)
+  }
+
+  // useEffect(() => {
+  //   if (callDesignationEveryDepartment) {
+  //     dispatch(
+  //       reduxServices.KRA.getDesignationThunk(
+  //         getDepartmentId(empDeptList, enteredDept),
+  //       ),
+  //     )
+  //   }
+  // }, [callDesignationEveryDepartment, enteredDept])
 
   useEffect(() => {
     if (enteredDesig === selectDesignation) {
@@ -122,18 +122,18 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
 
   const backButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(reduxServices.KRA.actions.clearDesignationList())
+    // dispatch(reduxServices.KRA.actions.clearDesignationList())
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList))
   }
 
   useEffect(() => {
     if (
-      enteredKraName.trim().length === 0 ||
-      !enteredKraName.match(regexAlphanumeric) ||
+      enteredKraName?.trim().length === 0 ||
+      !enteredKraName?.match(regexAlphanumeric) ||
       enteredDept === selectDepartment ||
       enteredDesig === selectDesignation ||
-      enteredDescription.trim().length === 0 ||
-      enteredPercentage.trim().length === 0 ||
+      enteredDescription?.trim().length === 0 ||
+      enteredPercentage?.trim().length === 0 ||
       enteredPercentage === '0' ||
       enteredPercentage === '00' ||
       enteredPercentage === '000' ||
@@ -171,8 +171,8 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <span
             data-testid="kra-name-asterix"
             className={
-              enteredKraName.trim().length === 0 ||
-              !enteredKraName.match(regexAlphanumeric)
+              enteredKraName?.trim().length === 0 ||
+              !enteredKraName?.match(regexAlphanumeric)
                 ? TextDanger
                 : TextWhite
             }
@@ -255,14 +255,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           Percentage:
           <span
             data-testid="percent-asterix"
-            className={
-              enteredPercentage.trim().length === 0 ||
-              enteredPercentage === '0' ||
-              enteredPercentage === '00' ||
-              enteredPercentage === '000'
-                ? TextDanger
-                : TextWhite
-            }
+            className={enteredPercentage ? TextWhite : TextDanger}
           >
             *
           </span>
@@ -277,16 +270,30 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
             onChange={percentChangeHandler}
           />
         </CCol>
-        <CCol sm={1}>
-          <strong>%</strong>
+        <CCol sm={1} className="p-0 w-auto">
+          <strong>% </strong>
         </CCol>
-        <CCol sm={3}>
-          <CFormText
+        {enteredPercentage === '0' ||
+        enteredPercentage === '00' ||
+        enteredPercentage === '000' ? (
+          <>
+            <CCol sm={4} className="p-1">
+              <strong data-testid="error-percent" className="text-danger">
+                Percentage can&apos;t be zero.
+              </strong>
+            </CCol>
+          </>
+        ) : (
+          <></>
+        )}
+
+        <CCol sm={4} className="p-1">
+          <strong
             data-testid="error-percent"
             className={isPercentErrorHidden ? TextWhite : TextDanger}
           >
             You can&apos;t add more than 100 % per KRA
-          </CFormText>
+          </strong>
         </CCol>
       </KRAInputFieldContainer>
       <KRAInputFieldContainer>
@@ -298,7 +305,7 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           <span
             data-testid="descrip-asterix"
             className={
-              enteredDescription.trim().length === 0 ? TextDanger : TextWhite
+              enteredDescription?.trim().length === 0 ? TextDanger : TextWhite
             }
           >
             *

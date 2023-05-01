@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
   CRow,
   CCol,
   CButton,
-  CSpinner,
   CFormCheck,
   CFormLabel,
   CFormSelect,
@@ -35,15 +34,17 @@ import {
   healthList,
   priceModelList,
 } from '../../../../../constant/constantData'
-import OBackButton from '../../../../../components/ReusableComponent/OBackButton'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
   const isLoading = ApiLoadingState.succeeded
   const classNameStyle = 'col-sm-3 col-form-label text-end'
+  const classNameStyleLabel = 'col-sm-3 col-form-label text-end pe-18'
 
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -120,7 +121,18 @@ const AddProject = (): JSX.Element => {
     } as GetAutoCompleteList
   })
 
-  const clientOrganizationList = projectClients
+  const sortedProjectDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedProjectDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {
@@ -234,11 +246,14 @@ const AddProject = (): JSX.Element => {
         ),
       )
 
-      history.push('/employeeList')
+      history.push('/projectreport')
     } else {
       dispatch(
         reduxServices.app.actions.addToast(
-          toastElement('Project Name Already Exist', 'danger'),
+          toastElement(
+            'Already a Project is existed with the given name.',
+            'danger',
+          ),
         ),
       )
     }
@@ -273,17 +288,29 @@ const AddProject = (): JSX.Element => {
       {isLoading === ApiLoadingState.succeeded ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/projectreport" name="back" />
+            <CRow className="justify-content-end">
+              <CCol md={4}>
+                <Link to="/projectreport">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1 add-project-back-btn"
+                    data-testid="Back-btn"
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
+            </CRow>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}
                 onSelectHandler={handleClientSelect}
-                value={project.client}
+                value={project.client?.replace(/^\s*/, '')}
               />
               <ProjectName
                 onChange={setProjectName}
                 onBlur={handleProjectName}
-                value={projectName}
+                value={projectName?.replace(/^\s*/, '')}
               />
               <OSelectList
                 isRequired={true}
@@ -299,6 +326,7 @@ const AddProject = (): JSX.Element => {
                 <CCol sm={3} />
                 <CCol sm={3}>
                   <CFormCheck
+                    className="sh-formLabel"
                     inline
                     type="checkbox"
                     name="internalProject"
@@ -339,7 +367,7 @@ const AddProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  Start Date:
+                  Start Date :
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
@@ -351,11 +379,12 @@ const AddProject = (): JSX.Element => {
                     showYearDropdown
                     dropdownMode="select"
                     data-testid="start-date-picker"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     dateFormat="dd/mm/yy"
                     name="addprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -363,10 +392,10 @@ const AddProject = (): JSX.Element => {
                 <CFormLabel
                   {...dynamicFormLabelProps(
                     'addprojectenddate',
-                    classNameStyle,
+                    classNameStyleLabel,
                   )}
                 >
-                  End Date:
+                  End Date :
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
@@ -376,12 +405,13 @@ const AddProject = (): JSX.Element => {
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    placeholderText="dd/mm/yy"
+                    placeholderText="dd/mm/yyyy"
                     data-testid="end-date-picker"
                     dateFormat="dd/mm/yy"
                     name="addprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>
@@ -396,9 +426,9 @@ const AddProject = (): JSX.Element => {
               <CRow className="mb-3">
                 <CFormLabel
                   data-testId="selectLabel"
-                  {...dynamicFormLabelProps('health', classNameStyle)}
+                  {...dynamicFormLabelProps('health', classNameStyleLabel)}
                 >
-                  Health: {project.health}
+                  Health :
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
@@ -434,13 +464,14 @@ const AddProject = (): JSX.Element => {
                 name="hiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel
                   data-testId="selectLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
-                  Description:
+                  Description :
                 </CFormLabel>
                 {showEditor && (
                   <CCol sm={9}>
@@ -463,7 +494,7 @@ const AddProject = (): JSX.Element => {
                     color="success"
                     data-testid="add-project"
                     onClick={handleSubmit}
-                    disabled={!isAddBtnEnable}
+                    disabled={!isAddBtnEnable || isGreaterThanStart}
                   >
                     Add
                   </CButton>
@@ -482,11 +513,7 @@ const AddProject = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol data-testid="spinner">
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </OCard>
   )

@@ -1,17 +1,12 @@
-import {
-  CButton,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CSpinner,
-} from '@coreui/react-pro'
+import { CButton, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import AddNewSkill from './AddNewSkill'
 import SkillListTable from './SkillListTable'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const SkillList = ({
   categoryId,
@@ -65,11 +60,7 @@ const SkillList = ({
           </CCardBody>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </>
   )

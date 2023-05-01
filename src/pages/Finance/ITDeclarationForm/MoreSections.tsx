@@ -5,6 +5,7 @@ import {
   CRow,
   CTable,
   CTableBody,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
@@ -126,6 +127,7 @@ const MoreSections = ({
   }, [investmentList])
 
   useEffect(() => {
+    console.log({ formSectionList })
     setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {
@@ -139,21 +141,23 @@ const MoreSections = ({
 
   return (
     <>
-      <div className="block-session clearfix widget_gap">
-        <CButton
-          color="warning"
-          className="btn btn-warning close-btn"
-          data-testid="df-cancel-btn"
-          size="sm"
-          onClick={() =>
-            handleShowRemoveSectionModal(
-              sectionItem.sectionId,
-              sectionItem.sectionName,
-            )
-          }
-        >
-          <i className="fa fa-times text-white"></i>
-        </CButton>
+      <div className="block-session clearfix widget_gap ms-3 me-3">
+        <CTooltip content="Cancel">
+          <CButton
+            color="warning"
+            className="btn btn-warning close-btn"
+            data-testid="df-cancel-btn"
+            size="sm"
+            onClick={() =>
+              handleShowRemoveSectionModal(
+                sectionItem.sectionId,
+                sectionItem.sectionName,
+              )
+            }
+          >
+            <i className="fa fa-times text-white"></i>
+          </CButton>
+        </CTooltip>
         <CRow className="form-group">
           <CRow className="col-sm-4">
             <CFormLabel className="col-sm-3 txt-info"> Sections:</CFormLabel>

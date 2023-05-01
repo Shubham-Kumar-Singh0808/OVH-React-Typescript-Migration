@@ -1,4 +1,4 @@
-import { CRow, CCol, CButton, CSpinner } from '@coreui/react-pro'
+import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import MailTemplateTypeTable from './MailTemplateTypeTable'
 import AddNewMailTemplateType from './AddNewMailTemplateType'
@@ -7,6 +7,8 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { AddEditEmployeeSkillsProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeSkills/employeeSkillTypes'
 import OCard from '../../../../components/ReusableComponent/OCard'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const MailTemplateTypeList = ({
   backButtonHandler,
@@ -46,11 +48,7 @@ const MailTemplateTypeList = ({
           </CRow>
         </OCard>
       ) : (
-        <CCol>
-          <CRow className="MailTemplate-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </>
   )

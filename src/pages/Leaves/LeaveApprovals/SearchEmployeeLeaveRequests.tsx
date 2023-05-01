@@ -420,11 +420,13 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         modalHeaderClass="d-none"
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: searchModalText,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: searchModalText,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal

@@ -42,6 +42,16 @@ export type TicketApprovalsSliceState = {
   selectedTicketId: number
   toggleValue: string
   routePath: string
+
+  TicketStatusValue: string
+  ApprovalStatusValue: string
+  DepartmentNameValue: string | number
+  CategoryNameValue: string | number
+  SubCategoryNameValue: string | number
+  DateValue: string
+  TrackerValue: string | number
+  FormDate: string | Date
+  ToDate: string | Date
 }
 
 export type GetAllTicketsForApprovalProps = {

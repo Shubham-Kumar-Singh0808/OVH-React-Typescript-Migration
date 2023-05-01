@@ -27,27 +27,7 @@ const KRAsDetailsTable = (): JSX.Element => {
     setIsModalVisible(true)
     setKpiDescription(descKpi)
   }
-  const tableHeaderCellPropsIndex = {
-    width: '26px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsKpiName = {
-    width: '127px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsDesc = {
-    width: '87px',
-    scope: 'col',
-  }
 
-  const tableHeaderCellPropsFrequency = {
-    width: '90px',
-    scope: 'col',
-  }
-  const tableHeaderCellPropsTarget = {
-    width: '83px',
-    scope: 'col',
-  }
   const limit = (value: string): string => {
     return value?.length > 30 ? `${value?.substring(0, 30)}...` : value
   }
@@ -55,40 +35,24 @@ const KRAsDetailsTable = (): JSX.Element => {
   return (
     <>
       <CTable
-        responsive
         striped
-        className="mt-0 text-start profile-tab-table-size w-100"
+        className="mt-0 text-start profile-tab-table-size w-100 table-layout-fixed"
       >
         <CTableHead className="profile-tab-header">
           <CTableRow>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsIndex}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               #
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsKpiName}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               KPI Name
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsDesc}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               Description
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsFrequency}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               Frequency
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsTarget}
-            >
+            <CTableHeaderCell className="profile-tab-content">
               Target
             </CTableHeaderCell>
           </CTableRow>
@@ -179,11 +143,13 @@ const KRAsDetailsTable = (): JSX.Element => {
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: kpiDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: kpiDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
     </>

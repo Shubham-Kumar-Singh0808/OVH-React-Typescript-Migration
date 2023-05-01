@@ -86,10 +86,21 @@ import { resignationListService } from './Separation/ResignationList/resignation
 import { employeeAccountService } from './Finance/EmployeeAccounts/employeeAccountsSlice'
 import { itDeclarationListService } from './Finance/ITDeclarationList/itDeclarationListSlice'
 import { investmentCheckListService } from './Finance/InvestmentCheckList/investmentCheckListSlice'
+import { payrollManagementService } from './Finance/PayrollManagement/PayrollManagementSlice'
 import { achieverListService } from './Achievements/AchieverList/AchieverListSlice'
 import { commonAchievementsService } from './Achievements/CommonAchievementsSlice'
 import { projectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/projectCreationRequestsSlice.'
+import { addProjectCreationRequestService } from './ProjectManagement/ProjectCreationRequests/AddProjectCreationRequest/addProjectCreationRequestSlice'
 import { addAchieverServices } from './Achievements/AddAchiever/AddAchieverSlice'
+import { projectViewService } from './ProjectManagement/Project/ProjectView/projectViewSlice'
+import { projectTimeLineService } from './ProjectManagement/Project/ProjectView/ProjectTimeLine/projectTimeLineSlice'
+import { changeRequestService } from './ProjectManagement/Project/ProjectView/ChangeRequest/changeRequestSlice'
+import { mileStoneService } from './ProjectManagement/Project/ProjectView/MileStone/mileStoneSlice'
+import { invoicesService } from './ProjectManagement/Project/ProjectView/Invoices/invoicesSlice'
+import { projectTailoringService } from './ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringSlice'
+import { projectHiveActivityReportService } from './ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetSlice'
+import { projectProposalsService } from './ProjectManagement/Project/ProjectView/Proposals/projectProposalsSlice'
+import { projectNotesService } from './ProjectManagement/Project/ProjectView/Notes/projectNotesSlice'
 import { initiateCycleService } from './Settings/InitiateCycle/initiateCycleSlice'
 import { myKRAsService } from './Performance/MyKRAs/myKRAsSlice'
 import { nomineeListService } from './Achievements/NomineeList/NomineeListSlice'
@@ -97,7 +108,14 @@ import { addNomineeService } from './Achievements/AddNominee/AddNomineeSlice'
 import { myReviewService } from './Performance/MyReview/myReviewSlice'
 import { leadershipEnrollmentListService } from './Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import { leadershipEnrollmentFormService } from './Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import { pipListService } from './Performance/PIPList/pipListSlice'
+import { reviewListService } from './Performance/ReviewList/reviewListSlice'
 import { KRAService } from './Performance/KRA/KRASlice'
+import { appraisalTemplateService } from './Performance/AppraisalTemplate/AppraisalTemplateSlice'
+import { projectStatusService } from './ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
+import { processAreaService } from './Settings/ProcessArea/ProcessAreaSlice'
+import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
+import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -188,16 +206,34 @@ export const reduxServices = {
   employeeAccount: employeeAccountService,
   itDeclarationList: itDeclarationListService,
   investmentCheckList: investmentCheckListService,
+  payrollManagement: payrollManagementService,
   achieverList: achieverListService,
   addAchiever: addAchieverServices,
   commonAchievements: commonAchievementsService,
   nomineeList: nomineeListService,
   addNominee: addNomineeService,
   projectCreationRequest: projectCreationRequestService,
+  projectViewDetails: projectViewService,
+  projectTimeLine: projectTimeLineService,
+  projectChangeRequest: changeRequestService,
+  projectMileStone: mileStoneService,
+  projectInvoices: invoicesService,
+  projectTailoring: projectTailoringService,
+  projectTimeSheet: projectHiveActivityReportService,
+  projectProposals: projectProposalsService,
+  projectNotes: projectNotesService,
+  addProjectCreationRequest: addProjectCreationRequestService,
   initiateCycle: initiateCycleService,
   myKRAs: myKRAsService,
   myReview: myReviewService,
   leadershipEnrollmentList: leadershipEnrollmentListService,
   leadershipEnrollmentForm: leadershipEnrollmentFormService,
+  pipList: pipListService,
+  reviewList: reviewListService,
   KRA: KRAService,
+  appraisalTemplate: appraisalTemplateService,
+  projectStatus: projectStatusService,
+  processArea: processAreaService,
+  addNewAuditForm: addNewAuditService,
+  sqaAuditReport: sqaAuditReportService,
 }

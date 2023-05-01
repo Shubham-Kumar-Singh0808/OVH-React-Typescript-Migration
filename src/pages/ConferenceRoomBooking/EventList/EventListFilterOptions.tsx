@@ -5,7 +5,9 @@ import ReactDatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { EventListOptions } from '../../../types/ConferenceRoomBooking/EventList/eventListTypes'
-import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
+import { dateFormat } from '../../../constant/DateFormat'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import { commonDateFormat } from '../../../utils/dateFormatUtils'
 
 const EventListFilterOptions = ({
   selectDate,
@@ -34,19 +36,8 @@ const EventListFilterOptions = ({
         endIndex: 20,
         dateSelection: selectDate,
         eventTypeId: 0,
-        searchFromDate: new Date(eventFromDate).toLocaleDateString(
-          deviceLocale,
-          {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          },
-        ),
-        searchToDate: new Date(eventToDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        }),
+        searchFromDate: eventFromDate,
+        searchToDate: eventToDate,
       }),
     )
   }
@@ -67,21 +58,27 @@ const EventListFilterOptions = ({
     setSearchBtnEnable(moment(start).isBefore(end))
   }, [eventFromDate, eventToDate])
 
-  const toDate = eventToDate
-    ? new Date(eventToDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
+  const onHandleToDate = (value: Date) => {
+    setEventToDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.eventList.actions.setToDateFilter(
+        moment(value).format(dateFormat),
+      ),
+    )
+  }
 
-  const fromDate = eventFromDate
-    ? new Date(eventFromDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
+  const onHandleFromDate = (value: Date) => {
+    setEventFromDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.eventList.actions.setFromDateFilter(
+        moment(value).format(dateFormat),
+      ),
+    )
+  }
+  const fromDate = (
+    <span className={eventFromDate ? TextWhite : TextDanger}>*</span>
+  )
+  const toDate = <span className={eventToDate ? TextWhite : TextDanger}>*</span>
   return (
     <>
       <CCol sm={2} md={2}>
@@ -94,6 +91,9 @@ const EventListFilterOptions = ({
           value={selectDate}
           onChange={(e) => {
             setSelectDate(e.target.value)
+            dispatch(
+              reduxServices.eventList.actions.setSelectCustom(e.target.value),
+            )
           }}
         >
           {selectDateOptions.map((opt, index) => (
@@ -108,53 +108,37 @@ const EventListFilterOptions = ({
           <CCol sm={6}>
             <CRow>
               <CCol sm={4} md={4}>
-                <CFormLabel className="mb0">
-                  From :
-                  {(eventFromDate == null || eventFromDate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
-                </CFormLabel>
+                <CFormLabel className="mb0">From :{fromDate}</CFormLabel>
                 <ReactDatePicker
-                  id="fromDate"
-                  data-testid="eventList-FromDate"
+                  id="eventFromDate"
+                  data-testid="eventList-eventFromDate"
                   autoComplete="off"
                   className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                   dateFormat="dd/mm/yy"
                   placeholderText="dd/mm/yy"
-                  name="fromDate"
-                  value={fromDate}
-                  onChange={(date: Date) =>
-                    setEventFromDate(moment(date).format(commonDateFormat))
-                  }
+                  name="eventFromDate"
+                  value={eventFromDate}
+                  onChange={(date: Date) => onHandleFromDate(date)}
                 />
               </CCol>
               <CCol sm={4} md={4}>
-                <CFormLabel className="mb0">
-                  To :
-                  {(eventToDate == null || eventToDate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
-                </CFormLabel>
+                <CFormLabel className="mb0">To :{toDate}</CFormLabel>
                 <ReactDatePicker
-                  id="toDate"
+                  id="eventToDate"
                   data-testid="eventList-FromDate"
                   autoComplete="off"
                   className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
                   showMonthDropdown
                   showYearDropdown
                   dropdownMode="select"
                   dateFormat="dd/mm/yy"
                   placeholderText="dd/mm/yy"
-                  name="toDate"
-                  value={toDate}
-                  onChange={(date: Date) =>
-                    setEventToDate(moment(date).format(commonDateFormat))
-                  }
+                  name="eventToDate"
+                  value={eventToDate}
+                  onChange={(date: Date) => onHandleToDate(date)}
                 />
               </CCol>
               <CCol md={1} sm={1} className="event-list-search">

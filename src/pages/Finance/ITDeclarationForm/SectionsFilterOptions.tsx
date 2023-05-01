@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import MoreSections from './MoreSections'
@@ -104,11 +105,20 @@ const SectionsFilterOptions = (): JSX.Element => {
   }
 
   useEffect(() => {
-    setFormSectionList(
-      sectionList.map((item) => {
+    const newList = sectionList.map((item) => {
+      const existingInvestments = formSectionList.find(
+        (eachInvestment) => eachInvestment.sectionId === item.sectionId,
+      )
+      if (existingInvestments) {
+        return {
+          ...item,
+          formInvestmentDTO: existingInvestments.formInvestmentDTO,
+        }
+      } else {
         return { ...item, formInvestmentDTO: [] }
-      }),
-    )
+      }
+    })
+    setFormSectionList(newList)
   }, [sectionList])
 
   useEffect(() => {
@@ -122,11 +132,23 @@ const SectionsFilterOptions = (): JSX.Element => {
       0,
     )
     dispatch(reduxServices.itDeclarationForm.actions.setGrandTotal(grandTotal))
+    dispatch(
+      reduxServices.itDeclarationForm.actions.setFormSectionData(
+        formSectionList.forEach((each) => {
+          each.formInvestmentDTO.forEach((e) => delete e.id)
+          const { invests, ...rest } = each
+          const { sectionLimit, ...rest2 } = rest
+          rest2.isOld = true
+          rest2.itSectionsId = null
+          return rest2
+        }),
+      ),
+    )
   }, [formSectionList])
 
   return (
     <>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-4 mb-4 ms-2">
         <CCol sm={1}>
           <CFormLabel {...formLabelProps}>
             Sections:

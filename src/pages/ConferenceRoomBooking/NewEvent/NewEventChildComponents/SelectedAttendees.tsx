@@ -7,6 +7,7 @@ import {
   CTableRow,
   CTableDataCell,
   CButton,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import { Availability } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
@@ -40,17 +41,19 @@ const SelectedAttendees = ({
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="danger btn-ovh me-1"
-                      className="btn-ovh-employee-list"
-                      data-testid="delete-btn"
-                      onClick={() => deleteBtnHandler(currAttendee.id)}
-                    >
-                      <i
-                        className="fa fa-trash-o text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list"
+                        data-testid="delete-btn"
+                        onClick={() => deleteBtnHandler(currAttendee.id)}
+                      >
+                        <i
+                          className="fa fa-trash-o text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
               )

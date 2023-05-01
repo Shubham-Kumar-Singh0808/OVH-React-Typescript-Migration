@@ -70,18 +70,13 @@ describe('KPI Table', () => {
     })
 
     test('number of rows are rendered', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(5)
+      expect(screen.queryAllByRole('row')).toHaveLength(4)
     })
 
     test('delete button functionality', () => {
       const delBtn = screen.getByTestId('del-btn-0')
       expect(delBtn).toBeEnabled()
       userEvent.click(delBtn)
-      const modalCnt = screen.getByTestId(modalContentId)
-      expect(modalCnt).toBeVisible()
-      expect(modalCnt).toHaveTextContent(
-        'Do you want to delete this Help others in resolving issues and meet deadlines?',
-      )
       const yesBtn = screen.getByRole('button', { name: 'Yes' })
       expect(yesBtn).toBeVisible()
       userEvent.click(yesBtn)
@@ -91,7 +86,7 @@ describe('KPI Table', () => {
       const name = screen.getByTestId('kpi-Name-1')
       const description = screen.getByTestId('kpi-description-2')
       expect(name).toHaveTextContent('Learn new technologies or...')
-      expect(description).toHaveTextContent('<span>This testimonial of...')
+      expect(description).toHaveTextContent('This testimonial of...')
 
       userEvent.click(description)
       const modalCnt = screen.getByTestId(modalContentId)

@@ -122,7 +122,7 @@ const selectedDate = (state: RootState): string =>
 const selectedView = (state: RootState): SelectedView =>
   state.hiveActivityReport.selectedView
 const managerReportSize = (state: RootState): number =>
-  state.hiveActivityReport.managerHiveActivityReport.size
+  state.hiveActivityReport.managerHiveActivityReport?.size
 const monthDisplay = (state: RootState): string =>
   state.hiveActivityReport.monthDisplay
 

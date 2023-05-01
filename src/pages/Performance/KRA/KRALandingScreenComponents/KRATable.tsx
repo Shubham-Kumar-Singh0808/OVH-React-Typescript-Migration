@@ -5,7 +5,6 @@ import {
   CTableBody,
   CTableHead,
   CTableHeaderCell,
-  CTableRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import KRATableItem from './KRATableItem'
@@ -25,7 +24,9 @@ const KRATable = (props: KRATableProps): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
+    setAddKPI,
   } = props
+  type ModalContent = string | JSX.Element | JSX.Element[]
   const dispatch = useAppDispatch()
   const currentQuery = useTypedSelector((state) => state.KRA.krasQuery)
   const kraData = useTypedSelector((state) => state.KRA.kraData)
@@ -33,10 +34,12 @@ const KRATable = (props: KRATableProps): JSX.Element => {
 
   const [selectedKRAId, setSelectedKRAId] = useState<number>(-1)
   const [isModalVisible, setModalVisible] = useState<boolean>(false)
-  const [modalDescription, setModalDescription] = useState<string>(emptyString)
-  const [showModalButtons, setShowModalButtons] = useState<boolean>(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] =
+    useState<boolean>(false)
+  const [modalDescription, setModalDescription] =
+    useState<ModalContent>(emptyString)
   const [deleteThisKRA, setDeleteThisKRA] = useState<number>()
-
+  const [deleteThisKRAName, setDeleteThisKRAName] = useState<string>('')
   const handlePageSizeSelectChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -53,14 +56,13 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         <OToast toastColor="success" toastMessage="KRA Deleted Successfully" />
       )
       if (reduxServices.KRA.deleteKRAThunk.fulfilled.match(result)) {
-        setModalVisible(false)
+        setIsDeleteModalVisible(false)
         dispatch(reduxServices.KRA.searchKRADataThunk(currentQuery))
         dispatch(reduxServices.app.actions.addToast(successMessage))
       }
     }
   }
 
-  const showModalButtonTernary = showModalButtons ? '' : 'd-none'
   const noRecords =
     kraData?.size !== 0
       ? `Total Records: ${kraData?.size}`
@@ -68,20 +70,18 @@ const KRATable = (props: KRATableProps): JSX.Element => {
 
   return (
     <>
-      <CTable responsive striped align="middle">
+      <CTable responsive align="middle" className="table-layout-fixed w-100">
         <CTableHead>
-          <CTableRow>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
-            <CTableHeaderCell scope="col">KRA Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-            <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="text-center">
-              Actions
-            </CTableHeaderCell>
-          </CTableRow>
+          <CTableHeaderCell scope="col"></CTableHeaderCell>
+          <CTableHeaderCell scope="col">KRA Name</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+          <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+          <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="text-center">
+            Actions
+          </CTableHeaderCell>
         </CTableHead>
         <CTableBody>
           {kraData?.list.map((item, index) => (
@@ -94,8 +94,10 @@ const KRATable = (props: KRATableProps): JSX.Element => {
               selectedKRA={item}
               setModalDescription={setModalDescription}
               setModalVisible={setModalVisible}
-              setShowModalButtons={setShowModalButtons}
               setDeleteThisKRA={setDeleteThisKRA}
+              setAddKPI={setAddKPI}
+              setIsDeleteModalVisible={setIsDeleteModalVisible}
+              setDeleteThisKRAName={setDeleteThisKRAName}
             />
           ))}
         </CTableBody>
@@ -127,20 +129,37 @@ const KRATable = (props: KRATableProps): JSX.Element => {
         )}
       </CRow>
       <OModal
-        visible={isModalVisible}
-        setVisible={setModalVisible}
-        modalSize="lg"
         alignment="center"
-        modalFooterClass={showModalButtonTernary}
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete KRA"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
         confirmButtonText="Yes"
         cancelButtonText="No"
         confirmButtonAction={deleteModalKRAButtonHandler}
-        modalHeaderClass="d-none"
       >
-        <div
-          data-testid="modal-cnt-kra-table"
-          dangerouslySetInnerHTML={{ __html: modalDescription }}
-        ></div>
+        <>
+          Do you want to delete this <strong>{deleteThisKRAName}</strong> ?
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+        visible={isModalVisible}
+        setVisible={setModalVisible}
+      >
+        <p>
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: String(modalDescription),
+              }}
+            />
+          </span>
+        </p>
       </OModal>
     </>
   )

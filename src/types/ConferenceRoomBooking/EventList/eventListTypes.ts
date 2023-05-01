@@ -1,4 +1,5 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+import { Availability } from '../NewEvent/newEventTypes'
 
 export type EventListTableProps = {
   paginationRange: number[]
@@ -6,6 +7,7 @@ export type EventListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  selectDate: string
 }
 
 export type EventListApiProps = {
@@ -137,12 +139,95 @@ export type UploadFeedbackFormInterface = {
   file: FormData
 }
 
+export type MeetingEditDTOList = {
+  availability: string
+  flag?: string
+  fullName?: string
+  id: number
+}
+
+export type EditExistingEventDetails = {
+  agenda: string
+  authorName: Author
+  availability: Availability[]
+  availableDates: null
+  conferenceType: string
+  description: string
+  disableEdit: null
+  empDesignations: null
+  employeeAvailability: null
+  employeeDto: null
+  employeeIds: null
+  employeeNames: []
+  endTime: string
+  eventEditAccess: null
+  eventId: null
+  eventLocation: string
+  eventTypeId: number
+  eventTypeName: string
+  fromDate: string
+  id: number
+  isAuthorisedUser: true
+  locationId: number
+  locationName: string
+  meetingAttendeesDto: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingStatus: null
+  projectName: string
+  roomId: number
+  roomName: string
+  startTime: string
+  timeFomrat: null
+  toDate: string
+  trainerName: Trainer
+}
+
+export type UpdateEventDetails = {
+  agenda: string
+  authorName: Author
+  availability: Availability[]
+  availableDates: null
+  conferenceType: string
+  description: string
+  disableEdit: null
+  empDesignations: null
+  employeeAvailability: null
+  employeeDto: null
+  employeeIds: null
+  employeeNames: []
+  endTime: string
+  eventEditAccess: null
+  eventId: null
+  eventLocation: string
+  eventTypeId: number
+  eventTypeName: string
+  fromDate: string
+  id: number
+  isAuthorisedUser: true
+  locationId: number
+  locationName: string
+  meetingAttendeesDto: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingStatus: null
+  projectName: string
+  roomName: string
+  startTime: string
+  timeFomrat: null
+  toDate: string
+  trainerName: Trainer
+}
+
 export type EventListSliceState = {
   events: Event[]
   feedbackFormDetails: FeedbackForm[]
   selectedMonth: string
   listSize: number
   feedbackFormListSize: number
+  editExistingEventData: EditExistingEventDetails
+  updateEventData: UpdateEventDetails
   isLoading: LoadingState
   error: ValidationError
+  SelectCustom: string
+  FromDateFilter: string | Date
+  ToDateFilter: string | Date
 }

@@ -14,10 +14,11 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const ClearanceCertificateDetailsForm = (): JSX.Element => {
   const [isCCDetailsEdit, setIsCCDetailsEdit] = useState<boolean>(false)
-  const [isActiveValue, setIsActiveValue] = useState<boolean>()
+  const [isActiveValue, setIsActiveValue] = useState<boolean>(false)
   const initialCCDetails = {} as UpdateClearanceDetails
   const [editCCDetails, setEditCCDetails] = useState(initialCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +36,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     setIsCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditCCDetails(updateClearanceDetails)
+    setIsActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditCCDetailsHandler = (
@@ -56,6 +58,13 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitClearanceCertificateHandler = async () => {
     const updateCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -65,10 +74,10 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: managerClearanceDetails[0]?.employeeId,
         employeeName: managerClearanceDetails[0]?.employeeName,
-        isDue: isActiveValue as unknown as boolean,
+        isDue: isActiveValue,
         seperationEmpId: managerClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: managerClearanceDetails[0]?.seperationEmpName,
-        seperationId: managerClearanceDetails[0]?.seperationId,
+        seperationId: getAllResignationHistory.separationId,
       }),
     )
     if (
@@ -83,6 +92,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
           submittedBy: 'Manager',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -149,7 +159,9 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{managerClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">
+                  {managerClearanceDetails[0]?.seperationEmpId}
+                </p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -158,7 +170,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearanceDetails[0]?.employeeName}
+                  {managerClearanceDetails[0]?.seperationEmpName}
                 </p>
               </CCol>
             </CRow>
@@ -167,9 +179,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {managerClearanceDetails[0]?.seperationEmpId}
-                </p>
+                <p className="mb-0">{managerClearanceDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -178,7 +188,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {managerClearanceDetails[0]?.seperationEmpName}
+                  {managerClearanceDetails[0]?.employeeName}
                 </p>
               </CCol>
             </CRow>
@@ -199,7 +209,7 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isActiveValue as unknown as boolean}
+                    checked={isActiveValue}
                     onChange={handleEditCCDetailsHandler}
                   />
                   <CFormCheck
@@ -238,7 +248,10 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {managerClearanceDetails[0]?.comments || 'N/A'}
+                    {managerClearanceDetails[0]?.comments?.replace(
+                      /^\s*/,
+                      '',
+                    ) || 'N/A'}
                   </p>
                 </CCol>
               )}
@@ -254,7 +267,8 @@ const ClearanceCertificateDetailsForm = (): JSX.Element => {
                       color="success"
                       onClick={SubmitClearanceCertificateHandler}
                       disabled={
-                        isActiveValue === true && editCCDetails?.comments === ''
+                        isActiveValue === true &&
+                        editCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update
