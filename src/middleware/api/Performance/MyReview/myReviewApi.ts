@@ -72,10 +72,23 @@ const getPerformanceRatings = async (): Promise<GetPerformanceRatings[]> => {
   return response.data
 }
 
+const submitAppraisalFormForRating = async (
+  submitAppraisalForm: EmployeeAppraisalForm,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: myReviewApiConfig.getEmployeeAppraisalRating,
+    method: AllowedHttpMethods.post,
+    data: submitAppraisalForm,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const myReviewApi = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
   saveAppraisalForm,
   getReviewComments,
   getPerformanceRatings,
+  submitAppraisalFormForRating,
 }

@@ -72,6 +72,20 @@ const saveAppraisalForm = createAsyncThunk(
   },
 )
 
+const submitAppraisalFormForRating = createAsyncThunk(
+  'myReview/submitAppraisalFormForRating',
+  async (submitEmployeeAppraisalForm: EmployeeAppraisalForm, thunkApi) => {
+    try {
+      return await myReviewApi.submitAppraisalFormForRating(
+        submitEmployeeAppraisalForm,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const getReviewComments = createAsyncThunk(
   'myReview/getReviewComments',
   async (appraisalFormId: number, thunkApi) => {
@@ -176,6 +190,7 @@ const myReviewThunk = {
   saveAppraisalForm,
   getReviewComments,
   getPerformanceRatings,
+  submitAppraisalFormForRating,
 }
 
 const myReviewSelectors = {

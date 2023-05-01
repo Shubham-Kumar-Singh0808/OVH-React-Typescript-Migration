@@ -78,14 +78,33 @@ const ReviewFormDetailsTable = ({
     }
   }
 
+  // const onChangeSelfRating = (
+  //   e:
+  //     | React.ChangeEvent<HTMLSelectElement>
+  //     | React.ChangeEvent<HTMLTextAreaElement>,
+  // ) => {
+  //   console.log(e.target.value)
+  // }
+  // console.log(kpiData)
+
   const onChangeSelfRating = (
-    e:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
   ) => {
-    console.log(e.target.value)
+    const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
+    newKPI[index].employeeRating = e.target.value
+    setKPIDetails(newKPI)
   }
-  console.log(kpiData)
+
+  const commentOnChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+  ) => {
+    const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
+    newKPI[index].employeeFeedback = e.target.value
+    setKPIDetails(newKPI)
+  }
+
   return (
     <>
       <CTable
@@ -161,43 +180,45 @@ const ReviewFormDetailsTable = ({
                       </CLink>
                     </CTableDataCell>
                   )}
-                  {/* {kpi.employeeRating === null ? ( */}
-                  <CTableDataCell>
-                    <CFormSelect
-                      aria-label="Default select example"
-                      key={index}
-                      size="sm"
-                      name="rating"
-                      id="empRating"
-                      value={kpi.employeeRating}
-                      onChange={(e) => onChangeSelfRating(e)}
-                    >
-                      <option value={''}>Select Rating</option>
-                      <option value="5">5</option>
-                      <option value="4">4</option>
-                      <option value="3">3</option>
-                      <option value="2">2</option>
-                      <option value="1">1</option>
-                      <option value="0">0</option>
-                    </CFormSelect>
-                  </CTableDataCell>
-                  {/* // ) : (
-                  //   <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
-                  // )} */}
-                  {/* {kpi.employeeFeedback === null ? ( */}
-                  <CTableDataCell>
-                    <CFormTextarea
-                      {...dynamicFormLabelProps(
-                        '2',
-                        'reviewForm-text-area documentWidth',
-                      )}
-                      value={kpi.employeeFeedback}
-                      onChange={(e) => onChangeSelfRating(e)}
-                    ></CFormTextarea>
-                  </CTableDataCell>
-                  {/* // ) : (
-                  //   <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
-                  // )} */}
+                  {kpi.employeeFeedback === null &&
+                  kpi.employeeRating === null ? (
+                    <CTableDataCell>
+                      <CFormSelect
+                        aria-label="Default select example"
+                        key={index}
+                        size="sm"
+                        name="rating"
+                        id="empRating"
+                        value={kpi.employeeRating}
+                        onChange={(e) => onChangeSelfRating(e, index)}
+                      >
+                        <option value={''}>Select Rating</option>
+                        <option value="5">5</option>
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                        <option value="0">0</option>
+                      </CFormSelect>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
+                  )}
+                  {kpi.employeeFeedback === null &&
+                  kpi.employeeRating === null ? (
+                    <CTableDataCell>
+                      <CFormTextarea
+                        {...dynamicFormLabelProps(
+                          '2',
+                          'reviewForm-text-area documentWidth',
+                        )}
+                        value={kpi.employeeFeedback}
+                        onChange={(e) => commentOnChange(e, index)}
+                      ></CFormTextarea>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
+                  )}
                   {kpi?.managerCommentsDtos &&
                     kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
                       <>

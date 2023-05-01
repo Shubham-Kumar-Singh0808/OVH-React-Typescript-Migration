@@ -82,7 +82,57 @@ const ReviewFormTable = (): JSX.Element => {
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
     dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
   }
-
+  const submitAppraisalFormHandler = () => {
+    dispatch(
+      reduxServices.myReview.submitAppraisalFormForRating({
+        adjustedAvgRating: null,
+        appraisalCycle: {
+          active: true,
+          appraisalDuration: appraisalForm.appraisalCycle.appraisalDuration,
+          appraisalEndDate: appraisalForm.appraisalCycle.appraisalEndDate,
+          appraisalStartDate: appraisalForm.appraisalCycle.appraisalStartDate,
+          appraisalType: appraisalForm.appraisalCycle.appraisalType,
+          cycleStartedFlag: appraisalForm.appraisalCycle.cycleStartedFlag,
+          description: appraisalForm.appraisalCycle.description,
+          fromDate: appraisalForm.appraisalCycle.fromDate,
+          id: appraisalForm.appraisalCycle.id,
+          level: appraisalForm.appraisalCycle.level,
+          name: appraisalForm.appraisalCycle.name,
+          servicePeriod: appraisalForm.appraisalCycle.servicePeriod,
+          toDate: appraisalForm.appraisalCycle.toDate,
+        },
+        appraisalFormStatus: null,
+        avgRatingsDtos: appraisalForm.avgRatingsDtos,
+        closedBy: null,
+        closedOn: null,
+        closedStatus: null,
+        closedSummary: null,
+        discussionOn: null,
+        discussionSummary: null,
+        empAvgRating: null,
+        empAvgRatingName: null,
+        empDepartmentName: null,
+        empDesignationName: null,
+        employee: appraisalForm.employee,
+        finalFeedback: null,
+        finalRating: null,
+        finalRatingName: null,
+        formRating: null,
+        formStatus: 'SUBMIT',
+        formStatusvalue: 0,
+        iAgreeFlag: null,
+        id: appraisalForm.id,
+        kpis: null,
+        kra: appraisalForm.kra,
+        manager1Name: null,
+        openForDiscussionFlag: null,
+        overallAvgRating: 'NaN',
+        overallAvgRatingName: null,
+        pendingWith: null,
+        requestDiscussion: false,
+      }),
+    )
+  }
   return (
     <>
       <CTable responsive striped className="mt-3 align-middle">
@@ -119,7 +169,12 @@ const ReviewFormTable = (): JSX.Element => {
             >
               Save
             </CButton>
-            <CButton color="success " className="btn-ovh" disabled>
+            <CButton
+              color="success "
+              className="btn-ovh"
+              disabled
+              onClick={submitAppraisalFormHandler}
+            >
               Submit
             </CButton>
           </CCol>
