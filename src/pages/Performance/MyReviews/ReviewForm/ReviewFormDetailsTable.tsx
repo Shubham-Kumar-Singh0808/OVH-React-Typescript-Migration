@@ -31,6 +31,8 @@ const ReviewFormDetailsTable = ({
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
+  const [descriptionError, setDescriptionError] = useState(false)
+
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(reduxServices.myReview.selectors.isLoading)
@@ -103,6 +105,11 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
+    if (newKPI[index].employeeFeedback.length > 56) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
   }
 
   return (
@@ -180,45 +187,51 @@ const ReviewFormDetailsTable = ({
                       </CLink>
                     </CTableDataCell>
                   )}
-                  {kpi.employeeFeedback === null &&
-                  kpi.employeeRating === null ? (
-                    <CTableDataCell>
-                      <CFormSelect
-                        aria-label="Default select example"
-                        key={index}
-                        size="sm"
-                        name="rating"
-                        id="empRating"
-                        value={kpi.employeeRating}
-                        onChange={(e) => onChangeSelfRating(e, index)}
-                      >
-                        <option value={''}>Select Rating</option>
-                        <option value="5">5</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1</option>
-                        <option value="0">0</option>
-                      </CFormSelect>
-                    </CTableDataCell>
-                  ) : (
+                  {/* {kpi.employeeFeedback === null &&
+                  kpi.employeeRating === null ? ( */}
+                  <CTableDataCell>
+                    <CFormSelect
+                      aria-label="Default select example"
+                      key={index}
+                      size="sm"
+                      name="rating"
+                      id="empRating"
+                      value={kpi.employeeRating}
+                      onChange={(e) => onChangeSelfRating(e, index)}
+                    >
+                      <option value={''}>Select Rating</option>
+                      <option value="5">5</option>
+                      <option value="4">4</option>
+                      <option value="3">3</option>
+                      <option value="2">2</option>
+                      <option value="1">1</option>
+                      <option value="0">0</option>
+                    </CFormSelect>
+                  </CTableDataCell>
+                  {/* ) : (
                     <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
-                  )}
-                  {kpi.employeeFeedback === null &&
-                  kpi.employeeRating === null ? (
-                    <CTableDataCell>
-                      <CFormTextarea
-                        {...dynamicFormLabelProps(
-                          '2',
-                          'reviewForm-text-area documentWidth',
-                        )}
-                        value={kpi.employeeFeedback}
-                        onChange={(e) => commentOnChange(e, index)}
-                      ></CFormTextarea>
-                    </CTableDataCell>
-                  ) : (
+                  )} */}
+                  {/* {kpi.employeeFeedback === null &&
+                  kpi.employeeRating === null ? ( */}
+                  <CTableDataCell>
+                    <CFormTextarea
+                      {...dynamicFormLabelProps(
+                        '2',
+                        'reviewForm-text-area documentWidth',
+                      )}
+                      value={kpi.employeeFeedback}
+                      onChange={(e) => commentOnChange(e, index)}
+                    ></CFormTextarea>
+                    <p className="mt-1">{kpi.employeeFeedback?.length}/500</p>
+                    {descriptionError && (
+                      <p className="text-danger" data-testid="error-msg">
+                        Please enter at least 50 characters.
+                      </p>
+                    )}
+                  </CTableDataCell>
+                  {/* ) : (
                     <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
-                  )}
+                  )} */}
                   {kpi?.managerCommentsDtos &&
                     kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
                       <>
