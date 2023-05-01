@@ -403,6 +403,18 @@ const NewEvent = (): JSX.Element => {
       setIsConfirmButtonEnabled(false)
     }
   }, [addEvent])
+  const attendeesResult = (
+    <CRow className="row d-flex justify-content-center">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
 
   return (
     <OCard
@@ -552,20 +564,9 @@ const NewEvent = (): JSX.Element => {
             ) : (
               <></>
             )}
-            {projectMembers?.length > 0 && addEvent.projectName.length > 0 ? (
-              ''
-            ) : (
-              <CRow className="row d-flex justify-content-center">
-                {attendeesList.length > 0 ? (
-                  <SelectedAttendees
-                    attendeesList={attendeesList}
-                    deleteBtnHandler={deleteBtnHandler}
-                  />
-                ) : (
-                  <></>
-                )}
-              </CRow>
-            )}
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>

@@ -400,6 +400,18 @@ const NewBookingFilterOptions = ({
     (feature) => feature.name === 'Meeting-Rooms',
   )
   console.log(errorMessageCount)
+  const attendeesResult = (
+    <CRow className="row d-flex justify-content-center">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
   return (
     <>
       <CRow>
@@ -520,21 +532,9 @@ const NewBookingFilterOptions = ({
             ) : (
               <></>
             )}
-            {projectMembers?.length > 0 &&
-            newRoomBooking.projectName.length > 0 ? (
-              ''
-            ) : (
-              <CRow className="row d-flex justify-content-center">
-                {attendeesList.length > 0 ? (
-                  <SelectedAttendees
-                    attendeesList={attendeesList}
-                    deleteBtnHandler={deleteBtnHandler}
-                  />
-                ) : (
-                  <></>
-                )}
-              </CRow>
-            )}
+            {projectMembers?.length > 0 && newRoomBooking.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
