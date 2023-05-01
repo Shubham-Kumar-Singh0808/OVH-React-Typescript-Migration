@@ -1,6 +1,6 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import EditMileStoneForm from './EditMileStoneForm'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../../../reducers/reduxServices'

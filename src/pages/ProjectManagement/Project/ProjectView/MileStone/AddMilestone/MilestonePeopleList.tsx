@@ -9,60 +9,52 @@ import {
   CTableDataCell,
   CTableRow,
 } from '@coreui/react-pro'
-import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import OModal from '../../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
-import { GetPeopleForMilestone } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
-import { deviceLocale } from '../../../../../../utils/dateFormatUtils'
+import {
+  GetPeopleForMilestone,
+  GetWorkDetails,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const MilestonePeopleList = ({
   onChangeHandleFromDate,
   onChangeHandleToDate,
-  workingDaysOnChange,
-  holidaysOnChange,
-  leavesOnChange,
-  totalDaysOnChange,
-  hoursOnChange,
-  totalHoursOnChange,
   roleOnChange,
   billableOnChange,
   item,
   index,
-  // fromDate,
-  // setFromDate,
-  // toDate,
-  // setToDate,
-  employeeName,
-  setEmployeeName,
   monthWorkingOnChange,
+  peopleListHolidays,
+  peopleListLeaves,
+  peopleListTotalDays,
+  peopleListHours,
+  isDateEnabled,
+  workDays,
+  setWorkDays,
+  holiDays,
+  setHoliDays,
+  leaves,
+  setLeaves,
+  totalDays,
+  setTotalDays,
+  hours,
+  setHours,
+  totalHours,
+  setTotalHours,
+  peopleListTotalValue,
+  newCheckListWithoutOnChange,
 }: {
   onChangeHandleFromDate: (date: Date, index: number) => void
   onChangeHandleToDate: (date: Date, index: number) => void
-  holidaysOnChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void
-  workingDaysOnChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void
-  leavesOnChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void
-  totalDaysOnChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void
-  hoursOnChange: (e: React.ChangeEvent<HTMLInputElement>, index: number) => void
   monthWorkingOnChange: (value: string, index: number) => void
-  totalHoursOnChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void
+  peopleListHolidays: (value: string, index: number) => void
+  peopleListLeaves: (value: string, index: number) => void
+  peopleListTotalDays: (value: string, index: number) => void
+  peopleListHours: (value: string, index: number) => void
+  peopleListTotalValue: (value: string, index: number) => void
   roleOnChange: (e: React.ChangeEvent<HTMLSelectElement>, index: number) => void
   billableOnChange: (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -70,54 +62,56 @@ const MilestonePeopleList = ({
   ) => void
   item: GetPeopleForMilestone
   index: number
-  // fromDate: string
-  // setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  // toDate: string
-  // setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  employeeName: string
-  setEmployeeName: React.Dispatch<React.SetStateAction<string | undefined>>
-}) => {
+  isDateEnabled: boolean
+  workDays: string | undefined
+  setWorkDays: React.Dispatch<React.SetStateAction<string | undefined>>
+  holiDays: string
+  setHoliDays: React.Dispatch<React.SetStateAction<string | undefined>>
+  leaves: string
+  setLeaves: React.Dispatch<React.SetStateAction<string | undefined>>
+  totalDays: string
+  setTotalDays: React.Dispatch<React.SetStateAction<string | undefined>>
+  hours: string
+  setHours: React.Dispatch<React.SetStateAction<string | undefined>>
+  totalHours: string
+  setTotalHours: React.Dispatch<React.SetStateAction<string | undefined>>
+  newCheckListWithoutOnChange: (object: GetWorkDetails, index: number) => void
+}): JSX.Element => {
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
-  // const [employeeName, setEmployeeName] = useState<string>()
-  const [workDays, setWorkDays] = useState<string>()
-  const [holiDays, setHoliDays] = useState<number>()
-  const [leaves, setLeaves] = useState<string>()
-  const [totalDays, setTotalDays] = useState<string>()
-  const [hours, setHours] = useState<string>()
-  const [totalHours, setTotalHours] = useState<string>()
   const [comments, setComments] = useState<string>()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
   const [referenceIndex, setReferenceIndex] = useState<string>()
-  const commonFormatDate = 'l'
   const totalHoursCalculations = Number(totalDays) * Number(hours)
-  useEffect(() => {
-    if (item?.empName) setEmployeeName(item?.empName)
-  }, [item?.empName])
+  const totalDaysResult = Number(workDays) - Number(leaves)
+
   const milestoneWorkDetails = useTypedSelector(
     reduxServices.projectMileStone.selectors.milestoneWorkDetails,
   )
-  const employeeData = getPeopleMilestone?.filter(
-    (items) => items?.empName === employeeName,
-  )
-
+  console.log(toDeleteFamilyId)
   useEffect(() => {
     if (totalHoursCalculations) {
       setTotalHours(String(totalHoursCalculations))
     }
   }, [totalHoursCalculations])
 
+  useEffect(() => {
+    if (totalDaysResult) {
+      setTotalDays(String(totalDaysResult))
+    }
+  }, [totalDaysResult])
+
   const dispatch = useAppDispatch()
 
-  console.log(milestoneWorkDetails)
   useEffect(() => {
     if (milestoneWorkDetails) setWorkDays(milestoneWorkDetails?.workingDays)
     setHoliDays(milestoneWorkDetails?.holidays)
     setLeaves(milestoneWorkDetails?.Leaves)
     setTotalDays(milestoneWorkDetails.totalDays)
     setHours(milestoneWorkDetails?.hours)
+    // newCheckListWithoutOnChange(milestoneWorkDetails, index)
   }, [milestoneWorkDetails])
 
   useEffect(() => {
@@ -129,8 +123,7 @@ const MilestonePeopleList = ({
       item?.hours
     ) {
       setWorkDays(item?.monthWorkingDays)
-      // setReferenceIndex(index)
-      setHoliDays(Number(item?.holidays))
+      setHoliDays(item?.holidays)
       setLeaves(item?.leaves)
       setTotalDays(item?.totalDays)
       setHours(item?.hours)
@@ -154,6 +147,12 @@ const MilestonePeopleList = ({
       )
       setReferenceIndex(item.employeeId)
       monthWorkingOnChange(workDays as string, index)
+      peopleListHolidays(holiDays as string, index)
+      peopleListLeaves(leaves as string, index)
+      peopleListTotalDays(totalDays as string, index)
+      peopleListHours(hours as string, index)
+      peopleListTotalValue(totalHours, index)
+      newCheckListWithoutOnChange(milestoneWorkDetails, index)
     }
   }, [item.endDate])
 
@@ -161,10 +160,36 @@ const MilestonePeopleList = ({
     setIsDeleteModalVisible(true)
     setToDeleteFamilyId(id)
   }
-  // console.log(toDeleteFamilyId)
+  console.log(item.hours)
+  const PeopleOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    peopleListLeaves(e.target.value, index)
+    setLeaves(e.target.value)
+  }
 
-  console.log(workDays)
-
+  const totalDaysOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    peopleListTotalDays(e.target.value, index)
+    setTotalDays(e.target.value)
+  }
+  const hoursOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    peopleListHours(e.target.value, index)
+    setHours(e.target.value)
+  }
+  const totalHoursOnChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    peopleListTotalValue(e.target.value, index)
+    setTotalHours(e.target.value)
+  }
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
@@ -186,10 +211,9 @@ const MilestonePeopleList = ({
                   dateFormat="dd/mm/yy"
                   name="editProjectEndDate"
                   autoComplete="off"
-                  // value={fromDate}
                   value={item.startDate}
-                  // onChange={(date: Date) => onChangeHandleFromDate(date, index)}
                   onChange={(date: Date) => onChangeHandleFromDate(date, index)}
+                  disabled={!isDateEnabled}
                 />
               </CTableDataCell>
               <CTableDataCell scope="row">
@@ -206,15 +230,12 @@ const MilestonePeopleList = ({
                   name="editProjectEndDate"
                   autoComplete="off"
                   value={item.endDate}
-                  // value={toDate}
-                  // onChange={(date: Date) => onChangeHandleToDate(date, index)}
                   onChange={(date: Date) => onChangeHandleToDate(date, index)}
+                  disabled={!isDateEnabled}
                 />
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
-                  // onChange={(e) => setWorkDays(e.target.value)}
-                  // value={workDays}
                   value={
                     referenceIndex === milestoneWorkDetails.employeeId
                       ? workDays
@@ -230,8 +251,11 @@ const MilestonePeopleList = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
-                  onChange={(e) => holidaysOnChange(e, index)}
-                  value={item.holidays}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? holiDays
+                      : item.holidays
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -242,8 +266,12 @@ const MilestonePeopleList = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
-                  onChange={(e) => leavesOnChange(e, index)}
-                  value={item.leaves}
+                  onChange={(e) => PeopleOnChange(e, index)}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? leaves
+                      : item.leaves
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -254,7 +282,12 @@ const MilestonePeopleList = ({
               <CTableDataCell scope="row">
                 <CFormInput
                   onChange={(e) => totalDaysOnChange(e, index)}
-                  value={item.totalDays}
+                  // onChange={(e) => setTotalDays(e.target.value)}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? totalDays
+                      : item.totalDays
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -264,8 +297,13 @@ const MilestonePeopleList = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
+                  // onChange={(e) => setHours(e.target.value)}
                   onChange={(e) => hoursOnChange(e, index)}
-                  value={item.hours}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? hours
+                      : item.hours
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -275,8 +313,13 @@ const MilestonePeopleList = ({
               </CTableDataCell>
               <CTableDataCell scope="row">
                 <CFormInput
+                  // onChange={(e) => setTotalHours(e.target.value)}
                   onChange={(e) => totalHoursOnChange(e, index)}
-                  value={item?.totalValue}
+                  value={
+                    referenceIndex === milestoneWorkDetails.employeeId
+                      ? totalHours
+                      : item.totalValue
+                  }
                   className="mt-2"
                   name="effort"
                   id="effort"
@@ -292,15 +335,15 @@ const MilestonePeopleList = ({
                   id="billable"
                   data-testid="billable-select"
                   name="billable"
-                  value={item.desigination}
+                  value={item.role}
                   onChange={(e) => roleOnChange(e, index)}
                 >
                   <option value="">Select</option>
-                  <option value="true">Developer</option>
-                  <option value="false">Designer</option>
-                  <option value="true">Tester</option>
-                  <option value="false">Project Manager</option>
-                  <option value="true">Business Analyst</option>
+                  <option value="Developer">Developer</option>
+                  <option value="Designer">Designer</option>
+                  <option value="Tester">Tester</option>
+                  <option value="Project Manager">Project Manager</option>
+                  <option value="Business Analyst">Business Analyst</option>
                 </CFormSelect>
               </CTableDataCell>
               <CTableDataCell scope="row">
@@ -314,7 +357,6 @@ const MilestonePeopleList = ({
                   value={item.billable}
                   onChange={(e) => billableOnChange(e, index)}
                 >
-                  <option value="">Select</option>
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                 </CFormSelect>

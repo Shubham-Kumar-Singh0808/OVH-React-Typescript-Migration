@@ -14,6 +14,7 @@ import {
   GetWorkDetailsProps,
   MileStoneResponse,
   MileStoneSliceState,
+  updateMilestoneProps,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const getProjectMileStone = createAsyncThunk(
@@ -135,6 +136,25 @@ const addProjectMilestone = createAsyncThunk<
     }
   },
 )
+const updateProjectMilestone = createAsyncThunk<
+  number | undefined,
+  updateMilestoneProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'projectView/updateProjectMilestone',
+  async (milestone: updateMilestoneProps, thunkApi) => {
+    try {
+      return await mileStoneApi.updateProjectMilestone(milestone)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 const milestoneDelete = createAsyncThunk<
   number | undefined,
@@ -176,7 +196,7 @@ const initialMileStoneState: MileStoneSliceState = {
   currentPage: 1,
   pageSize: 20,
   getMilestone: {} as GetMilestone,
-  getPeopleForMilestone: [],
+  getPeopleForMilestone: [] as GetPeopleForMilestone[],
   milestoneNumber: 0,
   getCRListForMilestone: [],
   getWorkDetails: {} as GetWorkDetails,
@@ -252,6 +272,7 @@ const mileStoneThunk = {
   addProjectMilestone,
   milestoneDelete,
   closeMilestone,
+  updateProjectMilestone,
 }
 
 const mileStoneSelectors = {

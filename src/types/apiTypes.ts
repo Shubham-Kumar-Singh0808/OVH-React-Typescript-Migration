@@ -669,6 +669,7 @@ export interface ProjectMilestoneApi extends ApiBase {
   mileStones: string
   milestoneDelete: string
   closeMilestone: string
+  updateMileStone: string
 }
 export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
