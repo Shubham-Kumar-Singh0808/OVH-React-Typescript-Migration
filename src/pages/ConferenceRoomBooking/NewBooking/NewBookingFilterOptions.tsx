@@ -403,7 +403,7 @@ const NewBookingFilterOptions = ({
   )
   console.log(errorMessageCount)
   const attendeesResult = (
-    <CRow className="row d-flex justify-content-center">
+    <CRow className=" d-flex justify-content-center mt-3">
       {attendeesList?.length > 0 ? (
         <SelectedAttendees
           attendeesList={attendeesList}

@@ -192,7 +192,7 @@ const ProjectMembersSelection = ({
                 </CRow>
               )}
             </CCol>
-            <CCol sm={2} md={3} className="meeting-bulk-add">
+            <CCol sm={2} md={2} className="meeting-bulk-add">
               <CTooltip content="Delete">
                 <CButton
                   color="info btn-ovh me-1"
