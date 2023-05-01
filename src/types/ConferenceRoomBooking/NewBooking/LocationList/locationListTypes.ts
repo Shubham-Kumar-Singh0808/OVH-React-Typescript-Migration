@@ -11,3 +11,8 @@ export type AddLocationSliceState = {
   currentPage: number
   pageSize: number
 }
+
+export type AddLocationProps = {
+  startIndex: number
+  endIndex: number
+}

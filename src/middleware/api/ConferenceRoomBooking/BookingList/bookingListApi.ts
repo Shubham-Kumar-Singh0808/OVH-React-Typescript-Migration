@@ -1,4 +1,5 @@
 import {
+  BookingRoomLocationProps,
   EditMeetingRequest,
   GetBookingsForSelection,
   GetBookingsForSelectionProps,
@@ -13,10 +14,16 @@ import {
 } from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, bookingListApiConfig } from '../../apiList'
 
-const getAllMeetingLocations = async (): Promise<MeetingLocations[]> => {
+const getAllMeetingLocations = async (
+  props: BookingRoomLocationProps,
+): Promise<MeetingLocations[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: bookingListApiConfig.getAllMeetingLocations,
     method: AllowedHttpMethods.get,
+    params: {
+      startIndex: props.startIndex ?? 0,
+      endIndex: props.endIndex ?? 20,
+    },
   })
 
   const response = await useAxios(requestConfig)

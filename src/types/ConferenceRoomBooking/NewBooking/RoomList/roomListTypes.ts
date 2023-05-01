@@ -19,3 +19,8 @@ export type AddRoomListSliceState = {
   currentPage: number
   pageSize: number
 }
+
+export type RoomLocationProps = {
+  startIndex: number
+  endIndex: number
+}

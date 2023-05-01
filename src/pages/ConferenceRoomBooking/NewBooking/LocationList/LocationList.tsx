@@ -28,12 +28,17 @@ const LocationList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(
+      reduxServices.addLocationList.getAllMeetingLocationsData({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
   }, [dispatch])
 
   const locationNameExists = (name: string) => {
     return locationNames?.find((locationName) => {
-      return locationName.locationName.toLowerCase() === name.toLowerCase()
+      return locationName?.locationName.toLowerCase() === name.toLowerCase()
     })
   }
 
@@ -47,8 +52,8 @@ const LocationList = ({
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setSelectLocationName(newValue)
     }
-    if (locationNameExists(value.trim())) {
-      setLocationNameExist(value.trim())
+    if (locationNameExists(value?.trim())) {
+      setLocationNameExist(value?.trim())
     } else {
       setLocationNameExist('')
     }
@@ -76,7 +81,12 @@ const LocationList = ({
       if (
         reduxServices.addLocationList.addLocation.fulfilled.match(isAddLocation)
       ) {
-        dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+        dispatch(
+          reduxServices.addLocationList.getAllMeetingLocationsData({
+            endIndex: 20,
+            startIndex: 0,
+          }),
+        )
         setSelectLocationName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
         dispatch(reduxServices.app.actions.addToast(undefined))
@@ -91,7 +101,12 @@ const LocationList = ({
     if (
       reduxServices.addLocationList.addLocation.fulfilled.match(isAddLocation)
     ) {
-      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+      dispatch(
+        reduxServices.addLocationList.getAllMeetingLocationsData({
+          endIndex: 20,
+          startIndex: 0,
+        }),
+      )
       setSelectLocationName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))

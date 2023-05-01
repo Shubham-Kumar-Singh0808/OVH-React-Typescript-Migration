@@ -1,4 +1,5 @@
 import {
+  RoomLocationProps,
   getAllMeetingLocations,
   getAllMeetingRooms,
 } from '../../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
@@ -75,10 +76,16 @@ const getRoomsOfLocation = async (
   return response.data
 }
 
-const getMeetingLocations = async (): Promise<getAllMeetingLocations[]> => {
+const getMeetingLocations = async (
+  props: RoomLocationProps,
+): Promise<getAllMeetingLocations[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: roomListApiConfig.getAllMeetingLocations,
     method: AllowedHttpMethods.get,
+    params: {
+      startIndex: props.startIndex ?? 0,
+      endIndex: props.endIndex ?? 20,
+    },
   })
 
   const response = await useAxios(requestConfig)

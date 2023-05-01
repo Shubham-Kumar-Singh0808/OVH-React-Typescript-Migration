@@ -190,3 +190,8 @@ export type UpdateRoomBooking = {
   toDate: null
   trainerName: null
 }
+
+export type BookingRoomLocationProps = {
+  startIndex: number
+  endIndex: number
+}

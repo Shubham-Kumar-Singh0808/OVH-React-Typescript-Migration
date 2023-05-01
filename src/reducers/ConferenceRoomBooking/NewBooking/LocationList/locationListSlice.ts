@@ -5,15 +5,16 @@ import addLocationListApi from '../../../../middleware/api/ConferenceRoomBooking
 import { RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
+  AddLocationProps,
   AddLocationSliceState,
   getAllMeetingLocations,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 
 const getAllMeetingLocationsData = createAsyncThunk(
   'addLocationList/getAllMeetingLocationsData',
-  async (_, thunkApi) => {
+  async (props: AddLocationProps, thunkApi) => {
     try {
-      return await addLocationListApi.getAllMeetingLocationsData()
+      return await addLocationListApi.getAllMeetingLocationsData(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

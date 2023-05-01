@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
   AddRoomListSliceState,
+  RoomLocationProps,
   getAllMeetingLocations,
   getAllMeetingRooms,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
@@ -110,9 +111,9 @@ const getRoomsOfLocation = createAsyncThunk<
 
 const getMeetingLocations = createAsyncThunk(
   'roomList/getMeetingLocations',
-  async (_, thunkApi) => {
+  async (props: RoomLocationProps, thunkApi) => {
     try {
-      return await roomListApi.getMeetingLocations()
+      return await roomListApi.getMeetingLocations(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -38,7 +38,12 @@ const RoomList = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(
+      reduxServices.addLocationList.getAllMeetingLocationsData({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
   }, [dispatch])
 
   useEffect(() => {

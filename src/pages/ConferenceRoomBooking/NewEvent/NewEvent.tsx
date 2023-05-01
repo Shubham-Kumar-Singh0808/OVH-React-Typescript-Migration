@@ -117,7 +117,12 @@ const NewEvent = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(
+      reduxServices.addLocationList.getAllMeetingLocationsData({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
     dispatch(reduxServices.newEvent.getLoggedEmployee())
     dispatch(reduxServices.eventTypeList.getEventTypes())
   }, [dispatch])

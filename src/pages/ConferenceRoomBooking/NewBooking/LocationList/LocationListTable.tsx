@@ -56,7 +56,12 @@ const LocationListTable = ({
         deleteLocationResult,
       )
     ) {
-      dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+      dispatch(
+        reduxServices.addLocationList.getAllMeetingLocationsData({
+          endIndex: 20,
+          startIndex: 0,
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
       dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (

@@ -100,7 +100,12 @@ const EditEvent = (): JSX.Element => {
   }, [editEvent?.agenda, trainerAutoCompleteTarget, editEvent?.description])
 
   useEffect(() => {
-    dispatch(reduxServices.addLocationList.getAllMeetingLocationsData())
+    dispatch(
+      reduxServices.addLocationList.getAllMeetingLocationsData({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
     dispatch(reduxServices.newEvent.getLoggedEmployee())
     if (editEvent?.roomId) {
       dispatch(

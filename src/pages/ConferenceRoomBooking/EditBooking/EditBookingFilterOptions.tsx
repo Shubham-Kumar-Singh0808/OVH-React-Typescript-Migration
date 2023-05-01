@@ -191,7 +191,12 @@ const EditBookingFilterOptions = (): JSX.Element => {
   }
 
   useEffect(() => {
-    dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    dispatch(
+      reduxServices.bookingList.getAllMeetingLocations({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
     dispatch(reduxServices.newEvent.getLoggedEmployee())
     if (editMeetingRequest.locationId) {
       dispatch(

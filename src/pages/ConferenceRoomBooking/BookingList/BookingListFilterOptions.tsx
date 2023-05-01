@@ -39,7 +39,12 @@ const BookingListFilterOptions = ({
   )
 
   useEffect(() => {
-    dispatch(reduxServices.bookingList.getAllMeetingLocations())
+    dispatch(
+      reduxServices.bookingList.getAllMeetingLocations({
+        endIndex: 20,
+        startIndex: 0,
+      }),
+    )
     if (location) {
       dispatch(reduxServices.bookingList.getRoomsOfLocation(Number(location)))
     }

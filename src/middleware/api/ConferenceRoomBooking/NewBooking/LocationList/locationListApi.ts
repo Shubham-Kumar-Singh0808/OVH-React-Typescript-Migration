@@ -1,16 +1,23 @@
-import { getAllMeetingLocations } from '../../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
+import {
+  AddLocationProps,
+  getAllMeetingLocations,
+} from '../../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../../utils/apiUtils'
 import { addLocationListApiConfig, AllowedHttpMethods } from '../../../apiList'
 
-const getAllMeetingLocationsData = async (): Promise<
-  getAllMeetingLocations[]
-> => {
+const getAllMeetingLocationsData = async (
+  props: AddLocationProps,
+): Promise<getAllMeetingLocations[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addLocationListApiConfig.getAllMeetingLocations,
     method: AllowedHttpMethods.get,
+    params: {
+      startIndex: props.startIndex ?? 0,
+      endIndex: props.endIndex ?? 20,
+    },
   })
 
   const response = await useAxios(requestConfig)
