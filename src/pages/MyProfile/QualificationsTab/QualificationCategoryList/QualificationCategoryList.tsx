@@ -54,11 +54,6 @@ const QualificationCategoryList = ({
           </CCardBody>
         </>
       ) : (
-        // <CCol>
-        //   <CRow className="category-loading-spinner">
-        //     <CSpinner />
-        //   </CRow>
-        // </CCol>
         <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </>
