@@ -8,13 +8,23 @@ import { mockLocationNames } from '../../../../test/data/addLocationListData'
 
 describe('Add Location List Table without data', () => {
   beforeEach(() => {
-    render(<LocationListTable userDeleteAccess={true} />, {
-      preloadedState: {
-        addLocationList: {
-          meetingLocations: mockLocationNames,
+    render(
+      <LocationListTable
+        userDeleteAccess={true}
+        pageSize={20}
+        currentPage={1}
+        setPageSize={jest.fn()}
+        setCurrentPage={jest.fn()}
+        paginationRange={[1, 2, 3]}
+      />,
+      {
+        preloadedState: {
+          addLocationList: {
+            meetingLocations: mockLocationNames,
+          },
         },
       },
-    })
+    )
   })
   afterEach(cleanup)
   test('should render Add LocationList component with data', () => {

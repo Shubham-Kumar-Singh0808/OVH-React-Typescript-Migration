@@ -10,7 +10,7 @@ import { addLocationListApiConfig, AllowedHttpMethods } from '../../../apiList'
 
 const getAllMeetingLocationsData = async (
   props: AddLocationProps,
-): Promise<getAllMeetingLocations[]> => {
+): Promise<getAllMeetingLocations> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: addLocationListApiConfig.getAllMeetingLocations,
     method: AllowedHttpMethods.get,

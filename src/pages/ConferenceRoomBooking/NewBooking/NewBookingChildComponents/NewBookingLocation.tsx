@@ -2,6 +2,7 @@ import { CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import React from 'react'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const NewBookingLocation = ({
   onHandleLocation,
@@ -11,7 +12,7 @@ const NewBookingLocation = ({
   locationValue: number
 }): JSX.Element => {
   const meetingLocation = useTypedSelector(
-    (state) => state.bookingList.meetingLocation,
+    reduxServices.addLocationList.selectors.locationNames,
   )
 
   return (

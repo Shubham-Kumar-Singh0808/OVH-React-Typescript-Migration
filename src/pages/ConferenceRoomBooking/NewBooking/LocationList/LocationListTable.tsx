@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCol,
@@ -15,15 +15,23 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { currentPageData } from '../../../../utils/paginationUtils'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPagination from '../../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
 
 const LocationListTable = ({
   userDeleteAccess,
+  pageSize,
+  currentPage,
+  setPageSize,
+  setCurrentPage,
+  paginationRange,
 }: {
   userDeleteAccess: boolean
+  pageSize: number
+  currentPage: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  paginationRange: number[]
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteLocationId, setDeleteLocationId] = useState(0)
@@ -33,6 +41,10 @@ const LocationListTable = ({
 
   const locationNames = useTypedSelector(
     reduxServices.addLocationList.selectors.locationNames,
+  )
+
+  const locationSize = useTypedSelector(
+    reduxServices.addLocationList.selectors.locationListSize,
   )
 
   const deletedToastElement = (
@@ -58,8 +70,8 @@ const LocationListTable = ({
     ) {
       dispatch(
         reduxServices.addLocationList.getAllMeetingLocationsData({
-          endIndex: 20,
-          startIndex: 0,
+          endIndex: pageSize * currentPage,
+          startIndex: pageSize * (currentPage - 1),
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
@@ -81,21 +93,6 @@ const LocationListTable = ({
     setDeleteLocationName(locationName)
   }
 
-  const pageFromState = useTypedSelector(
-    reduxServices.addLocationList.selectors.pageFromState,
-  )
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.addLocationList.selectors.pageSizeFromState,
-  )
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(locationNames?.length, pageSizeFromState, pageFromState)
-
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -106,11 +103,6 @@ const LocationListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
-  const currentPageItems = useMemo(
-    () => currentPageData(locationNames, currentPage, pageSize),
-    [locationNames, currentPage, pageSize],
-  )
 
   return (
     <>
@@ -127,8 +119,8 @@ const LocationListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {currentPageItems.length > 0 &&
-            currentPageItems?.map((location, index) => {
+          {locationNames?.length > 0 &&
+            locationNames?.map((location, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
@@ -160,35 +152,42 @@ const LocationListTable = ({
             })}
         </CTableBody>
       </CTable>
-      <CRow>
-        <CCol xs={4}>
-          <strong>
-            {locationNames?.length
-              ? `Total Records: ${locationNames?.length}`
-              : `No Records Found`}
-          </strong>
-        </CCol>
-        <CCol xs={3}>
-          {locationNames?.length > 20 && (
-            <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
-              selectedPageSize={pageSize}
-            />
-          )}
-        </CCol>
-        {locationNames?.length > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
+      {locationNames?.length ? (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {locationSize}</strong>
+            </p>
           </CCol>
-        )}
-      </CRow>
+          <CCol xs={3}>
+            {locationSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {locationSize > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      ) : (
+        <CCol>
+          <CRow className="mt-4 ms-3">
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
       <OModal
         alignment="center"
         visible={isDeleteModalVisible}

@@ -6,6 +6,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const LocationList = ({
   setToggle,
@@ -27,14 +28,26 @@ const LocationList = ({
     reduxServices.addLocationList.selectors.locationNames,
   )
 
+  const locationSize = useTypedSelector(
+    reduxServices.addLocationList.selectors.locationListSize,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(locationSize, 20)
+
   useEffect(() => {
     dispatch(
       reduxServices.addLocationList.getAllMeetingLocationsData({
-        endIndex: 20,
-        startIndex: 0,
+        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
 
   const locationNameExists = (name: string) => {
     return locationNames?.find((locationName) => {
@@ -83,8 +96,8 @@ const LocationList = ({
       ) {
         dispatch(
           reduxServices.addLocationList.getAllMeetingLocationsData({
-            endIndex: 20,
-            startIndex: 0,
+            endIndex: pageSize * currentPage,
+            startIndex: pageSize * (currentPage - 1),
           }),
         )
         setSelectLocationName('')
@@ -103,8 +116,8 @@ const LocationList = ({
     ) {
       dispatch(
         reduxServices.addLocationList.getAllMeetingLocationsData({
-          endIndex: 20,
-          startIndex: 0,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
         }),
       )
       setSelectLocationName('')
@@ -189,6 +202,11 @@ const LocationList = ({
         </CRow>
         <LocationListTable
           userDeleteAccess={userAccess?.deleteaccess as boolean}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          paginationRange={paginationRange}
         />
       </OCard>
     </>

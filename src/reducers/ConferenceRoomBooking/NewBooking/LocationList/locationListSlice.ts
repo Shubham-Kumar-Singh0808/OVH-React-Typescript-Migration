@@ -8,6 +8,7 @@ import {
   AddLocationProps,
   AddLocationSliceState,
   getAllMeetingLocations,
+  LocationList,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 
 const getAllMeetingLocationsData = createAsyncThunk(
@@ -47,10 +48,11 @@ const deleteLocation = createAsyncThunk(
 )
 
 const initialAddLocationListState: AddLocationSliceState = {
-  meetingLocations: [],
+  meetingLocations: { size: 0, List: [] },
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
+  locationList: [],
 }
 
 const addLocationListSlice = createSlice({
@@ -85,20 +87,20 @@ const addLocationListSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.meetingLocations = action.payload as getAllMeetingLocations[]
+          state.meetingLocations = action.payload as getAllMeetingLocations
         },
       )
   },
 })
 
-const locationNames = (state: RootState): getAllMeetingLocations[] =>
-  state.addLocationList.meetingLocations
+const locationNames = (state: RootState): LocationList[] =>
+  state.addLocationList.meetingLocations.List
 
-const addLocationNames = (state: RootState): getAllMeetingLocations[] =>
-  state.addLocationList.meetingLocations
+// const addLocationNames = (state: RootState): getAllMeetingLocations[] =>
+//   state.addLocationList.meetingLocations
 
-const deleteLocationNames = (state: RootState): getAllMeetingLocations[] =>
-  state.addLocationList.meetingLocations
+// const deleteLocationNames = (state: RootState): getAllMeetingLocations[] =>
+//   state.addLocationList.meetingLocations
 
 const isLoading = (state: RootState): LoadingState =>
   state.addLocationList.isLoading
@@ -107,6 +109,9 @@ const pageFromState = (state: RootState): number =>
   state.addLocationList.currentPage
 const pageSizeFromState = (state: RootState): number =>
   state.addLocationList.pageSize
+
+const locationListSize = (state: RootState): number =>
+  state.addLocationList.meetingLocations.size
 
 const addLocationListThunk = {
   getAllMeetingLocationsData,
@@ -117,10 +122,11 @@ const addLocationListThunk = {
 const locationListSelectors = {
   isLoading,
   locationNames,
-  addLocationNames,
-  deleteLocationNames,
+  // addLocationNames,
+  // deleteLocationNames,
   pageFromState,
   pageSizeFromState,
+  locationListSize,
 }
 
 export const addLocationListService = {

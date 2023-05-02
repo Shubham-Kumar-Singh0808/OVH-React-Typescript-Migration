@@ -8,7 +8,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
-import { getAllMeetingLocations } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
+import { LocationList } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 import { RoomsByLocation } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const LocationAndRoom = ({
@@ -19,7 +19,7 @@ const LocationAndRoom = ({
   locationValue,
   roomValue,
 }: {
-  eventLocations: getAllMeetingLocations[]
+  eventLocations: LocationList[]
   onHandleLocation: (value: string) => void
   onHandleRoom: (value: string) => void
   locationRooms: RoomsByLocation[]

@@ -100,7 +100,7 @@ const NewBookingFilterOptions = ({
 
   useEffect(() => {
     dispatch(
-      reduxServices.bookingList.getAllMeetingLocations({
+      reduxServices.addLocationList.getAllMeetingLocationsData({
         endIndex: 20,
         startIndex: 0,
       }),

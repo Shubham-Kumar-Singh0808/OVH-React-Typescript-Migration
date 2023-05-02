@@ -1,6 +1,6 @@
 import { CRow, CFormLabel, CCol, CFormSelect } from '@coreui/react-pro'
 import React from 'react'
-import { getAllMeetingLocations } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
+import { LocationList } from '../../../../types/ConferenceRoomBooking/NewBooking/LocationList/locationListTypes'
 import { RoomsByLocation } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 const RoomAndLocation = ({
@@ -9,7 +9,7 @@ const RoomAndLocation = ({
   eventLocations,
   locationRooms,
 }: {
-  eventLocations: getAllMeetingLocations[]
+  eventLocations: LocationList[]
   locationRooms: RoomsByLocation[]
   eventLocationValue: number
   eventRoomValue: number
