@@ -110,121 +110,116 @@ const EventTypeListTable = ({
 
   return (
     <>
-      <CCol className="custom-scroll">
-        <CTable striped responsive className="mt-1">
-          <CTableHead>
-            <CTableRow>
-              <CTableHeaderCell scope="col">#</CTableHeaderCell>
-              <CTableHeaderCell className="ps-1">EventType</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-            </CTableRow>
-          </CTableHead>
-          <CTableBody>
-            {eventTypeList.length > 0 &&
-              eventTypeList?.map((currEventType, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
+      <CTable striped responsive className="mt-1">
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell className="ps-1">EventType</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {eventTypeList.length > 0 &&
+            eventTypeList?.map((currEventType, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  {isEditBtnClicked &&
+                  currEventType.id === selectEventTypeId ? (
+                    <CTableDataCell scope="row">
+                      <CCol sm={5}>
+                        <CFormInput
+                          className="eventType-editInput"
+                          data-testid="eventTypeName"
+                          type="text"
+                          id="eventTypeName"
+                          size="sm"
+                          name="eventTypeName"
+                          value={editEventTypeName}
+                          onChange={onChangeInputHandler}
+                        />
+                      </CCol>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{currEventType.name}</CTableDataCell>
+                  )}
+
+                  <CTableDataCell>
                     {isEditBtnClicked &&
                     currEventType.id === selectEventTypeId ? (
-                      <CTableDataCell scope="row">
-                        <CCol sm={5}>
-                          <CFormInput
-                            className="eventType-editInput"
-                            data-testid="eventTypeName"
-                            type="text"
-                            id="eventTypeName"
-                            size="sm"
-                            name="eventTypeName"
-                            value={editEventTypeName}
-                            onChange={onChangeInputHandler}
-                          />
-                        </CCol>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell>{currEventType.name}</CTableDataCell>
-                    )}
-
-                    <CTableDataCell>
-                      {isEditBtnClicked &&
-                      currEventType.id === selectEventTypeId ? (
-                        <>
-                          <CTooltip content="Save">
-                            <CButton
-                              data-testid={`save-btn${index}`}
-                              size="sm"
-                              className="btn btn-success btn-sm btn-ovh-employee-list cursor-pointer"
-                              color="success btn-ovh me-2"
-                              onClick={saveBtnHandler}
-                            >
-                              <i
-                                className="fa fa-floppy-o"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
-                          <CTooltip content="Cancel">
-                            <CButton
-                              data-testid={`cancel-btn${index}`}
-                              size="sm"
-                              className="btn btn-danger btn-sm btn-ovh-employee-list cursor-pointer"
-                              color="danger btn-ovh me-2"
-                              onClick={cancelBtnHandler}
-                            >
-                              <i className="fa fa-times" aria-hidden="true"></i>
-                            </CButton>
-                          </CTooltip>
-                        </>
-                      ) : (
-                        <CTooltip content="Edit">
-                          <>
-                            {userAccess?.updateaccess && (
-                              <CButton
-                                data-testid={`edit-btn${index}`}
-                                size="sm"
-                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                                color="info btn-ovh me-1"
-                                onClick={() =>
-                                  editBtnHandler(
-                                    currEventType.id,
-                                    currEventType.name,
-                                  )
-                                }
-                              >
-                                <i
-                                  className="fa fa-edit"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
-                            )}
-                          </>
-                        </CTooltip>
-                      )}
-                      {userAccess?.deleteaccess && (
-                        <CTooltip content="Delete">
+                      <>
+                        <CTooltip content="Save">
                           <CButton
-                            data-testid={`delete-btn${index}`}
+                            data-testid={`save-btn${index}`}
+                            size="sm"
+                            className="btn btn-success btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="success btn-ovh me-2"
+                            onClick={saveBtnHandler}
+                          >
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            data-testid={`cancel-btn${index}`}
                             size="sm"
                             className="btn btn-danger btn-sm btn-ovh-employee-list cursor-pointer"
                             color="danger btn-ovh me-2"
-                            onClick={() =>
-                              deleteBtnHandler(
-                                currEventType.id,
-                                currEventType.name,
-                              )
-                            }
+                            onClick={cancelBtnHandler}
                           >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                            <i className="fa fa-times" aria-hidden="true"></i>
                           </CButton>
                         </CTooltip>
-                      )}
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-          </CTableBody>
-        </CTable>
-      </CCol>
+                      </>
+                    ) : (
+                      <>
+                        {userAccess?.updateaccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              data-testid={`edit-btn${index}`}
+                              size="sm"
+                              className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                              color="info btn-ovh me-1"
+                              onClick={() =>
+                                editBtnHandler(
+                                  currEventType.id,
+                                  currEventType.name,
+                                )
+                              }
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                      </>
+                    )}
+                    {userAccess?.deleteaccess && (
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`delete-btn${index}`}
+                          size="sm"
+                          className="btn btn-danger btn-sm btn-ovh-employee-list cursor-pointer"
+                          color="danger btn-ovh me-2"
+                          onClick={() =>
+                            deleteBtnHandler(
+                              currEventType.id,
+                              currEventType.name,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    )}
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
+        </CTableBody>
+      </CTable>
       <CRow>
         <CCol xs={4}>
           <p>
