@@ -130,11 +130,23 @@ const ResignationListFilterOptions = ({
         dateSelection: Select || '',
         empStatus: employeeStatus || '',
         endIndex: pageSize * selectCurrentPage,
-        from: '',
+        from: selectFromDate
+          ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
         status: status || 'All',
-        to: '',
+        to: selectToDate
+          ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
@@ -461,6 +473,11 @@ const ResignationListFilterOptions = ({
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
         pageSize={pageSize}
+        Select={Select}
+        employeeStatus={employeeStatus}
+        selectCurrentPage={selectCurrentPage}
+        selectFromDate={selectFromDate as string}
+        selectToDate={selectToDate as string}
       />
     </>
   )
