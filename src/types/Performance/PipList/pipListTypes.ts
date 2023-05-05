@@ -51,6 +51,8 @@ export type PipListSliceState = {
   employeePIPTimeline: GetPIPHistory
   list: GetPipList
   pipListValue?: string
+  fromDate: string
+  toDate: string
 }
 
 export type EmployeePIPListTableProps = {
