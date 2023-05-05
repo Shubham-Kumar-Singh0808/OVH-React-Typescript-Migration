@@ -56,7 +56,7 @@ const ResignationHistory = (): JSX.Element => {
                   className="btn-ovh me-1"
                   onClick={editButtonHandler}
                 >
-                  <i className="fa fa-edit"></i>Edit
+                  <i className="fa fa-pencil-square-o"></i>Edit
                 </CButton>
               </CTooltip>
             ) : (

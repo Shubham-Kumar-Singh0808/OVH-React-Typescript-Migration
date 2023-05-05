@@ -156,9 +156,7 @@ const EmployeePipList = ({
   }
 
   const clearButtonHandler = () => {
-    // localStorage.removeItem('fmonth')
-    setSelectDay('')
-    dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
+    setSelectDay('Current Month')
     setFromDate('')
     setToDate('')
     setSearchByEmployee(false)
