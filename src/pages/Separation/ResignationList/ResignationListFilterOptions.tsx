@@ -234,6 +234,12 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
+  useEffect(() => {
+    if (Select !== 'Custom') {
+      setSelectFromDate('')
+      setSelectToDate('')
+    }
+  }, [Select])
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
