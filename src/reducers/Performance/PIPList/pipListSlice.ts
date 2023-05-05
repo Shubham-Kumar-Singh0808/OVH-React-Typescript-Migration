@@ -303,10 +303,9 @@ const getPIPValue = (state: RootState): string | undefined =>
   state.pipList.pipListValue
 
 const getFromDateValue = (state: RootState): string | Date =>
-  state.resignationList.fromDate
+  state.pipList.fromDate
 
-const getToDateValue = (state: RootState): string | Date =>
-  state.resignationList.toDate
+const getToDateValue = (state: RootState): string | Date => state.pipList.toDate
 
 export const pipListThunk = {
   getAllPIPList,

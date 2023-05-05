@@ -14,7 +14,7 @@ import EmployeePipListOptions from './EmployeePipListOptions'
 import EmployeePipListTable from './EmployeePipListTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { showIsRequired } from '../../../../utils/helper'
+import { deviceLocale, showIsRequired } from '../../../../utils/helper'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
@@ -48,9 +48,9 @@ const EmployeePipList = ({
   searchByEmployee: boolean
   setSearchByEmployee: React.Dispatch<React.SetStateAction<boolean>>
   fromDate: string | Date
-  setFromDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
+  setFromDate: React.Dispatch<React.SetStateAction<string | Date>>
   toDate: string | Date
-  setToDate: React.Dispatch<React.SetStateAction<string | Date | undefined>>
+  setToDate: React.Dispatch<React.SetStateAction<string | Date>>
   dateError: boolean
   isMultiSearchBtn: boolean
   toggle: string
@@ -85,22 +85,32 @@ const EmployeePipList = ({
     <OToast toastMessage="Enter Vaild Name !" toastColor="danger" />
   )
 
+  const fromDateValue = fromDate
+    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
+  const toDateValue = toDate
+    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
   const pipListObj = {
     startIndex: pageSize * (selectCurrentPage - 1),
     endIndex: pageSize * selectCurrentPage,
     selectionStatus: selectedEmployeePipStatus,
     dateSelection: selectDay || '',
-    from:
-      (localStorage.getItem('fromMonth')
-        ? localStorage.getItem('fromMonth')
-        : (fromDate as string)) || '',
+    from: fromDateValue || '',
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
-    to:
-      (localStorage.getItem('toMonth')
-        ? localStorage.getItem('toMonth')
-        : (toDate as string)) || '',
+    to: toDateValue || '',
   }
 
   const multiSearchBtnHandler = async () => {
@@ -131,12 +141,12 @@ const EmployeePipList = ({
 
   const pipListObject = {
     dateSelection: String(selectDay),
-    from: (fromDate as string) || '',
+    from: fromDateValue || '',
     multiSearch: searchInput,
     searchByAdded,
     searchByEmployee,
     selectionStatus: selectedEmployeePipStatus,
-    to: (toDate as string) || '',
+    to: toDateValue || '',
     endIndex: pageSize * currentPage,
     startIndex: pageSize * (currentPage - 1),
   }
@@ -146,7 +156,8 @@ const EmployeePipList = ({
   }
 
   const clearButtonHandler = () => {
-    localStorage.removeItem('fmonth')
+    // localStorage.removeItem('fmonth')
+    setSelectDay('')
     dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
     setFromDate('')
     setToDate('')
@@ -173,14 +184,13 @@ const EmployeePipList = ({
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
   useEffect(() => {
-    if (selectDay === 'Custom') {
+    dispatch(reduxServices.pipList.actions.setMonthValue(selectDay))
+  }, [selectDay])
+  useEffect(() => {
+    if (selectDay !== 'Custom') {
       setFromDate('')
       setToDate('')
     }
-  }, [selectDay])
-
-  useEffect(() => {
-    dispatch(reduxServices.pipList.actions.setMonthValue(selectDay))
   }, [selectDay])
 
   return (
@@ -258,8 +268,11 @@ const EmployeePipList = ({
                         showMonthDropdown
                         showYearDropdown
                         dropdownMode="select"
-                        value={fromDate as string}
+                        value={fromDateValue}
                         onChange={(date: Date) => {
+                          dispatch(
+                            reduxServices.pipList.actions.setFromDate(date),
+                          )
                           setFromDate(date)
                         }}
                         selected={fromDate as Date}
@@ -284,8 +297,11 @@ const EmployeePipList = ({
                         showMonthDropdown
                         showYearDropdown
                         dropdownMode="select"
-                        value={toDate as string}
+                        value={toDateValue}
                         onChange={(date: Date) => {
+                          dispatch(
+                            reduxServices.pipList.actions.setToDate(date),
+                          )
                           setToDate(date)
                         }}
                         selected={toDate as Date}
