@@ -53,7 +53,9 @@ const AppContent = () => {
       location.pathname === '/ClearanceCertificateIT' ||
       location.pathname === '/ClearanceCertificateFinance' ||
       location.pathname === '/ClearanceCertificateAdmin' ||
-      location.pathname === '/ClearanceCertificateHR'
+      location.pathname === '/ClearanceCertificateHR' ||
+      location.pathname === '/ExitFeedBackForm' ||
+      location.pathname === '/ClearanceCertificateManager'
     ) {
       dispatch(
         reduxServices.resignationList.actions.setMonthValue(
