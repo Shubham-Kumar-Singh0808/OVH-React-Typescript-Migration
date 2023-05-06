@@ -4,8 +4,6 @@ import {
   CTableHeaderCell,
   CTable,
   CTableBody,
-  CTableDataCell,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
@@ -15,6 +13,8 @@ import {
   EmployeeProjectDetailInterface,
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeProjectsDetail = (
   props: EmployeeProjectDetailInterface,
@@ -83,11 +83,7 @@ const EmployeeProjectsDetail = (
           {projectDetails ? (
             <EmployeeProjectDetailsEntry />
           ) : (
-            <CTableRow color="default" className="text-center">
-              <CTableDataCell colSpan={7}>
-                <CSpinner data-testid="project-loader" />
-              </CTableDataCell>
-            </CTableRow>
+            <OLoadingSpinner type={LoadingType.PAGE} />
           )}
         </CTableBody>
       </CTable>
