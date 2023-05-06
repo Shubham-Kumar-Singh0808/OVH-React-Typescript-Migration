@@ -7,13 +7,15 @@ import EmployeeRemovePIP from './EmployeeRemovePIP'
 import EmployeeUpdatePIP from './EmployeeUpdatePIP'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const EmployeePipTimeline = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
-
+  const viewEmployeePipDetails = useTypedSelector(
+    reduxServices.pipList.selectors.viewEmployeePipDetails,
+  )
   useEffect(() => {
     dispatch(reduxServices.pipList.viewPipDetails(id))
     dispatch(
@@ -36,14 +38,18 @@ const EmployeePipTimeline = (): JSX.Element => {
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
               <>
-                <CButton
-                  data-testid="update-btn"
-                  className="btn-ovh me-1 text-white"
-                  color="success"
-                  onClick={() => setToggle('employeeUpdatePIP')}
-                >
-                  Update
-                </CButton>
+                {viewEmployeePipDetails?.extendDate != null ? (
+                  ''
+                ) : (
+                  <CButton
+                    data-testid="update-btn"
+                    className="btn-ovh me-1 text-white"
+                    color="success"
+                    onClick={() => setToggle('employeeUpdatePIP')}
+                  >
+                    Update
+                  </CButton>
+                )}
                 <CButton
                   data-testid="Extend-btn"
                   color="warning"

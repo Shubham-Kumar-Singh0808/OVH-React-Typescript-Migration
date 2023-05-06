@@ -12,6 +12,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { useParams } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -35,7 +36,7 @@ const EmployeeExtendPIP = ({
   const [improvementPlan, setImprovementPlan] = useState<string>('')
   const [isExtendBtnEnabled, setIsExtendBtnEnabled] = useState(false)
   const [isExtendDateError, setIsExtendDateError] = useState<boolean>(false)
-
+  const { id } = useParams<{ id: string }>()
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
@@ -94,6 +95,7 @@ const EmployeeExtendPIP = ({
         updatedDate: viewEmployeePipDetails.updatedDate,
       }),
     )
+    dispatch(reduxServices.pipList.viewPipDetails(id))
     dispatch(
       reduxServices.pipList.getPIPHistory({
         filterName: 'PIP',
