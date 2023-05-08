@@ -83,7 +83,7 @@ const Notifications = (): JSX.Element => {
       >
         <CRow>
           {notificationAlerts.length > 0 &&
-            notificationAlerts?.map((location, index) => {
+            notificationAlerts?.map((notification, index) => {
               return (
                 <CTableRow key={index}>
                   <CButton
@@ -91,16 +91,30 @@ const Notifications = (): JSX.Element => {
                     size="sm"
                     color="success btn-ovh me-1"
                     className="btn-ovh-employee-list"
-                    onClick={() => ButtonHandler(location.id)}
+                    onClick={() => ButtonHandler(notification.id)}
                   >
-                    <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                    {notification.alertType === 'MilestoneDelay' ||
+                    notification.alertType === 'MilestoneClose' ? (
+                      <i
+                        className="fa fa-briefcase fa-lg"
+                        aria-hidden="true"
+                      ></i>
+                    ) : notification.alertType === 'LeaveCancel' ? (
+                      <i className="fa fa-user-times"></i>
+                    ) : notification.alertType == 'LeaveApply' ? (
+                      <i className="fa fa-calendar-o"></i>
+                    ) : notification.alertType == 'LeaveReject' ? (
+                      <i className="fa fa-times"></i>
+                    ) : (
+                      ''
+                    )}
                   </CButton>
                   <CCol sm={6}>
-                    <CTableDataCell>{location.msg}</CTableDataCell>
+                    <CTableDataCell>{notification.msg}</CTableDataCell>
                   </CCol>
                   <CRow>
                     <CTableDataCell>
-                      <b>{location.msgDate}</b>
+                      <b>{notification.msgDate}</b>
                     </CTableDataCell>
                   </CRow>
                 </CTableRow>
