@@ -1,5 +1,6 @@
 import {
   NotificationAlertsData,
+  UpdateTypes,
   allAlertsTypes,
 } from '../../../types/Notifications/notificationTypes'
 import {
@@ -25,8 +26,25 @@ const allAlerts = async (
   return response.data
 }
 
+const updateAlert = async (
+  props: UpdateTypes,
+): Promise<NotificationAlertsData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: notificationsApiConfig.updateAlert,
+    method: AllowedHttpMethods.get,
+    params: {
+      employeeId: props.employeeId,
+      alertId: props.alertId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const notificationApi = {
   allAlerts,
+  updateAlert,
 }
 
 export default notificationApi

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { CRow, CTableBody, CTableDataCell, CTableRow } from '@coreui/react-pro'
+import { CRow, CTableDataCell, CTableRow } from '@coreui/react-pro'
 import OCard from '../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -31,17 +31,15 @@ const Notifications = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <CRow>
-          <CTableBody>
-            {notificationAlerts.length > 0 &&
-              notificationAlerts?.map((location, index) => {
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index}</CTableDataCell>
-                    <CTableDataCell>{location.msg}</CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-          </CTableBody>
+          {notificationAlerts.length > 0 &&
+            notificationAlerts?.map((location, index) => {
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">{index}</CTableDataCell>
+                  <CTableDataCell>{location.msg}</CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CRow>
       </OCard>
     </>

@@ -818,4 +818,5 @@ export interface SQAAuditReportApi extends ApiBase {
 
 export interface NotificationsApi extends ApiBase {
   allAlerts: string
+  updateAlert: string
 }

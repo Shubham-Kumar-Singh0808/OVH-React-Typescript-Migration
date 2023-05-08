@@ -5,6 +5,7 @@ import notificationApi from '../../middleware/api/Notifications/notificationsApi
 import {
   AlertsData,
   NotificationSliceState,
+  UpdateTypes,
   allAlertsTypes,
 } from '../../types/Notifications/notificationTypes'
 import { ApiLoadingState } from '../../middleware/api/apiList'
@@ -15,6 +16,17 @@ const getAllAlerts = createAsyncThunk(
   async (props: allAlertsTypes, thunkApi) => {
     try {
       return await notificationApi.allAlerts(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const getUpdateAlert = createAsyncThunk(
+  'notifications/updateAlert',
+  async (props: UpdateTypes, thunkApi) => {
+    try {
+      return await notificationApi.updateAlert(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -39,10 +51,19 @@ const notificationSlice = createSlice({
         state.notificationAlerts = action.payload.alertsList
         state.listSize = action.payload.alertsSize
       })
+      .addCase(getUpdateAlert.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addCase(getAllAlerts.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
       .addCase(getAllAlerts.rejected, (state) => {
+        state.isLoading = ApiLoadingState.failed
+      })
+      .addCase(getUpdateAlert.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
+      .addCase(getUpdateAlert.rejected, (state) => {
         state.isLoading = ApiLoadingState.failed
       })
   },
@@ -57,6 +78,7 @@ const listSize = (state: RootState): number => state.notification.listSize
 
 export const notificationThunk = {
   getAllAlerts,
+  getUpdateAlert,
 }
 
 export const notificationSelectors = {

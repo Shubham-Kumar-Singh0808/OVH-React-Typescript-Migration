@@ -995,4 +995,5 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
 }
 export const notificationsApiConfig: NotificationsApi = {
   allAlerts: apiPrefix + '/alert/allAlerts',
+  updateAlert: apiPrefix + '/alert/updateAlert',
 }

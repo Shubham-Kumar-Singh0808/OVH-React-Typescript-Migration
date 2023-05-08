@@ -5,6 +5,10 @@ export type allAlertsTypes = {
   endIndex: number
   startIndex: number
 }
+export type UpdateTypes = {
+  employeeId: number
+  alertId: number
+}
 export type AlertsData = {
   id: number
   msg: string
