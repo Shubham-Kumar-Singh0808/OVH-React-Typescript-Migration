@@ -62,8 +62,6 @@ const PipList = (): JSX.Element => {
       const win = window.location.href
       if (!win.toLowerCase().includes('pip')) {
         localStorage.removeItem('fmonth')
-        // localStorage.removeItem('fromMonth')
-        // localStorage.removeItem('toMonth')
       }
     }
   }, [fromDate, toDate])

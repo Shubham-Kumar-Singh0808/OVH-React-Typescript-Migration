@@ -162,7 +162,6 @@ const EmployeePipList = ({
     setSearchByEmployee(false)
     setSearchByAdded(false)
     setSearchInput('')
-    // dispatch(reduxServices.pipList.actions.changeSelectedEmployeePipStatus(''))
     dispatch(
       reduxServices.pipList.getAllPIPList({
         startIndex: pageSize * (selectCurrentPage - 1),
