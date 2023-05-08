@@ -68,9 +68,7 @@ const TicketApprovalsFilterOptions = ({
     useState<string>(ApprovalStatusValue)
 
   const [dateOption, setDateOption] = useState<string>(DateValue)
-  const [trackerValue, setTrackerValue] = useState<number | string>(
-    Number(TrackerValue),
-  )
+  const [trackerValue, setTrackerValue] = useState<number | string>('')
 
   const [employeeNameCheckbox, setEmployeeNameCheckbox] =
     useState<boolean>(false)

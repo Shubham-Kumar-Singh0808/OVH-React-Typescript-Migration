@@ -50,9 +50,9 @@ const TicketApprovals = (): JSX.Element => {
   console.log(DepartmentNameValue + 'DepartmentNameValue')
 
   const initialState: GetAllTicketsForApprovalProps = {
-    categoryId: Number(CategoryNameValue) || undefined,
+    categoryId: undefined,
     dateSelection: DateValue,
-    departmentId: Number(DepartmentNameValue) || undefined,
+    departmentId: undefined,
     endIndex: 20,
     fromDate: (ticketFromDate as string) || '',
     multiSearch: '',
@@ -60,24 +60,18 @@ const TicketApprovals = (): JSX.Element => {
     searchByAssigneeName: false,
     searchByEmpName: false,
     startIndex: 0,
-    subCategoryId: Number(SubCategoryNameValue) || undefined,
+    subCategoryId: undefined,
     ticketStatus: ApprovalStatusValue,
     toDate: (ticketToDate as string) || '',
-    trackerID: Number(TrackerValue) || undefined,
+    trackerID: undefined,
   }
 
   const [ticketApprovalParams, setTicketApprovalParams] = useState(initialState)
-  const [deptId, setDeptId] = useState<number>(Number(DepartmentNameValue))
-  const [categoryId, setCategoryId] = useState<number>(
-    Number(CategoryNameValue),
-  )
-  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>(
-    Number(SubCategoryNameValue),
-  )
+  const [deptId, setDeptId] = useState<number>()
+  const [categoryId, setCategoryId] = useState<number>()
+  const [subCategoryIdValue, setSubCategoryIdValue] = useState<number>()
   const [renderTicketApprovals, setRenderTicketApprovals] =
     useState<boolean>(false)
-
-  console.log(deptId + 'deptId')
 
   const ticketsForApproval = useTypedSelector(
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
@@ -151,18 +145,14 @@ const TicketApprovals = (): JSX.Element => {
   )
   useEffect(() => {
     dispatch(
-      reduxServices.ticketApprovals.actions.setDepartmentNameValue(
-        Number(deptId),
-      ),
+      reduxServices.ticketApprovals.actions.setDepartmentNameValue(deptId),
     )
     dispatch(
-      reduxServices.ticketApprovals.actions.setCategoryNameValue(
-        Number(categoryId),
-      ),
+      reduxServices.ticketApprovals.actions.setCategoryNameValue(categoryId),
     )
     dispatch(
       reduxServices.ticketApprovals.actions.setSubCategoryNameValue(
-        Number(subCategoryIdValue),
+        subCategoryIdValue,
       ),
     )
   }, [deptId, categoryId, subCategoryIdValue])

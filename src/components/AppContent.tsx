@@ -176,7 +176,7 @@ const AppContent = () => {
       )
       dispatch(
         reduxServices.ticketApprovals.actions.setApprovalStatusValue(
-          'pending Approval',
+          'Pending Approval',
         ),
       )
       dispatch(reduxServices.ticketApprovals.actions.setDateValue('Today'))
