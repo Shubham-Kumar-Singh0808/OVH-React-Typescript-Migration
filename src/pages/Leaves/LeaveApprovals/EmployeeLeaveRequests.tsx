@@ -152,13 +152,6 @@ const EmployeeLeaveRequests = (props: {
     }
   }
 
-  const dynamicFormLabelProps = (rows: string, className: string) => {
-    return {
-      rows,
-      className,
-    }
-  }
-
   const leaveRejectToastElement = (
     <OToast
       toastColor="danger"

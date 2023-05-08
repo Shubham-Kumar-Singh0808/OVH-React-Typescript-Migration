@@ -6,12 +6,14 @@ import {
   CTableDataCell,
   CTableRow,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import OCard from '../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../middleware/hooks/usePagination'
+import { AlertsData } from '../../types/Notifications/notificationTypes'
 
 const Notifications = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -64,13 +66,97 @@ const Notifications = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  const ButtonHandler = (id: number) => {
+  const iconButtonHandler = (id: number) => {
     dispatch(
       reduxServices.notification.getUpdateAlert({
         employeeId: Number(employeeId),
         alertId: id,
       }),
     )
+    dispatch(
+      reduxServices.notification.getAllAlerts({
+        employeeId: Number(employeeId),
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+  }
+
+  const isPersistValue = (notification: AlertsData) => {
+    if (
+      notification.alertType === 'MilestoneDelay' ||
+      notification.alertType === 'MilestoneClose'
+    ) {
+      return (
+        <CButton
+          size="sm"
+          color="info btn-ovh me-1"
+          className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+          onClick={() => iconButtonHandler(notification.id)}
+          disabled={notification.alertStatus === true}
+        >
+          <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+        </CButton>
+      )
+    } else if (notification.alertType === 'LeaveCancel') {
+      return (
+        <Link to={`/employeeLeaveSummary`}>
+          <CButton
+            size="sm"
+            color="info btn-ovh me-1"
+            onClick={() => iconButtonHandler(notification.id)}
+            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+            disabled={notification.alertStatus === true}
+          >
+            <i className="fa fa-user-times"></i>
+          </CButton>
+        </Link>
+      )
+    } else if (notification.alertType === 'LeaveApply') {
+      return (
+        <Link to={`/leaveApprovals`}>
+          <CButton
+            size="sm"
+            color="info btn-ovh me-1"
+            onClick={() => iconButtonHandler(notification.id)}
+            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+            disabled={notification.alertStatus === true}
+          >
+            <i className="fa fa-calendar-o"></i>
+          </CButton>
+        </Link>
+      )
+    } else if (notification.alertType === 'LeaveReject') {
+      return (
+        <Link to={`/employeeLeaveSummary`}>
+          <CButton
+            size="sm"
+            color="info btn-ovh me-1"
+            onClick={() => iconButtonHandler(notification.id)}
+            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+            disabled={notification.alertStatus === true}
+          >
+            <i className="fa fa-times"></i>
+          </CButton>
+        </Link>
+      )
+    } else if (notification.alertType === 'LeaveApprove') {
+      return (
+        <Link to={`/employeeLeaveSummary`}>
+          <CButton
+            size="sm"
+            color="info btn-ovh me-1"
+            onClick={() => iconButtonHandler(notification.id)}
+            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+            disabled={notification.alertStatus === true}
+          >
+            <i className="fa fa-check"></i>
+          </CButton>
+        </Link>
+      )
+    } else {
+      return ''
+    }
   }
 
   return (
@@ -86,29 +172,9 @@ const Notifications = (): JSX.Element => {
             notificationAlerts?.map((notification, index) => {
               return (
                 <CTableRow key={index}>
-                  <CButton
-                    data-testid={`btn-delete${index}`}
-                    size="sm"
-                    color="success btn-ovh me-1"
-                    className="btn-ovh-employee-list"
-                    onClick={() => ButtonHandler(notification.id)}
-                  >
-                    {notification.alertType === 'MilestoneDelay' ||
-                    notification.alertType === 'MilestoneClose' ? (
-                      <i
-                        className="fa fa-briefcase fa-lg"
-                        aria-hidden="true"
-                      ></i>
-                    ) : notification.alertType === 'LeaveCancel' ? (
-                      <i className="fa fa-user-times"></i>
-                    ) : notification.alertType == 'LeaveApply' ? (
-                      <i className="fa fa-calendar-o"></i>
-                    ) : notification.alertType == 'LeaveReject' ? (
-                      <i className="fa fa-times"></i>
-                    ) : (
-                      ''
-                    )}
-                  </CButton>
+                  <span className="sh-timeline-status">
+                    {isPersistValue(notification)}
+                  </span>
                   <CCol sm={6}>
                     <CTableDataCell>{notification.msg}</CTableDataCell>
                   </CCol>
