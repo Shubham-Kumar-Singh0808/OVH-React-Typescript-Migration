@@ -46,7 +46,7 @@ function AddEditVisaDetails({
   const [inValidImage, setInvalidImage] = useState<boolean>(false)
   const [clearVisaType, setClearVisaType] = useState<boolean>(false)
   const [dateFormat, setDateFormat] = useState<string>('')
-
+  const [clearFile, setClearFile] = useState<string>('')
   const [dateOfIssueFlag, setDateOfIssueFlag] = useState<boolean>(false)
   const [dateOfExpiryFlag, setDateOfExpiryFlag] = useState<boolean>(false)
 
@@ -56,6 +56,7 @@ function AddEditVisaDetails({
   const getVisaCountryDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.visaTypeDetails,
   )
+
   const getEditVisaDetails = useTypedSelector(
     reduxServices.personalInformation.selectors.employeeVisaDetails,
   )
@@ -241,6 +242,7 @@ function AddEditVisaDetails({
     }
 
     setSelectedFile(file[0])
+    setClearFile(element.value)
   }
 
   const handleClearDetails = () => {
@@ -256,6 +258,8 @@ function AddEditVisaDetails({
     setDateOfExpire('')
     setError(false)
     setImageUrl('')
+    setClearFile('')
+    setInvalidImage(false)
   }
   const actionMapping = {
     added: 'added',
@@ -273,6 +277,7 @@ function AddEditVisaDetails({
   const handleAddVisaDetails = async () => {
     const prepareObject = {
       ...employeeVisaDetails,
+      empId: employeeId,
       dateOfIssue: moment(dateOfIssue).format(commonFormatDate),
       dateOfExpire: moment(dateOfExpire).format(commonFormatDate),
     }
@@ -304,8 +309,23 @@ function AddEditVisaDetails({
           ),
         ),
       )
+      backButtonHandler()
+    } else if (
+      reduxServices.personalInformation.addEmployeeVisa.rejected.match(
+        addVisaMemberResultAction,
+      ) &&
+      addVisaMemberResultAction.payload === 409
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            This visa details is already there for the particular Time Period"
+          />,
+        ),
+      )
     }
-    backButtonHandler()
   }
 
   const handleUpdateVisaMember = async () => {
@@ -333,8 +353,23 @@ function AddEditVisaDetails({
           getToastMessage(actionMapping.updated),
         ),
       )
+      backButtonHandler()
+    } else if (
+      reduxServices.personalInformation.updateEmployeeVisa.rejected.match(
+        updateVisaMemberResultAction,
+      ) &&
+      updateVisaMemberResultAction.payload === 409
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            This visa details is already there for the particular Time Period"
+          />,
+        ),
+      )
     }
-    backButtonHandler()
   }
 
   const validateDates = (startDate: Date, endDate: Date) => {
@@ -529,6 +564,7 @@ function AddEditVisaDetails({
                 data-testid="file-upload"
                 id="fileUpload"
                 name="file"
+                value={clearFile}
                 onChange={(element: React.SyntheticEvent) =>
                   onChangeFileEventHandler(
                     element.currentTarget as HTMLInputElement,

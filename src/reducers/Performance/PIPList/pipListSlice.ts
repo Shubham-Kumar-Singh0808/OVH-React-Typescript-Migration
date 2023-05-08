@@ -170,7 +170,7 @@ const savePIPClearnceCertificate = createAsyncThunk(
     }
   },
 )
-
+const curMonth = 'Current Month'
 export const initialPipListState: PipListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -181,14 +181,29 @@ export const initialPipListState: PipListSliceState = {
   activeEmployee: [],
   employeePIPTimeline: { size: 0, list: [] },
   list: {} as GetPipList,
+  pipListValue: curMonth,
+  fromDate: '',
+  toDate: '',
 }
 
 const pipListSlice = createSlice({
   name: 'pipList',
   initialState: initialPipListState,
   reducers: {
+    setMonthValue: (state, action) => {
+      state.pipListValue = action.payload
+    },
     changeSelectedEmployeePipStatus: (state, action) => {
       state.selectedEmployeePipStatus = action.payload as EmployeePipStatus
+    },
+    clearPIPList: (state) => {
+      state.pipListValue = 'Current Month'
+    },
+    setFromDate: (state, action) => {
+      state.fromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.toDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -284,6 +299,14 @@ const viewEmployeePipDetails = (state: RootState): GetPipList =>
 const clearenceCertificate = (state: RootState): GetPipList =>
   state.pipList.list
 
+const getPIPValue = (state: RootState): string | undefined =>
+  state.pipList.pipListValue
+
+const getFromDateValue = (state: RootState): string | Date =>
+  state.pipList.fromDate
+
+const getToDateValue = (state: RootState): string | Date => state.pipList.toDate
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -308,6 +331,9 @@ export const pipListSelectors = {
   employeePIPTimeline,
   viewEmployeePipDetails,
   clearenceCertificate,
+  getPIPValue,
+  getFromDateValue,
+  getToDateValue,
 }
 
 export const pipListService = {

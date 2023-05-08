@@ -1,11 +1,4 @@
-import {
-  CButton,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CSpinner,
-} from '@coreui/react-pro'
+import { CButton, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import AddNewQualificationCategory from './AddNewQualificationCategory'
 import QualificationCategoryListTable from './QualificationCategoryListTable'
@@ -13,6 +6,8 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { AddUpdateEmployeeQualificationProps } from '../../../../types/MyProfile/QualificationsTab/EmployeeQualifications/employeeQualificationTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const QualificationCategoryList = ({
   backButtonHandler,
@@ -59,11 +54,7 @@ const QualificationCategoryList = ({
           </CCardBody>
         </>
       ) : (
-        <CCol>
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </>
   )

@@ -43,6 +43,7 @@ const EditProjectStatus = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [dateError, setDateError] = useState<boolean>(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
@@ -138,6 +139,7 @@ const EditProjectStatus = ({
     ) {
       updateProjectStatusHandler()
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -180,6 +182,7 @@ const EditProjectStatus = ({
     editNextWeekStatus,
   ])
   console.log(setShowEditor)
+  console.log(errorMessageCount)
   return (
     <>
       <CRow className="justify-content-end">
@@ -288,8 +291,10 @@ const EditProjectStatus = ({
           <CRow className="mt-2">
             <CCol sm={{ span: 6, offset: 3 }}>
               <span className="text-danger" data-testid="errorMessage">
-                Next week date should be greater than current week date and
-                should be after one week from current week date
+                <b>
+                  Next week date should be greater than current week date and
+                  should be after one week from current week date
+                </b>
               </span>
             </CCol>
           </CRow>

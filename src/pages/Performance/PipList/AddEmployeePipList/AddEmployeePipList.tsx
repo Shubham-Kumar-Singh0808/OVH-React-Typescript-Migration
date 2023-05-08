@@ -31,19 +31,19 @@ const AddEmployeePipList = ({
   searchByAdded,
   searchByEmployee,
   searchInput,
-  selectDate,
   fromDate,
   toDate,
   setToggle,
+  selectDay,
 }: {
   setToggle: () => void
   pageSize: number
   searchByAdded: boolean
   searchByEmployee: boolean
   searchInput: string
-  selectDate: string
   fromDate: Date | string
   toDate: Date | string
+  selectDay: string
 }): JSX.Element => {
   const [startDate, setStartDate] = useState<string>()
   const [endDate, setEndDate] = useState<string>()
@@ -192,7 +192,7 @@ const AddEmployeePipList = ({
           startIndex: pageSize * (selectCurrentPage - 1),
           endIndex: pageSize * selectCurrentPage,
           selectionStatus: selectedEmployeePipStatus,
-          dateSelection: selectDate,
+          dateSelection: selectDay,
           from: (fromDate as string) || '',
           multiSearch: searchInput,
           searchByAdded,
@@ -319,6 +319,7 @@ const AddEmployeePipList = ({
                 placeholderText="Start Date"
                 name="startDate"
                 maxDate={disableAfterDate}
+                minDate={new Date()}
                 value={startDate}
                 onChange={(date: Date) => onHandleStartDatePicker(date)}
               />

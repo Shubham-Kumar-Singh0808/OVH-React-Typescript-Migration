@@ -66,6 +66,7 @@ const PaySlipExcelFileTable = (props: {
     ) {
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
+      props.setClearFile('')
       dispatch(
         reduxServices.payrollManagement.getCurrentPayslip({
           startIndex: props.pageSize * (props.currentPage - 1),

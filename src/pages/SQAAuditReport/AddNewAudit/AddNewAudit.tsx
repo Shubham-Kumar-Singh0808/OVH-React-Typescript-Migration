@@ -303,7 +303,7 @@ const AddNewAudit = (): JSX.Element => {
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Audit Type :
-              <span className={addAudit.auditType ? TextWhite : TextDanger}>
+              <span className={addAudit?.auditType ? TextWhite : TextDanger}>
                 *
               </span>
             </CFormLabel>
@@ -314,7 +314,7 @@ const AddNewAudit = (): JSX.Element => {
                 type="text"
                 name="auditType"
                 placeholder="Audit Type"
-                value={addAudit.auditType}
+                value={addAudit?.auditType}
                 onChange={handleInputChange}
               />
             </CCol>
@@ -389,7 +389,7 @@ const AddNewAudit = (): JSX.Element => {
                     <div
                       className={
                         projectNameAutoCompleteTarget &&
-                        projectNameAutoCompleteTarget.length > 0
+                        projectNameAutoCompleteTarget?.length > 0
                           ? 'autocomplete-dropdown-wrap'
                           : 'autocomplete-dropdown-wrap hide'
                       }
@@ -431,7 +431,7 @@ const AddNewAudit = (): JSX.Element => {
                   type="text"
                   name="projectName"
                   placeholder="Project Name"
-                  value={addAudit.projectName}
+                  value={addAudit?.projectName}
                   onChange={handleInputChange}
                 />
               </CCol>
@@ -460,14 +460,16 @@ const AddNewAudit = (): JSX.Element => {
                     className: 'form-control form-control-sm',
                     placeholder: 'Project Manager',
                   }}
-                  getItemValue={(item) => item.firstName + ' ' + item.lastName}
+                  getItemValue={(item) =>
+                    item?.firstName + ' ' + item?.lastName
+                  }
                   items={projectManagers ?? []}
                   wrapperStyle={{ position: 'relative' }}
                   renderMenu={(children) => (
                     <div
                       className={
                         projectManagerAutoCompleteTarget &&
-                        projectManagerAutoCompleteTarget.length > 0
+                        projectManagerAutoCompleteTarget?.length > 0
                           ? 'autocomplete-dropdown-wrap'
                           : 'autocomplete-dropdown-wrap hide'
                       }

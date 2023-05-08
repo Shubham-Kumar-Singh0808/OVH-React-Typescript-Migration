@@ -30,11 +30,37 @@ const ResignationListFilterOptions = ({
   Select: string
   setSelect: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const getFromDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getToDateValue,
+  )
   const [dateError, setDateError] = useState<boolean>(false)
-  const [selectFromDate, setSelectFromDate] = useState<Date | string>()
-  const [selectToDate, setSelectToDate] = useState<Date | string>()
-  const [status, setStatus] = useState<string>('All')
-  const [employeeStatus, setEmployeeStatus] = useState<string>()
+  const [selectFromDate, setSelectFromDate] = useState<Date | string>(
+    getFromDateValue,
+  )
+  const [selectToDate, setSelectToDate] = useState<Date | string>(
+    getToDateValue,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.resignationList.actions.setFromDate(selectFromDate))
+    dispatch(reduxServices.resignationList.actions.setToDate(selectToDate))
+  }, [dispatch, selectFromDate, selectToDate])
+
+  const getSelectedStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedStatusValue,
+  )
+  const getSelectedEmployeeStatusValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedEmployeeStatusValue,
+  )
+
+  const [status, setStatus] = useState<string>(getSelectedStatusValue)
+  const [employeeStatus, setEmployeeStatus] = useState<string>(
+    getSelectedEmployeeStatusValue,
+  )
   const [searchInputValue, setSearchInputValue] = useState<string>('')
   const listSize = useTypedSelector(
     reduxServices.resignationList.selectors.resignationListSize,
@@ -51,7 +77,6 @@ const ResignationListFilterOptions = ({
     reduxServices.app.selectors.selectCurrentPage,
   )
 
-  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -102,44 +127,30 @@ const ResignationListFilterOptions = ({
   useEffect(() => {
     dispatch(
       reduxServices.resignationList.getResignationList({
-        dateSelection:
-          (localStorage.getItem('selectData')
-            ? localStorage.getItem('selectData')
-            : Select) || '',
-        empStatus:
-          (localStorage.getItem('employeeStatus')
-            ? localStorage.getItem('employeeStatus')
-            : employeeStatus) || '',
+        dateSelection: Select || '',
+        empStatus: employeeStatus || '',
         endIndex: pageSize * selectCurrentPage,
-        from: '',
+        from: selectFromDate
+          ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
-        status:
-          (localStorage.getItem('status')
-            ? localStorage.getItem('status')
-            : status) || 'All',
-        to: '',
+        status: status || 'All',
+        to: selectToDate
+          ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
 
-  useEffect(() => {
-    if (localStorage.getItem('selectData')) {
-      setSelect(localStorage.getItem('selectData') ?? '')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (localStorage.getItem('status')) {
-      setStatus(localStorage.getItem('status') ?? '')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (localStorage.getItem('employeeStatus')) {
-      setEmployeeStatus(localStorage.getItem('employeeStatus') ?? '')
-    }
-  }, [])
   const handleViewButtonHandler = () => {
     dispatch(
       reduxServices.resignationList.getResignationList({
@@ -223,6 +234,12 @@ const ResignationListFilterOptions = ({
       }),
     )
   }
+  useEffect(() => {
+    if (Select !== 'Custom') {
+      setSelectFromDate('')
+      setSelectToDate('')
+    }
+  }, [Select])
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
@@ -238,10 +255,12 @@ const ResignationListFilterOptions = ({
             name="Select"
             value={Select}
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setMonthValue(
+                  e.target.value,
+                ),
+              )
               setSelect(e.target.value)
-              if (!localStorage.getItem('selectData')) {
-                localStorage.setItem('selectData', e.target.value)
-              }
             }}
           >
             <option value="">Select Month</option>
@@ -262,10 +281,12 @@ const ResignationListFilterOptions = ({
             name="status"
             value={status}
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setStatusValue(
+                  e.target.value,
+                ),
+              )
               setStatus(e.target.value)
-              if (!localStorage.getItem('status')) {
-                localStorage.setItem('status', e.target.value)
-              }
             }}
           >
             <option value="All" selected>
@@ -292,10 +313,12 @@ const ResignationListFilterOptions = ({
             name="employeeStatus"
             value={employeeStatus}
             onChange={(e) => {
+              dispatch(
+                reduxServices.resignationList.actions.setEmployeeStatusValue(
+                  e.target.value,
+                ),
+              )
               setEmployeeStatus(e.target.value)
-              if (!localStorage.getItem('employeeStatus')) {
-                localStorage.setItem('employeeStatus', e.target.value)
-              }
             }}
           >
             <option value="">Employee Status</option>
@@ -353,7 +376,12 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={fromDateValue}
-                onChange={(date: Date) => setSelectFromDate(date)}
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.resignationList.actions.setFromDate(date),
+                  )
+                  setSelectFromDate(date)
+                }}
                 selected={selectFromDate as Date}
               />
             </CCol>
@@ -378,7 +406,12 @@ const ResignationListFilterOptions = ({
                 showYearDropdown
                 dropdownMode="select"
                 value={toDateValue}
-                onChange={(date: Date) => setSelectToDate(date)}
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.resignationList.actions.setToDate(date),
+                  )
+                  setSelectToDate(date)
+                }}
                 selected={selectToDate as Date}
               />
               {dateError && (
@@ -446,6 +479,11 @@ const ResignationListFilterOptions = ({
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
         pageSize={pageSize}
+        Select={Select}
+        employeeStatus={employeeStatus}
+        selectCurrentPage={selectCurrentPage}
+        selectFromDate={selectFromDate as string}
+        selectToDate={selectToDate as string}
       />
     </>
   )

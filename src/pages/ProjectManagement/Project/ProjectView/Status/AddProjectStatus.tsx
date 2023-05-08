@@ -23,6 +23,7 @@ const AddProjectStatus = ({
   const [nextWeekStatus, setNextWeekStatus] = useState<string>()
   const [dateError, setDateError] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
   const getProjectDetail = useTypedSelector(
@@ -48,6 +49,7 @@ const AddProjectStatus = ({
   const toastElement = (
     <OToast toastMessage="Status Added Successfully" toastColor={'success'} />
   )
+  console.log(errorMessageCount)
   const addProjectStatusHandler = async () => {
     const addProjectStatusReportResultAction = await dispatch(
       reduxServices.projectStatus.addProjectStatusReport({
@@ -125,6 +127,7 @@ const AddProjectStatus = ({
     ) {
       addProjectStatusHandler()
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }

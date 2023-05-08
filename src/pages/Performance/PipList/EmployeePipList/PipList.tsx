@@ -3,41 +3,28 @@ import moment from 'moment'
 import EmployeePipList from './EmployeePipList'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import AddEmployeePipList from '../AddEmployeePipList/AddEmployeePipList'
 
 const PipList = (): JSX.Element => {
-  const currentMonth = 'Current Month'
-  const [selectDate, setSelectDate] = useState<string>(currentMonth)
   const [searchInput, setSearchInput] = useState<string>('')
   const [searchByAdded, setSearchByAdded] = useState<boolean>(false)
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
-  const [fromDate, setFromDate] = useState<string>()
-  const [toDate, setToDate] = useState<string>()
+  const getFromDateValue = useTypedSelector(
+    reduxServices.pipList.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.pipList.selectors.getToDateValue,
+  )
+  const [fromDate, setFromDate] = useState<string | Date>(getFromDateValue)
+  const [toDate, setToDate] = useState<string | Date>(getToDateValue)
   const [dateError, setDateError] = useState<boolean>(false)
 
   const [isMultiSearchBtn, setIsMultiSearchBtn] = useState(false)
   const [toggle, setToggle] = useState<string>('')
-
-  useEffect(() => {
-    if (localStorage.getItem('fmonth')) {
-      setSelectDate(localStorage.getItem('fmonth') ?? '')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (localStorage.getItem('fromMonth')) {
-      setFromDate(localStorage.getItem('fromMonth') ?? '')
-    }
-  }, [])
-
-  useEffect(() => {
-    if (localStorage.getItem('toMonth')) {
-      setToDate(localStorage.getItem('toMonth') ?? '')
-    }
-  }, [])
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (searchByAdded || searchByEmployee) {
@@ -75,8 +62,6 @@ const PipList = (): JSX.Element => {
       const win = window.location.href
       if (!win.toLowerCase().includes('pip')) {
         localStorage.removeItem('fmonth')
-        localStorage.removeItem('fromMonth')
-        localStorage.removeItem('toMonth')
       }
     }
   }, [fromDate, toDate])
@@ -86,9 +71,6 @@ const PipList = (): JSX.Element => {
   )
 
   const listSize = useTypedSelector(reduxServices.pipList.selectors.listSize)
-  const selectedEmployeePipStatus = useTypedSelector(
-    reduxServices.pipList.selectors.selectedEmployeePipStatus,
-  )
 
   const {
     paginationRange,
@@ -103,27 +85,10 @@ const PipList = (): JSX.Element => {
       setCurrentPage(selectCurrentPage)
     }
   }, [selectCurrentPage])
-
-  const pipListObj = {
-    startIndex: pageSize * (selectCurrentPage - 1),
-    endIndex: pageSize * selectCurrentPage,
-    selectionStatus: selectedEmployeePipStatus,
-    dateSelection:
-      (localStorage.getItem('fmonth')
-        ? localStorage.getItem('fmonth')
-        : selectDate) || '',
-    from:
-      (localStorage.getItem('fromMonth')
-        ? localStorage.getItem('fromMonth')
-        : fromDate) || '',
-    multiSearch: searchInput,
-    searchByAdded,
-    searchByEmployee,
-    to:
-      (localStorage.getItem('toMonth')
-        ? localStorage.getItem('toMonth')
-        : toDate) || '',
-  }
+  useEffect(() => {
+    dispatch(reduxServices.pipList.actions.setFromDate(fromDate))
+    dispatch(reduxServices.pipList.actions.setToDate(toDate))
+  }, [dispatch, fromDate, toDate])
 
   return (
     <>
@@ -135,21 +100,18 @@ const PipList = (): JSX.Element => {
           CFooterClassName="d-none"
         >
           <EmployeePipList
-            selectDate={selectDate}
-            setSelectDate={setSelectDate}
             searchInput={searchInput}
             setSearchInput={setSearchInput}
             searchByAdded={searchByAdded}
             setSearchByAdded={setSearchByAdded}
             searchByEmployee={searchByEmployee}
             setSearchByEmployee={setSearchByEmployee}
-            fromDate={fromDate}
+            fromDate={fromDate as string}
             setFromDate={setFromDate}
-            toDate={toDate}
+            toDate={toDate as string}
             setToDate={setToDate}
             dateError={dateError}
             isMultiSearchBtn={isMultiSearchBtn}
-            currentMonth={currentMonth}
             toggle={toggle}
             setToggle={setToggle}
             HierarchyUserAccess={HierarchyUserAccess}
@@ -158,23 +120,22 @@ const PipList = (): JSX.Element => {
             setPageSize={setPageSize}
             currentPage={currentPage}
             pageSize={pageSize}
-            pipListObj={pipListObj}
             setCurrentPage={setCurrentPage}
           />
         </OCard>
       )}
-      {toggle === 'addPIP' && !IndividualUserAccess?.viewaccess && (
+      {toggle === 'addPIP' && (
         <AddEmployeePipList
           pageSize={pageSize}
           searchByAdded={searchByAdded}
           searchByEmployee={searchByEmployee}
           searchInput={searchInput}
-          selectDate={selectDate}
           fromDate={fromDate as string}
           toDate={toDate as string}
           setToggle={() => {
             setToggle('')
           }}
+          selectDay={''}
         />
       )}
     </>

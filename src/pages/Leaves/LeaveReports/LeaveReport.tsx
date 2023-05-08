@@ -7,7 +7,8 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const LeaveReport = (): JSX.Element => {
-  const [selectYear, setSelectYear] = useState('2022')
+  const currentYear = new Date().getFullYear()
+  const [selectYear, setSelectYear] = useState(String(currentYear))
   const listSize = useTypedSelector(
     reduxServices.leaveReport.selectors.listSize,
   )

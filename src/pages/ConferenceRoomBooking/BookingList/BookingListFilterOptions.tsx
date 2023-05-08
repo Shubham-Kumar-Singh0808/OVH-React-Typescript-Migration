@@ -62,6 +62,11 @@ const BookingListFilterOptions = ({
 
   const onHandleStartDate = (value: Date) => {
     setSelectDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.bookingList.actions.setFromDateValue(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   return (
@@ -83,6 +88,11 @@ const BookingListFilterOptions = ({
             value={location}
             onChange={(e) => {
               setLocation(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setLocationValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value={''}>Select Location</option>
@@ -108,6 +118,9 @@ const BookingListFilterOptions = ({
             value={room}
             onChange={(e) => {
               setRoom(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setRoomValue(e.target.value),
+              )
             }}
           >
             <option value={''}>Select Room</option>
@@ -131,6 +144,11 @@ const BookingListFilterOptions = ({
             value={meetingStatus}
             onChange={(e) => {
               setMeetingStatus(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setMeetingStatus(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="New">New</option>
@@ -154,6 +172,11 @@ const BookingListFilterOptions = ({
             value={selectDateOptions}
             onChange={(e) => {
               setSelectDateOptions(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setSelectCustom(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="Today">Today</option>

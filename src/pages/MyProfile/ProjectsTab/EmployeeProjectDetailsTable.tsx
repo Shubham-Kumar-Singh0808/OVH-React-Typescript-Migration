@@ -4,8 +4,6 @@ import {
   CTableHeaderCell,
   CTable,
   CTableBody,
-  CTableDataCell,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
@@ -83,11 +81,7 @@ const EmployeeProjectsDetail = (
           {projectDetails ? (
             <EmployeeProjectDetailsEntry />
           ) : (
-            <CTableRow color="default" className="text-center">
-              <CTableDataCell colSpan={7}>
-                <CSpinner data-testid="project-loader" />
-              </CTableDataCell>
-            </CTableRow>
+            <p>No Records Found...</p>
           )}
         </CTableBody>
       </CTable>
