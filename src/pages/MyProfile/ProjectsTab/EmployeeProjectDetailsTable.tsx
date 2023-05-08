@@ -83,7 +83,7 @@ const EmployeeProjectsDetail = (
           {projectDetails ? (
             <EmployeeProjectDetailsEntry />
           ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
+            <p>No Records Found...</p>
           )}
         </CTableBody>
       </CTable>

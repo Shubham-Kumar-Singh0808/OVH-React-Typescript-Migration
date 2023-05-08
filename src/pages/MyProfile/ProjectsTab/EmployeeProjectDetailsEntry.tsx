@@ -47,13 +47,13 @@ const EmployeeProjectDetailsEntry = (): JSX.Element => {
           {employeeDetails[0]?.isAllocated ? 'Allocated' : 'Not Allocated'}
         </CTableDataCell>
 
-        {!employeeDetails?.length && isLoading !== ApiLoadingState.loading && (
+        {/* {!employeeDetails?.length && isLoading !== ApiLoadingState.loading && (
           <CCol className="text-start ms-4">
             <CRow>
               <h5>No Records Found... </h5>
             </CRow>
           </CCol>
-        )}
+        )} */}
       </CTableRow>
     </>
   )
