@@ -66,11 +66,9 @@ const ProjectReport = (): JSX.Element => {
     health: getProjectHealth as string,
     projectStatus: getStatusValue as string,
     type: getPricingModel as string,
-    projectDatePeriod: getSelectValue as string,
+    projectDatePeriod: '',
     intrnalOrNot: false,
     multiSearch: '',
-    startdate: (getCustomFromValue as string) || '',
-    enddate: (getCustomToValue as string) || '',
   }
 
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
