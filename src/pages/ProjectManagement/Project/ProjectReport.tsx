@@ -66,18 +66,28 @@ const ProjectReport = (): JSX.Element => {
     health: getProjectHealth as string,
     projectStatus: getStatusValue as string,
     type: getPricingModel as string,
-    projectDatePeriod: '',
+    projectDatePeriod: getSelectValue,
     intrnalOrNot: false,
     multiSearch: '',
+    startdate: getCustomFromValue as string,
+    enddate: getCustomToValue as string,
   }
 
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
   const [isViewBtnEnable, setViewBtnEnable] = useState(true)
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
-
-  useEffect(() => {
-    dispatch(reduxServices.projectReport.getFetchActiveProjectReports(params))
-  }, [dispatch])
+  console.log(params.projectStatus)
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.projectReport.getFetchActiveProjectReports({
+  //       endIndex: 20,
+  //       firstIndex: 0,
+  //       health: getProjectHealth as string,
+  //       projectStatus: 'INPROGRESS',
+  //       type: getPricingModel as string,
+  //     }),
+  //   )
+  // }, [dispatch])
 
   const {
     paginationRange,
@@ -99,13 +109,13 @@ const ProjectReport = (): JSX.Element => {
             firstIndex: pageSize * (currentPage - 1),
             endIndex: pageSize * currentPage,
             employeeId: Number(employeeId),
+            startdate: getCustomFromValue as string,
+            enddate: getCustomToValue as string,
           }
         : {
             ...params,
             firstIndex: pageSize * (currentPage - 1),
             endIndex: pageSize * currentPage,
-            startdate: '',
-            enddate: '',
             employeeId: Number(employeeId),
           }
 
@@ -241,8 +251,8 @@ const ProjectReport = (): JSX.Element => {
           }
         : {
             ...params,
-            startdate: '',
-            enddate: '',
+            startdate: getCustomFromValue as string,
+            enddate: getCustomToValue as string,
             employeeId: Number(employeeId),
           }
 
@@ -315,7 +325,7 @@ const ProjectReport = (): JSX.Element => {
       )
     }
   }
-
+  console.log(params.startdate)
   return (
     <OCard
       className="mb-4 myprofile-wrapper project-report"
