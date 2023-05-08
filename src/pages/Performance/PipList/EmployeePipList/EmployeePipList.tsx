@@ -162,18 +162,18 @@ const EmployeePipList = ({
     setSearchByEmployee(false)
     setSearchByAdded(false)
     setSearchInput('')
-    dispatch(reduxServices.pipList.actions.changeSelectedEmployeePipStatus(''))
+    // dispatch(reduxServices.pipList.actions.changeSelectedEmployeePipStatus(''))
     dispatch(
       reduxServices.pipList.getAllPIPList({
         startIndex: pageSize * (selectCurrentPage - 1),
         endIndex: pageSize * selectCurrentPage,
         selectionStatus: selectedEmployeePipStatus,
         dateSelection: 'Current Month',
-        from: (fromDate as string) || '',
+        from: fromDateValue || '',
         multiSearch: searchInput,
         searchByAdded,
         searchByEmployee,
-        to: (toDate as string) || '',
+        to: toDateValue || '',
       }),
     )
   }
@@ -336,7 +336,6 @@ const EmployeePipList = ({
               </CButton>
             </CCol>
           </CRow>
-          {/* )} */}
           {!IndividualUserAccess?.viewaccess &&
             HierarchyUserAccess?.viewaccess && (
               <CRow className="justify-content-end">
