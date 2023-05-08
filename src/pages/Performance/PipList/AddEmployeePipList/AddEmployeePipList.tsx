@@ -319,6 +319,7 @@ const AddEmployeePipList = ({
                 placeholderText="Start Date"
                 name="startDate"
                 maxDate={disableAfterDate}
+                minDate={new Date()}
                 value={startDate}
                 onChange={(date: Date) => onHandleStartDatePicker(date)}
               />

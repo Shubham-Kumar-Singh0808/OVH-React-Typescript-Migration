@@ -129,7 +129,7 @@ const EmployeePipListTable = ({
                       <Link to={`/ViewPIPDetail/${item.id}`}>
                         <CButton
                           color="info"
-                          className="btn-ovh-employee-list"
+                          className="btn-ovh-employee-list me-1"
                           data-testid="history-btn"
                           onClick={() => timeLineHandler(item.id as number)}
                         >
@@ -143,7 +143,7 @@ const EmployeePipListTable = ({
                     <CTooltip content="Clearence Certificate">
                       <Link to={`/PIPClearnceCerticates`}>
                         <CButton
-                          className="btn-ovh-employee-list"
+                          className="btn-ovh-employee-list me-1"
                           color="info"
                           type="button"
                           onClick={() => clearanceBtnHandler(item.id as number)}

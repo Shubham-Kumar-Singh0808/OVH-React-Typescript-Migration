@@ -18,14 +18,21 @@ const EmployeePipTimeline = (): JSX.Element => {
   )
   useEffect(() => {
     dispatch(reduxServices.pipList.viewPipDetails(id))
-    dispatch(
-      reduxServices.pipList.getPIPHistory({
-        filterName: 'PIP',
-        pipId: Number(id),
-      }),
-    )
   }, [dispatch])
 
+  const updateButtonHandler = () => {
+    setToggle('employeeUpdatePIP')
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
+  const extendButtonHandler = () => {
+    setToggle('employeeExtendPIP')
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
+
+  const removeButtonHandler = () => {
+    setToggle('employeeRemovePIP')
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
   return (
     <>
       {toggle === '' && (
@@ -45,7 +52,7 @@ const EmployeePipTimeline = (): JSX.Element => {
                     data-testid="update-btn"
                     className="btn-ovh me-1 text-white"
                     color="success"
-                    onClick={() => setToggle('employeeUpdatePIP')}
+                    onClick={updateButtonHandler}
                   >
                     Update
                   </CButton>
@@ -54,7 +61,7 @@ const EmployeePipTimeline = (): JSX.Element => {
                   data-testid="Extend-btn"
                   color="warning"
                   className="btn-ovh me-1 text-white"
-                  onClick={() => setToggle('employeeExtendPIP')}
+                  onClick={extendButtonHandler}
                 >
                   Extend PIP
                 </CButton>
@@ -62,7 +69,7 @@ const EmployeePipTimeline = (): JSX.Element => {
                   data-testid="Remove-btn"
                   className="btn-ovh me-1 text-white"
                   color="success"
-                  onClick={() => setToggle('employeeRemovePIP')}
+                  onClick={removeButtonHandler}
                 >
                   Remove From PIP
                 </CButton>

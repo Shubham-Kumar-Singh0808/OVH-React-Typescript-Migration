@@ -1,6 +1,5 @@
-import { CTableRow, CTableDataCell, CCol, CRow } from '@coreui/react-pro'
+import { CTableRow, CTableDataCell } from '@coreui/react-pro'
 import React from 'react'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { localeDateFormat } from '../../../utils/dateFormatUtils'
@@ -15,9 +14,6 @@ const EmployeeProjectDetailsEntry = (): JSX.Element => {
   )
   const employeeDetails = projectDetails?.filter(
     (item) => item.employeeId === Number(employeeId),
-  )
-  const isLoading = useTypedSelector(
-    reduxServices.employeeAccount.selectors.isLoading,
   )
 
   return (
