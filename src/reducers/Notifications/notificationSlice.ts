@@ -35,7 +35,7 @@ const getUpdateAlert = createAsyncThunk(
   },
 )
 
-const initialNotificationState: NotificationSliceState = {
+export const initialNotificationState: NotificationSliceState = {
   notificationAlerts: [],
   isLoading: ApiLoadingState.idle,
   listSize: 0,
