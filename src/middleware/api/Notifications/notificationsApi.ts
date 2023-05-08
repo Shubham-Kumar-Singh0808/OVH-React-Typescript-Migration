@@ -1,5 +1,6 @@
 import {
   NotificationAlertsData,
+  UpdateList,
   UpdateTypes,
   allAlertsTypes,
 } from '../../../types/Notifications/notificationTypes'
@@ -26,9 +27,7 @@ const allAlerts = async (
   return response.data
 }
 
-const updateAlert = async (
-  props: UpdateTypes,
-): Promise<NotificationAlertsData> => {
+const updateAlert = async (props: UpdateTypes): Promise<UpdateList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: notificationsApiConfig.updateAlert,
     method: AllowedHttpMethods.get,

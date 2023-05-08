@@ -27,4 +27,16 @@ export type NotificationSliceState = {
   notificationAlerts: AlertsData[]
   isLoading: ApiLoadingState
   listSize: number
+  updateAlertsList: UpdateList
+}
+
+export type UpdateList = {
+  id: number
+  msg: string
+  empId: null | number
+  msgDate: string
+  alertType: string
+  alertStatus: boolean
+  latestSatatus: boolean
+  projectId: null
 }

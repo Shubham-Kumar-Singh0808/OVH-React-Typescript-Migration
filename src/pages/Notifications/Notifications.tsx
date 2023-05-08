@@ -1,5 +1,11 @@
 import React, { useEffect } from 'react'
-import { CCol, CRow, CTableDataCell, CTableRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCol,
+  CRow,
+  CTableDataCell,
+  CTableRow,
+} from '@coreui/react-pro'
 import OCard from '../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -58,8 +64,13 @@ const Notifications = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  const getItemNumber = (index: number) => {
-    return (currentPage - 1) * pageSize + index + 1
+  const ButtonHandler = (id: number) => {
+    dispatch(
+      reduxServices.notification.getUpdateAlert({
+        employeeId: Number(employeeId),
+        alertId: id,
+      }),
+    )
   }
 
   return (
@@ -75,10 +86,23 @@ const Notifications = (): JSX.Element => {
             notificationAlerts?.map((location, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">
-                    {getItemNumber(index)}
-                  </CTableDataCell>
-                  <CTableDataCell>{location.msg}</CTableDataCell>
+                  <CButton
+                    data-testid={`btn-delete${index}`}
+                    size="sm"
+                    color="success btn-ovh me-1"
+                    className="btn-ovh-employee-list"
+                    onClick={() => ButtonHandler(location.id)}
+                  >
+                    <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+                  </CButton>
+                  <CCol sm={6}>
+                    <CTableDataCell>{location.msg}</CTableDataCell>
+                  </CCol>
+                  <CRow>
+                    <CTableDataCell>
+                      <b>{location.msgDate}</b>
+                    </CTableDataCell>
+                  </CRow>
                 </CTableRow>
               )
             })}

@@ -5,6 +5,7 @@ import notificationApi from '../../middleware/api/Notifications/notificationsApi
 import {
   AlertsData,
   NotificationSliceState,
+  UpdateList,
   UpdateTypes,
   allAlertsTypes,
 } from '../../types/Notifications/notificationTypes'
@@ -38,6 +39,7 @@ const initialNotificationState: NotificationSliceState = {
   notificationAlerts: [],
   isLoading: ApiLoadingState.idle,
   listSize: 0,
+  updateAlertsList: {} as UpdateList,
 }
 
 const notificationSlice = createSlice({
@@ -51,8 +53,9 @@ const notificationSlice = createSlice({
         state.notificationAlerts = action.payload.alertsList
         state.listSize = action.payload.alertsSize
       })
-      .addCase(getUpdateAlert.fulfilled, (state) => {
+      .addCase(getUpdateAlert.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.updateAlertsList = action.payload
       })
       .addCase(getAllAlerts.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -74,6 +77,9 @@ const isLoading = (state: RootState): LoadingState =>
 const notificationAlerts = (state: RootState): AlertsData[] =>
   state.notification.notificationAlerts
 
+const updateAlertsList = (state: RootState): UpdateList =>
+  state.notification.updateAlertsList
+
 const listSize = (state: RootState): number => state.notification.listSize
 
 export const notificationThunk = {
@@ -85,6 +91,7 @@ export const notificationSelectors = {
   isLoading,
   notificationAlerts,
   listSize,
+  updateAlertsList,
 }
 
 export const notificationService = {
