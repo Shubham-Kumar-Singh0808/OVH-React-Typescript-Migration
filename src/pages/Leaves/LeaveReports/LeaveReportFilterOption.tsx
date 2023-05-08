@@ -59,16 +59,28 @@ const LeaveReportsFilterOption = ({
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.leaveReport.searchLeaveSummaries({
-          financialYear: selectYear,
-          search: searchInput,
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
+      if (searchInput === '') {
+        dispatch(
+          reduxServices.leaveReport.getAllEmployeesLeaveSummaries({
+            financialYear: selectYear,
+            startIndex: 0,
+            endIndex: 20,
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.leaveReport.searchLeaveSummaries({
+            financialYear: selectYear,
+            search: searchInput,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+          }),
+        )
+      }
     }
   }
+
   const handleExportLeaveReportData = async () => {
     const employeeLeaveReportDataDownload =
       await leaveReportsApi.exportLeaveReportData({
