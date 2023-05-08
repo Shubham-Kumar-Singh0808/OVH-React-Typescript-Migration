@@ -18,6 +18,8 @@ import { LeaveReportOptionsProps } from '../../../types/Leaves/LeaveReports/leav
 const LeaveReportsFilterOption = ({
   selectYear,
   setSelectYear,
+  setCurrentPage,
+  setPageSize,
 }: LeaveReportOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
@@ -89,6 +91,12 @@ const LeaveReportsFilterOption = ({
     .map((val2) => val2.yearOfEra.value)
 
   const uniqueValue = Array.from(new Set(result))
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectYear(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
   return (
     <>
       <CRow className="mt-1">
@@ -107,7 +115,8 @@ const LeaveReportsFilterOption = ({
                 name="selectYear"
                 id="selectYear"
                 value={selectYear}
-                onChange={(e) => setSelectYear(e.target.value)}
+                // onChange={(e) => setSelectYear(e.target.value)}
+                onChange={onChangeHandler}
               >
                 {uniqueValue.map((value, index) => {
                   return <option key={index}>{value}</option>
