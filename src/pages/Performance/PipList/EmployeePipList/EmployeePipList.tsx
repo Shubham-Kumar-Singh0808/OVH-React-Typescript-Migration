@@ -33,7 +33,6 @@ const EmployeePipList = ({
   isMultiSearchBtn,
   toggle,
   setToggle,
-  HierarchyUserAccess,
   IndividualUserAccess,
   paginationRange,
   setPageSize,
@@ -162,18 +161,17 @@ const EmployeePipList = ({
     setSearchByEmployee(false)
     setSearchByAdded(false)
     setSearchInput('')
-    dispatch(reduxServices.pipList.actions.changeSelectedEmployeePipStatus(''))
     dispatch(
       reduxServices.pipList.getAllPIPList({
         startIndex: pageSize * (selectCurrentPage - 1),
         endIndex: pageSize * selectCurrentPage,
         selectionStatus: selectedEmployeePipStatus,
         dateSelection: 'Current Month',
-        from: (fromDate as string) || '',
+        from: fromDateValue || '',
         multiSearch: searchInput,
         searchByAdded,
         searchByEmployee,
-        to: (toDate as string) || '',
+        to: toDateValue || '',
       }),
     )
   }
@@ -195,220 +193,220 @@ const EmployeePipList = ({
     <>
       {toggle === '' && (
         <>
-          {!IndividualUserAccess?.viewaccess &&
-            HierarchyUserAccess?.viewaccess && (
-              <CRow className="employeeAllocation-form  mt-4">
-                <CCol sm={2} md={1} className="text-end">
-                  <CFormLabel className="mt-2">Select:</CFormLabel>
-                </CCol>
-                <CCol sm={2}>
-                  <CFormSelect
-                    aria-label="Default select example"
-                    size="sm"
-                    id="selectDate"
-                    data-testid="form-select1"
-                    name="selectDate"
-                    value={selectDay}
-                    onChange={(e) => {
-                      dispatch(
-                        reduxServices.pipList.actions.setMonthValue(
-                          e.target.value,
-                        ),
-                      )
-                      setSelectDay(e.target.value)
-                    }}
-                  >
-                    <option value="Today">Today</option>
-                    <option value="Yesterday">Yesterday</option>
-                    <option value="This Week">This Week</option>
-                    <option value="Last Week">Last Week</option>
-                    <option value="Last Month">Last Month</option>
-                    <option value="Current Month">Current Month</option>
-                    <option value="Custom">Custom</option>
-                  </CFormSelect>
-                </CCol>
-                <CCol sm={12} md={9}>
-                  <EmployeePipListOptions
-                    paginationRange={paginationRange}
-                    setPageSize={setPageSize}
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    pageSize={pageSize}
-                    fromDate={fromDate}
-                    toDate={toDate}
-                    searchInput={searchInput}
-                    searchByAdded={searchByAdded}
-                    searchByEmployee={searchByEmployee}
-                    setToggle={setToggle}
-                    setFromDate={setFromDate}
-                    setToDate={setToDate}
-                    selectDay={selectDay}
-                  />
-                </CCol>
-                {selectDay === 'Custom' ? (
-                  <>
-                    <CCol sm={2} md={1} className="text-end">
-                      <CFormLabel className="mt-1">
-                        From:
-                        <span className={showIsRequired(fromDate as string)}>
-                          *
-                        </span>
-                      </CFormLabel>
-                    </CCol>
-                    <CCol sm={2}>
-                      <DatePicker
-                        className="form-control form-control-sm sh-date-picker"
-                        data-testid="date-picker"
-                        placeholderText="dd/mm/yyyy"
-                        name="fromDate"
-                        id="fromDate"
-                        autoComplete="off"
-                        showMonthDropdown
-                        showYearDropdown
-                        dropdownMode="select"
-                        value={fromDateValue}
-                        onChange={(date: Date) => {
-                          dispatch(
-                            reduxServices.pipList.actions.setFromDate(date),
-                          )
-                          setFromDate(date)
-                        }}
-                        selected={fromDate as Date}
-                      />
-                    </CCol>
-                    <CCol sm={2} md={1} className="text-end">
-                      <CFormLabel className="mt-1">
-                        To:
-                        <span className={showIsRequired(toDate as string)}>
-                          *
-                        </span>
-                      </CFormLabel>
-                    </CCol>
-                    <CCol sm={2}>
-                      <DatePicker
-                        className="form-control form-control-sm sh-date-picker"
-                        data-testid="date-picker"
-                        placeholderText="dd/mm/yyyy"
-                        name="toDate"
-                        id="toDate"
-                        autoComplete="off"
-                        showMonthDropdown
-                        showYearDropdown
-                        dropdownMode="select"
-                        value={toDateValue}
-                        onChange={(date: Date) => {
-                          dispatch(
-                            reduxServices.pipList.actions.setToDate(date),
-                          )
-                          setToDate(date)
-                        }}
-                        selected={toDate as Date}
-                      />
-                      {dateError && (
-                        <span
-                          className="text-danger"
-                          data-testid="errorMessage"
-                        >
-                          <b>To date should be greater than From date</b>
-                        </span>
-                      )}
-                    </CCol>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </CRow>
-            )}
-
-          {!IndividualUserAccess?.viewaccess &&
-            HierarchyUserAccess?.viewaccess && (
-              <CRow className="mt-4 mb-4">
-                <CCol sm={9} md={{ offset: 3 }}>
-                  <CButton
-                    className="cursor-pointer"
-                    color="success btn-ovh me-1"
-                    data-testid="view-btn"
-                    onClick={viewButtonHandler}
-                    disabled={
-                      (selectDay === 'Custom' &&
-                        !(fromDate !== '' && toDate !== '')) ||
-                      dateError
-                    }
-                  >
-                    View
-                  </CButton>
-                  <CButton
-                    className="cursor-pointer"
-                    disabled={false}
-                    color="warning btn-ovh me-1"
-                    onClick={clearButtonHandler}
-                  >
-                    Clear
-                  </CButton>
-                </CCol>
-              </CRow>
-            )}
-          {!IndividualUserAccess?.viewaccess &&
-            HierarchyUserAccess?.viewaccess && (
-              <CRow className="justify-content-end">
-                <CCol sm={3}>
-                  <label className="search_emp">
-                    <CFormCheck
-                      className="pt-2"
-                      data-testid="ch-searchByEmployee"
-                      id="searchByEmployee"
-                      name="searchByEmployee"
-                      checked={searchByEmployee}
-                      onChange={(e) => setSearchByEmployee(e.target.checked)}
-                    />
-                    <b>Search by Employee Name</b>
-                  </label>
-                  <label className="search_emp">
-                    <CFormCheck
-                      className="pt-2"
-                      data-testid="ch-searchByAdded"
-                      id="searchByAdded"
-                      name="searchByAdded"
-                      checked={searchByAdded}
-                      onChange={(e) => setSearchByAdded(e.target.checked)}
-                    />
-                    <b>Search by Added by Name</b>
-                  </label>
-                </CCol>
-              </CRow>
-            )}
-          {!IndividualUserAccess?.viewaccess &&
-            HierarchyUserAccess?.viewaccess && (
-              <CRow className="gap-2 d-md-flex justify-content-md-end">
-                <CCol sm={3} md={3}>
-                  <CInputGroup className="global-search me-0">
-                    <CFormInput
-                      disabled={!isMultiSearchBtn}
-                      data-testid="searchField"
-                      placeholder="Employee Search"
-                      aria-label="Multiple Search"
-                      aria-describedby="button-addon2"
-                      value={searchInput?.replace(/^\s*/, '')}
-                      onChange={(e) => {
-                        setSearchInput(e.target.value)
+          {IndividualUserAccess?.viewaccess ? (
+            ''
+          ) : (
+            <CRow className="employeeAllocation-form  mt-4">
+              <CCol sm={2} md={1} className="text-end">
+                <CFormLabel className="mt-2">Select:</CFormLabel>
+              </CCol>
+              <CCol sm={2}>
+                <CFormSelect
+                  aria-label="Default select example"
+                  size="sm"
+                  id="selectDate"
+                  data-testid="form-select1"
+                  name="selectDate"
+                  value={selectDay}
+                  onChange={(e) => {
+                    dispatch(
+                      reduxServices.pipList.actions.setMonthValue(
+                        e.target.value,
+                      ),
+                    )
+                    setSelectDay(e.target.value)
+                  }}
+                >
+                  <option value="Today">Today</option>
+                  <option value="Yesterday">Yesterday</option>
+                  <option value="This Week">This Week</option>
+                  <option value="Last Week">Last Week</option>
+                  <option value="Last Month">Last Month</option>
+                  <option value="Current Month">Current Month</option>
+                  <option value="Custom">Custom</option>
+                </CFormSelect>
+              </CCol>
+              <CCol sm={12} md={9}>
+                <EmployeePipListOptions
+                  paginationRange={paginationRange}
+                  setPageSize={setPageSize}
+                  setCurrentPage={setCurrentPage}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  fromDate={fromDate}
+                  toDate={toDate}
+                  searchInput={searchInput}
+                  searchByAdded={searchByAdded}
+                  searchByEmployee={searchByEmployee}
+                  setToggle={setToggle}
+                  setFromDate={setFromDate}
+                  setToDate={setToDate}
+                  selectDay={selectDay}
+                />
+              </CCol>
+              {selectDay === 'Custom' ? (
+                <>
+                  <CCol sm={2} md={1} className="text-end">
+                    <CFormLabel className="mt-1">
+                      From:
+                      <span className={showIsRequired(fromDate as string)}>
+                        *
+                      </span>
+                    </CFormLabel>
+                  </CCol>
+                  <CCol sm={2}>
+                    <DatePicker
+                      className="form-control form-control-sm sh-date-picker"
+                      data-testid="date-picker"
+                      placeholderText="dd/mm/yyyy"
+                      name="fromDate"
+                      id="fromDate"
+                      autoComplete="off"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      value={fromDateValue}
+                      onChange={(date: Date) => {
+                        dispatch(
+                          reduxServices.pipList.actions.setFromDate(date),
+                        )
+                        setFromDate(date)
                       }}
-                      onKeyDown={handleSearchBtn}
+                      selected={fromDate as Date}
                     />
-                    <CButton
-                      disabled={!searchInput?.replace(/^\s*/, '')}
-                      data-testid="multi-search-btn"
-                      className="cursor-pointer"
-                      type="button"
-                      color="info"
-                      id="button-addon2"
-                      onClick={multiSearchBtnHandler}
-                    >
-                      <i className="fa fa-search"></i>
-                    </CButton>
-                  </CInputGroup>
-                </CCol>
-              </CRow>
-            )}
+                  </CCol>
+                  <CCol sm={2} md={1} className="text-end">
+                    <CFormLabel className="mt-1">
+                      To:
+                      <span className={showIsRequired(toDate as string)}>
+                        *
+                      </span>
+                    </CFormLabel>
+                  </CCol>
+                  <CCol sm={2}>
+                    <DatePicker
+                      className="form-control form-control-sm sh-date-picker"
+                      data-testid="date-picker"
+                      placeholderText="dd/mm/yyyy"
+                      name="toDate"
+                      id="toDate"
+                      autoComplete="off"
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      value={toDateValue}
+                      onChange={(date: Date) => {
+                        dispatch(reduxServices.pipList.actions.setToDate(date))
+                        setToDate(date)
+                      }}
+                      selected={toDate as Date}
+                    />
+                    {dateError && (
+                      <span className="text-danger" data-testid="errorMessage">
+                        <b>To date should be greater than From date</b>
+                      </span>
+                    )}
+                  </CCol>
+                </>
+              ) : (
+                <></>
+              )}
+            </CRow>
+          )}
+
+          {IndividualUserAccess?.viewaccess ? (
+            ''
+          ) : (
+            <CRow className="mt-4 mb-4">
+              <CCol sm={9} md={{ offset: 3 }}>
+                <CButton
+                  className="cursor-pointer"
+                  color="success btn-ovh me-1"
+                  data-testid="view-btn"
+                  onClick={viewButtonHandler}
+                  disabled={
+                    (selectDay === 'Custom' &&
+                      !(fromDate !== '' && toDate !== '')) ||
+                    dateError
+                  }
+                >
+                  View
+                </CButton>
+                <CButton
+                  className="cursor-pointer"
+                  disabled={false}
+                  color="warning btn-ovh me-1"
+                  onClick={clearButtonHandler}
+                >
+                  Clear
+                </CButton>
+              </CCol>
+            </CRow>
+          )}
+          {IndividualUserAccess?.viewaccess ? (
+            ''
+          ) : (
+            <CRow className="justify-content-end">
+              <CCol sm={3}>
+                <label className="search_emp">
+                  <CFormCheck
+                    className="pt-2"
+                    data-testid="ch-searchByEmployee"
+                    id="searchByEmployee"
+                    name="searchByEmployee"
+                    checked={searchByEmployee}
+                    onChange={(e) => setSearchByEmployee(e.target.checked)}
+                  />
+                  <b>Search by Employee Name</b>
+                </label>
+                <label className="search_emp">
+                  <CFormCheck
+                    className="pt-2"
+                    data-testid="ch-searchByAdded"
+                    id="searchByAdded"
+                    name="searchByAdded"
+                    checked={searchByAdded}
+                    onChange={(e) => setSearchByAdded(e.target.checked)}
+                  />
+                  <b>Search by Added by Name</b>
+                </label>
+              </CCol>
+            </CRow>
+          )}
+
+          {IndividualUserAccess?.viewaccess ? (
+            ''
+          ) : (
+            <CRow className="gap-2 d-md-flex justify-content-md-end">
+              <CCol sm={3} md={3}>
+                <CInputGroup className="global-search me-0">
+                  <CFormInput
+                    disabled={!isMultiSearchBtn}
+                    data-testid="searchField"
+                    placeholder="Employee Search"
+                    aria-label="Multiple Search"
+                    aria-describedby="button-addon2"
+                    value={searchInput?.replace(/^\s*/, '')}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value)
+                    }}
+                    onKeyDown={handleSearchBtn}
+                  />
+                  <CButton
+                    disabled={!searchInput?.replace(/^\s*/, '')}
+                    data-testid="multi-search-btn"
+                    className="cursor-pointer"
+                    type="button"
+                    color="info"
+                    id="button-addon2"
+                    onClick={multiSearchBtnHandler}
+                  >
+                    <i className="fa fa-search"></i>
+                  </CButton>
+                </CInputGroup>
+              </CCol>
+            </CRow>
+          )}
           <EmployeePipListTable
             paginationRange={paginationRange}
             setPageSize={setPageSize}

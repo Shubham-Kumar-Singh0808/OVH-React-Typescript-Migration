@@ -10,6 +10,7 @@ import {
 } from '@coreui/react-pro'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -29,6 +30,7 @@ const EmployeeRemovePIP = ({
   const [selectRatingValue, setSelectRatingValue] = useState<string>('')
   const [reasonForRemovePIP, setReasonForRemovePIP] = useState<string>('')
   const [isRemoveBtnEnabled, setIsRemoveBtnEnabled] = useState(false)
+  const { id } = useParams<{ id: string }>()
 
   const viewPipDetails = useTypedSelector(
     reduxServices.pipList.selectors.viewEmployeePipDetails,
@@ -82,6 +84,7 @@ const EmployeeRemovePIP = ({
         pipId: viewPipDetails.id as number,
       }),
     )
+    dispatch(reduxServices.pipList.viewPipDetails(id))
     dispatch(reduxServices.app.actions.addToast(successToastMsg))
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
