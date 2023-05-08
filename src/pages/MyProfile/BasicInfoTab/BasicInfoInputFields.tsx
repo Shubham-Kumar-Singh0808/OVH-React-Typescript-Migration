@@ -67,7 +67,7 @@ const BasicInfoInputFields = ({
       className,
     }
   }
-
+  console.log(baseLocationShown)
   return (
     <>
       <CRow className="mt-3 ">

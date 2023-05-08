@@ -13,8 +13,6 @@ import {
   EmployeeProjectDetailInterface,
   ProjectDetails,
 } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeProjectsDetail = (
   props: EmployeeProjectDetailInterface,
@@ -83,7 +81,7 @@ const EmployeeProjectsDetail = (
           {projectDetails ? (
             <EmployeeProjectDetailsEntry />
           ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
+            <p>No Records Found...</p>
           )}
         </CTableBody>
       </CTable>
