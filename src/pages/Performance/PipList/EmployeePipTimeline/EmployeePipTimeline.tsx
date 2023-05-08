@@ -45,7 +45,8 @@ const EmployeePipTimeline = (): JSX.Element => {
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
               <>
-                {viewEmployeePipDetails?.extendDate != null ? (
+                {viewEmployeePipDetails?.extendDate != null ||
+                viewEmployeePipDetails?.pipflag === false ? (
                   ''
                 ) : (
                   <CButton
@@ -57,22 +58,30 @@ const EmployeePipTimeline = (): JSX.Element => {
                     Update
                   </CButton>
                 )}
-                <CButton
-                  data-testid="Extend-btn"
-                  color="warning"
-                  className="btn-ovh me-1 text-white"
-                  onClick={extendButtonHandler}
-                >
-                  Extend PIP
-                </CButton>
-                <CButton
-                  data-testid="Remove-btn"
-                  className="btn-ovh me-1 text-white"
-                  color="success"
-                  onClick={removeButtonHandler}
-                >
-                  Remove From PIP
-                </CButton>
+                {viewEmployeePipDetails?.pipflag === true ? (
+                  <CButton
+                    data-testid="Extend-btn"
+                    color="warning"
+                    className="btn-ovh me-1 text-white"
+                    onClick={extendButtonHandler}
+                  >
+                    Extend PIP
+                  </CButton>
+                ) : (
+                  ''
+                )}
+                {viewEmployeePipDetails?.pipflag === true ? (
+                  <CButton
+                    data-testid="Remove-btn"
+                    className="btn-ovh me-1 text-white"
+                    color="success"
+                    onClick={removeButtonHandler}
+                  >
+                    Remove From PIP
+                  </CButton>
+                ) : (
+                  ''
+                )}
                 <Link to={`/PIPList`}>
                   <CButton
                     color="info"

@@ -37,7 +37,7 @@ export type GetPipList = {
   updatedDate: null | string
   empId: number
   improvement: string
-  pipflag: true
+  pipflag: boolean
 }
 
 export type PipListSliceState = {

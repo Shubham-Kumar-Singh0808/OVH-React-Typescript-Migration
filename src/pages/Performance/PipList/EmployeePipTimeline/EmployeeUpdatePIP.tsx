@@ -12,6 +12,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import { useParams } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import {
@@ -33,7 +34,7 @@ const EmployeeUpdatePIP = ({
   const viewEmployeePipData = useTypedSelector(
     reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
-
+  const { id } = useParams<{ id: string }>()
   const initialPIPDetails = {} as GetPipList
   const [updatePIP, setUpdatePIP] = useState(initialPIPDetails)
 
@@ -134,6 +135,7 @@ const EmployeeUpdatePIP = ({
         pipId: viewEmployeePipData.id as number,
       }),
     )
+    dispatch(reduxServices.pipList.viewPipDetails(id))
     dispatch(reduxServices.app.actions.addToast(successToast))
     dispatch(reduxServices.app.actions.addToast(undefined))
     setToggle('')
