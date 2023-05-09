@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react'
-import {
-  CButton,
-  CCol,
-  CRow,
-  CTableDataCell,
-  CTableRow,
-} from '@coreui/react-pro'
+import { CCol, CRow } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import OCard from '../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -17,6 +11,7 @@ import { AlertsData } from '../../types/Notifications/notificationTypes'
 
 const Notifications = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const cursorPointer = 'cursor-pointer'
 
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -82,76 +77,145 @@ const Notifications = (): JSX.Element => {
     )
   }
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const isPersistValue = (notification: AlertsData) => {
     if (
       notification.alertType === 'MilestoneDelay' ||
       notification.alertType === 'MilestoneClose'
     ) {
       return (
-        <CButton
-          size="sm"
-          color="info btn-ovh me-1"
-          className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+        <li
+          className={
+            notification.alertStatus === true
+              ? 'read' && cursorPointer
+              : 'un-read' && cursorPointer
+          }
           onClick={() => iconButtonHandler(notification.id)}
-          disabled={notification.alertStatus === true}
+          aria-disabled={notification.alertStatus === true}
         >
-          <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
-        </CButton>
+          <div className="media-left">
+            <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
+              <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+            </span>
+          </div>
+          <div className="media-body">
+            <div className="text-nowrap cursor-pointer">{notification.msg}</div>
+            <small className="text-muted cursor-pointer">
+              {notification.msgDate}
+            </small>
+          </div>
+        </li>
       )
     } else if (notification.alertType === 'LeaveCancel') {
       return (
         <Link to={`/employeeLeaveSummary`}>
-          <CButton
-            size="sm"
-            color="info btn-ovh me-1"
+          <li
+            className={
+              notification.alertStatus === true
+                ? 'read' && cursorPointer
+                : 'un-read' && cursorPointer
+            }
             onClick={() => iconButtonHandler(notification.id)}
-            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-            disabled={notification.alertStatus === true}
+            aria-disabled={notification.alertStatus === true}
           >
-            <i className="fa fa-user-times"></i>
-          </CButton>
+            <div className="media-left">
+              <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
+                <i className="fa fa-user-times"></i>
+              </span>
+            </div>
+            <div className="media-body">
+              <div className="text-nowrap cursor-pointer">
+                {notification.msg}
+              </div>
+              <small className="text-muted cursor-pointer">
+                {notification.msgDate}
+              </small>
+            </div>
+          </li>
         </Link>
       )
     } else if (notification.alertType === 'LeaveApply') {
       return (
         <Link to={`/leaveApprovals`}>
-          <CButton
-            size="sm"
-            color="info btn-ovh me-1"
+          <li
+            className={
+              notification.alertStatus === true
+                ? 'read' && cursorPointer
+                : 'un-read' && cursorPointer
+            }
             onClick={() => iconButtonHandler(notification.id)}
-            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-            disabled={notification.alertStatus === true}
+            aria-disabled={notification.alertStatus === true}
           >
-            <i className="fa fa-calendar-o"></i>
-          </CButton>
+            <div className="media-left">
+              <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
+                <i className="fa fa-calendar-o"></i>
+              </span>
+            </div>
+            <div className="media-body">
+              <div className="text-nowrap cursor-pointer">
+                {notification.msg}
+              </div>
+              <small className="text-muted cursor-pointer">
+                {notification.msgDate}
+              </small>
+            </div>
+          </li>
         </Link>
       )
     } else if (notification.alertType === 'LeaveReject') {
       return (
         <Link to={`/employeeLeaveSummary`}>
-          <CButton
-            size="sm"
-            color="info btn-ovh me-1"
+          <li
+            className={
+              notification.alertStatus === true
+                ? 'read' && cursorPointer
+                : 'un-read' && cursorPointer
+            }
             onClick={() => iconButtonHandler(notification.id)}
-            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-            disabled={notification.alertStatus === true}
+            aria-disabled={notification.alertStatus === true}
           >
-            <i className="fa fa-times"></i>
-          </CButton>
+            <div className="media-left">
+              <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
+                <i className="fa fa-times"></i>
+              </span>
+            </div>
+            <div className="media-body">
+              <div className="text-nowrap cursor-pointer">
+                {notification.msg}
+              </div>
+              <small className="text-muted cursor-pointer">
+                {notification.msgDate}
+              </small>
+            </div>
+          </li>
         </Link>
       )
     } else if (notification.alertType === 'LeaveApprove') {
       return (
         <Link to={`/employeeLeaveSummary`}>
-          <CButton
-            size="sm"
-            color="info btn-ovh me-1"
+          <li
+            className={
+              notification.alertStatus === true
+                ? 'read' && cursorPointer
+                : 'un-read' && cursorPointer
+            }
             onClick={() => iconButtonHandler(notification.id)}
-            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-            disabled={notification.alertStatus === true}
+            aria-disabled={notification.alertStatus === true}
           >
-            <i className="fa fa-check"></i>
-          </CButton>
+            <div className="media-left">
+              <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
+                <i className="fa fa-check"></i>
+              </span>
+            </div>
+            <div className="media-body">
+              <div className="text-nowrap cursor-pointer">
+                {notification.msg}
+              </div>
+              <small className="text-muted cursor-pointer">
+                {notification.msgDate}
+              </small>
+            </div>
+          </li>
         </Link>
       )
     } else {
@@ -164,25 +228,19 @@ const Notifications = (): JSX.Element => {
       <OCard
         className="mb-4 myprofile-wrapper"
         title="Notifications"
-        CBodyClassName="ps-0 pe-0"
+        CBodyClassName="ps-0 pe-0 notifi-page"
         CFooterClassName="d-none"
       >
-        <CRow>
+        <ul className="head-list">
           {notificationAlerts.length > 0 &&
             notificationAlerts?.map((notification, index) => {
               return (
-                <CRow key={index}>
-                  <span className="sh-timeline-status">
-                    {isPersistValue(notification)} {notification.msg}
-                  </span>
-                  {/* <CCol sm={6}>
-                    <CRow>{notification.msg}</CRow>
-                  </CCol> */}
-                  <b>{notification.msgDate}</b>
-                </CRow>
+                <React.Fragment key={index}>
+                  {isPersistValue(notification)}
+                </React.Fragment>
               )
             })}
-        </CRow>
+        </ul>
         <CRow>
           <CCol xs={4}>
             <p className="mt-2">
