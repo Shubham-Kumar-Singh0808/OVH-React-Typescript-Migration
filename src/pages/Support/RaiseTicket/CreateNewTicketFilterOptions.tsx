@@ -20,6 +20,8 @@ import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNew
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
 import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
+import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const CreateNewTicketFilterOptions = ({
   setToggle,
@@ -45,6 +47,7 @@ const CreateNewTicketFilterOptions = ({
   const [addEmployeeName, setAddEmployeeName] = useState<
     GetAllEmployeesNames[]
   >([])
+  const [selectMealDate, setSelectMealDate] = useState<string>()
 
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
@@ -197,6 +200,7 @@ const CreateNewTicketFilterOptions = ({
     setCategoryId(0)
     setSubCategoryIdValue(0)
     setStartDate('')
+    setSelectMealDate('')
     setEndDate('')
     setSubjectValue('')
     setPriorityValue('Normal')
@@ -256,6 +260,12 @@ const CreateNewTicketFilterOptions = ({
       setSubCategoryIdValue(undefined)
     }
   }, [categoryId])
+
+  const onHandleStartDatePicker = (value: Date) => {
+    setSelectMealDate(moment(value).format(dateFormat))
+  }
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
   return (
     <>
@@ -518,6 +528,33 @@ const CreateNewTicketFilterOptions = ({
             ''
           )}
         </CRow>
+        {categoryId === 42 ? (
+          <CRow className="mt-3">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Date :
+              <span className={selectMealDate ? TextWhite : TextDanger}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <ReactDatePicker
+                id="selectMealDate"
+                className="form-control form-control-sm sh-date-picker"
+                showMonthDropdown
+                showYearDropdown
+                autoComplete="off"
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
+                name="selectMealDate"
+                value={selectMealDate}
+                minDate={new Date()}
+                maxDate={disableAfterDate}
+                onChange={(date: Date) => onHandleStartDatePicker(date)}
+              />
+            </CCol>
+          </CRow>
+        ) : (
+          ''
+        )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Priority :
