@@ -79,6 +79,9 @@ const EmployeeReport = (): JSX.Element => {
               setCountry={setCountry}
               searchInput={searchInput}
               setSearchInput={setSearchInput}
+              setCurrentPage={setCurrentPage}
+              pageSize={pageSize}
+              currentPage={currentPage}
             />
             <EmployeeReportTable
               paginationRange={paginationRange}
