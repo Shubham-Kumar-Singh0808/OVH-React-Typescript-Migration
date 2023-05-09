@@ -171,19 +171,15 @@ const Notifications = (): JSX.Element => {
           {notificationAlerts.length > 0 &&
             notificationAlerts?.map((notification, index) => {
               return (
-                <CTableRow key={index}>
+                <CRow key={index}>
                   <span className="sh-timeline-status">
-                    {isPersistValue(notification)}
+                    {isPersistValue(notification)} {notification.msg}
                   </span>
-                  <CCol sm={6}>
-                    <CTableDataCell>{notification.msg}</CTableDataCell>
-                  </CCol>
-                  <CRow>
-                    <CTableDataCell>
-                      <b>{notification.msgDate}</b>
-                    </CTableDataCell>
-                  </CRow>
-                </CTableRow>
+                  {/* <CCol sm={6}>
+                    <CRow>{notification.msg}</CRow>
+                  </CCol> */}
+                  <b>{notification.msgDate}</b>
+                </CRow>
               )
             })}
         </CRow>
