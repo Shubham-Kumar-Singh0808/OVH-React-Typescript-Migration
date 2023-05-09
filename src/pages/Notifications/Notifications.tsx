@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { CCol, CRow } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
+import { Link, useHistory, useLocation } from 'react-router-dom'
 import OCard from '../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
@@ -11,6 +11,7 @@ import { AlertsData } from '../../types/Notifications/notificationTypes'
 
 const Notifications = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const navigator = useHistory()
   const cursorPointer = 'cursor-pointer'
 
   const employeeId = useTypedSelector(
@@ -61,7 +62,7 @@ const Notifications = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  const iconButtonHandler = (id: number) => {
+  const iconButtonHandler = (id: number, index: number) => {
     dispatch(
       reduxServices.notification.getUpdateAlert({
         employeeId: Number(employeeId),
@@ -75,27 +76,28 @@ const Notifications = (): JSX.Element => {
         endIndex: pageSize * currentPage,
       }),
     )
+    // notificationAlerts[index].alertStatus = true
+    // navigator.push('/employeeLeaveSummary')
   }
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
-  const isPersistValue = (notification: AlertsData) => {
+  const isPersistValue = (notification: AlertsData, index: number) => {
     if (
       notification.alertType === 'MilestoneDelay' ||
       notification.alertType === 'MilestoneClose'
     ) {
       return (
         <li
-          className={
-            notification.alertStatus === true
-              ? 'read' && cursorPointer
-              : 'un-read' && cursorPointer
-          }
-          onClick={() => iconButtonHandler(notification.id)}
+          className={`${notification.alertStatus ? 'read' : 'un-read'}`}
+          onClick={() => iconButtonHandler(notification.id, index)}
           aria-disabled={notification.alertStatus === true}
         >
           <div className="media-left">
-            <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
-              <i className="fa fa-briefcase fa-lg" aria-hidden="true"></i>
+            <span className="sh-timeline-status icon-wrap icon-circle bg-primary cursor-pointer">
+              <i
+                className="fa fa-briefcase fa-lg cursor-pointer"
+                aria-hidden="true"
+              ></i>
             </span>
           </div>
           <div className="media-body">
@@ -110,12 +112,8 @@ const Notifications = (): JSX.Element => {
       return (
         <Link to={`/employeeLeaveSummary`}>
           <li
-            className={
-              notification.alertStatus === true
-                ? 'read' && cursorPointer
-                : 'un-read' && cursorPointer
-            }
-            onClick={() => iconButtonHandler(notification.id)}
+            className={`${notification.alertStatus ? 'read' : 'un-read'}`}
+            onClick={() => iconButtonHandler(notification.id, index)}
             aria-disabled={notification.alertStatus === true}
           >
             <div className="media-left">
@@ -138,12 +136,8 @@ const Notifications = (): JSX.Element => {
       return (
         <Link to={`/leaveApprovals`}>
           <li
-            className={
-              notification.alertStatus === true
-                ? 'read' && cursorPointer
-                : 'un-read' && cursorPointer
-            }
-            onClick={() => iconButtonHandler(notification.id)}
+            className={`${notification.alertStatus ? 'read' : 'un-read'}`}
+            onClick={() => iconButtonHandler(notification.id, index)}
             aria-disabled={notification.alertStatus === true}
           >
             <div className="media-left">
@@ -166,12 +160,8 @@ const Notifications = (): JSX.Element => {
       return (
         <Link to={`/employeeLeaveSummary`}>
           <li
-            className={
-              notification.alertStatus === true
-                ? 'read' && cursorPointer
-                : 'un-read' && cursorPointer
-            }
-            onClick={() => iconButtonHandler(notification.id)}
+            className={`${notification.alertStatus ? 'read' : 'un-read'}`}
+            onClick={() => iconButtonHandler(notification.id, index)}
             aria-disabled={notification.alertStatus === true}
           >
             <div className="media-left">
@@ -194,12 +184,8 @@ const Notifications = (): JSX.Element => {
       return (
         <Link to={`/employeeLeaveSummary`}>
           <li
-            className={
-              notification.alertStatus === true
-                ? 'read' && cursorPointer
-                : 'un-read' && cursorPointer
-            }
-            onClick={() => iconButtonHandler(notification.id)}
+            className={`${notification.alertStatus ? 'read' : 'un-read'}`}
+            onClick={() => iconButtonHandler(notification.id, index)}
             aria-disabled={notification.alertStatus === true}
           >
             <div className="media-left">
@@ -236,7 +222,7 @@ const Notifications = (): JSX.Element => {
             notificationAlerts?.map((notification, index) => {
               return (
                 <React.Fragment key={index}>
-                  {isPersistValue(notification)}
+                  {isPersistValue(notification, index)}
                 </React.Fragment>
               )
             })}
