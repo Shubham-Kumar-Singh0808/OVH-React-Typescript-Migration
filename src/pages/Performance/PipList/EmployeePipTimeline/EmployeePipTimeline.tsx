@@ -1,5 +1,5 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import EmployeePipTimelineOptions from './EmployeePipTimelineOptions'
 import EmployeeExtendPIP from './EmployeeExtendPIP'
@@ -16,9 +16,6 @@ const EmployeePipTimeline = (): JSX.Element => {
   const viewEmployeePipDetails = useTypedSelector(
     reduxServices.pipList.selectors.viewEmployeePipDetails,
   )
-  useEffect(() => {
-    dispatch(reduxServices.pipList.viewPipDetails(id))
-  }, [dispatch])
 
   const updateButtonHandler = () => {
     setToggle('employeeUpdatePIP')
