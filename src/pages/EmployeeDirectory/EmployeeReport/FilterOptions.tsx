@@ -28,6 +28,7 @@ const FilterOptions = ({
   setCurrentPage,
   pageSize,
   currentPage,
+  setPageSize,
 }: EmployeeReportOptionsProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -80,6 +81,7 @@ const FilterOptions = ({
   const onChangeCategoryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value)
     setCurrentPage(1)
+    setPageSize(20)
   }
 
   const onChangeSelectCountryHandler = (
@@ -87,6 +89,7 @@ const FilterOptions = ({
   ) => {
     setCountry(e.target.value)
     setCurrentPage(1)
+    setPageSize(20)
   }
 
   return (

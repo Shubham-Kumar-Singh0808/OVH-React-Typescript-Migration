@@ -66,12 +66,16 @@ const AchieverList = (): JSX.Element => {
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setAchievement(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const selectedOptionChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setSelectedOption(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const [achieverFromDate, setAchieverFromDate] = useState<string>('')

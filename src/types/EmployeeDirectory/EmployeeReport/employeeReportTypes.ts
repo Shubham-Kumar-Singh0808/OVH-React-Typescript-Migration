@@ -75,4 +75,5 @@ export type EmployeeReportOptionsProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   currentPage: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }

@@ -82,6 +82,7 @@ const EmployeeReport = (): JSX.Element => {
               setCurrentPage={setCurrentPage}
               pageSize={pageSize}
               currentPage={currentPage}
+              setPageSize={setPageSize}
             />
             <EmployeeReportTable
               paginationRange={paginationRange}
