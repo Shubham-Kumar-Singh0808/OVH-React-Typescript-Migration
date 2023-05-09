@@ -199,38 +199,47 @@ const CreateNewTicketFilterOptions = ({
     />
   )
 
-  const result1 =
-    allEmployeeProfiles.filter((item) => item.id) ===
-    addEmployeeName.filter((item) => item.id)
-  console.log(result1 + 'result1')
-
   const handleApplyTicket = async () => {
+    const payload =
+      categoryId === 42
+        ? {
+            categoryId,
+            id: deptId as number,
+            description: createTicket?.description,
+            startDate: selectMealDate,
+            priority: PriorityValue,
+            subCategoryId: subCategoryIdValue,
+            subject: subjectValue as string,
+            tracker: trackerValue,
+            watcherIds: addEmployeeName?.map((currentItem) => currentItem.id),
+          }
+        : {
+            id: deptId as number,
+            description: createTicket?.description,
+            accessEndDate: endDate
+              ? new Date(endDate).toLocaleDateString(deviceLocale, {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: '2-digit',
+                })
+              : '',
+            accessStartDate: startDate
+              ? new Date(startDate).toLocaleDateString(deviceLocale, {
+                  year: 'numeric',
+                  month: 'numeric',
+                  day: '2-digit',
+                })
+              : '',
+            categoryId,
+            startDate: '',
+            priority: PriorityValue,
+            subCategoryId: subCategoryIdValue,
+            subject: subjectValue as string,
+            tracker: trackerValue,
+            watcherIds: [] as number[],
+          }
     const createNewTicketResultAction = await dispatch(
-      reduxServices.raiseNewTicket.createNewTicket({
-        id: deptId as number,
-        description: createTicket?.description,
-        accessEndDate: endDate
-          ? new Date(endDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
-        accessStartDate: startDate
-          ? new Date(startDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
-        categoryId,
-        startDate: '',
-        priority: PriorityValue,
-        subCategoryId: subCategoryIdValue,
-        subject: subjectValue as string,
-        tracker: trackerValue,
-        watcherIds: [],
-      }),
+      reduxServices.raiseNewTicket.createNewTicket(payload),
     )
     if (uploadFile) {
       const formData = new FormData()
