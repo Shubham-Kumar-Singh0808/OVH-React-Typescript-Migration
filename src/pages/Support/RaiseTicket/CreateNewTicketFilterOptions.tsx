@@ -12,12 +12,14 @@ import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
+import Multiselect from 'multiselect-react-dropdown'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { CreateNewTicket } from '../../../types/Support/RaiseNewTicket/createNewTicketTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
+import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 
 const CreateNewTicketFilterOptions = ({
   setToggle,
@@ -40,6 +42,10 @@ const CreateNewTicketFilterOptions = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
+  const [addEmployeeName, setAddEmployeeName] = useState<
+    GetAllEmployeesNames[]
+  >([])
+
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
@@ -60,6 +66,7 @@ const CreateNewTicketFilterOptions = ({
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
   }, [dispatch])
+
   useEffect(() => {
     if (deptId) {
       dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
@@ -78,6 +85,22 @@ const CreateNewTicketFilterOptions = ({
     })
   }
 
+  const allEmployeeProfiles = useTypedSelector(
+    reduxServices.allocateEmployee.selectors.employeeNames,
+  )
+
+  const handleMultiSelect = (list: GetAllEmployeesNames[]) => {
+    setAddEmployeeName(list)
+  }
+  useEffect(() => {
+    dispatch(reduxServices.allocateEmployee.getAllEmployeesProfileData())
+  }, [dispatch])
+
+  const handleOnRemoveSelectedOption = (
+    selectedList: GetAllEmployeesNames[],
+  ) => {
+    setAddEmployeeName(selectedList)
+  }
   const handleApplyTicket = async () => {
     const createNewTicketResultAction = await dispatch(
       reduxServices.raiseNewTicket.createNewTicket({
@@ -169,6 +192,7 @@ const CreateNewTicketFilterOptions = ({
 
   const clearBtnHandler = () => {
     setTrackerValue('')
+    setAddEmployeeName([])
     setDeptId(0)
     setCategoryId(0)
     setSubCategoryIdValue(0)
@@ -369,78 +393,83 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Start Date :
-          </CFormLabel>
-          <CCol sm={3}>
-            <ReactDatePicker
-              id="fromDate"
-              data-testid="dateOptionSelect"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-              showMonthDropdown
-              showYearDropdown
-              minDate={new Date()}
-              dropdownMode="select"
-              dateFormat="dd/mm/yy"
-              autoComplete="off"
-              placeholderText="dd/mm/yy"
-              name="fromDate"
-              value={
-                startDate
-                  ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setStartDate(moment(date).format(commonFormatDate))
-              }
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            End Date :
-          </CFormLabel>
-          <CCol sm={3}>
-            <ReactDatePicker
-              id="toDate"
-              data-testid="dateOptionSelect"
-              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-              showMonthDropdown
-              showYearDropdown
-              minDate={new Date()}
-              dropdownMode="select"
-              autoComplete="off"
-              dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yy"
-              name="toDate"
-              value={
-                endDate
-                  ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setEndDate(moment(date).format(commonFormatDate))
-              }
-            />
-            {dateError && (
-              <CCol>
-                <span className="text-danger" data-testid="errorMessage">
-                  Access end date should be greater than access start date
-                </span>
+        {categoryId === 42 ? (
+          ''
+        ) : (
+          <>
+            <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+              <CFormLabel className="col-sm-2 col-form-label text-end">
+                Start Date :
+              </CFormLabel>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="fromDate"
+                  data-testid="dateOptionSelect"
+                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  showMonthDropdown
+                  showYearDropdown
+                  minDate={new Date()}
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  autoComplete="off"
+                  placeholderText="dd/mm/yy"
+                  name="fromDate"
+                  value={
+                    startDate
+                      ? new Date(startDate).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: 'numeric',
+                          day: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setStartDate(moment(date).format(commonFormatDate))
+                  }
+                />
               </CCol>
-            )}
-          </CCol>
-        </CRow>
-
+            </CRow>
+            <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+              <CFormLabel className="col-sm-2 col-form-label text-end">
+                End Date :
+              </CFormLabel>
+              <CCol sm={3}>
+                <ReactDatePicker
+                  id="toDate"
+                  data-testid="dateOptionSelect"
+                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+                  showMonthDropdown
+                  showYearDropdown
+                  minDate={new Date()}
+                  dropdownMode="select"
+                  autoComplete="off"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yy"
+                  name="toDate"
+                  value={
+                    endDate
+                      ? new Date(endDate).toLocaleDateString(deviceLocale, {
+                          year: 'numeric',
+                          month: 'numeric',
+                          day: '2-digit',
+                        })
+                      : ''
+                  }
+                  onChange={(date: Date) =>
+                    setEndDate(moment(date).format(commonFormatDate))
+                  }
+                />
+                {dateError && (
+                  <CCol>
+                    <span className="text-danger" data-testid="errorMessage">
+                      Access end date should be greater than access start date
+                    </span>
+                  </CCol>
+                )}
+              </CCol>
+            </CRow>
+          </>
+        )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Subject :
@@ -512,6 +541,31 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
+        {categoryId === 42 ? (
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Add Members:
+            </CFormLabel>
+            <CCol sm={3}>
+              <Multiselect
+                className="ovh-multiselect"
+                data-testid="employee-option"
+                options={allEmployeeProfiles?.map((employee) => employee) || []}
+                displayValue="fullName"
+                placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
+                selectedValues={addEmployeeName}
+                onSelect={(list: GetAllEmployeesNames[]) =>
+                  handleMultiSelect(list)
+                }
+                onRemove={(selectedList: GetAllEmployeesNames[]) =>
+                  handleOnRemoveSelectedOption(selectedList)
+                }
+              />
+            </CCol>
+          </CRow>
+        ) : (
+          ''
+        )}
         <CRow className="mt-4 mb-4">
           <CFormLabel className="col-sm-2 col-form-label text-end">
             Files :
