@@ -25,6 +25,10 @@ const FilterOptions = ({
   setCountry,
   searchInput,
   setSearchInput,
+  setCurrentPage,
+  pageSize,
+  currentPage,
+  setPageSize,
 }: EmployeeReportOptionsProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -62,9 +66,30 @@ const FilterOptions = ({
   ) => {
     if (event.key === 'Enter') {
       dispatch(
-        reduxServices.employeeReports.actions.setSearchEmployee(searchInput),
+        reduxServices.employeeReports.getEmployeeReport({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          selectionStatus: selectedEmploymentStatus,
+          selectedCategory: category,
+          searchEmployee: searchInput,
+          country,
+        }),
       )
     }
+  }
+
+  const onChangeCategoryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
+
+  const onChangeSelectCountryHandler = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setCountry(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   return (
@@ -120,9 +145,7 @@ const FilterOptions = ({
             id="category"
             data-testid="form-select1"
             value={category}
-            onChange={(e) => {
-              setCategory(e.target.value)
-            }}
+            onChange={onChangeCategoryHandler}
           >
             {categoryOptions.map((opt, index) => (
               <option key={index} value={opt.value}>
@@ -141,9 +164,7 @@ const FilterOptions = ({
             id="country"
             data-testid="form-select2"
             value={country}
-            onChange={(e) => {
-              setCountry(e.target.value)
-            }}
+            onChange={onChangeSelectCountryHandler}
           >
             <option>Select Country</option>
             {countries?.map((opt, index) => (
@@ -180,6 +201,7 @@ const FilterOptions = ({
                 setSearchInput(e.target.value)
               }}
               onKeyUp={handleSearchByEnter}
+              autoComplete="off"
             />
             <CButton
               disabled={!searchInput}
