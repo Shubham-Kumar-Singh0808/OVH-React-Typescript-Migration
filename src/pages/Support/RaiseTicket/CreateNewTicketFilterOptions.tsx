@@ -48,7 +48,6 @@ const CreateNewTicketFilterOptions = ({
     GetAllEmployeesNames[]
   >([])
   const [selectMealDate, setSelectMealDate] = useState<string>()
-
   const dispatch = useAppDispatch()
   const trackerList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.trackerList,
@@ -104,81 +103,6 @@ const CreateNewTicketFilterOptions = ({
   ) => {
     setAddEmployeeName(selectedList)
   }
-  const handleApplyTicket = async () => {
-    const createNewTicketResultAction = await dispatch(
-      reduxServices.raiseNewTicket.createNewTicket({
-        id: deptId as number,
-        description: createTicket?.description,
-        accessEndDate: endDate
-          ? new Date(endDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
-        accessStartDate: startDate
-          ? new Date(startDate).toLocaleDateString(deviceLocale, {
-              year: 'numeric',
-              month: 'numeric',
-              day: '2-digit',
-            })
-          : '',
-        categoryId,
-        startDate: '',
-        priority: PriorityValue,
-        subCategoryId: subCategoryIdValue,
-        subject: subjectValue as string,
-        tracker: trackerValue,
-        watcherIds: [],
-      }),
-    )
-    if (uploadFile) {
-      const formData = new FormData()
-      formData.append('file', uploadFile, uploadFile.name)
-      const ticketIdParams = createNewTicketResultAction.payload as {
-        ticketId: number
-      }
-      const uploadPrepareObject = {
-        ticketId: ticketIdParams.ticketId,
-        file: formData,
-      }
-      dispatch(
-        reduxServices.raiseNewTicket.uploadSupportTicketsDocuments(
-          uploadPrepareObject,
-        ),
-      )
-    }
-    if (
-      reduxServices.raiseNewTicket.createNewTicket.fulfilled.match(
-        createNewTicketResultAction,
-      )
-    ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Ticket created successfully"
-          />,
-        ),
-      )
-      setTrackerValue('')
-      setDeptId(0)
-      setCategoryId(0)
-      setSubCategoryIdValue(0)
-      setStartDate('')
-      setEndDate('')
-      setSubjectValue('')
-      setPriorityValue('Normal')
-      setShowEditor(false)
-      setTimeout(() => {
-        setShowEditor(true)
-      }, 100)
-      setCreateTicket({
-        description: '',
-      })
-    }
-  }
-
   useEffect(() => {
     const newFromDate = new Date(
       moment(startDate?.toString()).format(commonFormatDate),
@@ -266,6 +190,96 @@ const CreateNewTicketFilterOptions = ({
   }
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const TicketFailedToast = (
+    <OToast
+      toastMessage="Ticket already raised"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const result1 =
+    allEmployeeProfiles.filter((item) => item.id) ===
+    addEmployeeName.filter((item) => item.id)
+  console.log(result1 + 'result1')
+
+  const handleApplyTicket = async () => {
+    const createNewTicketResultAction = await dispatch(
+      reduxServices.raiseNewTicket.createNewTicket({
+        id: deptId as number,
+        description: createTicket?.description,
+        accessEndDate: endDate
+          ? new Date(endDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        accessStartDate: startDate
+          ? new Date(startDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
+        categoryId,
+        startDate: '',
+        priority: PriorityValue,
+        subCategoryId: subCategoryIdValue,
+        subject: subjectValue as string,
+        tracker: trackerValue,
+        watcherIds: [],
+      }),
+    )
+    if (uploadFile) {
+      const formData = new FormData()
+      formData.append('file', uploadFile, uploadFile.name)
+      const ticketIdParams = createNewTicketResultAction.payload as {
+        ticketId: number
+      }
+      const uploadPrepareObject = {
+        ticketId: ticketIdParams.ticketId,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.raiseNewTicket.uploadSupportTicketsDocuments(
+          uploadPrepareObject,
+        ),
+      )
+    }
+    if (
+      reduxServices.raiseNewTicket.createNewTicket.fulfilled.match(
+        createNewTicketResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Ticket created successfully"
+          />,
+        ),
+      )
+      setTrackerValue('')
+      setDeptId(0)
+      setCategoryId(0)
+      setSubCategoryIdValue(0)
+      setStartDate('')
+      setEndDate('')
+      setSubjectValue('')
+      setPriorityValue('Normal')
+      setShowEditor(false)
+      setSelectMealDate('')
+      setAddEmployeeName([])
+      setTimeout(() => {
+        setShowEditor(true)
+      }, 100)
+      setCreateTicket({
+        description: '',
+      })
+    }
+  }
 
   return (
     <>
