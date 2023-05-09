@@ -8,7 +8,7 @@ import { mockRoomNames } from '../../../../test/data/addRoomListData'
 
 describe('Room List without data', () => {
   beforeEach(() => {
-    render(<RoomListTable userDeleteAccess={true} />)
+    render(<RoomListTable userDeleteAccess={true} selectLocationId={''} />)
   })
 
   test('should render the correct headers', () => {
@@ -28,7 +28,7 @@ describe('Room List without data', () => {
 
 describe('Room List Table with data', () => {
   beforeEach(() => {
-    render(<RoomListTable userDeleteAccess={true} />, {
+    render(<RoomListTable userDeleteAccess={true} selectLocationId={''} />, {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,

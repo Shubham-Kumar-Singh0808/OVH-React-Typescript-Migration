@@ -227,4 +227,7 @@ export type EventListSliceState = {
   updateEventData: UpdateEventDetails
   isLoading: LoadingState
   error: ValidationError
+  SelectCustom: string
+  FromDateFilter: string | Date
+  ToDateFilter: string | Date
 }

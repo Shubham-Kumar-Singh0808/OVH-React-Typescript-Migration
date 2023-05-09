@@ -6,7 +6,7 @@ import {
   CDropdownToggle,
 } from '@coreui/react-pro'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch } from '../stateStore'
 
@@ -39,7 +39,7 @@ const AppHeaderDropdown = (): JSX.Element => {
         <CDropdownMenu>
           <CDropdownDivider />
           <CDropdownItem component="button">
-            Show All Notifications
+            <Link to={'/notifications'}>Show All Notifications</Link>
           </CDropdownItem>
         </CDropdownMenu>
       </CDropdown>

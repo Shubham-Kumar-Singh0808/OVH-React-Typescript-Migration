@@ -259,6 +259,7 @@ function AddEditVisaDetails({
     setError(false)
     setImageUrl('')
     setClearFile('')
+    setInvalidImage(false)
   }
   const actionMapping = {
     added: 'added',

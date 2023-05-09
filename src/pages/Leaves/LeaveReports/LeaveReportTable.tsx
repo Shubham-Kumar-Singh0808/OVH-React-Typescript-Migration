@@ -32,7 +32,7 @@ const LeaveReportTable = ({
   const isLoading = useTypedSelector(
     reduxServices.leaveReport.selectors.isLoading,
   )
-
+  console.log(pageSize)
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {

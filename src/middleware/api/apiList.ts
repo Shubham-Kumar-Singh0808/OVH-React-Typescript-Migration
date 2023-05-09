@@ -106,6 +106,7 @@ import {
   ProcessAreaListApi,
   AddNewAudit,
   SQAAuditReportApi,
+  NotificationsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -991,4 +992,8 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   saveOrSubmitAuditForm:
     apiPrefix + '/sqaAuditController/saveOrSubmitAuditForm',
   downloadSQAAuditFile: '/sqaAuditController/downloadSQAAuditFile',
+}
+export const notificationsApiConfig: NotificationsApi = {
+  allAlerts: apiPrefix + '/alert/allAlerts',
+  updateAlert: apiPrefix + '/alert/updateAlert',
 }

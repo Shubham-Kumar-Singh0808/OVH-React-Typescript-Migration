@@ -19,7 +19,7 @@ body {
   font-size: 14px;
 }
 .form-select {
-  font-size: 13px;
+  font-size: 12px;
 }
 .form-label {
   font-weight: $font-weight-bold;
@@ -436,3 +436,8 @@ input.capetalized {
   height: 60px;
   resize: both;
 }
+// .react-datepicker__day--today {
+//   background-color: #5797cd;
+//   color: white;
+//   border-radius: 3px;
+// }

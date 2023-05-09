@@ -29,6 +29,7 @@ import {
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
+import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
 
 const NewBookingFilterOptions = ({
   setToggle,
@@ -67,6 +68,14 @@ const NewBookingFilterOptions = ({
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
@@ -274,6 +283,7 @@ const NewBookingFilterOptions = ({
         } as ShouldResetNewBookingFields
         setResetField(shouldResetFields)
         setAttendeesAutoCompleteTarget('')
+        setAttendeesList([])
       } else if (
         reduxServices.newBooking.confirmNewMeetingAppointment.rejected.match(
           addBookingResult,
@@ -354,6 +364,7 @@ const NewBookingFilterOptions = ({
     setResetField(shouldResetFields)
     setAttendeesAutoCompleteTarget('')
     setIsAttendeeErrorShow(false)
+    setAttendeesList([])
   }
 
   useEffect(() => {
@@ -391,6 +402,18 @@ const NewBookingFilterOptions = ({
     (feature) => feature.name === 'Meeting-Rooms',
   )
   console.log(errorMessageCount)
+  const attendeesResult = (
+    <CRow className=" d-flex justify-content-center mt-3">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
   return (
     <>
       <CRow>
@@ -502,11 +525,18 @@ const NewBookingFilterOptions = ({
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
                   isErrorShow={isErrorShow}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
                 />
               </>
             ) : (
               <></>
             )}
+            {projectMembers?.length > 0 && newRoomBooking.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>

@@ -1,9 +1,7 @@
 import {
   CCardBody,
-  CSpinner,
   CTable,
   CTableBody,
-  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
@@ -12,6 +10,8 @@ import React, { useEffect, useState } from 'react'
 import EmployeeProjectsEntry from './EmployeeProjectsEntry'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeProjectsTable = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -61,11 +61,7 @@ const EmployeeProjectsTable = (): JSX.Element => {
                 />
               ))
             ) : (
-              <CTableRow color="default" className="text-center">
-                <CTableDataCell colSpan={8}>
-                  <CSpinner data-testid="employee-loader" />
-                </CTableDataCell>
-              </CTableRow>
+              <OLoadingSpinner type={LoadingType.PAGE} />
             )}
           </CTableBody>
         </CTable>

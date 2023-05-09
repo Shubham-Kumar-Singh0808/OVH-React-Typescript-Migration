@@ -24,6 +24,7 @@ import {
 } from './NewEventChildComponents'
 import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
 import SlotsBooked from './NewEventChildComponents/SlotsBooked'
+import SelectedAttendees from './NewEventChildComponents/SelectedAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -114,6 +115,15 @@ const NewEvent = (): JSX.Element => {
   console.log(attendeesList)
   const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
     useState<string>()
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -126,7 +136,7 @@ const NewEvent = (): JSX.Element => {
     if (addEvent.locationId)
       dispatch(reduxServices.newEvent.getRoomsByLocation(addEvent.locationId))
   }, [addEvent.locationId])
-
+  console.log(errorMessageCount)
   useEffect(() => {
     if (addEvent.startTime === '' && addEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -332,6 +342,7 @@ const NewEvent = (): JSX.Element => {
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
       if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
         dispatch(
           reduxServices.app.actions.addToast(failureValidationErrorToastMsg),
         )
@@ -339,6 +350,7 @@ const NewEvent = (): JSX.Element => {
         handleConfirmBtn()
       }
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMsg))
     }
   }
@@ -356,6 +368,7 @@ const NewEvent = (): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setAttendeesList([])
   }
   const commonFormatDate = 'l'
 
@@ -391,6 +404,18 @@ const NewEvent = (): JSX.Element => {
       setIsConfirmButtonEnabled(false)
     }
   }, [addEvent])
+  const attendeesResult = (
+    <CRow className="row d-flex justify-content-center">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
 
   return (
     <OCard
@@ -531,11 +556,18 @@ const NewEvent = (): JSX.Element => {
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
                   isErrorShow={isErrorShow}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
                 />
               </>
             ) : (
               <></>
             )}
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>

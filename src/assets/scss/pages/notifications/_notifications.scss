@@ -1,0 +1,38 @@
+
+/* for notification page*/
+.notifi-page .media-left, .notifi-page .media-right, .notifi-page .media-body
+	{
+	display: table-cell;
+	vertical-align: top;
+}
+
+.notifi-page .head-list li {
+	padding: 10px 15px 5px;
+}
+
+.notifi-page .head-list li:hover {
+	background: #eee;
+}
+
+.notifi-page .media-left, .notifi-page .media>.pull-left {
+	padding-right: 10px;
+}
+
+.notifi-page .head-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.read, .un-read {
+	box-shadow: 0 0 1px #ccc;
+}
+
+.read span.icon-wrap {
+	background: #ccc !important;
+}
+.icon-circle{
+  border-radius: 50%;
+  padding: 10px;
+  color: #fff !important;
+}

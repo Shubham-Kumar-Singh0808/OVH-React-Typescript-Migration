@@ -60,10 +60,20 @@ const EventListFilterOptions = ({
 
   const onHandleToDate = (value: Date) => {
     setEventToDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.eventList.actions.setToDateFilter(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   const onHandleFromDate = (value: Date) => {
     setEventFromDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.eventList.actions.setFromDateFilter(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
   const fromDate = (
     <span className={eventFromDate ? TextWhite : TextDanger}>*</span>
@@ -81,6 +91,9 @@ const EventListFilterOptions = ({
           value={selectDate}
           onChange={(e) => {
             setSelectDate(e.target.value)
+            dispatch(
+              reduxServices.eventList.actions.setSelectCustom(e.target.value),
+            )
           }}
         >
           {selectDateOptions.map((opt, index) => (

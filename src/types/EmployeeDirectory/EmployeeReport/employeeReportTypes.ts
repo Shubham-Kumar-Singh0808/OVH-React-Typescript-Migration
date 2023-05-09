@@ -72,4 +72,8 @@ export type EmployeeReportOptionsProps = {
   setCountry: (value: string) => void
   searchInput: string
   setSearchInput: (value: string) => void
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  currentPage: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
