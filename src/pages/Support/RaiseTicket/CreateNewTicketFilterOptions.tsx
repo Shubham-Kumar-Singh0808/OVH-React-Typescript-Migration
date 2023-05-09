@@ -72,11 +72,9 @@ const CreateNewTicketFilterOptions = ({
   useEffect(() => {
     if (deptId) {
       dispatch(reduxServices.ticketApprovals.getDepartmentCategoryList(deptId))
-      // setSubCategoryIdValue(0)
     }
     if (categoryId) {
       dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
-      // setSubCategoryIdValue(0)
     }
   }, [deptId, categoryId])
   const commonFormatDate = 'l'

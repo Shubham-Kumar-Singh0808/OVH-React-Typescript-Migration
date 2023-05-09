@@ -74,8 +74,6 @@ const Notifications = (): JSX.Element => {
         endIndex: pageSize * currentPage,
       }),
     )
-    // notificationAlerts[index].alertStatus = true
-    // navigator.push('/employeeLeaveSummary')
   }
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
