@@ -18,6 +18,8 @@ import { LeaveReportOptionsProps } from '../../../types/Leaves/LeaveReports/leav
 const LeaveReportsFilterOption = ({
   selectYear,
   setSelectYear,
+  setCurrentPage,
+  setPageSize,
 }: LeaveReportOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
@@ -57,16 +59,28 @@ const LeaveReportsFilterOption = ({
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.leaveReport.searchLeaveSummaries({
-          financialYear: selectYear,
-          search: searchInput,
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-        }),
-      )
+      if (searchInput === '') {
+        dispatch(
+          reduxServices.leaveReport.getAllEmployeesLeaveSummaries({
+            financialYear: selectYear,
+            startIndex: 0,
+            endIndex: 20,
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.leaveReport.searchLeaveSummaries({
+            financialYear: selectYear,
+            search: searchInput,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+          }),
+        )
+      }
     }
   }
+
   const handleExportLeaveReportData = async () => {
     const employeeLeaveReportDataDownload =
       await leaveReportsApi.exportLeaveReportData({
@@ -89,6 +103,12 @@ const LeaveReportsFilterOption = ({
     .map((val2) => val2.yearOfEra.value)
 
   const uniqueValue = Array.from(new Set(result))
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectYear(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
   return (
     <>
       <CRow className="mt-1">
@@ -107,7 +127,8 @@ const LeaveReportsFilterOption = ({
                 name="selectYear"
                 id="selectYear"
                 value={selectYear}
-                onChange={(e) => setSelectYear(e.target.value)}
+                // onChange={(e) => setSelectYear(e.target.value)}
+                onChange={onChangeHandler}
               >
                 {uniqueValue.map((value, index) => {
                   return <option key={index}>{value}</option>

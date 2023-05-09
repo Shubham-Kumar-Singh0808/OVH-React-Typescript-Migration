@@ -44,6 +44,8 @@ const LeaveReport = (): JSX.Element => {
         <LeaveReportFilterOption
           selectYear={selectYear}
           setSelectYear={setSelectYear}
+          setCurrentPage={setCurrentPage}
+          setPageSize={setPageSize}
         />
       </OCard>
       <LeaveReportTable
