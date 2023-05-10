@@ -29,6 +29,8 @@ const toRender = (
         filterByCertificate={'MVC Certificate'}
         multiSearchValue={'Java'}
         setIsAccordionItemShow={jest.fn}
+        setCurrentPage={jest.fn()}
+        setPageSize={jest.fn()}
       />
     </div>
   </div>
@@ -67,6 +69,8 @@ describe('Certificates Filter Options Component Testing', () => {
               filterByCertificate={''}
               multiSearchValue={''}
               setIsAccordionItemShow={jest.fn}
+              setCurrentPage={jest.fn()}
+              setPageSize={jest.fn()}
             />
           </ReduxProvider>
         </div>
@@ -91,6 +95,8 @@ describe('Certificates Filter Options Component Testing', () => {
               filterByCertificate={'.Net'}
               multiSearchValue={''}
               setIsAccordionItemShow={jest.fn}
+              setCurrentPage={jest.fn()}
+              setPageSize={jest.fn()}
             />
           </ReduxProvider>
         </div>
@@ -115,6 +121,8 @@ describe('Certificates Filter Options Component Testing', () => {
               filterByCertificate={'.Net'}
               multiSearchValue={''}
               setIsAccordionItemShow={jest.fn}
+              setCurrentPage={jest.fn()}
+              setPageSize={jest.fn()}
             />
           </ReduxProvider>
         </div>
@@ -150,6 +158,8 @@ describe('Certificates Filter Options Component Testing', () => {
               filterByCertificate={''}
               multiSearchValue={''}
               setIsAccordionItemShow={mockSetIsAccordionItemShow}
+              setCurrentPage={jest.fn()}
+              setPageSize={jest.fn()}
             />
           </div>
         </div>,
@@ -205,6 +215,8 @@ describe('Certificates Filter Options Component Testing', () => {
               filterByCertificate={''}
               multiSearchValue={''}
               setIsAccordionItemShow={mockSetIsAccordionItemShow}
+              setCurrentPage={jest.fn()}
+              setPageSize={jest.fn()}
             />
           </div>
         </div>,
