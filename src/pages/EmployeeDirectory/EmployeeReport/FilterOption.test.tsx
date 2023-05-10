@@ -21,6 +21,10 @@ describe('Fitler Options Component Testing', () => {
           setCountry={mockSetCountry}
           searchInput={''}
           setSearchInput={mockSetSearchInput}
+          setCurrentPage={mockSetSearchInput}
+          pageSize={0}
+          currentPage={0}
+          setPageSize={mockSetSearchInput}
         />,
       )
     })
@@ -72,6 +76,10 @@ describe('Fitler Options Component Testing', () => {
           setCountry={mockSetCountry}
           searchInput={'test'}
           setSearchInput={mockSetSearchInput}
+          setCurrentPage={mockSetSearchInput}
+          pageSize={0}
+          currentPage={0}
+          setPageSize={mockSetSearchInput}
         />,
       )
     })
@@ -117,6 +125,10 @@ describe('Fitler Options Component Testing', () => {
           setCountry={mockSetCountry}
           searchInput={''}
           setSearchInput={mockSetSearchInput}
+          setCurrentPage={mockSetSearchInput}
+          pageSize={0}
+          currentPage={0}
+          setPageSize={mockSetSearchInput}
         />,
         {
           preloadedState: {

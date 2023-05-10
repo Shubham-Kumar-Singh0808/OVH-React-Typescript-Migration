@@ -14,11 +14,17 @@ import { EmploymentStatus } from '../../../types/EmployeeDirectory/EmployeesList
 import { ReduxProvider } from '../../../components/Helper'
 import stateStore from '../../../stateStore'
 
+const mockSetPageSize = jest.fn()
 describe('List Options Component Testing', () => {
   test('should render Personal info tab component with out crashing', () => {
     render(
       <ReduxProvider reduxStore={stateStore}>
-        <ListOptions userCreateAccess={true} userViewAccess={true} />
+        <ListOptions
+          userCreateAccess={true}
+          userViewAccess={true}
+          setCurrentPage={mockSetPageSize}
+          setPageSize={mockSetPageSize}
+        />
       </ReduxProvider>,
     )
 
