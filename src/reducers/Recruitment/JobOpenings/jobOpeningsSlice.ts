@@ -35,7 +35,7 @@ const getAllTechnology = createAsyncThunk(
   },
 )
 
-export const initialNotificationState: JobOpeningsSliceState = {
+export const initialJobOpeningsState: JobOpeningsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
   getAllTechnology: [],
@@ -43,7 +43,7 @@ export const initialNotificationState: JobOpeningsSliceState = {
 }
 const jobVacanciesSlice = createSlice({
   name: 'jobOpenings',
-  initialState: initialNotificationState,
+  initialState: initialJobOpeningsState,
   reducers: {},
   extraReducers: (builder) => {
     builder
