@@ -192,7 +192,7 @@ const MyTicketsTable = ({
                           <CTooltip content="Edit">
                             <CButton
                               color="info"
-                              className="btn-ovh me-2"
+                              className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
                               disabled={ticket.approvalStatus === 'Cancelled'}
                               data-testid="edit-btn"
                             >
@@ -208,7 +208,7 @@ const MyTicketsTable = ({
                         <CTooltip content="Cancel">
                           <CButton
                             color="btn btn-warning"
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list me-1"
                             data-testid="cancel-btn"
                             onClick={() => handleCancelTicketModal(ticket.id)}
                             disabled={ticket.approvalStatus === 'Cancelled'}
@@ -224,7 +224,7 @@ const MyTicketsTable = ({
                     <CTooltip content="Timeline">
                       <CButton
                         color="info"
-                        className="btn-ovh me-2"
+                        className="btn-ovh-employee-list me-1"
                         data-testid="history-btn"
                         onClick={() => handleTicketHistoryClick(ticket.id)}
                       >
