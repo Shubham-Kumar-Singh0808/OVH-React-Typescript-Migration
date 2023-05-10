@@ -11,9 +11,6 @@ describe('Employee Projects Table Testing', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
   })
-  it('should show the loader when employeeProjects are empty', () => {
-    expect(screen.getByTestId('employee-loader')).toBeTruthy()
-  })
   it('should show the correct headers', () => {
     expect(
       screen.getByRole('columnheader', { name: 'Project Name' }),

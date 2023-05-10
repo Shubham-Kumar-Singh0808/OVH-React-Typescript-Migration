@@ -256,6 +256,8 @@ const ProjectReport = (): JSX.Element => {
     } else {
       setIsCloseBtnVisible(true)
     }
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const clearHandler = () => {
@@ -312,9 +314,16 @@ const ProjectReport = (): JSX.Element => {
               employeeId: Number(employeeId),
             }
 
-      dispatch(
-        reduxServices.projectReport.getFetchSearchAllocationReport(payload),
-      )
+      if (params.multiSearch === '') {
+        dispatch(
+          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
+        )
+      }
     }
   }
 

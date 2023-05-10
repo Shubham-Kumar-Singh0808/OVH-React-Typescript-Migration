@@ -197,8 +197,8 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
                     <CTableDataCell>
-                      {leaveHistory.status === 'PendingApproval' &&
-                      'canBeCancelledAfterApproval' ? (
+                      {leaveHistory.status === 'PendingApproval' ||
+                      leaveHistory.canBeCancelledAfterApproval ? (
                         <CTooltip content="Cancel">
                           <CButton
                             color="warning"

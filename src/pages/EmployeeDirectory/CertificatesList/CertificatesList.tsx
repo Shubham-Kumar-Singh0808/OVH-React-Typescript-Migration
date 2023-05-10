@@ -85,6 +85,8 @@ const CertificatesList = (): JSX.Element => {
               filterByCertificate={filterByCertificate}
               multiSearchValue={multiSearchValue}
               setIsAccordionItemShow={setIsAccordionItemShow}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
             />
           </CCol>
           {isLoading !== ApiLoadingState.loading ? (

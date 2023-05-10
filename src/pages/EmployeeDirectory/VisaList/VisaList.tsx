@@ -80,6 +80,8 @@ const VisaList = (): JSX.Element => {
               filterByVisaType={filterByVisaType}
               multiSearchValue={multiSearchValue}
               setIsAccordionItemShow={setIsAccordionItemShow}
+              setPageSize={setPageSize}
+              setCurrentPage={setCurrentPage}
             />
           </CCol>
           {isLoading !== ApiLoadingState.loading ? (
