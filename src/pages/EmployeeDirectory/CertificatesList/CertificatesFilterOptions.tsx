@@ -25,6 +25,8 @@ const CertificatesFilterOptions = ({
   filterByCertificate,
   multiSearchValue,
   setIsAccordionItemShow,
+  setPageSize,
+  setCurrentPage,
 }: CertificatesFilterOptionsProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -96,6 +98,22 @@ const CertificatesFilterOptions = ({
     downloadFile(certificateListDownload, 'CertificatesList.csv')
   }
 
+  const onChangeTechnologyHandler = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSelectTechnology(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
+
+  const onChangeCertificateHandler = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setSelectCertificate(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
+
   return (
     <>
       <CRow>
@@ -111,9 +129,7 @@ const CertificatesFilterOptions = ({
             data-testid="selectTechnology"
             name="technology"
             value={selectTechnology}
-            onChange={(e) => {
-              setSelectTechnology(e.target.value)
-            }}
+            onChange={onChangeTechnologyHandler}
           >
             <option value={''}>Select Technology</option>
             {getTechnologies
@@ -141,9 +157,7 @@ const CertificatesFilterOptions = ({
                 data-testid="selectCertificate"
                 name="certificate"
                 value={selectCertificate}
-                onChange={(e) => {
-                  setSelectCertificate(e.target.value)
-                }}
+                onChange={onChangeCertificateHandler}
               >
                 <option value={''}>Select Certificate</option>
                 {getCertificateByTechnology?.map(
