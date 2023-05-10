@@ -10,19 +10,26 @@ export type EmployeeDetails = {
 }
 
 export type Investment = {
-  id?: number
+  id: number
   investmentId: string
   customAmount: string
+  description: string | null
+  requiredDocs: string
 }
 
 export type Invest = {
   investmentId: number
   investmentName: string
   maxLimit: number
-  description: string
+  description: string | null
   requiredDocs: string
   sectionId: number
   sectionName: string
+}
+
+export interface ITDeclarationModal {
+  showModal: boolean
+  modalDescription: string
 }
 
 export type Sections = {
@@ -70,6 +77,8 @@ export type ITDeclarationFormSliceState = {
   error: ValidationError
   grandTotal: number
   formSectionData: FormSectionsDTO[]
+  isSubmitButtonEnabled: boolean
+  modal: ITDeclarationModal
 }
 
 export type itDeclarationFormSectionList = {

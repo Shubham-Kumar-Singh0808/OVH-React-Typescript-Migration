@@ -3,14 +3,22 @@ import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
 import EmployeeDetails from './EmployeeDetails'
 import IncomeTaxAct from './IncomeTaxAct'
+import PreviousEmployerAct from './PreviousEmployerAct/PreviousEmployerAct'
+import { interchangeMonthAndDay } from './ITDeclarationFormHelpers'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OToast from '../../../components/ReusableComponent/OToast'
+import OModal from '../../../components/ReusableComponent/OModal'
+import { emptyString } from '../../../constant/constantData'
 
 const ITDeclarationForm = (): JSX.Element => {
-  const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
+  // const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState<boolean>(false)
+  const [enteredOrganization, setEnteredOrganization] =
+    useState<string>(emptyString)
+  const [enteredFromDate, setEnteredFromDate] = useState<string>(emptyString)
+  const [enteredToDate, setEnteredToDate] = useState<string>(emptyString)
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -26,9 +34,13 @@ const ITDeclarationForm = (): JSX.Element => {
   const grandTotalResult = useTypedSelector(
     reduxServices.itDeclarationForm.selectors.grandTotal,
   )
-  const formSectionData = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.formSectionData,
+  const employeeDetails = useTypedSelector(
+    (state) => state.itDeclarationForm.employeeDetails,
   )
+  const finalITDeclarationData = useTypedSelector(
+    (state) => state.itDeclarationForm.submitITDeclarationForm,
+  )
+  const modal = useTypedSelector((state) => state.itDeclarationForm.modal)
 
   const warningToastMessage = (
     <OToast
@@ -37,20 +49,25 @@ const ITDeclarationForm = (): JSX.Element => {
     />
   )
 
-  useEffect(() => {
-    if (isAgreeChecked) {
-      setIsButtonEnabled(true)
-    } else {
-      setIsButtonEnabled(false)
-    }
-  }, [isAgreeChecked])
+  const organizationChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setEnteredOrganization(e.target.value)
+  }
+
+  console.log(useTypedSelector((state) => state.itDeclarationForm))
+
   useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
     if (itDeclarationFormExists === true) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
       history.push('/itDeclarationList')
     }
-  }, [dispatch, itDeclarationFormExists])
+  }, [])
+
+  const isButtonEnabled = useTypedSelector(
+    (state) => state.itDeclarationForm.isSubmitButtonEnabled,
+  )
 
   const toastElement = (
     <OToast
@@ -61,17 +78,18 @@ const ITDeclarationForm = (): JSX.Element => {
 
   const handleSubmitDeclarationForm = async () => {
     const prepareObject = {
-      designation: '',
-      employeeId: 0,
-      employeeName: '',
-      formSectionsDTOs: formSectionData,
-      fromDate: '',
+      ...finalITDeclarationData,
+      designation: employeeDetails.designation,
+      employeeId: employeeDetails.employeeId,
+      employeeName: employeeDetails.fullName,
+      // formSectionsDTOs: formSectionData,
+      fromDate: interchangeMonthAndDay(enteredFromDate),
       grandTotal: grandTotalResult,
       isAgree: isAgreeChecked,
-      itDeclarationFormId: null,
-      organisationName: '',
-      panNumber: '',
-      toDate: '',
+      // itDeclarationFormId: null,
+      organisationName: enteredOrganization,
+      panNumber: employeeDetails.pan,
+      toDate: interchangeMonthAndDay(enteredToDate),
     }
     console.log(prepareObject)
     const addDeclarationFormResultAction = await dispatch(
@@ -87,6 +105,23 @@ const ITDeclarationForm = (): JSX.Element => {
     }
   }
 
+  const modalVisibleHandler = (value: boolean) => {
+    dispatch(reduxServices.itDeclarationForm.actions.modalVisible({ value }))
+  }
+
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    window.location.reload()
+  }
+
+  useEffect(() => {
+    //all my investments are in the store. calculating grand amount based on changes in investments
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
+  }, [
+    finalITDeclarationData?.formSectionsDTOs,
+    finalITDeclarationData?.grandTotal,
+  ])
+
   return (
     <>
       <OCard
@@ -97,6 +132,15 @@ const ITDeclarationForm = (): JSX.Element => {
       >
         <EmployeeDetails />
         <IncomeTaxAct />
+        <PreviousEmployerAct
+          enteredOrganization={enteredOrganization}
+          organizationChangeHandler={organizationChangeHandler}
+          enteredFromDate={enteredFromDate}
+          setEnteredFromDate={setEnteredFromDate}
+          enteredToDate={enteredToDate}
+          setEnteredToDate={setEnteredToDate}
+        />
+
         <CRow className="mt-3 mb-3">
           <CCol sm={12}>
             <p className="pull-right">
@@ -135,10 +179,10 @@ const ITDeclarationForm = (): JSX.Element => {
               <CButton
                 color="success"
                 className="btn-ovh me-1"
-                data-testid="df-submit-btn"
+                data-testid="decform-final-submit-btn"
                 size="sm"
                 onClick={handleSubmitDeclarationForm}
-                disabled={!isButtonEnabled}
+                disabled={!isButtonEnabled || !isAgreeChecked}
               >
                 Submit
               </CButton>
@@ -146,6 +190,7 @@ const ITDeclarationForm = (): JSX.Element => {
                 color="warning "
                 className="btn-ovh"
                 data-testid="df-clear-btn"
+                onClick={clearButtonHandler}
               >
                 Clear
               </CButton>
@@ -153,6 +198,15 @@ const ITDeclarationForm = (): JSX.Element => {
           )}
         </CRow>
       </OCard>
+      <OModal
+        visible={modal?.showModal}
+        modalSize="lg"
+        setVisible={modalVisibleHandler}
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        {modal?.modalDescription}
+      </OModal>
     </>
   )
 }

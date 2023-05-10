@@ -9,20 +9,27 @@ import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFea
 import { mockSections } from '../../../test/data/investmentCheckListData'
 
 const formSelectOption = 'form-select-section'
-const moreSectionsButton = 'btn-moreSections'
+const moreSectionsButton = 'btn-moreSections-Add More'
 describe('Sections Filter Options Testing', () => {
   beforeEach(() => {
-    render(<SectionsFilterOptions />, {
-      preloadedState: {
-        itDeclarationForm: {
-          isLoading: ApiLoadingState.succeeded,
-          sections: mockSections,
-        },
-        userAccessToFeatures: {
-          userAccessToFeatures: mockUserAccessToFeaturesData,
+    render(
+      <SectionsFilterOptions
+        isOldEmployee={true}
+        showAsterix={true}
+        moreSectionButtonText="Add More"
+      />,
+      {
+        preloadedState: {
+          itDeclarationForm: {
+            isLoading: ApiLoadingState.succeeded,
+            sections: mockSections,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       },
-    })
+    )
   })
   test('should render Sections Dropdown without crashing', () => {
     const selectSection = screen.getByTestId(formSelectOption)
@@ -58,6 +65,7 @@ describe('Sections Filter Options Testing', () => {
           index={0}
           setFormSectionList={jest.fn()}
           formSectionList={[]}
+          isOldEmployee={true}
         />,
       ),
     )

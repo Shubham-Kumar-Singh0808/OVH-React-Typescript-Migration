@@ -2,6 +2,11 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import MoreSections from './MoreSections'
+import {
+  defaultSelectSection,
+  formLabelProps,
+  initialSections,
+} from './ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import {
@@ -11,11 +16,19 @@ import {
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import { emptyString } from '../../../constant/constantData'
 
-const SectionsFilterOptions = (): JSX.Element => {
-  const [selectedSection, setSelectedSection] = useState<Sections>(
-    {} as Sections,
-  )
+const SectionsFilterOptions = ({
+  showAsterix,
+  moreSectionButtonText = 'More Sections',
+  isOldEmployee,
+}: {
+  showAsterix: boolean
+  moreSectionButtonText?: string
+  isOldEmployee: boolean
+}): JSX.Element => {
+  const [selectedSection, setSelectedSection] =
+    useState<Sections>(initialSections)
   const [showInvestment, setShowInvestment] = useState<boolean>(false)
   const [isMoreSectionsButtonEnabled, setIsMoreSectionsButtonEnabled] =
     useState<boolean>(false)
@@ -38,17 +51,12 @@ const SectionsFilterOptions = (): JSX.Element => {
   }, [dispatch])
 
   useEffect(() => {
-    if (selectedSection?.sectionId) {
+    if (selectedSection?.sectionId !== -1) {
       setIsMoreSectionsButtonEnabled(true)
     } else {
       setIsMoreSectionsButtonEnabled(false)
     }
   }, [selectedSection?.sectionId])
-
-  const formLabelProps = {
-    htmlFor: 'inputSection',
-    className: 'col-form-label sections-label',
-  }
 
   const handleOnChangeSection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
@@ -75,10 +83,11 @@ const SectionsFilterOptions = (): JSX.Element => {
         dispatch(reduxServices.app.actions.addToast(undefined))
       }, 2000)
     }
+    setSelectedSection(initialSections)
   }
 
   useEffect(() => {
-    if (selectedSection?.sectionId) {
+    if (selectedSection?.sectionId !== -1) {
       dispatch(
         reduxServices.itDeclarationForm.getInvestsBySectionId(
           selectedSection?.sectionId,
@@ -102,7 +111,16 @@ const SectionsFilterOptions = (): JSX.Element => {
       (itSection) => itSection.sectionId !== toCancelSectionId,
     )
     setSectionList(newSectionList)
+    dispatch(
+      reduxServices.itDeclarationForm.actions.removeFormSectionDTO({
+        sectionId: toCancelSectionId,
+      }),
+    )
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
+  }, [sectionList])
 
   useEffect(() => {
     const newList = sectionList.map((item) => {
@@ -121,30 +139,34 @@ const SectionsFilterOptions = (): JSX.Element => {
     setFormSectionList(newList)
   }, [sectionList])
 
-  useEffect(() => {
-    const grandTotalArray = formSectionList.map((list) =>
-      list.formInvestmentDTO.reduce((prev, current) => {
-        return prev + +current.customAmount
-      }, 0),
-    )
-    const grandTotal = grandTotalArray.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0,
-    )
-    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotal(grandTotal))
-    dispatch(
-      reduxServices.itDeclarationForm.actions.setFormSectionData(
-        formSectionList.forEach((each) => {
-          each.formInvestmentDTO.forEach((e) => delete e.id)
-          const { invests, ...rest } = each
-          const { sectionLimit, ...rest2 } = rest
-          rest2.isOld = true
-          rest2.itSectionsId = null
-          return rest2
-        }),
-      ),
-    )
-  }, [formSectionList])
+  // useEffect(() => {
+  //   const grandTotalArray = formSectionList.map((list) =>
+  //     list.formInvestmentDTO.reduce((prev, current) => {
+  //       return prev + +current.customAmount
+  //     }, 0),
+  //   )
+  //   const grandTotal = grandTotalArray.reduce(
+  //     (accumulator, currentValue) => accumulator + currentValue,
+  //     0,
+  //   )
+  //   dispatch(reduxServices.itDeclarationForm.actions.setGrandTotal(grandTotal))
+  //   // dispatch(
+  //   //   reduxServices.itDeclarationForm.actions.setFormSectionData(
+  //   //     formSectionList.forEach((each) => {
+  //   //       each.formInvestmentDTO.forEach((e) => {
+  //   //         //copying the object and omitting 'id' property
+  //   //         const { id, ...rest } = e
+  //   //         Object.assign(e, rest)
+  //   //       })
+  //   //       const { invests, ...rest } = each
+  //   //       const { sectionLimit, ...rest2 } = rest
+  //   //       rest2.isOld = true
+  //   //       rest2.itSectionsId = null
+  //   //       return rest2
+  //   //     }),
+  //   //   ),
+  //   // )
+  // }, [formSectionList])
 
   return (
     <>
@@ -152,25 +174,29 @@ const SectionsFilterOptions = (): JSX.Element => {
         <CCol sm={1}>
           <CFormLabel {...formLabelProps}>
             Sections:
-            <span
-              className={selectedSection?.sectionId ? TextWhite : TextDanger}
-            >
-              *
-            </span>
+            {showAsterix && (
+              <span
+                className={
+                  selectedSection?.sectionId !== -1 ? TextWhite : TextDanger
+                }
+              >
+                *
+              </span>
+            )}
           </CFormLabel>
         </CCol>
         <CCol sm={3}>
           <CFormSelect
             size="sm"
             id="section"
-            data-testid="form-select-section"
+            data-testid={`mainSectionSelect-${isOldEmployee}`}
             name="sectionName"
             onChange={(e) => {
               handleOnChangeSection(e)
             }}
             value={selectedSection?.sectionId}
           >
-            <option value={''}>Select section</option>
+            <option value={''}>{defaultSelectSection}</option>
             {section?.map((sectionItem, index) => (
               <option key={index} value={sectionItem.sectionId}>
                 {sectionItem.sectionName}
@@ -182,13 +208,13 @@ const SectionsFilterOptions = (): JSX.Element => {
           <CButton
             color="info"
             className="text-white btn-ovh"
-            data-testid="btn-moreSections"
+            data-testid={`btn-moreSections-${moreSectionButtonText}`}
             size="sm"
             disabled={!isMoreSectionsButtonEnabled}
             onClick={handleClickSection}
           >
             <i className="fa fa-plus me-1"></i>
-            More Sections
+            {moreSectionButtonText}
           </CButton>
         </CCol>
       </CRow>
@@ -207,6 +233,7 @@ const SectionsFilterOptions = (): JSX.Element => {
                   sectionList={sectionList}
                   setFormSectionList={setFormSectionList}
                   formSectionList={formSectionList}
+                  isOldEmployee={isOldEmployee}
                 />
               </CCol>
             </CRow>

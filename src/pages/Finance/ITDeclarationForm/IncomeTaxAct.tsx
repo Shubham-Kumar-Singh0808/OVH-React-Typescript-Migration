@@ -10,7 +10,7 @@ const IncomeTaxAct = (): JSX.Element => {
           Deduction available for Salaried employees under Income Tax Act 1961
         </h4>
       </CCardHeader>
-      <SectionsFilterOptions />
+      <SectionsFilterOptions showAsterix={true} isOldEmployee={true} />
     </>
   )
 }

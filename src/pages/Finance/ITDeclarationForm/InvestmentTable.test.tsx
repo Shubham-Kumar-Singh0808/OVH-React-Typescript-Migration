@@ -7,7 +7,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockSections } from '../../../test/data/itDeclarationFormData'
 import { mockInvestments } from '../../../test/data/investmentCheckListData'
 
-const selectInvest = 'form-select-investment'
+const selectInvest = 'form-select-investment0'
 const customAmountInput = 'custom-amount'
 describe('Investment Table Component Testing', () => {
   beforeEach(() => {
@@ -19,12 +19,15 @@ describe('Investment Table Component Testing', () => {
           id: 1,
           investmentId: '1',
           customAmount: '100000',
+          requiredDocs: '',
+          description: 'test',
         }}
-        secIndex={1}
+        secIndex={0}
         sectionList={mockSections}
         index={0}
         onChangeCustomAmount={jest.fn()}
         onChangeInvestment={jest.fn()}
+        investmentButtonHandler={jest.fn()}
       />,
       {
         preloadedState: {

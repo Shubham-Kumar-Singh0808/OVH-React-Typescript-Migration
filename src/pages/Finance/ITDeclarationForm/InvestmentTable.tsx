@@ -18,11 +18,17 @@ const InvestmentTable = ({
   secIndex,
   onChangeCustomAmount,
   onChangeInvestment,
+  investmentButtonHandler,
   index,
   sectionList,
 }: {
   setShowSubTotalAmount: (value: number) => void
   handleClickRemoveInvestment: (id: number) => void
+  investmentButtonHandler: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    investmentId: number,
+    type: 'query' | 'doc',
+  ) => void
   currentSec: Investment
   secIndex: number
   sectionList: Sections[]
@@ -42,19 +48,19 @@ const InvestmentTable = ({
     <>
       <CTableRow>
         <CTableDataCell scope="row">
-          <CCol className="mt-2">{currentSec.id}</CCol>
+          <CCol className="mt-2">{currentSec?.id}</CCol>
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CCol sm={12}>
             <CFormSelect
-              data-testid="form-select-investment"
+              data-testid={`form-select-investment${secIndex}`}
               size="sm"
               id="investment"
               name="investmentName"
               value={currentSec.investmentId}
-              onChange={(e) =>
-                onChangeInvestment(secIndex, e, currentSec.id as number)
-              }
+              onChange={(e) => {
+                onChangeInvestment(secIndex, e, +currentSec.investmentId)
+              }}
             >
               <option value="">Select Investment</option>
               {sectionList[index]?.invests.map((invest, investIndex) => (
@@ -74,11 +80,11 @@ const InvestmentTable = ({
               size="sm"
               placeholder="Enter Savings Amount"
               name="customAmount"
-              data-testid="custom-amount"
+              data-testid={`custom-amount${secIndex}`}
               maxLength={12}
               value={currentSec.customAmount}
               onChange={(e) =>
-                onChangeCustomAmount(secIndex, e, currentSec.id as number)
+                onChangeCustomAmount(secIndex, e, +currentSec.investmentId)
               }
             ></CFormInput>
           </CCol>
@@ -87,12 +93,12 @@ const InvestmentTable = ({
           <CCol className="mt-1">
             <CButton
               color="info"
-              data-testid={`df-remove-btn${index}`}
+              data-testid={`df-remove-btn${secIndex}`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
-              onClick={() =>
-                handleClickRemoveInvestment(currentSec.id as number)
-              }
+              onClick={() => {
+                handleClickRemoveInvestment(+currentSec.investmentId)
+              }}
             >
               <i className="fa fa-minus" aria-hidden="true"></i>
             </CButton>
@@ -100,18 +106,41 @@ const InvestmentTable = ({
         </CTableDataCell>
         <CTableDataCell scope="row">
           <CCol className="mt-1">
-            <CButton
-              color="info"
-              data-testid={`df-query-btn${index}`}
-              className="btn btn-primary bigfont text-white"
-              size="sm"
-            >
-              <i className="fa fa-question" aria-hidden="true"></i>
-            </CButton>
+            {currentSec.description && (
+              <CButton
+                color="info"
+                data-testid={`df-query-btn${secIndex}`}
+                className="btn btn-primary bigfont text-white"
+                size="sm"
+                onClick={(e) =>
+                  investmentButtonHandler(e, +currentSec.investmentId, 'query')
+                }
+              >
+                <i className="fa fa-question" aria-hidden="true"></i>
+              </CButton>
+            )}
           </CCol>
         </CTableDataCell>
         <CTableDataCell scope="row">
-          <CCol className="mt-2">Documents Required</CCol>
+          {currentSec.requiredDocs !== '' ? (
+            <CButton
+              className="mt-2 btn-ovh text-primary"
+              variant="outline"
+              style={{
+                backgroundColor: 'transparent',
+                color: 'inherit',
+                borderStyle: 'none',
+              }}
+              data-testid={`df-doc-btn${secIndex}`}
+              onClick={(e) => {
+                investmentButtonHandler(e, +currentSec.investmentId, 'doc')
+              }}
+            >
+              Documents Required
+            </CButton>
+          ) : (
+            <></>
+          )}
         </CTableDataCell>
       </CTableRow>
     </>
