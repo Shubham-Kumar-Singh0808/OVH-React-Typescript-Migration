@@ -32,3 +32,10 @@ export type JobOpeningsSliceState = {
   isLoading: LoadingState
   error: ValidationError
 }
+export type JobOpeningsTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}

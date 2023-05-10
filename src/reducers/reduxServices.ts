@@ -117,6 +117,7 @@ import { processAreaService } from './Settings/ProcessArea/ProcessAreaSlice'
 import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 import { notificationService } from './Notifications/notificationSlice'
+import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 
 export const reduxServices = {
   app: appService,
@@ -238,4 +239,5 @@ export const reduxServices = {
   addNewAuditForm: addNewAuditService,
   sqaAuditReport: sqaAuditReportService,
   notification: notificationService,
+  jobVacancies: jobOpeningsService,
 }

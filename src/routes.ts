@@ -444,6 +444,9 @@ const processAreaList = React.lazy(
 const Notifications = React.lazy(
   () => import('./pages/Notifications/Notifications'),
 )
+const JobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/JobOpenings'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -643,11 +646,11 @@ const routes = [
     name: 'Update Ticket',
     component: UpdateTicketUnderTicketList,
   },
-  {
-    path: '/jobvacancies',
-    name: 'Job Openings',
-    component: JobOpenings,
-  },
+  // {
+  //   path: '/jobvacancies',
+  //   name: 'Job Openings',
+  //   component: JobOpenings,
+  // },
   {
     path: '/birthdaylist',
     name: 'List of Birthdays',
@@ -974,6 +977,11 @@ const routes = [
     path: '/notifications',
     name: 'Notifications',
     component: Notifications,
+  },
+  {
+    path: '/jobvacancies',
+    name: 'Jobvacancies',
+    component: JobVacancies,
   },
 ]
 
