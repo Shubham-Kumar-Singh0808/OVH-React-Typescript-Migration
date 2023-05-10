@@ -176,6 +176,8 @@ const ResignationListFilterOptions = ({
           : '',
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
   const handleSearchInput = () => {
     dispatch(
@@ -201,14 +203,16 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * selectCurrentPage,
+        endIndex: 20,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (selectCurrentPage - 1),
+        startIndex: 0,
         status: 'ALL',
         to: '',
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const handleExportResignationListData = async () => {
@@ -240,6 +244,41 @@ const ResignationListFilterOptions = ({
       setSelectToDate('')
     }
   }, [Select])
+
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      if (searchInputValue === '') {
+        dispatch(
+          reduxServices.resignationList.getResignationList({
+            dateSelection: '',
+            empStatus: '',
+            endIndex: 20,
+            from: '',
+            multiplesearch: '',
+            startIndex: 0,
+            status: 'ALL',
+            to: '',
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.resignationList.getResignationList({
+            dateSelection: '',
+            empStatus: '',
+            endIndex: pageSize * selectCurrentPage,
+            from: '',
+            multiplesearch: searchInputValue,
+            startIndex: pageSize * (selectCurrentPage - 1),
+            status: 'ALL',
+            to: '',
+          }),
+        )
+      }
+    }
+  }
   return (
     <>
       <CRow className="employeeAllocation-form mt-4">
@@ -458,6 +497,7 @@ const ResignationListFilterOptions = ({
               onChange={(e) => {
                 setSearchInputValue(e.target.value)
               }}
+              onKeyUp={handleSearchByEnter}
             />
             <CButton
               disabled={!searchInputValue?.replace(/^\s*/, '')}

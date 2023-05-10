@@ -10,9 +10,13 @@ import { downloadFile } from '../../../utils/helper'
 const ListOptions = ({
   userCreateAccess,
   userViewAccess,
+  setCurrentPage,
+  setPageSize,
 }: {
   userCreateAccess: boolean
   userViewAccess: boolean
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -28,6 +32,8 @@ const ListOptions = ({
         event.target.value,
       ),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const handleExportEmployeeData = async () => {

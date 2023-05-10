@@ -152,6 +152,8 @@ const EmployeePipList = ({
 
   const viewButtonHandler = () => {
     dispatch(reduxServices.pipList.getAllPIPList(pipListObject))
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const clearButtonHandler = () => {
@@ -186,6 +188,7 @@ const EmployeePipList = ({
     if (selectDay !== 'Custom') {
       setFromDate('')
       setToDate('')
+      setCurrentPage(1)
     }
   }, [selectDay])
 
