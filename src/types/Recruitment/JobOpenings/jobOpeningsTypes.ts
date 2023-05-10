@@ -34,3 +34,13 @@ export type JobOpeningsSliceState = {
   getAllJobVacancies: GetAllJobVacanciesList[]
   listSize: number
 }
+
+export type JobVacancy = {
+  description: string
+  expiryDate: string
+  jobCode: string
+  minimumExperience: string
+  noOfRequirements: string
+  positionVacant: string
+  status: string
+}

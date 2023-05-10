@@ -970,4 +970,5 @@ export const notificationsApiConfig: NotificationsApi = {
 export const jobOpeningsApiConfig: JobOpeningsApi = {
   getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  addJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/addJobVacancy',
 }

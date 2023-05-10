@@ -447,6 +447,9 @@ const Notifications = React.lazy(
 const JobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/JobOpenings'),
 )
+const AddJobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -982,6 +985,11 @@ const routes = [
     path: '/jobvacancies',
     name: 'Jobvacancies',
     component: JobVacancies,
+  },
+  {
+    path: '/addJobvacancies',
+    name: 'AddJobVacancies',
+    component: AddJobVacancies,
   },
 ]
 

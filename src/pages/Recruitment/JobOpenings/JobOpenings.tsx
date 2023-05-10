@@ -7,6 +7,7 @@ import {
   CInputGroup,
   CRow,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import JobOpeningsTable from './JobOpeningsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -147,20 +148,22 @@ const JobOpenings = (): JSX.Element => {
             </CCol>
           </CRow>
           <div className="d-inline ml15 pull-right">
-            <CButton color="info" className="text-white btn-ovh" size="sm">
-              <i className="fa fa-plus me-1"></i>
-              Add
-            </CButton>
+            <Link to={'/addJobvacancies'}>
+              <CButton color="info" className="text-white btn-ovh" size="sm">
+                <i className="fa fa-plus me-1"></i>
+                Add
+              </CButton>
+            </Link>
           </div>
         </div>
+        <JobOpeningsTable
+          paginationRange={paginationRange}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
       </OCard>
-      <JobOpeningsTable
-        paginationRange={paginationRange}
-        setPageSize={setPageSize}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-        pageSize={pageSize}
-      />
     </>
   )
 }

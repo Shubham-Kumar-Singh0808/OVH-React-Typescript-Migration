@@ -2,6 +2,7 @@ import {
   GetAllJobVacancies,
   GetAllJobVacanciesProps,
   GetAllTechnology,
+  JobVacancy,
 } from '../../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -37,9 +38,19 @@ const getAllTechnology = async (): Promise<GetAllTechnology[]> => {
   return response.data
 }
 
+const addJobVacancy = async (): Promise<JobVacancy> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.addJobVacancy,
+    method: AllowedHttpMethods.post,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const jobOpeningsApi = {
   getAllJobVacancies,
   getAllTechnology,
+  addJobVacancy,
 }
 
 export default jobOpeningsApi
