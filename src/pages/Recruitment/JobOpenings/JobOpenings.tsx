@@ -119,34 +119,33 @@ const JobOpenings = (): JSX.Element => {
               />
             </>
           </div>
-          <CRow className="gap-2 d-md-flex justify-content-md-end">
-            <CCol sm={3} md={3}>
-              <CInputGroup className="global-search me-0 justify-content-md-end">
-                <CFormInput
-                  data-testid="searchField"
-                  placeholder="Multiple Search"
-                  aria-label="Multiple Search"
-                  aria-describedby="button-addon2"
-                  value={searchInput}
-                  onChange={(e) => {
-                    setSearchInput(e.target.value)
-                  }}
-                  onKeyDown={handleSearchBtn}
-                />
-                <CButton
-                  disabled={!searchInput}
-                  data-testid="multi-search-btn"
-                  className="cursor-pointer"
-                  type="button"
-                  color="info"
-                  id="button-addon2"
-                  onClick={multiSearchBtnHandler}
-                >
-                  <i className="fa fa-search"></i>
-                </CButton>
-              </CInputGroup>
-            </CCol>
-          </CRow>
+          <div className="me-2 d-inline-block">
+            <CInputGroup className="global-search me-0 justify-content-md-end">
+              <CFormInput
+                data-testid="searchField"
+                placeholder="Multiple Search"
+                aria-label="Multiple Search"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+                onKeyDown={handleSearchBtn}
+              />
+              <CButton
+                disabled={!searchInput}
+                data-testid="multi-search-btn"
+                className="cursor-pointer"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={multiSearchBtnHandler}
+              >
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </div>
+
           <div className="d-inline ml15 pull-right">
             <Link to={'/addJobvacancies'}>
               <CButton color="info" className="text-white btn-ovh" size="sm">

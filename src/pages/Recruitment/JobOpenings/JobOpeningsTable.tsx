@@ -59,11 +59,7 @@ const JobOpeningsTable = ({
   }
   return (
     <>
-      <CTable
-        striped
-        responsive
-        className="text-start text-left align-middle alignment"
-      >
+      <CTable className="align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
