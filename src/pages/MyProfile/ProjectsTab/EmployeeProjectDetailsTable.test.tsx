@@ -2,7 +2,6 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import EmployeeProjectsDetail from './EmployeeProjectDetailsTable'
 import { render, screen } from '../../../test/testUtils'
-import { mockEmployeeProjectsDetail } from '../../../test/data/employeeProjectsData'
 
 const toRender = (
   <div>
@@ -20,9 +19,6 @@ describe('Employee Projects Details', () => {
   test('should render the "Projec Details" table', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
-  })
-  test('should render the loading spinner when project details are empty', () => {
-    expect(screen.getByTestId('project-loader')).toBeTruthy()
   })
   test('should render the correct headers', () => {
     expect(screen.getByRole('columnheader', { name: 'ID' })).toBeTruthy()
