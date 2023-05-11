@@ -13,7 +13,6 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const EmployeeProjectsTable = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectEmpId, setSelectEmpId] = useState<number>()
 
@@ -31,15 +30,10 @@ const EmployeeProjectsTable = (): JSX.Element => {
   )
 
   useEffect(() => {
-    setIsLoading(true)
     if (employeeId) {
       dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
     }
   }, [dispatch, employeeId])
-
-  useEffect(() => {
-    if (employeeProjects) setIsLoading(false)
-  }, [employeeProjects])
 
   const toTitleCase = (str: string) => {
     return str

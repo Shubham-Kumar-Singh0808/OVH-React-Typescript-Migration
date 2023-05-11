@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   CButton,
   CCol,
@@ -189,14 +190,6 @@ const CreateNewTicketFilterOptions = ({
   }
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
-
-  const TicketFailedToast = (
-    <OToast
-      toastMessage="Ticket already raised"
-      toastColor="danger"
-      data-testid="failedToast"
-    />
-  )
 
   const handleApplyTicket = async () => {
     const payload =
