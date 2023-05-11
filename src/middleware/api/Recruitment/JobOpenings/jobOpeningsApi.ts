@@ -93,6 +93,33 @@ const getJobVacancyAudit = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const updateJobVacancy = async (
+  data: GetAllJobVacanciesList,
+): Promise<GetAllJobVacanciesList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.updateJobVacancy,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isCandidateMappedWithJob = async (jobCode: string): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.isCandidateMappedWithJob,
+    method: AllowedHttpMethods.get,
+    params: {
+      jobCode,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const jobOpeningsApi = {
   getAllJobVacancies,
   getAllTechnology,
@@ -100,6 +127,8 @@ const jobOpeningsApi = {
   deleteJobVacancy,
   getJobOpeningById,
   getJobVacancyAudit,
+  updateJobVacancy,
+  isCandidateMappedWithJob,
 }
 
 export default jobOpeningsApi

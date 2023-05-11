@@ -4,15 +4,19 @@ import { Link } from 'react-router-dom'
 import JobOpeningsTable from './JobOpeningsTable'
 import ViewJobInfo from './ViewJobInfo/ViewJobInfo'
 import JobVacancyTimeline from './JobVacancyTimeline/JobVacancyTimeline'
+import EditJobOpening from './EditJobOpening/EditJobOpening'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { GetAllJobVacanciesList } from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 
 const JobOpenings = (): JSX.Element => {
   const [selectRadioAction, setSelectRadioAction] = useState<string>('Open')
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
+  const initialCycle = {} as GetAllJobVacanciesList
+  const [editJobInfo, setEditJobInfo] = useState(initialCycle)
 
   const dispatch = useAppDispatch()
 
@@ -82,7 +86,7 @@ const JobOpenings = (): JSX.Element => {
     setCurrentPage(1)
     setPageSize(20)
   }
-
+  console.log(editJobInfo)
   return (
     <>
       {toggle === '' && (
@@ -162,11 +166,19 @@ const JobOpenings = (): JSX.Element => {
             searchInput={searchInput}
             selectRadioAction={selectRadioAction}
             setToggle={setToggle}
+            setEditJobInfo={setEditJobInfo}
           />
         </OCard>
       )}
       {toggle === 'jobInfo' && <ViewJobInfo setToggle={setToggle} />}
       {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
+      {toggle === 'editJobOpening' && (
+        <EditJobOpening
+          setToggle={setToggle}
+          editJobInfo={editJobInfo}
+          setEditJobInfo={setEditJobInfo}
+        />
+      )}
     </>
   )
 }

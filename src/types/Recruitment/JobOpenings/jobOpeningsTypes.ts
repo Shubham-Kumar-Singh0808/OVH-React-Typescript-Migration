@@ -80,3 +80,15 @@ export type JobVacancyAudit = {
   size: number
   list: JobVacancyAuditList[]
 }
+
+export type JobOpeningsTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  searchInput: string
+  selectRadioAction: string
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditJobInfo: React.Dispatch<React.SetStateAction<GetAllJobVacanciesList>>
+}

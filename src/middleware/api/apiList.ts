@@ -974,4 +974,7 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   deleteJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/deleteJobVacancy',
   getJobOpeningById: apiPrefix + '/jobapplicant/getJobOpeningById',
   getJobVacancyAudit: apiPrefix + '/jobvacancy/getJobVacancyAudit',
+  updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
+  isCandidateMappedWithJob:
+    apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
 }

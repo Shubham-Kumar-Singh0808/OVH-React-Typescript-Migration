@@ -44,6 +44,7 @@ const ViewJobInfo = ({
                 className="btn-ovh-employee-list me-1"
                 color="info"
                 type="button"
+                onClick={() => setToggle('editJobOpening')}
               >
                 <i className="fa fa-edit text-white" aria-hidden="true">
                   &nbsp; Edit

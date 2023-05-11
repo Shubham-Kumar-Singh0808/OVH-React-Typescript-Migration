@@ -828,4 +828,6 @@ export interface JobOpeningsApi extends ApiBase {
   deleteJobVacancy: string
   getJobOpeningById: string
   getJobVacancyAudit: string
+  updateJobVacancy: string
+  isCandidateMappedWithJob: string
 }

@@ -85,6 +85,30 @@ const getJobVacancyAudit = createAsyncThunk(
   },
 )
 
+const updateJobVacancy = createAsyncThunk(
+  'jobOpenings/updateJobVacancy',
+  async (data: GetAllJobVacanciesList, thunkApi) => {
+    try {
+      return await jobOpeningsApi.updateJobVacancy(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isCandidateMappedWithJob = createAsyncThunk(
+  'jobOpenings/isCandidateMappedWithJob',
+  async (jobCode: string, thunkApi) => {
+    try {
+      return await jobOpeningsApi.isCandidateMappedWithJob(jobCode)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialJobOpeningsState: JobOpeningsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -119,6 +143,10 @@ const jobVacanciesSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getJobOpeningById = action.payload
       })
+      .addCase(updateJobVacancy.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getJobOpeningById = action.payload
+      })
       .addMatcher(
         isAnyOf(deleteJobVacancy.fulfilled, addJobVacancy.fulfilled),
         (state) => {
@@ -133,6 +161,7 @@ const jobVacanciesSlice = createSlice({
           getJobVacancyAudit.pending,
           deleteJobVacancy.pending,
           addJobVacancy.pending,
+          updateJobVacancy.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -146,6 +175,7 @@ const jobVacanciesSlice = createSlice({
           getJobVacancyAudit.rejected,
           deleteJobVacancy.rejected,
           addJobVacancy.rejected,
+          updateJobVacancy.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -180,6 +210,8 @@ export const jobVacanciesThunk = {
   deleteJobVacancy,
   getJobOpeningById,
   getJobVacancyAudit,
+  updateJobVacancy,
+  isCandidateMappedWithJob,
 }
 
 export const jobVacanciesSelectors = {

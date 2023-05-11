@@ -18,8 +18,11 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { JobOpeningsTableProps } from '../../../types/Dashboard/JobOpenings/JobOpeningsTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
+import {
+  GetAllJobVacanciesList,
+  JobOpeningsTableProps,
+} from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 
 const JobOpeningsTable = ({
   paginationRange,
@@ -30,6 +33,7 @@ const JobOpeningsTable = ({
   searchInput,
   selectRadioAction,
   setToggle,
+  setEditJobInfo,
 }: JobOpeningsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -80,6 +84,11 @@ const JobOpeningsTable = ({
     setToggle('jobTimeline')
     dispatch(reduxServices.jobVacancies.getJobVacancyAudit(id))
   }
+  const editButtonHandler = (jobData: GetAllJobVacanciesList) => {
+    setEditJobInfo(jobData)
+    setToggle('editJobOpening')
+  }
+
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Job Deleted Successfully" />
   )
@@ -179,6 +188,7 @@ const JobOpeningsTable = ({
                       color="info btn-ovh me-1"
                       className="btn-ovh-employee-list me-1"
                       data-testid={`btn-edit${index}`}
+                      onClick={() => editButtonHandler(jobVacancy)}
                     >
                       <i className="fa fa-edit" aria-hidden="true"></i>
                     </CButton>
