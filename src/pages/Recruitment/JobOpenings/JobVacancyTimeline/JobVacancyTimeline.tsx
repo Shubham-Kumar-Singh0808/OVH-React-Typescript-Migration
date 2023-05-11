@@ -66,7 +66,7 @@ const JobVacancyTimeline = ({
           </CCol>
         </CRow>
         <div className="sh-timeline-container">
-          {auditList.length > 0 &&
+          {auditList?.length > 0 &&
             auditList?.map((auditHistory, index) => {
               const status = auditHistory?.status === 'true' ? 'Open' : 'Close'
               const oldStatus =

@@ -4,6 +4,10 @@ import jobOpeningsReducer, {
 } from './jobOpeningsSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockJobTechnology } from '../../../test/data/jobVacenciesData'
+import {
+  GetAllJobVacanciesList,
+  JobVacancyAuditList,
+} from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 
 describe('notification Slice', () => {
   describe('jobOpenings test', () => {
@@ -17,6 +21,9 @@ describe('notification Slice', () => {
         listSize: 0,
         getAllTechnology: [],
         getAllJobVacancies: [],
+        getJobOpeningById: {} as GetAllJobVacanciesList,
+        getJobVacancyAuditList: [],
+        getJobVacancyAudit: {} as JobVacancyAuditList,
       })
     })
 
@@ -26,10 +33,13 @@ describe('notification Slice', () => {
       }
       const state = jobOpeningsReducer(initialJobOpeningsState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.failed,
+        isLoading: ApiLoadingState.loading,
         listSize: 0,
         getAllTechnology: [],
         getAllJobVacancies: [],
+        getJobOpeningById: {} as GetAllJobVacanciesList,
+        getJobVacancyAuditList: [],
+        getJobVacancyAudit: {} as JobVacancyAuditList,
       })
     })
   })
@@ -44,6 +54,9 @@ describe('notification Slice', () => {
         listSize: 0,
         getAllTechnology: [],
         getAllJobVacancies: [],
+        getJobOpeningById: {} as GetAllJobVacanciesList,
+        getJobVacancyAuditList: [],
+        getJobVacancyAudit: {} as JobVacancyAuditList,
       })
     })
 
@@ -58,6 +71,9 @@ describe('notification Slice', () => {
         listSize: 0,
         getAllTechnology: mockJobTechnology,
         getAllJobVacancies: [],
+        getJobOpeningById: {} as GetAllJobVacanciesList,
+        getJobVacancyAuditList: [],
+        getJobVacancyAudit: {} as JobVacancyAuditList,
       })
     })
 
@@ -67,10 +83,13 @@ describe('notification Slice', () => {
       }
       const state = jobOpeningsReducer(initialJobOpeningsState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.failed,
+        isLoading: ApiLoadingState.loading,
         listSize: 0,
         getAllTechnology: [],
         getAllJobVacancies: [],
+        getJobOpeningById: {} as GetAllJobVacanciesList,
+        getJobVacancyAuditList: [],
+        getJobVacancyAudit: {} as JobVacancyAuditList,
       })
     })
   })
