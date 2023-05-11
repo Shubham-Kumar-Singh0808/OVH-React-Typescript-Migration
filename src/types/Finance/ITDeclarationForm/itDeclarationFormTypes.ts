@@ -79,6 +79,7 @@ export type ITDeclarationFormSliceState = {
   formSectionData: FormSectionsDTO[]
   isSubmitButtonEnabled: boolean
   modal: ITDeclarationModal
+  uploadedDocumentId: number
 }
 
 export type itDeclarationFormSectionList = {
@@ -89,4 +90,9 @@ export type itDeclarationFormSectionList = {
   sectionName: string
   sectionLimit: number
   invests: Invest[]
+}
+
+export interface UploadITDocumentDTO {
+  documentId: number
+  document: FormData | string
 }

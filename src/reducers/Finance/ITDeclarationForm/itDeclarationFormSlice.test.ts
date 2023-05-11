@@ -46,6 +46,7 @@ describe('IT Declaration List Slice', () => {
         modalDescription: '',
       },
       isSubmitButtonEnabled: false,
+      uploadedDocumentId: -1,
     }
     it('Should be able to set isLoading to "loading" if getEmployeeInfo is pending', () => {
       const action = {

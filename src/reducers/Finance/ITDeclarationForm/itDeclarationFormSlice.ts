@@ -11,6 +11,7 @@ import {
   ITDeclarationFormSliceState,
   Sections,
   submitITDeclarationForm,
+  UploadITDocumentDTO,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
 export const initialSubmitITDeclarationForm: submitITDeclarationForm = {
@@ -104,9 +105,9 @@ const addITDeclarationForm = createAsyncThunk(
 
 const uploadITDeclareDocuments = createAsyncThunk(
   'itDeclarationForm/uploadITDeclareDocuments',
-  async (_, thunkApi) => {
+  async (finalData: UploadITDocumentDTO, thunkApi) => {
     try {
-      return await itDeclarationFormApi.uploadITDocument()
+      return await itDeclarationFormApi.uploadITDocument(finalData)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -130,6 +131,7 @@ const initialITDeclarationFormState: ITDeclarationFormSliceState = {
     showModal: false,
     modalDescription: '',
   },
+  uploadedDocumentId: -1,
 }
 
 const itDeclarationFormSlice = createSlice({
@@ -146,10 +148,10 @@ const itDeclarationFormSlice = createSlice({
       state.isSubmitButtonEnabled = false
     },
     setGrandTotalFinal: (state) => {
-      const sections = state.submitITDeclarationForm?.formSectionsDTOs
+      const sectionsCopy = state.submitITDeclarationForm?.formSectionsDTOs
       let totalSum = 0
-      for (let i = 0; i < sections?.length; i++) {
-        totalSum += sections[i].formInvestmentDTO.reduce((accum, item) => {
+      for (let i = 0; i < sectionsCopy?.length; i++) {
+        totalSum += sectionsCopy[i].formInvestmentDTO.reduce((accum, item) => {
           if (item.customAmount === '') {
             //equivalent to 0
             return accum
@@ -236,8 +238,9 @@ const itDeclarationFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.sections = action.payload
       })
-      .addCase(addITDeclarationForm.fulfilled, (state) => {
+      .addCase(addITDeclarationForm.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.uploadedDocumentId = Number(action.payload)
       })
       .addCase(isITDeclarationFormExist.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded

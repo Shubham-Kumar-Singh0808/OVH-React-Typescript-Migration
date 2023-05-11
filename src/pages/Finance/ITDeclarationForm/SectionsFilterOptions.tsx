@@ -16,7 +16,6 @@ import {
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
-import { emptyString } from '../../../constant/constantData'
 
 const SectionsFilterOptions = ({
   showAsterix,

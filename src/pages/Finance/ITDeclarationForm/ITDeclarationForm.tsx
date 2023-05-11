@@ -109,8 +109,6 @@ const ITDeclarationForm = (): JSX.Element => {
     window.location.reload()
   }
 
-  console.log(useTypedSelector((state) => state.itDeclarationForm))
-
   return (
     <>
       <OCard

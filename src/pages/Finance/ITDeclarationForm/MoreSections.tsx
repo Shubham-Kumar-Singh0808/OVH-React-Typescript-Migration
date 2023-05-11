@@ -95,14 +95,6 @@ const MoreSections = ({
     }
   }
 
-  // const changeAmountHandler = (index: number, value: string) => {
-  //   const newInvestmentList: Investment[] = JSON.parse(
-  //     JSON.stringify(investmentList),
-  //   )
-  //   newInvestmentList[index].customAmount = value.replace(/\D/g, '')
-  //   setInvestmentList(newInvestmentList)
-  // }
-
   const onChangeCustomAmount = (
     customAmtIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
@@ -215,7 +207,9 @@ const MoreSections = ({
   //Checking if the user has entered and deleted the amount, then button must be disabled
   useEffect(() => {
     if (
-      investmentList.some((obj) => obj.customAmount === '') ||
+      investmentList.some(
+        (obj) => obj.customAmount === '' || obj.investmentId === '',
+      ) ||
       sectionItem.sectionLimit < showSubTotalAmount
     ) {
       dispatch(
