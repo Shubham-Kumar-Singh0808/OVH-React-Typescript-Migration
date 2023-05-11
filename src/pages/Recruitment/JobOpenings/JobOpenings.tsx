@@ -155,6 +155,8 @@ const JobOpenings = (): JSX.Element => {
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           pageSize={pageSize}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       </OCard>
     </>

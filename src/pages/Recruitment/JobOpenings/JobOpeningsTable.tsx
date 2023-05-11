@@ -19,6 +19,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { JobOpeningsTableProps } from '../../../types/Dashboard/JobOpenings/JobOpeningsTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const JobOpeningsTable = ({
   paginationRange,
@@ -26,12 +27,17 @@ const JobOpeningsTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  searchInput,
+  selectRadioAction,
 }: JobOpeningsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [isJobDescriptionModalVisible, setIsJobDescriptionModalVisible] =
     useState(false)
   const [description, setDescription] = useState<string>('')
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deleteJobTitleId, setDeleteJobTitleId] = useState(0)
+  const [deleteJobName, setDeleteJobName] = useState('')
 
   const getJobVacancies = useTypedSelector(
     reduxServices.jobVacancies.selectors.getJobVacancies,
@@ -57,6 +63,37 @@ const JobOpeningsTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+  const deleteButtonHandler = (id: number, locationName: string) => {
+    setIsDeleteModalVisible(true)
+    setDeleteJobTitleId(id)
+    setDeleteJobName(locationName)
+  }
+  const deletedToastElement = (
+    <OToast toastColor="success" toastMessage="Job Deleted Successfully" />
+  )
+  const confirmDeleteLocation = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteLocationResult = await dispatch(
+      reduxServices.jobVacancies.deleteJobVacancy(deleteJobTitleId),
+    )
+    if (
+      reduxServices.jobVacancies.deleteJobVacancy.fulfilled.match(
+        deleteLocationResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.jobVacancies.getAllJobVacancies({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          searchJobTitle: searchInput,
+          status: selectRadioAction,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
   return (
     <>
       <CTable className="align-middle alignment">
@@ -148,6 +185,12 @@ const JobOpeningsTable = ({
                       size="sm"
                       color="danger btn-ovh me-1"
                       className="btn-ovh-employee-list me-1"
+                      onClick={() =>
+                        deleteButtonHandler(
+                          jobVacancy.id,
+                          jobVacancy.positionVacant,
+                        )
+                      }
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -201,6 +244,22 @@ const JobOpeningsTable = ({
             }}
           />
         </span>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Location"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={confirmDeleteLocation}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this <strong>{deleteJobName}</strong> Job
+          ?
+        </>
       </OModal>
     </>
   )

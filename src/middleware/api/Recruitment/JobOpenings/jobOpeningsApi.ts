@@ -48,10 +48,25 @@ const addJobVacancy = async (data: JobVacancy): Promise<JobVacancy> => {
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const deleteJobVacancy = async (jobvacancyId: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.deleteJobVacancy,
+    method: AllowedHttpMethods.post,
+    params: {
+      jobvacancyId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const jobOpeningsApi = {
   getAllJobVacancies,
   getAllTechnology,
   addJobVacancy,
+  deleteJobVacancy,
 }
 
 export default jobOpeningsApi

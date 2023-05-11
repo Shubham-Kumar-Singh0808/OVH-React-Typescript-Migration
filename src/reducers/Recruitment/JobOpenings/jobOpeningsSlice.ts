@@ -48,6 +48,18 @@ const addJobVacancy = createAsyncThunk(
   },
 )
 
+const deleteJobVacancy = createAsyncThunk(
+  'jobOpenings/deleteJobVacancy',
+  async (jobvacancyId: number, thunkApi) => {
+    try {
+      return await jobOpeningsApi.deleteJobVacancy(jobvacancyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialJobOpeningsState: JobOpeningsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -70,6 +82,9 @@ const jobVacanciesSlice = createSlice({
         state.getAllTechnology = action.payload
       })
       .addCase(addJobVacancy.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+      .addCase(deleteJobVacancy.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(getAllJobVacancies.pending, (state) => {
@@ -101,6 +116,7 @@ export const jobVacanciesThunk = {
   getAllJobVacancies,
   getAllTechnology,
   addJobVacancy,
+  deleteJobVacancy,
 }
 
 export const jobVacanciesSelectors = {
