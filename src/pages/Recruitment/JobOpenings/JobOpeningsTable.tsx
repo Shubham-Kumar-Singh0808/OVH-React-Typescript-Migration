@@ -76,7 +76,10 @@ const JobOpeningsTable = ({
     setToggle('jobInfo')
     dispatch(reduxServices.jobVacancies.getJobOpeningById(id))
   }
-
+  const timeLineButtonHandler = (id: number) => {
+    setToggle('jobTimeline')
+    dispatch(reduxServices.jobVacancies.getJobVacancyAudit(id))
+  }
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Job Deleted Successfully" />
   )
@@ -162,7 +165,7 @@ const JobOpeningsTable = ({
                     <CButton
                       color="info"
                       className="btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
+                      data-testid="View-btn"
                       onClick={() => viewButtonHandler(jobVacancy.id)}
                     >
                       <i
@@ -185,6 +188,7 @@ const JobOpeningsTable = ({
                       color="info btn-ovh me-1"
                       className="btn-ovh-employee-list me-1"
                       data-testid={`sc-timeline-btn${index}`}
+                      onClick={() => timeLineButtonHandler(jobVacancy.id)}
                     >
                       <i className="fa fa-bar-chart" aria-hidden="true"></i>
                     </CButton>

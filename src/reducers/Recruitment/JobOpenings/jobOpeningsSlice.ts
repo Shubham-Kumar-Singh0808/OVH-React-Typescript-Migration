@@ -75,9 +75,9 @@ const getJobOpeningById = createAsyncThunk(
 
 const getJobVacancyAudit = createAsyncThunk(
   'jobOpenings/getJobVacancyAudit',
-  async (jobvacancyId: number, thunkApi) => {
+  async (jobVacancyId: number, thunkApi) => {
     try {
-      return await jobOpeningsApi.getJobVacancyAudit(jobvacancyId)
+      return await jobOpeningsApi.getJobVacancyAudit(jobVacancyId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -168,6 +168,9 @@ const JobOpeningById = (state: RootState): GetAllJobVacanciesList =>
 const JobVacancyAudit = (state: RootState): JobVacancyAuditList =>
   state.jobVacancies.getJobVacancyAudit
 
+const auditList = (state: RootState): JobVacancyAuditList[] =>
+  state.jobVacancies.getJobVacancyAuditList
+
 const listSize = (state: RootState): number => state.jobVacancies.listSize
 
 export const jobVacanciesThunk = {
@@ -186,6 +189,7 @@ export const jobVacanciesSelectors = {
   getTechnology,
   JobOpeningById,
   JobVacancyAudit,
+  auditList,
 }
 
 export const jobOpeningsService = {

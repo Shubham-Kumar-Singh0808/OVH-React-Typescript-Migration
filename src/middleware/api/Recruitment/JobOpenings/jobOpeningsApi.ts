@@ -80,13 +80,13 @@ const getJobOpeningById = async (
 }
 
 const getJobVacancyAudit = async (
-  jobvacancyId: number,
+  jobVacancyId: number,
 ): Promise<JobVacancyAudit> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: jobOpeningsApiConfig.getJobVacancyAudit,
     method: AllowedHttpMethods.get,
     params: {
-      jobvacancyId,
+      jobVacancyId,
     },
   })
 

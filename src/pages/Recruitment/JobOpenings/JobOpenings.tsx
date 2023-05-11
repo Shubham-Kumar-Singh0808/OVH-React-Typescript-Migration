@@ -3,6 +3,7 @@ import { CFormCheck, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import JobOpeningsTable from './JobOpeningsTable'
 import ViewJobInfo from './ViewJobInfo/ViewJobInfo'
+import JobVacancyTimeline from './JobVacancyTimeline/JobVacancyTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -165,6 +166,7 @@ const JobOpenings = (): JSX.Element => {
         </OCard>
       )}
       {toggle === 'jobInfo' && <ViewJobInfo setToggle={setToggle} />}
+      {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
     </>
   )
 }
