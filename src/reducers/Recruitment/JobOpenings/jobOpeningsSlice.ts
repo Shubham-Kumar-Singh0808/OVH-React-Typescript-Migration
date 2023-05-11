@@ -7,6 +7,7 @@ import {
   GetAllJobVacanciesProps,
   GetAllTechnology,
   JobOpeningsSliceState,
+  JobVacancy,
 } from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -37,9 +38,9 @@ const getAllTechnology = createAsyncThunk(
 
 const addJobVacancy = createAsyncThunk(
   'jobOpenings/addJobVacancy',
-  async (_, thunkApi) => {
+  async (data: JobVacancy, thunkApi) => {
     try {
-      return await jobOpeningsApi.addJobVacancy()
+      return await jobOpeningsApi.addJobVacancy(data)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -67,6 +68,9 @@ const jobVacanciesSlice = createSlice({
       .addCase(getAllTechnology.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.getAllTechnology = action.payload
+      })
+      .addCase(addJobVacancy.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addCase(getAllJobVacancies.pending, (state) => {
         state.isLoading = ApiLoadingState.loading

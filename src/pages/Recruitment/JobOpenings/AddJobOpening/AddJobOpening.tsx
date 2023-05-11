@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CRow,
   CFormLabel,
@@ -11,6 +11,7 @@ import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
   TextWhite,
@@ -19,8 +20,14 @@ import {
 } from '../../../../constant/ClassName'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import { useAppDispatch } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddJobOpening = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const history = useHistory()
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -33,6 +40,7 @@ const AddJobOpening = (): JSX.Element => {
   const [description, setDescription] = useState<string>('')
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [selectStatus, setSelectStatus] = useState<string>('')
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const handledInputChange = (
     event:
@@ -74,6 +82,40 @@ const AddJobOpening = (): JSX.Element => {
       setIsShowComment(true)
     }, 0)
   }
+
+  useEffect(() => {
+    if (jobCode && jobTitle && noOfOpenings && experience && selectStatus) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [jobCode, jobTitle, noOfOpenings, experience, selectStatus])
+
+  const successToast = (
+    <OToast toastMessage="Job Added Successfully" toastColor="success" />
+  )
+
+  const addJobVacancyButtonHandler = async () => {
+    const isAddLocation = await dispatch(
+      reduxServices.jobVacancies.addJobVacancy({
+        description,
+        expiryDate: expireDate,
+        jobCode,
+        minimumExperience: experience,
+        noOfRequirements: noOfOpenings,
+        positionVacant: jobTitle,
+        status: selectStatus,
+      }),
+    )
+    if (
+      reduxServices.jobVacancies.addJobVacancy.fulfilled.match(isAddLocation)
+    ) {
+      history.push('/jobvacancies')
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
   return (
     <>
       <OCard
@@ -254,6 +296,8 @@ const AddJobOpening = (): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
+              disabled={!isAddButtonEnabled}
+              onClick={addJobVacancyButtonHandler}
             >
               Add
             </CButton>

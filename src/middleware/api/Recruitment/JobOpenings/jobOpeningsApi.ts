@@ -38,10 +38,11 @@ const getAllTechnology = async (): Promise<GetAllTechnology[]> => {
   return response.data
 }
 
-const addJobVacancy = async (): Promise<JobVacancy> => {
+const addJobVacancy = async (data: JobVacancy): Promise<JobVacancy> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: jobOpeningsApiConfig.addJobVacancy,
     method: AllowedHttpMethods.post,
+    data,
   })
 
   const response = await useAxios(requestConfig)
