@@ -21,7 +21,7 @@ import {
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
-import { showIsRequired } from '../../../utils/helper'
+import { convertTime, showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
 import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
@@ -304,10 +304,24 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }
   const handleConfirmBtn = async () => {
-    const startTimeSplit = editMeetingRequest.startTime.split(':')
+    // const startTimeSplit = editMeetingRequest.startTime.split(':')
+
+    const startTimeResult = convertTime(editMeetingRequest.startTime)
+    const endTimeResult = convertTime(editMeetingRequest.endTime)
+
+    console.log(startTimeResult)
+    console.log(endTimeResult)
+
+    const startTimeHourResult = startTimeResult.split(':')[0]
+    const startTimeMinutesResult = startTimeResult.split(':')[1]?.split(' ')[0]
+
+    const endTimeHourResult = endTimeResult.split(':')[0]
+    const endTimeMinutes = endTimeResult.split(':')[1]?.split(' ')[0]
+    console.log(startTimeHourResult)
+    console.log(startTimeMinutesResult)
     const timeCheckResult = await dispatch(
       reduxServices.newEvent.timeCheck(
-        `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+        `${editMeetingRequest.fromDate}/${startTimeHourResult}/${startTimeMinutesResult}`,
       ),
     )
     const newAttendeesList = attendeeResponse?.map(
@@ -316,7 +330,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
         return { id, availability }
       },
     )
-    console.log(newAttendeesList)
     const prepareObj = {
       agenda: editMeetingRequest?.agenda,
       authorName: loggedEmployee,
@@ -330,7 +343,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       employeeDto: null,
       employeeIds: null,
       employeeNames: editMeetingRequest.employeeNames,
-      endTime: `${editMeetingRequest.fromDate}/${endHour}/${endMinutesDay}`,
+      endTime: `${editMeetingRequest.fromDate}/${endTimeHourResult}/${endTimeMinutes}`,
       eventEditAccess: null,
       eventId: null,
       eventLocation: null,
@@ -347,7 +360,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       projectName: projectsAutoCompleteTarget,
       roomId: editMeetingRequest.roomId,
       roomName: editMeetingRequest.roomName,
-      startTime: `${editMeetingRequest.fromDate}/${startHour}/${startMinutesDay}`,
+      startTime: `${editMeetingRequest.fromDate}/${startTimeHourResult}/${startTimeMinutesResult}`,
       timeFomrat: null,
       toDate: null,
       trainerName: null,
