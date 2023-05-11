@@ -63,9 +63,9 @@ const deleteJobVacancy = createAsyncThunk(
 
 const getJobOpeningById = createAsyncThunk(
   'jobOpenings/getJobOpeningById',
-  async (jobvacancyId: number, thunkApi) => {
+  async (jobVacancyId: number, thunkApi) => {
     try {
-      return await jobOpeningsApi.getJobOpeningById(jobvacancyId)
+      return await jobOpeningsApi.getJobOpeningById(jobVacancyId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

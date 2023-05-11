@@ -40,4 +40,5 @@ export type JobOpeningsTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   searchInput: string
   selectRadioAction: string
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }

@@ -65,13 +65,13 @@ const deleteJobVacancy = async (jobvacancyId: number): Promise<number> => {
 }
 
 const getJobOpeningById = async (
-  jobvacancyId: number,
+  jobVacancyId: number,
 ): Promise<GetAllJobVacanciesList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: jobOpeningsApiConfig.getJobOpeningById,
     method: AllowedHttpMethods.get,
     params: {
-      jobvacancyId,
+      jobVacancyId,
     },
   })
 

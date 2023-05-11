@@ -29,6 +29,7 @@ const JobOpeningsTable = ({
   setCurrentPage,
   searchInput,
   selectRadioAction,
+  setToggle,
 }: JobOpeningsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -60,14 +61,22 @@ const JobOpeningsTable = ({
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
+
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
   const deleteButtonHandler = (id: number, locationName: string) => {
     setIsDeleteModalVisible(true)
     setDeleteJobTitleId(id)
     setDeleteJobName(locationName)
   }
+
+  const viewButtonHandler = (id: number) => {
+    setToggle('jobInfo')
+    dispatch(reduxServices.jobVacancies.getJobOpeningById(id))
+  }
+
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Job Deleted Successfully" />
   )
@@ -154,6 +163,7 @@ const JobOpeningsTable = ({
                       color="info"
                       className="btn-ovh-employee-list me-1"
                       data-testid="edit-btn"
+                      onClick={() => viewButtonHandler(jobVacancy.id)}
                     >
                       <i
                         className="fa fa-eye  text-white"
