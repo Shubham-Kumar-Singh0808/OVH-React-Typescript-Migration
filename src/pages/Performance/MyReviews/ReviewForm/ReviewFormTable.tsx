@@ -161,27 +161,27 @@ const ReviewFormTable = (): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
-      {isButtonsVisible && (
-        <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
-              className="btn-ovh me-1"
-              color="success"
-              onClick={saveEmployeeAppraisalFormHandler}
-            >
-              Save
-            </CButton>
-            <CButton
-              color="success "
-              className="btn-ovh"
-              disabled
-              onClick={submitAppraisalFormHandler}
-            >
-              Submit
-            </CButton>
-          </CCol>
-        </CRow>
-      )}
+      {/* {isButtonsVisible && ( */}
+      <CRow>
+        <CCol md={{ span: 6, offset: 3 }}>
+          <CButton
+            className="btn-ovh me-1"
+            color="success"
+            onClick={saveEmployeeAppraisalFormHandler}
+          >
+            Save
+          </CButton>
+          <CButton
+            color="success "
+            className="btn-ovh"
+            disabled
+            onClick={submitAppraisalFormHandler}
+          >
+            Submit
+          </CButton>
+        </CCol>
+      </CRow>
+      {/* )} */}
     </>
   )
 }
