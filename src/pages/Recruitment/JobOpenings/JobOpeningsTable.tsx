@@ -138,9 +138,14 @@ const JobOpeningsTable = ({
         <CTableBody>
           {getJobVacancies.map((jobVacancy, index) => {
             const jobDescriptionLimit =
-              jobVacancy.description && jobVacancy.description.length > 25
-                ? `${jobVacancy.description.substring(0, 25)}`
+              jobVacancy.description && jobVacancy.description.length > 30
+                ? `${jobVacancy.description.substring(0, 30)}...`
                 : jobVacancy.description
+
+            const ticketDescription =
+              jobVacancy.description !== null
+                ? parse(jobDescriptionLimit)
+                : 'N/A'
             return (
               <CTableRow key={index}>
                 <CTableDataCell scope="row">
@@ -158,7 +163,7 @@ const JobOpeningsTable = ({
                       data-testid={`job-description${index}`}
                       onClick={() => handleModal(jobVacancy.description)}
                     >
-                      {parse(jobDescriptionLimit)}
+                      {ticketDescription}
                     </CLink>
                   </CTableDataCell>
                 ) : (

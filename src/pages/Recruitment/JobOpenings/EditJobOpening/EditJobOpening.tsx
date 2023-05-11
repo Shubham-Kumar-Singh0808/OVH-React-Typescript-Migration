@@ -49,7 +49,9 @@ const EditJobOpening = ({
     if (
       editJobInfo.jobCode &&
       editJobInfo.minimumExperience &&
-      editJobInfo.noOfRequirements
+      editJobInfo.noOfRequirements &&
+      editJobInfo.positionVacant &&
+      editJobInfo.status
     ) {
       setIsUpdateButtonEnabled(true)
     } else {
@@ -92,7 +94,7 @@ const EditJobOpening = ({
       minimumExperience: editJobInfo.minimumExperience,
       description: editJobInfo.description,
       opendDate: editJobInfo.opendDate,
-      expiryDate: editJobInfo.expiryDate,
+      expiryDate: editToDate,
       noOfRequirements: editJobInfo.noOfRequirements,
       offered: editJobInfo.offered,
       remaining: editJobInfo.remaining,
@@ -118,7 +120,7 @@ const EditJobOpening = ({
       setIsShowComment(true)
     }, 100)
   }, [])
-
+  console.log(editJobInfo.status)
   return (
     <>
       <OCard
@@ -317,8 +319,8 @@ const EditJobOpening = ({
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Status</option>
-              <option value="Open">Open</option>
-              <option value="Close">Close</option>
+              <option value="open">Open</option>
+              <option value="close">Close</option>
             </CFormSelect>
           </CCol>
         </CRow>
