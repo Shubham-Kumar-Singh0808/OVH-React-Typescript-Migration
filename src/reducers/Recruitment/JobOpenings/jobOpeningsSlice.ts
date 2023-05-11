@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import jobOpeningsApi from '../../../middleware/api/Recruitment/JobOpenings/jobOpeningsApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
@@ -8,6 +8,7 @@ import {
   GetAllTechnology,
   JobOpeningsSliceState,
   JobVacancy,
+  JobVacancyAuditList,
 } from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -60,12 +61,40 @@ const deleteJobVacancy = createAsyncThunk(
   },
 )
 
+const getJobOpeningById = createAsyncThunk(
+  'jobOpenings/getJobOpeningById',
+  async (jobvacancyId: number, thunkApi) => {
+    try {
+      return await jobOpeningsApi.getJobOpeningById(jobvacancyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getJobVacancyAudit = createAsyncThunk(
+  'jobOpenings/getJobVacancyAudit',
+  async (jobvacancyId: number, thunkApi) => {
+    try {
+      return await jobOpeningsApi.getJobVacancyAudit(jobvacancyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialJobOpeningsState: JobOpeningsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
   getAllTechnology: [],
   getAllJobVacancies: [],
+  getJobOpeningById: {} as GetAllJobVacanciesList,
+  getJobVacancyAuditList: [],
+  getJobVacancyAudit: {} as JobVacancyAuditList,
 }
+
 const jobVacanciesSlice = createSlice({
   name: 'jobOpenings',
   initialState: initialJobOpeningsState,
@@ -81,24 +110,47 @@ const jobVacanciesSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getAllTechnology = action.payload
       })
-      .addCase(addJobVacancy.fulfilled, (state) => {
+      .addCase(getJobVacancyAudit.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.getJobVacancyAuditList = action.payload.list
+        state.listSize = action.payload.size
       })
-      .addCase(deleteJobVacancy.fulfilled, (state) => {
+      .addCase(getJobOpeningById.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
+        state.getJobOpeningById = action.payload
       })
-      .addCase(getAllJobVacancies.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(getAllJobVacancies.rejected, (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
-      .addCase(getAllTechnology.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(getAllTechnology.rejected, (state) => {
-        state.isLoading = ApiLoadingState.failed
-      })
+      .addMatcher(
+        isAnyOf(deleteJobVacancy.fulfilled, addJobVacancy.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllTechnology.pending,
+          getAllJobVacancies.pending,
+          getJobOpeningById.pending,
+          getJobVacancyAudit.pending,
+          deleteJobVacancy.pending,
+          addJobVacancy.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getAllTechnology.rejected,
+          getAllJobVacancies.rejected,
+          getJobOpeningById.rejected,
+          getJobVacancyAudit.rejected,
+          deleteJobVacancy.rejected,
+          addJobVacancy.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 const isLoading = (state: RootState): LoadingState =>
@@ -110,6 +162,12 @@ const getJobVacancies = (state: RootState): GetAllJobVacanciesList[] =>
 const getTechnology = (state: RootState): GetAllTechnology[] =>
   state.jobVacancies.getAllTechnology
 
+const JobOpeningById = (state: RootState): GetAllJobVacanciesList =>
+  state.jobVacancies.getJobOpeningById
+
+const JobVacancyAudit = (state: RootState): JobVacancyAuditList =>
+  state.jobVacancies.getJobVacancyAudit
+
 const listSize = (state: RootState): number => state.jobVacancies.listSize
 
 export const jobVacanciesThunk = {
@@ -117,6 +175,8 @@ export const jobVacanciesThunk = {
   getAllTechnology,
   addJobVacancy,
   deleteJobVacancy,
+  getJobOpeningById,
+  getJobVacancyAudit,
 }
 
 export const jobVacanciesSelectors = {
@@ -124,6 +184,8 @@ export const jobVacanciesSelectors = {
   getJobVacancies,
   listSize,
   getTechnology,
+  JobOpeningById,
+  JobVacancyAudit,
 }
 
 export const jobOpeningsService = {

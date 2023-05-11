@@ -826,4 +826,6 @@ export interface JobOpeningsApi extends ApiBase {
   getAllTechnology: string
   addJobVacancy: string
   deleteJobVacancy: string
+  getJobOpeningById: string
+  getJobVacancyAudit: string
 }

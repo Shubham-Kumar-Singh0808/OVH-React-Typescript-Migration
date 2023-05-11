@@ -33,6 +33,9 @@ export type JobOpeningsSliceState = {
   getAllTechnology: GetAllTechnology[]
   getAllJobVacancies: GetAllJobVacanciesList[]
   listSize: number
+  getJobOpeningById: GetAllJobVacanciesList
+  getJobVacancyAuditList: JobVacancyAuditList[]
+  getJobVacancyAudit: JobVacancyAuditList
 }
 
 export type JobVacancy = {
@@ -43,4 +46,37 @@ export type JobVacancy = {
   noOfRequirements: string
   positionVacant: string
   status: string
+}
+
+export type JobVacancyAuditList = {
+  id: null
+  jobCode: string
+  positionVacant: string
+  minimumExperience: string
+  description: string
+  opendDate: string
+  expiryDate: string
+  noOfRequirements: string
+  offered: string
+  remaining: null
+  status: string
+  oldjobCode: null
+  oldpositionVacant: null
+  oldminimumExperience: null
+  olddescription: null
+  oldopendDate: null
+  oldexpiryDate: null
+  oldnoOfRequirements: null
+  oldoffered: null
+  oldremaining: null
+  modifiedDate: string
+  modifiedBy: string
+  persistType: string
+  columnName: null
+  oldStatus: null
+}
+
+export type JobVacancyAudit = {
+  size: number
+  list: JobVacancyAuditList[]
 }

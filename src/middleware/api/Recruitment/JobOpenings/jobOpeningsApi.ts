@@ -1,8 +1,10 @@
 import {
   GetAllJobVacancies,
+  GetAllJobVacanciesList,
   GetAllJobVacanciesProps,
   GetAllTechnology,
   JobVacancy,
+  JobVacancyAudit,
 } from '../../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -62,11 +64,42 @@ const deleteJobVacancy = async (jobvacancyId: number): Promise<number> => {
   return response.data
 }
 
+const getJobOpeningById = async (
+  jobvacancyId: number,
+): Promise<GetAllJobVacanciesList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.getJobOpeningById,
+    method: AllowedHttpMethods.get,
+    params: {
+      jobvacancyId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getJobVacancyAudit = async (
+  jobvacancyId: number,
+): Promise<JobVacancyAudit> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: jobOpeningsApiConfig.getJobVacancyAudit,
+    method: AllowedHttpMethods.get,
+    params: {
+      jobvacancyId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const jobOpeningsApi = {
   getAllJobVacancies,
   getAllTechnology,
   addJobVacancy,
   deleteJobVacancy,
+  getJobOpeningById,
+  getJobVacancyAudit,
 }
 
 export default jobOpeningsApi
