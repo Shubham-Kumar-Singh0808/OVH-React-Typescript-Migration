@@ -67,6 +67,8 @@ const ITDeclarationForm = (): JSX.Element => {
     (state) => state.itDeclarationForm.isSubmitButtonEnabled,
   )
 
+  console.log(useTypedSelector((state) => state.itDeclarationForm))
+
   const toastElement = (
     <OToast
       toastColor="success"
@@ -74,7 +76,27 @@ const ITDeclarationForm = (): JSX.Element => {
     />
   )
 
+  const finalITSubmissionForSectionDTO = useTypedSelector(
+    (state) => state.itDeclarationForm.submitITDeclarationForm.formSectionsDTOs,
+  )
+
+  //the income tax 1961 act is compulsory
+  useEffect(() => {
+    if (
+      finalITSubmissionForSectionDTO.filter((item) => item.isOld === true)
+        .length === 0
+    ) {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setSubmitButtonDisabled(),
+      )
+    }
+  }, [finalITSubmissionForSectionDTO])
+
   const handleSubmitDeclarationForm = async () => {
+    const formData = new FormData()
+    if (enteredFile) {
+      formData.append('file', enteredFile)
+    }
     const prepareObject = {
       ...finalITDeclarationData,
       designation: employeeDetails.designation,
@@ -90,9 +112,18 @@ const ITDeclarationForm = (): JSX.Element => {
     const addDeclarationFormResultAction = await dispatch(
       reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
     )
+    const fileUploadResult = await dispatch(
+      reduxServices.itDeclarationForm.uploadITDeclareDocuments({
+        documentId: Number(addDeclarationFormResultAction.payload),
+        document: enteredFile ? formData : '',
+      }),
+    )
     if (
       reduxServices.itDeclarationForm.addITDeclarationForm.fulfilled.match(
         addDeclarationFormResultAction,
+      ) &&
+      reduxServices.itDeclarationForm.uploadITDeclareDocuments.fulfilled.match(
+        fileUploadResult,
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))

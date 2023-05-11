@@ -178,7 +178,7 @@ const SectionsFilterOptions = ({
             value={selectedSection?.sectionId}
           >
             <option value={''}>{defaultSelectSection}</option>
-            {sections.length > 0 &&
+            {sections!.length > 0 &&
               sections?.map((sectionItem, index) => (
                 <option key={index} value={sectionItem.sectionId.toString()}>
                   {sectionItem.sectionName}
