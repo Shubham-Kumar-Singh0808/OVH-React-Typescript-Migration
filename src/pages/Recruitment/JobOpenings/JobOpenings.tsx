@@ -5,6 +5,7 @@ import JobOpeningsTable from './JobOpeningsTable'
 import ViewJobInfo from './ViewJobInfo/ViewJobInfo'
 import JobVacancyTimeline from './JobVacancyTimeline/JobVacancyTimeline'
 import EditJobOpening from './EditJobOpening/EditJobOpening'
+import EditJobView from './ViewJobInfo/EditJobView'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -174,6 +175,13 @@ const JobOpenings = (): JSX.Element => {
       {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
       {toggle === 'editJobOpening' && (
         <EditJobOpening
+          setToggle={setToggle}
+          editJobInfo={editJobInfo}
+          setEditJobInfo={setEditJobInfo}
+        />
+      )}
+      {toggle === 'editViewJobOpening' && (
+        <EditJobView
           setToggle={setToggle}
           editJobInfo={editJobInfo}
           setEditJobInfo={setEditJobInfo}
