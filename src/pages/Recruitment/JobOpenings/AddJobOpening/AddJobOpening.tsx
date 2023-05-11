@@ -20,7 +20,7 @@ import {
 } from '../../../../constant/ClassName'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
@@ -41,7 +41,17 @@ const AddJobOpening = (): JSX.Element => {
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [selectStatus, setSelectStatus] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [jobCodeExist, setJobCodeExist] = useState('')
 
+  const jobVacancies = useTypedSelector(
+    reduxServices.jobVacancies.selectors.getJobVacancies,
+  )
+
+  const jobCodeExists = (name: string) => {
+    return jobVacancies?.find((locationName) => {
+      return locationName.jobCode.toLowerCase() === name.toLowerCase()
+    })
+  }
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -60,6 +70,11 @@ const AddJobOpening = (): JSX.Element => {
     } else if (name === 'experience') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setExperience(newValue)
+    }
+    if (jobCodeExists(value.trim())) {
+      setJobCodeExist(value.trim())
+    } else {
+      setJobCodeExist('')
     }
   }
 
@@ -146,6 +161,11 @@ const AddJobOpening = (): JSX.Element => {
               value={jobCode}
               onChange={handledInputChange}
             />
+            {jobCodeExist && (
+              <span className={TextDanger} data-testid="nameAlreadyExist">
+                <b>Job Code already exist</b>
+              </span>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
@@ -296,7 +316,11 @@ const AddJobOpening = (): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isAddButtonEnabled}
+              disabled={
+                isAddButtonEnabled
+                  ? isAddButtonEnabled && jobCodeExist.length > 0
+                  : !isAddButtonEnabled
+              }
               onClick={addJobVacancyButtonHandler}
             >
               Add
