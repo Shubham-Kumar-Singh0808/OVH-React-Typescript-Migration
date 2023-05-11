@@ -43,6 +43,7 @@ const JobOpeningsTable = ({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteJobTitleId, setDeleteJobTitleId] = useState(0)
   const [deleteJobName, setDeleteJobName] = useState('')
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
 
   const getJobVacancies = useTypedSelector(
     reduxServices.jobVacancies.selectors.getJobVacancies,
@@ -69,34 +70,21 @@ const JobOpeningsTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
-  const deleteButtonHandler = (id: number, locationName: string) => {
-    setIsDeleteModalVisible(true)
-    setDeleteJobTitleId(id)
-    setDeleteJobName(locationName)
-  }
-
-  const viewButtonHandler = (id: number) => {
-    setToggle('jobInfo')
-    dispatch(reduxServices.jobVacancies.getJobOpeningById(id))
-  }
-  const timeLineButtonHandler = (id: number) => {
-    setToggle('jobTimeline')
-    dispatch(reduxServices.jobVacancies.getJobVacancyAudit(id))
-  }
-  const editButtonHandler = (jobData: GetAllJobVacanciesList) => {
-    setEditJobInfo(jobData)
-    setToggle('editJobOpening')
-  }
-
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Job Deleted Successfully" />
+  )
+  const deletedToast = (
+    <OToast
+      toastColor="danger"
+      toastMessage="Job code already mapped with Candidate.So,you can't delete."
+    />
   )
   const confirmDeleteLocation = async () => {
     setIsDeleteModalVisible(false)
     const deleteLocationResult = await dispatch(
       reduxServices.jobVacancies.deleteJobVacancy(deleteJobTitleId),
     )
+
     if (
       reduxServices.jobVacancies.deleteJobVacancy.fulfilled.match(
         deleteLocationResult,
@@ -113,6 +101,39 @@ const JobOpeningsTable = ({
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
+  }
+  console.log(errorMessageCount)
+  const deleteButtonHandler = async (
+    id: number,
+    locationName: string,
+    jobCode: string,
+  ) => {
+    const deleteLocationResult = await dispatch(
+      reduxServices.jobVacancies.isCandidateMappedWithJob(jobCode),
+    )
+
+    if (deleteLocationResult.payload === false) {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(deletedToast))
+    } else {
+      confirmDeleteLocation()
+      setIsDeleteModalVisible(true)
+      setDeleteJobTitleId(id)
+      setDeleteJobName(locationName)
+    }
+  }
+
+  const viewButtonHandler = (id: number) => {
+    setToggle('jobInfo')
+    dispatch(reduxServices.jobVacancies.getJobOpeningById(id))
+  }
+  const timeLineButtonHandler = (id: number) => {
+    setToggle('jobTimeline')
+    dispatch(reduxServices.jobVacancies.getJobVacancyAudit(id))
+  }
+  const editButtonHandler = (jobData: GetAllJobVacanciesList) => {
+    setEditJobInfo(jobData)
+    setToggle('editJobOpening')
   }
 
   return (
@@ -218,6 +239,7 @@ const JobOpeningsTable = ({
                         deleteButtonHandler(
                           jobVacancy.id,
                           jobVacancy.positionVacant,
+                          jobVacancy.jobCode,
                         )
                       }
                     >

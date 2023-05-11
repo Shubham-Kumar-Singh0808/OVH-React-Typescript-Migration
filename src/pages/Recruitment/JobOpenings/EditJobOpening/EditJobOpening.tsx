@@ -120,7 +120,7 @@ const EditJobOpening = ({
       setIsShowComment(true)
     }, 100)
   }, [])
-  console.log(editJobInfo.status)
+
   return (
     <>
       <OCard
