@@ -157,99 +157,102 @@ const JobOpeningsTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {getJobVacancies.map((jobVacancy, index) => {
-            const jobDescriptionLimit =
-              jobVacancy.description && jobVacancy.description.length > 30
-                ? `${jobVacancy.description.substring(0, 30)}...`
-                : jobVacancy.description
+          {getJobVacancies.length > 0 &&
+            getJobVacancies?.map((jobVacancy, index) => {
+              const jobDescriptionLimit =
+                jobVacancy.description && jobVacancy.description.length > 30
+                  ? `${jobVacancy.description.substring(0, 30)}...`
+                  : jobVacancy.description
 
-            const ticketDescription =
-              jobVacancy.description !== null
-                ? parse(jobDescriptionLimit)
-                : 'N/A'
-            return (
-              <CTableRow key={index}>
-                <CTableDataCell scope="row">
-                  {getItemNumber(index)}
-                </CTableDataCell>
-                <CTableDataCell scope="row">
-                  {jobVacancy.jobCode}
-                </CTableDataCell>
-                <CTableDataCell>{jobVacancy.positionVacant}</CTableDataCell>
-                <CTableDataCell>{jobVacancy.minimumExperience}</CTableDataCell>
-                {jobDescriptionLimit ? (
-                  <CTableDataCell>
-                    <CLink
-                      className="cursor-pointer text-decoration-none text-primary description-link"
-                      data-testid={`job-description${index}`}
-                      onClick={() => handleModal(jobVacancy.description)}
-                    >
-                      {ticketDescription}
-                    </CLink>
+              const ticketDescription =
+                jobVacancy.description !== null
+                  ? parse(jobDescriptionLimit)
+                  : 'N/A'
+              return (
+                <CTableRow key={index}>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
                   </CTableDataCell>
-                ) : (
-                  <CTableDataCell>{`N/A`}</CTableDataCell>
-                )}
-                <CTableDataCell>{jobVacancy.opendDate}</CTableDataCell>
-                <CTableDataCell>{jobVacancy.expiryDate}</CTableDataCell>
-                <CTableDataCell>{jobVacancy.noOfRequirements}</CTableDataCell>
-                <CTableDataCell>{jobVacancy.offered}</CTableDataCell>
-                <CTableDataCell>{jobVacancy.remaining}</CTableDataCell>
-                <CTableDataCell>
-                  <CTooltip content="View">
-                    <CButton
-                      color="info"
-                      className="btn-ovh-employee-list me-1"
-                      data-testid="View-btn"
-                      onClick={() => viewButtonHandler(jobVacancy.id)}
-                    >
-                      <i
-                        className="fa fa-eye  text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
-                  </CTooltip>
-                  <CTooltip content="Edit">
-                    <CButton
-                      color="info btn-ovh me-1"
-                      className="btn-ovh-employee-list me-1"
-                      data-testid={`btn-edit${index}`}
-                      onClick={() => editButtonHandler(jobVacancy)}
-                    >
-                      <i className="fa fa-edit" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
-                  <CTooltip content="Timeline">
-                    <CButton
-                      color="info btn-ovh me-1"
-                      className="btn-ovh-employee-list me-1"
-                      data-testid={`sc-timeline-btn${index}`}
-                      onClick={() => timeLineButtonHandler(jobVacancy.id)}
-                    >
-                      <i className="fa fa-bar-chart" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
-                  <CTooltip content="Delete">
-                    <CButton
-                      data-testid={`btn-delete${index}`}
-                      size="sm"
-                      color="danger btn-ovh me-1"
-                      className="btn-ovh-employee-list me-1"
-                      onClick={() =>
-                        deleteButtonHandler(
-                          jobVacancy.id,
-                          jobVacancy.positionVacant,
-                          jobVacancy.jobCode,
-                        )
-                      }
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
-                  </CTooltip>
-                </CTableDataCell>
-              </CTableRow>
-            )
-          })}
+                  <CTableDataCell scope="row">
+                    {jobVacancy.jobCode}
+                  </CTableDataCell>
+                  <CTableDataCell>{jobVacancy.positionVacant}</CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy.minimumExperience}
+                  </CTableDataCell>
+                  {jobDescriptionLimit ? (
+                    <CTableDataCell>
+                      <CLink
+                        className="cursor-pointer text-decoration-none text-primary description-link"
+                        data-testid={`job-description${index}`}
+                        onClick={() => handleModal(jobVacancy.description)}
+                      >
+                        {ticketDescription}
+                      </CLink>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell>{`N/A`}</CTableDataCell>
+                  )}
+                  <CTableDataCell>{jobVacancy.opendDate}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy.expiryDate}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy.noOfRequirements}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy.offered}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy.remaining}</CTableDataCell>
+                  <CTableDataCell>
+                    <CTooltip content="View">
+                      <CButton
+                        color="info"
+                        className="btn-ovh-employee-list me-1"
+                        data-testid="View-btn"
+                        onClick={() => viewButtonHandler(jobVacancy.id)}
+                      >
+                        <i
+                          className="fa fa-eye  text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list me-1"
+                        data-testid={`btn-edit${index}`}
+                        onClick={() => editButtonHandler(jobVacancy)}
+                      >
+                        <i className="fa fa-edit" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Timeline">
+                      <CButton
+                        color="info btn-ovh me-1"
+                        className="btn-ovh-employee-list me-1"
+                        data-testid={`sc-timeline-btn${index}`}
+                        onClick={() => timeLineButtonHandler(jobVacancy.id)}
+                      >
+                        <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                    <CTooltip content="Delete">
+                      <CButton
+                        data-testid={`btn-delete${index}`}
+                        size="sm"
+                        color="danger btn-ovh me-1"
+                        className="btn-ovh-employee-list me-1"
+                        onClick={() =>
+                          deleteButtonHandler(
+                            jobVacancy.id,
+                            jobVacancy.positionVacant,
+                            jobVacancy.jobCode,
+                          )
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
+                  </CTableDataCell>
+                </CTableRow>
+              )
+            })}
         </CTableBody>
       </CTable>
       <CRow>
