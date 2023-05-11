@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CFormCheck,
-  CButton,
-  CCol,
-  CFormInput,
-  CInputGroup,
-  CRow,
-} from '@coreui/react-pro'
+import { CFormCheck, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import JobOpeningsTable from './JobOpeningsTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -60,6 +53,7 @@ const JobOpenings = (): JSX.Element => {
         status: selectRadioAction,
       }),
     )
+    dispatch(reduxServices.jobVacancies.getAllTechnology())
   }, [currentPage, dispatch, pageSize, selectRadioAction])
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {

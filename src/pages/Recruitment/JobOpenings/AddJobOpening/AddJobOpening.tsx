@@ -11,7 +11,7 @@ import moment from 'moment'
 import ReactDatePicker from 'react-datepicker'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import {
   TextWhite,
@@ -140,6 +140,19 @@ const AddJobOpening = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <Link to={'/jobvacancies'}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
+          </CCol>
+        </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
