@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { SyntheticEvent } from 'react'
 import { CCardHeader, CFormInput, CRow } from '@coreui/react-pro'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -14,6 +14,7 @@ const PreviousEmployerAct = ({
   setEnteredFromDate,
   enteredToDate,
   setEnteredToDate,
+  setEnteredFile,
 }: {
   enteredOrganization: string
   organizationChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -21,7 +22,15 @@ const PreviousEmployerAct = ({
   setEnteredFromDate: (value: React.SetStateAction<string>) => void
   enteredToDate: string
   setEnteredToDate: (value: React.SetStateAction<string>) => void
+  setEnteredFile: React.Dispatch<React.SetStateAction<File | undefined>>
 }): JSX.Element => {
+  const fileUploadHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (file && file !== undefined) {
+      setEnteredFile(file[0])
+    }
+  }
+
   return (
     <>
       <CCardHeader>
@@ -37,6 +46,7 @@ const PreviousEmployerAct = ({
             placeholder="Organization"
             value={enteredOrganization}
             onChange={organizationChangeHandler}
+            data-testid="itdec-oldOrganizationName"
           />
         </EmployerEntryItem>
         <EmployerEntryItem label="From Date">
@@ -59,6 +69,17 @@ const PreviousEmployerAct = ({
             onChange={(date: Date) =>
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
+          />
+        </EmployerEntryItem>
+      </CRow>
+      <CRow className="mt-2 ms-2">
+        <EmployerEntryItem label="Document">
+          <input
+            type="file"
+            data-testid="prevEmployerActDocUpload"
+            onChange={(e: SyntheticEvent) => {
+              fileUploadHandler(e.currentTarget as HTMLInputElement)
+            }}
           />
         </EmployerEntryItem>
       </CRow>

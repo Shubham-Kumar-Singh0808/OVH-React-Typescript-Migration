@@ -8,7 +8,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockSections } from '../../../test/data/investmentCheckListData'
 
-const formSelectOption = 'form-select-section'
+const formSelectOption = 'mainSectionSelect-true'
 const moreSectionsButton = 'btn-moreSections-Add More'
 describe('Sections Filter Options Testing', () => {
   beforeEach(() => {

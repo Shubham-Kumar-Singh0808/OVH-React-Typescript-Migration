@@ -163,7 +163,6 @@ const MoreSections = ({
     type: 'query' | 'doc',
   ) => {
     e.preventDefault()
-    console.log(sectionList[index])
     const investment = getInvestment(sectionList, index, investmentId)
     if (!investment) {
       return
@@ -236,6 +235,8 @@ const MoreSections = ({
     }
   }, [investmentList])
 
+  console.log(isOldEmployee)
+
   useEffect(() => {
     const formSection: FormSectionsDTO = {
       isOld: isOldEmployee,
@@ -247,14 +248,10 @@ const MoreSections = ({
     dispatch(
       reduxServices.itDeclarationForm.actions.setFormSectionDTO(formSection),
     )
-  }, [investmentList])
-
-  useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
   }, [investmentList])
 
   useEffect(() => {
-    // setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {
         return { ...item, formInvestmentDTO: investmentList }
@@ -265,11 +262,12 @@ const MoreSections = ({
     setFormSectionList(updatedList)
   }, [index, investmentList])
 
-  console.log(showSubTotalAmount)
-
   return (
     <>
-      <div className="block-session clearfix widget_gap ms-3 me-3">
+      <div
+        className="block-session clearfix widget_gap ms-3 me-3"
+        data-testid={`${sectionItem.sectionId}-${isOldEmployee}`}
+      >
         <CTooltip content="Cancel">
           <CButton
             color="warning"
@@ -330,6 +328,7 @@ const MoreSections = ({
                     onChangeInvestment={onChangeInvestment}
                     index={index} //this is the section index
                     sectionList={sectionList}
+                    isOldEmployee={isOldEmployee}
                   />
                 </React.Fragment>
               )

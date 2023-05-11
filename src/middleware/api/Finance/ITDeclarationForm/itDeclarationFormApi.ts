@@ -62,12 +62,21 @@ const isITDeclarationFormExist = async (): Promise<boolean | undefined> => {
   return response.data
 }
 
+const uploadITDocument = () => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.uploadITDocuments,
+    method: AllowedHttpMethods.post,
+  })
+  return useAxios(requestConfig)
+}
+
 const itDeclarationFormApi = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
   addITDeclarationForm,
   isITDeclarationFormExist,
+  uploadITDocument,
 }
 
 export default itDeclarationFormApi

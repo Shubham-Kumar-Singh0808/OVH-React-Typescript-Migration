@@ -1,8 +1,25 @@
 import { CCardHeader } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
 import SectionsFilterOptions from './SectionsFilterOptions'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const IncomeTaxAct = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const finalITSubmissionForSectionDTO = useTypedSelector(
+    (state) => state.itDeclarationForm.submitITDeclarationForm.formSectionsDTOs,
+  )
+
+  useEffect(() => {
+    if (
+      finalITSubmissionForSectionDTO.filter((item) => item.isOld === true)
+        .length === 0
+    ) {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setSubmitButtonDisabled(),
+      )
+    }
+  }, [finalITSubmissionForSectionDTO])
   return (
     <>
       <CCardHeader>

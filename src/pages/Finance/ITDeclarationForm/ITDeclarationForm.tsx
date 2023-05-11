@@ -13,12 +13,12 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import { emptyString } from '../../../constant/constantData'
 
 const ITDeclarationForm = (): JSX.Element => {
-  // const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isAgreeChecked, setIsAgreeChecked] = useState<boolean>(false)
   const [enteredOrganization, setEnteredOrganization] =
     useState<string>(emptyString)
   const [enteredFromDate, setEnteredFromDate] = useState<string>(emptyString)
   const [enteredToDate, setEnteredToDate] = useState<string>(emptyString)
+  const [enteredFile, setEnteredFile] = useState<File | undefined>(undefined)
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -55,8 +55,6 @@ const ITDeclarationForm = (): JSX.Element => {
     setEnteredOrganization(e.target.value)
   }
 
-  console.log(useTypedSelector((state) => state.itDeclarationForm))
-
   useEffect(() => {
     dispatch(reduxServices.itDeclarationForm.isITDeclarationFormExist())
     if (itDeclarationFormExists === true) {
@@ -82,16 +80,13 @@ const ITDeclarationForm = (): JSX.Element => {
       designation: employeeDetails.designation,
       employeeId: employeeDetails.employeeId,
       employeeName: employeeDetails.fullName,
-      // formSectionsDTOs: formSectionData,
       fromDate: interchangeMonthAndDay(enteredFromDate),
       grandTotal: grandTotalResult,
       isAgree: isAgreeChecked,
-      // itDeclarationFormId: null,
       organisationName: enteredOrganization,
       panNumber: employeeDetails.pan,
       toDate: interchangeMonthAndDay(enteredToDate),
     }
-    console.log(prepareObject)
     const addDeclarationFormResultAction = await dispatch(
       reduxServices.itDeclarationForm.addITDeclarationForm(prepareObject),
     )
@@ -114,13 +109,7 @@ const ITDeclarationForm = (): JSX.Element => {
     window.location.reload()
   }
 
-  useEffect(() => {
-    //all my investments are in the store. calculating grand amount based on changes in investments
-    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
-  }, [
-    finalITDeclarationData?.formSectionsDTOs,
-    finalITDeclarationData?.grandTotal,
-  ])
+  console.log(useTypedSelector((state) => state.itDeclarationForm))
 
   return (
     <>
@@ -139,6 +128,7 @@ const ITDeclarationForm = (): JSX.Element => {
           setEnteredFromDate={setEnteredFromDate}
           enteredToDate={enteredToDate}
           setEnteredToDate={setEnteredToDate}
+          setEnteredFile={setEnteredFile}
         />
 
         <CRow className="mt-3 mb-3">

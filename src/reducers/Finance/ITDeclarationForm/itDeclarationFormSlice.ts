@@ -102,6 +102,18 @@ const addITDeclarationForm = createAsyncThunk(
   },
 )
 
+const uploadITDeclareDocuments = createAsyncThunk(
+  'itDeclarationForm/uploadITDeclareDocuments',
+  async (_, thunkApi) => {
+    try {
+      return await itDeclarationFormApi.uploadITDocument()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialITDeclarationFormState: ITDeclarationFormSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -135,7 +147,6 @@ const itDeclarationFormSlice = createSlice({
     },
     setGrandTotalFinal: (state) => {
       const sections = state.submitITDeclarationForm?.formSectionsDTOs
-      console.log(sections)
       let totalSum = 0
       for (let i = 0; i < sections?.length; i++) {
         totalSum += sections[i].formInvestmentDTO.reduce((accum, item) => {
@@ -150,24 +161,18 @@ const itDeclarationFormSlice = createSlice({
     },
     setFormSectionDTO: (state, action) => {
       //used to set the form sections data that is to be sent through api
-      if (
-        state.submitITDeclarationForm?.formSectionsDTOs.find(
+      const sectionIndex =
+        state.submitITDeclarationForm?.formSectionsDTOs.findIndex(
           (item) =>
             item.sectionId === action.payload.sectionId &&
             item.isOld === action.payload.isOld,
         )
-      ) {
-        const findIndex =
-          state.submitITDeclarationForm.formSectionsDTOs.findIndex(
-            (item) => item.sectionId === action.payload.sectionId,
-          )
-        if (findIndex !== -1) {
-          state.submitITDeclarationForm.formSectionsDTOs.splice(
-            findIndex,
-            1,
-            action.payload,
-          )
-        }
+      if (sectionIndex !== -1) {
+        state.submitITDeclarationForm?.formSectionsDTOs.splice(
+          sectionIndex,
+          1,
+          action.payload,
+        )
       } else {
         state.submitITDeclarationForm?.formSectionsDTOs.push(action.payload)
       }
@@ -180,6 +185,7 @@ const itDeclarationFormSlice = createSlice({
             item.sectionId === action.payload.sectionId &&
             item.isOld === action.payload.isOld,
         )
+      console.log(findIndex)
       if (findIndex !== -1) {
         state.submitITDeclarationForm?.formSectionsDTOs.splice(findIndex, 1)
       }
@@ -196,7 +202,7 @@ const itDeclarationFormSlice = createSlice({
         const findIndexInvestment =
           state.submitITDeclarationForm?.formSectionsDTOs[
             findIndex
-          ].formInvestmentDTO.findIndex(
+          ]?.formInvestmentDTO.findIndex(
             (item) => +item.investmentId === action.payload.investmentId,
           )
         if (findIndexInvestment !== -1) {
@@ -215,6 +221,9 @@ const itDeclarationFormSlice = createSlice({
     },
     setModalDescription: (state, action) => {
       state.modal.modalDescription = action.payload.description
+    },
+    setAgreeCheckbox: (state, action) => {
+      state.submitITDeclarationForm.isAgree = action.payload.value
     },
   },
   extraReducers: (builder) => {
@@ -238,8 +247,11 @@ const itDeclarationFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.investments = [
           ...state.investments,
-          ...(action.payload as Invest[]),
+          ...Object.values(action.payload as Invest[]),
         ]
+      })
+      .addCase(uploadITDeclareDocuments.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(
@@ -248,6 +260,7 @@ const itDeclarationFormSlice = createSlice({
           getInvestsBySectionId.pending,
           isITDeclarationFormExist.pending,
           addITDeclarationForm.pending,
+          uploadITDeclareDocuments.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -260,6 +273,7 @@ const itDeclarationFormSlice = createSlice({
           getInvestsBySectionId.rejected,
           isITDeclarationFormExist.rejected,
           addITDeclarationForm.rejected,
+          uploadITDeclareDocuments.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -295,6 +309,7 @@ const itDeclarationFormThunk = {
   getInvestsBySectionId,
   isITDeclarationFormExist,
   addITDeclarationForm,
+  uploadITDeclareDocuments,
 }
 
 const itDeclarationFormSelectors = {

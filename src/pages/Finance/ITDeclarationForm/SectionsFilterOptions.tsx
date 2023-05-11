@@ -42,8 +42,8 @@ const SectionsFilterOptions = ({
 
   const dispatch = useAppDispatch()
 
-  const section = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.sections,
+  const sections: Sections[] = useTypedSelector(
+    (state) => state.itDeclarationForm.sections,
   )
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const SectionsFilterOptions = ({
 
   const handleOnChangeSection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target
-    const filterSection = section.filter(
+    const filterSection = sections.filter(
       (currentSection) => currentSection.sectionId === Number(value),
     )
     setSelectedSection(filterSection[0])
@@ -96,6 +96,16 @@ const SectionsFilterOptions = ({
     }
   }, [selectedSection?.sectionId])
 
+  useEffect(() => {
+    //if there are no sections selected
+    if (sectionList.length === 0 && isOldEmployee === true) {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setSubmitButtonDisabled(),
+      )
+    }
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
+  }, [sectionList, isOldEmployee])
+
   const handleShowRemoveSectionModal = (
     sectionId: number,
     sectionName: string,
@@ -114,6 +124,7 @@ const SectionsFilterOptions = ({
     dispatch(
       reduxServices.itDeclarationForm.actions.removeFormSectionDTO({
         sectionId: toCancelSectionId,
+        isOld: isOldEmployee,
       }),
     )
   }
@@ -138,35 +149,6 @@ const SectionsFilterOptions = ({
     })
     setFormSectionList(newList)
   }, [sectionList])
-
-  // useEffect(() => {
-  //   const grandTotalArray = formSectionList.map((list) =>
-  //     list.formInvestmentDTO.reduce((prev, current) => {
-  //       return prev + +current.customAmount
-  //     }, 0),
-  //   )
-  //   const grandTotal = grandTotalArray.reduce(
-  //     (accumulator, currentValue) => accumulator + currentValue,
-  //     0,
-  //   )
-  //   dispatch(reduxServices.itDeclarationForm.actions.setGrandTotal(grandTotal))
-  //   // dispatch(
-  //   //   reduxServices.itDeclarationForm.actions.setFormSectionData(
-  //   //     formSectionList.forEach((each) => {
-  //   //       each.formInvestmentDTO.forEach((e) => {
-  //   //         //copying the object and omitting 'id' property
-  //   //         const { id, ...rest } = e
-  //   //         Object.assign(e, rest)
-  //   //       })
-  //   //       const { invests, ...rest } = each
-  //   //       const { sectionLimit, ...rest2 } = rest
-  //   //       rest2.isOld = true
-  //   //       rest2.itSectionsId = null
-  //   //       return rest2
-  //   //     }),
-  //   //   ),
-  //   // )
-  // }, [formSectionList])
 
   return (
     <>
@@ -197,11 +179,12 @@ const SectionsFilterOptions = ({
             value={selectedSection?.sectionId}
           >
             <option value={''}>{defaultSelectSection}</option>
-            {section?.map((sectionItem, index) => (
-              <option key={index} value={sectionItem.sectionId}>
-                {sectionItem.sectionName}
-              </option>
-            ))}
+            {sections.length > 0 &&
+              sections?.map((sectionItem, index) => (
+                <option key={index} value={sectionItem.sectionId.toString()}>
+                  {sectionItem.sectionName}
+                </option>
+              ))}
           </CFormSelect>
         </CCol>
         <CCol sm={2} className="d-flex align-items-center">

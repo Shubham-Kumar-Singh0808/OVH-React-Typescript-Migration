@@ -21,6 +21,7 @@ const InvestmentTable = ({
   investmentButtonHandler,
   index,
   sectionList,
+  isOldEmployee,
 }: {
   setShowSubTotalAmount: (value: number) => void
   handleClickRemoveInvestment: (id: number) => void
@@ -43,6 +44,7 @@ const InvestmentTable = ({
     e: React.ChangeEvent<HTMLSelectElement>,
     id: number,
   ) => void
+  isOldEmployee: boolean
 }): JSX.Element => {
   return (
     <>
@@ -53,7 +55,7 @@ const InvestmentTable = ({
         <CTableDataCell scope="row">
           <CCol sm={12}>
             <CFormSelect
-              data-testid={`form-select-investment${secIndex}`}
+              data-testid={`form-select-investment${secIndex}-${isOldEmployee}`}
               size="sm"
               id="investment"
               name="investmentName"
@@ -80,7 +82,7 @@ const InvestmentTable = ({
               size="sm"
               placeholder="Enter Savings Amount"
               name="customAmount"
-              data-testid={`custom-amount${secIndex}`}
+              data-testid={`custom-amount${secIndex}-${isOldEmployee}`}
               maxLength={12}
               value={currentSec.customAmount}
               onChange={(e) =>
@@ -93,7 +95,7 @@ const InvestmentTable = ({
           <CCol className="mt-1">
             <CButton
               color="info"
-              data-testid={`df-remove-btn${secIndex}`}
+              data-testid={`df-remove-btn${secIndex}-${isOldEmployee}`}
               className="btn-ovh-employee-list me-1 text-white"
               size="sm"
               onClick={() => {
@@ -109,7 +111,7 @@ const InvestmentTable = ({
             {currentSec.description && (
               <CButton
                 color="info"
-                data-testid={`df-query-btn${secIndex}`}
+                data-testid={`df-query-btn${secIndex}-${isOldEmployee}`}
                 className="btn btn-primary bigfont text-white"
                 size="sm"
                 onClick={(e) =>
@@ -131,7 +133,7 @@ const InvestmentTable = ({
                 color: 'inherit',
                 borderStyle: 'none',
               }}
-              data-testid={`df-doc-btn${secIndex}`}
+              data-testid={`df-doc-btn${secIndex}-${isOldEmployee}`}
               onClick={(e) => {
                 investmentButtonHandler(e, +currentSec.investmentId, 'doc')
               }}

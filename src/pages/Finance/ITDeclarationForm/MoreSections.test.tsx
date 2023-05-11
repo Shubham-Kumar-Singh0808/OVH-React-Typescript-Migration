@@ -61,9 +61,11 @@ describe('More Sections Component Testing', () => {
     expect(moreInvestmentsButton).toBeDisabled()
   })
   test('new investment input functionality', () => {
-    const investmentSelectOption = screen.getByTestId('form-select-investment0')
+    const investmentSelectOption = screen.getByTestId(
+      'form-select-investment0-false',
+    )
     const moreInvestmentsButton = screen.getByTestId(moreInvestmentsBtnId)
-    const investmentAmountOption = screen.getByTestId('custom-amount0')
+    const investmentAmountOption = screen.getByTestId('custom-amount0-false')
     const chosenInvestment = testSection.invests[1]
     expect(investmentSelectOption).toHaveValue('')
     act(() => {
@@ -74,9 +76,9 @@ describe('More Sections Component Testing', () => {
     expect(investmentSelectOption).toHaveValue(
       chosenInvestment.investmentId.toString(),
     )
-    expect(screen.getByTestId('df-remove-btn0')).toBeEnabled()
-    expect(screen.getByTestId('df-query-btn0')).toBeVisible()
-    expect(screen.getByTestId('df-doc-btn0')).toBeVisible()
+    expect(screen.getByTestId('df-remove-btn0-false')).toBeEnabled()
+    expect(screen.getByTestId('df-query-btn0-false')).toBeVisible()
+    expect(screen.getByTestId('df-doc-btn0-false')).toBeVisible()
 
     expect(investmentAmountOption).toHaveValue('')
     act(() => {
@@ -88,14 +90,15 @@ describe('More Sections Component Testing', () => {
       userEvent.click(moreInvestmentsButton)
     })
     act(() => {
-      userEvent.selectOptions(screen.getByTestId('form-select-investment1'), [
-        testSection.invests[0].investmentId.toString(),
-      ])
+      userEvent.selectOptions(
+        screen.getByTestId('form-select-investment1-false'),
+        [testSection.invests[0].investmentId.toString()],
+      )
     })
-    expect(screen.getByTestId('form-select-investment1')).toHaveValue(
+    expect(screen.getByTestId('form-select-investment1-false')).toHaveValue(
       testSection.invests[0].investmentId.toString(),
     )
-    expect(screen.getByTestId('df-remove-btn1')).toBeEnabled()
+    expect(screen.getByTestId('df-remove-btn1-false')).toBeEnabled()
     // expect(screen.getByTestId('df-query-btn1')).not.toBeInTheDocument()
     // expect(screen.getByTestId('df-doc-btn1')).not.toBeVisible()
   })
@@ -109,7 +112,7 @@ describe('More Sections Component Testing', () => {
     }
     for (let i = testSection.invests.length; i >= 1; i--) {
       act(() => {
-        userEvent.click(screen.getByTestId(`df-remove-btn${i - 1}`))
+        userEvent.click(screen.getByTestId(`df-remove-btn${i - 1}-false`))
       })
       expect(screen.queryAllByRole('row')).toHaveLength(i - 1)
     }
