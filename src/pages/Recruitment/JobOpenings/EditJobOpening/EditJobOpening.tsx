@@ -74,10 +74,14 @@ const EditJobOpening = ({
   ) => {
     const { name, value } = event.target
     setEditJobInfo((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
+      return {
+        ...prevState,
+        ...{
+          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+        },
+      }
     })
   }
-
   const updateSuccessToastMessage = (
     <OToast
       toastMessage="Job opening is successfully edited.
