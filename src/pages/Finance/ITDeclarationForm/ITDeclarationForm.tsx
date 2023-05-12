@@ -25,7 +25,7 @@ const ITDeclarationForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
   const itDeclarationFormExists = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
+    (state) => state.itDeclarationForm.itDeclarationFormExist,
   )
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -63,7 +63,7 @@ const ITDeclarationForm = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
       history.push('/itDeclarationList')
     }
-  }, [])
+  }, [itDeclarationFormExists])
 
   const isButtonEnabled = useTypedSelector(
     (state) => state.itDeclarationForm.isSubmitButtonEnabled,
