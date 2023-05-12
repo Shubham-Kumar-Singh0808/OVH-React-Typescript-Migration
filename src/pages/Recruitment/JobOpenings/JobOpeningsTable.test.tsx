@@ -57,7 +57,7 @@ describe('Job Openings without data', () => {
     })
   })
 
-  test('should render Add LocationList component with data', () => {
+  test('should render  component with data', () => {
     expect(screen.getByText('BA09')).toBeInTheDocument()
     expect(screen.getByText('2-6')).toBeInTheDocument()
     expect(screen.getByText('Business Analyst')).toBeInTheDocument()

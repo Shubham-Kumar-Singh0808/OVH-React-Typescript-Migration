@@ -58,7 +58,7 @@ describe('Job Openings without data', () => {
     expect(deleteBtnElement).toBeInTheDocument()
     userEvent.click(deleteBtnElement)
   })
-  test('should render  Add PIP component with out crashing', () => {
+  test('should render component with out crashing', () => {
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
