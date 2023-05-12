@@ -147,10 +147,6 @@ const TicketApprovals = React.lazy(
   () => import('./pages/Support/TicketApprovals/TicketApprovals'),
 )
 
-const JobOpenings = React.lazy(
-  () => import('./pages/Dashboard/JobOpenings/JobOpenings'),
-)
-
 const BirthdaysListTable = React.lazy(
   () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
 )
