@@ -71,7 +71,12 @@ const EditJobView = ({
   ) => {
     const { name, value } = event.target
     setEditJobInfo((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
+      return {
+        ...prevState,
+        ...{
+          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+        },
+      }
     })
   }
 
