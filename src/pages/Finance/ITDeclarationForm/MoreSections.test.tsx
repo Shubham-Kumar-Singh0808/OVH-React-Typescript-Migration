@@ -2,13 +2,14 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import MoreSections from './MoreSections'
-import { act, render, screen, waitFor } from '../../../test/testUtils'
+import { act, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   mockInvestments,
   mockSections,
 } from '../../../test/data/itDeclarationFormData'
 
+const mockInvestmentSelect0 = 'form-select-investment0-false'
 const cancelButton = 'df-cancel-btn'
 const moreInvestmentsBtnId = 'moreInvestmentBtn'
 const mockCancelSectionHandler = jest.fn()
@@ -60,10 +61,36 @@ describe('More Sections Component Testing', () => {
     }
     expect(moreInvestmentsButton).toBeDisabled()
   })
+  test('query button functionality', () => {
+    const investmentSelectOption = screen.getByTestId(mockInvestmentSelect0)
+    act(() => {
+      userEvent.selectOptions(investmentSelectOption, [
+        testSection.invests[1].investmentId.toString(),
+      ])
+    })
+    const queryButton = screen.getByTestId('df-query-btn0-false')
+    expect(queryButton).toBeTruthy()
+    expect(queryButton).toBeEnabled()
+    act(() => {
+      userEvent.click(queryButton)
+    })
+  })
+  test('document button functionality', () => {
+    const investmentSelectOption = screen.getByTestId(mockInvestmentSelect0)
+    act(() => {
+      userEvent.selectOptions(investmentSelectOption, [
+        mockSections[0].invests[1].investmentId.toString(),
+      ])
+    })
+    const documentButton = screen.getByTestId('df-doc-btn0-false')
+    expect(documentButton).toBeTruthy()
+    expect(documentButton).toBeEnabled()
+    act(() => {
+      userEvent.click(documentButton)
+    })
+  })
   test('new investment input functionality', () => {
-    const investmentSelectOption = screen.getByTestId(
-      'form-select-investment0-false',
-    )
+    const investmentSelectOption = screen.getByTestId(mockInvestmentSelect0)
     const moreInvestmentsButton = screen.getByTestId(moreInvestmentsBtnId)
     const investmentAmountOption = screen.getByTestId('custom-amount0-false')
     const chosenInvestment = testSection.invests[1]

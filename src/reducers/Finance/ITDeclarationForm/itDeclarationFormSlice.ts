@@ -222,7 +222,10 @@ const itDeclarationFormSlice = createSlice({
       state.modal.showModal = action.payload.value
     },
     setModalDescription: (state, action) => {
-      state.modal.modalDescription = action.payload.description
+      state.modal = {
+        ...state.modal,
+        modalDescription: action.payload.description,
+      }
     },
     setAgreeCheckbox: (state, action) => {
       state.submitITDeclarationForm.isAgree = action.payload.value
