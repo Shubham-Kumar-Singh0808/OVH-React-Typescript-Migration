@@ -44,6 +44,7 @@ const ViewJobInfo = ({
                 className="btn-ovh-employee-list me-1"
                 color="info"
                 type="button"
+                data-testid="edit-button"
                 onClick={() => setToggle('editViewJobOpening')}
               >
                 <i className="fa fa-edit text-white" aria-hidden="true">
@@ -60,7 +61,7 @@ const ViewJobInfo = ({
           >
             Job Code:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.jobCode}</CCol>
+          <CCol sm={3}>{JobOpeningById?.jobCode}</CCol>
         </CRow>
         <CRow>
           <CFormLabel
@@ -69,7 +70,7 @@ const ViewJobInfo = ({
           >
             Job Title:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.positionVacant}</CCol>
+          <CCol sm={3}>{JobOpeningById?.positionVacant}</CCol>
         </CRow>
         <CRow>
           <CFormLabel
@@ -78,7 +79,7 @@ const ViewJobInfo = ({
           >
             No.of Vacancies:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.noOfRequirements}</CCol>
+          <CCol sm={3}>{JobOpeningById?.noOfRequirements}</CCol>
         </CRow>
         <CRow>
           <CFormLabel
@@ -87,7 +88,7 @@ const ViewJobInfo = ({
           >
             Experience:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.minimumExperience}</CCol>
+          <CCol sm={3}>{JobOpeningById?.minimumExperience}</CCol>
         </CRow>
         <CRow>
           <CFormLabel
@@ -96,7 +97,7 @@ const ViewJobInfo = ({
           >
             Job Description:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.description}</CCol>
+          <CCol sm={3}>{JobOpeningById?.description}</CCol>
         </CRow>
         <CRow>
           <CFormLabel
@@ -105,7 +106,7 @@ const ViewJobInfo = ({
           >
             Status:
           </CFormLabel>
-          <CCol sm={3}>{JobOpeningById.status}</CCol>
+          <CCol sm={3}>{JobOpeningById?.status}</CCol>
         </CRow>
       </OCard>
     </>

@@ -184,7 +184,7 @@ const jobVacanciesSlice = createSlice({
   },
 })
 const isLoading = (state: RootState): LoadingState =>
-  state.jobVacancies.isLoading
+  state?.jobVacancies.isLoading
 
 const getJobVacancies = (state: RootState): GetAllJobVacanciesList[] =>
   state.jobVacancies.getAllJobVacancies

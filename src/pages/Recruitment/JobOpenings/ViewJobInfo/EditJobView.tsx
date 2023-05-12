@@ -34,12 +34,9 @@ const EditJobView = ({
   setEditJobInfo: React.Dispatch<React.SetStateAction<GetAllJobVacanciesList>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [isShowComment, setIsShowComment] = useState<boolean>(true)
-  const [editToDate, setEditToDate] = useState<string>(editJobInfo.expiryDate)
-  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
-    useState<boolean>(false)
-  console.log(editToDate + 'editToDate')
-
+  const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
+  const [editDate, setEditDate] = useState<string>(editJobInfo.expiryDate)
+  const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -53,21 +50,21 @@ const EditJobView = ({
       editJobInfo.positionVacant &&
       editJobInfo.status
     ) {
-      setIsUpdateButtonEnabled(true)
+      setIsUpdateBtnEnabled(true)
     } else {
-      setIsUpdateButtonEnabled(false)
+      setIsUpdateBtnEnabled(false)
     }
   }, [editJobInfo])
 
-  const handleText = (description: string) => {
+  const handleDescription = (description: string) => {
     setEditJobInfo((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
-  const onHandleDatePicker = (value: Date) => {
-    setEditToDate(moment(value).format(dateFormat))
+  const datePickerHandler = (value: Date) => {
+    setEditDate(moment(value).format(dateFormat))
   }
-  const onChangeInputHandler = (
+  const onChangeHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -78,7 +75,7 @@ const EditJobView = ({
     })
   }
 
-  const updateSuccessToastMessage = (
+  const updateSuccessMessage = (
     <OToast
       toastMessage="Job opening is successfully edited.
         "
@@ -86,7 +83,7 @@ const EditJobView = ({
     />
   )
 
-  const updateHandler = async () => {
+  const updateBtnHandler = async () => {
     const prepareObject = {
       id: editJobInfo.id,
       jobCode: editJobInfo.jobCode,
@@ -94,7 +91,7 @@ const EditJobView = ({
       minimumExperience: editJobInfo.minimumExperience,
       description: editJobInfo.description,
       opendDate: editJobInfo.opendDate,
-      expiryDate: editToDate,
+      expiryDate: editDate,
       noOfRequirements: editJobInfo.noOfRequirements,
       offered: editJobInfo.offered,
       remaining: editJobInfo.remaining,
@@ -109,15 +106,15 @@ const EditJobView = ({
       )
     ) {
       setToggle('')
-      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(updateSuccessMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
   useEffect(() => {
-    setIsShowComment(false)
+    setIsShowDescription(false)
     setTimeout(() => {
-      setIsShowComment(true)
+      setIsShowDescription(true)
     }, 100)
   }, [])
 
@@ -156,7 +153,7 @@ const EditJobView = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-2"
-              data-testid="Job-Code"
+              data-testid="JobCode"
               type="text"
               id="jobCode"
               size="sm"
@@ -164,7 +161,7 @@ const EditJobView = ({
               autoComplete="off"
               placeholder="Job Code"
               value={editJobInfo.jobCode}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             />
           </CCol>
         </CRow>
@@ -183,7 +180,7 @@ const EditJobView = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-2"
-              data-testid="positionVacant"
+              data-testid="position-Vacant"
               type="text"
               id="positionVacant"
               size="sm"
@@ -191,7 +188,7 @@ const EditJobView = ({
               autoComplete="off"
               placeholder="Title"
               value={editJobInfo.positionVacant}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             />
           </CCol>
         </CRow>
@@ -211,7 +208,7 @@ const EditJobView = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-2"
-              data-testid="noOfRequirements"
+              data-testid="noOf-Requirements"
               type="text"
               id="noOfRequirements"
               size="sm"
@@ -220,7 +217,7 @@ const EditJobView = ({
               placeholder="No of Openings"
               value={editJobInfo.noOfRequirements}
               maxLength={5}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             />
           </CCol>
         </CRow>
@@ -240,7 +237,7 @@ const EditJobView = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-2"
-              data-testid="minimumExperience"
+              data-testid="minimum-Experience"
               type="text"
               id="minimumExperience"
               size="sm"
@@ -249,7 +246,7 @@ const EditJobView = ({
               placeholder="Experience"
               maxLength={11}
               value={editJobInfo.minimumExperience}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             />
           </CCol>
         </CRow>
@@ -263,7 +260,7 @@ const EditJobView = ({
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
-              id="expiryDate"
+              id="editDate"
               className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
@@ -272,15 +269,15 @@ const EditJobView = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editToDate}
+              value={editDate}
               minDate={new Date()}
-              onChange={(date: Date) => onHandleDatePicker(date)}
+              onChange={(date: Date) => datePickerHandler(date)}
             />
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel className={TextLabelProps}>Job Description: </CFormLabel>
-          {isShowComment ? (
+          {isShowDescription ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
@@ -290,7 +287,7 @@ const EditJobView = ({
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleText(editor.getData().trim())
+                  handleDescription(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -313,10 +310,10 @@ const EditJobView = ({
               aria-label="status"
               className="mb-2"
               id="status"
-              data-testid="status"
+              data-testid="Status"
               name="status"
               value={editJobInfo.status}
-              onChange={onChangeInputHandler}
+              onChange={onChangeHandler}
             >
               <option value={''}>Select Status</option>
               <option value="open">Open</option>
@@ -330,8 +327,8 @@ const EditJobView = ({
               data-testid="updateBtn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isUpdateButtonEnabled}
-              onClick={updateHandler}
+              disabled={!isUpdateBtnEnabled}
+              onClick={updateBtnHandler}
             >
               Update
             </CButton>
