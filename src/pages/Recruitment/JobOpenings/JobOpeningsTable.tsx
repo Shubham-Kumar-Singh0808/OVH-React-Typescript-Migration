@@ -160,15 +160,12 @@ const JobOpeningsTable = ({
         <CTableBody>
           {getJobVacancies.length > 0 &&
             getJobVacancies?.map((jobVacancy, index) => {
-              const jobDescriptionLimit =
-                jobVacancy.description && jobVacancy.description.length > 30
-                  ? `${jobVacancy.description.substring(0, 30)}...`
-                  : jobVacancy.description
-
-              const ticketDescription =
-                jobVacancy.description !== null
-                  ? parse(jobDescriptionLimit)
-                  : 'N/A'
+              const removeTag = '/(<([^>]+)>)/gi'
+              const removeSpaces = jobVacancy.description.replace(removeTag, '')
+              const employeeCommentsLimit =
+                removeSpaces && removeSpaces.length > 30
+                  ? `${removeSpaces.substring(0, 30)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
@@ -181,14 +178,17 @@ const JobOpeningsTable = ({
                   <CTableDataCell>
                     {jobVacancy.minimumExperience}
                   </CTableDataCell>
-                  {jobDescriptionLimit ? (
-                    <CTableDataCell>
+                  {employeeCommentsLimit ? (
+                    <CTableDataCell
+                      scope="row"
+                      className="sh-organization-link"
+                    >
                       <CLink
-                        className="cursor-pointer text-decoration-none text-primary description-link"
-                        data-testid={`job-description${index}`}
+                        className="cursor-pointer text-primary centerAlignment-text"
+                        data-testid={`emp-comments${index}`}
                         onClick={() => handleModal(jobVacancy.description)}
                       >
-                        {ticketDescription}
+                        {parse(employeeCommentsLimit)}
                       </CLink>
                     </CTableDataCell>
                   ) : (
