@@ -48,7 +48,7 @@ const JobOpeningsTable = ({
   const getJobVacancies = useTypedSelector(
     reduxServices.jobVacancies.selectors.getJobVacancies,
   )
-  const listSize = useTypedSelector(
+  const TotalListSize = useTypedSelector(
     reduxServices.jobVacancies.selectors.listSize,
   )
   const handleModal = (jobDescription: string) => {
@@ -57,11 +57,11 @@ const JobOpeningsTable = ({
     setDescription(jobDescription)
   }
 
-  const totalNoOfRecords = getJobVacancies?.length
-    ? `Total Records: ${listSize}`
+  const totalRecords = getJobVacancies?.length
+    ? `Total Records: ${TotalListSize}`
     : `No Records found...`
 
-  const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
@@ -258,19 +258,19 @@ const JobOpeningsTable = ({
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{totalNoOfRecords}</strong>
+            <strong>{totalRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
-          {listSize > 20 && (
+          {TotalListSize > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSize}
+              handlePageSizeSelectChange={onHandlerPageSize}
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {listSize > 20 && (
+        {TotalListSize > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
