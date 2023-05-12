@@ -1,4 +1,5 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export type GetAllJobVacanciesProps = {
   endIndex: number
@@ -91,4 +92,5 @@ export type JobOpeningsTableProps = {
   selectRadioAction: string
   setToggle: React.Dispatch<React.SetStateAction<string>>
   setEditJobInfo: React.Dispatch<React.SetStateAction<GetAllJobVacanciesList>>
+  userAccess: UserAccessToFeatures | undefined
 }

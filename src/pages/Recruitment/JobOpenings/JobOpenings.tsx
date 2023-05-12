@@ -87,7 +87,14 @@ const JobOpenings = (): JSX.Element => {
     setCurrentPage(1)
     setPageSize(20)
   }
-  console.log(editJobInfo)
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Job Openings',
+  )
+
   return (
     <>
       {toggle === '' && (
@@ -150,12 +157,18 @@ const JobOpenings = (): JSX.Element => {
             </div>
 
             <div className="d-inline ml15 pull-right">
-              <Link to={'/addJobvacancies'}>
-                <CButton color="info" className="text-white btn-ovh" size="sm">
-                  <i className="fa fa-plus me-1"></i>
-                  Add
-                </CButton>
-              </Link>
+              {userAccess?.createaccess && (
+                <Link to={'/addJobvacancies'}>
+                  <CButton
+                    color="info"
+                    className="text-white btn-ovh"
+                    size="sm"
+                  >
+                    <i className="fa fa-plus me-1"></i>
+                    Add
+                  </CButton>
+                </Link>
+              )}
             </div>
           </div>
           <JobOpeningsTable
@@ -168,6 +181,7 @@ const JobOpenings = (): JSX.Element => {
             selectRadioAction={selectRadioAction}
             setToggle={setToggle}
             setEditJobInfo={setEditJobInfo}
+            userAccess={userAccess}
           />
         </OCard>
       )}

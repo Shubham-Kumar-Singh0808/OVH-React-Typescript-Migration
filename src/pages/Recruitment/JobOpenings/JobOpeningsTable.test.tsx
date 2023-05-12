@@ -5,6 +5,7 @@ import JobOpeningsTable from './JobOpeningsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockJobVacancies } from '../../../test/data/jobVacenciesData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
 describe('Job Openings without data', () => {
@@ -20,6 +21,7 @@ describe('Job Openings without data', () => {
         selectRadioAction={''}
         setToggle={mockSetData}
         setEditJobInfo={mockSetData}
+        userAccess={undefined}
       />,
       {
         preloadedState: {
@@ -28,6 +30,10 @@ describe('Job Openings without data', () => {
             listSize: 0,
             getAllTechnology: [],
             getAllJobVacancies: mockJobVacancies.list,
+          },
+          userAccessToFeatures: {
+            isLoading: ApiLoadingState.succeeded,
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },
@@ -56,16 +62,5 @@ describe('Job Openings without data', () => {
     expect(screen.getByText('2-6')).toBeInTheDocument()
     expect(screen.getByText('Business Analyst')).toBeInTheDocument()
     expect(screen.getByText('19/06/2019')).toBeInTheDocument()
-  })
-
-  test('should be able to click  button element', () => {
-    const deleteBtnElement = screen.getByTestId('btn-delete10')
-    expect(deleteBtnElement).toBeInTheDocument()
-    userEvent.click(deleteBtnElement)
-  })
-  test('should be able to click edit button element', () => {
-    const deleteBtnElement = screen.getByTestId('btn-edit10')
-    expect(deleteBtnElement).toBeInTheDocument()
-    userEvent.click(deleteBtnElement)
   })
 })

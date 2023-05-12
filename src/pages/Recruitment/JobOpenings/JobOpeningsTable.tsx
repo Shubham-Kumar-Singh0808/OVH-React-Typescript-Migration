@@ -34,6 +34,7 @@ const JobOpeningsTable = ({
   selectRadioAction,
   setToggle,
   setEditJobInfo,
+  userAccess,
 }: JobOpeningsTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -212,16 +213,18 @@ const JobOpeningsTable = ({
                         ></i>
                       </CButton>
                     </CTooltip>
-                    <CTooltip content="Edit">
-                      <CButton
-                        color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
-                        data-testid={`btn-edit${index}`}
-                        onClick={() => editButtonHandler(jobVacancy)}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
+                    {userAccess?.updateaccess && (
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list me-1"
+                          data-testid={`btn-edit${index}`}
+                          onClick={() => editButtonHandler(jobVacancy)}
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    )}
                     <CTooltip content="Timeline">
                       <CButton
                         color="info btn-ovh me-1"
@@ -232,23 +235,25 @@ const JobOpeningsTable = ({
                         <i className="fa fa-bar-chart" aria-hidden="true"></i>
                       </CButton>
                     </CTooltip>
-                    <CTooltip content="Delete">
-                      <CButton
-                        data-testid={`btn-delete${index}`}
-                        size="sm"
-                        color="danger btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
-                        onClick={() =>
-                          deleteButtonHandler(
-                            jobVacancy.id,
-                            jobVacancy.positionVacant,
-                            jobVacancy.jobCode,
-                          )
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
+                    {userAccess?.deleteaccess && (
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`btn-delete${index}`}
+                          size="sm"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list me-1"
+                          onClick={() =>
+                            deleteButtonHandler(
+                              jobVacancy.id,
+                              jobVacancy.positionVacant,
+                              jobVacancy.jobCode,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
