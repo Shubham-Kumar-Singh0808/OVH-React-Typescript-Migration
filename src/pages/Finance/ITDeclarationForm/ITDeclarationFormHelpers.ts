@@ -94,3 +94,12 @@ export const interchangeMonthAndDay = (enteredDate: string): string => {
   const year = date.getFullYear()
   return `${day}/${month}/${year}`
 }
+
+export const compareDate = (cycleDate: string, joinDate: string): boolean => {
+  const cycleDateParse = Date.parse(cycleDate)
+  console.log(joinDate)
+  const joinDateParse = Date.parse(joinDate)
+  console.log(cycleDateParse)
+  console.log(joinDateParse)
+  return cycleDateParse < joinDateParse
+}

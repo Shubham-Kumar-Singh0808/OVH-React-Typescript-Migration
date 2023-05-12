@@ -38,7 +38,7 @@ describe('IT Declaration Form Component Testing', () => {
           sections: mockSections,
           investments: mockInvestments,
           employeeDetails: {
-            activeCycle: 'test',
+            activeCyle: '01/02/2023',
             designation: 'Associate Software Engineer',
             employeeId: 2050,
             fullName: 'Testing',
