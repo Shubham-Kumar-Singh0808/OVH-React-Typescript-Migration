@@ -127,7 +127,7 @@ const EditJobView = ({
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Edit Job Opening"
+        title={'Edit Job Opening'}
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -136,7 +136,7 @@ const EditJobView = ({
             <CButton
               color="info"
               className="btn-ovh me-1"
-              data-testid="back-button"
+              data-testid="back-btn"
               onClick={() => setToggle('jobInfo')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
@@ -158,7 +158,7 @@ const EditJobView = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-2"
-              data-testid="JobCode"
+              data-testid="Job-Code"
               type="text"
               id="jobCode"
               size="sm"
