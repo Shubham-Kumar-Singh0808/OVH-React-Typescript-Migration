@@ -16,13 +16,13 @@ describe('Employee Accounts Table Component Testing', () => {
     render(
       <AddEmployeePipList
         pageSize={0}
-        selectDate=""
         setToggle={mockSetTogglePage}
         searchByAdded={true}
         searchByEmployee={true}
         searchInput=""
         fromDate=""
         toDate=""
+        selectDay={''}
       />,
       {
         preloadedState: {

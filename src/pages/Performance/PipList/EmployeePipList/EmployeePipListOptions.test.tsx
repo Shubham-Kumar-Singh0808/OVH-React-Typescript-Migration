@@ -18,10 +18,10 @@ describe('Employee Accounts Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
+        selectDay=""
         setToggle={mockSetTogglePage}
         setFromDate={mockSetTogglePage}
         setToDate={mockSetTogglePage}
-        selectDay={''}
       />,
       {
         preloadedState: {

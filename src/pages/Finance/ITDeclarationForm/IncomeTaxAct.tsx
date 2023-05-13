@@ -1,5 +1,5 @@
-import { CCardHeader } from '@coreui/react-pro'
 import React from 'react'
+import { CCardHeader } from '@coreui/react-pro'
 import SectionsFilterOptions from './SectionsFilterOptions'
 
 const IncomeTaxAct = (): JSX.Element => {
@@ -10,7 +10,7 @@ const IncomeTaxAct = (): JSX.Element => {
           Deduction available for Salaried employees under Income Tax Act 1961
         </h4>
       </CCardHeader>
-      <SectionsFilterOptions />
+      <SectionsFilterOptions showAsterix={true} isOldEmployee={true} />
     </>
   )
 }
