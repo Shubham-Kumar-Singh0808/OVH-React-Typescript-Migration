@@ -304,8 +304,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }
   const handleConfirmBtn = async () => {
-    // const startTimeSplit = editMeetingRequest.startTime.split(':')
-
     const startTimeResult = convertTime(editMeetingRequest.startTime)
     const endTimeResult = convertTime(editMeetingRequest.endTime)
 
