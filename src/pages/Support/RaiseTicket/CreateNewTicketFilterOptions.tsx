@@ -30,6 +30,7 @@ const CreateNewTicketFilterOptions = ({
 }: {
   setToggle: (value: string) => void
   userViewAccess: boolean
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }): JSX.Element => {
   const initialCreateNewTicket = {} as CreateNewTicket
   const [createTicket, setCreateTicket] = useState(initialCreateNewTicket)

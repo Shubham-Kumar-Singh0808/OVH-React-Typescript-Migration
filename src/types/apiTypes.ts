@@ -821,3 +821,14 @@ export interface NotificationsApi extends ApiBase {
   allAlerts: string
   updateAlert: string
 }
+
+export interface JobOpeningsApi extends ApiBase {
+  getAllJobVacancies: string
+  getAllTechnology: string
+  addJobVacancy: string
+  deleteJobVacancy: string
+  getJobOpeningById: string
+  getJobVacancyAudit: string
+  updateJobVacancy: string
+  isCandidateMappedWithJob: string
+}
