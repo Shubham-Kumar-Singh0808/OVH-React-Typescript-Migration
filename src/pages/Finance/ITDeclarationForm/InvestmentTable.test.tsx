@@ -7,8 +7,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockSections } from '../../../test/data/itDeclarationFormData'
 import { mockInvestments } from '../../../test/data/investmentCheckListData'
 
-const selectInvest = 'form-select-investment'
-const customAmountInput = 'custom-amount'
+const selectInvest = 'form-select-investment0-true'
+const customAmountInput = 'custom-amount0-true'
 describe('Investment Table Component Testing', () => {
   beforeEach(() => {
     render(
@@ -19,12 +19,16 @@ describe('Investment Table Component Testing', () => {
           id: 1,
           investmentId: '1',
           customAmount: '100000',
+          requiredDocs: '',
+          description: 'test',
         }}
-        secIndex={1}
+        secIndex={0}
         sectionList={mockSections}
         index={0}
         onChangeCustomAmount={jest.fn()}
         onChangeInvestment={jest.fn()}
+        investmentButtonHandler={jest.fn()}
+        isOldEmployee={true}
       />,
       {
         preloadedState: {
@@ -51,13 +55,13 @@ describe('Investment Table Component Testing', () => {
   })
   test('should render the remove Investment button', () => {
     userEvent.selectOptions(screen.getByTestId(selectInvest), '1')
-    const removeInvestBtn = screen.getByTestId('df-remove-btn0')
+    const removeInvestBtn = screen.getByTestId('df-remove-btn0-true')
     userEvent.click(removeInvestBtn)
     expect(removeInvestBtn).toBeTruthy()
   })
   test('should render the query button', () => {
     userEvent.selectOptions(screen.getByTestId(selectInvest), '1')
-    const queryBtn = screen.getByTestId('df-query-btn0')
+    const queryBtn = screen.getByTestId('df-query-btn0-true')
     userEvent.click(queryBtn)
     expect(queryBtn).toBeTruthy()
   })

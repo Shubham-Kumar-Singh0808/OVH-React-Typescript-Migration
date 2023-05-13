@@ -522,6 +522,7 @@ export interface ITDeclarationFormApi extends ApiBase {
   getInvestsBySectionId: string
   addITDeclarationForm: string
   isITDeclarationFormExist: string
+  uploadITDocuments: string
 }
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
