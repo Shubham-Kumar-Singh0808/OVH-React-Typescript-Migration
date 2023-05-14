@@ -128,6 +128,7 @@ import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import intervieweeDetailsReducer from './reducers/Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -256,6 +257,7 @@ export const allReducers = {
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
+  intervieweeDetails: intervieweeDetailsReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

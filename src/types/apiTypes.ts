@@ -832,3 +832,6 @@ export interface JobOpeningsApi extends ApiBase {
   updateJobVacancy: string
   isCandidateMappedWithJob: string
 }
+export interface IntervieweeDetailsApi extends ApiBase {
+  timelinedetails: string
+}
