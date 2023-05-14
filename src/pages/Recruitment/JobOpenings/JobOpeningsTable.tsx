@@ -161,7 +161,10 @@ const JobOpeningsTable = ({
           {getJobVacancies.length > 0 &&
             getJobVacancies?.map((jobVacancy, index) => {
               const removeTag = '/(<([^>]+)>)/gi'
-              const removeSpaces = jobVacancy.description.replace(removeTag, '')
+              const removeSpaces = jobVacancy?.description?.replace(
+                removeTag,
+                '',
+              )
               const employeeCommentsLimit =
                 removeSpaces && removeSpaces.length > 30
                   ? `${removeSpaces.substring(0, 30)}...`
@@ -174,7 +177,7 @@ const JobOpeningsTable = ({
                   <CTableDataCell scope="row">
                     {jobVacancy.jobCode}
                   </CTableDataCell>
-                  <CTableDataCell>{jobVacancy.positionVacant}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.positionVacant}</CTableDataCell>
                   <CTableDataCell>
                     {jobVacancy.minimumExperience}
                   </CTableDataCell>
@@ -186,7 +189,7 @@ const JobOpeningsTable = ({
                       <CLink
                         className="cursor-pointer text-primary centerAlignment-text"
                         data-testid={`emp-comments${index}`}
-                        onClick={() => handleModal(jobVacancy.description)}
+                        onClick={() => handleModal(jobVacancy?.description)}
                       >
                         {parse(employeeCommentsLimit)}
                       </CLink>
@@ -194,18 +197,20 @@ const JobOpeningsTable = ({
                   ) : (
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
-                  <CTableDataCell>{jobVacancy.opendDate}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy.expiryDate}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy.noOfRequirements}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy.offered}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy.remaining}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.opendDate}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.expiryDate}</CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy?.noOfRequirements}
+                  </CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.offered}</CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.remaining}</CTableDataCell>
                   <CTableDataCell>
                     <CTooltip content="View">
                       <CButton
                         color="info"
                         className="btn-ovh-employee-list me-1"
                         data-testid="View-btn"
-                        onClick={() => viewButtonHandler(jobVacancy.id)}
+                        onClick={() => viewButtonHandler(jobVacancy?.id)}
                       >
                         <i
                           className="fa fa-eye  text-white"
