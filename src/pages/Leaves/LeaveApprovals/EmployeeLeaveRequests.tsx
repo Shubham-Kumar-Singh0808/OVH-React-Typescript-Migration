@@ -39,8 +39,6 @@ const EmployeeLeaveRequests = (props: {
     useState<boolean>(false)
   const [isRejectModalVisibility, setIsRejectModalVisibility] =
     useState<boolean>(false)
-  const [isCancelAfterApprovalVisibility, setIsCancelAfterApprovalVisibility] =
-    useState<boolean>(false)
   const [isManagerCheckModal, setIsManagerCheckModal] = useState<boolean>(false)
   const [modalText, setModalText] = useState<string>('')
   const [isManagerCheckText, setIsManagerCheckText] = useState<string>('')
@@ -212,34 +210,12 @@ const EmployeeLeaveRequests = (props: {
       dispatch(reduxServices.app.actions.addToast(leaveRejectToastElement))
     }
   }
-  const handleCancelAfterApprovalLeave = async () => {
-    dispatch(
-      reduxServices.leaveApprovals.checkProjectManagerExists(selectLeaveId),
-    )
-    setIsCancelAfterApprovalVisibility(false)
-    const cancelAfterApprovalResultAction = await dispatch(
-      reduxServices.leaveApprovals.leaveReject({
-        leaveId: selectLeaveId,
-      }),
-    )
-    if (
-      reduxServices.leaveApprovals.leaveReject.fulfilled.match(
-        cancelAfterApprovalResultAction,
-      )
-    ) {
-      dispatch(
-        reduxServices.leaveApprovals.getEmployeeLeaves({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          managerId: Number(employeeId),
-        }),
-      )
-    }
-  }
+
   const tableHeaderCellPropsAction = {
     width: '12%',
     scope: 'col',
   }
+  console.log(employeesLeavesList)
 
   return (
     <>
@@ -264,6 +240,8 @@ const EmployeeLeaveRequests = (props: {
           {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
               {employeesLeavesList?.map((employeeLeaveItem, index) => {
+                console.log(employeeLeaveItem)
+
                 const removeTag = '/(<([^>]+)>)/gi'
                 const removeSpaces =
                   employeeLeaveItem.employeeComments &&
@@ -467,17 +445,6 @@ const EmployeeLeaveRequests = (props: {
         modalHeaderClass="d-none"
       >
         <p>{isManagerCheckText}</p>
-      </OModal>
-      <OModal
-        alignment="center"
-        visible={isCancelAfterApprovalVisibility}
-        setVisible={setIsCancelAfterApprovalVisibility}
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalHeaderClass="d-none"
-        confirmButtonAction={handleCancelAfterApprovalLeave}
-      >
-        <p>{`Would you like to approve for Cancel After approval ?`}</p>
       </OModal>
     </>
   )
