@@ -14,7 +14,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 
-const CandidateList = () => {
+const CandidateList = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [selectStatus, setSelectStatus] = useState<string>('')

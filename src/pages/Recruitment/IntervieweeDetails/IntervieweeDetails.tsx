@@ -1,7 +1,7 @@
 import React from 'react'
 import OCard from '../../../components/ReusableComponent/OCard'
 
-const IntervieweeDetails = () => {
+const IntervieweeDetails = (): JSX.Element => {
   return (
     <>
       <OCard
