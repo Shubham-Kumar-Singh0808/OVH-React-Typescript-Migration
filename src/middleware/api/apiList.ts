@@ -109,6 +109,7 @@ import {
   NotificationsApi,
   JobOpeningsApi,
   IntervieweeDetailsApi,
+  CandidateListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -982,4 +983,10 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
 }
 export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
   timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
+}
+export const CandidateListApiConfig: CandidateListApi = {
+  searchScheduledCandidate:
+    apiPrefix + '/jobapplicant/jobAdmin/searchScheduledCandidate',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
 }
