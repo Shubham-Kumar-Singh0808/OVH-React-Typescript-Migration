@@ -436,3 +436,21 @@ input.capetalized {
   height: 60px;
   resize: both;
 }
+// .react-datepicker__day--today {
+//   background-color: #5797cd;
+//   color: white;
+//   border-radius: 3px;
+// }
+.nav-item.notification{
+  .dropdown-menu{
+    min-width: 275px !important;
+    
+  }
+  .text-muted{
+    pointer-events: none;
+    font-size: 1.2em !important;
+  }
+  .dropdown-item{
+    padding: 15px !important;
+  }
+}

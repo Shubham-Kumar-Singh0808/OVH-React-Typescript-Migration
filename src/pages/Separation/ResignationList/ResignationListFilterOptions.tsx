@@ -130,11 +130,23 @@ const ResignationListFilterOptions = ({
         dateSelection: Select || '',
         empStatus: employeeStatus || '',
         endIndex: pageSize * selectCurrentPage,
-        from: '',
+        from: selectFromDate
+          ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
         multiplesearch: '',
         startIndex: pageSize * (selectCurrentPage - 1),
         status: status || 'All',
-        to: '',
+        to: selectToDate
+          ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            })
+          : '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
@@ -164,6 +176,8 @@ const ResignationListFilterOptions = ({
           : '',
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
   const handleSearchInput = () => {
     dispatch(
@@ -189,14 +203,16 @@ const ResignationListFilterOptions = ({
       reduxServices.resignationList.getResignationList({
         dateSelection: '',
         empStatus: '',
-        endIndex: pageSize * selectCurrentPage,
+        endIndex: 20,
         from: '',
         multiplesearch: '',
-        startIndex: pageSize * (selectCurrentPage - 1),
+        startIndex: 0,
         status: 'ALL',
         to: '',
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const handleExportResignationListData = async () => {
@@ -221,6 +237,47 @@ const ResignationListFilterOptions = ({
         to: '',
       }),
     )
+  }
+  useEffect(() => {
+    if (Select !== 'Custom') {
+      setSelectFromDate('')
+      setSelectToDate('')
+    }
+  }, [Select])
+
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      if (searchInputValue === '') {
+        dispatch(
+          reduxServices.resignationList.getResignationList({
+            dateSelection: '',
+            empStatus: '',
+            endIndex: 20,
+            from: '',
+            multiplesearch: '',
+            startIndex: 0,
+            status: 'ALL',
+            to: '',
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.resignationList.getResignationList({
+            dateSelection: '',
+            empStatus: '',
+            endIndex: pageSize * selectCurrentPage,
+            from: '',
+            multiplesearch: searchInputValue,
+            startIndex: pageSize * (selectCurrentPage - 1),
+            status: 'ALL',
+            to: '',
+          }),
+        )
+      }
+    }
   }
   return (
     <>
@@ -440,6 +497,7 @@ const ResignationListFilterOptions = ({
               onChange={(e) => {
                 setSearchInputValue(e.target.value)
               }}
+              onKeyUp={handleSearchByEnter}
             />
             <CButton
               disabled={!searchInputValue?.replace(/^\s*/, '')}
@@ -461,6 +519,11 @@ const ResignationListFilterOptions = ({
         setCurrentPage={setCurrentPage}
         currentPage={currentPage}
         pageSize={pageSize}
+        Select={Select}
+        employeeStatus={employeeStatus}
+        selectCurrentPage={selectCurrentPage}
+        selectFromDate={selectFromDate as string}
+        selectToDate={selectToDate as string}
       />
     </>
   )

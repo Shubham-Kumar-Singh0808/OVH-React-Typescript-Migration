@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   CButton,
   CCol,
@@ -10,9 +11,16 @@ import {
 import React, { useEffect, useState } from 'react'
 import InvestmentTable from './InvestmentTable'
 import {
+  convertInvestmentToFormInvestmentDTO,
+  getInvestment,
+  initialInvestment,
+  reNumberSerialsOfInvestmentListAndRemove,
+} from './ITDeclarationFormHelpers'
+import {
   itDeclarationFormSectionList,
   Investment,
   Sections,
+  FormSectionsDTO,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
@@ -26,6 +34,7 @@ const MoreSections = ({
   index,
   setFormSectionList,
   formSectionList,
+  isOldEmployee,
 }: {
   sectionItem: Sections
   handleShowRemoveSectionModal: (investId: number, investName: string) => void
@@ -35,45 +44,55 @@ const MoreSections = ({
   index: number
   setFormSectionList: (value: itDeclarationFormSectionList[]) => void
   formSectionList: itDeclarationFormSectionList[]
+  isOldEmployee: boolean
 }): JSX.Element => {
-  const [counter, setCounter] = useState(1)
-  const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(false)
+  const [isMoreInvestBtnEnable, setIsMoreInvestBtnEnable] = useState(true)
   const [investmentList, setInvestmentList] = useState<Investment[]>([
-    {
-      id: counter,
-      investmentId: '',
-      customAmount: '',
-    },
+    initialInvestment,
   ])
   const [showSubTotalAmount, setShowSubTotalAmount] = useState<number>(0)
   const [reRender, setReRender] = useState<boolean>(false)
 
   const dispatch = useAppDispatch()
 
-  const handleClickInvestment = () => {
-    setCounter(counter + 1)
+  const handleClickInvestment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const oldInvestmentListLength = investmentList.length
     setInvestmentList([
       ...investmentList,
       {
-        id: counter + 1,
-        investmentId: '',
-        customAmount: '',
+        ...initialInvestment,
+        id: oldInvestmentListLength + 1,
       },
     ])
   }
 
   const handleClickRemoveInvestment = (id: number) => {
-    const newInvestmentList = investmentList.filter(
-      (investment) => investment.id !== id,
+    //this function is to renumber the investments and remove the chosen one based on investmentId
+    const newInvestmentList = reNumberSerialsOfInvestmentListAndRemove(
+      investmentList,
+      id,
     )
     setInvestmentList(newInvestmentList)
+    dispatch(
+      reduxServices.itDeclarationForm.actions.removeFormSectionInvestmentDTO({
+        sectionId: sectionList[index].sectionId,
+        investmentId: id,
+        isOld: isOldEmployee,
+      }),
+    )
     if (newInvestmentList?.length === 0) {
       const newList = sectionList.filter(
         (section) => section.sectionId !== sectionItem.sectionId,
       )
       setSectionList(newList)
+      dispatch(
+        reduxServices.itDeclarationForm.actions.removeFormSectionDTO({
+          sectionId: sectionList[index].sectionId,
+          isOld: isOldEmployee,
+        }),
+      )
     }
-    console.log(newInvestmentList.length)
   }
 
   const onChangeCustomAmount = (
@@ -105,18 +124,57 @@ const MoreSections = ({
     const isInvestmentExists = newInvestmentCopy.find(
       (currInvestment) => currInvestment.investmentId === e.target.value,
     )
-
-    newInvestmentCopy[investIndex].investmentId = e.target.value
-    setInvestmentList(newInvestmentCopy)
     if (isInvestmentExists !== undefined) {
       dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
-      newInvestmentCopy[investIndex].investmentId = ''
+      newInvestmentCopy[investIndex] = {
+        ...initialInvestment,
+        id: newInvestmentCopy[investIndex].id,
+        investmentId: '',
+      }
       setInvestmentList(newInvestmentCopy)
       setReRender(!reRender)
       setTimeout(() => {
         dispatch(reduxServices.app.actions.addToast(undefined))
       }, 2000)
+      return
     }
+    const chosenInvestment = getInvestment(sectionList, index, +e.target.value)
+    newInvestmentCopy[investIndex] = {
+      ...newInvestmentCopy[investIndex],
+      investmentId: String(chosenInvestment!.investmentId),
+      description: chosenInvestment!.description,
+      requiredDocs: chosenInvestment!.requiredDocs,
+    }
+    setInvestmentList(newInvestmentCopy)
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
+  }
+
+  const investmentButtonsHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    investmentId: number,
+    type: 'query' | 'doc',
+  ) => {
+    e.preventDefault()
+    const investment = getInvestment(sectionList, index, investmentId)
+    if (!investment) {
+      return
+    }
+    if (type === 'query') {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setModalDescription({
+          description: investment.description,
+        }),
+      )
+    } else {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setModalDescription({
+          description: investment.requiredDocs,
+        }),
+      )
+    }
+    dispatch(
+      reduxServices.itDeclarationForm.actions.modalVisible({ value: true }),
+    )
   }
 
   useEffect(() => {
@@ -126,9 +184,68 @@ const MoreSections = ({
     setShowSubTotalAmount(total)
   }, [investmentList])
 
+  //This useEffect is for checking if the total investment amount of section is crossing section limit
   useEffect(() => {
-    console.log({ formSectionList })
-    setIsMoreInvestBtnEnable(sectionList[index]?.invests.length <= 1)
+    if (sectionItem.sectionLimit < showSubTotalAmount) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastMessage="Total Entered Amount Exceeding Max Limit"
+            toastColor="danger"
+          />,
+        ),
+      )
+      // changeAmountHandler(index, '')
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setSubmitButtonDisabled(),
+      )
+    } else {
+      dispatch(reduxServices.itDeclarationForm.actions.setSubmitButtonEnabled())
+    }
+  }, [showSubTotalAmount, sectionItem.sectionLimit])
+
+  //Checking if the user has entered and deleted the amount, then button must be disabled
+  useEffect(() => {
+    if (
+      investmentList.some(
+        (obj) => obj.customAmount === '' || obj.investmentId === '',
+      ) ||
+      sectionItem.sectionLimit < showSubTotalAmount
+    ) {
+      dispatch(
+        reduxServices.itDeclarationForm.actions.setSubmitButtonDisabled(),
+      )
+    } else {
+      dispatch(reduxServices.itDeclarationForm.actions.setSubmitButtonEnabled())
+    }
+  }, [investmentList, showSubTotalAmount])
+
+  //if the number of investments entered is same as coming from api for section, then btn disabled
+  useEffect(() => {
+    if (sectionList[index]?.invests.length === investmentList.length) {
+      setIsMoreInvestBtnEnable(true)
+    } else {
+      setIsMoreInvestBtnEnable(false)
+    }
+  }, [investmentList])
+
+  console.log(isOldEmployee)
+
+  useEffect(() => {
+    const formSection: FormSectionsDTO = {
+      isOld: isOldEmployee,
+      itSectionsId: null,
+      formInvestmentDTO: convertInvestmentToFormInvestmentDTO(investmentList),
+      sectionId: sectionList[index]?.sectionId,
+      sectionName: sectionList[index]?.sectionName,
+    }
+    dispatch(
+      reduxServices.itDeclarationForm.actions.setFormSectionDTO(formSection),
+    )
+    dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())
+  }, [investmentList])
+
+  useEffect(() => {
     const updatedList = formSectionList?.map((item, itemIndex) => {
       if (itemIndex === index) {
         return { ...item, formInvestmentDTO: investmentList }
@@ -141,7 +258,10 @@ const MoreSections = ({
 
   return (
     <>
-      <div className="block-session clearfix widget_gap ms-3 me-3">
+      <div
+        className="block-session clearfix widget_gap ms-3 me-3"
+        data-testid={`${sectionItem.sectionId}-${isOldEmployee}`}
+      >
         <CTooltip content="Cancel">
           <CButton
             color="warning"
@@ -172,6 +292,7 @@ const MoreSections = ({
               color="info"
               className="text-white btn-ovh"
               size="sm"
+              data-testid="moreInvestmentBtn"
               onClick={handleClickInvestment}
               disabled={isMoreInvestBtnEnable}
             >
@@ -194,12 +315,14 @@ const MoreSections = ({
                   <InvestmentTable
                     setShowSubTotalAmount={setShowSubTotalAmount}
                     handleClickRemoveInvestment={handleClickRemoveInvestment}
+                    investmentButtonHandler={investmentButtonsHandler}
                     currentSec={currentSec}
-                    secIndex={secIndex}
+                    secIndex={secIndex} //this is the row index
                     onChangeCustomAmount={onChangeCustomAmount}
                     onChangeInvestment={onChangeInvestment}
-                    index={index}
+                    index={index} //this is the section index
                     sectionList={sectionList}
+                    isOldEmployee={isOldEmployee}
                   />
                 </React.Fragment>
               )
@@ -208,7 +331,7 @@ const MoreSections = ({
         </CTable>
         <div className="clearfix">
           <p className="pull-right txt-subtotal">
-            Sub Total: <span>{showSubTotalAmount}</span>
+            Sub Total: <span data-testid="subtotal">{showSubTotalAmount}</span>
           </p>
         </div>
       </div>

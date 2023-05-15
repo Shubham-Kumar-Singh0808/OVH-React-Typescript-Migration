@@ -147,10 +147,6 @@ const TicketApprovals = React.lazy(
   () => import('./pages/Support/TicketApprovals/TicketApprovals'),
 )
 
-const JobOpenings = React.lazy(
-  () => import('./pages/Dashboard/JobOpenings/JobOpenings'),
-)
-
 const BirthdaysListTable = React.lazy(
   () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
 )
@@ -441,6 +437,15 @@ const SQAAuditViewReport = React.lazy(
 const processAreaList = React.lazy(
   () => import('./pages/Settings/ProcessArea/ProcessArea'),
 )
+const Notifications = React.lazy(
+  () => import('./pages/Notifications/Notifications'),
+)
+const JobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/JobOpenings'),
+)
+const AddJobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -640,11 +645,11 @@ const routes = [
     name: 'Update Ticket',
     component: UpdateTicketUnderTicketList,
   },
-  {
-    path: '/jobvacancies',
-    name: 'Job Openings',
-    component: JobOpenings,
-  },
+  // {
+  //   path: '/jobvacancies',
+  //   name: 'Job Openings',
+  //   component: JobOpenings,
+  // },
   {
     path: '/birthdaylist',
     name: 'List of Birthdays',
@@ -966,6 +971,21 @@ const routes = [
     path: '/viewProjectAudit/:auditId',
     name: 'SQA Audit View',
     component: SQAAuditViewReport,
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: Notifications,
+  },
+  {
+    path: '/jobvacancies',
+    name: 'Jobvacancies',
+    component: JobVacancies,
+  },
+  {
+    path: '/addJobvacancies',
+    name: 'AddJobVacancies',
+    component: AddJobVacancies,
   },
 ]
 

@@ -37,7 +37,7 @@ export type GetPipList = {
   updatedDate: null | string
   empId: number
   improvement: string
-  pipflag: true
+  pipflag: boolean
 }
 
 export type PipListSliceState = {
@@ -51,6 +51,8 @@ export type PipListSliceState = {
   employeePIPTimeline: GetPIPHistory
   list: GetPipList
   pipListValue?: string
+  fromDate: string | Date
+  toDate: string | Date
 }
 
 export type EmployeePIPListTableProps = {
@@ -67,8 +69,8 @@ export type EmployeePIPListTableProps = {
   setToggle: (value: string) => void
   searchByEmployee?: boolean
   // setSelectDate: (value: string) => void
-  setFromDate: React.Dispatch<React.SetStateAction<string | undefined | Date>>
-  setToDate: React.Dispatch<React.SetStateAction<string | undefined | Date>>
+  setFromDate: React.Dispatch<React.SetStateAction<string | Date>>
+  setToDate: React.Dispatch<React.SetStateAction<string | Date>>
   // getPIPValue: string
   selectDay: string
 }

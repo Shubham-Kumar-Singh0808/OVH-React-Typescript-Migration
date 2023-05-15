@@ -20,13 +20,13 @@ const EmployeeDetails = (): JSX.Element => {
             Employee Id:
           </CFormLabel>
           <CCol sm={3} className="mt-2" data-testid="emp-id">
-            {employeeInformation.employeeId}
+            {employeeInformation?.employeeId}
           </CCol>
           <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Employee Name:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            {employeeInformation.fullName}
+            {employeeInformation?.fullName}
           </CCol>
         </CRow>
         <CRow>
@@ -34,13 +34,13 @@ const EmployeeDetails = (): JSX.Element => {
             PAN:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            {employeeInformation.pan}
+            {employeeInformation?.pan}
           </CCol>
           <CFormLabel className="col-sm-6 col-md-2 col-form-label text-end">
             Designation:
           </CFormLabel>
           <CCol sm={3} className="mt-2">
-            {employeeInformation.designation}
+            {employeeInformation?.designation}
           </CCol>
         </CRow>
       </CCol>

@@ -26,6 +26,13 @@ const AppContent = () => {
     reduxServices.resignationList.selectors.getSelectedEmployeeStatusValue,
   )
 
+  const fromDateValue = useTypedSelector(
+    reduxServices.pipList.selectors.getFromDateValue,
+  )
+  const toDateValue = useTypedSelector(
+    reduxServices.pipList.selectors.getToDateValue,
+  )
+
   useEffect(() => {
     if (
       location.pathname === '/PIPList' ||
@@ -33,10 +40,14 @@ const AppContent = () => {
       location.pathname.split('/')[1] === 'ViewPIPDetail'
     ) {
       dispatch(reduxServices.pipList.actions.setMonthValue(getPIPValue))
+      dispatch(reduxServices.pipList.actions.setFromDate(fromDateValue))
+      dispatch(reduxServices.pipList.actions.setToDate(toDateValue))
     } else {
       dispatch(reduxServices.pipList.actions.setMonthValue('Current Month'))
+      dispatch(reduxServices.pipList.actions.setFromDate(''))
+      dispatch(reduxServices.pipList.actions.setToDate(''))
     }
-  }, [dispatch, location, getPIPValue])
+  }, [dispatch, location, getPIPValue, fromDateValue, toDateValue])
 
   const getFromDateValue = useTypedSelector(
     reduxServices.resignationList.selectors.getFromDateValue,
@@ -53,7 +64,9 @@ const AppContent = () => {
       location.pathname === '/ClearanceCertificateIT' ||
       location.pathname === '/ClearanceCertificateFinance' ||
       location.pathname === '/ClearanceCertificateAdmin' ||
-      location.pathname === '/ClearanceCertificateHR'
+      location.pathname === '/ClearanceCertificateHR' ||
+      location.pathname === '/ExitFeedBackForm' ||
+      location.pathname === '/ClearanceCertificateManager'
     ) {
       dispatch(
         reduxServices.resignationList.actions.setMonthValue(

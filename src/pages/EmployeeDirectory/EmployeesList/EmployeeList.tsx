@@ -82,6 +82,8 @@ const EmployeeList = ({ updateaccess }: UserAccessToFeatures): JSX.Element => {
             <ListOptions
               userCreateAccess={userAccess?.createaccess as boolean}
               userViewAccess={userAccessTo?.viewaccess as boolean}
+              setCurrentPage={setCurrentPage}
+              setPageSize={setPageSize}
             />
             <EmployeeListTable
               paginationRange={paginationRange}

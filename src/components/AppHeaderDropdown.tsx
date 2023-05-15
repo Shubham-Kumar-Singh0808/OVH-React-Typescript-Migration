@@ -6,7 +6,7 @@ import {
   CDropdownToggle,
 } from '@coreui/react-pro'
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch } from '../stateStore'
 
@@ -32,15 +32,23 @@ const AppHeaderDropdown = (): JSX.Element => {
 
   return (
     <>
-      <CDropdown variant="nav-item" data-testid="notification-button">
+      <CDropdown
+        variant="nav-item"
+        data-testid="notification-button"
+        className="notification"
+      >
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-bell-o fa-lg"></i>
         </CDropdownToggle>
-        <CDropdownMenu>
+        <CDropdownMenu className="py-1 px-2">
+          <Link to={'/notifications'} className="dropdown-item text-muted">
+            You have messages
+          </Link>
           <CDropdownDivider />
-          <CDropdownItem component="button">
+          <Link to={'/notifications'} className="dropdown-item">
             Show All Notifications
-          </CDropdownItem>
+            <i className="fa fa-angle-right fa-lg pull-right"></i>
+          </Link>
         </CDropdownMenu>
       </CDropdown>
       &nbsp; &nbsp; &nbsp;

@@ -11,7 +11,7 @@ export type CreateNewTicket = {
   subCategoryId?: number
   subject?: string
   tracker?: number | string
-  watcherIds?: []
+  watcherIds?: number[]
 }
 
 export type createNewTicketSliceState = {

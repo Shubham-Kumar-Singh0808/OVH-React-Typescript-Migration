@@ -182,6 +182,8 @@ export const initialPipListState: PipListSliceState = {
   employeePIPTimeline: { size: 0, list: [] },
   list: {} as GetPipList,
   pipListValue: curMonth,
+  fromDate: '',
+  toDate: '',
 }
 
 const pipListSlice = createSlice({
@@ -196,6 +198,12 @@ const pipListSlice = createSlice({
     },
     clearPIPList: (state) => {
       state.pipListValue = 'Current Month'
+    },
+    setFromDate: (state, action) => {
+      state.fromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.toDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -294,6 +302,11 @@ const clearenceCertificate = (state: RootState): GetPipList =>
 const getPIPValue = (state: RootState): string | undefined =>
   state.pipList.pipListValue
 
+const getFromDateValue = (state: RootState): string | Date =>
+  state.pipList.fromDate
+
+const getToDateValue = (state: RootState): string | Date => state.pipList.toDate
+
 export const pipListThunk = {
   getAllPIPList,
   exportPIPList,
@@ -319,6 +332,8 @@ export const pipListSelectors = {
   viewEmployeePipDetails,
   clearenceCertificate,
   getPIPValue,
+  getFromDateValue,
+  getToDateValue,
 }
 
 export const pipListService = {

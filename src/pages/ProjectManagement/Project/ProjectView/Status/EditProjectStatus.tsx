@@ -291,8 +291,10 @@ const EditProjectStatus = ({
           <CRow className="mt-2">
             <CCol sm={{ span: 6, offset: 3 }}>
               <span className="text-danger" data-testid="errorMessage">
-                Next week date should be greater than current week date and
-                should be after one week from current week date
+                <b>
+                  Next week date should be greater than current week date and
+                  should be after one week from current week date
+                </b>
               </span>
             </CCol>
           </CRow>
