@@ -8,10 +8,11 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import ReviewFormEntry from './ReviewFormEntry'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { KPI } from '../../../../types/Performance/MyReview/myReviewTypes'
 
 const ReviewFormTable = (): JSX.Element => {
   const employeeId = useTypedSelector(
@@ -19,6 +20,7 @@ const ReviewFormTable = (): JSX.Element => {
   )
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedEmpId, setSelectedEmpId] = useState<number>(Number(employeeId))
+  const [KPIDetails, setKPIDetails] = useState<KPI[]>()
   const dispatch = useAppDispatch()
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
@@ -28,6 +30,10 @@ const ReviewFormTable = (): JSX.Element => {
   )
   const appraisalFormId = useTypedSelector(
     reduxServices.myReview.selectors.appraisalFormId,
+  )
+
+  const updatedAppraisalForm = useTypedSelector(
+    reduxServices.myReview.actions.updateKPI,
   )
   const saveEmployeeAppraisalFormHandler = () => {
     dispatch(
@@ -50,7 +56,7 @@ const ReviewFormTable = (): JSX.Element => {
         },
         avgRatingsDtos: appraisalForm.avgRatingsDtos,
         employee: appraisalForm.employee,
-        kra: appraisalForm?.kra,
+        kra: updatedAppraisalForm.payload,
         appraisalFormStatus: null,
         closedBy: null,
         closedOn: null,
@@ -135,6 +141,17 @@ const ReviewFormTable = (): JSX.Element => {
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
     dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
   }
+  const sortedAppraisalKPI = useMemo(() => {
+    if (appraisalForm?.kra) {
+      return appraisalForm?.kra
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [appraisalForm?.kra])
+
   return (
     <>
       <CTable responsive striped className="mt-3 align-middle">
@@ -157,6 +174,8 @@ const ReviewFormTable = (): JSX.Element => {
                 isIconVisible={isIconVisible}
                 setIsIconVisible={setIsIconVisible}
                 employeeKRA={kra}
+                KPIDetails={KPIDetails}
+                setKPIDetails={setKPIDetails}
               />
             ))}
         </CTableBody>

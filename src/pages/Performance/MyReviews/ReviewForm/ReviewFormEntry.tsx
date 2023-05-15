@@ -3,7 +3,7 @@ import React from 'react'
 import ReviewFormDetailsTable from './ReviewFormDetailsTable'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
-import { KRA } from '../../../../types/Performance/MyReview/myReviewTypes'
+import { KPI, KRA } from '../../../../types/Performance/MyReview/myReviewTypes'
 
 const ReviewFormEntry = (props: {
   id: number
@@ -12,6 +12,8 @@ const ReviewFormEntry = (props: {
   setSelectedEmployeeId: (value: number) => void
   isIconVisible: boolean
   setIsIconVisible: (value: boolean) => void
+  KPIDetails: KPI[] | undefined
+  setKPIDetails: React.Dispatch<React.SetStateAction<KPI[] | undefined>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const handleExpandRow = (
@@ -48,7 +50,12 @@ const ReviewFormEntry = (props: {
       </CTableRow>
       {props.isIconVisible && props.selectedEmployeeId === props.id ? (
         <CTableDataCell colSpan={10}>
-          <ReviewFormDetailsTable kpiData={props.employeeKRA.kpis} />
+          <ReviewFormDetailsTable
+            kpiData={props.employeeKRA.kpis}
+            KPIDetails={props.KPIDetails as KPI[]}
+            setKPIDetails={props.setKPIDetails}
+            id={props.employeeKRA.id}
+          />
         </CTableDataCell>
       ) : (
         <></>

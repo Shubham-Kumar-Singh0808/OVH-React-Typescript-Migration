@@ -21,16 +21,30 @@ import { KPI } from '../../../../types/Performance/MyReview/myReviewTypes'
 
 const ReviewFormDetailsTable = ({
   kpiData,
+  KPIDetails,
+  setKPIDetails,
+  id,
 }: {
   kpiData: KPI[]
+  KPIDetails: KPI[]
+  setKPIDetails: React.Dispatch<React.SetStateAction<KPI[] | undefined>>
+  id: number
 }): JSX.Element => {
-  const [KPIDetails, setKPIDetails] = useState<KPI[]>()
+  // const [KPIDetails, setKPIDetails] = useState<KPI[]>()
   const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
     useState<boolean>(false)
   const [kpiDetails, setKpiDetails] = useState({} as KPI)
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
+
+  console.log(id)
+
+  const updatedAppraisalForm = useTypedSelector(
+    reduxServices.myReview.actions.updateKPI,
+  )
+
+  console.log(updatedAppraisalForm)
   const [descriptionError, setDescriptionError] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -47,6 +61,7 @@ const ReviewFormDetailsTable = ({
       className,
     }
   }
+
   const tableHeaderCellPropsIndex = {
     width: '26px',
     scope: 'col',
@@ -89,6 +104,17 @@ const ReviewFormDetailsTable = ({
   // }
   // console.log(kpiData)
 
+  // useEffect(() => {
+  //   const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
+  //   dispatch(
+  //     reduxServices.myReview.actions.updateKPI({
+  //       kraId: id,
+  //       kpi: newKPI,
+  //       kpiId: newKPI,
+  //     }),
+  //   )
+  // }, [])
+
   const onChangeSelfRating = (
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
@@ -105,11 +131,18 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
-    if (newKPI[index].employeeFeedback.length > 56) {
-      setDescriptionError(false)
-    } else {
-      setDescriptionError(true)
-    }
+    // if (newKPI[index].employeeFeedback.length > 56) {
+    //   setDescriptionError(false)
+    // } else {
+    //   setDescriptionError(true)
+    // }
+    dispatch(
+      reduxServices.myReview.actions.updateKPI({
+        kraId: id,
+        kpi: newKPI[index],
+        kpiId: newKPI[index].id,
+      }),
+    )
   }
 
   return (

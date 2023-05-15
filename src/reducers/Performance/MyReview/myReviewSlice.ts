@@ -117,6 +117,21 @@ const myReviewSlice = createSlice({
     setIsButtonVisible: (state, action) => {
       state.isButtonsVisible = action.payload
     },
+    updateKPI: (state, action) => {
+      const { kraId, kpiId, kpi } = action.payload
+      const appraisalFormKRAs = state.employeeAppraisalForm.kra
+      for (let i = 0; i < appraisalFormKRAs.length; i++) {
+        if (appraisalFormKRAs[i].id === kraId) {
+          const filteredKPI = appraisalFormKRAs[i].kpis.filter(
+            (kpi) => kpi.id !== kpiId,
+          )
+          filteredKPI.push(kpi)
+          appraisalFormKRAs[i].kpis = filteredKPI
+          break
+        }
+      }
+      state.employeeAppraisalForm.kra = appraisalFormKRAs
+    },
   },
   extraReducers: (builder) => {
     builder
