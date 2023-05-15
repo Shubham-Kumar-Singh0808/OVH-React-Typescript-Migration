@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { CRow, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
+import CandidateListTable from './CandidateListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CandidateList = () => {
   const dispatch = useAppDispatch()
@@ -18,9 +20,38 @@ const CandidateList = () => {
   const getAllTechnology = useTypedSelector(
     reduxServices.candidateList.selectors.getAllTechnology,
   )
+  const listSize = useTypedSelector(
+    reduxServices.candidateList.selectors.listSize,
+  )
+
+  const CurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  useEffect(() => {
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
+    }
+  }, [CurrentPage])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
+
   useEffect(() => {
     dispatch(reduxServices.candidateList.getEmpCountries())
     dispatch(reduxServices.candidateList.getTechnology())
+    dispatch(
+      reduxServices.candidateList.searchScheduledCandidate({
+        startIndex: pageSize * (CurrentPage - 1),
+        endIndex: pageSize * CurrentPage,
+        searchStr: '',
+      }),
+    )
   }, [dispatch])
 
   return (
@@ -114,6 +145,13 @@ const CandidateList = () => {
             </CRow>
           </CCol>
         </CRow>
+        <CandidateListTable
+          paginationRange={paginationRange}
+          setPageSize={setPageSize}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
       </OCard>
     </>
   )

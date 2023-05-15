@@ -82,3 +82,10 @@ export type GetAllTechnology = {
   id: number
   name: string
 }
+export type TableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
