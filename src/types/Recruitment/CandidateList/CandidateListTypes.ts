@@ -88,6 +88,7 @@ export type TableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  searchInput: string
 }
 
 export type viewHandlerProps = {

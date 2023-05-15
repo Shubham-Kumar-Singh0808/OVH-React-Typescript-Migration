@@ -275,6 +275,7 @@ const CandidateList = () => {
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           pageSize={pageSize}
+          searchInput={searchInput}
         />
       </OCard>
     </>

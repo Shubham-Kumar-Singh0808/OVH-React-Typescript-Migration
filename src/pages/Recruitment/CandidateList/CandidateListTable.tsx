@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -16,6 +16,8 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const CandidateListTable = ({
   paginationRange,
@@ -23,8 +25,12 @@ const CandidateListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  searchInput,
 }: TableProps): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deleteLocationId, setDeleteLocationId] = useState(0)
+  const [deleteLocationName, setDeleteLocationName] = useState('')
 
   const getCandidateDetails = useTypedSelector(
     reduxServices.candidateList.selectors.getAllCandidateDetails,
@@ -47,6 +53,58 @@ const CandidateListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  const deleteButtonHandler = (id: number, locationName: string) => {
+    setIsDeleteModalVisible(true)
+    setDeleteLocationId(id)
+    setDeleteLocationName(locationName)
+  }
+
+  const deletedToastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Candidate Deleted Successfully"
+    />
+  )
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="You can't delete.Candidate is in progress
+      "
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const confirmDeleteLocation = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteLocationResult = await dispatch(
+      reduxServices.candidateList.deleteCandidate(deleteLocationId),
+    )
+    if (
+      reduxServices.candidateList.deleteCandidate.fulfilled.match(
+        deleteLocationResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.candidateList.searchScheduledCandidate({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          searchStr: searchInput,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.candidateList.deleteCandidate.rejected.match(
+        deleteLocationResult,
+      ) &&
+      deleteLocationResult.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
   return (
     <>
       <CTable
@@ -125,6 +183,9 @@ const CandidateListTable = ({
                         size="sm"
                         color="danger btn-ovh me-1"
                         className="btn-ovh-employee-list me-1"
+                        onClick={() =>
+                          deleteButtonHandler(data.personId, data.fullName)
+                        }
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </CButton>
@@ -163,6 +224,22 @@ const CandidateListTable = ({
           </CCol>
         )}
       </CRow>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Candidate"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={confirmDeleteLocation}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteLocationName}</strong> Candidate ?
+        </>
+      </OModal>
     </>
   )
 }

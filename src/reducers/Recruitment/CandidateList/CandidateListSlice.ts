@@ -57,6 +57,19 @@ const getCountryWiseCandidatesList = createAsyncThunk(
     }
   },
 )
+
+const deleteCandidate = createAsyncThunk(
+  'candidateList/deleteCandidate',
+  async (candidateId: number, thunkApi) => {
+    try {
+      return await candidateListApi.deleteCandidate(candidateId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialCandidateListState: CandidateListSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -114,6 +127,7 @@ export const candidateListThunk = {
   getEmpCountries,
   getTechnology,
   getCountryWiseCandidatesList,
+  deleteCandidate,
 }
 
 export const candidateListSelectors = {

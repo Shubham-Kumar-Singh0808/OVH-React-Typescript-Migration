@@ -840,4 +840,5 @@ export interface CandidateListApi extends ApiBase {
   getEmpCountries: string
   getAllTechnology: string
   getCountryWiseCandidatesList: string
+  deleteCandidate: string
 }

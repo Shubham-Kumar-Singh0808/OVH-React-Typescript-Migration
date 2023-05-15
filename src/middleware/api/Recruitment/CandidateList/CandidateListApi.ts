@@ -60,12 +60,25 @@ const getCountryWiseCandidatesList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+const deleteCandidate = async (candidateId: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.deleteCandidate,
+    method: AllowedHttpMethods.get,
+    params: {
+      candidateId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
   getTechnology,
   getCountryWiseCandidatesList,
+  deleteCandidate,
 }
 
 export default candidateListApi
