@@ -58,6 +58,17 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     setIsCancelModalVisible(true)
   }
 
+  const handleCancelModal = (leaveID: number) => {
+    setLeaveId(leaveID)
+    dispatch(reduxServices.employeeLeaveSummary.cancelAfterApproval(leaveID))
+    dispatch(
+      reduxServices.employeeLeaveSummary.getEmployeeLeaveHistory({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+      }),
+    )
+    setIsCancelModalVisible(true)
+  }
   const dispatch = useAppDispatch()
 
   const handleCancelLeave = async () => {
@@ -197,8 +208,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
                     <CTableDataCell>
-                      {leaveHistory.status === 'PendingApproval' ||
-                      leaveHistory.canBeCancelledAfterApproval ? (
+                      {leaveHistory.status === 'PendingApproval' ? (
                         <CTooltip content="Cancel">
                           <CButton
                             color="warning"
@@ -208,6 +218,22 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                             onClick={() =>
                               handleShowCancelModal(leaveHistory.id)
                             }
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      ) : (
+                        <></>
+                      )}
+
+                      {leaveHistory.canBeCancelledAfterApproval ? (
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="warning"
+                            size="sm"
+                            className="btn-ovh btn-ovh-employee-list"
+                            data-testid={`cancel-btn${index}`}
+                            onClick={() => handleCancelModal(leaveHistory.id)}
                           >
                             <i className="fa fa-times" aria-hidden="true"></i>
                           </CButton>
