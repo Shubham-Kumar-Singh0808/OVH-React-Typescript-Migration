@@ -989,4 +989,6 @@ export const CandidateListApiConfig: CandidateListApi = {
     apiPrefix + '/jobapplicant/jobAdmin/searchScheduledCandidate',
   getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getCountryWiseCandidatesList:
+    apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
 }

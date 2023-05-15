@@ -10,6 +10,7 @@ import {
   CandidateListTableProps,
   GetAllTechnology,
   country,
+  viewHandlerProps,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 const searchScheduledCandidate = createAsyncThunk(
@@ -45,6 +46,17 @@ const getTechnology = createAsyncThunk(
     }
   },
 )
+const getCountryWiseCandidatesList = createAsyncThunk(
+  'candidateList/getCountryWiseCandidatesList',
+  async (data: viewHandlerProps, thunkApi) => {
+    try {
+      return await candidateListApi.getCountryWiseCandidatesList(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 export const initialCandidateListState: CandidateListSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -65,6 +77,10 @@ const candidateListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.allCandidateDetails = action.payload.list
         state.listSize = action.payload.size
+      })
+      .addCase(getCountryWiseCandidatesList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.allCandidateDetails = action.payload.list
       })
       .addCase(getEmpCountries.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -97,6 +113,7 @@ export const candidateListThunk = {
   searchScheduledCandidate,
   getEmpCountries,
   getTechnology,
+  getCountryWiseCandidatesList,
 }
 
 export const candidateListSelectors = {

@@ -89,3 +89,11 @@ export type TableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
+
+export type viewHandlerProps = {
+  candidateStatus: string
+  endIndex: number
+  selectionCountry: number
+  selectionTechnology: string
+  startIndex: number
+}

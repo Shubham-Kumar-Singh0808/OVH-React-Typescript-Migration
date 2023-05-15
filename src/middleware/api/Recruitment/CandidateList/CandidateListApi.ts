@@ -3,6 +3,7 @@ import {
   CandidateTotalInfo,
   GetAllTechnology,
   country,
+  viewHandlerProps,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -47,10 +48,24 @@ const getTechnology = async (): Promise<GetAllTechnology[]> => {
   return response.data
 }
 
+const getCountryWiseCandidatesList = async (
+  data: viewHandlerProps,
+): Promise<CandidateTotalInfo> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.getCountryWiseCandidatesList,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
   getTechnology,
+  getCountryWiseCandidatesList,
 }
 
 export default candidateListApi
