@@ -108,6 +108,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  ChangeReporteesApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -978,4 +979,14 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+
+export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
+  getAllReportingManagerData:
+    apiPrefix + '/delegation/getAllReportingManagerData',
+  getAllHRList: apiPrefix + '/delegation/getAllHRList',
+  getEmployeesUnderManger: apiPrefix + '/delegation/getMangerUnderEmployees',
+  getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
+  updateReportingManager: apiPrefix + '/delegation/getHrAssociates',
+  updateHrAssociatesManager: apiPrefix + '/delegation/updateReportingManager',
 }
