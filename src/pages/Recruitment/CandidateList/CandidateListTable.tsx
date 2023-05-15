@@ -11,6 +11,7 @@ import {
   CButton,
   CTooltip,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import { TableProps } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -104,7 +105,9 @@ const CandidateListTable = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
-
+  const timeLineHandler = (personId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(personId))
+  }
   return (
     <>
       <CTable
@@ -169,13 +172,16 @@ const CandidateListTable = ({
                       </CButton>
                     </CTooltip>
                     <CTooltip content="Timeline">
-                      <CButton
-                        color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
-                        data-testid={`sc-timeline-btn${index}`}
-                      >
-                        <i className="fa fa-bar-chart" aria-hidden="true"></i>
-                      </CButton>
+                      <Link to={`/candidatetimeline/${data.personId}`}>
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list me-1"
+                          data-testid={`sc-timeline-btn${index}`}
+                          onClick={() => timeLineHandler(data.personId)}
+                        >
+                          <i className="fa fa-bar-chart" aria-hidden="true"></i>
+                        </CButton>
+                      </Link>
                     </CTooltip>
                     <CTooltip content="Delete">
                       <CButton
