@@ -152,7 +152,7 @@ const ReviewFormTable = (): JSX.Element => {
     }
     return []
   }, [appraisalForm?.kra])
-
+  console.log(appraisalForm?.formStatusvalue)
   return (
     <>
       <CTable responsive striped className="mt-3 align-middle">
@@ -181,27 +181,30 @@ const ReviewFormTable = (): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
-      {/* {isButtonsVisible && ( */}
-      <CRow>
-        <CCol md={{ span: 6, offset: 3 }}>
-          <CButton
-            className="btn-ovh me-1"
-            color="success"
-            onClick={saveEmployeeAppraisalFormHandler}
-          >
-            Save
-          </CButton>
-          <CButton
-            color="success "
-            className="btn-ovh"
-            disabled
-            onClick={submitAppraisalFormHandler}
-          >
-            Submit
-          </CButton>
-        </CCol>
-      </CRow>
-      {/* )} */}
+
+      {appraisalForm?.formStatusvalue > 0 ? (
+        ''
+      ) : (
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              onClick={saveEmployeeAppraisalFormHandler}
+            >
+              Save
+            </CButton>
+            <CButton
+              color="success "
+              className="btn-ovh"
+              disabled
+              onClick={submitAppraisalFormHandler}
+            >
+              Submit
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
     </>
   )
 }
