@@ -85,6 +85,9 @@ const isLoading = (state: RootState): LoadingState =>
 const getAllCandidateDetails = (state: RootState): CandidateList[] =>
   state.candidateList.allCandidateDetails
 
+const getAllEmpCountries = (state: RootState): country[] =>
+  state.candidateList.empCountries
+
 const listSize = (state: RootState): number => state.candidateList.listSize
 
 const getAllTechnology = (state: RootState): GetAllTechnology[] =>
@@ -101,6 +104,7 @@ export const candidateListSelectors = {
   listSize,
   getAllCandidateDetails,
   getAllTechnology,
+  getAllEmpCountries,
 }
 
 export const candidateListService = {
