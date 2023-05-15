@@ -8,6 +8,8 @@ import {
   CycleDtOs,
   IntervieweeDetailsSliceState,
   TimeLineList,
+  UpdateProps,
+  saveButnprops,
   timeLineDetails,
 } from '../../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
 
@@ -16,6 +18,30 @@ const timeLineData = createAsyncThunk(
   async (candidateId: number, thunkApi) => {
     try {
       return await IntervieweeDetailsApi.timeLineDetails(candidateId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const saveInitialComments = createAsyncThunk(
+  'IntervieweeDetails/saveInitialComments',
+  async (props: saveButnprops, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.saveInitialComments(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateCandidateInterviewStatus = createAsyncThunk(
+  'IntervieweeDetails/updateCandidateInterviewStatus',
+  async (props: UpdateProps, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.updateCandidateInterviewStatus(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -45,6 +71,8 @@ const IntervieweeDetailsSlice = createSlice({
 
 export const intervieweeDetailsThunk = {
   timeLineData,
+  saveInitialComments,
+  updateCandidateInterviewStatus,
 }
 
 const listSize = (state: RootState): number => state.intervieweeDetails.listSize

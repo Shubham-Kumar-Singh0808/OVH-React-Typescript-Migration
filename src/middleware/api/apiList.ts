@@ -983,6 +983,9 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
 }
 export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
   timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
+  saveInitialComments: apiPrefix + '/jobapplicant/jobAdmin/saveInitialComments',
+  updateCandidateInterviewStatus:
+    apiPrefix + '/jobapplicant/jobAdmin/updateCandidateInterviewStatus',
 }
 export const CandidateListApiConfig: CandidateListApi = {
   searchScheduledCandidate:

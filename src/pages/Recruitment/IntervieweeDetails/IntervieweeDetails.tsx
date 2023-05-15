@@ -1,14 +1,76 @@
-import React from 'react'
-import { CButton, CCol, CRow } from '@coreui/react-pro'
+import React, { useState } from 'react'
+import {
+  CButton,
+  CCol,
+  CFormLabel,
+  CFormTextarea,
+  CRow,
+} from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OModal from '../../../components/ReusableComponent/OModal'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const IntervieweeDetails = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const TimeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
+  const [isApproveModalVisibility, setIsApproveModalVisibility] =
+    useState<boolean>(false)
+  const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [comment, setComment] = useState<string>(
+    TimeLineListSelector.initialComments,
+  )
+
+  const handleModal = () => {
+    setIsApproveModalVisibility(true)
+  }
+  const deletedToastElement = (
+    <OToast toastColor="success" toastMessage="saved successfully" />
+  )
+  const saveBtnHandler = async () => {
+    const saveInitialCommentsResult = await dispatch(
+      reduxServices.intervieweeDetails.saveInitialComments({
+        initialComments: comment,
+        personId: TimeLineListSelector.personId,
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.saveInitialComments.fulfilled.match(
+        saveInitialCommentsResult,
+      )
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    }
+  }
+
+  const confirmBtnHandler = async () => {
+    const updateCandidateInterviewStatusResult = await dispatch(
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
+        candidateId: TimeLineListSelector.personId,
+        holdSubStatus: '',
+        status: '',
+        statusComments: '',
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
+        updateCandidateInterviewStatusResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          TimeLineListSelector.personId,
+        ),
+      )
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+    }
+  }
   return (
     <>
       <OCard
@@ -19,17 +81,15 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {/* <Link
-              to={`/jobschedulecandidateList/${TimeLineListSelector.personId}`}
-            > */}
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-            {/* </Link> */}
+            <Link to={`/jobschedulecandidateList`}>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CRow>
@@ -76,10 +136,79 @@ const IntervieweeDetails = (): JSX.Element => {
           </p>
           <p>
             <b>Initial Comments: </b>
-            <span>{TimeLineListSelector.initialComments}</span>
+            <CFormTextarea
+              data-testid="text-area"
+              aria-label="textarea"
+              autoComplete="off"
+              value={comment}
+              className="sh-question"
+              onChange={(e) => setComment(e.target.value)}
+            ></CFormTextarea>
           </p>
         </CRow>
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              data-testid="save-btn"
+              className="btn-ovh me-1 text-white"
+              color="success"
+              onClick={saveBtnHandler}
+            >
+              Save
+            </CButton>
+          </CCol>
+        </CRow>
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="success"
+              className="btn-ovh me-1 text-white"
+              onClick={handleModal}
+            >
+              <i className="fa fa-plus fa-lg me-1"></i>Add Comments
+            </CButton>
+          </CCol>
+        </CRow>
       </OCard>
+      <OModal
+        alignment="center"
+        visible={isApproveModalVisibility}
+        setVisible={setIsApproveModalVisibility}
+        confirmButtonText="Yes"
+        modalTitle="Do you want to add comments to this candidate?"
+        cancelButtonText="No"
+        modalHeaderClass="d-none"
+        confirmButtonAction={confirmBtnHandler}
+      >
+        <>
+          <CRow className="mt-1 mb-1">
+            <p>Do you want to add comments to this candidate?</p>
+            <br></br>
+            <CFormLabel className="col-sm-3">
+              Comments:
+              <span
+                className={
+                  approveLeaveComment?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={6}>
+              <CFormTextarea
+                data-testid="text-area"
+                aria-label="textarea"
+                autoComplete="off"
+                maxLength={150}
+                value={approveLeaveComment}
+                onChange={(e) => setApproveLeaveComment(e.target.value)}
+              ></CFormTextarea>
+            </CCol>
+          </CRow>
+        </>
+      </OModal>
     </>
   )
 }

@@ -88,3 +88,15 @@ export type IntervieweeDetailsSliceState = {
   CycleDtOsList: CycleDtOs[]
   timeLineDetails: timeLineDetails
 }
+
+export type saveButnprops = {
+  initialComments: string
+  personId: number
+}
+
+export type UpdateProps = {
+  candidateId: number
+  holdSubStatus: string
+  status: string
+  statusComments: string
+}
