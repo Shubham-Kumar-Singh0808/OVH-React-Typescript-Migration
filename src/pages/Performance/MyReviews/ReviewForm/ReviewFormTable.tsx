@@ -35,6 +35,7 @@ const ReviewFormTable = (): JSX.Element => {
   const updatedAppraisalForm = useTypedSelector(
     reduxServices.myReview.actions.updateKPI,
   )
+  console.log(appraisalForm.kra)
   const saveEmployeeAppraisalFormHandler = () => {
     dispatch(
       reduxServices.myReview.saveAppraisalForm({
@@ -56,7 +57,7 @@ const ReviewFormTable = (): JSX.Element => {
         },
         avgRatingsDtos: appraisalForm.avgRatingsDtos,
         employee: appraisalForm.employee,
-        kra: updatedAppraisalForm.payload,
+        kra: appraisalForm.kra,
         appraisalFormStatus: null,
         closedBy: null,
         closedOn: null,
@@ -164,8 +165,8 @@ const ReviewFormTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {appraisalForm &&
-            appraisalForm?.kra?.map((kra, index) => (
+          {sortedAppraisalKPI &&
+            sortedAppraisalKPI?.map((kra, index) => (
               <ReviewFormEntry
                 id={kra.id}
                 key={index}

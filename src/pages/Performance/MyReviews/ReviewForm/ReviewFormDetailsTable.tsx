@@ -9,7 +9,7 @@ import {
   CFormSelect,
   CFormTextarea,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -104,17 +104,6 @@ const ReviewFormDetailsTable = ({
   // }
   // console.log(kpiData)
 
-  // useEffect(() => {
-  //   const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
-  //   dispatch(
-  //     reduxServices.myReview.actions.updateKPI({
-  //       kraId: id,
-  //       kpi: newKPI,
-  //       kpiId: newKPI,
-  //     }),
-  //   )
-  // }, [])
-
   const onChangeSelfRating = (
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
@@ -122,6 +111,13 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeRating = e.target.value
     setKPIDetails(newKPI)
+    dispatch(
+      reduxServices.myReview.actions.updateKPI({
+        kraId: id,
+        kpi: newKPI[index],
+        kpiId: newKPI[index].id,
+      }),
+    )
   }
 
   const commentOnChange = (
@@ -144,7 +140,14 @@ const ReviewFormDetailsTable = ({
       }),
     )
   }
-
+  // const sortedKPIDetails = useMemo(() => {
+  //   if (KPIDetails) {
+  //     return KPIDetails.slice().sort((sortNode1, sortNode2) =>
+  //       sortNode1.name.localeCompare(sortNode2.name),
+  //     )
+  //   }
+  //   return []
+  // }, [KPIDetails])
   return (
     <>
       <CTable
