@@ -86,10 +86,10 @@ const updateReportingManagerAsync = createAsyncThunk(
 
 const updateHrAssociatesManagerAsync = createAsyncThunk(
   'changeReportees/updateHrAssociatesManager',
-  async (HrAssociatesManager: UpdateManager, thunkApi) => {
+  async (HrAssociatesManagerdata: UpdateManager, thunkApi) => {
     try {
       return await ChangeReporteesApi.updateHrAssociatesManager(
-        HrAssociatesManager,
+        HrAssociatesManagerdata,
       )
     } catch (error) {
       const err = error as AxiosError

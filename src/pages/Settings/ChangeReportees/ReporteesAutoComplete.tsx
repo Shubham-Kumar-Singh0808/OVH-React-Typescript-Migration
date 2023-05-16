@@ -16,8 +16,16 @@ const ReporteesAutoComplete = ({
   autoCompleteTarget,
   shouldRenderTable,
 }: ChangeReporteesProps): JSX.Element => {
-  const [isRequired, setIsRequired] = useState<boolean>(true)
+  const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [managerId, setManagerId] = useState<number>()
+
+  useEffect(() => {
+    if (autoCompleteTarget.length > 0) {
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [autoCompleteTarget])
 
   const dispatch = useAppDispatch()
   console.log(placeHolder)
@@ -37,27 +45,39 @@ const ReporteesAutoComplete = ({
     setAutoCompleteTarget('')
   }
 
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAutoCompleteTarget(e.target.value)
+  }
+  const filter = managersOrHrManagersList?.filter(
+    (item) => item.fullName === autoCompleteTarget,
+  )
   const onHandleSelectManager = (fullName: string) => {
     setAutoCompleteTarget(fullName)
     const managerName = managersOrHrManagersList.find(
       (data) => data.fullName === fullName,
     )
     setManagerId(managerName?.id as number)
-    setIsRequired(false)
   }
 
   const handleSearchByEnter = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    if (event.key === 'Enter' && placeHolder === 'Manager Name') {
+    if (
+      event.key === 'Enter' &&
+      placeHolder === 'Manager Name' &&
+      filter[0]?.fullName
+    ) {
       dispatch(
         reduxServices.changeReportees.getAllEmployeesUnderManagerAsync(
           managerId as number,
         ),
       )
-      // console.log('place holder is', placeHolder)
       setShouldRenderTable(true)
-    } else if (event.key === 'Enter' && placeHolder === 'Hr Name') {
+    } else if (
+      event.key === 'Enter' &&
+      placeHolder === 'Hr Name' &&
+      filter[0]?.fullName
+    ) {
       dispatch(
         reduxServices.changeReportees.getHrAssociatesUnderHRManagerAsync(
           managerId as number,
@@ -74,15 +94,13 @@ const ReporteesAutoComplete = ({
         <>
           <CRow className="mb-3 ms-5">
             <CCol sm={2}>
-              <CFormLabel data-testid="pmLabel">
+              <CFormLabel data-testid="mLabel">
                 Project Manager:
-                {isRequired && (
-                  <span
-                    className={showIsRequired(autoCompleteTarget as string)}
-                  >
-                    *
-                  </span>
-                )}
+                <span
+                  className={filter[0]?.fullName ? 'text-white' : 'text-danger'}
+                >
+                  *
+                </span>
               </CFormLabel>
             </CCol>
 
@@ -126,9 +144,7 @@ const ReporteesAutoComplete = ({
                 shouldItemRender={(item, value) =>
                   item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
                 }
-                onChange={(e) => {
-                  setAutoCompleteTarget(e.target.value)
-                }}
+                onChange={onChangeInput}
                 onSelect={(value) => {
                   onHandleSelectManager(value)
                 }}
@@ -139,7 +155,7 @@ const ReporteesAutoComplete = ({
                 color="warning "
                 className="btn-ovh"
                 data-testid="clear-manager"
-                // disabled={!isViewBtnEnabled}
+                disabled={isDisabled}
                 onClick={onClickHandler}
               >
                 Clear
@@ -154,12 +170,16 @@ const ReporteesAutoComplete = ({
                     employeeData={getEmployeesUnderManger}
                     managersOrHrManagersList={managersOrHrManagersList}
                     placeHolder={placeHolder}
+                    onClickHandler={onClickHandler}
+                    autoCompleteTarget={autoCompleteTarget}
                   />
                 ) : (
                   <EmployeesListUnderManagerTable
                     employeeData={getHrAssociatesUnderManger}
                     managersOrHrManagersList={managersOrHrManagersList}
                     placeHolder={placeHolder}
+                    onClickHandler={onClickHandler}
+                    autoCompleteTarget={autoCompleteTarget}
                   />
                 ))}
             </CCol>

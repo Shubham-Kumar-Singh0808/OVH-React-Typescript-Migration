@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -11,26 +11,117 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
+import { useHistory } from 'react-router-dom'
 import ReporteesUpdateAutoComplete from './ReporteesUpdateAutoComplete'
 import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeesListUnderManagerTable = ({
   employeeData,
   managersOrHrManagersList,
   placeHolder,
+  onClickHandler,
+  autoCompleteTarget,
 }: {
   employeeData: EmployeeData[]
   managersOrHrManagersList: EmployeeData[]
   placeHolder: string
+  autoCompleteTarget: string
+  onClickHandler: () => void
 }): JSX.Element => {
+  const [selectedRows, setSelectedRows] = useState<number[]>([])
+  const [managerId, setManagerId] = useState<number>(0)
+  const [validName, setValidName] = useState<boolean>(false)
+  const [buttonDisable, setButtonDisable] = useState<boolean>(false)
+
+  const history = useHistory()
+  const dispatch = useAppDispatch()
+
   const isLoading = useTypedSelector(
     reduxServices.changeReportees.selectors.isLoading,
   )
+  //Employee's Hr Associate changed succssfully
+  //Reporting Manager
+  const actionMapping = {
+    reportingManager: 'Reporting Manager',
+    hrManager: 'Hr Associate',
+  }
+  const successToastMessage = (action: string) => (
+    <OToast
+      toastMessage={`Employee's ${action} changed successfully.`}
+      toastColor="success"
+    />
+  )
+  const handleSelectRow = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number,
+  ) => {
+    if (event.target.checked) {
+      setSelectedRows([...selectedRows, id])
+    } else {
+      setSelectedRows(selectedRows.filter((rowId: number) => rowId !== id))
+    }
+  }
+  console.log('selected rows: ', selectedRows)
+
+  const handleUpdateSelected = async () => {
+    const object = {
+      employeeId: selectedRows,
+      managerId,
+    }
+
+    if (placeHolder === 'Manager Name') {
+      const updateReporteeOrHrManager = await dispatch(
+        reduxServices.changeReportees.updateReportingManagerAsync(object),
+      )
+      if (
+        reduxServices.changeReportees.updateReportingManagerAsync.fulfilled.match(
+          updateReporteeOrHrManager,
+        )
+      ) {
+        setSelectedRows([])
+        onClickHandler()
+        dispatch(
+          reduxServices.app.actions.addToast(
+            successToastMessage(actionMapping.reportingManager),
+          ),
+        )
+        history.push('/delegation')
+      }
+    } else if (placeHolder === 'Hr Name') {
+      const updateReporteeOrHrManager = await dispatch(
+        reduxServices.changeReportees.updateHrAssociatesManagerAsync(object),
+      )
+
+      if (
+        reduxServices.changeReportees.updateHrAssociatesManagerAsync.fulfilled.match(
+          updateReporteeOrHrManager,
+        )
+      ) {
+        setSelectedRows([])
+        onClickHandler()
+        dispatch(
+          reduxServices.app.actions.addToast(
+            successToastMessage(actionMapping.hrManager),
+          ),
+        )
+        history.push('/delegation')
+      }
+    }
+  }
+  useEffect(() => {
+    if (selectedRows && validName) {
+      setButtonDisable(true)
+    } else {
+      setButtonDisable(false)
+    }
+  }, [selectedRows, validName])
+  console.log(selectedRows, validName)
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -50,7 +141,12 @@ const EmployeesListUnderManagerTable = ({
                 return (
                   <CTableRow key={employee.id}>
                     <CTableDataCell>
-                      <CFormCheck id="flexCheckDefault" label="" />
+                      <CFormCheck
+                        id="selectEmployee"
+                        onChange={(event) =>
+                          handleSelectRow(event, employee.id)
+                        }
+                      />
                     </CTableDataCell>
                     <CTableDataCell>{employee.id}</CTableDataCell>
                     <CTableDataCell>{employee.fullName}</CTableDataCell>
@@ -75,6 +171,9 @@ const EmployeesListUnderManagerTable = ({
               <ReporteesUpdateAutoComplete
                 managersOrHrManagersList={managersOrHrManagersList}
                 placeHolder={placeHolder}
+                setManagerId={setManagerId}
+                setValidName={setValidName}
+                autoCompleteTarget={autoCompleteTarget}
               />
               <CRow className="mb-3 align-items-center ms-5">
                 <CCol sm={{ span: 6, offset: 3 }}>
@@ -82,8 +181,8 @@ const EmployeesListUnderManagerTable = ({
                     className="btn-ovh me-1"
                     color="success"
                     data-testid="update-manager"
-                    // disabled={!isViewBtnEnabled}
-                    // onClick={handleEditEmployee}
+                    disabled={!buttonDisable}
+                    onClick={handleUpdateSelected}
                   >
                     Update
                   </CButton>

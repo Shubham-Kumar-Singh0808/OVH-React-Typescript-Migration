@@ -1,11 +1,8 @@
 import { CButton, CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import EmployeesListUnderManagerTable from './EmployeesListUnderManagerTable'
-import {
-  ChangeReporteesProps,
-  EmployeeData,
-} from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
+import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
 import { showIsRequired } from '../../../utils/helper'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -14,55 +11,43 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 const ReporteesUpdateAutoComplete = ({
   managersOrHrManagersList,
   placeHolder,
+  setManagerId,
+  setValidName,
+  autoCompleteTarget,
 }: {
   managersOrHrManagersList: EmployeeData[]
   placeHolder: string
+  setManagerId: React.Dispatch<React.SetStateAction<number>>
+  setValidName: React.Dispatch<React.SetStateAction<boolean>>
+  autoCompleteTarget: string
 }): JSX.Element => {
-  const [isRequired, setIsRequired] = useState<boolean>(true)
-  const [managerId, setManagerId] = useState<number>()
-  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
+  const [autoCompleteTargetInternal, setAutoCompleteTargetInternal] =
+    useState<string>('')
 
-  const dispatch = useAppDispatch()
-
-  const getEmployeesUnderManger = useTypedSelector(
-    reduxServices.changeReportees.selectors.EmployeesUnderManagerDetails,
-  )
-  const getHrAssociatesUnderManger = useTypedSelector(
-    reduxServices.changeReportees.selectors.HrAssociatesUnderHRManager,
-  )
   const isLoading = useTypedSelector(
     reduxServices.changeReportees.selectors.isLoading,
   )
 
   const onClickHandler = () => {
-    setAutoCompleteTarget('')
+    setAutoCompleteTargetInternal('')
   }
+  const filter = managersOrHrManagersList?.filter(
+    (item) => item.fullName === autoCompleteTargetInternal,
+  )
+
+  setValidName(!!filter[0]?.fullName)
+  console.log('valid name', !!filter[0]?.fullName)
+
+  const filteredManagersOrHrManagersList = managersOrHrManagersList?.filter(
+    (item) => item.fullName !== autoCompleteTarget,
+  )
 
   const onHandleSelectManager = (fullName: string) => {
-    setAutoCompleteTarget(fullName)
+    setAutoCompleteTargetInternal(fullName)
     const managerName = managersOrHrManagersList.find(
       (data) => data.fullName === fullName,
     )
     setManagerId(managerName?.id as number)
-    setIsRequired(false)
-  }
-
-  const handleSearchByEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter' && placeHolder === 'Manager Name') {
-      dispatch(
-        reduxServices.changeReportees.getAllEmployeesUnderManagerAsync(
-          managerId as number,
-        ),
-      )
-    } else if (event.key === 'Enter' && placeHolder === 'Hr Name') {
-      dispatch(
-        reduxServices.changeReportees.getHrAssociatesUnderHRManagerAsync(
-          managerId as number,
-        ),
-      )
-    }
   }
 
   return (
@@ -73,13 +58,11 @@ const ReporteesUpdateAutoComplete = ({
             <CCol sm={2}>
               <CFormLabel data-testid="pmLabel">
                 Project Manager:
-                {isRequired && (
-                  <span
-                    className={showIsRequired(autoCompleteTarget as string)}
-                  >
-                    *
-                  </span>
-                )}
+                <span
+                  className={filter[0]?.fullName ? 'text-white' : 'text-danger'}
+                >
+                  *
+                </span>
               </CFormLabel>
             </CCol>
 
@@ -89,16 +72,16 @@ const ReporteesUpdateAutoComplete = ({
                   className: 'form-control form-control-sm',
                   id: 'projectmanagers-autocomplete',
                   placeholder: placeHolder,
-                  onKeyDown: handleSearchByEnter,
                 }}
                 getItemValue={(item) => item.fullName}
-                items={managersOrHrManagersList}
+                items={filteredManagersOrHrManagersList}
                 data-testid="pmautocomplete"
                 wrapperStyle={{ position: 'relative' }}
                 renderMenu={(children) => (
                   <div
                     className={
-                      autoCompleteTarget && autoCompleteTarget.length > 0
+                      autoCompleteTargetInternal &&
+                      autoCompleteTargetInternal.length > 0
                         ? 'autocomplete-dropdown-wrap'
                         : 'autocomplete-dropdown-wrap hide'
                     }
@@ -119,12 +102,12 @@ const ReporteesUpdateAutoComplete = ({
                     {item.fullName}
                   </div>
                 )}
-                value={autoCompleteTarget}
+                value={autoCompleteTargetInternal}
                 shouldItemRender={(item, value) =>
                   item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
                 }
                 onChange={(e) => {
-                  setAutoCompleteTarget(e.target.value)
+                  setAutoCompleteTargetInternal(e.target.value)
                 }}
                 onSelect={(value) => {
                   onHandleSelectManager(value)

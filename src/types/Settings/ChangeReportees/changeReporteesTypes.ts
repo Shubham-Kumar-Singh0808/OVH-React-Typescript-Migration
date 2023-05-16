@@ -108,7 +108,7 @@ export type EmployeeData = {
 }
 
 export type UpdateManager = {
-  employeeId: number
+  employeeId: number[]
   managerId: number
 }
 

@@ -987,6 +987,6 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
   getAllHRList: apiPrefix + '/delegation/getAllHRList',
   getEmployeesUnderManger: apiPrefix + '/delegation/getMangerUnderEmployees',
   getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
-  updateReportingManager: apiPrefix + '/delegation/getHrAssociates',
-  updateHrAssociatesManager: apiPrefix + '/delegation/updateReportingManager',
+  updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
+  updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
 }

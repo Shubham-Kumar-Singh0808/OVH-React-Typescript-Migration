@@ -72,12 +72,12 @@ const updateReportingManager = async (
 }
 
 const updateHrAssociatesManager = async (
-  HrAssociatesManager: UpdateManager,
+  HrAssociatesManagerdata: UpdateManager,
 ): Promise<undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ChangeReporteesAPiConfig.updateHrAssociatesManager,
     method: AllowedHttpMethods.post,
-    data: HrAssociatesManager,
+    data: HrAssociatesManagerdata,
   })
 
   const response = await useAxios(requestConfig)
