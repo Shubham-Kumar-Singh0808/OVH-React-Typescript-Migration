@@ -1,5 +1,5 @@
 import { CButton, CCol, CFormLabel, CRow } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
 import EmployeesListUnderManagerTable from './EmployeesListUnderManagerTable'
 import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
@@ -23,6 +23,15 @@ const ReporteesUpdateAutoComplete = ({
 }): JSX.Element => {
   const [autoCompleteTargetInternal, setAutoCompleteTargetInternal] =
     useState<string>('')
+  const [isDisabled, setIsDisabled] = useState<boolean>(true)
+
+  useEffect(() => {
+    if (autoCompleteTargetInternal.length > 0) {
+      setIsDisabled(false)
+    } else {
+      setIsDisabled(true)
+    }
+  }, [autoCompleteTargetInternal])
 
   const isLoading = useTypedSelector(
     reduxServices.changeReportees.selectors.isLoading,
@@ -119,7 +128,7 @@ const ReporteesUpdateAutoComplete = ({
                 color="warning "
                 className="btn-ovh"
                 data-testid="clear-manager"
-                // disabled={!isViewBtnEnabled}
+                disabled={isDisabled}
                 onClick={onClickHandler}
               >
                 Clear
