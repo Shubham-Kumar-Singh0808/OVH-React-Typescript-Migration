@@ -363,6 +363,7 @@ export interface LeaveSummaryApi extends ApiBase {
   getEmployeeLeaveSummary: string
   getEmployeeLeaveHistory: string
   cancelEmployeeLeave: string
+  cancelAfterApproval: string
 }
 export interface TicketListInformationApi extends ApiBase {
   getTicketListInformation: string
