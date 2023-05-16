@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import { LoadingState } from '../../commonTypes'
 
 export type Employee = {

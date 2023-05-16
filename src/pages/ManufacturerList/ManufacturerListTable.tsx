@@ -1,7 +1,5 @@
 import {
-  CButton,
   CCol,
-  CImage,
   CRow,
   CTable,
   CTableBody,
@@ -9,29 +7,30 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CTooltip,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
 import React from 'react'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import { reduxServices } from '../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import { ManufacturerListProps } from '../../types/ManufacturerList/ManufacturerType'
 import OPagination from '../../components/ReusableComponent/OPagination'
 
-const EmployeeListTable = ({
-    paginationRange,
-          setPageSize,
-          setCurrentPage,
-          setCurrentPage,
-          currentPage,
-          pageSize,
-  }
-  const ManufacturerListTable = (): JSX.Element => {
+const ManufacturerListTable = ({
+  paginationRange,
+  setPageSize,
+  setCurrentPage,
+  currentPage,
+  pageSize,
+}: {
+  paginationRange: number[]
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  currentPage: number
+  pageSize: number
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const manufacturer = useTypedSelector(
-    reduxServices.employeeList.selectors.employees,
+  const employees = useTypedSelector(
+    reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const listSize = useTypedSelector(
     reduxServices.employeeList.selectors.listSize,
@@ -59,8 +58,8 @@ const EmployeeListTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {manufacturer?.length > 0 &&
-              manufacturer.map((manufacturer, index) => {
+            {employees?.length > 0 &&
+              employees?.map((manufacturer, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row"></CTableHeaderCell>
@@ -69,7 +68,6 @@ const EmployeeListTable = ({
                     </CTableDataCell>
                     <CTableDataCell>{manufacturer.productName}</CTableDataCell>
                     <CTableDataCell>{manufacturer.createdBy}</CTableDataCell>
-                    <CTableDataCell>{manufacturer.Actions}</CTableDataCell>
                   </CTableRow>
                 )
               })}
@@ -109,11 +107,3 @@ const EmployeeListTable = ({
 }
 
 export default ManufacturerListTable
-function setPageSize(arg0: number) {
-    throw new Error('Function not implemented.')
-}
-
-function setCurrentPage(arg0: number) {
-    throw new Error('Function not implemented.')
-}
-

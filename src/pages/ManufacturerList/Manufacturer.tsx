@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import ManufacturerTable from './ManufacturerTable'
 import ManufacturerListTable from './ManufacturerListTable'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import { reduxServices } from '../../reducers/reduxServices'
@@ -41,7 +40,6 @@ const Manufacturer = (): JSX.Element => {
         <ManufacturerListTable
           paginationRange={paginationRange}
           setPageSize={setPageSize}
-          setCurrentPage={setCurrentPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
           pageSize={pageSize}

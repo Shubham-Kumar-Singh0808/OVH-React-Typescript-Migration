@@ -1,15 +1,15 @@
 import { LoadingState } from '../commonTypes'
 
 export type ManufacturerDetails = {
-  assetType: string
-  assetTypeId: number
-  createdBy: string
-  createdDate: string
-  departmentId: null
-  departmentName: null
+  manufacturerId: number
+  manufacturerName: string
   productId: number
   productName: string
+  departmentId: null
+  departmentName: null
+  createdBy: string
   updatedBy: string
+  createdDate: string
   updatedDate: string
 }
 
