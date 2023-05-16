@@ -5,11 +5,11 @@ import {
   ManufacturerDetails,
   ManufacturerListProps,
   ManufacturerListSliceState,
-} from '../../types/ManufacturerList/ManufacturerType'
-import { LoadingState, ValidationError } from '../../types/commonTypes'
-import { ApiLoadingState } from '../../middleware/api/apiList'
-import { RootState } from '../../stateStore'
-import ManufacturerApi from '../../middleware/ManufacturerList/ManufacturerListApi'
+} from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { RootState } from '../../../stateStore'
+import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 
 const getManufacturerList = createAsyncThunk(
   'category/getEmployees',

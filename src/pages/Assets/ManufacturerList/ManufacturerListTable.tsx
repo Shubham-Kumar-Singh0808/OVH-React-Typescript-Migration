@@ -11,10 +11,10 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
-import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
-import { reduxServices } from '../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import OPagination from '../../components/ReusableComponent/OPagination'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 
 const ManufacturerListTable = ({
   paginationRange,
@@ -34,6 +34,9 @@ const ManufacturerListTable = ({
   const employees = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
   const listSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
@@ -53,6 +56,7 @@ const ManufacturerListTable = ({
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
               <CTableHeaderCell scope="col">Manufacturer Name</CTableHeaderCell>
               <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
               <CTableHeaderCell scope="col">Last Updated by</CTableHeaderCell>
@@ -65,6 +69,7 @@ const ManufacturerListTable = ({
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row"></CTableHeaderCell>
+                    <CTableHeaderCell>{getItemNumber(index)}</CTableHeaderCell>
                     <CTableDataCell>
                       {manufacturer.manufacturerName}
                     </CTableDataCell>
@@ -100,6 +105,7 @@ const ManufacturerListTable = ({
               })}
           </CTableBody>
         </CTable>
+
         <CRow>
           <CCol md={3} className="no-records">
             <strong>

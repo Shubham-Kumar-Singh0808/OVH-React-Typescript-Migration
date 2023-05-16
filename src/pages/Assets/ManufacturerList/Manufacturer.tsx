@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import ManufacturerListTable from './ManufacturerListTable'
-import { useAppDispatch, useTypedSelector } from '../../stateStore'
-import { reduxServices } from '../../reducers/reduxServices'
-import OCard from '../../components/ReusableComponent/OCard'
-import { usePagination } from '../../middleware/hooks/usePagination'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const Manufacturer = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -11,7 +11,7 @@ const Manufacturer = (): JSX.Element => {
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const listSize = useTypedSelector(
-    reduxServices.employeeList.selectors.listSize,
+    reduxServices.ManufacturerList.selectors.listSize,
   )
   const {
     paginationRange,

@@ -1,4 +1,4 @@
-import { LoadingState } from '../commonTypes'
+import { LoadingState } from '../../commonTypes'
 
 export type ManufacturerDetails = {
   manufacturerId: number
