@@ -912,6 +912,7 @@ export const myReviewApiConfig: MyReviewApi = {
   getReviewComments: apiPrefix + '/appraisal/getReviewComments',
   getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
   existingAppraisalForm: apiPrefix + '/appraisal/existingAppraisalForm',
+  saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { CButton } from '@coreui/react-pro'
 import MyReviewTabs from './MyReviewTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useTypedSelector } from '../../../stateStore'
@@ -8,7 +9,11 @@ const MyReview = (): JSX.Element => {
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
-
+  const [isRequestDiscussion, setIsRequestDiscussion] = useState(false)
+  const handleRequestDiscussionClick = () => {
+    // Perform save logic here
+    setIsRequestDiscussion(true)
+  }
   return (
     <>
       <OCard
@@ -17,6 +22,26 @@ const MyReview = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
+        {appraisalForm.formStatus === 'PENDINGAGREEMENT' ||
+        appraisalForm.formStatus === 'OPENFORDISCUSSION' ? (
+          <div className="d-inline ml15 pull-right">
+            <CButton type="submit" className="btn btn-success">
+              Acknowledge
+            </CButton>
+            &nbsp; &nbsp; &nbsp;
+            {!isRequestDiscussion && (
+              <CButton
+                type="submit"
+                className="btn btn-warning"
+                onClick={handleRequestDiscussionClick}
+              >
+                Request Discussion
+              </CButton>
+            )}
+          </div>
+        ) : (
+          ''
+        )}
         {appraisalForm?.formStatusvalue > 0 ? (
           <>
             <div className="form-group">

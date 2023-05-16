@@ -3,6 +3,7 @@ import {
   GetPerformanceRatings,
   PageDetails,
   ReviewCommentsResponse,
+  SaveReviewCommentsProps,
 } from '../../../../types/Performance/MyReview/myReviewTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -99,6 +100,21 @@ const existingAppraisalForm = async (
   return response.data
 }
 
+const saveReviewComments = async (
+  props: SaveReviewCommentsProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: myReviewApiConfig.saveReviewComments,
+    method: AllowedHttpMethods.post,
+    params: {
+      appraisalFormId: props.appraisalFormId,
+      comments: props.comments,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const myReviewApi = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
@@ -107,4 +123,5 @@ export const myReviewApi = {
   getPerformanceRatings,
   submitAppraisalFormForRating,
   existingAppraisalForm,
+  saveReviewComments,
 }

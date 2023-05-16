@@ -10,6 +10,7 @@ import {
   MyReviewSliceState,
   PageDetails,
   ReviewComments,
+  SaveReviewCommentsProps,
 } from '../../../types/Performance/MyReview/myReviewTypes'
 
 const initialMyReviewState: MyReviewSliceState = {
@@ -122,6 +123,18 @@ const existingAppraisalForm = createAsyncThunk(
   },
 )
 
+const saveReviewComments = createAsyncThunk(
+  'myReview/saveReviewComments',
+  async (props: SaveReviewCommentsProps, thunkApi) => {
+    try {
+      return await myReviewApi.saveReviewComments(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -224,6 +237,7 @@ const myReviewThunk = {
   getPerformanceRatings,
   submitAppraisalFormForRating,
   existingAppraisalForm,
+  saveReviewComments,
 }
 
 const myReviewSelectors = {

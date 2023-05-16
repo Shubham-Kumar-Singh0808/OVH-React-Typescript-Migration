@@ -279,3 +279,8 @@ export type GetPerformanceRatings = {
   rating: number
   label: string
 }
+
+export type SaveReviewCommentsProps = {
+  appraisalFormId: number
+  comments: string
+}
