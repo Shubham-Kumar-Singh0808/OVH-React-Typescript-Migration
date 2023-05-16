@@ -1,6 +1,12 @@
 import { LoadingState } from '../../commonTypes'
 
 export type Employee = {
+  manufacturerName: ReactNode
+  productName: ReactNode
+  createdBy: ReactNode
+  AssetType: ReactNode
+  Last: ReactNode
+  Actions: ReactNode
   id: number
   firstName: string
   lastName: string
