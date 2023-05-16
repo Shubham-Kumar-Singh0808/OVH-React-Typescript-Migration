@@ -988,6 +988,7 @@ export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
     apiPrefix + '/jobapplicant/jobAdmin/updateCandidateInterviewStatus',
   empScheduleInterviewDetails:
     apiPrefix + '/jobapplicant/empScheduleInterviewDetails',
+  updateInterview: apiPrefix + '/jobapplicant/jobAdmin/updateInterview',
 }
 export const CandidateListApiConfig: CandidateListApi = {
   searchScheduledCandidate:

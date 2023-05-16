@@ -67,11 +67,25 @@ const empScheduleInterviewDetails = async (
   return response.data
 }
 
+const updateInterview = async (
+  data: EmpScheduleInterviewData,
+): Promise<EmpScheduleInterviewData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.updateInterview,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const IntervieweeDetailsApi = {
   timeLineDetails,
   saveInitialComments,
   updateCandidateInterviewStatus,
   empScheduleInterviewDetails,
+  updateInterview,
 }
 
 export default IntervieweeDetailsApi

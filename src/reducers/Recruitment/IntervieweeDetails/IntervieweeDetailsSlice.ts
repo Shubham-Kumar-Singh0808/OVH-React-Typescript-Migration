@@ -64,6 +64,18 @@ const empScheduleInterviewDetails = createAsyncThunk(
   },
 )
 
+const updateInterview = createAsyncThunk(
+  'IntervieweeDetails/updateInterview',
+  async (props: EmpScheduleInterviewData, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.updateInterview(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -95,6 +107,7 @@ export const intervieweeDetailsThunk = {
   saveInitialComments,
   updateCandidateInterviewStatus,
   empScheduleInterviewDetails,
+  updateInterview,
 }
 
 const listSize = (state: RootState): number => state.intervieweeDetails.listSize
