@@ -11,10 +11,11 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { formatInterviewModeText } from '../../../utils/scheduledInterviewsUtils'
 
 const ScheduledInterviewsTable = (props: {
@@ -25,6 +26,8 @@ const ScheduledInterviewsTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   isTheadShow: boolean
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const {
     paginationRange,
     pageSize,
@@ -67,6 +70,14 @@ const ScheduledInterviewsTable = (props: {
     }
     return <></>
   }
+  const onClickHandler = (candidateId: number, interviewCycleId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+    dispatch(
+      reduxServices.intervieweeDetails.empScheduleInterviewDetails(
+        interviewCycleId,
+      ),
+    )
+  }
 
   return (
     <>
@@ -98,13 +109,24 @@ const ScheduledInterviewsTable = (props: {
               <CTableBody>
                 {scheduledCandidatesForEmployee.list?.map(
                   (currentCandidate, index) => {
+                    console.log(currentCandidate.personId)
+
                     return (
                       <CTableRow key={index}>
                         <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                         <CTableDataCell className="text-center">
-                          <CLink className="cursor-pointer sh-Interview-Table-link">
+                          <Link
+                            className="cursor-pointer sh-Interview-Table-link"
+                            to={`/candidatetimeline/${currentCandidate.candidateId}&${currentCandidate.interviewCycleId}`}
+                            onClick={() =>
+                              onClickHandler(
+                                Number(currentCandidate.candidateId),
+                                currentCandidate.interviewCycleId,
+                              )
+                            }
+                          >
                             {currentCandidate.candidateName}
-                          </CLink>
+                          </Link>
                         </CTableDataCell>
                         <CTableDataCell className="text-center">
                           {currentCandidate.interviewers}

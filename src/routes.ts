@@ -953,5 +953,10 @@ const routes = [
     name: 'Candidate List',
     component: CandidateList,
   },
+  {
+    path: '/candidatetimeline/:personId&intervwcycleId',
+    name: 'Interviewee Details',
+    component: IntervieweeDetails,
+  },
 ]
 export default routes
