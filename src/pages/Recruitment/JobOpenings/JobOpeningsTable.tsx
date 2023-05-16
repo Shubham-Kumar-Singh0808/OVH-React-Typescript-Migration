@@ -204,7 +204,7 @@ const JobOpeningsTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{jobVacancy?.offered}</CTableDataCell>
                   <CTableDataCell>{jobVacancy?.remaining}</CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="actions">
                     <CTooltip content="View">
                       <CButton
                         color="info"

@@ -7,6 +7,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
+import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -17,14 +18,14 @@ import OToast from '../../../components/ReusableComponent/OToast'
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const TimeLineListSelector = useTypedSelector(
+  const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
   const [comment, setComment] = useState<string>(
-    TimeLineListSelector.initialComments,
+    timeLineListSelector.initialComments,
   )
 
   const handleModal = () => {
@@ -37,7 +38,7 @@ const IntervieweeDetails = (): JSX.Element => {
     const saveInitialCommentsResult = await dispatch(
       reduxServices.intervieweeDetails.saveInitialComments({
         initialComments: comment,
-        personId: TimeLineListSelector.personId,
+        personId: timeLineListSelector.personId,
       }),
     )
     if (
@@ -52,10 +53,10 @@ const IntervieweeDetails = (): JSX.Element => {
   const confirmBtnHandler = async () => {
     const updateCandidateInterviewStatusResult = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
-        candidateId: TimeLineListSelector.personId,
-        holdSubStatus: '',
-        status: '',
-        statusComments: '',
+        candidateId: timeLineListSelector.personId,
+        holdSubStatus: 'Test',
+        status: 'Test',
+        statusComments: 'Test',
       }),
     )
     if (
@@ -63,9 +64,10 @@ const IntervieweeDetails = (): JSX.Element => {
         updateCandidateInterviewStatusResult,
       )
     ) {
+      setApproveLeaveComment('')
       dispatch(
         reduxServices.intervieweeDetails.timeLineData(
-          TimeLineListSelector.personId,
+          timeLineListSelector.personId,
         ),
       )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
@@ -95,44 +97,44 @@ const IntervieweeDetails = (): JSX.Element => {
         <CRow>
           <p>
             <b>Name: </b>
-            {TimeLineListSelector.fullName}
+            {timeLineListSelector.fullName}
           </p>
           <p>
             <b>Candidate added Date: </b>{' '}
-            <span>{TimeLineListSelector.addedDate}</span>
+            <span>{timeLineListSelector.addedDate}</span>
           </p>
           <p>
-            <b>Applied for:</b> <span>{TimeLineListSelector.appliedFor}</span>
+            <b>Applied for:</b> <span>{timeLineListSelector.appliedFor}</span>
           </p>
           <p>
-            <b>Skills:</b> <span>{TimeLineListSelector.skill}</span>
+            <b>Skills:</b> <span>{timeLineListSelector.skill}</span>
           </p>
           <p>
             <b> Experience: </b>
-            <span>{TimeLineListSelector.experience}</span>
+            <span>{timeLineListSelector.experience}</span>
           </p>
           <p>
             <b> Recruiter: </b>
-            <span>{TimeLineListSelector.recruiter}</span>
+            <span>{timeLineListSelector.recruiter}</span>
           </p>
           <p>
-            <b> Status:</b> <span>{TimeLineListSelector.candidateStatus}</span>
+            <b> Status:</b> <span>{timeLineListSelector.candidateStatus}</span>
           </p>
           <p>
             <b>Status Comments:</b>{' '}
-            <span>{TimeLineListSelector.statusComments}</span>
+            <span>{timeLineListSelector.statusComments}</span>
           </p>
           <p>
             <b> Resume: </b>
-            <span>{TimeLineListSelector.fullName}</span>
+            <span>{timeLineListSelector.fullName}</span>
           </p>
           <p>
             <b> Other Documents:</b>{' '}
-            <span>{TimeLineListSelector.fullName}</span>
+            <span>{timeLineListSelector.fullName}</span>
           </p>
           <p>
             <b> Reason for change:</b>{' '}
-            <span>{TimeLineListSelector.reason}</span>
+            <span>{timeLineListSelector.reason}</span>
           </p>
           <p>
             <b>Initial Comments: </b>
@@ -169,6 +171,7 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
+        <IntervieweeDetailsTimeline />
       </OCard>
       <OModal
         alignment="center"

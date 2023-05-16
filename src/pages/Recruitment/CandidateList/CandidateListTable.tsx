@@ -161,7 +161,7 @@ const CandidateListTable = ({
                   <CTableDataCell>
                     {data.cadidateInterviewStatus}
                   </CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="actions">
                     <CTooltip content="Edit">
                       <CButton
                         color="info btn-ovh me-1"

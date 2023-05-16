@@ -836,6 +836,7 @@ export interface IntervieweeDetailsApi extends ApiBase {
   timelinedetails: string
   saveInitialComments: string
   updateCandidateInterviewStatus: string
+  empScheduleInterviewDetails: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string

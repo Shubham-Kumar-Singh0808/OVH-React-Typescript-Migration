@@ -87,6 +87,7 @@ export type IntervieweeDetailsSliceState = {
   cycleDtOs: CycleDtOs
   CycleDtOsList: CycleDtOs[]
   timeLineDetails: timeLineDetails
+  scheduleInterviewData: EmpScheduleInterviewData
 }
 
 export type saveButnprops = {
@@ -99,4 +100,42 @@ export type UpdateProps = {
   holdSubStatus: string
   status: string
   statusComments: string
+}
+
+export type EmpScheduleInterviewData = {
+  candidateId: string
+  interviewers: string
+  interviewersDTOList: null
+  interviewDate: string
+  interviewTime: string
+  interviewComments: null
+  interviewRound: string
+  interviewStatus: null
+  candidateName: string
+  interviewMode: string
+  interviewCycleId: number
+  experiance: null
+  rating: null
+  status: string
+  candiadateEmailId: string
+  skills: string
+  mobileNumber: string
+  cycleDTOs: null
+  interviewResultStatus: null
+  description: null
+  skypeId: null
+  proactiveComments: null
+  communicationComments: null
+  excellenceComments: null
+  updatedBy: null
+  recruiter: null
+  reason: null
+  ctc: null
+  ectc: null
+  technology: null
+  np: null
+  country: null
+  jobCode: null
+  sourceName: null
+  personId: null
 }

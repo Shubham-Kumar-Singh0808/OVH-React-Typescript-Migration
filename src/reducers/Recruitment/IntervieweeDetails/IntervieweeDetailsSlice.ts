@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import IntervieweeDetailsApi from '../../../middleware/api/Recruitment/IntervieweeDetails/IntervieweeDetailsApi'
 import {
   CycleDtOs,
+  EmpScheduleInterviewData,
   IntervieweeDetailsSliceState,
   TimeLineList,
   UpdateProps,
@@ -49,6 +50,20 @@ const updateCandidateInterviewStatus = createAsyncThunk(
   },
 )
 
+const empScheduleInterviewDetails = createAsyncThunk(
+  'IntervieweeDetails/empScheduleInterviewDetails',
+  async (interviewCycleId: number, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.empScheduleInterviewDetails(
+        interviewCycleId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -56,16 +71,22 @@ export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   cycleDtOs: {} as CycleDtOs,
   CycleDtOsList: [],
   timeLineDetails: {} as timeLineDetails,
+  scheduleInterviewData: {} as EmpScheduleInterviewData,
 }
 const IntervieweeDetailsSlice = createSlice({
   name: 'IntervieweeDetails',
   initialState: initialIntervieweeDetailsState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(timeLineData.fulfilled, (state, action) => {
-      state.isLoading = ApiLoadingState.succeeded
-      state.timeLineList = action.payload
-    })
+    builder
+      .addCase(timeLineData.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.timeLineList = action.payload
+      })
+      .addCase(empScheduleInterviewDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.scheduleInterviewData = action.payload
+      })
   },
 })
 
@@ -73,6 +94,7 @@ export const intervieweeDetailsThunk = {
   timeLineData,
   saveInitialComments,
   updateCandidateInterviewStatus,
+  empScheduleInterviewDetails,
 }
 
 const listSize = (state: RootState): number => state.intervieweeDetails.listSize
@@ -92,6 +114,10 @@ const cycleDtOsArrayList = (state: RootState): CycleDtOs[] =>
 const TimeLineListSelector = (state: RootState): TimeLineList =>
   state.intervieweeDetails.timeLineList
 
+const scheduleInterviewSelector = (
+  state: RootState,
+): EmpScheduleInterviewData => state.intervieweeDetails.scheduleInterviewData
+
 export const intervieweeDetailsSelectors = {
   listSize,
   isLoading,
@@ -99,6 +125,7 @@ export const intervieweeDetailsSelectors = {
   cycleDtOsList,
   cycleDtOsArrayList,
   TimeLineListSelector,
+  scheduleInterviewSelector,
 }
 
 export const intervieweeDetailsService = {
