@@ -127,6 +127,9 @@ const cycleDtOsArrayList = (state: RootState): CycleDtOs[] =>
 const TimeLineListSelector = (state: RootState): TimeLineList =>
   state.intervieweeDetails.timeLineList
 
+const scheduleInterviewData = (state: RootState): EmpScheduleInterviewData =>
+  state.intervieweeDetails.scheduleInterviewData
+
 const scheduleInterviewSelector = (
   state: RootState,
 ): EmpScheduleInterviewData => state.intervieweeDetails.scheduleInterviewData
@@ -139,6 +142,7 @@ export const intervieweeDetailsSelectors = {
   cycleDtOsArrayList,
   TimeLineListSelector,
   scheduleInterviewSelector,
+  scheduleInterviewData,
 }
 
 export const intervieweeDetailsService = {

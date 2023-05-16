@@ -124,9 +124,9 @@ export type EmpScheduleInterviewData = {
   interviewResultStatus: null
   description: null
   skypeId: null
-  proactiveComments: null
-  communicationComments: null
-  excellenceComments: null
+  proactiveComments: null | string
+  communicationComments: null | string
+  excellenceComments: null | string
   updatedBy: null
   recruiter: null
   reason: null

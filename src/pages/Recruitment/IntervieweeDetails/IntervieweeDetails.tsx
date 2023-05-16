@@ -54,9 +54,9 @@ const IntervieweeDetails = (): JSX.Element => {
     const updateCandidateInterviewStatusResult = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,
-        holdSubStatus: 'Test',
-        status: 'Test',
-        statusComments: 'Test',
+        holdSubStatus: '',
+        status: 'ADD_COMMENTS',
+        statusComments: approveLeaveComment,
       }),
     )
     if (
@@ -65,14 +65,16 @@ const IntervieweeDetails = (): JSX.Element => {
       )
     ) {
       setApproveLeaveComment('')
+      setIsApproveModalVisibility(false)
+
       dispatch(
         reduxServices.intervieweeDetails.timeLineData(
           timeLineListSelector.personId,
         ),
       )
-      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
     }
   }
+
   return (
     <>
       <OCard

@@ -19,6 +19,9 @@ const IntervieweeDetailsTimeline = () => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
+  const scheduleInterviewData = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
+  )
   const [jobTitle, setJobTitle] = useState<string>('')
   const [proactive, setProactive] = useState<string>('')
 
@@ -62,41 +65,41 @@ const IntervieweeDetailsTimeline = () => {
   const saveButtonHandler = async () => {
     const updateResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateInterview({
-        candidateId: '',
-        interviewers: '',
-        interviewersDTOList: null,
-        interviewDate: '',
-        interviewTime: '',
-        interviewComments: null,
-        interviewRound: '',
-        interviewStatus: null,
-        candidateName: '',
-        interviewMode: '',
+        candidateId: scheduleInterviewData.candidateId,
+        interviewers: scheduleInterviewData.interviewers,
+        interviewersDTOList: scheduleInterviewData.interviewersDTOList,
+        interviewDate: scheduleInterviewData.interviewDate,
+        interviewTime: scheduleInterviewData.interviewTime,
+        interviewComments: scheduleInterviewData.interviewComments,
+        interviewRound: scheduleInterviewData.interviewRound,
+        interviewStatus: scheduleInterviewData.interviewStatus,
+        candidateName: scheduleInterviewData.candidateName,
+        interviewMode: scheduleInterviewData.interviewMode,
         interviewCycleId: 0,
-        experiance: null,
-        rating: null,
-        status: '',
-        candiadateEmailId: '',
-        skills: '',
-        mobileNumber: '',
-        cycleDTOs: null,
-        interviewResultStatus: null,
-        description: null,
-        skypeId: null,
-        proactiveComments: null,
-        communicationComments: null,
-        excellenceComments: null,
-        updatedBy: null,
-        recruiter: null,
-        reason: null,
-        ctc: null,
-        ectc: null,
-        technology: null,
-        np: null,
-        country: null,
-        jobCode: null,
-        sourceName: null,
-        personId: null,
+        experiance: scheduleInterviewData.experiance,
+        rating: scheduleInterviewData.rating,
+        status: scheduleInterviewData.status,
+        candiadateEmailId: scheduleInterviewData.candiadateEmailId,
+        skills: scheduleInterviewData.skills,
+        mobileNumber: scheduleInterviewData.mobileNumber,
+        cycleDTOs: scheduleInterviewData.cycleDTOs,
+        interviewResultStatus: scheduleInterviewData.interviewResultStatus,
+        description: scheduleInterviewData.description,
+        skypeId: scheduleInterviewData.skypeId,
+        proactiveComments: proactive,
+        communicationComments: communication,
+        excellenceComments: excellence,
+        updatedBy: scheduleInterviewData.updatedBy,
+        recruiter: scheduleInterviewData.recruiter,
+        reason: scheduleInterviewData.reason,
+        ctc: scheduleInterviewData.ctc,
+        ectc: scheduleInterviewData.ectc,
+        technology: scheduleInterviewData.technology,
+        np: scheduleInterviewData.np,
+        country: scheduleInterviewData.country,
+        jobCode: scheduleInterviewData.jobCode,
+        sourceName: scheduleInterviewData.sourceName,
+        personId: scheduleInterviewData.personId,
       }),
     )
     if (
@@ -104,8 +107,16 @@ const IntervieweeDetailsTimeline = () => {
         updateResultAction,
       )
     ) {
-      dispatch(reduxServices.intervieweeDetails.timeLineData(0))
-      dispatch(reduxServices.intervieweeDetails.empScheduleInterviewDetails(0))
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          Number(scheduleInterviewData.candidateId),
+        ),
+      )
+      dispatch(
+        reduxServices.intervieweeDetails.empScheduleInterviewDetails(
+          scheduleInterviewData.interviewCycleId,
+        ),
+      )
     }
   }
   return (
@@ -133,7 +144,7 @@ const IntervieweeDetailsTimeline = () => {
                       </CFormLabel>
                       <Link to={''}>
                         <h4 className="sh-timeline-title">
-                          {item.updatedBy} -
+                          {item.updatedBy} - {item.rating}★★★★
                         </h4>
                       </Link>
                     </div>
