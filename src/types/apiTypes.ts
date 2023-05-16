@@ -832,3 +832,7 @@ export interface JobOpeningsApi extends ApiBase {
   updateJobVacancy: string
   isCandidateMappedWithJob: string
 }
+
+export interface AssetWarrantyReportApi extends ApiBase {
+  getWarrantyAssetsList: string
+}

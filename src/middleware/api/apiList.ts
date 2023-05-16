@@ -108,6 +108,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  AssetWarrantyReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -978,4 +979,8 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+
+export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
+  getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
 }

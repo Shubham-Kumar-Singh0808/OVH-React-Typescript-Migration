@@ -403,14 +403,12 @@ const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
 )
-
 const ClearnceCerticates = React.lazy(
   () =>
     import(
       './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
     ),
 )
-
 const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
@@ -445,6 +443,9 @@ const JobVacancies = React.lazy(
 )
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -987,6 +988,11 @@ const routes = [
     name: 'AddJobVacancies',
     component: AddJobVacancies,
   },
-]
 
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
+  },
+]
 export default routes
