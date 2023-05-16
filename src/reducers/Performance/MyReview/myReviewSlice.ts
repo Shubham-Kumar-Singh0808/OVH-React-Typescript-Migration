@@ -110,6 +110,18 @@ const getPerformanceRatings = createAsyncThunk(
   },
 )
 
+const existingAppraisalForm = createAsyncThunk(
+  'myReview/existingAppraisalForm',
+  async (appraisalFormId: number, thunkApi) => {
+    try {
+      return await myReviewApi.existingAppraisalForm(appraisalFormId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -155,12 +167,17 @@ const myReviewSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getPerformanceRatings = action.payload
       })
+      .addCase(existingAppraisalForm.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeAppraisalForm = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getEmployeePerformanceReview.pending,
           getEmployeeReviewForm.pending,
           saveAppraisalForm.pending,
           getPerformanceRatings.pending,
+          existingAppraisalForm.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -206,6 +223,7 @@ const myReviewThunk = {
   getReviewComments,
   getPerformanceRatings,
   submitAppraisalFormForRating,
+  existingAppraisalForm,
 }
 
 const myReviewSelectors = {

@@ -33,6 +33,7 @@ const AppraisalForm = (): JSX.Element => {
   useEffect(() => {
     if (appraisalFormId) {
       dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
+      dispatch(reduxServices.myReview.existingAppraisalForm(appraisalFormId))
     }
   }, [appraisalFormId])
 

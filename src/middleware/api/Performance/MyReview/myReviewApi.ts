@@ -84,6 +84,21 @@ const submitAppraisalFormForRating = async (
   return response.data
 }
 
+const existingAppraisalForm = async (
+  appraisalFormId: number,
+): Promise<EmployeeAppraisalForm> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: myReviewApiConfig.existingAppraisalForm,
+    method: AllowedHttpMethods.get,
+    params: {
+      appraisalFormId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const myReviewApi = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
@@ -91,4 +106,5 @@ export const myReviewApi = {
   getReviewComments,
   getPerformanceRatings,
   submitAppraisalFormForRating,
+  existingAppraisalForm,
 }
