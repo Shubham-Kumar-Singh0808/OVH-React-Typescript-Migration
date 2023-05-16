@@ -756,6 +756,7 @@ export interface MyReviewApi extends ApiBase {
   getEmployeeAppraisalRating: string
   getReviewComments: string
   getPerformanceRatings: string
+  existingAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {

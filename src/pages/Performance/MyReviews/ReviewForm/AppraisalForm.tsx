@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { CCol, CRow } from '@coreui/react-pro'
+import { CButton, CCol, CRow } from '@coreui/react-pro'
 import ReviewFormTable from './ReviewFormTable'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
@@ -43,6 +43,20 @@ const AppraisalForm = (): JSX.Element => {
               <ReviewHistoryDetails />
             </CCol>
           </CRow>
+          <div className="completed">
+            <CButton
+              className="btn-bg-closed ng-hide"
+              ng-show="appraisalform.formStatus == 'CLOSED'"
+            >
+              Review form was closed by HR Department.
+            </CButton>
+            <CButton
+              className="btn-bg-comp"
+              ng-show="appraisalform.formStatus == 'COMPLETED'"
+            >
+              Review Process Completed.
+            </CButton>
+          </div>
         </>
       ) : (
         <OLoadingSpinner type={LoadingType.PAGE} />
