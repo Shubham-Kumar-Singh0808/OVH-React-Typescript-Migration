@@ -22,6 +22,10 @@ const AppraisalForm = (): JSX.Element => {
     reduxServices.myReview.selectors.isReviewCommentsLoading,
   )
 
+  const appraisalForm = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalForm,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }, [dispatch])
@@ -44,18 +48,26 @@ const AppraisalForm = (): JSX.Element => {
             </CCol>
           </CRow>
           <div className="completed">
-            <CButton
-              className="btn-bg-closed ng-hide"
-              ng-show="appraisalform.formStatus == 'CLOSED'"
-            >
-              Review form was closed by HR Department.
-            </CButton>
-            <CButton
-              className="btn-bg-comp"
-              ng-show="appraisalform.formStatus == 'COMPLETED'"
-            >
-              Review Process Completed.
-            </CButton>
+            {appraisalForm.formStatus === 'CLOSED' ? (
+              <CButton
+                className="btn-bg-closed ng-hide"
+                ng-show="appraisalform.formStatus == 'CLOSED'"
+              >
+                Review form was closed by HR Department.
+              </CButton>
+            ) : (
+              ''
+            )}
+            {appraisalForm.formStatus === 'COMPLETED' ? (
+              <CButton
+                className="btn-success"
+                ng-show="appraisalform.formStatus == 'COMPLETED'"
+              >
+                Review Process Completed.
+              </CButton>
+            ) : (
+              ''
+            )}
           </div>
         </>
       ) : (

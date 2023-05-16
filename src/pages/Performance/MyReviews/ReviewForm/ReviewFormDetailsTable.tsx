@@ -95,15 +95,6 @@ const ReviewFormDetailsTable = ({
     }
   }
 
-  // const onChangeSelfRating = (
-  //   e:
-  //     | React.ChangeEvent<HTMLSelectElement>
-  //     | React.ChangeEvent<HTMLTextAreaElement>,
-  // ) => {
-  //   console.log(e.target.value)
-  // }
-  // console.log(kpiData)
-
   const onChangeSelfRating = (
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
@@ -127,11 +118,11 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
-    // if (newKPI[index].employeeFeedback.length > 56) {
-    //   setDescriptionError(false)
-    // } else {
-    //   setDescriptionError(true)
-    // }
+    if (newKPI[index].employeeFeedback.length > 56) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
     dispatch(
       reduxServices.myReview.actions.updateKPI({
         kraId: id,
@@ -140,14 +131,7 @@ const ReviewFormDetailsTable = ({
       }),
     )
   }
-  // const sortedKPIDetails = useMemo(() => {
-  //   if (KPIDetails) {
-  //     return KPIDetails.slice().sort((sortNode1, sortNode2) =>
-  //       sortNode1.name.localeCompare(sortNode2.name),
-  //     )
-  //   }
-  //   return []
-  // }, [KPIDetails])
+
   return (
     <>
       <CTable
