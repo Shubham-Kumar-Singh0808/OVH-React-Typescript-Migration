@@ -15,10 +15,10 @@ const getAssetsWarrantyList = async (
     url: assetWarrantyReportConfig.getWarrantyAssetsList,
     method: AllowedHttpMethods.post,
     params: {
-      endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
       dateSelection: props.dateSelection ?? '',
+      endIndex: props.endIndex ?? 20,
       from: props.from ?? '',
+      startIndex: props.startIndex ?? 0,
       to: props.to ?? '',
     },
   })

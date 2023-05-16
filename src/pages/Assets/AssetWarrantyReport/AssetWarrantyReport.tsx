@@ -17,7 +17,7 @@ const AssetWarrantyReport = (): JSX.Element => {
       reduxServices.assetsWarrantyList.getAssetsWarrantyList({
         startIndex: 0,
         endIndex: 20,
-        dateSelection: '',
+        dateSelection: 'Current Month',
         from: '',
         to: '',
       }),
