@@ -6,17 +6,20 @@ import OCard from '../../components/ReusableComponent/OCard'
 import { usePagination } from '../../middleware/hooks/usePagination'
 
 const Manufacturer = (): JSX.Element => {
+  const dispatch = useAppDispatch()
   const employees = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
-  const dispatch = useAppDispatch()
+  const listSize = useTypedSelector(
+    reduxServices.employeeList.selectors.listSize,
+  )
   const {
     paginationRange,
     setPageSize,
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(20, 20)
+  } = usePagination(listSize, 20)
 
   useEffect(() => {
     dispatch(

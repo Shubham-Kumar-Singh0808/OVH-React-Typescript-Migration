@@ -26,6 +26,7 @@ const initialManufacturerListState: ManufacturerListSliceState = {
   manufacturerDetails: [],
   getAllManufacturerName: {} as GetAllManufacturerName,
   isLoading: ApiLoadingState.idle,
+  listSize: 0,
 }
 
 const ManufacturerListSlice = createSlice({
@@ -40,6 +41,7 @@ const ManufacturerListSlice = createSlice({
       .addMatcher(isAnyOf(getManufacturerList.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.manufacturerDetails = action.payload.list
+        state.listSize = action.payload.size
         // state = action.payload.size
       })
   },
@@ -53,11 +55,12 @@ const isLoading = (state: RootState): LoadingState =>
   state.manufacturerList.isLoading
 const manufacturerList = (state: RootState): ManufacturerDetails[] =>
   state.manufacturerList.manufacturerDetails
-// const listSize = (state: RootState): number => state.employeeList.listSize
+const listSize = (state: RootState): number => state.manufacturerList.listSize
 
 export const ManufacturerListSelectors = {
   manufacturerList,
   isLoading,
+  listSize,
 }
 
 export const ManufacturerListService = {

@@ -21,6 +21,7 @@ export type GetAllManufacturerName = {
 export type ManufacturerListSliceState = {
   manufacturerDetails: ManufacturerDetails[]
   getAllManufacturerName: GetAllManufacturerName
+  listSize: number
   isLoading: LoadingState
 }
 

@@ -1,4 +1,5 @@
 import {
+  CButton,
   CCol,
   CRow,
   CTable,
@@ -7,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
@@ -33,9 +35,9 @@ const ManufacturerListTable = ({
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const listSize = useTypedSelector(
-    reduxServices.employeeList.selectors.listSize,
+    reduxServices.ManufacturerList.selectors.listSize,
   )
-
+  console.log(listSize)
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -68,6 +70,31 @@ const ManufacturerListTable = ({
                     </CTableDataCell>
                     <CTableDataCell>{manufacturer.productName}</CTableDataCell>
                     <CTableDataCell>{manufacturer.createdBy}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid="edit-family"
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
+
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid="delete-family"
+                          size="sm"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    </CTableDataCell>
                   </CTableRow>
                 )
               })}
