@@ -5,7 +5,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 import candidateListApi from '../../../middleware/api/Recruitment/CandidateList/CandidateListApi'
 import {
-  CandidateList,
+  CandidateLists,
   CandidateListSliceState,
   CandidateListTableProps,
   GetAllTechnology,
@@ -73,7 +73,7 @@ const deleteCandidate = createAsyncThunk(
 export const initialCandidateListState: CandidateListSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
-  candidateDetails: {} as CandidateList,
+  candidateDetails: {} as CandidateLists,
   allCandidateDetails: [],
   allCountryDetails: {} as country,
   empCountries: [],
@@ -111,7 +111,7 @@ const candidateListSlice = createSlice({
 const isLoading = (state: RootState): LoadingState =>
   state?.candidateList.isLoading
 
-const getAllCandidateDetails = (state: RootState): CandidateList[] =>
+const getAllCandidateDetails = (state: RootState): CandidateLists[] =>
   state.candidateList.allCandidateDetails
 
 const getAllEmpCountries = (state: RootState): country[] =>

@@ -11,10 +11,11 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { formatInterviewModeText } from '../../../utils/scheduledInterviewsUtils'
 
 const ScheduledCandidatesTable = (props: {
@@ -48,6 +49,7 @@ const ScheduledCandidatesTable = (props: {
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+  const dispatch = useAppDispatch()
 
   const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
     if (interviewStatus === 'NEW') {
@@ -104,6 +106,14 @@ const ScheduledCandidatesTable = (props: {
     width: '8%',
     scope: 'col',
   }
+  const onClickHandler = (candidateId: number, interviewCycleId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+    dispatch(
+      reduxServices.intervieweeDetails.empScheduleInterviewDetails(
+        interviewCycleId,
+      ),
+    )
+  }
 
   return (
     <>
@@ -146,9 +156,18 @@ const ScheduledCandidatesTable = (props: {
                     <CTableRow key={index}>
                       <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                       <CTableDataCell>
-                        <CLink className="cursor-pointer sh-Interview-Table-link">
+                        <Link
+                          className="cursor-pointer sh-Interview-Table-link"
+                          to={`/candidatetimeline/${currentCandidate.candidateId}&${currentCandidate.interviewCycleId}`}
+                          onClick={() =>
+                            onClickHandler(
+                              Number(currentCandidate.candidateId),
+                              currentCandidate.interviewCycleId,
+                            )
+                          }
+                        >
                           {currentCandidate.candidateName}
-                        </CLink>
+                        </Link>
                       </CTableDataCell>
                       <CTableDataCell>
                         {currentCandidate.experiance}

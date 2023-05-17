@@ -22,7 +22,7 @@ const IntervieweeDetailsTimeline = () => {
   const scheduleInterviewData = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
   )
-  const [jobTitle, setJobTitle] = useState<string>('')
+  const [jobTitle, setJobTitle] = useState<string>('★★★★')
   const [proactive, setProactive] = useState<string>('')
 
   const [communication, setCommunication] = useState<string>('')
@@ -68,41 +68,41 @@ const IntervieweeDetailsTimeline = () => {
   const saveButtonHandler = async () => {
     const updateResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateInterview({
-        candiadateEmailId: 'sunnymaish2212@gmail.com',
-        candidateId: '13806',
-        candidateName: 'Jyo Goru',
-        communicationComments: communication,
-        country: null,
-        ctc: null,
-        cycleDTOs: null,
-        description: null,
-        ectc: null,
-        excellenceComments: excellence,
-        experiance: null,
-        interviewComments: 'test',
-        interviewCycleId: 21836,
-        interviewDate: '17 May 2023',
-        interviewMode: 'FACE_TO_FACE',
-        interviewResultStatus: null,
-        interviewRound: '1',
-        interviewStatus: null,
-        interviewTime: '9:30 PM',
-        interviewers: 'Sunny Manesh Kumar Eagala',
-        interviewersDTOList: null,
-        jobCode: null,
-        mobileNumber: '9966223254',
-        np: null,
-        personId: null,
+        candidateId: scheduleInterviewData.candidateId,
+        interviewers: scheduleInterviewData.interviewers,
+        interviewersDTOList: scheduleInterviewData.interviewersDTOList,
+        interviewDate: scheduleInterviewData.interviewDate,
+        interviewTime: scheduleInterviewData.interviewTime,
+        interviewComments: scheduleInterviewData.interviewComments,
+        interviewRound: scheduleInterviewData.interviewRound,
+        interviewStatus: scheduleInterviewData.interviewStatus,
+        candidateName: scheduleInterviewData.candidateName,
+        interviewMode: scheduleInterviewData.interviewMode,
+        interviewCycleId: scheduleInterviewData.interviewCycleId,
+        experiance: scheduleInterviewData.experiance,
+        rating: scheduleInterviewData.rating,
+        status: scheduleInterviewData.status,
+        candiadateEmailId: scheduleInterviewData.candiadateEmailId,
+        skills: scheduleInterviewData.skills,
+        mobileNumber: scheduleInterviewData.mobileNumber,
+        cycleDTOs: scheduleInterviewData.cycleDTOs,
+        interviewResultStatus: scheduleInterviewData.interviewResultStatus,
+        description: scheduleInterviewData.description,
+        skypeId: scheduleInterviewData.skypeId,
         proactiveComments: proactive,
-        rating: 1,
-        reason: null,
-        recruiter: null,
-        skills: 'Automation',
-        skypeId: null,
-        sourceName: null,
-        status: 'pending',
-        technology: null,
-        updatedBy: null,
+        communicationComments: communication,
+        excellenceComments: excellence,
+        updatedBy: scheduleInterviewData.updatedBy,
+        recruiter: scheduleInterviewData.recruiter,
+        reason: scheduleInterviewData.reason,
+        ctc: scheduleInterviewData.ctc,
+        ectc: scheduleInterviewData.ectc,
+        technology: scheduleInterviewData.technology,
+        np: scheduleInterviewData.np,
+        country: scheduleInterviewData.country,
+        jobCode: scheduleInterviewData.jobCode,
+        sourceName: scheduleInterviewData.sourceName,
+        personId: scheduleInterviewData.personId,
       }),
     )
     if (
@@ -152,30 +152,184 @@ const IntervieweeDetailsTimeline = () => {
                       </Link>
                     </div>
                     <div className="sh-timeline-body">
+                      <CRow className="mt-3 mb-3">
+                        <CFormLabel
+                          {...formLabelProps}
+                          className="col-sm-3 col-form-label text-end"
+                        >
+                          Rating:
+                          <span className={jobTitle ? TextWhite : TextDanger}>
+                            *
+                          </span>
+                        </CFormLabel>
+                        <CCol sm={3}>
+                          <CFormInput
+                            className="mb-2"
+                            data-testid="jobTitle"
+                            type="text"
+                            id="jobTitle"
+                            size="sm"
+                            name="jobTitle"
+                            autoComplete="off"
+                            value={jobTitle}
+                            onChange={(e) => setJobTitle(e.target.value)}
+                          />
+                        </CCol>
+                      </CRow>
+                      <CRow className="mt-3 mb-3">
+                        <CFormLabel
+                          {...formLabelProps}
+                          className="col-sm-3 col-form-label text-end"
+                        >
+                          Proactive:
+                          <span className={proactive ? TextWhite : TextDanger}>
+                            *
+                          </span>
+                        </CFormLabel>
+                        <CCol sm={3}>
+                          <CFormInput
+                            className="mb-2"
+                            data-testid="proactive"
+                            type="text"
+                            id="proactive"
+                            size="sm"
+                            name="proactive"
+                            autoComplete="off"
+                            value={proactive}
+                            onChange={handledInputChange}
+                          />
+                        </CCol>
+                      </CRow>
+                      <CRow className="mt-3 mb-3">
+                        <CFormLabel
+                          {...formLabelProps}
+                          className="col-sm-3 col-form-label text-end"
+                        >
+                          Communication:
+                          <span
+                            className={communication ? TextWhite : TextDanger}
+                          >
+                            *
+                          </span>
+                        </CFormLabel>
+                        <CCol sm={3}>
+                          <CFormInput
+                            className="mb-2"
+                            data-testid="communication"
+                            type="text"
+                            id="communication"
+                            size="sm"
+                            name="communication"
+                            autoComplete="off"
+                            value={communication}
+                            onChange={handledInputChange}
+                          />
+                        </CCol>
+                      </CRow>
+                      <CRow className="mt-3 mb-3">
+                        <CFormLabel
+                          {...formLabelProps}
+                          className="col-sm-3 col-form-label text-end"
+                        >
+                          Excellence:
+                          <span className={excellence ? TextWhite : TextDanger}>
+                            *
+                          </span>
+                        </CFormLabel>
+                        <CCol sm={3}>
+                          <CFormInput
+                            className="mb-2"
+                            data-testid="excellence"
+                            type="text"
+                            id="excellence"
+                            size="sm"
+                            name="excellence"
+                            autoComplete="off"
+                            value={excellence}
+                            onChange={handledInputChange}
+                          />
+                        </CCol>
+                      </CRow>
+                      <CRow className="mt-3 mb-3">
+                        <CFormLabel
+                          {...formLabelProps}
+                          className="col-sm-3 col-form-label text-end"
+                        >
+                          Other Comments:
+                          <span
+                            className={
+                              otherComments.replace(/^\s*/, '')
+                                ? TextWhite
+                                : TextDanger
+                            }
+                          >
+                            *
+                          </span>
+                        </CFormLabel>
+                        <CCol sm={3}>
+                          <CFormTextarea
+                            placeholder="Enter Your Comments"
+                            data-testid="text-area"
+                            aria-label="textarea"
+                            autoComplete="off"
+                            value={otherComments}
+                            maxLength={250}
+                            onChange={(e) => setOtherComments(e.target.value)}
+                          ></CFormTextarea>
+                          <p>{otherComments?.length}Left/250Max</p>
+                        </CCol>
+                      </CRow>
+                      <CRow>
+                        <CCol md={{ span: 6, offset: 3 }}>
+                          <CButton
+                            data-testid="save-btn"
+                            className="btn-ovh me-1 text-white"
+                            color="warning"
+                            onClick={saveButtonHandler}
+                            disabled={!isBtnEnable}
+                          >
+                            Save
+                          </CButton>
+                        </CCol>
+                      </CRow>
+                    </div>
+                    <div className="sh-timeline-body">
                       <div className="sh-timeline-item mb-1"></div>
                       <>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            <blockquote>Proactive :</blockquote>
-                          </CFormLabel>
-                          &nbsp;
-                          {item.proactiveComments}
-                        </div>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            <blockquote>Communication :</blockquote>
-                          </CFormLabel>
-                          &nbsp;
-                          {item.communicationComments}
-                          {selectRating}
-                        </div>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            <blockquote>Excellence :</blockquote>
-                          </CFormLabel>
-                          &nbsp;
-                          {item.excellenceComments}
-                        </div>
+                        {item.proactiveComments != null ? (
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              <blockquote>Proactive :</blockquote>
+                            </CFormLabel>
+                            &nbsp;
+                            {item.proactiveComments}
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        {item.communicationComments != null ? (
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              <blockquote>Communication :</blockquote>
+                            </CFormLabel>
+                            &nbsp;
+                            {item.communicationComments}
+                            {selectRating}
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                        {item.excellenceComments != null ? (
+                          <div className="mb-1">
+                            <CFormLabel className="col-form-label p-0">
+                              <blockquote>Excellence :</blockquote>
+                            </CFormLabel>
+                            &nbsp;
+                            {item.excellenceComments}
+                          </div>
+                        ) : (
+                          <></>
+                        )}
                         <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">
                             <blockquote>Other Comments :</blockquote>
@@ -191,134 +345,6 @@ const IntervieweeDetailsTimeline = () => {
             )
           })}
       </div>
-      <CRow className="mt-3 mb-3">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Rating:
-          <span className={jobTitle ? TextWhite : TextDanger}>*</span>
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            className="mb-2"
-            data-testid="jobTitle"
-            type="text"
-            id="jobTitle"
-            size="sm"
-            name="jobTitle"
-            autoComplete="off"
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-3 mb-3">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Proactive:
-          <span className={proactive ? TextWhite : TextDanger}>*</span>
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            className="mb-2"
-            data-testid="proactive"
-            type="text"
-            id="proactive"
-            size="sm"
-            name="proactive"
-            autoComplete="off"
-            value={proactive}
-            onChange={handledInputChange}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-3 mb-3">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Communication:
-          <span className={communication ? TextWhite : TextDanger}>*</span>
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            className="mb-2"
-            data-testid="communication"
-            type="text"
-            id="communication"
-            size="sm"
-            name="communication"
-            autoComplete="off"
-            value={communication}
-            onChange={handledInputChange}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-3 mb-3">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Excellence:
-          <span className={excellence ? TextWhite : TextDanger}>*</span>
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            className="mb-2"
-            data-testid="excellence"
-            type="text"
-            id="excellence"
-            size="sm"
-            name="excellence"
-            autoComplete="off"
-            value={excellence}
-            onChange={handledInputChange}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-3 mb-3">
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Other Comments:
-          <span
-            className={
-              otherComments.replace(/^\s*/, '') ? TextWhite : TextDanger
-            }
-          >
-            *
-          </span>
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormTextarea
-            placeholder="Enter Your Comments"
-            data-testid="text-area"
-            aria-label="textarea"
-            autoComplete="off"
-            value={otherComments}
-            maxLength={250}
-            onChange={(e) => setOtherComments(e.target.value)}
-          ></CFormTextarea>
-          <p>{otherComments?.length}Left/250Max</p>
-        </CCol>
-      </CRow>
-      <CRow>
-        <CCol md={{ span: 6, offset: 3 }}>
-          <CButton
-            data-testid="save-btn"
-            className="btn-ovh me-1 text-white"
-            color="warning"
-            onClick={saveButtonHandler}
-            disabled={!isBtnEnable}
-          >
-            Save
-          </CButton>
-        </CCol>
-      </CRow>
     </>
   )
 }

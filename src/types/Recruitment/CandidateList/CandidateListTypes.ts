@@ -12,7 +12,7 @@ export type CandidateAppliedForList = {
   minimumExperience: string
   description: string
   opendDate: string
-  expiryDate: null
+  expiryDate: null | string
   noOfRequirements: number
   offered: number
   remaining: number
@@ -30,7 +30,7 @@ export type country = {
   mobileCode: string
   countryCode: string
 }
-export type CandidateList = {
+export type CandidateLists = {
   personId: number
   firstName: string
   lastName: string
@@ -54,7 +54,7 @@ export type CandidateList = {
   documentList: []
   skillData: null
   appliedForVacancy: string
-  resumePath: null
+  resumePath: null | string
   otherDocumentPath: null
   cadidateInterviewStatus: string
   recruiter: string
@@ -67,13 +67,13 @@ export type CandidateList = {
 
 export type CandidateTotalInfo = {
   size: number
-  list: CandidateList[]
+  list: CandidateLists[]
 }
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
-  candidateDetails: CandidateList
-  allCandidateDetails: CandidateList[]
+  candidateDetails: CandidateLists
+  allCandidateDetails: CandidateLists[]
   allCountryDetails: country
   empCountries: country[]
   getAllTechnology: GetAllTechnology[]
