@@ -56,6 +56,14 @@ const AppraisalForm = (): JSX.Element => {
     }
   }
 
+  useEffect(() => {
+    if (Number(comments?.length) > 50) {
+      setIsPostButtonEnabled(true)
+    } else {
+      setIsPostButtonEnabled(false)
+    }
+  }, [comments])
+
   return (
     <>
       {isLoading !== ApiLoadingState.loading &&
@@ -70,7 +78,7 @@ const AppraisalForm = (): JSX.Element => {
               Comments:
               <span
                 className={
-                  comments?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+                  Number(comments?.length) > 50 ? 'text-white' : 'text-danger'
                 }
               >
                 *
