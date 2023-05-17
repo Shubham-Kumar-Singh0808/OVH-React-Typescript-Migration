@@ -7,26 +7,26 @@ export type EmployeeData = {
   lastName: string
   middleName: string | null
   designation: string
-  role: string
-  manager: string
-  designationKrasDTO: null
-  employeeSubmitted: null
-  managerSubmitted: null
-  acknowledged: null
+  role: string | null
+  manager: string | null
+  designationKrasDTO: string | null
+  employeeSubmitted: string | null
+  managerSubmitted: string | null
+  acknowledged: string | null
   fullName: string
-  profilePicPath: string
-  thumbPicture: null
-  profilePicGeneratedPath: null
+  profilePicPath: string | null
+  thumbPicture: string | null
+  profilePicGeneratedPath: string | null
   gender: string | null
-  dob: string
+  dob: string | null
   departmentName: string
   employmentTypeName: null
-  jobTypeName: string
-  imageData: null
-  curentLocation: null
-  baseLocation: null
+  jobTypeName: string | null
+  imageData: string | null
+  curentLocation: string | null
+  baseLocation: string | null
   officialBirthday: null
-  realBirthday: null
+  realBirthday: string | null
   maritalStatus: null
   emergencyContactName: null
   emergencyPhone: null
