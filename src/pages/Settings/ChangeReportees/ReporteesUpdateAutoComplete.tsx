@@ -1,11 +1,9 @@
 import { CButton, CCol, CFormLabel, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import EmployeesListUnderManagerTable from './EmployeesListUnderManagerTable'
 import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
-import { showIsRequired } from '../../../utils/helper'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useTypedSelector } from '../../../stateStore'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ReporteesUpdateAutoComplete = ({
