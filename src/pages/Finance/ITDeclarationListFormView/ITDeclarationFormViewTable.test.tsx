@@ -139,7 +139,7 @@ describe('Employee BirthdaysList Table Component Testing', () => {
   })
   test('should render Grand_total added by the Employee', () => {
     expect(screen.getByTestId('viewITForm-grand-total')).toHaveTextContent(
-      `Grand Total: ${mockITForm.grandTotal.toLocaleString('en-IN')}`,
+      `Grand Total: ${mockITForm.grandTotal.toLocaleString()}`,
     )
   })
 })
