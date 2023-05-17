@@ -53,6 +53,14 @@ describe('Update IT Declaration Form', () => {
       ) // checking for true only as same component is used
     })
 
+    test('back button functionality', () => {
+      const backButton = screen.getByTestId('updateIT-back-btn')
+      expect(backButton).toBeEnabled()
+      act(() => {
+        userEvent.click(backButton)
+      })
+    })
+
     test('update functionality', () => {
       //getting all elements
       const updateButton = screen.getByTestId('updateIT-btn')

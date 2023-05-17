@@ -7,6 +7,7 @@ import {
   FormSection,
   ITForm,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { interchangeMonthAndDay } from '../ITDeclarationForm/ITDeclarationFormHelpers'
 
 export const initialITForm: ITForm = {
   cycleId: 0,
@@ -136,4 +137,15 @@ export const isSubSectionTotalExceedingMaxLimit = (
     }
   }
   return false
+}
+
+export const isDateValid = (dateString: string): boolean => {
+  return !isNaN(new Date(dateString).getTime())
+}
+
+export const returnEmptyStringIfDateInvalid = (dateString: string): string => {
+  if (isDateValid(dateString)) {
+    return interchangeMonthAndDay(dateString)
+  }
+  return ''
 }

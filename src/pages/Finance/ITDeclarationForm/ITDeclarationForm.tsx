@@ -185,7 +185,7 @@ const ITDeclarationForm = (): JSX.Element => {
               <CCol sm={12}>
                 <p className="pull-right">
                   <b className="txt-grandtotal ">
-                    Grand Total: {grandTotalResult}
+                    Grand Total: {grandTotalResult.toLocaleString('en-IN')}
                   </b>
                 </p>
               </CCol>

@@ -54,11 +54,16 @@ const PreviousEmployerAct = ({
             dropdownMode="select"
             placeholderText="dd/mm/yyyy"
             value={getFormattedDate(enteredFromDate)}
+            highlightDates={[{ 'today-date-highlight': [new Date()] }]}
             onChange={(date: Date) =>
               setEnteredFromDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={new Date(enteredFromDate)}
+            openToDate={
+              !isNaN(Date.parse(enteredFromDate))
+                ? new Date(enteredFromDate)
+                : new Date()
+            }
           />
         </EmployerEntryItem>
         <EmployerEntryItem label="To Date">
@@ -71,7 +76,12 @@ const PreviousEmployerAct = ({
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={new Date(enteredToDate)}
+            openToDate={
+              !isNaN(Date.parse(enteredToDate))
+                ? new Date(enteredToDate)
+                : new Date()
+            }
+            highlightDates={[{ 'today-date-highlight': [new Date()] }]}
           />
         </EmployerEntryItem>
       </CRow>

@@ -17,6 +17,7 @@ import {
   getGrandTotalFromSubSectionsTotal,
   isInvestmentNotFilledOut,
   isSubSectionTotalExceedingMaxLimit,
+  returnEmptyStringIfDateInvalid,
 } from '../ITDeclarationListHelpers'
 import {
   FinalUpdateITFormDTO,
@@ -57,10 +58,10 @@ const UpdateITDeclarationForm = (): JSX.Element => {
   const [enteredOrganizationName, setEnteredOrganizationName] =
     useState<string>(employeeEnteredDetails?.organisationName)
   const [enteredFromDate, setEnteredFromDate] = useState<string>(
-    interchangeMonthAndDay(employeeEnteredDetails?.fromDate),
+    returnEmptyStringIfDateInvalid(employeeEnteredDetails?.fromDate),
   ) // converting to month/day/year
   const [enteredToDate, setEnteredToDate] = useState<string>(
-    interchangeMonthAndDay(employeeEnteredDetails?.toDate),
+    returnEmptyStringIfDateInvalid(employeeEnteredDetails?.toDate),
   )
   const [enteredFile, setEnteredFile] = useState<File>()
 
@@ -166,6 +167,17 @@ const UpdateITDeclarationForm = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
+        <CRow className="mt-2 justify-content-end text-end">
+          <CCol xs={2} className="px-0">
+            <CButton
+              color="info"
+              data-testid="updateIT-back-btn"
+              className="btn-ovh me-3"
+            >
+              <i className="fa fa-arrow-left me-1"></i>Back
+            </CButton>
+          </CCol>
+        </CRow>
         <ITEmployeeDetails employeeInformation={employeeDetails} />
         <CCardHeader>
           <h4 className="h4">

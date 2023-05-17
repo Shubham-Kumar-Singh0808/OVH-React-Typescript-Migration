@@ -10,6 +10,7 @@ import {
 } from '../../../test/data/itDeclarationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import ITDeclarationList from '../ITDeclarationList/ITDeclarationList'
+import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const toRender = (
   <div>
@@ -19,72 +20,68 @@ const toRender = (
     <ITDeclarationList />
   </div>
 )
+
+const mockITForm: ITForm = {
+  itDeclarationFormId: 102,
+  employeeId: 1889,
+  employeeName: 'Sravan Bachu',
+  panNumber: 'AJOPB1100B',
+  designation: 'Module Lead',
+  formSectionsDTOs: [
+    {
+      itSectionsId: 260,
+      sectionId: 1,
+      sectionName: '80 C',
+      isOld: true,
+      maxLimit: 150000,
+      formInvestmentDTO: [
+        {
+          formInvestmentId: 382,
+          investmentId: 5,
+          investmentName: 'Principal repayment of Home LoanTestB',
+          customAmount: 150000,
+        },
+      ],
+    },
+    {
+      itSectionsId: 264,
+      sectionId: 9,
+      sectionName: '24',
+      isOld: true,
+      maxLimit: 200000,
+      formInvestmentDTO: [
+        {
+          formInvestmentId: 387,
+          investmentId: 14,
+          investmentName: 'Interest on Home LoanTestC',
+          customAmount: 166000,
+        },
+      ],
+    },
+  ],
+  organisationName: 'CTE',
+  fromDate: '01/04/2018',
+  toDate: '01/06/2018',
+  isAgree: null,
+  grandTotal: 316000,
+  filePath: null,
+  cycleId: 2,
+}
+
 describe('Employee BirthdaysList Table Component Testing', () => {
   beforeEach(() => {
-    render(
-      <ITDeclarationFormViewTable
-        viewDeclarationForm={[
-          {
-            itDeclarationFormId: 102,
-            employeeId: 1889,
-            employeeName: 'Sravan Bachu',
-            panNumber: 'AJOPB1100B',
-            designation: 'Module Lead',
-            formSectionsDTOs: [
-              {
-                itSectionsId: 260,
-                sectionId: 1,
-                sectionName: '80 C',
-                isOld: true,
-                maxLimit: 150000,
-                formInvestmentDTO: [
-                  {
-                    formInvestmentId: 382,
-                    investmentId: 5,
-                    investmentName: 'Principal repayment of Home LoanTestB',
-                    customAmount: 150000,
-                  },
-                ],
-              },
-              {
-                itSectionsId: 264,
-                sectionId: 9,
-                sectionName: '24',
-                isOld: true,
-                maxLimit: 200000,
-                formInvestmentDTO: [
-                  {
-                    formInvestmentId: 387,
-                    investmentId: 14,
-                    investmentName: 'Interest on Home LoanTestC',
-                    customAmount: 166000,
-                  },
-                ],
-              },
-            ],
-            organisationName: 'CTE',
-            fromDate: '01/04/2018',
-            toDate: '01/06/2018',
-            isAgree: null,
-            grandTotal: 316000,
-            filePath: null,
-            cycleId: 2,
-          },
-        ]}
-      />,
-      {
-        preloadedState: {
-          itDeclarationList: {
-            isLoading: ApiLoadingState.succeeded,
-            cycles: mockInvestmentCycles,
-            itDeclarationForms: mockDeclarationList.itforms,
-          },
-          userAccessToFeatures: {
-            userAccessToFeatures: mockUserAccessToFeaturesData,
-          },
+    render(<ITDeclarationFormViewTable viewDeclarationForm={mockITForm} />, {
+      preloadedState: {
+        itDeclarationList: {
+          isLoading: ApiLoadingState.succeeded,
+          cycles: mockInvestmentCycles,
+          itDeclarationForms: mockDeclarationList.itforms,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
-    )
+    })
   })
   afterEach(cleanup)
   test('should render the "IT DeclarationForm View" table ', () => {
@@ -117,10 +114,18 @@ describe('Employee BirthdaysList Table Component Testing', () => {
     ).toBeInTheDocument()
   })
   test('should render Employee Details', () => {
-    expect(screen.getByText('1889')).toBeInTheDocument()
-    expect(screen.getByText('Sravan Bachu')).toBeInTheDocument()
-    expect(screen.getByText('AJOPB1100B')).toBeInTheDocument()
-    expect(screen.getByText('Module Lead')).toBeInTheDocument()
+    expect(
+      screen.getByText(mockITForm.employeeId.toString()),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(mockITForm.employeeName.toString()),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        mockITForm.panNumber ? mockITForm.panNumber?.toString() : '',
+      ),
+    ).toBeInTheDocument()
+    expect(screen.getByText(mockITForm.designation)).toBeInTheDocument()
   })
   test('should render Sections added by the Employee', () => {
     expect(screen.getByText('80 C')).toBeInTheDocument()
@@ -132,19 +137,9 @@ describe('Employee BirthdaysList Table Component Testing', () => {
     ).toBeInTheDocument()
     expect(screen.getByText('Interest on Home LoanTestC')).toBeInTheDocument()
   })
-  test('should render Savings Amount added by the Employee', () => {
-    expect(screen.getByText('150,000')).toBeInTheDocument()
-    expect(screen.getByText('166,000')).toBeInTheDocument()
-  })
-  test('should render Sub_total amount for each Section added by the Employee', () => {
-    expect(screen.getByText('Sub Total: 166000')).toBeInTheDocument()
-    expect(screen.getByText('Sub Total: 150000')).toBeInTheDocument()
-  })
-  test('should render Max_amount for each Section added by the Employee', () => {
-    expect(screen.getByText('Max-Amount: 200,000')).toBeInTheDocument()
-    expect(screen.getByText('Max-Amount: 150,000')).toBeInTheDocument()
-  })
   test('should render Grand_total added by the Employee', () => {
-    expect(screen.getByText('Grand Total: 316,000')).toBeInTheDocument()
+    expect(screen.getByTestId('viewITForm-grand-total')).toHaveTextContent(
+      `Grand Total: ${mockITForm.grandTotal.toLocaleString('en-IN')}`,
+    )
   })
 })

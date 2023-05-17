@@ -171,7 +171,7 @@ const ITDeclarationFormViewTable = ({
           <div className=" bdr-top col-sm-12">
             <div className="col-sm-12">
               <p className="pull-right fs-16">
-                <b>
+                <b data-testid="viewITForm-grand-total">
                   Grand Total:{' '}
                   {viewDeclarationForm?.grandTotal?.toLocaleString()}
                 </b>
