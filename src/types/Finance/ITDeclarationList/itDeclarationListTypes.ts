@@ -1,4 +1,9 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
+import {
+  EmployeeDetails,
+  Sections,
+  submitITDeclarationForm,
+} from '../ITDeclarationForm/itDeclarationFormTypes'
 import { Section } from '../InvestmentCheckList/investmentCheckListTypes'
 
 export type Cycle = {
@@ -10,28 +15,33 @@ export type Cycle = {
 }
 
 export type FormInvestment = {
-  formInvestmentId: number
+  formInvestmentId: number | null
   investmentId: number
-  investmentName: string
-  customAmount: number
+  investmentName: string | null
+  customAmount: number | string
 }
 
 export type FormSection = {
   isOld: boolean
-  itSectionsId: number
+  itSectionsId: number | null
   maxLimit: number
   sectionId: number
   sectionName: string
   formInvestmentDTO: FormInvestment[]
 }
 
+export interface EditITDeclarationEmployeeDetails
+  extends Omit<EmployeeDetails, 'pan'> {
+  pan: string | null
+}
+
 export type ITForm = {
   fromDate: string
   grandTotal: number
-  isAgree: null
+  isAgree: null | boolean
   itDeclarationFormId: number
   organisationName: string
-  panNumber: string
+  panNumber: string | null
   toDate: string
   cycleId: number
   designation: string
@@ -62,7 +72,7 @@ export type ITDeclarationListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  viewDeclarationFormButtonHandler: (viewForm: ITForm[]) => void
+  viewDeclarationFormButtonHandler: (viewForm: ITForm) => void
 }
 
 export type ITDeclarationListOptionsProps = {
@@ -113,6 +123,20 @@ export type AddInvestmentData = {
   investmentId?: number
 }
 
+export type UpdatedITDeclarationFormDTO = Omit<
+  submitITDeclarationForm,
+  'itDeclarationFormId'
+>
+
+export interface ITDeclarationListModal {
+  showModal: boolean
+  description: string
+  confirmButtonFunction?: () => Promise<void> | void
+  confirmBtnText?: string
+  cancelBtnText?: string
+  footerClass?: string
+}
+
 export type ITDeclarationListSliceState = {
   itDeclarationForms: ITForm[]
   listSize: number
@@ -124,5 +148,51 @@ export type ITDeclarationListSliceState = {
   investments: Investment[]
   currentPage: number
   pageSize: number
-  toggle: string
+  toggle: ITDeclarationFormToggleType
+  updatedITDeclarationFormDTO: ITForm
+  employeeDetails: EditITDeclarationEmployeeDetails
+  sectionsWithInvests: Sections[]
+  modal: ITDeclarationListModal
+  isUpdateITFormButtonEnabled: boolean
 }
+
+export enum ITDeclarationFormToggleType {
+  HomePage = '',
+  ViewForm = 'viewITDeclarationForm',
+  editSection = 'editSections',
+  editInvestmentPage = 'editInvestmentPage',
+  editInvestmentCycle = 'editInvestmentCycle',
+  updateITDeclarationForm = 'updateITDeclarationForm',
+}
+
+export interface ITInvestmentTableRowProps {
+  investment: FormInvestment
+  investmentIndex: number
+  sectionsWithInvests: Sections[]
+  currentSectionId: number
+  investmentChangeHandler: (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    sectionId: number,
+    investment: FormInvestment,
+    investmentIndex: number,
+  ) => void
+  amountChangeHandler: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    sectionId: number,
+    investment: FormInvestment,
+    investmentIndex: number,
+  ) => void
+  deleteInvestmentButtonHandler: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    sectionId: number,
+    investmentId: number,
+  ) => void
+  contentButtonHandler: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    sectionId: number,
+    investmentId: number,
+    type: 'query' | 'doc',
+  ) => void
+}
+
+export type FinalUpdateITFormDTO = Omit<Omit<ITForm, 'filePath'>, 'cycleId'>

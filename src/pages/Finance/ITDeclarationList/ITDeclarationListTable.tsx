@@ -14,27 +14,30 @@ import {
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
-import { ITDeclarationListTableProps } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import {
+  ITDeclarationFormToggleType,
+  ITDeclarationListTableProps,
+  ITForm,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const ITDeclarationListTable = (
   props: ITDeclarationListTableProps,
 ): JSX.Element => {
+  const dispatch = useAppDispatch()
   const itDeclarationForms = useTypedSelector(
     reduxServices.itDeclarationList.selectors.itDeclarationForms,
   )
   const itDeclarationListSize = useTypedSelector(
     reduxServices.itDeclarationList.selectors.listSize,
   )
-  const isITDeclarationFormExists = useTypedSelector(
-    reduxServices.itDeclarationForm.selectors.itDeclarationFormExists,
-  )
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-  const userAccessToEditDeclarationForm = userAccessToFeatures?.find(
-    (feature) => feature.name === 'IT Declaration Form',
-  )
+  // const isITDeclarationFormExists = useTypedSelector(
+  //   (state) => state.itDeclarationForm.itDeclarationFormExist,
+  // )
+  const userAccessToEditDeclarationForm = useTypedSelector(
+    (state) => state.userAccessToFeatures.userAccessToFeatures,
+  )?.find((feature) => feature.name === 'IT Declaration Form')
+
   const {
     paginationRange,
     pageSize,
@@ -48,6 +51,45 @@ const ITDeclarationListTable = (
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+  }
+
+  console.log(useTypedSelector((state) => state.itDeclarationList))
+
+  const editITFormButtonHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    form: ITForm,
+  ) => {
+    e.preventDefault()
+    const result = await dispatch(
+      reduxServices.itDeclarationList.isITFormEditable(
+        form.itDeclarationFormId,
+      ),
+    )
+    if (
+      reduxServices.itDeclarationList.isITFormEditable.fulfilled.match(result)
+    ) {
+      dispatch(reduxServices.itDeclarationList.getEmployeeDetails())
+      const sectionsResult = await dispatch(
+        reduxServices.itDeclarationList.getSectionsHavingInvests(),
+      )
+      dispatch(
+        reduxServices.itDeclarationList.actions.editThisForm({
+          ...form,
+          isAgree: false, //as initial value is null, changing it to false
+        }),
+      )
+      if (
+        reduxServices.itDeclarationList.getSectionsHavingInvests.fulfilled.match(
+          sectionsResult,
+        )
+      ) {
+        dispatch(
+          reduxServices.itDeclarationList.actions.setToggle(
+            ITDeclarationFormToggleType.updateITDeclarationForm,
+          ),
+        )
+      }
+    }
   }
 
   return (
@@ -84,39 +126,24 @@ const ITDeclarationListTable = (
                           className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
                           data-testid={`viewItDeclarationForm-btn${index}`}
                           onClick={() =>
-                            props.viewDeclarationFormButtonHandler([
-                              {
-                                cycleId: itDeclaration.cycleId,
-                                designation: itDeclaration.designation,
-                                employeeId: itDeclaration.employeeId,
-                                employeeName: itDeclaration.employeeName,
-                                filePath: itDeclaration.filePath,
-                                formSectionsDTOs:
-                                  itDeclaration.formSectionsDTOs,
-                                fromDate: itDeclaration.fromDate,
-                                grandTotal: itDeclaration.grandTotal,
-                                isAgree: itDeclaration.isAgree,
-                                itDeclarationFormId:
-                                  itDeclaration.itDeclarationFormId,
-                                organisationName:
-                                  itDeclaration.organisationName,
-                                panNumber: itDeclaration.panNumber,
-                                toDate: itDeclaration.toDate,
-                              },
-                            ])
+                            props.viewDeclarationFormButtonHandler(
+                              itDeclaration,
+                            )
                           }
                         >
                           <i className="fa fa-eye" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
-                      {isITDeclarationFormExists === true &&
-                      userAccessToEditDeclarationForm?.updateaccess ? (
+                      {userAccessToEditDeclarationForm?.updateaccess ? (
                         <>
                           <CTooltip content="Edit">
                             <CButton
                               color="info btn-ovh"
                               className="btn-ovh-employee-list"
                               data-testid={`sc-edit-btn${index}`}
+                              onClick={(e) =>
+                                editITFormButtonHandler(e, itDeclaration)
+                              }
                             >
                               <i className="fa fa-edit" aria-hidden="true"></i>
                             </CButton>

@@ -1,6 +1,6 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
-export type EmployeeDetails = {
+export interface EmployeeDetails {
   activeCyle: string
   designation: string
   employeeId: number
@@ -52,7 +52,7 @@ export type FormSectionsDTO = {
   formInvestmentDTO: FormInvestmentDTO[]
 }
 
-export type submitITDeclarationForm = {
+export interface submitITDeclarationForm {
   designation: string
   employeeId: number
   employeeName: string

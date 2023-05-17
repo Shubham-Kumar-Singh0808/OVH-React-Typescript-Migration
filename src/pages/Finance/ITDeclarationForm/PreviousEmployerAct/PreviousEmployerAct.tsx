@@ -3,7 +3,6 @@ import { CCardHeader, CFormInput, CRow } from '@coreui/react-pro'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import EmployerEntryItem from './EmployerEntryItem'
-import SectionsFilterOptions from '../SectionsFilterOptions'
 import { getFormattedDate } from '../ITDeclarationFormHelpers'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 
@@ -58,6 +57,8 @@ const PreviousEmployerAct = ({
             onChange={(date: Date) =>
               setEnteredFromDate(moment(date).format(commonDateFormat))
             }
+            maxDate={new Date()}
+            openToDate={new Date(enteredFromDate)}
           />
         </EmployerEntryItem>
         <EmployerEntryItem label="To Date">
@@ -69,6 +70,8 @@ const PreviousEmployerAct = ({
             onChange={(date: Date) =>
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
+            maxDate={new Date()}
+            openToDate={new Date(enteredToDate)}
           />
         </EmployerEntryItem>
       </CRow>
@@ -83,11 +86,6 @@ const PreviousEmployerAct = ({
           />
         </EmployerEntryItem>
       </CRow>
-      <SectionsFilterOptions
-        showAsterix={false}
-        moreSectionButtonText="Add More"
-        isOldEmployee={false}
-      />
     </>
   )
 }
