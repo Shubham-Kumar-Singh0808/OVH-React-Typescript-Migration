@@ -147,15 +147,22 @@ const myReviewSlice = createSlice({
       const appraisalFormKRAs = state.employeeAppraisalForm.kra
       for (let i = 0; i < appraisalFormKRAs.length; i++) {
         if (appraisalFormKRAs[i].id === kraId) {
+          console.log(kpiId)
           const filteredKPI = appraisalFormKRAs[i].kpis.filter(
             (kpi) => kpi.id !== kpiId,
           )
+          console.log(filteredKPI)
           filteredKPI.push(kpi)
+          console.log(filteredKPI)
           appraisalFormKRAs[i].kpis = filteredKPI
+          console.log(appraisalFormKRAs)
           break
         }
       }
-      state.employeeAppraisalForm.kra = appraisalFormKRAs
+      state.employeeAppraisalForm = {
+        ...state.employeeAppraisalForm,
+        kra: appraisalFormKRAs,
+      }
     },
   },
   extraReducers: (builder) => {

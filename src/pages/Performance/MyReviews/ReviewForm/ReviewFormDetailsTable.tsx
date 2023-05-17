@@ -111,6 +111,7 @@ const ReviewFormDetailsTable = ({
     )
   }
 
+  console.log(useTypedSelector((state) => state.myReview))
   const commentOnChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     index: number,
