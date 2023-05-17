@@ -31,6 +31,8 @@ const IntervieweeDetailsTimeline = () => {
 
   const [otherComments, setOtherComments] = useState<string>('')
 
+  const [selectRating, setSelectRating] = useState<string>('')
+
   const [isBtnEnable, setIsBtnEnable] = useState(false)
 
   useEffect(() => {
@@ -62,44 +64,45 @@ const IntervieweeDetailsTimeline = () => {
       setOtherComments(newValue)
     }
   }
+
   const saveButtonHandler = async () => {
     const updateResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateInterview({
-        candidateId: scheduleInterviewData.candidateId,
-        interviewers: scheduleInterviewData.interviewers,
-        interviewersDTOList: scheduleInterviewData.interviewersDTOList,
-        interviewDate: scheduleInterviewData.interviewDate,
-        interviewTime: scheduleInterviewData.interviewTime,
-        interviewComments: scheduleInterviewData.interviewComments,
-        interviewRound: scheduleInterviewData.interviewRound,
-        interviewStatus: scheduleInterviewData.interviewStatus,
-        candidateName: scheduleInterviewData.candidateName,
-        interviewMode: scheduleInterviewData.interviewMode,
-        interviewCycleId: 0,
-        experiance: scheduleInterviewData.experiance,
-        rating: scheduleInterviewData.rating,
-        status: scheduleInterviewData.status,
-        candiadateEmailId: scheduleInterviewData.candiadateEmailId,
-        skills: scheduleInterviewData.skills,
-        mobileNumber: scheduleInterviewData.mobileNumber,
-        cycleDTOs: scheduleInterviewData.cycleDTOs,
-        interviewResultStatus: scheduleInterviewData.interviewResultStatus,
-        description: scheduleInterviewData.description,
-        skypeId: scheduleInterviewData.skypeId,
-        proactiveComments: proactive,
+        candiadateEmailId: 'sunnymaish2212@gmail.com',
+        candidateId: '13806',
+        candidateName: 'Jyo Goru',
         communicationComments: communication,
+        country: null,
+        ctc: null,
+        cycleDTOs: null,
+        description: null,
+        ectc: null,
         excellenceComments: excellence,
-        updatedBy: scheduleInterviewData.updatedBy,
-        recruiter: scheduleInterviewData.recruiter,
-        reason: scheduleInterviewData.reason,
-        ctc: scheduleInterviewData.ctc,
-        ectc: scheduleInterviewData.ectc,
-        technology: scheduleInterviewData.technology,
-        np: scheduleInterviewData.np,
-        country: scheduleInterviewData.country,
-        jobCode: scheduleInterviewData.jobCode,
-        sourceName: scheduleInterviewData.sourceName,
-        personId: scheduleInterviewData.personId,
+        experiance: null,
+        interviewComments: 'test',
+        interviewCycleId: 21836,
+        interviewDate: '17 May 2023',
+        interviewMode: 'FACE_TO_FACE',
+        interviewResultStatus: null,
+        interviewRound: '1',
+        interviewStatus: null,
+        interviewTime: '9:30 PM',
+        interviewers: 'Sunny Manesh Kumar Eagala',
+        interviewersDTOList: null,
+        jobCode: null,
+        mobileNumber: '9966223254',
+        np: null,
+        personId: null,
+        proactiveComments: proactive,
+        rating: 1,
+        reason: null,
+        recruiter: null,
+        skills: 'Automation',
+        skypeId: null,
+        sourceName: null,
+        status: 'pending',
+        technology: null,
+        updatedBy: null,
       }),
     )
     if (
@@ -164,6 +167,7 @@ const IntervieweeDetailsTimeline = () => {
                           </CFormLabel>
                           &nbsp;
                           {item.communicationComments}
+                          {selectRating}
                         </div>
                         <div className="mb-1">
                           <CFormLabel className="col-form-label p-0">

@@ -108,14 +108,14 @@ export type EmpScheduleInterviewData = {
   interviewersDTOList: null
   interviewDate: string
   interviewTime: string
-  interviewComments: null
+  interviewComments: null | string
   interviewRound: string
   interviewStatus: null
   candidateName: string
   interviewMode: string
   interviewCycleId: number
   experiance: null
-  rating: null
+  rating: null | number
   status: string
   candiadateEmailId: string
   skills: string
