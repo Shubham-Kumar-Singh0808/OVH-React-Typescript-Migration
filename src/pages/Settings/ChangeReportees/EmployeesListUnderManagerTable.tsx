@@ -39,14 +39,22 @@ const EmployeesListUnderManagerTable = ({
   const [validName, setValidName] = useState<boolean>(false)
   const [buttonDisable, setButtonDisable] = useState<boolean>(false)
 
+  useEffect(() => {
+    if (selectedRows.length > 0 && validName) {
+      setButtonDisable(true)
+    } else {
+      setButtonDisable(false)
+    }
+  }, [selectedRows, validName])
+  console.log(selectedRows, validName)
+
   const history = useHistory()
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(
     reduxServices.changeReportees.selectors.isLoading,
   )
-  //Employee's Hr Associate changed succssfully
-  //Reporting Manager
+
   const actionMapping = {
     reportingManager: 'Reporting Manager',
     hrManager: 'Hr Associate',
@@ -114,14 +122,7 @@ const EmployeesListUnderManagerTable = ({
       }
     }
   }
-  useEffect(() => {
-    if (selectedRows && validName) {
-      setButtonDisable(true)
-    } else {
-      setButtonDisable(false)
-    }
-  }, [selectedRows, validName])
-  console.log(selectedRows, validName)
+
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (

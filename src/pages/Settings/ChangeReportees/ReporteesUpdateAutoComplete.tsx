@@ -61,7 +61,7 @@ const ReporteesUpdateAutoComplete = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="mb-3 ms-5">
+          <CRow className="mb-3 ms-5 mt-3">
             <CCol sm={2}>
               <CFormLabel data-testid="pmLabel">
                 Project Manager:

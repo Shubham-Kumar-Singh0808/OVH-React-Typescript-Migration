@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  CCol,
-  CForm,
-  CFormCheck,
-  CFormInput,
-  CFormLabel,
-  CRow,
-} from '@coreui/react-pro'
+import { CCol, CFormCheck, CRow } from '@coreui/react-pro'
 import ReporteesAutoComplete from './ReporteesAutoComplete'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
