@@ -1,6 +1,8 @@
+import axios from 'axios'
 import {
   GetAllManufacturerName,
   ManufacturerListProps,
+  exportManufacturerListProps,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import {
   getAuthenticatedRequestConfig,
@@ -27,9 +29,24 @@ const getManufacturerList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
-
+const exportManufacturerData = async (
+  props: exportManufacturerListProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.exportManufacturerList,
+    method: AllowedHttpMethods.get,
+    params: {
+      manufacturerNameSearch: props.manufacturerNameSearch ?? '',
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await axios(requestConfig)
+  return response.data
+}
 const ManufacturerApi = {
   getManufacturerList,
+  exportManufacturerData,
 }
 
 export default ManufacturerApi

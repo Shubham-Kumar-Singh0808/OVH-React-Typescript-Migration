@@ -833,5 +833,6 @@ export interface JobOpeningsApi extends ApiBase {
   isCandidateMappedWithJob: string
 }
 export interface ManufacturerApi extends ApiBase {
+  exportManufacturerList: string
   getAllManufacturerName: string
 }

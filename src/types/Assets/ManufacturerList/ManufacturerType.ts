@@ -1,3 +1,4 @@
+import { string } from 'prop-types'
 import { LoadingState } from '../../commonTypes'
 
 export type ManufacturerDetails = {
@@ -26,7 +27,12 @@ export type ManufacturerListSliceState = {
 }
 
 export type ManufacturerListProps = {
+  search: string
   endIndex: number
   manufacturerName: string
   startIndex: number
+}
+export type exportManufacturerListProps = {
+  manufacturerNameSearch: string
+  token: string
 }
