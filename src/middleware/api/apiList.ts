@@ -484,6 +484,7 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+  cancelAfterApproval: apiPrefix + '/leave/cancelAfterApproval',
 }
 
 export const ticketListInformationApiConfig: TicketListInformationApi = {
