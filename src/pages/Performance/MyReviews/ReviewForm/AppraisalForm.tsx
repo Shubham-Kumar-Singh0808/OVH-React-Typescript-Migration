@@ -70,47 +70,53 @@ const AppraisalForm = (): JSX.Element => {
       isReviewCommentsLoading !== ApiLoadingState.loading ? (
         <>
           <ReviewFormTable />
-          <div
-            className="form-group"
-            ng-show="requestDiscussionFlag || (appraisalform.requestDiscussion &amp;&amp; level1Flag &amp;&amp; appraisalform.formStatus != 'COMPLETED')"
-          >
-            <label className="col-sm-3 text-primary">
-              Comments:
-              <span
-                className={
-                  Number(comments?.length) > 50 ? 'text-white' : 'text-danger'
-                }
-              >
-                *
-              </span>
-            </label>
-            <CRow className="mt-4 mb-0">
-              <CCol col-xs-12 mt-10>
-                <CFormTextarea
-                  autoComplete="off"
-                  type="text"
-                  id="notesLink"
-                  name="notesLink"
-                  placeholder="What you are thinking?"
-                  data-testid="notes-link"
-                  maxLength={250}
-                  value={comments}
-                  onChange={(e) => setComments(e.target.value)}
-                ></CFormTextarea>
-                <p className="mt-1">{comments?.length}/250</p>
-              </CCol>
-            </CRow>
-            <div className="col-sm-8 col-sm-offset-3  col-xs-offset-3">
-              <button
-                type="submit"
-                className="btn btn-success"
-                onClick={saveButtonHandler}
-                disabled={!isPostButtonEnabled}
-              >
-                Submit
-              </button>
+          {appraisalForm?.formStatus === 'COMPLETED' ||
+          appraisalForm?.formStatus === 'SUBMIT' ||
+          appraisalForm?.formStatus === 'SAVE' ? (
+            ''
+          ) : (
+            <div
+              className="form-group"
+              ng-show="requestDiscussionFlag || (appraisalform.requestDiscussion &amp;&amp; level1Flag &amp;&amp; appraisalform.formStatus != 'COMPLETED')"
+            >
+              <label className="col-sm-3 text-primary">
+                Comments:
+                <span
+                  className={
+                    Number(comments?.length) > 50 ? 'text-white' : 'text-danger'
+                  }
+                >
+                  *
+                </span>
+              </label>
+              <CRow className="mt-4 mb-0">
+                <CCol col-xs-12 mt-10>
+                  <CFormTextarea
+                    autoComplete="off"
+                    type="text"
+                    id="notesLink"
+                    name="notesLink"
+                    placeholder="What you are thinking?"
+                    data-testid="notes-link"
+                    maxLength={250}
+                    value={comments}
+                    onChange={(e) => setComments(e.target.value)}
+                  ></CFormTextarea>
+                  <p className="mt-1">{comments?.length}/250</p>
+                </CCol>
+              </CRow>
+              <div className="col-sm-8 col-sm-offset-3  col-xs-offset-3">
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  onClick={saveButtonHandler}
+                  disabled={!isPostButtonEnabled}
+                >
+                  Submit
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           <CRow className="mt-4">
             <CCol>
               <ReviewHistoryDetails />

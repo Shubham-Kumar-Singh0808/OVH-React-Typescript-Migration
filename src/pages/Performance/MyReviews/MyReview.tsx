@@ -42,7 +42,7 @@ const MyReview = (): JSX.Element => {
         ) : (
           ''
         )}
-        {appraisalForm?.formStatusvalue > 0 ? (
+        {appraisalForm?.formStatus === 'COMPLETED' ? (
           <>
             <div className="form-group">
               <label className="pull-left text-primary">
