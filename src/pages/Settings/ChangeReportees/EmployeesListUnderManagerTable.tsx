@@ -11,7 +11,6 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import { useHistory } from 'react-router-dom'
 import ReporteesUpdateAutoComplete from './ReporteesUpdateAutoComplete'
 import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
@@ -48,7 +47,6 @@ const EmployeesListUnderManagerTable = ({
   }, [selectedRows, validName])
   console.log(selectedRows, validName)
 
-  const history = useHistory()
   const dispatch = useAppDispatch()
 
   const isLoading = useTypedSelector(
@@ -99,7 +97,8 @@ const EmployeesListUnderManagerTable = ({
             successToastMessage(actionMapping.reportingManager),
           ),
         )
-        history.push('/delegation')
+
+        window.scrollTo(0, 0)
       }
     } else if (placeHolder === 'Hr Name') {
       const updateReporteeOrHrManager = await dispatch(
@@ -118,7 +117,7 @@ const EmployeesListUnderManagerTable = ({
             successToastMessage(actionMapping.hrManager),
           ),
         )
-        history.push('/delegation')
+        window.scrollTo(0, 0)
       }
     }
   }
@@ -183,7 +182,9 @@ const EmployeesListUnderManagerTable = ({
                     color="success"
                     data-testid="update-manager"
                     disabled={!buttonDisable}
-                    onClick={handleUpdateSelected}
+                    onClick={() => {
+                      handleUpdateSelected()
+                    }}
                   >
                     Update
                   </CButton>
