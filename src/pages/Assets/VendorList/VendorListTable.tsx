@@ -102,7 +102,7 @@ const VendorListTable = ({
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(vendor)}
                       >
-                        {parse(vendor?.vendorAddress)}
+                        {parse(vendor?.vendorAddress as string)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -120,35 +120,26 @@ const VendorListTable = ({
                   <CTableDataCell className="ng-binding">
                     {vendor.createdBy}
                   </CTableDataCell>
-                  <CTableDataCell>
-                    <CTableRow>
+                  <CTableDataCell scope="row">
+                    <div className="buttons-clients">
                       <CTooltip content="Edit">
                         <CButton
-                          className="btn-ovh-employee-list me-1"
                           color="info btn-ovh me-1"
-                          data-testid="edit-btn"
+                          className="btn-ovh-employee-list"
                         >
-                          <i
-                            className="fa fa-edit text-white"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
-                    </CTableRow>
-                    <CTableRow>
+
                       <CTooltip content="Delete">
                         <CButton
-                          className="btn-ovh-employee-list me-1"
                           color="danger btn-ovh me-1"
-                          data-testid="delete-btn"
+                          className="btn-ovh-employee-list"
                         >
-                          <i
-                            className="fa fa-trash-o text-white"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
-                    </CTableRow>
+                    </div>
                   </CTableDataCell>
                 </CTableRow>
               )
