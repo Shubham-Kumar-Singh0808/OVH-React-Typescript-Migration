@@ -88,6 +88,7 @@ const ReviewFormTable = (): JSX.Element => {
     )
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
     dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }
   const submitAppraisalFormHandler = () => {
     dispatch(

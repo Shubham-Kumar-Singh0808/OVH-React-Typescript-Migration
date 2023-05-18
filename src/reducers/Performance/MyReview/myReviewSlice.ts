@@ -146,26 +146,28 @@ const myReviewSlice = createSlice({
       const { kraId, kpiId, kpi } = action.payload
       const appraisalFormKRAs = [...state.employeeAppraisalForm.kra] // Create a shallow copy of the KRA array
 
-      for (let i = 0; i < appraisalFormKRAs.length; i++) {
-        if (appraisalFormKRAs[i].id === kraId) {
-          const filteredKPIs = appraisalFormKRAs[i].kpis.filter(
-            (existingKPI) => existingKPI.id !== kpiId,
-          )
-          filteredKPIs.push(kpi)
+      const updatedKRAs = appraisalFormKRAs.map((kra) => {
+        if (kra.id === kraId) {
+          const updatedKPIs = kra.kpis.map((existingKPI) => {
+            if (existingKPI.id === kpiId) {
+              return kpi
+            }
+            return existingKPI
+          })
 
-          appraisalFormKRAs[i] = {
-            ...appraisalFormKRAs[i],
-            kpis: filteredKPIs,
+          return {
+            ...kra,
+            kpis: updatedKPIs,
           }
-          break
         }
-      }
+        return kra
+      })
 
-      state = {
+      return {
         ...state,
         employeeAppraisalForm: {
           ...state.employeeAppraisalForm,
-          kra: appraisalFormKRAs,
+          kra: updatedKRAs,
         },
       }
     },
