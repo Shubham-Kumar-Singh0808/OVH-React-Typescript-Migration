@@ -2,7 +2,7 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 import {
   EmployeeDetails,
   Sections,
-  submitITDeclarationForm,
+  SubmitITDeclarationForm,
 } from '../ITDeclarationForm/itDeclarationFormTypes'
 import { Section } from '../InvestmentCheckList/investmentCheckListTypes'
 
@@ -124,7 +124,7 @@ export type AddInvestmentData = {
 }
 
 export type UpdatedITDeclarationFormDTO = Omit<
-  submitITDeclarationForm,
+  SubmitITDeclarationForm,
   'itDeclarationFormId'
 >
 

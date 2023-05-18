@@ -159,6 +159,15 @@ const UpdateITDeclarationForm = (): JSX.Element => {
     }
   }
 
+  const backBtnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.HomePage,
+      ),
+    )
+  }
+
   return (
     <>
       <OCard
@@ -173,6 +182,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
               color="info"
               data-testid="updateIT-back-btn"
               className="btn-ovh me-3"
+              onClick={backBtnHandler}
             >
               <i className="fa fa-arrow-left me-1"></i>Back
             </CButton>

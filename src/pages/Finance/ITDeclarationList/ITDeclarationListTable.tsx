@@ -31,9 +31,6 @@ const ITDeclarationListTable = (
   const itDeclarationListSize = useTypedSelector(
     reduxServices.itDeclarationList.selectors.listSize,
   )
-  // const isITDeclarationFormExists = useTypedSelector(
-  //   (state) => state.itDeclarationForm.itDeclarationFormExist,
-  // )
   const userAccessToEditDeclarationForm = useTypedSelector(
     (state) => state.userAccessToFeatures.userAccessToFeatures,
   )?.find((feature) => feature.name === 'IT Declaration Form')

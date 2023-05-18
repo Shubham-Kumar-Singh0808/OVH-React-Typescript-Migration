@@ -57,5 +57,29 @@ describe('IT Sections - Update IT Form', () => {
         ),
       ).toHaveTextContent(mockCurrentSection.maxLimit.toLocaleString('en-IN'))
     })
+
+    test('query button functionality', () => {
+      // there are 2 investments. using the first one
+      const chosenInvestment = mockCurrentSection.formInvestmentDTO[0]
+      const firstInvestmentQueryBtn = screen.getByTestId(
+        `investment-query-btn-0-${chosenInvestment.investmentId}-${mockCurrentSection.sectionId}`,
+      )
+      expect(firstInvestmentQueryBtn).toBeEnabled()
+      act(() => {
+        userEvent.click(firstInvestmentQueryBtn)
+      })
+    })
+
+    test('document button functionality', () => {
+      // there are 2 investments. using the second one
+      const chosenInvestment = mockCurrentSection.formInvestmentDTO[1]
+      const secondInvestmentDocBtn = screen.getByTestId(
+        `investment-doc-btn-1-${chosenInvestment.investmentId}-${mockCurrentSection.sectionId}`,
+      )
+      expect(secondInvestmentDocBtn).toBeEnabled()
+      act(() => {
+        userEvent.click(secondInvestmentDocBtn)
+      })
+    })
   })
 })

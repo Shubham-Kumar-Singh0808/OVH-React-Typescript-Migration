@@ -179,5 +179,23 @@ describe('Update IT Declaration Form', () => {
         userEvent.click(updateButton)
       })
     })
+
+    test('add investment functionality', () => {
+      const sectionToBeUpdated = mockForm.formSectionsDTOs[3] // one investment under this
+      const moreInvestmentBtn = screen.getByTestId(
+        `moreInvestmentBtn-true-${sectionToBeUpdated.sectionId}`,
+      )
+      expect(moreInvestmentBtn).toBeEnabled()
+      expect(
+        screen.getAllByTestId(`investment-row-${sectionToBeUpdated.sectionId}`),
+      ).toHaveLength(sectionToBeUpdated.formInvestmentDTO.length)
+
+      act(() => {
+        userEvent.click(moreInvestmentBtn)
+      })
+      expect(
+        screen.getAllByTestId(`investment-row-${sectionToBeUpdated.sectionId}`),
+      ).toHaveLength(sectionToBeUpdated.formInvestmentDTO.length + 1)
+    })
   })
 })

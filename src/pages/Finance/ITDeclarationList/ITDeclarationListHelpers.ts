@@ -102,7 +102,7 @@ export const getInvestmentDataFromInvestType = (
   investment: FormInvestment,
 ): Invest => {
   const section = sectionsWithInvests?.filter(
-    (section) => section.sectionId === sectionId,
+    (sec) => sec.sectionId === sectionId,
   )[0]
   const finalInvestment = section?.invests.filter(
     (invest) => invest.investmentId === investment.investmentId,
@@ -117,10 +117,8 @@ export const getGrandTotalFromSubSectionsTotal = (
   userSections: FormSection[],
 ): number => {
   let totalSum = 0
-  for (let i = 0; i < userSections.length; i++) {
-    totalSum += getSubTotalAmountOfEachSection(
-      userSections[i].formInvestmentDTO,
-    )
+  for (const thisSection of userSections) {
+    totalSum += getSubTotalAmountOfEachSection(thisSection.formInvestmentDTO)
   }
   return totalSum
 }
@@ -128,11 +126,11 @@ export const getGrandTotalFromSubSectionsTotal = (
 export const isSubSectionTotalExceedingMaxLimit = (
   userSections: FormSection[],
 ): boolean => {
-  for (let i = 0; i < userSections.length; i++) {
+  for (const thisSection of userSections) {
     const sectionSum = getSubTotalAmountOfEachSection(
-      userSections[i].formInvestmentDTO,
+      thisSection.formInvestmentDTO,
     )
-    if (sectionSum > userSections[i].maxLimit) {
+    if (sectionSum > thisSection.maxLimit) {
       return true
     }
   }

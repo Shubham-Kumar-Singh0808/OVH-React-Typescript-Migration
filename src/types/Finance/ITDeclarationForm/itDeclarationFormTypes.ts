@@ -52,7 +52,8 @@ export type FormSectionsDTO = {
   formInvestmentDTO: FormInvestmentDTO[]
 }
 
-export interface submitITDeclarationForm {
+//this type is also used in itDeclarationList. Change With Caution
+export interface SubmitITDeclarationForm {
   designation: string
   employeeId: number
   employeeName: string
@@ -70,7 +71,7 @@ export type ITDeclarationFormSliceState = {
   employeeDetails: EmployeeDetails
   sections: Sections[]
   investments: Invest[]
-  submitITDeclarationForm: submitITDeclarationForm
+  submitITDeclarationForm: SubmitITDeclarationForm
   itDeclarationFormId: number
   itDeclarationFormExist: boolean
   isLoading: LoadingState

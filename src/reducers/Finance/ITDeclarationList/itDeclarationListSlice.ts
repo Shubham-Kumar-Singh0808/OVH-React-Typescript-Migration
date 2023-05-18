@@ -423,11 +423,11 @@ const itDeclarationListSlice = createSlice({
             section.sectionId === sectionId && section.isOld === isOld,
         )
       if (sectionIndex !== -1) {
-        const sections = state.updatedITDeclarationFormDTO.formSectionsDTOs
-        sections[sectionIndex].formInvestmentDTO.push(investment)
+        const sec = state.updatedITDeclarationFormDTO.formSectionsDTOs
+        sec[sectionIndex].formInvestmentDTO.push(investment)
         state.updatedITDeclarationFormDTO = {
           ...state.updatedITDeclarationFormDTO,
-          formSectionsDTOs: sections,
+          formSectionsDTOs: sec,
         }
       }
     },
