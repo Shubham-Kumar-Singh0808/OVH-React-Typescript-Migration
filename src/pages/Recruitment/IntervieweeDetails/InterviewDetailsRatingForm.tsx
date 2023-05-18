@@ -7,6 +7,7 @@ import {
   CButton,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import RatingStar from './RatingStar'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -26,8 +27,6 @@ const InterviewDetailsRatingForm = () => {
   const [excellence, setExcellence] = useState<string>('')
 
   const [otherComments, setOtherComments] = useState<string>('')
-
-  const [selectRating, setSelectRating] = useState<string>('')
 
   const [isBtnEnable, setIsBtnEnable] = useState(false)
 
@@ -133,16 +132,7 @@ const InterviewDetailsRatingForm = () => {
               data-testid="sh-modifiedBy"
             >
               <h4 className="sh-timeline-title">
-                {scheduleInterviewData.updatedBy} -{' '}
-                {scheduleInterviewData.rating}
-                <i className="fa fa-star" aria-hidden="true"></i>
-                <CButton color="success" className="btn-ovh me-1 text-white">
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                  <i className="fa fa-star" aria-hidden="true"></i>
-                </CButton>
+                {scheduleInterviewData.updatedBy} - <RatingStar />
                 <CFormLabel className="col-form-label p-0">
                   {scheduleInterviewData.interviewRound}
                 </CFormLabel>
@@ -157,18 +147,8 @@ const InterviewDetailsRatingForm = () => {
                   Rating:
                   <span className={jobTitle ? TextWhite : TextDanger}>*</span>
                 </CFormLabel>
-                <CCol sm={3}>
-                  <CFormInput
-                    className="mb-2"
-                    data-testid="jobTitle"
-                    type="text"
-                    id="jobTitle"
-                    size="sm"
-                    name="jobTitle"
-                    autoComplete="off"
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                  />
+                <CCol>
+                  <RatingStar />
                 </CCol>
               </CRow>
               <CRow className="mt-3 mb-3">

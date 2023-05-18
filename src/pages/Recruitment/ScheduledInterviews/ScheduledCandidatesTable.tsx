@@ -8,7 +8,6 @@ import {
   CRow,
   CTableDataCell,
   CBadge,
-  CLink,
 } from '@coreui/react-pro'
 import React from 'react'
 import { Link } from 'react-router-dom'

@@ -1,34 +1,27 @@
 import React, { useState } from 'react'
 
 const RatingStar = () => {
-  const [rating, setRating] = useState(0)
-  const maxStars = 0
+  const [rating, setRating] = useState<number | null>(null)
 
-  const handleRatingClick = (index: number) => {
-    setRating(index + 1)
-  }
-  const renderStars = () => {
-    const stars = []
-    for (let i = 0; i < maxStars; i++) {
-      const starClass = i < rating ? 'filled' : ''
-      stars.push(
-        <li
-          key={i}
-          className={`${starClass}`}
-          onClick={() => handleRatingClick(i)}
-        >
-          ★
-        </li>,
-      )
+  const handleStarClick = (selectedRating: number) => {
+    if (rating === selectedRating) {
+      setRating(null)
+    } else {
+      setRating(selectedRating)
     }
-    console.log(stars + 'stars')
-
-    return stars
   }
 
   return (
     <div>
-      <ul className="rating">{renderStars()}</ul>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className={`star ${rating && star <= rating ? 'selected' : ''}`}
+          onClick={() => handleStarClick(star)}
+        >
+          ★
+        </span>
+      ))}
     </div>
   )
 }
