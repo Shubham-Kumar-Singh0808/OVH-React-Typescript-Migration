@@ -17,6 +17,7 @@ import {
   getInvestmentById,
   getSubTotalAmountOfEachSection,
   initialFormInvestment,
+  initialITDeclarationModal,
   numbersOnlyRegex,
 } from '../ITDeclarationListHelpers'
 import { Sections } from '../../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
@@ -96,7 +97,11 @@ const ITSections = ({
         isOld: isOldEmployee,
       }),
     )
-    dispatch(reduxServices.itDeclarationList.actions.setShowModal(false))
+    dispatch(
+      reduxServices.itDeclarationList.actions.setModal(
+        initialITDeclarationModal,
+      ),
+    )
   }
 
   const investmentButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {

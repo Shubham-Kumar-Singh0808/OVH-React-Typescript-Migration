@@ -15,6 +15,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import {
   getGrandTotalFromSubSectionsTotal,
+  getInitialGetITDeclarationForm,
   isInvestmentNotFilledOut,
   isSubSectionTotalExceedingMaxLimit,
   returnEmptyStringIfDateInvalid,
@@ -33,6 +34,9 @@ const UpdateITDeclarationForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const employeeDetails = useTypedSelector(
     (state) => state.itDeclarationList.employeeDetails,
+  )
+  const cycleId = useTypedSelector(
+    (state) => state.itDeclarationList.updatedITDeclarationFormDTO.cycleId,
   )
   const itDeclarationFormId = useTypedSelector(
     (state) =>
@@ -161,6 +165,11 @@ const UpdateITDeclarationForm = (): JSX.Element => {
 
   const backBtnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    dispatch(
+      reduxServices.itDeclarationList.getITDeclarationForm(
+        getInitialGetITDeclarationForm(cycleId),
+      ),
+    )
     dispatch(
       reduxServices.itDeclarationList.actions.setToggle(
         ITDeclarationFormToggleType.HomePage,

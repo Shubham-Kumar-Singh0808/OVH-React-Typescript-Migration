@@ -5,6 +5,8 @@ import {
 import {
   FormInvestment,
   FormSection,
+  ITDeclarationListApiProps,
+  ITDeclarationListModal,
   ITForm,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { interchangeMonthAndDay } from '../ITDeclarationForm/ITDeclarationFormHelpers'
@@ -25,6 +27,12 @@ export const initialITForm: ITForm = {
   toDate: '',
 }
 
+export const getInitialGetITDeclarationForm = (
+  cycleId: number,
+): ITDeclarationListApiProps => {
+  return { startIndex: 0, endIndex: 20, cycleId, employeeName: '' }
+}
+
 export const numbersOnlyRegex = /\D/g
 
 export const initialFormInvestment: FormInvestment = {
@@ -32,6 +40,15 @@ export const initialFormInvestment: FormInvestment = {
   investmentId: -1,
   investmentName: null,
   customAmount: '',
+}
+
+export const initialITDeclarationModal: ITDeclarationListModal = {
+  showModal: false,
+  description: '',
+  confirmButtonFunction: undefined,
+  confirmBtnText: 'Confirm',
+  cancelBtnText: 'Cancel',
+  footerClass: '',
 }
 
 export const initialInvestObject: Invest = {

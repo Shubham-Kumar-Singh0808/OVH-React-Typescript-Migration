@@ -1,7 +1,13 @@
 import userEvent from '@testing-library/user-event'
 import React from 'react'
 import UpdateITDeclarationForm from './UpdateITDeclarationForm'
-import { act, cleanup, render, screen } from '../../../../test/testUtils'
+import {
+  act,
+  cleanup,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockDeclarationList,
@@ -61,7 +67,7 @@ describe('Update IT Declaration Form', () => {
       })
     })
 
-    test('update functionality', () => {
+    test('update functionality', async () => {
       //getting all elements
       const updateButton = screen.getByTestId('updateIT-btn')
       const checkboxButton = screen.getByLabelText(declareStatement)
@@ -174,6 +180,27 @@ describe('Update IT Declaration Form', () => {
         mockForm.formSectionsDTOs.length,
       ) // section deleted
       expect(updateButton).toBeEnabled()
+
+      //entering additional details in prev emp act
+      const organizationNameInput = screen.getByTestId(
+        'itdec-oldOrganizationName',
+      )
+      act(() => {
+        userEvent.clear(organizationNameInput)
+        userEvent.type(organizationNameInput, 'test on') //entering old organization name
+      })
+      const documentUpload = screen.getByTestId(
+        'prevEmployerActDocUpload',
+      ) as HTMLInputElement
+      const fileToUpload = new File(['(⌐□_□)'], 'test.pdf', {
+        type: 'application/pdf',
+      })
+      await waitFor(() => {
+        act(() => {
+          userEvent.upload(documentUpload, fileToUpload)
+        })
+      })
+      expect(documentUpload).toBeTruthy()
 
       act(() => {
         userEvent.click(updateButton)

@@ -71,8 +71,7 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
     description: '',
     confirmBtnText: 'Confirm',
     cancelBtnText: 'Cancel',
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    confirmButtonFunction: () => {},
+    confirmButtonFunction: undefined,
   },
   isUpdateITFormButtonEnabled: false,
 }
@@ -396,13 +395,10 @@ const itDeclarationListSlice = createSlice({
       action: PayloadAction<{ sectionId: number; isOld: boolean }>,
     ) => {
       const { sectionId, isOld } = action.payload
-      console.log(sectionId)
-      console.log(isOld)
       const formSectionList = state.updatedITDeclarationFormDTO.formSectionsDTOs
       const filteredList = formSectionList.filter(
         (section) => section.sectionId !== sectionId || section.isOld !== isOld,
       )
-      console.log(filteredList)
       state.updatedITDeclarationFormDTO = {
         ...state.updatedITDeclarationFormDTO,
         formSectionsDTOs: filteredList,
