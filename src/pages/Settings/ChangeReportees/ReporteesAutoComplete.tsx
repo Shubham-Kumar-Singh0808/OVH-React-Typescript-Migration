@@ -82,7 +82,7 @@ const ReporteesAutoComplete = ({
           managerId as number,
         ),
       )
-      console.log('place holder is', placeHolder)
+      //console.log('place holder is', placeHolder)
       setShouldRenderTable(true)
     }
   }
@@ -113,7 +113,7 @@ const ReporteesAutoComplete = ({
                 }}
                 getItemValue={(item) => item.fullName}
                 items={managersOrHrManagersList}
-                data-testid="pmautocomplete"
+                data-testid="mgr-autocomplete"
                 wrapperStyle={{ position: 'relative' }}
                 renderMenu={(children) => (
                   <div

@@ -15,11 +15,7 @@ const initialEmployeeChangeReporteeState: ChangeReporteesSliceState = {
   AllHRList: [],
   EmployeesUnderManager: [],
   EmployeesUnderHRManager: [],
-  refreshList: false,
   isLoading: ApiLoadingState.idle,
-  currentPage: 0,
-  pageSize: 0,
-  error: 0,
 }
 
 const getAllReportingManagerAsync = createAsyncThunk(

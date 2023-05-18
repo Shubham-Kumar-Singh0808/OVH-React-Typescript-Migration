@@ -117,11 +117,7 @@ export type ChangeReporteesSliceState = {
   AllHRList: EmployeeData[]
   EmployeesUnderManager: EmployeeData[]
   EmployeesUnderHRManager: EmployeeData[]
-  refreshList: boolean
   isLoading: ApiLoadingState
-  currentPage: number
-  pageSize: number
-  error: ValidationError
 }
 
 export type ChangeReporteesProps = {
