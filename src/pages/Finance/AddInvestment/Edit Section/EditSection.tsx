@@ -11,7 +11,10 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { UpdateSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationFormToggleType,
+  UpdateSection,
+} from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { showIsRequired } from '../../../../utils/helper'
 
 const EditSection = ({
@@ -65,7 +68,11 @@ const EditSection = ({
     <OToast toastColor="danger" toastMessage="Section already exist" />
   )
   const backButtonHandler = () => {
-    dispatch(reduxServices.itDeclarationList.actions.setToggle(''))
+    dispatch(
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.HomePage,
+      ),
+    )
   }
   const handleUpdateSection = async () => {
     const filteredInvest = sections.filter(

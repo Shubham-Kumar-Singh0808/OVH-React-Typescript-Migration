@@ -1,5 +1,7 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import {
   Cycle,
+  EditITDeclarationEmployeeDetails,
   ITDeclarationFormListResponse,
 } from '../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
@@ -33,6 +35,16 @@ export const mockInvestmentCycles: Cycle[] = [
     active: false,
   },
 ]
+
+export const mockUpdateITFormEmployeeInformation: EditITDeclarationEmployeeDetails =
+  {
+    employeeId: 2050,
+    fullName: 'Testing Hello',
+    pan: 'EIFE2323',
+    designation: 'Associate Software Engineer',
+    activeCyle: '06/05/2023',
+    joinDate: '07/05/2023',
+  }
 
 export const mockDeclarationList: ITDeclarationFormListResponse = {
   itforms: [
@@ -83,7 +95,7 @@ export const mockDeclarationList: ITDeclarationFormListResponse = {
             {
               formInvestmentId: 366,
               investmentId: 19,
-              investmentName: 'House Rent Paid to Landlordd',
+              investmentName: 'House Rent Paid to Landlord',
               customAmount: 96000,
             },
           ],
@@ -109,12 +121,27 @@ export const mockDeclarationList: ITDeclarationFormListResponse = {
             },
           ],
         },
+        {
+          itSectionsId: 900,
+          sectionId: 10,
+          sectionName: '10 exemptionA',
+          isOld: false,
+          maxLimit: 15000,
+          formInvestmentDTO: [
+            {
+              formInvestmentId: 526,
+              investmentId: 16,
+              investmentName: 'House rent',
+              customAmount: 1000,
+            },
+          ],
+        },
       ],
       organisationName: '',
       fromDate: 'n/a',
       toDate: 'n/a',
       isAgree: null,
-      grandTotal: 364004,
+      grandTotal: 365004,
       filePath: null,
       cycleId: 2,
     },
@@ -144,7 +171,7 @@ export const mockDeclarationList: ITDeclarationFormListResponse = {
           itSectionsId: 253,
           sectionId: 10,
           sectionName: '10 exemptionTest',
-          isOld: true,
+          isOld: false,
           maxLimit: 15000,
           formInvestmentDTO: [
             {
@@ -216,20 +243,20 @@ export const mockDeclarationList: ITDeclarationFormListResponse = {
         {
           itSectionsId: 256,
           sectionId: 10,
-          sectionName: '10 exemptionTestA',
+          sectionName: '10 exemptionA',
           isOld: true,
           maxLimit: 15000,
           formInvestmentDTO: [
             {
               formInvestmentId: 375,
               investmentId: 16,
-              investmentName: 'House rentTestA',
+              investmentName: 'House rent',
               customAmount: 96000,
             },
             {
               formInvestmentId: 376,
               investmentId: 15,
-              investmentName: 'Medical BillsTestB',
+              investmentName: 'Medical Bills',
               customAmount: 15000,
             },
           ],
