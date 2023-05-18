@@ -37,6 +37,12 @@ const ProductTypeList = (): JSX.Element => {
   } = usePagination(TotalListSize, 20)
 
   useEffect(() => {
+    if (window.location.pathname === '/productList') {
+      setCurrentPage(1)
+    }
+  }, [])
+
+  useEffect(() => {
     if (selectCurrentPage) {
       setCurrentPage(selectCurrentPage)
     }
@@ -61,12 +67,6 @@ const ProductTypeList = (): JSX.Element => {
     )
     downloadFile(ExportProductList, 'ExportProductList.csv')
   }
-
-  useEffect(() => {
-    if (window.location.pathname === '/productList') {
-      setCurrentPage(1)
-    }
-  }, [])
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter')

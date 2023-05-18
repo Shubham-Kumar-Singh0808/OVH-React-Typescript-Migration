@@ -25,10 +25,24 @@ const ProductTypeListTable = ({
   currentPage,
   setCurrentPage,
 }: ProductTypeListTableProps): JSX.Element => {
+  const dispatch = useAppDispatch()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteProductTypeId, setToDeleteProductTypeId] = useState(0)
   const [toDeleteProductTypeName, setToDeleteProductTypeName] = useState('')
 
+  const ProductTypeList = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.ProductTypeList,
+  )
+  const totalListSize = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.listSize,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessProductList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Product Type List',
+  )
   const handleShowDeleteModal = (productId: number, productName: string) => {
     setIsDeleteModalVisible(true)
     setToDeleteProductTypeId(productId)
@@ -53,16 +67,6 @@ const ProductTypeListTable = ({
       )
     }
   }
-  const ProductTypeList = useTypedSelector(
-    reduxServices.ProductTypeList.selectors.ProductTypeList,
-  )
-  const totalListSize = useTypedSelector(
-    reduxServices.ProductTypeList.selectors.listSize,
-  )
-  const totalRecordList = ProductTypeList?.length
-    ? `Total Records: ${totalListSize}`
-    : `No Records found...`
-
   const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
@@ -71,14 +75,10 @@ const ProductTypeListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const dispatch = useAppDispatch()
+  const totalRecordList = ProductTypeList?.length
+    ? `Total Records: ${totalListSize}`
+    : `No Records found...`
 
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-  const userAccessProductList = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Product Type List',
-  )
   return (
     <>
       <CTable striped align="middle">
