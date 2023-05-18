@@ -97,9 +97,9 @@ export const interchangeMonthAndDay = (enteredDate: string): string => {
 
 export const compareDate = (cycleDate: string, joinDate: string): boolean => {
   const cycleDateParse = Date.parse(cycleDate)
-  console.log(joinDate)
   const joinDateParse = Date.parse(joinDate)
-  console.log(cycleDateParse)
-  console.log(joinDateParse)
   return cycleDateParse < joinDateParse
 }
+
+export const declareStatement =
+  'I, declare that the above statement is true to the best of my knowledge and belief. In the event of any change that may occur during the year pertaining to the information given in the form, I undertake to inform the same to the company. Income Tax liability arising due to failure, if any, for not making / not intimating payment / investment made or proposed to be made by me and / or any wrong declaration would be my responsibility. I further undertake to provide all documentary proofs of payment made by me and if I fail to do so, the company can make full deduction of income tax dues from salary.'
