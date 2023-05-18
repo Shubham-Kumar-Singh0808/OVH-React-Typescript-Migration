@@ -5,7 +5,8 @@ import { render, screen } from '../../../test/testUtils'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
 
 // Mock the redux store and dependencies as needed
-
+const mockHandleExport = jest.fn()
+const mockHandleAdd = jest.fn()
 describe('Manufacturer Component Testing', () => {
   beforeEach(() => {
     render(<Manufacturer />, {
@@ -15,6 +16,14 @@ describe('Manufacturer Component Testing', () => {
         },
       },
     })
+  })
+  test('should be able to render  Product Specification List  Title', () => {
+    expect(screen.getByText('Manufacturer List')).toBeInTheDocument()
+  })
+  test('should able to click "click to to export" button', () => {
+    const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
+    fireEvent.click(exportBtn)
+    expect(mockHandleExport).toHaveBeenCalledTimes(0)
   })
   test('renders Manufacturer component', () => {
     // Assert that the component renders without error
