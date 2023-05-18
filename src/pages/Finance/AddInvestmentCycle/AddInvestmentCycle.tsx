@@ -7,7 +7,10 @@ import EditInvestmentCycle from './EditCycle/EditInvestmentCycle'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { Cycle } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  Cycle,
+  ITDeclarationFormToggleType,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const AddInvestmentCycle = (): JSX.Element => {
   const [editCycle, setEditCycle] = useState<Cycle>({
@@ -27,7 +30,9 @@ const AddInvestmentCycle = (): JSX.Element => {
 
   const editCycleButtonHandler = (editCycleData: Cycle): void => {
     dispatch(
-      reduxServices.itDeclarationList.actions.setToggle('editInvestmentCycle'),
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.editInvestmentCycle,
+      ),
     )
     console.log(editCycleData)
     setEditCycle({
