@@ -184,7 +184,7 @@ const EmployeePipListTable = ({
             />
           )}
         </CCol>
-        {pipListSizeRecords > 20 && (
+        {/* {pipListSizeRecords > 20 && (
           <CCol
             xs={5}
             className="gap-1 d-grid d-md-flex justify-content-md-end"
@@ -195,7 +195,7 @@ const EmployeePipListTable = ({
               paginationRange={paginationRange}
             />
           </CCol>
-        )}
+        )} */}
       </CRow>
       <OModal
         modalSize="lg"

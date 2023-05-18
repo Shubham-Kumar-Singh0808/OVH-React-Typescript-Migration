@@ -15,9 +15,9 @@ export type WarrantyAssetsList = {
   invoiceNumber: string
   purchasedDate: string
   receivedDate: string
-  notes: null
-  employeeName: string
-  employeeId: number
+  notes: null | string
+  employeeName: string | null
+  employeeId: number | null
   description: null
   status: string
   assetTypeId: number
@@ -29,14 +29,14 @@ export type WarrantyAssetsList = {
   searchByEmpName: null
   departmentId: null
   departmentName: null
-  location: string
+  location: string | null
   vendorName: string
   createdBy: string
   updatedBy: string
   createdDate: string
   updatedDate: string
-  referenceNumber: string
-  amount: string
+  referenceNumber: string | null
+  amount: string | null
   countryId: number
 }
 
@@ -52,30 +52,27 @@ export type WarrantyAssetsListSliceState = {
   isLoading: LoadingState
 }
 
-// type AssetsWarrantyListProps = {
-//     dateSelection: string;
-//     endIndex: number;
-//     from: string;
-//     startIndex: number;
-//     to: string;
-//   };
-
-//   const AssetsWarrantyListProps: React.FC<AssetsWarrantyListProps> = ({
-//     dateSelection,
-//     endIndex,
-//     from,
-//     startIndex,
-//     to,
-//   }) => {
-//     // Your component logic here
-//   };
-
-//   export default AssetsWarrantyListProps;
-
 export type AssetsWarrantyListProps = {
   dateSelection: string
   endIndex: number
   from: string
   startIndex: number
   to: string
+}
+
+export type AssetsWarrantyListTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+}
+
+export type ExportAssetWarrantyListProps = {
+  startIndex: number
+  endIndex: number
+  from: string
+  to: string
+  dateSelection: string
+  token: string
 }

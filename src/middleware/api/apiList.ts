@@ -983,4 +983,6 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
 
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
+  downloadExportAssetWarrantyList:
+    apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }

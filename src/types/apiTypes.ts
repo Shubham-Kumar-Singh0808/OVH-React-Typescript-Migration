@@ -835,4 +835,5 @@ export interface JobOpeningsApi extends ApiBase {
 
 export interface AssetWarrantyReportApi extends ApiBase {
   getWarrantyAssetsList: string
+  downloadExportAssetWarrantyList: string
 }

@@ -2,6 +2,7 @@ import { AxiosError } from 'axios'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import {
   AssetsWarrantyListProps,
+  ExportAssetWarrantyListProps,
   GetWarrantyAssetsList,
   WarrantyAssetsList,
   WarrantyAssetsListSliceState,
@@ -12,7 +13,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 
 const getAssetsWarrantyList = createAsyncThunk(
-  'category/getEmployees',
+  'category/getAssetsWarrantyReports',
   async (props: AssetsWarrantyListProps, thunkApi) => {
     try {
       return await assetsWarrantyListApi.getAssetsWarrantyList(props)
@@ -23,24 +24,29 @@ const getAssetsWarrantyList = createAsyncThunk(
   },
 )
 
-const initialAssetsWarrantyListState: WarrantyAssetsListSliceState = {
+export const initialAssetsWarrantyListState: WarrantyAssetsListSliceState = {
   warrantyAssetsDetails: [],
   listSize: 0,
   isLoading: ApiLoadingState.idle,
   getWarrantyAssetsList: {} as GetWarrantyAssetsList,
 }
 
-const assetsWarrantyListSlice = createSlice({
-  name: 'employeeList',
-  initialState: initialAssetsWarrantyListState,
-  reducers: {
-    // clearEmployeeList: (state) => {
-    //   state.employees = []
-    // },
-    // changeSelectedEmploymentStatus: (state, action) => {
-    //   state.selectedEmploymentStatus = action.payload as EmploymentStatus
-    // },
+const getExportAssetsWarrantyList = createAsyncThunk(
+  'assetManagement/exportAssetsList',
+  async (props: ExportAssetWarrantyListProps, thunkApi) => {
+    try {
+      return await assetsWarrantyListApi.getExportAssetsWarrantyList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
   },
+)
+
+const assetsWarrantyListSlice = createSlice({
+  name: 'assetWarrantyReport',
+  initialState: initialAssetsWarrantyListState,
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addMatcher(isAnyOf(getAssetsWarrantyList.pending), (state) => {
@@ -56,13 +62,15 @@ const assetsWarrantyListSlice = createSlice({
 
 const assetsWarrantyListThunk = {
   getAssetsWarrantyList,
+  getExportAssetsWarrantyList,
 }
 
-const isLoading = (state: RootState): LoadingState =>
-  state.assetsWarrantyList.isLoading
+function isLoading(state: RootState): LoadingState {
+  return state.assetsWarrantyList.isLoading
+}
 const assetsWarrantyList = (state: RootState): WarrantyAssetsList[] =>
   state.assetsWarrantyList.warrantyAssetsDetails
-const listSize = (state: RootState): number => state.employeeList.listSize
+const listSize = (state: RootState): number => state.assetsWarrantyList.listSize
 
 export const assetsWarrantyListSelectors = {
   isLoading,

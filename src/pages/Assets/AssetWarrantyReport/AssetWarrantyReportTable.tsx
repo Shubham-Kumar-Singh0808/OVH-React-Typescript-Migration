@@ -12,46 +12,66 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useMemo, useState } from 'react'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { TicketDetailsTableProps } from '../../../types/Support/Report/ticketReportTypes'
-import { currentPageData } from '../../../utils/paginationUtils'
+import {
+  AssetsWarrantyListTableProps,
+  WarrantyAssetsList,
+} from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
+import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
+import { downloadFile } from '../../../utils/helper'
 
-const AssetWarrantyReportTable = ({
-  backButtonHandler,
-}: TicketDetailsTableProps): JSX.Element => {
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [subject, setSubject] = useState<string>('')
-  const getTicketDetailsList = useTypedSelector(
-    reduxServices.ticketReport.selectors.ticketsDetails,
+const AssetWarrantyReportTable = (
+  props: AssetsWarrantyListTableProps,
+): JSX.Element => {
+  const getAssetDetailsList = useTypedSelector(
+    reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
   )
-  const isLoading = useTypedSelector(
-    reduxServices.ticketReport.selectors.isLoading,
+  const [isproductSpecification, setProductSpecification] =
+    useState<boolean>(false)
+  const assetWarrantyList = useTypedSelector(
+    reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
   )
 
-  const pageFromState = useTypedSelector(
-    reduxServices.ticketReport.selectors.pageFromState,
-  )
-  const pageSizeFromState = useTypedSelector(
-    reduxServices.ticketReport.selectors.pageSizeFromState,
-  )
+  // const selectedassetsReports = useTypedSelector(
+  //   reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
+  // )
+
   const {
     paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
     pageSize,
-  } = usePagination(
-    getTicketDetailsList.length,
-    pageSizeFromState,
-    pageFromState,
+    setPageSize,
+    currentPage,
+    setCurrentPage,
+  } = props
+
+  const handleExportEmployeeDesignationData = async () => {
+    const assetsWarrantyReportList =
+      await assetsWarrantyListApi.getExportAssetsWarrantyList({
+        startIndex: 0,
+        endIndex: 20,
+        from: '',
+        to: '',
+        dateSelection: 'Current Month',
+        token: '',
+      })
+    downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
+  }
+  const [reasonModal, setReasonModal] = useState({} as WarrantyAssetsList)
+  // const pageFromState = useTypedSelector(
+  //   reduxServices.assetsWarrantyList.selectors.pageFromState,
+  // )
+
+  // const pageSizeFromState = useTypedSelector(
+  //   reduxServices.assetsWarrantyList.selectors.pageSizeFromState,
+  // )
+
+  const assetListSizeRecords = useTypedSelector(
+    reduxServices.assetsWarrantyList.selectors.listSize,
   )
 
   const handlePageSizeSelectChange = (
@@ -61,26 +81,28 @@ const AssetWarrantyReportTable = ({
     setCurrentPage(1)
   }
 
-  const currentPageItems = useMemo(
-    () => currentPageData(getTicketDetailsList, currentPage, pageSize),
-    [getTicketDetailsList, currentPage, pageSize],
-  )
-
-  const handleModal = (ticket: string) => {
-    setIsModalVisible(true)
-    setSubject(ticket)
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
   }
+
+  const handleAgendaModal = (appraisalCycleInfo: WarrantyAssetsList) => {
+    setProductSpecification(true)
+    setReasonModal(appraisalCycleInfo)
+  }
+
   return (
     <>
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
           <CButton
             color="info"
-            data-testid="toggle-back-button"
-            className="btn-ovh me-1"
-            onClick={backButtonHandler}
+            className="text-white"
+            size="sm"
+            data-testid="export-button"
+            onClick={handleExportEmployeeDesignationData}
           >
-            <i className="fa fa-arrow-left  me-1"></i>Back
+            <i className="fa fa-plus me-1"></i>
+            Click to Export
           </CButton>
         </CCol>
       </CRow>
@@ -103,85 +125,84 @@ const AssetWarrantyReportTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {isLoading !== ApiLoadingState.loading ? (
-            currentPageItems?.map((ticketDetail, index) => {
-              const subjectLimit =
-                ticketDetail.subject && ticketDetail.subject.length > 30
-                  ? `${ticketDetail.subject.substring(0, 30)}...`
-                  : ticketDetail.subject
-
-              const ticketDescriptionLimit =
-                ticketDetail.description && ticketDetail.description.length > 32
-                  ? `${ticketDetail.description.substring(0, 32)}...`
-                  : ticketDetail.description
-
-              const ticketDetailDescription =
-                ticketDetail.description !== null
-                  ? parse(ticketDescriptionLimit)
-                  : 'N/A'
+          {assetWarrantyList?.length > 0 &&
+            assetWarrantyList.map((warranty, index) => {
+              const removeSpaces = warranty.pSpecification
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+              const agendaLimit =
+                removeSpaces && removeSpaces.length > 15
+                  ? `${removeSpaces.substring(0, 15)}...`
+                  : removeSpaces
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">{ticketDetail.id}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.employeeName}</CTableDataCell>
-                  {subjectLimit ? (
-                    <CTableDataCell>
+                  <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
+                  <CTableDataCell>
+                    {warranty.assetNumber || 'N/A'}
+                  </CTableDataCell>
+
+                  <CTableDataCell>{warranty.assetType || 'N/A'}</CTableDataCell>
+                  <CTableDataCell className="text-center">
+                    {warranty.referenceNumber || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {warranty.productName || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {warranty.vendorName || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    {warranty.pSpecification ? (
                       <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`subject-comments${index}`}
-                        onClick={() => handleModal(ticketDetail.subject)}
+                        className="cursor-pointer text-decoration-none"
+                        data-testid={`specification-modal-link${index}`}
+                        onClick={() => handleAgendaModal(warranty)}
                       >
-                        {parse(subjectLimit)}
+                        {parse(agendaLimit)}
                       </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{`N/A`}</CTableDataCell>
-                  )}
-                  <CTableDataCell>{ticketDetail.trackerName}</CTableDataCell>
-                  {ticketDescriptionLimit ? (
-                    <CTableDataCell>
+                    ) : (
+                      'N/A'
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    {warranty.otherAssetNumber ? (
                       <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid={`dsc-comments${index}`}
-                        onClick={() => handleModal(ticketDetail.description)}
+                        className="cursor-pointer text-decoration-none"
+                        data-testid="description-modal-link"
+                        onClick={() => handleAgendaModal(warranty)}
                       >
-                        {ticketDetailDescription}
+                        {parse(agendaLimit)}
                       </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{`N/A`}</CTableDataCell>
-                  )}
-                  <CTableDataCell>{ticketDetail.priority}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.startDate}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.approvedBy}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.actualTime}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.approvalStatus}</CTableDataCell>
-                  <CTableDataCell>{ticketDetail.status}</CTableDataCell>
+                    ) : (
+                      'N/A'
+                    )}
+                  </CTableDataCell>
+                  <CTableDataCell>{warranty.purchasedDate}</CTableDataCell>
+
+                  <CTableDataCell>{warranty.warrantyEndDate}</CTableDataCell>
+                  <CTableDataCell>{warranty.status}</CTableDataCell>
                 </CTableRow>
               )
-            })
-          ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
-          )}
+            })}
         </CTableBody>
       </CTable>
       <CRow>
         <CCol xs={4}>
-          {/* <strong>
-            {getTicketDetailsList?.length
-              ? `Total Records: ${getTicketDetailsList.length}`
-              : `No Records Found...`}
-          </strong> */}
+          <p>
+            <strong>Total Records: {assetListSizeRecords} </strong>
+          </p>
         </CCol>
         <CCol xs={3}>
-          {getTicketDetailsList.length > 20 && (
+          {assetListSizeRecords > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {getTicketDetailsList.length > 20 && (
+        {assetListSizeRecords > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -197,13 +218,42 @@ const AssetWarrantyReportTable = ({
       <OModal
         modalSize="lg"
         alignment="center"
+        visible={isproductSpecification}
+        setVisible={setProductSpecification}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
-        modalBodyClass="model-body-text-alinement"
-        visible={isModalVisible}
-        setVisible={setIsModalVisible}
       >
-        {subject}
+        <>
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: reasonModal.pSpecification,
+              }}
+            />
+          </span>
+        </>
+      </OModal>
+      <OModal
+        modalSize="lg"
+        alignment="center"
+        visible={isproductSpecification}
+        setVisible={setProductSpecification}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalFooterClass="d-none"
+        modalHeaderClass="d-none"
+      >
+        <>
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: reasonModal.otherAssetNumber,
+              }}
+            />
+          </span>
+        </>
       </OModal>
     </>
   )
