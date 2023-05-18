@@ -109,7 +109,7 @@ const ManufacturerListTable = ({
         <CRow>
           <CCol md={3} className="no-records">
             <strong>
-              {listSize ? `Total Records: ${listSize}` : `Employee Not Found.`}
+              {listSize ? `Total Records: ${listSize}` : `No records found.`}
             </strong>
           </CCol>
           <CCol xs={3}>

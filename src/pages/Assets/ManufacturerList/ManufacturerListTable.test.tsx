@@ -30,6 +30,9 @@ describe('Job Openings without data', () => {
       },
     )
   })
+  test('Should be able to see total of 6 records', () => {
+    expect(screen.getByText('Total Records: 20')).toBeInTheDocument()
+  })
   test('should render first page data only', () => {
     waitFor(() => {
       userEvent.click(screen.getByText('Next >', { exact: true }))
