@@ -107,6 +107,7 @@ import {
   AddNewAudit,
   SQAAuditReportApi,
   NotificationsApi,
+  JobOpeningsApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -482,6 +483,7 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+  cancelAfterApproval: apiPrefix + '/leave/cancelAfterApproval',
 }
 
 export const ticketListInformationApiConfig: TicketListInformationApi = {
@@ -682,6 +684,7 @@ export const itDeclarationFormApiConfig: ITDeclarationFormApi = {
   getInvestsBySectionId: apiPrefix + '/itDeclaration/getInvestsBySecId',
   addITDeclarationForm: apiPrefix + '/itDeclaration/addITDeclarationForm',
   isITDeclarationFormExist: apiPrefix + '/itDeclaration/isItDeclareExist',
+  uploadITDocuments: apiPrefix + '/itDeclaration/uploadItDeclareDocuments',
 }
 
 export const paySlipsApiConfig: PaySlipsApi = {
@@ -706,7 +709,6 @@ export const bankDetailsApiConfig: BankDetailsApi = {
   deleteBankAccount: apiPrefix + '/Employee/deleteBankAccount',
   editBankInformation: apiPrefix + '/Employee/bankInformation',
 }
-
 export const resignationListApiConfig: ResignationListApi = {
   resignationList: apiPrefix + '/separationController/resignationList',
   exportResignationList:
@@ -727,7 +729,6 @@ export const resignationListApiConfig: ResignationListApi = {
   uploadExitFeedBackFile: apiPrefix + '/fileUpload/uploadExitfeedBackFile',
   updateTimeLine: apiPrefix + '/separationController/updateSeparation',
 }
-
 export const itDeclarationListApiConfig: ITDeclarationListApi = {
   getCycles: apiPrefix + '/itDeclaration/getCycles',
   getSections: apiPrefix + '/itDeclaration/getSection',
@@ -747,13 +748,13 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
   getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
+  isITFormEditable: apiPrefix + '/itDeclaration/isItFormEditable',
+  editITForm: apiPrefix + '/itDeclaration/editItForm',
 }
-
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
   getSections: apiPrefix + '/itDeclaration/getSection',
 }
-
 export const reviewListApiConfig: ReviewListApi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getReviewList: apiPrefix + '/appraisal/getSearchResult',
@@ -762,17 +763,14 @@ export const reviewListApiConfig: ReviewListApi = {
   exportReviewList: apiPrefix + '/appraisal/exportAppraisalList',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
 }
-
 export const CommonAchievementsApiConfig: CommonAchievementsApi = {
   getAllAchievementsType: apiPrefix + '/achievement/getAllAchievementType',
 }
-
 export const AchieverListApiConfig: AchieverListApi = {
   getAchieverList: apiPrefix + '/achievement/getAllAchievement',
   updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
   achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
 }
-
 export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
   {
     getCheckList: apiPrefix + '/project-mgmt/getCheckList',
@@ -780,7 +778,6 @@ export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
       apiPrefix + '/project-mgmt/getProjectRequestMailIds',
     addProjectRequest: apiPrefix + '/project-mgmt/projectRequest',
   }
-
 export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   getAllProjectRequestList:
     apiPrefix + '/project-mgmt/getAllProjectRequestList',
@@ -792,7 +789,6 @@ export const ProjectCreationRequestApiConfig: ProjectCreationRequestApi = {
   deleteProjectRequest: apiPrefix + '/project-mgmt/deleteProjectRequest',
   rejectProjectRequest: apiPrefix + '/project-mgmt/rejectProjectRequest',
 }
-
 export const AddAchieverApiConfig: AddAchieverApi = {
   addAchievementType: apiPrefix + '/achievement/addAchievementType',
   getAchievementTypeDetails:
@@ -804,7 +800,6 @@ export const AddAchieverApiConfig: AddAchieverApi = {
   addAchievement: apiPrefix + '/achievement/addAchievement',
   getImageData: apiPrefix + '/achievement/getImageData',
 }
-
 export const NomineeListApiConfig: NomineeListApi = {
   getAllCycles: apiPrefix + '/nominationController/getallcycles',
   getNominations: apiPrefix + '/nominationController/getNominations',
@@ -813,18 +808,15 @@ export const NomineeListApiConfig: NomineeListApi = {
   reviewNominee: apiPrefix + '/nominationController/reviewNominee',
   exportNomineeList: apiPrefix + '/nominationController/exportNomineesList',
 }
-
 export const AddNomineeApiConfig: AddNomineeApi = {
   nominationFormDetails:
     apiPrefix + '/nominationController/nominationFormDetails',
   addNominee: apiPrefix + '/nominationController/addNominee',
 }
-
 export const employeeAccountsApiConfig: EmployeeAccountsApi = {
   financeDetails: apiPrefix + '/Employee/financeDetails',
   exportFinanceList: apiPrefix + '/Employee/exportFinanceList',
 }
-
 export const projectViewApiConfig: ProjectDetailsApi = {
   getProjects: apiPrefix + '/allocation-mgmt/projects',
   getProject: apiPrefix + '/project-mgmt/project',
@@ -833,39 +825,32 @@ export const projectViewApiConfig: ProjectDetailsApi = {
 export const projectTimeLineApiConfig: ProjectTimeLineApi = {
   getProjectHistory: apiPrefix + '/project-mgmt/getProjectHistory',
 }
-
 export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
   getCRList: apiPrefix + '/project-mgmt/getCRList',
   changeRequest: apiPrefix + '/project-mgmt/changeRequest',
   deleteCR: apiPrefix + '/project-mgmt/deleteCR',
   updateChangeRequest: apiPrefix + '/project-mgmt/updateChangeRequest',
 }
-
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
 }
-
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
     apiPrefix + '/project-mgmt/getClosedMilestonesandCRs',
   getInvoicesOfMilestone: apiPrefix + '/invoice/getInvoicesOfMilestone',
   getInvoiceSummary: apiPrefix + '/invoice/getInvoiceSummary',
 }
-
 export const projectTailoringApiConfig: ProjectTailoringApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
 }
-
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
 }
-
 export const projectProposalsApiConfig: ProjectProposalApi = {
   projectProposal: apiPrefix + '/project-mgmt/projectProposal',
 }
-
 export const projectNotesApiConfig: ProjectNotesApi = {
   projectNotesTimeLine: apiPrefix + '/projectnewsfeed/',
   uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
@@ -881,12 +866,10 @@ export const initiateCycleApiConfig: InitiateCycleApi = {
   editCycle: apiPrefix + '/nominationController/editCycle',
   updateCycle: apiPrefix + '/nominationController/updateCycle',
 }
-
 export const myKRAsApiConfig: MyKRAsApi = {
   getKRAForIndividualEmployee: apiPrefix + '/kra/kraForIndividual',
   getKPIsForIndividualEmployee: apiPrefix + '/kra/kpisForIndividualKra',
 }
-
 export const newBookingApiConfig: NewBookingApi = {
   getLoggedEmployeeName: apiPrefix + '/meetingRequest/getLoggedEmployeeName',
   getAllProfileEmployeesData:
@@ -897,18 +880,15 @@ export const newBookingApiConfig: NewBookingApi = {
   getAllMeetingAppointmentList:
     apiPrefix + '/meetingRequest/getAllMeetingAppointmentList',
 }
-
 export const LeadershipEnrollmentFormApiConfig: LeadershipEnrollmentFormApi = {
   employeeDetails: apiPrefix + '/achievement/getEmployeeDetails',
   addLeadership: apiPrefix + '/achievement/addLeadership',
 }
-
 export const LeadershipEnrollmentListApiConfig: LeadershipEnrollmentListApi = {
   getLeadershipList: apiPrefix + '/achievement/getLeadershipList',
   leadershipApprove: apiPrefix + '/achievement/leadershipApprove',
   leadershipReject: apiPrefix + '/achievement/leadershipReject',
 }
-
 export const KRAApiConfig: KRAApi = {
   getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getDesignation: apiPrefix + '/kra/designation',
@@ -926,11 +906,9 @@ export const KRAApiConfig: KRAApi = {
   updateKPI: apiPrefix + '/kra/updateKpi',
   checkIfNewKpiDuplicate: apiPrefix + 'kra/',
 }
-
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
 }
-
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
   exportPIPList: apiPrefix + '/PIPManagement/exportPIPList',
@@ -945,20 +923,17 @@ export const PipListApiConfig: PIPListApi = {
   savePIPClearnceCertificate:
     apiPrefix + '/PIPManagement/savePIPClearnceCertificate',
 }
-
 export const AppraisalTemplateApiConfig: AppraisalTemplateApi = {
   cycle: apiPrefix + '/appraisal/cycle',
   activeCycle: apiPrefix + '/appraisal/activeCycle',
   getDesignationsUnderCycle: apiPrefix + '/appraisal/getDesignationsUnderCycle',
 }
-
 export const projectStatusApiConfig: ProjectStatusApi = {
   statusReportLis: apiPrefix + '/project-mgmt/statusReportList',
   addStatusReport: apiPrefix + '/project-mgmt/statusReports',
   deleteStatusReport: apiPrefix + '/project-mgmt/statusReportDelete',
   updateStatusReport: apiPrefix + '/project-mgmt/updateStatusreport',
 }
-
 export const processAreaApiConfig: ProcessAreaListApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
@@ -979,7 +954,6 @@ export const addNewAuditApiConfig: AddNewAudit = {
   getProjectEmployees: apiPrefix + '/allocation-mgmt/getProjectEmployees',
   updateSQAAuditForm: apiPrefix + '/sqaAuditController/updateAuditForm',
 }
-
 export const sqaAuditReportApiConfig: SQAAuditReportApi = {
   getSQAAuditReport: apiPrefix + '/sqaAuditController/getSQAAuditReport',
   exportSqaAuditReport: apiPrefix + '/sqaAuditController/exportSqaAuditReport',
@@ -996,4 +970,15 @@ export const sqaAuditReportApiConfig: SQAAuditReportApi = {
 export const notificationsApiConfig: NotificationsApi = {
   allAlerts: apiPrefix + '/alert/allAlerts',
   updateAlert: apiPrefix + '/alert/updateAlert',
+}
+export const jobOpeningsApiConfig: JobOpeningsApi = {
+  getAllJobVacancies: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  addJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/addJobVacancy',
+  deleteJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/deleteJobVacancy',
+  getJobOpeningById: apiPrefix + '/jobapplicant/getJobOpeningById',
+  getJobVacancyAudit: apiPrefix + '/jobvacancy/getJobVacancyAudit',
+  updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
+  isCandidateMappedWithJob:
+    apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
 }

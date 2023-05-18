@@ -363,6 +363,7 @@ export interface LeaveSummaryApi extends ApiBase {
   getEmployeeLeaveSummary: string
   getEmployeeLeaveHistory: string
   cancelEmployeeLeave: string
+  cancelAfterApproval: string
 }
 export interface TicketListInformationApi extends ApiBase {
   getTicketListInformation: string
@@ -522,6 +523,7 @@ export interface ITDeclarationFormApi extends ApiBase {
   getInvestsBySectionId: string
   addITDeclarationForm: string
   isITDeclarationFormExist: string
+  uploadITDocuments: string
 }
 export interface PaySlipsApi extends ApiBase {
   getEmployeePayslipsForSelectedYear: string
@@ -579,6 +581,8 @@ export interface ITDeclarationListApi extends ApiBase {
   updateCycle: string
   updateInvestment: string
   isInvestmentExist: string
+  isITFormEditable: string
+  editITForm: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {
@@ -819,4 +823,15 @@ export interface SQAAuditReportApi extends ApiBase {
 export interface NotificationsApi extends ApiBase {
   allAlerts: string
   updateAlert: string
+}
+
+export interface JobOpeningsApi extends ApiBase {
+  getAllJobVacancies: string
+  getAllTechnology: string
+  addJobVacancy: string
+  deleteJobVacancy: string
+  getJobOpeningById: string
+  getJobVacancyAudit: string
+  updateJobVacancy: string
+  isCandidateMappedWithJob: string
 }

@@ -40,6 +40,11 @@ body {
     color: $white;
   }
 }
+.today-date-highlight {
+  background-color: #5297d6;
+  border-radius: 5px;
+  color: white;
+}
 
 .btn-download {
   background-color: $blue-btnBg;
@@ -210,14 +215,13 @@ input.capetalized {
   cursor: not-allowed;
   pointer-events: all !important;
 }
-.Allocation-table th{
+.Allocation-table th {
   background-color: #3f8bd1;
 }
-.employee-allocation-export-btn{
+.employee-allocation-export-btn {
   position: relative;
-  
 }
-.employee-allocation-export-btn button{
+.employee-allocation-export-btn button {
   position: absolute;
   right: 12px;
 }
@@ -244,8 +248,9 @@ input.capetalized {
   border-bottom: 1px solid $blue-light;
   color: $blue-light;
 }
-.bookingList-model-table th,.bookingList-model-table td {
-   border-bottom: none;
+.bookingList-model-table th,
+.bookingList-model-table td {
+  border-bottom: none;
 }
 
 .text-danger {
@@ -267,46 +272,50 @@ input.capetalized {
   padding: 8px !important;
 }
 
-.pe-18{
+.pe-18 {
   padding-right: 18px;
 }
 
-.resignation-initiate-btn,.resignation-initiate-btn:hover,.resignation-initiate-btn:active,.resignation-initiate-btn:focus{
+.resignation-initiate-btn,
+.resignation-initiate-btn:hover,
+.resignation-initiate-btn:active,
+.resignation-initiate-btn:focus {
   background-color: $blue-btnBg;
-    border-color:$blue-btnBg;
-    color: $white;
+  border-color: $blue-btnBg;
+  color: $white;
 }
-.sh-btn-group.resign-btn button{
- margin:2px;
- padding:4px 8px;
+.sh-btn-group.resign-btn button {
+  margin: 2px;
+  padding: 4px 8px;
 }
-.status-name{
+.status-name {
   padding: 3px 10px !important;
 }
-.project-width{
+.project-width {
   width: 100px;
 }
-.project-creation{
+.project-creation {
   font-weight: 400 !important;
-} 
-.checkList-table td{
- border-bottom: none;
 }
-.project-view-text-header h3{
+.checkList-table td {
+  border-bottom: none;
+}
+.project-view-text-header h3 {
   font-size: 24px;
   font-weight: 400;
 }
-.milestone-table th ,.milestone-table td{
+.milestone-table th,
+.milestone-table td {
   text-align: center;
 }
-.milestone-model-table{
+.milestone-model-table {
   font-weight: bold;
 }
-.milestone-model-table tr td:first-child{
+.milestone-model-table tr td:first-child {
   width: 150px;
-    text-align: right;
+  text-align: right;
 }
-.milestone-model-table td{
+.milestone-model-table td {
   border-bottom: none;
 }
 .resignation-comments {
@@ -330,7 +339,7 @@ input.capetalized {
 }
 
 .table-color {
-  color: rgba(0, 0, 0, 0.02)
+  color: rgba(0, 0, 0, 0.02);
 }
 
 .nominee-detail:hover {
@@ -353,10 +362,9 @@ input.capetalized {
 .add-project-checkList-table td {
   border-bottom: none;
 }
-.checkList-radio-btn{
+.checkList-radio-btn {
   margin-right: inherit !important;
   padding-left: initial !important;
-
 }
 .checkList-radio-btn input {
   margin-left: 0 !important;
@@ -368,71 +376,73 @@ input.capetalized {
 
 .add-project-request-icon {
   padding: 4px 8px !important;
-   margin-top: 18px;
-   background-color: #428bca !important;
-   border-color: #357ebd;
-   color: #fff !important;
+  margin-top: 18px;
+  background-color: #428bca !important;
+  border-color: #357ebd;
+  color: #fff !important;
 }
 
-.was-validated .form-check-input:valid, .form-check-input.is-valid, .form-check-input.ng-valid{
+.was-validated .form-check-input:valid,
+.form-check-input.is-valid,
+.form-check-input.ng-valid {
   border-color: #b1b7c1;
 }
-.sh-timeline-title{
+.sh-timeline-title {
   font-weight: 400;
 }
-.edit-time-control{
-  input,select{
+.edit-time-control {
+  input,
+  select {
     border: 1px solid #000;
   }
 }
 
 .table-layout-fixed {
   table-layout: fixed;
-  th:first-of-type{
-      width: 40px;
-    }
+  th:first-of-type {
+    width: 40px;
+  }
 }
-.sh-project-report-details{
-
-  .profile-tab-header{
+.sh-project-report-details {
+  .profile-tab-header {
     background-color: $primary-75;
   }
 }
-.projectCreation-request-table{
-  .badge{
+.projectCreation-request-table {
+  .badge {
     font-size: 85%;
     padding: 3px 10px;
     width: 100%;
   }
 }
 .changeRequest-table {
-  th:first-of-type{
+  th:first-of-type {
     width: auto;
   }
 }
-.loading-spinner{
-  img{
+.loading-spinner {
+  img {
     width: 70px;
   }
 }
-.modal-open{
+.modal-open {
   overflow: hidden;
 }
 
 .lineHeight {
   line-height: 1;
 }
-.sh-initiateCheckBox .form-check-input{ 
+.sh-initiateCheckBox .form-check-input {
   width: 1.5em;
-    height: 1.5em;
+  height: 1.5em;
 }
-.sh-initiateCheckBox .form-check-input:checked[type=checkbox]{
+.sh-initiateCheckBox .form-check-input:checked[type='checkbox'] {
   background-size: 24px;
 }
-.table-slots-booked.table tr:last-child td{
+.table-slots-booked.table tr:last-child td {
   border: none;
 }
-.sh-agenda{
+.sh-agenda {
   height: 60px;
   resize: both;
 }
@@ -441,3 +451,15 @@ input.capetalized {
 //   color: white;
 //   border-radius: 3px;
 // }
+.nav-item.notification {
+  .dropdown-menu {
+    min-width: 275px !important;
+  }
+  .text-muted {
+    pointer-events: none;
+    font-size: 1.2em !important;
+  }
+  .dropdown-item {
+    padding: 15px !important;
+  }
+}

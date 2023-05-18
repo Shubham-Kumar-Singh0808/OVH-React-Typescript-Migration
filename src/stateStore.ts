@@ -127,6 +127,7 @@ import processAreaReducer from './reducers/Settings/ProcessArea/ProcessAreaSlice
 import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
+import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -254,6 +255,7 @@ export const allReducers = {
   addNewAuditForm: addNewAuditFormReducer,
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
+  jobVacancies: jobVacanciesReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

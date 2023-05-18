@@ -122,7 +122,7 @@ const EditInvestment = ({
   )
 
   const backButtonHandler = () => {
-    dispatch(reduxServices.itDeclarationList.actions.setToggle(''))
+    dispatch(reduxServices.itDeclarationList.actions.clickBackButton())
   }
   const handleUpdateInvestment = async () => {
     const filteredInvest = sections.filter(

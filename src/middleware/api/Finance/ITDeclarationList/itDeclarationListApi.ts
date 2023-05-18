@@ -6,6 +6,8 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
+  EditITDeclarationEmployeeDetails,
+  FinalUpdateITFormDTO,
   Investment,
   ITDeclarationFormListResponse,
   ITDeclarationListApiProps,
@@ -237,6 +239,37 @@ const updateCycle = async (editCycle: Cycle): Promise<number | undefined> => {
   return response.data
 }
 
+const getEmployeeInfo = async (): Promise<EditITDeclarationEmployeeDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.getEmployeeDetails,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isITFormEditable = async (itFormId: number): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.isITFormEditable,
+    method: AllowedHttpMethods.post,
+    params: {
+      itFormId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const editITForm = async (data: FinalUpdateITFormDTO): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationListApiConfig.editITForm,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 export const itDeclarationListApi = {
   getCycles,
   getITDeclarationForm,
@@ -255,4 +288,7 @@ export const itDeclarationListApi = {
   isInvestmentExist,
   updateInvestment,
   isSectionExist,
+  isITFormEditable,
+  getEmployeeInfo,
+  editITForm,
 }

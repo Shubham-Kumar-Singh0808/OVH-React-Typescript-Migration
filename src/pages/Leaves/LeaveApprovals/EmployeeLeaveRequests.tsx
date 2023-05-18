@@ -215,6 +215,7 @@ const EmployeeLeaveRequests = (props: {
     width: '12%',
     scope: 'col',
   }
+  console.log(employeesLeavesList)
 
   return (
     <>
@@ -239,6 +240,8 @@ const EmployeeLeaveRequests = (props: {
           {isLoading !== ApiLoadingState.loading ? (
             <CTableBody>
               {employeesLeavesList?.map((employeeLeaveItem, index) => {
+                console.log(employeeLeaveItem)
+
                 const removeTag = '/(<([^>]+)>)/gi'
                 const removeSpaces =
                   employeeLeaveItem.employeeComments &&
