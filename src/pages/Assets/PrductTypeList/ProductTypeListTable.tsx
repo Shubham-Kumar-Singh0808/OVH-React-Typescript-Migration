@@ -79,9 +79,6 @@ const ProductTypeListTable = ({
   const userAccessProductList = userAccessToFeatures?.find(
     (feature) => feature.name === 'Product Type List',
   )
-
-  console.log(ProductTypeList + 'ProductType')
-  console.log(totalListSize + 'TotalListSize')
   return (
     <>
       <CTable striped align="middle">

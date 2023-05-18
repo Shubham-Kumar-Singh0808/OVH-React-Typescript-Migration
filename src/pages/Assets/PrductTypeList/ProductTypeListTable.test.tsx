@@ -7,7 +7,7 @@ import { mockProductTypeList } from '../../../test/data/ProductTypeListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
-describe('Job Openings without data', () => {
+describe('Product Type list without data', () => {
   beforeEach(() => {
     render(
       <ProductTypeListTable

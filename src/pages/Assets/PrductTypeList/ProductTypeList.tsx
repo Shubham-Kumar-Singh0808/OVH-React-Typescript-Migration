@@ -52,7 +52,7 @@ const ProductTypeList = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  const handleExportProjectList = async () => {
+  const handleExportProductTypeList = async () => {
     const ExportProductList = await ProductTypeAPI.ExportProductListDownloading(
       {
         productSearch: searchInput,
@@ -106,7 +106,7 @@ const ProductTypeList = (): JSX.Element => {
               color="info"
               className="text-white"
               size="sm"
-              onClick={handleExportProjectList}
+              onClick={handleExportProductTypeList}
             >
               <i className="fa fa-plus me-1"></i>
               Click to Export

@@ -53,10 +53,10 @@ const ExportProductListDownloading = async (
   return response.data
 }
 
-const ProductTypeAPI = {
+const ProductTypeListApi = {
   GetProductTypeList,
   DeleteProductTypeRecord,
   ExportProductListDownloading,
 }
 
-export default ProductTypeAPI
+export default ProductTypeListApi
