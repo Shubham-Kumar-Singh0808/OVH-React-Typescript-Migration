@@ -1,7 +1,7 @@
 import { LoadingState } from '../../commonTypes'
 
 export type ProductSpecifications = {
-  replace(removeTag: string, arg1: string): unknown
+  // replace(removeTag: string, arg1: string): unknown
   id: number
   productId: number
   productName: string

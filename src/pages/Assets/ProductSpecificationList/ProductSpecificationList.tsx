@@ -137,19 +137,15 @@ const ProductSpecificationList = (): JSX.Element => {
               </CInputGroup>
             </CCol>
           </CRow>
-          {isLoading !== ApiLoadingState.loading ? (
-            <>
-              <ProductSpecificationListTable
-                paginationRange={paginationRange}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-              />
-            </>
-          ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
-          )}
+          <>
+            <ProductSpecificationListTable
+              paginationRange={paginationRange}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+            />
+          </>
         </OCard>
       )}
       {toggle === '/addAssetType' && <AddProduct setToggle={setToggle} />}

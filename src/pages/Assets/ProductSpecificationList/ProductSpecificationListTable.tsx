@@ -21,6 +21,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OModal from '../../../components/ReusableComponent/OModal'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 // import OModal from '../../../components/ReusableComponent/OModal'
 
@@ -45,6 +46,10 @@ const ProductSpecificationListTable = ({
   const listSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
   )
+
+  const isLoading = useTypedSelector(
+    reduxServices.productSpecificationList.selectors.isLoading,
+  )
   console.log(listSize)
 
   const handlePageSizeSelectChange = (
@@ -59,27 +64,26 @@ const ProductSpecificationListTable = ({
 
   return (
     <>
-      {productSpecification.length ? (
-        <>
-          <CTable striped align="middle">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
-                <CTableHeaderCell scope="col">
-                  Manufacturer Name
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col" className="commentWidth">
-                  Product Specification
-                </CTableHeaderCell>
-                <CTableHeaderCell scope="col">Last Updated by</CTableHeaderCell>
-                <CTableHeaderCell scope="col" data-testid="action-header">
-                  Actions
-                </CTableHeaderCell>
-              </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {productSpecification.map((productSpecification, index) => {
+      <>
+        <CTable striped align="middle">
+          <CTableHead>
+            <CTableRow>
+              <CTableHeaderCell scope="col">#</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Product Type</CTableHeaderCell>
+              <CTableHeaderCell scope="col">Manufacturer Name</CTableHeaderCell>
+              <CTableHeaderCell scope="col">
+                Product Specification
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col">Last Updated by</CTableHeaderCell>
+              <CTableHeaderCell scope="col" data-testid="action-header">
+                Actions
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody color="light">
+            {isLoading !== ApiLoadingState.loading ? (
+              productSpecification &&
+              productSpecification?.map((productSpecification, index) => {
                 const removeTag = '/(<([^>]+)>)/gi'
                 const removeSpaces =
                   productSpecification?.productSpecification.replace(
@@ -143,41 +147,41 @@ const ProductSpecificationListTable = ({
                     </CTableDataCell>
                   </CTableRow>
                 )
-              })}
-            </CTableBody>
-          </CTable>
-          <CRow>
-            <CCol xs={4}>
-              <p>
-                <strong>Total Records: {listSize}</strong>
-              </p>
-            </CCol>
-            <CCol xs={3}>
-              {listSize > 20 && (
-                <OPageSizeSelect
-                  handlePageSizeSelectChange={handlePageSizeSelectChange}
-                  options={[20, 40, 60, 80]}
-                  selectedPageSize={pageSize}
-                />
-              )}
-            </CCol>
-            {listSize > 20 && (
-              <CCol
-                xs={5}
-                className="gap-1 d-grid d-md-flex justify-content-md-end"
-              >
-                <OPagination
-                  currentPage={currentPage}
-                  pageSetter={setCurrentPage}
-                  paginationRange={paginationRange}
-                />
-              </CCol>
+              })
+            ) : (
+              <OLoadingSpinner type={LoadingType.PAGE} />
             )}
-          </CRow>
-        </>
-      ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
-      )}
+          </CTableBody>
+        </CTable>
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {listSize}</strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {listSize > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={handlePageSizeSelectChange}
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {listSize > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      </>
       <OModal
         modalSize="lg"
         alignment="center"

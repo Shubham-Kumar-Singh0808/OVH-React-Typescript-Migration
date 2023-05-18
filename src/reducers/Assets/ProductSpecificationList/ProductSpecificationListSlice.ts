@@ -45,8 +45,6 @@ const productSpecificationListSlice = createSlice({
         isAnyOf(getProductSpecificationList.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          // state.productSpecifications = action.payload
-          //   .list
           state.productSpecifications = action.payload.list
           state.listSize = action.payload.size
         },
