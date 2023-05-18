@@ -303,7 +303,9 @@ const MoreSections = ({
           <div className="col-sm-6">
             <b className="pull-right txt-info">
               Max Limit:{' '}
-              <span className="txt-info">{sectionItem.sectionLimit}</span>
+              <span className="txt-info">
+                {sectionItem.sectionLimit.toLocaleString('en-IN')}
+              </span>
             </b>
           </div>
         </CRow>
@@ -331,7 +333,10 @@ const MoreSections = ({
         </CTable>
         <div className="clearfix">
           <p className="pull-right txt-subtotal">
-            Sub Total: <span data-testid="subtotal">{showSubTotalAmount}</span>
+            Sub Total:{' '}
+            <span data-testid="subtotal">
+              {showSubTotalAmount.toLocaleString('en-IN')}
+            </span>
           </p>
         </div>
       </div>

@@ -749,6 +749,8 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
   getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
+  isITFormEditable: apiPrefix + '/itDeclaration/isItFormEditable',
+  editITForm: apiPrefix + '/itDeclaration/editItForm',
 }
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
