@@ -18,7 +18,7 @@ const InterviewDetailsRatingForm = () => {
   const scheduleInterviewData = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
   )
-  const [jobTitle, setJobTitle] = useState<string>('★★★★')
+  const [jobTitle, setJobTitle] = useState<string>('')
   const [proactive, setProactive] = useState<string>('')
 
   const [communication, setCommunication] = useState<string>('')
@@ -134,7 +134,15 @@ const InterviewDetailsRatingForm = () => {
             >
               <h4 className="sh-timeline-title">
                 {scheduleInterviewData.updatedBy} -{' '}
-                {scheduleInterviewData.rating}★★★★
+                {scheduleInterviewData.rating}
+                <i className="fa fa-star" aria-hidden="true"></i>
+                <CButton color="success" className="btn-ovh me-1 text-white">
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                  <i className="fa fa-star" aria-hidden="true"></i>
+                </CButton>
                 <CFormLabel className="col-form-label p-0">
                   {scheduleInterviewData.interviewRound}
                 </CFormLabel>

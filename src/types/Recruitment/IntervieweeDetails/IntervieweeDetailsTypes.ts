@@ -29,7 +29,7 @@ export type CycleDtOs = {
   interviewMode: null
   interviewCycleId: number
   experiance: null
-  rating: null
+  rating: null | string | number
   status: string
   candiadateEmailId: null
   skills: null
