@@ -59,23 +59,26 @@ const VendorList = (): JSX.Element => {
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.vendorList.getVendors({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
+          startIndex: 0,
+          endIndex: 20,
           vendorName: searchInput,
         }),
       )
+      setCurrentPage(1)
+      setPageSize(20)
     }
   }
 
-  const searchButtonHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const searchButtonHandler = () => {
     dispatch(
       reduxServices.vendorList.getVendors({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: 0,
+        endIndex: 20,
         vendorName: searchInput,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   useEffect(() => {
