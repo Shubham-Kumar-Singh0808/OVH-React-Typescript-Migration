@@ -118,6 +118,7 @@ import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
+import { vendorListService } from './Assets/VendorList/vendorListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -240,4 +241,5 @@ export const reduxServices = {
   sqaAuditReport: sqaAuditReportService,
   notification: notificationService,
   jobVacancies: jobOpeningsService,
+  vendorList: vendorListService,
 }

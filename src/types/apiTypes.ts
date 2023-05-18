@@ -832,3 +832,11 @@ export interface JobOpeningsApi extends ApiBase {
   updateJobVacancy: string
   isCandidateMappedWithJob: string
 }
+
+export interface VendorListApi extends ApiBase {
+  getAllVendorDetails: string
+  getDepartmentNameList: string
+  addVendorDetails: string
+  exportVendorData: string
+  searchVendors: string
+}
