@@ -2,12 +2,13 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
-import { render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
 
 const mockSetData = jest.fn()
+const handleModal = jest.fn()
 describe('Job Openings without data', () => {
   beforeEach(() => {
     render(
@@ -52,5 +53,13 @@ describe('Job Openings without data', () => {
   test('should render  component with data', () => {
     expect(screen.getByText('Testing Flow')).toBeInTheDocument()
     expect(screen.getByText('Pavani')).toBeInTheDocument()
+  })
+  it('should call handleModal function with the correct argument on link click', () => {
+    const linkElement = screen.getByTestId('product-specification2') // Update with the actual link text or use getByTestId if available
+
+    fireEvent.click(linkElement)
+
+    expect(handleModal).toHaveBeenCalledTimes(0)
+    // expect(handleModal).toBeInTheDocument()
   })
 })

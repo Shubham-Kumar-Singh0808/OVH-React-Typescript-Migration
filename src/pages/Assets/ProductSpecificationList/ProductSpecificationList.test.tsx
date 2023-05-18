@@ -6,10 +6,19 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const mockHandleExport = jest.fn()
+const mockHandleAdd = jest.fn()
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ProductSpecificationList />
+  </div>
+)
 describe('Product Specification List Component Testing', () => {
   beforeEach(() => {
-    render(<ProductSpecificationList />, {
+    render(toRender, {
       preloadedState: {
         productSpecificationList: {
           productSpecifications: [],

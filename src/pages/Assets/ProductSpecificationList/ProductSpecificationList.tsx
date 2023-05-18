@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
-import AddProduct from './AddNewProduct/AddProductSpecificationList'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import productSpecificationListApi from '../../../middleware/api/Assets/ProductSpecificationList/ProductSpecificationListApi'
 import { downloadFile } from '../../../utils/helper'
 
@@ -87,28 +83,36 @@ const ProductSpecificationList = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
-          <div className="d-inline ml15 pull-right">
-            <CButton
-              color="info"
-              className="text-white btn-ovh"
-              size="sm"
-              onClick={handleExportData}
-              data-testid="employee-export-btn"
+          <CRow className="d-md-flex justify-content-md-end">
+            <CCol
+              lg={12}
+              className="gap-4 d-md-flex justify-content-end mt-3 mb-3"
             >
-              <i className="fa fa-plus me-1"></i>
-              Click to Export
-            </CButton>
-            &nbsp; &nbsp; &nbsp;
-            <CButton
-              color="info"
-              className="text-white btn-ovh"
-              size="sm"
-              onClick={() => setToggle('/addAssetType')}
-            >
-              <i className="fa fa-plus me-1"></i>
-              Add
-            </CButton>
-          </div>
+              <div className="d-inline ml15 pull-right">
+                <CButton
+                  color="info"
+                  className="text-white btn-ovh"
+                  size="sm"
+                  onClick={handleExportData}
+                  data-testid="employee-export-btn"
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+                &nbsp; &nbsp; &nbsp;
+                <CButton
+                  color="info"
+                  className="text-white btn-ovh"
+                  size="sm"
+                  data-testid="add-product"
+                  onClick={() => setToggle('/addAssetType')}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Add
+                </CButton>
+              </div>
+            </CCol>
+          </CRow>
           <CRow className="gap-2 d-md-flex justify-content-md-end">
             <CCol sm={3} md={3}>
               <CInputGroup className="global-search me-0 justify-content-md-end">
@@ -148,7 +152,6 @@ const ProductSpecificationList = (): JSX.Element => {
           </>
         </OCard>
       )}
-      {toggle === '/addAssetType' && <AddProduct setToggle={setToggle} />}
     </>
   )
 }

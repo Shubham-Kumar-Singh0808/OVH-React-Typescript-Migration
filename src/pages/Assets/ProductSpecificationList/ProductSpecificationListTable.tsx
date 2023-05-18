@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -81,15 +82,14 @@ const ProductSpecificationListTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody color="light">
-            {isLoading !== ApiLoadingState.loading ? (
-              productSpecification &&
+            {isLoading !== ApiLoadingState?.loading ? (
+              productSpecification?.length > 0 &&
               productSpecification?.map((productSpecification, index) => {
-                const removeTag = '/(<([^>]+)>)/gi'
-                const removeSpaces =
-                  productSpecification?.productSpecification.replace(
-                    removeTag,
-                    '',
-                  )
+                const removeSpaces = productSpecification?.productSpecification
+                  ?.replace(/\s+/g, ' ')
+                  ?.replace('/(<([^>]+)>)/gi', '')
+                  .trim()
+                  .replace(/&nbsp;/g, '')
                 const productSpecificationLimit =
                   removeSpaces && removeSpaces.length > 30
                     ? `${removeSpaces.substring(0, 30)}...`
@@ -112,7 +112,7 @@ const ProductSpecificationListTable = ({
                       >
                         <CLink
                           className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`emp-comments${index}`}
+                          data-testid={`product-specification${index}`}
                           onClick={() =>
                             handleModal(
                               productSpecification.productSpecification,
@@ -129,21 +129,25 @@ const ProductSpecificationListTable = ({
                       {productSpecification.createdBy}
                     </CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
-                      <CButton
-                        color="info"
-                        size="sm"
-                        className="btn-ovh-employee-list"
-                      >
-                        <i className="text-white fa fa-pencil-square-o"></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info"
+                          size="sm"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="text-white fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
                       &nbsp; &nbsp; &nbsp;
-                      <CButton
-                        color="danger"
-                        className="btn-ovh me-2"
-                        // onClick={() => handleShowDeleteModal(family.familyId)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh me-2"
+                          // onClick={() => handleShowDeleteModal(family.familyId)}
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     </CTableDataCell>
                   </CTableRow>
                 )
