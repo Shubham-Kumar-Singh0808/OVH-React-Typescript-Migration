@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import {
   CButton,
   CCol,
+  CForm,
   CFormLabel,
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
+import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -20,6 +22,9 @@ const IntervieweeDetails = (): JSX.Element => {
 
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
+  const scheduleInterviewData = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
   )
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
@@ -85,7 +90,7 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <Link to={`/jobschedulecandidateList`}>
+            <Link to={`/candidateSearch`}>
               <CButton
                 color="info"
                 className="btn-ovh me-1"
@@ -96,60 +101,133 @@ const IntervieweeDetails = (): JSX.Element => {
             </Link>
           </CCol>
         </CRow>
-        <CRow>
-          <p>
-            <b>Name: </b>
-            {timeLineListSelector.fullName}
-          </p>
-          <p>
-            <b>Candidate added Date: </b>{' '}
-            <span>{timeLineListSelector.addedDate}</span>
-          </p>
-          <p>
-            <b>Applied for:</b> <span>{timeLineListSelector.appliedFor}</span>
-          </p>
-          <p>
-            <b>Skills:</b> <span>{timeLineListSelector.skill}</span>
-          </p>
-          <p>
-            <b> Experience: </b>
-            <span>{timeLineListSelector.experience}</span>
-          </p>
-          <p>
-            <b> Recruiter: </b>
-            <span>{timeLineListSelector.recruiter}</span>
-          </p>
-          <p>
-            <b> Status:</b> <span>{timeLineListSelector.candidateStatus}</span>
-          </p>
-          <p>
-            <b>Status Comments:</b>{' '}
-            <span>{timeLineListSelector.statusComments}</span>
-          </p>
-          <p>
-            <b> Resume: </b>
-            <span>{timeLineListSelector.fullName}</span>
-          </p>
-          <p>
-            <b> Other Documents:</b>{' '}
-            <span>{timeLineListSelector.fullName}</span>
-          </p>
-          <p>
-            <b> Reason for change:</b>{' '}
-            <span>{timeLineListSelector.reason}</span>
-          </p>
-          <p>
-            <b>Initial Comments: </b>
-            <CFormTextarea
-              data-testid="text-area"
-              aria-label="textarea"
-              autoComplete="off"
-              value={comment}
-              className="sh-question"
-              onChange={(e) => setComment(e.target.value)}
-            ></CFormTextarea>
-          </p>
-        </CRow>
+        <CForm>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Name:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector.fullName}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Candidate added Date:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector.addedDate}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Applied for:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector.appliedFor}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Skills:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector.skill || 'N/A'}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Experience:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector.experience || 'N/A'}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Recruiter:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.recruiter || 'N/A'}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Status:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.candidateStatus}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Mode of interview:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.modeOfInterview}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Resume:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.resumePath}</p>
+              <CButton
+                size="sm"
+                className="btn btn-primary btn-xs"
+                ng-click="openInNewTab(interviewTimelineDetailsList.resumePath)"
+                disabled={timeLineListSelector?.resumePath === null}
+              >
+                PREVIEW
+              </CButton>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Other Documents:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.otherDocumentPath}</p>
+              <CButton
+                size="sm"
+                className="btn btn-primary btn-xs"
+                ng-click="openInNewTabDoc(interviewTimelineDetailsList.otherDocumentPath)"
+                disabled={timeLineListSelector?.otherDocumentPath === null}
+              >
+                PREVIEWDOC
+              </CButton>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Reason for change:
+            </CFormLabel>
+            <CCol sm={3}>
+              <p className="mb-0">{timeLineListSelector?.reason}</p>
+            </CCol>
+          </CRow>
+          <CRow className="mt-1 mb-0 align-items-center">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Initial Comments:
+              <span
+                className={
+                  comment?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormTextarea
+                data-testid="text-area"
+                aria-label="textarea"
+                autoComplete="off"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              ></CFormTextarea>
+            </CCol>
+          </CRow>
+        </CForm>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
@@ -173,6 +251,11 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
+        {scheduleInterviewData.status === 'finished' ? (
+          <></>
+        ) : (
+          <InterviewDetailsRatingForm />
+        )}
         <IntervieweeDetailsTimeline />
       </OCard>
       <OModal
