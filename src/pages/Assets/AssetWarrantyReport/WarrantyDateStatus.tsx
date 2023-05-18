@@ -2,7 +2,6 @@ import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import moment from 'moment'
-import { deviceLocale, showIsRequired } from '../../../utils/helper'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
@@ -30,7 +29,6 @@ const WarrantyDateStatus = ({
   const dispatch = useAppDispatch()
   const [dateError, setDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
-
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
     const start = moment(fromDate, dateFormat).format(newDateFormatForIsBefore)
@@ -116,7 +114,7 @@ const WarrantyDateStatus = ({
                 <span className={showIsRequired(fromDate as string)}>*</span>
               </CFormLabel> */}
               <CFormLabel>
-                To:
+                From:
                 {(fromDate == null || fromDate === '') && (
                   <span className="text-danger">*</span>
                 )}
@@ -177,6 +175,19 @@ const WarrantyDateStatus = ({
         )}
         <CRow className="mt-4 mb-4">
           <CCol sm={9} md={{ offset: 3 }}>
+            {/* <CButton
+              className="cursor-pointer"
+              color="success btn-ovh me-1"
+              data-testid="view-btn"
+              onClick={viewButtonHandler}
+              disabled={
+                (selectDate === 'Custom' &&
+                  !(fromDate !== '' && toDate !== '')) ||
+                dateError
+              }
+            >
+              View
+            </CButton> */}
             <CButton
               className="cursor-pointer"
               color="success btn-ovh me-1"
@@ -190,6 +201,7 @@ const WarrantyDateStatus = ({
             >
               View
             </CButton>
+
             <CButton
               className="cursor-pointer"
               disabled={false}
