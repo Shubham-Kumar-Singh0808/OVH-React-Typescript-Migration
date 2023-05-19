@@ -109,6 +109,7 @@ import {
   NotificationsApi,
   JobOpeningsApi,
   ChangeReporteesApi,
+  ProductTypeListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -992,4 +993,9 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
   getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
   updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
   updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
+}
+export const GetProductTypeListConfig: ProductTypeListApi = {
+  getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
+  deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
+  exportProductList: apiPrefix + '/assetManagement/exportProductList',
 }
