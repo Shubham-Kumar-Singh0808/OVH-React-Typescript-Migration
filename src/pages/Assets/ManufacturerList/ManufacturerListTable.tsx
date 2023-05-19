@@ -40,7 +40,6 @@ const ManufacturerListTable = ({
   const listSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
-  console.log(listSize)
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
