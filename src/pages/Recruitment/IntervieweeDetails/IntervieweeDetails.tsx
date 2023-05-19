@@ -251,11 +251,12 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        {scheduleInterviewData.status === 'finished' ? (
+        {/* {scheduleInterviewData.status === 'finished' ? (
           <></>
         ) : (
           <InterviewDetailsRatingForm />
         )}
+        <IntervieweeDetailsTimeline /> */}
         <IntervieweeDetailsTimeline />
       </OCard>
       <OModal

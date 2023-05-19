@@ -2,6 +2,7 @@ import React from 'react'
 import { CFormLabel } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import RatingStar from './RatingStar'
+import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -18,6 +19,16 @@ const IntervieweeDetailsTimeline = () => {
       <div className="sh-timeline-container">
         {timeLineListSelector?.cycleDTOs?.length > 0 &&
           timeLineListSelector?.cycleDTOs?.map((item, index) => {
+            const result =
+              item.rating === null &&
+              item.proactiveComments === null &&
+              item.excellenceComments === null &&
+              item.communicationComments === null &&
+              item.interviewComments === null ? (
+                <InterviewDetailsRatingForm />
+              ) : (
+                ''
+              )
             return (
               <>
                 <div key={index} className="sh-timeline-card">
@@ -34,9 +45,6 @@ const IntervieweeDetailsTimeline = () => {
                       className="sh-timeline-header mb-4 clearfix"
                       data-testid="sh-modifiedBy"
                     >
-                      <CFormLabel className="col-form-label p-0">
-                        {item.interviewRound}
-                      </CFormLabel>
                       <Link to={''}>
                         <h4 className="sh-timeline-title">
                           {item.interviewers} -
@@ -46,9 +54,11 @@ const IntervieweeDetailsTimeline = () => {
                         </h4>
                       </Link>
                     </div>
+
                     <div className="sh-timeline-body">
                       <div className="sh-timeline-item mb-1"></div>
                       <>
+                        {result}
                         {item.proactiveComments != null ? (
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
