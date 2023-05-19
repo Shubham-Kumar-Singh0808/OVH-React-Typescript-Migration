@@ -37,7 +37,7 @@ const InterviewDetailsRatingForm = () => {
     } else {
       setIsBtnEnable(false)
     }
-  }, [proactive, communication, excellence, otherComments])
+  }, [proactive, communication, excellence, otherComments, rating])
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>

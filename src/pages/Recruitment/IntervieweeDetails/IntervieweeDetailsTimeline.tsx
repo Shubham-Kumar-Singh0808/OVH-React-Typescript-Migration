@@ -1,7 +1,6 @@
 import React from 'react'
 import { CFormLabel } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
-import RatingStar from './RatingStar'
 import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
@@ -9,9 +8,6 @@ import { useTypedSelector } from '../../../stateStore'
 const IntervieweeDetailsTimeline = () => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
-  )
-  const scheduleInterviewData = useTypedSelector(
-    reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
   )
 
   return (
@@ -49,7 +45,7 @@ const IntervieweeDetailsTimeline = () => {
                         <h4 className="sh-timeline-title">
                           {item.interviewers} -
                           <CFormLabel className="col-form-label p-0">
-                            {scheduleInterviewData.interviewRound}
+                            {item.interviewRound}
                           </CFormLabel>
                         </h4>
                       </Link>

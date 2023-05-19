@@ -16,7 +16,6 @@ const RatingStar = ({
       setRating(selectedRating)
     }
   }
-  console.log(rating + 'rating')
 
   return (
     <div>

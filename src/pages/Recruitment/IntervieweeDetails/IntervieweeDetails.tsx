@@ -9,7 +9,6 @@ import {
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
-import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -23,9 +22,7 @@ const IntervieweeDetails = (): JSX.Element => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
-  const scheduleInterviewData = useTypedSelector(
-    reduxServices.intervieweeDetails.selectors.scheduleInterviewData,
-  )
+
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
@@ -251,12 +248,6 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        {/* {scheduleInterviewData.status === 'finished' ? (
-          <></>
-        ) : (
-          <InterviewDetailsRatingForm />
-        )}
-        <IntervieweeDetailsTimeline /> */}
         <IntervieweeDetailsTimeline />
       </OCard>
       <OModal
