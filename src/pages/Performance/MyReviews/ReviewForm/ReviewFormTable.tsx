@@ -198,7 +198,6 @@ const ReviewFormTable = (): JSX.Element => {
             <CButton
               color="success "
               className="btn-ovh"
-              disabled
               onClick={submitAppraisalFormHandler}
             >
               Submit
