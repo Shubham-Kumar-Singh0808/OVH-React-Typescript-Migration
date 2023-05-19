@@ -25,6 +25,11 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
   const [comments, setComments] = useState<string>('')
   const [leaveId, setLeaveId] = useState(0)
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
+  const [
+    isCancelAfterApprovalModalVisible,
+    setIsCancelAfterApprovalModalVisible,
+  ] = useState(false)
+
   const employeeLeaveHistoryDetails = useTypedSelector(
     reduxServices.employeeLeaveSummary.selectors.employeeLeaveHistory,
   )
@@ -58,6 +63,11 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     setIsCancelModalVisible(true)
   }
 
+  const handleCancelModal = (leaveID: number) => {
+    setLeaveId(leaveID)
+    setIsCancelAfterApprovalModalVisible(true)
+  }
+
   const dispatch = useAppDispatch()
 
   const handleCancelLeave = async () => {
@@ -67,6 +77,24 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
     )
     if (
       reduxServices.employeeLeaveSummary.cancelEmployeeLeave.fulfilled.match(
+        cancelLeaveResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.employeeLeaveSummary.getEmployeeLeaveHistory({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+        }),
+      )
+    }
+  }
+  const handleCancelLeaveAfterApproval = async () => {
+    setIsCancelAfterApprovalModalVisible(false)
+    const cancelLeaveResultAction = await dispatch(
+      reduxServices.employeeLeaveSummary.cancelAfterApproval(leaveId),
+    )
+    if (
+      reduxServices.employeeLeaveSummary.cancelAfterApproval.fulfilled.match(
         cancelLeaveResultAction,
       )
     ) {
@@ -197,8 +225,7 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                     </CTableDataCell>
                     <CTableDataCell>{leaveHistory.approvedBy}</CTableDataCell>
                     <CTableDataCell>
-                      {leaveHistory.status === 'PendingApproval' ||
-                      leaveHistory.canBeCancelledAfterApproval ? (
+                      {leaveHistory.status === 'PendingApproval' ? (
                         <CTooltip content="Cancel">
                           <CButton
                             color="warning"
@@ -208,6 +235,22 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
                             onClick={() =>
                               handleShowCancelModal(leaveHistory.id)
                             }
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      ) : (
+                        <></>
+                      )}
+
+                      {leaveHistory.canBeCancelledAfterApproval ? (
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="warning"
+                            size="sm"
+                            className="btn-ovh btn-ovh-employee-list"
+                            data-testid={`cancel-btn${index}`}
+                            onClick={() => handleCancelModal(leaveHistory.id)}
                           >
                             <i className="fa fa-times" aria-hidden="true"></i>
                           </CButton>
@@ -286,6 +329,18 @@ const LeaveHistoryTable = (props: LeaveHistoryTableProps): JSX.Element => {
         confirmButtonAction={handleCancelLeave}
       >
         <>Would you like to Cancel the leave ?</>
+      </OModal>
+      <OModal
+        visible={isCancelAfterApprovalModalVisible}
+        setVisible={setIsCancelAfterApprovalModalVisible}
+        modalTitle="Cancel leave after approval"
+        modalBodyClass="mt-0"
+        closeButtonClass="d-none"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        confirmButtonAction={handleCancelLeaveAfterApproval}
+      >
+        <>Would you like to cancel the leave after approval ?</>
       </OModal>
     </>
   )

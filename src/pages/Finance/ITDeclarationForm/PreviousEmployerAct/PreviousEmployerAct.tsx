@@ -3,7 +3,6 @@ import { CCardHeader, CFormInput, CRow } from '@coreui/react-pro'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import EmployerEntryItem from './EmployerEntryItem'
-import SectionsFilterOptions from '../SectionsFilterOptions'
 import { getFormattedDate } from '../ITDeclarationFormHelpers'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 
@@ -55,8 +54,15 @@ const PreviousEmployerAct = ({
             dropdownMode="select"
             placeholderText="dd/mm/yyyy"
             value={getFormattedDate(enteredFromDate)}
+            highlightDates={[{ 'today-date-highlight': [new Date()] }]}
             onChange={(date: Date) =>
               setEnteredFromDate(moment(date).format(commonDateFormat))
+            }
+            maxDate={new Date()}
+            openToDate={
+              !isNaN(Date.parse(enteredFromDate))
+                ? new Date(enteredFromDate)
+                : new Date()
             }
           />
         </EmployerEntryItem>
@@ -69,6 +75,13 @@ const PreviousEmployerAct = ({
             onChange={(date: Date) =>
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
+            maxDate={new Date()}
+            openToDate={
+              !isNaN(Date.parse(enteredToDate))
+                ? new Date(enteredToDate)
+                : new Date()
+            }
+            highlightDates={[{ 'today-date-highlight': [new Date()] }]}
           />
         </EmployerEntryItem>
       </CRow>
@@ -83,11 +96,6 @@ const PreviousEmployerAct = ({
           />
         </EmployerEntryItem>
       </CRow>
-      <SectionsFilterOptions
-        showAsterix={false}
-        moreSectionButtonText="Add More"
-        isOldEmployee={false}
-      />
     </>
   )
 }

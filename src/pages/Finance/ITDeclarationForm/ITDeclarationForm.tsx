@@ -3,8 +3,13 @@ import { useHistory } from 'react-router-dom'
 import { CRow, CCol, CFormCheck, CButton } from '@coreui/react-pro'
 import EmployeeDetails from './EmployeeDetails'
 import IncomeTaxAct from './IncomeTaxAct'
+import SectionsFilterOptions from './SectionsFilterOptions'
 import PreviousEmployerAct from './PreviousEmployerAct/PreviousEmployerAct'
-import { compareDate, interchangeMonthAndDay } from './ITDeclarationFormHelpers'
+import {
+  compareDate,
+  declareStatement,
+  interchangeMonthAndDay,
+} from './ITDeclarationFormHelpers'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -158,22 +163,29 @@ const ITDeclarationForm = (): JSX.Element => {
               employeeDetails.activeCyle,
               employeeDetails.joinDate,
             ) && (
-              <PreviousEmployerAct
-                enteredOrganization={enteredOrganization}
-                organizationChangeHandler={organizationChangeHandler}
-                enteredFromDate={enteredFromDate}
-                setEnteredFromDate={setEnteredFromDate}
-                enteredToDate={enteredToDate}
-                setEnteredToDate={setEnteredToDate}
-                setEnteredFile={setEnteredFile}
-              />
+              <>
+                <PreviousEmployerAct
+                  enteredOrganization={enteredOrganization}
+                  organizationChangeHandler={organizationChangeHandler}
+                  enteredFromDate={enteredFromDate}
+                  setEnteredFromDate={setEnteredFromDate}
+                  enteredToDate={enteredToDate}
+                  setEnteredToDate={setEnteredToDate}
+                  setEnteredFile={setEnteredFile}
+                />
+                <SectionsFilterOptions
+                  showAsterix={false}
+                  moreSectionButtonText="Add More"
+                  isOldEmployee={false}
+                />
+              </>
             )}
 
             <CRow className="mt-3 mb-3">
               <CCol sm={12}>
                 <p className="pull-right">
                   <b className="txt-grandtotal ">
-                    Grand Total: {grandTotalResult}
+                    Grand Total: {grandTotalResult.toLocaleString('en-IN')}
                   </b>
                 </p>
               </CCol>
@@ -186,22 +198,11 @@ const ITDeclarationForm = (): JSX.Element => {
                   data-testid="ch-agree"
                   onChange={() => setIsAgreeChecked(!isAgreeChecked)}
                   checked={isAgreeChecked}
+                  label={declareStatement}
+                  inline
+                  hitArea="full"
+                  style={{ fontWeight: 'bold' }}
                 />
-                <span className="ps-2">
-                  <strong>
-                    I, declare that the above statement is true to the best of
-                    my knowledge and belief. In the event of any change that may
-                    occur during the year pertaining to the information given in
-                    the form, I undertake to inform the same to the company.
-                    Income Tax liability arising due to failure, if any, for not
-                    making / not intimating payment / investment made or
-                    proposed to be made by me and / or any wrong declaration
-                    would be my responsibility. I further undertake to provide
-                    all documentary proofs of payment made by me and if I fail
-                    to do so, the company can make full deduction of income tax
-                    dues from salary.
-                  </strong>
-                </span>
               </CCol>
             </CRow>
             <CRow className="mt-2 mb-2">
