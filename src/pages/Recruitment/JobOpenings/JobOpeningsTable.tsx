@@ -139,7 +139,7 @@ const JobOpeningsTable = ({
 
   return (
     <>
-      <CTable className="align-middle alignment">
+      <CTable striped className="text-start text-left align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -203,7 +203,7 @@ const JobOpeningsTable = ({
                     <CTooltip content="View">
                       <CButton
                         color="info"
-                        className="btn-ovh-employee-list me-1"
+                        className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="View-btn"
                         onClick={() => viewButtonHandler(jobVacancy?.id)}
                       >
@@ -217,7 +217,7 @@ const JobOpeningsTable = ({
                       <CTooltip content="Edit">
                         <CButton
                           color="info btn-ovh me-1"
-                          className="btn-ovh-employee-list me-1"
+                          className="btn-ovh-employee-list me-1 mt-1"
                           data-testid={`btn-edit${index}`}
                           onClick={() => editButtonHandler(jobVacancy)}
                         >
@@ -228,7 +228,7 @@ const JobOpeningsTable = ({
                     <CTooltip content="Timeline">
                       <CButton
                         color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
+                        className="btn-ovh-employee-list me-1 mt-1"
                         data-testid={`sc-timeline-btn${index}`}
                         onClick={() => timeLineButtonHandler(jobVacancy.id)}
                       >
@@ -241,7 +241,7 @@ const JobOpeningsTable = ({
                           data-testid={`btn-delete${index}`}
                           size="sm"
                           color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list me-1"
+                          className="btn-ovh-employee-list me-1 mt-1"
                           onClick={() =>
                             deleteButtonHandler(
                               jobVacancy.id,

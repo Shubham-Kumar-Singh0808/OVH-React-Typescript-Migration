@@ -167,7 +167,7 @@ const EditJobOpening = ({
               name="jobCode"
               autoComplete="off"
               placeholder="Job Code"
-              value={editJobInfo.jobCode}
+              value={editJobInfo.jobCode || 'N/A'}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -194,7 +194,7 @@ const EditJobOpening = ({
               name="positionVacant"
               autoComplete="off"
               placeholder="Title"
-              value={editJobInfo.positionVacant}
+              value={editJobInfo.positionVacant || 'N/A'}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -222,7 +222,7 @@ const EditJobOpening = ({
               name="noOfRequirements"
               autoComplete="off"
               placeholder="No of Openings"
-              value={editJobInfo.noOfRequirements}
+              value={editJobInfo.noOfRequirements || 'N/A'}
               maxLength={5}
               onChange={onChangeInputHandler}
             />
@@ -252,7 +252,7 @@ const EditJobOpening = ({
               autoComplete="off"
               placeholder="Experience"
               maxLength={11}
-              value={editJobInfo.minimumExperience}
+              value={editJobInfo.minimumExperience || 'N/A'}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -276,7 +276,7 @@ const EditJobOpening = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editToDate}
+              value={editToDate || 'N/A'}
               minDate={new Date()}
               onChange={(date: Date) => onHandleDatePicker(date)}
             />
@@ -289,7 +289,7 @@ const EditJobOpening = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editJobInfo.description}
+                initData={editJobInfo.description || 'N/A'}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}
