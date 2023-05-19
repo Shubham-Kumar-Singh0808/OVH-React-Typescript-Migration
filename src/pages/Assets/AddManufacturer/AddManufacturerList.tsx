@@ -17,14 +17,14 @@ import {
 } from '../../../types/Settings/LeaveSettings/employeeLeaveCalenderTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 
-const AddEditLeaveCategories = ({
+const AddManufacturerList = ({
   confirmButtonText,
   backButtonHandler,
 }: AddEditLeaveCategoryProps): JSX.Element => {
   const initialEmployeeAddLeaveCategories = {} as EmployeeAddUpdateLeaveCategory
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  const [employeeLeaveCategories, setEmployeeLeaveCategories] = useState(
+  const [employeeLeaveCategories, setManufacturerList] = useState(
     initialEmployeeAddLeaveCategories,
   )
 
@@ -38,25 +38,25 @@ const AddEditLeaveCategories = ({
     const { name, value } = event.target
     if (name === 'name') {
       const nameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
-      setEmployeeLeaveCategories((prevState) => {
+      setManufacturerList((prevState) => {
         return { ...prevState, ...{ [name]: nameValue } }
       })
     } else {
-      setEmployeeLeaveCategories((values) => {
+        setManufacturerList((values) => {
         return { ...values, ...{ [name]: value } }
       })
     }
   }
 
-  const handleAddLeaveCategory = async () => {
-    const addLeaveCategoryResultAction = await dispatch(
+  const handleAddManufacturerList = async () => {
+    const addManufacturerListResultAction = await dispatch(
       reduxServices.employeeLeaveSettings.addManufacturerList(
         employeeLeaveCategories,
       ),
     )
     if (
       reduxServices.employeeLeaveSettings.addManufacturerList.fulfilled.match(
-        addLeaveCategoryResultAction,
+        addManufacturerListResultAction,
       )
     ) {
       backButtonHandler()
@@ -70,9 +70,9 @@ const AddEditLeaveCategories = ({
       )
     } else if (
       reduxServices.employeeLeaveSettings.addManufacturerList.rejected.match(
-        addLeaveCategoryResultAction,
+        addManufacturerListResultAction,
       ) &&
-      addLeaveCategoryResultAction.payload === 500
+      addManufacturerListResultAction.payload === 500
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
@@ -187,7 +187,7 @@ const AddEditLeaveCategories = ({
                 className="btn-ovh me-1"
                 size="sm"
                 disabled={!isAddButtonEnabled}
-                onClick={handleAddLeaveCategory}
+                onClick={handleAddManufacturerList}
               >
                 {confirmButtonText}
               </CButton>
@@ -195,7 +195,7 @@ const AddEditLeaveCategories = ({
                 color="warning "
                 className="btn-ovh"
                 onClick={() => {
-                  setEmployeeLeaveCategories({
+                    setManufacturerList({
                     name: '',
                     leaveType: '',
                   })
@@ -210,4 +210,4 @@ const AddEditLeaveCategories = ({
     </>
   )
 }
-export default AddEditLeaveCategories
+export default AddManufacturerList

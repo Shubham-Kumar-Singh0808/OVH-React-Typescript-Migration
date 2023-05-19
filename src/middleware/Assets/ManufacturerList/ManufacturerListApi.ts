@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {
   GetAllManufacturerName,
+  ManufacturerList,
   ManufacturerListProps,
   exportManufacturerListProps,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
@@ -44,9 +45,20 @@ const exportManufacturerData = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const getAllLookUpList = async (): Promise<ManufacturerList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.getAllLookUps,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const ManufacturerApi = {
   getManufacturerList,
   exportManufacturerData,
+  getAllLookUpList,
 }
 
 export default ManufacturerApi

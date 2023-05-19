@@ -3,6 +3,7 @@ import { AxiosError } from 'axios'
 import {
   GetAllManufacturerName,
   ManufacturerDetails,
+  ManufacturerList,
   ManufacturerListProps,
   ManufacturerListSliceState,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
@@ -12,10 +13,21 @@ import { RootState } from '../../../stateStore'
 import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 
 const getManufacturerList = createAsyncThunk(
-  'category/getEmployees',
+  'category/getManufacturerList',
   async (props: ManufacturerListProps, thunkApi) => {
     try {
       return await ManufacturerApi.getManufacturerList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const getAllLookUps = createAsyncThunk(
+  'category/getAllLookUps       ',
+  async (_, thunkApi) => {
+    try {
+      return await ManufacturerApi.getAllLookUpList()
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -27,6 +39,7 @@ const initialManufacturerListState: ManufacturerListSliceState = {
   getAllManufacturerName: {} as GetAllManufacturerName,
   isLoading: ApiLoadingState.idle,
   listSize: 0,
+  manufacturerList: {} as ManufacturerList,
 }
 
 const ManufacturerListSlice = createSlice({
@@ -35,20 +48,24 @@ const ManufacturerListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getManufacturerList.pending), (state) => {
+      .addCase(getManufacturerList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
-      .addMatcher(isAnyOf(getManufacturerList.fulfilled), (state, action) => {
+      .addCase(getManufacturerList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.manufacturerDetails = action.payload.list
         state.listSize = action.payload.size
-        // state = action.payload.size
+      })
+      .addCase(getAllLookUps.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.manufacturerList = action.payload
       })
   },
 })
 
 const ManufacturerListThunk = {
   getManufacturerList,
+  getAllLookUps,
 }
 
 const isLoading = (state: RootState): LoadingState =>
@@ -56,11 +73,14 @@ const isLoading = (state: RootState): LoadingState =>
 const manufacturerList = (state: RootState): ManufacturerDetails[] =>
   state.manufacturerList.manufacturerDetails
 const listSize = (state: RootState): number => state.manufacturerList.listSize
+const manufacturerData = (state: RootState): ManufacturerList =>
+  state.manufacturerList.manufacturerList
 
 export const ManufacturerListSelectors = {
   manufacturerList,
   isLoading,
   listSize,
+  manufacturerData,
 }
 
 export const ManufacturerListService = {

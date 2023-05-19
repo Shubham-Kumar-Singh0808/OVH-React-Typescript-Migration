@@ -176,7 +176,7 @@ const employeeLeaveSettingsThunk = {
   getEmployeeLeaveCategories,
   getEmployeeLeaveCalenderSettings,
   deleteEmployeeLeaveCategory,
-  addEmployeeLeaveCategory,
+  addManufacturerList: addEmployeeLeaveCategory,
   updateEmployeeLeaveCategory,
 }
 
