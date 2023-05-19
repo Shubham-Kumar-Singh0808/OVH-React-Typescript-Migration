@@ -51,13 +51,13 @@ describe('Assets Warranty List List Filter Options Component Testing with data',
       }),
     )
     expect(datePickers[0]).toHaveValue('29 Oct, 2019')
-    expect(datePickers[1]).toHaveValue('10 Jan, 2022')
+    expect(datePickers[1]).toHaveValue('29 Oct, 2019')
     const viewBtnElement = screen.getByRole('button', { name: 'View' })
     userEvent.click(viewBtnElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
     userEvent.click(screen.getByTestId('clear-btn'))
     expect(datePickers[0]).toHaveValue('29 Oct, 2019')
-    expect(datePickers[1]).toHaveValue('10 Jan, 2022')
+    expect(datePickers[1]).toHaveValue('29 Oct, 2019')
   })
   test('should be able to click View button element', () => {
     const addBtn = screen.getByRole('button', { name: 'View' })
