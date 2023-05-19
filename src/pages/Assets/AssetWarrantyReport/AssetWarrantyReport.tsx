@@ -23,10 +23,6 @@ const AssetWarrantyReport = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  const data = useTypedSelector(
-    reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
-  )
-
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(
