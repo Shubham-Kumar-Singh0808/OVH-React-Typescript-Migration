@@ -161,12 +161,12 @@ const EmployeesListUnderManagerTable = ({
 
           <CCol xs={4}>
             <strong>
-              {employeeData.length > 0
+              {employeeData?.length > 0
                 ? `Total Records: ${employeeData.length}`
                 : `No Records Found`}
             </strong>
           </CCol>
-          {employeeData.length > 0 && (
+          {employeeData?.length > 0 && (
             <CCol>
               <ReporteesUpdateAutoComplete
                 managersOrHrManagersList={managersOrHrManagersList}

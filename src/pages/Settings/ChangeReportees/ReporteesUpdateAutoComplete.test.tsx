@@ -21,6 +21,13 @@ describe('Testing Reportees AutoComplete Component', () => {
           setValidName={jest.fn}
           autoCompleteTarget={''}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 
@@ -43,6 +50,13 @@ describe('Testing Reportees AutoComplete Component', () => {
           setValidName={jest.fn}
           autoCompleteTarget={''}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 
@@ -74,6 +88,13 @@ describe('Testing Reportees AutoComplete Component', () => {
           setValidName={jest.fn}
           autoCompleteTarget={'aaa'}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 
