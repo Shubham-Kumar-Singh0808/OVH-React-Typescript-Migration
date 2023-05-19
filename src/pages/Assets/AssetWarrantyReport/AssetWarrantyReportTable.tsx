@@ -11,35 +11,25 @@ import {
   CLink,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import {
-  AssetsWarrantyListTableProps,
-  WarrantyAssetsList,
-} from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
+import { AssetsWarrantyListTableProps } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
 import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
 import { downloadFile } from '../../../utils/helper'
 
 const AssetWarrantyReportTable = (
   props: AssetsWarrantyListTableProps,
 ): JSX.Element => {
-  const getAssetDetailsList = useTypedSelector(
-    reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
-  )
   const [isproductSpecification, setProductSpecification] =
     useState<boolean>(false)
+  const [specification, setSpecification] = useState('')
   const assetWarrantyList = useTypedSelector(
     reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
   )
-
-  // const selectedassetsReports = useTypedSelector(
-  //   reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
-  // )
 
   const {
     paginationRange,
@@ -61,15 +51,6 @@ const AssetWarrantyReportTable = (
       })
     downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
   }
-  const [reasonModal, setReasonModal] = useState({} as WarrantyAssetsList)
-  // const pageFromState = useTypedSelector(
-  //   reduxServices.assetsWarrantyList.selectors.pageFromState,
-  // )
-
-  // const pageSizeFromState = useTypedSelector(
-  //   reduxServices.assetsWarrantyList.selectors.pageSizeFromState,
-  // )
-
   const assetListSizeRecords = useTypedSelector(
     reduxServices.assetsWarrantyList.selectors.listSize,
   )
@@ -85,9 +66,10 @@ const AssetWarrantyReportTable = (
     return (currentPage - 1) * pageSize + index + 1
   }
 
-  const handleAgendaModal = (appraisalCycleInfo: WarrantyAssetsList) => {
+  const handleAgendaModal = (appraisalCycleSpecification: string) => {
     setProductSpecification(true)
-    setReasonModal(appraisalCycleInfo)
+    setSpecification(appraisalCycleSpecification)
+    // setReasonModal(appraisalCycleInfo)
   }
 
   return (
@@ -127,6 +109,15 @@ const AssetWarrantyReportTable = (
         <CTableBody>
           {assetWarrantyList?.length > 0 &&
             assetWarrantyList.map((warranty, index) => {
+              const removeSpaces1 = warranty.otherAssetNumber
+                ?.replace(/\s+/g, ' ')
+                .trim()
+                .replace(/&nbsp;/g, '')
+              const agendaLimit1 =
+                removeSpaces1 && removeSpaces1.length > 15
+                  ? `${removeSpaces1.substring(0, 15)}...`
+                  : removeSpaces1
+
               const removeSpaces = warranty.pSpecification
                 ?.replace(/\s+/g, ' ')
                 .trim()
@@ -135,6 +126,7 @@ const AssetWarrantyReportTable = (
                 removeSpaces && removeSpaces.length > 15
                   ? `${removeSpaces.substring(0, 15)}...`
                   : removeSpaces
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -157,7 +149,9 @@ const AssetWarrantyReportTable = (
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid={`specification-modal-link${index}`}
-                        onClick={() => handleAgendaModal(warranty)}
+                        onClick={() =>
+                          handleAgendaModal(warranty.pSpecification)
+                        }
                       >
                         {parse(agendaLimit)}
                       </CLink>
@@ -169,10 +163,12 @@ const AssetWarrantyReportTable = (
                     {warranty.otherAssetNumber ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
-                        data-testid="description-modal-link"
-                        onClick={() => handleAgendaModal(warranty)}
+                        data-testid={`description-modal-link${index}`}
+                        onClick={() =>
+                          handleAgendaModal(warranty.otherAssetNumber)
+                        }
                       >
-                        {parse(agendaLimit)}
+                        {parse(agendaLimit1)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -229,27 +225,7 @@ const AssetWarrantyReportTable = (
           <span className="descriptionField">
             <div
               dangerouslySetInnerHTML={{
-                __html: reasonModal.pSpecification,
-              }}
-            />
-          </span>
-        </>
-      </OModal>
-      <OModal
-        modalSize="lg"
-        alignment="center"
-        visible={isproductSpecification}
-        setVisible={setProductSpecification}
-        confirmButtonText="Yes"
-        cancelButtonText="No"
-        modalFooterClass="d-none"
-        modalHeaderClass="d-none"
-      >
-        <>
-          <span className="descriptionField">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: reasonModal.otherAssetNumber,
+                __html: specification,
               }}
             />
           </span>

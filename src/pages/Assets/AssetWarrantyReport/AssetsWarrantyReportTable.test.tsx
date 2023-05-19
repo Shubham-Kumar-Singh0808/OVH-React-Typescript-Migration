@@ -5,11 +5,6 @@ import AssetWarrantyReportTable from './AssetWarrantyReportTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
 
-// const expectPageSizeToBeRendered = (pageSize: number) => {
-//   for (let i = 0; i < pageSize; i++) {
-//     expect(screen.getByText(mockAssetsWarrantyList.list[i]).toBeInTheDocument()
-//   }
-// }
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
@@ -63,20 +58,11 @@ describe('Employee BirthdaysList Table Component Testing', () => {
   test('should render Add Assets List component with data', () => {
     expect(screen.getByText('01/25/2023')).toBeInTheDocument()
     expect(screen.getByText('1/05/2023')).toBeInTheDocument()
-    // expect(screen.getAllByText('working')).toBeInTheDocument()
     expect(screen.getByText('RBT121212')).toBeInTheDocument()
     expect(screen.getByText('Software')).toBeInTheDocument()
     expect(screen.getByText('WorldTest')).toBeInTheDocument()
   })
 
-  // test('should be able to click delete button element', () => {
-  //   // // const deleteBtnElement = screen.getByTestId('btn-delete10')
-  //   // // expect(deleteBtnElement).toBeInTheDocument()
-  //   // // userEvent.click(deleteBtnElement)
-  //   const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
-  //   userEvent.click(modalConfirmBtn)
-  //   expect(modalConfirmBtn).toBeInTheDocument()
-  // })
   test('should render first page data only', () => {
     waitFor(() => {
       userEvent.click(screen.getByText('Next >', { exact: true }))

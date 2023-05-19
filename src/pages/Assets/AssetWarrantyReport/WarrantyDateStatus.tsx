@@ -1,11 +1,10 @@
 import { CButton, CCol, CFormLabel, CFormSelect, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import DatePicker, { registerLocale } from 'react-datepicker'
 import moment from 'moment'
+import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
-import { commonDateFormat } from '../../../utils/dateFormatUtils'
 
 const WarrantyDateStatus = ({
   pageSize,
@@ -28,7 +27,6 @@ const WarrantyDateStatus = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [dateError, setDateError] = useState<boolean>(false)
-  const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
     const start = moment(fromDate, dateFormat).format(newDateFormatForIsBefore)
@@ -37,13 +35,6 @@ const WarrantyDateStatus = ({
     setDateError(moment(end).isBefore(start))
   }, [fromDate, toDate])
 
-  useEffect(() => {
-    if (fromDate && toDate) {
-      setIsAllocateButtonEnabled(true)
-    } else {
-      setIsAllocateButtonEnabled(false)
-    }
-  }, [fromDate, toDate])
   const viewButtonHandler = () => {
     dispatch(
       reduxServices.assetsWarrantyList.getAssetsWarrantyList({
@@ -109,10 +100,6 @@ const WarrantyDateStatus = ({
         {selectDate === 'Custom' ? (
           <>
             <CCol sm={2} md={1} className="text-end">
-              {/* <CFormLabel className="mt-1">
-                From:
-                <span className={showIsRequired(fromDate as string)}>*</span>
-              </CFormLabel> */}
               <CFormLabel>
                 From:
                 {(fromDate == null || fromDate === '') && (
@@ -137,7 +124,6 @@ const WarrantyDateStatus = ({
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
-              {/* <CFormLabel className="mt-1">To:</CFormLabel> */}
               <CFormLabel>
                 To:
                 {(toDate == null || toDate === '') && (
@@ -159,7 +145,6 @@ const WarrantyDateStatus = ({
                 dropdownMode="select"
                 value={toDate}
                 onChange={(date: Date) => onHandleToDate(date)}
-                // selected={toDate as Date}
               />
               {dateError && (
                 <CCol sm={12} className="mt-1 pt-1">
@@ -173,21 +158,8 @@ const WarrantyDateStatus = ({
         ) : (
           <></>
         )}
-        <CRow className="mt-4 mb-4">
+        <CCol sm={2}>
           <CCol sm={9} md={{ offset: 3 }}>
-            {/* <CButton
-              className="cursor-pointer"
-              color="success btn-ovh me-1"
-              data-testid="view-btn"
-              onClick={viewButtonHandler}
-              disabled={
-                (selectDate === 'Custom' &&
-                  !(fromDate !== '' && toDate !== '')) ||
-                dateError
-              }
-            >
-              View
-            </CButton> */}
             <CButton
               className="cursor-pointer"
               color="success btn-ovh me-1"
@@ -201,7 +173,6 @@ const WarrantyDateStatus = ({
             >
               View
             </CButton>
-
             <CButton
               className="cursor-pointer"
               disabled={false}
@@ -212,7 +183,7 @@ const WarrantyDateStatus = ({
               Clear
             </CButton>
           </CCol>
-        </CRow>
+        </CCol>
       </CRow>
     </>
   )
