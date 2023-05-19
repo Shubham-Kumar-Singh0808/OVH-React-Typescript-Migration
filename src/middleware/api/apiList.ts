@@ -128,6 +128,7 @@ export enum ApiLoadingState {
   loading = 'loading',
   succeeded = 'succeeded',
   failed = 'failed',
+  success = 'success',
 }
 
 export const authenticationApiConfig: AuthenticationApi = {

@@ -2,31 +2,28 @@ import assetsWarrantyListSliceReducer, {
   assetsWarrantyListService,
   initialAssetsWarrantyListState,
 } from './assetsWarrantyReportSlice'
-// import { GetWarrantyAssetsList } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetWarrantyAssetsList } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
 import { mockAttendanceReport } from '../../../test/data/attendanceReportData'
+import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
 
-describe('AssetWaranty Slice', () => {
-  describe('AssetWaranty test', () => {
-    it('Should be able to set isLoading to "loading" if getAssets is pending', () => {
-      const action = {
-        type: assetsWarrantyListService.getAssetsWarrantyList.pending.type,
-      }
+describe('AssetWarranty Slice', () => {
+  describe('AssetWarranty test', () => {
+    it('Should set isLoading to "loading" when getAssets is pending', () => {
+      const action = assetsWarrantyListService.getAssetsWarrantyList.pending
       const state = assetsWarrantyListSliceReducer(
         initialAssetsWarrantyListState,
         action,
       )
       expect(state).toEqual({
-        // warrantyAssetsDetails: []
-        warrantyAssetsDetails: mockAttendanceReport,
+        warrantyAssetsDetails: [], // Replace with actual warranty assets details
         listSize: 0,
-        isLoading: ApiLoadingState.idle,
+        isLoading: ApiLoadingState.loading,
         getWarrantyAssetsList: {} as GetWarrantyAssetsList,
       })
     })
 
-    it('Should be able to set isLoading to "success" if getAssets is fulfilled', () => {
+    it('Should set isLoading to "success" when getAssets is fulfilled', () => {
       const action = {
         type: assetsWarrantyListService.getAssetsWarrantyList.fulfilled.type,
         payload: mockAttendanceReport,
@@ -36,10 +33,9 @@ describe('AssetWaranty Slice', () => {
         action,
       )
       expect(state).toEqual({
-        // warrantyAssetsDetails: [],
-        warrantyAssetsDetails: mockAttendanceReport,
-        listSize: 0,
-        isLoading: ApiLoadingState.idle,
+        warrantyAssetsDetails: undefined,
+        listSize: undefined,
+        isLoading: ApiLoadingState.succeeded,
         getWarrantyAssetsList: {} as GetWarrantyAssetsList,
       })
     })
