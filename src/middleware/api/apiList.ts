@@ -108,6 +108,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  ProductTypeListApi,
   AssetWarrantyReportApi,
 } from '../../types/apiTypes'
 
@@ -484,6 +485,7 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+  cancelAfterApproval: apiPrefix + '/leave/cancelAfterApproval',
 }
 
 export const ticketListInformationApiConfig: TicketListInformationApi = {
@@ -748,6 +750,8 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
   getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
+  isITFormEditable: apiPrefix + '/itDeclaration/isItFormEditable',
+  editITForm: apiPrefix + '/itDeclaration/editItForm',
 }
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
@@ -979,6 +983,11 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+export const GetProductTypeListConfig: ProductTypeListApi = {
+  getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
+  deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
+  exportProductList: apiPrefix + '/assetManagement/exportProductList',
 }
 
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {

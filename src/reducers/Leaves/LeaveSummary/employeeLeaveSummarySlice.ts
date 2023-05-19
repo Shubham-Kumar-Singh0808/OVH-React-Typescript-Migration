@@ -52,6 +52,18 @@ const cancelEmployeeLeave = createAsyncThunk<
   }
 })
 
+const cancelAfterApproval = createAsyncThunk(
+  'leaveSummary/cancelAfterApproval',
+  async (leaveId: number, thunkApi) => {
+    try {
+      return await LeaveSummaryApi.cancelAfterApproval(leaveId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialLeaveSummaryState: EmployeeLeaveSummarySliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -110,6 +122,7 @@ const leaveSummaryThunk = {
   getEmployeeLeaveSummary,
   getEmployeeLeaveHistory,
   cancelEmployeeLeave,
+  cancelAfterApproval,
 }
 
 const leaveSummarySelectors = {

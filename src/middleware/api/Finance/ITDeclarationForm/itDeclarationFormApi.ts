@@ -3,7 +3,7 @@ import {
   Invest,
   Sections,
   UploadITDocumentDTO,
-  submitITDeclarationForm,
+  SubmitITDeclarationForm,
 } from '../../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -43,7 +43,7 @@ const getInvestsBySectionId = async (sectionId: number): Promise<Invest[]> => {
 }
 
 const addITDeclarationForm = async (
-  submitDeclarationForm: submitITDeclarationForm,
+  submitDeclarationForm: SubmitITDeclarationForm,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationFormApiConfig.addITDeclarationForm,
