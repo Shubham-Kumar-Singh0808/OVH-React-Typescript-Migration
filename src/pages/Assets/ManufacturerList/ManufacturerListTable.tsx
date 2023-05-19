@@ -37,7 +37,7 @@ const ManufacturerListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const listSize = useTypedSelector(
+  const manufacturerListSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
   const handlePageSizeSelectChange = (
@@ -108,11 +108,13 @@ const ManufacturerListTable = ({
         <CRow>
           <CCol md={3} className="no-records">
             <strong>
-              {listSize ? `Total Records: ${listSize}` : `No records found.`}
+              {manufacturerListSize
+                ? `Total Records: ${manufacturerListSize}`
+                : `No records found.`}
             </strong>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {manufacturerListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80, 100]}
@@ -120,7 +122,7 @@ const ManufacturerListTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {manufacturerListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"
