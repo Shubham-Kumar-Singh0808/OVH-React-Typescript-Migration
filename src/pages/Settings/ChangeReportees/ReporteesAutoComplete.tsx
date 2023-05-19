@@ -27,7 +27,7 @@ const ReporteesAutoComplete = ({
   }, [autoCompleteTarget])
 
   const dispatch = useAppDispatch()
-  console.log(placeHolder)
+
   const getEmployeesUnderManger = useTypedSelector(
     reduxServices.changeReportees.selectors.EmployeesUnderManagerDetails,
   )
@@ -82,7 +82,7 @@ const ReporteesAutoComplete = ({
           managerId as number,
         ),
       )
-      //console.log('place holder is', placeHolder)
+
       setShouldRenderTable(true)
     }
   }

@@ -45,7 +45,6 @@ const EmployeesListUnderManagerTable = ({
       setButtonDisable(false)
     }
   }, [selectedRows, validName])
-  console.log(selectedRows, validName)
 
   const dispatch = useAppDispatch()
 
@@ -73,8 +72,6 @@ const EmployeesListUnderManagerTable = ({
       setSelectedRows(selectedRows.filter((rowId: number) => rowId !== id))
     }
   }
-  console.log('selected rows: ', selectedRows)
-
   const handleUpdateSelected = async () => {
     const object = {
       employeeId: selectedRows,
