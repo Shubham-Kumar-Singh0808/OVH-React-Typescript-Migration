@@ -42,7 +42,6 @@ const ManufacturerListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.manufacturerDetails = action.payload.list
         state.listSize = action.payload.size
-        // state = action.payload.size
       })
   },
 })
