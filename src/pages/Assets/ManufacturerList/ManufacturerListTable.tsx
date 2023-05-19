@@ -10,7 +10,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'

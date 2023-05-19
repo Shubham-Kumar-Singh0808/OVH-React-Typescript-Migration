@@ -18,8 +18,6 @@ const Manufacturer = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
-  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>('')
   const {
     paginationRange,
     setPageSize,
