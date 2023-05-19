@@ -447,6 +447,12 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
+const productList = React.lazy(
+  () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
+)
+const ChangeReportees = React.lazy(
+  () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
