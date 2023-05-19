@@ -142,9 +142,9 @@ const EmployeeListTable = ({
         </CTable>
         <CRow>
           <CCol md={3} className="no-records">
-            {/* <strong>
+            <strong>
               {listSize ? `Total Records: ${listSize}` : `Employee Not Found.`}
-            </strong> */}
+            </strong>
           </CCol>
           <CCol xs={3}>
             {listSize > 20 && (

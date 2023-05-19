@@ -131,8 +131,6 @@ import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsS
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 
-// import ExportWarrantyList from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
-
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
@@ -262,8 +260,6 @@ export const allReducers = {
   jobVacancies: jobVacanciesReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
-  // ExportWarrantyList: assetsExportWarrantyListReducer,
-
   // add your slice reducers here
 }
 const stateStore = configureStore({

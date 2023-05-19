@@ -35,6 +35,12 @@ const WarrantyDateStatus = ({
     setDateError(moment(end).isBefore(start))
   }, [fromDate, toDate])
 
+  const onHandleFromDate = (value: Date) => {
+    setFromDate(moment(value).format(dateFormat))
+  }
+  const onHandleToDate = (value: Date) => {
+    setToDate(moment(value).format(dateFormat))
+  }
   const viewButtonHandler = () => {
     dispatch(
       reduxServices.assetsWarrantyList.getAssetsWarrantyList({
@@ -60,13 +66,6 @@ const WarrantyDateStatus = ({
         to: toDate || '',
       }),
     )
-  }
-
-  const onHandleFromDate = (value: Date) => {
-    setFromDate(moment(value).format(dateFormat))
-  }
-  const onHandleToDate = (value: Date) => {
-    setToDate(moment(value).format(dateFormat))
   }
 
   return (

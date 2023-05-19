@@ -40,9 +40,6 @@ const AssetWarrantyReport = (): JSX.Element => {
     )
   }, [dispatch, currentPage, pageSize])
 
-  // [dispatch, fromDate, toDate])
-
-  console.log(data)
   return (
     <>
       <OCard

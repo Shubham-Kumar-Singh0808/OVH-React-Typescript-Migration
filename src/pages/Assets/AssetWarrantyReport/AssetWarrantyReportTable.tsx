@@ -24,12 +24,31 @@ import { downloadFile } from '../../../utils/helper'
 const AssetWarrantyReportTable = (
   props: AssetsWarrantyListTableProps,
 ): JSX.Element => {
-  const [isproductSpecification, setProductSpecification] =
-    useState<boolean>(false)
+  const [isAssetWarranty, setAssetWarranty] = useState<boolean>(false)
   const [specification, setSpecification] = useState('')
   const assetWarrantyList = useTypedSelector(
     reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
   )
+
+  const assetListSizeRecords = useTypedSelector(
+    reduxServices.assetsWarrantyList.selectors.listSize,
+  )
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const handleAgendaModal = (appraisalCycleSpecification: string) => {
+    setAssetWarranty(true)
+    setSpecification(appraisalCycleSpecification)
+  }
 
   const {
     paginationRange,
@@ -50,26 +69,6 @@ const AssetWarrantyReportTable = (
         token: '',
       })
     downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
-  }
-  const assetListSizeRecords = useTypedSelector(
-    reduxServices.assetsWarrantyList.selectors.listSize,
-  )
-
-  const handlePageSizeSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    setPageSize(Number(event.target.value))
-    setCurrentPage(1)
-  }
-
-  const getItemNumber = (index: number) => {
-    return (currentPage - 1) * pageSize + index + 1
-  }
-
-  const handleAgendaModal = (appraisalCycleSpecification: string) => {
-    setProductSpecification(true)
-    setSpecification(appraisalCycleSpecification)
-    // setReasonModal(appraisalCycleInfo)
   }
 
   return (
@@ -214,8 +213,8 @@ const AssetWarrantyReportTable = (
       <OModal
         modalSize="lg"
         alignment="center"
-        visible={isproductSpecification}
-        setVisible={setProductSpecification}
+        visible={isAssetWarranty}
+        setVisible={setAssetWarranty}
         confirmButtonText="Yes"
         cancelButtonText="No"
         modalFooterClass="d-none"

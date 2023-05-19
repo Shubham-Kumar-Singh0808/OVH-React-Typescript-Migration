@@ -8,7 +8,7 @@ import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
 
-describe('Employee BirthdaysList Table Component Testing', () => {
+describe('Assets Warranty Report Table Component Testing', () => {
   beforeEach(() => {
     render(
       <AssetWarrantyReportTable
