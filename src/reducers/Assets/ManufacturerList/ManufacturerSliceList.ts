@@ -35,10 +35,10 @@ const ManufacturerListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getManufacturerList.pending), (state) => {
+      .addCase(getManufacturerList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
-      .addMatcher(isAnyOf(getManufacturerList.fulfilled), (state, action) => {
+      .addCase(getManufacturerList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.manufacturerDetails = action.payload.list
         state.listSize = action.payload.size
