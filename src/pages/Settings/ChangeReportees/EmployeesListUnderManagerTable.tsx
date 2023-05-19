@@ -126,7 +126,7 @@ const EmployeesListUnderManagerTable = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CTable className="mt-4" striped>
+          <CTable className="mt-4" striped data-testid="tableTest">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
