@@ -12,7 +12,7 @@ const Manufacturer = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
 
-  const employees = useTypedSelector(
+  const Manufacturer = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const listSize = useTypedSelector(
@@ -69,7 +69,7 @@ const Manufacturer = (): JSX.Element => {
       }),
     )
   }, [dispatch, currentPage, pageSize])
-  console.log(employees)
+  console.log(Manufacturer)
 
   return (
     <>

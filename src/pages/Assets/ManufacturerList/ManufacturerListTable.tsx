@@ -31,7 +31,7 @@ const ManufacturerListTable = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const employees = useTypedSelector(
+  const Manufacturer = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const getItemNumber = (index: number) => {
@@ -64,8 +64,8 @@ const ManufacturerListTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {employees?.length > 0 &&
-              employees?.map((manufacturer, index) => {
+            {Manufacturer?.length > 0 &&
+              Manufacturer?.map((manufacturer, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row"></CTableHeaderCell>

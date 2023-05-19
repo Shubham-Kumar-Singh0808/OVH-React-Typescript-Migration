@@ -12,7 +12,7 @@ import { RootState } from '../../../stateStore'
 import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 
 const getManufacturerList = createAsyncThunk(
-  'category/getEmployees',
+  'category/getManufacturerList',
   async (props: ManufacturerListProps, thunkApi) => {
     try {
       return await ManufacturerApi.getManufacturerList(props)
@@ -30,7 +30,7 @@ const initialManufacturerListState: ManufacturerListSliceState = {
 }
 
 const ManufacturerListSlice = createSlice({
-  name: 'employeeList',
+  name: 'ManufacturerList',
   initialState: initialManufacturerListState,
   reducers: {},
   extraReducers: (builder) => {
