@@ -12,7 +12,7 @@ const Manufacturer = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
 
-  const Manufacturer = useTypedSelector(
+  const Manufacturerlist = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const listSize = useTypedSelector(
