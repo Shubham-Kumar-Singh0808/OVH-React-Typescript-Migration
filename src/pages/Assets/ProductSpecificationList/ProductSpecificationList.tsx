@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
+import AddProduct from './AddNewProduct/AddProductSpecificationList'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -152,6 +153,7 @@ const ProductSpecificationList = (): JSX.Element => {
           </>
         </OCard>
       )}
+      {toggle === '/addAssetType' && <AddProduct setToggle={setToggle} />}
     </>
   )
 }
