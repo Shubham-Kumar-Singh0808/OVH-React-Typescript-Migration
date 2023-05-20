@@ -33,9 +33,7 @@ const getAllLookUpList = async (): Promise<ManufacturerList> => {
   return response.data
 }
 
-const getProductTypeList = async (
-  productId: number,
-): Promise<ProductType[]> => {
+const getProductTypeList = async (productId: number): Promise<AssetType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.getProductTypeChangeList,
     method: AllowedHttpMethods.get,

@@ -65,7 +65,7 @@ const addProductSlice = createSlice({
     builder
       .addCase(getProductTypeList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.productType = action.payload
+        state.assetType = action.payload
       })
       .addMatcher(isAnyOf(getAssetTypeList.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -96,8 +96,8 @@ const addProductThunk = {
 const assetTypeList = (state: RootState): AssetType[] =>
   state.addProduct.assetType
 
-const productTypeList = (state: RootState): ProductType[] =>
-  state.addProduct.productType
+const productTypeList = (state: RootState): AssetType[] =>
+  state.addProduct.assetType
 
 const AssetData = (state: RootState): AssetTypeList[] =>
   state.addProduct.assetTypeList
