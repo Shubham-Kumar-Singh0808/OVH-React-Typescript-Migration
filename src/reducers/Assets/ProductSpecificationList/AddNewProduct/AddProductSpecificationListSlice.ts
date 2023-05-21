@@ -7,11 +7,12 @@ import {
   AssetTypeList,
   ManufacturerList,
   AssetTypeListSliceState,
+  AddProductSpecificationProps,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { RootState } from '../../../../stateStore'
+import { AppDispatch, RootState } from '../../../../stateStore'
 
 const getAssetTypeList = createAsyncThunk(
   'assetTypeList/getAssetTypeList       ',
@@ -42,6 +43,48 @@ const getAllLookUps = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await assetTypeListApi.getAllLookUpList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteProductSpecification = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'leaveSettings/deleteEmployeeLeaveCategory',
+  async (specificationId, thunkApi) => {
+    try {
+      return await assetTypeListApi.deleteProductSpecification(specificationId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addProductSpecifications = createAsyncThunk<
+  number | undefined,
+  AddProductSpecificationProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'leaveSettings/addEmployeeLeaveCategory',
+  async (employeeLeaveCategory: AddProductSpecificationProps, thunkApi) => {
+    try {
+      return await assetTypeListApi.addProductSpecifications(
+        employeeLeaveCategory,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -91,6 +134,8 @@ const addProductThunk = {
   getAssetTypeList,
   getProductTypeList,
   getAllLookUps,
+  addProductSpecifications,
+  deleteProductSpecification,
 }
 
 const assetTypeList = (state: RootState): AssetType[] =>

@@ -14,6 +14,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProduct = ({
   setToggle,
@@ -23,7 +24,9 @@ const AddProduct = ({
   const [selectAssetId, setSelectAssetId] = useState<string>('')
   const [selectProductId, setSelectProductId] = useState<string>('')
 
-  const [selectAssetType, setSelectAssetType] = useState('')
+  const [productSpecification, setProductSpecification] = useState<string>('')
+
+  const [manufactureType, setManufactureType] = useState('')
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
@@ -86,21 +89,32 @@ const AddProduct = ({
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
   const handleProductSpecification = (ProductSpecification: string) => {
-    setAddProduct((prevState) => {
-      return { ...prevState, ...{ ProductSpecification } }
-    })
+    setProductSpecification(ProductSpecification)
   }
-  const [addProduct, setAddProduct] = useState({})
 
-  const handleAddNewClient = async () => {
-    const isAddLocation = await dispatch(
-      reduxServices.addNewProduct.(selectLocationName),
+  const handleAddLeaveCategory = async () => {
+    const addLeaveCategoryResultAction = await dispatch(
+      reduxServices.addNewProduct.addProductSpecifications({
+        assetTypeId: selectAssetId,
+        manufacturerId: Number(manufactureType),
+        productId: Number(selectProductId),
+        productSpecification,
+      }),
     )
     if (
-      reduxServices.addNewProduct.addLocation.fulfilled.match(isAddLocation)
+      reduxServices.addNewProduct.addProductSpecifications.fulfilled.match(
+        addLeaveCategoryResultAction,
+      )
     ) {
-      dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.app.actions.addToast(undefined))
+      setToggle('')
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="leave category added successfully"
+          />,
+        ),
+      )
     }
   }
   return (
@@ -216,7 +230,7 @@ const AddProduct = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                // initData={addProduct?.}
+                initData={productSpecification}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -234,7 +248,7 @@ const AddProduct = ({
               data-testid="add-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              onClick={handleAddNewClient}
+              onClick={handleAddLeaveCategory}
               // disabled={!isButtonEnabled}
             >
               Add

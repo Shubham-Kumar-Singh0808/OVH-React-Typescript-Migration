@@ -123,3 +123,10 @@ export type AddBtnProducts = {
 export type GetAddBtnProductsData = {
   addBtnProducts: AddBtnProducts[]
 }
+
+export type AddProductSpecificationProps = {
+  assetTypeId: string
+  manufacturerId: number
+  productId: number
+  productSpecification: string
+}

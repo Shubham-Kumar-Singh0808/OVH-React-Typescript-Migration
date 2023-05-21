@@ -1,4 +1,5 @@
 import {
+  AddProductSpecificationProps,
   AssetType,
   ManufacturerList,
   ProductType,
@@ -44,9 +45,37 @@ const getProductTypeList = async (productId: number): Promise<AssetType[]> => {
   return response.data
 }
 
+const deleteProductSpecification = async (
+  specificationId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProductSpecificationListReportApiConfig.deleteProductSpecification,
+    method: AllowedHttpMethods.delete,
+    params: {
+      specificationId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addProductSpecifications = async (
+  employeeLeaveCategory: AddProductSpecificationProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProductSpecificationListReportApiConfig.addProductSpecifications,
+    method: AllowedHttpMethods.post,
+    data: employeeLeaveCategory,
+  })
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
+}
+
 const assetTypeListApi = {
   getAssetTypeList,
   getProductTypeList,
   getAllLookUpList,
+  deleteProductSpecification,
+  addProductSpecifications,
 }
 export default assetTypeListApi

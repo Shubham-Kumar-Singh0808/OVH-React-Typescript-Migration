@@ -842,4 +842,5 @@ export interface ProductSpecificationListApi extends ApiBase {
   getProductTypeChangeList: string
   exportProductSpecificationList: string
   addProductSpecifications: string
+  deleteProductSpecification: string
 }

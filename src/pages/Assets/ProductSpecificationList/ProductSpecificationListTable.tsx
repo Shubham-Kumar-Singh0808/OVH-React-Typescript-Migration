@@ -14,7 +14,7 @@ import {
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
 // import { Link } from 'react-router-dom'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { ProductSpecificationListTableProps } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -23,6 +23,7 @@ import OModal from '../../../components/ReusableComponent/OModal'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 // import OModal from '../../../components/ReusableComponent/OModal'
 
@@ -36,6 +37,8 @@ const ProductSpecificationListTable = ({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [productSpecificationId, setProductSpecificationsId] =
     useState<string>('')
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteVisaId, setToDeleteVisaId] = useState(0)
 
   const handleModal = (specificationDetails: string) => {
     setIsModalVisible(true)
@@ -61,6 +64,39 @@ const ProductSpecificationListTable = ({
   }
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
+  }
+
+  const handleShowDeleteModal = (specificationId: number) => {
+    setToDeleteVisaId(specificationId)
+    setIsDeleteModalVisible(true)
+  }
+  const dispatch = useAppDispatch()
+  const handleConfirmDeleteVisaDetails = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteFamilyMemberResultAction = await dispatch(
+      reduxServices.addNewProduct.deleteProductSpecification(toDeleteVisaId),
+    )
+    if (
+      reduxServices.addNewProduct.deleteProductSpecification.fulfilled.match(
+        deleteFamilyMemberResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.productSpecificationList.getProductSpecificationList({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          productName: '',
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Visa Detail deleted successfully"
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -143,6 +179,9 @@ const ProductSpecificationListTable = ({
                         <CButton
                           color="danger"
                           className="btn-ovh me-2"
+                          onClick={() =>
+                            handleShowDeleteModal(productSpecification.id)
+                          }
                           // onClick={() => handleShowDeleteModal(family.familyId)}
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
@@ -203,6 +242,19 @@ const ProductSpecificationListTable = ({
             />
           </span>
         </p>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Visa Details"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteVisaDetails}
+        modalBodyClass="mt-0"
+      >
+        <>Do you really want to delete this ?</>
       </OModal>
     </>
   )

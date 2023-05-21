@@ -996,4 +996,6 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
       apiPrefix + '/assetManagement/exportProductSpecificationList',
     addProductSpecifications:
       apiPrefix + '/assetManagement/addProductSpecifications',
+    deleteProductSpecification:
+      apiPrefix + '/assetManagement/deleteProductSpecification',
   }
