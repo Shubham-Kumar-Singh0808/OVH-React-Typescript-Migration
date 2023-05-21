@@ -147,7 +147,7 @@ const Manufacturer = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'jobInfo' && <AddManufacturerList />}
+      {toggle === 'jobInfo' && <AddManufacturerList setToggle={setToggle} />}
     </>
   )
 }

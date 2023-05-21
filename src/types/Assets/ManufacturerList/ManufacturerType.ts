@@ -108,3 +108,8 @@ export type exportManufacturerListProps = {
   manufacturerNameSearch: string
   token: string
 }
+
+export type AddManufacturerListProps = {
+  manufacturerName: string
+  productId: string
+}

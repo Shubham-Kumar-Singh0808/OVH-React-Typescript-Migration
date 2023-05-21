@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+  AddManufacturerListProps,
   GetAllManufacturerName,
   ManufacturerList,
   ManufacturerListProps,
@@ -55,10 +56,24 @@ const getAllLookUpList = async (): Promise<ManufacturerList> => {
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const addManufacturer = async (
+  addManufactureList: AddManufacturerListProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.addManufacturer,
+    method: AllowedHttpMethods.post,
+    data: addManufactureList,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ManufacturerApi = {
   getManufacturerList,
   exportManufacturerData,
   getAllLookUpList,
+  addManufacturer,
 }
 
 export default ManufacturerApi

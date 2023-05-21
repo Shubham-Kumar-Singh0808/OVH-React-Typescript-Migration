@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
+  AddManufacturerListProps,
   GetAllManufacturerName,
   ManufacturerDetails,
   ManufacturerList,
@@ -9,7 +10,7 @@ import {
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 
 const getManufacturerList = createAsyncThunk(
@@ -28,6 +29,25 @@ const getAllLookUps = createAsyncThunk(
   async (_, thunkApi) => {
     try {
       return await ManufacturerApi.getAllLookUpList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const addManufacturer = createAsyncThunk<
+  number | undefined,
+  AddManufacturerListProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'leaveSettings/addManufacturer',
+  async (employeeLeaveCalender: AddManufacturerListProps, thunkApi) => {
+    try {
+      return await ManufacturerApi.addManufacturer(employeeLeaveCalender)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -66,6 +86,7 @@ const ManufacturerListSlice = createSlice({
 const ManufacturerListThunk = {
   getManufacturerList,
   getAllLookUps,
+  addManufacturer,
 }
 
 const isLoading = (state: RootState): LoadingState =>
