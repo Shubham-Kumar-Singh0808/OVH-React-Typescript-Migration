@@ -91,6 +91,18 @@ const AddProduct = ({
     })
   }
   const [addProduct, setAddProduct] = useState({})
+
+  const handleAddNewClient = async () => {
+    const isAddLocation = await dispatch(
+      reduxServices.addNewProduct.(selectLocationName),
+    )
+    if (
+      reduxServices.addNewProduct.addLocation.fulfilled.match(isAddLocation)
+    ) {
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   return (
     <>
       <OCard
@@ -222,7 +234,7 @@ const AddProduct = ({
               data-testid="add-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              // onClick={handleAddNewClient}
+              onClick={handleAddNewClient}
               // disabled={!isButtonEnabled}
             >
               Add
