@@ -3,15 +3,12 @@ import {
   GetAllManufacturerName,
   ManufacturerListProps,
   exportManufacturerListProps,
-} from '../../../types/Assets/ManufacturerList/ManufacturerType'
+} from '../../../../types/Assets/ManufacturerList/ManufacturerType'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
-} from '../../../utils/apiUtils'
-import {
-  AllowedHttpMethods,
-  ManufacturerApiListConfig,
-} from '../../api/apiList'
+} from '../../../../utils/apiUtils'
+import { AllowedHttpMethods, ManufacturerApiListConfig } from '../../apiList'
 
 const getManufacturerList = async (
   props: ManufacturerListProps,

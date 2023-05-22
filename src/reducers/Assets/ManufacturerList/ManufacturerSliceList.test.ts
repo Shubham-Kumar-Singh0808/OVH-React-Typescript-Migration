@@ -2,7 +2,7 @@ import configureStore, { MockStoreEnhanced } from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import reducer, { ManufacturerListService } from './ManufacturerSliceList'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
+import ManufacturerApi from '../../../middleware/api/Assets/ManufacturerList/ManufacturerListApi'
 import {
   GetAllManufacturerName,
   ManufacturerListSliceState,
