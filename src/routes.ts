@@ -451,6 +451,8 @@ const productList = React.lazy(
   () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
 )
 
+const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -996,6 +998,12 @@ const routes = [
     path: '/productList',
     name: 'Product List',
     component: productList,
+  },
+
+  {
+    path: '/assetList',
+    name: 'Asset List',
+    component: AssetList,
   },
 ]
 

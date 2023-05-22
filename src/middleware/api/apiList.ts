@@ -109,6 +109,7 @@ import {
   NotificationsApi,
   JobOpeningsApi,
   ProductTypeListApi,
+  AssetListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -987,4 +988,10 @@ export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
+}
+
+export const GetAssetListConfig: AssetListApi = {
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  // getEmpCountreen: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
 }
