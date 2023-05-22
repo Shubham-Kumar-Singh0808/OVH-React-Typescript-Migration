@@ -62,6 +62,7 @@ const EmployeesListUnderManagerTable = ({
       toastColor="success"
     />
   )
+  //logic for selecting/unselecting the records
   const handleSelectRow = (
     event: React.ChangeEvent<HTMLInputElement>,
     id: number,
@@ -72,6 +73,7 @@ const EmployeesListUnderManagerTable = ({
       setSelectedRows(selectedRows.filter((rowId: number) => rowId !== id))
     }
   }
+  //updating the multiple employee's manager
   const handleUpdateSelected = async () => {
     const object = {
       employeeId: selectedRows,
