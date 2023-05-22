@@ -167,18 +167,24 @@ const ReviewFormDetailsTable = ({
             >
               Comments
             </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsFrequency}
-            >
-              Manager Rating
-            </CTableHeaderCell>
-            <CTableHeaderCell
-              className="profile-tab-content"
-              {...tableHeaderCellPropsFrequency}
-            >
-              Manager Comments
-            </CTableHeaderCell>
+            {appraisalForm.formStatus === 'COMPLETED' ? (
+              <>
+                <CTableHeaderCell
+                  className="profile-tab-content"
+                  {...tableHeaderCellPropsFrequency}
+                >
+                  Manager Rating
+                </CTableHeaderCell>
+                <CTableHeaderCell
+                  className="profile-tab-content"
+                  {...tableHeaderCellPropsFrequency}
+                >
+                  Manager Comments
+                </CTableHeaderCell>
+              </>
+            ) : (
+              ''
+            )}
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -251,25 +257,33 @@ const ReviewFormDetailsTable = ({
                       )}
                     </CTableDataCell>
                   )}
-                  {kpi?.managerCommentsDtos &&
-                    kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
-                      <>
-                        {mgrComment?.managerRating !== null ? (
-                          <CTableDataCell key={cmtIndex}>
-                            {mgrComment.managerRating}
-                          </CTableDataCell>
-                        ) : (
-                          <CTableDataCell></CTableDataCell>
+                  {appraisalForm.formStatus === 'COMPLETED' ? (
+                    <>
+                      {kpi?.managerCommentsDtos &&
+                        kpi?.managerCommentsDtos?.map(
+                          (mgrComment, cmtIndex) => (
+                            <>
+                              {mgrComment?.managerRating !== null ? (
+                                <CTableDataCell key={cmtIndex}>
+                                  {mgrComment.managerRating}
+                                </CTableDataCell>
+                              ) : (
+                                <CTableDataCell></CTableDataCell>
+                              )}
+                              {mgrComment?.managerComments !== null ? (
+                                <CTableDataCell>
+                                  {mgrComment.managerComments}
+                                </CTableDataCell>
+                              ) : (
+                                <CTableDataCell></CTableDataCell>
+                              )}
+                            </>
+                          ),
                         )}
-                        {mgrComment?.managerComments !== null ? (
-                          <CTableDataCell>
-                            {mgrComment.managerComments}
-                          </CTableDataCell>
-                        ) : (
-                          <CTableDataCell></CTableDataCell>
-                        )}
-                      </>
-                    ))}
+                    </>
+                  ) : (
+                    ''
+                  )}
                 </CTableRow>
               )
             })

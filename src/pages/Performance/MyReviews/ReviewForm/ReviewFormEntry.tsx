@@ -28,7 +28,7 @@ const ReviewFormEntry = (props: {
     <>
       <CTableRow>
         <CTableDataCell scope="row">
-          {props.isIconVisible && props.selectedEmployeeId === props.id ? (
+          {props.isIconVisible && props.selectedEmployeeId === props?.id ? (
             <i
               data-testid="ic-expandIcon"
               className="fa fa-minus-circle cursor-pointer"
@@ -38,7 +38,7 @@ const ReviewFormEntry = (props: {
             <i
               data-testid="ic-collapseIcon"
               className="fa fa-plus-circle cursor-pointer"
-              onClick={() => handleExpandRow(props.id)}
+              onClick={() => handleExpandRow(props?.id)}
             />
           )}
         </CTableDataCell>
