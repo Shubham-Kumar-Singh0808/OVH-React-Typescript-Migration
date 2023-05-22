@@ -9,9 +9,6 @@ import productSpecificationListApi from '../../../middleware/api/Assets/ProductS
 import { downloadFile } from '../../../utils/helper'
 
 const ProductSpecificationList = (): JSX.Element => {
-  const products = useTypedSelector(
-    reduxServices.productSpecificationList.selectors.productSpecificationList,
-  )
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
 
