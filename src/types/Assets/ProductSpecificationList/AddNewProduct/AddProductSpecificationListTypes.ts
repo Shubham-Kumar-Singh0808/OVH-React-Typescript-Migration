@@ -12,10 +12,6 @@ export type AssetType = {
   createdDate: string
   updatedDate: string
 }
-// export type GetAssetTypeListDetails = {
-//   length: number
-//   assetType: AssetType[]
-// }
 
 export type ProductType = {
   manufacturerId: number
@@ -37,11 +33,6 @@ export type AssetTypeListSliceState = {
   assetTypeList: AssetTypeList[]
   manufactureList: ManufacturerList
 }
-
-// export type GetProductTypeListDetails = {
-//   length: number
-//   productType: ProductType[]
-// }
 
 export type ManufacturerList = {
   assetTypeList: AssetTypeList[]
@@ -119,7 +110,4 @@ export type AddBtnProducts = {
   manufacturerId: number
   productId: number
   productSpecification: string
-}
-export type GetAddBtnProductsData = {
-  addBtnProducts: AddBtnProducts[]
 }

@@ -1,4 +1,5 @@
 import {
+  AddBtnProducts,
   AssetType,
   ManufacturerList,
   ProductType,
@@ -45,10 +46,23 @@ const getProductTypeList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+const addProductSpecifications = async (
+  data: AddBtnProducts,
+): Promise<AddBtnProducts> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProductSpecificationListReportApiConfig.addProductSpecifications,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 
 const assetTypeListApi = {
   getAssetTypeList,
   getProductTypeList,
   getAllLookUpList,
+  addProductSpecifications,
 }
 export default assetTypeListApi

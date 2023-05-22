@@ -75,9 +75,9 @@ const AddProduct = ({
   //     setSelectAssetType(newValue)
   //   }
   // }
-  // const clearInputs = () => {
-  //   setSelectAssetId('')
-  // }
+  const clearInputs = () => {
+    setSelectAssetId('')
+  }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
       htmlFor,
@@ -231,7 +231,7 @@ const AddProduct = ({
               data-testid="clear-btn"
               color="warning "
               className="btn-ovh text-white"
-              // onClick={handleClearInputs}
+              onClick={clearInputs}
             >
               Clear
             </CButton>
