@@ -839,3 +839,8 @@ export interface ProductTypeListApi extends ApiBase {
   deleteProduct: string
   exportProductList: string
 }
+
+export interface AssetWarrantyReportApi extends ApiBase {
+  getWarrantyAssetsList: string
+  downloadExportAssetWarrantyList: string
+}
