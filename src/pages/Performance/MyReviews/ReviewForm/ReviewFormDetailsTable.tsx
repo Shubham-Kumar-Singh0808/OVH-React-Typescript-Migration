@@ -34,11 +34,10 @@ const ReviewFormDetailsTable = ({
   const [isKPIDetailsModalVisible, setIsKPIDetailsModalVisible] =
     useState<boolean>(false)
   const [kpiDetails, setKpiDetails] = useState({} as KPI)
+
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
-
-  console.log(id)
 
   // const updatedAppraisalForm = useTypedSelector(
   //   reduxServices.myReview.actions.updateKPI,
@@ -119,11 +118,11 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
-    // if (newKPI[index].employeeFeedback.length > 56) {
-    //   setDescriptionError(false)
-    // } else {
-    //   setDescriptionError(true)
-    // }
+    if (newKPI[index].employeeFeedback.length > 56) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
     dispatch(
       reduxServices.myReview.actions.updateKPI({
         kraId: id,

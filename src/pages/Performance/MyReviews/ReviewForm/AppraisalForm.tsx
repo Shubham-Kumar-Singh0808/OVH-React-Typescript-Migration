@@ -11,6 +11,7 @@ import ReviewHistoryDetails from '../ReviewHistory/ReviewHistoryDetails'
 const AppraisalForm = (): JSX.Element => {
   const [comments, setComments] = useState<string>()
   const [isPostButtonEnabled, setIsPostButtonEnabled] = useState(false)
+
   const dispatch = useAppDispatch()
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,

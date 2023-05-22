@@ -8,7 +8,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react-pro'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import ReviewFormEntry from './ReviewFormEntry'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -21,6 +21,8 @@ const ReviewFormTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [selectedEmpId, setSelectedEmpId] = useState<number>(Number(employeeId))
   const [KPIDetails, setKPIDetails] = useState<KPI[]>()
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] =
+    useState<boolean>(false)
   const dispatch = useAppDispatch()
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
@@ -35,6 +37,13 @@ const ReviewFormTable = (): JSX.Element => {
   const updatedAppraisalForm = useTypedSelector(
     reduxServices.myReview.actions.updateKPI,
   )
+  useEffect(() => {
+    if (KPIDetails) {
+      setIsSubmitButtonDisabled(true)
+    } else {
+      setIsSubmitButtonDisabled(false)
+    }
+  }, [KPIDetails])
   console.log(appraisalForm.kra)
   const saveEmployeeAppraisalFormHandler = () => {
     dispatch(
@@ -249,6 +258,7 @@ const ReviewFormTable = (): JSX.Element => {
               color="success "
               className="btn-ovh"
               onClick={submitAppraisalFormHandler}
+              disabled={!isSubmitButtonDisabled}
             >
               Submit
             </CButton>
