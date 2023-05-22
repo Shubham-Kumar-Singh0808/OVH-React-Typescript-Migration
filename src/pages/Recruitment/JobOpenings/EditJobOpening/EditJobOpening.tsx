@@ -276,7 +276,7 @@ const EditJobOpening = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editToDate || 'N/A'}
+              value={editToDate || ''}
               minDate={new Date()}
               onChange={(date: Date) => onHandleDatePicker(date)}
             />
@@ -289,7 +289,7 @@ const EditJobOpening = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editJobInfo.description || 'N/A'}
+                initData={editJobInfo.description || ''}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}

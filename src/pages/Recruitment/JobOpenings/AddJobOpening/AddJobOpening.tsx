@@ -48,8 +48,8 @@ const AddJobOpening = (): JSX.Element => {
   )
 
   const jobCodeExists = (name: string) => {
-    return jobVacancies?.find((locationName) => {
-      return locationName.jobCode.toLowerCase() === name.toLowerCase()
+    return jobVacancies?.find((code) => {
+      return code.jobCode.toLowerCase() === name.toLowerCase()
     })
   }
   const handledInputChange = (
