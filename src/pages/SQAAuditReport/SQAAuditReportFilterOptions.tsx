@@ -33,8 +33,17 @@ const SQAAuditReportFilterOptions = ({
   toDate: string
   setToDate: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const [status, setStatus] = useState<string>('')
-  const [rescheduleStatus, setRescheduleStatus] = useState<string>('')
+  const getSelectedStatusValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedStatusValue,
+  )
+  const getSelectedRescheduleStatusValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedRescheduleStatusValue,
+  )
+
+  const [status, setStatus] = useState<string>(getSelectedStatusValue)
+  const [rescheduleStatus, setRescheduleStatus] = useState<string>(
+    getSelectedRescheduleStatusValue,
+  )
   const [searchInput, setSearchInput] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
   const sqaAuditReportListSize = useTypedSelector(
@@ -220,6 +229,11 @@ const SQAAuditReportFilterOptions = ({
             name="selectDate"
             value={selectDate}
             onChange={(e) => {
+              dispatch(
+                reduxServices.sqaAuditReport.actions.setMonthValue(
+                  e.target.value,
+                ),
+              )
               setSelectDate(e.target.value)
             }}
           >
@@ -246,6 +260,11 @@ const SQAAuditReportFilterOptions = ({
             name="status"
             value={status}
             onChange={(e) => {
+              dispatch(
+                reduxServices.sqaAuditReport.actions.setStatusValue(
+                  e.target.value,
+                ),
+              )
               setStatus(e.target.value)
             }}
           >
@@ -268,6 +287,11 @@ const SQAAuditReportFilterOptions = ({
                 name="rescheduleStatus"
                 value={rescheduleStatus}
                 onChange={(e) => {
+                  dispatch(
+                    reduxServices.sqaAuditReport.actions.setRescheduleStatus(
+                      e.target.value,
+                    ),
+                  )
                   setRescheduleStatus(e.target.value)
                 }}
               >
@@ -305,9 +329,12 @@ const SQAAuditReportFilterOptions = ({
                 name="fromDate"
                 maxDate={disableAfterDate}
                 value={fromDateValue}
-                onChange={(date: Date) =>
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.sqaAuditReport.actions.setFromDate(date),
+                  )
                   setFromDate(moment(date).format(commonFormatDate))
-                }
+                }}
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
@@ -332,9 +359,10 @@ const SQAAuditReportFilterOptions = ({
                 placeholderText="dd/mm/yyyy"
                 name="toDate"
                 value={toDateValue}
-                onChange={(date: Date) =>
+                onChange={(date: Date) => {
+                  dispatch(reduxServices.sqaAuditReport.actions.setToDate(date))
                   setToDate(moment(date).format(commonFormatDate))
-                }
+                }}
                 maxDate={disableAfterDate}
               />
             </CCol>
