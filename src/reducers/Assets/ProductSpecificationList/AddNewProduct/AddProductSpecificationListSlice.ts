@@ -151,16 +151,6 @@ const addProductSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.manufactureList = action.payload
       })
-      .addMatcher(isAnyOf(updateProductSpecification.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(
-        isAnyOf(updateProductSpecification.fulfilled),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
-          // state.updateProductSpecification = action.payload
-        },
-      )
   },
 })
 const addProductThunk = {
