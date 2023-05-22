@@ -38,6 +38,7 @@ const ReporteesAutoComplete = ({
     reduxServices.changeReportees.selectors.isLoading,
   )
 
+  //clears the data
   const onClickHandler = () => {
     setShouldRenderTable(false)
     dispatch(reduxServices.changeReportees.actions.clearManagerData())
@@ -50,6 +51,7 @@ const ReporteesAutoComplete = ({
   const filter = managersOrHrManagersList?.filter(
     (item) => item.fullName === autoCompleteTarget,
   )
+  //sets the manager id and autocomplete value
   const onHandleSelectManager = (fullName: string) => {
     setAutoCompleteTarget(fullName)
     const managerName = managersOrHrManagersList.find(
@@ -58,6 +60,7 @@ const ReporteesAutoComplete = ({
     setManagerId(managerName?.id as number)
   }
 
+  //gets the employees under manager
   const handleSearchByEnter = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
