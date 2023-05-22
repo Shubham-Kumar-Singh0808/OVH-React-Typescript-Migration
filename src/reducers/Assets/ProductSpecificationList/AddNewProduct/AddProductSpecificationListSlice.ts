@@ -2,17 +2,16 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
   AssetType,
-  ProductType,
   GetAssetTypeListData,
   AssetTypeList,
   ManufacturerList,
   AssetTypeListSliceState,
-  AddBtnProducts,
+  AddProductSpecificationProps,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { RootState } from '../../../../stateStore'
+import { AppDispatch, RootState } from '../../../../stateStore'
 
 const getAssetTypeList = createAsyncThunk(
   'assetTypeList/getAssetTypeList       ',
@@ -49,11 +48,42 @@ const getAllLookUps = createAsyncThunk(
     }
   },
 )
-const addProductSpecifications = createAsyncThunk(
-  'AssetTypeListData/addProductSpecifications       ',
-  async (data: AddBtnProducts, thunkApi) => {
+
+const deleteProductSpecification = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'productSpecification/deleteProductSpecification',
+  async (specificationId, thunkApi) => {
     try {
-      return await assetTypeListApi.addProductSpecifications(data)
+      return await assetTypeListApi.deleteProductSpecification(specificationId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addProductSpecifications = createAsyncThunk<
+  number | undefined,
+  AddProductSpecificationProps,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'productSpecifications/addProductSpecifications',
+  async (employeeLeaveCategory: AddProductSpecificationProps, thunkApi) => {
+    try {
+      return await assetTypeListApi.addProductSpecifications(
+        employeeLeaveCategory,
+      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -77,7 +107,7 @@ const addProductSlice = createSlice({
     builder
       .addCase(getProductTypeList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.productType = action.payload
+        state.assetType = action.payload
       })
       .addMatcher(isAnyOf(getAssetTypeList.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
@@ -104,13 +134,14 @@ const addProductThunk = {
   getProductTypeList,
   getAllLookUps,
   addProductSpecifications,
+  deleteProductSpecification,
 }
 
 const assetTypeList = (state: RootState): AssetType[] =>
   state.addProduct.assetType
 
-const productTypeList = (state: RootState): ProductType[] =>
-  state.addProduct.productType
+const productTypeList = (state: RootState): AssetType[] =>
+  state.addProduct.assetType
 
 const AssetData = (state: RootState): AssetTypeList[] =>
   state.addProduct.assetTypeList

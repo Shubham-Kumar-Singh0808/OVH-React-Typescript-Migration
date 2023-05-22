@@ -1,5 +1,6 @@
 import {
   AddBtnProducts,
+  AddProductSpecificationProps,
   AssetType,
   ManufacturerList,
   ProductType,
@@ -34,9 +35,7 @@ const getAllLookUpList = async (): Promise<ManufacturerList> => {
   return response.data
 }
 
-const getProductTypeList = async (
-  productId: number,
-): Promise<ProductType[]> => {
+const getProductTypeList = async (productId: number): Promise<AssetType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.getProductTypeChangeList,
     method: AllowedHttpMethods.get,
@@ -46,23 +45,38 @@ const getProductTypeList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const deleteProductSpecification = async (
+  specificationId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProductSpecificationListReportApiConfig.deleteProductSpecification,
+    method: AllowedHttpMethods.delete,
+    params: {
+      specificationId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const addProductSpecifications = async (
-  data: AddBtnProducts,
-): Promise<AddBtnProducts> => {
+  employeeLeaveCategory: AddProductSpecificationProps,
+): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.addProductSpecifications,
     method: AllowedHttpMethods.post,
-    data,
+    data: employeeLeaveCategory,
   })
-
-  const response = await useAxios(requestConfig)
-  return response.data
+  const responseVisa = await useAxios(requestConfig)
+  return responseVisa.data
 }
 
 const assetTypeListApi = {
   getAssetTypeList,
   getProductTypeList,
   getAllLookUpList,
+  deleteProductSpecification,
   addProductSpecifications,
 }
 export default assetTypeListApi

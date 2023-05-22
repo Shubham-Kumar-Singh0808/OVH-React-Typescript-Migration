@@ -1,7 +1,6 @@
 import { LoadingState } from '../../commonTypes'
 
 export type ProductSpecifications = {
-  // replace(removeTag: string, arg1: string): unknown
   id: number
   productId: number
   productName: string
@@ -43,8 +42,3 @@ export type ProductSpecificationListTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   updateaccess?: boolean
 }
-// export type GetassetTypeList = {
-//   id: number
-//   assetType: string
-// }
-// export type GetmanufacturerList = {}

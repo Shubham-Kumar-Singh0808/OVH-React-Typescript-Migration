@@ -14,6 +14,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProduct = ({
   setToggle,
@@ -23,7 +24,9 @@ const AddProduct = ({
   const [selectAssetId, setSelectAssetId] = useState<string>('')
   const [selectProductId, setSelectProductId] = useState<string>('')
 
-  const [selectAssetType, setSelectAssetType] = useState('')
+  const [productSpecification, setProductSpecification] = useState<string>('')
+
+  const [manufactureType, setManufactureType] = useState('')
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
@@ -46,7 +49,6 @@ const AddProduct = ({
   useEffect(() => {
     dispatch(reduxServices.addNewProduct.getAllLookUps())
   }, [dispatch])
-  //   console.log(AssetTypeList + 'AssetList')
 
   useEffect(() => {
     if (selectAssetId) {
@@ -64,19 +66,15 @@ const AddProduct = ({
     }
   }, [dispatch, selectProductId])
 
-  // const handledInputChange = (
-  //   event:
-  //     | React.ChangeEvent<HTMLSelectElement>
-  //     | React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   const { name, value } = event.target
-  //   if (name === 'assetType') {
-  //     const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-  //     setSelectAssetType(newValue)
-  //   }
-  // }
   const clearInputs = () => {
     setSelectAssetId('')
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+    setProductSpecification(' ')
+    setSelectProductId('')
+    setManufactureType('')
   }
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -86,11 +84,34 @@ const AddProduct = ({
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
   const handleProductSpecification = (ProductSpecification: string) => {
-    setAddProduct((prevState) => {
-      return { ...prevState, ...{ ProductSpecification } }
-    })
+    setProductSpecification(ProductSpecification)
   }
-  const [addProduct, setAddProduct] = useState({})
+
+  const handleAddProductSpecification = async () => {
+    const addProductSpecificationAction = await dispatch(
+      reduxServices.addNewProduct.addProductSpecifications({
+        assetTypeId: selectAssetId,
+        manufacturerId: Number(manufactureType),
+        productId: Number(selectProductId),
+        productSpecification,
+      }),
+    )
+    if (
+      reduxServices.addNewProduct.addProductSpecifications.fulfilled.match(
+        addProductSpecificationAction,
+      )
+    ) {
+      setToggle('')
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="product Specification added successfully"
+          />,
+        ),
+      )
+    }
+  }
   return (
     <>
       <OCard
@@ -177,10 +198,10 @@ const AddProduct = ({
               id="selectProductId"
               data-testid="form-select1"
               name="selectProductId"
-              // value={selectProductId}
-              // onChange={(e) => {
-              //   setSelectProductId(e.target.value)
-              // }}
+              value={manufactureType}
+              onChange={(e) => {
+                setManufactureType(e.target.value)
+              }}
             >
               <option value={''}>Select Manufacturer</option>
               {ProductTypeList.length > 0 &&
@@ -204,7 +225,7 @@ const AddProduct = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                // initData={addProduct?.}
+                initData={productSpecification}
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -222,7 +243,7 @@ const AddProduct = ({
               data-testid="add-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              // onClick={handleAddNewClient}
+              onClick={handleAddProductSpecification}
               // disabled={!isButtonEnabled}
             >
               Add
