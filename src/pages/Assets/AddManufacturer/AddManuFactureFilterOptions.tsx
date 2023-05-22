@@ -93,7 +93,7 @@ const AddManuFactureFilterOptions = ({
               value={productType}
               onChange={(e) => setProductType(e.target.value)}
             >
-              <option value={''}>Select Leave Type</option>
+              <option value={''}>Select Product Type</option>
               <option value="EARNED">EARNED</option>
               <option value="LOP">LOP</option>
             </CFormSelect>
