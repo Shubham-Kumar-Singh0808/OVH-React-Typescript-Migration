@@ -445,6 +445,9 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
+const Manufacturer = React.lazy(
+  () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
 const AssetWarrantyReport = React.lazy(
   () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
 )
@@ -992,6 +995,11 @@ const routes = [
     path: '/addJobvacancies',
     name: 'AddJobVacancies',
     component: AddJobVacancies,
+  },
+  {
+    path: '/manufacturerList',
+    name: 'manufacturerList',
+    component: Manufacturer,
   },
   {
     path: '/productList',

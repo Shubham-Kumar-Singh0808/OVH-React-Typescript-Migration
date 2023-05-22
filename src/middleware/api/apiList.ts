@@ -108,6 +108,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
 } from '../../types/apiTypes'
@@ -984,6 +985,10 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+export const ManufacturerApiListConfig: ManufacturerApi = {
+  getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
+  exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
 }
 export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
