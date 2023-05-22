@@ -243,6 +243,8 @@ const appraisalFormId = (state: RootState): number =>
 const performanceRatings = (state: RootState): GetPerformanceRatings[] =>
   state.myReview.getPerformanceRatings
 
+const errorMessage = (state: RootState): ValidationError => state.myReview.error
+
 const myReviewThunk = {
   getEmployeePerformanceReview,
   getEmployeeReviewForm,
@@ -264,6 +266,7 @@ const myReviewSelectors = {
   isReviewCommentsLoading,
   isButtonsVisible,
   performanceRatings,
+  errorMessage,
 }
 
 export const myReviewService = {
