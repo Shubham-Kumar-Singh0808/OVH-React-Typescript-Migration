@@ -44,7 +44,6 @@ const AddProduct = ({
   const ProductTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
-  console.log(ProductTypeList + 'ProductTypeList')
 
   useEffect(() => {
     dispatch(reduxServices.addNewProduct.getAllLookUps())

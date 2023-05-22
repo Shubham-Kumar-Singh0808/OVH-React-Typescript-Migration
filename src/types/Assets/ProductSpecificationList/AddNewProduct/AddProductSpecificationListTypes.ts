@@ -25,6 +25,23 @@ export type ProductType = {
   createdDate: string
   updatedDate: string
 }
+export type UpdateProductSpecificationTypes = {
+  id: number
+  productId: number
+  productName: string
+  manufacturerId: number
+  manufacturerName: string
+  assetTypeId: number
+  assetType: string
+  productSpecification: string
+  createdBy: string
+  createdDate: string
+  updatedBy: string
+  updatedDate: string
+  departmentId: number | null
+  departmentName: string | null
+  roleId: number | null
+}
 export type AssetTypeListSliceState = {
   assetType: AssetType[]
   isLoading: LoadingState
@@ -32,6 +49,7 @@ export type AssetTypeListSliceState = {
   getAssetTypeListData: GetAssetTypeListData
   assetTypeList: AssetTypeList[]
   manufactureList: ManufacturerList
+  // updateProductSpecification: UpdateProductSpecificationTypes
 }
 
 export type ManufacturerList = {
@@ -114,7 +132,6 @@ export type AddBtnProducts = {
 export type GetAddBtnProductsData = {
   addBtnProducts: AddBtnProducts[]
 }
-
 export type AddProductSpecificationProps = {
   assetTypeId: string
   manufacturerId: number

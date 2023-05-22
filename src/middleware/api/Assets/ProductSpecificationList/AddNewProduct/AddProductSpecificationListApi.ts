@@ -4,6 +4,7 @@ import {
   AssetType,
   ManufacturerList,
   ProductType,
+  UpdateProductSpecificationTypes,
 } from '../../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -71,12 +72,23 @@ const addProductSpecifications = async (
   const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
 }
-
+const updateProductSpecification = async (
+  productSpecificationDetails: UpdateProductSpecificationTypes,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ProductSpecificationListReportApiConfig.updateProductSpecification,
+    method: AllowedHttpMethods.post,
+    data: productSpecificationDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const assetTypeListApi = {
   getAssetTypeList,
   getProductTypeList,
   getAllLookUpList,
   deleteProductSpecification,
   addProductSpecifications,
+  updateProductSpecification,
 }
 export default assetTypeListApi

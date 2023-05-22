@@ -7,6 +7,7 @@ import {
   ManufacturerList,
   AssetTypeListSliceState,
   AddProductSpecificationProps,
+  UpdateProductSpecificationTypes,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
@@ -79,10 +80,10 @@ const addProductSpecifications = createAsyncThunk<
   }
 >(
   'productSpecifications/addProductSpecifications',
-  async (employeeLeaveCategory: AddProductSpecificationProps, thunkApi) => {
+  async (addProductSpecifications: AddProductSpecificationProps, thunkApi) => {
     try {
       return await assetTypeListApi.addProductSpecifications(
-        employeeLeaveCategory,
+        addProductSpecifications,
       )
     } catch (error) {
       const err = error as AxiosError
@@ -90,7 +91,30 @@ const addProductSpecifications = createAsyncThunk<
     }
   },
 )
-
+const updateProductSpecification = createAsyncThunk<
+  number | undefined,
+  UpdateProductSpecificationTypes,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'editProduct/ updateProductSpecification ',
+  async (
+    updateProductSpecification: UpdateProductSpecificationTypes,
+    thunkApi,
+  ) => {
+    try {
+      return await assetTypeListApi.updateProductSpecification(
+        updateProductSpecification,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialAddProductState: AssetTypeListSliceState = {
   assetType: [],
   productType: [],
@@ -127,6 +151,16 @@ const addProductSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.manufactureList = action.payload
       })
+      .addMatcher(isAnyOf(updateProductSpecification.pending), (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
+      .addMatcher(
+        isAnyOf(updateProductSpecification.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          // state.updateProductSpecification = action.payload
+        },
+      )
   },
 })
 const addProductThunk = {
@@ -135,6 +169,7 @@ const addProductThunk = {
   getAllLookUps,
   addProductSpecifications,
   deleteProductSpecification,
+  updateProductSpecification,
 }
 
 const assetTypeList = (state: RootState): AssetType[] =>
