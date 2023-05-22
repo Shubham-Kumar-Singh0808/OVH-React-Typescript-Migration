@@ -9,7 +9,7 @@ import { mockProductSpecificationList } from '../../../test/data/ProductSpecific
 
 const mockSetData = jest.fn()
 const handleModal = jest.fn()
-describe('Job Openings without data', () => {
+describe('Product Specifications without data', () => {
   beforeEach(() => {
     render(
       <ProductSpecificationListTable
@@ -51,8 +51,12 @@ describe('Job Openings without data', () => {
   })
 
   test('should render  component with data', () => {
-    expect(screen.getByText('Testing Flow')).toBeInTheDocument()
-    expect(screen.getByText('Pavani')).toBeInTheDocument()
+    expect(
+      screen.getByText(mockProductSpecificationList[0].productName),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(mockProductSpecificationList[0].manufacturerName),
+    ).toBeInTheDocument()
   })
   it('should call handleModal function with the correct argument on link click', () => {
     const linkElement = screen.getByTestId('product-specification2') // Update with the actual link text or use getByTestId if available

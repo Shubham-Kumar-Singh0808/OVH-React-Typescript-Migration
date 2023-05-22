@@ -9,7 +9,7 @@ import productSpecificationListApi from '../../../middleware/api/Assets/ProductS
 import { downloadFile } from '../../../utils/helper'
 
 const ProductSpecificationList = (): JSX.Element => {
-  const employees = useTypedSelector(
+  const products = useTypedSelector(
     reduxServices.productSpecificationList.selectors.productSpecificationList,
   )
   const [searchInput, setSearchInput] = useState<string>('')
@@ -35,7 +35,6 @@ const ProductSpecificationList = (): JSX.Element => {
       }),
     )
   }, [currentPage, dispatch, pageSize])
-  console.log(employees)
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       dispatch(

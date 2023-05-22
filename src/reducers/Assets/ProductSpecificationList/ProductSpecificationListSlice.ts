@@ -38,7 +38,8 @@ const productSpecificationListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getProductSpecificationList.pending), (state) => {
+
+      .addCase(getProductSpecificationList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
       .addMatcher(

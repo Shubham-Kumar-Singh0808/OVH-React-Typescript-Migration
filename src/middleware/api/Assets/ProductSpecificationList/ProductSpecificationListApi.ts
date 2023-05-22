@@ -27,6 +27,7 @@ const getProductSpecificationList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
 const exportProductSpecificationData = async (
   props: ProductSpecificationListProps,
 ): Promise<Blob | undefined> => {

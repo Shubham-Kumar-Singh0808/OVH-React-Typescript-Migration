@@ -24,8 +24,6 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
-// import OModal from '../../../components/ReusableComponent/OModal'
-
 const ProductSpecificationListTable = ({
   paginationRange,
   pageSize,
@@ -51,7 +49,6 @@ const ProductSpecificationListTable = ({
   const isLoading = useTypedSelector(
     reduxServices.productSpecificationList.selectors.isLoading,
   )
-  console.log(listSize)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -140,11 +137,7 @@ const ProductSpecificationListTable = ({
                       </CTooltip>
                       &nbsp; &nbsp; &nbsp;
                       <CTooltip content="Delete">
-                        <CButton
-                          color="danger"
-                          className="btn-ovh me-2"
-                          // onClick={() => handleShowDeleteModal(family.familyId)}
-                        >
+                        <CButton color="danger" className="btn-ovh me-2">
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
