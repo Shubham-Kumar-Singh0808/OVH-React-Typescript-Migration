@@ -1,12 +1,22 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddManuFactureFilterOptions from './AddManuFactureFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const AddManufacturerList = ({
   setToggle,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  //   const result = useTypedSelector(
+  //     reduxServices.ManufacturerList.selectors.manufacturerData,
+  //   )
+  //  console.log(result)
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+  }, [dispatch])
   return (
     <>
       <OCard

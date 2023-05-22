@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const AddManuFactureFilterOptions = ({
@@ -21,6 +21,9 @@ const AddManuFactureFilterOptions = ({
   const [productType, setProductType] = useState<string>('')
   const [manufactureName, setManufatureName] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const result = useTypedSelector(
+    reduxServices.ManufacturerList.selectors.manufacturerData,
+  )
 
   const clearButtonHandler = () => {
     setProductType('')
@@ -29,6 +32,9 @@ const AddManuFactureFilterOptions = ({
 
   const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+  }, [dispatch])
   const handleAddManufactureHandler = async () => {
     const addManuFactureListResultAction = await dispatch(
       reduxServices.ManufacturerList.addManufacturer({
@@ -46,12 +52,13 @@ const AddManuFactureFilterOptions = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="leave category added successfully"
+            toastMessage="ManufacturerList added successfully"
           />,
         ),
       )
     }
   }
+  console.log('result')
   useEffect(() => {
     if (productType && manufactureName) {
       setIsAddButtonEnabled(true)
@@ -94,8 +101,12 @@ const AddManuFactureFilterOptions = ({
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
-              <option value="EARNED">EARNED</option>
-              <option value="LOP">LOP</option>
+              {result.productList?.length > 0 &&
+                result?.map((result, index) => (
+                  <option key={index} value={result?.productId}>
+                    {result?.productName}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>

@@ -25,7 +25,7 @@ const getManufacturerList = createAsyncThunk(
   },
 )
 const getAllLookUps = createAsyncThunk(
-  'category/getAllLookUps       ',
+  'category/getAllLookUps ',
   async (_, thunkApi) => {
     try {
       return await ManufacturerApi.getAllLookUpList()
