@@ -50,10 +50,26 @@ const cancelEmployeeLeave = async (
   return response.data
 }
 
+const cancelAfterApproval = async (
+  leaveId: number,
+): Promise<EmployeeLeaveHistoryResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: leaveSummaryApiConfig.cancelAfterApproval,
+    method: AllowedHttpMethods.put,
+    params: {
+      leaveId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const LeaveSummaryApi = {
   getEmployeeLeaveSummary,
   getEmployeeLeaveHistory,
   cancelEmployeeLeave,
+  cancelAfterApproval,
 }
 
 export default LeaveSummaryApi

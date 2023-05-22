@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { ReactNode } from 'react'
 
 export type route = {
@@ -403,14 +404,12 @@ const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
 )
-
 const ClearnceCerticates = React.lazy(
   () =>
     import(
       './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
     ),
 )
-
 const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
@@ -450,6 +449,16 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const Manufacturer = React.lazy(
+  () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
+)
+const productList = React.lazy(
+  () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -996,6 +1005,20 @@ const routes = [
     name: 'Product Specification List',
     component: ProductSpecificationList,
   },
+  {
+    path: '/manufacturerList',
+    name: 'manufacturerList',
+    component: Manufacturer,
+  },
+  {
+    path: '/productList',
+    name: 'Product List',
+    component: productList,
+  },
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
+  },
 ]
-
 export default routes

@@ -7,7 +7,10 @@ import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import EditSection from '../Edit Section/EditSection'
-import { UpdateSection } from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationFormToggleType,
+  UpdateSection,
+} from '../../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
@@ -32,7 +35,11 @@ const SectionsList = (): JSX.Element => {
   }, [dispatch])
 
   const editSectionButtonHandler = (editSectionData: UpdateSection): void => {
-    dispatch(reduxServices.itDeclarationList.actions.setToggle('editSections'))
+    dispatch(
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.editSection,
+      ),
+    )
     console.log(editSectionData)
     setEditSection({
       invests: [],
