@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ChangeReporteeFilterOptions from './ChangeReporteeFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const ChangeReportees = () => {

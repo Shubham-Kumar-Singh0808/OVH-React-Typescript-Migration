@@ -11,8 +11,8 @@ import {
   waitFor,
 } from '../../../test/testUtils'
 import { mockAllReportingManagerData } from '../../../test/data/ChangeReporteesData'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 
+const updateTestId = 'update-manager'
 describe('FEmployeesListUnderManagerTable component with data', () => {
   beforeEach(() => {
     render(
@@ -22,7 +22,7 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
         <div id="root">
           <EmployeesListUnderManagerTable
             employeeData={mockAllReportingManagerData}
-            managersOrHrManagersList={[]}
+            managersOrHrManagersList={mockAllReportingManagerData}
             placeHolder={'Manager Name'}
             autoCompleteTarget={''}
             onClickHandler={jest.fn()}
@@ -54,7 +54,7 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
   })
 
   test('should click on update button  ', () => {
-    const editElement = screen.getAllByTestId('update-manager')
+    const editElement = screen.getAllByTestId(updateTestId)
     fireEvent.click(editElement[0])
     expect(editElement[0]).toBeInTheDocument()
     expect(editElement[0]).toBeDisabled()
@@ -72,18 +72,8 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
     ).toBeInTheDocument()
   })
 
-  // it('should update selected rows when checkbox is checked/unchecked', () => {
-  //   const checkbox = screen.getAllByRole('checkbox')
-
-  //   fireEvent.click(checkbox[0])
-  //   expect(checkbox[0]).toBe(true)
-
-  //   fireEvent.click(checkbox[0])
-  //   expect(checkbox[0]).toBe(false)
-  // })
-
   // eslint-disable-next-line require-await
-  it('update button enable', async () => {
+  it('update button enable for Manager', async () => {
     const checkbox = screen.getAllByRole('checkbox')
     // Select a row
     fireEvent.click(checkbox[1])
@@ -95,11 +85,11 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
       target: { value: 'Ajay Ray' },
     })
 
-    const updateButton = screen.getByTestId('update-manager')
-    userEvent.click(updateButton)
+    const updateButton = screen.getByTestId(updateTestId)
+    expect(updateButton).toBeEnabled()
+    //userEvent.click(updateButton)
 
-    // expect(updateButton).toBeDisabled()
-    // fireEvent.click(updateButton)
+    fireEvent.click(updateButton)
     await waitFor(() => {
       expect(
         screen.findByText(/Employee's Reporting Manager changed successfully./),
@@ -108,7 +98,7 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
   })
 })
 
-describe('update button', () => {
+describe('Manager update button', () => {
   beforeEach(() => {
     render(
       <EmployeesListUnderManagerTable
@@ -130,5 +120,54 @@ describe('update button', () => {
 
   it('should render "No Records Found" when employeeData is empty', () => {
     expect(screen.getByText(/No Records Found/i)).toBeInTheDocument()
+  })
+})
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <EmployeesListUnderManagerTable
+      employeeData={mockAllReportingManagerData}
+      managersOrHrManagersList={mockAllReportingManagerData}
+      placeHolder={'Hr Name'}
+      autoCompleteTarget={''}
+      onClickHandler={jest.fn()}
+    />
+  </div>
+)
+describe('Hr Manager update button', () => {
+  beforeEach(() => {
+    render(toRender, {
+      preloadedState: {
+        changeReportees: {
+          AllReportingManagerList: mockAllReportingManagerData,
+        },
+      },
+    })
+  })
+
+  it('update button enable for Hr Manager', async () => {
+    const checkbox = screen.getAllByRole('checkbox')
+    // Select a row
+    fireEvent.click(checkbox[0])
+    fireEvent.click(checkbox[1])
+    fireEvent.click(checkbox[0])
+
+    // Select a valid manager from the autocomplete
+    fireEvent.change(screen.getByRole('combobox'), {
+      target: { value: 'Ajay Ray' },
+    })
+
+    const updateButton = screen.getByTestId(updateTestId)
+    expect(updateButton).toBeEnabled()
+
+    fireEvent.click(updateButton)
+    await waitFor(() => {
+      expect(
+        screen.findByText(/Employee's Hr Associate changed successfully./),
+      ).toBeTruthy()
+    })
   })
 })
