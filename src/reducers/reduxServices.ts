@@ -119,6 +119,7 @@ import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
+import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 
 export const reduxServices = {
@@ -244,4 +245,5 @@ export const reduxServices = {
   jobVacancies: jobOpeningsService,
   ManufacturerList: ManufacturerListService,
   ProductTypeList: ProductTypeListService,
+  assetsWarrantyList: assetsWarrantyListService,
 }

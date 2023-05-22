@@ -404,14 +404,12 @@ const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
 )
-
 const ClearnceCerticates = React.lazy(
   () =>
     import(
       './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
     ),
 )
-
 const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
@@ -449,6 +447,9 @@ const AddJobVacancies = React.lazy(
 )
 const Manufacturer = React.lazy(
   () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
 )
 const productList = React.lazy(
   () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
@@ -1005,6 +1006,10 @@ const routes = [
     name: 'Product List',
     component: productList,
   },
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
+  },
 ]
-
 export default routes
