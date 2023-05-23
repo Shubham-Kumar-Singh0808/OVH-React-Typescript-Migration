@@ -1,3 +1,4 @@
+import { UpdateProductSpecificationTypes } from './AddNewProduct/AddProductSpecificationListTypes'
 import { LoadingState } from '../../commonTypes'
 
 export type ProductSpecifications = {
@@ -41,4 +42,8 @@ export type ProductSpecificationListTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   updateaccess?: boolean
+  setEditProductSpecification: React.Dispatch<
+    React.SetStateAction<UpdateProductSpecificationTypes>
+  >
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
 import AddProduct from './AddNewProduct/AddProductSpecificationList'
+import EditProductSpecification from './EditProductSpecification/EditProductSpecification'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import productSpecificationListApi from '../../../middleware/api/Assets/ProductSpecificationList/ProductSpecificationListApi'
 import { downloadFile } from '../../../utils/helper'
+import { UpdateProductSpecificationTypes } from '../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 
 const ProductSpecificationList = (): JSX.Element => {
   const employees = useTypedSelector(
@@ -15,6 +17,9 @@ const ProductSpecificationList = (): JSX.Element => {
   )
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
+  const productSpecification = {} as UpdateProductSpecificationTypes
+  const [editProductSpecification, setEditProductSpecification] =
+    useState(productSpecification)
 
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
@@ -74,7 +79,7 @@ const ProductSpecificationList = (): JSX.Element => {
       'ProductSpecificationList.csv',
     )
   }
-
+  console.log(editProductSpecification)
   return (
     <>
       {toggle === '' && (
@@ -149,11 +154,20 @@ const ProductSpecificationList = (): JSX.Element => {
               setCurrentPage={setCurrentPage}
               pageSize={pageSize}
               setPageSize={setPageSize}
+              setEditProductSpecification={setEditProductSpecification}
+              setToggle={setToggle}
             />
           </>
         </OCard>
       )}
       {toggle === '/addAssetType' && <AddProduct setToggle={setToggle} />}
+      {toggle === '/editProductSpecification' && (
+        <EditProductSpecification
+          setToggle={setToggle}
+          editProductSpecification={editProductSpecification}
+          setEditProductSpecification={setEditProductSpecification}
+        />
+      )}
     </>
   )
 }

@@ -16,7 +16,10 @@ import parse from 'html-react-parser'
 // import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { ProductSpecificationListTableProps } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
+import {
+  ProductSpecificationListTableProps,
+  ProductSpecifications,
+} from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -33,6 +36,8 @@ const ProductSpecificationListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  setEditProductSpecification,
+  setToggle,
 }: ProductSpecificationListTableProps): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [productSpecificationId, setProductSpecificationsId] =
@@ -97,6 +102,11 @@ const ProductSpecificationListTable = ({
         ),
       )
     }
+  }
+
+  const editButtonHandler = (productSpecification: ProductSpecifications) => {
+    setEditProductSpecification(productSpecification)
+    setToggle('/editProductSpecification')
   }
 
   return (
@@ -170,6 +180,9 @@ const ProductSpecificationListTable = ({
                           color="info"
                           size="sm"
                           className="btn-ovh-employee-list"
+                          onClick={() =>
+                            editButtonHandler(productSpecification)
+                          }
                         >
                           <i className="text-white fa fa-pencil-square-o"></i>
                         </CButton>
