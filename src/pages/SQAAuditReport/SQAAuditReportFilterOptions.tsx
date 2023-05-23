@@ -33,6 +33,8 @@ const SQAAuditReportFilterOptions = ({
   toDate: string
   setToDate: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const getSelectedStatusValue = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.getSelectedStatusValue,
   )
@@ -40,17 +42,37 @@ const SQAAuditReportFilterOptions = ({
     reduxServices.sqaAuditReport.selectors.getSelectedRescheduleStatusValue,
   )
 
+  const getFromDateValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getToDateValue,
+  )
+
+  const getSelectedMonthValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedMonthValue,
+  )
+
   const [status, setStatus] = useState<string>(getSelectedStatusValue)
   const [rescheduleStatus, setRescheduleStatus] = useState<string>(
     getSelectedRescheduleStatusValue,
   )
+
+  useEffect(() => {
+    dispatch(reduxServices.sqaAuditReport.actions.setStatusValue(status))
+    dispatch(
+      reduxServices.sqaAuditReport.actions.setRescheduleStatus(
+        rescheduleStatus,
+      ),
+    )
+  }, [dispatch, status, rescheduleStatus])
+
   const [searchInput, setSearchInput] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
   const sqaAuditReportListSize = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportListSize,
   )
 
-  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -91,11 +113,11 @@ const SQAAuditReportFilterOptions = ({
         endIndex: pageSize * currentPage,
         multiSearch: '',
         startIndex: pageSize * (currentPage - 1),
-        SQAAuditSelectionDate: selectDate || '',
-        auditRescheduleStatus: rescheduleStatus || '',
-        auditStatus: status || '',
-        from: '',
-        to: '',
+        SQAAuditSelectionDate: getSelectedMonthValue || '',
+        auditRescheduleStatus: getSelectedRescheduleStatusValue || '',
+        auditStatus: getSelectedStatusValue || '',
+        from: (getFromDateValue as string) || '',
+        to: (getToDateValue as string) || '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
