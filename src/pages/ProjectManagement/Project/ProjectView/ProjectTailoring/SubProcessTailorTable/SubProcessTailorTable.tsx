@@ -7,12 +7,8 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import SubProcessTailorTableRow from './SubProcessTailorTableRow'
-import {
-  ProcessSubHeadDTO,
-  ProjectTailoringStatusEnum,
-} from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
+import { ProcessSubHeadDTO } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 import { sortSubProcessesInAscendingOrder } from '../ProjectTailoringHelpers'
-import { useTypedSelector } from '../../../../../../stateStore'
 
 const SubProcessTailorTable = ({
   subProcesses,

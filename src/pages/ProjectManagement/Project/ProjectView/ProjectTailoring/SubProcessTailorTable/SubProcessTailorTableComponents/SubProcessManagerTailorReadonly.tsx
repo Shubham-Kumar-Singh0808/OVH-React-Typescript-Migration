@@ -13,7 +13,7 @@ const SubProcessManagerTailorReadonly = ({
   subProcess,
 }: {
   subProcess: ProcessSubHeadDTO
-}) => {
+}): JSX.Element => {
   const tailorStatus = useTypedSelector(
     (state) => state.projectTailoring.tailorStatus,
   )

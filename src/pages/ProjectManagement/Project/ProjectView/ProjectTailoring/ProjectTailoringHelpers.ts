@@ -213,7 +213,7 @@ export const getEnumValueForTailorStatus = (
 // to check if the manager submit button must be enabled. For selected yes/waived off they must write justification
 export const checkManagerSubmitButtonEnabled = (
   processHeadList: ProcessHeadDTO[],
-) => {
+): boolean => {
   for (let i = 0; i < processHeadList?.length; i++) {
     // filtering the list based on options selected - yes / waived off along with comments
     const subProcessesFilteredList = processHeadList[
@@ -266,7 +266,7 @@ export const getProcessedDescription = (
 
 export const checkSQARejectedButtonEnabled = (
   processHeadList: ProcessHeadDTO[],
-) => {
+): boolean => {
   // filtering the list based on options selected - rejected
   for (let i = 0; i < processHeadList?.length; i++) {
     const subProcessesFilteredList = processHeadList[

@@ -14,12 +14,10 @@ import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
-import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 import {
   ProcessHeadDTO,
   ProjectTailoringStatusEnum,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
-import OToast from '../../../../../components/ReusableComponent/OToast'
 
 /*
   this component follows top-down data approach. Intially the data is stored in the redux store.
@@ -30,9 +28,6 @@ import OToast from '../../../../../components/ReusableComponent/OToast'
 const ProjectTailoring = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const { projectId } = useParams<{ projectId: string }>()
-  const isLoading = useTypedSelector(
-    (state) => state.projectTailoring.isLoading,
-  )
   const projectTailoringState = useTypedSelector(
     (state) => state.projectTailoring,
   )
@@ -68,7 +63,6 @@ const ProjectTailoring = (): JSX.Element => {
     dispatch(
       reduxServices.projectTailoring.actions.setFormStatus(tailorStatusEnum),
     )
-    console.log('done')
     return projectTailoringState.projectTailoringDocument?.processHeaddto
   }, [projectTailoringState, defaultProjectTailoringDocData])
 

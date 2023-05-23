@@ -14,7 +14,7 @@ const ManagerUpdateButton = ({
   submitDocumentHandler: (
     finalData: OutgoingSaveProjectTailoringDocument,
   ) => Promise<void>
-}) => {
+}): JSX.Element => {
   const projectTailoringDocument = useTypedSelector(
     (state) => state.projectTailoring.projectTailoringDocument,
   )

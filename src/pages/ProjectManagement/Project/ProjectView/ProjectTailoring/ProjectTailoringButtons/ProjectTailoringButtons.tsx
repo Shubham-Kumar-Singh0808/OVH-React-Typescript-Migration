@@ -12,7 +12,7 @@ import { reduxServices } from '../../../../../../reducers/reduxServices'
 import OToast from '../../../../../../components/ReusableComponent/OToast'
 import { managerFeatureId, sqaFeatureId } from '../ProjectTailoringHelpers'
 
-const ProjectTailoringButtons = () => {
+const ProjectTailoringButtons = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const managerUserAccessToFeatures = useTypedSelector(
     (state) =>

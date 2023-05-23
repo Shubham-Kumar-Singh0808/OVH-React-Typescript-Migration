@@ -1,5 +1,5 @@
 import { CTableDataCell } from '@coreui/react-pro'
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { reduxServices } from '../../../../../../../reducers/reduxServices'
 import {
   useAppDispatch,
