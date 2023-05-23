@@ -73,6 +73,10 @@ const EmployeeReportessTable = (): JSX.Element => {
     scope: 'col',
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   return (
     <>
       <CTable striped>
@@ -94,7 +98,10 @@ const EmployeeReportessTable = (): JSX.Element => {
           {employeeReportees.length > 0 &&
             currentPageItems?.map((reportee, index) => (
               <CTableRow key={index}>
-                <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                <CTableDataCell scope="row">
+                  {' '}
+                  {getItemNumber(index)}
+                </CTableDataCell>
                 <CTableDataCell scope="row">
                   <Link
                     to={`/employeeProfile/${reportee.managerId}`}
