@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { ReactNode } from 'react'
 
 export type route = {
@@ -402,6 +403,16 @@ const IntervieweeDetails = React.lazy(
 const CandidateList = React.lazy(
   () => import('./pages/Recruitment/CandidateList/CandidateList'),
 )
+const Manufacturer = React.lazy(
+  () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
+)
+const productList = React.lazy(
+  () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
+)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -957,6 +968,21 @@ const routes = [
     path: '/candidatetimeline/:personId&intervwcycleId',
     name: 'Interviewee Details',
     component: IntervieweeDetails,
+  },
+  {
+    path: '/manufacturerList',
+    name: 'manufacturerList',
+    component: Manufacturer,
+  },
+  {
+    path: '/productList',
+    name: 'Product List',
+    component: productList,
+  },
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
   },
 ]
 export default routes

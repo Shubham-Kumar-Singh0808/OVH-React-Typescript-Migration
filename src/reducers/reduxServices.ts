@@ -120,6 +120,9 @@ import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 import { intervieweeDetailsService } from './Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
 import { candidateListService } from './Recruitment/CandidateList/CandidateListSlice'
+import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
+import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 
 export const reduxServices = {
   app: appService,
@@ -244,4 +247,7 @@ export const reduxServices = {
   jobVacancies: jobOpeningsService,
   intervieweeDetails: intervieweeDetailsService,
   candidateList: candidateListService,
+  ManufacturerList: ManufacturerListService,
+  ProductTypeList: ProductTypeListService,
+  assetsWarrantyList: assetsWarrantyListService,
 }
