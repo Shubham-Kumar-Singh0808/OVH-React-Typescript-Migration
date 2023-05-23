@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { CButton } from '@coreui/react-pro'
 import MyReviewTabs from './MyReviewTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
 const MyReview = (): JSX.Element => {
@@ -10,9 +10,14 @@ const MyReview = (): JSX.Element => {
     reduxServices.myReview.selectors.appraisalForm,
   )
   const [isRequestDiscussion, setIsRequestDiscussion] = useState(false)
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+  const dispatch = useAppDispatch()
   const handleRequestDiscussionClick = () => {
     // Perform save logic here
     setIsRequestDiscussion(true)
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }
   console.log(appraisalForm.kra?.length)
   const errorMessage = useTypedSelector(
@@ -39,27 +44,30 @@ const MyReview = (): JSX.Element => {
         ) : (
           <>
             {appraisalForm.formStatus === 'PENDINGAGREEMENT' ||
-            appraisalForm.formStatus === 'OPENFORDISCUSSION' ? (
+            appraisalForm.formStatus === 'OPENFORDISCUSSION' ||
+            appraisalForm.formStatus !== 'COMPLETED' ? (
               <div className="d-inline ml15 pull-right">
                 <CButton type="submit" className="btn btn-success">
                   Acknowledge
                 </CButton>
                 &nbsp; &nbsp; &nbsp;
-                {!isRequestDiscussion && (
-                  <CButton
-                    type="submit"
-                    className="btn btn-warning"
-                    onClick={handleRequestDiscussionClick}
-                  >
-                    Request Discussion
-                  </CButton>
-                )}
+                {appraisalForm?.formStatus === 'PENDINGAGREEMENT' ||
+                  (!isRequestDiscussion && (
+                    <CButton
+                      type="submit"
+                      className="btn btn-warning"
+                      onClick={handleRequestDiscussionClick}
+                    >
+                      Request Discussion
+                    </CButton>
+                  ))}
               </div>
             ) : (
               ''
             )}
             {appraisalForm?.formStatus === 'COMPLETED' ||
-            appraisalForm?.formStatus === 'SUBMIT' ? (
+            appraisalForm?.formStatus === 'SUBMIT' ||
+            appraisalForm?.formStatus === 'PENDINGAGREEMENT' ? (
               <>
                 <div className="form-group">
                   <label className="pull-left text-primary">
