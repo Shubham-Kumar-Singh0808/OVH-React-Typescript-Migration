@@ -12,10 +12,11 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ReviewListTableProps } from '../../../types/Performance/ReviewList/reviewListTypes'
 
 const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
@@ -26,7 +27,7 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   const reviewListSize = useTypedSelector(
     reduxServices.reviewList.selectors.listSize,
   )
-
+  const dispatch = useAppDispatch()
   const {
     paginationRange,
     pageSize,
@@ -99,6 +100,10 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
       </CRow>
     )
 
+  const viewButtonHandler = (empId: number) => {
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(empId))
+  }
+
   return (
     <>
       <CTable striped responsive align="middle">
@@ -142,14 +147,17 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                       {reviewStatusLabelColor(review.formStatus)}
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CTooltip content="View">
-                        <CButton
-                          className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                          data-testid={`view-reviewForm-btn${index}`}
-                        >
-                          <i className="fa fa-eye" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      <Link to={`/ViewAppraisalForm/?emp=${review.empId}`}>
+                        <CTooltip content="View">
+                          <CButton
+                            className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                            data-testid={`view-reviewForm-btn${index}`}
+                            onClick={() => viewButtonHandler(review.empId)}
+                          >
+                            <i className="fa fa-eye" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      </Link>
                     </CTableDataCell>
                   </CTableRow>
                 )

@@ -217,7 +217,7 @@ export type EmployeeAppraisalForm = {
   finalRatingName: null
   formRating: null
   formStatus: string
-  formStatusvalue: number
+  formStatusvalue: number | string
   iAgreeFlag: null
   id: number
   kpis: null

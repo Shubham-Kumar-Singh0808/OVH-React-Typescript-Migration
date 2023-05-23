@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { CButton } from '@coreui/react-pro'
-import MyReviewTabs from './MyReviewTabs'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import MyReviewTabs from '../../MyReviews/MyReviewTabs'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
-const MyReview = (): JSX.Element => {
+const ManagerEmployeeReview = (): JSX.Element => {
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
@@ -18,10 +18,6 @@ const MyReview = (): JSX.Element => {
   const errorMessage = useTypedSelector(
     reduxServices.myReview.selectors.errorMessage,
   )
-  const result =
-    appraisalForm?.overallAvgRating === 'NaN'
-      ? 'N/A'
-      : appraisalForm?.overallAvgRating
   return (
     <>
       <OCard
@@ -58,8 +54,7 @@ const MyReview = (): JSX.Element => {
             ) : (
               ''
             )}
-            {appraisalForm?.formStatus === 'COMPLETED' ||
-            appraisalForm?.formStatus === 'SUBMIT' ? (
+            {appraisalForm?.formStatus === 'COMPLETED' ? (
               <>
                 <div className="form-group">
                   <label className="pull-left text-primary">
@@ -85,7 +80,9 @@ const MyReview = (): JSX.Element => {
 
                   <div className="col-sm-2">
                     <label className="ng-binding">
-                      <span className="ng-binding">{result}</span>
+                      <span className="ng-binding">
+                        {appraisalForm?.overallAvgRating}
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -97,9 +94,8 @@ const MyReview = (): JSX.Element => {
           </>
         )}
       </OCard>
-      :
     </>
   )
 }
 
-export default MyReview
+export default ManagerEmployeeReview

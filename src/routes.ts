@@ -449,6 +449,10 @@ const AddJobVacancies = React.lazy(
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
+
+const ViewAppraisalForm = React.lazy(
+  () => import('./pages/Performance/MyReviews/MyReview'),
+)
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -986,6 +990,11 @@ const routes = [
     path: '/addJobvacancies',
     name: 'AddJobVacancies',
     component: AddJobVacancies,
+  },
+  {
+    path: '/ViewAppraisalForm',
+    name: 'ViewAppraisalForm',
+    component: ViewAppraisalForm,
   },
 ]
 
