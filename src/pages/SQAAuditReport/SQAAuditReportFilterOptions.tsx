@@ -239,7 +239,7 @@ const SQAAuditReportFilterOptions = ({
     <>
       <CRow>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Select :</CFormLabel>
+          <CFormLabel className="mt-1">Select:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -271,7 +271,7 @@ const SQAAuditReportFilterOptions = ({
         </CCol>
 
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Status :</CFormLabel>
+          <CFormLabel className="mt-1">Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -298,7 +298,7 @@ const SQAAuditReportFilterOptions = ({
         <CCol sm={4}>
           <CRow>
             <CCol sm={3} lg={3} className="text-end">
-              <CFormLabel className="mt-1">Reschedule Status :</CFormLabel>
+              <CFormLabel className="mt-1">Reschedule Status:</CFormLabel>
             </CCol>
             <CCol sm={6}>
               <CFormSelect
