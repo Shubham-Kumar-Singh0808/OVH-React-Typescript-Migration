@@ -844,6 +844,10 @@ export const projectTailoringApiConfig: ProjectTailoringApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+  saveProjectTailoringDocumentForManager:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocumentForManager',
+  saveProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocument',
 }
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',

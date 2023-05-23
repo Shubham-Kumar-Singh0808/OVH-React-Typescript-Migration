@@ -1,0 +1,95 @@
+import React from 'react'
+import { CTableRow, CTableDataCell } from '@coreui/react-pro'
+import SubProcessManagerInput from './SubProcessTailorTableComponents/SubProcessManagerInput'
+import SubProcessSQAInput from './SubProcessTailorTableComponents/SubProcessSQAInput'
+import SubProcessManagerTailorReadonly from './SubProcessTailorTableComponents/SubProcessManagerTailorReadonly'
+import {
+  ProcessSubHeadDTO,
+  ProjectTailoringStatusEnum,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
+import { useTypedSelector } from '../../../../../../stateStore'
+import {
+  isManagerAllowedToEdit,
+  managerFeatureId,
+  processedString,
+  sqaFeatureId,
+} from '../ProjectTailoringHelpers'
+
+const SubProcessTailorTableRow = ({
+  subProcess,
+  processHeadId,
+  subProcessIndex,
+}: {
+  subProcess: ProcessSubHeadDTO
+  processHeadId: number
+  subProcessIndex: number
+}): JSX.Element => {
+  const tailorStatus = useTypedSelector(
+    (state) => state.projectTailoring.tailorStatus,
+  )
+  const managerUserAccessToFeatures = useTypedSelector(
+    (state) =>
+      state.userAccessToFeatures.userAccessToFeatures.filter(
+        (feature) => feature.featureId === managerFeatureId,
+      )[0],
+  )
+  const sqaUserAccessAndFeatures = useTypedSelector(
+    (state) =>
+      state.userAccessToFeatures.userAccessToFeatures.filter(
+        (feature) => feature.featureId === sqaFeatureId,
+      )[0],
+  )
+
+  return (
+    <CTableRow data-testid={`subProcesses-${processHeadId}`}>
+      <CTableDataCell>{subProcessIndex + 1}</CTableDataCell>
+      <CTableDataCell>{subProcess.processSubHeadName}</CTableDataCell>
+      <CTableDataCell>
+        <a href={`${subProcess.link}`}>{subProcess.documentName}</a>
+      </CTableDataCell>
+      <CTableDataCell>{subProcess.responsible}</CTableDataCell>
+      <SubProcessManagerTailorReadonly subProcess={subProcess} />
+      {isManagerAllowedToEdit(tailorStatus) &&
+        managerUserAccessToFeatures?.createaccess && (
+          // once it is approved/rejected by sqa/ is initial, manager can edit it
+          // updated - after approval/rejection, manager can update the document again
+          <SubProcessManagerInput
+            selectTailorValue={subProcess.specificToProject}
+            managerComments={subProcess.comments}
+            processHeadId={processHeadId}
+            processSubHeadId={subProcess.processSubHeadId}
+          />
+        )}
+      {(tailorStatus === ProjectTailoringStatusEnum.submitted ||
+        tailorStatus === ProjectTailoringStatusEnum.updated) &&
+        sqaUserAccessAndFeatures?.viewaccess && (
+          // sqa can give their approval or rejection after submitted by manager
+          <SubProcessSQAInput
+            selectSQAStatus={subProcess.sqaApproval}
+            sqaComments={subProcess.sqaComments}
+            processHeadId={processHeadId}
+            processSubHeadId={subProcess.processSubHeadId}
+          />
+        )}
+      {(tailorStatus === ProjectTailoringStatusEnum.approved ||
+        tailorStatus === ProjectTailoringStatusEnum.rejected) && (
+        // after the document is approved/rejected, both sqa and managers have
+        // readonly access until manager updates it again. Then sqa will have edit access
+        <>
+          <CTableDataCell
+            data-testid={`sqaAppText-${processHeadId}-${subProcess.processSubHeadId}`}
+          >
+            {subProcess.sqaApproval}
+          </CTableDataCell>
+          <CTableDataCell
+            data-testid={`sqaJustText-${processHeadId}-${subProcess.processSubHeadId}`}
+          >
+            {processedString(subProcess.sqaComments)}
+          </CTableDataCell>
+        </>
+      )}
+    </CTableRow>
+  )
+}
+
+export default SubProcessTailorTableRow
