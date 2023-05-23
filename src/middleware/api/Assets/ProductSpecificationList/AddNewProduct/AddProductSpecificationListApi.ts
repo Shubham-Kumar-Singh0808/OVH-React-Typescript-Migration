@@ -77,7 +77,7 @@ const updateProductSpecification = async (
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.updateProductSpecification,
-    method: AllowedHttpMethods.post,
+    method: AllowedHttpMethods.put,
     data: productSpecificationDetails,
   })
   const response = await useAxios(requestConfig)

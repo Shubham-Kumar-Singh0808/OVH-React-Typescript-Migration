@@ -49,7 +49,7 @@ export type AssetTypeListSliceState = {
   getAssetTypeListData: GetAssetTypeListData
   assetTypeList: AssetTypeList[]
   manufactureList: ManufacturerList
-  // updateProductSpecification: UpdateProductSpecificationTypes
+  updateProductSpecification: UpdateProductSpecificationTypes
 }
 
 export type ManufacturerList = {

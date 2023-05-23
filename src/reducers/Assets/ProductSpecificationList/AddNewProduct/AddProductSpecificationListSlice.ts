@@ -8,6 +8,7 @@ import {
   AssetTypeListSliceState,
   AddProductSpecificationProps,
   UpdateProductSpecificationTypes,
+  ProductType,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
@@ -122,6 +123,7 @@ const initialAddProductState: AssetTypeListSliceState = {
   getAssetTypeListData: {} as GetAssetTypeListData,
   assetTypeList: [],
   manufactureList: {} as ManufacturerList,
+  updateProductSpecification: {} as UpdateProductSpecificationTypes,
 }
 const addProductSlice = createSlice({
   name: 'addProduct',
@@ -165,8 +167,8 @@ const addProductThunk = {
 const assetTypeList = (state: RootState): AssetType[] =>
   state.addProduct.assetType
 
-const productTypeList = (state: RootState): AssetType[] =>
-  state.addProduct.assetType
+const productTypeList = (state: RootState): ProductType[] =>
+  state.addProduct.productType
 
 const AssetData = (state: RootState): AssetTypeList[] =>
   state.addProduct.assetTypeList
@@ -180,6 +182,9 @@ const isLoading = (state: RootState): ApiLoadingState =>
 const manufactureList = (state: RootState): ManufacturerList =>
   state.addProduct.manufactureList
 
+const updateProductList = (state: RootState): UpdateProductSpecificationTypes =>
+  state.addProduct.updateProductSpecification
+
 const addProductSelectors = {
   assetTypeList,
   productTypeList,
@@ -187,6 +192,7 @@ const addProductSelectors = {
   AssetData,
   getAllLookups,
   manufactureList,
+  updateProductList,
 }
 
 export const addProductService = {

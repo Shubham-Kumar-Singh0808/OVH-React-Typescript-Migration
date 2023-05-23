@@ -1,17 +1,20 @@
+import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import { CKEditor } from 'ckeditor4-react'
 import AddProductSpecificationList from './AddProductSpecificationList'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { render } from '../../../../test/testUtils'
+import { render, screen } from '../../../../test/testUtils'
 import {
   GetAssetTypeListData,
   ManufacturerList,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 
 const mockSetTogglePage = jest.fn()
+
 describe('Job Openings without data', () => {
   beforeEach(() => {
-    render(<AddProductSpecificationList />, {
+    render(<AddProductSpecificationList setToggle={jest.fn()} />, {
       preloadedState: {
         addProduct: {
           assetType: [],
@@ -36,5 +39,35 @@ describe('Job Openings without data', () => {
     })
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)
+  })
+  test('should be able to click save button element', () => {
+    const saveBtnElement = screen.getByTestId('add-btn')
+    expect(saveBtnElement).toBeInTheDocument()
+    userEvent.click(saveBtnElement)
+  })
+  test('should be able to click edit button element', () => {
+    const clearBtnElement = screen.getByTestId('clear-btn')
+    expect(clearBtnElement).toBeInTheDocument()
+    userEvent.click(clearBtnElement)
+  })
+  test('pass comments to test input value', () => {
+    render(
+      <CKEditor
+        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
+      />,
+    )
+  })
+  test('should enable add button after selecting form option', async () => {
+    const assetTypeSelect = screen.getByTestId('asset-type')
+    userEvent.selectOptions(assetTypeSelect, ['Hardware'])
+    expect(assetTypeSelect).toHaveValue('')
+
+    const productTypeSelect = screen.getByTestId('product-type')
+    userEvent.selectOptions(productTypeSelect, '')
+    expect(productTypeSelect).toHaveValue('')
+
+    const manufacturerSelect = screen.getByTestId('manufacturer-type')
+    userEvent.selectOptions(manufacturerSelect, '')
+    expect(manufacturerSelect).toHaveValue('')
   })
 })

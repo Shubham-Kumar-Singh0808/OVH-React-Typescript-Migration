@@ -104,9 +104,19 @@ const ProductSpecificationListTable = ({
     }
   }
 
-  const editButtonHandler = (productSpecification: ProductSpecifications) => {
-    setEditProductSpecification(productSpecification)
+  // const editButtonHandler = (productSpecification: ProductSpecifications) => {
+  //   setEditProductSpecification(productSpecification)
+  //   setToggle('/editProductSpecification')
+  // }
+  const editBtnHandler = (
+    id: number,
+    productId: number,
+    productSpecification: ProductSpecifications,
+  ) => {
+    dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(id)))
+    dispatch(reduxServices.addNewProduct.getProductTypeList(productId))
     setToggle('/editProductSpecification')
+    setEditProductSpecification(productSpecification)
   }
 
   return (
@@ -181,7 +191,11 @@ const ProductSpecificationListTable = ({
                           size="sm"
                           className="btn-ovh-employee-list"
                           onClick={() =>
-                            editButtonHandler(productSpecification)
+                            editBtnHandler(
+                              productSpecification.assetTypeId,
+                              productSpecification.productId,
+                              productSpecification,
+                            )
                           }
                         >
                           <i className="text-white fa fa-pencil-square-o"></i>

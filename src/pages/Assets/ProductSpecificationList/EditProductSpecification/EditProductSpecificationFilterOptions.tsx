@@ -29,46 +29,97 @@ const EditProductSpecificationFilterOptions = ({
   const result = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
   )
-
+  const AssetType = useTypedSelector(
+    reduxServices.addNewProduct.selectors.assetTypeList,
+  )
   const formLabel = 'col-sm-3 col-form-label text-end'
   const [showEditor, setShowEditor] = useState<boolean>(true)
-  console.log(editProductSpecification.assetType)
 
   const ProductTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
+  const updateProductList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.updateProductList,
+  )
   const onChangeProductSpecificationHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
+
     setEditProductSpecification((prevState) => {
-      return {
-        ...prevState,
-        ...{
-          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-        },
-      }
+      return { ...prevState, ...{ [name]: value } }
     })
+    dispatch(
+      reduxServices.addNewProduct.getAssetTypeList(
+        editProductSpecification.assetTypeId,
+      ),
+    )
   }
+
+  // useEffect(() => {
+  //   if (editProductSpecification.assetTypeId) {
+  //     dispatch(
+  //       reduxServices.addNewProduct.getProductTypeList(
+  //         editProductSpecification.assetTypeId,
+  //       ),
+  //     )
+  //   }
+  // }, [editProductSpecification.assetTypeId])
+
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (editProductSpecification.assetTypeId) {
-      dispatch(
-        reduxServices.addNewProduct.getAssetTypeList(
-          Number(editProductSpecification.assetTypeId),
-        ),
-      )
-    }
+    dispatch(reduxServices.addNewProduct.getAllLookUps())
   }, [dispatch, editProductSpecification.assetTypeId])
-  console.log(editProductSpecification.productId)
+
+  // useEffect(() => {
+  //   if (updateProductList) {
+  //     setEditProductSpecification({
+  //       id: updateProductList.id,
+  //       productId: updateProductList.productId,
+  //       productName: updateProductList.productName,
+  //       manufacturerId: updateProductList.manufacturerId,
+  //       manufacturerName: updateProductList.manufacturerName,
+  //       assetTypeId: updateProductList.assetTypeId,
+  //       assetType: updateProductList.assetType,
+  //       productSpecification: updateProductList.productSpecification,
+  //       createdBy: updateProductList.createdBy,
+  //       createdDate: updateProductList.createdDate,
+  //       updatedBy: updateProductList.updatedBy,
+  //       updatedDate: updateProductList.updatedDate,
+  //       departmentId: updateProductList.departmentId,
+  //       departmentName: updateProductList.departmentName,
+  //       roleId: updateProductList.roleId,
+  //     })
+  //   }
+  //   setShowEditor(false)
+  //   setTimeout(() => {
+  //     setShowEditor(true)
+  //   }, 100)
+  // }, [updateProductList])
 
   const handleUpdateProductSpecification = async () => {
+    const prepareObject = {
+      id: editProductSpecification.id,
+      productId: editProductSpecification.productId,
+      productName: editProductSpecification.productName,
+      manufacturerId: editProductSpecification.manufacturerId,
+      manufacturerName: editProductSpecification.manufacturerName,
+      assetTypeId: editProductSpecification.assetTypeId,
+      assetType: editProductSpecification.assetType,
+      productSpecification: editProductSpecification.productSpecification,
+      createdBy: editProductSpecification.createdBy,
+      createdDate: editProductSpecification.createdDate,
+      updatedBy: editProductSpecification.updatedBy,
+      updatedDate: editProductSpecification.updatedDate,
+      departmentId: editProductSpecification.departmentId,
+      departmentName: editProductSpecification.departmentName,
+      roleId: editProductSpecification.roleId,
+    }
     const updateProductSpecificationResultAction = await dispatch(
-      reduxServices.addNewProduct.updateProductSpecification(
-        editProductSpecification,
-      ),
+      reduxServices.addNewProduct.updateProductSpecification(prepareObject),
     )
     if (
       reduxServices.addNewProduct.updateProductSpecification.fulfilled.match(
@@ -83,17 +134,14 @@ const EditProductSpecificationFilterOptions = ({
       // )
     }
   }
-  useEffect(() => {
-    // Reset the form fields when editProductSpecification changes
-    if (editProductSpecification) {
-      setEditProductSpecification({
-        assetTypeId: '',
-        productName: '',
-        manufacturerId: '',
-        productSpecification: '',
-      });
-    }
-  }, [editProductSpecification]);
+
+  const onChangeHandler = (description: string) => {
+    setEditProductSpecification((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
+  }
+
+  console.log(editProductSpecification.productName)
   return (
     <>
       <CRow className="mt-3 ">
@@ -101,7 +149,7 @@ const EditProductSpecificationFilterOptions = ({
           Asset Type:{' '}
           <span
             className={
-              editProductSpecification.assetType ? TextWhite : TextDanger
+              editProductSpecification.assetTypeId ? TextWhite : TextDanger
             }
           >
             *
@@ -111,9 +159,9 @@ const EditProductSpecificationFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="id"
+            id="assetTypeId"
             data-testid="form-select1"
-            name="id"
+            name="assetTypeId"
             value={editProductSpecification.assetTypeId}
             onChange={onChangeProductSpecificationHandler}
           >
@@ -131,7 +179,7 @@ const EditProductSpecificationFilterOptions = ({
           Product Type:{' '}
           <span
             className={
-              editProductSpecification.productId ? TextWhite : TextDanger
+              editProductSpecification.productName ? TextWhite : TextDanger
             }
           >
             *
@@ -141,17 +189,17 @@ const EditProductSpecificationFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="productId"
+            id="productName"
             data-testid="form-select1"
-            name="productId"
-            value={editProductSpecification.productName}
+            name="productName"
+            value={editProductSpecification.productId}
             onChange={onChangeProductSpecificationHandler}
           >
             <option value={''}>Select Product Type</option>
-            {ProductTypeList.length > 0 &&
-              ProductTypeList?.map((location, index) => (
-                <option key={index} value={location.productId}>
-                  {location.productName}
+            {AssetType.length > 0 &&
+              AssetType?.map((product, index) => (
+                <option key={index} value={product.productId}>
+                  {product.productName}
                 </option>
               ))}
           </CFormSelect>
@@ -166,17 +214,17 @@ const EditProductSpecificationFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="selectProductId"
+            id="manufacturerId"
             data-testid="form-select1"
-            name="selectProductId"
-            value={editProductSpecification.manufacturerId}
+            name="manufacturerId"
+            value={editProductSpecification.manufacturerName}
             onChange={onChangeProductSpecificationHandler}
           >
             <option value={''}>Select Manufacturer</option>
             {ProductTypeList.length > 0 &&
               ProductTypeList?.map((product, index) => (
                 <option key={index} value={product.productId}>
-                  {product.productName}
+                  {product.manufacturerName}
                 </option>
               ))}
           </CFormSelect>
@@ -198,7 +246,7 @@ const EditProductSpecificationFilterOptions = ({
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {
-                onChangeProductSpecificationHandler(editor.getData().trim())
+                onChangeHandler(editor.getData().trim())
               }}
             />
           </CCol>

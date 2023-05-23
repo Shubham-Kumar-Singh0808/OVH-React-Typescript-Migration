@@ -141,7 +141,7 @@ const AddProduct = ({
               aria-label="Default select example"
               size="sm"
               id="id"
-              data-testid="form-select1"
+              data-testid="asset-type"
               name="id"
               value={selectAssetId}
               onChange={(e) => {
@@ -168,7 +168,7 @@ const AddProduct = ({
               aria-label="Default select example"
               size="sm"
               id="productId"
-              data-testid="form-select1"
+              data-testid="product-type"
               name="productId"
               value={selectProductId}
               onChange={(e) => {
@@ -195,7 +195,7 @@ const AddProduct = ({
               aria-label="Default select example"
               size="sm"
               id="selectProductId"
-              data-testid="form-select1"
+              data-testid="manufacturer-type"
               name="selectProductId"
               value={manufactureType}
               onChange={(e) => {

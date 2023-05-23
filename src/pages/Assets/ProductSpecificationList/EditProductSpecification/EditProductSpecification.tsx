@@ -18,9 +18,7 @@ const EditProductSpecification = ({
   >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
-  }, [dispatch])
+
   return (
     <>
       <OCard
