@@ -1,5 +1,5 @@
 import { CButton, CFormLabel, CFormTextarea } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTypedSelector } from '../../../../../../stateStore'
 import { getSaveProjectTailoringDocumentFinalData } from '../ProjectTailoringHelpers'
@@ -9,6 +9,7 @@ import {
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 import OModal from '../../../../../../components/ReusableComponent/OModal'
 import useModal from '../../../../../../middleware/hooks/useModal'
+import { TextDanger } from '../../../../../../constant/ClassName'
 
 // these are buttons for sqa to either approve or to reject the tailored document
 
@@ -30,6 +31,7 @@ const SQAButtons = ({
   )
   const { projectId } = useParams<{ projectId: string }>()
   const [rejectComments, setRejectComments] = useState<string>('')
+  const [isModalBtnEnabled, setIsModalBtnEnabled] = useState<boolean>(false)
 
   const rejectCommentsChangeHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
@@ -74,6 +76,15 @@ const SQAButtons = ({
     setShowModal(true)
   }
 
+  // logic to enable button in the modal
+  useEffect(() => {
+    if (rejectComments.trim().length > 0) {
+      setIsModalBtnEnabled(true)
+    } else {
+      setIsModalBtnEnabled(false)
+    }
+  }, [rejectComments])
+
   return (
     <>
       <CButton
@@ -100,9 +111,12 @@ const SQAButtons = ({
         modalHeaderClass="d-none"
         confirmButtonText="Submit"
         confirmButtonAction={modalRejectButtonHandler}
+        isConfirmButtonDisabled={!isModalBtnEnabled}
       >
         <>
-          <CFormLabel>Reason for Rejecting: </CFormLabel>
+          <CFormLabel>
+            Reason for Rejecting: <span className={TextDanger}>*</span>
+          </CFormLabel>
           <CFormTextarea
             onChange={rejectCommentsChangeHandler}
             value={rejectComments}

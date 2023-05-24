@@ -4,8 +4,9 @@ import { useTypedSelector } from '../../../../../../../stateStore'
 import {
   ProcessSubHeadDTO,
   ProjectTailoringStatusEnum,
+  TailoringRequiredSelectOptions,
 } from '../../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
-import { sqaFeatureId } from '../../ProjectTailoringHelpers'
+import { processedString, sqaFeatureId } from '../../ProjectTailoringHelpers'
 
 // this component is used to render the readonly data submitted by the managers to the different screends
 
@@ -25,12 +26,31 @@ const SubProcessManagerTailorReadonly = ({
   )
   return (
     <>
-      {tailorStatus === ProjectTailoringStatusEnum.submitted && (
+      {(tailorStatus === ProjectTailoringStatusEnum.submitted ||
+        tailorStatus === ProjectTailoringStatusEnum.updated) && (
         // manager has submitted the form and has readonly access until sqa responds
         <>
-          <CTableDataCell>{subProcess.specificToProject}</CTableDataCell>
           <CTableDataCell>
-            {subProcess.comments ? subProcess.comments : 'N/A'}
+            {subProcess.specificToProject ===
+              TailoringRequiredSelectOptions.WaivedOff.toString() ||
+            subProcess.specificToProject ===
+              TailoringRequiredSelectOptions.Yes.toString() ? (
+              <span
+                style={{
+                  backgroundColor: 'green',
+                  color: 'white',
+                  paddingRight: '0.2rem',
+                  paddingLeft: '0.2rem',
+                }}
+              >
+                {subProcess.specificToProject}
+              </span>
+            ) : (
+              subProcess.specificToProject
+            )}
+          </CTableDataCell>
+          <CTableDataCell>
+            {processedString(subProcess.comments)}
           </CTableDataCell>
         </>
       )}
@@ -39,7 +59,25 @@ const SubProcessManagerTailorReadonly = ({
         sqaUserAccessAndFeatures.viewaccess && (
           // this is for sqa view only.
           <>
-            <CTableDataCell>{subProcess.specificToProject}</CTableDataCell>
+            <CTableDataCell>
+              {subProcess.specificToProject ===
+                TailoringRequiredSelectOptions.WaivedOff ||
+              subProcess.specificToProject ===
+                TailoringRequiredSelectOptions.Yes ? (
+                <span
+                  style={{
+                    backgroundColor: 'green',
+                    color: 'white',
+                    paddingRight: '0.2rem',
+                    paddingLeft: '0.2rem',
+                  }}
+                >
+                  {subProcess.specificToProject}
+                </span>
+              ) : (
+                subProcess.specificToProject
+              )}
+            </CTableDataCell>
             <CTableDataCell>
               {subProcess.comments ? subProcess.comments : 'N/A'}
             </CTableDataCell>

@@ -155,7 +155,12 @@ export const updateSQAEnteredDataInList = (
 
 // once the manager has submitted the document, he/she cannot edit the document until the sqa approves/rejects it
 export const isManagerAllowedToEdit = (tailorStatus: string): boolean => {
-  return tailorStatus !== ProjectTailoringStatusEnum.submitted
+  return (
+    tailorStatus === ProjectTailoringStatusEnum.initial.toString() ||
+    tailorStatus === ProjectTailoringStatusEnum.saveForManager ||
+    tailorStatus === ProjectTailoringStatusEnum.approved ||
+    tailorStatus === ProjectTailoringStatusEnum.rejected
+  )
 }
 
 // used to get the final data for document initially submitted by manager that is to be submitted to the api

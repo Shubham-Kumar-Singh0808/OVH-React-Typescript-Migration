@@ -17,12 +17,14 @@ import { getSaveProjectTailoringDocumentInitialManagerFinalData } from '../Proje
 
 const InitialManagerButtons = ({
   submitDocumentHandler,
+  getLatestData,
 }: {
   submitDocumentHandler: (
     finalData:
       | OutgoingSaveProjectTailoringDocumentInitial
       | OutgoingSaveProjectTailoringDocument,
   ) => Promise<void>
+  getLatestData: () => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const defaultProjectTailoringDocument = useTypedSelector(
@@ -65,6 +67,7 @@ const InitialManagerButtons = ({
         rejectComments: null,
       }
       submitDocumentHandler(savedFinalData)
+      getLatestData()
       return
     }
     const result = await dispatch(
@@ -78,6 +81,7 @@ const InitialManagerButtons = ({
       )
     ) {
       renderSaveToast()
+      getLatestData()
     }
   }
 

@@ -45,8 +45,6 @@ const ProjectTailoring = (): JSX.Element => {
     )
   }, [])
 
-  console.log(useTypedSelector((state) => state.projectTailoring))
-
   const displayedData: ProcessHeadDTO[] = useMemo(() => {
     //this means that the document has not been initially submitted by the manager
     if (typeof projectTailoringState.projectTailoringDocument === 'string') {

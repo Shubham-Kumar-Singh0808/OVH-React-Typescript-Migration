@@ -7,8 +7,12 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import SubProcessTailorTableRow from './SubProcessTailorTableRow'
-import { ProcessSubHeadDTO } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
+import {
+  ProcessSubHeadDTO,
+  ProjectTailoringStatusEnum,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 import { sortSubProcessesInAscendingOrder } from '../ProjectTailoringHelpers'
+import { useTypedSelector } from '../../../../../../stateStore'
 
 const SubProcessTailorTable = ({
   subProcesses,
@@ -17,6 +21,9 @@ const SubProcessTailorTable = ({
   subProcesses: ProcessSubHeadDTO[]
   processHeadId: number
 }): JSX.Element => {
+  const tailorStatus = useTypedSelector(
+    (state) => state.projectTailoring.tailorStatus,
+  )
   return (
     <CTable striped responsive align="middle">
       <CTableHead className="profile-tab-header">
@@ -39,12 +46,16 @@ const SubProcessTailorTable = ({
           <CTableHeaderCell scope="col" className="profile-tab-content">
             Justification
           </CTableHeaderCell>
-          <CTableHeaderCell scope="col" className="profile-tab-content">
-            SQA Approved
-          </CTableHeaderCell>
-          <CTableHeaderCell scope="col" className="profile-tab-content">
-            SQA Review
-          </CTableHeaderCell>
+          {tailorStatus !== ProjectTailoringStatusEnum.initial && (
+            <>
+              <CTableHeaderCell scope="col" className="profile-tab-content">
+                SQA Approved
+              </CTableHeaderCell>
+              <CTableHeaderCell scope="col" className="profile-tab-content">
+                SQA Review
+              </CTableHeaderCell>
+            </>
+          )}
         </CTableRow>
       </CTableHead>
       <CTableBody>

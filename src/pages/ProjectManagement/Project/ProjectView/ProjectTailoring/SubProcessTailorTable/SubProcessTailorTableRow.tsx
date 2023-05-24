@@ -2,6 +2,7 @@ import React from 'react'
 import { CTableRow, CTableDataCell } from '@coreui/react-pro'
 import SubProcessManagerInput from './SubProcessTailorTableComponents/SubProcessManagerInput'
 import SubProcessSQAInput from './SubProcessTailorTableComponents/SubProcessSQAInput'
+import SubProcessSQAReadonly from './SubProcessTailorTableComponents/SubProcessSQAReadonly'
 import SubProcessManagerTailorReadonly from './SubProcessTailorTableComponents/SubProcessManagerTailorReadonly'
 import {
   ProcessSubHeadDTO,
@@ -11,7 +12,6 @@ import { useTypedSelector } from '../../../../../../stateStore'
 import {
   isManagerAllowedToEdit,
   managerFeatureId,
-  processedString,
   sqaFeatureId,
 } from '../ProjectTailoringHelpers'
 
@@ -40,6 +40,9 @@ const SubProcessTailorTableRow = ({
       )[0],
   )
 
+  console.log(isManagerAllowedToEdit(tailorStatus))
+  console.log(useTypedSelector((state) => state.projectTailoring))
+
   return (
     <CTableRow data-testid={`subProcesses-${processHeadId}`}>
       <CTableDataCell>{subProcessIndex + 1}</CTableDataCell>
@@ -48,6 +51,7 @@ const SubProcessTailorTableRow = ({
         <a href={`${subProcess.link}`}>{subProcess.documentName}</a>
       </CTableDataCell>
       <CTableDataCell>{subProcess.responsible}</CTableDataCell>
+      {/* readonly for tailoing select */}
       <SubProcessManagerTailorReadonly subProcess={subProcess} />
       {isManagerAllowedToEdit(tailorStatus) &&
         managerUserAccessToFeatures?.createaccess && (
@@ -71,22 +75,25 @@ const SubProcessTailorTableRow = ({
             processSubHeadId={subProcess.processSubHeadId}
           />
         )}
+      {tailorStatus === ProjectTailoringStatusEnum.updated &&
+        managerUserAccessToFeatures.updateaccess && (
+          <SubProcessSQAReadonly
+            sqaApproval={subProcess.sqaApproval}
+            sqaComments={subProcess.sqaComments}
+            processHeadId={processHeadId}
+            processSubHeadId={subProcess.processSubHeadId}
+          />
+        )}
       {(tailorStatus === ProjectTailoringStatusEnum.approved ||
         tailorStatus === ProjectTailoringStatusEnum.rejected) && (
         // after the document is approved/rejected, both sqa and managers have
         // readonly access until manager updates it again. Then sqa will have edit access
-        <>
-          <CTableDataCell
-            data-testid={`sqaAppText-${processHeadId}-${subProcess.processSubHeadId}`}
-          >
-            {subProcess.sqaApproval}
-          </CTableDataCell>
-          <CTableDataCell
-            data-testid={`sqaJustText-${processHeadId}-${subProcess.processSubHeadId}`}
-          >
-            {processedString(subProcess.sqaComments)}
-          </CTableDataCell>
-        </>
+        <SubProcessSQAReadonly
+          sqaApproval={subProcess.sqaApproval}
+          sqaComments={subProcess.sqaComments}
+          processHeadId={processHeadId}
+          processSubHeadId={subProcess.processSubHeadId}
+        />
       )}
     </CTableRow>
   )

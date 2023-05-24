@@ -5,8 +5,12 @@ import { act, cleanup, render, screen } from '../../../../../../test/testUtils'
 import { ProjectTailoringStatusEnum } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 
 const mockSubmitDocumentHandler = jest.fn()
+const mockGetLatestData = jest.fn()
 const toRender = (
-  <InitialManagerButtons submitDocumentHandler={mockSubmitDocumentHandler} />
+  <InitialManagerButtons
+    submitDocumentHandler={mockSubmitDocumentHandler}
+    getLatestData={mockGetLatestData}
+  />
 )
 
 describe('Initial Manager Button - Project Tailoring', () => {
