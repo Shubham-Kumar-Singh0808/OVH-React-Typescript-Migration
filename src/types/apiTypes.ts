@@ -1,4 +1,3 @@
-import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -843,4 +842,19 @@ export interface ChangeReporteesApi extends ApiBase {
   getHrAssociates: string
   updateReportingManager: string
   updateHrAssociatesManager: string
+}
+
+export interface ManufacturerApi extends ApiBase {
+  exportManufacturerList: string
+  getAllManufacturerName: string
+}
+export interface ProductTypeListApi extends ApiBase {
+  getProductTypeList: string
+  deleteProduct: string
+  exportProductList: string
+}
+
+export interface AssetWarrantyReportApi extends ApiBase {
+  getWarrantyAssetsList: string
+  downloadExportAssetWarrantyList: string
 }

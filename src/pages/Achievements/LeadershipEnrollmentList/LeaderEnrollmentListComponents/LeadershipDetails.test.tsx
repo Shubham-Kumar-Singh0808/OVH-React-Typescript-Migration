@@ -5,10 +5,7 @@ import userEvent from '@testing-library/user-event'
 import LeadershipDetails from './LeadershipDetails'
 import { cleanup, render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import {
-  mockLeadershipDetails,
-  mockLeadershipDetails2,
-} from '../../../../test/data/LeadershipEnrollmentListData'
+import { mockLeadershipDetails } from '../../../../test/data/LeadershipEnrollmentListData'
 
 const mockSetShowLeadershipDetails = jest.fn()
 const mockSetCurrentIndex = jest.fn()
@@ -25,10 +22,6 @@ const toRender = (
     />
   </div>
 )
-
-const approveBtnId = 'approve-btn'
-const rejectBtnId = 'reject-btn'
-const finalBtnId = 'final-btn'
 
 describe('Leadership Details', () => {
   describe('status=Approved Render', () => {

@@ -43,12 +43,11 @@ const ReporteesUpdateAutoComplete = ({
   )
 
   setValidName(!!filter[0]?.fullName)
-  console.log('valid name', !!filter[0]?.fullName)
 
   const filteredManagersOrHrManagersList = managersOrHrManagersList?.filter(
     (item) => item.fullName !== autoCompleteTarget,
   )
-
+  //sets the autocomplete value and manager id
   const onHandleSelectManager = (fullName: string) => {
     setAutoCompleteTargetInternal(fullName)
     const managerName = managersOrHrManagersList.find(

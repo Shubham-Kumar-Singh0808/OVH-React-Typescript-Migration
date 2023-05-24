@@ -18,10 +18,8 @@ const ChangeReporteeFilterOptions = () => {
   const AllHRList = useTypedSelector(
     reduxServices.changeReportees.selectors.HRListDetails,
   )
-  const isLoading = useTypedSelector(
-    reduxServices.changeReportees.selectors.isLoading,
-  )
 
+  //sets placeHolder
   const handleOnChange = (value: string) => {
     setAutoCompleteTarget('')
     dispatch(reduxServices.changeReportees.actions.clearManagerData())

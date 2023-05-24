@@ -45,7 +45,6 @@ const EmployeesListUnderManagerTable = ({
       setButtonDisable(false)
     }
   }, [selectedRows, validName])
-  console.log(selectedRows, validName)
 
   const dispatch = useAppDispatch()
 
@@ -63,6 +62,7 @@ const EmployeesListUnderManagerTable = ({
       toastColor="success"
     />
   )
+  //logic for selecting/unselecting the records
   const handleSelectRow = (
     event: React.ChangeEvent<HTMLInputElement>,
     id: number,
@@ -73,8 +73,7 @@ const EmployeesListUnderManagerTable = ({
       setSelectedRows(selectedRows.filter((rowId: number) => rowId !== id))
     }
   }
-  console.log('selected rows: ', selectedRows)
-
+  //updating the multiple employee's manager
   const handleUpdateSelected = async () => {
     const object = {
       employeeId: selectedRows,
@@ -126,7 +125,7 @@ const EmployeesListUnderManagerTable = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CTable className="mt-4" striped>
+          <CTable className="mt-4" striped data-testid="tableTest">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -161,12 +160,12 @@ const EmployeesListUnderManagerTable = ({
 
           <CCol xs={4}>
             <strong>
-              {employeeData.length > 0
+              {employeeData?.length > 0
                 ? `Total Records: ${employeeData.length}`
                 : `No Records Found`}
             </strong>
           </CCol>
-          {employeeData.length > 0 && (
+          {employeeData?.length > 0 && (
             <CCol>
               <ReporteesUpdateAutoComplete
                 managersOrHrManagersList={managersOrHrManagersList}

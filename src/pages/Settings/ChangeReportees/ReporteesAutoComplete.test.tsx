@@ -22,6 +22,13 @@ describe('Testing Reportees AutoComplete Component', () => {
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 
@@ -45,6 +52,13 @@ describe('Testing Reportees AutoComplete Component', () => {
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 
@@ -74,9 +88,16 @@ describe('Testing Reportees AutoComplete Component', () => {
           placeHolder={placeHolder}
           autoCompleteTarget={''}
           setAutoCompleteTarget={jest.fn}
-          shouldRenderTable={false}
+          shouldRenderTable={true}
           setShouldRenderTable={jest.fn}
         />,
+        {
+          preloadedState: {
+            changeReportees: {
+              AllReportingManagerList: mockAllReportingManagerData,
+            },
+          },
+        },
       )
     })
 

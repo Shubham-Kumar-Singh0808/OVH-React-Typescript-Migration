@@ -162,7 +162,6 @@ const changeReporteesSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
-          state.error = action.payload as ValidationError
         },
       )
   },

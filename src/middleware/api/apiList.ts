@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
+// eslint-disable-next-line max-lines
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -109,6 +110,9 @@ import {
   NotificationsApi,
   JobOpeningsApi,
   ChangeReporteesApi,
+  ManufacturerApi,
+  ProductTypeListApi,
+  AssetWarrantyReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -127,6 +131,7 @@ export enum ApiLoadingState {
   loading = 'loading',
   succeeded = 'succeeded',
   failed = 'failed',
+  success = 'success',
 }
 
 export const authenticationApiConfig: AuthenticationApi = {
@@ -992,4 +997,19 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
   getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
   updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
   updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
+}
+export const ManufacturerApiListConfig: ManufacturerApi = {
+  getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
+  exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+}
+export const GetProductTypeListConfig: ProductTypeListApi = {
+  getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
+  deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
+  exportProductList: apiPrefix + '/assetManagement/exportProductList',
+}
+
+export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
+  getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
+  downloadExportAssetWarrantyList:
+    apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
