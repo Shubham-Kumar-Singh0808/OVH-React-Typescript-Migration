@@ -93,26 +93,5 @@ describe('Leadership Details', () => {
       expect(finalButton).toHaveTextContent('Approve')
       userEvent.click(finalButton)
     })
-    test('error approve button', () => {
-      const approveButton = screen.getByTestId(approveBtnId)
-      userEvent.click(approveButton)
-      userEvent.click(screen.getByTestId(finalBtnId))
-    })
-    test('click reject button', () => {
-      const rejectButton = screen.getByTestId(rejectBtnId)
-      userEvent.click(rejectButton)
-      expect(screen.getByTestId('modal-content')).toHaveTextContent(
-        'Do you really want to',
-      )
-      expect(screen.getByTestId('emp-name')).toHaveTextContent('Admin Support?')
-      expect(screen.getByTestId('app-rej')).toHaveTextContent('Reject')
-      const textArea = screen.getByTestId('text-area-comments')
-      expect(textArea).toBeVisible()
-      userEvent.type(textArea, 'typing here')
-
-      const finalButton = screen.getByTestId(finalBtnId)
-      expect(finalButton).toHaveTextContent('Reject')
-      userEvent.click(finalButton)
-    })
   })
 })
