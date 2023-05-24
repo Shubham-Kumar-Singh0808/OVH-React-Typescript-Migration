@@ -316,7 +316,10 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
               <span
                 data-testid={`ques-star-${index}`}
                 className={
-                  descriptionContent?.at(index)?.isDone ? TextWhite : TextDanger
+                  descriptionContent.length > 0 &&
+                  descriptionContent?.at(index)?.isDone
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
