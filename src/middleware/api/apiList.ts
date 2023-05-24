@@ -988,4 +988,6 @@ export const ManufacturerApiListConfig: ManufacturerApi = {
   exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
   addManufacturer: apiPrefix + '/assetManagement/addManufacturer',
+  deleteManufacturerName: apiPrefix + '/assetManagement/deleteManufacturerName',
+  updateManufacturerName: apiPrefix + '/assetManagement/updateManufacturerName',
 }

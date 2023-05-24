@@ -4,6 +4,7 @@ import {
   GetAllManufacturerName,
   ManufacturerList,
   ManufacturerListProps,
+  UpdateProps,
   exportManufacturerListProps,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import {
@@ -69,11 +70,41 @@ const addManufacturer = async (
   return response.data
 }
 
+const deleteManufacturerName = async (
+  manufacturerId: number,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.deleteManufacturerName,
+    method: AllowedHttpMethods.delete,
+    params: {
+      manufacturerId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateManufacturerName = async (
+  data: UpdateProps,
+): Promise<UpdateProps> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.updateManufacturerName,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ManufacturerApi = {
   getManufacturerList,
   exportManufacturerData,
   getAllLookUpList,
   addManufacturer,
+  deleteManufacturerName,
+  updateManufacturerName,
 }
 
 export default ManufacturerApi

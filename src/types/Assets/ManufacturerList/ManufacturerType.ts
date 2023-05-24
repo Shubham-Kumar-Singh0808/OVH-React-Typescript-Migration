@@ -20,7 +20,6 @@ export type GetAllManufacturerName = {
 }
 
 export type ManufacturerList = {
-  map(arg0: (result: any, index: any) => JSX.Element): import("react").ReactNode
   assetTypeList: AssetTypeList[]
   manufacturerList: ManufactureData[]
   productList: ProductList[]
@@ -113,4 +112,21 @@ export type exportManufacturerListProps = {
 export type AddManufacturerListProps = {
   manufacturerName: string
   productId: string
+}
+export type EditManufacturerList = {
+  manufacturerId: number
+  manufacturerName: string
+}
+
+export type UpdateProps = {
+  createdBy: string
+  createdDate: string
+  departmentId: null
+  departmentName: null
+  manufacturerId: number
+  manufacturerName: string
+  productId: number
+  productName: string
+  updatedBy: string
+  updatedDate: string
 }

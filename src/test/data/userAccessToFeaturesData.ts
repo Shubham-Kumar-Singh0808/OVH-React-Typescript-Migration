@@ -1991,4 +1991,13 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
     deleteaccess: true,
     childFeatures: null,
   },
+  {
+    featureId: 159,
+    name: 'Manufacturer List',
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
 ]

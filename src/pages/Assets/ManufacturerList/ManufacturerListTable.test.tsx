@@ -4,8 +4,12 @@ import userEvent from '@testing-library/user-event'
 import ManufacturerListTable from './ManufacturerListTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { GetAllManufacturerName } from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import {
+  GetAllManufacturerName,
+  ManufacturerDetails,
+} from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
 describe('Job Openings without data', () => {
@@ -17,6 +21,10 @@ describe('Job Openings without data', () => {
         setCurrentPage={mockSetData}
         pageSize={0}
         setPageSize={mockSetData}
+        searchInput={''}
+        setToggle={mockSetData}
+        setEditManufacturerData={mockSetData}
+        userAccess={mockSetData}
       />,
       {
         preloadedState: {
@@ -24,14 +32,18 @@ describe('Job Openings without data', () => {
             isLoading: ApiLoadingState.succeeded,
             manufacturerDetails: mockManufacturerData,
             getAllManufacturerName: {} as GetAllManufacturerName,
-            listSize: 0,
+            listSize: 2,
+          },
+          userAccessToFeatures: {
+            // isLoading: ApiLoadingState.succeeded,
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },
     )
   })
   test('Should be able to see total of 6 records', () => {
-    expect(screen.getByText('No records found.')).toBeInTheDocument()
+    expect(screen.getByText('Total Records: 2')).toBeInTheDocument()
   })
   test('should render first page data only', () => {
     waitFor(() => {
@@ -60,5 +72,13 @@ describe('Job Openings without data', () => {
     expect(screen.getByText('Manufacturer Name')).toBeInTheDocument()
     expect(screen.getByText('Last Updated by')).toBeInTheDocument()
     expect(screen.getByText('Actions')).toBeInTheDocument()
+  })
+  test('should be able to click delete button element', async () => {
+    const deleteBtnElement = screen.getByTestId('btn-delete0')
+    await expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
   })
 })

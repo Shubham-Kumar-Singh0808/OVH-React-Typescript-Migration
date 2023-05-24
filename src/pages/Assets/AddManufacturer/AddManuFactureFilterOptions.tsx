@@ -74,6 +74,7 @@ const AddManuFactureFilterOptions = ({
             color="info"
             className="btn-ovh me-1"
             onClick={() => setToggle('')}
+            data-testid="back-button"
           >
             <i className="fa fa-arrow-left  me-1"></i>Back
           </CButton>
@@ -95,14 +96,14 @@ const AddManuFactureFilterOptions = ({
               data-testid="form-select"
               aria-label="Default select example"
               size="sm"
-              id="leaveType"
-              name="leaveType"
+              id="ProductType"
+              name="ProductType"
               value={productType}
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {result.productList?.length > 0 &&
-                result?.map((result, index) => (
+                result?.productList?.map((result, index) => (
                   <option key={index} value={result?.productId}>
                     {result?.productName}
                   </option>
@@ -115,7 +116,7 @@ const AddManuFactureFilterOptions = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            Name Of Leave Category
+            Manufacturer Name
             <span className={manufactureName ? 'text-white' : 'text-danger'}>
               *
             </span>
@@ -123,9 +124,10 @@ const AddManuFactureFilterOptions = ({
           <CCol sm={3}>
             <CFormInput
               type="text"
+              data-testid="ManufacturerName"
               id="name"
               name="name"
-              placeholder="Leave Name"
+              placeholder="Enter Manufacturer Name"
               value={manufactureName}
               onChange={(e) => setManufatureName(e.target.value)}
             />
@@ -135,6 +137,7 @@ const AddManuFactureFilterOptions = ({
         <CRow className="mt-3 mb-3">
           <CCol className="col-md-3 offset-md-3">
             <CButton
+              data-testid="save-btn"
               color="success"
               className="btn-ovh me-1"
               size="sm"
@@ -144,6 +147,7 @@ const AddManuFactureFilterOptions = ({
               Add
             </CButton>
             <CButton
+              data-testid="clear-btn"
               color="warning "
               className="btn-ovh"
               onClick={clearButtonHandler}

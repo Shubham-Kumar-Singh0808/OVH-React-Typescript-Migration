@@ -16,7 +16,7 @@ describe('Achievements Slice', () => {
       getAllManufacturerName: {} as GetAllManufacturerName,
       listSize: 0,
       isLoading: ApiLoadingState.idle,
-    } as ManufacturerListSliceState
+    } as unknown as ManufacturerListSliceState
 
     it('Should be able to set isLoading to "loading" if getAllAchievements is pending', () => {
       const action = {

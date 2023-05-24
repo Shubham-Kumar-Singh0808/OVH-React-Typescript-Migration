@@ -8,6 +8,8 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { downloadFile } from '../../../utils/helper'
 import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 import AddManufacturerList from '../AddManufacturer/AddManufacturerList'
+import EditManufacturerList from '../EditManufacturer/EditManufacturerList'
+import { ManufacturerDetails } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 
 const Manufacturer = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -22,6 +24,10 @@ const Manufacturer = (): JSX.Element => {
   )
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
+
+  const initialManufacturerList = {} as ManufacturerDetails
+  const [editManufacturerData, setEditManufacturerData] =
+    useState<ManufacturerDetails>(initialManufacturerList)
   const {
     paginationRange,
     setPageSize,
@@ -75,6 +81,14 @@ const Manufacturer = (): JSX.Element => {
   }, [dispatch, currentPage, pageSize])
   console.log(employees)
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Manufacturer List',
+  )
+
   return (
     <>
       {toggle === '' && (
@@ -99,13 +113,15 @@ const Manufacturer = (): JSX.Element => {
                 <i className="fa fa-plus me-1"></i>
                 Click to Export
               </CButton>
-              <CButton
-                color="info btn-ovh me-0"
-                data-testid="addButton"
-                onClick={() => setToggle('AddManufacturerList')}
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
+              {userAccess?.createaccess && (
+                <CButton
+                  color="info btn-ovh me-0"
+                  data-testid="addButton"
+                  onClick={() => setToggle('AddManufacturerList')}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              )}
             </CCol>
           </CRow>
           <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -144,11 +160,22 @@ const Manufacturer = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
             pageSize={pageSize}
+            searchInput={searchInput}
+            setToggle={setToggle}
+            setEditManufacturerData={setEditManufacturerData}
+            userAccess={userAccess}
           />
         </OCard>
       )}
       {toggle === 'AddManufacturerList' && (
         <AddManufacturerList setToggle={setToggle} />
+      )}
+      {toggle === 'EditManufacturerList' && (
+        <EditManufacturerList
+          setToggle={setToggle}
+          editManufacturerData={editManufacturerData}
+          setEditManufacturerData={setEditManufacturerData}
+        />
       )}
     </>
   )

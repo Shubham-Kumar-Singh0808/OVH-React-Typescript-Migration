@@ -15,6 +15,10 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPagination from '../../../components/ReusableComponent/OPagination'
+import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { ManufacturerDetails } from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const ManufacturerListTable = ({
   paginationRange,
@@ -22,14 +26,27 @@ const ManufacturerListTable = ({
   setCurrentPage,
   currentPage,
   pageSize,
+  searchInput,
+  setToggle,
+  setEditManufacturerData,
+  userAccess,
 }: {
   paginationRange: number[]
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   currentPage: number
   pageSize: number
+  searchInput: string
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditManufacturerData: React.Dispatch<
+    React.SetStateAction<ManufacturerDetails>
+  >
+  userAccess: UserAccessToFeatures | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [deleteLocationId, setDeleteLocationId] = useState(0)
+  const [deleteLocationName, setDeleteLocationName] = useState('')
 
   const employees = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
@@ -47,6 +64,61 @@ const ManufacturerListTable = ({
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
+  }
+
+  const deleteBtnHandler = (id: number, name: string) => {
+    setIsDeleteModalVisible(true)
+    setDeleteLocationId(id)
+    setDeleteLocationName(name)
+  }
+
+  const deletedToastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Manufacturer Deleted Successfully"
+    />
+  )
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="This manufacturer name is used in specifications,So you cannot delete"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+  const confirmDeleteLocation = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteLocationResult = await dispatch(
+      reduxServices.ManufacturerList.deleteManufacturerName(deleteLocationId),
+    )
+    if (
+      reduxServices.ManufacturerList.deleteManufacturerName.fulfilled.match(
+        deleteLocationResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.ManufacturerList.getManufacturerList({
+          endIndex: pageSize * currentPage,
+          manufacturerName: searchInput,
+          startIndex: pageSize * (currentPage - 1),
+          search: '',
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (
+      reduxServices.ManufacturerList.deleteManufacturerName.rejected.match(
+        deleteLocationResult,
+      ) &&
+      deleteLocationResult.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+  const editBtnHandler = (manufacturer: ManufacturerDetails) => {
+    console.log(manufacturer)
+    setToggle('EditManufacturerList')
+    setEditManufacturerData(manufacturer)
   }
 
   return (
@@ -76,25 +148,34 @@ const ManufacturerListTable = ({
                     <CTableDataCell>{manufacturer.productName}</CTableDataCell>
                     <CTableDataCell>{manufacturer.createdBy}</CTableDataCell>
                     <CTableDataCell scope="row">
-                      <CTooltip content="Edit">
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid="edit-family"
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            data-testid="edit-family"
+                            onClick={() => editBtnHandler(manufacturer)}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
 
                       <CTooltip content="Delete">
                         <CButton
-                          data-testid="delete-family"
+                          data-testid={`btn-delete${index}`}
                           size="sm"
                           color="danger btn-ovh me-1"
                           className="btn-ovh-employee-list"
+                          onClick={() =>
+                            deleteBtnHandler(
+                              manufacturer.manufacturerId,
+                              manufacturer.manufacturerName,
+                            )
+                          }
                         >
                           <i className="fa fa-trash-o" aria-hidden="true"></i>
                         </CButton>
@@ -135,6 +216,22 @@ const ManufacturerListTable = ({
           )}
         </CRow>
       </>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Manufacturer"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={confirmDeleteLocation}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this{' '}
+          <strong>{deleteLocationName}</strong> manufacturer ?
+        </>
+      </OModal>
     </>
   )
 }

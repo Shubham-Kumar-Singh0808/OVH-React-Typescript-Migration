@@ -840,4 +840,6 @@ export interface ManufacturerApi extends ApiBase {
   getAllManufacturerName: string
   getAllLookUps: string
   addManufacturer: string
+  deleteManufacturerName: string
+  updateManufacturerName: string
 }

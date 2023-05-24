@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
   AddManufacturerListProps,
+  EditManufacturerList,
   GetAllManufacturerName,
   ManufacturerDetails,
   ManufacturerList,
   ManufacturerListProps,
   ManufacturerListSliceState,
+  UpdateProps,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -54,6 +56,31 @@ const addManufacturer = createAsyncThunk<
     }
   },
 )
+
+const deleteManufacturerName = createAsyncThunk(
+  'addLocationList/deleteManufacturerName',
+  async (manufacturerId: number, thunkApi) => {
+    try {
+      return await ManufacturerApi.deleteManufacturerName(manufacturerId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateManufacturerName = createAsyncThunk(
+  'addLocationList/updateManufacturerName',
+  async (props: UpdateProps, thunkApi) => {
+    try {
+      return await ManufacturerApi.updateManufacturerName(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialManufacturerListState: ManufacturerListSliceState = {
   manufacturerDetails: [],
   getAllManufacturerName: {} as GetAllManufacturerName,
@@ -87,6 +114,8 @@ const ManufacturerListThunk = {
   getManufacturerList,
   getAllLookUps,
   addManufacturer,
+  deleteManufacturerName,
+  updateManufacturerName,
 }
 
 const isLoading = (state: RootState): LoadingState =>
