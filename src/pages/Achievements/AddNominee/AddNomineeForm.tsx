@@ -172,7 +172,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
     for (let i = 0; i < questionsData.length; i++) {
       questionsData[i] = {
         ...questionsData[i],
-        feedBack: descriptionContent[i].description,
+        feedBack: descriptionContent[i]?.description,
       }
     }
     const finalData: IncomingNominationFormDetails = {
@@ -316,7 +316,7 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
               <span
                 data-testid={`ques-star-${index}`}
                 className={
-                  descriptionContent.length > 0 &&
+                  descriptionContent?.length > 0 &&
                   descriptionContent?.at(index)?.isDone
                     ? TextWhite
                     : TextDanger
