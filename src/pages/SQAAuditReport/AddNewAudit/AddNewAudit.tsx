@@ -239,8 +239,12 @@ const AddNewAudit = (): JSX.Element => {
   const failureToastMessage = (
     <OToast toastMessage="Please enter a vaild time" toastColor="danger" />
   )
-
   const handleAddNewAuditForm = async (auditFormStatus: string) => {
+    if (addAudit.startTime.split(':') > addAudit.endTime.split(':')) {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+      return
+    }
     const startTimeSplit = addAudit.startTime.split(':')
     const endTimeSplit = addAudit.endTime.split(':')
     const prepareObject = {
@@ -289,8 +293,6 @@ const AddNewAudit = (): JSX.Element => {
     ) {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
-    } else if (addAudit.startTime.split(':') < addAudit.endTime.split(':')) {
-      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
   console.log(errorMessageCount)
