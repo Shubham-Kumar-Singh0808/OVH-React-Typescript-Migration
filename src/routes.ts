@@ -451,7 +451,10 @@ const AddJobVacancies = React.lazy(
  */
 
 const ViewAppraisalForm = React.lazy(
-  () => import('./pages/Performance/MyReviews/MyReview'),
+  () =>
+    import(
+      './pages/Performance/ReviewList/ManagerEmployeeAppraisal/ManagerEmployeeReview'
+    ),
 )
 const routes = [
   { path: '/', exact: true, name: 'Home' },

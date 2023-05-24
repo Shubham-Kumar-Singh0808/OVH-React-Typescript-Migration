@@ -30,9 +30,7 @@ const AppraisalForm = (): JSX.Element => {
   )
 
   useEffect(() => {
-    dispatch(
-      reduxServices.myReview.getEmployeeReviewForm(appraisalForm.employee?.id),
-    )
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }, [dispatch])
 
   console.log(appraisalForm.employee?.id)

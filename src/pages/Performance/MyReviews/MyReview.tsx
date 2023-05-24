@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CButton } from '@coreui/react-pro'
 import MyReviewTabs from './MyReviewTabs'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -17,8 +17,10 @@ const MyReview = (): JSX.Element => {
   const handleRequestDiscussionClick = () => {
     // Perform save logic here
     setIsRequestDiscussion(true)
-    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
   }
+  useEffect(() => {
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
+  }, [dispatch])
   console.log(appraisalForm.kra?.length)
   const errorMessage = useTypedSelector(
     reduxServices.myReview.selectors.errorMessage,
@@ -27,6 +29,7 @@ const MyReview = (): JSX.Element => {
     appraisalForm?.overallAvgRating === 'NaN'
       ? 'N/A'
       : appraisalForm?.overallAvgRating
+
   return (
     <>
       <OCard
@@ -45,7 +48,9 @@ const MyReview = (): JSX.Element => {
           <>
             {appraisalForm.formStatus === 'PENDINGAGREEMENT' ||
             appraisalForm.formStatus === 'OPENFORDISCUSSION' ||
-            appraisalForm.formStatus !== 'COMPLETED' ? (
+            (appraisalForm.formStatus !== 'COMPLETED' &&
+              appraisalForm.formStatus !== 'SUBMIT' &&
+              appraisalForm.formStatus !== 'SAVE') ? (
               <div className="d-inline ml15 pull-right">
                 <CButton type="submit" className="btn btn-success">
                   Acknowledge
