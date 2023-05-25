@@ -7,7 +7,7 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
-const ChangeReporteeFilterOptions = () => {
+const ChangeReporteeFilterOptions = (): JSX.Element => {
   const [isActive, setIsActive] = useState(true)
   const [autoCompleteTarget, setAutoCompleteTarget] = useState('')
   const [ShouldRenderTable, setShouldRenderTable] = useState<boolean>(false)
