@@ -140,6 +140,19 @@ const AddProjectMileStone = ({
     }
   }, [item.billable])
 
+  const allocateHandleInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'allocation') {
+      let targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
+      if (Number(targetValue) > 100) targetValue = '100'
+      // setAllocationValue(targetValue)
+    }
+  }
+
   return (
     <>
       <CTableBody>
@@ -221,6 +234,8 @@ const AddProjectMileStone = ({
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
+            maxLength={4}
+            autoComplete="off"
             data-testid="percentage-test"
             disabled={!isPercentageEnable}
           />

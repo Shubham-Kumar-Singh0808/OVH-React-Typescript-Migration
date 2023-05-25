@@ -409,7 +409,7 @@ const ProjectReportsTable = ({
                           userAccessProjectClose?.viewaccess && (
                             <CTooltip content="Close">
                               <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
+                                className="btn-ovh-employee-list me-1"
                                 color="danger btn-ovh me-1"
                                 data-testid="close-btn"
                                 onClick={() =>
@@ -431,7 +431,7 @@ const ProjectReportsTable = ({
                         <Link to={`/viewProject/${value.id}`}>
                           <CTooltip content="View">
                             <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
+                              className="btn-ovh-employee-list me-1"
                               color="info-light btn-ovh me-1"
                               data-testid="view-btn"
                               onClick={() => handleViewModel(value.id)}
@@ -447,7 +447,7 @@ const ProjectReportsTable = ({
                           <Link to={`/editproject/${value.id}`}>
                             <CTooltip content="Edit">
                               <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
+                                className="btn-ovh-employee-list me-1"
                                 color="primary btn-ovh me-1"
                                 data-testid="edit-btn"
                               >
@@ -462,7 +462,7 @@ const ProjectReportsTable = ({
                         {userAccess.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
+                              className="btn-ovh-employee-list me-1"
                               color="danger btn-ovh me-1"
                               data-testid="delete-btn"
                               disabled={value.count > 0}
