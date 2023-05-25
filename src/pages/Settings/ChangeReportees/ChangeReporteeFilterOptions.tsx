@@ -3,6 +3,9 @@ import { CCol, CFormCheck, CRow } from '@coreui/react-pro'
 import ReporteesAutoComplete from './ReporteesAutoComplete'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ChangeReporteeFilterOptions = () => {
   const [isActive, setIsActive] = useState(true)
@@ -19,6 +22,9 @@ const ChangeReporteeFilterOptions = () => {
     reduxServices.changeReportees.selectors.HRListDetails,
   )
 
+  const isLoading = useTypedSelector(
+    reduxServices.changeReportees.selectors.isLoading,
+  )
   //sets placeHolder
   const handleOnChange = (value: string) => {
     setAutoCompleteTarget('')
@@ -31,48 +37,55 @@ const ChangeReporteeFilterOptions = () => {
       setPlaceHolder('Manager Name')
     } else setPlaceHolder('Hr Name')
   }
+  const reporteesAutoCompleteComponent = isActive ? (
+    <ReporteesAutoComplete
+      managersOrHrManagersList={AllReportingManager}
+      placeHolder={placeHolder}
+      autoCompleteTarget={autoCompleteTarget}
+      setAutoCompleteTarget={setAutoCompleteTarget}
+      shouldRenderTable={ShouldRenderTable}
+      setShouldRenderTable={setShouldRenderTable}
+    />
+  ) : (
+    <ReporteesAutoComplete
+      managersOrHrManagersList={AllHRList}
+      placeHolder={placeHolder}
+      autoCompleteTarget={autoCompleteTarget}
+      setAutoCompleteTarget={setAutoCompleteTarget}
+      shouldRenderTable={ShouldRenderTable}
+      setShouldRenderTable={setShouldRenderTable}
+    />
+  )
   return (
     <>
-      <CRow className="mb-3">
-        <CCol sm={2}>
-          <CFormCheck
-            type="radio"
-            name="Reportees"
-            id="reportees"
-            label="Reportees"
-            checked={isActive}
-            onChange={() => handleOnChange('reportees')}
-          />
-        </CCol>
-        <CCol sm={2}>
-          <CFormCheck
-            type="radio"
-            name="HR Associates"
-            id="hrAssocaites"
-            label="HR Associates"
-            checked={!isActive}
-            onChange={() => handleOnChange('hrReportees')}
-          />
-        </CCol>
-      </CRow>
-      {isActive ? (
-        <ReporteesAutoComplete
-          managersOrHrManagersList={AllReportingManager}
-          placeHolder={placeHolder}
-          autoCompleteTarget={autoCompleteTarget}
-          setAutoCompleteTarget={setAutoCompleteTarget}
-          shouldRenderTable={ShouldRenderTable}
-          setShouldRenderTable={setShouldRenderTable}
-        />
+      {isLoading !== ApiLoadingState.loading ? (
+        <>
+          <CRow className="mb-3">
+            <CCol sm={2}>
+              <CFormCheck
+                type="radio"
+                name="Reportees"
+                id="reportees"
+                label="Reportees"
+                checked={isActive}
+                onChange={() => handleOnChange('reportees')}
+              />
+            </CCol>
+            <CCol sm={2}>
+              <CFormCheck
+                type="radio"
+                name="HR Associates"
+                id="hrAssocaites"
+                label="HR Associates"
+                checked={!isActive}
+                onChange={() => handleOnChange('hrReportees')}
+              />
+            </CCol>
+          </CRow>
+          {reporteesAutoCompleteComponent}
+        </>
       ) : (
-        <ReporteesAutoComplete
-          managersOrHrManagersList={AllHRList}
-          placeHolder={placeHolder}
-          autoCompleteTarget={autoCompleteTarget}
-          setAutoCompleteTarget={setAutoCompleteTarget}
-          shouldRenderTable={ShouldRenderTable}
-          setShouldRenderTable={setShouldRenderTable}
-        />
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </>
   )

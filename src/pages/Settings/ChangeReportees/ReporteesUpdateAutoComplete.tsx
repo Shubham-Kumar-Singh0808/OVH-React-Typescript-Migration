@@ -44,6 +44,8 @@ const ReporteesUpdateAutoComplete = ({
 
   setValidName(!!filter[0]?.fullName)
 
+  const validationClassName = filter[0]?.fullName ? 'text-white' : 'text-danger'
+
   const filteredManagersOrHrManagersList = managersOrHrManagersList?.filter(
     (item) => item.fullName !== autoCompleteTarget,
   )
@@ -64,11 +66,7 @@ const ReporteesUpdateAutoComplete = ({
             <CCol sm={2}>
               <CFormLabel data-testid="pmLabel">
                 Project Manager:
-                <span
-                  className={filter[0]?.fullName ? 'text-white' : 'text-danger'}
-                >
-                  *
-                </span>
+                <span className={validationClassName}>*</span>
               </CFormLabel>
             </CCol>
 

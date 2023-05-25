@@ -13,11 +13,8 @@ import {
 } from '@coreui/react-pro'
 import ReporteesUpdateAutoComplete from './ReporteesUpdateAutoComplete'
 import { EmployeeData } from '../../../types/Settings/ChangeReportees/changeReporteesTypes'
-import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 
 const EmployeesListUnderManagerTable = ({
@@ -48,10 +45,6 @@ const EmployeesListUnderManagerTable = ({
 
   const dispatch = useAppDispatch()
 
-  const isLoading = useTypedSelector(
-    reduxServices.changeReportees.selectors.isLoading,
-  )
-
   const actionMapping = {
     reportingManager: 'Reporting Manager',
     hrManager: 'Hr Associate',
@@ -62,6 +55,10 @@ const EmployeesListUnderManagerTable = ({
       toastColor="success"
     />
   )
+  const records =
+    employeeData?.length > 0
+      ? `Total Records: ${employeeData.length}`
+      : `No Records Found`
   //logic for selecting/unselecting the records
   const handleSelectRow = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -123,77 +120,65 @@ const EmployeesListUnderManagerTable = ({
 
   return (
     <>
-      {isLoading !== ApiLoadingState.loading ? (
-        <>
-          <CTable className="mt-4" striped data-testid="tableTest">
-            <CTableHead>
-              <CTableRow>
-                <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Employee Id</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-                <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+      <CTable className="mt-4" striped data-testid="tableTest">
+        <CTableHead>
+          <CTableRow>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Employee Id</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Designation</CTableHeaderCell>
+          </CTableRow>
+        </CTableHead>
+        <CTableBody>
+          {employeeData?.map((employee) => {
+            return (
+              <CTableRow key={employee.id}>
+                <CTableDataCell>
+                  <CFormCheck
+                    id="selectEmployee"
+                    onChange={(event) => handleSelectRow(event, employee.id)}
+                  />
+                </CTableDataCell>
+                <CTableDataCell>{employee.id}</CTableDataCell>
+                <CTableDataCell>{employee.fullName}</CTableDataCell>
+                <CTableDataCell>{employee.departmentName}</CTableDataCell>
+                <CTableDataCell>{employee.designation}</CTableDataCell>
               </CTableRow>
-            </CTableHead>
-            <CTableBody>
-              {employeeData?.map((employee) => {
-                return (
-                  <CTableRow key={employee.id}>
-                    <CTableDataCell>
-                      <CFormCheck
-                        id="selectEmployee"
-                        onChange={(event) =>
-                          handleSelectRow(event, employee.id)
-                        }
-                      />
-                    </CTableDataCell>
-                    <CTableDataCell>{employee.id}</CTableDataCell>
-                    <CTableDataCell>{employee.fullName}</CTableDataCell>
-                    <CTableDataCell>{employee.departmentName}</CTableDataCell>
-                    <CTableDataCell>{employee.designation}</CTableDataCell>
-                  </CTableRow>
-                )
-              })}
-            </CTableBody>
-            <CCol xs={4}></CCol>
-          </CTable>
+            )
+          })}
+        </CTableBody>
+        <CCol xs={4}></CCol>
+      </CTable>
 
-          <CCol xs={4}>
-            <strong>
-              {employeeData?.length > 0
-                ? `Total Records: ${employeeData.length}`
-                : `No Records Found`}
-            </strong>
-          </CCol>
-          {employeeData?.length > 0 && (
-            <CCol>
-              <ReporteesUpdateAutoComplete
-                managersOrHrManagersList={managersOrHrManagersList}
-                placeHolder={placeHolder}
-                setManagerId={setManagerId}
-                setValidName={setValidName}
-                autoCompleteTarget={autoCompleteTarget}
-              />
-              <CRow className="mb-3 align-items-center ms-5">
-                <CCol sm={{ span: 6, offset: 3 }}>
-                  <CButton
-                    className="btn-ovh me-1"
-                    color="success"
-                    data-testid="update-manager"
-                    disabled={!buttonDisable}
-                    onClick={() => {
-                      handleUpdateSelected()
-                    }}
-                  >
-                    Update
-                  </CButton>
-                </CCol>
-              </CRow>
+      <CCol xs={4}>
+        <strong>{records}</strong>
+      </CCol>
+      {employeeData?.length > 0 && (
+        <CCol>
+          <ReporteesUpdateAutoComplete
+            managersOrHrManagersList={managersOrHrManagersList}
+            placeHolder={placeHolder}
+            setManagerId={setManagerId}
+            setValidName={setValidName}
+            autoCompleteTarget={autoCompleteTarget}
+          />
+          <CRow className="mb-3 align-items-center ms-5">
+            <CCol sm={{ span: 6, offset: 3 }}>
+              <CButton
+                className="btn-ovh me-1"
+                color="success"
+                data-testid="update-manager"
+                disabled={!buttonDisable}
+                onClick={() => {
+                  handleUpdateSelected()
+                }}
+              >
+                Update
+              </CButton>
             </CCol>
-          )}
-        </>
-      ) : (
-        <OLoadingSpinner type={LoadingType.PAGE} />
+          </CRow>
+        </CCol>
       )}
     </>
   )

@@ -108,21 +108,21 @@ const changeReporteesSlice = createSlice({
     builder
       .addCase(getAllReportingManagerAsync.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.AllReportingManagerList = action.payload as EmployeeData[]
+        state.AllReportingManagerList = action.payload
       })
       .addCase(getAllHRListAsync.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.AllHRList = action.payload as EmployeeData[]
+        state.AllHRList = action.payload
       })
       .addCase(getAllEmployeesUnderManagerAsync.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.EmployeesUnderManager = action.payload as EmployeeData[]
+        state.EmployeesUnderManager = action.payload
       })
       .addCase(
         getHrAssociatesUnderHRManagerAsync.fulfilled,
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
-          state.EmployeesUnderHRManager = action.payload as EmployeeData[]
+          state.EmployeesUnderHRManager = action.payload
         },
       )
       .addMatcher(
@@ -160,7 +160,7 @@ const changeReporteesSlice = createSlice({
           updateReportingManagerAsync.rejected,
           updateHrAssociatesManagerAsync.rejected,
         ),
-        (state, action) => {
+        (state) => {
           state.isLoading = ApiLoadingState.failed
         },
       )

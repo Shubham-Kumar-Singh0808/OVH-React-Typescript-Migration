@@ -1,5 +1,4 @@
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { ValidationError } from '../../commonTypes'
 
 export type EmployeeData = {
   id: number
