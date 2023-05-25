@@ -1,4 +1,3 @@
-import { StringifyOptions } from 'querystring'
 import { Method, ResponseType } from 'axios'
 
 export type AuthenticatedRequestConfig = {
@@ -363,6 +362,7 @@ export interface LeaveSummaryApi extends ApiBase {
   getEmployeeLeaveSummary: string
   getEmployeeLeaveHistory: string
   cancelEmployeeLeave: string
+  cancelAfterApproval: string
 }
 export interface TicketListInformationApi extends ApiBase {
   getTicketListInformation: string
@@ -580,6 +580,8 @@ export interface ITDeclarationListApi extends ApiBase {
   updateCycle: string
   updateInvestment: string
   isInvestmentExist: string
+  isITFormEditable: string
+  editITForm: string
 }
 
 export interface InvestmentCheckListApi extends ApiBase {
@@ -676,6 +678,8 @@ export interface ProjectInvoiceApi extends ApiBase {
 export interface ProjectTailoringApi extends ApiBase {
   getProjectTailoringDocument: string
   getProjectTailoring: string
+  saveProjectTailoringDocumentForManager: string
+  saveProjectTailoringDocument: string
 }
 
 export interface ProjectTimeSheetApi extends ApiBase {
@@ -831,6 +835,30 @@ export interface JobOpeningsApi extends ApiBase {
   getJobVacancyAudit: string
   updateJobVacancy: string
   isCandidateMappedWithJob: string
+}
+
+export interface ChangeReporteesApi extends ApiBase {
+  getAllReportingManagerData: string
+  getAllHRList: string
+  getEmployeesUnderManger: string
+  getHrAssociates: string
+  updateReportingManager: string
+  updateHrAssociatesManager: string
+}
+
+export interface ManufacturerApi extends ApiBase {
+  exportManufacturerList: string
+  getAllManufacturerName: string
+}
+export interface ProductTypeListApi extends ApiBase {
+  getProductTypeList: string
+  deleteProduct: string
+  exportProductList: string
+}
+
+export interface AssetWarrantyReportApi extends ApiBase {
+  getWarrantyAssetsList: string
+  downloadExportAssetWarrantyList: string
 }
 
 export interface VendorListApi extends ApiBase {
