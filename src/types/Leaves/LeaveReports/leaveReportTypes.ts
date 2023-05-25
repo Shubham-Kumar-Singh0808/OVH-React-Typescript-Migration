@@ -19,7 +19,7 @@ export type EmployeeDTOList = {
   employeeSubmitted: null | string
   managerSubmitted: null | string
   acknowledged: null | string
-  fullName: string | string
+  fullName: string | null
   profilePicPath: null | string
   thumbPicture: null | string
   profilePicGeneratedPath: null | string
@@ -93,7 +93,7 @@ export type EmployeeDTOList = {
   casualLeaveCount: number
   lopLeaveCount: number
   holidaysCount: number | null
-  contractExists: null | null
+  contractExists: null | boolean
   contractStartDate: null | string
   contractEndDate: null | string
   personalEmail: null | string
