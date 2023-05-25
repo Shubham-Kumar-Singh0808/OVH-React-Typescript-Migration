@@ -129,6 +129,7 @@ import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
+import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -258,6 +259,7 @@ export const allReducers = {
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
   vendorList: vendorListReducer,
+  addNewVendor: addNewVendorReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

@@ -988,5 +988,6 @@ export const vendorListApiConfig: VendorListApi = {
   getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
   addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
   exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
-  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+  deleteVendorDetails: apiPrefix + '/assetManagement/deleteVendorDetails',
+  editVendorDetails: apiPrefix + '/assetManagement/updateVendorDetails',
 }
