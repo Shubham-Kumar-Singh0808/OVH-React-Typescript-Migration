@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
+// eslint-disable-next-line max-lines
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -108,6 +109,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
@@ -985,6 +987,16 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+
+export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
+  getAllReportingManagerData:
+    apiPrefix + '/delegation/getAllReportingManagerData',
+  getAllHRList: apiPrefix + '/delegation/getAllHRList',
+  getEmployeesUnderManger: apiPrefix + '/delegation/getMangerUnderEmployees',
+  getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
+  updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
+  updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
 }
 export const ManufacturerApiListConfig: ManufacturerApi = {
   getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',

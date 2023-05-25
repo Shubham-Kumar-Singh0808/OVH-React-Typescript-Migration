@@ -454,7 +454,9 @@ const AssetWarrantyReport = React.lazy(
 const productList = React.lazy(
   () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
 )
-
+const ChangeReportees = React.lazy(
+  () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1005,6 +1007,11 @@ const routes = [
     path: '/productList',
     name: 'Product List',
     component: productList,
+  },
+  {
+    path: '/delegation',
+    name: 'Change Reportees',
+    component: ChangeReportees,
   },
   {
     path: '/assetWarrantyReport',
