@@ -90,6 +90,24 @@ const ReporteesAutoComplete = ({
       setShouldRenderTable(true)
     }
   }
+  const employeeListUnderManagerTableComponent =
+    placeHolder === 'Manager Name' ? (
+      <EmployeesListUnderManagerTable
+        employeeData={getEmployeesUnderManger}
+        managersOrHrManagersList={managersOrHrManagersList}
+        placeHolder={placeHolder}
+        onClickHandler={onClickHandler}
+        autoCompleteTarget={autoCompleteTarget}
+      />
+    ) : (
+      <EmployeesListUnderManagerTable
+        employeeData={getHrAssociatesUnderManger}
+        managersOrHrManagersList={managersOrHrManagersList}
+        placeHolder={placeHolder}
+        onClickHandler={onClickHandler}
+        autoCompleteTarget={autoCompleteTarget}
+      />
+    )
 
   return (
     <>
@@ -163,24 +181,7 @@ const ReporteesAutoComplete = ({
           </CRow>
           <CRow>
             <CCol>
-              {shouldRenderTable &&
-                (placeHolder === 'Manager Name' ? (
-                  <EmployeesListUnderManagerTable
-                    employeeData={getEmployeesUnderManger}
-                    managersOrHrManagersList={managersOrHrManagersList}
-                    placeHolder={placeHolder}
-                    onClickHandler={onClickHandler}
-                    autoCompleteTarget={autoCompleteTarget}
-                  />
-                ) : (
-                  <EmployeesListUnderManagerTable
-                    employeeData={getHrAssociatesUnderManger}
-                    managersOrHrManagersList={managersOrHrManagersList}
-                    placeHolder={placeHolder}
-                    onClickHandler={onClickHandler}
-                    autoCompleteTarget={autoCompleteTarget}
-                  />
-                ))}
+              {shouldRenderTable && employeeListUnderManagerTableComponent}
             </CCol>
           </CRow>
         </>
