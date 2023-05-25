@@ -31,6 +31,7 @@ const EditManufacturerList = ({
   const productResult = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerData,
   )
+  console.log(productResult)
 
   useEffect(() => {
     if (
@@ -58,9 +59,6 @@ const EditManufacturerList = ({
       }
     })
   }
-  useEffect(() => {
-    dispatch(reduxServices.ManufacturerList.getAllLookUps())
-  }, [dispatch])
   const updateSuccessToastMessage = (
     <OToast
       toastMessage="Product type is successfully edited.

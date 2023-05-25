@@ -22,8 +22,6 @@ const Manufacturer = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
-  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>('')
 
   const initialManufacturerList = {} as ManufacturerDetails
   const [editManufacturerData, setEditManufacturerData] =
@@ -68,6 +66,9 @@ const Manufacturer = (): JSX.Element => {
       }),
     )
   }
+  useEffect(() => {
+    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+  }, [dispatch])
 
   useEffect(() => {
     dispatch(

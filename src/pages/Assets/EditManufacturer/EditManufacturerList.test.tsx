@@ -3,9 +3,9 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import EditManufacturerList from './EditManufacturerList'
-import AddManuFactureFilterOptions from '../AddManufacturer/AddManuFactureFilterOptions'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { render, screen } from '../../../test/testUtils'
+import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 
 const mockSetTogglePage = jest.fn()
 
@@ -35,7 +35,7 @@ describe('Job Openings without data', () => {
             listSize: 0,
             getAllManufacturerName: {},
             manufacturerList: {},
-            manufacturerDetails: [],
+            manufacturerDetails: mockManufactureGetLookup,
           },
         },
       },
