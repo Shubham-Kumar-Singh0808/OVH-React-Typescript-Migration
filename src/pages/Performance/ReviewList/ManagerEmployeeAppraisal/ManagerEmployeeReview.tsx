@@ -18,6 +18,8 @@ const ManagerEmployeeReview = (): JSX.Element => {
   const errorMessage = useTypedSelector(
     reduxServices.myReview.selectors.errorMessage,
   )
+  const overallAvgRatingResult =
+    appraisalForm?.overallAvgRating === 'NaN' ? 'N/A' : ''
   return (
     <>
       <OCard
@@ -54,7 +56,8 @@ const ManagerEmployeeReview = (): JSX.Element => {
             ) : (
               ''
             )}
-            {appraisalForm?.formStatus === 'COMPLETED' ? (
+            {appraisalForm?.formStatus === 'COMPLETED' ||
+            appraisalForm?.formStatus === 'SUBMIT' ? (
               <>
                 <div className="form-group">
                   <label className="pull-left text-primary">
@@ -81,7 +84,7 @@ const ManagerEmployeeReview = (): JSX.Element => {
                   <div className="col-sm-2">
                     <label className="ng-binding">
                       <span className="ng-binding">
-                        {appraisalForm?.overallAvgRating}
+                        {overallAvgRatingResult}
                       </span>
                     </label>
                   </div>
