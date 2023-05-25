@@ -23,16 +23,22 @@ const AddProduct = ({
 }): JSX.Element => {
   const [selectAssetId, setSelectAssetId] = useState<string>('')
   const [selectProductId, setSelectProductId] = useState<string>('')
-
-  const [productSpecification, setProductSpecification] = useState<string>('')
-
   const [manufactureType, setManufactureType] = useState('')
+  const [productSpecification, setProductSpecification] = useState<string>('')
 
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
-  const result = useTypedSelector(
+  const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
   )
+  console.log('specification List', getAllLookUps)
+  const AssetTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.assetTypeList,
+  )
+  const ProductTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.productTypeList,
+  )
+
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
@@ -40,29 +46,26 @@ const AddProduct = ({
 
   const dispatch = useAppDispatch()
   const [showEditor, setShowEditor] = useState<boolean>(true)
-
-  const ProductTypeList = useTypedSelector(
-    reduxServices.addNewProduct.selectors.productTypeList,
-  )
-
-  useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
-  }, [dispatch])
+  console.log(AssetTypeList)
+  console.log(ProductTypeList)
+  // useEffect(() => {
+  //   dispatch(reduxServices.addNewProduct.getAllLookUps())
+  // }, [dispatch])
 
   useEffect(() => {
-    if (selectAssetId) {
-      dispatch(
-        reduxServices.addNewProduct.getAssetTypeList(Number(selectAssetId)),
-      )
-    }
+    // if (selectAssetId) {
+    dispatch(
+      reduxServices.addNewProduct.getAssetTypeList(Number(selectAssetId)),
+    )
+    // }
   }, [dispatch, selectAssetId])
 
   useEffect(() => {
-    if (selectProductId) {
-      dispatch(
-        reduxServices.addNewProduct.getProductTypeList(Number(selectProductId)),
-      )
-    }
+    // if (selectProductId) {
+    dispatch(
+      reduxServices.addNewProduct.getProductTypeList(Number(selectProductId)),
+    )
+    // }
   }, [dispatch, selectProductId])
 
   const clearInputs = () => {
@@ -111,6 +114,7 @@ const AddProduct = ({
       )
     }
   }
+  console.log(getAllLookUps)
   return (
     <>
       <OCard
@@ -149,8 +153,8 @@ const AddProduct = ({
               }}
             >
               <option value={''}>Select Asset Type</option>
-              {result?.assetTypeList?.length > 0 &&
-                result?.assetTypeList?.map((item, index) => (
+              {getAllLookUps?.assetTypeList?.length > 0 &&
+                getAllLookUps?.assetTypeList?.map((item, index) => (
                   <option key={index} value={item.id}>
                     {item.assetType}
                   </option>
@@ -176,10 +180,10 @@ const AddProduct = ({
               }}
             >
               <option value={''}>Select Product Type</option>
-              {ProductTypeList.length > 0 &&
-                ProductTypeList?.map((location, index) => (
-                  <option key={index} value={location.productId}>
-                    {location.productName}
+              {AssetTypeList?.length > 0 &&
+                AssetTypeList?.map((item, index) => (
+                  <option key={index} value={item.assetTypeId}>
+                    {item.productName}
                   </option>
                 ))}
             </CFormSelect>
@@ -206,7 +210,7 @@ const AddProduct = ({
               {ProductTypeList.length > 0 &&
                 ProductTypeList?.map((product, index) => (
                   <option key={index} value={product.productId}>
-                    {product.productName}
+                    {product.manufacturerName}
                   </option>
                 ))}
             </CFormSelect>

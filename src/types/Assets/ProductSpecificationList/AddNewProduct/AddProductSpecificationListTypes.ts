@@ -50,6 +50,7 @@ export type AssetTypeListSliceState = {
   assetTypeList: AssetTypeList[]
   manufactureList: ManufacturerList
   updateProductSpecification: UpdateProductSpecificationTypes
+  getAddBtnProducts: AddBtnProducts
 }
 
 export type ManufacturerList = {
@@ -124,14 +125,14 @@ export type GetAssetTypeListData = {
 }
 //Add Button api
 export type AddBtnProducts = {
-  assetTypeId: number
+  assetTypeId: string
   manufacturerId: number
   productId: number
   productSpecification: string
 }
-export type GetAddBtnProductsData = {
-  addBtnProducts: AddBtnProducts[]
-}
+// export type GetAddBtnProductsData = {
+//   addBtnProducts: AddBtnProducts[]
+// }
 export type AddProductSpecificationProps = {
   assetTypeId: string
   manufacturerId: number

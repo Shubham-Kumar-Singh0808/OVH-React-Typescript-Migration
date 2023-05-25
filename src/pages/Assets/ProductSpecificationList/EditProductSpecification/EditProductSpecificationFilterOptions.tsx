@@ -26,8 +26,15 @@ const EditProductSpecificationFilterOptions = ({
       className,
     }
   }
-  const result = useTypedSelector(
-    reduxServices.addNewProduct.selectors.manufactureList,
+  const [selectedAssetType, setSelectedAssetType] = useState<number | string>()
+  const [selectedProductType, setSelectedProductType] = useState<
+    number | string
+  >()
+  const [selectedManufacturer, setSelectedManufacturer] = useState<
+    number | string
+  >()
+  const getAllLookUps = useTypedSelector(
+    reduxServices.addNewProduct.selectors.AssetData,
   )
   const AssetType = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -58,21 +65,40 @@ const EditProductSpecificationFilterOptions = ({
       ),
     )
   }
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
+    if (selectedAssetType) {
+      dispatch(
+        reduxServices.addNewProduct.getAssetTypeList(
+          selectedAssetType as number,
+        ),
+      )
+    }
+    if (selectedManufacturer) {
+      dispatch(
+        reduxServices.addNewProduct.getProductTypeList(
+          selectedManufacturer as number,
+        ),
+      )
+    }
+  }, [dispatch, selectedAssetType, selectedProductType, getAllLookUps])
 
   // useEffect(() => {
-  //   if (editProductSpecification.assetTypeId) {
+  //   if (editProductSpecification?.assetTypeId) {
   //     dispatch(
   //       reduxServices.addNewProduct.getProductTypeList(
   //         editProductSpecification.assetTypeId,
   //       ),
   //     )
   //   }
-  // }, [editProductSpecification.assetTypeId])
+  // }, [editProductSpecification?.assetTypeId])
 
-  const dispatch = useAppDispatch()
-  useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
-  }, [dispatch, editProductSpecification.assetTypeId])
+  // useEffect(() => {
+  //   if (editProductSpecification?.assetTypeId) {
+  //     dispatch(reduxServices.addNewProduct.getAllLookUps())
+  //   }
+  // }, [dispatch, editProductSpecification.assetTypeId])
 
   // useEffect(() => {
   //   if (updateProductList) {
@@ -141,7 +167,6 @@ const EditProductSpecificationFilterOptions = ({
     })
   }
 
-  console.log(editProductSpecification.productName)
   return (
     <>
       <CRow className="mt-3 ">
@@ -165,8 +190,8 @@ const EditProductSpecificationFilterOptions = ({
             value={editProductSpecification.assetTypeId}
             onChange={onChangeProductSpecificationHandler}
           >
-            {result?.assetTypeList?.length > 0 &&
-              result?.assetTypeList?.map((item, index) => (
+            {getAllLookUps?.length > 0 &&
+              getAllLookUps?.map((item, index) => (
                 <option key={index} value={item.id}>
                   {item.assetType}
                 </option>
@@ -217,13 +242,13 @@ const EditProductSpecificationFilterOptions = ({
             id="manufacturerId"
             data-testid="form-select1"
             name="manufacturerId"
-            value={editProductSpecification.manufacturerName}
+            value={editProductSpecification?.manufacturerName}
             onChange={onChangeProductSpecificationHandler}
           >
             <option value={''}>Select Manufacturer</option>
             {ProductTypeList.length > 0 &&
               ProductTypeList?.map((product, index) => (
-                <option key={index} value={product.productId}>
+                <option key={index} value={product?.manufacturerId}>
                   {product.manufacturerName}
                 </option>
               ))}

@@ -3,8 +3,6 @@ import { CRow, CCol, CButton } from '@coreui/react-pro'
 import EditProductSpecificationFilterOptions from './EditProductSpecificationFilterOptions'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { UpdateProductSpecificationTypes } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
-import { useAppDispatch } from '../../../../stateStore'
-import { reduxServices } from '../../../../reducers/reduxServices'
 
 const EditProductSpecification = ({
   setToggle,
@@ -17,8 +15,6 @@ const EditProductSpecification = ({
     React.SetStateAction<UpdateProductSpecificationTypes>
   >
 }): JSX.Element => {
-  const dispatch = useAppDispatch()
-
   return (
     <>
       <OCard

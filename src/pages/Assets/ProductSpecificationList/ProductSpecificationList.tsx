@@ -80,6 +80,13 @@ const ProductSpecificationList = (): JSX.Element => {
     )
   }
   console.log(editProductSpecification)
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Product Specification List',
+  )
   return (
     <>
       {toggle === '' && (
@@ -156,6 +163,7 @@ const ProductSpecificationList = (): JSX.Element => {
               setPageSize={setPageSize}
               setEditProductSpecification={setEditProductSpecification}
               setToggle={setToggle}
+              userAccess={userAccess}
             />
           </>
         </OCard>

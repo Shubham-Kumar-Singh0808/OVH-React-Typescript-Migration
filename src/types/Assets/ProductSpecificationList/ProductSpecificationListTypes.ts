@@ -1,5 +1,6 @@
 import { UpdateProductSpecificationTypes } from './AddNewProduct/AddProductSpecificationListTypes'
 import { LoadingState } from '../../commonTypes'
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export type ProductSpecifications = {
   id: number
@@ -46,4 +47,5 @@ export type ProductSpecificationListTableProps = {
     React.SetStateAction<UpdateProductSpecificationTypes>
   >
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  userAccess: UserAccessToFeatures | undefined
 }

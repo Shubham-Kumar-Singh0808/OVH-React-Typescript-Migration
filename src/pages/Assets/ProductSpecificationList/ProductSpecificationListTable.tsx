@@ -38,6 +38,7 @@ const ProductSpecificationListTable = ({
   setCurrentPage,
   setEditProductSpecification,
   setToggle,
+  userAccess,
 }: ProductSpecificationListTableProps): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [productSpecificationId, setProductSpecificationsId] =
@@ -103,17 +104,13 @@ const ProductSpecificationListTable = ({
       )
     }
   }
-
-  // const editButtonHandler = (productSpecification: ProductSpecifications) => {
-  //   setEditProductSpecification(productSpecification)
-  //   setToggle('/editProductSpecification')
-  // }
   const editBtnHandler = (
     id: number,
     productId: number,
     productSpecification: ProductSpecifications,
   ) => {
-    dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(id)))
+    console.log()
+    dispatch(reduxServices.addNewProduct.getAssetTypeList(id))
     dispatch(reduxServices.addNewProduct.getProductTypeList(productId))
     setToggle('/editProductSpecification')
     setEditProductSpecification(productSpecification)
@@ -185,35 +182,39 @@ const ProductSpecificationListTable = ({
                       {productSpecification.createdBy}
                     </CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
-                      <CTooltip content="Edit">
-                        <CButton
-                          color="info"
-                          size="sm"
-                          className="btn-ovh-employee-list"
-                          onClick={() =>
-                            editBtnHandler(
-                              productSpecification.assetTypeId,
-                              productSpecification.productId,
-                              productSpecification,
-                            )
-                          }
-                        >
-                          <i className="text-white fa fa-pencil-square-o"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            size="sm"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              editBtnHandler(
+                                productSpecification.assetTypeId,
+                                productSpecification.productId,
+                                productSpecification,
+                              )
+                            }
+                          >
+                            <i className="text-white fa fa-pencil-square-o"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                       &nbsp; &nbsp; &nbsp;
-                      <CTooltip content="Delete">
-                        <CButton
-                          color="danger"
-                          className="btn-ovh me-2"
-                          onClick={() =>
-                            handleShowDeleteModal(productSpecification.id)
-                          }
-                          // onClick={() => handleShowDeleteModal(family.familyId)}
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger"
+                            data-testid={`btn-delete${index}`}
+                            className="btn-ovh me-2"
+                            onClick={() =>
+                              handleShowDeleteModal(productSpecification.id)
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

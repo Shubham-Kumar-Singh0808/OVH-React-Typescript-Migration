@@ -9,6 +9,7 @@ import {
   AddProductSpecificationProps,
   UpdateProductSpecificationTypes,
   ProductType,
+  AddBtnProducts,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
@@ -116,7 +117,7 @@ const updateProductSpecification = createAsyncThunk<
     }
   },
 )
-const initialAddProductState: AssetTypeListSliceState = {
+export const initialAddProductState: AssetTypeListSliceState = {
   assetType: [],
   productType: [],
   isLoading: ApiLoadingState.idle,
@@ -124,6 +125,7 @@ const initialAddProductState: AssetTypeListSliceState = {
   assetTypeList: [],
   manufactureList: {} as ManufacturerList,
   updateProductSpecification: {} as UpdateProductSpecificationTypes,
+  getAddBtnProducts: {} as AddBtnProducts,
 }
 const addProductSlice = createSlice({
   name: 'addProduct',
@@ -133,7 +135,7 @@ const addProductSlice = createSlice({
     builder
       .addCase(getProductTypeList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.assetType = action.payload
+        state.productType = action.payload
       })
       .addMatcher(isAnyOf(getAssetTypeList.pending), (state) => {
         state.isLoading = ApiLoadingState.loading

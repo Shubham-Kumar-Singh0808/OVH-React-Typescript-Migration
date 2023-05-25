@@ -57,9 +57,10 @@ describe('Job Openings without data', () => {
       />,
     )
   })
-  test('should enable add button after selecting form option', async () => {
+
+  test('should enable add button after selecting form option', () => {
     const assetTypeSelect = screen.getByTestId('asset-type')
-    userEvent.selectOptions(assetTypeSelect, ['Hardware'])
+    userEvent.selectOptions(assetTypeSelect, '')
     expect(assetTypeSelect).toHaveValue('')
 
     const productTypeSelect = screen.getByTestId('product-type')

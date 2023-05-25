@@ -36,7 +36,9 @@ const getAllLookUpList = async (): Promise<ManufacturerList> => {
   return response.data
 }
 
-const getProductTypeList = async (productId: number): Promise<AssetType[]> => {
+const getProductTypeList = async (
+  productId: number,
+): Promise<ProductType[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.getProductTypeChangeList,
     method: AllowedHttpMethods.get,
@@ -62,12 +64,12 @@ const deleteProductSpecification = async (
 }
 
 const addProductSpecifications = async (
-  employeeLeaveCategory: AddProductSpecificationProps,
+  addProductSpecifications: AddProductSpecificationProps,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ProductSpecificationListReportApiConfig.addProductSpecifications,
     method: AllowedHttpMethods.post,
-    data: employeeLeaveCategory,
+    data: addProductSpecifications,
   })
   const responseVisa = await useAxios(requestConfig)
   return responseVisa.data
