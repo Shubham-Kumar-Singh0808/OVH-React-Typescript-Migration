@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CButton } from '@coreui/react-pro'
+import ManagerReviewTabs from './ManagerReviewTabs'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import MyReviewTabs from '../../MyReviews/MyReviewTabs'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
@@ -90,7 +90,7 @@ const ManagerEmployeeReview = (): JSX.Element => {
             ) : (
               ''
             )}
-            <MyReviewTabs />
+            <ManagerReviewTabs />
           </>
         )}
       </OCard>
