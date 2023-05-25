@@ -5,18 +5,18 @@ import React, { useEffect, useState } from 'react'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
-import { UpdateProductSpecificationTypes } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { ProductSpecifications } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const EditProductSpecificationFilterOptions = ({
   editProductSpecification,
   setEditProductSpecification,
   setToggle,
 }: {
-  editProductSpecification: UpdateProductSpecificationTypes
+  editProductSpecification: ProductSpecifications
   setEditProductSpecification: React.Dispatch<
-    React.SetStateAction<UpdateProductSpecificationTypes>
+    React.SetStateAction<ProductSpecifications>
   >
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
@@ -34,7 +34,7 @@ const EditProductSpecificationFilterOptions = ({
     number | string
   >()
   const getAllLookUps = useTypedSelector(
-    reduxServices.addNewProduct.selectors.AssetData,
+    reduxServices.addNewProduct.selectors.manufactureList,
   )
   const AssetType = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -66,6 +66,9 @@ const EditProductSpecificationFilterOptions = ({
     )
   }
   const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.addNewProduct.getAllLookUps())
+  }, [dispatch])
   useEffect(() => {
     if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
     if (selectedAssetType) {
@@ -190,8 +193,8 @@ const EditProductSpecificationFilterOptions = ({
             value={editProductSpecification.assetTypeId}
             onChange={onChangeProductSpecificationHandler}
           >
-            {getAllLookUps?.length > 0 &&
-              getAllLookUps?.map((item, index) => (
+            {getAllLookUps.assetTypeList?.length > 0 &&
+              getAllLookUps.assetTypeList?.map((item, index) => (
                 <option key={index} value={item.id}>
                   {item.assetType}
                 </option>

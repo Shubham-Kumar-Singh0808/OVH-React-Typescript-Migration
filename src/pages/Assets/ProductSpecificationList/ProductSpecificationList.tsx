@@ -10,6 +10,7 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import productSpecificationListApi from '../../../middleware/api/Assets/ProductSpecificationList/ProductSpecificationListApi'
 import { downloadFile } from '../../../utils/helper'
 import { UpdateProductSpecificationTypes } from '../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
+import { ProductSpecifications } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const ProductSpecificationList = (): JSX.Element => {
   const employees = useTypedSelector(
@@ -17,7 +18,9 @@ const ProductSpecificationList = (): JSX.Element => {
   )
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
-  const productSpecification = {} as UpdateProductSpecificationTypes
+
+  const productSpecification = {} as ProductSpecifications
+
   const [editProductSpecification, setEditProductSpecification] =
     useState(productSpecification)
 
