@@ -48,24 +48,25 @@ const AddProduct = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   console.log(AssetTypeList)
   console.log(ProductTypeList)
-  // useEffect(() => {
-  //   dispatch(reduxServices.addNewProduct.getAllLookUps())
-  // }, [dispatch])
 
   useEffect(() => {
-    // if (selectAssetId) {
-    dispatch(
-      reduxServices.addNewProduct.getAssetTypeList(Number(selectAssetId)),
-    )
-    // }
+    dispatch(reduxServices.addNewProduct.getAllLookUps())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (selectAssetId) {
+      dispatch(
+        reduxServices.addNewProduct.getAssetTypeList(Number(selectAssetId)),
+      )
+    }
   }, [dispatch, selectAssetId])
 
   useEffect(() => {
-    // if (selectProductId) {
-    dispatch(
-      reduxServices.addNewProduct.getProductTypeList(Number(selectProductId)),
-    )
-    // }
+    if (selectProductId) {
+      dispatch(
+        reduxServices.addNewProduct.getProductTypeList(Number(selectProductId)),
+      )
+    }
   }, [dispatch, selectProductId])
 
   const clearInputs = () => {
@@ -192,7 +193,7 @@ const AddProduct = ({
         <CRow className="mt-3 ">
           <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
             Manufacturer/ Brand Name:{' '}
-            {/* <span className={selectProductId ? TextWhite : TextDanger}>*</span> */}
+            <span className={manufactureType ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
