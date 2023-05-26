@@ -74,6 +74,7 @@ const ProjectCreationRequestTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const getItemNumber = (index: number) => {

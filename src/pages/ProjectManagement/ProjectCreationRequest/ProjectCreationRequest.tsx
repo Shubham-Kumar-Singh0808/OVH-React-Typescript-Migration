@@ -47,9 +47,9 @@ const ProjectCreationRequest = (): JSX.Element => {
   const handleSearch = () => {
     dispatch(
       reduxServices.projectCreationRequest.getAllProjectRequestList({
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         multiSearch: searchInput,
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
       }),
     )
   }
@@ -60,9 +60,9 @@ const ProjectCreationRequest = (): JSX.Element => {
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.projectCreationRequest.getAllProjectRequestList({
-          endIndex: pageSize * currentPage,
+          endIndex: 20,
           multiSearch: searchInput,
-          firstIndex: pageSize * (currentPage - 1),
+          firstIndex: 0,
         }),
       )
     }

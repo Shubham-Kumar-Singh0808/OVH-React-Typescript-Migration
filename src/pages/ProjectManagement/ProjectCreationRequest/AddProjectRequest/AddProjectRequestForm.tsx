@@ -69,6 +69,10 @@ const AddProjectRequestForm = ({
   isAddMilestoneButtonEnabled,
   emailError,
   billingContactPersonEmailError,
+  emailErrorMsgCC,
+  emailErrorMsgBCC,
+  setEmailErrorMsgCC,
+  setEmailErrorMsgBCC,
 }: {
   projectRequest: AddProjectRequestDetails
   setProjectRequest: React.Dispatch<
@@ -102,6 +106,10 @@ const AddProjectRequestForm = ({
   isAddMilestoneButtonEnabled: boolean
   emailError: boolean
   billingContactPersonEmailError: boolean
+  emailErrorMsgCC: boolean
+  emailErrorMsgBCC: boolean
+  setEmailErrorMsgCC: React.Dispatch<React.SetStateAction<boolean>>
+  setEmailErrorMsgBCC: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
@@ -110,7 +118,6 @@ const AddProjectRequestForm = ({
 
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
     useState<string>('')
-  const [emailErrorMsgCC, setEmailErrorMsgCC] = useState(false)
 
   const validateEmailMsgCC = (email: string) => {
     if (validator.isEmail(email)) {
@@ -128,7 +135,6 @@ const AddProjectRequestForm = ({
 
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
     useState<string>('')
-  const [emailErrorMsgBCC, setEmailErrorMsgBCC] = useState(false)
 
   const validateEmailMsgBCC = (email: string) => {
     if (validator.isEmail(email)) {
@@ -551,7 +557,9 @@ const AddProjectRequestForm = ({
         <OInputField
           onChangeHandler={setCustomerContactName}
           onBlurHandler={onHandleAddProjectCustomerContactName}
-          value={customerContactName?.replace(/^\s*/, '')}
+          value={customerContactName
+            ?.replace(/^\s*/, '')
+            ?.replace(/[^a-zA-Z\s]/g, '')}
           isRequired={true}
           label="Customer Contact Name"
           name="projectContactPerson"
@@ -893,6 +901,7 @@ const AddProjectRequestForm = ({
           <CFormInput
             name="CC"
             id="CC"
+            autoComplete="off"
             value={projectRequestMailIdCC}
             onChange={(e) => handleProjectRequestMailIdCC(e)}
           />
@@ -909,6 +918,7 @@ const AddProjectRequestForm = ({
         <CCol sm={3}>
           <CFormInput
             name="BCC"
+            autoComplete="off"
             id="BCC"
             value={projectRequestMailIdBbc}
             onChange={(e) => handleProjectRequestMailIdBbc(e)}
