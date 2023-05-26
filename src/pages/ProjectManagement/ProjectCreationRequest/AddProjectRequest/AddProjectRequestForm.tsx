@@ -565,7 +565,9 @@ const AddProjectRequestForm = ({
         <OInputField
           onChangeHandler={setBillingContactName}
           onBlurHandler={onHandleAddProjectBillingContactName}
-          value={billingContactName?.replace(/^\s*/, '')}
+          value={billingContactName
+            ?.replace(/[^a-zA-Z\s]/g, '')
+            .replace(/^\s*/, '')}
           isRequired={false}
           label="Billing Contact Name"
           name="billingContactPerson"
