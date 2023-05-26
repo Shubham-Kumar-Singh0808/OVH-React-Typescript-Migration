@@ -44,7 +44,7 @@ const ProductSpecificationList = (): JSX.Element => {
     }
   }
 
-  const multiSearchBtnHandler = () => {
+  const searchBtnInputHandler = () => {
     dispatch(
       reduxServices.productSpecificationList.getProductSpecificationList({
         endIndex: 20,
@@ -127,7 +127,7 @@ const ProductSpecificationList = (): JSX.Element => {
                   type="button"
                   color="info"
                   id="button-addon2"
-                  onClick={multiSearchBtnHandler}
+                  onClick={searchBtnInputHandler}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>

@@ -41,7 +41,7 @@ const ProductSpecificationListTable = ({
   const productSpecification = useTypedSelector(
     reduxServices.productSpecificationList.selectors.productSpecificationList,
   )
-  const listSize = useTypedSelector(
+  const productSpecificationListSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
   )
 
@@ -153,11 +153,11 @@ const ProductSpecificationListTable = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {listSize}</strong>
+              <strong>Total Records: {productSpecificationListSize}</strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {productSpecificationListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80]}
@@ -165,7 +165,7 @@ const ProductSpecificationListTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {productSpecificationListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"
