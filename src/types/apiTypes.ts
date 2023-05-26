@@ -678,6 +678,8 @@ export interface ProjectInvoiceApi extends ApiBase {
 export interface ProjectTailoringApi extends ApiBase {
   getProjectTailoringDocument: string
   getProjectTailoring: string
+  saveProjectTailoringDocumentForManager: string
+  saveProjectTailoringDocument: string
 }
 
 export interface ProjectTimeSheetApi extends ApiBase {
@@ -834,6 +836,16 @@ export interface JobOpeningsApi extends ApiBase {
   updateJobVacancy: string
   isCandidateMappedWithJob: string
 }
+
+export interface ChangeReporteesApi extends ApiBase {
+  getAllReportingManagerData: string
+  getAllHRList: string
+  getEmployeesUnderManger: string
+  getHrAssociates: string
+  updateReportingManager: string
+  updateHrAssociatesManager: string
+}
+
 export interface IntervieweeDetailsApi extends ApiBase {
   timelinedetails: string
   saveInitialComments: string
@@ -861,4 +873,12 @@ export interface ProductTypeListApi extends ApiBase {
 export interface AssetWarrantyReportApi extends ApiBase {
   getWarrantyAssetsList: string
   downloadExportAssetWarrantyList: string
+}
+
+export interface VendorListApi extends ApiBase {
+  getAllVendorDetails: string
+  getDepartmentNameList: string
+  addVendorDetails: string
+  exportVendorData: string
+  searchVendors: string
 }
