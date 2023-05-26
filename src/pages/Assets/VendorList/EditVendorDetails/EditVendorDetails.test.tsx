@@ -102,14 +102,6 @@ describe('Vendor Details without data', () => {
     const name = screen.getByTestId('name')
     userEvent.type(name, 'Srikanth')
 
-    // const address = screen.getByTestId('address')
-    // userEvent.type(address, 'Hyderabad')
-    // // Assert that the address change callback has been called
-    // expect(editorChange).toHaveBeenCalledWith('Hyderabad')
-
-    // const bankDetails = screen.getByTestId('vendorBankDetails')
-    // userEvent.type(bankDetails, 'SBI')
-
     const gstNumber = screen.getByTestId('vendorGSTNumber')
     userEvent.type(gstNumber, '636188754099')
 
