@@ -109,6 +109,7 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
@@ -991,6 +992,13 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+export const vendorListApiConfig: VendorListApi = {
+  getAllVendorDetails: apiPrefix + '/assetManagement/getAllVendorDetails',
+  getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
+  addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
+  exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
+  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
 }
 
 export const ChangeReporteesAPiConfig: ChangeReporteesApi = {

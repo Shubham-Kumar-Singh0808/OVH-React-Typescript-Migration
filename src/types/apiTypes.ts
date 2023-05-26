@@ -860,3 +860,11 @@ export interface AssetWarrantyReportApi extends ApiBase {
   getWarrantyAssetsList: string
   downloadExportAssetWarrantyList: string
 }
+
+export interface VendorListApi extends ApiBase {
+  getAllVendorDetails: string
+  getDepartmentNameList: string
+  addVendorDetails: string
+  exportVendorData: string
+  searchVendors: string
+}
