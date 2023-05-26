@@ -44,7 +44,7 @@ export type ProductSpecificationListTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   updateaccess?: boolean
   setEditProductSpecification: React.Dispatch<
-    React.SetStateAction<UpdateProductSpecificationTypes>
+    React.SetStateAction<ProductSpecifications>
   >
   setToggle: React.Dispatch<React.SetStateAction<string>>
   userAccess: UserAccessToFeatures | undefined

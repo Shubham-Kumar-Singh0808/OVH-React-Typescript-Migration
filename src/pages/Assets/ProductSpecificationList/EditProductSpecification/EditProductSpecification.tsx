@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import EditProductSpecificationFilterOptions from './EditProductSpecificationFilterOptions'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { UpdateProductSpecificationTypes } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
+import { ProductSpecifications } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const EditProductSpecification = ({
   setToggle,
@@ -10,9 +10,9 @@ const EditProductSpecification = ({
   setEditProductSpecification,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
-  editProductSpecification: UpdateProductSpecificationTypes
+  editProductSpecification: ProductSpecifications
   setEditProductSpecification: React.Dispatch<
-    React.SetStateAction<UpdateProductSpecificationTypes>
+    React.SetStateAction<ProductSpecifications>
   >
 }): JSX.Element => {
   return (

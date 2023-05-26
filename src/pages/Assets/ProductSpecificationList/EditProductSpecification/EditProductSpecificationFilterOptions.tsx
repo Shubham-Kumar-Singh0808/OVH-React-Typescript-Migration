@@ -5,19 +5,19 @@ import React, { useEffect, useState } from 'react'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
-import { UpdateProductSpecificationTypes } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { ProductSpecifications } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const EditProductSpecificationFilterOptions = ({
   editProductSpecification,
   setEditProductSpecification,
   setToggle,
 }: {
-  editProductSpecification: UpdateProductSpecificationTypes
+  editProductSpecification: ProductSpecifications
   setEditProductSpecification: React.Dispatch<
-    React.SetStateAction<UpdateProductSpecificationTypes>
+    React.SetStateAction<ProductSpecifications>
   >
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
@@ -78,6 +78,9 @@ const EditProductSpecificationFilterOptions = ({
     )
   }
 
+  useEffect(() => {
+    dispatch(reduxServices.addNewProduct.getAllLookUps())
+  }, [dispatch])
   useEffect(() => {
     if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
     if (selectedAssetType) {
@@ -185,11 +188,11 @@ const EditProductSpecificationFilterOptions = ({
     // }
   }
 
-  const onChangeHandler = (description: string) => {
-    setEditProductSpecification((prevState) => {
-      return { ...prevState, ...{ description } }
-    })
-  }
+  // const onChangeHandler = (description: string) => {
+  //   setEditProductSpecification((prevState) => {
+  //     return { ...prevState, ...{ description } }
+  //   })
+  // }
 
   return (
     <>
