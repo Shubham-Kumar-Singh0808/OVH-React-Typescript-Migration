@@ -17,7 +17,6 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { VendorDetails } from '../../../../types/Assets/VendorList/vendorListTypes'
 import { showIsRequired } from '../../../../utils/helper'
-import { usePagination } from '../../../../middleware/hooks/usePagination'
 
 const EditVendorDetails = ({
   setToggle,
@@ -32,8 +31,6 @@ const EditVendorDetails = ({
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
-
-  const listSize = useTypedSelector(reduxServices.vendorList.selectors.listSize)
   const formLabelProps = {
     htmlFor: 'editVendorDetails',
     className: 'col-form-label',
