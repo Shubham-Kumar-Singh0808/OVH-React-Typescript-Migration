@@ -67,7 +67,7 @@ describe('Manufracturer List without data', () => {
     const assetType = screen.getByTestId('manufacturerName')
     userEvent.type(assetType, 'test')
 
-    const updateButton = screen.getByTestId('updateBtn')
-    expect(updateButton).toBeEnabled()
+    const ClearButton = screen.getByTestId('clear-btn')
+    expect(ClearButton).toBeEnabled()
   })
 })

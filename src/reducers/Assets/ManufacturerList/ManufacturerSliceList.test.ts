@@ -1,47 +1,69 @@
-import configureStore, { MockStoreEnhanced } from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import reducer, { ManufacturerListService } from './ManufacturerSliceList'
+import ManufacturerListReducer, {
+  initialManufacturerListState,
+  ManufacturerListService,
+} from './ManufacturerSliceList'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 import {
   GetAllManufacturerName,
-  ManufacturerListSliceState,
+  ManufacturerList,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import { mockManufactureGetLookup, mockManufacturerDetails } from '../../../test/data/EditManufacturerMockData'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
 
-describe('Achievements Slice', () => {
-  describe('Achievements Reducer', () => {
-    const initialAchievementsState = {
-      manufacturerDetails: [],
-      getAllManufacturerName: {} as GetAllManufacturerName,
-      listSize: 0,
-      isLoading: ApiLoadingState.idle,
-    } as unknown as ManufacturerListSliceState
-
-    it('Should be able to set isLoading to "loading" if getAllAchievements is pending', () => {
+describe('notification Slice', () => {
+  describe('jobOpenings test', () => {
+    it('Should be able to set isLoading to "failed" if getManufacturerList is rejected', () => {
+      const action = {
+        type: ManufacturerListService.getManufacturerList.rejected.type,
+        payload: mockManufacturerData,
+      }
+      const state = ManufacturerListReducer(
+        initialManufacturerListState,
+        action,
+      )
+      expect(state).toEqual({
+        manufacturerDetails: [],
+        getManufacturerList: undefined,
+        getAllManufacturerName: {} as GetAllManufacturerName,
+        isLoading: ApiLoadingState.idle,
+        listSize: 0,
+        manufacturerList: {} as ManufacturerList,
+      })
+    })
+  })
+  describe('getAllTechnology test', () => {
+    it('Should be able to set isLoading to "loading" if getAllLookUps is pending', () => {
       const action = {
         type: ManufacturerListService.getManufacturerList.pending.type,
       }
-      const state = reducer(initialAchievementsState, action)
+      const state = ManufacturerListReducer(
+        initialManufacturerListState,
+        action,
+      )
       expect(state).toEqual({
         manufacturerDetails: [],
         getAllManufacturerName: {} as GetAllManufacturerName,
-        listSize: 0,
         isLoading: ApiLoadingState.loading,
+        listSize: 0,
+        manufacturerList: {} as ManufacturerList,
       })
     })
 
-    it('Should be able to set isLoading to "success" if getAllAchievements is fulfilled', () => {
+    it('Should be able to set isLoading to "success" if getAllLookUps is fulfilled', () => {
       const action = {
-        type: ManufacturerListService.getManufacturerList.fulfilled.type,
-        payload: mockManufacturerData,
+        type: ManufacturerListService.getAllLookUps.fulfilled.type,
+        payload: mockManufactureGetLookup,
       }
-      const state = reducer(initialAchievementsState, action)
+      const state = ManufacturerListReducer(
+        initialManufacturerListState,
+        action,
+      )
       expect(state).toEqual({
-        manufacturerDetails: undefined,
+        manufacturerList: mockManufactureGetLookup,
+        manufacturerDetails: [],
         getAllManufacturerName: {} as GetAllManufacturerName,
-        listSize: undefined,
         isLoading: ApiLoadingState.succeeded,
+        listSize: 0,
       })
     })
   })

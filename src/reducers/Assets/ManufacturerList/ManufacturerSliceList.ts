@@ -80,7 +80,7 @@ const updateManufacturerName = createAsyncThunk(
   },
 )
 
-const initialManufacturerListState: ManufacturerListSliceState = {
+export const initialManufacturerListState: ManufacturerListSliceState = {
   manufacturerDetails: [],
   getAllManufacturerName: {} as GetAllManufacturerName,
   isLoading: ApiLoadingState.idle,
