@@ -119,14 +119,11 @@ import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 import { vendorListService } from './Assets/VendorList/vendorListSlice'
-<<<<<<< HEAD
 import { addNewVendorService } from './Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
-=======
 import { changeReporteesService } from './Settings/ChangeReportees/changeReporteesSlice'
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
->>>>>>> develop
 
 export const reduxServices = {
   app: appService,
@@ -250,12 +247,9 @@ export const reduxServices = {
   notification: notificationService,
   jobVacancies: jobOpeningsService,
   vendorList: vendorListService,
-<<<<<<< HEAD
   addNewVendor: addNewVendorService,
-=======
   changeReportees: changeReporteesService,
   ManufacturerList: ManufacturerListService,
   ProductTypeList: ProductTypeListService,
   assetsWarrantyList: assetsWarrantyListService,
->>>>>>> develop
 }
