@@ -11,7 +11,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -386,13 +386,15 @@ const AddProjectRequestForm = ({
   }
 
   const percentageOnChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].milestonePercentage = e.target.value
+    let targetValue = e.target.value.replace(/\D/g, '').replace(/^0+/, '')
+    if (Number(targetValue) > 100) targetValue = '100'
+    newMileStone[index].milestonePercentage = targetValue
     setProjectMileStone(newMileStone)
   }
 
