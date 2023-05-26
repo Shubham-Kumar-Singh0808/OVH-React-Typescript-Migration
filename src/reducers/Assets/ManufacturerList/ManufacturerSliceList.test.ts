@@ -7,7 +7,7 @@ import {
   GetAllManufacturerName,
   ManufacturerList,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
-import { mockManufactureGetLookup, mockManufacturerDetails } from '../../../test/data/EditManufacturerMockData'
+import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
 
 describe('notification Slice', () => {
@@ -23,9 +23,8 @@ describe('notification Slice', () => {
       )
       expect(state).toEqual({
         manufacturerDetails: [],
-        getManufacturerList: undefined,
         getAllManufacturerName: {} as GetAllManufacturerName,
-        isLoading: ApiLoadingState.idle,
+        isLoading: ApiLoadingState.loading,
         listSize: 0,
         manufacturerList: {} as ManufacturerList,
       })
