@@ -35,9 +35,9 @@ const VendorListTable = ({
   const [vendorAddress, setVendorAddress] = useState({} as VendorDetails)
 
   const dispatch = useAppDispatch()
-  const handleModal = (vendorAddress: VendorDetails) => {
+  const handleModal = (address: VendorDetails) => {
     setIsVendorAddressModalVisible(true)
-    setVendorAddress(vendorAddress)
+    setVendorAddress(address)
   }
   const vendorList = useTypedSelector(
     reduxServices.vendorList.selectors.vendors,
@@ -102,7 +102,7 @@ const VendorListTable = ({
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(vendor)}
                       >
-                        {parse(vendor?.vendorAddress as string)}
+                        {parse(vendor?.vendorAddress)}
                       </CLink>
                     ) : (
                       'N/A'
