@@ -8,6 +8,7 @@ import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclaration
 import { UpdateProductSpecificationTypes } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditProductSpecificationFilterOptions = ({
   editProductSpecification,
@@ -26,6 +27,7 @@ const EditProductSpecificationFilterOptions = ({
       className,
     }
   }
+  const dispatch = useAppDispatch()
   const [selectedAssetType, setSelectedAssetType] = useState<number | string>()
   const [selectedProductType, setSelectedProductType] = useState<
     number | string
@@ -33,8 +35,9 @@ const EditProductSpecificationFilterOptions = ({
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
   >()
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const getAllLookUps = useTypedSelector(
-    reduxServices.addNewProduct.selectors.AssetData,
+    reduxServices.addNewProduct.selectors.manufactureList,
   )
   const AssetType = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -48,10 +51,19 @@ const EditProductSpecificationFilterOptions = ({
   const updateProductList = useTypedSelector(
     reduxServices.addNewProduct.selectors.updateProductList,
   )
+
+  useEffect(() => {
+    if (editProductSpecification.id && editProductSpecification.assetType) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [editProductSpecification])
   const onChangeProductSpecificationHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
@@ -65,7 +77,7 @@ const EditProductSpecificationFilterOptions = ({
       ),
     )
   }
-  const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
     if (selectedAssetType) {
@@ -125,7 +137,13 @@ const EditProductSpecificationFilterOptions = ({
   //     setShowEditor(true)
   //   }, 100)
   // }, [updateProductList])
-
+  const updateSuccessToastMessage = (
+    <OToast
+      toastMessage="Product Specification is successfully edited.
+      "
+      toastColor="success"
+    />
+  )
   const handleUpdateProductSpecification = async () => {
     const prepareObject = {
       id: editProductSpecification.id,
@@ -153,12 +171,18 @@ const EditProductSpecificationFilterOptions = ({
       )
     ) {
       setToggle('')
-      // dispatch(
-      //   reduxServices.app.actions.addToast(
-      //     getToastMessage(actionMapping.updated),
-      //   ),
-      // )
+      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
+
+    // {
+    //   setToggle('')
+    //   dispatch(
+    //     reduxServices.app.actions.addToast(
+    //       getToastMessage(actionMapping.updated),
+    //     ),
+    //   )
+    // }
   }
 
   const onChangeHandler = (description: string) => {
@@ -190,8 +214,8 @@ const EditProductSpecificationFilterOptions = ({
             value={editProductSpecification.assetTypeId}
             onChange={onChangeProductSpecificationHandler}
           >
-            {getAllLookUps?.length > 0 &&
-              getAllLookUps?.map((item, index) => (
+            {getAllLookUps?.assetTypeList?.length > 0 &&
+              getAllLookUps?.assetTypeList?.map((item, index) => (
                 <option key={index} value={item.id}>
                   {item.assetType}
                 </option>
@@ -286,7 +310,7 @@ const EditProductSpecificationFilterOptions = ({
             className="btn-ovh me-1 text-white"
             color="success"
             onClick={handleUpdateProductSpecification}
-            // disabled={!isButtonEnabled}
+            //disabled={!isButtonEnabled}
           >
             Update
           </CButton>
