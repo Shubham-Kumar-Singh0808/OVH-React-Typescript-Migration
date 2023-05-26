@@ -183,13 +183,6 @@ const AddVendorDetails = ({
     />
   )
 
-  const WarningToastMessage = (
-    <OToast
-      toastColor="danger"
-      toastMessage="Already a Vendor is existed with the given Code."
-    />
-  )
-
   const handleAddNewVendor = async () => {
     const prepareObject = {
       ...addVendor,
@@ -203,13 +196,6 @@ const AddVendorDetails = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
-    } else if (
-      reduxServices.addNewVendor.addNewVendor.rejected.match(
-        addVendorResultAction,
-      )
-    ) {
-      // dispatch(reduxServices.app.actions.addToast(WarningToastMessage))
-      // dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -244,7 +230,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="name"
+              data-testid="vendorName"
               type="text"
               id="name"
               size="sm"
@@ -270,6 +256,7 @@ const AddVendorDetails = ({
                 onChange: CKEditorEventHandler<'change'>
               }>
                 initData={addVendor?.vendorAddress}
+                data-testid="vendorAddress"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -294,6 +281,7 @@ const AddVendorDetails = ({
                 onChange: CKEditorEventHandler<'change'>
               }>
                 initData={addVendor?.vendorBankDetails}
+                data-testid="vendorBankDetails"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -315,9 +303,9 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="gstNumber"
+              data-testid="vendorGSTNumber"
               type="text"
-              id="vendorGSTNumber"
+              id="gstNumber"
               size="sm"
               name="vendorGSTNumber"
               autoComplete="off"
@@ -337,7 +325,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="city"
+              data-testid="vendorCity"
               type="text"
               id="city"
               size="sm"
@@ -360,7 +348,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="state"
+              data-testid="vendorState"
               type="text"
               id="state"
               size="sm"
@@ -389,7 +377,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="pincode"
+              data-testid="vendorPincode"
               type="text"
               id="pincode"
               size="sm"
@@ -413,7 +401,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="country"
+              data-testid="vendorCountry"
               type="text"
               id="country"
               size="sm"
@@ -436,7 +424,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="email"
+              data-testid="vendorEmailId"
               type="text"
               id="email"
               size="sm"
@@ -467,7 +455,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="phoneNumber"
+              data-testid="vendorPhoneNumber"
               type="text"
               id="phoneNumber"
               size="sm"
@@ -490,7 +478,7 @@ const AddVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="faxNumber"
+              data-testid="vendorFaxNumber"
               type="text"
               id="faxNumber"
               size="sm"
@@ -512,6 +500,7 @@ const AddVendorDetails = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              data-testid="departmentId"
               id="department"
               size="sm"
               aria-label="Department"

@@ -53,33 +53,33 @@ describe('Vendor List Slice', () => {
       it('Should be able to set isLoading to "success" if update Vendor Details is fulfilled', () => {
         const action = {
           type: vendorListService.updateVendorDetails.fulfilled.type,
+          payload: mockVendorList,
         }
         const state = reducer(initialVendorListState, action)
         expect(state).toEqual({
-          vendors: mockVendorDetails.list,
-          listSize: mockVendorDetails.size,
+          vendors: [],
+          listSize: 0,
           getAllVendorDetails: {} as GetAllVendorDetails,
           isLoading: ApiLoadingState.succeeded,
-          getVendorById: mockVendorDetails.list,
+          getVendorById: mockVendorList,
         })
       })
-      // it('Should be able to set isLoading to "failed" if updateClient is rejected', () => {
-      //   const action = {
-      //     type: clientsService.updateClient.rejected.type,
-      //     payload: 500,
-      //   }
-      //   const state = clientsReducer(initialClientsSliceState, action)
-      //   expect(state).toEqual({
-      //     selectedClientStatus: ClientStatus.active,
-      //     clientsList: { clients: [], totalClients: 0 },
-      //     projectsUnderClient: [],
-      //     isLoading: ApiLoadingState.failed,
-      //     isLoadingProjectDetails: ApiLoadingState.idle,
-      //     editClient: {} as Client,
-      //     clientCountries: [],
-      //     error: 500,
-      //   })
-      // })
+    })
+
+    describe('delete Vendor details test', () => {
+      it('Should be able to set isLoading to "failed" if delete Vendor details is rejected', () => {
+        const rejectedAction = {
+          type: vendorListService.deleteVendorDetails.pending.type,
+        }
+        const state = reducer(initialVendorListState, rejectedAction)
+        expect(state).toEqual({
+          vendors: [],
+          listSize: 0,
+          getAllVendorDetails: {} as GetAllVendorDetails,
+          isLoading: ApiLoadingState.loading,
+          getVendorById: {} as VendorDetails,
+        })
+      })
     })
   })
 })

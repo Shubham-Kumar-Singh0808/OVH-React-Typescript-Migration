@@ -9,9 +9,7 @@ import {
 import vendorListApi from '../../../middleware/api/Assets/VendorList/vendorListApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { AppDispatch, RootState } from '../../../stateStore'
-import { Department } from '../../../types/Assets/VendorList/AddVendorDetails/addVendorDetailsType'
-import addNewVendorApi from '../../../middleware/api/Assets/VendorList/AddVendorDetailsApi/addVendorDetailsApi'
+import { RootState } from '../../../stateStore'
 
 const getVendors = createAsyncThunk(
   'vendorList/getVendors',
