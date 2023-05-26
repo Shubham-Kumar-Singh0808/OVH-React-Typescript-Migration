@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddManuFactureFilterOptions from './AddManuFactureFilterOptions'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 
 const mockSetTogglePage = jest.fn()
 
@@ -49,22 +49,25 @@ describe('Manufracturer List without data', () => {
     userEvent.click(backButtonElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
   })
-  test('pass comments to test input value', () => {
-    render(
-      <CKEditor
-        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
-      />,
-    )
-  })
   test('should render with data ', () => {
     expect(screen.getByText('Product Type:')).toBeInTheDocument()
     expect(screen.getByText('Manufacturer Name')).toBeInTheDocument()
   })
-  test('should able to render every element', () => {
-    const ManufacturerId = screen.getByTestId('form-select')
-    userEvent.type(ManufacturerId, '1')
+  // test('should able to render every element', () => {
+  //   const ManufacturerId = screen.getByTestId('form-select')
+  //   userEvent.type(ManufacturerId, '1')
 
-    const ManufacturerName = screen.getByTestId('ManufacturerName')
-    userEvent.type(ManufacturerName, 'Microsoft')
+  //   const ManufacturerName = screen.getByTestId('ManufacturerName')
+  //   userEvent.type(ManufacturerName, 'Microsoft')
+  // })
+  test('should able to Add input field', () => {
+    const productNameInput = screen.getByTestId('form-select')
+    fireEvent.change(productNameInput, ['MS Office 2007'])
+    expect(productNameInput).toHaveValue('')
+    const assetType = screen.getByTestId('manufacturerName')
+    userEvent.type(assetType, 'test')
+
+    const updateButton = screen.getByTestId('updateBtn')
+    expect(updateButton).toBeEnabled()
   })
 })

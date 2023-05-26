@@ -124,7 +124,7 @@ const AddManuFactureFilterOptions = ({
           <CCol sm={3}>
             <CFormInput
               type="text"
-              data-testid="ManufacturerName"
+              data-testid="manufacturerName"
               id="name"
               name="name"
               placeholder="Enter Manufacturer Name"
