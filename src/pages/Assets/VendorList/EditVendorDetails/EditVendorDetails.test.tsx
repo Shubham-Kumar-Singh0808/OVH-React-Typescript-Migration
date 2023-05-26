@@ -20,7 +20,7 @@ describe('Vendor Details without data', () => {
           createdBy: '',
           createdDate: '',
           departmentId: 0,
-          departmentName: '',
+          departmentName: 'Accounts',
           isExpenseVendor: false,
           updatedBy: '',
           updatedDate: '',
@@ -96,7 +96,7 @@ describe('Vendor Details without data', () => {
     expect(screen.getByText('Phone Number:')).toBeInTheDocument()
     expect(screen.getByText('Fax Number:')).toBeInTheDocument()
     expect(screen.getByText('Department:')).toBeInTheDocument()
-    // expect(screen.getByText('Expense Vendor :')).toBeInTheDocument()
+    expect(screen.getByText('Expense Vendor:')).toBeInTheDocument()
   })
   test('should able to render every element', () => {
     const name = screen.getByTestId('name')

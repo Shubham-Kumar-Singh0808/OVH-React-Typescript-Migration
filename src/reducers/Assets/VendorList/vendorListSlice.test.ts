@@ -48,54 +48,5 @@ describe('Vendor List Slice', () => {
         getVendorById: {} as VendorDetails,
       })
     })
-
-    describe('update Vendor Details test', () => {
-      it('Should be able to set isLoading to "success" if update Vendor Details is fulfilled', () => {
-        const action = {
-          type: vendorListService.updateVendorDetails.fulfilled.type,
-          payload: mockVendorList,
-        }
-        const state = reducer(initialVendorListState, action)
-        expect(state).toEqual({
-          vendors: mockVendorDetails.list,
-          listSize: mockVendorDetails.size,
-          getAllVendorDetails: {} as GetAllVendorDetails,
-          isLoading: ApiLoadingState.succeeded,
-          getVendorById: mockVendorList,
-        })
-      })
-
-      //   it('Should be able to set isLoading to "loading" if update Vendor Details is pending', () => {
-      //     const action = {
-      //       type: vendorListService.updateVendorDetails.pending.type,
-      //     }
-      //     const state = reducer(initialVendorListState, action)
-      //     expect(state).toEqual({
-      //       vendors: [],
-      //       listSize: 0,
-      //       getAllVendorDetails: {} as GetAllVendorDetails,
-      //       isLoading: ApiLoadingState.loading,
-      //       getVendorById: mockVendorList,
-      //     })
-      //   })
-      // })
-
-      describe('delete Vendor details test', () => {
-        it('Should be able to set isLoading to "succeeded" if delete Vendor details is fulfilled', () => {
-          const rejectedAction = {
-            type: vendorListService.deleteVendorDetails.fulfilled.type,
-            payload: mockVendorList,
-          }
-          const state = reducer(initialVendorListState, rejectedAction)
-          expect(state).toEqual({
-            vendors: [],
-            listSize: 0,
-            getAllVendorDetails: {} as GetAllVendorDetails,
-            isLoading: ApiLoadingState.succeeded,
-            getVendorById: {} as VendorDetails,
-          })
-        })
-      })
-    })
   })
 })

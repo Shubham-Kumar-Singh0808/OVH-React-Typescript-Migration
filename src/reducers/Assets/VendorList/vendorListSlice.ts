@@ -61,20 +61,10 @@ const vendorListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // .addCase(getVendors.pending, (state) => {
-      //   state.isLoading = ApiLoadingState.loading
-      // })
       .addCase(getVendors.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.vendors = action.payload.list
         state.listSize = action.payload.size
-      })
-      .addCase(updateVendorDetails.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.getVendorById = action.payload
-      })
-      .addCase(deleteVendorDetails.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(
         isAnyOf(

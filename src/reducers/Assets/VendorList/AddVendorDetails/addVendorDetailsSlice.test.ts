@@ -50,6 +50,7 @@ describe('addNewVendor Slice', () => {
         department: [],
         isLoading: ApiLoadingState.failed,
         addVendorDetails: {} as AddVendor,
+        error: undefined,
       })
     })
     it('Should be able to set isLoading to "loading" if addNewVendor is pending', () => {
@@ -85,6 +86,7 @@ describe('addNewVendor Slice', () => {
         department: [],
         isLoading: ApiLoadingState.failed,
         addVendorDetails: {} as AddVendor,
+        error: undefined,
       })
     })
   })
