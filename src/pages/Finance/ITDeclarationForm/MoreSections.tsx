@@ -229,8 +229,6 @@ const MoreSections = ({
     }
   }, [investmentList])
 
-  console.log(isOldEmployee)
-
   useEffect(() => {
     const formSection: FormSectionsDTO = {
       isOld: isOldEmployee,

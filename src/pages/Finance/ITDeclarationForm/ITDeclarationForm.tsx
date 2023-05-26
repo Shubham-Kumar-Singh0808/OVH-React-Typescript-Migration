@@ -8,6 +8,7 @@ import PreviousEmployerAct from './PreviousEmployerAct/PreviousEmployerAct'
 import {
   compareDate,
   declareStatement,
+  getWordsDate,
   interchangeMonthAndDay,
 } from './ITDeclarationFormHelpers'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -47,6 +48,9 @@ const ITDeclarationForm = (): JSX.Element => {
   const finalITDeclarationData = useTypedSelector(
     (state) => state.itDeclarationForm.submitITDeclarationForm,
   )
+  const activeCycle = useTypedSelector(
+    (state) => state.itDeclarationForm.employeeDetails.activeCyle,
+  )
   const modal = useTypedSelector((state) => state.itDeclarationForm.modal)
 
   const warningToastMessage = (
@@ -74,8 +78,6 @@ const ITDeclarationForm = (): JSX.Element => {
   const isButtonEnabled = useTypedSelector(
     (state) => state.itDeclarationForm.isSubmitButtonEnabled,
   )
-
-  console.log(useTypedSelector((state) => state.itDeclarationForm))
 
   const toastElement = (
     <OToast
@@ -173,6 +175,7 @@ const ITDeclarationForm = (): JSX.Element => {
                   enteredToDate={enteredToDate}
                   setEnteredToDate={setEnteredToDate}
                   setEnteredFile={setEnteredFile}
+                  dateToShow={getWordsDate(activeCycle)}
                 />
                 <SectionsFilterOptions
                   showAsterix={false}
