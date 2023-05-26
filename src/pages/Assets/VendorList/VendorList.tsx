@@ -55,7 +55,10 @@ const VendorList = (): JSX.Element => {
     dispatch(reduxServices.addNewVendor.getDepartment())
   }, [selectCurrentPage, dispatch, pageSize])
 
-  const handleExportVendorListData = async () => {
+  const handleExportVendorListData = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
     const employeeListDownload = await vendorListApi.exportVendorListData({})
     downloadFile(employeeListDownload, 'VendorList.csv')
   }
@@ -84,7 +87,8 @@ const VendorList = (): JSX.Element => {
     (feature) => feature.name === 'Vendor List',
   )
 
-  const searchButtonHandler = () => {
+  const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     dispatch(
       reduxServices.vendorList.getVendors({
         startIndex: 0,

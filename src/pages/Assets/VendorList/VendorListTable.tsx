@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -43,9 +43,9 @@ const VendorListTable = ({
   const [vendorName, setVendorName] = useState<string>('')
 
   const dispatch = useAppDispatch()
-  const handleModal = (vendorAddress: VendorDetails) => {
+  const handleModal = (address: VendorDetails) => {
     setIsVendorAddressModalVisible(true)
-    setVendorAddress(vendorAddress)
+    setVendorAddress(address)
   }
   const vendorList = useTypedSelector(
     reduxServices.vendorList.selectors.vendors,
@@ -147,7 +147,7 @@ const VendorListTable = ({
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(vendor)}
                       >
-                        {parse(vendorAddressLimit as string)}
+                        {parse(vendor?.vendorAddress)}
                       </CLink>
                     ) : (
                       'N/A'

@@ -55,7 +55,7 @@ const LeadershipDetails = (props: LeadershipDetailsProps): JSX.Element => {
   )
 
   useEffect(() => {
-    setCurrentDetails(employeeDetails.at(currentIndex))
+    setCurrentDetails(employeeDetails?.at(currentIndex))
   }, [currentIndex])
 
   const booleanToString = (value: boolean | undefined) => {
