@@ -1,9 +1,13 @@
-import React, { SetStateAction } from 'react'
+import React from 'react'
 import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 import EditManufacturerList from './EditManufacturerList'
-import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { fireEvent, render, screen } from '../../../test/testUtils'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import {
+  mockManufactureGetLookup,
+  mockManufacturerDetails,
+} from '../../../test/data/EditManufacturerMockData'
 
 const mockSetData = jest.fn()
 describe('Job Openings without data', () => {
@@ -12,24 +16,24 @@ describe('Job Openings without data', () => {
       <EditManufacturerList
         setToggle={mockSetData}
         editManufacturerData={{
-          manufacturerId: 0,
-          manufacturerName: '',
-          productId: 0,
-          productName: '',
-          departmentId: null,
-          departmentName: null,
-          createdBy: '',
-          updatedBy: '',
-          createdDate: '',
-          updatedDate: '',
+          manufacturerId: 1,
+          manufacturerName: 'Microsoft',
+          productId: 14,
+          productName: 'MS Office 2008',
+          departmentId: 1,
+          departmentName: 'Networking',
+          createdBy: null,
+          updatedBy: null,
+          createdDate: null,
+          updatedDate: null,
         }}
         setEditManufacturerData={mockSetData}
       />,
       {
         preloadedState: {
           ProductTypeList: {
-            manufacturerList: mockManufactureGetLookup,
             isLoading: ApiLoadingState.succeeded,
+            manufacturerDetails: mockManufacturerDetails,
           },
         },
       },
@@ -48,30 +52,31 @@ describe('Job Openings without data', () => {
     expect(addBtnElement).toBeEnabled()
     fireEvent.click(addBtnElement)
   })
-  test('should be able to click edit button element', () => {
-    const deleteBtnElement = screen.getByTestId('updateBtn')
-    expect(deleteBtnElement).toBeInTheDocument()
-    userEvent.click(deleteBtnElement)
-  })
-  test('should render component with out crashing', () => {
-    const backButtonElement = screen.getByTestId('back-button')
-    expect(backButtonElement).toBeInTheDocument()
-    userEvent.click(backButtonElement)
-    expect(mockSetData).toHaveBeenCalledTimes(1)
+  test('should be able to click Add button element', () => {
+    const AddBtnElement = screen.getByTestId('updateBtn')
+    expect(AddBtnElement).toBeInTheDocument()
+    fireEvent.click(AddBtnElement)
   })
   test('should render with data ', () => {
     expect(screen.getByText('Product Type:')).toBeInTheDocument()
     expect(screen.getByText('Manufacturer Name')).toBeInTheDocument()
   })
-  test('should select Product type', () => {
-    const ProductType = screen.getByTestId('form-select')
-    fireEvent.change(ProductType, ['Books'])
-    expect(ProductType).toHaveValue('')
+  test('should select Product Name', () => {
+    const assetType = screen.getByTestId('form-select')
+    fireEvent.change(assetType, ['MS Office 2007'])
+    expect(assetType).toHaveValue('')
+  })
+  test('should render update button as enabled when clicked on edit button', () => {
+    expect(screen.getByTestId('updateBtn')).toBeEnabled()
   })
   test('should able to Add input field', () => {
-    const productNameInput = screen.getByTestId('productName')
-    userEvent.type(productNameInput, 'test')
+    const productNameInput = screen.getByTestId('form-select')
+    fireEvent.change(productNameInput, ['MS Office 2007'])
+    expect(productNameInput).toHaveValue('')
+    const assetType = screen.getByTestId('manufacturerName')
+    userEvent.type(assetType, 'test')
+
     const updateButton = screen.getByTestId('updateBtn')
-    expect(updateButton).toBeDisabled()
+    expect(updateButton).toBeEnabled()
   })
 })

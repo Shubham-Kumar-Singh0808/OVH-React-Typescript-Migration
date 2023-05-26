@@ -160,7 +160,7 @@ const EditManufacturerList = ({
             <CCol sm={3}>
               <CFormInput
                 type="text"
-                data-testid="productName"
+                data-testid="manufacturerName"
                 id="manufacturerName"
                 name="manufacturerName"
                 placeholder="Enter Manufacturer Name"

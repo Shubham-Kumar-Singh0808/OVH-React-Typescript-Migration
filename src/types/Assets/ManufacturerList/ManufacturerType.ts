@@ -5,21 +5,18 @@ export type ManufacturerDetails = {
   manufacturerName: string
   productId: number
   productName: string
-  departmentId: null
-  departmentName: null
-  createdBy: string
-  updatedBy: string
-  createdDate: string
-  updatedDate: string
+  departmentId: number
+  departmentName: string
+  createdBy: null | string
+  updatedBy: null
+  createdDate: null
+  updatedDate: null
 }
-
 
 export type GetAllManufacturerName = {
   size: number
   list: ManufacturerDetails[]
 }
-
-
 
 export type ManufacturerListSliceState = {
   manufacturerDetails: ManufacturerDetails[]
@@ -61,7 +58,6 @@ export type UpdateProps = {
   updatedBy: string
   updatedDate: string
 }
-
 
 export type ManufacturerList = {
   assetTypeList: AssetTypeList[]
@@ -133,7 +129,6 @@ export type VendorList = {
   vendorPincode: string
   vendorState: string
 }
-
 
 export type calendar = {
   javaDate: number
