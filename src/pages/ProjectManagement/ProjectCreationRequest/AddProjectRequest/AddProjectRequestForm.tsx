@@ -41,6 +41,7 @@ import OInputField from '../../../../components/ReusableComponent/OInputField'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger } from '../../../../constant/ClassName'
 
 const AddProjectRequestForm = ({
   projectRequest,
@@ -109,8 +110,39 @@ const AddProjectRequestForm = ({
 
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
     useState<string>('')
+  const [emailErrorMsgCC, setEmailErrorMsgCC] = useState(false)
+
+  const validateEmailMsgCC = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailErrorMsgCC(false)
+    } else {
+      setEmailErrorMsgCC(true)
+    }
+  }
+
+  const handleProjectRequestMailIdCC = (e: ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value
+    setProjectRequestMailIdCC(email)
+    validateEmailMsgCC(email)
+  }
+
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
     useState<string>('')
+  const [emailErrorMsgBCC, setEmailErrorMsgBCC] = useState(false)
+
+  const validateEmailMsgBCC = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailErrorMsgBCC(false)
+    } else {
+      setEmailErrorMsgBCC(true)
+    }
+  }
+
+  const handleProjectRequestMailIdBbc = (e: ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value
+    setProjectRequestMailIdBbc(email)
+    validateEmailMsgBCC(email)
+  }
 
   const projectRequestMailIds = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
@@ -278,25 +310,6 @@ const AddProjectRequestForm = ({
       ...projectRequest,
       domain: value,
     })
-  }
-
-  const handleProjectRequestMailIdCC = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectRequest({
-      ...projectRequest,
-      cc: e.target.value,
-    })
-    setProjectRequestMailIdCC(e.target.value)
-  }
-  const handleProjectRequestMailIdBbc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectRequest({
-      ...projectRequest,
-      bcc: e.target.value,
-    })
-    setProjectRequestMailIdBbc(e.target.value)
   }
 
   useEffect(() => {
@@ -883,6 +896,12 @@ const AddProjectRequestForm = ({
             value={projectRequestMailIdCC}
             onChange={(e) => handleProjectRequestMailIdCC(e)}
           />
+          {emailErrorMsgCC && (
+            <p data-testid="error-msg" className={TextDanger}>
+              Enter a valid Email address.For multiple mail ids use,without
+              space!!
+            </p>
+          )}
         </CCol>
         <CFormLabel className="col-sm-1 col-form-label text-end">
           BCC:
@@ -894,13 +913,21 @@ const AddProjectRequestForm = ({
             value={projectRequestMailIdBbc}
             onChange={(e) => handleProjectRequestMailIdBbc(e)}
           />
+          {emailErrorMsgBCC && (
+            <p data-testid="error-msg" className={TextDanger}>
+              Enter a valid Email address.For multiple mail ids use,without
+              space!!
+            </p>
+          )}
         </CCol>
         <CCol sm={1}>
           <CButton
             className="btn-ovh me-2"
             color="success"
             onClick={updateMailIdHandler}
-            disabled={!isUpdateButtonEnabled}
+            disabled={
+              !isUpdateButtonEnabled || emailErrorMsgBCC || emailErrorMsgCC
+            }
           >
             Update
           </CButton>
