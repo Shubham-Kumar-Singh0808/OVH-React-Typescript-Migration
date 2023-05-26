@@ -86,8 +86,8 @@ describe('Add Vendor Details without data', () => {
     const name = screen.getByTestId('vendorName')
     userEvent.type(name, 'Srikanth')
 
-    const address = screen.getByTestId('vendorAddress')
-    userEvent.type(address, 'Hyderabad')
+    // const address = screen.getByTestId('vendorAddress')
+    // userEvent.type(address, 'Hyderabad')
     // // Assert that the address change callback has been called
     // expect(editorChange).toHaveBeenCalledWith('Hyderabad')
 

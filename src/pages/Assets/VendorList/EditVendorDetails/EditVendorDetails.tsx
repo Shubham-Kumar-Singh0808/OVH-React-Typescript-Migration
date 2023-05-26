@@ -211,6 +211,7 @@ const EditVendorDetails = ({
                 onChange: CKEditorEventHandler<'change'>
               }>
                 initData={editVendorInfo.vendorAddress}
+                data-testid="address"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
@@ -256,7 +257,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="gstNumber"
+              data-testid="vendorGSTNumber"
               type="text"
               id="vendorGSTNumber"
               size="sm"
@@ -278,7 +279,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="city"
+              data-testid="vendorCity"
               type="text"
               id="city"
               size="sm"
@@ -303,7 +304,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="state"
+              data-testid="vendorState"
               type="text"
               id="state"
               size="sm"
@@ -328,7 +329,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="pincode"
+              data-testid="vendorPincode"
               type="number"
               id="pincode"
               size="sm"
@@ -354,7 +355,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="country"
+              data-testid="vendorCountry"
               type="text"
               id="country"
               size="sm"
@@ -379,7 +380,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="email"
+              data-testid="vendorEmailId"
               type="text"
               id="email"
               size="sm"
@@ -404,7 +405,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="phoneNumber"
+              data-testid="vendorPhoneNumber"
               type="number"
               id="phoneNumber"
               size="sm"
@@ -427,7 +428,7 @@ const EditVendorDetails = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="faxNumber"
+              data-testid="vendorFaxNumber"
               type="number"
               id="faxNumber"
               size="sm"
@@ -453,10 +454,11 @@ const EditVendorDetails = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              id="department"
+              data-testid="departmentName"
+              id="departmentName"
               size="sm"
               aria-label="Department"
-              name="departmentId"
+              name="departmentName"
               value={editVendorInfo.departmentId}
               onChange={onChangeInputHandler}
             >
@@ -483,6 +485,7 @@ const EditVendorDetails = ({
               className="mb-3"
               inline
               type="checkbox"
+              data-testid="expenseVendor"
               name="isExpenseVendor"
               id="expenseVendor"
               onChange={(event) => handleIsInternalStatus(event.target.checked)}

@@ -64,6 +64,20 @@ describe('Vendor List Slice', () => {
           getVendorById: mockVendorList,
         })
       })
+
+      it('Should be able to set isLoading to "loading" if update Vendor Details is pending', () => {
+        const action = {
+          type: vendorListService.updateVendorDetails.pending.type,
+        }
+        const state = reducer(initialVendorListState, action)
+        expect(state).toEqual({
+          vendors: [],
+          listSize: 0,
+          getAllVendorDetails: {} as GetAllVendorDetails,
+          isLoading: ApiLoadingState.loading,
+          getVendorById: {} as VendorDetails,
+        })
+      })
     })
 
     describe('delete Vendor details test', () => {

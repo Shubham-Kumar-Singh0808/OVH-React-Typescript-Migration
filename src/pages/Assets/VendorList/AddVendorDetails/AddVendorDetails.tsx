@@ -8,7 +8,6 @@ import {
   CFormSelect,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import validator from 'validator'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -55,29 +54,29 @@ const AddVendorDetails = ({
   }
   const vendorNameRegexReplace = /-_[^a-z0-9\s]/gi
 
-  const onChangePinCodeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    if (name === 'vendorPincode') {
-      const presentZipValue = value.replace(/[^0-9]/gi, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: presentZipValue } }
-      })
-    } else if (name === 'vendorPhoneNumber') {
-      const phoneNumber = value.replace(/[^0-9]/gi, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: phoneNumber } }
-      })
-    } else if (name === 'vendorFaxNumber') {
-      const faxNumber = value.replace(/[^0-9]/gi, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: faxNumber } }
-      })
-    } else {
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: value } }
-      })
-    }
-  }
+  // const onChangePinCodeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target
+  //   if (name === 'vendorPincode') {
+  //     const presentZipValue = value.replace(/[^0-9]/gi, '')
+  //     setAddVendor((prevState) => {
+  //       return { ...prevState, ...{ [name]: presentZipValue } }
+  //     })
+  //   } else if (name === 'vendorPhoneNumber') {
+  //     const phoneNumber = value.replace(/[^0-9]/gi, '')
+  //     setAddVendor((prevState) => {
+  //       return { ...prevState, ...{ [name]: phoneNumber } }
+  //     })
+  //   } else if (name === 'vendorFaxNumber') {
+  //     const faxNumber = value.replace(/[^0-9]/gi, '')
+  //     setAddVendor((prevState) => {
+  //       return { ...prevState, ...{ [name]: faxNumber } }
+  //     })
+  //   } else {
+  //     setAddVendor((prevState) => {
+  //       return { ...prevState, ...{ [name]: value } }
+  //     })
+  //   }
+  // }
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -104,6 +103,21 @@ const AddVendorDetails = ({
         .replace(/^\s*/, '')
       setAddVendor((values) => {
         return { ...values, ...{ [name]: vendorGSTNumber } }
+      })
+    } else if (name === 'vendorPincode') {
+      const presentZipValue = value.replace(/[^0-9]/gi, '')
+      setAddVendor((prevState) => {
+        return { ...prevState, ...{ [name]: presentZipValue } }
+      })
+    } else if (name === 'vendorPhoneNumber') {
+      const phoneNumber = value.replace(/[^0-9]/gi, '')
+      setAddVendor((prevState) => {
+        return { ...prevState, ...{ [name]: phoneNumber } }
+      })
+    } else if (name === 'vendorFaxNumber') {
+      const faxNumber = value.replace(/[^0-9]/gi, '')
+      setAddVendor((prevState) => {
+        return { ...prevState, ...{ [name]: faxNumber } }
       })
     } else {
       setAddVendor((values) => {
@@ -195,7 +209,15 @@ const AddVendorDetails = ({
         addVendorResultAction,
       )
     ) {
+      setToggle('')
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      dispatch(
+        reduxServices.vendorList.getVendors({
+          startIndex: 0,
+          endIndex: 20,
+          vendorName: '',
+        }),
+      )
     }
   }
 
@@ -251,7 +273,7 @@ const AddVendorDetails = ({
             <span className={showIsRequired(addVendor.vendorAddress)}>*</span>
           </CFormLabel>
           {showEditor ? (
-            <CCol sm={8}>
+            <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
@@ -386,7 +408,7 @@ const AddVendorDetails = ({
               placeholder="Pincode"
               maxLength={6}
               value={addVendor.vendorPincode}
-              onChange={onChangePinCodeHandler}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -464,7 +486,7 @@ const AddVendorDetails = ({
               placeholder="Phone No."
               value={addVendor.vendorPhoneNumber}
               maxLength={10}
-              onChange={onChangePinCodeHandler}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -486,7 +508,7 @@ const AddVendorDetails = ({
               autoComplete="off"
               placeholder="Fax No."
               value={addVendor.vendorFaxNumber}
-              onChange={onChangePinCodeHandler}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -500,6 +522,7 @@ const AddVendorDetails = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
+              className="mb-1"
               data-testid="departmentId"
               id="department"
               size="sm"
@@ -519,7 +542,7 @@ const AddVendorDetails = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-3">
           <CFormLabel
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
@@ -528,7 +551,7 @@ const AddVendorDetails = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormCheck
-              className="mb-3"
+              className="mb-1"
               inline
               type="checkbox"
               name="isExpenseVendor"
