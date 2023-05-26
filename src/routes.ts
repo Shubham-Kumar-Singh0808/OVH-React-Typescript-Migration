@@ -394,6 +394,10 @@ const LeadershipEnrollmentForm = React.lazy(
       './pages/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentForm'
     ),
 )
+const ProductSpecificationList = React.lazy(
+  () =>
+    import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
 
 const PIPList = React.lazy(
   () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
@@ -445,9 +449,9 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
-const ProductSpecificationList = React.lazy(
-  () =>
-    import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+
+const VendorList = React.lazy(
+  () => import('./pages/Assets/VendorList/VendorList'),
 )
 const Manufacturer = React.lazy(
   () => import('./pages/Assets/ManufacturerList/Manufacturer'),
@@ -1003,9 +1007,9 @@ const routes = [
     component: AddJobVacancies,
   },
   {
-    path: '/productSpecificationList',
-    name: 'Product Specification List',
-    component: ProductSpecificationList,
+    path: '/vendorList',
+    name: 'Vendor List',
+    component: VendorList,
   },
   {
     path: '/manufacturerList',
@@ -1026,6 +1030,11 @@ const routes = [
     path: '/assetWarrantyReport',
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
+  },
+  {
+    path: '/productSpecificationList',
+    name: 'Product Specification List',
+    component: ProductSpecificationList,
   },
 ]
 export default routes

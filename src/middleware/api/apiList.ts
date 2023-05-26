@@ -111,6 +111,7 @@ import {
   NotificationsApi,
   JobOpeningsApi,
   ProductSpecificationListApi,
+  VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
@@ -1006,6 +1007,13 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     exportProductSpecificationList:
       apiPrefix + '/assetManagement/exportProductSpecificationList',
   }
+export const vendorListApiConfig: VendorListApi = {
+  getAllVendorDetails: apiPrefix + '/assetManagement/getAllVendorDetails',
+  getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
+  addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
+  exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
+  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+}
 
 export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
   getAllReportingManagerData:
