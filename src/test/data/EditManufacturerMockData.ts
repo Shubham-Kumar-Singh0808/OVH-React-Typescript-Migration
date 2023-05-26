@@ -2,6 +2,18 @@ import { ManufacturerList } from '../../types/Assets/ManufacturerList/Manufactur
 
 export const mockManufactureGetLookup: ManufacturerList = {
   manufacturerList: [
+    // {
+    //   createdBy: 'Anusha Singathi',
+    //   createdDate: '25/05/2023',
+    //   departmentId: null,
+    //   departmentName: null,
+    //   manufacturerId: 271,
+    //   manufacturerName: 'Anusha singathi',
+    //   productId: 244,
+    //   productName: 'eee',
+    //   updatedBy: '',
+    //   updatedDate: '',
+    // },
     {
       manufacturerId: 1,
       manufacturerName: 'Microsoft',

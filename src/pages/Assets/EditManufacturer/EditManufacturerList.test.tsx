@@ -1,19 +1,16 @@
-import '@testing-library/jest-dom'
-import React from 'react'
+import React, { SetStateAction } from 'react'
 import userEvent from '@testing-library/user-event'
-import { CKEditor } from 'ckeditor4-react'
 import EditManufacturerList from './EditManufacturerList'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { render, screen } from '../../../test/testUtils'
 import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 
-const mockSetTogglePage = jest.fn()
-
+const mockSetData = jest.fn()
 describe('Job Openings without data', () => {
   beforeEach(() => {
     render(
       <EditManufacturerList
-        setToggle={mockSetTogglePage}
+        setToggle={mockSetData}
         editManufacturerData={{
           manufacturerId: 0,
           manufacturerName: '',
@@ -26,16 +23,13 @@ describe('Job Openings without data', () => {
           createdDate: '',
           updatedDate: '',
         }}
-        setEditManufacturerData={mockSetTogglePage}
+        setEditManufacturerData={mockSetData}
       />,
       {
         preloadedState: {
-          ManufacturerList: {
-            isLoading: ApiLoadingState.idle,
-            listSize: 0,
-            getAllManufacturerName: {},
-            manufacturerList: {},
-            manufacturerDetails: mockManufactureGetLookup,
+          ProductTypeList: {
+            manufacturerList: mockManufactureGetLookup,
+            isLoading: ApiLoadingState.succeeded,
           },
         },
       },
@@ -52,7 +46,7 @@ describe('Job Openings without data', () => {
       name: 'Back',
     })
     expect(addBtnElement).toBeEnabled()
-    userEvent.click(addBtnElement)
+    fireEvent.click(addBtnElement)
   })
   test('should be able to click edit button element', () => {
     const deleteBtnElement = screen.getByTestId('updateBtn')
@@ -63,24 +57,21 @@ describe('Job Openings without data', () => {
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
-  })
-  test('pass comments to test input value', () => {
-    render(
-      <CKEditor
-        initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
-      />,
-    )
+    expect(mockSetData).toHaveBeenCalledTimes(1)
   })
   test('should render with data ', () => {
     expect(screen.getByText('Product Type:')).toBeInTheDocument()
     expect(screen.getByText('Manufacturer Name')).toBeInTheDocument()
   })
-  test('should able to render every element', () => {
-    const ManufacturerId = screen.getByTestId('productId')
-    userEvent.type(ManufacturerId, '1')
-
-    const ManufacturerName = screen.getByTestId('ManufacturerName')
-    userEvent.type(ManufacturerName, 'Microsoft')
+  test('should select Product type', () => {
+    const ProductType = screen.getByTestId('form-select')
+    fireEvent.change(ProductType, ['Books'])
+    expect(ProductType).toHaveValue('')
+  })
+  test('should able to Add input field', () => {
+    const productNameInput = screen.getByTestId('productName')
+    userEvent.type(productNameInput, 'test')
+    const updateButton = screen.getByTestId('updateBtn')
+    expect(updateButton).toBeDisabled()
   })
 })
