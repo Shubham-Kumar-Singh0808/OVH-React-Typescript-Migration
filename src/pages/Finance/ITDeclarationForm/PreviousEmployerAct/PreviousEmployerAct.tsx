@@ -5,6 +5,7 @@ import moment from 'moment'
 import EmployerEntryItem from './EmployerEntryItem'
 import { getFormattedDate } from '../ITDeclarationFormHelpers'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
+import { openToDateHandler } from '../../../../utils/datePicketUtils'
 
 const PreviousEmployerAct = ({
   enteredOrganization,
@@ -59,11 +60,7 @@ const PreviousEmployerAct = ({
               setEnteredFromDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={
-              !isNaN(Date.parse(enteredFromDate))
-                ? new Date(enteredFromDate)
-                : new Date()
-            }
+            openToDate={openToDateHandler(enteredFromDate)}
           />
         </EmployerEntryItem>
         <EmployerEntryItem label="To Date">
@@ -76,11 +73,7 @@ const PreviousEmployerAct = ({
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={
-              !isNaN(Date.parse(enteredToDate))
-                ? new Date(enteredToDate)
-                : new Date()
-            }
+            openToDate={openToDateHandler(enteredFromDate)}
             highlightDates={[{ 'today-date-highlight': [new Date()] }]}
           />
         </EmployerEntryItem>

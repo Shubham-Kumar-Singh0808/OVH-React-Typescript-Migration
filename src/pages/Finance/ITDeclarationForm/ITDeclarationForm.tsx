@@ -68,6 +68,7 @@ const ITDeclarationForm = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(warningToastMessage))
       history.push('/itDeclarationList')
     }
+    window.scroll(0, 0)
   }, [itDeclarationFormExists])
 
   const isButtonEnabled = useTypedSelector(
@@ -184,9 +185,11 @@ const ITDeclarationForm = (): JSX.Element => {
             <CRow className="mt-3 mb-3">
               <CCol sm={12}>
                 <p className="pull-right">
-                  <b className="txt-grandtotal ">
-                    Grand Total: {grandTotalResult.toLocaleString('en-IN')}
-                  </b>
+                  {grandTotalResult > 0 && (
+                    <b className="txt-grandtotal ">
+                      Grand Total: {grandTotalResult.toLocaleString('en-IN')}
+                    </b>
+                  )}
                 </p>
               </CCol>
             </CRow>
