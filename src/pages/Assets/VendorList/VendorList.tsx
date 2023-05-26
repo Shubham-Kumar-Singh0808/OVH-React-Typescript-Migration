@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import VendorListTable from './VendorListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -48,7 +48,10 @@ const VendorList = (): JSX.Element => {
     )
   }, [selectCurrentPage, dispatch, pageSize])
 
-  const handleExportVendorListData = async () => {
+  const handleExportVendorListData = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
     const employeeListDownload = await vendorListApi.exportVendorListData({})
     downloadFile(employeeListDownload, 'VendorList.csv')
   }
@@ -69,7 +72,8 @@ const VendorList = (): JSX.Element => {
     }
   }
 
-  const searchButtonHandler = () => {
+  const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     dispatch(
       reduxServices.vendorList.getVendors({
         startIndex: 0,
