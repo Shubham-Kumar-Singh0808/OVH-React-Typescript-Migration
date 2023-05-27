@@ -118,6 +118,8 @@ import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
 import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
+import { vendorListService } from './Assets/VendorList/vendorListSlice'
+import { changeReporteesService } from './Settings/ChangeReportees/changeReporteesSlice'
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
@@ -243,6 +245,8 @@ export const reduxServices = {
   sqaAuditReport: sqaAuditReportService,
   notification: notificationService,
   jobVacancies: jobOpeningsService,
+  vendorList: vendorListService,
+  changeReportees: changeReporteesService,
   ManufacturerList: ManufacturerListService,
   ProductTypeList: ProductTypeListService,
   assetsWarrantyList: assetsWarrantyListService,
