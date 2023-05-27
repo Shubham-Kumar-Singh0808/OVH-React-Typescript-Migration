@@ -13,7 +13,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
-// import { Link } from 'react-router-dom'
 import { useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { ProductSpecificationListTableProps } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
@@ -42,7 +41,7 @@ const ProductSpecificationListTable = ({
   const productSpecification = useTypedSelector(
     reduxServices.productSpecificationList.selectors.productSpecificationList,
   )
-  const listSize = useTypedSelector(
+  const productSpecificationListSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
   )
 
@@ -81,12 +80,13 @@ const ProductSpecificationListTable = ({
           <CTableBody color="light">
             {isLoading !== ApiLoadingState?.loading ? (
               productSpecification?.length > 0 &&
-              productSpecification?.map((productSpecification, index) => {
-                const removeSpaces = productSpecification?.productSpecification
-                  ?.replace(/\s+/g, ' ')
-                  ?.replace('/(<([^>]+)>)/gi', '')
-                  .trim()
-                  .replace(/&nbsp;/g, '')
+              productSpecification?.map((productSpecificationItem, index) => {
+                const removeSpaces =
+                  productSpecificationItem?.productSpecification
+                    ?.replace(/\s+/g, ' ')
+                    ?.replace('/(<([^>]+)>)/gi', '')
+                    .trim()
+                    .replace(/&nbsp;/g, '')
                 const productSpecificationLimit =
                   removeSpaces && removeSpaces.length > 30
                     ? `${removeSpaces.substring(0, 30)}...`
@@ -97,10 +97,10 @@ const ProductSpecificationListTable = ({
                       {getItemNumber(index)}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {productSpecification.productName}
+                      {productSpecificationItem.productName}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {productSpecification.manufacturerName}
+                      {productSpecificationItem.manufacturerName}
                     </CTableDataCell>
                     {productSpecificationLimit ? (
                       <CTableDataCell
@@ -112,18 +112,18 @@ const ProductSpecificationListTable = ({
                           data-testid={`product-specification${index}`}
                           onClick={() =>
                             handleModal(
-                              productSpecification.productSpecification,
+                              productSpecificationItem.productSpecification,
                             )
                           }
                         >
-                          {parse(productSpecification.productSpecification)}
+                          {parse(productSpecificationItem.productSpecification)}
                         </CLink>
                       </CTableDataCell>
                     ) : (
                       <CTableDataCell>{`N/A`}</CTableDataCell>
                     )}
                     <CTableDataCell>
-                      {productSpecification.createdBy}
+                      {productSpecificationItem.createdBy}
                     </CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
                       <CTooltip content="Edit">
@@ -153,11 +153,11 @@ const ProductSpecificationListTable = ({
         <CRow>
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {listSize}</strong>
+              <strong>Total Records: {productSpecificationListSize}</strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {productSpecificationListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80]}
@@ -165,7 +165,7 @@ const ProductSpecificationListTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {productSpecificationListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"

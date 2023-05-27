@@ -9,7 +9,8 @@ import productSpecificationListApi from '../../../middleware/api/Assets/ProductS
 import { downloadFile } from '../../../utils/helper'
 
 const ProductSpecificationList = (): JSX.Element => {
-  const [searchInput, setSearchInput] = useState<string>('')
+  const [productSpecificationSearchInput, setProductSpecificationSearchInput] =
+    useState<string>('')
   const [toggle, setToggle] = useState<string>('')
 
   const dispatch = useAppDispatch()
@@ -37,18 +38,18 @@ const ProductSpecificationList = (): JSX.Element => {
       dispatch(
         reduxServices.productSpecificationList.getProductSpecificationList({
           endIndex: 20,
-          productName: searchInput,
+          productName: productSpecificationSearchInput,
           startIndex: 0,
         }),
       )
     }
   }
 
-  const multiSearchBtnHandler = () => {
+  const searchBtnInputHandler = () => {
     dispatch(
       reduxServices.productSpecificationList.getProductSpecificationList({
         endIndex: 20,
-        productName: searchInput,
+        productName: productSpecificationSearchInput,
         startIndex: 0,
       }),
     )
@@ -114,20 +115,20 @@ const ProductSpecificationList = (): JSX.Element => {
                   placeholder="Multiple Search"
                   aria-label="Multiple Search"
                   aria-describedby="button-addon2"
-                  value={searchInput}
+                  value={productSpecificationSearchInput}
                   onChange={(e) => {
-                    setSearchInput(e.target.value)
+                    setProductSpecificationSearchInput(e.target.value)
                   }}
                   onKeyDown={handleSearchBtn}
                 />
                 <CButton
-                  disabled={!searchInput}
+                  disabled={!productSpecificationSearchInput}
                   data-testid="multi-search-btn"
                   className="cursor-pointer"
                   type="button"
                   color="info"
                   id="button-addon2"
-                  onClick={multiSearchBtnHandler}
+                  onClick={searchBtnInputHandler}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>
