@@ -35,8 +35,7 @@ const EmployeeReviewList = (): JSX.Element => {
   const [filterByDepartment, setFilterByDepartment] = useState<string>()
   const [filterByDesignation, setFilterByDesignation] = useState<string>()
   const [isTableView, setIsTableView] = useState(false)
-  console.log(setFilterByDepartment)
-  console.log(setFilterByDesignation)
+
   const {
     paginationRange,
     setPageSize,

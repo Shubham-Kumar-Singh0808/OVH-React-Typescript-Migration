@@ -242,7 +242,9 @@ const ReviewFormTable = (): JSX.Element => {
         </CTableBody>
       </CTable>
 
-      {appraisalForm?.formStatusvalue === 'COMPLETED' ? (
+      {Number(appraisalForm?.formStatusvalue) >= 1 ? (
+        ''
+      ) : (
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
@@ -262,8 +264,6 @@ const ReviewFormTable = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-      ) : (
-        ''
       )}
     </>
   )

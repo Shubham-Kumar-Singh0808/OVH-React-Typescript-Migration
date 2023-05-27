@@ -9,7 +9,7 @@ import {
   CFormSelect,
   CFormTextarea,
 } from '@coreui/react-pro'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import parse from 'html-react-parser'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -38,6 +38,8 @@ const ReviewFormDetailsTable = ({
   const appraisalForm = useTypedSelector(
     reduxServices.myReview.selectors.appraisalForm,
   )
+
+  const [managerRating, setManagerRating] = useState<string>()
 
   // const updatedAppraisalForm = useTypedSelector(
   //   reduxServices.myReview.actions.updateKPI,
@@ -118,11 +120,11 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
-    // if (newKPI[index].employeeFeedback.length > 56) {
-    //   setDescriptionError(false)
-    // } else {
-    //   setDescriptionError(true)
-    // }
+    if (newKPI[index].employeeFeedback.length > 56) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
     dispatch(
       reduxServices.myReview.actions.updateKPI({
         kraId: id,
@@ -198,8 +200,6 @@ const ReviewFormDetailsTable = ({
                   ? `${removeSpaces.substring(0, 30)}...`
                   : removeSpaces
               managerCommentExist(kpi)
-              console.log(kpi.employeeRating)
-              console.log(kpi.employeeFeedback)
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
@@ -242,10 +242,10 @@ const ReviewFormDetailsTable = ({
                   ) : (
                     <CTableDataCell>
                       <CFormTextarea
-                        {...dynamicFormLabelProps(
-                          '2',
-                          'reviewForm-text-area documentWidth',
-                        )}
+                        // {...dynamicFormLabelProps(
+                        //   '2',
+                        //   'reviewForm-text-area documentWidth',
+                        // )}
                         value={kpi.employeeFeedback}
                         onChange={(e) => commentOnChange(e, index)}
                       ></CFormTextarea>
@@ -262,7 +262,6 @@ const ReviewFormDetailsTable = ({
                     {kpi?.managerCommentsDtos.length > 0 &&
                       kpi?.managerCommentsDtos?.map((mgrComment, cmtIndex) => (
                         <>
-                          <h1>testing</h1>
                           {appraisalForm.appraisalFormStatus !==
                           'NotSubmittedByYou' ? (
                             <CTableDataCell key={cmtIndex}>

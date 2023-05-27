@@ -150,7 +150,7 @@ const myReviewSlice = createSlice({
         if (kra.id === kraId) {
           const updatedKPIs = kra.kpis.map((existingKPI) => {
             if (existingKPI.id === kpiId) {
-              return kpi
+              return { ...existingKPI, ...kpi } // Merge existing KPI with updated values
             }
             return existingKPI
           })

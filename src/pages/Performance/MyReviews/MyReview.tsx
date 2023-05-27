@@ -13,10 +13,14 @@ const MyReview = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const appraisalFormId = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalFormId,
+  )
   const dispatch = useAppDispatch()
   const handleRequestDiscussionClick = () => {
     // Perform save logic here
     setIsRequestDiscussion(true)
+    dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
   }
   useEffect(() => {
     dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
@@ -29,6 +33,10 @@ const MyReview = (): JSX.Element => {
     appraisalForm?.overallAvgRating === 'NaN'
       ? 'N/A'
       : appraisalForm?.overallAvgRating
+
+  const reviewComments = useTypedSelector(
+    reduxServices.myReview.selectors.reviewComments,
+  )
 
   return (
     <>
@@ -56,7 +64,7 @@ const MyReview = (): JSX.Element => {
                   Acknowledge
                 </CButton>
                 &nbsp; &nbsp; &nbsp;
-                {appraisalForm?.formStatus === 'PENDINGAGREEMENT' ||
+                {/* {appraisalForm?.formStatus === 'PENDINGAGREEMENT' ||
                   (!isRequestDiscussion && (
                     <CButton
                       type="submit"
@@ -65,7 +73,20 @@ const MyReview = (): JSX.Element => {
                     >
                       Request Discussion
                     </CButton>
-                  ))}
+                  ))} */}
+                {appraisalForm.formStatus === 'COMPLETED' ||
+                !isRequestDiscussion ||
+                reviewComments.length === 0 ? (
+                  ''
+                ) : (
+                  <CButton
+                    type="submit"
+                    className="btn btn-warning"
+                    onClick={handleRequestDiscussionClick}
+                  >
+                    Request Discussion
+                  </CButton>
+                )}
               </div>
             ) : (
               ''
