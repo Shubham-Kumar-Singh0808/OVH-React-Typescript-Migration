@@ -28,6 +28,7 @@ const toRender = (
 )
 
 const oldOrganizationNameId = 'itdec-oldOrganizationName'
+const mockActiveCycleDate = '01/02/2023'
 
 describe('IT Declaration Form Component Testing', () => {
   beforeEach(() => {
@@ -38,7 +39,7 @@ describe('IT Declaration Form Component Testing', () => {
           sections: mockSections,
           investments: mockInvestments,
           employeeDetails: {
-            activeCyle: '01/02/2023',
+            activeCyle: mockActiveCycleDate,
             designation: 'Associate Software Engineer',
             employeeId: 2050,
             fullName: 'Testing',
@@ -65,6 +66,11 @@ describe('IT Declaration Form Component Testing', () => {
 
   test('should render IT Declaration Form component without crashing', () => {
     expect(screen.getByText('IT Declaration Form')).toBeInTheDocument()
+  })
+  test('previous employer act heading is rendered correctly', () => {
+    expect(screen.getByTestId('PrevEmpAct-heading')).toHaveTextContent(
+      'Employees Who Joined After 1 February 2023 (Income from Previous Employer ( Joined After 1-February-2023 ))',
+    )
   })
   test('complete functionality', async () => {
     const finalSubmitButton = screen.getByTestId('decform-final-submit-btn')
