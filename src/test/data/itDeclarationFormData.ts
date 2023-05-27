@@ -13,6 +13,7 @@ export const mockEmployeeInformation: EmployeeDetails = {
   pan: '89e79879845',
 }
 
+//this is being used in itDeclarationList also
 export const mockSections: Sections[] = [
   {
     sectionId: 1,
@@ -89,7 +90,7 @@ export const mockSections: Sections[] = [
         investmentId: 17,
         investmentName: 'Unit Linked Insurance Policy (ULIP)',
         maxLimit: 0,
-        description: '<br/>',
+        description: 'Testing',
         requiredDocs: 'Investment Document to be Submit',
         sectionId: 1,
         sectionName: '80 C',

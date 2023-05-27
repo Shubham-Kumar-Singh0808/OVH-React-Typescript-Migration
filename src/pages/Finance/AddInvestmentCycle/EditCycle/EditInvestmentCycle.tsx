@@ -78,7 +78,7 @@ const EditInvestmentCycle = ({
     <OToast toastColor="danger" toastMessage="Cycle Name exist" />
   )
   const backButtonHandler = () => {
-    dispatch(reduxServices.itDeclarationList.actions.setToggle(''))
+    dispatch(reduxServices.itDeclarationList.actions.clickBackButton())
   }
   const updateInvestmentCycle = async () => {
     const prepareObject = {

@@ -229,8 +229,6 @@ const MoreSections = ({
     }
   }, [investmentList])
 
-  console.log(isOldEmployee)
-
   useEffect(() => {
     const formSection: FormSectionsDTO = {
       isOld: isOldEmployee,
@@ -279,7 +277,7 @@ const MoreSections = ({
           </CButton>
         </CTooltip>
         <CRow className="form-group">
-          <CRow className="col-sm-4">
+          <CRow className="col-sm-4 me-2">
             <CFormLabel className="col-sm-3 txt-info"> Sections:</CFormLabel>
             <CCol className="col-sm-8">
               <CFormLabel className="txt-info">
@@ -287,7 +285,7 @@ const MoreSections = ({
               </CFormLabel>
             </CCol>
           </CRow>
-          <div className="col-sm-2 ps-2">
+          <div className="col-sm-2">
             <CButton
               color="info"
               className="text-white btn-ovh"
@@ -303,7 +301,9 @@ const MoreSections = ({
           <div className="col-sm-6">
             <b className="pull-right txt-info">
               Max Limit:{' '}
-              <span className="txt-info">{sectionItem.sectionLimit}</span>
+              <span className="txt-info">
+                {sectionItem.sectionLimit.toLocaleString('en-IN')}
+              </span>
             </b>
           </div>
         </CRow>
@@ -331,7 +331,10 @@ const MoreSections = ({
         </CTable>
         <div className="clearfix">
           <p className="pull-right txt-subtotal">
-            Sub Total: <span data-testid="subtotal">{showSubTotalAmount}</span>
+            Sub Total:{' '}
+            <span data-testid="subtotal">
+              {showSubTotalAmount.toLocaleString('en-IN')}
+            </span>
           </p>
         </div>
       </div>

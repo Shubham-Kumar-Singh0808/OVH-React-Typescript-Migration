@@ -10,7 +10,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { Investment } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationFormToggleType,
+  Investment,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const InvestmentList = (): JSX.Element => {
   const [selectedSectionId, setSelectedSectionId] = useState<string>()
@@ -45,7 +48,9 @@ const InvestmentList = (): JSX.Element => {
     editInvestmentData: Investment,
   ): void => {
     dispatch(
-      reduxServices.itDeclarationList.actions.setToggle('editInvestmentPage'),
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.editInvestmentPage,
+      ),
     )
 
     setEditInvestment({

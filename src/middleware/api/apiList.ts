@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
+// eslint-disable-next-line max-lines
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -108,6 +109,11 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  VendorListApi,
+  ChangeReporteesApi,
+  ManufacturerApi,
+  ProductTypeListApi,
+  AssetWarrantyReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -126,6 +132,7 @@ export enum ApiLoadingState {
   loading = 'loading',
   succeeded = 'succeeded',
   failed = 'failed',
+  success = 'success',
 }
 
 export const authenticationApiConfig: AuthenticationApi = {
@@ -483,6 +490,7 @@ export const leaveSummaryApiConfig: LeaveSummaryApi = {
   getEmployeeLeaveSummary: apiPrefix + '/leave/leaveSummary',
   getEmployeeLeaveHistory: apiPrefix + '/leave/leaves',
   cancelEmployeeLeave: apiPrefix + '/leave/cancel',
+  cancelAfterApproval: apiPrefix + '/leave/cancelAfterApproval',
 }
 
 export const ticketListInformationApiConfig: TicketListInformationApi = {
@@ -747,6 +755,8 @@ export const itDeclarationListApiConfig: ITDeclarationListApi = {
   isInvestmentExist: apiPrefix + '/itDeclaration/isInvestmentExist',
   isSectionExist: apiPrefix + '/itDeclaration/isSectionExist',
   getEmployeeDetails: apiPrefix + '/itDeclaration/getEmployee',
+  isITFormEditable: apiPrefix + '/itDeclaration/isItFormEditable',
+  editITForm: apiPrefix + '/itDeclaration/editItForm',
 }
 export const InvestmentCheckListApiConfig: InvestmentCheckListApi = {
   getInvestments: apiPrefix + '/itDeclaration/getInvestsBySecId',
@@ -841,6 +851,10 @@ export const projectTailoringApiConfig: ProjectTailoringApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+  saveProjectTailoringDocumentForManager:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocumentForManager',
+  saveProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocument',
 }
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
@@ -986,4 +1000,36 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+export const vendorListApiConfig: VendorListApi = {
+  getAllVendorDetails: apiPrefix + '/assetManagement/getAllVendorDetails',
+  getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
+  addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
+  exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
+  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+}
+
+export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
+  getAllReportingManagerData:
+    apiPrefix + '/delegation/getAllReportingManagerData',
+  getAllHRList: apiPrefix + '/delegation/getAllHRList',
+  getEmployeesUnderManger: apiPrefix + '/delegation/getMangerUnderEmployees',
+  getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
+  updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
+  updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
+}
+export const ManufacturerApiListConfig: ManufacturerApi = {
+  getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
+  exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+}
+export const GetProductTypeListConfig: ProductTypeListApi = {
+  getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
+  deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
+  exportProductList: apiPrefix + '/assetManagement/exportProductList',
+}
+
+export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
+  getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
+  downloadExportAssetWarrantyList:
+    apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }

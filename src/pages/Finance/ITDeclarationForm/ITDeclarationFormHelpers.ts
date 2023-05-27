@@ -97,9 +97,22 @@ export const interchangeMonthAndDay = (enteredDate: string): string => {
 
 export const compareDate = (cycleDate: string, joinDate: string): boolean => {
   const cycleDateParse = Date.parse(cycleDate)
-  console.log(joinDate)
   const joinDateParse = Date.parse(joinDate)
-  console.log(cycleDateParse)
-  console.log(joinDateParse)
   return cycleDateParse < joinDateParse
 }
+
+// used to convert the incoming date to words date of format [month, day, year]
+export const getWordsDate = (dateString: string): Array<string> => {
+  const [day, month, year] = dateString.split('/')
+
+  const date = new Date(`${month}/${day}/${year}`)
+  const chck = date.toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+  return chck.split(' ').map((item) => item.replace(',', '')) //month, day, year
+}
+
+export const declareStatement =
+  'I, declare that the above statement is true to the best of my knowledge and belief. In the event of any change that may occur during the year pertaining to the information given in the form, I undertake to inform the same to the company. Income Tax liability arising due to failure, if any, for not making / not intimating payment / investment made or proposed to be made by me and / or any wrong declaration would be my responsibility. I further undertake to provide all documentary proofs of payment made by me and if I fail to do so, the company can make full deduction of income tax dues from salary.'

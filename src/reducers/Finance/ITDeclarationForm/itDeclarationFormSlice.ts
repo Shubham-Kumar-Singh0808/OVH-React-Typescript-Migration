@@ -10,11 +10,11 @@ import {
   Invest,
   ITDeclarationFormSliceState,
   Sections,
-  submitITDeclarationForm,
+  SubmitITDeclarationForm,
   UploadITDocumentDTO,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 
-export const initialSubmitITDeclarationForm: submitITDeclarationForm = {
+export const initialSubmitITDeclarationForm: SubmitITDeclarationForm = {
   designation: '',
   employeeId: 0,
   employeeName: '',
@@ -91,7 +91,7 @@ const isITDeclarationFormExist = createAsyncThunk<
 
 const addITDeclarationForm = createAsyncThunk(
   'itDeclarationForm/addITDeclarationForm',
-  async (submitDeclarationForm: submitITDeclarationForm, thunkApi) => {
+  async (submitDeclarationForm: SubmitITDeclarationForm, thunkApi) => {
     try {
       return await itDeclarationFormApi.addITDeclarationForm(
         submitDeclarationForm,

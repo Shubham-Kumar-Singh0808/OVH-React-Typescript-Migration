@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import FilterOptions from './FilterOptions'
 import ITDeclarationListTable from './ITDeclarationListTable'
+import { initialITForm } from './ITDeclarationListHelpers'
+import UpdateITDeclarationForm from './UpdateITDeclarationForm/UpdateITDeclarationForm'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -8,29 +10,17 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
-import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationFormToggleType,
+  ITForm,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 import ITDeclarationFormViewTable from '../ITDeclarationListFormView/ITDeclarationFormViewTable'
 
 const ITDeclarationList = (): JSX.Element => {
   const [investmentCycle, setInvestmentCycle] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>('')
-  const [viewDeclarationForm, setViewDeclarationForm] = useState<ITForm[]>([
-    {
-      cycleId: 0,
-      designation: '',
-      employeeId: 0,
-      employeeName: '',
-      filePath: null,
-      formSectionsDTOs: [],
-      fromDate: '',
-      grandTotal: 0,
-      isAgree: null,
-      itDeclarationFormId: 0,
-      organisationName: '',
-      panNumber: '',
-      toDate: '',
-    },
-  ])
+  const [viewDeclarationForm, setViewDeclarationForm] =
+    useState<ITForm>(initialITForm)
   const itDeclarationListPath = '/itDeclarationList'
   const dispatch = useAppDispatch()
   const toggle = useTypedSelector(
@@ -39,9 +29,7 @@ const ITDeclarationList = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.itDeclarationList.selectors.isLoading,
   )
-  const listSize = useTypedSelector(
-    reduxServices.itDeclarationList.selectors.listSize,
-  )
+  const listSize = useTypedSelector((state) => state.itDeclarationList.listSize)
 
   const searchEmployee = useTypedSelector(
     reduxServices.itDeclarationList.selectors.searchEmployee,
@@ -58,6 +46,16 @@ const ITDeclarationList = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.itDeclarationList.getCycles())
   }, [dispatch])
+
+  // in react as the state is saved, when coming back to this page, home page must be rendered
+  useEffect(() => {
+    dispatch(
+      reduxServices.itDeclarationList.actions.setToggle(
+        ITDeclarationFormToggleType.HomePage,
+      ),
+    )
+    window.scroll(0, 0)
+  }, [])
 
   useEffect(() => {
     dispatch(
@@ -77,34 +75,18 @@ const ITDeclarationList = (): JSX.Element => {
     }
   }, [window.location.pathname])
 
-  const viewDeclarationFormButtonHandler = (viewForm: ITForm[]): void => {
+  const viewDeclarationFormButtonHandler = (viewForm: ITForm): void => {
     dispatch(
       reduxServices.itDeclarationList.actions.setToggle(
-        'viewITDeclarationForm',
+        ITDeclarationFormToggleType.ViewForm,
       ),
     )
-    setViewDeclarationForm([
-      {
-        cycleId: viewForm[0].cycleId,
-        designation: viewForm[0].designation,
-        employeeId: viewForm[0].employeeId,
-        employeeName: viewForm[0].employeeName,
-        filePath: viewForm[0].filePath,
-        formSectionsDTOs: viewForm[0].formSectionsDTOs,
-        fromDate: viewForm[0].fromDate,
-        grandTotal: viewForm[0].grandTotal,
-        isAgree: viewForm[0].isAgree,
-        itDeclarationFormId: viewForm[0].itDeclarationFormId,
-        organisationName: viewForm[0].organisationName,
-        panNumber: viewForm[0].panNumber,
-        toDate: viewForm[0].toDate,
-      },
-    ])
+    setViewDeclarationForm(viewForm)
   }
 
   return (
     <>
-      {toggle === '' && (
+      {toggle === ITDeclarationFormToggleType.HomePage && (
         <>
           <OCard
             className="mb-4 myprofile-wrapper"
@@ -137,7 +119,10 @@ const ITDeclarationList = (): JSX.Element => {
           </OCard>
         </>
       )}
-      {toggle === 'viewITDeclarationForm' && (
+      {toggle === ITDeclarationFormToggleType.updateITDeclarationForm && (
+        <UpdateITDeclarationForm />
+      )}
+      {toggle === ITDeclarationFormToggleType.ViewForm && (
         <ITDeclarationFormViewTable viewDeclarationForm={viewDeclarationForm} />
       )}
     </>

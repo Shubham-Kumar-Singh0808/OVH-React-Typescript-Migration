@@ -160,15 +160,10 @@ const JobOpeningsTable = ({
         <CTableBody>
           {getJobVacancies.length > 0 &&
             getJobVacancies?.map((jobVacancy, index) => {
-              const removeTag = '/(<([^>]+)>)/gi'
-              const removeSpaces = jobVacancy?.description?.replace(
-                removeTag,
-                '',
-              )
-              const employeeCommentsLimit =
-                removeSpaces && removeSpaces.length > 30
-                  ? `${removeSpaces.substring(0, 30)}...`
-                  : removeSpaces
+              const jobDescriptionLimit =
+                jobVacancy.description && jobVacancy.description.length > 25
+                  ? `${jobVacancy.description.substring(0, 25)}`
+                  : jobVacancy.description
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
@@ -181,7 +176,7 @@ const JobOpeningsTable = ({
                   <CTableDataCell>
                     {jobVacancy.minimumExperience}
                   </CTableDataCell>
-                  {employeeCommentsLimit ? (
+                  {jobDescriptionLimit ? (
                     <CTableDataCell
                       scope="row"
                       className="sh-organization-link"
@@ -191,7 +186,7 @@ const JobOpeningsTable = ({
                         data-testid={`emp-comments${index}`}
                         onClick={() => handleModal(jobVacancy?.description)}
                       >
-                        {parse(employeeCommentsLimit)}
+                        {parse(jobDescriptionLimit)}
                       </CLink>
                     </CTableDataCell>
                   ) : (

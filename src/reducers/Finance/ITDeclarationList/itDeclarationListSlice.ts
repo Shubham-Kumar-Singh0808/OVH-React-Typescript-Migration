@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
+import type { PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { itDeclarationListApi } from '../../../middleware/api/Finance/ITDeclarationList/itDeclarationListApi'
@@ -9,12 +11,45 @@ import {
   AddInvestmentData,
   AddSection,
   Cycle,
+  EditITDeclarationEmployeeDetails,
+  FinalUpdateITFormDTO,
+  FormInvestment,
+  FormSection,
   Investment,
+  ITDeclarationFormToggleType,
   ITDeclarationListApiProps,
+  ITDeclarationListModal,
   ITDeclarationListSliceState,
   ITForm,
   UpdateSection,
 } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import itDeclarationFormApi from '../../../middleware/api/Finance/ITDeclarationForm/itDeclarationFormApi'
+import { UploadITDocumentDTO } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+
+export const initialUpdateITDeclarationFormDTO: ITForm = {
+  itDeclarationFormId: -1,
+  employeeId: 0,
+  employeeName: '',
+  panNumber: null,
+  filePath: null,
+  designation: '',
+  fromDate: '',
+  grandTotal: 0,
+  isAgree: null,
+  organisationName: '',
+  toDate: '',
+  formSectionsDTOs: [],
+  cycleId: -1,
+}
+
+export const initialEmployeeDetails: EditITDeclarationEmployeeDetails = {
+  employeeId: -1,
+  fullName: '',
+  pan: null,
+  designation: '',
+  activeCyle: '',
+  joinDate: '',
+}
 
 const initialITDeclarationListState: ITDeclarationListSliceState = {
   itDeclarationForms: [],
@@ -25,9 +60,20 @@ const initialITDeclarationListState: ITDeclarationListSliceState = {
   cycles: [],
   currentPage: 1,
   pageSize: 20,
-  toggle: '',
+  toggle: ITDeclarationFormToggleType.HomePage,
   investments: [],
   sections: [],
+  updatedITDeclarationFormDTO: initialUpdateITDeclarationFormDTO,
+  employeeDetails: initialEmployeeDetails,
+  sectionsWithInvests: [],
+  modal: {
+    showModal: false,
+    description: '',
+    confirmBtnText: 'Confirm',
+    cancelBtnText: 'Cancel',
+    confirmButtonFunction: undefined,
+  },
+  isUpdateITFormButtonEnabled: false,
 }
 
 const getCycles = createAsyncThunk(
@@ -240,6 +286,68 @@ const isSectionExist = createAsyncThunk(
   },
 )
 
+const getEmployeeDetails = createAsyncThunk(
+  'itDeclarationList/getEmployeeDetails',
+  async (_, thunkApi) => {
+    try {
+      return await itDeclarationListApi.getEmployeeInfo()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const isITFormEditable = createAsyncThunk(
+  'itDeclarationList/isITFormEditable',
+  async (itFormId: number, thunkApi) => {
+    try {
+      return await itDeclarationListApi.isITFormEditable(itFormId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getSectionsHavingInvests = createAsyncThunk(
+  'itDeclarationList/getSectionsHavingInvests',
+  async (_, thunkApi) => {
+    try {
+      //to prevent redundancy, using the api from itDeclarationFormApi
+      return await itDeclarationFormApi.getSectionsHavingInvests()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const editITForm = createAsyncThunk(
+  'itDeclarationList/editITForm',
+  async (data: FinalUpdateITFormDTO, thunkApi) => {
+    try {
+      return await itDeclarationListApi.editITForm(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const uploadITDeclarationDocument = createAsyncThunk(
+  'itDeclarationList/uploadITDeclarationDocument',
+  async (itDocument: UploadITDocumentDTO, thunkApi) => {
+    try {
+      //preventing redunancy
+      return await itDeclarationFormApi.uploadITDocument(itDocument)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const itDeclarationListSlice = createSlice({
   name: 'itDeclarationList',
   initialState: initialITDeclarationListState,
@@ -259,31 +367,178 @@ const itDeclarationListSlice = createSlice({
     setPageSize: (state, action) => {
       state.pageSize = action.payload
     },
-    setToggle: (state, action) => {
+    setToggle: (state, action: PayloadAction<ITDeclarationFormToggleType>) => {
       state.toggle = action.payload
+    },
+    clickBackButton: (state) => {
+      state.toggle = ITDeclarationFormToggleType.HomePage
+    },
+    editThisForm: (state, action: PayloadAction<ITForm>) => {
+      state.updatedITDeclarationFormDTO = action.payload
+    },
+    setIsAgreeChecked: (state, action: PayloadAction<{ value: boolean }>) => {
+      state.updatedITDeclarationFormDTO = {
+        ...state.updatedITDeclarationFormDTO,
+        isAgree: action.payload.value,
+      }
+    },
+    addSectionInUpdateIT: (state, action: PayloadAction<FormSection>) => {
+      const formSectionList = state.updatedITDeclarationFormDTO.formSectionsDTOs
+      formSectionList.push(action.payload)
+      state.updatedITDeclarationFormDTO = {
+        ...state.updatedITDeclarationFormDTO,
+        formSectionsDTOs: formSectionList,
+      }
+    },
+    removeSectionInUpdateIT: (
+      state,
+      action: PayloadAction<{ sectionId: number; isOld: boolean }>,
+    ) => {
+      const { sectionId, isOld } = action.payload
+      const formSectionList = state.updatedITDeclarationFormDTO.formSectionsDTOs
+      const filteredList = formSectionList.filter(
+        (section) => section.sectionId !== sectionId || section.isOld !== isOld,
+      )
+      state.updatedITDeclarationFormDTO = {
+        ...state.updatedITDeclarationFormDTO,
+        formSectionsDTOs: filteredList,
+      }
+    },
+    addInvestmentToSection: (
+      state,
+      action: PayloadAction<{
+        sectionId: number
+        investment: FormInvestment
+        isOld: boolean
+      }>,
+    ) => {
+      const { sectionId, isOld, investment } = action.payload
+      const sectionIndex =
+        state.updatedITDeclarationFormDTO.formSectionsDTOs.findIndex(
+          (section) =>
+            section.sectionId === sectionId && section.isOld === isOld,
+        )
+      if (sectionIndex !== -1) {
+        const sec = state.updatedITDeclarationFormDTO.formSectionsDTOs
+        sec[sectionIndex].formInvestmentDTO.push(investment)
+        state.updatedITDeclarationFormDTO = {
+          ...state.updatedITDeclarationFormDTO,
+          formSectionsDTOs: sec,
+        }
+      }
+    },
+    deleteInvestmentFromSection: (
+      state,
+      action: PayloadAction<{
+        sectionId: number
+        investmentId: number
+        isOld: boolean
+      }>,
+    ) => {
+      const { sectionId, investmentId, isOld } = action.payload
+      const sectionIndex =
+        state.updatedITDeclarationFormDTO.formSectionsDTOs?.findIndex(
+          (sec) => sec.sectionId === sectionId && sec.isOld === isOld,
+        )
+      if (sectionIndex !== -1) {
+        const newInvestmentList =
+          state.updatedITDeclarationFormDTO.formSectionsDTOs[
+            sectionIndex
+          ].formInvestmentDTO.filter(
+            (investment) => investment.investmentId !== investmentId,
+          )
+        if (newInvestmentList.length === 0) {
+          state.updatedITDeclarationFormDTO.formSectionsDTOs.splice(
+            sectionIndex,
+            1,
+          )
+        } else {
+          state.updatedITDeclarationFormDTO.formSectionsDTOs[
+            sectionIndex
+          ].formInvestmentDTO = newInvestmentList
+        }
+      }
+    },
+    updateInvestmentOfSection: (
+      state,
+      action: PayloadAction<{
+        investment: FormInvestment
+        investmentIndex: number
+        sectionId: number
+        isOld: boolean
+      }>,
+    ) => {
+      const { sectionId, investment, investmentIndex, isOld } = action.payload
+      const sectionIndex =
+        state.updatedITDeclarationFormDTO.formSectionsDTOs.findIndex(
+          (sec) => sec.sectionId === sectionId && sec.isOld === isOld,
+        )
+      if (sectionIndex !== -1) {
+        const previousStateValue =
+          state.updatedITDeclarationFormDTO.formSectionsDTOs[sectionIndex]
+            .formInvestmentDTO[investmentIndex]
+        if (previousStateValue.formInvestmentId !== null) {
+          // doing this way because API is being sent that way. Edited Investments have string amount
+          const finalInvestment = {
+            ...previousStateValue,
+            investmentName: investment.investmentName,
+            customAmount: investment.customAmount.toString(),
+            investmentId: investment.investmentId,
+          }
+          state.updatedITDeclarationFormDTO.formSectionsDTOs[
+            sectionIndex
+          ].formInvestmentDTO.splice(investmentIndex, 1, finalInvestment)
+        } else {
+          // this is for new investments
+          const finalInvestment = {
+            ...investment,
+            investmentName: null,
+          }
+          state.updatedITDeclarationFormDTO.formSectionsDTOs[
+            sectionIndex
+          ].formInvestmentDTO.splice(investmentIndex, 1, finalInvestment)
+        }
+      }
+    },
+    setModal: (state, action: PayloadAction<ITDeclarationListModal>) => {
+      state.modal = action.payload
+    },
+    setShowModal: (state, action: PayloadAction<boolean>) => {
+      state.modal = {
+        ...state.modal,
+        showModal: action.payload,
+      }
+    },
+    setGrandTotal: (state, action: PayloadAction<number>) => {
+      state.updatedITDeclarationFormDTO = {
+        ...state.updatedITDeclarationFormDTO,
+        grandTotal: action.payload,
+      }
+    },
+    setUpdateITButtonBoolean: (state, action: PayloadAction<boolean>) => {
+      state.isUpdateITFormButtonEnabled = action.payload
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getCycles.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.cycles = action.payload
       })
       .addCase(getSections.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.sections = action.payload
       })
       .addCase(getInvestments.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.investments = action.payload
       })
       .addCase(getITDeclarationForm.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.itDeclarationForms = action.payload.itforms
         state.listSize = action.payload.itformlistsize
       })
-      .addCase(addCycle.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
+      .addCase(getEmployeeDetails.fulfilled, (state, action) => {
+        state.employeeDetails = action.payload
+      })
+      .addCase(getSectionsHavingInvests.fulfilled, (state, action) => {
+        state.sectionsWithInvests = action.payload
       })
       .addMatcher(
         isAnyOf(
@@ -298,6 +553,16 @@ const itDeclarationListSlice = createSlice({
           isInvestmentExist.fulfilled,
           updateInvestment.fulfilled,
           isSectionExist.fulfilled,
+          getCycles.fulfilled,
+          getSections.fulfilled,
+          getITDeclarationForm.fulfilled,
+          addCycle.fulfilled,
+          getInvestments.fulfilled,
+          getEmployeeDetails.fulfilled,
+          isITFormEditable.fulfilled,
+          getSectionsHavingInvests.fulfilled,
+          editITForm.fulfilled,
+          uploadITDeclarationDocument.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -321,6 +586,11 @@ const itDeclarationListSlice = createSlice({
           isInvestmentExist.pending,
           updateInvestment.pending,
           isSectionExist.pending,
+          getEmployeeDetails.pending,
+          isITFormEditable.pending,
+          getSectionsHavingInvests.pending,
+          editITForm.pending,
+          uploadITDeclarationDocument.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -344,6 +614,11 @@ const itDeclarationListSlice = createSlice({
           isInvestmentExist.rejected,
           updateInvestment.rejected,
           isSectionExist.rejected,
+          getEmployeeDetails.rejected,
+          isITFormEditable.rejected,
+          getSectionsHavingInvests.rejected,
+          editITForm.rejected,
+          uploadITDeclarationDocument.rejected,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
@@ -388,6 +663,11 @@ const itDeclarationListThunk = {
   isInvestmentExist,
   updateInvestment,
   isSectionExist,
+  getEmployeeDetails,
+  isITFormEditable,
+  getSectionsHavingInvests,
+  editITForm,
+  uploadITDeclarationDocument,
 }
 
 const itDeclarationListSelectors = {
