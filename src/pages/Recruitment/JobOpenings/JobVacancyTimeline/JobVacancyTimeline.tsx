@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import React from 'react'
 import { CRow, CCol, CButton, CFormLabel, CBadge } from '@coreui/react-pro'
 import parse from 'html-react-parser'
