@@ -173,7 +173,7 @@ const SQAAuditReportTable = ({
 
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="mt-3 align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -208,7 +208,7 @@ const SQAAuditReportTable = ({
                   <CTableDataCell>{auditReport?.projectManager}</CTableDataCell>
                   <CTableDataCell>{auditReport?.auditDate}</CTableDataCell>
                   <CTableDataCell>
-                    {auditReport?.startTime}-{auditReport.endTime}
+                    {auditReport?.startTime} - {auditReport.endTime}
                   </CTableDataCell>
                   <CTableDataCell>{auditReport.auditStatus}</CTableDataCell>
                   <CTableDataCell>{auditReport.pci || 'N/A'}</CTableDataCell>
@@ -217,15 +217,23 @@ const SQAAuditReportTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{auditRescheduleStatus}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="success"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                      onClick={() => handleShowRescheduleModal(auditReport.id)}
-                      disabled={auditReport.formStatus !== 'Submit'}
-                    >
-                      <i className="fa fa-calendar" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Reschedule">
+                      <CButton
+                        color="success"
+                        size="sm"
+                        className="btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                        onClick={() =>
+                          handleShowRescheduleModal(auditReport.id)
+                        }
+                        disabled={auditReport.formStatus !== 'Submit'}
+                      >
+                        <i
+                          className="fa fa-calendar text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                     <Link to={`/viewProjectAudit/${auditReport.id}`}>
                       <CTooltip content="View">
                         <CButton

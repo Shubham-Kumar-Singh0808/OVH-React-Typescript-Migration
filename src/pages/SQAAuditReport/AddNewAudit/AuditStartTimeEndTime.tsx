@@ -8,7 +8,7 @@ const AuditStartTimeEndTime = ({
   onSelectStartAndEndTime: (val1: string, val2: string) => void
 }): JSX.Element => {
   const auditHoursList = [
-    { label: '00', value: '00' },
+    { label: '00', value: '' },
     { label: '01', value: '01' },
     { label: '02', value: '02' },
     { label: '03', value: '03' },
@@ -29,7 +29,6 @@ const AuditStartTimeEndTime = ({
     { label: '30', value: '30' },
     { label: '45', value: '45' },
   ]
-
   const [auditStartTime, setAuditStartTime] = useState({
     hours: '',
     minutes: '00',
@@ -40,7 +39,6 @@ const AuditStartTimeEndTime = ({
     minutes: '00',
     meridian: 'AM',
   })
-
   useEffect(() => {
     if (auditStartTime.hours && auditEndTime.hours) {
       const concatStartTime = `${auditStartTime.hours}:${auditStartTime.minutes} ${auditStartTime.meridian}`
