@@ -17,6 +17,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { VendorDetails } from '../../../../types/Assets/VendorList/vendorListTypes'
 import { showIsRequired } from '../../../../utils/helper'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 
 const EditVendorDetails = ({
   setToggle,
@@ -319,7 +320,13 @@ const EditVendorDetails = ({
             className="col-sm-3 col-form-label text-end"
           >
             Pincode:
-            <span className={showIsRequired(editVendorInfo.vendorPincode)}>
+            <span
+              className={
+                editVendorInfo?.vendorPincode?.length > 5
+                  ? TextWhite
+                  : TextDanger
+              }
+            >
               *
             </span>
           </CFormLabel>
@@ -395,7 +402,13 @@ const EditVendorDetails = ({
             className="col-sm-3 col-form-label text-end"
           >
             Phone Number:
-            <span className={showIsRequired(editVendorInfo.vendorPhoneNumber)}>
+            <span
+              className={
+                editVendorInfo?.vendorPhoneNumber?.length > 9
+                  ? TextWhite
+                  : TextDanger
+              }
+            >
               *
             </span>
           </CFormLabel>
