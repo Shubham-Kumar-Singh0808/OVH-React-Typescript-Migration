@@ -1,5 +1,3 @@
-import { type } from 'os'
-import { number } from 'prop-types'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 export type ManufacturerList = {

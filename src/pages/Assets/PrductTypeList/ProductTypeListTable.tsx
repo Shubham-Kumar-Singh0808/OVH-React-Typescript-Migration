@@ -122,7 +122,6 @@ const ProductTypeListTable = ({
   }
 
   const editButtonHandler = (ProductType: ProductTypeListType) => {
-    console.log(ProductType + 'Test')
     setToggle('ProductData')
     setEditProductType(ProductType)
   }

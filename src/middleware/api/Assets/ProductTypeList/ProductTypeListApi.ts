@@ -79,6 +79,7 @@ const AddProductTypeRecord = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+
 const UpdateProductTypeRecord = async (
   props: UpdateProductTypeRecordTypes,
 ): Promise<string> => {

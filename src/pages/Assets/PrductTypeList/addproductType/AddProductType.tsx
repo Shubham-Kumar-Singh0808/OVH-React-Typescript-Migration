@@ -16,10 +16,8 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProductTypeRecord = ({
   setToggle,
-}: //backButtonHandler,
-{
+}: {
   setToggle: (value: string) => void
-  //backButtonHandler: () => void
 }): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewVendorDetails',
@@ -36,7 +34,6 @@ const AddProductTypeRecord = ({
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
-  // console.log(addProductTypeList)
 
   const clearInputs = () => {
     setProductName('')
@@ -121,9 +118,6 @@ const AddProductTypeRecord = ({
               data-testid="AssetType-test"
               onChange={(e) => setAssetTypeId(e.target.value)}
               value={assetTypeIds}
-              // Add onChange handler
-              // value={employeeFamily?.relationShip}
-              // onChange={onChangePersonNameHandler}
             >
               <option value={''}>Select Asset type</option>
               {addProductTypeList?.assetTypeList?.length > 0 &&

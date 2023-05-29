@@ -1996,8 +1996,8 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
     name: 'Product Type List',
     viewaccess: true,
     createaccess: true,
-    updateaccess: false,
-    deleteaccess: false,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
 ]

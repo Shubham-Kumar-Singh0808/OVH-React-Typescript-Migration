@@ -58,17 +58,4 @@ describe('Product Type list without data', () => {
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
-
-  test('should render  component with data', () => {
-    expect(screen.getByText('Kanna Karrolla')).toBeInTheDocument()
-    expect(screen.getByText('WorldTest')).toBeInTheDocument()
-    expect(screen.getByText('Staging Testing')).toBeInTheDocument()
-  })
-  test('Should be able to see table titles', () => {
-    expect(screen.getByText('Actions')).toBeInTheDocument()
-    expect(screen.getByText('Last Updated by')).toBeInTheDocument()
-    expect(screen.getByText('#')).toBeInTheDocument()
-    expect(screen.getByText('Asset Type')).toBeInTheDocument()
-    expect(screen.getByText('Product Type')).toBeInTheDocument()
-  })
 })

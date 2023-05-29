@@ -46,8 +46,4 @@ describe('ProductTypeList without data', () => {
     userEvent.type(searchInput, 'WorldTest')
     fireEvent.click(screen.getByTestId('multi-search-btn'))
   })
-  // test('should render  Product Type List screen and add button', () => {
-  //   const addBtnElement = screen.getByTestId('add-button')
-  //   expect(addBtnElement).toBeInTheDocument()
-  // })
 })

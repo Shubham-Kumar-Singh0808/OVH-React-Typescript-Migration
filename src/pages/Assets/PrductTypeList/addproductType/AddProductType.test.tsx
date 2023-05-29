@@ -7,7 +7,7 @@ import '@testing-library/jest-dom'
 import { mockProductTypeListGetLookup } from '../../../../test/data/ProductTypeLookupsData'
 
 const mockSetData = jest.fn()
-describe('Job Openings without data', () => {
+describe('Product type list without data', () => {
   beforeEach(() => {
     render(<AddProductType setToggle={mockSetData} />, {
       preloadedState: {

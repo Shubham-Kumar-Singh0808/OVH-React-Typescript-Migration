@@ -133,7 +133,6 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
-//import AddProductTypeListReducer from './reducers/Assets/addproducttype/AddProductTypeSlice'
 
 export const allReducers = {
   app: appReducer,
