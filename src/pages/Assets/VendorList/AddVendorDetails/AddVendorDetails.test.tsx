@@ -5,10 +5,7 @@ import { CKEditor } from 'ckeditor4-react'
 import AddVendorDetails from './AddVendorDetails'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import {
-  GetAllVendorDetails,
-  VendorDetails,
-} from '../../../../types/Assets/VendorList/vendorListTypes'
+import { GetAllVendorDetails } from '../../../../types/Assets/VendorList/vendorListTypes'
 import { mockVendorDetails } from '../../../../test/data/vendorListData'
 
 const mockSetTogglePage = jest.fn()

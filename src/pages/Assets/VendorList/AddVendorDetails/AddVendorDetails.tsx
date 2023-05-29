@@ -54,29 +54,6 @@ const AddVendorDetails = ({
   }
   const vendorNameRegexReplace = /-_[^a-z0-9\s]/gi
 
-  // const onChangePinCodeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target
-  //   if (name === 'vendorPincode') {
-  //     const presentZipValue = value.replace(/[^0-9]/gi, '')
-  //     setAddVendor((prevState) => {
-  //       return { ...prevState, ...{ [name]: presentZipValue } }
-  //     })
-  //   } else if (name === 'vendorPhoneNumber') {
-  //     const phoneNumber = value.replace(/[^0-9]/gi, '')
-  //     setAddVendor((prevState) => {
-  //       return { ...prevState, ...{ [name]: phoneNumber } }
-  //     })
-  //   } else if (name === 'vendorFaxNumber') {
-  //     const faxNumber = value.replace(/[^0-9]/gi, '')
-  //     setAddVendor((prevState) => {
-  //       return { ...prevState, ...{ [name]: faxNumber } }
-  //     })
-  //   } else {
-  //     setAddVendor((prevState) => {
-  //       return { ...prevState, ...{ [name]: value } }
-  //     })
-  //   }
-  // }
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
