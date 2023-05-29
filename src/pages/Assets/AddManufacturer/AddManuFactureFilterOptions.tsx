@@ -110,9 +110,9 @@ const AddManuFactureFilterOptions = ({
             >
               <option value={''}>Select Product Type</option>
               {result.productList?.length > 0 &&
-                result?.productList?.map((result, index) => (
-                  <option key={index} value={result?.productId}>
-                    {result?.productName}
+                result?.productList?.map((results, index) => (
+                  <option key={index} value={results?.productId}>
+                    {results?.productName}
                   </option>
                 ))}
             </CFormSelect>
