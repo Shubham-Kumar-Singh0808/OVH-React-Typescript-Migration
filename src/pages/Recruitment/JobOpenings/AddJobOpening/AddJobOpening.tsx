@@ -48,11 +48,12 @@ const AddJobOpening = (): JSX.Element => {
   )
 
   const jobCodeExists = (name: string) => {
-    return jobVacancies?.find((locationName) => {
-      return locationName.jobCode.toLowerCase() === name.toLowerCase()
+    return jobVacancies?.find((code) => {
+      return code.jobCode.toLowerCase() === name.toLowerCase()
     })
   }
-  const handledInputChange = (
+
+  const handleJobCodeInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -61,8 +62,22 @@ const AddJobOpening = (): JSX.Element => {
     if (name === 'jobCode') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setJobCode(newValue)
-    } else if (name === 'jobTitle') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+    }
+    if (jobCodeExists(value.trim())) {
+      setJobCodeExist(value.trim())
+    } else {
+      setJobCodeExist('')
+    }
+  }
+
+  const handledInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'jobTitle') {
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setJobTitle(newValue)
     } else if (name === 'noOfOpenings') {
       const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
@@ -70,11 +85,6 @@ const AddJobOpening = (): JSX.Element => {
     } else if (name === 'experience') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setExperience(newValue)
-    }
-    if (jobCodeExists(value.trim())) {
-      setJobCodeExist(value.trim())
-    } else {
-      setJobCodeExist('')
     }
   }
 
@@ -92,6 +102,7 @@ const AddJobOpening = (): JSX.Element => {
     setExpireDate('')
     setDescription('')
     setIsShowComment(false)
+    setJobCodeExist('')
     setSelectStatus('')
     setTimeout(() => {
       setIsShowComment(true)
@@ -172,7 +183,7 @@ const AddJobOpening = (): JSX.Element => {
               autoComplete="off"
               placeholder="Job Code"
               value={jobCode}
-              onChange={handledInputChange}
+              onChange={handleJobCodeInputChange}
             />
             {jobCodeExist && (
               <span className={TextDanger} data-testid="nameAlreadyExist">
