@@ -16,7 +16,7 @@ const Manufacturer = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
 
-  const listSize = useTypedSelector(
+  const manufacturerListSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
 
@@ -29,7 +29,7 @@ const Manufacturer = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(listSize, 20)
+  } = usePagination(manufacturerListSize, 20)
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
