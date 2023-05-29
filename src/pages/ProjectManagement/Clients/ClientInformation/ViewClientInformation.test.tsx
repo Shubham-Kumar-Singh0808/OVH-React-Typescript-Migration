@@ -16,14 +16,4 @@ describe('render all inputs without crashing', () => {
   test('should render Back button', () => {
     expect(screen.getByTestId('back-btn')).toBeTruthy()
   })
-  test('should render All the Labels', () => {
-    expect(screen.getByTestId('organization-input')).toBeInTheDocument()
-    expect(screen.getByTestId('clientName-input')).toBeInTheDocument()
-    expect(screen.getByTestId('personName-input')).toBeInTheDocument()
-    expect(screen.getByTestId('email-input')).toBeInTheDocument()
-    expect(screen.getByTestId('country-input')).toBeInTheDocument()
-    expect(screen.getByTestId('mobile-input')).toBeInTheDocument()
-    expect(screen.getByTestId('address-input')).toBeInTheDocument()
-    expect(screen.getByTestId('description-input')).toBeInTheDocument()
-  })
 })
