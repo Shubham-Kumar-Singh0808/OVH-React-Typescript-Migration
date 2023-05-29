@@ -9,19 +9,6 @@ import {
 } from '@coreui/react-pro'
 import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
 
-// const LimitText = ({
-//   text,
-//   limit,
-// }: {
-//   text: string | undefined
-//   limit: number
-// }): JSX.Element => {
-//   const truncatedText =
-//     text && text.length > limit ? `${text.substring(0, limit)}...` : text
-
-//   return <>{truncatedText}</>
-// }
-
 const ModalLink = ({
   text,
   index,

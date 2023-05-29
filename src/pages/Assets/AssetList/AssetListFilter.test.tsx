@@ -67,9 +67,6 @@ describe('Asset List Filter Options Component Testing with data', () => {
     userEvent.click(addBtn)
     expect(addBtn).toBeInTheDocument()
   })
-
-  //--------------------------------
-
   test('should render Asset filter', () => {
     const activeStatus = screen.findByTestId('form-select-2')
     expect(activeStatus).toBeTruthy()
@@ -82,10 +79,7 @@ describe('Asset List Filter Options Component Testing with data', () => {
     const categoryFilter = screen.findByTestId('form-select-4')
     expect(categoryFilter).toBeTruthy()
   })
-  // test('should render Add Assets List Data component with data', () => {
-  //   expect(screen.getByText('16/07/2011')).toBeInTheDocument()
-  //   expect(screen.getByText('RBT121212')).toBeInTheDocument()
-  // })
+
   test('should render Export button in the component', () => {
     expect(screen.getByTestId('Add-export-button')).toBeTruthy()
   })
@@ -94,8 +88,4 @@ describe('Asset List Filter Options Component Testing with data', () => {
     const searchBtn = screen.getByTestId('ch-searchByEmployee')
     fireEvent.click(searchBtn)
   })
-  // test('should render country filter', () => {
-  //   const countryFilter = screen.findByTestId('countryFilter')
-  //   expect(countryFilter).toBeTruthy()
-  // })
 })
