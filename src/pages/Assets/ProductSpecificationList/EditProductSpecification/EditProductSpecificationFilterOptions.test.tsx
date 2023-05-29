@@ -1,7 +1,15 @@
 import React from 'react'
 import EditProductSpecification from './EditProductSpecification'
-import { render, screen } from '../../../test/testUtils'
 import '@testing-library/jest-dom'
+import { fireEvent, screen, render } from '../../../../test/testUtils'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import {
+  GetAssetTypeListData,
+  ManufacturerList,
+} from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
+import { mockProductSpecificationList } from '../../../../test/data/ProductSpecificationListData'
+import { GetProductSpecificationListDetails } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
+// import userEvent from '@testing-library/user-event'
 
 const mockSetTogglePage = jest.fn()
 const mockHandleAdd = jest.fn()
@@ -37,11 +45,69 @@ const toRender = (
 )
 describe('EditProductSpecification FilterOptions Component Testing with data', () => {
   beforeEach(() => {
-    render(toRender)
+    render(
+      <EditProductSpecification
+        setToggle={jest.fn()}
+        editProductSpecification={{
+          id: 0,
+          productId: 0,
+          productName: '',
+          manufacturerId: 0,
+          manufacturerName: '',
+          assetTypeId: 0,
+          assetType: '',
+          productSpecification: '',
+          createdBy: '',
+          createdDate: '',
+          updatedBy: '',
+          updatedDate: '',
+          departmentId: null,
+          departmentName: null,
+          roleId: null,
+        }}
+        setEditProductSpecification={mockSetTogglePage}
+      />,
+      {
+        preloadedState: {
+          productSpecificationList: {
+            productSpecifications: mockProductSpecificationList,
+            getProductSpecificationListDetails:
+              {} as GetProductSpecificationListDetails,
+            isLoading: ApiLoadingState.succeeded,
+            listSize: 0,
+          },
+        },
+      },
+    )
   })
-})
-test('should render fields', () => {
-  const AssetTypeDropdown = screen.getByTestId('form-select1')
-  userEvent.selectOptions(AssetTypeDropdown, [''])
-  expect(AssetTypeDropdown).toBeInTheDocument()
+
+  test('should be able to render  Edit Product Specification  Title', () => {
+    expect(screen.getByText('Edit Product Specification')).toBeInTheDocument()
+  })
+  test('should render add Product Specification back button', () => {
+    expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
+  })
+  test('should able to click Edit Button', () => {
+    const editBtnElement = screen.getByRole('button', {
+      name: 'Edit',
+    })
+    expect(editBtnElement).toBeEnabled()
+    // userEvent.click(editBtnElement)
+  })
+
+  test('should render fields', () => {
+    const AssetTypeDropdown = screen.getByTestId('form-select1')
+    fireEvent.change(AssetTypeDropdown, ['Hardware'])
+    expect(AssetTypeDropdown).toBeInTheDocument()
+  })
+  test('should select Product type', () => {
+    const ProductType = screen.getByTestId('form-select2')
+    fireEvent.change(ProductType, ['Aluminium Door'])
+    expect(ProductType).toHaveValue('')
+  })
+  test('should select Manufacturer Name', () => {
+    const Manufacturer = screen.getByTestId('form-select3')
+    fireEvent.change(Manufacturer, ['Apple'])
+    expect(Manufacturer).toHaveValue('')
+  })
 })

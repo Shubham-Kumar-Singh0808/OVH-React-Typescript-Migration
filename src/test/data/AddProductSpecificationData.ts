@@ -374,7 +374,7 @@ export const mockAssetTypeData: AssetType[] = [
     departmentName: null,
     createdBy: 'Dinesh Kota',
     updatedBy: '',
-    createdDate: '28/06/2016',
+    createdDate: '29/06/2016',
     updatedDate: '',
   },
   {
@@ -384,7 +384,7 @@ export const mockAssetTypeData: AssetType[] = [
     assetType: 'Hardware',
     departmentId: null,
     departmentName: null,
-    createdBy: 'Naresh Podila',
+    createdBy: 'Naresh abc',
     updatedBy: '',
     createdDate: '28/06/2016',
     updatedDate: '',

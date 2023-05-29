@@ -1,11 +1,4 @@
-import {
-  CButton,
-  CCol,
-  CFormInput,
-  CFormSelect,
-  CFormLabel,
-  CRow,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormSelect, CFormLabel, CRow } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
@@ -31,7 +24,7 @@ const AddProduct = ({
   const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
   )
-  console.log('specification List', getAllLookUps)
+
   const AssetTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
   )
@@ -46,8 +39,6 @@ const AddProduct = ({
 
   const dispatch = useAppDispatch()
   const [showEditor, setShowEditor] = useState<boolean>(true)
-  console.log(AssetTypeList)
-  console.log(ProductTypeList)
 
   useEffect(() => {
     dispatch(reduxServices.addNewProduct.getAllLookUps())
@@ -115,7 +106,19 @@ const AddProduct = ({
       )
     }
   }
-  console.log(getAllLookUps)
+
+  useEffect(() => {
+    if (
+      selectAssetId &&
+      selectProductId &&
+      manufactureType &&
+      productSpecification
+    ) {
+      setIsAddButtonEnabled(true)
+    } else {
+      setIsAddButtonEnabled(false)
+    }
+  }, [selectAssetId, selectProductId, manufactureType, productSpecification])
   return (
     <>
       <OCard
@@ -248,7 +251,7 @@ const AddProduct = ({
               className="btn-ovh me-1 text-white"
               color="success"
               onClick={handleAddProductSpecification}
-              // disabled={!isButtonEnabled}
+              disabled={!isAddButtonEnabled}
             >
               Add
             </CButton>

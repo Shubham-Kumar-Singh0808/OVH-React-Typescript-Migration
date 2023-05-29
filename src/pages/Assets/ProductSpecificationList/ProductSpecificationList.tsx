@@ -9,7 +9,6 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import productSpecificationListApi from '../../../middleware/api/Assets/ProductSpecificationList/ProductSpecificationListApi'
 import { downloadFile } from '../../../utils/helper'
-import { UpdateProductSpecificationTypes } from '../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import { ProductSpecifications } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const ProductSpecificationList = (): JSX.Element => {

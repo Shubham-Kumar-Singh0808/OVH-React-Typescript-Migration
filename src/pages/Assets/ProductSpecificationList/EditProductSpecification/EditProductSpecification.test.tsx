@@ -49,7 +49,7 @@ describe('Job Openings without data', () => {
       },
     )
   })
-  test('should be able to render  Add Product Specification  Title', () => {
+  test('should be able to render  Edit Product Specification  Title', () => {
     expect(screen.getByText('Edit Product Specification')).toBeInTheDocument()
   })
   test('should render add Product Specification back button', () => {
@@ -57,7 +57,7 @@ describe('Job Openings without data', () => {
   })
   test('should able to click Add Button', () => {
     const addBtnElement = screen.getByRole('button', {
-      name: 'Back',
+      name: 'Add',
     })
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)

@@ -12,7 +12,7 @@ import {
 
 const mockSetTogglePage = jest.fn()
 
-describe('Job Openings without data', () => {
+describe('Product Specification without data', () => {
   beforeEach(() => {
     render(<AddProductSpecificationList setToggle={jest.fn()} />, {
       preloadedState: {
@@ -35,7 +35,7 @@ describe('Job Openings without data', () => {
   })
   test('should able to click Add Button', () => {
     const addBtnElement = screen.getByRole('button', {
-      name: 'Back',
+      name: 'Add',
     })
     expect(addBtnElement).toBeEnabled()
     userEvent.click(addBtnElement)

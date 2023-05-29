@@ -28,10 +28,17 @@ const EditProductSpecificationFilterOptions = ({
     }
   }
   const dispatch = useAppDispatch()
-  const [selectedAssetType, setSelectedAssetType] = useState<number | string>()
+  const [selectedAssetType, setSelectedAssetType] = useState<number | string>(
+    editProductSpecification.assetTypeId,
+  )
+  console.log(selectedAssetType + 'selectedAssetType')
+
   const [selectedProductType, setSelectedProductType] = useState<
     number | string
-  >()
+  >(editProductSpecification.productName)
+
+  console.log(selectedProductType + 'selectedProductType')
+
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
   >()
@@ -71,75 +78,29 @@ const EditProductSpecificationFilterOptions = ({
     setEditProductSpecification((prevState) => {
       return { ...prevState, ...{ [name]: value } }
     })
-    dispatch(
-      reduxServices.addNewProduct.getAssetTypeList(
-        editProductSpecification.assetTypeId,
-      ),
-    )
   }
 
   useEffect(() => {
     dispatch(reduxServices.addNewProduct.getAllLookUps())
   }, [dispatch])
-  useEffect(() => {
-    if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
-    if (selectedAssetType) {
-      dispatch(
-        reduxServices.addNewProduct.getAssetTypeList(
-          selectedAssetType as number,
-        ),
-      )
-    }
-    if (selectedManufacturer) {
-      dispatch(
-        reduxServices.addNewProduct.getProductTypeList(
-          selectedManufacturer as number,
-        ),
-      )
-    }
-  }, [dispatch, selectedAssetType, selectedProductType, getAllLookUps])
-
   // useEffect(() => {
-  //   if (editProductSpecification?.assetTypeId) {
+  //   if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
+  //   if (selectedAssetType) {
   //     dispatch(
-  //       reduxServices.addNewProduct.getProductTypeList(
-  //         editProductSpecification.assetTypeId,
+  //       reduxServices.addNewProduct.getAssetTypeList(
+  //         selectedAssetType as number,
   //       ),
   //     )
   //   }
-  // }, [editProductSpecification?.assetTypeId])
-
-  // useEffect(() => {
-  //   if (editProductSpecification?.assetTypeId) {
-  //     dispatch(reduxServices.addNewProduct.getAllLookUps())
+  //   if (selectedManufacturer) {
+  //     dispatch(
+  //       reduxServices.addNewProduct.getProductTypeList(
+  //         selectedManufacturer as number,
+  //       ),
+  //     )
   //   }
-  // }, [dispatch, editProductSpecification.assetTypeId])
+  // }, [dispatch, selectedAssetType, selectedProductType, getAllLookUps])
 
-  // useEffect(() => {
-  //   if (updateProductList) {
-  //     setEditProductSpecification({
-  //       id: updateProductList.id,
-  //       productId: updateProductList.productId,
-  //       productName: updateProductList.productName,
-  //       manufacturerId: updateProductList.manufacturerId,
-  //       manufacturerName: updateProductList.manufacturerName,
-  //       assetTypeId: updateProductList.assetTypeId,
-  //       assetType: updateProductList.assetType,
-  //       productSpecification: updateProductList.productSpecification,
-  //       createdBy: updateProductList.createdBy,
-  //       createdDate: updateProductList.createdDate,
-  //       updatedBy: updateProductList.updatedBy,
-  //       updatedDate: updateProductList.updatedDate,
-  //       departmentId: updateProductList.departmentId,
-  //       departmentName: updateProductList.departmentName,
-  //       roleId: updateProductList.roleId,
-  //     })
-  //   }
-  //   setShowEditor(false)
-  //   setTimeout(() => {
-  //     setShowEditor(true)
-  //   }, 100)
-  // }, [updateProductList])
   const updateSuccessToastMessage = (
     <OToast
       toastMessage="Product Specification is successfully edited.
@@ -174,38 +135,30 @@ const EditProductSpecificationFilterOptions = ({
       )
     ) {
       setToggle('')
+      dispatch(
+        reduxServices.productSpecificationList.getProductSpecificationList({
+          startIndex: 0,
+          endIndex: 20,
+          productName: '',
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
-
-    // {
-    //   setToggle('')
-    //   dispatch(
-    //     reduxServices.app.actions.addToast(
-    //       getToastMessage(actionMapping.updated),
-    //     ),
-    //   )
-    // }
   }
 
-  // const onChangeHandler = (description: string) => {
-  //   setEditProductSpecification((prevState) => {
-  //     return { ...prevState, ...{ description } }
-  //   })
-  // }
+  const onChangeHandler = (productSpecification: string) => {
+    setEditProductSpecification((prevState) => {
+      return { ...prevState, ...{ productSpecification } }
+    })
+  }
 
   return (
     <>
       <CRow className="mt-3 ">
         <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
           Asset Type:{' '}
-          <span
-            className={
-              editProductSpecification.assetTypeId ? TextWhite : TextDanger
-            }
-          >
-            *
-          </span>
+          <span className={selectedAssetType ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
@@ -214,8 +167,8 @@ const EditProductSpecificationFilterOptions = ({
             id="assetTypeId"
             data-testid="form-select1"
             name="assetTypeId"
-            value={editProductSpecification.assetTypeId}
-            onChange={onChangeProductSpecificationHandler}
+            value={selectedAssetType}
+            onChange={(e) => setSelectedAssetType(e.target.value)}
           >
             {getAllLookUps?.assetTypeList?.length > 0 &&
               getAllLookUps?.assetTypeList?.map((item, index) => (
@@ -229,11 +182,7 @@ const EditProductSpecificationFilterOptions = ({
       <CRow className="mt-3 ">
         <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
           Product Type:{' '}
-          <span
-            className={
-              editProductSpecification.productName ? TextWhite : TextDanger
-            }
-          >
+          <span className={selectedProductType ? TextWhite : TextDanger}>
             *
           </span>
         </CFormLabel>
@@ -242,15 +191,15 @@ const EditProductSpecificationFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="productName"
-            data-testid="form-select1"
+            data-testid="form-select2"
             name="productName"
-            value={editProductSpecification.productId}
-            onChange={onChangeProductSpecificationHandler}
+            value={selectedProductType}
+            onChange={(e) => setSelectedProductType(e.target.value)}
           >
             <option value={''}>Select Product Type</option>
             {AssetType.length > 0 &&
               AssetType?.map((product, index) => (
-                <option key={index} value={product.productId}>
+                <option key={index} value={product.assetTypeId}>
                   {product.productName}
                 </option>
               ))}
@@ -267,7 +216,7 @@ const EditProductSpecificationFilterOptions = ({
             aria-label="Default select example"
             size="sm"
             id="manufacturerId"
-            data-testid="form-select1"
+            data-testid="form-select3"
             name="manufacturerId"
             value={editProductSpecification?.manufacturerName}
             onChange={onChangeProductSpecificationHandler}
@@ -289,22 +238,22 @@ const EditProductSpecificationFilterOptions = ({
         >
           Product Specification:
         </CFormLabel>
-        {showEditor ? (
-          <CCol sm={8}>
+        <CCol sm={8} data-testid="ckEditor-component">
+          {showEditor ? (
             <CKEditor<{
               onChange: CKEditorEventHandler<'change'>
             }>
-              initData={editProductSpecification.productSpecification}
+              initData={editProductSpecification?.productSpecification}
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {
                 onChangeHandler(editor.getData().trim())
               }}
             />
-          </CCol>
-        ) : (
-          ''
-        )}
+          ) : (
+            ''
+          )}
+        </CCol>
       </CRow>
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
@@ -313,7 +262,6 @@ const EditProductSpecificationFilterOptions = ({
             className="btn-ovh me-1 text-white"
             color="success"
             onClick={handleUpdateProductSpecification}
-            //disabled={!isButtonEnabled}
           >
             Update
           </CButton>

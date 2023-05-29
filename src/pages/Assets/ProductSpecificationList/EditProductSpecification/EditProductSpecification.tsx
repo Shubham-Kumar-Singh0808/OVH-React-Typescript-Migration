@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import EditProductSpecificationFilterOptions from './EditProductSpecificationFilterOptions'
 import OCard from '../../../../components/ReusableComponent/OCard'

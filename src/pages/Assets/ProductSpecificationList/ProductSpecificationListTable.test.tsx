@@ -4,7 +4,10 @@ import userEvent from '@testing-library/user-event'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
+import {
+  GetProductSpecificationListDetails,
+  ProductSpecifications,
+} from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
 
 const mockSetData = jest.fn()
@@ -18,6 +21,9 @@ describe('Job Openings without data', () => {
         setCurrentPage={mockSetData}
         pageSize={0}
         setPageSize={mockSetData}
+        setEditProductSpecification={mockSetData}
+        setToggle={mockSetData}
+        userAccess={undefined}
       />,
       {
         preloadedState: {
@@ -60,6 +66,5 @@ describe('Job Openings without data', () => {
     fireEvent.click(linkElement)
 
     expect(handleModal).toHaveBeenCalledTimes(0)
-    // expect(handleModal).toBeInTheDocument()
   })
 })
