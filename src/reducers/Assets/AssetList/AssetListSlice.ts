@@ -13,7 +13,7 @@ import {
 import AssetListApi from '../../../middleware/api/Assets/AssetList/AssetListApi'
 
 const getAssetTypeChangeList = createAsyncThunk(
-  'category/getAssetList',
+  'asset/getAssetList',
   async (id: number, thunkApi) => {
     try {
       return await AssetListApi.getAssetTypeChangeList(id)
@@ -37,7 +37,7 @@ const getAllLookUps = createAsyncThunk(
 )
 
 const getAllAssetListData = createAsyncThunk(
-  'assetManagement/getallassetlist',
+  'allAsset/getallassetlist',
   async (props: AllAssetListProps, thunkApi) => {
     try {
       return await AssetListApi.getAllAssetListData(props)

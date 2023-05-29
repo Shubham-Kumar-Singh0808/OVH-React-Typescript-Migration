@@ -10,7 +10,7 @@ import { mockAllAssetListData } from '../../../test/data/AssetListData'
 
 const mockSetTogglePage = jest.fn()
 
-describe('Employee Accounts Table Component Testing', () => {
+describe('Asset List Table Component Testing', () => {
   beforeEach(() => {
     render(
       <AssetListTable

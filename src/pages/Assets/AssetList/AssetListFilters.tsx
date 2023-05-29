@@ -60,9 +60,6 @@ const AssetListFilters = ({
     }
   }, [asset])
 
-  console.log(assetType + 'assetType')
-  console.log(productType + 'productType')
-
   const assetListTypeList = useTypedSelector(
     reduxServices.assetList.selectors.manufacturerList,
   )
@@ -70,8 +67,6 @@ const AssetListFilters = ({
   const assetListData = useTypedSelector(
     reduxServices.assetList.selectors.assetListData,
   )
-  console.log(assetListData)
-
   const [dateError, setDateError] = useState<boolean>(false)
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -94,12 +89,12 @@ const AssetListFilters = ({
       reduxServices.assetList.getAllAssetListData({
         assetTypeId: Number(assetType) || '',
         dateSelection: selectDate,
-        endIndex: 20,
+        endIndex: pageSize * currentPage,
         multipleSearch: searchInput || '',
         productId: Number(productType) || '',
         searchByEmpName: false,
         selectionStatus: asset,
-        startIndex: 0,
+        startIndex: pageSize * (currentPage - 1),
         status: statusType,
         fromDate: fromDate as string,
         toDate: toDate as string,
@@ -392,7 +387,6 @@ const AssetListFilters = ({
                   name="Multiple Search"
                   checked={searchByEmployee}
                   onChange={(e) => setSearchByEmployee(e.target.checked)}
-                  // disabled={!isButtonEnabled}
                 />
                 <b>Search by Employee Name</b>
               </label>
