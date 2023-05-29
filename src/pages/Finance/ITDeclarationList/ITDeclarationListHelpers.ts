@@ -30,7 +30,12 @@ export const initialITForm: ITForm = {
 export const getInitialGetITDeclarationForm = (
   cycleId: number,
 ): ITDeclarationListApiProps => {
-  return { startIndex: 0, endIndex: 20, cycleId, employeeName: '' }
+  return {
+    startIndex: 0,
+    endIndex: 20,
+    investmentCycle: cycleId,
+    employeeName: '',
+  }
 }
 
 export const numbersOnlyRegex = /\D/g

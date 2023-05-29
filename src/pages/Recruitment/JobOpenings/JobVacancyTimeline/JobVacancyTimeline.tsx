@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import React from 'react'
 import { CRow, CCol, CButton, CFormLabel, CBadge } from '@coreui/react-pro'
 import parse from 'html-react-parser'
@@ -71,17 +72,15 @@ const JobVacancyTimeline = ({
               const status = auditHistory?.status === 'true' ? 'Open' : 'Close'
               const oldStatus =
                 auditHistory?.oldStatus === 'true' ? 'Open' : 'Close'
-              const oldFilterStatus =
-                auditHistory.oldStatus === null
-                  ? ''
-                  : isJobAuditPrevValue(oldStatus)
+              const oldFilterStatus = isJobAuditPrevValue(oldStatus || 'N/A')
+
               return (
                 <div key={index} className="sh-timeline-card">
                   <div
                     className="sh-timeline-timestamp"
                     data-testid="sh-time-stamp"
                   >
-                    {auditHistory?.modifiedDate}
+                    {auditHistory?.modifiedDate || 'N/A'}
                   </div>
                   <div className="sh-timeline-content">
                     <div
@@ -89,10 +88,10 @@ const JobVacancyTimeline = ({
                       data-testid="sh-modifiedBy"
                     >
                       <h4 className="sh-timeline-title">
-                        {auditHistory?.modifiedBy} -
+                        {auditHistory?.modifiedBy || 'N/A'} -
                       </h4>
                       <span className="sh-timeline-status">
-                        {isPersistValue(auditHistory?.persistType)}
+                        {isPersistValue(auditHistory?.persistType || 'N/A')}
                       </span>
                     </div>
                     <div className="sh-timeline-body">
@@ -103,9 +102,11 @@ const JobVacancyTimeline = ({
                               <CFormLabel className="col-form-label p-0">
                                 JobCode:
                               </CFormLabel>
-                              {isJobAuditPrevValue(auditHistory.oldjobCode)}
+                              {isJobAuditPrevValue(
+                                auditHistory.oldjobCode || 'N/A',
+                              )}
                               &nbsp;
-                              {auditHistory.jobCode}
+                              {auditHistory.jobCode || 'N/A'}
                             </div>
                           </>
                         ) : (
@@ -118,10 +119,10 @@ const JobVacancyTimeline = ({
                                 JobTitle:
                               </CFormLabel>
                               {isJobAuditPrevValue(
-                                auditHistory.oldpositionVacant,
+                                auditHistory.oldpositionVacant || 'N/A',
                               )}
                               &nbsp;
-                              {auditHistory.positionVacant}
+                              {auditHistory.positionVacant || 'N/A'}
                             </div>
                           </>
                         ) : (
@@ -135,10 +136,10 @@ const JobVacancyTimeline = ({
                                 Experience:
                               </CFormLabel>
                               {isJobAuditPrevValue(
-                                auditHistory.oldminimumExperience,
+                                auditHistory.oldminimumExperience || 'N/A',
                               )}
                               &nbsp;
-                              {auditHistory.minimumExperience}
+                              {auditHistory.minimumExperience || 'N/A'}
                             </div>
                           </>
                         ) : (
@@ -151,9 +152,11 @@ const JobVacancyTimeline = ({
                               <CFormLabel className="col-form-label p-0">
                                 Job description:
                               </CFormLabel>
-                              {isJobAuditPrevValue(auditHistory.olddescription)}
+                              {isJobAuditPrevValue(
+                                auditHistory.olddescription,
+                              ) || 'N/A'}
                               &nbsp;
-                              {auditHistory.description}
+                              {parse(auditHistory.description || 'N/A')}
                             </div>
                           </>
                         ) : (
@@ -166,9 +169,11 @@ const JobVacancyTimeline = ({
                               <CFormLabel className="col-form-label p-0">
                                 Expire Date:
                               </CFormLabel>
-                              {isJobAuditPrevValue(auditHistory.oldexpiryDate)}
+                              {isJobAuditPrevValue(
+                                auditHistory.oldexpiryDate,
+                              ) || 'N/A'}
                               &nbsp;
-                              {auditHistory.expiryDate}
+                              {auditHistory.expiryDate || 'N/A'}
                             </div>
                           </>
                         ) : (
@@ -183,16 +188,16 @@ const JobVacancyTimeline = ({
                               </CFormLabel>
                               {isJobAuditPrevValue(
                                 auditHistory.oldnoOfRequirements,
-                              )}
+                              ) || 'N/A'}
                               &nbsp;
-                              {auditHistory.noOfRequirements}
+                              {auditHistory.noOfRequirements || 'N/A'}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
 
-                        {status || auditHistory.oldStatus !== null ? (
+                        {auditHistory.oldStatus ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
@@ -200,7 +205,7 @@ const JobVacancyTimeline = ({
                               </CFormLabel>
                               {oldFilterStatus}
                               &nbsp;
-                              {status}
+                              {status || 'N/A'}
                             </div>
                           </>
                         ) : (

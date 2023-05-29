@@ -92,7 +92,6 @@ const Login = (): JSX.Element => {
       setPassword('')
     }
   }
-
   return (
     <div className={`min-vh-100 align-items-center login-container ${loginBg}`}>
       <CContainer fluid>

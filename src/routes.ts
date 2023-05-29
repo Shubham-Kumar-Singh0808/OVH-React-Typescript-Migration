@@ -445,6 +445,10 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
+
+const VendorList = React.lazy(
+  () => import('./pages/Assets/VendorList/VendorList'),
+)
 const Manufacturer = React.lazy(
   () => import('./pages/Assets/ManufacturerList/Manufacturer'),
 )
@@ -454,7 +458,9 @@ const AssetWarrantyReport = React.lazy(
 const productList = React.lazy(
   () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
 )
-
+const ChangeReportees = React.lazy(
+  () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 /**
@@ -999,6 +1005,11 @@ const routes = [
     component: AddJobVacancies,
   },
   {
+    path: '/vendorList',
+    name: 'Vendor List',
+    component: VendorList,
+  },
+  {
     path: '/manufacturerList',
     name: 'manufacturerList',
     component: Manufacturer,
@@ -1007,6 +1018,11 @@ const routes = [
     path: '/productList',
     name: 'Product List',
     component: productList,
+  },
+  {
+    path: '/delegation',
+    name: 'Change Reportees',
+    component: ChangeReportees,
   },
   {
     path: '/assetWarrantyReport',
