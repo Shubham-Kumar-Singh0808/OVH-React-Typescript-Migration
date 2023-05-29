@@ -24,7 +24,7 @@ describe('Manufacturer Slice', () => {
       expect(state).toEqual({
         manufacturerDetails: [],
         getAllManufacturerName: {} as GetAllManufacturerName,
-        isLoading: ApiLoadingState.loading,
+        isLoading: ApiLoadingState.idle,
         listSize: 0,
         manufacturerList: {} as ManufacturerList,
       })
