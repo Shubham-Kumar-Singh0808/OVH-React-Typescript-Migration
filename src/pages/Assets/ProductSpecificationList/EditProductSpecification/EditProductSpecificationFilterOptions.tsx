@@ -31,13 +31,10 @@ const EditProductSpecificationFilterOptions = ({
   const [selectedAssetType, setSelectedAssetType] = useState<number | string>(
     editProductSpecification.assetTypeId,
   )
-  console.log(selectedAssetType + 'selectedAssetType')
 
   const [selectedProductType, setSelectedProductType] = useState<
     number | string
   >(editProductSpecification.productName)
-
-  console.log(selectedProductType + 'selectedProductType')
 
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
@@ -55,8 +52,6 @@ const EditProductSpecificationFilterOptions = ({
   const ProductTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
-
-  console.log(setShowEditor)
 
   useEffect(() => {
     if (editProductSpecification.id && editProductSpecification.assetType) {
@@ -90,6 +85,10 @@ const EditProductSpecificationFilterOptions = ({
     selectedProductType,
     editProductSpecification,
   ])
+
+  useEffect(() => {
+    setShowEditor(false)
+  }, [])
 
   const updateSuccessToastMessage = (
     <OToast
@@ -254,6 +253,7 @@ const EditProductSpecificationFilterOptions = ({
             className="btn-ovh me-1 text-white"
             color="success"
             onClick={handleUpdateProductSpecification}
+            disabled={!isAddButtonEnabled}
           >
             Update
           </CButton>
