@@ -27,9 +27,7 @@ const ProductSpecificationList = (): JSX.Element => {
   const listSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
   )
-  const isLoading = useTypedSelector(
-    reduxServices.productSpecificationList.selectors.isLoading,
-  )
+
   const {
     paginationRange,
     setPageSize,

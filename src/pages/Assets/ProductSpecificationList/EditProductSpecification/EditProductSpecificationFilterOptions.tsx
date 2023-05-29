@@ -55,9 +55,8 @@ const EditProductSpecificationFilterOptions = ({
   const ProductTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
-  const updateProductList = useTypedSelector(
-    reduxServices.addNewProduct.selectors.updateProductList,
-  )
+
+  console.log(setShowEditor)
 
   useEffect(() => {
     if (editProductSpecification.id && editProductSpecification.assetType) {

@@ -19,8 +19,6 @@ const AddProduct = ({
   const [manufactureType, setManufactureType] = useState('')
   const [productSpecification, setProductSpecification] = useState<string>('')
 
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-
   const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
   )

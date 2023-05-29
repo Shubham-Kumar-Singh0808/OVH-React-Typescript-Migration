@@ -186,7 +186,11 @@ const SectionsFilterOptions = ({
               ))}
           </CFormSelect>
         </CCol>
-        <CCol sm={2} className="d-flex align-items-center">
+        <CCol
+          sm={2}
+          className="d-flex align-items-center"
+          style={{ marginLeft: '-0.2rem' }}
+        >
           <CButton
             color="info"
             className="text-white btn-ovh"

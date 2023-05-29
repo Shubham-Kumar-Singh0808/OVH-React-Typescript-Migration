@@ -120,6 +120,11 @@ import { notificationService } from './Notifications/notificationSlice'
 import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import { vendorListService } from './Assets/VendorList/vendorListSlice'
+import { changeReporteesService } from './Settings/ChangeReportees/changeReporteesSlice'
+import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
+import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 
 export const reduxServices = {
   app: appService,
@@ -244,4 +249,9 @@ export const reduxServices = {
   jobVacancies: jobOpeningsService,
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
+  vendorList: vendorListService,
+  changeReportees: changeReporteesService,
+  ManufacturerList: ManufacturerListService,
+  ProductTypeList: ProductTypeListService,
+  assetsWarrantyList: assetsWarrantyListService,
 }
