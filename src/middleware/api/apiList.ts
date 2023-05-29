@@ -108,7 +108,9 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  ManufacturerApi,
   ProductTypeListApi,
+  AssetWarrantyReportApi,
   AssetListApi,
 } from '../../types/apiTypes'
 
@@ -128,6 +130,7 @@ export enum ApiLoadingState {
   loading = 'loading',
   succeeded = 'succeeded',
   failed = 'failed',
+  success = 'success',
 }
 
 export const authenticationApiConfig: AuthenticationApi = {
@@ -984,14 +987,23 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
 }
+export const ManufacturerApiListConfig: ManufacturerApi = {
+  getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
+  exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+}
 export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
 }
+export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
+  getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
+  downloadExportAssetWarrantyList:
+    apiPrefix + '/assetManagement/exportAssetWarrantyList',
+}
 
 export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
-  // getEmpCountreen: apiPrefix + '/jobapplicant/getEmpCountries',
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }

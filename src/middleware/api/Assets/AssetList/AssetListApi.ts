@@ -1,7 +1,8 @@
 import {
-  AssetTypeChangeListApiProps,
-  GetAllLookUpList,
-  GetAssetTypeChangeListDetails,
+  AllAssetListProps,
+  AssetTypeChangeList,
+  ManufacturerList,
+  AllAssetData,
 } from '../../../../types/Assets/AssetList/AssetListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -11,7 +12,7 @@ import { AllowedHttpMethods, GetAssetListConfig } from '../../apiList'
 
 const getAssetTypeChangeList = async (
   id: number,
-): Promise<GetAssetTypeChangeListDetails> => {
+): Promise<AssetTypeChangeList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: GetAssetListConfig.getAssetTypeChange,
     method: AllowedHttpMethods.get,
@@ -24,7 +25,7 @@ const getAssetTypeChangeList = async (
   return response.data
 }
 
-const getAllLookUpList = async (): Promise<GetAllLookUpList> => {
+const getAllLookUpList = async (): Promise<ManufacturerList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: GetAssetListConfig.getAllLookUps,
     method: AllowedHttpMethods.get,
@@ -34,8 +35,22 @@ const getAllLookUpList = async (): Promise<GetAllLookUpList> => {
   return response.data
 }
 
+const getAllAssetListData = async (
+  props: AllAssetListProps,
+): Promise<AllAssetData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: GetAssetListConfig.getAllAssets,
+    method: AllowedHttpMethods.post,
+    data: props,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AssetLitApi = {
   getAllLookUpList,
   getAssetTypeChangeList,
+  getAllAssetListData,
 }
 export default AssetLitApi

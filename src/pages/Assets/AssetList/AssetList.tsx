@@ -1,27 +1,43 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+/* eslint-disable sonarjs/no-duplicate-string */
+import React, { useEffect, useState } from 'react'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
-import { useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const AssetList = (): JSX.Element => {
-  const data1 = useTypedSelector(reduxServices.assetList.selectors.assetList)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.assetList.getAllLookUps())
   }, [dispatch])
-  console.log(data1)
 
-  // useEffect(() => {
-  //   dispatch(
-  //     reduxServices.assetList.getAssetTypeChangeList({
-  //       id: 2,
-  //     }),
-  //   )
-  // }, [dispatch])
-  // console.log(data)
+  const [selectDate, setSelectDate] = useState<string>('')
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
+  const [searchInput, setSearchInput] = useState<string>()
+  const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
+
+  const listSize = useTypedSelector(reduxServices.assetList.selectors.listSize)
+
+  const CurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  useEffect(() => {
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
+    }
+  }, [CurrentPage])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
 
   return (
     <>
@@ -31,8 +47,27 @@ const AssetList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <AssetListFilters />
-        <AssetListTable />
+        <AssetListFilters
+          fromDate={fromDate as string}
+          setFromDate={setFromDate}
+          toDate={toDate as string}
+          setToDate={setToDate}
+          searchInput={searchInput as string}
+          setSearchInput={setSearchInput}
+          selectDate={selectDate}
+          setSelectDate={setSelectDate}
+          searchByEmployee={searchByEmployee}
+          setSearchByEmployee={setSearchByEmployee}
+          currentPage={currentPage}
+          pageSize={pageSize}
+        />
+        <AssetListTable
+          paginationRange={paginationRange}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+        />
       </OCard>
     </>
   )
