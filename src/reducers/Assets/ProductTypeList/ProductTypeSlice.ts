@@ -8,7 +8,6 @@ import {
   ProductTypeListProps,
   ProductTypeListResponse,
   ProductTypeListSLiceState,
-  ProductTypeListType,
 } from '../../../types/Assets/ProductTypeList/ProductTypeListTypes'
 import {
   AddProductTypes,

@@ -404,14 +404,12 @@ const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
 )
-
 const ClearnceCerticates = React.lazy(
   () =>
     import(
       './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
     ),
 )
-
 const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
@@ -447,10 +445,22 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
+
+const VendorList = React.lazy(
+  () => import('./pages/Assets/VendorList/VendorList'),
+)
+const Manufacturer = React.lazy(
+  () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
+)
 const productList = React.lazy(
   () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
 )
-
+const ChangeReportees = React.lazy(
+  () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -993,10 +1003,29 @@ const routes = [
     component: AddJobVacancies,
   },
   {
+    path: '/vendorList',
+    name: 'Vendor List',
+    component: VendorList,
+  },
+  {
+    path: '/manufacturerList',
+    name: 'manufacturerList',
+    component: Manufacturer,
+  },
+  {
     path: '/productList',
     name: 'Product List',
     component: productList,
   },
+  {
+    path: '/delegation',
+    name: 'Change Reportees',
+    component: ChangeReportees,
+  },
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
+  },
 ]
-
 export default routes

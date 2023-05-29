@@ -5,7 +5,6 @@ import {
 } from '../../../../types/Assets/ProductTypeList/ProductTypeListTypes'
 import {
   AddProductTypes,
-  AssetTypeList,
   ManufacturerList,
   UpdateProductTypeRecordTypes,
 } from '../../../../types/Assets/ProductTypeList/addproducttype/AddProductType'

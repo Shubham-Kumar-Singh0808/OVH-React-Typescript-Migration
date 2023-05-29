@@ -221,6 +221,8 @@ const AddProjectMileStone = ({
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
+            maxLength={3}
+            autoComplete="off"
             data-testid="percentage-test"
             disabled={!isPercentageEnable}
           />

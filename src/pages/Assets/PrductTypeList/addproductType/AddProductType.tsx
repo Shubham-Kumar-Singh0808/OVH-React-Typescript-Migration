@@ -8,7 +8,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { useHistory } from 'react-router'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -29,9 +28,7 @@ const AddProductTypeRecord = ({
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [assetTypeIds, setAssetTypeId] = useState('')
   const [productNames, setProductName] = useState<string>('')
-  const [nameExists, setNameExists] = useState('')
   const dispatch = useAppDispatch()
-  const history = useHistory()
 
   const addProductTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
@@ -167,11 +164,7 @@ const AddProductTypeRecord = ({
               data-testid="Add-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={
-                isAddButtonEnabled
-                  ? isAddButtonEnabled && nameExists.length > 0
-                  : !isAddButtonEnabled
-              }
+              disabled={!isAddButtonEnabled}
               onClick={addProductButtonHandler}
             >
               Add
