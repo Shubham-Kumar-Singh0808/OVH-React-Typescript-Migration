@@ -1,5 +1,4 @@
 import {
-  AddBtnProducts,
   AddProductSpecificationProps,
   AssetType,
   ManufacturerList,

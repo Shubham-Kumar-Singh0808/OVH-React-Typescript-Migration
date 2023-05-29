@@ -1,11 +1,4 @@
-import {
-  CButton,
-  CCol,
-  CFormInput,
-  CFormSelect,
-  CFormLabel,
-  CRow,
-} from '@coreui/react-pro'
+import { CButton, CCol, CFormSelect, CFormLabel, CRow } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
@@ -25,8 +18,6 @@ const AddProduct = ({
   const [selectProductId, setSelectProductId] = useState<string>('')
   const [manufactureType, setManufactureType] = useState('')
   const [productSpecification, setProductSpecification] = useState<string>('')
-
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,

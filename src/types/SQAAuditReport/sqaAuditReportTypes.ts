@@ -57,6 +57,12 @@ export type sqaAuditReportSliceState = {
   isLoading: ApiLoadingState
   sqaAuditHistory: GetSQAAuditHistory
   getAuditDetails: GetAuditDetails
+
+  selectMonthValue: string
+  statusValue: string
+  rescheduleStatus: string
+  fromDate: string
+  toDate: string
 }
 
 export type GetSQAAuditReportProps = {

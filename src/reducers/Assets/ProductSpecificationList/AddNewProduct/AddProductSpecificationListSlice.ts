@@ -11,10 +11,10 @@ import {
   ProductType,
   AddBtnProducts,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
-import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 import { ValidationError } from '../../../../types/commonTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { AppDispatch, RootState } from '../../../../stateStore'
+import assetTypeListApi from '../../../../middleware/api/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListApi'
 
 const getAssetTypeList = createAsyncThunk(
   'assetTypeList/getAssetTypeList       ',

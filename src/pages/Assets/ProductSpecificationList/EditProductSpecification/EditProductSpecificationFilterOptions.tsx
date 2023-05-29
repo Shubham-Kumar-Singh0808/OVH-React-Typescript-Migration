@@ -45,9 +45,9 @@ const EditProductSpecificationFilterOptions = ({
   const ProductTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
-  const updateProductList = useTypedSelector(
-    reduxServices.addNewProduct.selectors.updateProductList,
-  )
+
+  console.log(setShowEditor)
+
   const onChangeProductSpecificationHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -86,48 +86,6 @@ const EditProductSpecificationFilterOptions = ({
       )
     }
   }, [dispatch, selectedAssetType, selectedProductType, getAllLookUps])
-
-  // useEffect(() => {
-  //   if (editProductSpecification?.assetTypeId) {
-  //     dispatch(
-  //       reduxServices.addNewProduct.getProductTypeList(
-  //         editProductSpecification.assetTypeId,
-  //       ),
-  //     )
-  //   }
-  // }, [editProductSpecification?.assetTypeId])
-
-  // useEffect(() => {
-  //   if (editProductSpecification?.assetTypeId) {
-  //     dispatch(reduxServices.addNewProduct.getAllLookUps())
-  //   }
-  // }, [dispatch, editProductSpecification.assetTypeId])
-
-  // useEffect(() => {
-  //   if (updateProductList) {
-  //     setEditProductSpecification({
-  //       id: updateProductList.id,
-  //       productId: updateProductList.productId,
-  //       productName: updateProductList.productName,
-  //       manufacturerId: updateProductList.manufacturerId,
-  //       manufacturerName: updateProductList.manufacturerName,
-  //       assetTypeId: updateProductList.assetTypeId,
-  //       assetType: updateProductList.assetType,
-  //       productSpecification: updateProductList.productSpecification,
-  //       createdBy: updateProductList.createdBy,
-  //       createdDate: updateProductList.createdDate,
-  //       updatedBy: updateProductList.updatedBy,
-  //       updatedDate: updateProductList.updatedDate,
-  //       departmentId: updateProductList.departmentId,
-  //       departmentName: updateProductList.departmentName,
-  //       roleId: updateProductList.roleId,
-  //     })
-  //   }
-  //   setShowEditor(false)
-  //   setTimeout(() => {
-  //     setShowEditor(true)
-  //   }, 100)
-  // }, [updateProductList])
 
   const handleUpdateProductSpecification = async () => {
     const prepareObject = {
