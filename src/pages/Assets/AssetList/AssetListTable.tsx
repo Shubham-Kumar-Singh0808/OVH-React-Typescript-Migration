@@ -14,9 +14,13 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
+import AssetListTableBody from './AssetListTableBody'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { AssetListTableProps } from '../../../types/Assets/AssetList/AssetListTypes'
+import {
+  AllAssetListProps,
+  AssetListTableProps,
+} from '../../../types/Assets/AssetList/AssetListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -58,30 +62,6 @@ const AssetListTable = ({
     ? `Total Records: ${assetListSize}`
     : `No Records found...`
 
-  const modelPopup = (
-    <CTableDataCell data-testid="action-cell">
-      <div className="sh-btn-group">
-        <CTooltip content="Edit">
-          <CButton color="info" size="sm" className="mb-1">
-            <i className="text-white fa fa-pencil-square-o"></i>
-          </CButton>
-        </CTooltip>
-        <br />
-        <CTooltip content="History">
-          <CButton color="info" size="sm" className="mb-1">
-            <i className=" fa fa-wrench"></i>
-          </CButton>
-        </CTooltip>
-        <br />
-        <CTooltip content="Change-Status">
-          <CButton color="info" size="sm" className="mb-1">
-            <i className="fa fa-bar-chart text-white"></i>
-          </CButton>
-        </CTooltip>
-      </div>
-    </CTableDataCell>
-  )
-
   return (
     <>
       {assets?.length > 0 && (
@@ -93,7 +73,6 @@ const AssetListTable = ({
                 className="text-white"
                 size="sm"
                 data-testid="export-button-download"
-                // onClick={handleExportEmployeeDesignationData}
               >
                 <i className="fa fa-plus me-1"></i>
                 Click to Export
@@ -122,8 +101,9 @@ const AssetListTable = ({
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
+
             <CTableBody>
-              {assets.map((asset, index) => {
+              {/* {assets.map((asset, index) => {
                 const removeSpaces1 = asset.otherAssetNumber
                   ?.replace(/\s+/g, ' ')
                   .trim()
@@ -150,17 +130,6 @@ const AssetListTable = ({
                   removeSpaces2 && removeSpaces2.length > 15
                     ? `${removeSpaces2.substring(0, 15)}...`
                     : removeSpaces2
-                const result = asset.pSpecification ? (
-                  <CLink
-                    className="cursor-pointer text-decoration-none"
-                    data-testid={`specification-modal-link1${index}`}
-                    onClick={() => handleAgendaModal(asset.pSpecification)}
-                  >
-                    {parse(agendaLimit)}
-                  </CLink>
-                ) : (
-                  'N/A'
-                )
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -175,7 +144,19 @@ const AssetListTable = ({
                       scope="row"
                       className="sh-organization-link"
                     >
-                      {result}
+                      {asset.pSpecification ? (
+                        <CLink
+                          className="cursor-pointer text-decoration-none"
+                          data-testid={`specification-modal-link1${index}`}
+                          onClick={() =>
+                            handleAgendaModal(asset.pSpecification)
+                          }
+                        >
+                          {parse(agendaLimit)}
+                        </CLink>
+                      ) : (
+                        'N/A'
+                      )}
                     </CTableDataCell>
                     <CTableDataCell
                       scope="row"
@@ -211,6 +192,7 @@ const AssetListTable = ({
                         'N/A'
                       )}
                     </CTableDataCell>
+
                     <CTableDataCell>
                       {asset.referenceNumber || 'N/A'}
                     </CTableDataCell>
@@ -222,8 +204,39 @@ const AssetListTable = ({
                     <CTableDataCell>
                       {asset.employeeName || 'N/A'}
                     </CTableDataCell>
-                    {modelPopup}
+                    <CTableDataCell data-testid="action-cell">
+                      <div className="sh-btn-group">
+                        <CTooltip content="Edit">
+                          <CButton color="info" size="sm" className="mb-1">
+                            <i className="text-white fa fa-pencil-square-o"></i>
+                          </CButton>
+                        </CTooltip>
+                        <br />
+                        <CTooltip content="History">
+                          <CButton color="info" size="sm" className="mb-1">
+                            <i className=" fa fa-wrench"></i>
+                          </CButton>
+                        </CTooltip>
+                        <br />
+                        <CTooltip content="Change-Status">
+                          <CButton color="info" size="sm" className="mb-1">
+                            <i className="fa fa-bar-chart text-white"></i>
+                          </CButton>
+                        </CTooltip>
+                      </div>
+                    </CTableDataCell>
                   </CTableRow>
+                )
+              })} */}
+              {assets?.map((item, index) => {
+                return (
+                  <AssetListTableBody
+                    key={index}
+                    item={item}
+                    index={index}
+                    handleAgendaModal={handleAgendaModal}
+                    getItemNumber={getItemNumber}
+                  />
                 )
               })}
             </CTableBody>
