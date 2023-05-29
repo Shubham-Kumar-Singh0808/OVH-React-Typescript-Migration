@@ -7,8 +7,8 @@ import {
   GetAllManufacturerName,
   ManufacturerList,
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
-import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
+import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 
 describe('notification Slice', () => {
   describe('jobOpenings test', () => {

@@ -25,7 +25,7 @@ const EditManufacturerList = ({
   setEditManufacturerData: React.Dispatch<
     React.SetStateAction<ManufacturerDetails>
   >
-}) => {
+}): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
   const productResult = useTypedSelector(
@@ -88,6 +88,14 @@ const EditManufacturerList = ({
       )
     ) {
       setToggle('')
+      dispatch(
+        reduxServices.ManufacturerList.getManufacturerList({
+          startIndex: 0,
+          endIndex: 20,
+          manufacturerName: '',
+          search: '',
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }

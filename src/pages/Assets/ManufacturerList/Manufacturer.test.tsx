@@ -17,7 +17,7 @@ describe('Manufacturer Component Testing', () => {
       },
     })
   })
-  test('should be able to render  Product Specification List  Title', () => {
+  test('should be able to render  Manufacturer List  Title', () => {
     expect(screen.getByText('Manufacturer List')).toBeInTheDocument()
   })
   test('should able to click "click to to export" button', () => {

@@ -11,8 +11,8 @@ import {
 } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import ManufacturerApi from '../../../middleware/api/Assets/ManufacturerList/ManufacturerListApi'
 import { AppDispatch, RootState } from '../../../stateStore'
-import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 
 const getManufacturerList = createAsyncThunk(
   'category/getManufacturerList',
@@ -89,7 +89,7 @@ export const initialManufacturerListState: ManufacturerListSliceState = {
 }
 
 const ManufacturerListSlice = createSlice({
-  name: 'employeeList',
+  name: 'ManufacturerList',
   initialState: initialManufacturerListState,
   reducers: {},
   extraReducers: (builder) => {

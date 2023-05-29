@@ -389,6 +389,59 @@ const AppContent = () => {
       dispatch(reduxServices.eventList.actions.setSelectCustom('Current Month'))
     }
   }, [dispatch, location, getPIPValue])
+
+  const getMonthValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedMonthValue,
+  )
+  const getStatus = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedStatusValue,
+  )
+
+  const getSelectedRescheduleStatusValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedRescheduleStatusValue,
+  )
+  const getFromValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getFromDateValue,
+  )
+  const getToValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getToDateValue,
+  )
+
+  useEffect(() => {
+    if (
+      location.pathname === '/SQAAudit' ||
+      location.pathname.split('/')[1] === '/viewProjectAudit' ||
+      location.pathname.split('/')[1] === 'editAuditForm' ||
+      location.pathname.split('/')[1] === '/newProjectAuditTimeline'
+    ) {
+      dispatch(
+        reduxServices.sqaAuditReport.actions.setMonthValue(getMonthValue),
+      )
+      dispatch(reduxServices.sqaAuditReport.actions.setStatusValue(getStatus))
+      dispatch(
+        reduxServices.sqaAuditReport.actions.setRescheduleStatus(
+          getSelectedRescheduleStatusValue,
+        ),
+      )
+      dispatch(reduxServices.sqaAuditReport.actions.setFromDate(getFromValue))
+      dispatch(reduxServices.sqaAuditReport.actions.setToDate(getToValue))
+    } else {
+      dispatch(reduxServices.sqaAuditReport.actions.setMonthValue(''))
+      dispatch(reduxServices.sqaAuditReport.actions.setStatusValue(''))
+      dispatch(reduxServices.sqaAuditReport.actions.setRescheduleStatus(''))
+      dispatch(reduxServices.sqaAuditReport.actions.setFromDate(''))
+      dispatch(reduxServices.sqaAuditReport.actions.setToDate(''))
+    }
+  }, [
+    dispatch,
+    location,
+    getMonthValue,
+    getStatus,
+    getSelectedRescheduleStatusValue,
+    getFromValue,
+    getToValue,
+  ])
+
   return (
     <CContainer fluid>
       <Suspense fallback={<OLoadingSpinner type={LoadingType.PAGE} />}>

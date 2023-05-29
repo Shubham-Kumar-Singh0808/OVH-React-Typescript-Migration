@@ -48,8 +48,8 @@ const AddJobOpening = (): JSX.Element => {
   )
 
   const jobCodeExists = (name: string) => {
-    return jobVacancies?.find((locationName) => {
-      return locationName.jobCode.toLowerCase() === name.toLowerCase()
+    return jobVacancies?.find((code) => {
+      return code.jobCode.toLowerCase() === name.toLowerCase()
     })
   }
   const handledInputChange = (
@@ -62,7 +62,7 @@ const AddJobOpening = (): JSX.Element => {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setJobCode(newValue)
     } else if (name === 'jobTitle') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
       setJobTitle(newValue)
     } else if (name === 'noOfOpenings') {
       const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')

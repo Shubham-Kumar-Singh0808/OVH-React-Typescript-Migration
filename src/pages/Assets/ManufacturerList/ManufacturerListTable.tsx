@@ -48,16 +48,15 @@ const ManufacturerListTable = ({
   const [deleteLocationId, setDeleteLocationId] = useState(0)
   const [deleteLocationName, setDeleteLocationName] = useState('')
 
-  const employees = useTypedSelector(
+  const Manufacturer = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerList,
   )
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const listSize = useTypedSelector(
+  const manufacturerListSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
-  console.log(listSize)
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -136,8 +135,8 @@ const ManufacturerListTable = ({
             </CTableRow>
           </CTableHead>
           <CTableBody>
-            {employees?.length > 0 &&
-              employees?.map((manufacturer, index) => {
+            {Manufacturer?.length > 0 &&
+              Manufacturer?.map((manufacturer, index) => {
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row"></CTableHeaderCell>
@@ -190,11 +189,13 @@ const ManufacturerListTable = ({
         <CRow>
           <CCol md={3} className="no-records">
             <strong>
-              {listSize ? `Total Records: ${listSize}` : `No records found.`}
+              {manufacturerListSize
+                ? `Total Records: ${manufacturerListSize}`
+                : `No records found.`}
             </strong>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {manufacturerListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80, 100]}
@@ -202,7 +203,7 @@ const ManufacturerListTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {manufacturerListSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"

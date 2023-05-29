@@ -1,6 +1,8 @@
 import {
-  ProjectTailoring,
-  ProjectTailoringList,
+  ProcessHeadDTO,
+  IncomingProjectTailoringList,
+  OutgoingSaveProjectTailoringDocumentInitial,
+  OutgoingSaveProjectTailoringDocument,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -11,9 +13,9 @@ import {
   AllowedHttpMethods,
 } from '../../../../apiList'
 
-const getProjectTailoringDocument = async (
+const getDefaultProjectTailoringDocument = async (
   flag: string,
-): Promise<ProjectTailoringList[]> => {
+): Promise<ProcessHeadDTO[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectTailoringApiConfig.getProjectTailoringDocument,
     method: AllowedHttpMethods.get,
@@ -26,9 +28,9 @@ const getProjectTailoringDocument = async (
   return response.data
 }
 
-const getProjectTailoring = async (
+const getProjectTailoringDocument = async (
   projectId: string,
-): Promise<ProjectTailoring> => {
+): Promise<IncomingProjectTailoringList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectTailoringApiConfig.getProjectTailoring,
     method: AllowedHttpMethods.get,
@@ -41,9 +43,37 @@ const getProjectTailoring = async (
   return response.data
 }
 
+const saveProjectTailoringDocumentForManager = (
+  data: OutgoingSaveProjectTailoringDocumentInitial,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectTailoringApiConfig.saveProjectTailoringDocumentForManager,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  return useAxios(requestConfig)
+}
+
+const saveProjectTailoringDocument = (
+  data:
+    | OutgoingSaveProjectTailoringDocumentInitial
+    | OutgoingSaveProjectTailoringDocument,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectTailoringApiConfig.saveProjectTailoringDocument,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  return useAxios(requestConfig)
+}
+
 const projectTailoringApi = {
+  getDefaultProjectTailoringDocument,
   getProjectTailoringDocument,
-  getProjectTailoring,
+  saveProjectTailoringDocumentForManager,
+  saveProjectTailoringDocument,
 }
 
 export default projectTailoringApi

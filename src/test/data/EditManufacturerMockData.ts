@@ -690,8 +690,8 @@ export const mockManufacturerDetails: ManufacturerDetails = {
   productName: 'Microsoft',
   departmentId: 1,
   departmentName: 'Networking',
-  createdBy: null,
-  updatedBy: null,
-  createdDate: null,
-  updatedDate: null,
+  createdBy: '',
+  updatedBy: '',
+  createdDate: '',
+  updatedDate: '',
 }

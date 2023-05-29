@@ -6,19 +6,16 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { downloadFile } from '../../../utils/helper'
-import ManufacturerApi from '../../../middleware/Assets/ManufacturerList/ManufacturerListApi'
 import AddManufacturerList from '../AddManufacturer/AddManufacturerList'
 import EditManufacturerList from '../EditManufacturer/EditManufacturerList'
 import { ManufacturerDetails } from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import ManufacturerApi from '../../../middleware/api/Assets/ManufacturerList/ManufacturerListApi'
 
 const Manufacturer = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
   const [toggle, setToggle] = useState<string>('')
 
-  const employees = useTypedSelector(
-    reduxServices.ManufacturerList.selectors.manufacturerList,
-  )
   const listSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
   )
@@ -80,7 +77,7 @@ const Manufacturer = (): JSX.Element => {
       }),
     )
   }, [dispatch, currentPage, pageSize])
-  console.log(employees)
+  console.log(Manufacturer)
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
