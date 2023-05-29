@@ -108,6 +108,8 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  VendorListApi,
+  ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
@@ -848,6 +850,10 @@ export const projectTailoringApiConfig: ProjectTailoringApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+  saveProjectTailoringDocumentForManager:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocumentForManager',
+  saveProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocument',
 }
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
@@ -985,6 +991,23 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   updateJobVacancy: apiPrefix + '/jobvacancy/jobAdmin/updateJobVacancy',
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
+}
+export const vendorListApiConfig: VendorListApi = {
+  getAllVendorDetails: apiPrefix + '/assetManagement/getAllVendorDetails',
+  getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
+  addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
+  exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
+  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+}
+
+export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
+  getAllReportingManagerData:
+    apiPrefix + '/delegation/getAllReportingManagerData',
+  getAllHRList: apiPrefix + '/delegation/getAllHRList',
+  getEmployeesUnderManger: apiPrefix + '/delegation/getMangerUnderEmployees',
+  getHrAssociates: apiPrefix + '/delegation/getHrAssociates',
+  updateReportingManager: apiPrefix + '/delegation/updateReportingManager',
+  updateHrAssociatesManager: apiPrefix + '/delegation/updateHrAssociates',
 }
 export const ManufacturerApiListConfig: ManufacturerApi = {
   getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',

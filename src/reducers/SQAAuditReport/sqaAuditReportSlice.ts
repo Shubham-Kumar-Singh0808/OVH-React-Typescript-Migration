@@ -123,18 +123,53 @@ const saveOrSubmitAuditForm = createAsyncThunk<
   },
 )
 
+const curMonth = ''
+const status = ''
+const rescheduleStatusValue = ''
+
 const initialSQAAuditReportState: sqaAuditReportSliceState = {
   getSQAAuditReport: { size: 0, list: [] },
   sqaAuditReportList: [],
   isLoading: ApiLoadingState.idle,
   sqaAuditHistory: { size: 0, list: [] },
   getAuditDetails: {} as GetAuditDetails,
+
+  selectMonthValue: curMonth,
+  statusValue: status,
+  rescheduleStatus: rescheduleStatusValue,
+  fromDate: '',
+  toDate: '',
 }
 
 const sqaAuditReportSlice = createSlice({
   name: 'support',
   initialState: initialSQAAuditReportState,
-  reducers: {},
+  reducers: {
+    setMonthValue: (state, action) => {
+      state.selectMonthValue = action.payload
+    },
+    clearSelectMonth: (state) => {
+      state.selectMonthValue = ''
+    },
+    setStatusValue: (state, action) => {
+      state.statusValue = action.payload
+    },
+    clearStatusValue: (state) => {
+      state.statusValue = ''
+    },
+    setRescheduleStatus: (state, action) => {
+      state.rescheduleStatus = action.payload
+    },
+    clearRescheduleStatus: (state) => {
+      state.rescheduleStatus = ''
+    },
+    setFromDate: (state, action) => {
+      state.fromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.toDate = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getSQAAuditReport.fulfilled, (state, action) => {
@@ -177,6 +212,21 @@ const sqaAuditReportTimeLine = (state: RootState): SQAAuditTimelineDetails[] =>
 const sqaAuditReportDetails = (state: RootState): GetAuditDetails =>
   state.sqaAuditReport.getAuditDetails
 
+const getSelectedMonthValue = (state: RootState): string =>
+  state.sqaAuditReport.selectMonthValue
+
+const getSelectedStatusValue = (state: RootState): string =>
+  state.sqaAuditReport.statusValue
+
+const getSelectedRescheduleStatusValue = (state: RootState): string =>
+  state.sqaAuditReport.rescheduleStatus
+
+const getFromDateValue = (state: RootState): string | Date =>
+  state.sqaAuditReport.fromDate
+
+const getToDateValue = (state: RootState): string | Date =>
+  state.sqaAuditReport.toDate
+
 const sqaAuditReportThunk = {
   getSQAAuditReport,
   deleteProjectAuditDetails,
@@ -192,6 +242,12 @@ const myTicketsSelectors = {
   sqaAuditReportListSize,
   sqaAuditReportTimeLine,
   sqaAuditReportDetails,
+
+  getSelectedMonthValue,
+  getSelectedStatusValue,
+  getSelectedRescheduleStatusValue,
+  getFromDateValue,
+  getToDateValue,
 }
 
 export const sqaAuditReportService = {

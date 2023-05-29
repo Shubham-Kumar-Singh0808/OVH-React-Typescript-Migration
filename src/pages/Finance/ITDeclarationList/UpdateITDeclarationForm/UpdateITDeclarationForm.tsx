@@ -8,6 +8,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
   compareDate,
   declareStatement,
+  getWordsDate,
   interchangeMonthAndDay,
 } from '../../ITDeclarationForm/ITDeclarationFormHelpers'
 import PreviousEmployerAct from '../../ITDeclarationForm/PreviousEmployerAct/PreviousEmployerAct'
@@ -119,6 +120,8 @@ const UpdateITDeclarationForm = (): JSX.Element => {
     )
   }, [userSelectedSections])
 
+  console.log(getWordsDate(employeeDetails.activeCyle))
+
   const updateButtonClickHandler = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
@@ -177,6 +180,10 @@ const UpdateITDeclarationForm = (): JSX.Element => {
     )
   }
 
+  const activeCycle = useTypedSelector(
+    (state) => state.itDeclarationList.employeeDetails.activeCyle,
+  )
+
   return (
     <>
       <OCard
@@ -220,6 +227,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
               enteredToDate={enteredToDate}
               setEnteredToDate={setEnteredToDate}
               setEnteredFile={setEnteredFile}
+              dateToShow={getWordsDate(activeCycle)}
             />
             <ITSectionsFilter
               userSelectedSections={newEmployeeSections}
