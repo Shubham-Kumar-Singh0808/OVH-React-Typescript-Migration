@@ -10,6 +10,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -30,6 +31,7 @@ const EditVendorDetails = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
+  const [emailError, setEmailError] = useState<boolean>(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
   const formLabelProps = {
@@ -40,6 +42,19 @@ const EditVendorDetails = ({
   const departments = useTypedSelector(
     reduxServices.addNewVendor.selectors.department,
   )
+
+  const textWhite = 'text-white'
+  const textDanger = 'text-danger'
+  const vendorEmail =
+    editVendorInfo.vendorEmailId && !emailError ? textWhite : textDanger
+
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
 
   useEffect(() => {
     if (
@@ -84,6 +99,13 @@ const EditVendorDetails = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
+    if (name === 'vendorEmailId') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setEditVendorInfo((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    }
     setEditVendorInfo((prevState) => {
       return {
         ...prevState,
@@ -377,7 +399,7 @@ const EditVendorDetails = ({
             className="col-sm-3 col-form-label text-end"
           >
             Email ID:
-            <span className={showIsRequired(editVendorInfo.vendorEmailId)}>
+            <span data-testid="error-msg" className={vendorEmail}>
               *
             </span>
           </CFormLabel>
@@ -391,7 +413,7 @@ const EditVendorDetails = ({
               name="vendorEmailId"
               autoComplete="off"
               placeholder="Email ID"
-              value={editVendorInfo.vendorEmailId}
+              value={editVendorInfo.vendorEmailId?.replace(/^\s*/, '')}
               onChange={onChangeInputHandler}
             />
           </CCol>

@@ -45,6 +45,11 @@ const AddVendorDetails = ({
     className: 'col-form-label category-label',
   }
 
+  const textWhite = 'text-white'
+  const textDanger = 'text-danger'
+  const vendorEmail =
+    addVendor.vendorEmailId && !emailError ? textWhite : textDanger
+
   const validateEmail = (email: string) => {
     if (validator.isEmail(email)) {
       setEmailError(false)
@@ -418,7 +423,9 @@ const AddVendorDetails = ({
             className="col-sm-3 col-form-label text-end"
           >
             Email ID:
-            <span className={showIsRequired(addVendor.vendorEmailId)}>*</span>
+            <span data-testid="error-msg" className={vendorEmail}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -430,7 +437,7 @@ const AddVendorDetails = ({
               name="vendorEmailId"
               autoComplete="off"
               placeholder="Email ID"
-              value={addVendor.vendorEmailId}
+              value={addVendor.vendorEmailId?.replace(/^\s*/, '')}
               onChange={handledInputChange}
             />
           </CCol>
