@@ -77,7 +77,6 @@ describe('Add Vendor Details without data', () => {
     expect(screen.getByText('Phone Number:')).toBeInTheDocument()
     expect(screen.getByText('Fax Number:')).toBeInTheDocument()
     expect(screen.getByText('Department:')).toBeInTheDocument()
-    // expect(screen.getByText('Expense Vendor :')).toBeInTheDocument()
   })
   test('should able to render every element', () => {
     const name = screen.getByTestId('vendorName')

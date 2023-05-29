@@ -32,7 +32,6 @@ const addNewVendor = async (
 const addNewVendorApi = {
   getDepartment,
   addNewVendor,
-  //checkClientOrgExist,
 }
 
 export default addNewVendorApi

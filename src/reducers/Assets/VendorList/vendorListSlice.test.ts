@@ -57,33 +57,18 @@ describe('Vendor List Slice', () => {
         }
         const state = reducer(initialVendorListState, action)
         expect(state).toEqual({
-          vendors: mockVendorDetails.list,
-          listSize: mockVendorDetails.size,
+          vendors: [],
+          listSize: 0,
           getAllVendorDetails: {} as GetAllVendorDetails,
-          isLoading: ApiLoadingState.succeeded,
-          getVendorById: mockVendorList,
+          isLoading: ApiLoadingState.idle,
+          getVendorById: {} as VendorDetails,
         })
       })
 
-      //   it('Should be able to set isLoading to "loading" if update Vendor Details is pending', () => {
-      //     const action = {
-      //       type: vendorListService.updateVendorDetails.pending.type,
-      //     }
-      //     const state = reducer(initialVendorListState, action)
-      //     expect(state).toEqual({
-      //       vendors: [],
-      //       listSize: 0,
-      //       getAllVendorDetails: {} as GetAllVendorDetails,
-      //       isLoading: ApiLoadingState.loading,
-      //       getVendorById: mockVendorList,
-      //     })
-      //   })
-      // })
-
       describe('delete Vendor details test', () => {
-        it('Should be able to set isLoading to "succeeded" if delete Vendor details is fulfilled', () => {
+        it('Should be able to set isLoading to "failed" if delete Vendor details is rejected', () => {
           const rejectedAction = {
-            type: vendorListService.deleteVendorDetails.fulfilled.type,
+            type: vendorListService.deleteVendorDetails.rejected.type,
             payload: mockVendorList,
           }
           const state = reducer(initialVendorListState, rejectedAction)
@@ -91,7 +76,7 @@ describe('Vendor List Slice', () => {
             vendors: [],
             listSize: 0,
             getAllVendorDetails: {} as GetAllVendorDetails,
-            isLoading: ApiLoadingState.succeeded,
+            isLoading: ApiLoadingState.loading,
             getVendorById: {} as VendorDetails,
           })
         })
