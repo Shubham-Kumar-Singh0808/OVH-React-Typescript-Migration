@@ -1,6 +1,5 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
-// eslint-disable-next-line max-lines
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
