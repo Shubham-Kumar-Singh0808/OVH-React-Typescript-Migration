@@ -120,11 +120,6 @@ const ReviewFormDetailsTable = ({
     const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
     newKPI[index].employeeFeedback = e.target.value
     setKPIDetails(newKPI)
-    if (newKPI[index].employeeFeedback.length > 56) {
-      setDescriptionError(false)
-    } else {
-      setDescriptionError(true)
-    }
     dispatch(
       reduxServices.myReview.actions.updateKPI({
         kraId: id,
@@ -132,6 +127,14 @@ const ReviewFormDetailsTable = ({
         kpiId: newKPI[index].id,
       }),
     )
+    if (
+      newKPI[index].employeeFeedback.length > 56 &&
+      newKPI[index].employeeFeedback === e.target.value
+    ) {
+      setDescriptionError(false)
+    } else {
+      setDescriptionError(true)
+    }
   }
 
   return (
@@ -200,6 +203,7 @@ const ReviewFormDetailsTable = ({
                   ? `${removeSpaces.substring(0, 30)}...`
                   : removeSpaces
               managerCommentExist(kpi)
+              console.log(kpi.employeeFeedback)
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">{index + 1}</CTableDataCell>
@@ -214,7 +218,7 @@ const ReviewFormDetailsTable = ({
                       </CLink>
                     </CTableDataCell>
                   )}
-                  {appraisalForm.formStatusvalue >= 1 ? (
+                  {Number(appraisalForm.formStatusvalue) >= 1 ? (
                     <CTableDataCell>{kpi.employeeRating}</CTableDataCell>
                   ) : (
                     <CTableDataCell>
@@ -237,7 +241,7 @@ const ReviewFormDetailsTable = ({
                       </CFormSelect>
                     </CTableDataCell>
                   )}
-                  {appraisalForm.formStatusvalue >= 1 ? (
+                  {Number(appraisalForm.formStatusvalue) >= 1 ? (
                     <CTableDataCell>{kpi.employeeFeedback}</CTableDataCell>
                   ) : (
                     <CTableDataCell>
