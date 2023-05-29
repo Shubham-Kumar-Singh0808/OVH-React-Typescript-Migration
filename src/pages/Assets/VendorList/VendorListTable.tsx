@@ -65,10 +65,10 @@ const VendorListTable = ({
     return (currentPage - 1) * pageSize + index + 1
   }
 
-  const onDeleteBtnClick = (deleteVendorId: number, name: string) => {
+  const onDeleteBtnClick = (deleteVendorsId: number, name: string) => {
     setDeleteClientModalVisibility(true)
     setVendorName(name)
-    setDeleteVendorId(deleteVendorId)
+    setDeleteVendorId(deleteVendorsId)
   }
 
   const deleteSuccessToastElement = (

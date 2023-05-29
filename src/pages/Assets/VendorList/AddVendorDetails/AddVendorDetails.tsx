@@ -58,6 +58,7 @@ const AddVendorDetails = ({
     }
   }
   const vendorNameRegexReplace = /-_[^a-z0-9\s]/gi
+  const vendorPhoneRegex = /\D/g
 
   const handledInputChange = (
     event:
@@ -87,17 +88,17 @@ const AddVendorDetails = ({
         return { ...values, ...{ [name]: vendorGSTNumber } }
       })
     } else if (name === 'vendorPincode') {
-      const presentZipValue = value.replace(/[^0-9]/gi, '')
+      const presentZipValue = value.replace(vendorPhoneRegex, '')
       setAddVendor((prevState) => {
         return { ...prevState, ...{ [name]: presentZipValue } }
       })
     } else if (name === 'vendorPhoneNumber') {
-      const phoneNumber = value.replace(/[^0-9]/gi, '')
+      const phoneNumber = value.replace(vendorPhoneRegex, '')
       setAddVendor((prevState) => {
         return { ...prevState, ...{ [name]: phoneNumber } }
       })
     } else if (name === 'vendorFaxNumber') {
-      const faxNumber = value.replace(/[^0-9]/gi, '')
+      const faxNumber = value.replace(vendorPhoneRegex, '')
       setAddVendor((prevState) => {
         return { ...prevState, ...{ [name]: faxNumber } }
       })
