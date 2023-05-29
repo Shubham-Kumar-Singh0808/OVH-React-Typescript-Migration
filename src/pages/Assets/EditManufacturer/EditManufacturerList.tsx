@@ -140,11 +140,16 @@ const EditManufacturerList = ({
               >
                 <option value={''}>Select Product Type</option>
                 {productResult.productList?.length > 0 &&
-                  productResult?.productList?.map((productResults, index) => (
-                    <option key={index} value={productResults?.productName}>
-                      {productResults?.productName}
-                    </option>
-                  ))}
+                  productResult?.productList?.map(
+                    (productResultItem, index) => (
+                      <option
+                        key={index}
+                        value={productResultItem?.productName}
+                      >
+                        {productResultItem?.productName}
+                      </option>
+                    ),
+                  )}
               </CFormSelect>
             </CCol>
           </CRow>
