@@ -109,7 +109,6 @@ const ProductSpecificationListTable = ({
     productId: number,
     productSpecification: ProductSpecifications,
   ) => {
-    console.log()
     dispatch(reduxServices.addNewProduct.getAssetTypeList(id))
     dispatch(reduxServices.addNewProduct.getProductTypeList(productId))
     setToggle('/editProductSpecification')

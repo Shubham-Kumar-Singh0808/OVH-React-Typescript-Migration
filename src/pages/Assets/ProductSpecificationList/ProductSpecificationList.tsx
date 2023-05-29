@@ -168,7 +168,9 @@ const ProductSpecificationList = (): JSX.Element => {
           </>
         </OCard>
       )}
-      {toggle === '/addAssetType' && <AddProduct setToggle={setToggle} />}
+      {toggle === '/addAssetType' && (
+        <AddProduct setToggle={setToggle} searchInput={searchInput} />
+      )}
       {toggle === '/editProductSpecification' && (
         <EditProductSpecification
           setToggle={setToggle}

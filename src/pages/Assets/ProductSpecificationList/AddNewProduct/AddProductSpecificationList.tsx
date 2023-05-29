@@ -11,13 +11,16 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddProduct = ({
   setToggle,
+  searchInput,
 }: {
   setToggle: (value: string) => void
+  searchInput: string
 }): JSX.Element => {
   const [selectAssetId, setSelectAssetId] = useState<string>('')
   const [selectProductId, setSelectProductId] = useState<string>('')
   const [manufactureType, setManufactureType] = useState('')
   const [productSpecification, setProductSpecification] = useState<string>('')
+  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
   const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
@@ -94,6 +97,13 @@ const AddProduct = ({
       )
     ) {
       setToggle('')
+      dispatch(
+        reduxServices.productSpecificationList.getProductSpecificationList({
+          endIndex: 20,
+          productName: searchInput,
+          startIndex: 0,
+        }),
+      )
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -184,7 +194,7 @@ const AddProduct = ({
               <option value={''}>Select Product Type</option>
               {AssetTypeList?.length > 0 &&
                 AssetTypeList?.map((item, index) => (
-                  <option key={index} value={item.assetTypeId}>
+                  <option key={index} value={item.productId}>
                     {item.productName}
                   </option>
                 ))}
@@ -211,7 +221,7 @@ const AddProduct = ({
               <option value={''}>Select Manufacturer</option>
               {ProductTypeList.length > 0 &&
                 ProductTypeList?.map((product, index) => (
-                  <option key={index} value={product.productId}>
+                  <option key={index} value={product.manufacturerId}>
                     {product.manufacturerName}
                   </option>
                 ))}

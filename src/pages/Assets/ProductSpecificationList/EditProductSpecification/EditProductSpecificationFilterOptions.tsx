@@ -41,7 +41,7 @@ const EditProductSpecificationFilterOptions = ({
 
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
-  >()
+  >(editProductSpecification?.manufacturerName)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const getAllLookUps = useTypedSelector(
     reduxServices.addNewProduct.selectors.manufactureList,
@@ -65,40 +65,31 @@ const EditProductSpecificationFilterOptions = ({
       setIsAddButtonEnabled(false)
     }
   }, [editProductSpecification])
-  const onChangeProductSpecificationHandler = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = event.target
-
-    setEditProductSpecification((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
-  }
 
   useEffect(() => {
     dispatch(reduxServices.addNewProduct.getAllLookUps())
   }, [dispatch])
-  // useEffect(() => {
-  //   if (!getAllLookUps) dispatch(reduxServices.addNewProduct.getAllLookUps())
-  //   if (selectedAssetType) {
-  //     dispatch(
-  //       reduxServices.addNewProduct.getAssetTypeList(
-  //         selectedAssetType as number,
-  //       ),
-  //     )
-  //   }
-  //   if (selectedManufacturer) {
-  //     dispatch(
-  //       reduxServices.addNewProduct.getProductTypeList(
-  //         selectedManufacturer as number,
-  //       ),
-  //     )
-  //   }
-  // }, [dispatch, selectedAssetType, selectedProductType, getAllLookUps])
+  useEffect(() => {
+    if (selectedAssetType) {
+      dispatch(
+        reduxServices.addNewProduct.getAssetTypeList(
+          selectedAssetType as number,
+        ),
+      )
+    }
+    if (selectedProductType) {
+      dispatch(
+        reduxServices.addNewProduct.getProductTypeList(
+          editProductSpecification.productId,
+        ),
+      )
+    }
+  }, [
+    dispatch,
+    selectedAssetType,
+    selectedProductType,
+    editProductSpecification,
+  ])
 
   const updateSuccessToastMessage = (
     <OToast
@@ -189,16 +180,16 @@ const EditProductSpecificationFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="productName"
+            id="selectedProductType"
             data-testid="form-select2"
-            name="productName"
+            name="selectedProductType"
             value={selectedProductType}
             onChange={(e) => setSelectedProductType(e.target.value)}
           >
             <option value={''}>Select Product Type</option>
             {AssetType.length > 0 &&
               AssetType?.map((product, index) => (
-                <option key={index} value={product.assetTypeId}>
+                <option key={index} value={product.productId}>
                   {product.productName}
                 </option>
               ))}
@@ -208,17 +199,19 @@ const EditProductSpecificationFilterOptions = ({
       <CRow className="mt-3 ">
         <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
           Manufacturer/ Brand Name:{' '}
-          {/* <span className={selectProductId ? TextWhite : TextDanger}>*</span> */}
+          <span className={selectedManufacturer ? TextWhite : TextDanger}>
+            *
+          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="manufacturerId"
+            id="selectedManufacturer"
             data-testid="form-select3"
-            name="manufacturerId"
-            value={editProductSpecification?.manufacturerName}
-            onChange={onChangeProductSpecificationHandler}
+            name="selectedManufacturer"
+            value={selectedManufacturer}
+            onChange={(e) => setSelectedManufacturer(e.target.value)}
           >
             <option value={''}>Select Manufacturer</option>
             {ProductTypeList.length > 0 &&
