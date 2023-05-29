@@ -2,25 +2,18 @@
 import {
   CButton,
   CCol,
-  CLink,
   CRow,
   CTable,
   CTableBody,
-  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
-  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import parse from 'html-react-parser'
 import AssetListTableBody from './AssetListTableBody'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import {
-  AllAssetListProps,
-  AssetListTableProps,
-} from '../../../types/Assets/AssetList/AssetListTypes'
+import { AssetListTableProps } from '../../../types/Assets/AssetList/AssetListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -103,131 +96,6 @@ const AssetListTable = ({
             </CTableHead>
 
             <CTableBody>
-              {/* {assets.map((asset, index) => {
-                const removeSpaces1 = asset.otherAssetNumber
-                  ?.replace(/\s+/g, ' ')
-                  .trim()
-                  .replace(/&nbsp;/g, '')
-                const agendaLimit1 =
-                  removeSpaces1 && removeSpaces1.length > 15
-                    ? `${removeSpaces1.substring(0, 15)}...`
-                    : removeSpaces1
-
-                const removeSpaces = asset.pSpecification
-                  ?.replace(/\s+/g, ' ')
-                  .trim()
-                  .replace(/&nbsp;/g, '')
-                const agendaLimit =
-                  removeSpaces && removeSpaces.length > 15
-                    ? `${removeSpaces.substring(0, 15)}...`
-                    : removeSpaces
-
-                const removeSpaces2 = asset.location
-                  ?.replace(/\s+/g, ' ')
-                  .trim()
-                  .replace(/&nbsp;/g, '')
-                const locationModel =
-                  removeSpaces2 && removeSpaces2.length > 15
-                    ? `${removeSpaces2.substring(0, 15)}...`
-                    : removeSpaces2
-                return (
-                  <CTableRow key={index}>
-                    <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                    <CTableDataCell>
-                      {asset.assetNumber || 'N/A'}
-                    </CTableDataCell>
-                    <CTableDataCell>{asset.assetType || 'N/A'}</CTableDataCell>
-                    <CTableDataCell className="text-center">
-                      {asset.productName || 'N/A'}
-                    </CTableDataCell>
-                    <CTableDataCell
-                      scope="row"
-                      className="sh-organization-link"
-                    >
-                      {asset.pSpecification ? (
-                        <CLink
-                          className="cursor-pointer text-decoration-none"
-                          data-testid={`specification-modal-link1${index}`}
-                          onClick={() =>
-                            handleAgendaModal(asset.pSpecification)
-                          }
-                        >
-                          {parse(agendaLimit)}
-                        </CLink>
-                      ) : (
-                        'N/A'
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell
-                      scope="row"
-                      className="sh-organization-link"
-                    >
-                      {asset.otherAssetNumber ? (
-                        <CLink
-                          className="cursor-pointer text-decoration-none"
-                          data-testid={`description-modal-link2${index}`}
-                          onClick={() =>
-                            handleAgendaModal(asset.otherAssetNumber)
-                          }
-                        >
-                          {parse(agendaLimit1)}
-                        </CLink>
-                      ) : (
-                        'N/A'
-                      )}
-                    </CTableDataCell>
-                    <CTableDataCell
-                      scope="row"
-                      className="sh-organization-link"
-                    >
-                      {asset.location ? (
-                        <CLink
-                          className="cursor-pointer text-decoration-none"
-                          data-testid={`specification-modal-link${index}`}
-                          onClick={() => handleAgendaModal(asset.location)}
-                        >
-                          {parse(locationModel)}
-                        </CLink>
-                      ) : (
-                        'N/A'
-                      )}
-                    </CTableDataCell>
-
-                    <CTableDataCell>
-                      {asset.referenceNumber || 'N/A'}
-                    </CTableDataCell>
-                    <CTableDataCell>{asset.status || 'N/A'}</CTableDataCell>
-                    <CTableDataCell>
-                      {asset.invoiceNumber || 'N/A'}
-                    </CTableDataCell>
-                    <CTableDataCell>{asset.amount || 'N/A'}</CTableDataCell>
-                    <CTableDataCell>
-                      {asset.employeeName || 'N/A'}
-                    </CTableDataCell>
-                    <CTableDataCell data-testid="action-cell">
-                      <div className="sh-btn-group">
-                        <CTooltip content="Edit">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className="text-white fa fa-pencil-square-o"></i>
-                          </CButton>
-                        </CTooltip>
-                        <br />
-                        <CTooltip content="History">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className=" fa fa-wrench"></i>
-                          </CButton>
-                        </CTooltip>
-                        <br />
-                        <CTooltip content="Change-Status">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className="fa fa-bar-chart text-white"></i>
-                          </CButton>
-                        </CTooltip>
-                      </div>
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              })} */}
               {assets?.map((item, index) => {
                 return (
                   <AssetListTableBody

@@ -3,86 +3,54 @@ import parse from 'html-react-parser'
 import {
   CButton,
   CLink,
-  CTableBody,
   CTableDataCell,
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
 import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
 
-const AssetListTableBody = ({
-  item,
+// const LimitText = ({
+//   text,
+//   limit,
+// }: {
+//   text: string | undefined
+//   limit: number
+// }): JSX.Element => {
+//   const truncatedText =
+//     text && text.length > limit ? `${text.substring(0, limit)}...` : text
+
+//   return <>{truncatedText}</>
+// }
+
+const ModalLink = ({
+  text,
   index,
   handleAgendaModal,
-  getItemNumber,
+  dataTestId,
 }: {
-  item: AllAssetsList
+  text: string | undefined
   index: number
-  getItemNumber: (index: number) => number
-  handleAgendaModal: (appraisalCycleSpecification: string) => void
+  handleAgendaModal: (data: string) => void
+  dataTestId: string
 }) => {
-  const removeSpaces1 = item.otherAssetNumber
-    ?.replace(/\s+/g, ' ')
-    .trim()
-    .replace(/&nbsp;/g, '')
-  const agendaLimit1 =
-    removeSpaces1 && removeSpaces1.length > 15
-      ? `${removeSpaces1.substring(0, 15)}...`
-      : removeSpaces1
+  if (!text) {
+    return <>N/A</>
+  }
 
-  const removeSpaces = item.pSpecification
-    ?.replace(/\s+/g, ' ')
-    .trim()
-    .replace(/&nbsp;/g, '')
-  const agendaLimit =
-    removeSpaces && removeSpaces.length > 15
-      ? `${removeSpaces.substring(0, 15)}...`
-      : removeSpaces
-
-  const removeSpaces2 = item.location
-    ?.replace(/\s+/g, ' ')
-    .trim()
-    .replace(/&nbsp;/g, '')
-  const locationModel =
-    removeSpaces2 && removeSpaces2.length > 15
-      ? `${removeSpaces2.substring(0, 15)}...`
-      : removeSpaces2
-
-  const specificationModel = item.pSpecification ? (
+  return (
     <CLink
       className="cursor-pointer text-decoration-none"
-      data-testid={`specification-modal-link1${index}`}
-      onClick={() => handleAgendaModal(item.pSpecification)}
+      data-testid={dataTestId}
+      key={index}
+      onClick={() => handleAgendaModal(text)}
     >
-      {parse(agendaLimit)}
+      {parse(text)}
     </CLink>
-  ) : (
-    'N/A'
   )
-  const otherAssetNumberModel = item.otherAssetNumber ? (
-    <CLink
-      className="cursor-pointer text-decoration-none"
-      data-testid={`description-modal-link2${index}`}
-      onClick={() => handleAgendaModal(item.otherAssetNumber)}
-    >
-      {parse(agendaLimit1)}
-    </CLink>
-  ) : (
-    'N/A'
-  )
-  const locationPopUpModel = item.location ? (
-    <CLink
-      className="cursor-pointer text-decoration-none"
-      data-testid={`specification-modal-link${index}`}
-      onClick={() => handleAgendaModal(item.location)}
-    >
-      {parse(locationModel)}
-    </CLink>
-  ) : (
-    'N/A'
-  )
+}
 
-  const actionIcons = (
+const ActionIcons = () => {
+  return (
     <CTableDataCell data-testid="action-cell">
       <div className="sh-btn-group">
         <CTooltip content="Edit">
@@ -105,35 +73,71 @@ const AssetListTableBody = ({
       </div>
     </CTableDataCell>
   )
+}
+
+const AssetListTableBody = ({
+  item,
+  index,
+  handleAgendaModal,
+  getItemNumber,
+}: {
+  item: AllAssetsList
+  index: number
+  getItemNumber: (index: number) => number
+  handleAgendaModal: (appraisalCycleSpecification: string) => void
+}): JSX.Element => {
+  const specificationModel = (
+    <ModalLink
+      text={item.pSpecification}
+      index={index}
+      handleAgendaModal={handleAgendaModal}
+      dataTestId={`specification-modal-link1${index}`}
+    />
+  )
+
+  const otherAssetNumberModel = (
+    <ModalLink
+      text={item.otherAssetNumber}
+      index={index}
+      handleAgendaModal={handleAgendaModal}
+      dataTestId={`description-modal-link2${index}`}
+    />
+  )
+
+  const locationPopUpModel = (
+    <ModalLink
+      text={item.location}
+      index={index}
+      handleAgendaModal={handleAgendaModal}
+      dataTestId={`specification-modal-link${index}`}
+    />
+  )
 
   return (
     <>
-      <CTableBody>
-        <CTableRow key={index}>
-          <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-          <CTableDataCell>{item.assetNumber || 'N/A'}</CTableDataCell>
-          <CTableDataCell>{item.assetType || 'N/A'}</CTableDataCell>
-          <CTableDataCell className="text-center">
-            {item.productName || 'N/A'}
-          </CTableDataCell>
-          <CTableDataCell scope="row" className="sh-organization-link">
-            {specificationModel}
-          </CTableDataCell>
-          <CTableDataCell scope="row" className="sh-organization-link">
-            {otherAssetNumberModel}
-          </CTableDataCell>
-          <CTableDataCell scope="row" className="sh-organization-link">
-            {locationPopUpModel}
-          </CTableDataCell>
-
-          <CTableDataCell>{item.referenceNumber || 'N/A'}</CTableDataCell>
-          <CTableDataCell>{item.status || 'N/A'}</CTableDataCell>
-          <CTableDataCell>{item.invoiceNumber || 'N/A'}</CTableDataCell>
-          <CTableDataCell>{item.amount || 'N/A'}</CTableDataCell>
-          <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
-          {actionIcons}
-        </CTableRow>
-      </CTableBody>
+      <CTableRow key={index}>
+        <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
+        <CTableDataCell>{item.assetNumber || 'N/A'}</CTableDataCell>
+        <CTableDataCell>{item.assetType || 'N/A'}</CTableDataCell>
+        <CTableDataCell className="text-center">
+          {item.productName || 'N/A'}
+        </CTableDataCell>
+        <CTableDataCell scope="row" className="sh-organization-link">
+          {specificationModel}
+        </CTableDataCell>
+        <CTableDataCell scope="row" className="sh-organization-link">
+          {otherAssetNumberModel}
+        </CTableDataCell>
+        <CTableDataCell scope="row" className="sh-organization-link">
+          {locationPopUpModel}
+        </CTableDataCell>
+        <CTableDataCell>{item.referenceNumber || 'N/A'}</CTableDataCell>
+        <CTableDataCell>{item.status || 'N/A'}</CTableDataCell>
+        <CTableDataCell>{item.invoiceNumber || 'N/A'}</CTableDataCell>
+        <CTableDataCell>{item.amount || 'N/A'}</CTableDataCell>
+        <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
+        <ActionIcons />
+      </CTableRow>
     </>
   )
 }
