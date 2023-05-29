@@ -14,8 +14,6 @@ import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
-import OToast from '../../../components/ReusableComponent/OToast'
 import { dateFormat } from '../../../constant/DateFormat'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 
@@ -73,10 +71,6 @@ const AssetListFilters = ({
     reduxServices.assetList.selectors.assetListData,
   )
   console.log(assetListData)
-
-  const failureToast = (
-    <OToast toastMessage="Enter Vaild Name !" toastColor="danger" />
-  )
 
   const [dateError, setDateError] = useState<boolean>(false)
   useEffect(() => {

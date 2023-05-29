@@ -16,10 +16,7 @@ import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import {
-  AllAssetListProps,
-  AssetListTableProps,
-} from '../../../types/Assets/AssetList/AssetListTypes'
+import { AssetListTableProps } from '../../../types/Assets/AssetList/AssetListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -60,6 +57,30 @@ const AssetListTable = ({
   const totalNoOfRecords = assets?.length
     ? `Total Records: ${assetListSize}`
     : `No Records found...`
+
+  const modelPopup = (
+    <CTableDataCell data-testid="action-cell">
+      <div className="sh-btn-group">
+        <CTooltip content="Edit">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className="text-white fa fa-pencil-square-o"></i>
+          </CButton>
+        </CTooltip>
+        <br />
+        <CTooltip content="History">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className=" fa fa-wrench"></i>
+          </CButton>
+        </CTooltip>
+        <br />
+        <CTooltip content="Change-Status">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className="fa fa-bar-chart text-white"></i>
+          </CButton>
+        </CTooltip>
+      </div>
+    </CTableDataCell>
+  )
 
   return (
     <>
@@ -129,6 +150,17 @@ const AssetListTable = ({
                   removeSpaces2 && removeSpaces2.length > 15
                     ? `${removeSpaces2.substring(0, 15)}...`
                     : removeSpaces2
+                const result = asset.pSpecification ? (
+                  <CLink
+                    className="cursor-pointer text-decoration-none"
+                    data-testid={`specification-modal-link1${index}`}
+                    onClick={() => handleAgendaModal(asset.pSpecification)}
+                  >
+                    {parse(agendaLimit)}
+                  </CLink>
+                ) : (
+                  'N/A'
+                )
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -143,19 +175,7 @@ const AssetListTable = ({
                       scope="row"
                       className="sh-organization-link"
                     >
-                      {asset.pSpecification ? (
-                        <CLink
-                          className="cursor-pointer text-decoration-none"
-                          data-testid={`specification-modal-link1${index}`}
-                          onClick={() =>
-                            handleAgendaModal(asset.pSpecification)
-                          }
-                        >
-                          {parse(agendaLimit)}
-                        </CLink>
-                      ) : (
-                        'N/A'
-                      )}
+                      {result}
                     </CTableDataCell>
                     <CTableDataCell
                       scope="row"
@@ -191,7 +211,6 @@ const AssetListTable = ({
                         'N/A'
                       )}
                     </CTableDataCell>
-
                     <CTableDataCell>
                       {asset.referenceNumber || 'N/A'}
                     </CTableDataCell>
@@ -203,27 +222,7 @@ const AssetListTable = ({
                     <CTableDataCell>
                       {asset.employeeName || 'N/A'}
                     </CTableDataCell>
-                    <CTableDataCell data-testid="action-cell">
-                      <div className="sh-btn-group">
-                        <CTooltip content="Edit">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className="text-white fa fa-pencil-square-o"></i>
-                          </CButton>
-                        </CTooltip>
-                        <br />
-                        <CTooltip content="History">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className=" fa fa-wrench"></i>
-                          </CButton>
-                        </CTooltip>
-                        <br />
-                        <CTooltip content="Change-Status">
-                          <CButton color="info" size="sm" className="mb-1">
-                            <i className="fa fa-bar-chart text-white"></i>
-                          </CButton>
-                        </CTooltip>
-                      </div>
-                    </CTableDataCell>
+                    {modelPopup}
                   </CTableRow>
                 )
               })}
