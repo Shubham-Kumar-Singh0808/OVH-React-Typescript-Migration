@@ -19,7 +19,7 @@ const AddManuFactureFilterOptions = ({
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const [productType, setProductType] = useState<string>('')
-  const [manufactureName, setManufatureName] = useState<string>('')
+  const [manufactureName, setManufacturerName] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const result = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerData,
@@ -27,7 +27,7 @@ const AddManuFactureFilterOptions = ({
 
   const clearButtonHandler = () => {
     setProductType('')
-    setManufatureName('')
+    setManufacturerName('')
   }
 
   const dispatch = useAppDispatch()
@@ -49,6 +49,13 @@ const AddManuFactureFilterOptions = ({
     ) {
       setToggle('')
       dispatch(
+        reduxServices.ManufacturerList.getManufacturerList({
+          startIndex: 0,
+          endIndex: 20,
+          manufacturerName: '',
+        }),
+      )
+      dispatch(
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
@@ -58,7 +65,7 @@ const AddManuFactureFilterOptions = ({
       )
     }
   }
-  console.log('result')
+
   useEffect(() => {
     if (productType && manufactureName) {
       setIsAddButtonEnabled(true)
@@ -129,7 +136,7 @@ const AddManuFactureFilterOptions = ({
               name="name"
               placeholder="Enter Manufacturer Name"
               value={manufactureName}
-              onChange={(e) => setManufatureName(e.target.value)}
+              onChange={(e) => setManufacturerName(e.target.value)}
             />
           </CCol>
         </CRow>

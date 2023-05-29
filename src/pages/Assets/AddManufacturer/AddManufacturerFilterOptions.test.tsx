@@ -8,7 +8,7 @@ import { fireEvent, render, screen } from '../../../test/testUtils'
 
 const mockSetTogglePage = jest.fn()
 
-describe('Manufracturer List without data', () => {
+describe('Manufacturer List without data', () => {
   beforeEach(() => {
     render(<AddManuFactureFilterOptions setToggle={jest.fn()} />, {
       preloadedState: {
@@ -53,13 +53,6 @@ describe('Manufracturer List without data', () => {
     expect(screen.getByText('Product Type:')).toBeInTheDocument()
     expect(screen.getByText('Manufacturer Name')).toBeInTheDocument()
   })
-  // test('should able to render every element', () => {
-  //   const ManufacturerId = screen.getByTestId('form-select')
-  //   userEvent.type(ManufacturerId, '1')
-
-  //   const ManufacturerName = screen.getByTestId('ManufacturerName')
-  //   userEvent.type(ManufacturerName, 'Microsoft')
-  // })
   test('should able to Add input field', () => {
     const productNameInput = screen.getByTestId('form-select')
     fireEvent.change(productNameInput, ['MS Office 2007'])

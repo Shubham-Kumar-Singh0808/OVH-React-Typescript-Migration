@@ -27,7 +27,7 @@ export type ManufacturerListSliceState = {
 }
 
 export type ManufacturerListProps = {
-  search: string
+  search?: string
   endIndex: number
   manufacturerName: string
   startIndex: number

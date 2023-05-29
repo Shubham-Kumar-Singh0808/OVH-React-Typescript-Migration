@@ -15,7 +15,7 @@ import ManufacturerApi from '../../../middleware/api/Assets/ManufacturerList/Man
 import { AppDispatch, RootState } from '../../../stateStore'
 
 const getManufacturerList = createAsyncThunk(
-  'category/getManufacturerList',
+  'manufacturerList/getManufacturerList',
   async (props: ManufacturerListProps, thunkApi) => {
     try {
       return await ManufacturerApi.getManufacturerList(props)
@@ -26,7 +26,7 @@ const getManufacturerList = createAsyncThunk(
   },
 )
 const getAllLookUps = createAsyncThunk(
-  'category/getAllLookUps ',
+  'manufacturerList/getAllLookUps ',
   async (_, thunkApi) => {
     try {
       return await ManufacturerApi.getAllLookUpList()
@@ -45,7 +45,7 @@ const addManufacturer = createAsyncThunk<
     rejectValue: ValidationError
   }
 >(
-  'leaveSettings/addManufacturer',
+  'manufacturerList/addManufacturer',
   async (employeeLeaveCalender: AddManufacturerListProps, thunkApi) => {
     try {
       return await ManufacturerApi.addManufacturer(employeeLeaveCalender)
@@ -57,7 +57,7 @@ const addManufacturer = createAsyncThunk<
 )
 
 const deleteManufacturerName = createAsyncThunk(
-  'addLocationList/deleteManufacturerName',
+  'manufacturerList/deleteManufacturerName',
   async (manufacturerId: number, thunkApi) => {
     try {
       return await ManufacturerApi.deleteManufacturerName(manufacturerId)
@@ -69,7 +69,7 @@ const deleteManufacturerName = createAsyncThunk(
 )
 
 const updateManufacturerName = createAsyncThunk(
-  'addLocationList/updateManufacturerName',
+  'manufacturerList/updateManufacturerName',
   async (props: UpdateProps, thunkApi) => {
     try {
       return await ManufacturerApi.updateManufacturerName(props)

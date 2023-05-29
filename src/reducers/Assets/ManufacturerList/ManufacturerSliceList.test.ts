@@ -10,8 +10,8 @@ import {
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
 import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 
-describe('notification Slice', () => {
-  describe('jobOpenings test', () => {
+describe('Manufacturer Slice', () => {
+  describe('Manufacturer test', () => {
     it('Should be able to set isLoading to "failed" if getManufacturerList is rejected', () => {
       const action = {
         type: ManufacturerListService.getManufacturerList.rejected.type,
@@ -30,7 +30,7 @@ describe('notification Slice', () => {
       })
     })
   })
-  describe('getAllTechnology test', () => {
+  describe('getManufacturerList test', () => {
     it('Should be able to set isLoading to "loading" if getAllLookUps is pending', () => {
       const action = {
         type: ManufacturerListService.getManufacturerList.pending.type,

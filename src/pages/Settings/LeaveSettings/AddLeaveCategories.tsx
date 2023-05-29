@@ -50,12 +50,12 @@ const AddEditLeaveCategories = ({
 
   const handleAddLeaveCategory = async () => {
     const addLeaveCategoryResultAction = await dispatch(
-      reduxServices.employeeLeaveSettings.addManufacturerList(
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory(
         employeeLeaveCategories,
       ),
     )
     if (
-      reduxServices.employeeLeaveSettings.addManufacturerList.fulfilled.match(
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory.fulfilled.match(
         addLeaveCategoryResultAction,
       )
     ) {
@@ -69,7 +69,7 @@ const AddEditLeaveCategories = ({
         ),
       )
     } else if (
-      reduxServices.employeeLeaveSettings.addManufacturerList.rejected.match(
+      reduxServices.employeeLeaveSettings.addEmployeeLeaveCategory.rejected.match(
         addLeaveCategoryResultAction,
       ) &&
       addLeaveCategoryResultAction.payload === 500

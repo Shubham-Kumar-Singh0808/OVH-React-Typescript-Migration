@@ -73,11 +73,9 @@ const Manufacturer = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
         manufacturerName: '',
-        search: '',
       }),
     )
   }, [dispatch, currentPage, pageSize])
-  console.log(Manufacturer)
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,

@@ -9,10 +9,6 @@ const AddManufacturerList = ({
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  //   const result = useTypedSelector(
-  //     reduxServices.ManufacturerList.selectors.manufacturerData,
-  //   )
-  //  console.log(result)
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.ManufacturerList.getAllLookUps())

@@ -84,7 +84,7 @@ const ManufacturerListTable = ({
       data-testid="failedToast"
     />
   )
-  const confirmDeleteLocation = async () => {
+  const confirmDeleteManufacturer = async () => {
     setIsDeleteModalVisible(false)
     const deleteLocationResult = await dispatch(
       reduxServices.ManufacturerList.deleteManufacturerName(deleteLocationId),
@@ -225,7 +225,7 @@ const ManufacturerListTable = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
-        confirmButtonAction={confirmDeleteLocation}
+        confirmButtonAction={confirmDeleteManufacturer}
         modalBodyClass="mt-0"
       >
         <>

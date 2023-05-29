@@ -31,7 +31,6 @@ const EditManufacturerList = ({
   const productResult = useTypedSelector(
     reduxServices.ManufacturerList.selectors.manufacturerData,
   )
-  console.log(productResult)
 
   useEffect(() => {
     if (
