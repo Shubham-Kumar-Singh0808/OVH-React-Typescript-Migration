@@ -1,8 +1,10 @@
+import {
+  AssetTypeList,
+  ManufacturerList,
+} from './addproducttype/AddProductType'
 import { LoadingState } from '../../commonTypes'
 
 export type ProductTypeListType = {
-  // size: number
-  // list: ProductTypeListType[]
   assetTypeId: number
   assetType: string
   createdBy: string
@@ -25,6 +27,7 @@ export type ProductTypeListSLiceState = {
   listSize: number
   isLoading: LoadingState
   productTypeResponse: ProductTypeListResponse
+  manufacturerList: ManufacturerList
 }
 
 export type ProductTypeListProps = {
@@ -39,6 +42,9 @@ export type ProductTypeListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditProductType: React.Dispatch<React.SetStateAction<ProductTypeListType>>
+  editButtonHandler?: (productId: number) => void
 }
 
 export type exportProductListDownload = {

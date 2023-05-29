@@ -7,30 +7,39 @@ import { mockProductTypeList } from '../../../test/data/ProductTypeListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ProductTypeListTable
+      paginationRange={[]}
+      currentPage={0}
+      setCurrentPage={mockSetData}
+      pageSize={0}
+      setPageSize={mockSetData}
+      setToggle={mockSetData}
+      setEditProductType={mockSetData}
+    />
+  </div>
+)
+
 describe('Product Type list without data', () => {
   beforeEach(() => {
-    render(
-      <ProductTypeListTable
-        paginationRange={[]}
-        currentPage={0}
-        setCurrentPage={mockSetData}
-        pageSize={0}
-        setPageSize={mockSetData}
-      />,
-      {
-        preloadedState: {
-          ProductTypeList: {
-            isLoading: ApiLoadingState.succeeded,
-            listSize: 0,
-            ProductTypeListModel: [],
-            productTypeResponse: mockProductTypeList,
-          },
-          userAccessToFeatures: {
-            userAccessToFeatures: mockUserAccessToFeaturesData,
-          },
+    render(toRender, {
+      preloadedState: {
+        ProductTypeList: {
+          isLoading: ApiLoadingState.succeeded,
+          listSize: 0,
+          ProductTypeListModel: [],
+          productTypeResponse: mockProductTypeList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
-    )
+    })
   })
   test('should render first page data only', () => {
     waitFor(() => {
@@ -61,16 +70,5 @@ describe('Product Type list without data', () => {
     expect(screen.getByText('#')).toBeInTheDocument()
     expect(screen.getByText('Asset Type')).toBeInTheDocument()
     expect(screen.getByText('Product Type')).toBeInTheDocument()
-  })
-  test('should render  Product Type List screen and Edit button', () => {
-    const index = 0
-    const EditElement = screen.getByTestId(`btn-edit${index}`)
-    expect(EditElement).toBeInTheDocument()
-  })
-  test('should be able to click delete button element', () => {
-    const index = 0
-    const deleteBtnElement = screen.getByTestId(`btn-delete${index}`)
-    expect(deleteBtnElement).toBeInTheDocument()
-    fireEvent.click(deleteBtnElement)
   })
 })

@@ -129,6 +129,7 @@ import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
+//import AddProductTypeListReducer from './reducers/Assets/addproducttype/AddProductTypeSlice'
 
 export const allReducers = {
   app: appReducer,
