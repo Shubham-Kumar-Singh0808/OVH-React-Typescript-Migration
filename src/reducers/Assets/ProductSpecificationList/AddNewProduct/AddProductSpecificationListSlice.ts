@@ -40,18 +40,6 @@ const getProductTypeList = createAsyncThunk(
   },
 )
 
-// const getAllLookUps = createAsyncThunk(
-//   'AssetTypeListData/getAllLookUps       ',
-//   async (_, thunkApi) => {
-//     try {
-//       return await assetTypeListApi.getAllLookUpList()
-//     } catch (error) {
-//       const err = error as AxiosError
-//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-//     }
-//   },
-// )
-
 const deleteProductSpecification = createAsyncThunk<
   number | undefined,
   number,
@@ -82,11 +70,9 @@ const addProductSpecifications = createAsyncThunk<
   }
 >(
   'productSpecifications/addProductSpecifications',
-  async (addProductSpecifications: AddProductSpecificationProps, thunkApi) => {
+  async (addProductItems: AddProductSpecificationProps, thunkApi) => {
     try {
-      return await assetTypeListApi.addProductSpecifications(
-        addProductSpecifications,
-      )
+      return await assetTypeListApi.addProductSpecifications(addProductItems)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -103,13 +89,10 @@ const updateProductSpecification = createAsyncThunk<
   }
 >(
   'editProduct/ updateProductSpecification ',
-  async (
-    updateProductSpecification: UpdateProductSpecificationTypes,
-    thunkApi,
-  ) => {
+  async (updateProductItems: UpdateProductSpecificationTypes, thunkApi) => {
     try {
       return await assetTypeListApi.updateProductSpecification(
-        updateProductSpecification,
+        updateProductItems,
       )
     } catch (error) {
       const err = error as AxiosError
@@ -147,20 +130,11 @@ const addProductSlice = createSlice({
       .addMatcher(isAnyOf(getProductTypeList.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
       })
-
-    // .addMatcher(isAnyOf(getAllLookUps.pending), (state) => {
-    //   state.isLoading = ApiLoadingState.loading
-    // })
-    // .addMatcher(isAnyOf(getAllLookUps.fulfilled), (state, action) => {
-    //   state.isLoading = ApiLoadingState.succeeded
-    //   state.manufactureList = action.payload
-    // })
   },
 })
 const addProductThunk = {
   getAssetTypeList,
   getProductTypeList,
-  // getAllLookUps,
   addProductSpecifications,
   deleteProductSpecification,
   updateProductSpecification,

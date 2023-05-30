@@ -1,4 +1,3 @@
-import { UpdateProductSpecificationTypes } from './AddNewProduct/AddProductSpecificationListTypes'
 import { LoadingState } from '../../commonTypes'
 import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 

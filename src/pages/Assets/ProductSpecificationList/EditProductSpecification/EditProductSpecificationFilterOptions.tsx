@@ -40,9 +40,7 @@ const EditProductSpecificationFilterOptions = ({
     number | string
   >(editProductSpecification?.manufacturerName)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  // const getAllLookUps = useTypedSelector(
-  //   reduxServices.addNewProduct.selectors.manufactureList,
-  // )
+
   const getAllLookUps = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )

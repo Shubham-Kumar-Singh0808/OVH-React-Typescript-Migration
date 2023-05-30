@@ -13,7 +13,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
-// import { Link } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import {
@@ -27,8 +26,6 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OToast from '../../../components/ReusableComponent/OToast'
-
-// import OModal from '../../../components/ReusableComponent/OModal'
 
 const ProductSpecificationListTable = ({
   paginationRange,
@@ -107,12 +104,12 @@ const ProductSpecificationListTable = ({
   const editBtnHandler = (
     id: number,
     productId: number,
-    productSpecification: ProductSpecifications,
+    productItems: ProductSpecifications,
   ) => {
     dispatch(reduxServices.addNewProduct.getAssetTypeList(id))
     dispatch(reduxServices.addNewProduct.getProductTypeList(productId))
     setToggle('/editProductSpecification')
-    setEditProductSpecification(productSpecification)
+    setEditProductSpecification(productItems)
   }
 
   return (
@@ -136,8 +133,8 @@ const ProductSpecificationListTable = ({
           <CTableBody color="light">
             {isLoading !== ApiLoadingState?.loading ? (
               productSpecification?.length > 0 &&
-              productSpecification?.map((productSpecification, index) => {
-                const removeSpaces = productSpecification?.productSpecification
+              productSpecification?.map((Item, index) => {
+                const removeSpaces = Item?.productSpecification
                   ?.replace(/\s+/g, ' ')
                   ?.replace('/(<([^>]+)>)/gi', '')
                   .trim()
@@ -151,12 +148,8 @@ const ProductSpecificationListTable = ({
                     <CTableDataCell scope="row">
                       {getItemNumber(index)}
                     </CTableDataCell>
-                    <CTableDataCell>
-                      {productSpecification.productName}
-                    </CTableDataCell>
-                    <CTableDataCell>
-                      {productSpecification.manufacturerName}
-                    </CTableDataCell>
+                    <CTableDataCell>{Item.productName}</CTableDataCell>
+                    <CTableDataCell>{Item.manufacturerName}</CTableDataCell>
                     {productSpecificationLimit ? (
                       <CTableDataCell
                         scope="row"
@@ -165,21 +158,15 @@ const ProductSpecificationListTable = ({
                         <CLink
                           className="cursor-pointer text-primary centerAlignment-text"
                           data-testid={`product-specification${index}`}
-                          onClick={() =>
-                            handleModal(
-                              productSpecification.productSpecification,
-                            )
-                          }
+                          onClick={() => handleModal(Item.productSpecification)}
                         >
-                          {parse(productSpecification.productSpecification)}
+                          {parse(Item.productSpecification)}
                         </CLink>
                       </CTableDataCell>
                     ) : (
                       <CTableDataCell>{`N/A`}</CTableDataCell>
                     )}
-                    <CTableDataCell>
-                      {productSpecification.createdBy}
-                    </CTableDataCell>
+                    <CTableDataCell>{Item.createdBy}</CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
                       {userAccess?.updateaccess && (
                         <CTooltip content="Edit">
@@ -189,9 +176,9 @@ const ProductSpecificationListTable = ({
                             className="btn-ovh-employee-list"
                             onClick={() =>
                               editBtnHandler(
-                                productSpecification.assetTypeId,
-                                productSpecification.productId,
-                                productSpecification,
+                                Item.assetTypeId,
+                                Item.productId,
+                                Item,
                               )
                             }
                           >
@@ -206,9 +193,7 @@ const ProductSpecificationListTable = ({
                             color="danger"
                             data-testid={`btn-delete${index}`}
                             className="btn-ovh me-2"
-                            onClick={() =>
-                              handleShowDeleteModal(productSpecification.id)
-                            }
+                            onClick={() => handleShowDeleteModal(Item.id)}
                           >
                             <i className="fa fa-trash-o" aria-hidden="true"></i>
                           </CButton>
