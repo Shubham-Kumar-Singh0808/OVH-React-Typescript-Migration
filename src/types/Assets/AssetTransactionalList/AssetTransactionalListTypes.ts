@@ -31,7 +31,7 @@ export type GetAssetTransactionList = {
   list: AssetTransactionalList[]
 }
 
-export type WarrantyAssetsListSliceState = {
+export type AssetTransactionListSliceState = {
   assetTransactionakDetails: AssetTransactionalList[]
   getAssetTransactionList: GetAssetTransactionList
   listSize: number
