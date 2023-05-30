@@ -5,6 +5,7 @@ import projectTimeSheetApi from '../../../../../middleware/api/ProjectManagement
 import { RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import {
+  EmployeeTimeSheet,
   ProjectHiveActivityReportSlice,
   ProjectTimeSheetProps,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetTypes'
@@ -23,15 +24,7 @@ const getProjectTimeSheet = createAsyncThunk(
 )
 
 const initialHiveActivityReportSliceState: ProjectHiveActivityReportSlice = {
-  employeeHiveActivityReport: {
-    id: 0,
-    userName: '',
-    firstName: '',
-    lastName: '',
-    activityTimes: [],
-    totalHiveTime: '',
-    projectIdentifier: '',
-  },
+  employeeHiveActivityReport: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -52,7 +45,7 @@ const projectHiveActivityReportSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.projectTimeSheet.isLoading
-const employeeHiveActivityReport = (state: RootState): EmployeeHiveReport =>
+const employeeHiveActivityReport = (state: RootState): EmployeeHiveReport[] =>
   state.projectTimeSheet.employeeHiveActivityReport
 
 const projectHiveActivityReportThunk = {

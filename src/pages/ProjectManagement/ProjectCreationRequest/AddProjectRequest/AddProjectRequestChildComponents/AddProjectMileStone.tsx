@@ -14,7 +14,6 @@ import { dateFormat } from '../../../../../constant/DateFormat'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
 import { ProjectRequestMilestoneDTO } from '../../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
-import { TextDanger } from '../../../../../constant/ClassName'
 
 const AddProjectMileStone = ({
   item,

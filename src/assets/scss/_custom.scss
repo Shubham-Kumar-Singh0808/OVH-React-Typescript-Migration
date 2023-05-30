@@ -463,3 +463,14 @@ input.capetalized {
     padding: 15px !important;
   }
 }
+.client-Alignment .card-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+.client-No-Records{
+  border-bottom: 1px solid #d8dbd0;
+}
+.client-No-Records .text-start {
+  background-color: #fff;
+    box-shadow: none;
+}

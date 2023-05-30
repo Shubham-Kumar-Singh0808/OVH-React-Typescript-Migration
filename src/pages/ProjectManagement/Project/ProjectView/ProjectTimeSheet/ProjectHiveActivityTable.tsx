@@ -16,7 +16,7 @@ import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const ProjectHiveActivityTable = (): JSX.Element => {
   const projectHiveActivityReport = useTypedSelector(
-    reduxServices.hiveActivityReport.selectors.managerHiveActivityReport,
+    reduxServices.projectTimeSheet.selectors.employeeHiveActivityReport,
   )
 
   const ManagerReportListSize = useTypedSelector(
@@ -67,7 +67,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         </CTableHead>
         {isLoading !== ApiLoadingState.loading ? (
           <CTableBody>
-            {projectHiveActivityReport?.list?.map(
+            {projectHiveActivityReport?.map(
               (employeeRecord, employeeRecordIndex) => {
                 const sortedProjectActivityTimes = employeeRecord.activityTimes
                   ?.slice()
@@ -109,7 +109,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         )}
       </CTable>
       <strong>
-        {projectHiveActivityReport?.list?.length
+        {projectHiveActivityReport?.length
           ? `Total Records: ${ManagerReportListSize}`
           : `No Records found...`}
       </strong>
