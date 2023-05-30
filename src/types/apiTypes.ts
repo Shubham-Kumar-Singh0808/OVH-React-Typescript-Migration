@@ -868,3 +868,7 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   searchVendors: string
 }
+export interface ChangeAssetStatusReportApi extends ApiBase {
+  saveEmployee: string
+  getAllAssets: string
+}
