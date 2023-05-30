@@ -1024,6 +1024,9 @@ export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addProduct: apiPrefix + 'assetManagement/addProduct',
+  updateProduct: apiPrefix + 'assetManagement/updateProduct',
 }
 
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
