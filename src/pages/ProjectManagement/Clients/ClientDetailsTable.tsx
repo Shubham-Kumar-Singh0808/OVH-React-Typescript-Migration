@@ -76,11 +76,7 @@ const ClientDetailsTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable
-        responsive
-        striped
-        className="mt-2 text-start profile-tab-table-size"
-      >
+      <CTable striped className="mt-2 text-start profile-tab-table-size">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
