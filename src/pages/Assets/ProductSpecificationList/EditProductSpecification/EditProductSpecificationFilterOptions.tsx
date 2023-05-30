@@ -254,6 +254,7 @@ const EditProductSpecificationFilterOptions = ({
             className="btn-ovh me-1 text-white"
             color="success"
             onClick={handleUpdateProductSpecification}
+            disabled={!isAddButtonEnabled}
           >
             Update
           </CButton>
