@@ -73,14 +73,20 @@ const EditJobOpening = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditJobInfo((prevState) => {
-      return {
-        ...prevState,
-        ...{
-          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-        },
-      }
-    })
+    if (name === 'noOfRequirements') {
+      const limit = value.replace(/\D/g, '')
+      setEditJobInfo((prevState) => {
+        return { ...prevState, ...{ [name]: Number(limit) } }
+      })
+    } else
+      setEditJobInfo((prevState) => {
+        return {
+          ...prevState,
+          ...{
+            [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+          },
+        }
+      })
   }
   const updateSuccessToastMessage = (
     <OToast
@@ -167,7 +173,7 @@ const EditJobOpening = ({
               name="jobCode"
               autoComplete="off"
               placeholder="Job Code"
-              value={editJobInfo.jobCode || 'N/A'}
+              value={editJobInfo.jobCode}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -194,7 +200,7 @@ const EditJobOpening = ({
               name="positionVacant"
               autoComplete="off"
               placeholder="Title"
-              value={editJobInfo.positionVacant || 'N/A'}
+              value={editJobInfo.positionVacant}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -222,7 +228,7 @@ const EditJobOpening = ({
               name="noOfRequirements"
               autoComplete="off"
               placeholder="No of Openings"
-              value={editJobInfo.noOfRequirements || 'N/A'}
+              value={editJobInfo.noOfRequirements}
               maxLength={5}
               onChange={onChangeInputHandler}
             />
@@ -252,7 +258,7 @@ const EditJobOpening = ({
               autoComplete="off"
               placeholder="Experience"
               maxLength={11}
-              value={editJobInfo.minimumExperience || 'N/A'}
+              value={editJobInfo.minimumExperience}
               onChange={onChangeInputHandler}
             />
           </CCol>

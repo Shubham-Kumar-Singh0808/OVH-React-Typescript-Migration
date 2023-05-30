@@ -120,7 +120,7 @@ const ClientsTable = ({
 
   return (
     <>
-      <CTable responsive striped className="text-start mt-5 align-middle">
+      <CTable striped className="text-start mt-5 align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col"></CTableHeaderCell>
