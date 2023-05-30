@@ -5,7 +5,6 @@ import projectTimeSheetApi from '../../../../../middleware/api/ProjectManagement
 import { RootState } from '../../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../../types/commonTypes'
 import {
-  EmployeeTimeSheet,
   ProjectHiveActivityReportSlice,
   ProjectTimeSheetProps,
 } from '../../../../../types/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetTypes'

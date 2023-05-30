@@ -67,42 +67,44 @@ const ProjectHiveActivityTable = (): JSX.Element => {
         </CTableHead>
         {isLoading !== ApiLoadingState.loading ? (
           <CTableBody>
-            {projectHiveActivityReport?.map(
-              (employeeRecord, employeeRecordIndex) => {
-                const sortedProjectActivityTimes = employeeRecord.activityTimes
-                  ?.slice()
-                  .sort(
-                    (activityItem1, activityItem2) =>
-                      activityItem1.dayofMonth - activityItem2.dayofMonth,
-                  )
-                return (
-                  <CTableRow key={employeeRecordIndex}>
-                    <CTableDataCell>{employeeRecord.id}</CTableDataCell>
-                    <CTableDataCell>{`${employeeRecord.firstName} ${employeeRecord.lastName}`}</CTableDataCell>
-                    {sortedProjectActivityTimes.map((value, index) => {
-                      return (
-                        <React.Fragment key={index}>
-                          {value.hours === '-' ? (
-                            <CTableDataCell className="text-center cursor-pointer sh-hive-activity-data-cell">
-                              {value.hours}
-                            </CTableDataCell>
-                          ) : (
-                            <CTableDataCell className="text-center">
-                              <CLink className="cursor-pointer sh-hive-activity-link">
-                                {value.hours}
-                              </CLink>
-                            </CTableDataCell>
-                          )}
-                        </React.Fragment>
+            {projectHiveActivityReport.length > 0 &&
+              projectHiveActivityReport?.map(
+                (employeeRecord, employeeRecordIndex) => {
+                  const sortedProjectActivityTimes =
+                    employeeRecord.activityTimes
+                      ?.slice()
+                      .sort(
+                        (activityItem1, activityItem2) =>
+                          activityItem1.dayofMonth - activityItem2.dayofMonth,
                       )
-                    })}
-                    <CTableDataCell className="text-center">
-                      {employeeRecord.totalHiveTime}
-                    </CTableDataCell>
-                  </CTableRow>
-                )
-              },
-            )}
+                  return (
+                    <CTableRow key={employeeRecordIndex}>
+                      <CTableDataCell>{employeeRecord.id}</CTableDataCell>
+                      <CTableDataCell>{`${employeeRecord.firstName} ${employeeRecord.lastName}`}</CTableDataCell>
+                      {sortedProjectActivityTimes.map((value, index) => {
+                        return (
+                          <React.Fragment key={index}>
+                            {value.hours === '-' ? (
+                              <CTableDataCell className="text-center cursor-pointer sh-hive-activity-data-cell">
+                                {value.hours}
+                              </CTableDataCell>
+                            ) : (
+                              <CTableDataCell className="text-center">
+                                <CLink className="cursor-pointer sh-hive-activity-link">
+                                  {value.hours}
+                                </CLink>
+                              </CTableDataCell>
+                            )}
+                          </React.Fragment>
+                        )
+                      })}
+                      <CTableDataCell className="text-center">
+                        {employeeRecord.totalHiveTime}
+                      </CTableDataCell>
+                    </CTableRow>
+                  )
+                },
+              )}
           </CTableBody>
         ) : (
           <OLoadingSpinner type={LoadingType.PAGE} />

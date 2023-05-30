@@ -43,7 +43,7 @@ interface TypesObject {
 }
 
 const EditProject = (): JSX.Element => {
-  const { id } = useParams<{ id: string }>()
+  const { projectId } = useParams<{ projectId: string }>()
   const [emailError, setEmailError] = useState<boolean>(false)
   const [billingContactPersonEmailError, setBillingContactPersonEmailError] =
     useState<boolean>(false)
@@ -194,7 +194,7 @@ const EditProject = (): JSX.Element => {
     dispatch(reduxServices.projectManagement.getAllDomains())
     dispatch(reduxServices.projectManagement.getAllManagers())
     dispatch(reduxServices.projectManagement.getAllPlatforms())
-    dispatch(reduxServices.projectManagement.getProject(id))
+    dispatch(reduxServices.projectManagement.getProject(projectId))
   }, [dispatch])
 
   const projectClients = useTypedSelector(

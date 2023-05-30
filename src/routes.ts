@@ -610,7 +610,7 @@ const routes = [
     component: EmployeeAllocation,
   },
   {
-    path: '/projectedit/:id',
+    path: '/editproject/:projectId',
     name: 'Edit Project',
     component: EditProject,
   },

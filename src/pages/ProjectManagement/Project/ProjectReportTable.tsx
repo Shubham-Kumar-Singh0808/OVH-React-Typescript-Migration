@@ -453,7 +453,7 @@ const ProjectReportsTable = ({
                           </CTooltip>
                         </Link>
                         {userAccess.updateaccess && (
-                          <Link to={`/projectedit/${value.id}`}>
+                          <Link to={`/editproject/${value.id}`}>
                             <CTooltip content="Edit">
                               <CButton
                                 className="btn-ovh-employee-list me-1"
