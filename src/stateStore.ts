@@ -131,6 +131,7 @@ import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsS
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
+import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
@@ -266,6 +267,7 @@ export const allReducers = {
   productSpecificationList: productSpecificationListReducer,
   addProduct: addProductReducer,
   vendorList: vendorListReducer,
+  addNewVendor: addNewVendorReducer,
   changeReportees: changeReporteesReducer,
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,

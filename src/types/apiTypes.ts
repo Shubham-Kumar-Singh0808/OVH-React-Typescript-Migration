@@ -864,6 +864,9 @@ export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string
   deleteProduct: string
   exportProductList: string
+  getAllLookUps: string
+  addProduct: string
+  updateProduct: string
 }
 
 export interface AssetWarrantyReportApi extends ApiBase {
@@ -875,6 +878,7 @@ export interface VendorListApi extends ApiBase {
   getAllVendorDetails: string
   getDepartmentNameList: string
   addVendorDetails: string
+  editVendorDetails: string
   exportVendorData: string
-  searchVendors: string
+  deleteVendorDetails: string
 }
