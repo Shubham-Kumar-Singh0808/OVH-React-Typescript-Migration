@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { CButton, CCol, CFormInput, CFormLabel, CRow } from '@coreui/react-pro'
+import {
+  CButton,
+  CCol,
+  CFormCheck,
+  CFormInput,
+  CFormLabel,
+  CFormSelect,
+  CRow,
+} from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import moment from 'moment'
@@ -9,8 +17,13 @@ import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFor
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../constant/DateFormat'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import OToast from '../../../components/ReusableComponent/OToast'
 
-const ChangeAssetStatus = (): JSX.Element => {
+const ChangeAssetStatus = ({
+  setToggle,
+}: {
+  setToggle: (value: string) => void
+}): JSX.Element => {
   const [assetNumber, setAssetNumber] = useState<string>('')
   const [vendorName, setVendorName] = useState<string>('')
   const [assetReferenceNumber, setAssetReferenceNumber] = useState<string>('')
@@ -19,28 +32,53 @@ const ChangeAssetStatus = (): JSX.Element => {
   const [invoiceNumber, setInvoiceNumber] = useState<string>('')
   const [amount, setAmount] = useState<string>('')
   const [location, setLocation] = useState<string>('')
-  const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [description, setDescescription] = useState<string>('')
+  //   const [showEditor, setShowEditor] = useState<boolean>(true)
+  const [description, setDescription] = useState<string>('')
   const [statusDate, setStatusDate] = useState<string>('')
+  const [isShowComment, setIsShowComment] = useState<boolean>(true)
+
+  //   const initialChangeAssetDetails = {} as saveAssetStatus
+  //   const [saveAssetStatus, setSaveAssetStatus] = useState({
+  //     ...initialChangeAssetDetails,
+  //   })
+  const formLabelProps = {
+    htmlFor: 'inputNewVendorDetails',
+    className: 'col-form-label category-label',
+  }
+
+  const textWhite = 'text-white'
+  const textDanger = 'text-danger'
+
   const onHandleStartDatePicker = (value: Date) => {
     setStatusDate(moment(value).format(dateFormat))
   }
   const clearInputs = () => {
-    // setAssetNumber('')
-    // setVendorName('')
-    // setAssetReferenceNumber('')
-    // setAssetStatus('')
-    // setEmployee('')
-    // setInvoiceNumber('')
-    // setAmount(false)
-    // setLocation('')
-    // setShowEditor('')
-    // setDescescription('')
-    // setStatusDate('')
+    setAssetNumber('')
+    setVendorName('')
+    setAssetReferenceNumber('')
+    setAssetStatus('')
+    setEmployee('')
+    setInvoiceNumber('')
+    setAmount(false)
+    setLocation('')
+    setShowEditor('')
+    setDescescription('')
+    setStatusDate('')
+    setIsShowComment(false)
     setTimeout(() => {
-      //   setIsShowComment(true)
+      setIsShowComment(true)
     }, 0)
   }
+
+  const handleDescription = (comments: string) => {
+    setDescription(comments)
+  }
+  const successToastMessage = (
+    <OToast
+      toastMessage="Change the Asset Status Successfully"
+      toastColor="success"
+    />
+  )
   return (
     <>
       <OCard
@@ -55,12 +93,13 @@ const ChangeAssetStatus = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              //   onClick={() => setToggle('')}
+              onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
         </CRow>
+
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
@@ -82,6 +121,70 @@ const ChangeAssetStatus = (): JSX.Element => {
               //   value={addVendor.vendorName}
               //   onChange={handledInputChange}
             />
+          </CCol>
+        </CRow>
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Asset Reference Number:
+            {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              className="mb-1"
+              data-testid="asset reference number"
+              type="text"
+              id="asset reference number"
+              size="sm"
+              name=" asset reference number"
+              autoComplete="off"
+              placeholder=" Asset Reference Number"
+              //   value={addVendor.vendorName}
+              //   onChange={handledInputChange}
+            />
+          </CCol>
+
+          <CCol sm={2}>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="add-vendorbtn"
+              onClick={() => setToggle('')}
+            >
+              <i className="fa fa-plus"></i>Add Vendor
+            </CButton>
+          </CCol>
+        </CRow>
+
+        <CRow className="mt-4 mb-4">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Asset Status :
+            {/* <span
+              className={
+                employeeFamily?.relationShip ? 'text-white' : 'text-danger'
+              }
+            >
+              *
+            </span> */}
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormSelect
+              aria-label="Relationship"
+              name="relationShip"
+              id="AssetStatus"
+              data-testid="asset-status"
+              //   value={employeeFamily?.relationShip}
+              //   onChange={onChangePersonNameHandler}
+            >
+              <option value={''}>Select Status</option>
+              <option value="Working">Working</option>
+              <option value="Not Working">Not Working</option>
+              <option value="Under Repair">Under Repair</option>
+              <option value="Idle">Idle</option>
+              <option value="Scrap">Scrap</option>
+            </CFormSelect>
           </CCol>
         </CRow>
 
@@ -114,7 +217,6 @@ const ChangeAssetStatus = (): JSX.Element => {
             className="col-sm-3 col-form-label text-end"
           >
             Employee:
-            {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -137,7 +239,6 @@ const ChangeAssetStatus = (): JSX.Element => {
             className="col-sm-3 col-form-label text-end"
           >
             Invoice Number:
-            {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -183,7 +284,6 @@ const ChangeAssetStatus = (): JSX.Element => {
             className="col-sm-3 col-form-label text-end"
           >
             Location:
-            {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -199,6 +299,25 @@ const ChangeAssetStatus = (): JSX.Element => {
               //   onChange={handledInputChange}
             />
           </CCol>
+          <CCol sm={3}>
+            <CFormCheck
+              className="chk_emp"
+              inline
+              type="checkbox"
+              name="isExpenseVendor"
+              id="expenseVendor"
+              onChange={(event) =>
+                handleIsUpdateAllLocations(event.target.checked)
+              }
+              checked={setAssetStatus.isUpdateAllLocations}
+            />
+          </CCol>
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Update All Locations For Employee
+          </CFormLabel>
         </CRow>
         <CRow className="mt-4 mb-4">
           <CFormLabel
@@ -208,7 +327,7 @@ const ChangeAssetStatus = (): JSX.Element => {
             Description:
             <span className={description ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
-          {showEditor ? (
+          {isShowComment ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
@@ -218,7 +337,7 @@ const ChangeAssetStatus = (): JSX.Element => {
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  //   handleDescription(editor.getData().trim())
+                  handleDescription(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -232,8 +351,8 @@ const ChangeAssetStatus = (): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              //   disabled={!isAddButtonEnabled}
-              //   onClick={handleAddNewVendor}
+              //   disabled={!isSaveButtonEnabled}
+              //   onClick={handleSaveAssetStatus}
             >
               Save
             </CButton>
