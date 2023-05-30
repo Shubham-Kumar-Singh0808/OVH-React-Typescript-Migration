@@ -1,6 +1,5 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import AddProductType from './AddProductType'
 import EditProductTypeRecord from './EditProductType'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'

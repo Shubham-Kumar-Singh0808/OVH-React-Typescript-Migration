@@ -1,7 +1,4 @@
-import {
-  AssetTypeList,
-  ManufacturerList,
-} from './addproducttype/AddProductType'
+import { ManufacturerList } from './addproducttype/AddProductType'
 import { LoadingState } from '../../commonTypes'
 
 export type ProductTypeListType = {

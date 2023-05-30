@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // eslint-disable-next-line sonarjs/cognitive-complexity
+=======
+/* eslint-disable sonarjs/cognitive-complexity */
+>>>>>>> develop
 import {
   CButton,
   CCol,
@@ -382,15 +386,25 @@ const AddProjectRequestForm = ({
     setCheckList(newMileStone)
   }
 
+  const [errorMessage, setErrorMessage] = useState<number | null>(null)
+
   const titleOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-
     index: number,
   ) => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].title = e.target.value
+    const newTitle = e.target.value.trim()
+    const titleExists = newMileStone.some(
+      (milestone, i) => i !== index && milestone.title === newTitle,
+    )
+    if (titleExists) {
+      setErrorMessage(index)
+    } else {
+      newMileStone[index].title = newTitle
+      setErrorMessage(null)
+    }
     setProjectMileStone(newMileStone)
   }
 
@@ -869,6 +883,7 @@ const AddProjectRequestForm = ({
                       setProjectMileStone={setProjectMileStone}
                       projectMileStone={projectMileStone}
                       titleOnChange={titleOnChange}
+                      errorMessage={errorMessage}
                       commentsOnChange={commentOnChange}
                       effortOnChange={effortOnChange}
                       onChangeHandleFromDate={onChangeHandleFromDate}

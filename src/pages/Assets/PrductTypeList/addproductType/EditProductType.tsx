@@ -33,7 +33,6 @@ const EditProductTypeRecord = ({
   const EditProductTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-  console.log(EditProductTypeList)
 
   useEffect(() => {
     if (EditProductType.productName && EditProductType.assetTypeId) {
