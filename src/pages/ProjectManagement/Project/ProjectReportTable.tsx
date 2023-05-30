@@ -386,7 +386,10 @@ const ProjectReportsTable = ({
 
                       <CTableDataCell>{value.projectCode}</CTableDataCell>
                       <CTableDataCell>{value.projectName}</CTableDataCell>
-                      <CTableDataCell>{value.type}</CTableDataCell>
+                      <CTableDataCell>
+                        {value.type.charAt(0).toUpperCase()}
+                        {value.type.slice(1).toLowerCase()}
+                      </CTableDataCell>
                       <CTableDataCell>{value.client}</CTableDataCell>
                       <CTableDataCell>{value.count}</CTableDataCell>
                       <CTableDataCell>{value.managerName}</CTableDataCell>
@@ -450,7 +453,7 @@ const ProjectReportsTable = ({
                           </CTooltip>
                         </Link>
                         {userAccess.updateaccess && (
-                          <Link to={`/editproject/${value.id}`}>
+                          <Link to={`/projectedit/${value.id}`}>
                             <CTooltip content="Edit">
                               <CButton
                                 className="btn-ovh-employee-list me-1"
