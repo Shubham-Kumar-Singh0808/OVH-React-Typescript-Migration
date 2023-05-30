@@ -269,6 +269,9 @@ const EmployeePipList = ({
                       showYearDropdown
                       dropdownMode="select"
                       value={fromDateValue}
+                      highlightDates={[
+                        { 'today-date-highlight': [new Date()] },
+                      ]}
                       onChange={(date: Date) => {
                         dispatch(
                           reduxServices.pipList.actions.setFromDate(date),
@@ -298,6 +301,9 @@ const EmployeePipList = ({
                       showYearDropdown
                       dropdownMode="select"
                       value={toDateValue}
+                      highlightDates={[
+                        { 'today-date-highlight': [new Date()] },
+                      ]}
                       onChange={(date: Date) => {
                         dispatch(reduxServices.pipList.actions.setToDate(date))
                         setToDate(date)
