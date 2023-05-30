@@ -30,6 +30,7 @@ const AssetListFilters = ({
   setSearchByEmployee,
   currentPage,
   pageSize,
+  setCurrentPage,
 }: {
   selectDate: string
   setSelectDate: React.Dispatch<React.SetStateAction<string>>
@@ -43,6 +44,7 @@ const AssetListFilters = ({
   setSearchByEmployee: React.Dispatch<React.SetStateAction<boolean>>
   currentPage: number
   pageSize: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -60,8 +62,11 @@ const AssetListFilters = ({
     }
   }, [asset])
 
+  // const assetListTypeList = useTypedSelector(
+  //   reduxServices.assetList.selectors.manufacturerList,
+  // )
   const assetListTypeList = useTypedSelector(
-    reduxServices.assetList.selectors.manufacturerList,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
 
   const assetListData = useTypedSelector(
@@ -151,6 +156,7 @@ const AssetListFilters = ({
     setToDate('')
     setSearchByEmployee(false)
     dispatch(reduxServices.assetList.actions.clearAssetListType([]))
+    setCurrentPage(1)
   }
 
   const onHandleStartDate = (value: Date) => {

@@ -1,7 +1,6 @@
 import {
   AllAssetListProps,
   AssetTypeChangeList,
-  ManufacturerList,
   AllAssetData,
 } from '../../../../types/Assets/AssetList/AssetListTypes'
 import {
@@ -25,16 +24,6 @@ const getAssetTypeChangeList = async (
   return response.data
 }
 
-const getAllLookUpList = async (): Promise<ManufacturerList> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: GetAssetListConfig.getAllLookUps,
-    method: AllowedHttpMethods.get,
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const getAllAssetListData = async (
   props: AllAssetListProps,
 ): Promise<AllAssetData> => {
@@ -49,7 +38,6 @@ const getAllAssetListData = async (
 }
 
 const AssetLitApi = {
-  getAllLookUpList,
   getAssetTypeChangeList,
   getAllAssetListData,
 }

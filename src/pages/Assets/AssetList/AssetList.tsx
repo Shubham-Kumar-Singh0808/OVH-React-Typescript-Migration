@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-duplicate-string */
 import React, { useEffect, useState } from 'react'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
@@ -10,7 +9,7 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 const AssetList = (): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.assetList.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
   const [selectDate, setSelectDate] = useState<string>('')
@@ -60,6 +59,7 @@ const AssetList = (): JSX.Element => {
           setSearchByEmployee={setSearchByEmployee}
           currentPage={currentPage}
           pageSize={pageSize}
+          setCurrentPage={setCurrentPage}
         />
         <AssetListTable
           paginationRange={paginationRange}

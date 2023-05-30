@@ -24,18 +24,6 @@ const getAssetTypeChangeList = createAsyncThunk(
   },
 )
 
-const getAllLookUps = createAsyncThunk(
-  'AssetTypeListData/getAllLookUps',
-  async (_, thunkApi) => {
-    try {
-      return await AssetListApi.getAllLookUpList()
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
 const getAllAssetListData = createAsyncThunk(
   'allAsset/getallassetlist',
   async (props: AllAssetListProps, thunkApi) => {
@@ -76,13 +64,6 @@ const assetTypeChangeListSlice = createSlice({
           state.asset = action.payload
         },
       )
-      .addMatcher(isAnyOf(getAllLookUps.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(getAllLookUps.fulfilled), (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.manufacturerList = action.payload
-      })
       .addMatcher(isAnyOf(getAllAssetListData.fulfilled), (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.allAssetList = action.payload.list
@@ -93,7 +74,6 @@ const assetTypeChangeListSlice = createSlice({
 
 const assetListThunk = {
   getAssetTypeChangeList,
-  getAllLookUps,
   getAllAssetListData,
 }
 
