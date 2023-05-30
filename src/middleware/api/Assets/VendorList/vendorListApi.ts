@@ -1,5 +1,6 @@
 import {
   GetAllVendorDetails,
+  VendorDetails,
   VendorListApiProps,
 } from '../../../../types/Assets/VendorList/vendorListTypes'
 import {
@@ -42,9 +43,36 @@ const exportVendorListData = async (
   return response.data
 }
 
+const updateVendorDetails = async (
+  data: VendorDetails,
+): Promise<VendorDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: vendorListApiConfig.editVendorDetails,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteVendorDetails = async (vendorId: number): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: vendorListApiConfig.deleteVendorDetails,
+    method: AllowedHttpMethods.delete,
+    params: {
+      vendorId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const vendorListApi = {
   getVendors,
   exportVendorListData,
+  updateVendorDetails,
+  deleteVendorDetails,
 }
 
 export default vendorListApi
