@@ -1,3 +1,5 @@
+import { LoadingState } from "../../commonTypes"
+
 export type SaveEmployee = {
   amount: number
   assetId: number
@@ -59,4 +61,5 @@ export type GetAllAssetResponse = {
 export type ChangeAssetStatusSliceState = {
   saveEmployee: SaveEmployee
   getAllAssetResponse: GetAllAssetResponse
+  isLoading: LoadingState
 }

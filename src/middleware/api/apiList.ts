@@ -1025,7 +1025,7 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
-export const chnageAssetStatusConfig: ChangeAssetStatusReportApi = {
+export const changeAssetStatusConfig: ChangeAssetStatusReportApi = {
   saveEmployee: apiPrefix + '/assetManagement/saveEmployee',
   getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }
