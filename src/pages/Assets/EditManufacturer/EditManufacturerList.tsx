@@ -28,8 +28,9 @@ const EditManufacturerList = ({
 }): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
+
   const productResult = useTypedSelector(
-    reduxServices.ManufacturerList.selectors.manufacturerData,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
 
   useEffect(() => {

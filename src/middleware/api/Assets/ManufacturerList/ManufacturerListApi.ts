@@ -45,15 +45,15 @@ const exportManufacturerData = async (
   return response.data
 }
 
-const getAllLookUpList = async (): Promise<ManufacturerList> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: ManufacturerApiListConfig.getAllLookUps,
-    method: AllowedHttpMethods.get,
-  })
+// const getAllLookUpList = async (): Promise<ManufacturerList> => {
+//   const requestConfig = getAuthenticatedRequestConfig({
+//     url: ManufacturerApiListConfig.getAllLookUps,
+//     method: AllowedHttpMethods.get,
+//   })
 
-  const response = await useAxios(requestConfig)
-  return response.data
-}
+//   const response = await useAxios(requestConfig)
+//   return response.data
+// }
 
 const addManufacturer = async (
   addManufactureList: AddManufacturerListProps,
@@ -98,7 +98,7 @@ const updateManufacturerName = async (
 const ManufacturerApi = {
   getManufacturerList,
   exportManufacturerData,
-  getAllLookUpList,
+  // getAllLookUpList,
   addManufacturer,
   deleteManufacturerName,
   updateManufacturerName,

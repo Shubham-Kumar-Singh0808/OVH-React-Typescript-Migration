@@ -21,8 +21,12 @@ const AddManuFactureFilterOptions = ({
   const [productType, setProductType] = useState<string>('')
   const [manufactureName, setManufacturerName] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  // const result = useTypedSelector(
+  //   reduxServices.ManufacturerList.selectors.manufacturerData,
+  // )
+
   const result = useTypedSelector(
-    reduxServices.ManufacturerList.selectors.manufacturerData,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
 
   const clearButtonHandler = () => {
@@ -33,7 +37,7 @@ const AddManuFactureFilterOptions = ({
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
   const handleAddManufactureHandler = async () => {
     const addManuFactureListResultAction = await dispatch(

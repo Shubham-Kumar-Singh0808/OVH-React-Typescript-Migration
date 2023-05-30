@@ -11,7 +11,7 @@ const AddManufacturerList = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
   return (
     <>
