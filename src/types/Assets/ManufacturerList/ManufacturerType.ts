@@ -7,10 +7,10 @@ export type ManufacturerDetails = {
   productName: string
   departmentId: number
   departmentName: string
-  createdBy: string
-  updatedBy: string
-  createdDate: string
-  updatedDate: string
+  createdBy: string | null
+  updatedBy: string | null
+  createdDate: string | null
+  updatedDate: string | null
 }
 
 export type GetAllManufacturerName = {
