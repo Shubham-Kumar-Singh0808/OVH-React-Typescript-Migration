@@ -854,6 +854,9 @@ export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string
   deleteProduct: string
   exportProductList: string
+  getAllLookUps: string
+  addProduct: string
+  updateProduct: string
 }
 export interface AssetListApi extends ApiBase {
   getAllLookUps: string
