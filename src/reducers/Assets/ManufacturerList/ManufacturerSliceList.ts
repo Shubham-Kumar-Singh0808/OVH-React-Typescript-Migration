@@ -25,17 +25,17 @@ const getManufacturerList = createAsyncThunk(
     }
   },
 )
-const getAllLookUps = createAsyncThunk(
-  'manufacturerList/getAllLookUps ',
-  async (_, thunkApi) => {
-    try {
-      return await ManufacturerApi.getAllLookUpList()
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
+// const getAllLookUps = createAsyncThunk(
+//   'manufacturerList/getAllLookUps ',
+//   async (_, thunkApi) => {
+//     try {
+//       return await ManufacturerApi.getAllLookUpList()
+//     } catch (error) {
+//       const err = error as AxiosError
+//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+//     }
+//   },
+// )
 const addManufacturer = createAsyncThunk<
   number | undefined,
   AddManufacturerListProps,
@@ -102,16 +102,16 @@ const ManufacturerListSlice = createSlice({
         state.manufacturerDetails = action.payload.list
         state.listSize = action.payload.size
       })
-      .addCase(getAllLookUps.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.manufacturerList = action.payload
-      })
+    // .addCase(getAllLookUps.fulfilled, (state, action) => {
+    //   state.isLoading = ApiLoadingState.succeeded
+    //   state.manufacturerList = action.payload
+    // })
   },
 })
 
 const ManufacturerListThunk = {
   getManufacturerList,
-  getAllLookUps,
+  // getAllLookUps,
   addManufacturer,
   deleteManufacturerName,
   updateManufacturerName,

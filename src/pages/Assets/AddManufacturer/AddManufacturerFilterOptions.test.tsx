@@ -5,6 +5,7 @@ import { CKEditor } from 'ckeditor4-react'
 import AddManuFactureFilterOptions from './AddManuFactureFilterOptions'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { fireEvent, render, screen } from '../../../test/testUtils'
+import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
 
 const mockSetTogglePage = jest.fn()
 
@@ -12,11 +13,11 @@ describe('Manufacturer List without data', () => {
   beforeEach(() => {
     render(<AddManuFactureFilterOptions setToggle={jest.fn()} />, {
       preloadedState: {
-        ManufacturerList: {
+        manufacturerList: {
           isLoading: ApiLoadingState.idle,
           listSize: 0,
           getAllManufacturerName: {},
-          manufacturerList: {},
+          manufacturerList: mockManufactureGetLookup,
           manufacturerDetails: [],
         },
       },

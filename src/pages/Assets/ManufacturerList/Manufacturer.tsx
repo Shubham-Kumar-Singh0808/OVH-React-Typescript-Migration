@@ -64,7 +64,7 @@ const Manufacturer = (): JSX.Element => {
     )
   }
   useEffect(() => {
-    dispatch(reduxServices.ManufacturerList.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
   useEffect(() => {
