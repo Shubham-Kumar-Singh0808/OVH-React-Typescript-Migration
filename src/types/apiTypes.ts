@@ -877,3 +877,13 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   deleteVendorDetails: string
 }
+export interface ProductSpecificationListApi extends ApiBase {
+  getAllProductSpecifications: string
+  getassetTypeChangeList: string
+  getAllLookUps: string
+  getProductTypeChangeList: string
+  exportProductSpecificationList: string
+  addProductSpecifications: string
+  deleteProductSpecification: string
+  updateProductSpecification: string
+}

@@ -135,6 +135,8 @@ import ManufacturerListReducer from './reducers/Assets/ManufacturerList/Manufact
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
+import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -270,6 +272,8 @@ export const allReducers = {
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
   assetList: assetListReducer,
+  productSpecificationList: productSpecificationListReducer,
+  addProduct: addProductReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
