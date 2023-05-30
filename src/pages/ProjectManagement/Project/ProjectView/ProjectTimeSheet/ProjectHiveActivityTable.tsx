@@ -42,7 +42,7 @@ const ProjectHiveActivityTable = (): JSX.Element => {
   }
   return (
     <>
-      <CTable striped responsive className="time-in-office-table align-middle">
+      <CTable striped className="time-in-office-table align-middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell {...tableHeaderCellPropsName}>
