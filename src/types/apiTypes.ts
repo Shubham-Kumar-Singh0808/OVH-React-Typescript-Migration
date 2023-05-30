@@ -849,6 +849,10 @@ export interface ChangeReporteesApi extends ApiBase {
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
+  getAllLookUps: string
+  addManufacturer: string
+  deleteManufacturerName: string
+  updateManufacturerName: string
 }
 export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string

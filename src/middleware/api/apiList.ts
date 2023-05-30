@@ -1016,6 +1016,10 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
 export const ManufacturerApiListConfig: ManufacturerApi = {
   getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
   exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addManufacturer: apiPrefix + '/assetManagement/addManufacturer',
+  deleteManufacturerName: apiPrefix + '/assetManagement/deleteManufacturerName',
+  updateManufacturerName: apiPrefix + '/assetManagement/updateManufacturerName',
 }
 export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
