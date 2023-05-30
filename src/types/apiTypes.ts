@@ -868,6 +868,7 @@ export interface VendorListApi extends ApiBase {
   getAllVendorDetails: string
   getDepartmentNameList: string
   addVendorDetails: string
+  editVendorDetails: string
   exportVendorData: string
-  searchVendors: string
+  deleteVendorDetails: string
 }
