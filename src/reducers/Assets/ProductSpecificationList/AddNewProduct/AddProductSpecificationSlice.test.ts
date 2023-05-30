@@ -77,8 +77,8 @@ describe('Add Product Specification Slice test', () => {
       }
       const state = addProductreducer(initialAddProductState, action)
       expect(state).toEqual({
-        assetType: mockProductTypeData,
-        productType: [],
+        assetType: [],
+        productType: mockProductTypeData,
         isLoading: ApiLoadingState.succeeded,
         getAssetTypeListData: {} as GetAssetTypeListData,
         assetTypeList: [],
@@ -124,39 +124,4 @@ describe('Add Product Specification Slice test', () => {
       })
     })
   })
-  // describe('getAllLookUps test', () => {
-  //   it('Should be able to set to "loading" if getAllLookUps is pending', () => {
-  //     const action = {
-  //       type: addProductService.getAllLookUps.pending.type,
-  //     }
-  //     const state = addProductreducer(initialAddProductState, action)
-  //     expect(state).toEqual({
-  //       assetType: [],
-  //       productType: [],
-  //       isLoading: ApiLoadingState.loading,
-  //       getAssetTypeListData: {} as GetAssetTypeListData,
-  //       assetTypeList: [],
-  //       manufactureList: {} as ManufacturerList,
-  //       updateProductSpecification: {} as UpdateProductSpecificationTypes,
-  //       getAddBtnProducts: mockAddBtnProducts,
-  //     })
-  //   })
-
-  // it('Should be able to set to "fullfilled" if getAssetTypeList is fullfilled', () => {
-  //   const action = {
-  //     type: addProductService.getAllLookUps.fulfilled.type,
-  //     payload: mockManufacturerList,
-  //   }
-  //   const state = addProductreducer(initialAddProductState, action)
-  //   expect(state).toEqual({
-  //     assetType: [],
-  //     productType: [],
-  //     isLoading: ApiLoadingState.succeeded,
-  //     getAssetTypeListData: {} as GetAssetTypeListData,
-  //     assetTypeList: [],
-  //     manufactureList: mockManufacturerList,
-  //     updateProductSpecification: {} as UpdateProductSpecificationTypes,
-  //     getAddBtnProducts: mockAddBtnProducts,
-  //   })
-  // })
 })

@@ -123,16 +123,12 @@ export type VendorList = {
 export type GetAssetTypeListData = {
   manufacturerList: ManufacturerList
 }
-//Add Button api
 export type AddBtnProducts = {
   assetTypeId: string
   manufacturerId: number
   productId: number
   productSpecification: string
 }
-// export type GetAddBtnProductsData = {
-//   addBtnProducts: AddBtnProducts[]
-// }
 export type AddProductSpecificationProps = {
   assetTypeId: string
   manufacturerId: number

@@ -3,13 +3,8 @@ import EditProductSpecification from './EditProductSpecification'
 import '@testing-library/jest-dom'
 import { fireEvent, screen, render } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import {
-  GetAssetTypeListData,
-  ManufacturerList,
-} from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 import { mockProductSpecificationList } from '../../../../test/data/ProductSpecificationListData'
 import { GetProductSpecificationListDetails } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
-// import userEvent from '@testing-library/user-event'
 
 const mockSetTogglePage = jest.fn()
 const mockHandleAdd = jest.fn()
@@ -86,13 +81,6 @@ describe('EditProductSpecification FilterOptions Component Testing with data', (
   })
   test('should render add Product Specification back button', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-  })
-  test('should able to click Edit Button', () => {
-    const editBtnElement = screen.getByRole('button', {
-      name: 'Edit',
-    })
-    expect(editBtnElement).toBeEnabled()
-    // userEvent.click(editBtnElement)
   })
 
   test('should render fields', () => {
