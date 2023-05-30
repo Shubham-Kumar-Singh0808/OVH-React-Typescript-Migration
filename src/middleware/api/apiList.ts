@@ -116,6 +116,7 @@ import {
   ProductTypeListApi,
   AssetWarrantyReportApi,
   AssetListApi,
+  ChangeAssetStatusReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1034,5 +1035,10 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
 export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
+}
+
+export const changeAssetStatusConfig: ChangeAssetStatusReportApi = {
+  saveEmployee: apiPrefix + '/assetManagement/saveEmployee',
   getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }
