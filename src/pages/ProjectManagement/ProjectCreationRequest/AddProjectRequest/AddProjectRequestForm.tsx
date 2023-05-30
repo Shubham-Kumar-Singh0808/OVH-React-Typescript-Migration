@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// eslint-disable-next-line sonarjs/cognitive-complexity
-=======
 /* eslint-disable sonarjs/cognitive-complexity */
->>>>>>> develop
 import {
   CButton,
   CCol,
