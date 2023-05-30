@@ -25,6 +25,7 @@ const toRender = (
       searchByEmployee={false}
       setSearchByEmployee={jest.fn()}
       setSearchInput={jest.fn()}
+      setCurrentPage={jest.fn()}
     />
   </div>
 )
