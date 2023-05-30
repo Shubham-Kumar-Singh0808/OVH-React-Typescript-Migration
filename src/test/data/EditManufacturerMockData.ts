@@ -1,20 +1,4 @@
-import {
-  ManufacturerDetails,
-  ManufacturerList,
-} from '../../types/Assets/ManufacturerList/ManufacturerType'
-
-export const mockManufacturerDetails: ManufacturerDetails = {
-  manufacturerId: 1,
-  manufacturerName: 'Microsoft',
-  productId: 14,
-  productName: 'Microsoft',
-  departmentId: 1,
-  departmentName: 'Networking',
-  createdBy: null,
-  updatedBy: null,
-  createdDate: null,
-  updatedDate: null,
-}
+import { ManufacturerList } from '../../types/Assets/ManufacturerList/ManufacturerType'
 
 export const mockManufactureGetLookup: ManufacturerList = {
   manufacturerList: [
