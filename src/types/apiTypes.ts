@@ -872,3 +872,7 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   deleteVendorDetails: string
 }
+
+export interface CategoryListApi extends ApiBase {
+  getCategoryList: string
+}
