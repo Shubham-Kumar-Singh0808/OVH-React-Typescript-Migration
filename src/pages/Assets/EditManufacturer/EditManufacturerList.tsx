@@ -133,8 +133,8 @@ const EditManufacturerList = ({
                 data-testid="form-select"
                 aria-label="Default select example"
                 size="sm"
-                id="manufacturerId"
-                name="manufacturerId"
+                id="productName"
+                name="productName"
                 value={editManufacturerData?.productName}
                 onChange={onChangeInputHandler}
               >
