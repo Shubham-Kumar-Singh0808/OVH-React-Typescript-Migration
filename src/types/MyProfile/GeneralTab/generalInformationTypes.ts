@@ -52,6 +52,7 @@ export type EmployeeGeneralInformation = {
   passportExpDate?: string
   passportFrontPagePath?: string
   passportBackPagePath?: string
+  imageData?: string
 }
 export type ProfileDetailsProps = {
   employeeGeneralInformation: EmployeeGeneralInformation

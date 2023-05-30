@@ -868,6 +868,11 @@ export interface ProductTypeListApi extends ApiBase {
   addProduct: string
   updateProduct: string
 }
+export interface AssetListApi extends ApiBase {
+  getAllLookUps: string
+  getAllAssets: string
+  getAssetTypeChange: string
+}
 
 export interface AssetWarrantyReportApi extends ApiBase {
   getWarrantyAssetsList: string
