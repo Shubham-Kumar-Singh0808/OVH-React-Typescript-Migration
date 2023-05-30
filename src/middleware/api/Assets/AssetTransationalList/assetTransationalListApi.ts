@@ -1,16 +1,18 @@
-import { AssetTransactionListProps } from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
-import { GetWarrantyAssetsList } from '../../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
+import {
+  AssetTransactionListProps,
+  GetAssetTransactionList,
+} from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../utils/apiUtils'
-import { AllowedHttpMethods, assetWarrantyReportConfig } from '../../apiList'
+import { AllowedHttpMethods, assetTransactionListConfig } from '../../apiList'
 
 const getAssetTransactionList = async (
   props: AssetTransactionListProps,
-): Promise<GetWarrantyAssetsList> => {
+): Promise<GetAssetTransactionList> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: assetWarrantyReportConfig.getWarrantyAssetsList,
+    url: assetTransactionListConfig.getAssetTransactionList,
     method: AllowedHttpMethods.post,
     params: {
       dateSelection: props.dateSelection ?? '',
@@ -25,8 +27,8 @@ const getAssetTransactionList = async (
   return response.data
 }
 
-const assetsWarrantyListApi = {
+const assetTransactionalListApi = {
   getAssetTransactionList,
 }
 
-export default assetsWarrantyListApi
+export default assetTransactionalListApi
