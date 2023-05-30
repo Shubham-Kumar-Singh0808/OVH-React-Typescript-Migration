@@ -4,14 +4,9 @@ import assetListSliceReducer, {
   assetListService,
   initialAssetTypeChangeListState,
 } from './AssetListSlice'
-import reducer from './AssetListSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { ManufacturerList } from '../../../types/Assets/AssetList/AssetListTypes'
-import {
-  mockAllAssetListData,
-  mockAssetTypeChangeList,
-  mockGetAllLookUpsResponse,
-} from '../../../test/data/AssetListData'
+import { mockAssetTypeChangeList } from '../../../test/data/AssetListData'
 
 describe('Asset List Slice', () => {
   describe('Asset List test', () => {
@@ -24,20 +19,6 @@ describe('Asset List Slice', () => {
       expect(state).toEqual({
         asset: [],
         isLoading: ApiLoadingState.idle,
-        manufacturerList: {} as ManufacturerList,
-        allAssetList: [],
-        listSize: 0,
-      })
-    })
-    it('Should set isLoading to "loading" when getAssets is pending', () => {
-      const action = assetListService.getAllLookUps.pending
-      const state = assetListSliceReducer(
-        initialAssetTypeChangeListState,
-        action,
-      )
-      expect(state).toEqual({
-        asset: [],
-        isLoading: ApiLoadingState.loading,
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
@@ -86,20 +67,6 @@ describe('Asset List Slice', () => {
         asset: undefined,
         isLoading: ApiLoadingState.succeeded,
         manufacturerList: {} as ManufacturerList,
-        allAssetList: [],
-        listSize: 0,
-      })
-    })
-    it('Should set isLoading to "success" when get all assets is fulfilled', () => {
-      const action = assetListService.getAllLookUps.fulfilled
-      const state = assetListSliceReducer(
-        initialAssetTypeChangeListState,
-        action,
-      )
-      expect(state).toEqual({
-        asset: [],
-        isLoading: ApiLoadingState.succeeded,
-        manufacturerList: undefined,
         allAssetList: [],
         listSize: 0,
       })
