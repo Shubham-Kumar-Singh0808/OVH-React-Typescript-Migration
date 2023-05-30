@@ -1,20 +1,14 @@
+import { CategoryDetails } from '../../../../types/ExpenseManagement/Category/categoryListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
 } from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, categoryListApiConfig } from '../../apiList'
 
-const getExpenseCategories = async (
-  props: CategoryListApiProps,
-): Promise<GetAllVendorDetails> => {
+const getExpenseCategories = async (): Promise<CategoryDetails> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoryListApiConfig.getCategoryList,
     method: AllowedHttpMethods.get,
-    params: {
-      endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
-      vendorName: props.vendorName,
-    },
   })
 
   const response = await useAxios(requestConfig)
