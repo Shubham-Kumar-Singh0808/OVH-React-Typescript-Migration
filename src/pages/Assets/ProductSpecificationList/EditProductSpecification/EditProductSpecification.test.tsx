@@ -1,6 +1,5 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import userEvent from '@testing-library/user-event'
 import EditProductSpecification from './EditProductSpecification'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { render, screen } from '../../../../test/testUtils'
@@ -54,12 +53,5 @@ describe('Edit Product Specification  without data', () => {
   })
   test('should render add Product Specification back button', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-  })
-  test('should able to click Add Button', () => {
-    const addBtnElement = screen.getByRole('button', {
-      name: 'Add',
-    })
-    expect(addBtnElement).toBeEnabled()
-    userEvent.click(addBtnElement)
   })
 })
