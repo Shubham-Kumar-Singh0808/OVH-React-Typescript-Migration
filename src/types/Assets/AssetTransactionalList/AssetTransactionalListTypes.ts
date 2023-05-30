@@ -1,3 +1,4 @@
+import { type } from 'os'
 import { LoadingState } from '../../commonTypes'
 
 export type AssetTransactionalList = {
@@ -35,4 +36,20 @@ export type WarrantyAssetsListSliceState = {
   getAssetTransactionList: GetAssetTransactionList
   listSize: number
   isLoading: LoadingState
+}
+
+export type AssetTransactionListProps = {
+  dateSelection: string
+  endIndex: number
+  from: string
+  startIndex: number
+  to: string
+}
+
+export type AssetTransactionListData = {
+  assetId: string
+  multipleSearch: string
+  productId: string
+  searchByEmpName: boolean
+  status: string
 }
