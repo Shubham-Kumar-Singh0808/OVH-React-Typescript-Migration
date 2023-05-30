@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormTextarea, CRow } from '@coreui/react-pro'
+import ManagerAppraisalTable from './ManagerAppraisalTable'
 import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -72,7 +73,7 @@ const ManagerAppraisalForm = (): JSX.Element => {
       {isLoading !== ApiLoadingState.loading &&
       isReviewCommentsLoading !== ApiLoadingState.loading ? (
         <>
-          <ReviewFormTable />
+          <ManagerAppraisalTable />
           {appraisalForm?.formStatus === 'COMPLETED' ||
           appraisalForm?.formStatus === 'SUBMIT' ||
           appraisalForm?.formStatus === 'SAVE' ? (

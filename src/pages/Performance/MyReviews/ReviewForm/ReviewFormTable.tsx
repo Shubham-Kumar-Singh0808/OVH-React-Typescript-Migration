@@ -241,7 +241,6 @@ const ReviewFormTable = (): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
-
       {Number(appraisalForm?.formStatusvalue) >= 1 ? (
         ''
       ) : (
