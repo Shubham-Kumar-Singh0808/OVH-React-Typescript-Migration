@@ -62,9 +62,6 @@ const AssetListFilters = ({
     }
   }, [asset])
 
-  // const assetListTypeList = useTypedSelector(
-  //   reduxServices.assetList.selectors.manufacturerList,
-  // )
   const assetListTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
