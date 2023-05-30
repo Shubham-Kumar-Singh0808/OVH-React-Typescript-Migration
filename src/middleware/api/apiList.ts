@@ -113,6 +113,7 @@ import {
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  AssetTransationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1023,4 +1024,8 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
+}
+export const assetTransactionListConfig: AssetTransationListApi = {
+  getAssetTransactionList:
+    apiPrefix + '/assetManagement/getTransactionalHistory',
 }

@@ -1,12 +1,5 @@
 import { AxiosError } from 'axios'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import {
-  AssetsWarrantyListProps,
-  ExportAssetWarrantyListProps,
-  GetWarrantyAssetsList,
-  WarrantyAssetsList,
-  WarrantyAssetsListSliceState,
-} from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
 import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -15,10 +8,11 @@ import {
   AssetTransactionListProps,
   AssetTransactionListSliceState,
   GetAssetTransactionList,
+  AssetTransactionalList,
 } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 import assetTransactionalListApi from '../../../middleware/api/Assets/AssetTransationalList/assetTransationalListApi'
 
-const getAssetsWarrantyList = createAsyncThunk(
+const getAssetTransactionList = createAsyncThunk(
   'assetManagement/assetTransactionalList',
   async (props: AssetTransactionListProps, thunkApi) => {
     try {
@@ -44,38 +38,43 @@ const assetTransactionListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getAssetsWarrantyList.pending), (state) => {
+      .addMatcher(isAnyOf(getAssetTransactionList.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
       })
-      .addMatcher(isAnyOf(getAssetsWarrantyList.fulfilled), (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.warrantyAssetsDetails = action.payload.list
-        state.listSize = action.payload.size
-      })
+      .addMatcher(
+        isAnyOf(getAssetTransactionList.fulfilled),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.assetTransactionakDetails = action.payload.list
+          state.listSize = action.payload.size
+        },
+      )
   },
 })
 
-const assetsWarrantyListThunk = {
-  getAssetsWarrantyList,
+const assetTransactionListThunk = {
+  getAssetTransactionList,
 }
 
 function isLoading(state: RootState): LoadingState {
-  return state.assetsWarrantyList.isLoading
+  return state.assetTransactionList.isLoading
 }
-const assetsWarrantyList = (state: RootState): WarrantyAssetsList[] =>
-  state.assetsWarrantyList.warrantyAssetsDetails
-const listSize = (state: RootState): number => state.assetsWarrantyList.listSize
+const assetTransactionList = (state: RootState): AssetTransactionalList[] =>
+  state.assetTransactionList.assetTransactionakDetails
 
-export const assetsWarrantyListSelectors = {
+const listSize = (state: RootState): number =>
+  state.assetTransactionList.listSize
+
+export const assetTransactionListSelectors = {
   isLoading,
-  assetsWarrantyList,
+  assetTransactionList,
   listSize,
 }
 
-export const assetsWarrantyListService = {
-  ...assetsWarrantyListThunk,
+export const assetTransactionListService = {
+  ...assetTransactionListThunk,
   actions: assetTransactionListSlice.actions,
-  selectors: assetsWarrantyListSelectors,
+  selectors: assetTransactionListSelectors,
 }
 
 export default assetTransactionListSlice.reducer

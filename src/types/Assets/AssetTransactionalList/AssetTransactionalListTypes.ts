@@ -44,6 +44,11 @@ export type AssetTransactionListProps = {
   from: string
   startIndex: number
   to: string
+  assetId?: string
+  multipleSearch?: string
+  productId?: string
+  searchByEmpName?: boolean
+  status?: string
 }
 
 export type AssetTransactionListData = {

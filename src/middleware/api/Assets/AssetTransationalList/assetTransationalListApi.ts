@@ -1,4 +1,5 @@
 import {
+  AssetTransactionListData,
   AssetTransactionListProps,
   GetAssetTransactionList,
 } from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
@@ -20,6 +21,13 @@ const getAssetTransactionList = async (
       from: props.from ?? '',
       startIndex: props.startIndex ?? 0,
       to: props.to ?? '',
+    },
+    data: {
+      assetId: props.assetId,
+      multipleSearch: props.multipleSearch,
+      productId: props.productId,
+      searchByEmpName: props.searchByEmpName,
+      status: props.status,
     },
   })
 

@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { toDate } from 'date-fns'
+import { useDispatch } from 'react-redux'
 import AssetTransactionalListTable from './AssetTransactionalListTable'
 import AssetTransactionalListFilter from './AssetTransactionalListFilter'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const AssetTransactionalList = (): JSX.Element => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.assetTransactionList.getAssetTransactionList({
+        startIndex: 0,
+        endIndex: 20,
+        dateSelection: '',
+        from: '',
+        to: '',
+      }),
+    )
+  }, [dispatch])
   return (
     <>
       <OCard
