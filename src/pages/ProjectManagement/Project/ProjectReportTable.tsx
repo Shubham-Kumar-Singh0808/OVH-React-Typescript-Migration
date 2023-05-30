@@ -408,22 +408,28 @@ const ProjectReportsTable = ({
                         {isCloseBtnVisible &&
                           userAccessProjectClose?.viewaccess && (
                             <CTooltip content="Close">
-                              <CButton
-                                className="btn-ovh-employee-list me-1"
-                                color="danger btn-ovh me-1"
-                                data-testid="close-btn"
-                                onClick={() =>
-                                  handleShowCloseModal(
-                                    value.id,
-                                    value.projectName,
-                                  )
-                                }
-                              >
-                                <i
-                                  className="fa fa-times text-white sh-fa-times"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
+                              {value.status === 'Closed' ? (
+                                <></>
+                              ) : (
+                                <>
+                                  <CButton
+                                    className="btn-ovh-employee-list me-1"
+                                    color="danger btn-ovh me-1"
+                                    data-testid="close-btn"
+                                    onClick={() =>
+                                      handleShowCloseModal(
+                                        value.id,
+                                        value.projectName,
+                                      )
+                                    }
+                                  >
+                                    <i
+                                      className="fa fa-times text-white sh-fa-times"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </CButton>
+                                </>
+                              )}
                             </CTooltip>
                           )}
                       </CTableDataCell>
