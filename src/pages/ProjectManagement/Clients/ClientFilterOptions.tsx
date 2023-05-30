@@ -13,13 +13,9 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ClientStatus } from '../../../types/ProjectManagement/Clients/clientsTypes'
 
 const ClientFilterOptions = ({
-  currentPage,
-  pageSize,
   setCurrentPage,
   setPageSize,
 }: {
-  currentPage: number
-  pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
@@ -68,7 +64,7 @@ const ClientFilterOptions = ({
     }
   }
 
-  const searchButtonHandler = (e: React.SyntheticEvent) => {
+  const searchButtonHandler = () => {
     dispatch(
       reduxServices.clients.searchClients({
         startIndex: 0,

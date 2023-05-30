@@ -46,13 +46,11 @@ const Clients = (): JSX.Element => {
 
   return (
     <OCard
-      className="mb-4 myprofile-wrapper"
+      className="mb-4 myprofile-wrapper client-Alignment"
       title={'Clients'}
       CFooterClassName="d-none"
     >
       <ClientFilterOptions
-        currentPage={currentPage}
-        pageSize={pageSize}
         setCurrentPage={setCurrentPage}
         setPageSize={setPageSize}
       />

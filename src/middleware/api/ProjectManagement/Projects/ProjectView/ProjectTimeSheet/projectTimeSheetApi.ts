@@ -1,6 +1,8 @@
 import axios from 'axios'
-import { ProjectTimeSheetProps } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetTypes'
-import { EmployeeHiveReport } from '../../../../../../types/TimeAndAttendance/HiveActivityReport/hiveActivityReportTypes'
+import {
+  EmployeeTimeSheet,
+  ProjectTimeSheetProps,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTimeSheet/projectTimeSheetTypes'
 import { getAuthenticatedRequestConfig } from '../../../../../../utils/apiUtils'
 import {
   projectTimeSheetApiConfig,
@@ -9,7 +11,7 @@ import {
 
 const getProjectTimeSheet = async (
   props: ProjectTimeSheetProps,
-): Promise<EmployeeHiveReport> => {
+): Promise<EmployeeTimeSheet[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: projectTimeSheetApiConfig.getProjectTimeSheet,
     method: AllowedHttpMethods.get,
