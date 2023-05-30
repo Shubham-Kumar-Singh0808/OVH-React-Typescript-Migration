@@ -121,6 +121,7 @@ import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { vendorListService } from './Assets/VendorList/vendorListSlice'
+import { addNewVendorService } from './Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import { changeReporteesService } from './Settings/ChangeReportees/changeReporteesSlice'
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
@@ -250,6 +251,7 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
   vendorList: vendorListService,
+  addNewVendor: addNewVendorService,
   changeReportees: changeReporteesService,
   ManufacturerList: ManufacturerListService,
   ProductTypeList: ProductTypeListService,

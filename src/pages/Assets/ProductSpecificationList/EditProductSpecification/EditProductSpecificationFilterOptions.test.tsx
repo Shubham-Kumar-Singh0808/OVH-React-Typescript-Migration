@@ -7,7 +7,6 @@ import { mockProductSpecificationList } from '../../../../test/data/ProductSpeci
 import { GetProductSpecificationListDetails } from '../../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
 
 const mockSetTogglePage = jest.fn()
-const mockHandleAdd = jest.fn()
 
 const toRender = (
   <div>
@@ -82,7 +81,6 @@ describe('EditProductSpecification FilterOptions Component Testing with data', (
   test('should render add Product Specification back button', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
   })
-
   test('should render fields', () => {
     const AssetTypeDropdown = screen.getByTestId('form-select1')
     fireEvent.change(AssetTypeDropdown, ['Hardware'])

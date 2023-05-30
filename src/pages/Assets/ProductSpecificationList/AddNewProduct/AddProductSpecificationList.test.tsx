@@ -10,35 +10,29 @@ import {
   ManufacturerList,
 } from '../../../../types/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListTypes'
 
-const mockSetTogglePage = jest.fn()
-
 describe('Product Specification without data', () => {
   beforeEach(() => {
-    render(<AddProductSpecificationList setToggle={jest.fn()} />, {
-      preloadedState: {
-        addProduct: {
-          assetType: [],
-          productType: [],
-          isLoading: ApiLoadingState.idle,
-          getAssetTypeListData: {} as GetAssetTypeListData,
-          assetTypeList: [],
-          manufactureList: {} as ManufacturerList,
+    render(
+      <AddProductSpecificationList setToggle={jest.fn()} searchInput={''} />,
+      {
+        preloadedState: {
+          addProduct: {
+            assetType: [],
+            productType: [],
+            isLoading: ApiLoadingState.idle,
+            getAssetTypeListData: {} as GetAssetTypeListData,
+            assetTypeList: [],
+            manufactureList: {} as ManufacturerList,
+          },
         },
       },
-    })
+    )
   })
   test('should be able to render  Add Product Specification  Title', () => {
     expect(screen.getByText('Add Product Specification')).toBeInTheDocument()
   })
   test('should render add Product Specification back button', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-  })
-  test('should able to click Add Button', () => {
-    const addBtnElement = screen.getByRole('button', {
-      name: 'Add',
-    })
-    expect(addBtnElement).toBeEnabled()
-    userEvent.click(addBtnElement)
   })
   test('should be able to click save button element', () => {
     const saveBtnElement = screen.getByTestId('add-btn')

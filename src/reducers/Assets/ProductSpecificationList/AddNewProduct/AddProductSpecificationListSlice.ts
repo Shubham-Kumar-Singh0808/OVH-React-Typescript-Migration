@@ -40,17 +40,17 @@ const getProductTypeList = createAsyncThunk(
   },
 )
 
-const getAllLookUps = createAsyncThunk(
-  'AssetTypeListData/getAllLookUps       ',
-  async (_, thunkApi) => {
-    try {
-      return await assetTypeListApi.getAllLookUpList()
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
+// const getAllLookUps = createAsyncThunk(
+//   'AssetTypeListData/getAllLookUps       ',
+//   async (_, thunkApi) => {
+//     try {
+//       return await assetTypeListApi.getAllLookUpList()
+//     } catch (error) {
+//       const err = error as AxiosError
+//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+//     }
+//   },
+// )
 
 const deleteProductSpecification = createAsyncThunk<
   number | undefined,
@@ -148,19 +148,19 @@ const addProductSlice = createSlice({
         state.isLoading = ApiLoadingState.loading
       })
 
-      .addMatcher(isAnyOf(getAllLookUps.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(getAllLookUps.fulfilled), (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.manufactureList = action.payload
-      })
+    // .addMatcher(isAnyOf(getAllLookUps.pending), (state) => {
+    //   state.isLoading = ApiLoadingState.loading
+    // })
+    // .addMatcher(isAnyOf(getAllLookUps.fulfilled), (state, action) => {
+    //   state.isLoading = ApiLoadingState.succeeded
+    //   state.manufactureList = action.payload
+    // })
   },
 })
 const addProductThunk = {
   getAssetTypeList,
   getProductTypeList,
-  getAllLookUps,
+  // getAllLookUps,
   addProductSpecifications,
   deleteProductSpecification,
   updateProductSpecification,

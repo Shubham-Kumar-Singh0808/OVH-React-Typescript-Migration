@@ -255,8 +255,8 @@ const AppContent = () => {
     } else {
       dispatch(reduxServices.projectReport.actions.setProjectHealth('All'))
       dispatch(reduxServices.projectReport.actions.setPricingModel('All'))
-      dispatch(reduxServices.projectReport.actions.setSelectValue('INPROGRESS'))
-      dispatch(reduxServices.projectReport.actions.setStatusValue(''))
+      dispatch(reduxServices.projectReport.actions.setSelectValue(''))
+      dispatch(reduxServices.projectReport.actions.setStatusValue('INPROGRESS'))
       dispatch(reduxServices.projectReport.actions.setCustomFromValue(''))
       dispatch(reduxServices.projectReport.actions.setCustomToValue(''))
     }

@@ -31,20 +31,20 @@ const EditProductSpecificationFilterOptions = ({
   const [selectedAssetType, setSelectedAssetType] = useState<number | string>(
     editProductSpecification.assetTypeId,
   )
-  console.log(selectedAssetType + 'selectedAssetType')
 
   const [selectedProductType, setSelectedProductType] = useState<
     number | string
   >(editProductSpecification.productName)
 
-  console.log(selectedProductType + 'selectedProductType')
-
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
   >(editProductSpecification?.manufacturerName)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  // const getAllLookUps = useTypedSelector(
+  //   reduxServices.addNewProduct.selectors.manufactureList,
+  // )
   const getAllLookUps = useTypedSelector(
-    reduxServices.addNewProduct.selectors.manufactureList,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
   const AssetType = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -56,8 +56,6 @@ const EditProductSpecificationFilterOptions = ({
     reduxServices.addNewProduct.selectors.productTypeList,
   )
 
-  console.log(setShowEditor)
-
   useEffect(() => {
     if (editProductSpecification.id && editProductSpecification.assetType) {
       setIsAddButtonEnabled(true)
@@ -67,7 +65,7 @@ const EditProductSpecificationFilterOptions = ({
   }, [editProductSpecification])
 
   useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
   useEffect(() => {
     if (selectedAssetType) {
@@ -90,6 +88,10 @@ const EditProductSpecificationFilterOptions = ({
     selectedProductType,
     editProductSpecification,
   ])
+
+  useEffect(() => {
+    setShowEditor(false)
+  }, [])
 
   const updateSuccessToastMessage = (
     <OToast

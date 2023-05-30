@@ -1,5 +1,7 @@
+/* eslint-disable max-lines */
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
+
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -1016,7 +1018,8 @@ export const vendorListApiConfig: VendorListApi = {
   getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
   addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
   exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
-  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+  deleteVendorDetails: apiPrefix + '/assetManagement/deleteVendorDetails',
+  editVendorDetails: apiPrefix + '/assetManagement/updateVendorDetails',
 }
 
 export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
@@ -1036,6 +1039,9 @@ export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addProduct: apiPrefix + 'assetManagement/addProduct',
+  updateProduct: apiPrefix + 'assetManagement/updateProduct',
 }
 
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
