@@ -25,15 +25,15 @@ const getAssetTypeList = async (id: number): Promise<AssetType[]> => {
   return response.data
 }
 
-const getAllLookUpList = async (): Promise<ManufacturerList> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: ProductSpecificationListReportApiConfig.getAllLookUps,
-    method: AllowedHttpMethods.get,
-  })
+// const getAllLookUpList = async (): Promise<ManufacturerList> => {
+//   const requestConfig = getAuthenticatedRequestConfig({
+//     url: ProductSpecificationListReportApiConfig.getAllLookUps,
+//     method: AllowedHttpMethods.get,
+//   })
 
-  const response = await useAxios(requestConfig)
-  return response.data
-}
+//   const response = await useAxios(requestConfig)
+//   return response.data
+// }
 
 const getProductTypeList = async (
   productId: number,
@@ -87,7 +87,7 @@ const updateProductSpecification = async (
 const assetTypeListApi = {
   getAssetTypeList,
   getProductTypeList,
-  getAllLookUpList,
+  // getAllLookUpList,
   deleteProductSpecification,
   addProductSpecifications,
   updateProductSpecification,

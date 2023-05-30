@@ -11,7 +11,7 @@ import {
 
 const mockSetTogglePage = jest.fn()
 
-describe('Job Openings without data', () => {
+describe('Edit Product Specification  without data', () => {
   beforeEach(() => {
     render(
       <EditProductSpecification

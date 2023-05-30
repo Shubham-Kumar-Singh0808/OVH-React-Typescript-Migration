@@ -22,8 +22,11 @@ const AddProduct = ({
   const [productSpecification, setProductSpecification] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
 
+  // const getAllLookUps = useTypedSelector(
+  //   reduxServices.addNewProduct.selectors.manufactureList,
+  // )
   const getAllLookUps = useTypedSelector(
-    reduxServices.addNewProduct.selectors.manufactureList,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
 
   const AssetTypeList = useTypedSelector(
@@ -42,7 +45,7 @@ const AddProduct = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
 
   useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
   useEffect(() => {

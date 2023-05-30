@@ -40,8 +40,11 @@ const EditProductSpecificationFilterOptions = ({
     number | string
   >(editProductSpecification?.manufacturerName)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  // const getAllLookUps = useTypedSelector(
+  //   reduxServices.addNewProduct.selectors.manufactureList,
+  // )
   const getAllLookUps = useTypedSelector(
-    reduxServices.addNewProduct.selectors.manufactureList,
+    reduxServices.ProductTypeList.selectors.manufacturerData,
   )
   const AssetType = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -62,7 +65,7 @@ const EditProductSpecificationFilterOptions = ({
   }, [editProductSpecification])
 
   useEffect(() => {
-    dispatch(reduxServices.addNewProduct.getAllLookUps())
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
   useEffect(() => {
     if (selectedAssetType) {
