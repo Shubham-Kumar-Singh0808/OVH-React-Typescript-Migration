@@ -115,7 +115,6 @@ const ManufacturerListTable = ({
     }
   }
   const editBtnHandler = (manufacturer: ManufacturerDetails) => {
-    console.log(manufacturer + 'test')
     setToggle('EditManufacturerList')
     setEditManufacturerData(manufacturer)
   }

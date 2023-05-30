@@ -34,7 +34,7 @@ const EditManufacturerList = ({
 
   useEffect(() => {
     if (
-      editManufacturerData.productId &&
+      editManufacturerData.productName &&
       editManufacturerData.manufacturerName
     ) {
       setIsAddButtonEnabled(true)
@@ -65,6 +65,7 @@ const EditManufacturerList = ({
       toastColor="success"
     />
   )
+
   const updateHandler = async () => {
     const prepareObject = {
       createdBy: editManufacturerData.createdBy,
@@ -127,14 +128,23 @@ const EditManufacturerList = ({
               className="col-sm-3 col-form-label text-end col-form-label category-label"
             >
               Product Type:{' '}
+              <span
+                className={
+                  editManufacturerData?.productName
+                    ? 'text-white'
+                    : 'text-danger'
+                }
+              >
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormSelect
                 data-testid="form-select"
                 aria-label="Default select example"
                 size="sm"
-                id="manufacturerId"
-                name="manufacturerId"
+                id="productName"
+                name="productName"
                 value={editManufacturerData?.productName}
                 onChange={onChangeInputHandler}
               >
