@@ -7,6 +7,8 @@ import {
 } from '../../../types/Assets/AssetList/ChangeAssetStatusType'
 import GetAllAssetsListApi from '../../../middleware/api/Assets/AssetList/ChangeAssetStatusApi'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { RootState } from '../../../stateStore'
+import { LoadingState } from '../../../types/commonTypes'
 
 const getAllAssets = createAsyncThunk(
   'assetManagement/getAllAssets',
@@ -21,8 +23,9 @@ const getAllAssets = createAsyncThunk(
 )
 
 const initialAllAssetStatusState: ChangeAssetStatusSliceState = {
-    saveEmployee,
-    getAllAssetResponse,
+  saveEmployee,
+  getAllAssetResponse,
+  isLoading: ApiLoadingState.idle,
 }
 
 const getAllAssetStatusSlice = createSlice({
@@ -41,3 +44,25 @@ const getAllAssetStatusSlice = createSlice({
       })
   },
 })
+const isLoading = (state: RootState): LoadingState =>
+  state.changeAssetStatus.isLoading
+const changestatus = (state: RootState): getAllAssets[] =>
+  state.changeAssetStatus.vendors
+const listSize = (state: RootState): number => state.changeAssetStatus.size
+
+const ChangeAssetStatusThunk = {
+  getAllAssets,
+}
+
+const ChangeStatusSelectors = {
+  isLoading,
+  changestatus,
+  listSize,
+}
+export const ChangeAssetStatusService = {
+  ...ChangeAssetStatusThunk,
+  actions: getAllAssetStatusSlice.actions,
+  selectors: ChangeStatusSelectors,
+}
+
+export default vendorListSlice.reducer

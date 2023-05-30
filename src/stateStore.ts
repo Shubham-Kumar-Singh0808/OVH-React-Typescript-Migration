@@ -133,6 +133,7 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import changeAssetStatusReducer from './reducers/Assets/AssetList/ChangeAssetStatusSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -266,6 +267,7 @@ export const allReducers = {
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
+  changeAssetStatus: changeAssetStatusReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
