@@ -197,12 +197,12 @@ const ProjectRequestViewDetails = (): JSX.Element => {
         </CRow>
         <CRow className="mt-1 mb-0">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Checklist::
+            Checklist:
           </CFormLabel>
           <CCol sm={10}>
             <CTable responsive align="middle" className="checkList-table">
               <CTableHead>
-                <CTableRow>
+                <CTableRow className="CheckList-view">
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col"> Checkpoint</CTableHeaderCell>
                   <CTableHeaderCell scope="col">
