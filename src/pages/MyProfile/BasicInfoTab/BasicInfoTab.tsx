@@ -28,6 +28,7 @@ import {
   reformatDate,
   dateFormatPerLocale,
 } from '../../../utils/dateFormatUtils'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -642,7 +643,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <BasicInfoTabImageCropper
-              file={employeeBasicInformation.thumbPicture}
+              file={`${base64Extension}${employeeBasicInformation.thumbPicture}`}
               empId={employeeBasicInformation.id as number}
               onUploadImage={croppedImageHandler}
             />

@@ -25,6 +25,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { base64Extension } from '../AchievementConstants'
 
 const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -98,7 +99,7 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                       <div>
                         <img
                           className="rounded-circle img-responsive"
-                          src={item.profilePicture}
+                          src={`${base64Extension}${item.profilePicture}`}
                           alt={item.employeeName}
                           width={35}
                         />

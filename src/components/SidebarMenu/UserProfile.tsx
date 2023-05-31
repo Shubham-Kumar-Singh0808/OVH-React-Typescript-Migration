@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import React from 'react'
 import { loggedInEmployeeSelectors } from '../../reducers/MyProfile/GeneralTab/generalInformationSlice'
 import { useTypedSelector } from '../../stateStore'
+import { base64Extension } from '../../pages/Achievements/AchievementConstants'
 
 const UserProfile = (): JSX.Element => {
   const employeeGeneralInformation = useTypedSelector(
@@ -15,7 +16,7 @@ const UserProfile = (): JSX.Element => {
         <CNavItem>
           <NavLink to="/profile">
             <img
-              src={employeeGeneralInformation?.profilePicPath}
+              src={`${base64Extension}${employeeGeneralInformation?.imageData}`}
               alt={employeeGeneralInformation?.fullName}
               className="user-profile-img"
             />
