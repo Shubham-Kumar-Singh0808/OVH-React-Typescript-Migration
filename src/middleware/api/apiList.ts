@@ -115,6 +115,8 @@ import {
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  AssetListApi,
+  ProductSpecificationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1015,6 +1017,10 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
 export const ManufacturerApiListConfig: ManufacturerApi = {
   getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
   exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addManufacturer: apiPrefix + '/assetManagement/addManufacturer',
+  deleteManufacturerName: apiPrefix + '/assetManagement/deleteManufacturerName',
+  updateManufacturerName: apiPrefix + '/assetManagement/updateManufacturerName',
 }
 export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
@@ -1024,9 +1030,32 @@ export const GetProductTypeListConfig: ProductTypeListApi = {
   addProduct: apiPrefix + 'assetManagement/addProduct',
   updateProduct: apiPrefix + 'assetManagement/updateProduct',
 }
-
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
+
+export const GetAssetListConfig: AssetListApi = {
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
+}
+export const ProductSpecificationListReportApiConfig: ProductSpecificationListApi =
+  {
+    getAllProductSpecifications:
+      apiPrefix + '/assetManagement/getAllProductSpecifications',
+    getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+    getassetTypeChangeList:
+      apiPrefix + '/assetManagement/getassetTypeChangeList',
+    getProductTypeChangeList:
+      apiPrefix + '/assetManagement/getProductTypeChangeList',
+    exportProductSpecificationList:
+      apiPrefix + '/assetManagement/exportProductSpecificationList',
+    addProductSpecifications:
+      apiPrefix + '/assetManagement/addProductSpecifications',
+    updateProductSpecification:
+      apiPrefix + '/assetManagement/updateProductSpecification',
+    deleteProductSpecification:
+      apiPrefix + '/assetManagement/deleteProductSpecification',
+  }

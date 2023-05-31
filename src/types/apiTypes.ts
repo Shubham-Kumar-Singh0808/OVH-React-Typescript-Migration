@@ -849,6 +849,10 @@ export interface ChangeReporteesApi extends ApiBase {
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
+  getAllLookUps: string
+  addManufacturer: string
+  deleteManufacturerName: string
+  updateManufacturerName: string
 }
 export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string
@@ -857,6 +861,11 @@ export interface ProductTypeListApi extends ApiBase {
   getAllLookUps: string
   addProduct: string
   updateProduct: string
+}
+export interface AssetListApi extends ApiBase {
+  getAllLookUps: string
+  getAllAssets: string
+  getAssetTypeChange: string
 }
 
 export interface AssetWarrantyReportApi extends ApiBase {
@@ -871,4 +880,14 @@ export interface VendorListApi extends ApiBase {
   editVendorDetails: string
   exportVendorData: string
   deleteVendorDetails: string
+}
+export interface ProductSpecificationListApi extends ApiBase {
+  getAllProductSpecifications: string
+  getassetTypeChangeList: string
+  getAllLookUps: string
+  getProductTypeChangeList: string
+  exportProductSpecificationList: string
+  addProductSpecifications: string
+  deleteProductSpecification: string
+  updateProductSpecification: string
 }
