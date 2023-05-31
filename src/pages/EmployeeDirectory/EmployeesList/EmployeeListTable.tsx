@@ -18,7 +18,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { base64Extension } from '../../Achievements/AchievementConstants'
+import { baseImageExtension } from '../../Achievements/AchievementConstants'
 
 const EmployeeListTable = ({
   paginationRange,
@@ -76,13 +76,14 @@ const EmployeeListTable = ({
           <CTableBody>
             {employees?.length > 0 &&
               employees.map((employee, index) => {
+                const imageUrl = employee.thumbPicture
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
-                      <CImage
-                        src={`${base64Extension}${employee?.thumbPicture}`}
-                        className="employee-thumb"
-                      />
+                      <CImage src={finalImageUrl} className="employee-thumb" />
                     </CTableHeaderCell>
                     <CTableDataCell>{employee.id}</CTableDataCell>
                     <CTableDataCell>

@@ -3,7 +3,7 @@ import React from 'react'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
-import { base64Extension } from '../../Achievements/AchievementConstants'
+import { baseImageExtension } from '../../Achievements/AchievementConstants'
 
 const UpcomingBirthdays = (): JSX.Element => {
   const upcomingEmployeeBirthdays = useTypedSelector(
@@ -22,16 +22,17 @@ const UpcomingBirthdays = (): JSX.Element => {
           <div className="birthdays-panel-body ps-0 pe-0">
             <ul className="birthdays-list-group recent-comments mb0">
               {upcomingEmployeeBirthdays?.map((birthday, index) => {
+                const imageUrl = birthday.imagePath
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <li
                     className="birthdays-list-group-item clearfix"
                     key={index}
                   >
                     <div className="pull-left mr15">
-                      <CImage
-                        className="birthday-avatar"
-                        src={`${base64Extension}${birthday.imagePath}`}
-                      />
+                      <CImage className="birthday-avatar" src={finalImageUrl} />
                     </div>
                     <p className="text-ellipsis mb0">
                       <span className="strong">{birthday.name}</span>
