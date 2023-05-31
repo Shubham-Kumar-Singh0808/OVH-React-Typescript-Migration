@@ -875,4 +875,6 @@ export interface VendorListApi extends ApiBase {
 
 export interface CategoryListApi extends ApiBase {
   getCategoryList: string
+  addCategory: string
+  checkForDuplicateCategory: string
 }

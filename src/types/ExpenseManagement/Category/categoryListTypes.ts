@@ -1,3 +1,6 @@
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import { LoadingState, ValidationError } from '../../commonTypes'
+
 export type CategoryList = {
   id: number
   categoryName: string
@@ -7,6 +10,16 @@ export type CategoryList = {
   updatedDate: string | null
 }
 
-export type CategoryDetails = {
-  list: CategoryList[]
+export type CategoryListSliceState = {
+  getAllCategory: CategoryList[]
+  isLoading: LoadingState
+  error: ValidationError
+  currentPage: number
+  pageSize: number
+}
+
+export type CategoryListTableProps = {
+  userAccess: UserAccessToFeatures | undefined
+  updateaccess?: boolean
+  userEditAccess?: boolean
 }

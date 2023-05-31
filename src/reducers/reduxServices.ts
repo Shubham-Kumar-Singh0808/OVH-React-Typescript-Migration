@@ -124,6 +124,8 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
+import { categoryListService } from './ExpenseManagement/Category/categoryListSlice'
+import { addNewCategoryService } from './ExpenseManagement/Category/AddNewCategory/addNewCategorySlice'
 
 export const reduxServices = {
   app: appService,
@@ -252,4 +254,6 @@ export const reduxServices = {
   ManufacturerList: ManufacturerListService,
   ProductTypeList: ProductTypeListService,
   assetsWarrantyList: assetsWarrantyListService,
+  categoryList: categoryListService,
+  addNewCategory: addNewCategoryService,
 }

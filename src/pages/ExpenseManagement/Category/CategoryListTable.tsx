@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CTable,
   CTableHead,
@@ -9,12 +9,27 @@ import {
   CCol,
   CRow,
   CLink,
+  CButton,
+  CTooltip,
 } from '@coreui/react-pro'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { CategoryListTableProps } from '../../../types/ExpenseManagement/Category/categoryListTypes'
 
-const ExpenseCategoryListTable = (): JSX.Element => {
+const ExpenseCategoryListTable = ({
+  userAccess,
+}: CategoryListTableProps): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const categoryList = useTypedSelector(
+    reduxServices.categoryList.selectors.categories,
+  )
+  useEffect(() => {
+    dispatch(reduxServices.categoryList.getCategoryList())
+  }, [dispatch])
+
   return (
     <>
-      <CTable striped className="mt-3 mb-3">
+      <CTable className="mt-4 mb-4">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -23,113 +38,40 @@ const ExpenseCategoryListTable = (): JSX.Element => {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {/* {/* {isLoading !== ApiLoadingState.loading ? (
-            currentPageItems.map((ticketReport, index) => { */}
-          {/* return (
+          {categoryList?.length > 0 &&
+            categoryList?.map((categoryItems, index) => {
+              return (
                 <CTableRow key={index}>
+                  <CTableDataCell>{index + 1}</CTableDataCell>
+                  <CTableDataCell className="ng-binding">
+                    {categoryItems.categoryName}
+                  </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {getItemNumber(index)}
+                    <div className="buttons-clients">
+                      {/* {userAccess?.updateaccess && ()} */}
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+
+                      {/* {userAccess?.deleteaccess && ( )} */}
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    </div>
                   </CTableDataCell>
-                  <CTableDataCell>{ticketReport.trackerName}</CTableDataCell>
-                  <CTableDataCell><div className="buttons-clients">
-                      {userAccess?.updateaccess && (
-                        <CTooltip content="Edit">
-                          <CButton
-                            color="info btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() => editButtonHandler(vendor)}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                      {userAccess?.deleteaccess && (
-                        <CTooltip content="Delete">
-                          <CButton
-                            color="danger btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              onDeleteBtnClick(
-                                vendor.vendorId,
-                                vendor.vendorName,
-                              )
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                    </div></CTableDataCell>
-                  <CTableDataCell>
-                    {ticketReport.subCategoryName}
-                  </CTableDataCell>
-                  {ticketReport.noOfTickets > 0 ? (
-                    <CTableDataCell scope="row">
-                      <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid="num-tickets"
-                        onClick={() =>
-                          handleTicket(
-                            ticketReport.categoryId,
-                            ticketReport.trackerId,
-                            ticketReport.subCategoryId,
-                          )
-                        }
-                      >
-                        {ticketReport.noOfTickets}
-                      </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{ticketReport.noOfTickets}</CTableDataCell>
-                  )}
-                  {ticketReport.noOfClosedTickets > 0 ? (
-                    <CTableDataCell>
-                      <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid="close-tickets"
-                        onClick={() =>
-                          handleClickTicketDetails(
-                            ticketReport.categoryId,
-                            ticketReport.trackerId,
-                            ticketReport.subCategoryId,
-                          )
-                        }
-                      >
-                        {ticketReport.noOfClosedTickets}
-                      </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>
-                      {ticketReport.noOfClosedTickets}
-                    </CTableDataCell>
-                  )}
-                  {ticketReport.noOfPendingTickets > 0 ? (
-                    <CTableDataCell>
-                      <CLink
-                        className="cursor-pointer text-decoration-none text-primary"
-                        data-testid="pending-tickets"
-                        onClick={() =>
-                          handlePendingTicket(
-                            ticketReport.categoryId,
-                            ticketReport.trackerId,
-                            ticketReport.subCategoryId,
-                          )
-                        }
-                      >
-                        {ticketReport.noOfPendingTickets}
-                      </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>
-                      {ticketReport.noOfPendingTickets}
-                    </CTableDataCell>
-                  )}
                 </CTableRow>
               )
-            })
-          ) : (
-            <OLoadingSpinner type={LoadingType.PAGE} />
-          )} */}
+            })}
         </CTableBody>
       </CTable>
     </>

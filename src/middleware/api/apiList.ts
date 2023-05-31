@@ -1033,4 +1033,8 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
 }
 export const categoryListApiConfig: CategoryListApi = {
   getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  addCategory: apiPrefix + '/ExpenseManagement/addCategory',
+  checkForDuplicateCategory:
+    apiPrefix +
+    '/ExpenseManagement/checkForDuplicateCategory?categoryName=Ray+Technologies',
 }
