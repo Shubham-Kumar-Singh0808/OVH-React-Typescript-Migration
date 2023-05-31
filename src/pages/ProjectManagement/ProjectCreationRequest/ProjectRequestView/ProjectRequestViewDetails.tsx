@@ -97,8 +97,8 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">
-              {projectViewDetails?.type.charAt(0).toUpperCase()}
-              {projectViewDetails?.type.slice(1).toLowerCase()}
+              {projectViewDetails?.type?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.type?.slice(1)?.toLowerCase()}
             </p>
           </CCol>
         </CRow>
@@ -108,8 +108,8 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">
-              {projectViewDetails?.model.charAt(0).toUpperCase()}
-              {projectViewDetails?.model.slice(1).toLowerCase()}
+              {projectViewDetails?.model?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.model?.slice(1)?.toLowerCase()}
             </p>
           </CCol>
         </CRow>
