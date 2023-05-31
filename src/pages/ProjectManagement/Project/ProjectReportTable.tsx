@@ -407,7 +407,7 @@ const ProjectReportsTable = ({
                           {value.status}
                         </span>
                       </CTableDataCell>
-                      <CTableDataCell>
+                      <CTableDataCell className="closeClient-btn">
                         {isCloseBtnVisible &&
                           userAccessProjectClose?.viewaccess && (
                             <CTooltip content="Close">
@@ -436,7 +436,9 @@ const ProjectReportsTable = ({
                             </CTooltip>
                           )}
                       </CTableDataCell>
-                      <CTableDataCell style={{ width: '120px' }}>
+                      <CTableDataCell
+                        style={{ width: '120px', paddingLeft: '0' }}
+                      >
                         <Link to={`/viewProject/${value.id}`}>
                           <CTooltip content="View">
                             <CButton

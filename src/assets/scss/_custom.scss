@@ -474,3 +474,10 @@ input.capetalized {
   background-color: #fff;
     box-shadow: none;
 }
+.closeClient-btn{
+  padding-right: 0 !important;
+  text-align: right;
+  .me-1{
+    margin-right: -4px !important;
+  }
+}
