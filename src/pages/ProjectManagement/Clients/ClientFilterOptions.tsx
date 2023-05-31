@@ -13,11 +13,11 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ClientStatus } from '../../../types/ProjectManagement/Clients/clientsTypes'
 
 const ClientFilterOptions = ({
-  currentPage,
-  pageSize,
+  setCurrentPage,
+  setPageSize,
 }: {
-  currentPage: number
-  pageSize: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -43,6 +43,8 @@ const ClientFilterOptions = ({
       ),
     )
     setSearchInput('')
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const searchButtonHandlerOnKeyDown = (
@@ -51,25 +53,28 @@ const ClientFilterOptions = ({
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.clients.searchClients({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
+          startIndex: 0,
+          endIndex: 20,
           selectionStatus: selectedClientStatus,
           searchText: searchInput,
         }),
       )
+      setCurrentPage(1)
+      setPageSize(20)
     }
   }
 
-  const searchButtonHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const searchButtonHandler = () => {
     dispatch(
       reduxServices.clients.searchClients({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: 0,
+        endIndex: 20,
         selectionStatus: selectedClientStatus,
         searchText: searchInput,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   return (

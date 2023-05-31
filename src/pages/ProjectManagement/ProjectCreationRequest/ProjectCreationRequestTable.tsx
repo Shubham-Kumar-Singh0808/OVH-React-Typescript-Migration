@@ -74,6 +74,7 @@ const ProjectCreationRequestTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const getItemNumber = (index: number) => {
@@ -359,7 +360,7 @@ const ProjectCreationRequestTable = ({
             {projectRequestListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
+                options={[20, 40, 60, 80, 100]}
                 selectedPageSize={pageSize}
               />
             )}

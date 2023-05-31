@@ -29,13 +29,13 @@ const ViewJobInfo = ({
         <div className="pull-right">
           <CTooltip content="Edit">
             <CButton
-              className="btn-ovh me-1"
+              className="btn-ovh me-4"
               color="info"
               type="button"
               data-testid="edit-button"
               onClick={() => setToggle('editViewJobOpening')}
             >
-              <i className="fa fa-edit text-white me-1">&nbsp; Edit</i>
+              <i className="fa fa-edit text-white me-1"></i>Edit
             </CButton>
           </CTooltip>
           <CButton

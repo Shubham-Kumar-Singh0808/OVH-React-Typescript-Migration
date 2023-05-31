@@ -16,15 +16,16 @@ const Clients = (): JSX.Element => {
   const selectedClientStatus = useTypedSelector(
     reduxServices.clients.selectors.selectedClientStatus,
   )
-  const selectClientCurrentPage = useTypedSelector(
+  const CurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
 
   useEffect(() => {
-    if (selectClientCurrentPage) {
-      setCurrentPage(selectClientCurrentPage)
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
     }
-  }, [selectClientCurrentPage])
+  }, [CurrentPage])
+
   const {
     paginationRange,
     setPageSize,
@@ -36,20 +37,23 @@ const Clients = (): JSX.Element => {
   useEffect(() => {
     dispatch(
       reduxServices.clients.getClients({
-        startIndex: pageSize * (selectClientCurrentPage - 1),
-        endIndex: pageSize * selectClientCurrentPage,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         selectionStatus: selectedClientStatus,
       }),
     )
-  }, [selectClientCurrentPage, dispatch, pageSize, selectedClientStatus])
+  }, [currentPage, dispatch, pageSize, selectedClientStatus])
 
   return (
     <OCard
-      className="mb-4 myprofile-wrapper"
+      className="mb-4 myprofile-wrapper client-Alignment"
       title={'Clients'}
       CFooterClassName="d-none"
     >
-      <ClientFilterOptions currentPage={currentPage} pageSize={pageSize} />
+      <ClientFilterOptions
+        setCurrentPage={setCurrentPage}
+        setPageSize={setPageSize}
+      />
       <ClientsTable
         paginationRange={paginationRange}
         setPageSize={setPageSize}

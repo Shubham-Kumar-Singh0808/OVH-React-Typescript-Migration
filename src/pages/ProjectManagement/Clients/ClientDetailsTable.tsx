@@ -76,11 +76,7 @@ const ClientDetailsTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable
-        responsive
-        striped
-        className="mt-2 text-start profile-tab-table-size"
-      >
+      <CTable striped className="mt-2 text-start profile-tab-table-size">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
@@ -145,15 +141,18 @@ const ClientDetailsTable = (): JSX.Element => {
           ) : (
             <OLoadingSpinner type={LoadingType.PAGE} />
           )}
+          <CTableRow className="client-No-Records">
+            {!projectsUnderClient?.length &&
+              isLoading !== ApiLoadingState.loading && (
+                <CCol className="text-start ms-4">
+                  <CRow>
+                    <h5>No Records Found... </h5>
+                  </CRow>
+                </CCol>
+              )}
+          </CTableRow>
         </CTableBody>
       </CTable>
-      {!projectsUnderClient?.length && isLoading !== ApiLoadingState.loading && (
-        <CCol className="text-start ms-4">
-          <CRow>
-            <h5>No Records Found... </h5>
-          </CRow>
-        </CCol>
-      )}
     </>
   )
 }

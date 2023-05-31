@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import moment from 'moment'
+import { useParams } from 'react-router-dom'
 import ProjectHiveActivityReportOptions from './ProjectHiveActivityReportOptions'
 import ProjectHiveActivityTable from './ProjectHiveActivityTable'
 import OCard from '../../../../../components/ReusableComponent/OCard'
@@ -14,6 +15,7 @@ const ProjectHiveActivityReport = (): JSX.Element => {
   const viewButtonHandler = () => {
     setIsViewClicked(true)
   }
+  const { projectId } = useParams<{ projectId: string }>()
 
   const selectedDate = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.selectedDate,
@@ -54,6 +56,15 @@ const ProjectHiveActivityReport = (): JSX.Element => {
 
     setIsViewClicked(false)
   }, [isViewClicked, setProjectMonthToDisplay])
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectTimeSheet.getProjectTimeSheet({
+        hiveDate: dateToUse,
+        projectId,
+      }),
+    )
+  })
   return (
     <>
       <OCard
