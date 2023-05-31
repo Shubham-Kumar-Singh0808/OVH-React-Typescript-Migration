@@ -3,6 +3,7 @@ import React from 'react'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 const UpcomingBirthdays = (): JSX.Element => {
   const upcomingEmployeeBirthdays = useTypedSelector(
@@ -29,7 +30,7 @@ const UpcomingBirthdays = (): JSX.Element => {
                     <div className="pull-left mr15">
                       <CImage
                         className="birthday-avatar"
-                        src={birthday.imagePath}
+                        src={`${base64Extension}${birthday.imagePath}`}
                       />
                     </div>
                     <p className="text-ellipsis mb0">

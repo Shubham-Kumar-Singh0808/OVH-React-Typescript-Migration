@@ -18,6 +18,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 const EmployeeListTable = ({
   paginationRange,
@@ -79,7 +80,7 @@ const EmployeeListTable = ({
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
                       <CImage
-                        src={employee.thumbPicture}
+                        src={`${base64Extension}${employee?.thumbPicture}`}
                         className="employee-thumb"
                       />
                     </CTableHeaderCell>
