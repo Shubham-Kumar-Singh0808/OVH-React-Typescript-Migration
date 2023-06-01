@@ -38,7 +38,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto'
+        endOfLine: 'auto',
       },
     ],
     // possible errors
@@ -101,7 +101,7 @@ module.exports = {
       { exceptAfterSingleLine: true },
     ],
     'max-depth': 'warn',
-    'max-lines': ['warn', 1000],
+    'max-lines': ['warn', 2000],
     'max-params': ['warn', 4],
     'no-array-constructor': 'warn',
     'no-bitwise': 'warn',

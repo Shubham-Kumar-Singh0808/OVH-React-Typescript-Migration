@@ -5,6 +5,7 @@ import moment from 'moment'
 import EmployerEntryItem from './EmployerEntryItem'
 import { getFormattedDate } from '../ITDeclarationFormHelpers'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
+import { openToDateHandler } from '../../../../utils/datePicketUtils'
 
 const PreviousEmployerAct = ({
   enteredOrganization,
@@ -14,6 +15,7 @@ const PreviousEmployerAct = ({
   enteredToDate,
   setEnteredToDate,
   setEnteredFile,
+  dateToShow,
 }: {
   enteredOrganization: string
   organizationChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -22,6 +24,7 @@ const PreviousEmployerAct = ({
   enteredToDate: string
   setEnteredToDate: (value: React.SetStateAction<string>) => void
   setEnteredFile: React.Dispatch<React.SetStateAction<File | undefined>>
+  dateToShow: Array<string>
 }): JSX.Element => {
   const fileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
@@ -33,9 +36,10 @@ const PreviousEmployerAct = ({
   return (
     <>
       <CCardHeader>
-        <h4 className="h4">
-          Employees Who Joined After 1st May 2023 (Income from Previous Employer
-          ( Joined After 1st-May-2023 ))
+        <h4 className="h4" data-testid="PrevEmpAct-heading">
+          Employees Who Joined After {dateToShow[1]} {dateToShow[0]}{' '}
+          {dateToShow[2]} (Income from Previous Employer ( Joined After{' '}
+          {dateToShow[1]}-{dateToShow[0]}-{dateToShow[2]} ))
         </h4>
       </CCardHeader>
       <CRow className="mt-4 ms-2">
@@ -59,11 +63,7 @@ const PreviousEmployerAct = ({
               setEnteredFromDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={
-              !isNaN(Date.parse(enteredFromDate))
-                ? new Date(enteredFromDate)
-                : new Date()
-            }
+            openToDate={openToDateHandler(enteredFromDate)}
           />
         </EmployerEntryItem>
         <EmployerEntryItem label="To Date">
@@ -76,11 +76,7 @@ const PreviousEmployerAct = ({
               setEnteredToDate(moment(date).format(commonDateFormat))
             }
             maxDate={new Date()}
-            openToDate={
-              !isNaN(Date.parse(enteredToDate))
-                ? new Date(enteredToDate)
-                : new Date()
-            }
+            openToDate={openToDateHandler(enteredFromDate)}
             highlightDates={[{ 'today-date-highlight': [new Date()] }]}
           />
         </EmployerEntryItem>

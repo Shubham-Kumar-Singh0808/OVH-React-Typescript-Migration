@@ -4,6 +4,7 @@ import VendorListTable from './VendorListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockVendorDetails } from '../../../test/data/vendorListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
 describe('Vendor List without data', () => {
@@ -15,6 +16,9 @@ describe('Vendor List without data', () => {
         setCurrentPage={mockSetData}
         pageSize={0}
         setPageSize={mockSetData}
+        setToggle={mockSetData}
+        setEditVendorInfo={mockSetData}
+        userAccess={undefined}
       />,
       {
         preloadedState: {
@@ -22,6 +26,10 @@ describe('Vendor List without data', () => {
             isLoading: ApiLoadingState.succeeded,
             vendors: mockVendorDetails.list,
             listSize: 150,
+          },
+          userAccessToFeatures: {
+            isLoading: ApiLoadingState.succeeded,
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },

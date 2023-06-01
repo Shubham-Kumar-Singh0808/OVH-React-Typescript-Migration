@@ -138,7 +138,7 @@ const ViewClientInformation = (): JSX.Element => {
               Description:
             </CFormLabel>
             <CCol sm={9}>
-              <span data-testid="description-input">
+              <span className="descriptionField">
                 <div
                   dangerouslySetInnerHTML={{
                     __html: getClientInformation?.description || 'N/A',

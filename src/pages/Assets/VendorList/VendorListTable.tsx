@@ -22,6 +22,7 @@ import {
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const VendorListTable = ({
   paginationRange,
@@ -29,10 +30,17 @@ const VendorListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  setToggle,
+  setEditVendorInfo,
+  userAccess,
 }: VendorListTableProps): JSX.Element => {
   const [isVendorAddressModalVisible, setIsVendorAddressModalVisible] =
     useState<boolean>(false)
   const [vendorAddress, setVendorAddress] = useState({} as VendorDetails)
+  const [deleteClientModalVisibility, setDeleteClientModalVisibility] =
+    useState(false)
+  const [deleteVendorId, setDeleteVendorId] = useState(0)
+  const [vendorName, setVendorName] = useState<string>('')
 
   const dispatch = useAppDispatch()
   const handleModal = (address: VendorDetails) => {
@@ -56,6 +64,61 @@ const VendorListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
+  const onDeleteBtnClick = (deleteVendorsId: number, name: string) => {
+    setDeleteClientModalVisibility(true)
+    setVendorName(name)
+    setDeleteVendorId(deleteVendorsId)
+  }
+
+  const deleteSuccessToastElement = (
+    <OToast
+      toastColor="success"
+      toastMessage="Vendor Details deleted Successfully!"
+    />
+  )
+
+  const editButtonHandler = (vendorData: VendorDetails) => {
+    setEditVendorInfo(vendorData)
+    setToggle('editVendorDetails')
+  }
+
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="This Vendor already added in specifications ,So you cannot delete"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+  const handleConfirmDeleteVendor = async () => {
+    setDeleteClientModalVisibility(false)
+    const deleteClientResultAction = await dispatch(
+      reduxServices.vendorList.deleteVendorDetails(deleteVendorId),
+    )
+    if (
+      reduxServices.vendorList.deleteVendorDetails.fulfilled.match(
+        deleteClientResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.vendorList.getVendors({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          vendorName: '',
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(deleteSuccessToastElement))
+    } else if (
+      reduxServices.vendorList.deleteVendorDetails.rejected.match(
+        deleteClientResultAction,
+      ) &&
+      deleteClientResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
   return (
     <>
       <CTable striped align="middle">
@@ -74,17 +137,14 @@ const VendorListTable = ({
         <CTableBody>
           {vendorList?.length > 0 &&
             vendorList?.map((vendor, index) => {
-              const removeTag = '/(<([^>]+)>)/gi'
-              const removeSpaces = vendor?.vendorAddress
-                ?.replace(/\s+/g, ' ')
-                .trim()
+              const removeTag = `${vendor?.vendorAddress
+                .replace(/<[^>]+>/g, '')
                 .replace(/&nbsp;/g, '')
-                .replace(removeTag, '')
-                .replace(/:/g, '')
+                .replace(/:/g, '')}`
               const vendorAddressLimit =
-                removeSpaces && removeSpaces.length > 30
-                  ? `${removeSpaces.substring(0, 30)}...`
-                  : removeSpaces
+                removeTag && removeTag.length > 30
+                  ? `${removeTag.substring(0, 30)}...`
+                  : removeTag
 
               return (
                 <CTableRow key={index}>
@@ -102,7 +162,7 @@ const VendorListTable = ({
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(vendor)}
                       >
-                        {parse(vendor?.vendorAddress)}
+                        {parse(vendorAddressLimit)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -122,23 +182,33 @@ const VendorListTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     <div className="buttons-clients">
-                      <CTooltip content="Edit">
-                        <CButton
-                          color="info btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-
-                      <CTooltip content="Delete">
-                        <CButton
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() => editButtonHandler(vendor)}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                      {userAccess?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              onDeleteBtnClick(
+                                vendor.vendorId,
+                                vendor.vendorName,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </div>
                   </CTableDataCell>
                 </CTableRow>
@@ -182,13 +252,33 @@ const VendorListTable = ({
         visible={isVendorAddressModalVisible}
         setVisible={setIsVendorAddressModalVisible}
       >
-        <span className="descriptionField" data-testid="modal-cnt-add">
+        <span
+          className="descriptionField"
+          data-testid="modal-cnt-add"
+          style={{ minHeight: '90px' }}
+        >
           <div
             dangerouslySetInnerHTML={{
               __html: vendorAddress.vendorAddress,
             }}
           />
         </span>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={deleteClientModalVisibility}
+        setVisible={setDeleteClientModalVisibility}
+        modalTitle="Delete Vendor Details"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteVendor}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this <strong>{vendorName}</strong> Vendor
+          Details ?
+        </>
       </OModal>
     </>
   )

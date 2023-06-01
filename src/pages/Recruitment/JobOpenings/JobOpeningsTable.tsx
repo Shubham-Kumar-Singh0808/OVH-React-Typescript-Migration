@@ -40,7 +40,7 @@ const JobOpeningsTable = ({
 
   const [isJobDescriptionModalVisible, setIsJobDescriptionModalVisible] =
     useState(false)
-  const [description, setDescription] = useState<string>('')
+  const [description, setDescription] = useState({} as GetAllJobVacanciesList)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteJobTitleId, setDeleteJobTitleId] = useState(0)
   const [deleteJobName, setDeleteJobName] = useState('')
@@ -52,9 +52,9 @@ const JobOpeningsTable = ({
   const TotalListSize = useTypedSelector(
     reduxServices.jobVacancies.selectors.listSize,
   )
-  const handleModal = (jobDescription: string) => {
-    const jobDescriptionLength = jobDescription?.length > 20
-    setIsJobDescriptionModalVisible(jobDescriptionLength)
+
+  const handleModal = (jobDescription: GetAllJobVacanciesList) => {
+    setIsJobDescriptionModalVisible(true)
     setDescription(jobDescription)
   }
 
@@ -139,7 +139,7 @@ const JobOpeningsTable = ({
 
   return (
     <>
-      <CTable className="align-middle alignment">
+      <CTable striped className="text-start text-left align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -160,50 +160,64 @@ const JobOpeningsTable = ({
         <CTableBody>
           {getJobVacancies.length > 0 &&
             getJobVacancies?.map((jobVacancy, index) => {
-              const jobDescriptionLimit =
-                jobVacancy.description && jobVacancy.description.length > 25
-                  ? `${jobVacancy.description.substring(0, 25)}`
-                  : jobVacancy.description
+              const removeTag = `${jobVacancy?.description
+                ?.replace(/<[^>]+>/g, '')
+                ?.replace(/&nbsp;/g, '')
+                ?.replace(/:/g, '')}`
+              const vendorAddressLimit =
+                removeTag && removeTag?.length > 30
+                  ? `${removeTag?.substring(0, 30)}...`
+                  : removeTag
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {jobVacancy.jobCode}
+                    {jobVacancy.jobCode || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>{jobVacancy?.positionVacant}</CTableDataCell>
                   <CTableDataCell>
-                    {jobVacancy.minimumExperience}
+                    {jobVacancy?.positionVacant || 'N/A'}
                   </CTableDataCell>
-                  {jobDescriptionLimit ? (
-                    <CTableDataCell
-                      scope="row"
-                      className="sh-organization-link"
-                    >
+                  <CTableDataCell>
+                    {jobVacancy.minimumExperience || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell
+                    scope="row"
+                    className="sh-organization-link sh-comment"
+                  >
+                    {vendorAddressLimit ? (
                       <CLink
-                        className="cursor-pointer text-primary centerAlignment-text"
-                        data-testid={`emp-comments${index}`}
-                        onClick={() => handleModal(jobVacancy?.description)}
+                        className="cursor-pointer text-decoration-none"
+                        data-testid={`vendor-address-${index}`}
+                        onClick={() => handleModal(jobVacancy)}
                       >
-                        {parse(jobDescriptionLimit)}
+                        {parse(vendorAddressLimit)}
                       </CLink>
-                    </CTableDataCell>
-                  ) : (
-                    <CTableDataCell>{`N/A`}</CTableDataCell>
-                  )}
-                  <CTableDataCell>{jobVacancy?.opendDate}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy?.expiryDate}</CTableDataCell>
-                  <CTableDataCell>
-                    {jobVacancy?.noOfRequirements}
+                    ) : (
+                      'N/A'
+                    )}
                   </CTableDataCell>
-                  <CTableDataCell>{jobVacancy?.offered}</CTableDataCell>
-                  <CTableDataCell>{jobVacancy?.remaining}</CTableDataCell>
-                  <CTableDataCell className="actions">
+                  <CTableDataCell>
+                    {jobVacancy?.opendDate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy?.expiryDate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy?.noOfRequirements || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy?.offered || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {jobVacancy?.remaining || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
                     <CTooltip content="View">
                       <CButton
                         color="info"
-                        className="btn-ovh-employee-list me-1"
+                        className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="View-btn"
                         onClick={() => viewButtonHandler(jobVacancy?.id)}
                       >
@@ -217,7 +231,7 @@ const JobOpeningsTable = ({
                       <CTooltip content="Edit">
                         <CButton
                           color="info btn-ovh me-1"
-                          className="btn-ovh-employee-list me-1"
+                          className="btn-ovh-employee-list me-1 mt-1"
                           data-testid={`btn-edit${index}`}
                           onClick={() => editButtonHandler(jobVacancy)}
                         >
@@ -228,7 +242,7 @@ const JobOpeningsTable = ({
                     <CTooltip content="Timeline">
                       <CButton
                         color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
+                        className="btn-ovh-employee-list me-1 mt-1"
                         data-testid={`sc-timeline-btn${index}`}
                         onClick={() => timeLineButtonHandler(jobVacancy.id)}
                       >
@@ -241,7 +255,7 @@ const JobOpeningsTable = ({
                           data-testid={`btn-delete${index}`}
                           size="sm"
                           color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list me-1"
+                          className="btn-ovh-employee-list me-1 mt-1"
                           onClick={() =>
                             deleteButtonHandler(
                               jobVacancy.id,
@@ -296,10 +310,10 @@ const JobOpeningsTable = ({
         visible={isJobDescriptionModalVisible}
         setVisible={setIsJobDescriptionModalVisible}
       >
-        <span className="descriptionField">
+        <span className="descriptionField" data-testid="modal-cnt-add">
           <div
             dangerouslySetInnerHTML={{
-              __html: description,
+              __html: description.description,
             }}
           />
         </span>
@@ -308,7 +322,7 @@ const JobOpeningsTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Delete Location"
+        modalTitle="Delete Job"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"

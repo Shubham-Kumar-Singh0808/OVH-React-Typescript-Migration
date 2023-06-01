@@ -47,6 +47,9 @@ const AddProjectRequest = ({
   const [billingContactPersonEmailError, setBillingContactPersonEmailError] =
     useState<boolean>(false)
   const [checkList, setCheckList] = useState(checkListDetails)
+  const [emailErrorMsgCC, setEmailErrorMsgCC] = useState(false)
+  const [emailErrorMsgBCC, setEmailErrorMsgBCC] = useState(false)
+
   const projectRequestMilestoneDTODetails = {} as ProjectRequestMilestoneDTO[]
   const initProjectRequest = {
     bcc: projectRequestMailIds.bcc,
@@ -239,6 +242,10 @@ const AddProjectRequest = ({
             }
             emailError={emailError}
             billingContactPersonEmailError={billingContactPersonEmailError}
+            emailErrorMsgCC={emailErrorMsgCC}
+            emailErrorMsgBCC={emailErrorMsgBCC}
+            setEmailErrorMsgCC={setEmailErrorMsgCC}
+            setEmailErrorMsgBCC={setEmailErrorMsgBCC}
           />
 
           <CRow className="mb-3 align-items-center">
@@ -250,6 +257,8 @@ const AddProjectRequest = ({
                 onClick={handleSubmitProjectRequest}
                 disabled={
                   !isAddBtnEnable ||
+                  emailErrorMsgBCC ||
+                  emailErrorMsgCC ||
                   (projectRequest.type === 'FixedBid' &&
                     !isAddMilestoneButtonEnabled) ||
                   checkListValid === false
