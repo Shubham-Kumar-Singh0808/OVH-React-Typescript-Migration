@@ -73,6 +73,9 @@ const CreateNewTicketFilterOptions = ({
   useEffect(() => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(
+      reduxServices.ticketApprovals.getDepartmentCategoryList(Number(deptId)),
+    )
   }, [dispatch])
 
   useEffect(() => {
@@ -194,6 +197,8 @@ const CreateNewTicketFilterOptions = ({
   }
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  console.log(mealType.mealType + 'mealType.mealType')
 
   const handleApplyTicket = async () => {
     const payload =
