@@ -17,6 +17,8 @@ import { showIsRequired } from '../../../../utils/helper'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { dateFormat } from '../../../../constant/DateFormat'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 // eslint-disable-next-line import/named
 
@@ -25,6 +27,8 @@ const AddAssetList = ({
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
   const [poNumber, setPoNumber] = useState<string>()
   const [vendorName, setVendorName] = useState<string>()
   const [assetType, setAssetType] = useState<string>()
@@ -68,6 +72,11 @@ const AddAssetList = ({
     setAmount('')
     setAssetStatus('')
     setCountry('')
+    setAddComment('')
+    setIsShowComment(false)
+    setTimeout(() => {
+      setIsShowComment(true)
+    }, 0)
   }
 
   const handledInputChange = (
@@ -111,6 +120,35 @@ const AddAssetList = ({
       setCountry(newValue)
     }
   }
+  const [addComment, setAddComment] = useState<string>('')
+  const [isShowComment, setIsShowComment] = useState<boolean>(true)
+
+  const handleBankAddress = (comments: string) => {
+    setAddComment(comments)
+  }
+
+  const assetListTypeList = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.manufacturerData,
+  )
+
+  useEffect(() => {
+    if (assetType) {
+      dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(assetType)))
+    }
+    if (productType) {
+      dispatch(
+        reduxServices.addNewProduct.getProductTypeList(Number(productType)),
+      )
+    }
+  }, [dispatch, assetType, productType])
+
+  const assetTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.assetTypeList,
+  )
+
+  const productTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.productTypeList,
+  )
 
   return (
     <>
@@ -174,6 +212,12 @@ const AddAssetList = ({
               onChange={(e) => setVendorName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
+              {assetListTypeList?.vendorList?.length > 0 &&
+                assetListTypeList?.vendorList?.map((location, index) => (
+                  <option key={index} value={location.vendorId}>
+                    {location.vendorName}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -192,9 +236,16 @@ const AddAssetList = ({
               size="sm"
               id="assetType"
               name="assetType"
+              value={assetType}
               onChange={(e) => setAssetType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
+              {assetListTypeList?.assetTypeList?.length > 0 &&
+                assetListTypeList?.assetTypeList?.map((location, index) => (
+                  <option key={index} value={location.id}>
+                    {location.assetType}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -213,9 +264,15 @@ const AddAssetList = ({
               size="sm"
               id="productType"
               name="productType"
+              value={productType}
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
+              {assetTypeList.map((location, index) => (
+                <option key={index} value={location.productId}>
+                  {location.productName}
+                </option>
+              ))}
             </CFormSelect>
           </CCol>
         </CRow>
@@ -228,14 +285,23 @@ const AddAssetList = ({
             <span className={manufacturerName ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
-              type="text"
+            <CFormSelect
               data-testid="manufacturerName"
+              aria-label="Default select example"
+              size="sm"
               id="manufacturerName"
               name="manufacturerName"
               placeholder="Enter Manufacturer Name"
+              value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
-            />
+            >
+              <option value={''}>Select Product Type</option>
+              {productTypeList.map((location, index) => (
+                <option key={index} value={location.productId}>
+                  {location.manufacturerName}
+                </option>
+              ))}
+            </CFormSelect>
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
@@ -393,7 +459,7 @@ const AddAssetList = ({
               name="warrantyStartDate"
               value={warrantyStartDate}
               minDate={new Date()}
-              onChange={(date: Date) => onHandleWarrantyEndDate(date)}
+              onChange={(date: Date) => onHandleWarrantyStartDate(date)}
             />
           </CCol>
         </CRow>
@@ -417,7 +483,7 @@ const AddAssetList = ({
               name="warrantyEndDate"
               value={warrantyEndDate}
               minDate={new Date()}
-              onChange={(date: Date) => onHandleWarrantyStartDate(date)}
+              onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
           </CCol>
         </CRow>
@@ -430,15 +496,25 @@ const AddAssetList = ({
             <span className={assetStatus ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
-              type="text"
-              data-testid="assetStatus"
+            <CFormSelect
+              data-testid="manufacturerName"
+              aria-label="Default select example"
+              size="sm"
               id="assetStatus"
               name="assetStatus"
-              placeholder="Select Status"
+              placeholder="Enter Manufacturer Name"
               value={assetStatus}
-              onChange={(e) => setAssetStatus(e.target.value)}
-            />
+              onChange={(e) => setManufacturerName(e.target.value)}
+            >
+              <option value={''}>Select Product Type</option>
+              <option value={'Working'}>Working</option>
+              <option value={'Not Working'}>Not Working</option>
+
+              <option value={'Under Repair'}>Under Repair</option>
+
+              <option value={'Idle'}>Idle</option>
+              <option value={'Scrap'}>Scrap</option>
+            </CFormSelect>
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
@@ -463,19 +539,19 @@ const AddAssetList = ({
             />
           </CCol>
         </CRow>
-        {/* <CRow className="mt-4 mb-4">
+        <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
             Notes:
           </CFormLabel>
-          {showEditor ? (
+          {isShowComment ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={addAsset?.vendorBankDetails}
+                initData={addComment}
                 data-testid="notes"
                 config={ckeditorConfig}
                 debug={true}
@@ -487,7 +563,7 @@ const AddAssetList = ({
           ) : (
             ''
           )}
-        </CRow> */}
+        </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
