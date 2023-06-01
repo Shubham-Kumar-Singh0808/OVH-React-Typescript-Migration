@@ -31,6 +31,7 @@ const AssetListFilters = ({
   currentPage,
   pageSize,
   setCurrentPage,
+  setToggle,
 }: {
   selectDate: string
   setSelectDate: React.Dispatch<React.SetStateAction<string>>
@@ -45,6 +46,7 @@ const AssetListFilters = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -163,6 +165,7 @@ const AssetListFilters = ({
   const onHandleEndDate = (value: Date) => {
     setToDate(moment(value).format(dateFormat))
   }
+
   return (
     <>
       <CRow className="justify-content-end">
@@ -373,7 +376,8 @@ const AssetListFilters = ({
                 color="info"
                 className="text-white"
                 size="sm"
-                data-testid="Add-export-button"
+                data-testid="Add-button"
+                onClick={() => setToggle('AddAssetList')}
               >
                 <i className="fa fa-plus me-1"></i>
                 Add
