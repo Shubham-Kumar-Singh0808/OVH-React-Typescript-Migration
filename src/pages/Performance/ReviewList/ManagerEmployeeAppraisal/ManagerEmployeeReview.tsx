@@ -20,6 +20,7 @@ const ManagerEmployeeReview = (): JSX.Element => {
   )
   const overallAvgRatingResult =
     appraisalForm?.overallAvgRating === 'NaN' ? 'N/A' : ''
+
   return (
     <>
       <OCard

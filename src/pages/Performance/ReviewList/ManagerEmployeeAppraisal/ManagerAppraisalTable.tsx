@@ -11,7 +11,7 @@ import {
 import React, { useMemo, useState } from 'react'
 import ReviewFormEntry from '../../MyReviews/ReviewForm/ReviewFormEntry'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { KPI } from '../../../../types/Performance/MyReview/myReviewTypes'
 
 const ManagerAppraisalTable = (): JSX.Element => {
@@ -21,6 +21,10 @@ const ManagerAppraisalTable = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+  const appraisalFormId = useTypedSelector(
+    reduxServices.myReview.selectors.appraisalFormId,
+  )
+  const dispatch = useAppDispatch()
   const [selectedEmpId, setSelectedEmpId] = useState<number>(Number(employeeId))
   const [isIconVisible, setIsIconVisible] = useState(false)
   const [KPIDetails, setKPIDetails] = useState<KPI[]>()
@@ -34,6 +38,61 @@ const ManagerAppraisalTable = (): JSX.Element => {
     }
     return []
   }, [appraisalForm?.kra])
+
+  const saveManagerAppraisalFormHandler = () => {
+    dispatch(
+      reduxServices.myReview.saveAppraisalForm({
+        adjustedAvgRating: null,
+        appraisalCycle: {
+          active: true,
+          appraisalDuration: appraisalForm.appraisalCycle.appraisalDuration,
+          appraisalEndDate: appraisalForm.appraisalCycle.appraisalEndDate,
+          appraisalStartDate: appraisalForm.appraisalCycle.appraisalStartDate,
+          appraisalType: appraisalForm.appraisalCycle.appraisalType,
+          cycleStartedFlag: appraisalForm.appraisalCycle.cycleStartedFlag,
+          description: appraisalForm.appraisalCycle.description,
+          fromDate: appraisalForm.appraisalCycle.fromDate,
+          id: appraisalForm.appraisalCycle.id,
+          level: appraisalForm.appraisalCycle.level,
+          name: appraisalForm.appraisalCycle.name,
+          servicePeriod: appraisalForm.appraisalCycle.servicePeriod,
+          toDate: appraisalForm.appraisalCycle.toDate,
+        },
+        avgRatingsDtos: appraisalForm.avgRatingsDtos,
+        employee: appraisalForm.employee,
+        kra: appraisalForm.kra,
+        appraisalFormStatus: null,
+        closedBy: null,
+        closedOn: null,
+        closedStatus: null,
+        closedSummary: null,
+        discussionOn: null,
+        discussionSummary: null,
+        empAvgRating: null,
+        empAvgRatingName: null,
+        empDepartmentName: null,
+        empDesignationName: null,
+        finalFeedback: null,
+        finalRating: null,
+        finalRatingName: null,
+        formRating: null,
+        formStatus: 'SAVE',
+        formStatusvalue: 0,
+        iAgreeFlag: null,
+        id: appraisalForm.id,
+        kpis: null,
+        manager1Name: null,
+        openForDiscussionFlag: null,
+        overallAvgRating: 'NaN',
+        overallAvgRatingName: null,
+        pendingWith: null,
+        requestDiscussion: false,
+      }),
+    )
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
+    dispatch(reduxServices.myReview.getReviewComments(appraisalFormId))
+    dispatch(reduxServices.myReview.getEmployeeReviewForm(Number(employeeId)))
+  }
   return (
     <>
       <CTable responsive striped className="mt-3 align-middle">
@@ -72,6 +131,7 @@ const ManagerAppraisalTable = (): JSX.Element => {
               className="btn-ovh me-1"
               color="success"
               //   onClick={saveEmployeeAppraisalFormHandler}
+              onClick={saveManagerAppraisalFormHandler}
             >
               Save
             </CButton>

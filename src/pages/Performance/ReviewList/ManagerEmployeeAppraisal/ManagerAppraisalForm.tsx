@@ -76,7 +76,8 @@ const ManagerAppraisalForm = (): JSX.Element => {
           <ManagerAppraisalTable />
           {appraisalForm?.formStatus === 'COMPLETED' ||
           appraisalForm?.formStatus === 'SUBMIT' ||
-          appraisalForm?.formStatus === 'SAVE' ? (
+          appraisalForm?.formStatus === 'SAVE' ||
+          appraisalForm?.formStatus === 'PENDING' ? (
             ''
           ) : (
             <div

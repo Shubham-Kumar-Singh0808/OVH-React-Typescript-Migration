@@ -75,7 +75,8 @@ const AppraisalForm = (): JSX.Element => {
           <ReviewFormTable />
           {appraisalForm?.formStatus === 'COMPLETED' ||
           appraisalForm?.formStatus === 'SUBMIT' ||
-          appraisalForm?.formStatus === 'SAVE' ? (
+          appraisalForm?.formStatus === 'SAVE' ||
+          appraisalForm?.formStatus === 'PENDING' ? (
             ''
           ) : (
             <div
