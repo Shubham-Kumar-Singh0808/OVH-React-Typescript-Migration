@@ -877,4 +877,7 @@ export interface CategoryListApi extends ApiBase {
   getCategoryList: string
   addCategory: string
   checkForDuplicateCategory: string
+  editCategory: string
+  updateCategory: string
+  deleteCategory: string
 }

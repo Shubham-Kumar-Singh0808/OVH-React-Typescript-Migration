@@ -9,8 +9,16 @@ export type Label = {
   className: string
 }
 
+export type EditCategory = {
+  id: number
+  categoryName: string
+  createdBy: string
+  updatedBy: string | null
+  createdDate: string
+  updatedDate: string | null
+}
 export type AddNewCategorySliceState = {
   isLoading: LoadingState
   error: ValidationError
-  categoryName: string
+  addNewCategory: EditCategory[]
 }

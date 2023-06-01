@@ -134,8 +134,8 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
-import categoryListReducer from './reducers/ExpenseManagement/Category/categoryListSlice'
-import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewCategory/addNewCategorySlice'
+import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
+import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 
 export const allReducers = {
   app: appReducer,

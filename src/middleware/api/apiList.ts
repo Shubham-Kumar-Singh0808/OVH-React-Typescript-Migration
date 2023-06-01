@@ -1035,6 +1035,8 @@ export const categoryListApiConfig: CategoryListApi = {
   getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
   addCategory: apiPrefix + '/ExpenseManagement/addCategory',
   checkForDuplicateCategory:
-    apiPrefix +
-    '/ExpenseManagement/checkForDuplicateCategory?categoryName=Ray+Technologies',
+    apiPrefix + '/ExpenseManagement/checkForDuplicateCategory',
+  editCategory: apiPrefix + '/ExpenseManagement/editCategory',
+  updateCategory: apiPrefix + '/ExpenseManagement/updateCategory',
+  deleteCategory: apiPrefix + '/ExpenseManagement/deleteCategory',
 }

@@ -1,6 +1,6 @@
-import React from 'react'
-import ExpenseCategoryListTable from './CategoryListTable'
-import AddExpenseCategory from './AddCategory/AddCategory'
+import React, { useEffect } from 'react'
+import ExpenseCategoryListTable from './ExpenseCategoryListTable'
+import AddExpenseCategory from './AddExpenseCategory/AddExpenseCategory'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
@@ -13,6 +13,12 @@ const ExpenseCategoryList = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Expense Management',
   )
+
+  useEffect(() => {
+    if (window.location.pathname === '/expenseCategory') {
+      // setCurrentPage(1)
+    }
+  }, [])
   return (
     <>
       <OCard

@@ -124,8 +124,8 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
-import { categoryListService } from './ExpenseManagement/Category/categoryListSlice'
-import { addNewCategoryService } from './ExpenseManagement/Category/AddNewCategory/addNewCategorySlice'
+import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
+import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 
 export const reduxServices = {
   app: appService,

@@ -462,7 +462,7 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const ExpenseCategoryList = React.lazy(
-  () => import('./pages/ExpenseManagement/Category/CategoryList'),
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
