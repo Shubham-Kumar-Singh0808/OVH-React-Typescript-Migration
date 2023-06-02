@@ -47,6 +47,43 @@ const AddAssetList = ({
   const [country, setCountry] = useState<string>()
   const [isDateError, setIsDateError] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (
+      poNumber &&
+      vendorName &&
+      assetType &&
+      productType &&
+      manufacturerName &&
+      invoiceNumber &&
+      amount &&
+      datePurchase &&
+      receivedDate &&
+      warrantyStartDate &&
+      warrantyEndDate &&
+      assetStatus &&
+      country
+    ) {
+      setAddButtonEnabled(false)
+    } else {
+      setAddButtonEnabled(true)
+    }
+  }, [
+    poNumber,
+    vendorName,
+    assetType,
+    productType,
+    manufacturerName,
+    invoiceNumber,
+    amount,
+    datePurchase,
+    receivedDate,
+    warrantyStartDate,
+    warrantyEndDate,
+    assetStatus,
+    country,
+  ])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -622,7 +659,7 @@ const AddAssetList = ({
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              // disabled={!isAddButtonEnabled}
+              disabled={!isAddButtonEnabled}
               // onClick={handleAddNewVendor}
             >
               Confirm
