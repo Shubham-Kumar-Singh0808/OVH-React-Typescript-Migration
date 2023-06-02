@@ -198,8 +198,6 @@ const CreateNewTicketFilterOptions = ({
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
-  console.log(mealType.mealType + 'mealType.mealType')
-
   const handleApplyTicket = async () => {
     const payload =
       categoryId === 42
@@ -290,9 +288,8 @@ const CreateNewTicketFilterOptions = ({
       })
     }
   }
-  console.log(departmentCategoryList)
 
-  const Result = departmentCategoryList.filter((item) => item.mealType)
+  const Result = departmentCategoryList.find((item) => item.mealType)
 
   return (
     <>
@@ -430,7 +427,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {Result[0]?.mealType === true ? (
+        {Result?.mealType === true ? (
           ''
         ) : (
           <>
@@ -555,7 +552,7 @@ const CreateNewTicketFilterOptions = ({
             ''
           )}
         </CRow>
-        {mealType.mealType === true ? (
+        {mealType?.mealType === true ? (
           <CRow className="mt-3">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Date :
@@ -605,7 +602,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {mealType.mealType === true ? (
+        {mealType?.mealType === true ? (
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Add Members:
