@@ -48,7 +48,7 @@ const ActionIcons = () => {
         <br />
         <CTooltip content="History">
           <CButton color="info" size="sm" className="mb-1">
-            <i className=" fa fa-wrench"></i>
+            <i className="text-white fa fa-wrench"></i>
           </CButton>
         </CTooltip>
         <br />

@@ -110,6 +110,7 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   selectedTicketId: 0,
   toggleValue: '',
   routePath: '',
+  mealType: {} as DepartmentCategoryList,
 
   TicketStatusValue: 'New',
   ApprovalStatusValue: 'Pending Approval',
@@ -229,6 +230,9 @@ const isLoading = (state: RootState): ApiLoadingState =>
 const departmentNameList = (state: RootState): DepartmentList[] =>
   state.ticketApprovals.departmentNameList
 
+const mealType = (state: RootState): DepartmentCategoryList =>
+  state.ticketApprovals.mealType
+
 const departmentCategoryList = (state: RootState): DepartmentCategoryList[] =>
   state.ticketApprovals.departmentCategoryList
 
@@ -290,6 +294,7 @@ const ticketApprovalsSelectors = {
   selectTicketId,
   toggleValue,
   routePath,
+  mealType,
 
   TicketStatusValue,
   ApprovalStatusValue,
