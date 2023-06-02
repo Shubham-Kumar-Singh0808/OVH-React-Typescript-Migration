@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import ProductTypeListTable from './ProductTypeListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
@@ -57,5 +58,13 @@ describe('Product Type list without data', () => {
       expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
+  })
+  test('should be able to click delete button element', () => {
+    const deleteBtn = screen.getAllByTestId('btn-deletes')
+    expect(deleteBtn[0]).toBeInTheDocument()
+    userEvent.click(deleteBtn[0])
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
   })
 })

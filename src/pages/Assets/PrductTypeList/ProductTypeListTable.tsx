@@ -176,7 +176,7 @@ const ProductTypeListTable = ({
                           {userAccessProductList?.deleteaccess && (
                             <CTooltip content="Delete">
                               <CButton
-                                data-testid="btn-delete"
+                                data-testid="btn-deletes"
                                 size="sm"
                                 color="danger btn-ovh me-1"
                                 className="btn-ovh-employee-list me-1"
