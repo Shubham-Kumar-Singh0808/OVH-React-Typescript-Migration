@@ -25,6 +25,7 @@ const AssetListTable = ({
   currentPage,
   setCurrentPage,
   setToggle,
+  setChangeReportStatus,
 }: AssetListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -106,6 +107,7 @@ const AssetListTable = ({
                     handleAgendaModal={handleAgendaModal}
                     getItemNumber={getItemNumber}
                     setToggle={setToggle}
+                    setChangeReportStatus={setChangeReportStatus}
                   />
                 )
               })}

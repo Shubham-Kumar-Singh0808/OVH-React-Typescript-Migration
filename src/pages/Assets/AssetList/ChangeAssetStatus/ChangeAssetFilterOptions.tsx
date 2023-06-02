@@ -7,36 +7,187 @@ import {
   CFormSelect,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import Autocomplete from 'react-autocomplete'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { description } from '../../../../test/constants'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
+import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
+import OToast from '../../../../components/ReusableComponent/OToast'
+import {
+  SaveEmployee,
+  UpdateAllLocations,
+} from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 
-const ChangeAssetFilterOptions = (): JSX.Element => {
+const ChangeAssetFilterOptions = ({
+  setToggle,
+  allEmployees,
+  onSelectEmployee,
+  employeeName,
+  setEmployeeName,
+  changeReportStatus,
+  setChangeReportStatus,
+}: // locationForEmpAssets,
+{
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  allEmployees: IncomingActiveEmployee[]
+  onSelectEmployee: (value: string) => void
+  employeeName: string | undefined
+  setEmployeeName: React.Dispatch<React.SetStateAction<string>>
+  changeReportStatus: AllAssetsList
+  setChangeReportStatus: React.Dispatch<React.SetStateAction<AllAssetsList>>
+  // locationForEmpAssets: SaveEmployee
+}): JSX.Element => {
   const [description, setDescription] = useState<string>('')
-  const [statusDate, setStatusDate] = useState<string>('')
-  const [isShowComment, setIsShowComment] = useState<boolean>(true)
+  const [statusDate, setStatusDate] = useState<string>(
+    changeReportStatus.createdDate,
+  )
+  const [isShowEditor, setIsShowEditor] = useState<boolean>(true)
   const [assetNumber, setAssetNumber] = useState<string>('')
-  const [vendorName, setVendorName] = useState<string>('')
+  const [vendorName, setVendorName] = useState<string>(
+    changeReportStatus.vendorName,
+  )
+
+  const [checkBox, setCheckBox] = useState<boolean>(false)
+
   const [assetReferenceNumber, setAssetReferenceNumber] = useState<string>('')
   const [assetStatus, setAssetStatus] = useState<string>('')
-  const [employee, setEmployee] = useState<string>('')
-  const [invoiceNumber, setInvoiceNumber] = useState<string>('')
-  const [amount, setAmount] = useState<string>('')
-  const [location, setLocation] = useState<string>('')
+  const [statusType, setStatusType] = useState<string>(
+    changeReportStatus.status,
+  )
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
+
+  const formLabel = 'col-sm-3 col-form-label text-end'
+  const dynamicFormLabelProps = (htmlFor: string, className: string) => {
+    return {
+      htmlFor,
+      className,
+    }
+  }
+  const onFocusOut = () => {
+    const selectedEmployee = allEmployees.find(
+      (value) => value.empFirstName + ' ' + value.empLastName === employeeName,
+    )
+    const selEmpName =
+      selectedEmployee?.empFirstName + ' ' + selectedEmployee?.empLastName
+
+    onSelectEmployee(selEmpName)
+  }
+  const selectEmployeeHandler = (empName: string) => {
+    setEmployeeName(empName)
+  }
 
   const onHandleStartDatePicker = (value: Date) => {
     setStatusDate(moment(value).format(dateFormat))
   }
-  const handleDescription = (comments: string) => {
-    setDescription(comments)
+  const handleText = (description: string) => {
+    setChangeReportStatus((prevState) => {
+      return { ...prevState, ...{ description } }
+    })
   }
+  const dispatch = useAppDispatch()
+
+  const allActiveEmployees = useTypedSelector(
+    (state) => state.addAchiever.activeEmployeeList,
+  )
+  const getLookUps = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.manufacturerData,
+  )
+  useEffect(() => {
+    dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
+  }, [dispatch])
+
+  useEffect(() => {
+    dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (
+      changeReportStatus.createdDate &&
+      changeReportStatus.location &&
+      changeReportStatus.description
+    ) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [changeReportStatus])
+
+  const updateSuccessToastMessage = (
+    <OToast
+      toastMessage="Asset Status Changed  successfully for this asset."
+      toastColor="success"
+    />
+  )
+  const handleSaveAssetStatus = async () => {
+    const prepareObject = {
+      amount: changeReportStatus.amount,
+      assetId: changeReportStatus.assetTypeId,
+      date: changeReportStatus.createdDate,
+      description: changeReportStatus.description,
+      employeeId: changeReportStatus.employeeId,
+      invoiceNumber: changeReportStatus.invoiceNumber,
+      location: changeReportStatus.location,
+      locationForEmpAssets: checkBox,
+      referenceNumber: changeReportStatus.referenceNumber,
+      status: changeReportStatus.status,
+      vendorId: changeReportStatus.vendorId,
+    }
+
+    const saveAssetDetailsResultAction = await dispatch(
+      reduxServices.changeStatus.saveEmployee(prepareObject),
+    )
+    if (
+      reduxServices.changeStatus.saveEmployee.fulfilled.match(
+        saveAssetDetailsResultAction,
+      )
+    ) {
+      setToggle('')
+
+      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
+  const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setAssetNumber('')
+    setVendorName('')
+    setAssetReferenceNumber('')
+    setAssetStatus('')
+    setIsShowEditor(false)
+    setDescription('')
+    setStatusDate('')
+    setTimeout(() => {
+      setIsShowEditor(true)
+    }, 0)
+  }
+
+  const handledInputChange = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = event.target
+    setChangeReportStatus((prevState) => {
+      return { ...prevState, ...{ [name]: value } }
+    })
+  }
+  console.log(statusDate)
+  const handleIsInternalStatus = (isExpenseVendor: boolean) => {
+    setCheckBox(isExpenseVendor)
+  }
+
   return (
     <>
       <CRow className="mt-4 mb-4">
@@ -45,7 +196,6 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Asset Number:
-          {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -57,9 +207,44 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             name=" asset number"
             autoComplete="off"
             placeholder=" Asset Number"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
+            value={changeReportStatus.assetNumber}
+            disabled
           />
+        </CCol>
+      </CRow>
+      <CRow className="mt-3 ">
+        <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
+          Vendor Name:{' '}
+        </CFormLabel>
+        <CCol sm={3}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="vendorName"
+            data-testid="asset-type"
+            name="vendorName"
+            value={vendorName}
+            onChange={(e) => {
+              setVendorName(e.target.value)
+            }}
+          >
+            {getLookUps?.vendorList?.length > 0 &&
+              getLookUps?.vendorList?.map((item, index) => (
+                <option key={index} value={item.vendorName}>
+                  {item.vendorName}
+                </option>
+              ))}
+          </CFormSelect>
+        </CCol>
+        <CCol sm={2}>
+          <CButton
+            color="info"
+            className="btn-ovh me-1"
+            data-testid="add-vendorbtn"
+            onClick={() => setToggle('')}
+          >
+            <i className="fa fa-plus"></i>Add Vendor
+          </CButton>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
@@ -68,53 +253,40 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Asset Reference Number:
-          {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
             className="mb-1"
-            data-testid="asset reference number"
+            data-testid="referenceNumber"
             type="text"
-            id="asset reference number"
+            id="referenceNumber"
             size="sm"
-            name=" asset reference number"
+            name="referenceNumber"
             autoComplete="off"
-            placeholder=" Asset Reference Number"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
+            placeholder="Asset Reference Number"
+            value={changeReportStatus.referenceNumber}
+            onChange={handledInputChange}
           />
-        </CCol>
-
-        <CCol sm={2}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="add-vendorbtn"
-            // onClick={() => setToggle('')}
-          >
-            <i className="fa fa-plus"></i>Add Vendor
-          </CButton>
+          <span>
+            <b>
+              <strong>Note:</strong> This field is mandatory for assembly part
+              (Ex- CPU, Chair){' '}
+            </b>
+          </span>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel className="col-sm-3 col-form-label text-end">
           Asset Status :
-          {/* <span
-              className={
-                employeeFamily?.relationShip ? 'text-white' : 'text-danger'
-              }
-            >
-              *
-            </span> */}
         </CFormLabel>
         <CCol sm={3}>
           <CFormSelect
             aria-label="Relationship"
-            name="relationShip"
-            id="AssetStatus"
+            name="statusType"
+            id="statusType"
             data-testid="asset-status"
-            //   value={employeeFamily?.relationShip}
-            //   onChange={onChangePersonNameHandler}
+            value={statusType}
+            onChange={(e) => setStatusType(e.target.value)}
           >
             <option value={''}>Select Status</option>
             <option value="Working">Working</option>
@@ -131,10 +303,11 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Status Date:
+          <span className={statusDate ? 'text-white' : 'text-danger'}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <ReactDatePicker
-            id="statusDate"
+            id="createdDate"
             className="form-control form-control-sm sh-date-picker"
             showMonthDropdown
             showYearDropdown
@@ -142,8 +315,8 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             dropdownMode="select"
             dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yyyy"
-            name="statusDate"
-            // value={statusDate}
+            name="createdDate"
+            value={statusDate}
             onChange={(date: Date) => onHandleStartDatePicker(date)}
           />
         </CCol>
@@ -155,20 +328,45 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
         >
           Employee:
         </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            className="mb-1"
-            data-testid="employee"
-            type="text"
-            id="employee"
-            size="sm"
-            name=" employee"
-            autoComplete="off"
-            placeholder=" Employee:"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
-          />
-        </CCol>
+        <Autocomplete
+          inputProps={{
+            className: 'form-control form-control-sm',
+            autoComplete: 'on',
+            placeholder: 'Employee Name',
+            onBlur: onFocusOut,
+          }}
+          items={allEmployees}
+          getItemValue={(item) => item.empFirstName + ' ' + item.empLastName}
+          value={employeeName}
+          renderMenu={(children) => (
+            <div
+              className={
+                employeeName && employeeName.length > 0
+                  ? 'autocomplete-dropdown-wrap'
+                  : 'autocomplete-dropdown-wrap hide'
+              }
+            >
+              {children}
+            </div>
+          )}
+          renderItem={(item, isHighlighted) => (
+            <div
+              className={
+                isHighlighted
+                  ? 'autocomplete-dropdown-item active'
+                  : 'autocomplete-dropdown-item'
+              }
+              key={item?.employeeId}
+            >
+              {item?.empFirstName + ' ' + item?.empLastName}
+            </div>
+          )}
+          shouldItemRender={(item, value) =>
+            item?.empFirstName?.toLowerCase().indexOf(value?.toLowerCase()) > -1
+          }
+          onChange={(e) => setEmployeeName(e.target.value)}
+          onSelect={(value) => selectEmployeeHandler(value)}
+        />
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel
@@ -180,15 +378,15 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
         <CCol sm={3}>
           <CFormInput
             className="mb-1"
-            data-testid="invoice number"
+            data-testid="invoiceNumber"
             type="text"
-            id="invoice number"
+            id="invoiceNumber"
             size="sm"
-            name=" invoice number"
+            name="invoiceNumber"
             autoComplete="off"
-            placeholder=" Invoice Number"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
+            placeholder="Invoice Number"
+            value={changeReportStatus.invoiceNumber}
+            onChange={handledInputChange}
           />
         </CCol>
       </CRow>
@@ -198,7 +396,6 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Amount:
-          {/* <span className={showIsRequired(addVendor.vendorName)}>*</span> */}
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -207,11 +404,11 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             type="text"
             id="amount"
             size="sm"
-            name=" amount"
+            name="amount"
             autoComplete="off"
-            placeholder=" Amount:"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
+            placeholder="Amount:"
+            value={changeReportStatus.amount}
+            onChange={handledInputChange}
           />
         </CCol>
       </CRow>
@@ -221,6 +418,11 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Location:
+          <span
+            className={changeReportStatus.location ? TextWhite : TextDanger}
+          >
+            *
+          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
@@ -229,32 +431,30 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             type="text"
             id="location"
             size="sm"
-            name=" location"
+            name="location"
             autoComplete="off"
             placeholder=" Location:"
-            //   value={addVendor.vendorName}
-            //   onChange={handledInputChange}
+            value={changeReportStatus.location}
+            onChange={handledInputChange}
           />
         </CCol>
-        <CCol sm={3}>
-          <CFormCheck
-            className="chk_emp"
-            inline
-            type="checkbox"
-            name="isExpenseVendor"
-            id="expenseVendor"
-            // onChange={(event) =>
-            //   handleIsUpdateAllLocations(event.target.checked)
-            // }
-            // checked={setAssetStatus.isUpdateAllLocations}
-          />
+        <CCol sm={6}>
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            <CFormCheck
+              className="mb-1"
+              inline
+              type="checkbox"
+              name="isExpenseVendor"
+              id="expenseVendor"
+              onChange={(event) => handleIsInternalStatus(event.target.checked)}
+              checked={checkBox}
+            />
+            Update All Locations For Employee
+          </CFormLabel>
         </CCol>
-        <CFormLabel
-          {...formLabelProps}
-          className="col-sm-3 col-form-label text-end"
-        >
-          Update All Locations For Employee
-        </CFormLabel>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel
@@ -262,9 +462,9 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Description:
-          <span className={description ? TextWhite : TextDanger}>*</span>
+          <span className={description ? 'text-white' : 'text-danger'}>*</span>
         </CFormLabel>
-        {isShowComment ? (
+        {isShowEditor ? (
           <CCol sm={9}>
             <CKEditor<{
               onChange: CKEditorEventHandler<'change'>
@@ -274,7 +474,7 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {
-                handleDescription(editor.getData().trim())
+                handleText(editor.getData().trim())
               }}
             />
           </CCol>
@@ -288,8 +488,8 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             data-testid="save-btn"
             className="btn-ovh me-1 text-white"
             color="success"
-            //   disabled={!isSaveButtonEnabled}
-            //   onClick={handleSaveAssetStatus}
+            disabled={!isSaveButtonEnabled}
+            onClick={handleSaveAssetStatus}
           >
             Save
           </CButton>
@@ -297,7 +497,7 @@ const ChangeAssetFilterOptions = (): JSX.Element => {
             data-testid="clear-btn"
             color="warning"
             className="btn-ovh text-white"
-            // onClick={clearInputs}
+            onClick={clearButtonHandler}
           >
             Clear
           </CButton>

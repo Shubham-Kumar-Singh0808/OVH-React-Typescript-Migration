@@ -6,6 +6,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
 
 const AssetList = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -19,6 +20,12 @@ const AssetList = (): JSX.Element => {
   const [toDate, setToDate] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>()
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
+
+  const changeReportStatusTypes = {} as AllAssetsList
+
+  const [changeReportStatus, setChangeReportStatus] = useState(
+    changeReportStatusTypes,
+  )
 
   const listSize = useTypedSelector(reduxServices.assetList.selectors.listSize)
 
@@ -72,11 +79,18 @@ const AssetList = (): JSX.Element => {
               pageSize={pageSize}
               setPageSize={setPageSize}
               setToggle={setToggle}
+              setChangeReportStatus={setChangeReportStatus}
             />
           </OCard>
         </>
       )}
-      {toggle === 'changeAsset' && <ChangeAssetStatus setToggle={setToggle} />}
+      {toggle === 'changeAsset' && (
+        <ChangeAssetStatus
+          setToggle={setToggle}
+          changeReportStatus={changeReportStatus}
+          setChangeReportStatus={setChangeReportStatus}
+        />
+      )}
     </>
   )
 }

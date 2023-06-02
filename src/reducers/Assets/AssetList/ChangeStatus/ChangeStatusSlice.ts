@@ -22,6 +22,18 @@ const getAllAssets = createAsyncThunk(
   },
 )
 
+const saveEmployee = createAsyncThunk(
+  'assetManagement/saveEmployee',
+  async (props: SaveEmployee, thunkApi) => {
+    try {
+      return await GetAllAssetsListApi.saveEmployee()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAllAssetStatusState: ChangeAssetStatusSliceState = {
   saveEmployee: {} as SaveEmployee,
   getAllAssetResponse: {} as GetAllAssetResponse,
@@ -42,12 +54,18 @@ const changeStatusSlice = createSlice({
         state.getAllAssetResponse.list = action.payload.list
         state.getAllAssetResponse.size = action.payload.size
       })
+      .addCase(saveEmployee.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.saveEmployee = action.payload
+      })
   },
 })
 const isLoading = (state: RootState): LoadingState =>
   state.changeStatus.isLoading
+
 const ChangeAssetStatusThunk = {
   getAllAssets,
+  saveEmployee,
 }
 
 const ChangeStatusSelectors = {

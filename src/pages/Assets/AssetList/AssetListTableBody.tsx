@@ -15,12 +15,14 @@ const AssetListTableBody = ({
   handleAgendaModal,
   getItemNumber,
   setToggle,
+  setChangeReportStatus,
 }: {
   item: AllAssetsList
   index: number
   getItemNumber: (index: number) => number
   handleAgendaModal: (appraisalCycleSpecification: string) => void
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  setChangeReportStatus: React.Dispatch<React.SetStateAction<AllAssetsList>>
 }): JSX.Element => {
   const ModalLink = ({
     text,
@@ -74,12 +76,12 @@ const AssetListTableBody = ({
       dataTestId={`specification-modal-link${index}`}
     />
   )
-  const changeReportButtonHandler = () => {
+  const changeReportButtonHandler = (item: AllAssetsList) => {
     setToggle('changeAsset')
-    console.log('testing')
+    setChangeReportStatus(item)
   }
 
-  const ActionIcons = () => {
+  const ActionIcons = (item: AllAssetsList) => {
     return (
       <CTableDataCell data-testid="action-cell">
         <div className="sh-btn-group">
@@ -94,7 +96,7 @@ const AssetListTableBody = ({
               color="info"
               size="sm"
               className="mb-1"
-              onClick={changeReportButtonHandler}
+              onClick={() => changeReportButtonHandler(item)}
             >
               <i className=" fa fa-wrench"></i>
             </CButton>
@@ -133,7 +135,7 @@ const AssetListTableBody = ({
         <CTableDataCell>{item.invoiceNumber || 'N/A'}</CTableDataCell>
         <CTableDataCell>{item.amount || 'N/A'}</CTableDataCell>
         <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
-        <ActionIcons />
+        {ActionIcons(item)}
       </CTableRow>
     </>
   )

@@ -53,6 +53,10 @@ export type getAllAssets = {
   countryId: number
 }
 
+export enum UpdateAllLocations {
+  yes = 'Yes',
+  no = 'No',
+}
 export type GetAllAssetResponse = {
   list: getAllAssets[]
   size: number
