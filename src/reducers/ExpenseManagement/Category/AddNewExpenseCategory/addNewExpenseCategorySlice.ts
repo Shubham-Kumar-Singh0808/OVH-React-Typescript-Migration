@@ -82,14 +82,26 @@ const addNewCategorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(deleteExpenseCategory.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
-      .addCase(checkDuplicateCategory.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
       .addMatcher(
-        isAnyOf(deleteExpenseCategory.pending, checkDuplicateCategory.pending),
+        isAnyOf(
+          addNewExpenseCategory.fulfilled,
+          checkDuplicateCategory.fulfilled,
+          editExpenseCategory.fulfilled,
+          updateExpenseCategory.fulfilled,
+          deleteExpenseCategory.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          addNewExpenseCategory.pending,
+          checkDuplicateCategory.pending,
+          editExpenseCategory.pending,
+          updateExpenseCategory.pending,
+          deleteExpenseCategory.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
@@ -98,6 +110,9 @@ const addNewCategorySlice = createSlice({
         isAnyOf(
           deleteExpenseCategory.rejected,
           checkDuplicateCategory.rejected,
+          editExpenseCategory.rejected,
+          updateExpenseCategory.rejected,
+          deleteExpenseCategory.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed

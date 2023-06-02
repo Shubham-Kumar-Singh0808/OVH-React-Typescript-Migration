@@ -27,8 +27,11 @@ const ExpenseCategoryList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <AddExpenseCategory />
-        <ExpenseCategoryListTable userAccess={userAccess} />
+        <AddExpenseCategory data-testid="add-expense-category" />
+        <ExpenseCategoryListTable
+          data-testid="expense-category-list-table"
+          userAccess={userAccess}
+        />
       </OCard>
     </>
   )

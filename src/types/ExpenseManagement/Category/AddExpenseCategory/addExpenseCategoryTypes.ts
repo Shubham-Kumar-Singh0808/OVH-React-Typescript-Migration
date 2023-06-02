@@ -1,4 +1,6 @@
+import { CategoryApi } from '../../../apiTypes'
 import { LoadingState, ValidationError } from '../../../commonTypes'
+import { CategoryList } from '../categoryListTypes'
 
 export interface DynamicFormLabelProps {
   dynamicFormLabelProps: (htmlFor: string, className: string) => Label
@@ -20,5 +22,5 @@ export type EditCategory = {
 export type AddNewCategorySliceState = {
   isLoading: LoadingState
   error: ValidationError
-  addNewCategory: EditCategory[]
+  addNewCategory: CategoryList[]
 }
