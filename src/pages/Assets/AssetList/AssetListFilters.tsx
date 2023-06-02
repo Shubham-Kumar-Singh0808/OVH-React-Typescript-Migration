@@ -185,7 +185,7 @@ const AssetListFilters = ({
   }
   return (
     <>
-      <CRow className="justify-content-end">
+      <CRow className="justify-content-end mt-20">
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-2">
@@ -300,7 +300,7 @@ const AssetListFilters = ({
           {selectDate === 'Custom' ? (
             <>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel>
+                <CFormLabel className="mt-2">
                   From:
                   {(fromDate == null || fromDate === '') && (
                     <span className="text-danger">*</span>
@@ -324,7 +324,7 @@ const AssetListFilters = ({
                 />
               </CCol>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel>
+                <CFormLabel className="mt-2">
                   To:
                   {(toDate == null || toDate === '') && (
                     <span className="text-danger">*</span>
@@ -359,6 +359,18 @@ const AssetListFilters = ({
             <></>
           )}
 
+          <CCol className="text-end" sm={3}>
+            <CButton
+              color="info"
+              className="text-white"
+              size="sm"
+              data-testid="Add-export-button"
+            >
+              <i className="fa fa-plus me-1"></i>
+              Add
+            </CButton>
+          </CCol>
+
           <CRow className="mt-4 mb-4">
             <CCol sm={9} md={{ offset: 3 }}>
               <CButton
@@ -383,20 +395,6 @@ const AssetListFilters = ({
                 onClick={ClearBtnHadler}
               >
                 Clear
-              </CButton>
-            </CCol>
-          </CRow>
-
-          <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              <CButton
-                color="info"
-                className="text-white"
-                size="sm"
-                data-testid="Add-export-button"
-              >
-                <i className="fa fa-plus me-1"></i>
-                Add
               </CButton>
             </CCol>
           </CRow>
