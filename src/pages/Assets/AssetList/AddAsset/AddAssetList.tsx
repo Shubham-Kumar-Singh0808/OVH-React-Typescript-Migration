@@ -45,6 +45,58 @@ const AddAssetList = ({
 
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
+  const [isDateError, setIsDateError] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (
+      poNumber &&
+      vendorName &&
+      assetType &&
+      productType &&
+      manufacturerName &&
+      invoiceNumber &&
+      amount &&
+      datePurchase &&
+      receivedDate &&
+      warrantyStartDate &&
+      warrantyEndDate &&
+      assetStatus &&
+      country
+    ) {
+      setAddButtonEnabled(false)
+    } else {
+      setAddButtonEnabled(true)
+    }
+  }, [
+    poNumber,
+    vendorName,
+    assetType,
+    productType,
+    manufacturerName,
+    invoiceNumber,
+    amount,
+    datePurchase,
+    receivedDate,
+    warrantyStartDate,
+    warrantyEndDate,
+    assetStatus,
+    country,
+  ])
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(warrantyStartDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(warrantyEndDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsError(moment(end).isBefore(start))
+  }, [warrantyStartDate, warrantyEndDate])
+
   // const [notes, setNotes] = useState<string>()
 
   const onHandleDateOfPurchase = (value: Date) => {
@@ -60,6 +112,10 @@ const AddAssetList = ({
     setWarrantyEndDate(moment(value).format(dateFormat))
   }
   const clearInputs = () => {
+    setWarrantyEndDate('')
+    setWarrantyStartDate('')
+    setReceivedDate('')
+    setDateOfPurchase('')
     setPoNumber('')
     setVendorName('')
     setAssetType('')
@@ -119,17 +175,6 @@ const AddAssetList = ({
       setCountry(newValue)
     }
   }
-  useEffect(() => {
-    const newDateFormatForIsBefore = 'YYYY-MM'
-    const start = moment(warrantyStartDate, 'MM-YYYY').format(
-      newDateFormatForIsBefore,
-    )
-    const end = moment(warrantyEndDate, 'MM-YYYY').format(
-      newDateFormatForIsBefore,
-    )
-
-    setIsMonthError(moment(end).isBefore(start))
-  }, [fromMonth, toMonth])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -178,10 +223,26 @@ const AddAssetList = ({
     reduxServices.addNewProduct.selectors.productTypeList,
   )
 
-  const employeeCountries = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
-  )
-
+  const handleAddNewVendor = async () => {
+    const isAddLocation = await dispatch(
+      reduxServices.jobVacancies.addJobVacancy({
+        description,
+        expiryDate: expireDate,
+        jobCode,
+        minimumExperience: experience,
+        noOfRequirements: noOfOpenings,
+        positionVacant: jobTitle,
+        status: selectStatus,
+      }),
+    )
+    if (
+      reduxServices.jobVacancies.addJobVacancy.fulfilled.match(isAddLocation)
+    ) {
+      history.push('/jobvacancies')
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   return (
     <>
       <OCard
@@ -469,7 +530,7 @@ const AddAssetList = ({
               minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
-            {isMonthError && (
+            {isDateError && (
               <span className="text-danger">
                 <b>Received date should be greater than purchased date</b>
               </span>
@@ -522,6 +583,13 @@ const AddAssetList = ({
               minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
+            {isError && (
+              <span className="text-danger">
+                <b>
+                  Warranty end date should be greater than Warranty start date
+                </b>
+              </span>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
@@ -611,8 +679,8 @@ const AddAssetList = ({
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              // disabled={!isAddButtonEnabled}
-              // onClick={handleAddNewVendor}
+              disabled={!isAddButtonEnabled}
+              onClick={handleAddNewVendor}
             >
               Confirm
             </CButton>

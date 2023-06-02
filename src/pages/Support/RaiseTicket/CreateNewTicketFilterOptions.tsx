@@ -69,6 +69,9 @@ const CreateNewTicketFilterOptions = ({
   useEffect(() => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
+    dispatch(
+      reduxServices.ticketApprovals.getDepartmentCategoryList(Number(deptId)),
+    )
   }, [dispatch])
 
   useEffect(() => {
@@ -282,6 +285,8 @@ const CreateNewTicketFilterOptions = ({
     }
   }
 
+  const Result = departmentCategoryList.find((item) => item.mealType)
+
   return (
     <>
       <CForm>
@@ -418,7 +423,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {categoryId === 42 ? (
+        {Result?.mealType === true ? (
           ''
         ) : (
           <>
@@ -543,7 +548,7 @@ const CreateNewTicketFilterOptions = ({
             ''
           )}
         </CRow>
-        {categoryId === 42 ? (
+        {Result?.mealType === true ? (
           <CRow className="mt-3">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Date :
@@ -593,7 +598,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {categoryId === 42 ? (
+        {Result?.mealType === true ? (
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Add Members:
