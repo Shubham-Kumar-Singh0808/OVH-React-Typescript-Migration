@@ -64,4 +64,7 @@ describe('Assets Warranty List List Filter Options Component Testing with data',
     userEvent.click(addBtn)
     expect(addBtn).toBeInTheDocument()
   })
+  test('should render Export button in the component', () => {
+    expect(screen.getByTestId('export-button')).toBeTruthy()
+  })
 })

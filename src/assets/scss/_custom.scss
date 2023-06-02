@@ -299,6 +299,7 @@ input.capetalized {
 }
 .checkList-table td {
   border-bottom: none;
+  
 }
 .project-view-text-header h3 {
   font-size: 24px;
@@ -462,4 +463,50 @@ input.capetalized {
   .dropdown-item {
     padding: 15px !important;
   }
+}
+.client-Alignment .card-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+.client-No-Records{
+  border-bottom: 1px solid #d8dbd0;
+}
+.client-No-Records .text-start {
+  background-color: #fff;
+    box-shadow: none;
+}
+.closeClient-btn{
+  padding-right: 0 !important;
+  text-align: right;
+  .me-1{
+    margin-right: -4px !important;
+  }
+}
+.CheckList-view{
+  th{
+    vertical-align: top !important;
+  }
+}
+.auditorsLabel {
+  margin-bottom: 0 !important;
+  td{
+    display: inline;
+    padding: 0 17px 0 0 !important;
+   
+  }
+}
+.sqa-btn{
+  width: 30px;
+}
+.export-Warranty{
+  position: absolute;
+  right: 0;
+}
+.asset-Warranty{
+  position: relative;
+  z-index: 999;
+}
+.project-no-records{
+background-color: #fff !important;
+    border-bottom: none;
 }

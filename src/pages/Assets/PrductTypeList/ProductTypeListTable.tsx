@@ -151,7 +151,7 @@ const ProductTypeListTable = ({
             <CTableBody>
               <>
                 {ProductTypeList?.list?.length > 0 &&
-                  ProductTypeList.list?.map((ProductType, index) => {
+                  ProductTypeList?.list?.map((ProductType, index) => {
                     return (
                       <CTableRow key={index}>
                         <CTableDataCell scope="col">

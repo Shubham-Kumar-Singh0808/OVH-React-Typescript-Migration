@@ -28,6 +28,7 @@ import {
   reformatDate,
   dateFormatPerLocale,
 } from '../../../utils/dateFormatUtils'
+import { baseImageExtension } from '../../Achievements/AchievementConstants'
 
 const BasicInfoTab = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -442,6 +443,11 @@ const BasicInfoTab = (): JSX.Element => {
   const normalText = 'text-white'
   const dangerText = 'text-danger'
 
+  const imageUrl = employeeBasicInformation.thumbPicture as string
+  const baseUrl = baseImageExtension
+  const url = new URL(imageUrl, baseUrl)
+  const finalImageUrl = url.href
+
   return (
     <>
       {isLoading && <OLoadingSpinner type={LoadingType.PAGE} />}
@@ -642,7 +648,7 @@ const BasicInfoTab = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <BasicInfoTabImageCropper
-              file={employeeBasicInformation.thumbPicture}
+              file={finalImageUrl}
               empId={employeeBasicInformation.id as number}
               onUploadImage={croppedImageHandler}
             />

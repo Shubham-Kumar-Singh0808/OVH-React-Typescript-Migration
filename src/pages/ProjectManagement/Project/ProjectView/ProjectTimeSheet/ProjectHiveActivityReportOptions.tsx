@@ -30,6 +30,10 @@ const ProjectHiveActivityReportOptions = ({
   const projectMonthDisplay = useTypedSelector(
     reduxServices.hiveActivityReport.selectors.monthDisplay,
   )
+
+  const currentDate = moment().subtract(1, 'month')
+  const monthDisplay = currentDate.format('MMMM-YYYY')
+
   const dispatch = useAppDispatch()
   const { projectId } = useParams<{ projectId: string }>()
   const dateToUse = filterByDate
@@ -217,13 +221,23 @@ const ProjectHiveActivityReportOptions = ({
           </CRow>
         </>
       )}
-      <CRow className="mt-4">
-        <CCol sm={8}>
-          <h5 className="sh-summary-text">
-            Hive Activity Summary for {projectMonthDisplay}
-          </h5>
-        </CCol>
-      </CRow>
+      {selectedDate === previousMonthDate ? (
+        <CRow className="mt-4">
+          <CCol sm={8}>
+            <h5 className="sh-summary-text">
+              Hive Activity Summary for {monthDisplay}
+            </h5>
+          </CCol>
+        </CRow>
+      ) : (
+        <CRow className="mt-4">
+          <CCol sm={8}>
+            <h5 className="sh-summary-text">
+              Hive Activity Summary for {projectMonthDisplay}
+            </h5>
+          </CCol>
+        </CRow>
+      )}
     </>
   )
 }
