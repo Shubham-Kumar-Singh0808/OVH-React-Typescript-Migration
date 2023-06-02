@@ -197,6 +197,9 @@ const AddInitiateCycle = (): JSX.Element => {
 
   const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
 
+  const [selectDatePicker, setSelectDatePicker] = useState(new Date())
+  const highlightDates = [selectDatePicker]
+
   return (
     <>
       {toggle === 'addCycle' && (
@@ -206,6 +209,12 @@ const AddInitiateCycle = (): JSX.Element => {
           CBodyClassName="ps-0 pe-0"
           CFooterClassName="d-none"
         >
+          <DatePicker
+            selected={selectDatePicker}
+            onChange={(date: Date) => setSelectDatePicker(date)}
+            highlightDates={highlightDates}
+          />
+
           <CRow className="justify-content-end">
             <CCol className="text-end" md={4}>
               <CButton
