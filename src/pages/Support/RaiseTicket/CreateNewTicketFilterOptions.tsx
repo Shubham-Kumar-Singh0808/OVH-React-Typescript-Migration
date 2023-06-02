@@ -292,6 +292,8 @@ const CreateNewTicketFilterOptions = ({
   }
   console.log(departmentCategoryList)
 
+  const Result = departmentCategoryList.filter((item) => item.mealType)
+
   return (
     <>
       <CForm>
@@ -428,7 +430,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {mealType.mealType === true ? (
+        {Result[0]?.mealType === true ? (
           ''
         ) : (
           <>
