@@ -29,6 +29,7 @@ const AssetTransactionalListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  isTableView,
 }: AssetTransactionListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isAssetWarranty, setAssetWarranty] = useState<boolean>(false)
@@ -58,7 +59,6 @@ const AssetTransactionalListTable = ({
   const handleExportEmployeeFinanceData = async () => {
     const contentElement = document.getElementById('transactionalExportId')
     if (contentElement) {
-      // const content = contentElement.textContent || contentElement.innerText
       const worksheet = XLSX.utils.table_to_sheet(
         document.getElementById('transactionalExportId'),
       )
@@ -74,7 +74,7 @@ const AssetTransactionalListTable = ({
 
   return (
     <>
-      {assets?.length > 0 && (
+      {isTableView && (
         <>
           <CRow className="mt-2">
             <CCol
@@ -117,7 +117,6 @@ const AssetTransactionalListTable = ({
                 <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
-
             <CTableBody>
               {assets.map((assetstransactonData, index) => {
                 const removeSpaces1 = assetstransactonData.description

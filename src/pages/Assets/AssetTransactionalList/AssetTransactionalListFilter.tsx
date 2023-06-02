@@ -30,6 +30,7 @@ const AssetTransactionalListFilter = ({
   currentPage,
   pageSize,
   setCurrentPage,
+  setIsTableView,
 }: {
   selectDate: string
   setSelectDate: React.Dispatch<React.SetStateAction<string>>
@@ -44,6 +45,7 @@ const AssetTransactionalListFilter = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setIsTableView: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -119,9 +121,9 @@ const AssetTransactionalListFilter = ({
         to: toDate as string,
         multipleSearch: searchInput || '',
         searchByEmpName: searchByEmployee,
-        productId: Number(productType) || '',
-        status: statusType,
-        assetId: Number(assetType) || '',
+        productId: '',
+        status: '',
+        assetId: '',
       }),
     )
   }
@@ -144,6 +146,7 @@ const AssetTransactionalListFilter = ({
         assetId: Number(assetType) || '',
       }),
     )
+    setIsTableView(true)
   }
 
   useEffect(() => {

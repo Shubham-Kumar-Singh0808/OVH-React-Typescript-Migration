@@ -49,10 +49,10 @@ const assetsWarrantyListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getAssetsWarrantyList.pending), (state) => {
+      .addCase(getAssetsWarrantyList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
       })
-      .addMatcher(isAnyOf(getAssetsWarrantyList.fulfilled), (state, action) => {
+      .addCase(getAssetsWarrantyList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.warrantyAssetsDetails = action.payload.list
         state.listSize = action.payload.size

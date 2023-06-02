@@ -17,6 +17,7 @@ const AssetTransactionalList = (): JSX.Element => {
   const [toDate, setToDate] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>()
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
+  const [isTableView, setIsTableView] = useState(false)
 
   const assetListSize = useTypedSelector(
     reduxServices.assetTransactionList.selectors.listSize,
@@ -62,6 +63,7 @@ const AssetTransactionalList = (): JSX.Element => {
           currentPage={currentPage}
           pageSize={pageSize}
           setCurrentPage={setCurrentPage}
+          setIsTableView={setIsTableView}
         />
         <AssetTransactionalListTable
           paginationRange={paginationRange}
@@ -69,6 +71,7 @@ const AssetTransactionalList = (): JSX.Element => {
           setCurrentPage={setCurrentPage}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          isTableView={isTableView}
         />
       </OCard>
     </>
