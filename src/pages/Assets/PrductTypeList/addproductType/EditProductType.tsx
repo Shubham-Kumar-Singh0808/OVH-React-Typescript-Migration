@@ -165,6 +165,7 @@ const EditProductTypeRecord = ({
                 type="text"
                 id="productName"
                 size="sm"
+                maxLength={52}
                 name="productName"
                 autoComplete="off"
                 placeholder="Enter Product Type"
