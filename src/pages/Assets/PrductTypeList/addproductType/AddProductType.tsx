@@ -31,9 +31,6 @@ const AddProductTypeRecord = ({
   const addProductTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-  // useEffect(() => {
-  //   dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  // }, [dispatch])
 
   const clearInputs = () => {
     setProductName('')
