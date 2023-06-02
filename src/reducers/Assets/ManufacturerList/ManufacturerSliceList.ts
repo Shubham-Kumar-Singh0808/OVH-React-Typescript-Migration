@@ -25,17 +25,6 @@ const getManufacturerList = createAsyncThunk(
     }
   },
 )
-// const getAllLookUps = createAsyncThunk(
-//   'manufacturerList/getAllLookUps ',
-//   async (_, thunkApi) => {
-//     try {
-//       return await ManufacturerApi.getAllLookUpList()
-//     } catch (error) {
-//       const err = error as AxiosError
-//       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-//     }
-//   },
-// )
 const addManufacturer = createAsyncThunk<
   number | undefined,
   AddManufacturerListProps,

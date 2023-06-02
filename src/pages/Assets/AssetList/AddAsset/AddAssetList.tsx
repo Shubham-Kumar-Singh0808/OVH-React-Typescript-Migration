@@ -130,7 +130,12 @@ const AddAssetList = ({
   const assetListTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-
+  const countriesList = useTypedSelector(
+    reduxServices.country.selectors.countriesList,
+  )
+  useEffect(() => {
+    dispatch(reduxServices.country.getAllCountries())
+  }, [dispatch])
   useEffect(() => {
     if (assetType) {
       dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(assetType)))
@@ -148,6 +153,10 @@ const AddAssetList = ({
 
   const productTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
+  )
+
+  const employeeCountries = useTypedSelector(
+    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
   return (
@@ -504,14 +513,12 @@ const AddAssetList = ({
               name="assetStatus"
               placeholder="Enter Manufacturer Name"
               value={assetStatus}
-              onChange={(e) => setManufacturerName(e.target.value)}
+              onChange={(e) => setAssetStatus(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               <option value={'Working'}>Working</option>
               <option value={'Not Working'}>Not Working</option>
-
               <option value={'Under Repair'}>Under Repair</option>
-
               <option value={'Idle'}>Idle</option>
               <option value={'Scrap'}>Scrap</option>
             </CFormSelect>
@@ -526,17 +533,23 @@ const AddAssetList = ({
             <span className={country ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
-            <CFormInput
-              className="mb-1"
+            <CFormSelect
               data-testid="country"
-              type="text"
-              id="country"
+              aria-label="Default select example"
               size="sm"
+              id="country"
               name="country"
-              autoComplete="off"
-              placeholder="Select Country"
+              placeholder="Enter Manufacturer Name"
+              value={country}
               onChange={(e) => setCountry(e.target.value)}
-            />
+            >
+              <option value={''}>Select Country</option>
+              {countriesList.map((location, index) => (
+                <option key={index} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </CFormSelect>
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">
