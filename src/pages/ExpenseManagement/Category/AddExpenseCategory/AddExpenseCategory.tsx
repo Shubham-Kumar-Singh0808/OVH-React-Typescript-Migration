@@ -103,6 +103,14 @@ const AddExpenseCategory = (): JSX.Element => {
     setIsCategoryNameExist('')
   }
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Expense Management',
+  )
+
   return (
     <>
       <CRow className="mt-4 mb-4">
@@ -136,19 +144,21 @@ const AddExpenseCategory = (): JSX.Element => {
       </CRow>
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
-          <CButton
-            data-testid="save-btn"
-            className="btn-ovh me-1 text-white"
-            color="success"
-            disabled={
-              isAddButtonEnabled
-                ? isAddButtonEnabled && isCategoryNameExist.length > 0
-                : !isAddButtonEnabled
-            }
-            onClick={addCategoryNameButtonHandler}
-          >
-            Add
-          </CButton>
+          {userAccess?.createaccess && (
+            <CButton
+              data-testid="save-btn"
+              className="btn-ovh me-1 text-white"
+              color="success"
+              disabled={
+                isAddButtonEnabled
+                  ? isAddButtonEnabled && isCategoryNameExist.length > 0
+                  : !isAddButtonEnabled
+              }
+              onClick={addCategoryNameButtonHandler}
+            >
+              Add
+            </CButton>
+          )}
           <CButton
             data-testid="clear-btn"
             color="warning"

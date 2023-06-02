@@ -274,41 +274,45 @@ const ExpenseCategoryListTable = ({
                       </>
                     ) : (
                       <>
-                        {/* {userAccess?.updateaccess && ()} */}
-                        <CTooltip content="Edit">
-                          <CButton
-                            color="info btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() => {
-                              editExpenseCategoryButtonHandler(
-                                categoryItems.id,
-                                categoryItems.categoryName,
-                                categoryItems.createdBy,
-                                categoryItems.updatedBy,
-                                categoryItems.createdDate,
-                                categoryItems.updatedDate,
-                              )
-                            }}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-
-                        {/* {userAccess?.deleteaccess && ( )} */}
-                        <CTooltip content="Delete">
-                          <CButton
-                            color="danger btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              onDeleteBtnClick(
-                                categoryItems.id,
-                                categoryItems.categoryName,
-                              )
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
+                        {userAccess?.updateaccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() => {
+                                editExpenseCategoryButtonHandler(
+                                  categoryItems.id,
+                                  categoryItems.categoryName,
+                                  categoryItems.createdBy,
+                                  categoryItems.updatedBy,
+                                  categoryItems.createdDate,
+                                  categoryItems.updatedDate,
+                                )
+                              }}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        {userAccess?.deleteaccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              color="danger btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() =>
+                                onDeleteBtnClick(
+                                  categoryItems.id,
+                                  categoryItems.categoryName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
                       </>
                     )}
                   </CTableDataCell>
