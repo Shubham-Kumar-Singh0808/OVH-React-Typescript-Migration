@@ -73,18 +73,9 @@ const ProductTypeListTable = ({
   const deletedToastElement = (
     <OToast
       toastColor="success"
-      toastMessage="Prodution Deleted Successfully"
+      toastMessage="Product type deleted successfully"
     />
   )
-  useEffect(() => {
-    dispatch(
-      reduxServices.ProductTypeList.getProductTypeList({
-        endIndex: pageSize * currentPage,
-        startIndex: pageSize * (currentPage - 1),
-        productName: '',
-      }),
-    )
-  }, [currentPage, dispatch, pageSize])
 
   const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))

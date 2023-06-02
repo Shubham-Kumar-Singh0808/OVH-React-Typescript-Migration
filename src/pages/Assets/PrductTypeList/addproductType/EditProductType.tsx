@@ -55,7 +55,7 @@ const EditProductTypeRecord = ({
 
   const updateSuccessToastMessage = (
     <OToast
-      toastMessage="Product Type List is successfully edited.
+      toastMessage="Product type updated successfully.
       "
       toastColor="success"
     />
@@ -84,6 +84,13 @@ const EditProductTypeRecord = ({
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
+      dispatch(
+        reduxServices.ProductTypeList.getProductTypeList({
+          startIndex: 0,
+          endIndex: 20,
+          productName: '',
+        }),
+      )
     }
   }
 
@@ -160,7 +167,7 @@ const EditProductTypeRecord = ({
                 size="sm"
                 name="productName"
                 autoComplete="off"
-                placeholder="productName"
+                placeholder="Enter Product Type"
                 value={EditProductType.productName}
                 onChange={handledInputChange}
               />

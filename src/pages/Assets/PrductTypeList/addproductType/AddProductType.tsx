@@ -31,9 +31,9 @@ const AddProductTypeRecord = ({
   const addProductTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-  useEffect(() => {
-    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
+  // }, [dispatch])
 
   const clearInputs = () => {
     setProductName('')
@@ -48,7 +48,10 @@ const AddProductTypeRecord = ({
     }
   }, [productNames, assetTypeIds])
   const successToast = (
-    <OToast toastMessage="Job Added Successfully" toastColor="success" />
+    <OToast
+      toastMessage="Product type added successfully"
+      toastColor="success"
+    />
   )
 
   const addProductButtonHandler = async () => {
@@ -66,6 +69,13 @@ const AddProductTypeRecord = ({
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
+      dispatch(
+        reduxServices.ProductTypeList.getProductTypeList({
+          startIndex: 0,
+          endIndex: 20,
+          productName: '',
+        }),
+      )
     }
   }
 
@@ -119,7 +129,7 @@ const AddProductTypeRecord = ({
               onChange={(e) => setAssetTypeId(e.target.value)}
               value={assetTypeIds}
             >
-              <option value={''}>Select Asset type</option>
+              <option value={''}>Select Asset Type</option>
               {addProductTypeList?.assetTypeList?.length > 0 &&
                 addProductTypeList?.assetTypeList?.map((product, index) => (
                   <option key={index} value={product.id}>
@@ -144,9 +154,10 @@ const AddProductTypeRecord = ({
               type="text"
               id="productName"
               size="sm"
+              maxLength={52}
               name="productName"
               autoComplete="off"
-              placeholder="productName"
+              placeholder="Enter Product Type"
               value={productNames}
               onChange={handledInputChange} // Add onChange handler
             />
