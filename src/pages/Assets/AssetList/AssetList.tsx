@@ -2,13 +2,22 @@ import React, { useEffect, useState } from 'react'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
 import AddAssetList from './AddAsset/AddAssetList'
+import EditAddAssetList from './EditAssetList/EditAssetList'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import {
+  AllAssetsList,
+  AssetTypeChangeList,
+} from '../../../types/Assets/AssetList/AssetListTypes'
 
 const AssetList = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
+
+  const initialEditAssetList = {} as AllAssetsList
+  const [editAddAssetList, setEditAddAssetList] =
+    useState<AllAssetsList>(initialEditAssetList)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -72,10 +81,12 @@ const AssetList = (): JSX.Element => {
             setCurrentPage={setCurrentPage}
             pageSize={pageSize}
             setPageSize={setPageSize}
+            setEditAddAssetList={setEditAddAssetList}
           />
         </OCard>
       )}
       {toggle === 'AddAssetList' && <AddAssetList setToggle={setToggle} />}
+      {toggle === 'EditAssetList' && <EditAddAssetList setToggle={setToggle} />}
     </>
   )
 }

@@ -41,7 +41,6 @@ const AddAssetList = ({
   const [datePurchase, setDateOfPurchase] = useState<string>()
   const [receivedDate, setReceivedDate] = useState<string>()
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>()
-
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>()
 
   const [assetStatus, setAssetStatus] = useState<string>()
@@ -120,6 +119,30 @@ const AddAssetList = ({
       setCountry(newValue)
     }
   }
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM'
+    const start = moment(warrantyStartDate, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(warrantyEndDate, 'MM-YYYY').format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsMonthError(moment(end).isBefore(start))
+  }, [fromMonth, toMonth])
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(datePurchase, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(receivedDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsDateError(moment(end).isBefore(start))
+  }, [datePurchase, receivedDate])
+
   const [addComment, setAddComment] = useState<string>('')
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
 

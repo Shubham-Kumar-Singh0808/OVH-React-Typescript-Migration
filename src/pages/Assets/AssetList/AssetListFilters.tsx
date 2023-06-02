@@ -16,6 +16,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import { AssetTypeChangeList } from '../../../types/Assets/AssetList/AssetListTypes'
 
 const AssetListFilters = ({
   selectDate,

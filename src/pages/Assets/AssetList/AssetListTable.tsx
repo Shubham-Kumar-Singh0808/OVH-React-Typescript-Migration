@@ -24,6 +24,7 @@ const AssetListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  setEditAddAssetList,
 }: AssetListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 

@@ -35,13 +35,21 @@ const ModalLink = ({
     </CLink>
   )
 }
+const editBtnHandler = () => {
+  
+}
 
 const ActionIcons = () => {
   return (
     <CTableDataCell data-testid="action-cell">
       <div className="sh-btn-group">
         <CTooltip content="Edit">
-          <CButton color="info" size="sm" className="mb-1">
+          <CButton
+            color="info"
+            size="sm"
+            className="mb-1"
+            onClick={editBtnHandler}
+          >
             <i className="text-white fa fa-pencil-square-o"></i>
           </CButton>
         </CTooltip>
