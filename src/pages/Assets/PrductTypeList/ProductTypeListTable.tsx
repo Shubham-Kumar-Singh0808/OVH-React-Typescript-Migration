@@ -204,7 +204,7 @@ const ProductTypeListTable = ({
           <CRow>
             <CCol xs={4}>
               <p className="mt-2">
-                <strong>{totalRecordList}</strong>
+                <strong data-testid="record-number">{totalRecordList}</strong>
               </p>
             </CCol>
             <CCol xs={3}>

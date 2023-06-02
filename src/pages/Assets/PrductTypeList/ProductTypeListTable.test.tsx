@@ -2,24 +2,30 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ProductTypeListTable from './ProductTypeListTable'
-import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockProductTypeList } from '../../../test/data/ProductTypeListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
-
+const mockSetPageSize = jest.fn()
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
     <ProductTypeListTable
-      paginationRange={[]}
+      paginationRange={[1, 2, 3]}
       currentPage={0}
       setCurrentPage={mockSetData}
       pageSize={0}
-      setPageSize={mockSetData}
+      setPageSize={mockSetPageSize}
       setToggle={mockSetData}
       setEditProductType={mockSetData}
     />
@@ -32,7 +38,7 @@ describe('Product Type list without data', () => {
       preloadedState: {
         ProductTypeList: {
           isLoading: ApiLoadingState.succeeded,
-          listSize: 0,
+          listSize: mockProductTypeList.size,
           ProductTypeListModel: [],
           productTypeResponse: mockProductTypeList,
         },
@@ -41,6 +47,11 @@ describe('Product Type list without data', () => {
         },
       },
     })
+  })
+  afterEach(cleanup)
+  test('should render the "Product Type List" table ', () => {
+    const table = screen.getByRole('table')
+    expect(table).toBeTruthy()
   })
   test('should render first page data only', () => {
     waitFor(() => {
@@ -59,6 +70,9 @@ describe('Product Type list without data', () => {
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
+  test('should render correct number of page records', () => {
+    expect(screen.queryAllByRole('row')).toHaveLength(21)
+  })
   test('should be able to click delete button element', () => {
     const deleteBtn = screen.getAllByTestId('btn-deletes')
     expect(deleteBtn[0]).toBeInTheDocument()
@@ -66,5 +80,16 @@ describe('Product Type list without data', () => {
     const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(modalConfirmBtn)
     expect(modalConfirmBtn).toBeInTheDocument()
+  })
+  test('Should be able to see table titles', () => {
+    expect(screen.getByText('#')).toBeInTheDocument()
+    expect(screen.getByText('Product Type')).toBeInTheDocument()
+    expect(screen.getByText('Asset Type')).toBeInTheDocument()
+    expect(screen.getByText('Last Updated by')).toBeInTheDocument()
+    expect(screen.getByText('Actions')).toBeInTheDocument()
+  })
+  test('render number of records', () => {
+    const totRec = screen.getByTestId('record-number')
+    expect(totRec).toBeInTheDocument()
   })
 })

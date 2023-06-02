@@ -23,7 +23,7 @@ describe('ProductTypeList without data', () => {
       preloadedState: {
         ProductTypeList: {
           isLoading: ApiLoadingState.succeeded,
-          listSize: 0,
+          listSize: mockProductTypeList.size,
           ProductTypeListModel: mockProductTypeList.list,
           productTypeResponse: { list: [], size: 0 },
         },
