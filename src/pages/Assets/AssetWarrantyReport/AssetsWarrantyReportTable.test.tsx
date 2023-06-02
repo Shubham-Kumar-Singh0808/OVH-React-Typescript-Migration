@@ -34,9 +34,6 @@ describe('Assets Warranty Report Table Component Testing', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
   })
-  test('should render Export button in the component', () => {
-    expect(screen.getByTestId('export-button')).toBeTruthy()
-  })
   test('should render with data ', () => {
     expect(screen.getByText('Water Coocvcler')).toBeInTheDocument()
     expect(screen.getByText('Water Coolu9er vendor')).toBeInTheDocument()

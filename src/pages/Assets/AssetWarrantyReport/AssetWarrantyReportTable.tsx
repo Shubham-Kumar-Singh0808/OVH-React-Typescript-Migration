@@ -5,7 +5,6 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CButton,
   CCol,
   CRow,
   CLink,
@@ -18,8 +17,6 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { AssetsWarrantyListTableProps } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
-import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
-import { downloadFile } from '../../../utils/helper'
 
 const AssetWarrantyReportTable = (
   props: AssetsWarrantyListTableProps,
@@ -58,35 +55,8 @@ const AssetWarrantyReportTable = (
     setCurrentPage,
   } = props
 
-  const handleExportEmployeeDesignationData = async () => {
-    const assetsWarrantyReportList =
-      await assetsWarrantyListApi.getExportAssetsWarrantyList({
-        startIndex: 0,
-        endIndex: 20,
-        from: '',
-        to: '',
-        dateSelection: 'Current Month',
-        token: '',
-      })
-    downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
-  }
-
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="text-white"
-            size="sm"
-            data-testid="export-button"
-            onClick={handleExportEmployeeDesignationData}
-          >
-            <i className="fa fa-plus me-1"></i>
-            Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
       <CTable striped className="mt-3">
         <CTableHead>
           <CTableRow>
