@@ -1,5 +1,7 @@
+/* eslint-disable max-lines */
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
+
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -113,6 +115,7 @@ import {
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  AssetListApi,
   AssetTransationListApi,
 } from '../../types/apiTypes'
 
@@ -998,7 +1001,8 @@ export const vendorListApiConfig: VendorListApi = {
   getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
   addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
   exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
-  searchVendors: apiPrefix + '/assetManagement/getAllVendorDetails',
+  deleteVendorDetails: apiPrefix + '/assetManagement/deleteVendorDetails',
+  editVendorDetails: apiPrefix + '/assetManagement/updateVendorDetails',
 }
 
 export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
@@ -1018,8 +1022,10 @@ export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addProduct: apiPrefix + 'assetManagement/addProduct',
+  updateProduct: apiPrefix + 'assetManagement/updateProduct',
 }
-
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
@@ -1028,4 +1034,10 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
 export const assetTransactionListConfig: AssetTransationListApi = {
   getAssetTransactionList:
     apiPrefix + '/assetManagement/getTransactionalHistory',
+}
+
+export const GetAssetListConfig: AssetListApi = {
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }

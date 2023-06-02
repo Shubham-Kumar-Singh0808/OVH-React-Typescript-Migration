@@ -1,6 +1,7 @@
 import { CCol, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { ProfileDetailsProps } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 const ProfileDetails = ({
   employeeGeneralInformation,
@@ -13,7 +14,8 @@ const ProfileDetails = ({
             <img
               width="120px"
               height="120px;"
-              src={employeeGeneralInformation?.profilePicPath}
+              // src={employeeGeneralInformation?.profilePicPath}
+              src={`${base64Extension}${employeeGeneralInformation?.imageData}`}
               alt={employeeGeneralInformation?.fullName}
             />
           </div>

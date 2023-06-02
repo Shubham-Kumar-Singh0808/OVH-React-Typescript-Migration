@@ -38,7 +38,7 @@ const ProjectCreationRequest = (): JSX.Element => {
     dispatch(
       reduxServices.projectCreationRequest.getAllProjectRequestList({
         endIndex: pageSize * currentPage,
-        multiSearch: '',
+        multiSearch: searchInput,
         firstIndex: pageSize * (currentPage - 1),
       }),
     )
@@ -47,11 +47,13 @@ const ProjectCreationRequest = (): JSX.Element => {
   const handleSearch = () => {
     dispatch(
       reduxServices.projectCreationRequest.getAllProjectRequestList({
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         multiSearch: searchInput,
-        firstIndex: pageSize * (currentPage - 1),
+        firstIndex: 0,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const handleSearchByEnter = (
@@ -60,11 +62,13 @@ const ProjectCreationRequest = (): JSX.Element => {
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.projectCreationRequest.getAllProjectRequestList({
-          endIndex: pageSize * currentPage,
+          endIndex: 20,
           multiSearch: searchInput,
-          firstIndex: pageSize * (currentPage - 1),
+          firstIndex: 0,
         }),
       )
+      setCurrentPage(1)
+      setPageSize(20)
     }
   }
 
@@ -105,14 +109,16 @@ const ProjectCreationRequest = (): JSX.Element => {
                 </CInputGroup>
               </CCol>
               <CCol sm={3} className="d-md-flex justify-content-end">
-                <CButton
-                  color="info btn-ovh me-1"
-                  className="text-white"
-                  onClick={() => setToggle('addProjectRequest')}
-                  data-testid="add-project-test"
-                >
-                  <i className="fa fa-plus"></i> Project Request
-                </CButton>
+                {userAccessCreateAction?.createaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    className="text-white"
+                    onClick={() => setToggle('addProjectRequest')}
+                    data-testid="add-project-test"
+                  >
+                    <i className="fa fa-plus"></i> Project Request
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <ProjectCreationRequestTable

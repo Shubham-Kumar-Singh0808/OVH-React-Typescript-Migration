@@ -1,25 +1,53 @@
-import React, { useEffect } from 'react'
-import { toDate } from 'date-fns'
-import { useDispatch } from 'react-redux'
-import AssetTransactionalListTable from './AssetTransactionalListTable'
+import React, { useEffect, useState } from 'react'
 import AssetTransactionalListFilter from './AssetTransactionalListFilter'
-import OCard from '../../../components/ReusableComponent/OCard'
+import AssetTransactionalListTable from './AssetTransactionalListTable'
 import { reduxServices } from '../../../reducers/reduxServices'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { usePagination } from '../../../middleware/hooks/usePagination'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const AssetTransactionalList = (): JSX.Element => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+
+  // const Current = 'Current'
+  // const originalValue = 'currentmonth'
+
+  // const modifiedValue = originalValue.replace('current', 'month+')
 
   useEffect(() => {
-    dispatch(
-      reduxServices.assetTransactionList.getAssetTransactionList({
-        startIndex: 0,
-        endIndex: 20,
-        dateSelection: '',
-        from: '',
-        to: '',
-      }),
-    )
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
+  // const assets = useTypedSelector(
+  //   reduxServices.assetTransactionList.selectors.assetTransactionList,
+  // )
+  const [selectDate, setSelectDate] = useState<string>('Current Month')
+  const [fromDate, setFromDate] = useState<string>()
+  const [toDate, setToDate] = useState<string>()
+  const [searchInput, setSearchInput] = useState<string>()
+  const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
+
+  const assetListSize = useTypedSelector(
+    reduxServices.assetTransactionList.selectors.listSize,
+  )
+
+  const CurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+
+  useEffect(() => {
+    if (CurrentPage) {
+      setCurrentPage(CurrentPage)
+    }
+  }, [CurrentPage])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(assetListSize, 20)
+
   return (
     <>
       <OCard
@@ -28,8 +56,28 @@ const AssetTransactionalList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <AssetTransactionalListFilter />
-        <AssetTransactionalListTable />
+        <AssetTransactionalListFilter
+          fromDate={fromDate as string}
+          setFromDate={setFromDate}
+          toDate={toDate as string}
+          setToDate={setToDate}
+          searchInput={searchInput as string}
+          setSearchInput={setSearchInput}
+          selectDate={selectDate}
+          setSelectDate={setSelectDate}
+          searchByEmployee={searchByEmployee}
+          setSearchByEmployee={setSearchByEmployee}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          setCurrentPage={setCurrentPage}
+        />
+        <AssetTransactionalListTable
+          paginationRange={paginationRange}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          setPageSize={setPageSize}
+        />
       </OCard>
     </>
   )

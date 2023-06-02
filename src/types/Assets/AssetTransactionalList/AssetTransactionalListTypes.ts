@@ -44,9 +44,9 @@ export type AssetTransactionListProps = {
   from: string
   startIndex: number
   to: string
-  assetId?: string
+  assetId?: number | string
   multipleSearch?: string
-  productId?: string
+  productId?: number | string
   searchByEmpName?: boolean
   status?: string
 }
@@ -57,4 +57,12 @@ export type AssetTransactionListData = {
   productId: string
   searchByEmpName: boolean
   status: string
+}
+
+export type AssetTransactionListTableProps = {
+  paginationRange: number[]
+  currentPage: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  pageSize: number
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }

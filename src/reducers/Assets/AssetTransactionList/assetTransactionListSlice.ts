@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
-import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -35,7 +34,11 @@ export const initialAssetTransactionListState: AssetTransactionListSliceState =
 const assetTransactionListSlice = createSlice({
   name: 'assetTransactionList',
   initialState: initialAssetTransactionListState,
-  reducers: {},
+  reducers: {
+    clearAssetTransactionListType: (state, action) => {
+      state.assetTransactionakDetails = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addMatcher(isAnyOf(getAssetTransactionList.pending), (state) => {
@@ -56,7 +59,7 @@ const assetTransactionListThunk = {
   getAssetTransactionList,
 }
 
-function isLoading(state: RootState): LoadingState {
+const isLoading = (state: RootState): LoadingState => {
   return state.assetTransactionList.isLoading
 }
 const assetTransactionList = (state: RootState): AssetTransactionalList[] =>

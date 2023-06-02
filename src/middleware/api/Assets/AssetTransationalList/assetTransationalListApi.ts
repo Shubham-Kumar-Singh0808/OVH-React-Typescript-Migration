@@ -1,5 +1,4 @@
 import {
-  AssetTransactionListData,
   AssetTransactionListProps,
   GetAssetTransactionList,
 } from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
@@ -10,27 +9,26 @@ import {
 import { AllowedHttpMethods, assetTransactionListConfig } from '../../apiList'
 
 const getAssetTransactionList = async (
-  props: AssetTransactionListProps,
+  prepareObject: AssetTransactionListProps,
 ): Promise<GetAssetTransactionList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: assetTransactionListConfig.getAssetTransactionList,
     method: AllowedHttpMethods.post,
-    params: {
-      dateSelection: props.dateSelection ?? '',
-      endIndex: props.endIndex ?? 20,
-      from: props.from ?? '',
-      startIndex: props.startIndex ?? 0,
-      to: props.to ?? '',
-    },
     data: {
-      assetId: props.assetId,
-      multipleSearch: props.multipleSearch,
-      productId: props.productId,
-      searchByEmpName: props.searchByEmpName,
-      status: props.status,
+      assetId: prepareObject.assetId ?? '',
+      multipleSearch: prepareObject.multipleSearch ?? '',
+      productId: prepareObject.productId ?? '',
+      searchByEmpName: prepareObject.searchByEmpName ?? false,
+      status: prepareObject.status ?? '',
+    },
+    params: {
+      dateSelection: prepareObject.dateSelection ?? '',
+      endIndex: prepareObject.endIndex ?? 20,
+      from: prepareObject.from ?? '',
+      startIndex: prepareObject.startIndex ?? 0,
+      to: prepareObject.to ?? '',
     },
   })
-
   const response = await useAxios(requestConfig)
   return response.data
 }
