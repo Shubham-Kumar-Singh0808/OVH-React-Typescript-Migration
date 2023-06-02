@@ -42,6 +42,7 @@ export const initialAssetTypeChangeListState: AssetListSliceState = {
   manufacturerList: {} as ManufacturerList,
   allAssetList: [],
   listSize: 0,
+  assetList: {} as AllAssetsList,
 }
 
 const assetTypeChangeListSlice = createSlice({
@@ -87,12 +88,16 @@ const manufacturerList = (state: RootState): ManufacturerList =>
 const allAssetListData = (state: RootState): AllAssetsList[] =>
   state.assetList.allAssetList
 
+const allAssetList = (state: RootState): AllAssetsList =>
+  state.assetList.assetList
+
 const assetListSelectors = {
   isLoading,
   assetListData,
   manufacturerList,
   listSize,
   allAssetListData,
+  allAssetList,
 }
 
 export const assetListService = {

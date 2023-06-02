@@ -1,21 +1,32 @@
-import { createAsyncThunk } from '@reduxjs/toolkit/dist/createAsyncThunk'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import id from 'date-fns/locale/id'
-import { createSlice } from '@reduxjs/toolkit'
 import {
   AddEditSliceState,
   AssetTypeAddList,
+  UpdateAssetListSliceState,
 } from '../../../types/Assets/AssetList/addEditListTypes'
 import AddAssetApi from '../../../middleware/api/Assets/AssetList/AddEditApi'
-import { ValidationError } from '../../../types/commonTypes'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { ManufacturerListSelectors } from '../ManufacturerList/ManufacturerSliceList'
+import { RootState } from '../../../stateStore'
 
 const getAddAssetList = createAsyncThunk(
   '/assetManagement/addAsset',
   async (props: AssetTypeAddList, thunkApi) => {
     try {
       return await AddAssetApi.getAddAssetList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateAddAsset = createAsyncThunk(
+  '/assetManagement/updateAddAsset',
+  async (props: UpdateAssetListSliceState, thunkApi) => {
+    try {
+      return await AddAssetApi.updateAddAsset(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -44,11 +55,19 @@ const AddAssetListSlice = createSlice({
 
 const AddAssetListThunk = {
   getAddAssetList,
+  updateAddAsset,
+}
+const isLoading = (state: RootState): LoadingState =>
+  state.addAssetList.isLoading
+const listSize = (state: RootState): number => state.manufacturerList.listSize
+export const AddAssetListSelectors = {
+  isLoading,
+  listSize,
 }
 export const AddAssetListService = {
   ...AddAssetListThunk,
   actions: AddAssetListSlice.actions,
-  selectors: ManufacturerListSelectors,
+  selectors: AddAssetListSelectors,
 }
 
 export default AddAssetListSlice.reducer

@@ -91,10 +91,6 @@ const ManufacturerListSlice = createSlice({
         state.manufacturerDetails = action.payload.list
         state.listSize = action.payload.size
       })
-    // .addCase(getAllLookUps.fulfilled, (state, action) => {
-    //   state.isLoading = ApiLoadingState.succeeded
-    //   state.manufacturerList = action.payload
-    // })
   },
 })
 

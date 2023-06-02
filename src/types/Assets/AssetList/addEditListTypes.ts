@@ -24,3 +24,43 @@ export type AddEditSliceState = {
   isLoading: LoadingState
   listSize: number
 }
+
+export type UpdateAssetListSliceState = {
+  amount: string
+  assetNumber: string
+  assetType: string
+  assetTypeId: number
+  countryId: number
+  createdBy: string
+  createdDate: string
+  departmentId: null
+  departmentName: null
+  descriptio: null
+  employeeId: null
+  employeeName: null
+  id: number
+  invoiceNumber: string
+  location: null
+  manufacturerId: number
+  manufacturerName: string
+  notes: string
+  otherAssetNumber: string
+  otherNumber: null
+  pSpecification: string
+  poNumber: string
+  productId: number
+  productName: string
+  productSpecification: null
+  productSpecificationId: number
+  purchasedDate: string
+  receivedDate: string
+  referenceNumber: null
+  searchByEmpName: null
+  status: string
+  updatedBy: ''
+  updatedDate: ''
+  vendorId: number
+  vendorName: string
+  warrantyEndDate: string
+  warrantyStartDate: string
+}

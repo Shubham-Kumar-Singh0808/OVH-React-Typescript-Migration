@@ -19,6 +19,7 @@ export type AssetListSliceState = {
   manufacturerList: ManufacturerList
   allAssetList: AllAssetsList[]
   listSize: number
+  assetList: AllAssetsList
 }
 
 export type ManufacturerList = {

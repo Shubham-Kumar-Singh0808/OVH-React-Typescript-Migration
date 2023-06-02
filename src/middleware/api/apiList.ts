@@ -1062,4 +1062,5 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
   }
 export const GetAddAssetListConfig: AddAssetListApi = {
   addAsset: apiPrefix + '/assetManagement/addAsset',
+  updateAddAsset: apiPrefix + '/assetManagement/updateAssetDetails',
 }

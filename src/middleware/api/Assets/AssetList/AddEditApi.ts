@@ -1,4 +1,7 @@
-import { AssetTypeAddList } from '../../../../types/Assets/AssetList/addEditListTypes'
+import {
+  AssetTypeAddList,
+  UpdateAssetListSliceState,
+} from '../../../../types/Assets/AssetList/addEditListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -17,8 +20,21 @@ const getAddAssetList = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
+const updateAddAsset = async (
+  data: UpdateAssetListSliceState,
+): Promise<UpdateAssetListSliceState> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: GetAddAssetListConfig.updateAddAsset,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 
 const AddAssetApi = {
   getAddAssetList,
+  updateAddAsset,
 }
 export default AddAssetApi
