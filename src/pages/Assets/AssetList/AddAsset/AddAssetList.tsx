@@ -75,6 +75,10 @@ const AddAssetList = ({
     setWarrantyEndDate(moment(value).format(dateFormat))
   }
   const clearInputs = () => {
+    setWarrantyEndDate('')
+    setWarrantyStartDate('')
+    setReceivedDate('')
+    setDateOfPurchase('')
     setPoNumber('')
     setVendorName('')
     setAssetType('')
