@@ -15,14 +15,8 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
-import { useDispatch } from 'react-redux'
-import saveAs from 'file-saver'
 import XLSX from 'xlsx'
-import {
-  RootState,
-  useAppDispatch,
-  useTypedSelector,
-} from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -37,11 +31,6 @@ const AssetTransactionalListTable = ({
   setCurrentPage,
 }: AssetTransactionListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
-  // const assetTransactionalListData = (
-  //   state: RootState,
-  // ): AssetTransactionalList[] =>
-  //   state.assetTransactionList.assetTransactionakDetails
-
   const [isAssetWarranty, setAssetWarranty] = useState<boolean>(false)
   const [specification, setSpecification] = useState('')
 
@@ -69,7 +58,7 @@ const AssetTransactionalListTable = ({
   const handleExportEmployeeFinanceData = async () => {
     const contentElement = document.getElementById('transactionalExportId')
     if (contentElement) {
-      const content = contentElement.textContent || contentElement.innerText
+      // const content = contentElement.textContent || contentElement.innerText
       const worksheet = XLSX.utils.table_to_sheet(
         document.getElementById('transactionalExportId'),
       )
@@ -281,10 +270,3 @@ const AssetTransactionalListTable = ({
 }
 
 export default AssetTransactionalListTable
-function addStyle(
-  worksheet: XLSX.WorkSheet,
-  range: XLSX.Range,
-  headerStyle: { font: { bold: boolean } },
-) {
-  throw new Error('Function not implemented.')
-}

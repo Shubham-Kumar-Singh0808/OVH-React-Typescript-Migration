@@ -182,14 +182,6 @@ const AssetTransactionalListFilter = ({
     setCurrentPage(1)
   }
 
-  // const onHandleStartDate = (value: Date) => {
-  //   setFromDate(moment(value).format(dateFormat))
-  // }
-
-  // const onHandleEndDate = (value: Date) => {
-  //   setToDate(moment(value).format(dateFormat))
-  // }
-
   return (
     <>
       <CRow className="justify-content-end">

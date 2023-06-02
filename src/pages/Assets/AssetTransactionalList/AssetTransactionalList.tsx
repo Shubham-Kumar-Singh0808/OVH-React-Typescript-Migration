@@ -8,18 +8,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const AssetTransactionalList = (): JSX.Element => {
   const dispatch = useAppDispatch()
-
-  // const Current = 'Current'
-  // const originalValue = 'currentmonth'
-
-  // const modifiedValue = originalValue.replace('current', 'month+')
-
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
-  // const assets = useTypedSelector(
-  //   reduxServices.assetTransactionList.selectors.assetTransactionList,
-  // )
+
   const [selectDate, setSelectDate] = useState<string>('Current Month')
   const [fromDate, setFromDate] = useState<string>()
   const [toDate, setToDate] = useState<string>()
