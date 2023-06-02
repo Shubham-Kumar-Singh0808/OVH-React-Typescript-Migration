@@ -11,6 +11,7 @@ import {
   AllAssetsList,
   AssetTypeChangeList,
 } from '../../../types/Assets/AssetList/AssetListTypes'
+import { AssetTypeAddList } from '../../../types/Assets/AssetList/addEditListTypes'
 
 const AssetList = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
@@ -86,7 +87,13 @@ const AssetList = (): JSX.Element => {
         </OCard>
       )}
       {toggle === 'AddAssetList' && <AddAssetList setToggle={setToggle} />}
-      {toggle === 'EditAssetList' && <EditAddAssetList setToggle={setToggle} />}
+      {toggle === 'EditAssetList' && (
+        <EditAddAssetList
+          setToggle={setToggle}
+          editAddAssetList={editAddAssetList}
+          setEditAddAssetList={setEditAddAssetList}
+        />
+      )}
     </>
   )
 }

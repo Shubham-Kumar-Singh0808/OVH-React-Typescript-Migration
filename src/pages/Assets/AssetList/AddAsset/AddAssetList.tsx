@@ -45,6 +45,21 @@ const AddAssetList = ({
 
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
+  const [isDateError, setIsDateError] = useState(false)
+  const [isError, setIsError] = useState(false)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(warrantyStartDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(warrantyEndDate, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+
+    setIsError(moment(end).isBefore(start))
+  }, [warrantyStartDate, warrantyEndDate])
+
   // const [notes, setNotes] = useState<string>()
 
   const onHandleDateOfPurchase = (value: Date) => {
@@ -119,17 +134,6 @@ const AddAssetList = ({
       setCountry(newValue)
     }
   }
-  useEffect(() => {
-    const newDateFormatForIsBefore = 'YYYY-MM'
-    const start = moment(warrantyStartDate, 'MM-YYYY').format(
-      newDateFormatForIsBefore,
-    )
-    const end = moment(warrantyEndDate, 'MM-YYYY').format(
-      newDateFormatForIsBefore,
-    )
-
-    setIsMonthError(moment(end).isBefore(start))
-  }, [fromMonth, toMonth])
 
   useEffect(() => {
     const newDateFormatForIsBefore = 'YYYY-MM-DD'
@@ -176,10 +180,6 @@ const AddAssetList = ({
 
   const productTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
-  )
-
-  const employeeCountries = useTypedSelector(
-    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
 
   return (
@@ -469,7 +469,7 @@ const AddAssetList = ({
               minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
-            {isMonthError && (
+            {isDateError && (
               <span className="text-danger">
                 <b>Received date should be greater than purchased date</b>
               </span>
@@ -522,6 +522,13 @@ const AddAssetList = ({
               minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
+            {isError && (
+              <span className="text-danger">
+                <b>
+                  Warranty end date should be greater than Warranty start date
+                </b>
+              </span>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">

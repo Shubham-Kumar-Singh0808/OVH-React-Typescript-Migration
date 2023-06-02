@@ -7,6 +7,7 @@ import {
   CFormInput,
   CFormSelect,
 } from '@coreui/react-pro'
+// eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -18,6 +19,7 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { showIsRequired } from '../../../../utils/helper'
+import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
 
 const EditAddAssetList = ({
   setToggle,
@@ -25,8 +27,8 @@ const EditAddAssetList = ({
   setEditAddAssetList,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
-  editAddAssetList: AssetTypeAddList
-  setEditAddAssetList: React.Dispatch<React.SetStateAction<AssetTypeAddList>>
+  editAddAssetList: AllAssetsList
+  setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
@@ -70,47 +72,47 @@ const EditAddAssetList = ({
     }
   }, [editAddAssetList])
 
-  const handleIsInternalStatus = (isExpenseVendor: boolean) => {
-    setEditAddAssetList({
-      ...editAddAssetList,
-      isExpenseVendor,
-    })
-  }
+  // const handleIsInternalStatus = (isExpenseVendor: boolean) => {
+  //   setEditAddAssetList({
+  //     ...editAddAssetList,
+  //     isExpenseVendor,
+  //   })
+  // }
 
-  const handleAddressText = (vendorAddress: string) => {
-    setEditVendorInfo((prevState) => {
-      return { ...prevState, ...{ vendorAddress } }
-    })
-  }
+  // const handleAddressText = (vendorAddress: string) => {
+  //   setEditVendorInfo((prevState) => {
+  //     return { ...prevState, ...{ vendorAddress } }
+  //   })
+  // }
 
-  const handleBankDetailsText = (vendorBankDetails: string) => {
-    setEditVendorInfo((prevState) => {
-      return { ...prevState, ...{ vendorBankDetails } }
-    })
-  }
+  // const handleBankDetailsText = (vendorBankDetails: string) => {
+  //   setEditVendorInfo((prevState) => {
+  //     return { ...prevState, ...{ vendorBankDetails } }
+  //   })
+  // }
 
-  const onChangeInputHandler = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = event.target
-    if (name === 'vendorEmailId') {
-      const personalEmail = value
-      validateEmail(personalEmail)
-      setEditVendorInfo((prevState) => {
-        return { ...prevState, ...{ [name]: personalEmail } }
-      })
-    }
-    setEditVendorInfo((prevState) => {
-      return {
-        ...prevState,
-        ...{
-          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-        },
-      }
-    })
-  }
+  // const onChangeInputHandler = (
+  //   event:
+  //     | React.ChangeEvent<HTMLSelectElement>
+  //     | React.ChangeEvent<HTMLInputElement>,
+  // ) => {
+  //   const { name, value } = event.target
+  //   if (name === 'vendorEmailId') {
+  //     const personalEmail = value
+  //     validateEmail(personalEmail)
+  //     setEditVendorInfo((prevState) => {
+  //       return { ...prevState, ...{ [name]: personalEmail } }
+  //     })
+  //   }
+  //   setEditVendorInfo((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       ...{
+  //         [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+  //       },
+  //     }
+  //   })
+  // }
   const updateSuccessToastMessage = (
     <OToast
       toastMessage="Vendor Details is successfully edited."
@@ -213,7 +215,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
             Vendor Name:{' '}
-            <span className={showIsRequired(editAddAssetList.vendorId)}>*</span>
+            {/* <span className={showIsRequired(editAddAssetList.vendorId)}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
