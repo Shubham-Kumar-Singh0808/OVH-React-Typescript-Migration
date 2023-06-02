@@ -117,6 +117,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  ExpenseSubCategoryListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1059,3 +1060,14 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
+  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
+  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
+  checkForDuplicateSubCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
+  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
+  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}

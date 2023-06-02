@@ -1,0 +1,160 @@
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
+import { LoadingState, ValidationError } from '../../../types/commonTypes'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { RootState } from '../../../stateStore'
+import subCategoryListApi from '../../../middleware/api/ExpenseManagement/Sub-Category/subCategoryApi'
+import {
+  CategoryList,
+  SubCategoryList,
+  SubCategoryListSliceState,
+} from '../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
+
+const getCategoryList = createAsyncThunk(
+  '/ExpenseManagement/getCategoryList',
+  async (_, thunkApi) => {
+    try {
+      return await subCategoryListApi.getCategoryList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/getSubCategoryList',
+  async (_, thunkApi) => {
+    try {
+      return await subCategoryListApi.getSubCategoryList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const addSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/addSubCategoryList',
+  async (newSubCategory: SubCategoryList[], thunkApi) => {
+    try {
+      return await subCategoryListApi.addSubCategoryList(newSubCategory)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const existSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/existSubCategoryList',
+  async (_, thunkApi) => {
+    try {
+      return await subCategoryListApi.existSubCategoryList()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const initialSubCategoryListState: SubCategoryListSliceState = {
+  isLoading: ApiLoadingState.idle,
+  expenseCategories: [],
+  subExpenseCategories: [],
+  currentPage: 1,
+  pageSize: 20,
+}
+
+const subCategoryListSlice = createSlice({
+  name: 'sub category',
+  initialState: initialSubCategoryListState,
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action) => {
+      state.pageSize = action.payload
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCategoryList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.expenseCategories = action.payload
+      })
+      .addCase(getSubCategoryList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.subExpenseCategories = action.payload
+      })
+      .addCase(addSubCategoryList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.subExpenseCategories = action.payload
+      })
+      .addMatcher(
+        isAnyOf(addSubCategoryList.fulfilled, existSubCategoryList.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCategoryList.pending,
+          getSubCategoryList.pending,
+          addSubCategoryList.pending,
+          existSubCategoryList.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCategoryList.rejected,
+          getSubCategoryList.rejected,
+          addSubCategoryList.rejected,
+          existSubCategoryList.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+  },
+})
+
+const isLoading = (state: RootState): LoadingState =>
+  state.subCategoryList.isLoading
+const categories = (state: RootState): CategoryList[] =>
+  state.subCategoryList.expenseCategories
+const subCategories = (state: RootState): SubCategoryList[] =>
+  state.subCategoryList.subExpenseCategories
+const addSubCategories = (state: RootState): SubCategoryList[] =>
+  state.subCategoryList.subExpenseCategories
+const pageFromState = (state: RootState): number =>
+  state.subCategoryList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.subCategoryList.pageSize
+
+const subCategoryListThunk = {
+  getCategoryList,
+  getSubCategoryList,
+  addSubCategoryList,
+  existSubCategoryList,
+}
+
+const subCategoryListSelectors = {
+  isLoading,
+  categories,
+  subCategories,
+  addSubCategories,
+  pageFromState,
+  pageSizeFromState,
+}
+
+export const subCategoryListService = {
+  ...subCategoryListThunk,
+  actions: subCategoryListSlice.actions,
+  selectors: subCategoryListSelectors,
+}
+
+export default subCategoryListSlice.reducer

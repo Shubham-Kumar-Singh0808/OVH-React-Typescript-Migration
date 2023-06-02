@@ -891,3 +891,13 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+
+export interface ExpenseSubCategoryListApi extends ApiBase {
+  getCategoryList: string
+  getSubCategoryList: string
+  addSubCategoryList: string
+  editSubCategory: string
+  checkForDuplicateSubCategory: string
+  updateSubCategory: string
+  deleteSubCategory: string
+}
