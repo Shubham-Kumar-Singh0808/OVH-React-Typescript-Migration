@@ -223,6 +223,26 @@ const AddAssetList = ({
     reduxServices.addNewProduct.selectors.productTypeList,
   )
 
+  const handleAddNewVendor = async () => {
+    const isAddLocation = await dispatch(
+      reduxServices.jobVacancies.addJobVacancy({
+        description,
+        expiryDate: expireDate,
+        jobCode,
+        minimumExperience: experience,
+        noOfRequirements: noOfOpenings,
+        positionVacant: jobTitle,
+        status: selectStatus,
+      }),
+    )
+    if (
+      reduxServices.jobVacancies.addJobVacancy.fulfilled.match(isAddLocation)
+    ) {
+      history.push('/jobvacancies')
+      dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
   return (
     <>
       <OCard
@@ -660,7 +680,7 @@ const AddAssetList = ({
               className="btn-ovh me-1 text-white"
               color="success"
               disabled={!isAddButtonEnabled}
-              // onClick={handleAddNewVendor}
+              onClick={handleAddNewVendor}
             >
               Confirm
             </CButton>
