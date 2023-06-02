@@ -45,6 +45,7 @@ const ChangeReporteeFilterOptions = () => {
       setAutoCompleteTarget={setAutoCompleteTarget}
       shouldRenderTable={ShouldRenderTable}
       setShouldRenderTable={setShouldRenderTable}
+      setIsActive={setIsActive}
     />
   ) : (
     <ReporteesAutoComplete
@@ -54,29 +55,32 @@ const ChangeReporteeFilterOptions = () => {
       setAutoCompleteTarget={setAutoCompleteTarget}
       shouldRenderTable={ShouldRenderTable}
       setShouldRenderTable={setShouldRenderTable}
+      setIsActive={setIsActive}
     />
   )
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="mb-3">
+          <CRow className="my-4 col-sm-10">
             <CCol sm={2}>
               <CFormCheck
                 type="radio"
                 name="Reportees"
                 id="reportees"
                 label="Reportees"
+                className="col-sm-2 col-form-label text-end ms-5 fw-bold"
                 checked={isActive}
                 onChange={() => handleOnChange('reportees')}
               />
             </CCol>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <CFormCheck
                 type="radio"
                 name="HR Associates"
                 id="hrAssocaites"
                 label="HR Associates"
+                className="col-sm-12 col-form-label text-start ms-5 fw-bold"
                 checked={!isActive}
                 onChange={() => handleOnChange('hrReportees')}
               />
