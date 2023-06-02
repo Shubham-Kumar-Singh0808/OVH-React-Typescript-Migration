@@ -17,7 +17,7 @@ describe('Asset Transaction List Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
-        isTableView={false}
+        isTableView={true}
       />,
       {
         preloadedState: {
@@ -84,7 +84,7 @@ describe('Asset Transaction List Table Component Testing', () => {
     expect(exportBtn).toBeTruthy()
   })
   test('should open modal when clicking on plus icon', () => {
-    const linkElement = screen.getByTestId('specification-modal-link2')
+    const linkElement = screen.getByTestId('specification-modal-link1')
     userEvent.click(linkElement)
     expect(linkElement).toBeTruthy()
   })
