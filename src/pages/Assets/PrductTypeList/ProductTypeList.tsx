@@ -64,7 +64,6 @@ const ProductTypeList = (): JSX.Element => {
       setCurrentPage(1)
     }
   }, [])
-  console.log(currentPage)
 
   const handleExportProductTypeList = async () => {
     const ExportProductList = await ProductTypeAPI.ExportProductListDownloading(
