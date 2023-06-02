@@ -35,9 +35,7 @@ const ModalLink = ({
     </CLink>
   )
 }
-const editBtnHandler = () => {
-  
-}
+const editBtnHandler = () => {}
 
 const ActionIcons = () => {
   return (

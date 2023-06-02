@@ -1,6 +1,7 @@
 import { LoadingState } from '../../commonTypes'
 
 export type AssetTypeAddList = {
+  assetStatus: string | number | string[] | undefined
   amount: string
   assetNumber: string
   assetTypeId: string
