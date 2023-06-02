@@ -469,6 +469,11 @@ const AddAssetList = ({
               minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
+            {isMonthError && (
+              <span className="text-danger">
+                <b>Received date should be greater than purchased date</b>
+              </span>
+            )}
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
