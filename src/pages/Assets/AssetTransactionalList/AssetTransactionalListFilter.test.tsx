@@ -26,9 +26,7 @@ const toRender = (
       setSearchByEmployeeName={jest.fn()}
       setSearchInputField={jest.fn()}
       setCurrentPage={jest.fn()}
-      setIsTableView={function (value: React.SetStateAction<boolean>): void {
-        throw new Error('Function not implemented.')
-      }}
+      setIsTableView={jest.fn()}
     />
   </div>
 )

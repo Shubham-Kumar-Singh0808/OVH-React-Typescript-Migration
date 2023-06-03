@@ -45,7 +45,7 @@ const AssetTransactionalListFilter = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
-  setIsTableView: React.Dispatch<React.SetStateAction<boolean>>
+  setIsTableView: (value: boolean) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
