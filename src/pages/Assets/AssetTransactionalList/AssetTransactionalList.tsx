@@ -12,12 +12,14 @@ const AssetTransactionalList = (): JSX.Element => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
-  const [selectDate, setSelectDate] = useState<string>('Current Month')
-  const [fromDate, setFromDate] = useState<string>()
-  const [toDate, setToDate] = useState<string>()
-  const [searchInput, setSearchInput] = useState<string>()
-  const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
-  const [isTableView, setIsTableView] = useState(false)
+  const [selectDatePicker, setselectDatePicker] =
+    useState<string>('Current Month')
+  const [fromDatePicker, setFromDatePicker] = useState<string>()
+  const [toDatePicker, setToDatePicker] = useState<string>()
+  const [searchInputField, setSearchInputField] = useState<string>()
+  const [searchByEmployeeName, setSearchByEmployeeName] =
+    useState<boolean>(false)
+  const [isAssetTableView, setIsAssetTableView] = useState(false)
 
   const assetListSize = useTypedSelector(
     reduxServices.assetTransactionList.selectors.listSize,
@@ -50,20 +52,20 @@ const AssetTransactionalList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <AssetTransactionalListFilter
-          fromDate={fromDate as string}
-          setFromDate={setFromDate}
-          toDate={toDate as string}
-          setToDate={setToDate}
-          searchInput={searchInput as string}
-          setSearchInput={setSearchInput}
-          selectDate={selectDate}
-          setSelectDate={setSelectDate}
-          searchByEmployee={searchByEmployee}
-          setSearchByEmployee={setSearchByEmployee}
+          fromDatePicker={fromDatePicker as string}
+          setFromDatePicker={setFromDatePicker}
+          toDatePicker={toDatePicker as string}
+          setToDatePicker={setToDatePicker}
+          searchInputField={searchInputField as string}
+          setSearchInputField={setSearchInputField}
+          selectDatePicker={selectDatePicker}
+          setSelectDatePicker={setselectDatePicker}
+          searchByEmployeeName={searchByEmployeeName}
+          setSearchByEmployeeName={setSearchByEmployeeName}
           currentPage={currentPage}
           pageSize={pageSize}
           setCurrentPage={setCurrentPage}
-          setIsTableView={setIsTableView}
+          setIsTableView={setIsAssetTableView}
         />
         <AssetTransactionalListTable
           paginationRange={paginationRange}
@@ -71,7 +73,7 @@ const AssetTransactionalList = (): JSX.Element => {
           setCurrentPage={setCurrentPage}
           pageSize={pageSize}
           setPageSize={setPageSize}
-          isTableView={isTableView}
+          isAssetTableView={isAssetTableView}
         />
       </OCard>
     </>

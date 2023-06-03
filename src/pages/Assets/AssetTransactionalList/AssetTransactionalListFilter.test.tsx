@@ -13,19 +13,22 @@ const toRender = (
     <div id="overlay-root"></div>
     <div id="root"></div>
     <AssetTransactionalListFilter
-      selectDate={'Custom'}
-      setSelectDate={mockSetSelect}
+      selectDatePicker={'Custom'}
+      setSelectDatePicker={mockSetSelect}
       pageSize={0}
       currentPage={0}
-      fromDate={undefined}
-      setFromDate={jest.fn()}
-      toDate={undefined}
-      setToDate={jest.fn()}
-      searchInput={''}
-      searchByEmployee={false}
-      setSearchByEmployee={jest.fn()}
-      setSearchInput={jest.fn()}
+      fromDatePicker={undefined}
+      setFromDatePicker={jest.fn()}
+      toDatePicker={undefined}
+      setToDatePicker={jest.fn()}
+      searchInputField={''}
+      searchByEmployeeName={false}
+      setSearchByEmployeeName={jest.fn()}
+      setSearchInputField={jest.fn()}
       setCurrentPage={jest.fn()}
+      setIsTableView={function (value: React.SetStateAction<boolean>): void {
+        throw new Error('Function not implemented.')
+      }}
     />
   </div>
 )
@@ -36,7 +39,7 @@ describe('Asset Transaction List Filter Options Component Testing with data', ()
   screen.debug()
   const date = '03/05/1988'
   test('should able to select values for options for respective select element', async () => {
-    const select = screen.getByTestId('form-select1')
+    const select = screen.getByTestId('form-select-date')
     userEvent.selectOptions(select, ['Custom'])
     expect(select).toHaveValue('Custom')
 
@@ -82,7 +85,7 @@ describe('Asset Transaction List Filter Options Component Testing with data', ()
   })
 
   test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
-    const searchBtn = screen.getByTestId('ch-searchByEmployee')
+    const searchBtn = screen.getByTestId('ch-searchByEmployeeName')
     fireEvent.click(searchBtn)
   })
 })

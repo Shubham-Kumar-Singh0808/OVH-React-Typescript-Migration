@@ -17,31 +17,31 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
 
 const AssetTransactionalListFilter = ({
-  selectDate,
-  setSelectDate,
-  searchInput,
-  setSearchInput,
-  fromDate,
-  setFromDate,
-  toDate,
-  setToDate,
-  searchByEmployee,
-  setSearchByEmployee,
+  selectDatePicker,
+  setSelectDatePicker,
+  searchInputField,
+  setSearchInputField,
+  fromDatePicker,
+  setFromDatePicker,
+  toDatePicker,
+  setToDatePicker,
+  searchByEmployeeName,
+  setSearchByEmployeeName,
   currentPage,
   pageSize,
   setCurrentPage,
   setIsTableView,
 }: {
-  selectDate: string
-  setSelectDate: React.Dispatch<React.SetStateAction<string>>
-  searchInput: string
-  setSearchInput: React.Dispatch<React.SetStateAction<string | undefined>>
-  fromDate: string | Date | undefined
-  setFromDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  toDate: string | Date | undefined
-  setToDate: React.Dispatch<React.SetStateAction<string | undefined>>
-  searchByEmployee: boolean
-  setSearchByEmployee: React.Dispatch<React.SetStateAction<boolean>>
+  selectDatePicker: string
+  setSelectDatePicker: React.Dispatch<React.SetStateAction<string>>
+  searchInputField: string
+  setSearchInputField: React.Dispatch<React.SetStateAction<string | undefined>>
+  fromDatePicker: string | Date | undefined
+  setFromDatePicker: React.Dispatch<React.SetStateAction<string | undefined>>
+  toDatePicker: string | Date | undefined
+  setToDatePicker: React.Dispatch<React.SetStateAction<string | undefined>>
+  searchByEmployeeName: boolean
+  setSearchByEmployeeName: React.Dispatch<React.SetStateAction<boolean>>
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
@@ -49,134 +49,147 @@ const AssetTransactionalListFilter = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [assetType, setAssetType] = useState<string | number>('')
-  const [productType, setProductType] = useState<string | number>('')
-  const [statusType, setStatusType] = useState<string>('')
+  const [assetTypeFilter, setAssetTypeFilter] = useState<string | number>('')
+  const [productTypeFilter, setProductTypeFilter] = useState<string | number>(
+    '',
+  )
+  const [statusTypeFilter, setStatusTypeFilter] = useState<string>('')
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
 
-  const onHandleFromDate = (value: Date) => {
-    setFromDate(moment(value).format(dateFormat))
+  const onHandleCalanderFromDate = (value: Date) => {
+    setFromDatePicker(moment(value).format(dateFormat))
   }
-  const onHandleToDate = (value: Date) => {
-    setToDate(moment(value).format(dateFormat))
+  const onHandleCalanderToDate = (value: Date) => {
+    setToDatePicker(moment(value).format(dateFormat))
   }
-  const assetListTypeList = useTypedSelector(
+  const assetTransansactionTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-  const assetListData = useTypedSelector(
+  const assetListResponse = useTypedSelector(
     reduxServices.assetList.selectors.assetListData,
   )
   const [dateError, setDateError] = useState<boolean>(false)
 
   useEffect(() => {
-    const newDateFormatForIsBefore = 'YYYY-MM-DD'
-    const start = moment(fromDate, dateFormat).format(newDateFormatForIsBefore)
-    const end = moment(toDate, dateFormat).format(newDateFormatForIsBefore)
+    const dateFormatForIsBefore = 'YYYY-MM-DD'
+    const startDate = moment(fromDatePicker, dateFormat).format(
+      dateFormatForIsBefore,
+    )
+    const endDate = moment(toDatePicker, dateFormat).format(
+      dateFormatForIsBefore,
+    )
 
-    setDateError(moment(end).isBefore(start))
-  }, [fromDate, toDate])
+    setDateError(moment(endDate).isBefore(startDate))
+  }, [fromDatePicker, toDatePicker])
 
   useEffect(() => {
-    if (assetType) {
+    if (assetTypeFilter) {
       dispatch(
-        reduxServices.assetList.getAssetTypeChangeList(Number(assetType)),
+        reduxServices.assetList.getAssetTypeChangeList(Number(assetTypeFilter)),
       )
     }
-  }, [dispatch, assetType])
+  }, [dispatch, assetTypeFilter])
 
   useEffect(() => {
-    if (assetType || productType || statusType || selectDate) {
+    if (
+      assetTypeFilter ||
+      productTypeFilter ||
+      statusTypeFilter ||
+      selectDatePicker
+    ) {
       setIsButtonEnabled(true)
     } else {
       setIsButtonEnabled(false)
     }
-  }, [assetType, productType, statusType, selectDate])
+  }, [assetTypeFilter, productTypeFilter, statusTypeFilter, selectDatePicker])
 
-  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchFilterBtn = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.assetTransactionList.getAssetTransactionList({
-          dateSelection: selectDate,
+          dateSelection: selectDatePicker,
           endIndex: pageSize * currentPage,
-          from: fromDate as string,
+          from: fromDatePicker as string,
           startIndex: pageSize * (currentPage - 1),
-          to: toDate as string,
-          multipleSearch: searchInput || '',
-          searchByEmpName: searchByEmployee,
-          productId: Number(productType) || '',
-          status: statusType,
-          assetId: Number(assetType) || '',
+          to: toDatePicker as string,
+          multipleSearch: searchInputField || '',
+          searchByEmpName: searchByEmployeeName,
+          productId: Number(productTypeFilter) || '',
+          status: statusTypeFilter,
+          assetId: Number(assetTypeFilter) || '',
         }),
       )
     }
   }
 
-  const multiSearchBtnHandler = () => {
+  const multiSearchFilterBtnHandler = () => {
     dispatch(
       reduxServices.assetTransactionList.getAssetTransactionList({
-        dateSelection: selectDate,
+        dateSelection: selectDatePicker,
         endIndex: pageSize * currentPage,
-        from: fromDate as string,
+        from: fromDatePicker as string,
         startIndex: pageSize * (currentPage - 1),
-        to: toDate as string,
-        multipleSearch: searchInput || '',
-        searchByEmpName: searchByEmployee,
+        to: toDatePicker as string,
+        multipleSearch: searchInputField || '',
+        searchByEmpName: searchByEmployeeName,
         productId: '',
         status: '',
         assetId: '',
       }),
     )
   }
-  const assets = useTypedSelector(
+  const assetsData = useTypedSelector(
     reduxServices.assetTransactionList.selectors.assetTransactionList,
   )
 
-  const viewButtonHandler = () => {
+  const viewButtonClickHandler = () => {
     dispatch(
       reduxServices.assetTransactionList.getAssetTransactionList({
-        dateSelection: selectDate,
+        dateSelection: selectDatePicker,
         endIndex: pageSize * currentPage,
-        from: fromDate as string,
+        from: fromDatePicker as string,
         startIndex: pageSize * (currentPage - 1),
-        to: toDate as string,
-        multipleSearch: searchInput || '',
-        searchByEmpName: searchByEmployee,
-        productId: Number(productType) || '',
-        status: statusType,
-        assetId: Number(assetType) || '',
+        to: toDatePicker as string,
+        multipleSearch: searchInputField || '',
+        searchByEmpName: searchByEmployeeName,
+        productId: Number(productTypeFilter) || '',
+        status: statusTypeFilter,
+        assetId: Number(assetTypeFilter) || '',
       }),
     )
     setIsTableView(true)
   }
 
   useEffect(() => {
-    if (assets.length > 0) {
+    if (assetsData.length > 0) {
       dispatch(
         reduxServices.assetTransactionList.getAssetTransactionList({
-          dateSelection: selectDate,
+          dateSelection: selectDatePicker,
           endIndex: pageSize * currentPage,
-          from: fromDate as string,
+          from: fromDatePicker as string,
           startIndex: pageSize * (currentPage - 1),
-          to: toDate as string,
-          multipleSearch: searchInput || '',
-          searchByEmpName: searchByEmployee,
-          productId: Number(productType) || '',
-          status: statusType,
-          assetId: Number(assetType) || '',
+          to: toDatePicker as string,
+          multipleSearch: searchInputField || '',
+          searchByEmpName: searchByEmployeeName,
+          productId: Number(productTypeFilter) || '',
+          status: statusTypeFilter,
+          assetId: Number(assetTypeFilter) || '',
         }),
       )
     }
   }, [pageSize, dispatch, currentPage])
 
-  const ClearBtnHadler = () => {
-    setSelectDate('')
-    setAssetType('')
-    setProductType('')
-    setStatusType('')
-    setSearchInput('')
-    setFromDate('')
-    setToDate('')
-    setSearchByEmployee(false)
+  const ClearBtnClickHadler = () => {
+    setSelectDatePicker('')
+    setAssetTypeFilter('')
+    setProductTypeFilter('')
+    setStatusTypeFilter('')
+    setSearchInputField('')
+    setFromDatePicker('')
+    setToDatePicker('')
+    setSearchByEmployeeName(false)
     dispatch(
       reduxServices.assetTransactionList.actions.clearAssetTransactionListType(
         [],
@@ -196,11 +209,11 @@ const AssetTransactionalListFilter = ({
             <CFormSelect
               aria-label="Default select example"
               size="sm"
-              id="selectDateOfPurchus"
-              data-testid="form-select1"
-              name="selectDateOfPurchus"
-              value={selectDate}
-              onChange={(e) => setSelectDate(e.target.value)}
+              id="selectDate"
+              data-testid="form-select-date"
+              name="selectDate"
+              value={selectDatePicker}
+              onChange={(e) => setSelectDatePicker(e.target.value)}
             >
               <option value="">Select Date</option>
               <option value="Current Month">Current Month</option>
@@ -208,8 +221,8 @@ const AssetTransactionalListFilter = ({
               <option value="Last Month">Last Month</option>
               <option value="Last Week">Last Week</option>
               <option value="This Week">This Week</option>
-              <option value="Today">Last Year</option>
-              <option value="Yesterday">Last Year</option>
+              <option value="Today">Today</option>
+              <option value="Yesterday">Yesterday</option>
             </CFormSelect>
           </CCol>
 
@@ -220,19 +233,21 @@ const AssetTransactionalListFilter = ({
             <CFormSelect
               aria-label="Default select example"
               size="sm"
-              id="selectAssetType"
-              data-testid="form-select-2"
-              name="selectAssetType"
-              value={assetType}
-              onChange={(e) => setAssetType(e.target.value)}
+              id="assetTypeFilter"
+              data-testid="asset-select"
+              name="assetTypeFilter"
+              value={assetTypeFilter}
+              onChange={(e) => setAssetTypeFilter(e.target.value)}
             >
               <option value={''}>Select Asset type</option>
-              {assetListTypeList?.assetTypeList?.length > 0 &&
-                assetListTypeList?.assetTypeList?.map((location, index) => (
-                  <option key={index} value={location.id}>
-                    {location.assetType}
-                  </option>
-                ))}
+              {assetTransansactionTypeList?.assetTypeList?.length > 0 &&
+                assetTransansactionTypeList?.assetTypeList?.map(
+                  (location, index) => (
+                    <option key={index} value={location.id}>
+                      {location.assetType}
+                    </option>
+                  ),
+                )}
             </CFormSelect>
           </CCol>
           <CCol sm={2} md={1} className="text-end">
@@ -242,14 +257,14 @@ const AssetTransactionalListFilter = ({
             <CFormSelect
               aria-label="Default select example"
               size="sm"
-              id="ProductType"
-              data-testid="form-select-3"
-              name="selectProductType"
-              value={productType}
-              onChange={(e) => setProductType(e.target.value)}
+              id="productTypeFilter"
+              data-testid="product-select"
+              name="productTypeFilter"
+              value={productTypeFilter}
+              onChange={(e) => setProductTypeFilter(e.target.value)}
             >
               <option value={''}>Select Product type</option>
-              {assetListData.map((item, index) => {
+              {assetListResponse.map((item, index) => {
                 return (
                   <option key={index} value={item.productId}>
                     {item.productName}
@@ -265,11 +280,11 @@ const AssetTransactionalListFilter = ({
             <CFormSelect
               aria-label="Default select example"
               size="sm"
-              id="Status"
-              data-testid="form-select-4"
-              name="selectStatus"
-              value={statusType}
-              onChange={(e) => setStatusType(e.target.value)}
+              id="statusTypeFilter"
+              data-testid="status-select"
+              name="statusTypeFilter"
+              value={statusTypeFilter}
+              onChange={(e) => setStatusTypeFilter(e.target.value)}
             >
               <option value="">Select Status</option>
               <option value="Idle">Idle</option>
@@ -280,13 +295,13 @@ const AssetTransactionalListFilter = ({
             </CFormSelect>
           </CCol>
 
-          {selectDate === 'Custom' ? (
+          {selectDatePicker === 'Custom' ? (
             <>
               <CRow className="form-group position-base">
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel>
                     From:
-                    {(fromDate == null || fromDate === '') && (
+                    {(fromDatePicker == null || fromDatePicker === '') && (
                       <span className="text-danger">*</span>
                     )}
                   </CFormLabel>
@@ -297,20 +312,20 @@ const AssetTransactionalListFilter = ({
                     data-testid="date-picker"
                     placeholderText="dd/mm/yyyy"
                     dateFormat="dd/mm/yy"
-                    name="fromDate"
-                    id="fromDate"
+                    name="fromDatePicker"
+                    id="fromDatePicker"
                     autoComplete="off"
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    value={fromDate as string}
-                    onChange={(date: Date) => onHandleFromDate(date)}
+                    value={fromDatePicker as string}
+                    onChange={(date: Date) => onHandleCalanderFromDate(date)}
                   />
                 </CCol>
                 <CCol sm={2} md={1} className="text-end">
                   <CFormLabel>
                     To:
-                    {(toDate == null || toDate === '') && (
+                    {(toDatePicker == null || toDatePicker === '') && (
                       <span className="text-danger">*</span>
                     )}
                   </CFormLabel>
@@ -321,14 +336,14 @@ const AssetTransactionalListFilter = ({
                     data-testid="date-picker"
                     placeholderText="dd/mm/yyyy"
                     dateFormat="dd/mm/yy"
-                    name="toDate"
-                    id="toDate"
+                    name="toDatePicker"
+                    id="toDatePicker"
                     autoComplete="off"
                     showMonthDropdown
                     showYearDropdown
                     dropdownMode="select"
-                    value={toDate as string}
-                    onChange={(date: Date) => onHandleToDate(date)}
+                    value={toDatePicker as string}
+                    onChange={(date: Date) => onHandleCalanderToDate(date)}
                   />
                   {dateError && (
                     <CCol sm={12} className="mt-1 pt-1">
@@ -350,11 +365,11 @@ const AssetTransactionalListFilter = ({
                 className="cursor-pointer"
                 color="success btn-ovh me-1"
                 data-testid="view-btn"
-                onClick={viewButtonHandler}
+                onClick={viewButtonClickHandler}
                 disabled={
-                  ((selectDate === 'Custom' || selectDate === '') &&
-                    fromDate !== '' &&
-                    toDate !== '') ||
+                  ((selectDatePicker === 'Custom' || selectDatePicker === '') &&
+                    fromDatePicker !== '' &&
+                    toDatePicker !== '') ||
                   dateError ||
                   !isButtonEnabled
                 }
@@ -365,7 +380,7 @@ const AssetTransactionalListFilter = ({
                 data-testid="clear-btn"
                 className="cursor-pointer"
                 color="warning btn-ovh me-1"
-                onClick={ClearBtnHadler}
+                onClick={ClearBtnClickHadler}
               >
                 Clear
               </CButton>
@@ -377,11 +392,11 @@ const AssetTransactionalListFilter = ({
               <label className="search_emp">
                 <CFormCheck
                   className="pt-2"
-                  data-testid="ch-searchByEmployee"
-                  id="searchByEmployee"
+                  data-testid="ch-searchByEmployeeName"
+                  id="searchByEmployeeName"
                   name="Multiple Search"
-                  checked={searchByEmployee}
-                  onChange={(e) => setSearchByEmployee(e.target.checked)}
+                  checked={searchByEmployeeName}
+                  onChange={(e) => setSearchByEmployeeName(e.target.checked)}
                 />
                 <b>Search by Employee Name</b>
               </label>
@@ -392,24 +407,24 @@ const AssetTransactionalListFilter = ({
             <CCol sm={3} md={3}>
               <CInputGroup className="global-search me-0">
                 <CFormInput
-                  data-testid="searchField"
+                  data-testid="searc-hField"
                   placeholder="Multiple Search"
                   aria-label="Multiple Search"
                   aria-describedby="button-addon2"
-                  value={searchInput?.replace(/^\s*/, '')}
+                  value={searchInputField?.replace(/^\s*/, '')}
                   onChange={(e) => {
-                    setSearchInput(e.target.value)
+                    setSearchInputField(e.target.value)
                   }}
-                  onKeyDown={handleSearchBtn}
+                  onKeyDown={handleSearchFilterBtn}
                 />
                 <CButton
-                  disabled={!searchInput?.replace(/^\s*/, '')}
+                  disabled={!searchInputField?.replace(/^\s*/, '')}
                   data-testid="multi-search-btn"
                   className="cursor-pointer"
                   type="button"
                   color="info"
                   id="button-addon2"
-                  onClick={multiSearchBtnHandler}
+                  onClick={multiSearchFilterBtnHandler}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>

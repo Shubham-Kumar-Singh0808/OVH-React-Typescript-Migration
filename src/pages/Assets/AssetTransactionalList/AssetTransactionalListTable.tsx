@@ -29,19 +29,19 @@ const AssetTransactionalListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
-  isTableView,
+  isAssetTableView,
 }: AssetTransactionListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [isAssetWarranty, setAssetWarranty] = useState<boolean>(false)
+  const [isAssetTransaction, setAssetTransaction] = useState<boolean>(false)
   const [specification, setSpecification] = useState('')
 
-  const assets = useTypedSelector(
+  const assetsResponse = useTypedSelector(
     reduxServices.assetTransactionList.selectors.assetTransactionList,
   )
-  const getItemNumber = (index: number) => {
+  const getPageItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const assetListSize = useTypedSelector(
+  const assetResponseListSize = useTypedSelector(
     reduxServices.assetTransactionList.selectors.listSize,
   )
 
@@ -51,9 +51,9 @@ const AssetTransactionalListTable = ({
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
-  const handleAgendaModal = (appraisalCycleSpecification: string) => {
-    setAssetWarranty(true)
-    setSpecification(appraisalCycleSpecification)
+  const handleAgendaModalpopup = (assetTransactionSpecification: string) => {
+    setAssetTransaction(true)
+    setSpecification(assetTransactionSpecification)
   }
 
   const handleExportEmployeeFinanceData = async () => {
@@ -68,13 +68,13 @@ const AssetTransactionalListTable = ({
     }
   }
 
-  const totalNoOfRecords = assets?.length
-    ? `Total Records: ${assetListSize}`
+  const totalNoOfAssetRecords = assetsResponse?.length
+    ? `Total Records: ${assetResponseListSize}`
     : `No Records found...`
 
   return (
     <>
-      {isTableView && (
+      {isAssetTableView && (
         <>
           <CRow className="mt-2">
             <CCol
@@ -118,27 +118,27 @@ const AssetTransactionalListTable = ({
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {assets.map((assetstransactonData, index) => {
-                const removeSpaces1 = assetstransactonData.description
+              {assetsResponse.map((assetstransactonData, index) => {
+                const removeSpacesDescription = assetstransactonData.description
                   ?.replace(/\s+/g, ' ')
                   .trim()
                   .replace(/&nbsp;/g, '')
-                const agendaLimit1 =
-                  removeSpaces1 && removeSpaces1.length > 15
-                    ? `${removeSpaces1.substring(0, 15)}...`
-                    : removeSpaces1
+                const descriptionPopUp =
+                  removeSpacesDescription && removeSpacesDescription.length > 15
+                    ? `${removeSpacesDescription.substring(0, 15)}...`
+                    : removeSpacesDescription
 
-                const removeSpaces2 = assetstransactonData.location
+                const removeSpacesLocation = assetstransactonData.location
                   ?.replace(/\s+/g, ' ')
                   .trim()
                   .replace(/&nbsp;/g, '')
-                const locationModel =
-                  removeSpaces2 && removeSpaces2.length > 15
-                    ? `${removeSpaces2.substring(0, 15)}...`
-                    : removeSpaces2
+                const locationModelPopUp =
+                  removeSpacesLocation && removeSpacesLocation.length > 15
+                    ? `${removeSpacesLocation.substring(0, 15)}...`
+                    : removeSpacesLocation
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
+                    <CTableDataCell>{getPageItemNumber(index)}</CTableDataCell>
                     <CTableDataCell>
                       {assetstransactonData.assetNumber || 'N/A'}
                     </CTableDataCell>
@@ -169,10 +169,12 @@ const AssetTransactionalListTable = ({
                           className="cursor-pointer text-decoration-none"
                           data-testid={`description-modal-link2${index}`}
                           onClick={() =>
-                            handleAgendaModal(assetstransactonData.description)
+                            handleAgendaModalpopup(
+                              assetstransactonData.description,
+                            )
                           }
                         >
-                          {parse(agendaLimit1)}
+                          {parse(descriptionPopUp)}
                         </CLink>
                       ) : (
                         'N/A'
@@ -187,10 +189,12 @@ const AssetTransactionalListTable = ({
                           className="cursor-pointer text-decoration-none"
                           data-testid={`specification-modal-link${index}`}
                           onClick={() =>
-                            handleAgendaModal(assetstransactonData.location)
+                            handleAgendaModalpopup(
+                              assetstransactonData.location,
+                            )
                           }
                         >
-                          {parse(locationModel)}
+                          {parse(locationModelPopUp)}
                         </CLink>
                       ) : (
                         'N/A'
@@ -217,11 +221,11 @@ const AssetTransactionalListTable = ({
           <CRow>
             <CCol xs={4}>
               <p className="mt-2">
-                <strong>{totalNoOfRecords}</strong>
+                <strong>{totalNoOfAssetRecords}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
-              {assetListSize > 20 && (
+              {assetResponseListSize > 20 && (
                 <OPageSizeSelect
                   handlePageSizeSelectChange={handlePageSize}
                   options={[20, 40, 60, 80, 100]}
@@ -229,7 +233,7 @@ const AssetTransactionalListTable = ({
                 />
               )}
             </CCol>
-            {assetListSize > 20 && (
+            {assetResponseListSize > 20 && (
               <CCol
                 xs={5}
                 className="d-grid gap-1 d-md-flex justify-content-md-end"
@@ -245,8 +249,8 @@ const AssetTransactionalListTable = ({
           <OModal
             modalSize="lg"
             alignment="center"
-            visible={isAssetWarranty}
-            setVisible={setAssetWarranty}
+            visible={isAssetTransaction}
+            setVisible={setAssetTransaction}
             confirmButtonText="Yes"
             cancelButtonText="No"
             modalFooterClass="d-none"
