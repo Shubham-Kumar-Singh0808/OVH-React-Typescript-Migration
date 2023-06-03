@@ -189,6 +189,7 @@ const AssetTransactionalListFilter = ({
     setSearchInputField('')
     setFromDatePicker('')
     setToDatePicker('')
+    setIsTableView(false)
     setSearchByEmployeeName(false)
     dispatch(
       reduxServices.assetTransactionList.actions.clearAssetTransactionListType(
