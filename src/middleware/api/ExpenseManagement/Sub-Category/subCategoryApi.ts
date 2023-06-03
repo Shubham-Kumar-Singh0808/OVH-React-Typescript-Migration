@@ -32,22 +32,27 @@ const getSubCategoryList = async (): Promise<SubCategoryList[]> => {
 }
 
 const addSubCategoryList = async (
-  newSubCategory: SubCategoryList[],
-): Promise<SubCategoryList[]> => {
+  categoryId: number,
+  subCategoryName: string,
+): Promise<string | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ExpenseSubCategoryListApiConfig.addSubCategoryList,
     method: AllowedHttpMethods.post,
-    data: newSubCategory,
+    params: { categoryId, subCategoryName },
   })
 
   const response = await useAxios(requestConfig)
   return response.data
 }
 
-const existSubCategoryList = async (): Promise<SubCategoryList[]> => {
+const existSubCategoryList = async (
+  categoryId: number,
+  subCategoryName: string,
+): Promise<string | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ExpenseSubCategoryListApiConfig.checkForDuplicateSubCategory,
     method: AllowedHttpMethods.get,
+    params: { categoryId, subCategoryName },
   })
 
   const response = await useAxios(requestConfig)
