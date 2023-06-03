@@ -207,9 +207,7 @@ const JobOpeningsTable = ({
                   <CTableDataCell>
                     {jobVacancy?.noOfRequirements || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>
-                    {jobVacancy?.offered || 'N/A'}
-                  </CTableDataCell>
+                  <CTableDataCell>{jobVacancy?.offered || '0'}</CTableDataCell>
                   <CTableDataCell>
                     {jobVacancy?.remaining || 'N/A'}
                   </CTableDataCell>
