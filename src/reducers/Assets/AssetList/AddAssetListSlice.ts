@@ -9,6 +9,7 @@ import AddAssetApi from '../../../middleware/api/Assets/AssetList/AddEditApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
+import AddAssetList from '../../../pages/Assets/AssetList/AddAsset/AddAssetList'
 
 const getAddAssetList = createAsyncThunk(
   '/assetManagement/addAsset',

@@ -19,6 +19,8 @@ import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { description } from '../../../../test/constants'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 // eslint-disable-next-line import/named
 
@@ -201,6 +203,9 @@ const AddAssetList = ({
   const countriesList = useTypedSelector(
     reduxServices.country.selectors.countriesList,
   )
+  const successToast = (
+    <OToast toastMessage="Asset list Added Successfully" toastColor="success" />
+  )
   useEffect(() => {
     dispatch(reduxServices.country.getAllCountries())
   }, [dispatch])
@@ -223,22 +228,31 @@ const AddAssetList = ({
     reduxServices.addNewProduct.selectors.productTypeList,
   )
 
-  const handleAddNewVendor = async () => {
-    const isAddLocation = await dispatch(
-      reduxServices.jobVacancies.addJobVacancy({
-        description,
-        expiryDate: expireDate,
-        jobCode,
-        minimumExperience: experience,
-        noOfRequirements: noOfOpenings,
-        positionVacant: jobTitle,
-        status: selectStatus,
+  const handleAddNewAssetList = async () => {
+    const isAddAssetLIst = await dispatch(
+      reduxServices.addAssetList.getAddAssetList({
+        amount: amount as string,
+        assetNumber: assetType as string,
+        assetTypeId: assetNumber as string,
+        countryId: Number(country),
+        invoiceNumber: invoiceNumber as string,
+        manufacturerId: manufacturerName as string,
+        notes: addComment,
+        poNumber: poNumber as string,
+        productId: productType as string,
+        purchasedDate: datePurchase as string,
+        receivedDate: receivedDate as string,
+        status: assetStatus as string,
+        vendorId: vendorName as string,
+        warrantyEndDate: warrantyStartDate as string,
+        warrantyStartDate: warrantyEndDate as string,
+        otherAssetNumber: '',
+        pSpecification: '',
       }),
     )
     if (
-      reduxServices.jobVacancies.addJobVacancy.fulfilled.match(isAddLocation)
+      reduxServices.addAssetList.getAddAssetList.fulfilled.match(isAddAssetLIst)
     ) {
-      history.push('/jobvacancies')
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -602,7 +616,7 @@ const AddAssetList = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="manufacturerName"
+              data-testid="assetStatus"
               aria-label="Default select example"
               size="sm"
               id="assetStatus"
@@ -635,7 +649,7 @@ const AddAssetList = ({
               size="sm"
               id="country"
               name="country"
-              placeholder="Enter Manufacturer Name"
+              placeholder="Select country Name"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             >
@@ -680,7 +694,7 @@ const AddAssetList = ({
               className="btn-ovh me-1 text-white"
               color="success"
               disabled={!isAddButtonEnabled}
-              onClick={handleAddNewVendor}
+              onClick={handleAddNewAssetList}
             >
               Confirm
             </CButton>

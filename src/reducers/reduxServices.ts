@@ -127,6 +127,7 @@ import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlic
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import { AddAssetListService } from './Assets/AssetList/AddAssetListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -258,4 +259,5 @@ export const reduxServices = {
   assetsWarrantyList: assetsWarrantyListService,
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
+  addAssetList: AddAssetListService,
 }
