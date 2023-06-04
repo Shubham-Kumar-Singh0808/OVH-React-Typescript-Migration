@@ -7,6 +7,7 @@ import {
   GetWorkDetails,
   GetWorkDetailsProps,
   MileStonesList,
+  updateMilestoneProps,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -147,6 +148,18 @@ const closeMilestone = async (
   return response.data
 }
 
+const updateProjectMilestone = async (
+  milestone: updateMilestoneProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectMileStoneApiConfig.updateMileStone,
+    method: AllowedHttpMethods.post,
+    data: milestone,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const mileStoneApi = {
   getProjectMileStone,
   editProjectMilestone,
@@ -157,6 +170,7 @@ const mileStoneApi = {
   addProjectMilestone,
   milestoneDelete,
   closeMilestone,
+  updateProjectMilestone,
 }
 
 export default mileStoneApi

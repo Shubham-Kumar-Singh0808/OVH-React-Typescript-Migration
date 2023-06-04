@@ -844,6 +844,7 @@ export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStones: apiPrefix + '/project-mgmt/mileStones',
   milestoneDelete: apiPrefix + '/project-mgmt/milestoneDelete',
   closeMilestone: apiPrefix + '/project-mgmt/closeMilestone',
+  updateMileStone: apiPrefix + '/project-mgmt/updateMileStone',
 }
 
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {

@@ -1,37 +1,37 @@
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React from 'react'
-import { useHistory } from 'react-router-dom'
-import EditMileStoneForm from './EditMileStoneForm'
+import AddMileStoneForm from './AddMileStoneForm'
 import OCard from '../../../../../../components/ReusableComponent/OCard'
+import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../../../stateStore'
 
-const EditMileStone = (): JSX.Element => {
+const AddMilestone = () => {
+  const dispatch = useAppDispatch()
+  const { projectId } = useParams<{ projectId: string }>()
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
-
-  const history = useHistory()
-
-  const backButtonHandler = () => {
-    history.goBack()
-  }
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectMileStone.getPeopleForMilestone(getProjectDetail.id),
+    )
+  }, [dispatch])
 
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Project Details"
-        CBodyClassName="ps-0 pe-0 row"
+        title="Add Milestone"
+        CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end ">
-          <CCol md={4} className="text-end position-absolute pe-0">
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
             <CButton
               color="info"
-              className="btn-ovh me-1 add-project-back-btn"
-              data-testid="toggle-back-button"
-              onClick={backButtonHandler}
+              className="btn-ovh me-4 add-project-back-btn"
+              data-testid="back-btn"
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
@@ -72,10 +72,10 @@ const EditMileStone = (): JSX.Element => {
             </dd>
           </dl>
         </div>
-        <EditMileStoneForm />
+        <AddMileStoneForm />
       </OCard>
     </>
   )
 }
 
-export default EditMileStone
+export default AddMilestone

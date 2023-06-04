@@ -15,11 +15,12 @@ import OModal from '../../../../../../components/ReusableComponent/OModal'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 import {
+  AllocatedMilestonePeople,
   GetPeopleForMilestone,
   GetWorkDetails,
 } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
-const MilestonePeopleList = ({
+const EditMileStonePeopleList = ({
   onChangeHandleFromDate,
   onChangeHandleToDate,
   roleOnChange,
@@ -60,7 +61,7 @@ const MilestonePeopleList = ({
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
   ) => void
-  item: GetPeopleForMilestone
+  item: AllocatedMilestonePeople
   index: number
   isDateEnabled: boolean
   workDays: string | undefined
@@ -410,4 +411,4 @@ const MilestonePeopleList = ({
   )
 }
 
-export default MilestonePeopleList
+export default EditMileStonePeopleList

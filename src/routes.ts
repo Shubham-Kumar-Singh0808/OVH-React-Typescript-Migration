@@ -266,7 +266,7 @@ const editMilestone = React.lazy(
 const addMilestone = React.lazy(
   () =>
     import(
-      './pages/ProjectManagement/Project/ProjectView/MileStone/AddMileStone/AddMilestone'
+      './pages/ProjectManagement/Project/ProjectView/MileStone/AddMilestone/AddMilestone'
     ),
 )
 

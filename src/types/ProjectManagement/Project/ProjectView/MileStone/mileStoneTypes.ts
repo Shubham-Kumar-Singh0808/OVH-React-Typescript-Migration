@@ -6,26 +6,26 @@ export type MileStonesList = {
 }
 
 export type AllocatedMilestonePeople = {
-  employeeId: number
+  employeeId: string
   empFirstName: string
   empLastName: string
   projectName: string
   projectId: number
   startDate: string
   endDate: string
-  billable: boolean
-  comments: null
+  billable: string
+  comments: string
   department: string
   desigination: string
   userName: string
   isAllocated: boolean
-  duration: null
-  count: null
-  rate: null
+  duration: string
+  count: string
+  rate: string
   role: string
-  amount: null
-  empName: null
-  status: null
+  amount: string
+  empName: string
+  status: string
   monthWorkingDays: string
   holidays: string
   leaves: string
@@ -65,6 +65,24 @@ export type MileStoneResponse = {
   remainingPercentage: null
 }
 
+export type GetPeopleForMilestone = {
+  billable: string
+  comments: string
+  count: string
+  desigination: string
+  empName: string
+  employeeId: string
+  endDate: string
+  holidays: string
+  hours: string
+  leaves: string
+  monthWorkingDays: string
+  role: string
+  startDate: string
+  totalDays: string
+  totalValue: string
+}
+
 export type MileStoneSliceState = {
   mileStonesList: MileStonesList
   isLoading: ApiLoadingState
@@ -80,7 +98,7 @@ export type MileStoneSliceState = {
 export type GetMilestone = {
   actualDate: string
   allocatedMilestonePeople: AllocatedMilestonePeople[]
-  billable: boolean
+  billable: string
   client: null
   comments: string
   crDuration: null
@@ -116,24 +134,6 @@ export type EditInvoiceDetails = {
   comments: string
 }
 
-export type GetPeopleForMilestone = {
-  billable?: string
-  comments?: null
-  count?: null
-  desigination?: string
-  empName?: string
-  employeeId: string
-  endDate?: string
-  holidays: string
-  hours: string
-  leaves: string
-  monthWorkingDays: string
-  role?: string
-  startDate?: string
-  totalDays: string
-  totalValue: string
-}
-
 export type GetCRListForMilestone = {
   id: number
   name: string
@@ -151,10 +151,10 @@ export type GetWorkDetailsProps = {
 }
 
 export type GetWorkDetails = {
-  totalValue: number
+  totalValue: string
   Leaves: string
   hours: string
-  holidays: number
+  holidays: string
   totalDays: string
   workingDays: string
   employeeId: string
@@ -163,7 +163,7 @@ export type AddMilestoneProps = {
   actualDate: string
   billable: string
   comments: string
-  crId: number
+  crId?: number
   milestoneNumber: string
   milestonePercentage?: string
   milestoneTypeFlag?: string
@@ -171,4 +171,34 @@ export type AddMilestoneProps = {
   projectId: number
   title: string
   allocatedMilestonePeople?: GetPeopleForMilestone[]
+}
+
+export type updateMilestoneProps = {
+  actualDate: string
+  allocatedMilestonePeople: AllocatedMilestonePeople[]
+  billable: string
+  client: string | null
+  comments: string
+  crDuration: string | null
+  crId: number
+  crName: string | null
+  effort: string | null
+  enableReopenFlag: string | null
+  id: number
+  invoiceExits: string | null
+  invoiceReopenFlag: string | null
+  invoiceStatus: string | boolean
+  isClosed: string | boolean
+  milestoneAmount: null
+  milestoneNumber: string
+  milestonePeopleDTO: string | null
+  milestonePercentage: string
+  milestoneTypeFlag: boolean
+  planedDate: string
+  project: null
+  projectId: string | null
+  projectType: null
+  raisedInvoicePercentage: null
+  remainingPercentage: null
+  title: string
 }
