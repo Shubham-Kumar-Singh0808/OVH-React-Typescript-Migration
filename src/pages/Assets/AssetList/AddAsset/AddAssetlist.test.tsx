@@ -43,7 +43,7 @@ describe('Add Asset list  Details without data', () => {
     userEvent.click(addBtnElement)
   })
   test('should be able to click edit button element', () => {
-    const addBtnElement = screen.getByTestId('save-btn')
+    const addBtnElement = screen.getByTestId('Confirm-btn')
     expect(addBtnElement).toBeInTheDocument()
     userEvent.click(addBtnElement)
   })

@@ -690,7 +690,7 @@ const AddAssetList = ({
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
             <CButton
-              data-testid="save-btn"
+              data-testid="Confirm-btn"
               className="btn-ovh me-1 text-white"
               color="success"
               disabled={!isAddButtonEnabled}
