@@ -202,21 +202,14 @@ const EditAddAssetList = ({
       warrantyStartDate: string,
     }
     const updateVendorDetailsResultAction = await dispatch(
-      reduxServices.vendorList.updateVendorDetails(prepareObject),
+      reduxServices.addAssetList.updateAddAsset(prepareObject),
     )
     if (
-      reduxServices.vendorList.updateVendorDetails.fulfilled.match(
+      reduxServices.addAssetList.updateAddAsset.fulfilled.match(
         updateVendorDetailsResultAction,
       )
     ) {
       setToggle('')
-      dispatch(
-        reduxServices.vendorList.getVendors({
-          startIndex: 0,
-          endIndex: 20,
-          vendorName: '',
-        }),
-      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
