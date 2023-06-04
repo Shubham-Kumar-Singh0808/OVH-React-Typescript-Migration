@@ -108,7 +108,6 @@ const ProductTypeListTable = ({
       DeleteProductType.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 

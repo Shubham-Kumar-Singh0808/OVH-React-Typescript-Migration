@@ -73,13 +73,16 @@ describe('Product Type list without data', () => {
   test('should render correct number of page records', () => {
     expect(screen.queryAllByRole('row')).toHaveLength(21)
   })
-  test('should be able to click delete button element', () => {
+  test('should be able to click delete button element', async () => {
     const deleteBtn = screen.getAllByTestId('btn-deletes')
     expect(deleteBtn[0]).toBeInTheDocument()
     userEvent.click(deleteBtn[0])
-    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
-    userEvent.click(modalConfirmBtn)
-    expect(modalConfirmBtn).toBeInTheDocument()
+    await waitFor(() => {
+      const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+      expect(modalConfirmBtn).toBeInTheDocument()
+      userEvent.click(modalConfirmBtn)
+      // Add assertions to check the effects of confirming the deletion
+    })
   })
   test('Should be able to see table titles', () => {
     expect(screen.getByText('#')).toBeInTheDocument()
@@ -91,5 +94,11 @@ describe('Product Type list without data', () => {
   test('render number of records', () => {
     const totRec = screen.getByTestId('record-number')
     expect(totRec).toBeInTheDocument()
+  })
+
+  test('should be able to click edit button element', () => {
+    const EditBtn = screen.getAllByTestId('btn-edit')
+    expect(EditBtn[0]).toBeInTheDocument()
+    userEvent.click(EditBtn[0])
   })
 })
