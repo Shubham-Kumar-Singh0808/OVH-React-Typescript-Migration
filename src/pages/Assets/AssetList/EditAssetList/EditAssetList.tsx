@@ -10,6 +10,7 @@ import {
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
+import moment from 'moment'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
@@ -20,6 +21,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { showIsRequired } from '../../../../utils/helper'
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const EditAddAssetList = ({
   setToggle,
@@ -33,11 +35,50 @@ const EditAddAssetList = ({
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [emailError, setEmailError] = useState<boolean>(false)
+  const [productType, setProductType] = useState<string>(
+    editAddAssetList.productName,
+  )
+  const [manufacturerName, setManufacturerName] = useState<string>(
+    editAddAssetList.manufacturerName,
+  )
+  const [datePurchase, setDateOfPurchase] = useState<string>(
+    editAddAssetList.purchasedDate,
+  )
+  const [receivedDate, setReceivedDate] = useState<string>(
+    editAddAssetList.receivedDate,
+  )
+  const [warrantyStartDate, setWarrantyStartDate] = useState<string>(
+    editAddAssetList.warrantyStartDate as string,
+  )
+  const [warrantyEndDate, setWarrantyEndDate] = useState<string>(
+    editAddAssetList.warrantyEndDate as string,
+  )
+
+  const [assetStatus, setAssetStatus] = useState<string>(
+    editAddAssetList.status,
+  )
+
+  const [country, setCountry] = useState<string | number>(
+    editAddAssetList.countryId as number,
+  )
+  const [addComment, setAddComment] = useState<string>(
+    editAddAssetList.notes as string,
+  )
+
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
+  const [vendorName, setVendorName] = useState<string>(
+    editAddAssetList.vendorName,
+  )
+  const [assetType, setAssetType] = useState<string>(editAddAssetList.assetType)
+
   const formLabelProps = {
     htmlFor: 'editVendorDetails',
     className: 'col-form-label',
+  }
+
+  const handleBankAddress = (comments: string) => {
+    setAddComment(comments)
   }
 
   const departments = useTypedSelector(
@@ -122,21 +163,43 @@ const EditAddAssetList = ({
 
   const updateHandler = async () => {
     const prepareObject = {
-      poNumber: editAddAssetList.poNumber,
-      vendorName: editAddAssetList.vendorId,
-      assetType: editAddAssetList.assetTypeId,
-      productType: editAddAssetList.productId,
-      manufacturerName: editAddAssetList.manufacturerId,
-      assetNumber: editAddAssetList.assetNumber,
-      licenseNumber: editAddAssetList.licenseNumber,
-      invoiceNumber: editAddAssetList.invoiceNumber,
       amount: editAddAssetList.amount,
-      datePurchase: editAddAssetList.purchasedDate,
-      receivedDate: editAddAssetList.receivedDate,
-      warrantyStartDate: editAddAssetList.warrantyStartDate,
-      warrantyEndDate: editAddAssetList.warrantyEndDate,
-      assetStatus: editAddAssetList.status,
-      country: editAddAssetList.countryId,
+      assetNumber: string,
+      assetType: string,
+      assetTypeId: number,
+      countryId: number,
+      createdBy: string,
+      createdDate: string,
+      departmentId: null,
+      departmentName: null,
+      description: null,
+      employeeId: null,
+      employeeName: null,
+      id: number,
+      invoiceNumber: string,
+      location: null,
+      manufacturerId: number,
+      manufacturerName: string,
+      notes: string,
+      otherAssetNumber: string,
+      otherNumber: null,
+      pSpecification: string,
+      poNumber: string,
+      productId: number,
+      productName: productType,
+      productSpecification: null,
+      productSpecificationId: number,
+      purchasedDate: string,
+      receivedDate: string,
+      referenceNumber: null,
+      searchByEmpName: null,
+      status: string,
+      updatedBy: string,
+      updatedDate: string,
+      vendorId: number,
+      vendorName: string,
+      warrantyEndDate: string,
+      warrantyStartDate: string,
     }
     const updateVendorDetailsResultAction = await dispatch(
       reduxServices.vendorList.updateVendorDetails(prepareObject),
@@ -166,11 +229,39 @@ const EditAddAssetList = ({
     }, 100)
   }, [])
 
+  const assetListTypeList = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.manufacturerData,
+  )
+  const countriesList = useTypedSelector(
+    reduxServices.country.selectors.countriesList,
+  )
+
+  const assetTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.assetTypeList,
+  )
+
+  const productTypeList = useTypedSelector(
+    reduxServices.addNewProduct.selectors.productTypeList,
+  )
+
+  const onHandleDateOfPurchase = (value: Date) => {
+    setDateOfPurchase(moment(value).format(dateFormat))
+  }
+  const onHandleReceivedDate = (value: Date) => {
+    setReceivedDate(moment(value).format(dateFormat))
+  }
+  const onHandleWarrantyStartDate = (value: Date) => {
+    setWarrantyStartDate(moment(value).format(dateFormat))
+  }
+  const onHandleWarrantyEndDate = (value: Date) => {
+    setWarrantyEndDate(moment(value).format(dateFormat))
+  }
+
   return (
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Add New Asset"
+        title="Edit Asset"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -214,18 +305,17 @@ const EditAddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
-            Vendor Name:{' '}
-            {/* <span className={showIsRequired(editAddAssetList.vendorId)}>*</span> */}
+            Vendor Name: <span className={showIsRequired(vendorName)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="vendorId"
+              data-testid="vendorName"
               aria-label="Default select example"
               size="sm"
-              id="vendorId"
-              name="vendorId"
-              value={editAddAssetList.vendorId}
-              // onChange={(e) => setVendorName(e.target.value)}
+              id="vendorName"
+              name="vendorName"
+              value={vendorName}
+              onChange={(e) => setVendorName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {assetListTypeList?.vendorList?.length > 0 &&
@@ -242,10 +332,7 @@ const EditAddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
-            Asset Type:{' '}
-            <span className={showIsRequired(editAddAssetList.assetTypeId)}>
-              *
-            </span>
+            Asset Type: <span className={showIsRequired(assetType)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -254,7 +341,7 @@ const EditAddAssetList = ({
               size="sm"
               id="assetType"
               name="assetType"
-              value={editAddAssetList.assetTypeId}
+              value={assetType}
               onChange={(e) => setAssetType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -272,19 +359,16 @@ const EditAddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
-            Product Type:{' '}
-            <span className={showIsRequired(editAddAssetList.productType)}>
-              *
-            </span>
+            Product Type: <span className={showIsRequired(productType)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="productType"
+              data-testid="productName"
               aria-label="Default select example"
               size="sm"
-              id="productType"
-              name="productType"
-              value={editAddAssetList.productType}
+              id="productName"
+              name="productName"
+              value={productType}
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -302,9 +386,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Manufacturer Name:
-            <span className={showIsRequired(editAddAssetList.manufacturerName)}>
-              *
-            </span>
+            <span className={showIsRequired(manufacturerName)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -314,7 +396,7 @@ const EditAddAssetList = ({
               id="manufacturerName"
               name="manufacturerName"
               placeholder="Enter Manufacturer Name"
-              value={editAddAssetList.manufacturerName}
+              value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -342,7 +424,7 @@ const EditAddAssetList = ({
               size="sm"
               name="assetNumber"
               autoComplete="off"
-              onChange={(e) => setAssetNumber(e.target.value)}
+              value={editAddAssetList.assetNumber}
             />
           </CCol>
         </CRow>
@@ -352,7 +434,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             License/Asset No:
-            <span className={showIsRequired(editAddAssetList.licenseNumber)}>
+            <span className={showIsRequired(editAddAssetList.otherAssetNumber)}>
               *
             </span>
           </CFormLabel>
@@ -365,7 +447,7 @@ const EditAddAssetList = ({
               size="sm"
               name="licenseNumber"
               placeholder="RBT"
-              onChange={(e) => setLicenseNumber(e.target.value)}
+              value={editAddAssetList.otherAssetNumber}
             />
           </CCol>
         </CRow>
@@ -389,7 +471,7 @@ const EditAddAssetList = ({
               name="invoiceNumber"
               autoComplete="off"
               placeholder="Invoice Number"
-              onChange={(e) => setInvoiceNumber(e.target.value)}
+              value={editAddAssetList.invoiceNumber}
             />
           </CCol>
         </CRow>
@@ -399,7 +481,9 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Amount:
-            <span className={showIsRequired(editAddAssetList.amount)}>*</span>
+            <span className={editAddAssetList.amount ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -411,7 +495,7 @@ const EditAddAssetList = ({
               name="amount"
               autoComplete="off"
               placeholder="Amount"
-              onChange={(e) => setAmount(e.target.value)}
+              value={editAddAssetList.amount as string}
             />
           </CCol>
         </CRow>
@@ -421,9 +505,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Date of Purchase :
-            <span className={showIsRequired(editAddAssetList.datePurchase)}>
-              *
-            </span>
+            <span className={showIsRequired(datePurchase)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -436,7 +518,7 @@ const EditAddAssetList = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="datePurchase"
-              value={editAddAssetList.purchasedDate}
+              value={datePurchase}
               minDate={new Date()}
               onChange={(date: Date) => onHandleDateOfPurchase(date)}
             />
@@ -448,9 +530,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Received Date:
-            <span className={showIsRequired(editAddAssetList.receivedDate)}>
-              *
-            </span>
+            <span className={showIsRequired(receivedDate)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -463,7 +543,7 @@ const EditAddAssetList = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="receivedDate"
-              value={editAddAssetList.receivedDate}
+              value={receivedDate}
               minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
@@ -487,7 +567,7 @@ const EditAddAssetList = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="warrantyStartDate"
-              value={editAddAssetList.warrantyStartDate}
+              value={warrantyStartDate}
               minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyStartDate(date)}
             />
@@ -511,7 +591,7 @@ const EditAddAssetList = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="warrantyEndDate"
-              value={editAddAssetList.warrantyEndDate}
+              value={warrantyEndDate}
               minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
@@ -523,9 +603,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Asset Status:
-            <span className={showIsRequired(editAddAssetList.assetStatus)}>
-              *
-            </span>
+            <span className={showIsRequired(assetStatus)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -535,7 +613,7 @@ const EditAddAssetList = ({
               id="assetStatus"
               name="assetStatus"
               placeholder="Enter Manufacturer Name"
-              value={editAddAssetList.assetStatus}
+              value={assetStatus}
               onChange={(e) => setAssetStatus(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -553,7 +631,7 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Country:
-            <span className={showIsRequired(editAddAssetList.poNumber)}>*</span>
+            <span className={country ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -606,8 +684,8 @@ const EditAddAssetList = ({
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              // disabled={!isAddButtonEnabled}
-              // onClick={handleAddNewVendor}
+              disabled={!isUpdateButtonEnabled}
+              onClick={updateHandler}
             >
               Confirm
             </CButton>
@@ -615,7 +693,7 @@ const EditAddAssetList = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              onClick={clearInputs}
+              // onClick={clearInputs}
             >
               Clear
             </CButton>
