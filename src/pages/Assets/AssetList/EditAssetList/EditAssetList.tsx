@@ -188,7 +188,6 @@ const EditAddAssetList = ({
       poNumber: editAddAssetList.poNumber,
       productId: editAddAssetList.productId,
       productName: productType,
-<<<<<<< HEAD
       productSpecification: editAddAssetList.productSpecification,
       productSpecificationId: editAddAssetList.productSpecificationId,
       purchasedDate: datePurchase,
@@ -202,20 +201,19 @@ const EditAddAssetList = ({
       vendorName,
       warrantyEndDate: warrantyStartDate,
       warrantyStartDate: warrantyEndDate,
-=======
-      productSpecification: null,
-      productSpecificationId: number,
-      purchasedDate: string,
-      receivedDate: string,
-      referenceNumber: null,
-      searchByEmpName: null,
-      status: string,
-      updatedBy: string,
-      updatedDate: string,
-      vendorId: number,
-      vendorName: string,
-      warrantyEndDate: string,
-      warrantyStartDate: string,
+      productSpecification: editAddAssetList.productSpecification,
+      productSpecificationId: editAddAssetList.productSpecification,
+      purchasedDate: datePurchase,
+      receivedDate,
+      referenceNumber: editAddAssetList.referenceNumber,
+      searchByEmpName: editAddAssetList.searchByEmpName,
+      status: assetStatus,
+      updatedBy: editAddAssetList.updatedBy,
+      updatedDate: editAddAssetList.updatedDate,
+      vendorId: editAddAssetList.vendorId,
+      vendorName,
+      warrantyEndDate,
+      warrantyStartDate,
     }
     const updateVendorDetailsResultAction = await dispatch(
       reduxServices.addAssetList.updateAddAsset(prepareObject),
@@ -228,7 +226,6 @@ const EditAddAssetList = ({
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
->>>>>>> edcfe072cc9ffdd32b061489d95042a7df96a456
     }
     // const updateVendorDetailsResultAction = await dispatch(
     //   reduxServices..updateAddAsset(prepareObject),

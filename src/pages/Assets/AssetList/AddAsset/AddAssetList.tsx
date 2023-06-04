@@ -316,6 +316,7 @@ const AddAssetList = ({
               id="vendorName"
               name="vendorName"
               value={vendorName}
+              placeholder="Select Vendor Name"
               onChange={(e) => setVendorName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -344,6 +345,7 @@ const AddAssetList = ({
               id="assetType"
               name="assetType"
               value={assetType}
+              placeholder="Select Asset Type"
               onChange={(e) => setAssetType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -372,6 +374,7 @@ const AddAssetList = ({
               id="productType"
               name="productType"
               value={productType}
+              placeholder="Select Product Type"
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -398,7 +401,7 @@ const AddAssetList = ({
               size="sm"
               id="manufacturerName"
               name="manufacturerName"
-              placeholder="Enter Manufacturer Name"
+              placeholder="Select Manufacturer Name"
               value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
@@ -621,7 +624,7 @@ const AddAssetList = ({
               size="sm"
               id="assetStatus"
               name="assetStatus"
-              placeholder="Enter Manufacturer Name"
+              placeholder="Select Status"
               value={assetStatus}
               onChange={(e) => setAssetStatus(e.target.value)}
             >
@@ -649,7 +652,7 @@ const AddAssetList = ({
               size="sm"
               id="country"
               name="country"
-              placeholder="Select country Name"
+              placeholder="Select Country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             >
