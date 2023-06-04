@@ -35,7 +35,7 @@ export type UpdateAssetListSliceState = {
   createdDate: string
   departmentId: null
   departmentName: null
-  descriptio: null
+  description: null
   employeeId: null
   employeeName: null
   id: number
@@ -57,8 +57,8 @@ export type UpdateAssetListSliceState = {
   referenceNumber: null
   searchByEmpName: null
   status: string
-  updatedBy: ''
-  updatedDate: ''
+  updatedBy: string
+  updatedDate: string
   vendorId: number
   vendorName: string
   warrantyEndDate: string

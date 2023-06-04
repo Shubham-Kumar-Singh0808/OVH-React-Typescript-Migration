@@ -2,43 +2,25 @@ import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/user
 import { LoadingState } from '../../commonTypes'
 
 export type VendorDetails = {
-  amount: string
-  assetNumber: string
-  assetType: string
-  assetTypeId: number
-  countryId: number
-  createdBy: string
-  createdDate: string
-  departmentId: null
-  departmentName: null
-  description: null
-  employeeId: null
-  employeeName: null
-  id: number
-  invoiceNumber: string
-  location: null
-  manufacturerId: number
-  manufacturerName: string
-  notes: string
-  otherAssetNumber: string
-  otherNumber: null
-  pSpecification: string
-  poNumber: string
-  productId: number
-  productName: string
-  productSpecification: null
-  productSpecificationId: number
-  purchasedDate: string
-  receivedDate: string
-  referenceNumber: null
-  searchByEmpName: null
-  status: string
-  updatedBy: string
-  updatedDate: string
   vendorId: number
   vendorName: string
-  warrantyEndDate: string
-  warrantyStartDate: string
+  vendorAddress: string
+  vendorCity: string
+  vendorState: string
+  vendorPincode: string
+  vendorCountry: string
+  vendorEmailId: string
+  vendorPhoneNumber: string
+  vendorFaxNumber: null | string
+  departmentId: number
+  departmentName: string
+  createdBy: string
+  updatedBy: string
+  createdDate: string
+  updatedDate: string
+  isExpenseVendor: boolean
+  vendorBankDetails: null | string
+  vendorGSTNumber: string | number | string[] | undefined | null
 }
 
 export type GetAllVendorDetails = {
