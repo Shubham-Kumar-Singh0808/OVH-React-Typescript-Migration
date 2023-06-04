@@ -33,8 +33,23 @@ const updateAddAsset = async (
   return response.data
 }
 
+const checkAssetNumberExixts = async (
+  AssetNumber: number,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: GetAddAssetListConfig.checkAssetNumberExixts,
+    method: AllowedHttpMethods.get,
+    params: {
+      AssetNumber,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AddAssetApi = {
   getAddAssetList,
   updateAddAsset,
+  checkAssetNumberExixts,
 }
 export default AddAssetApi

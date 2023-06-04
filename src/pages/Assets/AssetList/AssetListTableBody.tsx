@@ -35,50 +35,19 @@ const ModalLink = ({
     </CLink>
   )
 }
-// const onClickHandler = () => {
-
-// }
-const ActionIcons = () => {
-  return (
-    <CTableDataCell data-testid="action-cell">
-      <div className="sh-btn-group">
-        <CTooltip content="Edit">
-          <CButton
-            color="info"
-            size="sm"
-            className="mb-1"
-            // onClick={onClickHandler}
-          >
-            <i className="text-white fa fa-pencil-square-o"></i>
-          </CButton>
-        </CTooltip>
-        <br />
-        <CTooltip content="History">
-          <CButton color="info" size="sm" className="mb-1">
-            <i className=" fa fa-wrench"></i>
-          </CButton>
-        </CTooltip>
-        <br />
-        <CTooltip content="Change-Status">
-          <CButton color="info" size="sm" className="mb-1">
-            <i className="fa fa-bar-chart text-white"></i>
-          </CButton>
-        </CTooltip>
-      </div>
-    </CTableDataCell>
-  )
-}
 
 const AssetListTableBody = ({
   item,
   index,
   handleAgendaModal,
   getItemNumber,
+  setToggle,
 }: {
   item: AllAssetsList
   index: number
   getItemNumber: (index: number) => number
   handleAgendaModal: (appraisalCycleSpecification: string) => void
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const specificationModel = (
     <ModalLink
@@ -106,6 +75,40 @@ const AssetListTableBody = ({
       dataTestId={`specification-modal-link${index}`}
     />
   )
+  const ActionIcons = () => {
+    return (
+      <CTableDataCell data-testid="action-cell">
+        <div className="sh-btn-group">
+          <CTooltip content="Edit">
+            <CButton
+              color="info"
+              size="sm"
+              className="mb-1"
+              onClick={onClickHandler}
+            >
+              <i className="text-white fa fa-pencil-square-o"></i>
+            </CButton>
+          </CTooltip>
+          <br />
+          <CTooltip content="History">
+            <CButton color="info" size="sm" className="mb-1">
+              <i className=" fa fa-wrench"></i>
+            </CButton>
+          </CTooltip>
+          <br />
+          <CTooltip content="Change-Status">
+            <CButton color="info" size="sm" className="mb-1">
+              <i className="fa fa-bar-chart text-white"></i>
+            </CButton>
+          </CTooltip>
+        </div>
+      </CTableDataCell>
+    )
+  }
+
+  const onClickHandler = () => {
+    setToggle('EditAssetList')
+  }
 
   return (
     <>

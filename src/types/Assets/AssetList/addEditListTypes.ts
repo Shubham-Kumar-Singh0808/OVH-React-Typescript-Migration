@@ -33,29 +33,29 @@ export type UpdateAssetListSliceState = {
   countryId: number
   createdBy: string
   createdDate: string
-  departmentId: null
-  departmentName: null
-  description: null
-  employeeId: null
-  employeeName: null
+  departmentId: number
+  departmentName: string
+  description: string
+  employeeId: number
+  employeeName: string
   id: number
   invoiceNumber: string
-  location: null
+  location: string
   manufacturerId: number
   manufacturerName: string
   notes: string
   otherAssetNumber: string
-  otherNumber: null
+  otherNumber: string
   pSpecification: string
   poNumber: string
   productId: number
   productName: string
-  productSpecification: null
+  productSpecification: string
   productSpecificationId: number
   purchasedDate: string
   receivedDate: string
-  referenceNumber: null
-  searchByEmpName: null
+  referenceNumber: string
+  searchByEmpName: string
   status: string
   updatedBy: string
   updatedDate: string

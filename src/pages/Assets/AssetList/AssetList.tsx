@@ -83,6 +83,7 @@ const AssetList = (): JSX.Element => {
             pageSize={pageSize}
             setPageSize={setPageSize}
             setEditAddAssetList={setEditAddAssetList}
+            setToggle={setToggle}
           />
         </OCard>
       )}

@@ -34,6 +34,17 @@ const updateAddAsset = createAsyncThunk(
     }
   },
 )
+const checkAssetNumberExixts = createAsyncThunk(
+  'newEventSlice/checkAssetNumberExixts',
+  async (AssetNumber: number, thunkApi) => {
+    try {
+      return await AddAssetApi.checkAssetNumberExixts(AssetNumber)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 
 export const initialAddAssetListState: AddEditSliceState = {
   isLoading: ApiLoadingState.idle,
@@ -57,6 +68,7 @@ const AddAssetListSlice = createSlice({
 const AddAssetListThunk = {
   getAddAssetList,
   updateAddAsset,
+  checkAssetNumberExixts,
 }
 const isLoading = (state: RootState): LoadingState =>
   state.addAssetList.isLoading

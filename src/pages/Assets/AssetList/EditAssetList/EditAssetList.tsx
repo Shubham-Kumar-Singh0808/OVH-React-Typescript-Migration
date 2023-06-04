@@ -113,77 +113,34 @@ const EditAddAssetList = ({
     }
   }, [editAddAssetList])
 
-  // const handleIsInternalStatus = (isExpenseVendor: boolean) => {
-  //   setEditAddAssetList({
-  //     ...editAddAssetList,
-  //     isExpenseVendor,
-  //   })
-  // }
-
-  // const handleAddressText = (vendorAddress: string) => {
-  //   setEditVendorInfo((prevState) => {
-  //     return { ...prevState, ...{ vendorAddress } }
-  //   })
-  // }
-
-  // const handleBankDetailsText = (vendorBankDetails: string) => {
-  //   setEditVendorInfo((prevState) => {
-  //     return { ...prevState, ...{ vendorBankDetails } }
-  //   })
-  // }
-
-  // const onChangeInputHandler = (
-  //   event:
-  //     | React.ChangeEvent<HTMLSelectElement>
-  //     | React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   const { name, value } = event.target
-  //   if (name === 'vendorEmailId') {
-  //     const personalEmail = value
-  //     validateEmail(personalEmail)
-  //     setEditVendorInfo((prevState) => {
-  //       return { ...prevState, ...{ [name]: personalEmail } }
-  //     })
-  //   }
-  //   setEditVendorInfo((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       ...{
-  //         [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-  //       },
-  //     }
-  //   })
-  // }
   const updateSuccessToastMessage = (
     <OToast
       toastMessage="Vendor Details is successfully edited."
       toastColor="success"
     />
   )
-
-  // eslint-disable-next-line require-await
   const updateHandler = async () => {
     const prepareObject = {
-      amount: editAddAssetList.amount,
-      assetNumber: editAddAssetList.assetNumber,
-      assetType: editAddAssetList.assetType,
-      assetTypeId: editAddAssetList.assetTypeId,
-      countryId: editAddAssetList.countryId,
+      amount: editAddAssetList.amount as string,
+      assetNumber: editAddAssetList.assetNumber as string,
+      assetType: editAddAssetList.assetType as string,
+      assetTypeId: editAddAssetList.assetTypeId as number,
+      countryId: editAddAssetList.countryId as number,
       createdBy: editAddAssetList.createdBy,
       createdDate: editAddAssetList.createdDate,
       departmentId: editAddAssetList.departmentId,
-      departmentName: editAddAssetList.departmentName,
-      description: editAddAssetList.description,
-      employeeId: editAddAssetList.employeeId,
-      employeeName: editAddAssetList.employeeName,
-      id: editAddAssetList.id,
-      invoiceNumber: editAddAssetList.invoiceNumber,
-      location: editAddAssetList.location,
-      manufacturerId: editAddAssetList.manufacturerId,
-      manufacturerName: editAddAssetList.manufacturerName,
-      notes: editAddAssetList.notes,
+      departmentName: editAddAssetList.departmentName as string,
+      description: editAddAssetList.description as string,
+      employeeId: editAddAssetList.employeeId as number,
+      employeeName: editAddAssetList.employeeName as string,
+      id: editAddAssetList.id as number,
+      invoiceNumber: editAddAssetList.invoiceNumber as string,
+      location: editAddAssetList.location as string,
+      manufacturerId: editAddAssetList.manufacturerId as number,
+      manufacturerName: editAddAssetList.manufacturerName as string,
+      notes: editAddAssetList.notes as string,
       otherAssetNumber: editAddAssetList.otherAssetNumber,
-      otherNumber: editAddAssetList.otherNumber,
+      otherNumber: editAddAssetList.otherNumber as string,
       pSpecification: editAddAssetList.pSpecification,
       poNumber: editAddAssetList.poNumber,
       productId: editAddAssetList.productId,
@@ -201,19 +158,6 @@ const EditAddAssetList = ({
       vendorName,
       warrantyEndDate: warrantyStartDate,
       warrantyStartDate: warrantyEndDate,
-      productSpecification: editAddAssetList.productSpecification,
-      productSpecificationId: editAddAssetList.productSpecification,
-      purchasedDate: datePurchase,
-      receivedDate,
-      referenceNumber: editAddAssetList.referenceNumber,
-      searchByEmpName: editAddAssetList.searchByEmpName,
-      status: assetStatus,
-      updatedBy: editAddAssetList.updatedBy,
-      updatedDate: editAddAssetList.updatedDate,
-      vendorId: editAddAssetList.vendorId,
-      vendorName,
-      warrantyEndDate,
-      warrantyStartDate,
     }
     const updateVendorDetailsResultAction = await dispatch(
       reduxServices.addAssetList.updateAddAsset(prepareObject),
@@ -227,25 +171,6 @@ const EditAddAssetList = ({
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
-    // const updateVendorDetailsResultAction = await dispatch(
-    //   reduxServices..updateAddAsset(prepareObject),
-    //  )
-    // if (
-    //   reduxServices.vendorList.updateVendorDetails.fulfilled.match(
-    //     updateVendorDetailsResultAction,
-    //   )
-    // ) {
-    //   setToggle('')
-    //   dispatch(
-    //     reduxServices.vendorList.getVendors({
-    //       startIndex: 0,
-    //       endIndex: 20,
-    //       vendorName: '',
-    //     }),
-    //   )
-    //   dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
-    //   dispatch(reduxServices.app.actions.addToast(undefined))
-    // }
   }
 
   useEffect(() => {

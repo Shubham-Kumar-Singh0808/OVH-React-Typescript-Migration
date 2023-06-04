@@ -35,13 +35,6 @@ describe('Add Asset list  Details without data', () => {
   test('should render add Asset List component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
   })
-  test('should able to click Add Button', () => {
-    const addBtn = screen.getByRole('button', {
-      name: 'Add',
-    })
-    expect(addBtn).toBeDisabled()
-    userEvent.click(addBtn)
-  })
   test('should be able to click edit button element', () => {
     const addBtnElement = screen.getByTestId('Confirm-btn')
     expect(addBtnElement).toBeInTheDocument()

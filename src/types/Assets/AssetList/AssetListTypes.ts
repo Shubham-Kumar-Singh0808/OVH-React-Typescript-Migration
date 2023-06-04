@@ -5,8 +5,8 @@ export type AssetTypeChangeList = {
   productName: string
   assetTypeId: null | number
   assetType: string
-  departmentId: null
-  departmentName: null
+  departmentId: number
+  departmentName: string
   createdBy: string
   updatedBy: string
   createdDate: string
@@ -111,17 +111,17 @@ export type AllAssetsList = {
   notes: null | string
   employeeName: string
   employeeId: number
-  description: null
+  description: string
   status: string
   assetTypeId: number
   assetType: string
-  productSpecification: null
-  otherNumber: null
+  productSpecification: string
+  otherNumber: string
   warrantyStartDate: string | null
   warrantyEndDate: string | null
-  searchByEmpName: null
-  departmentId: null
-  departmentName: null
+  searchByEmpName: string
+  departmentId: number
+  departmentName: string
   location: string
   vendorName: string
   createdBy: string
@@ -159,4 +159,5 @@ export type AssetListTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }

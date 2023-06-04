@@ -895,4 +895,5 @@ export interface ProductSpecificationListApi extends ApiBase {
 export interface AddAssetListApi extends ApiBase {
   addAsset: string
   updateAddAsset: string
+  checkAssetNumberExixts: string
 }
