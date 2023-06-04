@@ -107,6 +107,7 @@ const AssetListTable = ({
                     handleAgendaModal={handleAgendaModal}
                     getItemNumber={getItemNumber}
                     setToggle={setToggle}
+                    setEditAddAssetList={setEditAddAssetList}
                   />
                 )
               })}

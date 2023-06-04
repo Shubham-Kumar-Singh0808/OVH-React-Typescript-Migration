@@ -265,7 +265,8 @@ const EditAddAssetList = ({
               size="sm"
               id="vendorName"
               name="vendorName"
-              value={vendorName}
+              placeholder="Select Vendor Name"
+              value={editAddAssetList.vendorName}
               onChange={(e) => setVendorName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -292,8 +293,9 @@ const EditAddAssetList = ({
               size="sm"
               id="assetType"
               name="assetType"
-              value={assetType}
-              onChange={(e) => setAssetType(e.target.value)}
+              placeholder="Select Asset Type"
+              value={editAddAssetList.assetType}
+              // onChange={(e) => setAssetType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {assetListTypeList?.assetTypeList?.length > 0 &&
@@ -319,8 +321,9 @@ const EditAddAssetList = ({
               size="sm"
               id="productName"
               name="productName"
-              value={productType}
-              onChange={(e) => setProductType(e.target.value)}
+              placeholder="Select Product Type"
+              value={editAddAssetList.productName}
+              // onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {assetTypeList.map((location, index) => (
@@ -346,8 +349,8 @@ const EditAddAssetList = ({
               size="sm"
               id="manufacturerName"
               name="manufacturerName"
-              placeholder="Enter Manufacturer Name"
-              value={manufacturerName}
+              placeholder="Select Manufacturer Name"
+              value={editAddAssetList.manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -563,7 +566,7 @@ const EditAddAssetList = ({
               size="sm"
               id="assetStatus"
               name="assetStatus"
-              placeholder="Enter Manufacturer Name"
+              placeholder="Select Status"
               value={assetStatus}
               onChange={(e) => setAssetStatus(e.target.value)}
             >
@@ -591,7 +594,7 @@ const EditAddAssetList = ({
               size="sm"
               id="country"
               name="country"
-              placeholder="Enter Manufacturer Name"
+              placeholder="Select Country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             >
@@ -631,15 +634,6 @@ const EditAddAssetList = ({
         </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
-            {/* <CButton
-              data-testid="save-btn"
-              className="btn-ovh me-1 text-white"
-              color="success"
-              disabled={!isUpdateButtonEnabled}
-              onClick={updateHandler}
-            >
-              Confirm
-            </CButton> */}
             <CButton
               data-testid="update-btn"
               color="warning"

@@ -42,12 +42,14 @@ const AssetListTableBody = ({
   handleAgendaModal,
   getItemNumber,
   setToggle,
+  setEditAddAssetList,
 }: {
   item: AllAssetsList
   index: number
   getItemNumber: (index: number) => number
   handleAgendaModal: (appraisalCycleSpecification: string) => void
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
 }): JSX.Element => {
   const specificationModel = (
     <ModalLink
@@ -108,6 +110,7 @@ const AssetListTableBody = ({
 
   const onClickHandler = () => {
     setToggle('EditAssetList')
+    setEditAddAssetList(item)
   }
 
   return (

@@ -229,11 +229,10 @@ const AddAssetList = ({
   )
 
   const handleAddNewAssetList = async () => {
-    const checkList = await dispatch({
-      reduxServices.addAssetList.checkAssetNumberExixts({
-        AssetNumber: 
-        })
-      })
+    // const checkList = await dispatch({
+    //   reduxServices.addAssetList.checkAssetNumberExixts({
+    //     })
+    //   })
     const isAddAssetLIst = await dispatch(
       reduxServices.addAssetList.getAddAssetList({
         amount: amount as string,
