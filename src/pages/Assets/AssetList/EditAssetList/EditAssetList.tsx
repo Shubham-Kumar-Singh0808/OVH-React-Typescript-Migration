@@ -161,65 +161,66 @@ const EditAddAssetList = ({
     />
   )
 
+  // eslint-disable-next-line require-await
   const updateHandler = async () => {
     const prepareObject = {
       amount: editAddAssetList.amount,
-      assetNumber: string,
-      assetType: string,
-      assetTypeId: number,
-      countryId: number,
-      createdBy: string,
-      createdDate: string,
-      departmentId: null,
-      departmentName: null,
-      description: null,
-      employeeId: null,
-      employeeName: null,
-      id: number,
-      invoiceNumber: string,
-      location: null,
-      manufacturerId: number,
-      manufacturerName: string,
-      notes: string,
-      otherAssetNumber: string,
-      otherNumber: null,
-      pSpecification: string,
-      poNumber: string,
-      productId: number,
+      assetNumber: editAddAssetList.assetNumber,
+      assetType: editAddAssetList.assetType,
+      assetTypeId: editAddAssetList.assetTypeId,
+      countryId: editAddAssetList.countryId,
+      createdBy: editAddAssetList.createdBy,
+      createdDate: editAddAssetList.createdDate,
+      departmentId: editAddAssetList.departmentId,
+      departmentName: editAddAssetList.departmentName,
+      description: editAddAssetList.description,
+      employeeId: editAddAssetList.employeeId,
+      employeeName: editAddAssetList.employeeName,
+      id: editAddAssetList.id,
+      invoiceNumber: editAddAssetList.invoiceNumber,
+      location: editAddAssetList.location,
+      manufacturerId: editAddAssetList.manufacturerId,
+      manufacturerName: editAddAssetList.manufacturerName,
+      notes: editAddAssetList.notes,
+      otherAssetNumber: editAddAssetList.otherAssetNumber,
+      otherNumber: editAddAssetList.otherNumber,
+      pSpecification: editAddAssetList.pSpecification,
+      poNumber: editAddAssetList.poNumber,
+      productId: editAddAssetList.productId,
       productName: productType,
-      productSpecification: null,
-      productSpecificationId: number,
-      purchasedDate: string,
-      receivedDate: string,
-      referenceNumber: null,
-      searchByEmpName: null,
-      status: string,
-      updatedBy: string,
-      updatedDate: string,
-      vendorId: number,
-      vendorName: string,
-      warrantyEndDate: string,
-      warrantyStartDate: string,
+      productSpecification: editAddAssetList.productSpecification,
+      productSpecificationId: editAddAssetList.productSpecificationId,
+      purchasedDate: datePurchase,
+      receivedDate,
+      referenceNumber: editAddAssetList.referenceNumber,
+      searchByEmpName: editAddAssetList.searchByEmpName,
+      status: assetStatus,
+      updatedBy: editAddAssetList.updatedBy,
+      updatedDate: editAddAssetList.updatedDate,
+      vendorId: editAddAssetList.vendorId,
+      vendorName,
+      warrantyEndDate: warrantyStartDate,
+      warrantyStartDate: warrantyEndDate,
     }
-    const updateVendorDetailsResultAction = await dispatch(
-      reduxServices.vendorList.updateVendorDetails(prepareObject),
-    )
-    if (
-      reduxServices.vendorList.updateVendorDetails.fulfilled.match(
-        updateVendorDetailsResultAction,
-      )
-    ) {
-      setToggle('')
-      dispatch(
-        reduxServices.vendorList.getVendors({
-          startIndex: 0,
-          endIndex: 20,
-          vendorName: '',
-        }),
-      )
-      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-    }
+    // const updateVendorDetailsResultAction = await dispatch(
+    //   reduxServices..updateAddAsset(prepareObject),
+    //  )
+    // if (
+    //   reduxServices.vendorList.updateVendorDetails.fulfilled.match(
+    //     updateVendorDetailsResultAction,
+    //   )
+    // ) {
+    //   setToggle('')
+    //   dispatch(
+    //     reduxServices.vendorList.getVendors({
+    //       startIndex: 0,
+    //       endIndex: 20,
+    //       vendorName: '',
+    //     }),
+    //   )
+    //   dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+    //   dispatch(reduxServices.app.actions.addToast(undefined))
+    // }
   }
 
   useEffect(() => {
@@ -680,7 +681,7 @@ const EditAddAssetList = ({
         </CRow>
         <CRow>
           <CCol md={{ span: 6, offset: 3 }}>
-            <CButton
+            {/* <CButton
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
@@ -688,14 +689,14 @@ const EditAddAssetList = ({
               onClick={updateHandler}
             >
               Confirm
-            </CButton>
+            </CButton> */}
             <CButton
-              data-testid="clear-btn"
+              data-testid="update-btn"
               color="warning"
               className="btn-ovh text-white"
               // onClick={clearInputs}
             >
-              Clear
+              Update
             </CButton>
           </CCol>
         </CRow>

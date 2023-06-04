@@ -260,4 +260,5 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
   addAssetList: AddAssetListService,
+  // updateAddAsset
 }
