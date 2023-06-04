@@ -1,0 +1,43 @@
+import { AssetTypeAddList } from '../../types/Assets/AssetList/addEditListTypes'
+
+export const mockassetData: AssetTypeAddList[] = [
+  {
+    amount: '876746',
+    assetNumber: 'RBT46444',
+    assetTypeId: '1',
+    countryId: 1,
+    invoiceNumber: 'tyeytey',
+    manufacturerId: '225',
+    notes: 'geghgdh',
+    otherAssetNumber: '5422yeyhe',
+    pSpecification:
+      'AC1750 Dual Band Gigabit<div>Ceiling Mount Access Point </div>',
+    poNumber: '4748444',
+    productId: '164',
+    purchasedDate: '04/06/2023',
+    receivedDate: '05/06/2023',
+    status: 'working',
+    vendorId: '89',
+    warrantyEndDate: '20/06/2023',
+    warrantyStartDate: '11/06/2023',
+  },
+  {
+    amount: '4536',
+    assetNumber: 'RBTtest34',
+    assetTypeId: '1',
+    countryId: 3,
+    invoiceNumber: '8765430',
+    manufacturerId: '225',
+    notes: 'hello im anusha',
+    otherAssetNumber: '76yt54e3',
+    pSpecification: 'sXDS',
+    poNumber: '5467738',
+    productId: '164',
+    purchasedDate: '04/06/2023',
+    receivedDate: '05/06/2023',
+    status: 'Not Working',
+    vendorId: '42',
+    warrantyEndDate: '16/06/2023',
+    warrantyStartDate: '08/06/2023',
+  },
+]
