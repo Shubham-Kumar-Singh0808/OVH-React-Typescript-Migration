@@ -26,6 +26,7 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
             placeHolder={'Manager Name'}
             autoCompleteTarget={''}
             onClickHandler={jest.fn()}
+            setIsActive={jest.fn()}
           />
         </div>
       </>,
@@ -107,6 +108,7 @@ describe('Manager update button', () => {
         placeHolder={'Hr Name'}
         autoCompleteTarget={''}
         onClickHandler={jest.fn()}
+        setIsActive={jest.fn()}
       />,
       {
         preloadedState: {
@@ -134,6 +136,7 @@ const toRender = (
       placeHolder={'Hr Name'}
       autoCompleteTarget={''}
       onClickHandler={jest.fn()}
+      setIsActive={jest.fn()}
     />
   </div>
 )

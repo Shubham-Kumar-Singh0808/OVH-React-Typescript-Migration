@@ -21,6 +21,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {
@@ -51,6 +52,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {
@@ -90,6 +92,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={true}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {

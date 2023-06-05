@@ -83,6 +83,7 @@ const EditProductTypeRecord = ({
     ) {
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.ProductTypeList.getProductTypeList({
           startIndex: 0,

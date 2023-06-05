@@ -65,6 +65,7 @@ const AddProductTypeRecord = ({
     ) {
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(successToast))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.ProductTypeList.getProductTypeList({
           startIndex: 0,
