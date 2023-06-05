@@ -14,11 +14,6 @@ const ExpenseCategoryList = (): JSX.Element => {
     (feature) => feature.name === 'Expense Management',
   )
 
-  useEffect(() => {
-    if (window.location.pathname === '/expenseCategory') {
-      // setCurrentPage(1)
-    }
-  }, [])
   return (
     <>
       <OCard

@@ -201,6 +201,12 @@ const ExpenseCategoryListTable = ({
     dispatch(reduxServices.category.actions.setPageSize(20))
   }, [dispatch])
 
+  useEffect(() => {
+    if (window.location.pathname === '/expenseCategory') {
+      setCurrentPage(1)
+    }
+  }, [])
+
   return (
     <>
       <CTable className="mt-4 mb-4">
@@ -333,7 +339,7 @@ const ExpenseCategoryListTable = ({
           {categoryList.length > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
