@@ -23,10 +23,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import {
-  SaveEmployee,
-  UpdateAllLocations,
-} from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
+import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 
 const ChangeAssetFilterOptions = ({
   setToggle,
@@ -36,8 +33,7 @@ const ChangeAssetFilterOptions = ({
   setEmployeeName,
   changeReportStatus,
   setChangeReportStatus,
-}: // locationForEmpAssets,
-{
+}: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   allEmployees: IncomingActiveEmployee[]
   onSelectEmployee: (value: string) => void
@@ -45,7 +41,6 @@ const ChangeAssetFilterOptions = ({
   setEmployeeName: React.Dispatch<React.SetStateAction<string>>
   changeReportStatus: AllAssetsList
   setChangeReportStatus: React.Dispatch<React.SetStateAction<AllAssetsList>>
-  // locationForEmpAssets: SaveEmployee
 }): JSX.Element => {
   const [description, setDescription] = useState<string>('')
   const [statusDate, setStatusDate] = useState<string>(
@@ -183,7 +178,7 @@ const ChangeAssetFilterOptions = ({
       return { ...prevState, ...{ [name]: value } }
     })
   }
-  console.log(statusDate)
+
   const handleIsInternalStatus = (isExpenseVendor: boolean) => {
     setCheckBox(isExpenseVendor)
   }
@@ -200,7 +195,7 @@ const ChangeAssetFilterOptions = ({
         <CCol sm={3}>
           <CFormInput
             className="mb-1"
-            data-testid="asset number"
+            data-testid="assetnumber"
             type="text"
             id="name"
             size="sm"
@@ -324,6 +319,7 @@ const ChangeAssetFilterOptions = ({
       <CRow className="mt-4 mb-4">
         <CFormLabel
           {...formLabelProps}
+          data-testid="ach-emp-name"
           className="col-sm-3 col-form-label text-end"
         >
           Employee:
@@ -332,7 +328,7 @@ const ChangeAssetFilterOptions = ({
           inputProps={{
             className: 'form-control form-control-sm',
             autoComplete: 'on',
-            placeholder: 'Employee Name',
+            placeholder: 'Employee',
             onBlur: onFocusOut,
           }}
           items={allEmployees}

@@ -91,7 +91,7 @@ const AssetListTableBody = ({
             </CButton>
           </CTooltip>
           <br />
-          <CTooltip content="History">
+          <CTooltip content="Change-Status">
             <CButton
               color="info"
               size="sm"
@@ -102,7 +102,7 @@ const AssetListTableBody = ({
             </CButton>
           </CTooltip>
           <br />
-          <CTooltip content="Change-Status">
+          <CTooltip content="History">
             <CButton color="info" size="sm" className="mb-1">
               <i className="fa fa-bar-chart text-white"></i>
             </CButton>

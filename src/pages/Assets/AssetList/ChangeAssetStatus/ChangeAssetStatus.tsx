@@ -34,22 +34,8 @@ const ChangeAssetStatus = ({
   }
   const onSelectEmployee = (value: string) => {
     const empId = getEmployeeId(activeEmployee, value)
-    // if (empId === -1) {
-    // }
   }
 
-  // const onSelectEmployee = (fullName: string) => {
-  //   setEmployeeFilterName(fullName)
-  //   const managerName = activeEmployee.find((data) => data.empName === fullName)
-
-  //   const reportManager = {
-  //     id: managerName?.id,
-  //     fullName: managerName?.fullName,
-  //     firstName: managerName?.firstName,
-  //     lastName: managerName?.lastName,
-  //   } as GetHRAssociate
-  //   onSelectHRAssociate(reportManager)
-  // }
   return (
     <>
       <OCard
@@ -62,6 +48,7 @@ const ChangeAssetStatus = ({
           <CCol className="text-end" md={4}>
             <CButton
               color="info"
+              name="back"
               className="btn-ovh me-1"
               data-testid="back-button"
               onClick={() => setToggle('')}
