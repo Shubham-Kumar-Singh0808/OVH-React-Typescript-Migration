@@ -1,4 +1,7 @@
-import { MileStonesList } from '../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
+import {
+  MileStoneHistory,
+  MileStonesList,
+} from '../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 import { ProjectDetail } from '../../types/ProjectManagement/Project/ProjectView/projectViewTypes'
 
 export const mockMileStonesList: MileStonesList = {
@@ -86,3 +89,26 @@ export const mockProjectViewDetails: ProjectDetail = {
   hiveProjectFlag: false,
   allocation: null,
 }
+
+export const mockMilestoneAudit: MileStoneHistory[] = [
+  {
+    id: 4379,
+    title: 'testing',
+    planedDate: '04 Apr 2023',
+    actualDate: '26 Apr 2023',
+    billable: true,
+    comments: 'test',
+    modifiedDate: '28-Apr-2023 03:43 PM',
+    modifiedBy: 'Mamatha Thunam',
+    milestoneId: 1648,
+    persistType: 'UPDATED',
+    projectName: 'United Treasure Hunt',
+    projectManager: 'Naveen Kunchakuri',
+    projectType: 'FIXEDBID',
+    projectStatus: 'INPROGRESS',
+    milestonePercentage: '10',
+    peopleDTOs: [],
+    milestoneAmount: null,
+    milestoneTypeFlag: null,
+  },
+]

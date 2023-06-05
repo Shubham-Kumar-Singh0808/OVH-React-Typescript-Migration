@@ -108,7 +108,7 @@ export type MileStoneHistory = {
   planedDate: string
   actualDate: string
   billable: true
-  comments: null
+  comments: string
   modifiedDate: string
   modifiedBy: string
   milestoneId: number
