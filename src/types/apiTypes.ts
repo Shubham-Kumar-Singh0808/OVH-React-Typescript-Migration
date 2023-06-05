@@ -678,6 +678,8 @@ export interface ProjectInvoiceApi extends ApiBase {
 export interface ProjectTailoringApi extends ApiBase {
   getProjectTailoringDocument: string
   getProjectTailoring: string
+  saveProjectTailoringDocumentForManager: string
+  saveProjectTailoringDocument: string
 }
 
 export interface ProjectTimeSheetApi extends ApiBase {
@@ -847,14 +849,45 @@ export interface ChangeReporteesApi extends ApiBase {
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
+  getAllLookUps: string
+  addManufacturer: string
+  deleteManufacturerName: string
+  updateManufacturerName: string
 }
 export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string
   deleteProduct: string
   exportProductList: string
+  getAllLookUps: string
+  addProduct: string
+  updateProduct: string
+}
+export interface AssetListApi extends ApiBase {
+  getAllLookUps: string
+  getAllAssets: string
+  getAssetTypeChange: string
 }
 
 export interface AssetWarrantyReportApi extends ApiBase {
   getWarrantyAssetsList: string
   downloadExportAssetWarrantyList: string
+}
+
+export interface VendorListApi extends ApiBase {
+  getAllVendorDetails: string
+  getDepartmentNameList: string
+  addVendorDetails: string
+  editVendorDetails: string
+  exportVendorData: string
+  deleteVendorDetails: string
+}
+export interface ProductSpecificationListApi extends ApiBase {
+  getAllProductSpecifications: string
+  getassetTypeChangeList: string
+  getAllLookUps: string
+  getProductTypeChangeList: string
+  exportProductSpecificationList: string
+  addProductSpecifications: string
+  deleteProductSpecification: string
+  updateProductSpecification: string
 }

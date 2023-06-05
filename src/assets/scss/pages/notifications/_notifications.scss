@@ -36,3 +36,19 @@
   padding: 10px;
   color: #fff !important;
 }
+.icon-wrap{
+	i{
+		display: block;
+		line-height: 1em;
+		text-align: center;
+		position: relative;
+		width: 1em;
+		vertical-align: middle;
+	}
+}
+.fa-times-bg{
+	background-color: red !important ;
+}
+.text-muted {
+    color: #939393 !important;
+}

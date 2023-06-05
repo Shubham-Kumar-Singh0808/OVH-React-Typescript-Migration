@@ -54,6 +54,7 @@ const ITDeclarationList = (): JSX.Element => {
         ITDeclarationFormToggleType.HomePage,
       ),
     )
+    window.scroll(0, 0)
   }, [])
 
   useEffect(() => {

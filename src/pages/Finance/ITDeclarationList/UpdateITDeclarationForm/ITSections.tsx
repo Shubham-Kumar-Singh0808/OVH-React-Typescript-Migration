@@ -261,7 +261,7 @@ const ITSections = ({
           </CButton>
         </CTooltip>
         <CRow className="form-group">
-          <CRow className="col-sm-4">
+          <CRow className="col-sm-4 me-2">
             <CFormLabel className="col-sm-3 txt-info"> Sections:</CFormLabel>
             <CCol className="col-sm-8">
               <CFormLabel
@@ -272,7 +272,7 @@ const ITSections = ({
               </CFormLabel>
             </CCol>
           </CRow>
-          <div className="col-sm-2 ps-2">
+          <div className="col-sm-2">
             <CButton
               color="info"
               className="text-white btn-ovh"

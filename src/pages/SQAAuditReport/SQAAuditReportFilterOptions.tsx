@@ -33,15 +33,46 @@ const SQAAuditReportFilterOptions = ({
   toDate: string
   setToDate: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const [status, setStatus] = useState<string>('')
-  const [rescheduleStatus, setRescheduleStatus] = useState<string>('')
+  const dispatch = useAppDispatch()
+
+  const getSelectedStatusValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedStatusValue,
+  )
+  const getSelectedRescheduleStatusValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedRescheduleStatusValue,
+  )
+
+  const getFromDateValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getFromDateValue,
+  )
+  const getToDateValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getToDateValue,
+  )
+
+  const getSelectedMonthValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSelectedMonthValue,
+  )
+
+  const [status, setStatus] = useState<string>(getSelectedStatusValue)
+  const [rescheduleStatus, setRescheduleStatus] = useState<string>(
+    getSelectedRescheduleStatusValue,
+  )
+
+  useEffect(() => {
+    dispatch(reduxServices.sqaAuditReport.actions.setStatusValue(status))
+    dispatch(
+      reduxServices.sqaAuditReport.actions.setRescheduleStatus(
+        rescheduleStatus,
+      ),
+    )
+  }, [dispatch, status, rescheduleStatus])
+
   const [searchInput, setSearchInput] = useState<string>('')
   const [dateError, setDateError] = useState<boolean>(false)
   const sqaAuditReportListSize = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportListSize,
   )
 
-  const dispatch = useAppDispatch()
   const {
     paginationRange,
     setPageSize,
@@ -82,11 +113,11 @@ const SQAAuditReportFilterOptions = ({
         endIndex: pageSize * currentPage,
         multiSearch: '',
         startIndex: pageSize * (currentPage - 1),
-        SQAAuditSelectionDate: selectDate || '',
-        auditRescheduleStatus: rescheduleStatus || '',
-        auditStatus: status || '',
-        from: '',
-        to: '',
+        SQAAuditSelectionDate: getSelectedMonthValue || '',
+        auditRescheduleStatus: getSelectedRescheduleStatusValue || '',
+        auditStatus: getSelectedStatusValue || '',
+        from: (getFromDateValue as string) || '',
+        to: (getToDateValue as string) || '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
@@ -208,7 +239,7 @@ const SQAAuditReportFilterOptions = ({
     <>
       <CRow>
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Select :</CFormLabel>
+          <CFormLabel className="mt-1">Select:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -220,6 +251,11 @@ const SQAAuditReportFilterOptions = ({
             name="selectDate"
             value={selectDate}
             onChange={(e) => {
+              dispatch(
+                reduxServices.sqaAuditReport.actions.setMonthValue(
+                  e.target.value,
+                ),
+              )
               setSelectDate(e.target.value)
             }}
           >
@@ -235,7 +271,7 @@ const SQAAuditReportFilterOptions = ({
         </CCol>
 
         <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">Status :</CFormLabel>
+          <CFormLabel className="mt-1">Status:</CFormLabel>
         </CCol>
         <CCol sm={2}>
           <CFormSelect
@@ -246,6 +282,11 @@ const SQAAuditReportFilterOptions = ({
             name="status"
             value={status}
             onChange={(e) => {
+              dispatch(
+                reduxServices.sqaAuditReport.actions.setStatusValue(
+                  e.target.value,
+                ),
+              )
               setStatus(e.target.value)
             }}
           >
@@ -257,7 +298,7 @@ const SQAAuditReportFilterOptions = ({
         <CCol sm={4}>
           <CRow>
             <CCol sm={3} lg={3} className="text-end">
-              <CFormLabel className="mt-1">Reschedule Status :</CFormLabel>
+              <CFormLabel className="mt-1">Reschedule Status:</CFormLabel>
             </CCol>
             <CCol sm={6}>
               <CFormSelect
@@ -268,6 +309,11 @@ const SQAAuditReportFilterOptions = ({
                 name="rescheduleStatus"
                 value={rescheduleStatus}
                 onChange={(e) => {
+                  dispatch(
+                    reduxServices.sqaAuditReport.actions.setRescheduleStatus(
+                      e.target.value,
+                    ),
+                  )
                   setRescheduleStatus(e.target.value)
                 }}
               >
@@ -305,9 +351,12 @@ const SQAAuditReportFilterOptions = ({
                 name="fromDate"
                 maxDate={disableAfterDate}
                 value={fromDateValue}
-                onChange={(date: Date) =>
+                onChange={(date: Date) => {
+                  dispatch(
+                    reduxServices.sqaAuditReport.actions.setFromDate(date),
+                  )
                   setFromDate(moment(date).format(commonFormatDate))
-                }
+                }}
               />
             </CCol>
             <CCol sm={2} md={1} className="text-end">
@@ -332,9 +381,10 @@ const SQAAuditReportFilterOptions = ({
                 placeholderText="dd/mm/yyyy"
                 name="toDate"
                 value={toDateValue}
-                onChange={(date: Date) =>
+                onChange={(date: Date) => {
+                  dispatch(reduxServices.sqaAuditReport.actions.setToDate(date))
                   setToDate(moment(date).format(commonFormatDate))
-                }
+                }}
                 maxDate={disableAfterDate}
               />
             </CCol>

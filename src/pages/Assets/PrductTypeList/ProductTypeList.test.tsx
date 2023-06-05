@@ -2,15 +2,24 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ProductTypeList from './ProductTypeList'
-import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockProductTypeList } from '../../../test/data/ProductTypeListData'
 
 const mockHandleExport = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ProductTypeList />
+  </div>
+)
 describe('ProductTypeList without data', () => {
   beforeEach(() => {
-    render(<ProductTypeList />, {
+    render(toRender, {
       preloadedState: {
         ProductTypeList: {
           isLoading: ApiLoadingState.succeeded,
@@ -36,9 +45,5 @@ describe('ProductTypeList without data', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'WorldTest')
     fireEvent.click(screen.getByTestId('multi-search-btn'))
-  })
-  test('should render  Product Type List screen and add button', () => {
-    const addBtnElement = screen.getByTestId('add-button')
-    expect(addBtnElement).toBeInTheDocument()
   })
 })

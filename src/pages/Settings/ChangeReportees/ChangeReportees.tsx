@@ -4,7 +4,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 
-const ChangeReportees = () => {
+const ChangeReportees = (): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.changeReportees.getAllReportingManagerAsync())

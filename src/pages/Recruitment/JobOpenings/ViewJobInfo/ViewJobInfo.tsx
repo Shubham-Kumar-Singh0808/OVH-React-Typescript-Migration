@@ -29,15 +29,13 @@ const ViewJobInfo = ({
         <div className="pull-right">
           <CTooltip content="Edit">
             <CButton
-              className="btn-ovh me-1"
+              className="btn-ovh me-4"
               color="info"
               type="button"
               data-testid="edit-button"
               onClick={() => setToggle('editViewJobOpening')}
             >
-              <i className="fa fa-edit text-white" aria-hidden="true">
-                &nbsp; Edit
-              </i>
+              <i className="fa fa-edit text-white me-1"></i>Edit
             </CButton>
           </CTooltip>
           <CButton
@@ -58,7 +56,7 @@ const ViewJobInfo = ({
             Job Code:
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
-            {JobOpeningById?.jobCode}
+            {JobOpeningById?.jobCode || 'N/A'}
           </CCol>
         </CRow>
         <CRow>
@@ -69,7 +67,7 @@ const ViewJobInfo = ({
             Job Title:
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
-            {JobOpeningById?.positionVacant}
+            {JobOpeningById?.positionVacant || 'N/A'}
           </CCol>
         </CRow>
         <CRow>
@@ -80,7 +78,7 @@ const ViewJobInfo = ({
             No.of Vacancies:
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
-            {JobOpeningById?.noOfRequirements}
+            {JobOpeningById?.noOfRequirements || 'N/A'}
           </CCol>
         </CRow>
         <CRow>
@@ -91,7 +89,7 @@ const ViewJobInfo = ({
             Experience:
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
-            {JobOpeningById?.minimumExperience}
+            {JobOpeningById?.minimumExperience || 'N/A'}
           </CCol>
         </CRow>
         <CRow>
@@ -104,7 +102,7 @@ const ViewJobInfo = ({
           <CCol sm={3} className="col-form-label">
             {' '}
             {(JobOpeningById?.description &&
-              parse(String(JobOpeningById?.description))) ||
+              parse(String(JobOpeningById?.description || 'N/A'))) ||
               'N/A'}
           </CCol>
         </CRow>

@@ -192,6 +192,69 @@ const EmployeePipList = ({
     }
   }, [selectDay])
 
+  const visibleDate =
+    selectDay === 'Custom' ? (
+      <>
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">
+            From:
+            <span className={showIsRequired(fromDate as string)}>*</span>
+          </CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <DatePicker
+            className="form-control form-control-sm sh-date-picker"
+            data-testid="date-picker"
+            placeholderText="dd/mm/yyyy"
+            name="fromDate"
+            id="fromDate"
+            autoComplete="off"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            value={fromDateValue}
+            onChange={(date: Date) => {
+              dispatch(reduxServices.pipList.actions.setFromDate(date))
+              setFromDate(date)
+            }}
+            selected={fromDate as Date}
+          />
+        </CCol>
+        <CCol sm={2} md={1} className="text-end">
+          <CFormLabel className="mt-1">
+            To:
+            <span className={showIsRequired(toDate as string)}>*</span>
+          </CFormLabel>
+        </CCol>
+        <CCol sm={2}>
+          <DatePicker
+            className="form-control form-control-sm sh-date-picker"
+            data-testid="date-picker"
+            placeholderText="dd/mm/yyyy"
+            name="toDate"
+            id="toDate"
+            autoComplete="off"
+            showMonthDropdown
+            showYearDropdown
+            dropdownMode="select"
+            value={toDateValue}
+            highlightDates={[{ 'today-date-highlight': [new Date()] }]}
+            onChange={(date: Date) => {
+              dispatch(reduxServices.pipList.actions.setToDate(date))
+              setToDate(date)
+            }}
+            selected={toDate as Date}
+          />
+          {dateError && (
+            <span className="text-danger" data-testid="errorMessage">
+              <b>To date should be greater than From date</b>
+            </span>
+          )}
+        </CCol>
+      </>
+    ) : (
+      <></>
+    )
   return (
     <>
       {toggle === '' && (
@@ -247,73 +310,7 @@ const EmployeePipList = ({
                   selectDay={selectDay}
                 />
               </CCol>
-              {selectDay === 'Custom' ? (
-                <>
-                  <CCol sm={2} md={1} className="text-end">
-                    <CFormLabel className="mt-1">
-                      From:
-                      <span className={showIsRequired(fromDate as string)}>
-                        *
-                      </span>
-                    </CFormLabel>
-                  </CCol>
-                  <CCol sm={2}>
-                    <DatePicker
-                      className="form-control form-control-sm sh-date-picker"
-                      data-testid="date-picker"
-                      placeholderText="dd/mm/yyyy"
-                      name="fromDate"
-                      id="fromDate"
-                      autoComplete="off"
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      value={fromDateValue}
-                      onChange={(date: Date) => {
-                        dispatch(
-                          reduxServices.pipList.actions.setFromDate(date),
-                        )
-                        setFromDate(date)
-                      }}
-                      selected={fromDate as Date}
-                    />
-                  </CCol>
-                  <CCol sm={2} md={1} className="text-end">
-                    <CFormLabel className="mt-1">
-                      To:
-                      <span className={showIsRequired(toDate as string)}>
-                        *
-                      </span>
-                    </CFormLabel>
-                  </CCol>
-                  <CCol sm={2}>
-                    <DatePicker
-                      className="form-control form-control-sm sh-date-picker"
-                      data-testid="date-picker"
-                      placeholderText="dd/mm/yyyy"
-                      name="toDate"
-                      id="toDate"
-                      autoComplete="off"
-                      showMonthDropdown
-                      showYearDropdown
-                      dropdownMode="select"
-                      value={toDateValue}
-                      onChange={(date: Date) => {
-                        dispatch(reduxServices.pipList.actions.setToDate(date))
-                        setToDate(date)
-                      }}
-                      selected={toDate as Date}
-                    />
-                    {dateError && (
-                      <span className="text-danger" data-testid="errorMessage">
-                        <b>To date should be greater than From date</b>
-                      </span>
-                    )}
-                  </CCol>
-                </>
-              ) : (
-                <></>
-              )}
+              {visibleDate}
             </CRow>
           )}
 

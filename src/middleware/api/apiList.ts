@@ -1,6 +1,7 @@
+/* eslint-disable max-lines */
 /* eslint-disable sonarjs/no-duplicate-string */
 // Todo: remove eslint and fix error
-// eslint-disable-next-line max-lines
+
 import {
   AddNewEmployeeAPi,
   AuthenticationApi,
@@ -109,10 +110,13 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  AssetListApi,
+  ProductSpecificationListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -850,6 +854,10 @@ export const projectTailoringApiConfig: ProjectTailoringApi = {
   getProjectTailoringDocument:
     apiPrefix + '/projectTailoring/getProjectTailoringDocument',
   getProjectTailoring: apiPrefix + '/projectTailoring/getProjectTailoring',
+  saveProjectTailoringDocumentForManager:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocumentForManager',
+  saveProjectTailoringDocument:
+    apiPrefix + '/projectTailoring/saveProjectTailoringDocument',
 }
 export const projectTimeSheetApiConfig: ProjectTimeSheetApi = {
   getProjectTimeSheet: apiPrefix + '/allocation-mgmt/getProjectTimeSheet',
@@ -988,6 +996,14 @@ export const jobOpeningsApiConfig: JobOpeningsApi = {
   isCandidateMappedWithJob:
     apiPrefix + '/jobapplicant/jobAdmin/isCandidateMappedWithJob',
 }
+export const vendorListApiConfig: VendorListApi = {
+  getAllVendorDetails: apiPrefix + '/assetManagement/getAllVendorDetails',
+  getDepartmentNameList: apiPrefix + '/assetManagement/getDepartmentNameList',
+  addVendorDetails: apiPrefix + '/assetManagement/addVendorDetails',
+  exportVendorData: apiPrefix + '/assetManagement/exportVendorList',
+  deleteVendorDetails: apiPrefix + '/assetManagement/deleteVendorDetails',
+  editVendorDetails: apiPrefix + '/assetManagement/updateVendorDetails',
+}
 
 export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
   getAllReportingManagerData:
@@ -1001,15 +1017,45 @@ export const ChangeReporteesAPiConfig: ChangeReporteesApi = {
 export const ManufacturerApiListConfig: ManufacturerApi = {
   getAllManufacturerName: apiPrefix + '/assetManagement/getAllManufacturerName',
   exportManufacturerList: apiPrefix + '/assetManagement/exportManufacturerList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addManufacturer: apiPrefix + '/assetManagement/addManufacturer',
+  deleteManufacturerName: apiPrefix + '/assetManagement/deleteManufacturerName',
+  updateManufacturerName: apiPrefix + '/assetManagement/updateManufacturerName',
 }
 export const GetProductTypeListConfig: ProductTypeListApi = {
   getProductTypeList: apiPrefix + '/assetManagement/getAllProductTypes',
   deleteProduct: apiPrefix + '/assetManagement/deleteProduct',
   exportProductList: apiPrefix + '/assetManagement/exportProductList',
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  addProduct: apiPrefix + 'assetManagement/addProduct',
+  updateProduct: apiPrefix + 'assetManagement/updateProduct',
 }
-
 export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
+
+export const GetAssetListConfig: AssetListApi = {
+  getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+  getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
+  getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
+}
+export const ProductSpecificationListReportApiConfig: ProductSpecificationListApi =
+  {
+    getAllProductSpecifications:
+      apiPrefix + '/assetManagement/getAllProductSpecifications',
+    getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
+    getassetTypeChangeList:
+      apiPrefix + '/assetManagement/getassetTypeChangeList',
+    getProductTypeChangeList:
+      apiPrefix + '/assetManagement/getProductTypeChangeList',
+    exportProductSpecificationList:
+      apiPrefix + '/assetManagement/exportProductSpecificationList',
+    addProductSpecifications:
+      apiPrefix + '/assetManagement/addProductSpecifications',
+    updateProductSpecification:
+      apiPrefix + '/assetManagement/updateProductSpecification',
+    deleteProductSpecification:
+      apiPrefix + '/assetManagement/deleteProductSpecification',
+  }

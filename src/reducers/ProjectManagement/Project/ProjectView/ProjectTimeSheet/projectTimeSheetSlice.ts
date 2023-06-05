@@ -23,15 +23,7 @@ const getProjectTimeSheet = createAsyncThunk(
 )
 
 const initialHiveActivityReportSliceState: ProjectHiveActivityReportSlice = {
-  employeeHiveActivityReport: {
-    id: 0,
-    userName: '',
-    firstName: '',
-    lastName: '',
-    activityTimes: [],
-    totalHiveTime: '',
-    projectIdentifier: '',
-  },
+  employeeHiveActivityReport: [],
   isLoading: ApiLoadingState.idle,
 }
 
@@ -52,7 +44,7 @@ const projectHiveActivityReportSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState =>
   state.projectTimeSheet.isLoading
-const employeeHiveActivityReport = (state: RootState): EmployeeHiveReport =>
+const employeeHiveActivityReport = (state: RootState): EmployeeHiveReport[] =>
   state.projectTimeSheet.employeeHiveActivityReport
 
 const projectHiveActivityReportThunk = {

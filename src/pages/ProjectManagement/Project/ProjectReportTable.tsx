@@ -386,7 +386,10 @@ const ProjectReportsTable = ({
 
                       <CTableDataCell>{value.projectCode}</CTableDataCell>
                       <CTableDataCell>{value.projectName}</CTableDataCell>
-                      <CTableDataCell>{value.type}</CTableDataCell>
+                      <CTableDataCell>
+                        {value.type.charAt(0).toUpperCase()}
+                        {value.type.slice(1).toLowerCase()}
+                      </CTableDataCell>
                       <CTableDataCell>{value.client}</CTableDataCell>
                       <CTableDataCell>{value.count}</CTableDataCell>
                       <CTableDataCell>{value.managerName}</CTableDataCell>
@@ -404,34 +407,42 @@ const ProjectReportsTable = ({
                           {value.status}
                         </span>
                       </CTableDataCell>
-                      <CTableDataCell>
+                      <CTableDataCell className="closeClient-btn">
                         {isCloseBtnVisible &&
                           userAccessProjectClose?.viewaccess && (
                             <CTooltip content="Close">
-                              <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
-                                color="danger btn-ovh me-1"
-                                data-testid="close-btn"
-                                onClick={() =>
-                                  handleShowCloseModal(
-                                    value.id,
-                                    value.projectName,
-                                  )
-                                }
-                              >
-                                <i
-                                  className="fa fa-times text-white sh-fa-times"
-                                  aria-hidden="true"
-                                ></i>
-                              </CButton>
+                              {value.status === 'Closed' ? (
+                                <></>
+                              ) : (
+                                <>
+                                  <CButton
+                                    className="btn-ovh-employee-list me-1"
+                                    color="danger btn-ovh me-1"
+                                    data-testid="close-btn"
+                                    onClick={() =>
+                                      handleShowCloseModal(
+                                        value.id,
+                                        value.projectName,
+                                      )
+                                    }
+                                  >
+                                    <i
+                                      className="fa fa-times text-white sh-fa-times"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </CButton>
+                                </>
+                              )}
                             </CTooltip>
                           )}
                       </CTableDataCell>
-                      <CTableDataCell style={{ width: '120px' }}>
+                      <CTableDataCell
+                        style={{ width: '120px', paddingLeft: '0' }}
+                      >
                         <Link to={`/viewProject/${value.id}`}>
                           <CTooltip content="View">
                             <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
+                              className="btn-ovh-employee-list me-1"
                               color="info-light btn-ovh me-1"
                               data-testid="view-btn"
                               onClick={() => handleViewModel(value.id)}
@@ -447,7 +458,7 @@ const ProjectReportsTable = ({
                           <Link to={`/editproject/${value.id}`}>
                             <CTooltip content="Edit">
                               <CButton
-                                className="btn-ovh-employee-list cursor-pointer"
+                                className="btn-ovh-employee-list me-1"
                                 color="primary btn-ovh me-1"
                                 data-testid="edit-btn"
                               >
@@ -462,7 +473,7 @@ const ProjectReportsTable = ({
                         {userAccess.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton
-                              className="btn-ovh-employee-list cursor-pointer"
+                              className="btn-ovh-employee-list me-1"
                               color="danger btn-ovh me-1"
                               data-testid="delete-btn"
                               disabled={value.count > 0}

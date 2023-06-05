@@ -445,6 +445,10 @@ const JobVacancies = React.lazy(
 const AddJobVacancies = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
 )
+
+const VendorList = React.lazy(
+  () => import('./pages/Assets/VendorList/VendorList'),
+)
 const Manufacturer = React.lazy(
   () => import('./pages/Assets/ManufacturerList/Manufacturer'),
 )
@@ -456,6 +460,11 @@ const productList = React.lazy(
 )
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
+const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+const ProductSpecificationList = React.lazy(
+  () =>
+    import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -999,6 +1008,11 @@ const routes = [
     component: AddJobVacancies,
   },
   {
+    path: '/vendorList',
+    name: 'Vendor List',
+    component: VendorList,
+  },
+  {
     path: '/manufacturerList',
     name: 'manufacturerList',
     component: Manufacturer,
@@ -1017,6 +1031,17 @@ const routes = [
     path: '/assetWarrantyReport',
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
+  },
+
+  {
+    path: '/assetList',
+    name: 'Asset List',
+    component: AssetList,
+  },
+  {
+    path: '/productSpecificationList',
+    name: 'Product Specification List',
+    component: ProductSpecificationList,
   },
 ]
 export default routes

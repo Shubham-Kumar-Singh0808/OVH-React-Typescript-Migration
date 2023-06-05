@@ -114,7 +114,7 @@ const Notifications = (): JSX.Element => {
           >
             <div className="media-left">
               <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
-                <i className="fa fa-user-times"></i>
+                <i className="fa fa-user-times fa-lg"></i>
               </span>
             </div>
             <div className="media-body">
@@ -138,7 +138,7 @@ const Notifications = (): JSX.Element => {
           >
             <div className="media-left">
               <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
-                <i className="fa fa-calendar-o"></i>
+                <i className="fa fa-calendar-o fa-lg"></i>
               </span>
             </div>
             <div className="media-body">
@@ -161,8 +161,8 @@ const Notifications = (): JSX.Element => {
             aria-disabled={notification.alertStatus === true}
           >
             <div className="media-left">
-              <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
-                <i className="fa fa-times"></i>
+              <span className="sh-timeline-status icon-wrap icon-circle bg-primary fa-times-bg">
+                <i className="fa fa-times fa-lg"></i>
               </span>
             </div>
             <div className="media-body">
@@ -186,7 +186,7 @@ const Notifications = (): JSX.Element => {
           >
             <div className="media-left">
               <span className="sh-timeline-status icon-wrap icon-circle bg-primary">
-                <i className="fa fa-check"></i>
+                <i className="fa fa-check fa-lg"></i>
               </span>
             </div>
             <div className="media-body">
