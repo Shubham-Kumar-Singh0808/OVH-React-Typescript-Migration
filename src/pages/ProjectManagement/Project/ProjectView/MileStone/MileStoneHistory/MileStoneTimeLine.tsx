@@ -53,7 +53,7 @@ const MileStoneTimeLine = (): JSX.Element => {
   return (
     <>
       <div className="sh-timeline-container">
-        {projectMileStoneHistoryDetails.map((item, index) => {
+        {projectMileStoneHistoryDetails?.map((item, index) => {
           const billable = item.billable ? 'Yes' : 'No'
           return (
             <div key={index} className="sh-timeline-card">
@@ -101,86 +101,99 @@ const MileStoneTimeLine = (): JSX.Element => {
                       </CFormLabel>
                       &nbsp;
                       {item.milestonePercentage}
+                      <CFormLabel className="col-form-label p-0">
+                        Comments
+                      </CFormLabel>
+                      &nbsp;
+                      {item.comments}
                     </div>
-                    <CTable striped responsive align="middle">
-                      <CTableHead>
-                        <CTableRow>
-                          <CTableHeaderCell scope="col">Id:</CTableHeaderCell>
-                          <CTableHeaderCell scope="col">Name:</CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            From Date:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            To Date:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Working Days:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Holidays:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Leaves
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Total Days:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Hours:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Total Hours:
-                          </CTableHeaderCell>
-                          <CTableHeaderCell scope="col">
-                            Billable:
-                          </CTableHeaderCell>
-                        </CTableRow>
-                      </CTableHead>
-                      <CTableBody>
-                        {item.peopleDTOs.map((data) => {
-                          const projectBillable = data.isBillable ? 'Yes' : 'No'
-                          return (
-                            <>
-                              <CTableRow>
-                                <CTableDataCell scope="row">
-                                  {data.employeeId}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.employeeName}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.fromDate}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.endDate}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.monthWorkingDays}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.holidays}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.leaves}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.totalDays}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.hours}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {data.totalValue}
-                                </CTableDataCell>
-                                <CTableDataCell scope="row">
-                                  {projectBillable}
-                                </CTableDataCell>
-                              </CTableRow>
-                            </>
-                          )
-                        })}
-                      </CTableBody>
-                    </CTable>
+                    {item.peopleDTOs.length > 0 ? (
+                      <CTable striped responsive align="middle">
+                        <CTableHead>
+                          <CTableRow>
+                            <CTableHeaderCell scope="col">Id:</CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Name:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              From Date:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              To Date:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Working Days:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Holidays:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Leaves
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Total Days:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Hours:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Total Hours:
+                            </CTableHeaderCell>
+                            <CTableHeaderCell scope="col">
+                              Billable:
+                            </CTableHeaderCell>
+                          </CTableRow>
+                        </CTableHead>
+                        <CTableBody>
+                          {item.peopleDTOs.map((data) => {
+                            const projectBillable = data.isBillable
+                              ? 'Yes'
+                              : 'No'
+                            return (
+                              <>
+                                <CTableRow>
+                                  <CTableDataCell scope="row">
+                                    {data.employeeId}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.employeeName}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.fromDate}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.endDate}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.monthWorkingDays}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.holidays}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.leaves}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.totalDays}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.hours}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {data.totalValue}
+                                  </CTableDataCell>
+                                  <CTableDataCell scope="row">
+                                    {projectBillable}
+                                  </CTableDataCell>
+                                </CTableRow>
+                              </>
+                            )
+                          })}
+                        </CTableBody>
+                      </CTable>
+                    ) : (
+                      ''
+                    )}
                   </div>
                 </div>
               </div>
