@@ -13,7 +13,7 @@ const getAddAssetList = async (
 ): Promise<AssetTypeAddList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: GetAddAssetListConfig.addAsset,
-    method: AllowedHttpMethods.get,
+    method: AllowedHttpMethods.post,
     data,
   })
 

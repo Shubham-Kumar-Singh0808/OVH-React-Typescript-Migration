@@ -65,9 +65,9 @@ const AddAssetList = ({
       assetStatus &&
       country
     ) {
-      setAddButtonEnabled(false)
-    } else {
       setAddButtonEnabled(true)
+    } else {
+      setAddButtonEnabled(false)
     }
   }, [
     poNumber,
@@ -131,7 +131,6 @@ const AddAssetList = ({
       setIsShowComment(true)
     }, 0)
   }
-
   const handledInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -145,32 +144,23 @@ const AddAssetList = ({
       const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
       setVendorName(targetValue)
     } else if (name === 'assetType') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setAssetType(newValue)
+      // Handle 'assetType' input
     } else if (name === 'productType') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setProductType(newValue)
+      // Handle 'productType' input
     } else if (name === 'manufacturerName') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setManufacturerName(newValue)
+      // Handle 'manufacturerName' input
     } else if (name === 'assetNumber') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setAssetNumber(newValue)
+      // Handle 'assetNumber' input
     } else if (name === 'licenseNumber') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setLicenseNumber(newValue)
+      // Handle 'licenseNumber' input
     } else if (name === 'invoiceNumber') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setInvoiceNumber(newValue)
+      // Handle 'invoiceNumber' input
     } else if (name === 'amount') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setAmount(newValue)
+      // Handle 'amount' input
     } else if (name === 'assetStatus') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setAssetStatus(newValue)
+      // Handle 'assetStatus' input
     } else if (name === 'country') {
-      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-      setCountry(newValue)
+      // Handle 'country' input
     }
   }
 
@@ -225,10 +215,10 @@ const AddAssetList = ({
   )
 
   const handleAddNewAssetList = async () => {
-    // const checkList = await dispatch({
-    //   reduxServices.addAssetList.checkAssetNumberExixts({
-    //     })
-    //   })
+    // const addManuFactureListResultAction = await dispatch(
+    //   reduxServices.addAssetList.checkAssetNumberExixts(Number(assetNumber)),
+    // )
+
     const isAddAssetLIst = await dispatch(
       reduxServices.addAssetList.getAddAssetList({
         amount: amount as string,
@@ -257,6 +247,7 @@ const AddAssetList = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+
   return (
     <>
       <OCard
