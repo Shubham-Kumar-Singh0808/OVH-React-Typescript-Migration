@@ -130,24 +130,24 @@ export type GetMilestone = {
   planedDate: string
   actualDate: string
   billable: true
-  comments: null
+  comments: string
   project: null
   client: null
   projectId: null
-  isClosed: true
+  isClosed: boolean
   milestonePercentage: string
   milestonePeopleDTO: null
   allocatedMilestonePeople: []
-  crId: null
-  crName: null
+  crId: number
+  crName: string
   crDuration: null
-  invoiceStatus: true
+  invoiceStatus: boolean
   projectType: null
   effort: null
   invoiceReopenFlag: null
   enableReopenFlag: null
   invoiceExits: null
-  milestoneTypeFlag: null
+  milestoneTypeFlag: boolean
   milestoneAmount: null
   raisedInvoicePercentage: null
   remainingPercentage: null
@@ -156,7 +156,7 @@ export type GetMilestone = {
 export type MilestoneNewsFeed = {
   feedPostCommentsList: []
   id: number
-  invoiceId: null
+  invoiceId: number
   post: string
   postDate: string
   postImageData: string
@@ -227,7 +227,7 @@ export type Project = {
   address: null
   allocation: null
   bcc: null
-  billable: false
+  billable: boolean
   billingContactPerson: string
   billingContactPersonEmail: string
   cc: null
@@ -244,10 +244,10 @@ export type Project = {
   employeeId: null
   enddate: string
   health: null
-  hiveProjectFlag: false
+  hiveProjectFlag: boolean
   hiveProjectName: string
   id: number
-  intrnalOrNot: false
+  intrnalOrNot: boolean
   isAllocated: null
   managerId: number
   managerName: string
