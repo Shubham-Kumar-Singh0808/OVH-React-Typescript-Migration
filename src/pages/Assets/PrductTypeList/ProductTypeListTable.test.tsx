@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import configureStore from 'redux-mock-store'
 import ProductTypeListTable from './ProductTypeListTable'
 import {
   cleanup,
@@ -15,6 +16,8 @@ import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFea
 
 const mockSetData = jest.fn()
 const mockSetPageSize = jest.fn()
+const mockStore = configureStore([])
+
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
@@ -100,5 +103,15 @@ describe('Product Type list without data', () => {
     const EditBtn = screen.getAllByTestId('btn-edit')
     expect(EditBtn[0]).toBeInTheDocument()
     userEvent.click(EditBtn[0])
+  })
+  test('should be able to click delete button element', async () => {
+    const deleteBtn = screen.getAllByTestId('btn-deletes')
+    expect(deleteBtn[0]).toBeEnabled()
+    fireEvent.click(deleteBtn[0])
+    await waitFor(() => {
+      expect(
+        screen.findByText(/Product type deleted successfully./),
+      ).toBeTruthy()
+    })
   })
 })

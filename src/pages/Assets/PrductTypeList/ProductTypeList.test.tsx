@@ -6,8 +6,10 @@ import { fireEvent, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockProductTypeList } from '../../../test/data/ProductTypeListData'
+import { downloadFile } from '../../../utils/helper'
 
 const mockHandleExport = jest.fn()
+const mockSetTicketApprovalParams = jest.fn()
 
 const toRender = (
   <div>
@@ -45,5 +47,35 @@ describe('ProductTypeList without data', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'WorldTest')
     fireEvent.click(screen.getByTestId('multi-search-btn'))
+  })
+  test('should render search input', () => {
+    const searchField = screen.getByTestId('searchField')
+    userEvent.type(searchField, 'testing')
+    expect(searchField).toHaveValue('testing')
+    fireEvent.keyDown(searchField, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+    })
+    expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
+  })
+
+  test('should create a link element and trigger a download', () => {
+    const data = new Blob(['CSV file data'], { type: 'text/csv' })
+    const fileName = 'ExportProductList.csv'
+    const createElementMock = jest.spyOn(document, 'createElement')
+    const clickMock = jest.fn()
+    const linkElement = {
+      href: '',
+      download: '',
+      click: clickMock,
+    }
+    const createObjectURLMock = jest.fn().mockReturnValue('dummy-object-url')
+    window.URL.createObjectURL = createObjectURLMock
+    downloadFile(data, fileName)
+    expect(createElementMock).toHaveBeenCalledWith('a')
+    expect(linkElement.href).toBe('')
+    expect(linkElement.download).toBe('')
+    expect(createObjectURLMock).toHaveBeenCalledWith(data)
   })
 })

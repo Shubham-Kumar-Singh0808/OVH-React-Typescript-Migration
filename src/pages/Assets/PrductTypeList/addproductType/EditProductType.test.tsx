@@ -1,13 +1,15 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
+import { fireEvent } from '@testing-library/react'
 import EditProductTypeRecord from './EditProductType'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
+import { act, render, screen, waitFor } from '../../../../test/testUtils'
 import '@testing-library/jest-dom'
 import { mockProductTypeListGetLookup } from '../../../../test/data/ProductTypeLookupsData'
 
 const mockSetData = jest.fn()
 const Product = 'MS Office 2010'
+
 describe('Product type list without data', () => {
   beforeEach(() => {
     render(

@@ -214,6 +214,7 @@ const ProductTypeListTable = ({
                   handlePageSizeSelectChange={onHandlerPageSize}
                   options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
+                  data-testid="page-size-select"
                 />
               )}
             </CCol>
