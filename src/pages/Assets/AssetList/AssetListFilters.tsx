@@ -167,9 +167,12 @@ const AssetListFilters = ({
     setToDate(moment(value).format(dateFormat))
   }
 
+  const assets = useTypedSelector(
+    reduxServices.assetList.selectors.allAssetListData,
+  )
   return (
     <>
-      <CRow className="justify-content-end">
+      <CRow className="justify-content-end mt-4">
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-2">
@@ -284,7 +287,7 @@ const AssetListFilters = ({
           {selectDate === 'Custom' ? (
             <>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel>
+                <CFormLabel className="mt-2">
                   From:
                   {(fromDate == null || fromDate === '') && (
                     <span className="text-danger">*</span>
@@ -308,7 +311,7 @@ const AssetListFilters = ({
                 />
               </CCol>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel>
+                <CFormLabel className="mt-2">
                   To:
                   {(toDate == null || toDate === '') && (
                     <span className="text-danger">*</span>
@@ -343,6 +346,30 @@ const AssetListFilters = ({
             <></>
           )}
 
+          <CCol className="text-end mt-2" sm={3}>
+            <CButton
+              color="info"
+              className="text-white"
+              size="sm"
+              data-testid="Add-export-button"
+            >
+              <i className="fa fa-plus me-1"></i>
+              Add
+            </CButton>
+          </CCol>
+          {assets?.length > 0 && (
+            <CCol className="text-end" md={12}>
+              <CButton
+                color="info"
+                className="text-white"
+                size="sm"
+                data-testid="export-button-download"
+              >
+                <i className="fa fa-plus me-1"></i>
+                Click to Export
+              </CButton>
+            </CCol>
+          )}
           <CRow className="mt-4 mb-4">
             <CCol sm={9} md={{ offset: 3 }}>
               <CButton
@@ -386,50 +413,52 @@ const AssetListFilters = ({
             </CCol>
           </CRow>
           <CRow className="justify-content-end">
-            <CCol sm={3}>
-              <label className="search_emp">
-                <CFormCheck
-                  className="pt-2"
-                  data-testid="ch-searchByEmployee"
-                  id="searchByEmployee"
-                  name="Multiple Search"
-                  checked={searchByEmployee}
-                  onChange={(e) => setSearchByEmployee(e.target.checked)}
-                />
-                <b>Search by Employee Name</b>
-              </label>
-            </CCol>
-          </CRow>
+            <CRow className="justify-content-end p-0">
+              <CCol sm={3}>
+                <label className="search_emp">
+                  <CFormCheck
+                    className="pt-2"
+                    data-testid="ch-searchByEmployee"
+                    id="searchByEmployee"
+                    name="Multiple Search"
+                    checked={searchByEmployee}
+                    onChange={(e) => setSearchByEmployee(e.target.checked)}
+                  />
+                  <b>Search by Employee Name</b>
+                </label>
+              </CCol>
+            </CRow>
 
-          <CRow className="gap-2 d-md-flex justify-content-md-end">
-            <CCol sm={3} md={3}>
-              <CInputGroup className="global-search me-0">
-                <CFormInput
-                  disabled={!isButtonEnabled}
-                  data-testid="searchField"
-                  placeholder="Multiple Search"
-                  aria-label="Multiple Search"
-                  aria-describedby="button-addon2"
-                  value={searchInput?.replace(/^\s*/, '')}
-                  onChange={(e) => {
-                    setSearchInput(e.target.value)
-                  }}
-                />
-                <CButton
-                  disabled={!searchInput?.replace(/^\s*/, '')}
-                  data-testid="multi-search-btn"
-                  className="cursor-pointer"
-                  type="button"
-                  color="info"
-                  id="button-addon2"
-                  onClick={multiSearchBtnHandler}
-                >
-                  <i className="fa fa-search"></i>
-                </CButton>
-              </CInputGroup>
-            </CCol>
+            <CRow className="gap-2 d-md-flex justify-content-md-end p-0">
+              <CCol sm={3} className="p-0" md={3}>
+                <CInputGroup className="global-search me-0">
+                  <CFormInput
+                    disabled={!isButtonEnabled}
+                    data-testid="searchField"
+                    placeholder="Multiple Search"
+                    aria-label="Multiple Search"
+                    aria-describedby="button-addon2"
+                    value={searchInput?.replace(/^\s*/, '')}
+                    onChange={(e) => {
+                      setSearchInput(e.target.value)
+                    }}
+                  />
+                  <CButton
+                    disabled={!searchInput?.replace(/^\s*/, '')}
+                    data-testid="multi-search-btn"
+                    className="cursor-pointer"
+                    type="button"
+                    color="info"
+                    id="button-addon2"
+                    onClick={multiSearchBtnHandler}
+                  >
+                    <i className="fa fa-search"></i>
+                  </CButton>
+                </CInputGroup>
+              </CCol>
+            </CRow>
+            {/* )} */}
           </CRow>
-          {/* )} */}
         </CRow>
       </CRow>
     </>

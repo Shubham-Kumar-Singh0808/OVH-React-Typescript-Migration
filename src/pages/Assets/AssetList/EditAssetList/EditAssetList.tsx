@@ -14,8 +14,6 @@ import moment from 'moment'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
-import { AssetTypeAddList } from '../../../../types/Assets/AssetList/addEditListTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -27,10 +25,10 @@ const EditAddAssetList = ({
   setToggle,
   editAddAssetList,
   setEditAddAssetList,
-  selectDate,
-  searchInput,
-  searchByEmployee,
-}: {
+}: // selectDate,
+// searchInput,
+// searchByEmployee,
+{
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editAddAssetList: AllAssetsList
   setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
@@ -40,7 +38,6 @@ const EditAddAssetList = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
-  const [emailError, setEmailError] = useState<boolean>(false)
   const [productType, setProductType] = useState<string | number>(
     editAddAssetList.productName,
   )
@@ -103,8 +100,8 @@ const EditAddAssetList = ({
     reduxServices.addNewVendor.selectors.department,
   )
 
-  const textWhite = 'text-white'
-  const textDanger = 'text-danger'
+  // const textWhite = 'text-white'
+  // const textDanger = 'text-danger'
 
   const onChangeInputHandler = (
     event:
@@ -158,23 +155,23 @@ const EditAddAssetList = ({
       amount: editAddAssetList.amount as string,
       assetNumber: editAddAssetList.assetNumber,
       assetType: editAddAssetList.assetType as string,
-      assetTypeId: editAddAssetList.assetTypeId as number,
+      assetTypeId: editAddAssetList.assetTypeId,
       countryId: editAddAssetList.countryId as number,
       createdBy: editAddAssetList.createdBy,
       createdDate: editAddAssetList.createdDate,
       departmentId: editAddAssetList.departmentId,
-      departmentName: editAddAssetList.departmentName as string,
-      description: editAddAssetList.description as string,
-      employeeId: editAddAssetList.employeeId as number,
-      employeeName: editAddAssetList.employeeName as string,
-      id: editAddAssetList.id as number,
-      invoiceNumber: editAddAssetList.invoiceNumber as string,
-      location: editAddAssetList.location as string,
-      manufacturerId: editAddAssetList.manufacturerId as number,
-      manufacturerName: editAddAssetList.manufacturerName as string,
+      departmentName: editAddAssetList.departmentName,
+      description: editAddAssetList.description,
+      employeeId: editAddAssetList.employeeId,
+      employeeName: editAddAssetList.employeeName,
+      id: editAddAssetList.id,
+      invoiceNumber: editAddAssetList.invoiceNumber,
+      location: editAddAssetList.location,
+      manufacturerId: editAddAssetList.manufacturerId,
+      manufacturerName: editAddAssetList.manufacturerName,
       notes: editAddAssetList.notes as string,
       otherAssetNumber: editAddAssetList.otherAssetNumber,
-      otherNumber: editAddAssetList.otherNumber as string,
+      otherNumber: editAddAssetList.otherNumber,
       pSpecification: editAddAssetList.pSpecification,
       poNumber: editAddAssetList.poNumber,
       productId: editAddAssetList.productId,
@@ -202,21 +199,6 @@ const EditAddAssetList = ({
       )
     ) {
       setToggle('')
-      // dispatch(
-      //   reduxServices.assetList.getAllAssetListData({
-      //     assetTypeId: Number(assetType) || '',
-      //     dateSelection: selectDate,
-      //     endIndex: 20,
-      //     multipleSearch: searchInput || '',
-      //     productId: Number(productType) || '',
-      //     searchByEmpName: searchByEmployee,
-      //     selectionStatus: asset,
-      //     startIndex: 0,
-      //     status: statusType,
-      //     fromDate: fromDate as string,
-      //     toDate: toDate as string,
-      //   }),
-      // )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }

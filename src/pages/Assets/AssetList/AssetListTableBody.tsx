@@ -38,6 +38,32 @@ const ModalLink = ({
   )
 }
 
+const ActionIcons = () => {
+  return (
+    <CTableDataCell data-testid="action-cell">
+      <div className="sh-btn-group">
+        <CTooltip content="Edit">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className="text-white fa fa-pencil-square-o"></i>
+          </CButton>
+        </CTooltip>
+        <br />
+        <CTooltip content="History">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className="text-white fa fa-wrench"></i>
+          </CButton>
+        </CTooltip>
+        <br />
+        <CTooltip content="Change-Status">
+          <CButton color="info" size="sm" className="mb-1">
+            <i className="fa fa-bar-chart text-white"></i>
+          </CButton>
+        </CTooltip>
+      </div>
+    </CTableDataCell>
+  )
+}
+
 const AssetListTableBody = ({
   item,
   index,

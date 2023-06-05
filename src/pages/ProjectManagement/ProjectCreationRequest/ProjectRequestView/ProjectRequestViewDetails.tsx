@@ -96,7 +96,10 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Pricing Model:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails?.type}</p>
+            <p className="mb-0">
+              {projectViewDetails?.type?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.type?.slice(1)?.toLowerCase()}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -104,7 +107,10 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project type:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails?.model}</p>
+            <p className="mb-0">
+              {projectViewDetails?.model?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.model?.slice(1)?.toLowerCase()}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -191,12 +197,12 @@ const ProjectRequestViewDetails = (): JSX.Element => {
         </CRow>
         <CRow className="mt-1 mb-0">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Checklist::
+            Checklist:
           </CFormLabel>
           <CCol sm={10}>
             <CTable responsive align="middle" className="checkList-table">
               <CTableHead>
-                <CTableRow>
+                <CTableRow className="CheckList-view">
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col"> Checkpoint</CTableHeaderCell>
                   <CTableHeaderCell scope="col">

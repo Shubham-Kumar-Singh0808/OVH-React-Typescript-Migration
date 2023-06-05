@@ -19,6 +19,9 @@ const JobOpenings = (): JSX.Element => {
   const initialCycle = {} as GetAllJobVacanciesList
   const [editJobInfo, setEditJobInfo] = useState(initialCycle)
 
+  const initialJobInfo = {} as GetAllJobVacanciesList
+  const [editViewJobInfo, setEditViewJobInfo] = useState(initialJobInfo)
+
   const dispatch = useAppDispatch()
 
   const CurrentPage = useTypedSelector(
@@ -197,7 +200,12 @@ const JobOpenings = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'jobInfo' && <ViewJobInfo setToggle={setToggle} />}
+      {toggle === 'jobInfo' && (
+        <ViewJobInfo
+          setToggle={setToggle}
+          setEditViewJobInfo={setEditViewJobInfo}
+        />
+      )}
       {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
       {toggle === 'editJobOpening' && (
         <EditJobOpening
@@ -209,8 +217,8 @@ const JobOpenings = (): JSX.Element => {
       {toggle === 'editViewJobOpening' && (
         <EditJobView
           setToggle={setToggle}
-          editJobInfo={editJobInfo}
-          setEditJobInfo={setEditJobInfo}
+          editViewJobInfo={editViewJobInfo}
+          setEditViewJobInfo={setEditViewJobInfo}
         />
       )}
     </>

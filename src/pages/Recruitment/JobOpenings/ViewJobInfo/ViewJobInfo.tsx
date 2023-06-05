@@ -4,11 +4,16 @@ import parse from 'html-react-parser'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
+import { GetAllJobVacanciesList } from '../../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 
 const ViewJobInfo = ({
   setToggle,
+  setEditViewJobInfo,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditViewJobInfo: React.Dispatch<
+    React.SetStateAction<GetAllJobVacanciesList>
+  >
 }): JSX.Element => {
   const JobOpeningById = useTypedSelector(
     reduxServices.jobVacancies.selectors.JobOpeningById,
@@ -18,6 +23,10 @@ const ViewJobInfo = ({
     className: 'col-form-label',
   }
 
+  const onClickHandler = () => {
+    setToggle('editViewJobOpening')
+    setEditViewJobInfo(JobOpeningById)
+  }
   return (
     <>
       <OCard
@@ -33,7 +42,7 @@ const ViewJobInfo = ({
               color="info"
               type="button"
               data-testid="edit-button"
-              onClick={() => setToggle('editViewJobOpening')}
+              onClick={onClickHandler}
             >
               <i className="fa fa-edit text-white me-1"></i>Edit
             </CButton>
@@ -101,9 +110,11 @@ const ViewJobInfo = ({
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
             {' '}
-            {(JobOpeningById?.description &&
-              parse(String(JobOpeningById?.description || 'N/A'))) ||
-              'N/A'}
+            <span className="descriptionField">
+              {(JobOpeningById?.description &&
+                parse(String(JobOpeningById?.description || 'N/A'))) ||
+                'N/A'}
+            </span>
           </CCol>
         </CRow>
         <CRow>

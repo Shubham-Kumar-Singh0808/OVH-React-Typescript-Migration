@@ -141,7 +141,7 @@ const AddAssetList = ({
   ) => {
     const { name, value } = event.target
     if (name === 'poNumber') {
-      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setPoNumber(newValue)
     } else if (name === 'vendorName') {
       const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
