@@ -14,7 +14,6 @@ const ReporteesAutoComplete = ({
   setShouldRenderTable,
   autoCompleteTarget,
   shouldRenderTable,
-  setIsActive,
 }: ChangeReporteesProps): JSX.Element => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [managerId, setManagerId] = useState<number>()
@@ -99,7 +98,6 @@ const ReporteesAutoComplete = ({
         placeHolder={placeHolder}
         onClickHandler={onClickHandler}
         autoCompleteTarget={autoCompleteTarget}
-        setIsActive={setIsActive}
       />
     ) : (
       <EmployeesListUnderManagerTable
@@ -108,7 +106,6 @@ const ReporteesAutoComplete = ({
         placeHolder={placeHolder}
         onClickHandler={onClickHandler}
         autoCompleteTarget={autoCompleteTarget}
-        setIsActive={setIsActive}
       />
     )
 

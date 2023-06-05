@@ -45,7 +45,7 @@ const ChangeReporteeFilterOptions = (): JSX.Element => {
       setAutoCompleteTarget={setAutoCompleteTarget}
       shouldRenderTable={ShouldRenderTable}
       setShouldRenderTable={setShouldRenderTable}
-      setIsActive={setIsActive}
+      // setIsActive={setIsActive}
     />
   ) : (
     <ReporteesAutoComplete
@@ -55,7 +55,7 @@ const ChangeReporteeFilterOptions = (): JSX.Element => {
       setAutoCompleteTarget={setAutoCompleteTarget}
       shouldRenderTable={ShouldRenderTable}
       setShouldRenderTable={setShouldRenderTable}
-      setIsActive={setIsActive}
+      // setIsActive={setIsActive}
     />
   )
   return (

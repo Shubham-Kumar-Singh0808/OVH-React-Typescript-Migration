@@ -23,14 +23,12 @@ const EmployeesListUnderManagerTable = ({
   placeHolder,
   onClickHandler,
   autoCompleteTarget,
-  setIsActive,
 }: {
   employeeData: EmployeeData[]
   managersOrHrManagersList: EmployeeData[]
   placeHolder: string
   autoCompleteTarget: string
   onClickHandler: () => void
-  setIsActive: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const [selectedRows, setSelectedRows] = useState<number[]>([])
   const [managerId, setManagerId] = useState<number>(0)
@@ -95,8 +93,6 @@ const EmployeesListUnderManagerTable = ({
             successToastMessage(actionMapping.reportingManager),
           ),
         )
-        setIsActive(true)
-        dispatch(reduxServices.app.actions.addToast(undefined))
         window.scrollTo(0, 0)
       }
     } else if (placeHolder === 'Hr Name') {
@@ -116,8 +112,6 @@ const EmployeesListUnderManagerTable = ({
             successToastMessage(actionMapping.hrManager),
           ),
         )
-        setIsActive(true)
-        dispatch(reduxServices.app.actions.addToast(undefined))
         window.scrollTo(0, 0)
       }
     }
