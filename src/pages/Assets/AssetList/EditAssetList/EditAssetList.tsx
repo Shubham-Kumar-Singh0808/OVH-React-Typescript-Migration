@@ -88,6 +88,22 @@ const EditAddAssetList = ({
   const textWhite = 'text-white'
   const textDanger = 'text-danger'
 
+  const onChangeInputHandler = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+
+    setEditAddAssetList((prevState) => {
+      return {
+        ...prevState,
+        ...{
+          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+        },
+      }
+    })
+  }
   useEffect(() => {
     if (
       editAddAssetList.poNumber &&
@@ -247,7 +263,7 @@ const EditAddAssetList = ({
               autoComplete="off"
               placeholder="PO Number"
               value={editAddAssetList.poNumber}
-              // onChange={handledInputChange}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -266,7 +282,7 @@ const EditAddAssetList = ({
               id="vendorName"
               name="vendorName"
               placeholder="Select Vendor Name"
-              value={editAddAssetList.vendorName}
+              value={vendorName}
               onChange={(e) => setVendorName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -294,8 +310,8 @@ const EditAddAssetList = ({
               id="assetType"
               name="assetType"
               placeholder="Select Asset Type"
-              value={editAddAssetList.assetType}
-              // onChange={(e) => setAssetType(e.target.value)}
+              value={assetType}
+              onChange={(e) => setAssetType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {assetListTypeList?.assetTypeList?.length > 0 &&
@@ -316,14 +332,14 @@ const EditAddAssetList = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="productName"
+              data-testid="productType"
               aria-label="Default select example"
               size="sm"
-              id="productName"
-              name="productName"
+              id="productType"
+              name="productType"
               placeholder="Select Product Type"
-              value={editAddAssetList.productName}
-              // onChange={(e) => setProductType(e.target.value)}
+              value={productType}
+              onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
               {assetTypeList.map((location, index) => (
@@ -350,7 +366,7 @@ const EditAddAssetList = ({
               id="manufacturerName"
               name="manufacturerName"
               placeholder="Select Manufacturer Name"
-              value={editAddAssetList.manufacturerName}
+              value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -379,6 +395,7 @@ const EditAddAssetList = ({
               name="assetNumber"
               autoComplete="off"
               value={editAddAssetList.assetNumber}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -395,13 +412,14 @@ const EditAddAssetList = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="licenseNumber"
+              data-testid="otherAssetNumber"
               type="text"
-              id="licenseNumber"
+              id="otherAssetNumber"
               size="sm"
-              name="licenseNumber"
+              name="otherAssetNumber"
               placeholder="RBT"
               value={editAddAssetList.otherAssetNumber}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -426,6 +444,7 @@ const EditAddAssetList = ({
               autoComplete="off"
               placeholder="Invoice Number"
               value={editAddAssetList.invoiceNumber}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -450,6 +469,7 @@ const EditAddAssetList = ({
               autoComplete="off"
               placeholder="Amount"
               value={editAddAssetList.amount as string}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -638,7 +658,7 @@ const EditAddAssetList = ({
               data-testid="update-btn"
               color="warning"
               className="btn-ovh text-white"
-              // onClick={clearInputs}
+              onClick={updateHandler}
             >
               Update
             </CButton>
