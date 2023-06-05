@@ -1,4 +1,5 @@
 import {
+  AddSubCategoryList,
   CategoryList,
   SubCategoryList,
 } from '../../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
@@ -32,13 +33,12 @@ const getSubCategoryList = async (): Promise<SubCategoryList[]> => {
 }
 
 const addSubCategoryList = async (
-  categoryId: number,
-  subCategoryName: string,
-): Promise<string | undefined> => {
+  props: AddSubCategoryList,
+): Promise<AddSubCategoryList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ExpenseSubCategoryListApiConfig.addSubCategoryList,
     method: AllowedHttpMethods.post,
-    params: { categoryId, subCategoryName },
+    params: { categoryId: props.id, subCategoryName: props.subCategoryName },
   })
 
   const response = await useAxios(requestConfig)
@@ -46,13 +46,12 @@ const addSubCategoryList = async (
 }
 
 const existSubCategoryList = async (
-  categoryId: number,
-  subCategoryName: string,
-): Promise<string | undefined> => {
+  props: AddSubCategoryList,
+): Promise<AddSubCategoryList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ExpenseSubCategoryListApiConfig.checkForDuplicateSubCategory,
     method: AllowedHttpMethods.get,
-    params: { categoryId, subCategoryName },
+    params: { categoryId: props.id, subCategoryName: props.subCategoryName },
   })
 
   const response = await useAxios(requestConfig)

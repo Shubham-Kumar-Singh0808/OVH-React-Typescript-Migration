@@ -5,6 +5,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 import subCategoryListApi from '../../../middleware/api/ExpenseManagement/Sub-Category/subCategoryApi'
 import {
+  AddSubCategoryList,
   CategoryList,
   SubCategoryList,
   SubCategoryListSliceState,
@@ -36,9 +37,9 @@ const getSubCategoryList = createAsyncThunk(
 
 const addSubCategoryList = createAsyncThunk(
   '/ExpenseManagement/addSubCategoryList',
-  async (newSubCategory: SubCategoryList[], thunkApi) => {
+  async (props: AddSubCategoryList, thunkApi) => {
     try {
-      return await subCategoryListApi.addSubCategoryList(newSubCategory)
+      return await subCategoryListApi.addSubCategoryList(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -48,9 +49,9 @@ const addSubCategoryList = createAsyncThunk(
 
 const existSubCategoryList = createAsyncThunk(
   '/ExpenseManagement/existSubCategoryList',
-  async (_, thunkApi) => {
+  async (props: AddSubCategoryList, thunkApi) => {
     try {
-      return await subCategoryListApi.existSubCategoryList()
+      return await subCategoryListApi.existSubCategoryList(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -64,6 +65,7 @@ const initialSubCategoryListState: SubCategoryListSliceState = {
   subExpenseCategories: [],
   currentPage: 1,
   pageSize: 20,
+  addSubCategory: {} as AddSubCategoryList,
 }
 
 const subCategoryListSlice = createSlice({
@@ -89,14 +91,12 @@ const subCategoryListSlice = createSlice({
       })
       .addCase(addSubCategoryList.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.subExpenseCategories = action.payload
+        state.addSubCategory = action.payload
       })
-      .addMatcher(
-        isAnyOf(addSubCategoryList.fulfilled, existSubCategoryList.fulfilled),
-        (state) => {
-          state.isLoading = ApiLoadingState.succeeded
-        },
-      )
+      .addCase(existSubCategoryList.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+
       .addMatcher(
         isAnyOf(
           getCategoryList.pending,
@@ -128,8 +128,8 @@ const categories = (state: RootState): CategoryList[] =>
   state.subCategoryList.expenseCategories
 const subCategories = (state: RootState): SubCategoryList[] =>
   state.subCategoryList.subExpenseCategories
-const addSubCategories = (state: RootState): SubCategoryList[] =>
-  state.subCategoryList.subExpenseCategories
+const addSubCategories = (state: RootState): AddSubCategoryList =>
+  state.subCategoryList.addSubCategory
 const pageFromState = (state: RootState): number =>
   state.subCategoryList.currentPage
 const pageSizeFromState = (state: RootState): number =>

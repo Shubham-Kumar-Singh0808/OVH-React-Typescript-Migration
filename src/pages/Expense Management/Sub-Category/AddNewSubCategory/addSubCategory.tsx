@@ -1,23 +1,24 @@
+import React, { useEffect, useState } from 'react'
 import {
   CRow,
-  CCol,
-  CButton,
-  CFormInput,
   CFormLabel,
+  CCol,
   CFormSelect,
+  CFormInput,
+  CButton,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
-import { showIsRequired } from '../../../../utils/helper'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { showIsRequired } from '../../../../utils/helper'
+import {
+  AddSubCategoryList,
+  SubCategoryList,
+} from '../../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { SubCategoryList } from '../../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
-import { TextDanger } from '../../../../constant/ClassName'
-import SubCategoryList from '../SubCategoryList'
-import SubCategoryList from '../SubCategoryList'
 
 const AddExpenseSubCategory = (): JSX.Element => {
-  const initialSubCategoryDetails = SubCategoryList[]
+  const initialSubCategoryDetails = {} as AddSubCategoryList
   const [addExpenseSubCategory, setAddExpenseSubCategory] = useState({
     ...initialSubCategoryDetails,
   })
@@ -28,25 +29,33 @@ const AddExpenseSubCategory = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const formLabelProps = {
-    htmlFor: 'input New Expense Sub Category',
+    htmlFor: 'inputNewExpenseCategory',
     className: 'col-form-label category-label',
   }
 
-  const expenseCategory = useTypedSelector(
+  const expenseCategoryNames = useTypedSelector(
     reduxServices.subCategory.selectors.categories,
   )
 
-  const expenseSubCategory = useTypedSelector(
+  const expenseSubCategoryNames = useTypedSelector(
     reduxServices.subCategory.selectors.subCategories,
   )
 
   const subCategoryNameExists = (name: string) => {
-    return expenseSubCategory?.find((subCategoryName) => {
+    return expenseSubCategoryNames?.find((subCategoryName) => {
       return (
         subCategoryName.subCategoryName.toLowerCase() === name.toLowerCase()
       )
     })
   }
+
+  useEffect(() => {
+    if (addExpenseSubCategory.id && addExpenseSubCategory.subCategoryName) {
+      setIsAddButtonEnabled(false)
+    } else {
+      setIsAddButtonEnabled(true)
+    }
+  }, [addExpenseSubCategory, subCategoryName])
 
   const subCategoryNameRegexReplace = /-_[^a-z0-9\s]/gi
 
@@ -56,12 +65,15 @@ const AddExpenseSubCategory = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'categoryName') {
+    if (name === 'subCategoryName') {
       const subCategoryName = value
         .replace(subCategoryNameRegexReplace, '')
         .replace(/^\s*/, '')
+      setSubCategoryName(subCategoryName)
+    } else {
       setAddExpenseSubCategory((values) => {
-        return { ...values, ...{ [name]: subCategoryName } }
+        const trimFieldValue = value.trimStart()
+        return { ...values, ...{ [name]: trimFieldValue } }
       })
     }
     if (subCategoryNameExists(value.trim())) {
@@ -79,15 +91,21 @@ const AddExpenseSubCategory = (): JSX.Element => {
       event.key === 'Enter' &&
       !isSubCategoryNameExist
     ) {
+      const expenseSubCategoryResult = {
+        ...addExpenseSubCategory,
+      }
       const isAddExpenseSubCategory = await dispatch(
-        reduxServices.subCategory.addSubCategoryList(addExpenseSubCategory),
+        reduxServices.subCategory.addSubCategoryList({
+          id: expenseSubCategoryResult.id,
+          subCategoryName: expenseSubCategoryResult.subCategoryName,
+        }),
       )
       if (
         reduxServices.subCategory.addSubCategoryList.fulfilled.match(
           isAddExpenseSubCategory,
         )
       ) {
-        dispatch(reduxServices.subCategory.existSubCategoryList())
+        //dispatch(reduxServices.subCategory.existSubCategoryList())
         dispatch(reduxServices.subCategory.getSubCategoryList())
         setSubCategoryName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
@@ -102,52 +120,12 @@ const AddExpenseSubCategory = (): JSX.Element => {
     />
   )
 
-  useEffect(() => {
-    if (
-      addExpenseSubCategory.id &&
-      addExpenseSubCategory.categoryId &&
-      addExpenseSubCategory.categoryName &&
-      addExpenseSubCategory.subCategoryName &&
-      addExpenseSubCategory.createdBy &&
-      addExpenseSubCategory.updatedBy &&
-      addExpenseSubCategory.createdDate &&
-      addExpenseSubCategory.updatedDate
-    ) {
-      setIsAddButtonEnabled(true)
-    } else {
-      setIsAddButtonEnabled(false)
-    }
-  }, [subCategoryName])
-
-  const addSubCategoryNameButtonHandler = async () => {
-    const expenseSubCategory = {
-      ...addExpenseSubCategory,
-    }
-    const isAddExpenseSubCategory = await dispatch(
-      reduxServices.subCategory.addSubCategoryList(expenseSubCategory),
-    )
-    if (
-      reduxServices.subCategory.addSubCategoryList.fulfilled.match(
-        isAddExpenseSubCategory,
-      )
-    ) {
-      dispatch(reduxServices.subCategory.existSubCategoryList())
-      dispatch(reduxServices.subCategory.getSubCategoryList())
-      setSubCategoryName('')
-      dispatch(reduxServices.app.actions.addToast(successToast))
-    }
-  }
   const clearInputs = () => {
     setAddExpenseSubCategory({
       id: 0,
-      categoryId: 0,
-      categoryName: '',
       subCategoryName: '',
-      createdBy: '',
-      updatedBy: '',
-      createdDate: '',
-      updatedDate: '',
     })
+    setSubCategoryName('')
     setIsSubCategoryNameExist('')
   }
 
@@ -159,6 +137,27 @@ const AddExpenseSubCategory = (): JSX.Element => {
     (feature) => feature.name === 'Expense Management',
   )
 
+  const addSubCategoryNameButtonHandler = async () => {
+    const expenseSubCategoryResult = {
+      ...addExpenseSubCategory,
+    }
+    const isAddExpenseSubCategory = await dispatch(
+      reduxServices.subCategory.addSubCategoryList({
+        id: expenseSubCategoryResult.id,
+        subCategoryName: expenseSubCategoryResult.subCategoryName,
+      }),
+    )
+    if (
+      reduxServices.subCategory.addSubCategoryList.fulfilled.match(
+        isAddExpenseSubCategory,
+      )
+    ) {
+      dispatch(reduxServices.subCategory.getSubCategoryList())
+      setSubCategoryName('')
+      dispatch(reduxServices.app.actions.addToast(successToast))
+    }
+  }
+
   return (
     <>
       <CRow className="mt-4 mb-4">
@@ -167,7 +166,9 @@ const AddExpenseSubCategory = (): JSX.Element => {
           className="col-sm-3 col-form-label text-end"
         >
           Category:
-          <span className={showIsRequired(addExpenseSubCategory.categoryName)}>
+          <span
+            className={addExpenseSubCategory?.id !== 0 ? TextWhite : TextDanger}
+          >
             *
           </span>
         </CFormLabel>
@@ -178,14 +179,14 @@ const AddExpenseSubCategory = (): JSX.Element => {
             id="category"
             size="sm"
             aria-label="Category"
-            name="departmentId"
+            name="id"
             onChange={handleCategoryInput}
-            value={addExpenseSubCategory.categoryName}
+            value={addExpenseSubCategory.id}
           >
             <option value={''}>Select Category</option>
-            {expenseCategory &&
-              expenseCategory?.length > 0 &&
-              expenseCategory?.map((categoryNames, index) => (
+            {expenseCategoryNames &&
+              expenseCategoryNames?.length > 0 &&
+              expenseCategoryNames?.map((categoryNames, index) => (
                 <option key={index} value={categoryNames.id}>
                   {categoryNames.categoryName}
                 </option>
@@ -214,16 +215,16 @@ const AddExpenseSubCategory = (): JSX.Element => {
             size="sm"
             name="subCategoryName"
             autoComplete="off"
-            placeholder="Category Name"
+            placeholder="Sub Category Name"
             value={addExpenseSubCategory.subCategoryName}
             onChange={handleCategoryInput}
             onKeyDown={handleEnterKeyword}
           />
-          {/* {isSubCategoryNameExist && (
+          {isSubCategoryNameExist && (
             <span className={TextDanger} data-testid="nameAlreadyExist">
-              <b>Category already exist</b>
+              <b>Sub Category already exist</b>
             </span>
-          )} */}
+          )}
         </CCol>
       </CRow>
       <CRow>

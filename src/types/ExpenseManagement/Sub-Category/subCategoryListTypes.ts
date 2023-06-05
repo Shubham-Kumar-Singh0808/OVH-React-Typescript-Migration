@@ -21,16 +21,10 @@ export type SubCategoryList = {
   updatedDate: string
 }
 
-// export type AddSubCategoryList = {
-//   id: number
-//   categoryId: number
-//   categoryName: string
-//   subCategoryName: string
-//   createdBy: string
-//   updatedBy: string
-//   createdDate: string
-//   updatedDate: string
-// }
+export type AddSubCategoryList = {
+  id: number
+  subCategoryName: string
+}
 
 export type SubCategoryListSliceState = {
   isLoading: LoadingState
@@ -38,6 +32,7 @@ export type SubCategoryListSliceState = {
   subExpenseCategories: SubCategoryList[]
   currentPage: number
   pageSize: number
+  addSubCategory: AddSubCategoryList
 }
 
 export type SubCategoryListTableProps = {
