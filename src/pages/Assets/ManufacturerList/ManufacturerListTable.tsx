@@ -161,23 +161,24 @@ const ManufacturerListTable = ({
                           </CButton>
                         </CTooltip>
                       )}
-
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`btn-delete${index}`}
-                          size="sm"
-                          color="danger btn-ovh me-1"
-                          className="btn-ovh-employee-list"
-                          onClick={() =>
-                            deleteBtnHandler(
-                              manufacturer.manufacturerId,
-                              manufacturer.manufacturerName,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
+                      {userAccess?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-delete${index}`}
+                            size="sm"
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              deleteBtnHandler(
+                                manufacturer.manufacturerId,
+                                manufacturer.manufacturerName,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )

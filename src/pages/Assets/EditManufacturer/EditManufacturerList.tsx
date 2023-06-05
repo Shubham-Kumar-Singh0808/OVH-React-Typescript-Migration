@@ -61,7 +61,7 @@ const EditManufacturerList = ({
   }
   const updateSuccessToastMessage = (
     <OToast
-      toastMessage="Product type is successfully edited.
+      toastMessage="Manufacturer name updated successfully.
       "
       toastColor="success"
     />
