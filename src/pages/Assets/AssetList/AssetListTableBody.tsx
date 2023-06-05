@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import parse from 'html-react-parser'
 import {
   CButton,
@@ -7,7 +7,15 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
+import AssetHistory from './AssetTimeline/AssetTimelineHistory'
+import AssetList from './AssetList'
+import {
+  AllAssetsList,
+  AssetHistoryProps,
+  AssetProps,
+} from '../../../types/Assets/AssetList/AssetListTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
 const ModalLink = ({
   text,
@@ -36,7 +44,24 @@ const ModalLink = ({
   )
 }
 
-const ActionIcons = () => {
+const ActionIcons = ({
+  setToggle,
+  historyItem,
+}: {
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  historyItem: AllAssetsList
+}) => {
+  const dispatch = useAppDispatch()
+
+  const timelineButtonHandler = (id: number) => {
+    setToggle('assetTimeline')
+    dispatch(
+      reduxServices.assetList.getAllAssetHistoryData({
+        assetId: id,
+        searchAssetReference: '',
+      }),
+    )
+  }
   return (
     <CTableDataCell data-testid="action-cell">
       <div className="sh-btn-group">
@@ -53,7 +78,12 @@ const ActionIcons = () => {
         </CTooltip>
         <br />
         <CTooltip content="Change-Status">
-          <CButton color="info" size="sm" className="mb-1">
+          <CButton
+            color="info"
+            size="sm"
+            className="mb-1"
+            onClick={() => timelineButtonHandler(historyItem.id)}
+          >
             <i className="fa fa-bar-chart text-white"></i>
           </CButton>
         </CTooltip>
@@ -65,6 +95,7 @@ const ActionIcons = () => {
 const AssetListTableBody = ({
   item,
   index,
+  setToggle,
   handleAgendaModal,
   getItemNumber,
 }: {
@@ -72,6 +103,7 @@ const AssetListTableBody = ({
   index: number
   getItemNumber: (index: number) => number
   handleAgendaModal: (appraisalCycleSpecification: string) => void
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const specificationModel = (
     <ModalLink
@@ -90,6 +122,18 @@ const AssetListTableBody = ({
       dataTestId={`description-modal-link2${index}`}
     />
   )
+
+  // const dispatch = useAppDispatch()
+
+  // const timelineButtonHandler = (id: number) => {
+  //   setToggle('assetTimeline')
+  //   dispatch(
+  //     reduxServices.assetList.getAllAssetHistoryData({
+  //       assetId: id,
+  //       searchAssetReference: '',
+  //     }),
+  //   )
+  // }
 
   const locationPopUpModel = (
     <ModalLink
@@ -123,7 +167,7 @@ const AssetListTableBody = ({
         <CTableDataCell>{item.invoiceNumber || 'N/A'}</CTableDataCell>
         <CTableDataCell>{item.amount || 'N/A'}</CTableDataCell>
         <CTableDataCell>{item.employeeName || 'N/A'}</CTableDataCell>
-        <ActionIcons />
+        <ActionIcons setToggle={setToggle} historyItem={item} />
       </CTableRow>
     </>
   )

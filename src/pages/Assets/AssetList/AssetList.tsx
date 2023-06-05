@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
+import AssetHistory from './AssetTimeline/AssetTimelineHistory'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
@@ -11,7 +12,7 @@ const AssetList = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
-
+  const [toggle, setToggle] = useState<string>('')
   const [selectDate, setSelectDate] = useState<string>('')
   const [fromDate, setFromDate] = useState<string>()
   const [toDate, setToDate] = useState<string>()
@@ -40,35 +41,39 @@ const AssetList = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Asset List"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <AssetListFilters
-          fromDate={fromDate as string}
-          setFromDate={setFromDate}
-          toDate={toDate as string}
-          setToDate={setToDate}
-          searchInput={searchInput as string}
-          setSearchInput={setSearchInput}
-          selectDate={selectDate}
-          setSelectDate={setSelectDate}
-          searchByEmployee={searchByEmployee}
-          setSearchByEmployee={setSearchByEmployee}
-          currentPage={currentPage}
-          pageSize={pageSize}
-          setCurrentPage={setCurrentPage}
-        />
-        <AssetListTable
-          paginationRange={paginationRange}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
-        />
-      </OCard>
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Asset List"
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <AssetListFilters
+            fromDate={fromDate as string}
+            setFromDate={setFromDate}
+            toDate={toDate as string}
+            setToDate={setToDate}
+            searchInput={searchInput as string}
+            setSearchInput={setSearchInput}
+            selectDate={selectDate}
+            setSelectDate={setSelectDate}
+            searchByEmployee={searchByEmployee}
+            setSearchByEmployee={setSearchByEmployee}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            setCurrentPage={setCurrentPage}
+          />
+          <AssetListTable
+            paginationRange={paginationRange}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            setToggle={setToggle}
+          />
+        </OCard>
+      )}
+      {toggle === 'assetTimeline' && <AssetHistory setToggle={setToggle} />}
     </>
   )
 }

@@ -866,6 +866,7 @@ export interface AssetListApi extends ApiBase {
   getAllLookUps: string
   getAllAssets: string
   getAssetTypeChange: string
+  getAssetHistory: string
 }
 
 export interface AssetWarrantyReportApi extends ApiBase {

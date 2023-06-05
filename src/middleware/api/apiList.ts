@@ -1040,6 +1040,7 @@ export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
   getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
+  getAssetHistory: apiPrefix + '/assetManagement/getAssetHistory',
 }
 export const ProductSpecificationListReportApiConfig: ProductSpecificationListApi =
   {

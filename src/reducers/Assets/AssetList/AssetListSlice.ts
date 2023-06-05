@@ -9,6 +9,8 @@ import {
   ManufacturerList,
   AllAssetListProps,
   AllAssetsList,
+  AssetProps,
+  AssetHistoryProps,
 } from '../../../types/Assets/AssetList/AssetListTypes'
 import AssetListApi from '../../../middleware/api/Assets/AssetList/AssetListApi'
 
@@ -36,11 +38,24 @@ const getAllAssetListData = createAsyncThunk(
   },
 )
 
+const getAllAssetHistoryData = createAsyncThunk(
+  'allAsset/getAssetHistory',
+  async (props: AssetProps, thunkApi) => {
+    try {
+      return await AssetListApi.getAssetHistory(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAssetTypeChangeListState: AssetListSliceState = {
   asset: [],
   isLoading: ApiLoadingState.idle,
   manufacturerList: {} as ManufacturerList,
   allAssetList: [],
+  assetHistoryList: [],
   listSize: 0,
 }
 
@@ -54,9 +69,16 @@ const assetTypeChangeListSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(isAnyOf(getAssetTypeChangeList.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getAllAssetHistoryData.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.assetHistoryList = action.payload
       })
+      .addMatcher(
+        isAnyOf(getAssetTypeChangeList.pending, getAllAssetHistoryData.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
       .addMatcher(
         isAnyOf(getAssetTypeChangeList.fulfilled),
         (state, action) => {
@@ -75,6 +97,7 @@ const assetTypeChangeListSlice = createSlice({
 const assetListThunk = {
   getAssetTypeChangeList,
   getAllAssetListData,
+  getAllAssetHistoryData,
 }
 
 const isLoading = (state: RootState): LoadingState => state.assetList.isLoading
@@ -87,12 +110,16 @@ const manufacturerList = (state: RootState): ManufacturerList =>
 const allAssetListData = (state: RootState): AllAssetsList[] =>
   state.assetList.allAssetList
 
+const assetHistory = (state: RootState): AssetHistoryProps[] =>
+  state.assetList.assetHistoryList
+
 const assetListSelectors = {
   isLoading,
   assetListData,
   manufacturerList,
   listSize,
   allAssetListData,
+  assetHistory,
 }
 
 export const assetListService = {

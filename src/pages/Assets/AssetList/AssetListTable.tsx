@@ -24,9 +24,9 @@ const AssetListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  setToggle,
 }: AssetListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
-
   const [isAssetWarranty, setAssetWarranty] = useState<boolean>(false)
   const [specification, setSpecification] = useState('')
 
@@ -36,6 +36,7 @@ const AssetListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+
   const assetListSize = useTypedSelector(
     reduxServices.assetList.selectors.listSize,
   )
@@ -104,6 +105,7 @@ const AssetListTable = ({
                     index={index}
                     handleAgendaModal={handleAgendaModal}
                     getItemNumber={getItemNumber}
+                    setToggle={setToggle}
                   />
                 )
               })}
