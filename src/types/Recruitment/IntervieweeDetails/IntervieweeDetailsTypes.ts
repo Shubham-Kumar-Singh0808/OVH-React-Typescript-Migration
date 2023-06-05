@@ -21,8 +21,8 @@ export type CycleDtOs = {
   interviewers: string
   interviewersDTOList: null
   interviewDate: string
-  interviewTime: null
-  interviewComments: string
+  interviewTime: null | string
+  interviewComments: string | null
   interviewRound: string
   interviewStatus: null
   candidateName: null
@@ -35,13 +35,13 @@ export type CycleDtOs = {
   skills: null
   mobileNumber: null
   cycleDTOs: null
-  interviewResultStatus: string
+  interviewResultStatus: string | null
   description: null
   skypeId: null
-  proactiveComments: null
-  communicationComments: null
-  excellenceComments: null
-  updatedBy: string
+  proactiveComments: null | string
+  communicationComments: null | string
+  excellenceComments: null | string
+  updatedBy: string | null
   recruiter: null
   reason: string
   ctc: null
@@ -64,7 +64,7 @@ export type TimeLineList = {
   fullName: string
   holdSubStatus: string
   initialComments: string
-  joineeComments: null
+  joineeComments: null | string
   lastName: null
   middleName: null
   modeOfInterview: string
