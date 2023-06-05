@@ -19,11 +19,10 @@ describe('MileStoneDiscussionTimeLine Component Testing', () => {
       })
     })
     screen.debug()
-    // test('should render with data ', () => {
-    //   expect(screen.getByText('testing')).toBeInTheDocument()
-    //   expect(screen.getByText('04/04/2023')).toBeInTheDocument()
-    // })
-
+    test('should render with data ', () => {
+      expect(screen.getByText('testing')).toBeInTheDocument()
+      expect(screen.getByText('04/04/2023')).toBeInTheDocument()
+    })
     test('should enter the discussion input ', () => {
       const subject = screen.getByTestId('notes-link')
       userEvent.type(subject, 'testing')
