@@ -45,11 +45,14 @@ const QualificationDetails = (): JSX.Element => {
     <>
       {toggle === '' && (
         <>
-          <CCardHeader>
-            <h4 className="h4">Qualifications</h4>
-          </CCardHeader>
+          {userAccessToSkill?.viewaccess && (
+            <CCardHeader>
+              <h4 className="h4">Qualifications</h4>
+            </CCardHeader>
+          )}
           <CCardBody className="ps-0 pe-0">
-            {!isViewingAnotherEmployee ? (
+            {!isViewingAnotherEmployee &&
+            userAccessToCertifications?.createaccess ? (
               <OAddButton
                 addButtonHandler={() => setToggle('addQualificationSection')}
               />

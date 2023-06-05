@@ -8,10 +8,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
@@ -149,18 +148,22 @@ const QualificationCategoryListTable = (): JSX.Element => {
                   {qualificationCategory.qualificationName}
                 </CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    onClick={() =>
-                      handleShowDeleteModal(
-                        qualificationCategory.qualificationCategory,
-                        qualificationCategory.id as number,
-                      )
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`btn-delete${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowDeleteModal(
+                          qualificationCategory.qualificationCategory,
+                          qualificationCategory.id as number,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )

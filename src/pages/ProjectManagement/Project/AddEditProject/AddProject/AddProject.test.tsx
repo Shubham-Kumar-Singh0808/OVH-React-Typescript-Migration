@@ -1,14 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory } from 'history'
 import AddProject from './AddProject'
-import {
-  render,
-  screen,
-  waitFor,
-  fireEvent,
-} from '../../../../../test/testUtils'
+import { render, screen, fireEvent } from '../../../../../test/testUtils'
 import { mockProjectClient } from '../../../../../test/data/projectClientData'
 import { mockReportingManager } from '../../../../../test/data/reportingManagers'
 
@@ -19,12 +13,9 @@ const deviceLocale: string =
 
 const clearBtnId = 'clear-project'
 const addBtnId = 'add-project'
-let history: any
 
 describe('Add Project Testing', () => {
   beforeEach(() => {
-    history = createMemoryHistory()
-
     render(<AddProject />, {
       preloadedState: {
         projectManagement: {
@@ -56,7 +47,7 @@ describe('Add Project Testing', () => {
     ).toBe(true)
     expect(screen.getByPlaceholderText('Project Manager')).toBeInTheDocument()
 
-    const dates = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
     expect(
@@ -91,15 +82,6 @@ describe('Add Project Testing', () => {
 
     expect(clearBtn).not.toBeDisabled()
     fireEvent.click(clearBtn)
-  })
-
-  test('should redirect to / after back button click', async () => {
-    const backBtn = screen.getAllByTestId('back-btn')
-    userEvent.click(backBtn[0])
-
-    await waitFor(() => {
-      expect(history.location.pathname).toBe('/')
-    })
   })
 
   test('should render "Add Project" title', () => {
@@ -145,7 +127,7 @@ describe('Add Project Testing', () => {
     fireEvent.click(dropdownManagerOptions[2])
 
     // Start Date
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {

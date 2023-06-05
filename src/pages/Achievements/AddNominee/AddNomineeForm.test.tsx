@@ -88,7 +88,7 @@ describe('add nominee form', () => {
 
       expect(screen.getByTestId('ach-star')).toHaveClass(TextDanger)
 
-      expect(empName).toHaveTextContent('Employee Name:*')
+      expect(empName).toHaveTextContent('Employee Name :*')
       expect(achType).toHaveTextContent('Achievement Type:*')
       expect(cycle).toHaveTextContent('Cycle:*')
       expect(fromMonth).toHaveTextContent('From Month:*')

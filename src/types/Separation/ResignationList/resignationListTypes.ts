@@ -71,6 +71,11 @@ export type ResignationListSliceState = {
   checkExitFeedBackForm: CheckExitFeedBackForm
   getEmpDetailsType: GetEmpDetailsType
   submitExitFeedBackForm: SubmitExitFeedBackForm
+  selectMonthValue: string
+  statusValue: string
+  employeeStatusValue: string
+  fromDate: string | Date
+  toDate: string | Date
 }
 
 export type ExportResignationListDataProps = {
@@ -103,12 +108,12 @@ export type SeparationTimeLine = {
   employeeName: string
   separationComments: SeparationComments[]
   employeeComments: string
-  managerComments: null
+  managerComments: string
   withdrawComments: null
   primaryReasonId: null
   primaryReasonName: string
   reasonComments: string
-  status: string
+  status: string | number
   canberevoked: false
   isRevoked: boolean
   isprocessInitiated: null
@@ -117,9 +122,9 @@ export type SeparationTimeLine = {
   managerCcCss: null
   itCcCss: null
   finanaceCcCss: null
-  showCommentsBox: false
+  showCommentsBox: boolean
   showEditButton: true
-  certificateDTO: []
+  certificateDTO: CertificateDTO[]
   relievingLetterPath: null
   managerName: null
   exitFeedbackFormPath: null
@@ -293,4 +298,17 @@ export type SubmitExitFeedBackForm = {
   salary: string
   separationId: number
   superiorGuidance: string
+}
+
+export type CertificateDTO = {
+  addedBy: string
+  ccId: number
+  comments: string
+  createdDate: string
+  employeeId: number
+  employeeName: string
+  isDue: boolean
+  seperationEmpId: null
+  seperationEmpName: null
+  seperationId: null
 }

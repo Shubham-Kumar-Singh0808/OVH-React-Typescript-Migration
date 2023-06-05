@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CContainer,
-  CFormLabel,
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
@@ -56,7 +55,7 @@ const LeadershipDetails = (props: LeadershipDetailsProps): JSX.Element => {
   )
 
   useEffect(() => {
-    setCurrentDetails(employeeDetails.at(currentIndex))
+    setCurrentDetails(employeeDetails?.at(currentIndex))
   }, [currentIndex])
 
   const booleanToString = (value: boolean | undefined) => {
@@ -239,8 +238,7 @@ const LeadershipDetails = (props: LeadershipDetailsProps): JSX.Element => {
           <CContainer>
             <CRow>
               <CRow className="mt-3">
-                <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-                <CCol sm={4}>
+                <CCol className="col-md-4 offset-md-4">
                   <CButton
                     color="success"
                     className="btn-ovh me-1"

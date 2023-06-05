@@ -35,11 +35,11 @@ describe('appraisal Configuration', () => {
         action,
       )
       expect(state).toEqual({
-        appraisalCycle: mockAppraisalCycle.list,
+        appraisalCycle: mockAppraisalCycle,
         editAppraisalCycle: {} as GetCycle,
         isLoading: ApiLoadingState.succeeded,
         error: null,
-        listSize: 42,
+        listSize: 0,
       })
     })
 

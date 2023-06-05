@@ -118,8 +118,25 @@ import addNomineeReducer from './reducers/Achievements/AddNominee/AddNomineeSlic
 import myReviewReducer from './reducers/Performance/MyReview/myReviewSlice'
 import leadershipEnrollmentListReducer from './reducers/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListSlice'
 import leadershipEnrollmentFormReducer from './reducers/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormSlice'
+import pipListReducer from './reducers/Performance/PIPList/pipListSlice'
 import reviewListReducer from './reducers/Performance/ReviewList/reviewListSlice'
 import KRAReducer from './reducers/Performance/KRA/KRASlice'
+import appraisalTemplateReducer from './reducers/Performance/AppraisalTemplate/AppraisalTemplateSlice'
+import projectStatusReducer from './reducers/ProjectManagement/Project/ProjectView/Status/projectStatusSlice'
+import processAreaReducer from './reducers/Settings/ProcessArea/ProcessAreaSlice'
+import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
+import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
+import notificationReducer from './reducers/Notifications/notificationSlice'
+import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
+import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
+import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
+import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
+import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
+import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
+import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -238,8 +255,25 @@ export const allReducers = {
   myReview: myReviewReducer,
   leadershipEnrollmentList: leadershipEnrollmentListReducer,
   leadershipEnrollmentForm: leadershipEnrollmentFormReducer,
+  pipList: pipListReducer,
   reviewList: reviewListReducer,
   KRA: KRAReducer,
+  appraisalTemplate: appraisalTemplateReducer,
+  projectStatus: projectStatusReducer,
+  processArea: processAreaReducer,
+  addNewAuditForm: addNewAuditFormReducer,
+  sqaAuditReport: sqaAuditReportReducer,
+  notification: notificationReducer,
+  jobVacancies: jobVacanciesReducer,
+  vendorList: vendorListReducer,
+  addNewVendor: addNewVendorReducer,
+  changeReportees: changeReporteesReducer,
+  manufacturerList: ManufacturerListReducer,
+  ProductTypeList: ProductTypeListReducer,
+  assetsWarrantyList: assetsWarrantyListReducer,
+  assetList: assetListReducer,
+  productSpecificationList: productSpecificationListReducer,
+  addProduct: addProductReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

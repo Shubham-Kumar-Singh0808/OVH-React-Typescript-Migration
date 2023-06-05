@@ -44,6 +44,8 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
   const [selectedLeaveId, setSelectedLeaveId] = useState<number>(0)
   const [searchApproveLeaveComment, setSearchApproveLeaveComment] =
     useState<string>('')
+  const [isCancelAfterApprovalVisibility, setIsCancelAfterApprovalVisibility] =
+    useState<boolean>(false)
 
   const searchLeaves = useTypedSelector(
     reduxServices.leaveApprovals.selectors.searchLeaves,
@@ -182,6 +184,10 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
       )
     }
   }
+  const handleApproveModal = (leaveId: number) => {
+    setSelectedLeaveId(leaveId)
+    setIsCancelAfterApprovalVisibility(true)
+  }
 
   const handleSearchRejectModal = async (leaveId: number) => {
     setSelectedLeaveId(leaveId)
@@ -262,6 +268,45 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
   const tableHeaderCellProps = {
     width: '12%',
     scope: 'col',
+  }
+  const handleCancelAfterApprovalLeave = async () => {
+    dispatch(
+      reduxServices.leaveApprovals.checkProjectManagerExists(selectedLeaveId),
+    )
+    setIsCancelAfterApprovalVisibility(false)
+    const cancelAfterApprovalResultAction = await dispatch(
+      reduxServices.leaveApprovals.leaveReject({
+        leaveId: selectedLeaveId,
+      }),
+    )
+    if (
+      reduxServices.leaveApprovals.leaveReject.fulfilled.match(
+        cancelAfterApprovalResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.leaveApprovals.getSearchEmployees({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          managerId: Number(employeeId),
+          fromDate: new Date(filterByFromDate).toLocaleDateString(
+            deviceLocale,
+            {
+              year: 'numeric',
+              month: 'numeric',
+              day: '2-digit',
+            },
+          ),
+          toDate: new Date(filterByToDate).toLocaleDateString(deviceLocale, {
+            year: 'numeric',
+            month: 'numeric',
+            day: '2-digit',
+          }),
+          member: Number(selectMember),
+          status: selectStatus,
+        }),
+      )
+    }
   }
 
   return (
@@ -359,6 +404,25 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
+                      {currentLeaveItem.status === 'CancelAfterApproval' ? (
+                        <>
+                          <CButton
+                            color="success btn-ovh me-1"
+                            data-testid="search-leave-approve-btn"
+                            className="btn-ovh-employee-list"
+                            onClick={() => {
+                              handleApproveModal(currentLeaveItem.id)
+                            }}
+                          >
+                            <i
+                              className="fa fa-check-circle-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </CTableDataCell>
                   </CTableRow>
                 )
@@ -420,11 +484,13 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         modalHeaderClass="d-none"
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: searchModalText,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: searchModalText,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal
@@ -473,6 +539,17 @@ const SearchEmployeeLeaveRequests = (): JSX.Element => {
         modalHeaderClass="d-none"
       >
         <p>{isSearchManagerCheckText}</p>
+      </OModal>
+      <OModal
+        alignment="center"
+        visible={isCancelAfterApprovalVisibility}
+        setVisible={setIsCancelAfterApprovalVisibility}
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        modalHeaderClass="d-none"
+        confirmButtonAction={handleCancelAfterApprovalLeave}
+      >
+        <p>{`Would you like to approve for Cancel After approval ?`}</p>
       </OModal>
     </>
   )

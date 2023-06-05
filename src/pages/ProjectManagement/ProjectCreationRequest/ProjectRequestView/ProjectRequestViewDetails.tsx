@@ -39,17 +39,11 @@ const ProjectRequestViewDetails = (): JSX.Element => {
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Customer Contact:
+            Customer Contact Name:
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">{projectViewDetails.projectContactPerson}</p>
           </CCol>
-        </CRow>
-
-        <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Name:
-          </CFormLabel>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
@@ -77,7 +71,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={3}>
             <p className="mb-0">
-              {projectViewDetails.billingContactPersonEmail || 'N/A'}
+              {projectViewDetails?.billingContactPersonEmail || 'N/A'}
             </p>
           </CCol>
         </CRow>
@@ -86,7 +80,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project Name:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.projectName}</p>
+            <p className="mb-0">{projectViewDetails?.projectName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -94,7 +88,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Requested by:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.managerName}</p>
+            <p className="mb-0">{projectViewDetails?.managerName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -102,7 +96,10 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Pricing Model:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.type}</p>
+            <p className="mb-0">
+              {projectViewDetails?.type?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.type?.slice(1)?.toLowerCase()}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -110,7 +107,10 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project type:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.model}</p>
+            <p className="mb-0">
+              {projectViewDetails?.model?.charAt(0)?.toUpperCase()}
+              {projectViewDetails?.model?.slice(1)?.toLowerCase()}
+            </p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -118,7 +118,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Project Manager:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.managerName}</p>
+            <p className="mb-0">{projectViewDetails?.managerName}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -126,7 +126,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Platform:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.platform}</p>
+            <p className="mb-0">{projectViewDetails?.platform}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -134,7 +134,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Domain:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.domain}</p>
+            <p className="mb-0">{projectViewDetails?.domain}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -142,7 +142,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Start Date:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.startdate}</p>
+            <p className="mb-0">{projectViewDetails?.startdate}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -150,7 +150,7 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             End Date:
           </CFormLabel>
           <CCol sm={3}>
-            <p className="mb-0">{projectViewDetails.enddate}</p>
+            <p className="mb-0">{projectViewDetails?.enddate}</p>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -158,11 +158,13 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Technology:
           </CFormLabel>
           <CCol sm={3}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.technology,
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.technology,
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -170,11 +172,13 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Required Resources:
           </CFormLabel>
           <CCol sm={3}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.requiredResources || 'N/A',
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.requiredResources || 'N/A',
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
@@ -182,21 +186,23 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             Description:
           </CFormLabel>
           <CCol sm={10}>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: projectViewDetails.description,
-              }}
-            />
+            <span className="descriptionField">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: projectViewDetails.description,
+                }}
+              />
+            </span>
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Checklist::
+            Checklist:
           </CFormLabel>
           <CCol sm={10}>
             <CTable responsive align="middle" className="checkList-table">
               <CTableHead>
-                <CTableRow>
+                <CTableRow className="CheckList-view">
                   <CTableHeaderCell scope="col">#</CTableHeaderCell>
                   <CTableHeaderCell scope="col"> Checkpoint</CTableHeaderCell>
                   <CTableHeaderCell scope="col">
@@ -209,15 +215,16 @@ const ProjectRequestViewDetails = (): JSX.Element => {
               </CTableHead>
               <CTableBody>
                 {projectViewDetails?.chelist?.map((item, index) => {
+                  const itemChecklist = item?.answer === 'yes' ? 'Yes' : 'No'
                   return (
                     <CTableRow key={index}>
                       <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                      <CTableDataCell scope="row">{item.name}</CTableDataCell>
+                      <CTableDataCell scope="row">{item?.name}</CTableDataCell>
                       <CTableDataCell scope="row">
-                        {item.answer || 'N/A'}
+                        {itemChecklist || 'N/A'}
                       </CTableDataCell>
                       <CTableDataCell scope="row">
-                        {item.comments || 'N/A'}
+                        {item?.comments || 'N/A'}
                       </CTableDataCell>
                     </CTableRow>
                   )
@@ -226,59 +233,66 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             </CTable>
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0">
-          <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-            Milestone:
-          </CFormLabel>
-          <CCol sm={10}>
-            <CTable striped responsive align="middle">
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {projectViewDetails?.projectRequestMilestoneDTO?.map(
-                  (item, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell scope="row">{index + 1}</CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.title}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.fromDate}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.toDate}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.effort}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.billable}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.milestonePercentage}
-                        </CTableDataCell>
-                        <CTableDataCell scope="row">
-                          {item.comments}
-                        </CTableDataCell>
-                      </CTableRow>
-                    )
-                  },
-                )}
-              </CTableBody>
-            </CTable>
-          </CCol>
-        </CRow>
+        {projectViewDetails?.projectRequestMilestoneDTO?.length > 0 ? (
+          <CRow className="mt-1 mb-0">
+            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+              Milestone:
+            </CFormLabel>
+            <CCol sm={10}>
+              <CTable striped responsive align="middle">
+                <CTableHead>
+                  <CTableRow>
+                    <CTableHeaderCell scope="col">#</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Percentage</CTableHeaderCell>
+                    <CTableHeaderCell scope="col">Comments</CTableHeaderCell>
+                  </CTableRow>
+                </CTableHead>
+                <CTableBody>
+                  {projectViewDetails?.projectRequestMilestoneDTO?.map(
+                    (item, index) => {
+                      const billable = item.billable ? 'Yes' : 'No'
+                      return (
+                        <CTableRow key={index}>
+                          <CTableDataCell scope="row">
+                            {index + 1}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.title}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.fromDate}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.toDate}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.effort}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {billable}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.milestonePercentage}
+                          </CTableDataCell>
+                          <CTableDataCell scope="row">
+                            {item.comments}
+                          </CTableDataCell>
+                        </CTableRow>
+                      )
+                    },
+                  )}
+                </CTableBody>
+              </CTable>
+            </CCol>
+          </CRow>
+        ) : (
+          ''
+        )}
       </CForm>
     </>
   )

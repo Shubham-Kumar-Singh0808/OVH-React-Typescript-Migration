@@ -16,21 +16,22 @@ const Proposal = (): JSX.Element => {
   const isLoading = useTypedSelector(
     reduxServices.projectProposals.selectors.isProjectProposalsLoading,
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToProjectProposal = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Proposals',
+  )
+
   useEffect(() => {
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }, [])
-  useEffect(() => {
-    if (
-      proposalLink.replace(
-        '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
-        '',
-      )
-    ) {
-      setIsPostButtonEnabled(true)
-    } else {
-      setIsPostButtonEnabled(false)
-    }
-  }, [proposalLink])
+
+  const isValidUrl = (input: string) => {
+    const regex = /^(ftp|http|https):\/\/[^ "]+$/
+    return regex.test(input)
+  }
 
   const postButtonHandler = () => {
     dispatch(
@@ -42,38 +43,42 @@ const Proposal = (): JSX.Element => {
     setProposalLink('')
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value
+    const isValid = isValidUrl(inputValue)
+    setProposalLink(inputValue)
+    setIsPostButtonEnabled(isValid)
+  }
   return (
     <>
       <CRow className="mt-4 mb-4">
         <CCol col-xs-12 mt-10>
           <CFormInput
             autoComplete="off"
-            type="text"
+            type="link"
             id="proposalLink"
             name="proposalLink"
-            placeholder="What you are thinking?"
+            placeholder="Please Enter Proposal link"
             data-testid="proposal-link"
             value={proposalLink}
-            onChange={(e) =>
-              setProposalLink(
-                e.target.value.replace(
-                  '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?',
-                  '',
-                ),
-              )
-            }
+            onChange={handleInputChange}
           />
         </CCol>
       </CRow>
       <CRow className="justify-content-end">
         <CCol className="text-end" md={4}>
-          <CButton
-            color="info btn-ovh me-1 pull-right"
-            disabled={!isPostButtonEnabled}
-            onClick={postButtonHandler}
-          >
-            <i className="fa fa-pencil fa-fw"></i>Post
-          </CButton>
+          {userAccessToProjectProposal?.createaccess && (
+            <CButton
+              className="proposal-post-button"
+              color="info btn-ovh me-1 pull-right"
+              data-testid="post-btn"
+              disabled={!isPostButtonEnabled}
+              onClick={postButtonHandler}
+            >
+              <i className="fa fa-pencil fa-fw"></i>Post
+            </CButton>
+          )}
         </CCol>
       </CRow>
       {isLoading !== ApiLoadingState.loading ? (

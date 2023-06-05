@@ -11,6 +11,7 @@ import {
   LoggedEmployee,
   ProjectMember,
   RoomsByLocation,
+  TrainerDetails,
   UniqueAttendeeParams,
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { ValidationError } from '../../../types/SidebarMenu/sidebarMenuType'
@@ -119,6 +120,7 @@ export const initialNewEventState: InitialNewEventSliceState = {
   projectMembers: [],
   error: null,
   allBookedDetailsForEvent: [],
+  trainer: {} as TrainerDetails,
 }
 
 const newEventSlice = createSlice({
@@ -193,6 +195,8 @@ const allEmployeesProfiles = (state: RootState): LoggedEmployee[] =>
 const projectMembers = (state: RootState): ProjectMember[] =>
   state.newEvent.projectMembers
 
+const trainer = (state: RootState): TrainerDetails => state.newEvent.trainer
+
 const selectError = (state: RootState): number => state.newEvent.error as number
 
 const allBookedDetailsForEvent = (
@@ -218,6 +222,7 @@ const newEventSelectors = {
   projectMembers,
   selectError,
   allBookedDetailsForEvent,
+  trainer,
 }
 
 export const newEventService = {

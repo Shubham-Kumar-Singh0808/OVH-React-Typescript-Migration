@@ -56,6 +56,7 @@ const TicketConfigurationOptions = ({
     setShowExportButton(true)
     setIsTableView(true)
   }
+
   useEffect(() => {
     if (selectedDepartment) {
       setIsButtonEnabled(true)
@@ -153,7 +154,7 @@ const TicketConfigurationOptions = ({
                 name="categoryName"
                 id="categoryName"
                 data-testid="category-name"
-                defaultValue={selectedCategory}
+                // defaultValue={selectedCategory}
                 disabled={!selectedDepartment}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 value={selectedCategory}
@@ -188,7 +189,7 @@ const TicketConfigurationOptions = ({
                 name="subCategoryName"
                 id="subCategoryName"
                 data-testid="sub-category-name"
-                defaultValue={selectedSubCategory}
+                // defaultValue={selectedSubCategory}
                 disabled={!selectedCategory}
                 onChange={(e) => setSelectedSubCategory(e.target.value)}
                 value={selectedSubCategory}

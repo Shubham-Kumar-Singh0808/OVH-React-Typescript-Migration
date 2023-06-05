@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import React from 'react'
@@ -17,6 +18,7 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { baseImageExtension } from '../../Achievements/AchievementConstants'
 
 const EmployeeListTable = ({
   paginationRange,
@@ -74,19 +76,21 @@ const EmployeeListTable = ({
           <CTableBody>
             {employees?.length > 0 &&
               employees.map((employee, index) => {
+                const imageUrl = employee.thumbPicture
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <CTableRow key={index}>
                     <CTableHeaderCell scope="row">
-                      <CImage
-                        src={employee.thumbPicture}
-                        className="employee-thumb"
-                      />
+                      <CImage src={finalImageUrl} className="employee-thumb" />
                     </CTableHeaderCell>
                     <CTableDataCell>{employee.id}</CTableDataCell>
                     <CTableDataCell>
                       <Link
                         to={`/employeeProfile/${employee.id}`}
                         className="employee-name"
+                        data-testid={`employee-profile-link${index}`}
                       >
                         {employee.fullName}
                       </Link>
@@ -105,23 +109,27 @@ const EmployeeListTable = ({
                         {userEditAccess && (
                           <div className="sh-btn-group">
                             <Link to={`/employeeProfile/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-eye"></i>
-                              </CButton>
+                              <CTooltip content="View">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-eye"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                             &nbsp;
                             <Link to={`/editEmployee/${employee.id}`}>
-                              <CButton
-                                color="info"
-                                size="sm"
-                                className="btn-ovh-employee-list"
-                              >
-                                <i className="text-white fa fa-pencil-square-o"></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info"
+                                  size="sm"
+                                  className="btn-ovh-employee-list"
+                                >
+                                  <i className="text-white fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </CTooltip>
                             </Link>
                           </div>
                         )}

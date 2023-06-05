@@ -33,6 +33,8 @@ const EmployeeHandbookSettings = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   useEffect(() => {
+    console.log({ currentPage })
+
     dispatch(
       reduxServices.employeeHandbookSettings.getEmployeeHandbooks({
         startIndex: pageSize * (currentPage - 1),

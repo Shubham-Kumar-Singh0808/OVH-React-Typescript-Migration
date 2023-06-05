@@ -15,6 +15,7 @@ import { getEmployeeGeneralInformationThunk } from './reducers/MyProfile/General
 import { reduxServices } from './reducers/reduxServices'
 import OLoadingSpinner from './components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from './types/Components/loadingScreenTypes'
+import ErrorPage from './pages/ErrorPage/ErrorPage'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -105,6 +106,8 @@ const App = (): JSX.Element => {
               </ProtectRoute>
             )}
           />
+
+          <Route exact path="/forbidden" component={ErrorPage} />
           <Route
             path="/"
             render={() => (

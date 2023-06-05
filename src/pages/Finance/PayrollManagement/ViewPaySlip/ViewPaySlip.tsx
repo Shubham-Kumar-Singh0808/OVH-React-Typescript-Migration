@@ -20,14 +20,12 @@ const ViewPaySlip = ({
           <>
             <CTableRow>
               <CTableDataCell className="text-center" colSpan={5}>
-                <strong>Payslip</strong>
+                <strong>PAYSLIP</strong>
               </CTableDataCell>
             </CTableRow>
             <CTableRow>
               <CTableDataCell>
-                <strong>
-                  <br></br>
-                </strong>
+                <strong></strong>
               </CTableDataCell>
               <CTableDataCell colSpan={2}>
                 <strong>Particulars</strong>
@@ -43,9 +41,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.name}
               </CTableDataCell>
-              <CTableDataCell text-align="middle">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="middle"></CTableDataCell>
               <CTableDataCell>
                 <strong>No of Days in the Month</strong>
               </CTableDataCell>
@@ -61,17 +57,11 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.designation}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">
-                <strong>
-                  <br></br>
-                </strong>
+                <strong></strong>
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
@@ -81,17 +71,13 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.employeeId}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">
                 <strong>
                   <u>LEAVES AVAILED</u>
                 </strong>
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
@@ -101,17 +87,11 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.joiningDate}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">
-                <strong>
-                  <br></br>
-                </strong>
+                <strong></strong>
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
@@ -121,9 +101,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.month}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">Medical Leave</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.medicliam}
@@ -137,9 +115,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.year}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">Paid Leave</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.leaveWithOutPay}
@@ -153,9 +129,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.epf}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="left">LWP</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.leaveWithOutPay}
@@ -169,9 +143,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.uaNumber}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
@@ -181,18 +153,9 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.panNumber}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
@@ -202,9 +165,7 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.bankName}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">Total Leaves</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.sumOfLeaves}
@@ -218,27 +179,15 @@ const ViewPaySlip = ({
               <CTableDataCell text-align="left">
                 {selectedPaySlipDetails.accountNo}
               </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">
                 Total Worked Days
               </CTableDataCell>
@@ -371,29 +320,17 @@ const ViewPaySlip = ({
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">Advances</CTableDataCell>
               <CTableDataCell text-align="center">500</CTableDataCell>
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">Gratuity</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.gratuity}
@@ -401,15 +338,9 @@ const ViewPaySlip = ({
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">Meals Card</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.mealsCard}
@@ -417,15 +348,9 @@ const ViewPaySlip = ({
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">Donation</CTableDataCell>
               <CTableDataCell text-align="center">
                 {selectedPaySlipDetails.donation}
@@ -451,36 +376,20 @@ const ViewPaySlip = ({
             </CTableRow>
 
             <CTableRow>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <br></br>
-              </CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
+              <CTableDataCell text-align="center"></CTableDataCell>
             </CTableRow>
 
             <CTableRow>
+              <CTableDataCell text-align="center"></CTableDataCell>
               <CTableDataCell text-align="center">
-                <br></br>
+                <strong></strong>
               </CTableDataCell>
               <CTableDataCell text-align="center">
-                <strong>
-                  <br></br>
-                </strong>
-              </CTableDataCell>
-              <CTableDataCell text-align="center">
-                <strong>
-                  <br></br>
-                </strong>
+                <strong></strong>
               </CTableDataCell>
               <CTableDataCell text-align="center">
                 <strong>NET PAY</strong>

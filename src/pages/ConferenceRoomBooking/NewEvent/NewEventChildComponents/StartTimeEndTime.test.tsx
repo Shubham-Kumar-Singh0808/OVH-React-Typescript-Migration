@@ -6,7 +6,12 @@ import { render, screen } from '../../../../test/testUtils'
 
 describe('StartTime and EndTime Component', () => {
   beforeEach(() => {
-    render(<StartTimeEndTime onSelectStartAndEndTime={jest.fn()} />)
+    render(
+      <StartTimeEndTime
+        onSelectStartAndEndTime={jest.fn()}
+        shouldReset={false}
+      />,
+    )
   })
 
   test('should able to select values for options for respective select element', () => {

@@ -201,6 +201,31 @@ const uploadExitFeedBackFile = createAsyncThunk(
   },
 )
 
+const updateResignationTimeLine = createAsyncThunk<
+  number | undefined,
+  SeparationTimeLine,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>(
+  'resignationList/updateCCDetails',
+  async (updateSeparationTimeLine: SeparationTimeLine, thunkApi) => {
+    try {
+      return await resignationListApi.updateResignationTimeLine(
+        updateSeparationTimeLine,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const curMonth = ''
+const status = 'All'
+const employeeStatus = ''
+
 const initialResignationListState: ResignationListSliceState = {
   resignationList: { size: 0, list: [] },
   isLoading: ApiLoadingState.idle,
@@ -213,6 +238,11 @@ const initialResignationListState: ResignationListSliceState = {
   toggle: '',
   getEmpDetailsType: {} as GetEmpDetailsType,
   submitExitFeedBackForm: {} as SubmitExitFeedBackForm,
+  selectMonthValue: curMonth,
+  statusValue: status,
+  employeeStatusValue: employeeStatus,
+  fromDate: '',
+  toDate: '',
 }
 
 const resignationListSlice = createSlice({
@@ -230,6 +260,30 @@ const resignationListSlice = createSlice({
     },
     removeClearanceDetails: (state) => {
       state.clearanceDetails = []
+    },
+    setMonthValue: (state, action) => {
+      state.selectMonthValue = action.payload
+    },
+    clearSelectMonth: (state) => {
+      state.selectMonthValue = ''
+    },
+    setStatusValue: (state, action) => {
+      state.statusValue = action.payload
+    },
+    clearStatusValue: (state) => {
+      state.statusValue = ''
+    },
+    setEmployeeStatusValue: (state, action) => {
+      state.employeeStatusValue = action.payload
+    },
+    clearEmployeeStatusValue: (state) => {
+      state.employeeStatusValue = ''
+    },
+    setFromDate: (state, action) => {
+      state.fromDate = action.payload
+    },
+    setToDate: (state, action) => {
+      state.toDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -302,6 +356,21 @@ const toggleValue = (state: RootState): string => state.resignationList.toggle
 const getEmpFeedBackDetails = (state: RootState): GetEmpDetailsType =>
   state.resignationList.getEmpDetailsType
 
+const getSelectedMonthValue = (state: RootState): string =>
+  state.resignationList.selectMonthValue
+
+const getSelectedStatusValue = (state: RootState): string =>
+  state.resignationList.statusValue
+
+const getSelectedEmployeeStatusValue = (state: RootState): string =>
+  state.resignationList.employeeStatusValue
+
+const getFromDateValue = (state: RootState): string | Date =>
+  state.resignationList.fromDate
+
+const getToDateValue = (state: RootState): string | Date =>
+  state.resignationList.toDate
+
 const resignationListThunk = {
   getResignationList,
   resignationIntitiateCC,
@@ -314,6 +383,7 @@ const resignationListThunk = {
   saveExitFeedBackForm,
   uploadRelievingLetter,
   uploadExitFeedBackFile,
+  updateResignationTimeLine,
 }
 
 const resignationListSelectors = {
@@ -327,6 +397,11 @@ const resignationListSelectors = {
   toggleValue,
   separationChartDetails,
   getEmpFeedBackDetails,
+  getSelectedMonthValue,
+  getSelectedStatusValue,
+  getSelectedEmployeeStatusValue,
+  getFromDateValue,
+  getToDateValue,
 }
 
 export const resignationListService = {

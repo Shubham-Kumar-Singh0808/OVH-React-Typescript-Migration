@@ -3,6 +3,8 @@ import {
   GetAllCycles,
   GetAllQuestions,
   GetQuestion,
+  NominationCycle,
+  NominationCycleDto,
   TotalResponse,
 } from '../../../../types/Settings/InitiateCycle/initiateCycleTypes'
 import {
@@ -82,6 +84,64 @@ const addQuestion = async ({
   return response.data
 }
 
+const addCycle = async ({
+  activateFlag,
+  cycleName,
+  endDate,
+  fromMonth,
+  startDate,
+  toMonth,
+}: {
+  activateFlag: boolean
+  cycleName: string | undefined
+  endDate: string | undefined
+  fromMonth: string | undefined
+  startDate: string | undefined
+  toMonth: string | undefined
+}): Promise<NominationCycle> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.addCycle,
+    method: AllowedHttpMethods.post,
+    data: {
+      activateFlag,
+      cycleName,
+      endDate,
+      fromMonth,
+      startDate,
+      toMonth,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const editCycle = async (cycleId: number): Promise<NominationCycleDto> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.editCycle,
+    method: AllowedHttpMethods.get,
+    params: {
+      cycleId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateCycle = async (
+  updateCycleData: NominationCycleDto,
+): Promise<NominationCycleDto> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: initiateCycleApiConfig.updateCycle,
+    method: AllowedHttpMethods.put,
+    data: updateCycleData,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const initiateCycleApi = {
   getActiveCycleData,
   getAllCycles,
@@ -89,6 +149,9 @@ const initiateCycleApi = {
   initiateCycle,
   deleteQuestion,
   addQuestion,
+  addCycle,
+  editCycle,
+  updateCycle,
 }
 
 export default initiateCycleApi

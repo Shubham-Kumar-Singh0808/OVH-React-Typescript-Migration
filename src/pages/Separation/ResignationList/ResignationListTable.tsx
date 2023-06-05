@@ -22,6 +22,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ResignationList } from '../../../types/Separation/ResignationList/resignationListTypes'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const ResignationListTable = ({
   paginationRange,
@@ -29,12 +30,22 @@ const ResignationListTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
+  Select,
+  employeeStatus,
+  selectCurrentPage,
+  selectFromDate,
+  selectToDate,
 }: {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  Select: string
+  employeeStatus: string
+  selectCurrentPage: number
+  selectFromDate: string
+  selectToDate: string
 }): JSX.Element => {
   const [isInitiateModalVisible, setIsInitiateModalVisible] = useState(false)
   const [toInitiateSeparationId, setToInitiateSeparationId] = useState(0)
@@ -84,26 +95,17 @@ const ResignationListTable = ({
     reduxServices.resignationList.selectors.resignationListSize,
   )
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.resignationList.getResignationList({
-        dateSelection: '',
-        empStatus: '',
-        endIndex: pageSize * currentPage,
-        from: '',
-        multiplesearch: '',
-        startIndex: pageSize * (currentPage - 1),
-        status: 'ALL',
-        to: '',
-      }),
-    )
-  }, [dispatch, pageSize, currentPage])
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
   }
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const handleShowInitiateResignationModal = (separationId: number) => {
     setToInitiateSeparationId(separationId)
     setIsInitiateModalVisible(true)
@@ -177,14 +179,26 @@ const ResignationListTable = ({
     ) {
       dispatch(
         reduxServices.resignationList.getResignationList({
-          dateSelection: '',
-          empStatus: '',
-          endIndex: pageSize * currentPage,
-          from: '',
+          dateSelection: Select || '',
+          empStatus: employeeStatus || '',
+          endIndex: pageSize * selectCurrentPage,
+          from: selectFromDate
+            ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
           multiplesearch: '',
-          startIndex: pageSize * (currentPage - 1),
-          status: 'ALL',
-          to: '',
+          startIndex: pageSize * (selectCurrentPage - 1),
+          status: status || 'All',
+          to: selectToDate
+            ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
         }),
       )
       dispatch(
@@ -228,7 +242,7 @@ const ResignationListTable = ({
               </Link>
             )}
             {userAccessITClearance?.viewaccess && (
-              <Link to={`/ClearanceCertificateManager`}>
+              <Link to={`/ClearanceCertificateIT`}>
                 <CTooltip content="IT">
                   <CButton
                     size="sm"
@@ -344,7 +358,9 @@ const ResignationListTable = ({
               getAllResignationList?.map((resignationItem, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {getItemNumber(index)}
+                    </CTableDataCell>
                     <CTableDataCell>
                       {resignationItem.employeeId}
                     </CTableDataCell>
@@ -352,6 +368,7 @@ const ResignationListTable = ({
                       <Link
                         to={`/employeeProfile/${resignationItem.employeeId}`}
                         className="employee-name"
+                        data-testid={`employee-profile-link${index}`}
                       >
                         {resignationItem.employeeName}
                       </Link>
@@ -377,7 +394,7 @@ const ResignationListTable = ({
                             <CTooltip content="Timeline">
                               <CButton
                                 color="info"
-                                className="btn-ovh me-2"
+                                className="btn-ovh-employee-list"
                                 data-testid="history-btn"
                                 onClick={() =>
                                   resignationHistoryButtonHandler(

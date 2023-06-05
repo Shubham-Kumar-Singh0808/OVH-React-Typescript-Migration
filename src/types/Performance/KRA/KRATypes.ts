@@ -1,4 +1,5 @@
 import React from 'react'
+import { ModalContent } from '../../../pages/Performance/KRA/KRAConstants'
 import { LoadingState } from '../../commonTypes'
 
 export interface KRATableItemProps {
@@ -7,7 +8,7 @@ export interface KRATableItemProps {
   selectedKRA: KRATableDataItem
   setIsIconVisible: React.Dispatch<React.SetStateAction<boolean>>
   setSelectedKRAId: React.Dispatch<React.SetStateAction<number>>
-  setModalDescription: React.Dispatch<React.SetStateAction<string>>
+  setModalDescription: React.Dispatch<React.SetStateAction<ModalContent>>
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setIsDeleteModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   setDeleteThisKRA: React.Dispatch<React.SetStateAction<number | undefined>>
@@ -93,6 +94,10 @@ export interface KRATableProps {
 export interface KRAFilterOptionsProps {
   currentPage: number
   pageSize: number
+  selectedDepartment: string
+  selectedDesignation: string
+  setSelectedDepartment: React.Dispatch<React.SetStateAction<string>>
+  setSelectedDesignation: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type Frequency = {
@@ -110,6 +115,7 @@ export interface KRAInitialState {
   krasQuery: KRADataQueryBody
   kraDesigPercentage: number
   isNewKRADuplicate: boolean
+  isNewKpiDuplicate: boolean
   editThisKra: KRATableDataItem
   editThisKpi: IncomingKPIDataItem
   currentOnScreenPage: KRAPages
@@ -162,6 +168,10 @@ export interface KRADesignationPercentageQuery {
 export interface NewKRADuplicateCheckQuery
   extends KRADesignationPercentageQuery {
   kraName: string
+}
+export type NewKPiDuplicateCheckQuery = {
+  id: number
+  name: string
 }
 
 export interface NewKRABody {

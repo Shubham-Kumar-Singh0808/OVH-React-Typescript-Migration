@@ -20,7 +20,7 @@ const mockSetTogglePage = jest.fn()
 
 describe('Add Question without data', () => {
   beforeEach(() => {
-    render(<AddQuestion setToggle={mockSetTogglePage} />, {
+    render(<AddQuestion />, {
       preloadedState: {
         initiateCycle: {
           isLoading: ApiLoadingState.succeeded,
@@ -58,7 +58,7 @@ describe('Add Question without data', () => {
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
-    expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
+    expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
   })
   test('should render clear inputs', () => {
     userEvent.click(screen.getByRole('button', { name: 'Add' }))

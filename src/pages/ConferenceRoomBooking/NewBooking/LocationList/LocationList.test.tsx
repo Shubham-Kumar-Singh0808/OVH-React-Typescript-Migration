@@ -26,7 +26,7 @@ describe('Add Location List without data', () => {
   })
   afterEach(cleanup)
   test('should able to select values for options for respective select element', () => {
-    const location = screen.getByTestId('locationName')
+    const location = screen.getByTestId('LocationName')
     userEvent.type(location, 'testing')
     expect(location).toHaveValue('testing')
 
@@ -35,7 +35,7 @@ describe('Add Location List without data', () => {
     userEvent.click(addBtnElement)
   })
   test('should display error message, when user enters already existing location', async () => {
-    const inputElement = screen.getByTestId('locationName')
+    const inputElement = screen.getByTestId('LocationName')
     userEvent.type(inputElement, 'Skype')
     await waitFor(() => {
       expect(

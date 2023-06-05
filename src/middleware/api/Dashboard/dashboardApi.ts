@@ -56,6 +56,15 @@ const getFinancialYear = async (): Promise<number | undefined> => {
   return response.data
 }
 
+const imageFix = async (): Promise<string | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: dashboardApiConfig.imageFix,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const searchEmployee = async (
   searchValue: string,
 ): Promise<employeeProfileData[]> => {
@@ -76,6 +85,7 @@ const dashboardApi = {
   getUpcomingBirthdayAnniversaries,
   getFinancialYear,
   searchEmployee,
+  imageFix,
 }
 
 export default dashboardApi

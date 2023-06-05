@@ -8,6 +8,7 @@ import {
   CButton,
   CRow,
   CCol,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -34,6 +35,7 @@ const ChangeRequestTable = ({
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteChangeRequest, setToDeleteChangeRequest] = useState(0)
+  const [duration, setDuration] = useState<string>()
   const changeRequestList = useTypedSelector(
     reduxServices.projectChangeRequest.selectors.projectChangeRequest,
   )
@@ -68,9 +70,10 @@ const ChangeRequestTable = ({
     setCurrentPage(1)
   }
 
-  const handleShowDeleteModal = (skillId: number) => {
+  const handleShowDeleteModal = (skillId: number, durationId: string) => {
     setToDeleteChangeRequest(skillId)
     setIsDeleteModalVisible(true)
+    setDuration(durationId)
   }
 
   const handleConfirmDeleteChangeRequest = async () => {
@@ -111,16 +114,28 @@ const ChangeRequestTable = ({
         projectid: String(projectId),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
+
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="mt-3 table-layout-fixed changeRequest-table">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Duration</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Description</CTableHeaderCell>
+            <CTableHeaderCell className="sh-index" scope="col">
+              #
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-name" scope="col">
+              Name
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-Duration" scope="col">
+              Duration
+            </CTableHeaderCell>
+            <CTableHeaderCell className="sh-description" scope="col">
+              Description
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -130,30 +145,38 @@ const ChangeRequestTable = ({
             changeRequestList?.map((item, index) => {
               return (
                 <CTableRow key={index}>
-                  <CTableDataCell scope="row">{index + 1}</CTableDataCell>
+                  <CTableDataCell scope="row">
+                    {getItemNumber(index)}
+                  </CTableDataCell>
                   <CTableDataCell>{item.name}</CTableDataCell>
                   <CTableDataCell>{item.duration}</CTableDataCell>
                   <CTableDataCell>{item.descripition}</CTableDataCell>
                   <CTableDataCell>
                     {userAccessChangeRequestEditDelete?.updateaccess && (
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => {
-                          editChangeRequestButtonHandler(item)
-                        }}
-                      >
-                        <i className="fa fa-pencil-square-o"></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          onClick={() => {
+                            editChangeRequestButtonHandler(item)
+                          }}
+                        >
+                          <i className="fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userAccessChangeRequestEditDelete?.deleteaccess && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => handleShowDeleteModal(item.id)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          onClick={() =>
+                            handleShowDeleteModal(item.id, item.duration)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>
@@ -211,7 +234,10 @@ const ChangeRequestTable = ({
         cancelButtonText="No"
         confirmButtonAction={handleConfirmDeleteChangeRequest}
       >
-        {`Do you really want to delete this ?`}
+        <>
+          Do you really want to delete this <strong>{duration}</strong> Change
+          request?
+        </>
       </OModal>
     </>
   )

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useHistory, useParams } from 'react-router-dom'
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import {
@@ -10,9 +10,11 @@ import {
   CFormCheck,
   CFormLabel,
   CFormSelect,
+  CFormInput,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import validator from 'validator'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OAutoComplete from '../../../../../components/ReusableComponent/OAutoComplete'
 import { GetList } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
@@ -26,18 +28,13 @@ import {
 } from '../../../../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
 import OInputField from '../../../../../components/ReusableComponent/OInputField'
 import OSelectList from '../../../../../components/ReusableComponent/OSelectList'
-import {
-  isEmail,
-  listComposer,
-  showIsRequired,
-} from '../../../../../utils/helper'
+import { listComposer, showIsRequired } from '../../../../../utils/helper'
 import { dateFormat } from '../../../../../constant/DateFormat'
 import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
 import {
   healthList,
   priceModelList,
 } from '../../../../../constant/constantData'
-import OBackButton from '../../../../../components/ReusableComponent/OBackButton'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
 
@@ -47,6 +44,9 @@ interface TypesObject {
 
 const EditProject = (): JSX.Element => {
   const { projectId } = useParams<{ projectId: string }>()
+  const [emailError, setEmailError] = useState<boolean>(false)
+  const [billingContactPersonEmailError, setBillingContactPersonEmailError] =
+    useState<boolean>(false)
   const dispatch = useAppDispatch()
   const history = useHistory()
   const classNameStyle = 'col-sm-3 col-form-label text-end'
@@ -71,6 +71,20 @@ const EditProject = (): JSX.Element => {
     reduxServices.projectManagement.selectors.project,
   )
 
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
+  const validateBillingContactEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setBillingContactPersonEmailError(false)
+    } else {
+      setBillingContactPersonEmailError(true)
+    }
+  }
   useEffect(() => {
     if (
       project.client !== '' &&
@@ -97,8 +111,8 @@ const EditProject = (): JSX.Element => {
       project.domain != null &&
       project.startdate !== '' &&
       project.startdate != null &&
-      !isEmail(project.projectContactEmail) &&
-      !isEmail(project.billingContactPersonEmail)
+      !emailError &&
+      !billingContactPersonEmailError
     ) {
       setUpdateBtn(true)
     } else {
@@ -206,7 +220,18 @@ const EditProject = (): JSX.Element => {
     } as GetAutoCompleteList
   })
 
-  const clientOrganizationList = projectClients
+  const sortedDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {
@@ -252,24 +277,10 @@ const EditProject = (): JSX.Element => {
     })
   }
 
-  const handleCustomerEmail = (value: string) => {
-    setProject({
-      ...project,
-      projectContactEmail: value,
-    })
-  }
-
   const handleBillingPerson = (value: string) => {
     setProject({
       ...project,
       billingContactPerson: value,
-    })
-  }
-
-  const handleBillingPersonEmail = (value: string) => {
-    setProject({
-      ...project,
-      billingContactPersonEmail: value,
     })
   }
 
@@ -381,6 +392,33 @@ const EditProject = (): JSX.Element => {
       : project.model.charAt(0).toUpperCase() +
         project.model.slice(1).toLowerCase()
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'projectContactEmail') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setProject((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else if (name === 'billingContactPersonEmail') {
+      const billingPersonEmail = value
+      validateBillingContactEmail(billingPersonEmail)
+      setProject((prevState) => {
+        return { ...prevState, ...{ [name]: billingPersonEmail } }
+      })
+    } else {
+      setProject((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+  const projectContactEmail =
+    project.projectContactEmail && !emailError ? 'text-white' : 'text-danger'
+  const billingContactPersonEmail =
+    project.billingContactPersonEmail && !billingContactPersonEmailError
+      ? 'text-white'
+      : 'text-danger'
+  console.log(project.client)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -391,7 +429,19 @@ const EditProject = (): JSX.Element => {
       {Object.keys(project).length > 0 ? (
         <>
           <CRow className="justify-content-end">
-            <OBackButton destination="/projectreport" name="back" />
+            <CRow className="justify-content-end">
+              <CCol md={4}>
+                <Link to="/projectreport">
+                  <CButton
+                    color="info"
+                    className="btn-ovh me-1 add-project-back-btn"
+                    data-testid="toggle-back-button"
+                  >
+                    <i className="fa fa-arrow-left  me-1"></i>Back
+                  </CButton>
+                </Link>
+              </CCol>
+            </CRow>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <ClientOrganization
                 list={clientOrganizationList}
@@ -401,46 +451,61 @@ const EditProject = (): JSX.Element => {
               <ProjectName
                 onChange={setProjectName}
                 onBlur={handleProjectName}
-                value={projectName}
+                value={projectName?.replace(/^\s*/, '')}
               />
               <OInputField
                 onChangeHandler={handleCustomerContactName}
-                value={project.projectContactPerson}
+                value={project.projectContactPerson?.replace(/^\s*/, '')}
                 isRequired={true}
                 label={'Customer Contact Name'}
                 name={'customerContactName'}
                 placeholder={'Name'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
-              <OInputField
-                onChangeHandler={handleCustomerEmail}
-                value={project.projectContactEmail}
-                isRequired={true}
-                type="email"
-                label={'Customer Email'}
-                name={'customerEmail'}
-                placeholder={'Email'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
-              />
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className="col-sm-3 col-form-label text-end">
+                  Customer Email :<span className={projectContactEmail}>*</span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    data-testid="email-address"
+                    type="email"
+                    name="projectContactEmail"
+                    autoComplete="off"
+                    placeholder="Email"
+                    value={project.projectContactEmail}
+                    onChange={handleInputChange}
+                  />
+                </CCol>
+              </CRow>
               <OInputField
                 onChangeHandler={handleBillingPerson}
-                value={project.billingContactPerson}
+                value={project.billingContactPerson?.replace(/^\s*/, '')}
                 isRequired={true}
                 label={'Billing Contact Person'}
                 name={'billingContactPerson'}
                 placeholder={'Name'}
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
-              <OInputField
-                onChangeHandler={handleBillingPersonEmail}
-                value={project.billingContactPersonEmail}
-                isRequired={true}
-                type="email"
-                label={'Billing Contact Person Email'}
-                name={'billingContactPersonEmail'}
-                placeholder={'Email Id'}
-                dynamicFormLabelProps={dynamicFormLabelProps}
-              />
+              <CRow className="mt-4 mb-4">
+                <CFormLabel className="col-sm-3 col-form-label text-end">
+                  Billing Contact Person Email :
+                  <span className={billingContactPersonEmail}>*</span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    data-testid="email-address"
+                    type="email"
+                    name="billingContactPersonEmail"
+                    autoComplete="off"
+                    placeholder="Email Id"
+                    value={project.billingContactPersonEmail}
+                    onChange={handleInputChange}
+                  />
+                </CCol>
+              </CRow>
               <OSelectList
                 isRequired={true}
                 list={priceModelList}
@@ -526,7 +591,7 @@ const EditProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  Start Date:
+                  Start Date :
                   <span className={showIsRequired(project.startdate)}>*</span>
                 </CFormLabel>
                 <CCol sm={3}>
@@ -543,6 +608,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectstartdate"
                     value={project.startdate}
                     onChange={(date: Date) => onHandleStartDate(date)}
+                    autoComplete="off"
                   />
                 </CCol>
               </CRow>
@@ -553,7 +619,7 @@ const EditProject = (): JSX.Element => {
                     classNameStyle,
                   )}
                 >
-                  End Date:
+                  End Date :
                 </CFormLabel>
                 <CCol sm={3}>
                   <DatePicker
@@ -569,6 +635,7 @@ const EditProject = (): JSX.Element => {
                     name="editprojectenddate"
                     value={project.enddate}
                     onChange={(date: Date) => onHandleEndDate(date)}
+                    autoComplete="off"
                   />
                   <span></span>
                 </CCol>
@@ -585,7 +652,7 @@ const EditProject = (): JSX.Element => {
                   data-testId="editHealthLabel"
                   {...dynamicFormLabelProps('health', classNameStyle)}
                 >
-                  Health:
+                  Health :
                 </CFormLabel>
                 <CCol sm={3}>
                   <CFormSelect
@@ -622,13 +689,14 @@ const EditProject = (): JSX.Element => {
                 name="editHiveProjectName"
                 placeholder="Project Name in Hive"
                 dynamicFormLabelProps={dynamicFormLabelProps}
+                autoComplete={'off'}
               />
               <CRow className="mt-4 mb-4">
                 <CFormLabel
                   data-testId="descriptionLabel"
                   {...dynamicFormLabelProps('description', classNameStyle)}
                 >
-                  Description:
+                  Description :
                 </CFormLabel>
                 <CCol sm={9}>
                   <CKEditor<{

@@ -2,11 +2,11 @@ import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type GetAllEmployeesNames = {
   id: number
-  profilePicPath: string
-  firstName: string
-  lastName: string
-  emailId: string
-  designation: string
+  profilePicPath?: string
+  firstName?: string
+  lastName?: string
+  emailId?: string
+  designation?: string
   fullName: string
 }
 export type GetAllProjects = {

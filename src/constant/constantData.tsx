@@ -1,7 +1,7 @@
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
 
 export const priceModelList: GetList[] = [
-  { id: 1, name: 'Fixed Bid' },
+  { id: 1, name: 'FixedBid' },
   { id: 2, name: 'Retainer' },
   { id: 3, name: 'Support' },
   { id: 4, name: 'T&M' },
@@ -82,10 +82,6 @@ export const reviewRatings = [
   {
     value: 5,
     text: '5',
-  },
-  {
-    value: 6,
-    text: '6',
   },
   {
     value: 6,

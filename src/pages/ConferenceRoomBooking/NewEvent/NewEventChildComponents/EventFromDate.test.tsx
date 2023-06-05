@@ -19,7 +19,7 @@ describe('New Event FromDate Component', () => {
   })
 
   test('should be able to render Event FromDate label', () => {
-    expect(screen.getByText('From Date:')).toBeInTheDocument()
+    expect(screen.getByText('From Date :')).toBeInTheDocument()
   })
 
   test('should render date picker', () => {

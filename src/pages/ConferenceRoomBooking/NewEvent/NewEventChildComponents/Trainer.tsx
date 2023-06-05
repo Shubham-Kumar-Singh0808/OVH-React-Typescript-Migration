@@ -1,5 +1,5 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Autocomplete from 'react-autocomplete'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -12,14 +12,19 @@ import {
 const Trainer = ({
   allEmployeesProfiles,
   onSelectTrainer,
+  shouldReset,
+  trainerAutoCompleteTarget,
+  setTrainerAutoCompleteTarget,
 }: {
   allEmployeesProfiles: LoggedEmployee[]
   onSelectTrainer: (value: TrainerDetails) => void
+  shouldReset: boolean
+  trainerAutoCompleteTarget: string | undefined
+  setTrainerAutoCompleteTarget: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
-  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
-    useState<string>()
 
   useEffect(() => {
     if (trainerAutoCompleteTarget) {
@@ -28,6 +33,10 @@ const Trainer = ({
       )
     }
   }, [trainerAutoCompleteTarget])
+
+  useEffect(() => {
+    if (shouldReset) setTrainerAutoCompleteTarget('')
+  }, [shouldReset])
 
   const onHandleSelectTrainer = (fullName: string) => {
     setTrainerAutoCompleteTarget(fullName)
@@ -44,7 +53,7 @@ const Trainer = ({
         className="col-sm-3 col-form-label text-end"
         data-testid="pmLabel"
       >
-        Trainer:
+        Trainer :
         <span className={trainerAutoCompleteTarget ? TextWhite : TextDanger}>
           *
         </span>

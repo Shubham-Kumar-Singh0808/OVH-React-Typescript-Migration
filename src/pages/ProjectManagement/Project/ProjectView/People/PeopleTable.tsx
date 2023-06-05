@@ -9,8 +9,9 @@ import {
   CFormSelect,
   CLink,
   CTableBody,
+  CTooltip,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
@@ -20,6 +21,7 @@ const PeopleTable = (): JSX.Element => {
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectViewDetails,
   )
+  const [isSaveButtonEnabled, setIsSaveButtonEnabled] = useState(false)
   const [isProjectAllocationEdit, setIsProjectAllocationEdit] =
     useState<boolean>(false)
   const [templateId, setTemplateId] = useState(0)
@@ -42,9 +44,17 @@ const PeopleTable = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditEmployeeAllocation((values) => {
-      return { ...values, ...{ [name]: value } }
-    })
+    if (name === 'allocation') {
+      let targetValue = value.replace(/\D/g, '')
+      if (Number(targetValue) > 100) targetValue = '100'
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: targetValue } }
+      })
+    } else {
+      setEditEmployeeAllocation((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
   }
 
   const editProjectAllocationButtonHandler = (
@@ -85,6 +95,15 @@ const PeopleTable = (): JSX.Element => {
   const cancelProjectAllocationButtonHandler = () => {
     setIsProjectAllocationEdit(false)
   }
+
+  useEffect(() => {
+    if (editAllocateProject.allocation?.replace(/^\s*/, '')) {
+      setIsSaveButtonEnabled(true)
+    } else {
+      setIsSaveButtonEnabled(false)
+    }
+  }, [editAllocateProject.allocation])
+
   return (
     <>
       <CTable striped responsive className="sh-project-report-details">
@@ -117,15 +136,17 @@ const PeopleTable = (): JSX.Element => {
             <CTableHeaderCell scope="col" className="profile-tab-content">
               Current Status
             </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Actions
-            </CTableHeaderCell>
+            {userAccessEditPeople?.updateaccess && (
+              <CTableHeaderCell scope="col" className="profile-tab-content">
+                Actions
+              </CTableHeaderCell>
+            )}
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {getProjectDetail?.length > 0 &&
             getProjectDetail?.map((project, i) => {
-              const billable = project.billable ? 'yes' : 'No'
+              const billable = project.billable ? 'Yes' : 'No'
               const allocated = project.isAllocated
                 ? 'Allocated'
                 : 'De-Allocated'
@@ -150,6 +171,9 @@ const PeopleTable = (): JSX.Element => {
                           id="allocation"
                           data-testid="template-input"
                           name="allocation"
+                          maxLength={3}
+                          max={100}
+                          autoComplete="off"
                           value={editAllocateProject.allocation}
                           onChange={handleEditProjectAllocationHandler}
                         />
@@ -162,7 +186,7 @@ const PeopleTable = (): JSX.Element => {
                   )}
                   {isProjectAllocationEdit &&
                   project.employeeId === templateId ? (
-                    <CTableDataCell scope="row">
+                    <CTableDataCell scope="row" style={{ width: '90px' }}>
                       <div className="edit-time-control">
                         <CFormSelect
                           aria-label="Default select example"
@@ -175,7 +199,7 @@ const PeopleTable = (): JSX.Element => {
                           }
                           onChange={handleEditProjectAllocationHandler}
                         >
-                          <option value="true">yes</option>
+                          <option value="true">Yes</option>
                           <option value="false">No</option>
                         </CFormSelect>
                       </div>
@@ -185,7 +209,7 @@ const PeopleTable = (): JSX.Element => {
                   )}
                   {isProjectAllocationEdit &&
                   project.employeeId === templateId ? (
-                    <CTableDataCell scope="row">
+                    <CTableDataCell scope="row" style={{ width: '150px' }}>
                       <div className="edit-time-control">
                         <CFormSelect
                           aria-label="Default select example"
@@ -206,52 +230,66 @@ const PeopleTable = (): JSX.Element => {
                   ) : (
                     <CTableDataCell>{allocated}</CTableDataCell>
                   )}
-                  <CTableDataCell scope="row">
-                    {isProjectAllocationEdit &&
-                    project.employeeId === templateId ? (
-                      <>
-                        <CButton
-                          color="success"
-                          className="btn-ovh me-1 mb-1"
-                          onClick={saveProjectAllocationHandler}
-                        >
-                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                        </CButton>
-                        <CButton
-                          color="warning"
-                          data-testid="cancel-btn"
-                          className="btn-ovh me-1 mb-1"
-                          onClick={cancelProjectAllocationButtonHandler}
-                        >
-                          <i className="fa fa-times" aria-hidden="true"></i>
-                        </CButton>
-                      </>
-                    ) : (
-                      <>
-                        {userAccessEditPeople?.updateaccess && (
+
+                  {isProjectAllocationEdit &&
+                  project.employeeId === templateId ? (
+                    <>
+                      <CTableDataCell scope="row" style={{ width: '100px' }}>
+                        <CTooltip content="Save">
                           <CButton
-                            color="info btn-ovh me-2"
-                            data-testid="edit-btn"
-                            onClick={() => {
-                              editProjectAllocationButtonHandler(project)
-                            }}
+                            color="success"
+                            className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                            onClick={saveProjectAllocationHandler}
+                            disabled={!isSaveButtonEnabled}
                           >
-                            <i className="fa fa-pencil-square-o"></i>
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
                           </CButton>
-                        )}
-                      </>
-                    )}
-                  </CTableDataCell>
+                        </CTooltip>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="warning"
+                            data-testid="cancel-btn"
+                            className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                            onClick={cancelProjectAllocationButtonHandler}
+                          >
+                            <i className="fa fa-times" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      </CTableDataCell>
+                    </>
+                  ) : (
+                    <>
+                      {userAccessEditPeople?.updateaccess && (
+                        <CTableDataCell scope="row" style={{ width: '100px' }}>
+                          <CTooltip content="Edit">
+                            <CButton
+                              className="btn-ovh-employee-list btn-ovh me-1 mb-1"
+                              color="info btn-ovh me-2"
+                              data-testid="edit-btn"
+                              onClick={() => {
+                                editProjectAllocationButtonHandler(project)
+                              }}
+                            >
+                              <i className="fa fa-pencil-square-o"></i>
+                            </CButton>
+                          </CTooltip>
+                        </CTableDataCell>
+                      )}
+                    </>
+                  )}
                 </CTableRow>
               )
             })}
         </CTableBody>
-        <strong>
-          {getProjectDetail?.length
-            ? `Total Records: ${getProjectDetail?.length}`
-            : `No Records found`}
-        </strong>
       </CTable>
+      <strong>
+        {getProjectDetail?.length
+          ? `Total Records: ${getProjectDetail?.length}`
+          : `No Records found`}
+      </strong>
     </>
   )
 }

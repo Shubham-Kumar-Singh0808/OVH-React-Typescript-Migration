@@ -101,7 +101,7 @@ const EmployeeAccounts = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="gap-2 d-md-flex justify-content-md-end">
-          <CCol sm={6} md={4}>
+          <CCol sm={3} md={3}>
             <CInputGroup className="global-search me-0 justify-content-md-end">
               <CFormInput
                 data-testid="searchField"

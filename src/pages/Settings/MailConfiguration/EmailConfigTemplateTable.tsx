@@ -8,6 +8,7 @@ import {
   CTableBody,
   CTableDataCell,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -153,33 +154,39 @@ const EmployeeEmailTemplateTable = ({
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {userEditAccess && (
-                      <CButton
-                        color="info btn-ovh me-2"
-                        data-testid="edit-btn22"
-                        onClick={() => {
-                          editTemplateButtonHandler({
-                            id: emailTemplate.id,
-                            templateName: emailTemplate.templateName,
-                            template: emailTemplate.template,
-                            templateTypeId: emailTemplate.templateTypeId,
-                            templateType: emailTemplate.templateType,
-                            assetTypeId: emailTemplate.assetTypeId,
-                            assetType: emailTemplate.assetType,
-                            email: emailTemplate.email,
-                          })
-                        }}
-                      >
-                        <i className="fa fa-pencil-square-o"></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-2"
+                          data-testid="edit-btn22"
+                          onClick={() => {
+                            editTemplateButtonHandler({
+                              id: emailTemplate.id,
+                              templateName: emailTemplate.templateName,
+                              template: emailTemplate.template,
+                              templateTypeId: emailTemplate.templateTypeId,
+                              templateType: emailTemplate.templateType,
+                              assetTypeId: emailTemplate.assetTypeId,
+                              assetType: emailTemplate.assetType,
+                              email: emailTemplate.email,
+                            })
+                          }}
+                        >
+                          <i className="fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userDeleteAccess && (
-                      <CButton
-                        data-testid={`btn-delete${index}`}
-                        color="danger btn-ovh me-2"
-                        onClick={() => handleShowDeleteModal(emailTemplate.id)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid={`btn-delete${index}`}
+                          color="danger btn-ovh me-2"
+                          onClick={() =>
+                            handleShowDeleteModal(emailTemplate.id)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>

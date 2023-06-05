@@ -10,11 +10,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
-import {
-  reviewListStatus,
-  employeeStatus,
-  reviewRatings,
-} from '../../../constant/constantData'
+import { employeeStatus, reviewRatings } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
@@ -24,11 +20,7 @@ import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/re
 
 const ReviewListFilterOptions = ({
   setIsTableView,
-  setFilterByDepartment,
-  setFilterByDesignation,
 }: {
-  setFilterByDepartment: (value: string) => void
-  setFilterByDesignation: (value: string) => void
   setIsTableView: (value: boolean) => void
   initialReviewList: ReviewListData
 }): JSX.Element => {
@@ -44,6 +36,7 @@ const ReviewListFilterOptions = ({
   const [selectRadio, setSelectRadio] = useState<string>('')
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
+  const [isChecked, setIsChecked] = useState<boolean>(false)
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
@@ -60,6 +53,13 @@ const ReviewListFilterOptions = ({
   )
 
   const dispatch = useAppDispatch()
+  const selectedItem = departments.filter(
+    (item) => item.departmentId === Number(selectDepartment),
+  )
+
+  const selectedDesignationItem = designations.filter(
+    (item) => item.id === Number(selectDesignation),
+  )
 
   useEffect(() => {
     if (cycle) {
@@ -101,10 +101,10 @@ const ReviewListFilterOptions = ({
   const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
     return dispatch(
       reduxServices.reviewList.getReviewList({
-        appraisalFormStatus: '',
-        cycleId: cycle as number,
-        departmentName: (selectDepartment as string) || '',
-        designationName: (selectDesignation as string) || '',
+        appraisalFormStatus: (selectStatus as string) || '',
+        cycleId: cycle === 'Custom' ? -1 : Number(cycle),
+        departmentName: selectedItem[0]?.departmentName || '',
+        designationName: selectedDesignationItem[0]?.name || '',
         empStatus: selectEmpstatus,
         employeeID: employeeId,
         endIndex: 20,
@@ -112,7 +112,6 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
-              day: '2-digit',
             })
           : '',
         ratings: [],
@@ -123,7 +122,6 @@ const ReviewListFilterOptions = ({
           ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
               year: 'numeric',
               month: 'numeric',
-              day: '2-digit',
             })
           : '',
       }),
@@ -131,8 +129,8 @@ const ReviewListFilterOptions = ({
   }
 
   const onViewHandler = () => {
-    setFilterByDepartment(selectDepartment as string)
-    setFilterByDesignation(selectDesignation as string)
+    setSelectedDepartment(selectDepartment as string)
+    setSelectDesignation(selectDesignation as string)
     setIsTableView(true)
     setShowExportButton(true)
     dispatchApiCall()
@@ -162,6 +160,7 @@ const ReviewListFilterOptions = ({
     setDateError(false)
     setSearchValue('')
     setShowExportButton(false)
+    setIsChecked(false)
   }
 
   const handleExportReviewList = async () => {
@@ -273,18 +272,22 @@ const ReviewListFilterOptions = ({
               setSelectStatus(e.target.value)
             }}
           >
-            {reviewListStatus?.map((status, index) => (
-              <option key={index} value={status.label}>
-                {status.name}
-              </option>
-            ))}
+            <option value="" selected>
+              Select Status
+            </option>
+            <option value="COMPLETED">Completed</option>
+            <option value="CLOSED">Closed</option>
+            <option value="OPENFORDISCUSSION">Needs Discussion</option>
+            <option value="PENDINGAGREEMENT">Needs Acknowledgement</option>
+            <option value="PENDING">Review Pending</option>
+            <option value="SAVE">Not-Submitted</option>
           </CFormSelect>
         </CCol>
       </CRow>
-      <CRow className="mt-4 justify-content-between">
+      <CRow className="mt-4">
         {cycle === 'Custom' && (
           <>
-            <CCol sm={2} className="ticket-from-date-col">
+            <CCol sm={3}>
               <CRow>
                 <CFormLabel>
                   From:
@@ -309,7 +312,6 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
-                            day: '2-digit',
                           },
                         )
                       : ''
@@ -320,7 +322,7 @@ const ReviewListFilterOptions = ({
                 />
               </CRow>
             </CCol>
-            <CCol sm={2} className="justify-content-md-end">
+            <CCol sm={3} className="justify-content-md-end">
               <CRow>
                 <CFormLabel>
                   To:
@@ -345,7 +347,6 @@ const ReviewListFilterOptions = ({
                           {
                             year: 'numeric',
                             month: '2-digit',
-                            day: '2-digit',
                           },
                         )
                       : ''
@@ -367,7 +368,12 @@ const ReviewListFilterOptions = ({
         )}
         <CCol sm={3}>
           <CFormLabel>Ratings:</CFormLabel>
-          <CMultiSelect options={reviewRatings} data-testid="ratings" />
+          <CMultiSelect
+            options={reviewRatings}
+            selectionType="counter"
+            data-testid="ratings"
+            className="py-1"
+          />
         </CCol>
         <CCol sm={3}>
           <CFormLabel>Employee Status :</CFormLabel>
@@ -433,6 +439,8 @@ const ReviewListFilterOptions = ({
         setSearchValue={setSearchValue}
         searchButtonOnKeyDown={searchButtonOnKeyDown}
         searchBtnHandler={searchBtnHandler}
+        isChecked={isChecked}
+        setIsChecked={setIsChecked}
       />
     </>
   )

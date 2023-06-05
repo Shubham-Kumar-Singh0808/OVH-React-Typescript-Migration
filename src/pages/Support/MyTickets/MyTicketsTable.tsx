@@ -9,6 +9,7 @@ import {
   CLink,
   CCol,
   CRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -49,6 +50,13 @@ const MyTicketsTable = ({
 
   const listSize = useTypedSelector(
     reduxServices.tickets.selectors.allTicketsListSize,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToMyTickets = userAccessToFeatures?.find(
+    (feature) => feature.name === 'My Tickets',
   )
 
   const isLoading = useTypedSelector(reduxServices.tickets.selectors.isLoading)
@@ -178,46 +186,54 @@ const MyTicketsTable = ({
                   <CTableDataCell>{ticket.approvalStatus}</CTableDataCell>
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>
-                    {userEditAccess && (
-                      <>
-                        <Link to={`/updateTicket/${ticket.id}`}>
+                    <>
+                      <Link to={`/updateTicket/${ticket.id}`}>
+                        {userEditAccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info"
+                              className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                              disabled={ticket.approvalStatus === 'Cancelled'}
+                              data-testid="edit-btn"
+                            >
+                              <i
+                                className="fa fa-pencil-square-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                      </Link>
+                      {userAccessToMyTickets?.deleteaccess && (
+                        <CTooltip content="Cancel">
                           <CButton
-                            color="info"
-                            className="btn-ovh me-2"
+                            color="btn btn-warning"
+                            className="btn-ovh-employee-list me-1"
+                            data-testid="cancel-btn"
+                            onClick={() => handleCancelTicketModal(ticket.id)}
                             disabled={ticket.approvalStatus === 'Cancelled'}
-                            data-testid="edit-btn"
                           >
                             <i
-                              className="fa fa-pencil-square-o"
+                              className="fa fa-times text-white"
                               aria-hidden="true"
                             ></i>
                           </CButton>
-                        </Link>
-                        <CButton
-                          color="btn btn-warning"
-                          className="btn-ovh me-2"
-                          data-testid="cancel-btn"
-                          onClick={() => handleCancelTicketModal(ticket.id)}
-                          disabled={ticket.approvalStatus === 'Cancelled'}
-                        >
-                          <i
-                            className="fa fa-times text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
-                      </>
-                    )}
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-2"
-                      data-testid="history-btn"
-                      onClick={() => handleTicketHistoryClick(ticket.id)}
-                    >
-                      <i
-                        className="fa fa-bar-chart text-white"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                        </CTooltip>
+                      )}
+                    </>
+                    <CTooltip content="Timeline">
+                      <CButton
+                        color="info"
+                        className="btn-ovh-employee-list me-1"
+                        data-testid="history-btn"
+                        onClick={() => handleTicketHistoryClick(ticket.id)}
+                      >
+                        <i
+                          className="fa fa-bar-chart text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -273,11 +289,13 @@ const MyTicketsTable = ({
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: ticketSubject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: ticketSubject,
+              }}
+            />
+          </span>
         </p>
       </OModal>
       <OModal

@@ -10,7 +10,7 @@ export const KRAFormLabelClass = 'col-sm-3 col-form-label text-end'
 
 export const regexAlphanumeric = /^[\w\-\s]+$/
 export const regexNumberOnly = /^\d\d[1-9]$/ ///[^1-9]\d/gi
-
+export type ModalContent = string | JSX.Element | JSX.Element[]
 export const getDepartmentId = (
   list: IncomingEmployeeDepartment[],
   name: string,

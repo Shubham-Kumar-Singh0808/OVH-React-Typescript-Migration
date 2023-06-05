@@ -13,11 +13,11 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { ClientStatus } from '../../../types/ProjectManagement/Clients/clientsTypes'
 
 const ClientFilterOptions = ({
-  currentPage,
-  pageSize,
+  setCurrentPage,
+  setPageSize,
 }: {
-  currentPage: number
-  pageSize: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -25,6 +25,13 @@ const ClientFilterOptions = ({
 
   const selectedClientStatus = useTypedSelector(
     reduxServices.clients.selectors.selectedClientStatus,
+  )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessAddClients = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Clients',
   )
 
   const handleChangeSelectedClientStatus = (
@@ -36,6 +43,8 @@ const ClientFilterOptions = ({
       ),
     )
     setSearchInput('')
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const searchButtonHandlerOnKeyDown = (
@@ -44,25 +53,28 @@ const ClientFilterOptions = ({
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.clients.searchClients({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
+          startIndex: 0,
+          endIndex: 20,
           selectionStatus: selectedClientStatus,
           searchText: searchInput,
         }),
       )
+      setCurrentPage(1)
+      setPageSize(20)
     }
   }
 
-  const searchButtonHandler = (e: React.SyntheticEvent) => {
-    e.preventDefault()
+  const searchButtonHandler = () => {
     dispatch(
       reduxServices.clients.searchClients({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
+        startIndex: 0,
+        endIndex: 20,
         selectionStatus: selectedClientStatus,
         searchText: searchInput,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   return (
@@ -71,10 +83,12 @@ const ClientFilterOptions = ({
         <CCol md={12} className="pe-0">
           <div className="form-group pull-right ms-4">
             <Link to="/addClient">
-              <CButton color="info" className="text-white btn-ovh" size="sm">
-                <i className="fa fa-plus me-1"></i>
-                Add Client
-              </CButton>
+              {userAccessAddClients?.createaccess && (
+                <CButton color="info" className="text-white btn-ovh" size="sm">
+                  <i className="fa fa-plus me-1"></i>
+                  Add Client
+                </CButton>
+              )}
             </Link>
           </div>
           <div className="col-sm-3 col-xs-12 pull-right me-2">
@@ -83,7 +97,7 @@ const ClientFilterOptions = ({
                 placeholder="Search here"
                 aria-label="Search here"
                 aria-describedby="button-addon2"
-                value={searchInput}
+                value={searchInput?.replace(/^\s*/, '')}
                 onChange={(e) => {
                   setSearchInput(e.target.value)
                 }}
@@ -95,7 +109,7 @@ const ClientFilterOptions = ({
                 color="info"
                 id="button-addon2"
                 onClick={searchButtonHandler}
-                disabled={!searchInput}
+                disabled={!searchInput?.replace(/^\s*/, '')}
               >
                 <i className="fa fa-search"></i>
               </CButton>

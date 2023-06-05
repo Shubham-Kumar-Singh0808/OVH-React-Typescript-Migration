@@ -1,35 +1,57 @@
 import { CTableRow, CTableDataCell } from '@coreui/react-pro'
 import React from 'react'
-import { EmployeeProjectDetailsEntryInterface } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 import { localeDateFormat } from '../../../utils/dateFormatUtils'
 
-const EmployeeProjectDetailsEntry = (
-  props: EmployeeProjectDetailsEntryInterface,
-): JSX.Element => {
+const EmployeeProjectDetailsEntry = (): JSX.Element => {
+  const projectDetails = useTypedSelector(
+    reduxServices.employeeProjects.selectors.projectDetails,
+  )
+
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+  const employeeDetails = projectDetails?.filter(
+    (item) => item.employeeId === Number(employeeId),
+  )
+
   return (
-    <CTableRow>
-      <CTableDataCell scope="row">{props.id}</CTableDataCell>
-      <CTableDataCell scope="row">
-        {props.projectDetails.empFirstName +
-          ' ' +
-          props.projectDetails.empLastName}
-      </CTableDataCell>
-      <CTableDataCell scope="row">
-        {props.projectDetails.desigination}
-      </CTableDataCell>
-      <CTableDataCell scope="row">
-        {props.projectDetails.allocation}
-      </CTableDataCell>
-      <CTableDataCell scope="row">
-        {localeDateFormat(props.projectDetails.endDate as string)}
-      </CTableDataCell>
-      <CTableDataCell scope="row">
-        {props.projectDetails.billable ? 'Yes' : 'No'}
-      </CTableDataCell>
-      <CTableDataCell scope="row">
-        {props.projectDetails.isAllocated ? 'Allocated' : 'Not Allocated'}
-      </CTableDataCell>
-    </CTableRow>
+    <>
+      <CTableRow>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.employeeId}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.empFirstName +
+            ' ' +
+            employeeDetails[0]?.empLastName}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.desigination}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.allocation}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {localeDateFormat(employeeDetails[0]?.endDate)}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.billable ? 'Yes' : 'No'}
+        </CTableDataCell>
+        <CTableDataCell scope="row">
+          {employeeDetails[0]?.isAllocated ? 'Allocated' : 'Not Allocated'}
+        </CTableDataCell>
+
+        {/* {!employeeDetails?.length && isLoading !== ApiLoadingState.loading && (
+          <CCol className="text-start ms-4">
+            <CRow>
+              <h5>No Records Found... </h5>
+            </CRow>
+          </CCol>
+        )} */}
+      </CTableRow>
+    </>
   )
 }
 

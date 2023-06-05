@@ -4,8 +4,6 @@ import {
   CTableHeaderCell,
   CTable,
   CTableBody,
-  CTableDataCell,
-  CSpinner,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import EmployeeProjectDetailsEntry from './EmployeeProjectDetailsEntry'
@@ -53,7 +51,7 @@ const EmployeeProjectsDetail = (
 
   return (
     <>
-      <CTable className="mt-2 text-center profile-tab-table-size">
+      <CTable className="mt-2 text-left profile-tab-table-size">
         <CTableHead className="profile-tab-header">
           <CTableRow>
             <CTableHeaderCell className="profile-tab-content" scope="col">
@@ -81,16 +79,9 @@ const EmployeeProjectsDetail = (
         </CTableHead>
         <CTableBody>
           {projectDetails ? (
-            <EmployeeProjectDetailsEntry
-              id={props.projectId}
-              projectDetails={projectDetails}
-            />
+            <EmployeeProjectDetailsEntry />
           ) : (
-            <CTableRow color="default" className="text-center">
-              <CTableDataCell colSpan={7}>
-                <CSpinner data-testid="project-loader" />
-              </CTableDataCell>
-            </CTableRow>
+            <p>No Records Found...</p>
           )}
         </CTableBody>
       </CTable>

@@ -24,6 +24,7 @@ import {
 } from './NewEventChildComponents'
 import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
 import SlotsBooked from './NewEventChildComponents/SlotsBooked'
+import SelectedAttendees from './NewEventChildComponents/SelectedAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -36,6 +37,7 @@ import {
 } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
+import { ShouldResetNewBookingFields } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -91,8 +93,17 @@ const NewEvent = (): JSX.Element => {
     trainerName: trainerDetails,
   } as AddEvent
 
+  const initResetFields = {
+    projectName: false,
+    startEndTime: false,
+    trainer: false,
+  } as ShouldResetNewBookingFields
+
+  const [resetFields, setResetField] = useState(initResetFields)
+  const [showEditor, setShowEditor] = useState<boolean>(true)
   const [addEvent, setAddEvent] = useState(initEvent)
   const [descriptionValue, setDescriptionValue] = useState('')
+  const [dateError, setDateError] = useState<boolean>(false)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [attendeesList, setAttendeesList] = useState<Availability[]>([])
@@ -100,6 +111,19 @@ const NewEvent = (): JSX.Element => {
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
+  console.log(attendeesList)
+  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
+    useState<string>()
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -112,7 +136,7 @@ const NewEvent = (): JSX.Element => {
     if (addEvent.locationId)
       dispatch(reduxServices.newEvent.getRoomsByLocation(addEvent.locationId))
   }, [addEvent.locationId])
-
+  console.log(errorMessageCount)
   useEffect(() => {
     if (addEvent.startTime === '' && addEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -192,7 +216,6 @@ const NewEvent = (): JSX.Element => {
       }
     }
   }
-  // console.log(attendeesList)
 
   // onchange handlers
   const onHandleLocation = (value: string) => {
@@ -205,6 +228,7 @@ const NewEvent = (): JSX.Element => {
     setAddEvent({ ...addEvent, authorName: value })
   }
   const onSelectTrainer = (value: Author) => {
+    setResetField({ ...resetFields, trainer: false })
     setAddEvent({ ...addEvent, trainerName: value })
   }
   const onHandleEventType = (value: string) => {
@@ -223,12 +247,14 @@ const NewEvent = (): JSX.Element => {
     })
   }
   const onSelectStartAndEndTime = (val1: string, val2: string) => {
+    setResetField({ ...resetFields, startEndTime: false })
     setAddEvent({ ...addEvent, startTime: val1, endTime: val2 })
   }
   const onHandleDescription = (value: string) => {
     setDescriptionValue(value)
   }
   const onSelectProject = (value: string) => {
+    setResetField({ ...resetFields, projectName: false })
     setAddEvent({ ...addEvent, projectName: value })
   }
 
@@ -240,6 +266,18 @@ const NewEvent = (): JSX.Element => {
       setIsAttendeeErrorShow(false)
     }
   }
+  console.log(addEvent.startTime)
+
+  const failureValidationErrorToastMsg = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
+  const failureToastMsg = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
 
   const handleConfirmBtn = async () => {
     const startTimeSplit = addEvent.startTime.split(':')
@@ -251,7 +289,6 @@ const NewEvent = (): JSX.Element => {
     )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newAttendeesList = attendeesList.map(({ name, ...rest }) => {
-      console.log(name)
       return rest
     })
     const prepareObj = {
@@ -278,8 +315,107 @@ const NewEvent = (): JSX.Element => {
           ),
         )
       }
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Sorry, you missed the selected time..!!"
+          />,
+        ),
+      )
     }
   }
+
+  const validateBookingTimings = () => {
+    if (addEvent.startTime.split(':') < addEvent.endTime.split(':')) {
+      const startTimeSplit = addEvent.startTime.split(':')
+      const endTimeSplit = addEvent.endTime.split(':')
+      const start = new Date(
+        `${addEvent.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${addEvent.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
+        dispatch(
+          reduxServices.app.actions.addToast(failureValidationErrorToastMsg),
+        )
+      } else {
+        handleConfirmBtn()
+      }
+    } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(failureToastMsg))
+    }
+  }
+
+  const clearBtnHandler = () => {
+    setAddEvent(initEvent)
+    const shouldResetFields = {
+      projectName: true,
+      startEndTime: true,
+      trainer: true,
+    } as ShouldResetNewBookingFields
+    setResetField(shouldResetFields)
+    setIsAttendeeErrorShow(false)
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+    setAttendeesList([])
+  }
+  const commonFormatDate = 'l'
+
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(addEvent.fromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(addEvent.toDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      addEvent.fromDate &&
+      addEvent.toDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [addEvent.fromDate, addEvent.toDate])
+
+  useEffect(() => {
+    if (
+      trainerAutoCompleteTarget &&
+      addEvent.eventTypeId &&
+      addEvent?.startTime &&
+      addEvent?.endTime &&
+      addEvent?.toDate &&
+      addEvent?.agenda?.replace(/^\s*/, '')
+    ) {
+      setIsConfirmButtonEnabled(true)
+    } else {
+      setIsConfirmButtonEnabled(false)
+    }
+  }, [addEvent])
+  const attendeesResult = (
+    <CRow className="row d-flex justify-content-center">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
 
   return (
     <OCard
@@ -307,6 +443,9 @@ const NewEvent = (): JSX.Element => {
             <Trainer
               allEmployeesProfiles={allEmployeesProfiles}
               onSelectTrainer={onSelectTrainer}
+              shouldReset={resetFields.trainer as boolean}
+              trainerAutoCompleteTarget={trainerAutoCompleteTarget}
+              setTrainerAutoCompleteTarget={setTrainerAutoCompleteTarget}
             />
             <EventType
               eventTypeList={eventTypeList}
@@ -321,16 +460,33 @@ const NewEvent = (): JSX.Element => {
               toDateValue={addEvent.toDate as string}
               toDateChangeHandler={toDateChangeHandler}
             />
+            {dateError && (
+              <CRow className="mt-2">
+                <CCol sm={{ span: 6, offset: 3 }}>
+                  <span className="text-danger" data-testid="errorMessage">
+                    <b>End Date should be greater than Start Date</b>
+                  </span>
+                </CCol>
+              </CRow>
+            )}
             <StartTimeEndTime
               onSelectStartAndEndTime={onSelectStartAndEndTime}
+              shouldReset={resetFields.startEndTime}
             />
             <CRow className="mt-1 mb-3">
               <CFormLabel className="col-sm-3 col-form-label text-end">
-                Subject:
-                <span className={showIsRequired(addEvent.agenda)}>*</span>
+                Subject :
+                <span
+                  className={showIsRequired(
+                    addEvent.agenda?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
@@ -342,27 +498,38 @@ const NewEvent = (): JSX.Element => {
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
-              <CFormLabel className="col-sm-3 col-form-label text-end">
-                Description:
-                <span className={showIsRequired(descriptionValue)}>*</span>
+              <CFormLabel className="col-sm-3 col-form-label text-end p-18">
+                Description :
+                <span
+                  className={showIsRequired(
+                    descriptionValue?.replace(/^\s*/, ''),
+                  )}
+                >
+                  *
+                </span>
               </CFormLabel>
-              <CCol sm={8}>
-                <CKEditor<{
-                  onChange: CKEditorEventHandler<'change'>
-                }>
-                  initData={''}
-                  config={ckeditorConfig}
-                  debug={true}
-                  onChange={({ editor }) => {
-                    onHandleDescription(editor.getData().trim())
-                  }}
-                />
-              </CCol>
+              {showEditor ? (
+                <CCol sm={8}>
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={''}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      onHandleDescription(editor.getData().trim())
+                    }}
+                  />
+                </CCol>
+              ) : (
+                ''
+              )}
             </CRow>
             <SelectProject
               allProjects={allProjects}
               onSelectProject={onSelectProject}
               isProjectAndAttendeesEnable={isProjectAndAttendeesEnable}
+              shouldReset={resetFields.projectName}
             />
             <Attendees
               allEmployeesProfiles={allEmployeesProfiles}
@@ -377,21 +544,30 @@ const NewEvent = (): JSX.Element => {
               }
               setAttendeesAutoCompleteTarget={setAttendeesAutoCompleteTarget}
             />
-
-            {projectMembers?.length > 0 && (
-              <ProjectMembersSelection
-                addEvent={addEvent}
-                projectMembers={projectMembers}
-                attendeesList={attendeesList}
-                setAttendeesList={setAttendeesList}
-                selectProjectMember={selectProjectMember}
-                isErrorShow={isErrorShow}
-                setIsErrorShow={setIsErrorShow}
-                setIsAttendeeErrorShow={setIsAttendeeErrorShow}
-                checkIsAttendeeExists={checkIsAttendeeExists}
-              />
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0 ? (
+              <>
+                <ProjectMembersSelection
+                  addEvent={addEvent}
+                  projectMembers={projectMembers}
+                  attendeesList={attendeesList}
+                  setAttendeesList={setAttendeesList}
+                  selectProjectMember={selectProjectMember}
+                  setIsErrorShow={setIsErrorShow}
+                  setIsAttendeeErrorShow={setIsAttendeeErrorShow}
+                  checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
+                />
+              </>
+            ) : (
+              <></>
             )}
-
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
@@ -399,7 +575,8 @@ const NewEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
+                    onClick={validateBookingTimings}
+                    disabled={!isConfirmButtonEnabled || dateError}
                   >
                     Confirm
                   </CButton>
@@ -407,6 +584,7 @@ const NewEvent = (): JSX.Element => {
                     color="warning "
                     data-testid="clearBtn"
                     className="btn-ovh"
+                    onClick={clearBtnHandler}
                   >
                     Clear
                   </CButton>

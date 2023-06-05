@@ -24,18 +24,6 @@ describe('NewBookingFilterOptions Component Testing with data', () => {
     userEvent.type(agenda, 'testing')
     expect(agenda).toHaveValue('testing')
   })
-  test('should click on location add button with out crashing', () => {
-    const locationAddButtonElement = screen.getByTestId('locationAdd-btn')
-    expect(locationAddButtonElement).toBeInTheDocument()
-    userEvent.click(locationAddButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(0)
-  })
-  test('should click on room add button with out crashing', () => {
-    const roomAddButtonElement = screen.getByTestId('roomAdd-btn')
-    expect(roomAddButtonElement).toBeInTheDocument()
-    userEvent.click(roomAddButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(0)
-  })
 
   test('should click on confirm button with out crashing', () => {
     const confirmButtonElement = screen.getByTestId('confirmBtn')

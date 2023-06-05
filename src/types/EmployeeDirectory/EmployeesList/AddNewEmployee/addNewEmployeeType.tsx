@@ -137,6 +137,7 @@ export interface InputField extends DynamicFormLabelProps {
   label: string
   name: string
   placeholder: string
+  autoComplete: string
 }
 
 export interface FullNameChangeHandlerProp extends DynamicFormLabelProps {

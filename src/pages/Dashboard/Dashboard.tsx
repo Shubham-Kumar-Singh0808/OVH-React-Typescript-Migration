@@ -69,6 +69,7 @@ const Dashboard = (): JSX.Element => {
       }),
     )
     dispatch(reduxServices.employeeAchievements.getAllAchievements())
+    dispatch(reduxServices.employeeAchievements.imageFix())
   }, [dispatch])
 
   return (

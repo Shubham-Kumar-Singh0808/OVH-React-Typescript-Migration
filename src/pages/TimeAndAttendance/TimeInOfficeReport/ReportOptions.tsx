@@ -10,9 +10,14 @@ import {
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import timeInOfficeReportApi from '../../../middleware/api/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportApi'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { currentMonthDate, previousMonthDate } from '../../../utils/helper'
+import {
+  currentMonthDate,
+  downloadFile,
+  previousMonthDate,
+} from '../../../utils/helper'
 
 const ReportOptions = ({
   setSearchValue,
@@ -77,6 +82,15 @@ const ReportOptions = ({
 
   const clearButtonHandler = () => {
     setStartDate(undefined)
+  }
+
+  const handleExportAttendance = async () => {
+    const timeInOfficeListDownload =
+      await timeInOfficeReportApi.exportAttendanceReport({
+        hiveDate: selectedDate,
+        search: '',
+      })
+    downloadFile(timeInOfficeListDownload, 'timeInOfficeList.csv')
   }
 
   return (
@@ -154,7 +168,7 @@ const ReportOptions = ({
               color="info"
               className="text-white btn-ovh pull-right"
               size="sm"
-              // onClick={handleExportAttendance}
+              onClick={handleExportAttendance}
             >
               <i className="fa fa-plus me-1"></i>
               Click to Export Attendance

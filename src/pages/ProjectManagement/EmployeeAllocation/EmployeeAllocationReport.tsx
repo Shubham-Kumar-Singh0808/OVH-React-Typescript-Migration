@@ -5,6 +5,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 const EmployeeAllocation = (): JSX.Element => {
   const currentMonth = 'Current Month'
   const [Select, setSelect] = useState<string>(currentMonth)
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"

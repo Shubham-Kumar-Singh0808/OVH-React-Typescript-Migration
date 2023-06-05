@@ -71,7 +71,7 @@ describe('Employee Accounts Table Component Testing', () => {
     )
   })
   test('Should be able to see table titles', () => {
-    expect(screen.getByText('Payslip')).toBeInTheDocument()
+    expect(screen.getByText('PAYSLIP')).toBeInTheDocument()
     expect(screen.getByText('Name of the Employee')).toBeInTheDocument()
     expect(screen.getByText('No of Days in the Month')).toBeInTheDocument()
     expect(screen.getByText('Designation')).toBeInTheDocument()

@@ -5,13 +5,13 @@ import {
   CForm,
   CFormLabel,
   CFormSelect,
-  CFormText,
   CRow,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
+import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../stateStore'
 import {
@@ -19,8 +19,7 @@ import {
   LeadershipListQueryParameters,
   LeadershipListStatusFiltersEnums,
 } from '../../../../types/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentListTypes'
-import { commonDateFormat } from '../../../../utils/dateFormatUtils'
-import { emptyString, getFullDateForamatted } from '../../AchievementConstants'
+import { emptyString } from '../../AchievementConstants'
 
 const dateFilterList: string[] = [
   String(LeadershipListDateFiltersEnums.currentMonth),
@@ -67,6 +66,15 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
   const [selectedStatusOption, setSelectedStatusOption] = useState<string>(
     String(LeadershipListStatusFiltersEnums.new),
   )
+  const [dateErrorMsg, setDateErrorMsg] = useState<boolean>(false)
+
+  useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(fromDate, dateFormat).format(newDateFormatForIsBefore)
+    const end = moment(toDate, dateFormat).format(newDateFormatForIsBefore)
+
+    setDateErrorMsg(moment(end).isBefore(start))
+  }, [fromDate, toDate])
 
   useEffect(() => {
     if (
@@ -130,25 +138,21 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
     )
   }
 
-  const showDateError = compareDates(fromDate, toDate) ? (
-    <div data-testid="error-msg-date">
-      <CFormText className={TextDanger} style={{ fontWeight: 'bold' }}>
-        To date should be greater than From date
-      </CFormText>
-    </div>
-  ) : (
-    <></>
-  )
-
   const fromDateAsterix = fromDate === emptyString ? TextDanger : TextWhite
   const toDateAsterix = toDate === emptyString ? TextDanger : TextWhite
 
+  const onHandleFromDatePicker = (value: Date) => {
+    setFromDate(moment(value).format(dateFormat))
+  }
+  const onHandleToDatePicker = (value: Date) => {
+    setToDate(moment(value).format(dateFormat))
+  }
   return (
     <CForm onSubmit={viewButtonHandler}>
       <CContainer className="mt-2 ms-2 mb-4">
         <CRow className="justify-content-end">
           <CCol sm={2} md={1} className="text-end">
-            <CFormLabel data-testid="date-label" className="mt-1">
+            <CFormLabel data-testid="date-label" className="mt-2">
               Date:
             </CFormLabel>
           </CCol>
@@ -169,40 +173,42 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
           String(LeadershipListDateFiltersEnums.custom) ? (
             <>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel className="mt-1">From:</CFormLabel>
+                <CFormLabel className="mt-2">From:</CFormLabel>
                 <span className={fromDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
                   placeholderText="dd/mm/yyyy"
                   className="form-control form-control-sm sh-date-picker"
-                  value={getFullDateForamatted(fromDate)}
-                  onChange={(date: Date) => {
-                    setFromDate(moment(date).format(commonDateFormat))
-                  }}
+                  value={fromDate}
+                  onChange={(date: Date) => onHandleFromDatePicker(date)}
                 />
               </CCol>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel className="mt-1">To:</CFormLabel>
+                <CFormLabel className="mt-2">To:</CFormLabel>
                 <span className={toDateAsterix}>*</span>
               </CCol>
               <CCol sm={2}>
                 <ReactDatePicker
                   placeholderText="dd/mm/yyyy"
                   className="form-control form-control-sm sh-date-picker"
-                  value={getFullDateForamatted(toDate)}
-                  onChange={(date: Date) => {
-                    setToDate(moment(date).format(commonDateFormat))
-                  }}
+                  value={toDate}
+                  onChange={(date: Date) => onHandleToDatePicker(date)}
                 />
-                <CCol>{showDateError}</CCol>
+                <CCol>
+                  {dateErrorMsg && (
+                    <span className="text-danger" data-testid="errorMessage">
+                      <b>To date should be greater than From date</b>
+                    </span>
+                  )}
+                </CCol>
               </CCol>
             </>
           ) : (
             <CCol sm={6}></CCol>
           )}
           <CCol sm={2} md={1} className="text-end">
-            <CFormLabel data-testid="status-label" className="mt-1">
+            <CFormLabel data-testid="status-label" className="mt-2">
               Status:
             </CFormLabel>
           </CCol>
@@ -229,7 +235,7 @@ const LeadershipEnrollmentListFilterOptions = (): JSX.Element => {
             type="submit"
             className="btn-ovh me-1"
             color="success"
-            disabled={!isViewButtonEnabled}
+            disabled={!isViewButtonEnabled || dateErrorMsg}
           >
             View
           </CButton>

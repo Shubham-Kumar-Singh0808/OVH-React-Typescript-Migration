@@ -16,8 +16,7 @@ const NewBookingRoom = ({
   return (
     <>
       <CFormLabel className="col-sm-3 col-form-label text-end">
-        Room:
-        <span className={roomValue ? TextWhite : TextDanger}>*</span>
+        Room :<span className={roomValue ? TextWhite : TextDanger}>*</span>
       </CFormLabel>
       <CCol sm={6}>
         <CFormSelect

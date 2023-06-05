@@ -30,6 +30,7 @@ const AddProjectMileStone = ({
   percentageOnChange,
   setIsAddMileStoneButtonEnabled,
   isAddMilestoneButtonEnabled,
+  errorMessage,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
@@ -59,6 +60,7 @@ const AddProjectMileStone = ({
   ) => void
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
   isAddMilestoneButtonEnabled: boolean
+  errorMessage: number | null
 }): JSX.Element => {
   const [error, setError] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
@@ -140,31 +142,42 @@ const AddProjectMileStone = ({
     }
   }, [item.billable])
 
+  const errorToast = (
+    <OToast toastColor="danger" toastMessage="Milestone Title Already Exists" />
+  )
+  const onFocusOut = () => {
+    if (errorMessage === index) {
+      dispatch(reduxServices.app.actions.addToast(errorToast))
+    }
+  }
+
   return (
     <>
       <CTableBody>
-        <CTableDataCell scope="row" className="col-sm-2">
+        <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormInput
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
-            value={item.title}
+            value={item.title?.replace(/^\s*/, '')}
             name="title"
             placeholder="Title"
             data-testid="title-testing"
+            onBlur={onFocusOut}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row" className="col-sm-1">
+        <CTableDataCell className="col-sm-1 ps-2 pe-2">
           <CFormInput
             onChange={(e) => effortOnChange(e, index)}
-            value={item.effort}
+            value={item.effort?.replace(/^\s*/, '').replace(/[\D]/gi, '')}
             className="mt-2"
             name="effort"
             id="effort"
-            placeholder="effort"
+            autoComplete="off"
+            placeholder="Effort"
             data-testid="effort-test"
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell className="col-sm-2">
           <DatePicker
             id="editProjectEndDate"
             className="form-control form-control-sm sh-date-picker"
@@ -176,11 +189,12 @@ const AddProjectMileStone = ({
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
             name="editProjectEndDate"
+            autoComplete="off"
             value={item.fromDate}
             onChange={(date: Date) => onChangeHandleFromDate(date, index)}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell className="col-sm-2">
           <DatePicker
             id="editProjectEndDate"
             className="form-control form-control-sm sh-date-picker"
@@ -192,11 +206,12 @@ const AddProjectMileStone = ({
             data-testid="end-date-picker"
             dateFormat="dd/mm/yy"
             name="editProjectEndDate"
+            autoComplete="off"
             value={item.toDate}
             onChange={(date: Date) => onChangeHandleToDate(date, index)}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row" className="col-sm-2">
+        <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormSelect
             className="mt-2"
             aria-label="Default select example"
@@ -208,32 +223,34 @@ const AddProjectMileStone = ({
             onChange={(e) => billableOnChange(e, index)}
           >
             <option value="">Select</option>
-            <option value="true">yes</option>
+            <option value="true">Yes</option>
             <option value="false">No</option>
           </CFormSelect>
         </CTableDataCell>
-        <CTableDataCell scope="row" className="col-sm-1">
+        <CTableDataCell className="col-sm-1 ps-2 pe-2">
           <CFormInput
             className="mt-2"
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
+            maxLength={3}
+            autoComplete="off"
             data-testid="percentage-test"
             disabled={!isPercentageEnable}
           />
         </CTableDataCell>
-        <CTableDataCell scope="row" className="col-sm-2">
+        <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormTextarea
             className="mt-2"
             aria-label="textarea"
             id="comments"
             name="comments"
             data-testid="text-area"
-            value={item.comments}
+            value={item.comments?.replace(/^\s*/, '')}
             onChange={(e) => commentsOnChange(e, index)}
           ></CFormTextarea>
         </CTableDataCell>
-        <CTableDataCell scope="row">
+        <CTableDataCell className="col-sm-2">
           {item.buttonType === 'Add' ? (
             <CButton
               data-testid="add-plus-btn1"
@@ -242,7 +259,7 @@ const AddProjectMileStone = ({
               type="button"
               id="button-addon2"
               onClick={() => handleClickMileStone(index)}
-              disabled={!isAddMilestoneButtonEnabled}
+              disabled={!isAddMilestoneButtonEnabled || error}
             >
               <i className="fa fa-plus"></i>
             </CButton>

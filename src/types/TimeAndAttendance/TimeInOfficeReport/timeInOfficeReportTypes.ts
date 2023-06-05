@@ -50,3 +50,8 @@ export type ManagerTimeInOfficeReportProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
+
+export type exportAttendanceReportProps = {
+  hiveDate: string
+  search: string
+}

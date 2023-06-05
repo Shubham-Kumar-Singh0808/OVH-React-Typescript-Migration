@@ -57,6 +57,10 @@ const SubCategoryListTable = (
     setCurrentPage(1)
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   const workFlowChecked = (
     <span className="hidden-block sh-tracker-checkbox">
       <CFormCheck
@@ -104,11 +108,16 @@ const SubCategoryListTable = (
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      let tempPageNum = currentPage
+      if (subCategoryList.list?.length === 1 && currentPage !== 1) {
+        setCurrentPage((prevState) => prevState - 1)
+        tempPageNum = currentPage - 1
+      }
       dispatch(
         reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList(
           {
-            startIndex: pageSize * (currentPage - 1),
-            endIndex: pageSize * currentPage,
+            startIndex: pageSize * (tempPageNum - 1),
+            endIndex: pageSize * tempPageNum,
             departmentId: props.filterByDepartment,
             categoryId: props.filterByCategory,
             subCategoryId: props.filterBySubCategory,
@@ -194,7 +203,7 @@ const SubCategoryListTable = (
                   subCategoryList?.list?.map((ticket, index) => {
                     return (
                       <CTableRow key={index}>
-                        <CTableDataCell>{index + 1}</CTableDataCell>
+                        <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                         <CTableDataCell>{ticket.departmentName}</CTableDataCell>
                         <CTableDataCell>{ticket.categoryName}</CTableDataCell>
                         <CTableDataCell>

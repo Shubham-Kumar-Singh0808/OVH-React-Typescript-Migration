@@ -2,7 +2,8 @@ import {
   EmployeeDetails,
   Invest,
   Sections,
-  submitITDeclarationForm,
+  UploadITDocumentDTO,
+  SubmitITDeclarationForm,
 } from '../../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -42,7 +43,7 @@ const getInvestsBySectionId = async (sectionId: number): Promise<Invest[]> => {
 }
 
 const addITDeclarationForm = async (
-  submitDeclarationForm: submitITDeclarationForm,
+  submitDeclarationForm: SubmitITDeclarationForm,
 ): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: itDeclarationFormApiConfig.addITDeclarationForm,
@@ -62,12 +63,25 @@ const isITDeclarationFormExist = async (): Promise<boolean | undefined> => {
   return response.data
 }
 
+const uploadITDocument = (data: UploadITDocumentDTO): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: itDeclarationFormApiConfig.uploadITDocuments,
+    method: AllowedHttpMethods.post,
+    params: {
+      itDeclarationFormId: data.documentId,
+    },
+    data: data.document,
+  })
+  return useAxios(requestConfig)
+}
+
 const itDeclarationFormApi = {
   getEmployeeInfo,
   getSectionsHavingInvests,
   getInvestsBySectionId,
   addITDeclarationForm,
   isITDeclarationFormExist,
+  uploadITDocument,
 }
 
 export default itDeclarationFormApi

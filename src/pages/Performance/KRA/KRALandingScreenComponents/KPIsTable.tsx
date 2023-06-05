@@ -1,12 +1,15 @@
 import {
   CButton,
+  CCol,
   CLink,
+  CRow,
   CTable,
   CTableBody,
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -92,6 +95,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
   }
 
   const editKPIButtonHandler = (editKPI: IncomingKPIDataItem) => {
+    console.log(editKPI)
     dispatch(reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.editKPI))
     dispatch(reduxServices.KRA.actions.setEditKpi(editKPI))
   }
@@ -102,32 +106,34 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         responsive
         striped
         align="middle"
-        className="mt-0 text-start profile-tab-table-size w-100"
+        className="mt-0 text-start profile-tab-table-size w-100 table-layout-fixed"
       >
         <CTableHead className="profile-tab-header">
-          <CTableRow>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              #
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              KPI Name
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Description
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Frequency
-            </CTableHeaderCell>
-            <CTableHeaderCell scope="col" className="profile-tab-content">
-              Target
-            </CTableHeaderCell>
-            <CTableHeaderCell
-              scope="col"
-              className="profile-tab-content text-center"
-            >
-              Actions
-            </CTableHeaderCell>
-          </CTableRow>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            #
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            KPI Name
+          </CTableHeaderCell>
+          <CTableHeaderCell
+            colSpan={3}
+            scope="col"
+            className="profile-tab-content"
+          >
+            Description
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            Frequency
+          </CTableHeaderCell>
+          <CTableHeaderCell scope="col" className="profile-tab-content">
+            Target
+          </CTableHeaderCell>
+          <CTableHeaderCell
+            scope="col"
+            className="profile-tab-content text-center"
+          >
+            Actions
+          </CTableHeaderCell>
         </CTableHead>
         <CTableBody>
           {kpiList &&
@@ -144,7 +150,11 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                   </CLink>
                 </CTableDataCell>
                 {item.description !== null ? (
-                  <CTableDataCell scope="row" className="commentWidth">
+                  <CTableDataCell
+                    colSpan={3}
+                    scope="row"
+                    className="commentWidth"
+                  >
                     <CLink
                       className="cursor-pointer text-primary centerAlignment-text text-decoration-hover"
                       data-testid={`kpi-description-${index}`}
@@ -155,7 +165,7 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                         )
                       }
                     >
-                      {dottedContent(item.description)}
+                      {parse(dottedContent(item.description))}
                     </CLink>
                   </CTableDataCell>
                 ) : (
@@ -198,32 +208,41 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
                   <div className="d-flex flex-row align-items-center justify-content-end">
                     <div className="button-events">
                       {userAccessToKPI?.updateaccess && (
-                        <CButton
-                          size="sm"
-                          color="info"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          title="Edit"
-                          onClick={() => editKPIButtonHandler(item)}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <>
+                          <CTooltip content="Edit">
+                            <CButton
+                              size="sm"
+                              color="info"
+                              className="btn-ovh me-1 btn-ovh-employee-list"
+                              onClick={() => editKPIButtonHandler(item)}
+                            >
+                              <i
+                                className="fa fa-pencil-square-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        </>
                       )}
                       {userAccessToKPI?.deleteaccess && (
-                        <CButton
-                          size="sm"
-                          color="danger"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid={`del-btn-${index}`}
-                          title="Delete"
-                          onClick={(e) => {
-                            deleteButtonHandler(e, item.id, item.name)
-                          }}
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
+                        <>
+                          <CTooltip content="Delete">
+                            <CButton
+                              size="sm"
+                              color="danger"
+                              className="btn-ovh me-1 btn-ovh-employee-list"
+                              data-testid={`del-btn-${index}`}
+                              onClick={(e) => {
+                                deleteButtonHandler(e, item.id, item.name)
+                              }}
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        </>
                       )}
                     </div>
                   </div>
@@ -232,6 +251,13 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
             ))}
         </CTableBody>
       </CTable>
+      {!kpiList?.length && (
+        <CCol className="text-start ms-4">
+          <CRow>
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
       <OModal
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
@@ -242,7 +268,9 @@ const KPIsTable = (props: KPIsTableProps): JSX.Element => {
         cancelButtonText="No"
         confirmButtonAction={modalDeleteButtonHandler}
       >
-        <>Do you want to delete this {deleteKPIName} ?</>
+        <>
+          Do you want to delete this <strong>{deleteKPIName}</strong> ?
+        </>
       </OModal>
       <OModal
         modalSize="lg"

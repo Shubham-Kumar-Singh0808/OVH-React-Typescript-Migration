@@ -4,9 +4,9 @@ import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/Payr
 
 const EmployeePayslipTaxDetails = ({
   onChangeInputHandler,
-  toEditPayslip,
+  toEditPayslipCopy,
 }: {
-  toEditPayslip: CurrentPayslip
+  toEditPayslipCopy: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
@@ -15,7 +15,7 @@ const EmployeePayslipTaxDetails = ({
       className,
     }
   }
-  const formLabel = 'col-sm-3 col-form-label text-end'
+  const formLabel = 'col-sm-6 col-form-label text-end'
 
   return (
     <>
@@ -23,14 +23,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('medicliam', formLabel)}>
           Medicliam:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="medicliam"
             data-testid="medicliam"
             name="medicliam"
             autoComplete="off"
-            value={toEditPayslip.medicliam}
+            value={toEditPayslipCopy.medicliam}
             placeholder="medicliam"
             onChange={onChangeInputHandler}
           />
@@ -40,14 +40,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('esi', formLabel)}>
           ESI:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="esi"
             data-testid="esi"
             name="esi"
             autoComplete="off"
-            value={toEditPayslip.esi}
+            value={toEditPayslipCopy.esi}
             placeholder="esi"
             onChange={onChangeInputHandler}
           />
@@ -57,14 +57,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('epf', formLabel)}>
           EPF:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="epf"
             data-testid="epf"
             name="epf"
             autoComplete="off"
-            value={toEditPayslip.epf}
+            value={toEditPayslipCopy.epf}
             placeholder="epf"
             onChange={onChangeInputHandler}
           />
@@ -74,14 +74,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('advArrears', formLabel)}>
           Adv Arrears:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="advArrears"
             data-testid="advArrears"
             name="advArrears"
             autoComplete="off"
-            value={toEditPayslip.advArrears}
+            value={toEditPayslipCopy.advArrears}
             placeholder="advArrears"
             onChange={onChangeInputHandler}
           />
@@ -91,14 +91,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('erc', formLabel)}>
           ERC:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="erc"
             data-testid="erc"
             name="erc"
             autoComplete="off"
-            value={toEditPayslip.erc}
+            value={toEditPayslipCopy.erc}
             placeholder="erc"
             onChange={onChangeInputHandler}
           />
@@ -108,32 +108,15 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('taxDeductionScheme', formLabel)}>
           Tax Deduction at Source:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="taxDeductionScheme"
             data-testid="taxDeductionScheme"
             name="taxDeductionScheme"
             autoComplete="off"
-            value={toEditPayslip.taxDeductionScheme}
+            value={toEditPayslipCopy.taxDeductionScheme}
             placeholder="taxDeductionScheme"
-            onChange={onChangeInputHandler}
-          />
-        </CCol>
-      </CRow>
-      <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('grossSalary', formLabel)}>
-          Gross Salary:
-        </CFormLabel>
-        <CCol sm={3}>
-          <CFormInput
-            type="text"
-            id="grossSalary"
-            data-testid="grossSalary"
-            name="grossSalary"
-            autoComplete="off"
-            value={toEditPayslip.grossSalary}
-            placeholder="grossSalary"
             onChange={onChangeInputHandler}
           />
         </CCol>
@@ -142,14 +125,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('professionalTax', formLabel)}>
           Professional Tax:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="professionalTax"
             data-testid="professionalTax"
             name="professionalTax"
             autoComplete="off"
-            value={toEditPayslip.professionalTax}
+            value={toEditPayslipCopy.professionalTax}
             placeholder="professionalTax"
             onChange={onChangeInputHandler}
           />
@@ -159,14 +142,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('arrears', formLabel)}>
           Arrears:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="arrears"
             data-testid="arrears"
             name="arrears"
             autoComplete="off"
-            value={toEditPayslip.arrears}
+            value={toEditPayslipCopy.arrears}
             placeholder="arrears"
             onChange={onChangeInputHandler}
           />
@@ -176,14 +159,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('incentive', formLabel)}>
           Incentive:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="incentive"
             data-testid="incentive"
             name="incentive"
             autoComplete="off"
-            value={toEditPayslip.incentive}
+            value={toEditPayslipCopy.incentive}
             placeholder="incentive"
             onChange={onChangeInputHandler}
           />
@@ -193,14 +176,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('vpayable', formLabel)}>
           Vpayable:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="vpayable"
             data-testid="vpayable"
             name="vpayable"
             autoComplete="off"
-            value={toEditPayslip.vpayable}
+            value={toEditPayslipCopy.vpayable}
             placeholder="vpayable"
             onChange={onChangeInputHandler}
           />
@@ -210,14 +193,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('netSalary', formLabel)}>
           Net Salary:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="netSalary"
             data-testid="netSalary"
             name="netSalary"
             autoComplete="off"
-            value={toEditPayslip.netSalary}
+            value={toEditPayslipCopy.netSalary}
             placeholder="netSalary"
             onChange={onChangeInputHandler}
           />
@@ -227,14 +210,14 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('gratuity', formLabel)}>
           Gratuity:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="gratuity"
             data-testid="gratuity"
             name="gratuity"
             autoComplete="off"
-            value={toEditPayslip.gratuity}
+            value={toEditPayslipCopy.gratuity}
             placeholder="gratuity"
             onChange={onChangeInputHandler}
           />
@@ -244,47 +227,51 @@ const EmployeePayslipTaxDetails = ({
         <CFormLabel {...dynamicFormLabelProps('remarks', formLabel)}>
           Remarks:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="remarks"
             data-testid="remarks"
             name="remarks"
             autoComplete="off"
-            value={toEditPayslip.remarks}
+            value={toEditPayslipCopy.remarks}
             placeholder="remarks"
             onChange={onChangeInputHandler}
           />
         </CCol>
       </CRow>
       <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Month:
         </CFormLabel>
-        <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.month}</p>
+        <CCol sm={5}>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.month}</b>
+          </p>
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+      <CRow className="mt-4 mb-4 align-items-center">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Year:
         </CFormLabel>
-        <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.year}</p>
+        <CCol sm={5}>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.year}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel {...dynamicFormLabelProps('donation', formLabel)}>
           Donation:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="donation"
             data-testid="donation"
             name="donation"
             autoComplete="off"
-            value={toEditPayslip.donation}
+            value={toEditPayslipCopy.donation}
             placeholder="donation"
             onChange={onChangeInputHandler}
           />

@@ -9,82 +9,82 @@ export type LeaveSummaries = {
 
 export type EmployeeDTOList = {
   id: number
-  firstName: null
-  lastName: null
-  middleName: null
-  designation: null
-  role: null
-  manager: null
-  designationKrasDTO: null
-  employeeSubmitted: null
-  managerSubmitted: null
-  acknowledged: null
-  fullName: string
-  profilePicPath: null
-  thumbPicture: null
-  profilePicGeneratedPath: null
-  gender: null
-  dob: null
-  departmentName: null
-  employmentTypeName: null
-  jobTypeName: null
-  imageData: null
-  curentLocation: null
-  baseLocation: null
-  officialBirthday: null
-  realBirthday: null
-  maritalStatus: null
-  emergencyContactName: null
-  emergencyPhone: null
-  emergencyRelationShip: null
-  grade: null
-  aboutMe: null
-  homeNumber: null
-  workNumber: null
-  presentAddress: null
-  presentCity: null
-  presentZip: null
-  presentLandMark: null
-  permanentAddress: null
-  permanentCity: null
-  permanentZip: null
-  permanentLandMark: null
+  firstName: null | string
+  lastName: null | string
+  middleName: null | string
+  designation: null | string
+  role: null | string
+  manager: null | string
+  designationKrasDTO: null | string
+  employeeSubmitted: null | string
+  managerSubmitted: null | string
+  acknowledged: null | string
+  fullName: string | null
+  profilePicPath: null | string
+  thumbPicture: null | string
+  profilePicGeneratedPath: null | string
+  gender: null | string
+  dob: null | string
+  departmentName: null | string
+  employmentTypeName: null | string
+  jobTypeName: null | string
+  imageData: null | string
+  curentLocation: null | string
+  baseLocation: null | string
+  officialBirthday: null | string
+  realBirthday: null | string
+  maritalStatus: null | string
+  emergencyContactName: null | string
+  emergencyPhone: null | number
+  emergencyRelationShip: null | string
+  grade: null | string
+  aboutMe: null | string
+  homeNumber: null | number
+  workNumber: null | number
+  presentAddress: null | string
+  presentCity: null | string
+  presentZip: null | string
+  presentLandMark: null | string
+  permanentAddress: null | string
+  permanentCity: null | string
+  permanentZip: null | string
+  permanentLandMark: null | string
   mobile: null
-  homeCode: null
-  workCode: null
-  skillList: null
-  userName: string
+  homeCode: null | string
+  workCode: null | string
+  skillList: null | string
+  userName: null | string
   alternativeMobile: null
-  dateOfJoining: null
-  informationList: null
-  anniversary: null
-  bankInformationList: null
-  bioAttendanceDtoSet: null
-  dates: null
+  dateOfJoining: null | string
+  informationList: null | string
+  anniversary: null | string
+  bankInformationList: null | string
+  bioAttendanceDtoSet: null | string
+  dates: null | string
   absentCount: number
-  statusName: null
+  statusName: null | string
   emergencyContact: null
-  relievingDate: null
-  observationDTOList: null
+  relievingDate: null | string
+  observationDTOList: null | string
   skypeId: null
-  percent: null
-  passportNumber: null
-  passportExpDate: null
-  passportIssuedPlace: null
-  passportIssuedDate: null
-  token: null
+  percent: null | string
+  passportNumber: null | string
+  passportExpDate: null | string
+  passportIssuedPlace: null | string
+  passportIssuedDate: null | string
+  token: null | string
   underNoticeDate: null
   candidateId: null
-  underNotice: null
-  emailId: null
-  empManager: null
-  bloodgroup: null
-  rbtCvPath: null
-  rbtCvName: null
-  timeSlotDTO: null
-  technology: null
-  hrAssociate: null
-  lateComingCount: null
+  underNotice: null | string
+  emailId: null | string
+  empManager: null | string
+  bloodgroup: null | string
+  rbtCvPath: null | string
+  rbtCvName: null | string
+  timeSlotDTO: null | string
+  technology: null | string
+  hrAssociate: null | string
+  lateComingCount: null | string
   passportFrontPagePath: null
   passportBackPagePath: null
   passportFrontPage: null
@@ -92,20 +92,20 @@ export type EmployeeDTOList = {
   projectManager: null
   casualLeaveCount: number
   lopLeaveCount: number
-  holidaysCount: number
-  contractExists: null
-  contractStartDate: null
-  contractEndDate: null
-  personalEmail: null
-  experience: null
-  companyExperience: null
-  updatedExperience: null
-  country: string
-  workStatus: null
-  comments: null
-  vendorId: null
-  vendorName: null
-  address: null
+  holidaysCount: number | null
+  contractExists: null | boolean
+  contractStartDate: null | string
+  contractEndDate: null | string
+  personalEmail: null | string
+  experience: null | string
+  companyExperience: null | string
+  updatedExperience: null | string
+  country: null | string
+  workStatus: null | string
+  comments: null | string
+  vendorId: null | string
+  vendorName: null | string
+  address: null | string
 }
 
 export type LeaveSummariesList = {
@@ -218,4 +218,6 @@ export type EmployeeLeaveReportTableProps = {
 export type LeaveReportOptionsProps = {
   selectYear: string
   setSelectYear: (value: string) => void
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }

@@ -6,8 +6,10 @@ import { RootState } from '../../../stateStore'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   GetActiveCycleData,
+  GetAllCycles,
   GetAllQuestions,
   InitiateCycleSliceState,
+  NominationCycleDto,
   TotalResponse,
 } from '../../../types/Settings/InitiateCycle/initiateCycleTypes'
 
@@ -92,6 +94,66 @@ const addQuestion = createAsyncThunk(
   },
 )
 
+const addCycle = createAsyncThunk(
+  'initiateCycle/addCycle',
+  async (
+    {
+      activateFlag,
+      cycleName,
+      endDate,
+      fromMonth,
+      startDate,
+      toMonth,
+    }: {
+      activateFlag: boolean
+      cycleName: string | undefined
+      endDate: string | undefined
+      fromMonth: string | undefined
+      startDate: string | undefined
+      toMonth: string | undefined
+    },
+    thunkApi,
+  ) => {
+    try {
+      return await initiateCycleApi.addCycle({
+        activateFlag,
+        cycleName,
+        endDate,
+        fromMonth,
+        startDate,
+        toMonth,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const editCycle = createAsyncThunk(
+  'initiateCycle/editCycle',
+  async (cycleId: number, thunkApi) => {
+    try {
+      return await initiateCycleApi.editCycle(cycleId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateCycle = createAsyncThunk(
+  'initiateCycle/updateCycle',
+  async (updateCycleData: NominationCycleDto, thunkApi) => {
+    try {
+      return await initiateCycleApi.updateCycle(updateCycleData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialCycleState: InitiateCycleSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
@@ -101,6 +163,8 @@ export const initialCycleState: InitiateCycleSliceState = {
   listSize: 0,
   currentPage: 1,
   pageSize: 20,
+  toggle: '',
+  editCycle: {} as NominationCycleDto,
 }
 
 const initiateCycleSlice = createSlice({
@@ -112,6 +176,9 @@ const initiateCycleSlice = createSlice({
     },
     setPageSize: (state, action) => {
       state.pageSize = action.payload
+    },
+    setToggle: (state, action) => {
+      state.toggle = action.payload
     },
   },
   extraReducers(builder) {
@@ -131,11 +198,20 @@ const initiateCycleSlice = createSlice({
         state.allQuestions = action.payload
         state.listSize = action.payload.size
       })
+      .addCase(editCycle.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.editCycle = action.payload
+      })
+      .addMatcher(isAnyOf(updateCycle.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
       .addMatcher(
         isAnyOf(
           getActiveCycleData.pending,
           getAllCycles.pending,
           getAllQuestions.pending,
+          editCycle.pending,
+          updateCycle.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -146,6 +222,8 @@ const initiateCycleSlice = createSlice({
           getActiveCycleData.rejected,
           getAllCycles.rejected,
           getAllQuestions.rejected,
+          editCycle.rejected,
+          updateCycle.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -165,11 +243,19 @@ const allQuestions = (state: RootState): GetAllQuestions =>
 
 const listSize = (state: RootState): number => state.initiateCycle.listSize
 
+const allCycles = (state: RootState): GetAllCycles =>
+  state.initiateCycle.allCycles
+
+const editCycles = (state: RootState): NominationCycleDto =>
+  state.initiateCycle.editCycle
+
 const pageFromState = (state: RootState): number =>
   state.initiateCycle.currentPage
 
 const pageSizeFromState = (state: RootState): number =>
   state.initiateCycle.pageSize
+
+const toggle = (state: RootState): string => state.initiateCycle.toggle
 
 const initiateCycleThunk = {
   getActiveCycleData,
@@ -178,6 +264,9 @@ const initiateCycleThunk = {
   initiateCycle,
   deleteQuestion,
   addQuestion,
+  addCycle,
+  editCycle,
+  updateCycle,
 }
 
 const initiateCycleSelectors = {
@@ -187,6 +276,9 @@ const initiateCycleSelectors = {
   allQuestions,
   pageFromState,
   pageSizeFromState,
+  allCycles,
+  toggle,
+  editCycles,
 }
 
 export const initiateCycleService = {

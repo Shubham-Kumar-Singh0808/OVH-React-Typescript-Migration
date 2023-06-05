@@ -9,6 +9,7 @@ import {
   CRow,
   CTableDataCell,
   CBadge,
+  CTooltip,
 } from '@coreui/react-pro'
 import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -141,12 +142,14 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                       {reviewStatusLabelColor(review.formStatus)}
                     </CTableDataCell>
                     <CTableDataCell>
-                      <CButton
-                        className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                        data-testid={`view-reviewForm-btn${index}`}
-                      >
-                        <i className="fa fa-eye" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="View">
+                        <CButton
+                          className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                          data-testid={`view-reviewForm-btn${index}`}
+                        >
+                          <i className="fa fa-eye" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     </CTableDataCell>
                   </CTableRow>
                 )

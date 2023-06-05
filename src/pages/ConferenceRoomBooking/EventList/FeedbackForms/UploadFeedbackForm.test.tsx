@@ -82,9 +82,7 @@ describe('EventList Component Testing', () => {
     userEvent.upload(fileInput, file)
 
     expect(
-      screen.getByText(
-        'Wrong file format chosen. Please choose either doc, docx, or pdf.',
-      ),
+      screen.getByText('Please choose doc or docx or pdf.'),
     ).toBeInTheDocument()
   })
 })

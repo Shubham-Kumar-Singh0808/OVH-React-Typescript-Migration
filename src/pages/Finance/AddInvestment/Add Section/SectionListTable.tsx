@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -129,41 +130,45 @@ const SectionListTable = ({
                 </CTableDataCell>
                 <CTableDataCell>
                   {userAccessToSectionActions?.updateaccess && (
-                    <CButton
-                      size="sm"
-                      color="info"
-                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                      data-testid={`section-edit-btn${index}`}
-                      onClick={() =>
-                        editSectionButtonHandler({
-                          sectionLimit: sectionItem.sectionLimit,
-                          sectionName: sectionItem.sectionName,
-                          invests: [],
-                          sectionId: sectionItem.sectionId,
-                        })
-                      }
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        data-testid={`section-edit-btn${index}`}
+                        onClick={() =>
+                          editSectionButtonHandler({
+                            sectionLimit: sectionItem.sectionLimit,
+                            sectionName: sectionItem.sectionName,
+                            invests: [],
+                            sectionId: sectionItem.sectionId,
+                          })
+                        }
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                   )}
                   {userAccessToSectionActions?.deleteaccess && (
-                    <CButton
-                      size="sm"
-                      data-testid={`section-delete-btn${index}`}
-                      color="danger"
-                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                      onClick={() =>
-                        handleShowSectionDeleteModal(
-                          sectionItem.sectionId,
-                          sectionItem.sectionName,
-                        )
-                      }
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        size="sm"
+                        data-testid={`section-delete-btn${index}`}
+                        color="danger"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        onClick={() =>
+                          handleShowSectionDeleteModal(
+                            sectionItem.sectionId,
+                            sectionItem.sectionName,
+                          )
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                   )}
                 </CTableDataCell>
               </CTableRow>

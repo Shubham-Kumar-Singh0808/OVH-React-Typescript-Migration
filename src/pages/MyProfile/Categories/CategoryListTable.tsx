@@ -10,10 +10,9 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
-import CIcon from '@coreui/icons-react'
-import { cilTrash } from '@coreui/icons'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -21,6 +20,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const CategoryListTable = (): JSX.Element => {
   const categories = useTypedSelector(
@@ -63,12 +63,18 @@ const CategoryListTable = (): JSX.Element => {
     setIsDeleteModalVisible(true)
   }
 
+  const SuccessToastMessage = (
+    <OToast toastMessage="Category Deleted Successfully" toastColor="success" />
+  )
+
   const handleConfirmDelete = async (categoryId: number) => {
     setIsDeleteModalVisible(false)
 
     dispatch(reduxServices.category.actions.setCurrentPage(currentPage))
     dispatch(reduxServices.category.actions.setPageSize(pageSize))
     dispatch(reduxServices.category.deleteCategory(categoryId))
+    dispatch(reduxServices.category.getAllCategories())
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const currentPageItems = useMemo(
@@ -101,19 +107,22 @@ const CategoryListTable = (): JSX.Element => {
                 </CTableHeaderCell>
                 <CTableDataCell>{category.categoryType}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    data-testid={`category-delete-btn${index}`}
-                    onClick={() =>
-                      handleShowDeleteModal(
-                        category.categoryType,
-                        category.categoryId,
-                      )
-                    }
-                  >
-                    <CIcon className="text-white" icon={cilTrash} />
-                  </CButton>
+                  <CTooltip content="Delete">
+                    <CButton
+                      data-testid={`category-delete-btn${index}`}
+                      size="sm"
+                      color="danger btn-ovh me-1"
+                      className="btn-ovh-employee-list"
+                      onClick={() =>
+                        handleShowDeleteModal(
+                          category.categoryType,
+                          category.categoryId,
+                        )
+                      }
+                    >
+                      <i className="fa fa-trash-o" aria-hidden="true"></i>
+                    </CButton>
+                  </CTooltip>
                 </CTableDataCell>
               </CTableRow>
             )
@@ -156,8 +165,13 @@ const CategoryListTable = (): JSX.Element => {
         confirmButtonText="Delete"
         closeButtonClass="d-none"
         confirmButtonAction={() => handleConfirmDelete(toDeleteCategoryId)}
+        alignment="center"
+        modalBodyClass="mt-0"
       >
-        {`Are you sure you want to delete this ${toDeleteCategoryName} category item?`}
+        <>
+          Are you sure you want to delete this{' '}
+          <strong>{toDeleteCategoryName}</strong> category item?
+        </>
       </OModal>
     </>
   )

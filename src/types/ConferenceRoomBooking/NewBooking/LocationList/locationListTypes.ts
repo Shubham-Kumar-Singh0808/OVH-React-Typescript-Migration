@@ -8,4 +8,6 @@ export type getAllMeetingLocations = {
 export type AddLocationSliceState = {
   meetingLocations: getAllMeetingLocations[]
   isLoading: ApiLoadingState
+  currentPage: number
+  pageSize: number
 }

@@ -1,17 +1,17 @@
 import {
   CRow,
   CCol,
-  CFormLabel,
-  CFormSelect,
   CButton,
   CFormInput,
   CInputGroup,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
 import EditPaySlip from './EditPaySlip/EditPaySlip'
 import PaySlipExcelFileTable from './PaySlipExcelFileTable/PaySlipExcelFileTable'
+import PayrollManagementFilterOptions from './PayrollManagementFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -25,20 +25,34 @@ const PayrollManagement = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [fileUploadErrorText, setFileUploadErrorText] = useState<string>('')
   const [toggle, setToggle] = useState('')
+  const [excelTable, setExcelTable] = useState(false)
+  const [clearFile, setClearFile] = useState<string>('')
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
-  const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
-  const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
-  const [isAllChecked, setIsAllChecked] = useState(false)
 
-  const currentYear = new Date().getFullYear()
-  const previousYears = currentYear - 4
-  const years = []
-  for (let i = currentYear; i >= previousYears; i--) {
-    years.push(i)
-  }
+  const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
+
+  const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
+    undefined,
+  )
+
+  const [isPercentageEnable, setPercentageEnable] = useState(false)
+
+  const [isDeleteBtnDisable, setIsDeleteBtnDisable] = useState(false)
+  const [allChecked, setAllChecked] = useState<boolean>(false)
+
+  const [paySlipId, setPaySlipId] = useState<number[]>([])
+  console.log(isDeleteBtnDisable)
+  useEffect(() => {
+    if (selectMonth) {
+      setPercentageEnable(true)
+    } else {
+      setPercentageEnable(false)
+      setSelectYear('')
+      dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
+    }
+  }, [selectMonth])
 
   const onChangeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
@@ -56,6 +70,8 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
+    setIsNoteVisible(file[0])
+    setClearFile(element.value)
   }
 
   const dispatch = useAppDispatch()
@@ -63,6 +79,21 @@ const PayrollManagement = (): JSX.Element => {
   const PaySlipsListSize = useTypedSelector(
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
+  const excelData = useTypedSelector(
+    reduxServices.payrollManagement.selectors.excelData,
+  )
+
+  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
+    setToEditPayslip(payslipItem)
+    setToggle('editPaySlip')
+  }
+  useEffect(() => {
+    if (allChecked) {
+      setIsDeleteBtnDisable(true)
+    } else {
+      setIsDeleteBtnDisable(false)
+    }
+  }, [allChecked])
 
   const {
     paginationRange,
@@ -119,8 +150,33 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
+  const successToastMessage = (
+    <OToast toastMessage="Deleted successfully" toastColor="success" />
+  )
+
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(paySlipId),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          year: Number(selectYear),
+          month: selectMonth,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
+
   const previewBtnHandler = async () => {
-    setToggle('excelTable')
+    setExcelTable(true)
     if (previewBtn) {
       const formData = new FormData()
       formData.append('file', previewBtn, previewBtn.name)
@@ -128,6 +184,7 @@ const PayrollManagement = (): JSX.Element => {
       const previewBtnActionResult = await dispatch(
         reduxServices.payrollManagement.readExcelFile(formData),
       )
+
       if (
         (reduxServices.payrollManagement.readExcelFile.fulfilled.match(
           previewBtnActionResult,
@@ -135,26 +192,25 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(failedMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
-        ) &&
-          previewBtnActionResult.payload === 500) ||
-        previewBtnActionResult.payload === ''
+        ),
+        previewBtnActionResult.payload === 500)
       ) {
+        setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
+      } else if (
+        reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+          previewBtnActionResult,
+        ) &&
+        previewBtnActionResult.type ===
+          'payrollManagement/readExcelFile/fulfilled'
+      ) {
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
       }
     }
   }
-
-  useEffect(() => {
-    if (isChecked && isAllChecked) {
-      setIsAllDeleteBtn(true)
-    } else {
-      setIsAllDeleteBtn(false)
-    }
-  }, [isChecked, isAllChecked])
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -163,220 +219,208 @@ const PayrollManagement = (): JSX.Element => {
     (feature) => feature.name === 'Payroll Management',
   )
 
+  const ExcelTable =
+    excelTable === false ? (
+      <>
+        {renderingPayslipData?.length > 0 && (
+          <PayrollManagementTable
+            selectMonth={selectMonth}
+            selectYear={selectYear}
+            paginationRange={paginationRange}
+            setPageSize={setPageSize}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            setToggle={setToggle}
+            setToEditPayslip={setToEditPayslip}
+            userDeleteAccess={userAccess?.deleteaccess as boolean}
+            userEditAccess={userAccess?.updateaccess as boolean}
+            editPaySlipHandler={editPaySlipHandler}
+            paySlipId={paySlipId}
+            setPaySlipId={setPaySlipId}
+            allChecked={allChecked}
+            setAllChecked={setAllChecked}
+          />
+        )}
+      </>
+    ) : (
+      <></>
+    )
+
+  const previewButton =
+    previewBtn && excelData.length === 0 ? (
+      <CButton
+        className="btn btn-download text-decoration-none btn btn-ovh"
+        size="sm"
+        color="info"
+        type="submit"
+        data-testid="preview-btn"
+        onClick={previewBtnHandler}
+      >
+        Preview
+      </CButton>
+    ) : (
+      ''
+    )
+
+  useEffect(() => {
+    if (window.location.pathname === '/payslipUpload') {
+      dispatch(reduxServices.payrollManagement.actions.clearPayrollManagement())
+    }
+  }, [])
+
+  const note =
+    !isNoteVisible && excelData.length === 0 ? (
+      <span className="textColor-shade" ng-show="MsgFlag">
+        Note: Please upload file either xls or xlsx format.
+      </span>
+    ) : (
+      <></>
+    )
+
+  const Delete = userAccess?.deleteaccess && (
+    <CTooltip content="Delete">
+      <CButton
+        color="danger btn-ovh"
+        type="button"
+        onClick={allDeleteBtnHandler}
+        id="button-delete"
+        // disabled={!isDeleteBtnDisable}
+      >
+        Delete
+      </CButton>
+    </CTooltip>
+  )
+
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(
         reduxServices.payrollManagement.getCurrentPayslip({
           startIndex: pageSize * (currentPage - 1),
           endIndex: pageSize * currentPage,
-          month: selectMonth,
           year: Number(selectYear),
+          month: selectMonth,
         }),
       )
   }, [dispatch, selectMonth, selectYear])
-
-  const previewButton = previewBtn ? (
-    <CButton
-      className="btn btn-download text-decoration-none btn btn-ovh"
-      size="sm"
-      color="info"
-      type="submit"
-      data-testid="preview-btn"
-      onClick={previewBtnHandler}
-    >
-      Preview
-    </CButton>
-  ) : (
-    ''
-  )
-
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Payroll Management"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <CRow className="mb-3">
-          <CCol className="col-sm-2 control-label text-left">
-            <CFormLabel className="mt-2">
-              Select Month:{' '}
-              <span className={selectMonth ? 'text-white' : 'text-danger'}>
-                *
-              </span>
-            </CFormLabel>
-          </CCol>
-          <CCol sm={2}>
-            <CFormSelect
-              aria-label="Default select example"
-              size="sm"
-              id="Month"
-              data-testid="form-select1"
-              name="Month"
-              value={selectMonth}
-              onChange={(e) => {
-                setSelectMonth(e.target.value)
-              }}
-            >
-              <option value={''}>Select Month</option>
-              <option>January</option>
-              <option>February</option>
-              <option>March</option>
-              <option>April</option>
-              <option>May</option>
-              <option>June</option>
-              <option>July</option>
-              <option>August</option>
-              <option>September</option>
-              <option>October</option>
-              <option>November</option>
-              <option>December</option>
-            </CFormSelect>
-          </CCol>
-          <CCol className="col-sm-2 control-label text-left">
-            <CFormLabel className="mt-1" data-testid="form-select2">
-              Select Year:{' '}
-              <span className={selectYear ? 'text-white' : 'text-danger'}>
-                *
-              </span>
-            </CFormLabel>
-          </CCol>
-          <CCol sm={2}>
-            <CFormSelect
-              aria-label="Default select example"
-              size="sm"
-              id="Year"
-              data-testid="form-select2"
-              name="Year"
-              disabled={!selectMonth}
-              value={selectYear}
-              onChange={(e) => {
-                setSelectYear(e.target.value)
-              }}
-            >
-              <option value={''}>Select Year</option>
-              {years.length > 0 &&
-                years?.map((year, index) => (
-                  <option key={index}>{year}</option>
-                ))}
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        {selectMonth && selectYear ? (
-          <CRow className="mt-3 sh-previewBtn">
-            <CCol sm={4} className="mt-4 mb-4">
-              <input
-                className="mt-1"
-                data-testid="feedback-form"
-                type="file"
-                name="upload-form"
-                accept=".xlsx, .xls"
-                onChange={(element: SyntheticEvent) =>
-                  onChangeFileUploadHandler(
-                    element.currentTarget as HTMLInputElement,
-                  )
-                }
-              />
-              {fileUploadErrorText && (
-                <div id="error">
-                  <strong className="mt-3 text-danger">
-                    {fileUploadErrorText}
-                  </strong>
-                </div>
-              )}
-              <CRow className="textColor-shade">
-                <span>Note: Please upload file either xls or xlsx format.</span>
-              </CRow>
-            </CCol>
-            <CCol md={4} className="text-end mt-4 mb-4">
-              {previewButton}
-              &nbsp;
-              <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
-            </CCol>
-          </CRow>
-        ) : (
-          ''
-        )}
+      {toggle === '' && (
         <>
-          <CRow className="gap-2 d-md-flex justify-content-md-end">
-            {renderingPayslipData?.length > 0 && (
-              <CCol sm={6} md={4}>
-                <CInputGroup className="global-search me-0 justify-content-md-end">
-                  <CFormInput
-                    className="global-search input form-control"
-                    data-testid="searchField"
-                    placeholder="Search by Id/Name"
-                    aria-label="Multiple Search"
-                    aria-describedby="button-addon2"
-                    value={searchInput}
-                    onChange={(e) => {
-                      setSearchInput(e.target.value)
-                    }}
-                    onKeyDown={handleSearchBtn}
-                    type="text"
-                  />
-                  <CButton
-                    disabled={!searchInput}
-                    data-testid="multi-search-btn"
-                    className="cursor-pointer"
-                    type="button"
-                    color="info"
-                    id="button-addon2"
-                    onClick={multiSearchBtnHandler}
-                  >
-                    Search
-                  </CButton>
-                  &nbsp;
-                  {userAccess?.deleteaccess && (
-                    <CButton
-                      color="danger btn-ovh"
-                      type="button"
-                      disabled={!isAllDeleteBtn}
-                      id="button-delete"
-                    >
-                      Delete
-                    </CButton>
-                  )}
-                </CInputGroup>
-              </CCol>
-            )}
-          </CRow>
-
-          {toggle === '' && renderingPayslipData?.length > 0 && (
-            <PayrollManagementTable
+          <OCard
+            className="mb-4 myprofile-wrapper"
+            title="Payroll Management"
+            CBodyClassName="ps-0 pe-0"
+            CFooterClassName="d-none"
+          >
+            <PayrollManagementFilterOptions
               selectMonth={selectMonth}
+              setSelectMonth={setSelectMonth}
               selectYear={selectYear}
-              paginationRange={paginationRange}
-              setPageSize={setPageSize}
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              setToggle={setToggle}
-              setToEditPayslip={setToEditPayslip}
-              isChecked={isChecked}
-              setIsChecked={setIsChecked}
-              isAllChecked={isAllChecked}
-              setIsAllChecked={setIsAllChecked}
-              userDeleteAccess={userAccess?.deleteaccess as boolean}
-              userEditAccess={userAccess?.updateaccess as boolean}
+              setSelectYear={setSelectYear}
+              isPercentageEnable={isPercentageEnable}
             />
-          )}
+            {selectMonth && selectYear ? (
+              <CRow className="mt-3 sh-previewBtn">
+                <CCol sm={4} className="mt-4 mb-4">
+                  <label className="col-sm-12 control-label text-left">
+                    <input
+                      className="mt-1 w-100"
+                      data-testid="feedback-form"
+                      type="file"
+                      name="upload-form"
+                      value={clearFile}
+                      accept=".xlsx, .xls"
+                      onChange={(element: SyntheticEvent) =>
+                        onChangeFileUploadHandler(
+                          element.currentTarget as HTMLInputElement,
+                        )
+                      }
+                    />
+                    {note}
+                  </label>
+                  {fileUploadErrorText && (
+                    <div id="error">
+                      <strong className="mt-3 text-danger">
+                        {fileUploadErrorText}
+                      </strong>
+                    </div>
+                  )}
+                </CCol>
+                <CCol md={4} className="text-end mt-4 mb-4">
+                  {previewButton}
+                  &nbsp;
+                  <DownloadSampleExcelFile className="text-decoration-none btn btn-download btn-ovh" />
+                </CCol>
+              </CRow>
+            ) : (
+              ''
+            )}
+            <>
+              <CRow className="gap-2 d-md-flex justify-content-md-end">
+                {renderingPayslipData?.length > 0 && (
+                  <CCol sm={6} md={4}>
+                    <CInputGroup className="global-search me-0 justify-content-md-end">
+                      <CFormInput
+                        className="global-search input form-control"
+                        data-testid="searchField"
+                        placeholder="Search by Id/Name"
+                        aria-label="Multiple Search"
+                        aria-describedby="button-addon2"
+                        value={searchInput}
+                        onChange={(e) => {
+                          setSearchInput(e.target.value)
+                        }}
+                        onKeyDown={handleSearchBtn}
+                        type="text"
+                      />
+                      <CButton
+                        disabled={!searchInput}
+                        data-testid="multi-search-btn"
+                        className="cursor-pointer"
+                        type="button"
+                        color="info"
+                        id="button-addon2"
+                        onClick={multiSearchBtnHandler}
+                      >
+                        Search
+                      </CButton>
+                      &nbsp;
+                      {Delete}
+                    </CInputGroup>
+                  </CCol>
+                )}
+              </CRow>
+              {ExcelTable}
+            </>
+            {excelTable ? (
+              <>
+                <PaySlipExcelFileTable
+                  selectMonth={selectMonth}
+                  selectYear={selectYear}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                  setToggle={setToggle}
+                  setExcelTable={setExcelTable}
+                  setClearFile={setClearFile}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+          </OCard>
         </>
-
-        {toggle === 'editPaySlip' && (
-          <EditPaySlip toEditPayslip={toEditPayslip} />
-        )}
-        {toggle === 'excelTable' && (
-          <PaySlipExcelFileTable
-            selectMonth={selectMonth}
-            selectYear={selectYear}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            setToggle={setToggle}
-          />
-        )}
-      </OCard>
+      )}
+      {toggle === 'editPaySlip' && !excelTable && (
+        <EditPaySlip
+          toEditPayslip={toEditPayslip}
+          setToggle={setToggle}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          selectMonth={selectMonth}
+          selectYear={selectYear}
+        />
+      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import ITDeclarationListTable from './ITDeclarationListTable'
+import { initialITForm } from './ITDeclarationListHelpers'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
@@ -76,7 +77,9 @@ describe('Employee BirthdaysList Table Component Testing', () => {
     const viewButtonEle = screen.getByTestId('viewItDeclarationForm-btn1')
     userEvent.click(viewButtonEle)
     expect(
-      render(<ITDeclarationFormViewTable viewDeclarationForm={[]} />),
+      render(
+        <ITDeclarationFormViewTable viewDeclarationForm={initialITForm} />,
+      ),
     ).toBeTruthy()
   })
 })

@@ -9,6 +9,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import parse from 'html-react-parser'
@@ -216,44 +217,48 @@ const InvestmentListTable = ({
                 </CTableDataCell>
                 <CTableDataCell scope="row">
                   {userAccessToSectionActions?.updateaccess && (
-                    <CButton
-                      size="sm"
-                      color="info"
-                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                      data-testid={`investment-edit-btn${index}`}
-                      onClick={() =>
-                        editInvestmentButtonHandler({
-                          description: investmentItem.description,
-                          investmentId: investmentItem.investmentId,
-                          investmentName: investmentItem.investmentName,
-                          maxLimit: investmentItem.maxLimit,
-                          requiredDocs: investmentItem.requiredDocs,
-                          sectionName: investmentItem.sectionName,
-                          sectionId: investmentItem.sectionId,
-                        })
-                      }
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        size="sm"
+                        color="info"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        data-testid={`investment-edit-btn${index}`}
+                        onClick={() =>
+                          editInvestmentButtonHandler({
+                            description: investmentItem.description,
+                            investmentId: investmentItem.investmentId,
+                            investmentName: investmentItem.investmentName,
+                            maxLimit: investmentItem.maxLimit,
+                            requiredDocs: investmentItem.requiredDocs,
+                            sectionName: investmentItem.sectionName,
+                            sectionId: investmentItem.sectionId,
+                          })
+                        }
+                      >
+                        <i
+                          className="fa fa-pencil-square-o"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                   )}
                   {userAccessToSectionActions?.deleteaccess && (
-                    <CButton
-                      size="sm"
-                      data-testid={`investment-delete-btn${index}`}
-                      color="danger"
-                      className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                      onClick={() =>
-                        handleShowSectionDeleteModal(
-                          investmentItem.investmentId,
-                          investmentItem.investmentName,
-                        )
-                      }
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Delete">
+                      <CButton
+                        size="sm"
+                        data-testid={`investment-delete-btn${index}`}
+                        color="danger"
+                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                        onClick={() =>
+                          handleShowSectionDeleteModal(
+                            investmentItem.investmentId,
+                            investmentItem.investmentName,
+                          )
+                        }
+                      >
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
+                      </CButton>
+                    </CTooltip>
                   )}
                 </CTableDataCell>
               </CTableRow>
@@ -313,13 +318,13 @@ const InvestmentListTable = ({
         visible={isDescModalVisible}
         setVisible={setIsDescModalVisible}
       >
-        <p>
+        <span className="descriptionField">
           <div
             dangerouslySetInnerHTML={{
               __html: description,
             }}
           />
-        </p>
+        </span>
       </OModal>
     </>
   )

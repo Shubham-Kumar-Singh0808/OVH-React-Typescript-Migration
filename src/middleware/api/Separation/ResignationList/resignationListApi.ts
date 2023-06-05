@@ -211,6 +211,18 @@ const uploadExitFeedBackFile = async (prepareObject: {
   return response.data
 }
 
+const updateResignationTimeLine = async (
+  updateSeparationTimeLine: SeparationTimeLine,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: resignationListApiConfig.updateTimeLine,
+    method: AllowedHttpMethods.put,
+    data: updateSeparationTimeLine,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const resignationListApi = {
   getResignationList,
   exportResignationListData,
@@ -224,6 +236,7 @@ const resignationListApi = {
   saveExitFeedBackForm,
   uploadRelievingLetter,
   uploadExitFeedBackFile,
+  updateResignationTimeLine,
 }
 
 export default resignationListApi

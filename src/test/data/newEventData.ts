@@ -145,7 +145,7 @@ export const mockProjectMembersSelection: ProjectMember[] = [
     passportIssuedDate: null,
     token: null,
     underNoticeDate: null,
-    candidateId: null,
+    candidateId: 1,
     underNotice: null,
     emailId: null,
     empManager: null,

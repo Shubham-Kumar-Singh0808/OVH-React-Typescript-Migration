@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import CIcon from '@coreui/icons-react'
 import React from 'react'
 import SimpleBar from 'simplebar-react'
+import { Link } from 'react-router-dom'
 import AppSidebarNavItems from './AppSidebarNavItems'
 import UserProfile from './UserProfile'
 import { logoNegative } from '../../assets/brand/logo-negative'
@@ -26,8 +27,14 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex main-logo">
-        <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} />
-        <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        <Link to={'/dashboard'}>
+          <CIcon
+            className="sidebar-brand-full cursor-pointer"
+            icon={logoNegative}
+            height={35}
+          />
+          <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
+        </Link>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

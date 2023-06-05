@@ -10,6 +10,7 @@ import {
   CFormInput,
   CCol,
   CRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
@@ -52,6 +53,12 @@ const AchievementTypeTable = (
   )
   const [editAchievementId, setEditAchievementId] = useState<number>(
     editAchievementIdDefaultValue,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessToAchievementTypeAction = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Achievement Type',
   )
 
   const [errors, setErrors] = useState<ErrorBooleans>({
@@ -194,8 +201,7 @@ const AchievementTypeTable = (
   ) => {
     e.preventDefault()
     setSelectedDeleteAchievementId(achievementTypeId)
-    const toModalContent = `Do you really want to delete ${achievementTypeName} type?`
-    setModalContent(toModalContent)
+    setModalContent(achievementTypeName)
     setDisplayModalContent(true)
   }
 
@@ -260,13 +266,7 @@ const AchievementTypeTable = (
 
   return (
     <>
-      <CTable
-        className="mt-2 mb-2"
-        responsive
-        striped
-        align="middle"
-        role="table"
-      >
+      <CTable className="mt-3 mb-3 table-layout-fixed" responsive striped>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -350,33 +350,50 @@ const AchievementTypeTable = (
                     </div>
                   ) : (
                     <div className="button-events">
-                      <CButton
-                        color="info"
-                        className="danger btn-ovh me-1 btn-ovh-employee-list"
-                        size="sm"
-                        data-testid={`edit-btn-${index}`}
-                        title="Edit"
-                        onClick={(e) => {
-                          editButtonHandler(e, item.id, item.status, item.order)
-                        }}
-                      >
-                        <i
-                          className="fa fa-edit text-white"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
-                      <CButton
-                        color="danger"
-                        size="sm"
-                        className="btn-ovh me-2 btn-ovh-employee-list"
-                        data-testid={`del-btn-${index}`}
-                        title="Delete"
-                        onClick={(e) => {
-                          deleteToModalButtonHandler(e, item.id, item.typeName)
-                        }}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      {userAccessToAchievementTypeAction?.updateaccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="danger btn-ovh me-1 btn-ovh-employee-list"
+                            size="sm"
+                            data-testid={`edit-btn-${index}`}
+                            title="Edit"
+                            onClick={(e) => {
+                              editButtonHandler(
+                                e,
+                                item.id,
+                                item.status,
+                                item.order,
+                              )
+                            }}
+                          >
+                            <i
+                              className="fa fa-edit text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
+                      {userAccessToAchievementTypeAction?.deleteaccess && (
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger"
+                            size="sm"
+                            className="btn-ovh me-2 btn-ovh-employee-list"
+                            data-testid={`del-btn-${index}`}
+                            title="Delete"
+                            onClick={(e) => {
+                              deleteToModalButtonHandler(
+                                e,
+                                item.id,
+                                item.typeName,
+                              )
+                            }}
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                     </div>
                   )}
                 </div>
@@ -385,7 +402,7 @@ const AchievementTypeTable = (
           ))}
         </CTableBody>
       </CTable>
-      <CRow>
+      <CRow className="mt-3">
         <CCol xs={4}>
           <p>
             <strong>Total Records: {achievementTypeDataList?.size}</strong>
@@ -430,7 +447,11 @@ const AchievementTypeTable = (
         confirmButtonText="Yes"
         cancelButtonText="No"
       >
-        <>{modalContent}</>
+        <>
+          Do you really want to delete this <strong>{modalContent}</strong>
+          {'  '}
+          achievement type ?
+        </>
       </OModal>
     </>
   )

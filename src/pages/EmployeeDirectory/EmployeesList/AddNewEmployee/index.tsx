@@ -233,7 +233,6 @@ const AddNewEmployee = (): JSX.Element => {
       addEmployee.firstName !== '' &&
       addEmployee.gender !== '' &&
       addEmployee.lastName !== '' &&
-      addEmployee.middleName !== '' &&
       addEmployee.hrAssociate.fullName != null &&
       addEmployee.jobTypeName !== '' &&
       addEmployee.manager.fullName != null &&
@@ -481,7 +480,7 @@ const AddNewEmployee = (): JSX.Element => {
                 placeHolder="Select Department"
               />
               <OSelectList
-                isRequired={true}
+                isRequired={false}
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 list={composedTechnologyList}
                 setValue={onHandleTechnology}

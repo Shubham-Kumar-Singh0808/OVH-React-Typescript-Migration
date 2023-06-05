@@ -8,4 +8,6 @@ export type Tracker = {
 export type AddTrackerSliceState = {
   isLoading: ApiLoadingState
   trackerList: Tracker[]
+  currentPage: number
+  pageSize: number
 }

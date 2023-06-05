@@ -12,7 +12,7 @@ describe('Allocate Employee without data', () => {
   beforeEach(() => {
     render(
       <EmployeePayslipTaxDetails
-        toEditPayslip={{
+        toEditPayslipCopy={{
           paySlipId: 0,
           employeeId: 0,
           designation: '',
@@ -80,7 +80,6 @@ describe('Allocate Employee without data', () => {
     expect(screen.getByText('Adv Arrears:')).toBeInTheDocument()
     expect(screen.getByText('ERC:')).toBeInTheDocument()
     expect(screen.getByText('Tax Deduction at Source:')).toBeInTheDocument()
-    expect(screen.getByText('Gross Salary:')).toBeInTheDocument()
     expect(screen.getByText('Professional Tax:')).toBeInTheDocument()
     expect(screen.getByText('Arrears:')).toBeInTheDocument()
     expect(screen.getByText('Incentive:')).toBeInTheDocument()
@@ -142,10 +141,6 @@ describe('Allocate Employee without data', () => {
   test('should able to taxDeductionScheme field', () => {
     const taxDeductionSchemeInput = screen.getByTestId('taxDeductionScheme')
     userEvent.type(taxDeductionSchemeInput, '0')
-  })
-  test('should able to grossSalary field', () => {
-    const grossSalaryInput = screen.getByTestId('grossSalary')
-    userEvent.type(grossSalaryInput, '20000')
   })
   test('should able to professionalTax field', () => {
     const professionalTaxInput = screen.getByTestId('professionalTax')

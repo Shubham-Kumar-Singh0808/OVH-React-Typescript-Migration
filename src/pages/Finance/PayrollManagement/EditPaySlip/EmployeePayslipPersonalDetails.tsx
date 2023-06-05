@@ -1,20 +1,14 @@
-import { CRow, CCol, CButton, CFormLabel, CFormInput } from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormInput } from '@coreui/react-pro'
 import React from 'react'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/PayrollManagementTypes'
 
 const EmployeePayslipPersonalDetails = ({
   onChangeInputHandler,
-  toEditPayslip,
-  designation,
-  accountNo,
-  setToggle,
+  toEditPayslipCopy,
 }: {
-  toEditPayslip: CurrentPayslip
+  toEditPayslipCopy: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
-  designation: string
-  accountNo: string
-  setToggle: (value: string) => void
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -23,77 +17,87 @@ const EmployeePayslipPersonalDetails = ({
     }
   }
 
-  const formLabel = 'col-sm-3 col-form-label text-end'
+  const formLabel = 'col-sm-6 col-form-label text-end'
 
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="back-button"
-            onClick={() => setToggle('')}
-          >
-            <i className="fa fa-arrow-left  me-1"></i>Back
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+      <CRow className="mt-4 mb-4 align-items-center">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Name:
         </CFormLabel>
-        <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.name}</p>
+        <CCol sm={5}>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.name}</b>
+          </p>
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+      <CRow className="mt-4 mb-4 align-items-center">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           Employee Id:
         </CFormLabel>
-        <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.employeeId}</p>
+        <CCol sm={5}>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.employeeId}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
+        <CFormLabel className="col-sm-6 col-form-label text-end p-1">
           Designation:
-          <span className={designation ? TextWhite : TextDanger}>*</span>
+          <span
+            className={
+              toEditPayslipCopy.designation?.replace(/^\s*/, '')
+                ? TextWhite
+                : TextDanger
+            }
+          >
+            *
+          </span>
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="designation"
             data-testid="designation-name"
             name="designation"
             autoComplete="off"
-            value={toEditPayslip.designation}
+            value={toEditPayslipCopy.designation}
             placeholder="designation"
             onChange={onChangeInputHandler}
           />
         </CCol>
       </CRow>
-      <CRow className="mt-1 mb-0 align-items-center">
-        <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+      <CRow className="mt-4 mb-4 align-items-center">
+        <CFormLabel className="col-sm-6 col-form-label text-end">
           DOJ:
         </CFormLabel>
-        <CCol sm={3}>
-          <p className="mb-0">{toEditPayslip.dateOfBirth}</p>
+        <CCol sm={5}>
+          <p className="mb-0">
+            <b>{toEditPayslipCopy.dateOfBirth}</b>
+          </p>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
-        <CFormLabel {...dynamicFormLabelProps('designation', formLabel)}>
+        <CFormLabel className="col-sm-6 col-form-label text-end p-1">
           Account Number:
-          <span className={accountNo ? TextWhite : TextDanger}>*</span>
+          <span
+            className={
+              toEditPayslipCopy.accountNo?.replace(/^\s*/, '')
+                ? TextWhite
+                : TextDanger
+            }
+          >
+            *
+          </span>
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="accountNo"
             data-testid="accountNo"
             name="accountNo"
             autoComplete="off"
-            value={toEditPayslip.accountNo}
+            value={toEditPayslipCopy.accountNo}
             placeholder="AccountNum"
             onChange={onChangeInputHandler}
           />
@@ -103,14 +107,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('grossSalary', formLabel)}>
           Gross Salary:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="grossSalary"
             data-testid="grossSalary"
             name="grossSalary"
             autoComplete="off"
-            value={toEditPayslip.grossSalary}
+            value={toEditPayslipCopy.grossSalary}
             placeholder="grossSalary"
             onChange={onChangeInputHandler}
           />
@@ -122,14 +126,14 @@ const EmployeePayslipPersonalDetails = ({
         >
           Variable Pay Percentage:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="variablePayPercentage"
             data-testid="variablePayPercentage"
             name="variablePayPercentage"
             autoComplete="off"
-            value={toEditPayslip.variablePayPercentage}
+            value={toEditPayslipCopy.variablePayPercentage}
             placeholder="variablePayPercentage"
             onChange={onChangeInputHandler}
           />
@@ -139,14 +143,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('variablePay', formLabel)}>
           Variable Pay:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="variablePay"
             data-testid="variablePay"
             name="variablePay"
             autoComplete="off"
-            value={toEditPayslip.variablePay}
+            value={toEditPayslipCopy.variablePay}
             placeholder="variablePay"
             onChange={onChangeInputHandler}
           />
@@ -158,14 +162,14 @@ const EmployeePayslipPersonalDetails = ({
         >
           Gross Sal After Variable Pay:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="grossSalAfterVariablepay"
             data-testid="grossSalAfterVariablepay"
             name="grossSalAfterVariablepay"
             autoComplete="off"
-            value={toEditPayslip.grossSalAfterVariablepay}
+            value={toEditPayslipCopy.grossSalAfterVariablepay}
             placeholder="grossSalAfterVariablepay"
             onChange={onChangeInputHandler}
           />
@@ -175,14 +179,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('basicSalary', formLabel)}>
           Basic Salary:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="basicSalary"
             data-testid="basicSalary"
             name="basicSalary"
             autoComplete="off"
-            value={toEditPayslip.basicSalary}
+            value={toEditPayslipCopy.basicSalary}
             placeholder="basicSalary"
             onChange={onChangeInputHandler}
           />
@@ -192,14 +196,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('houseRentAllowance', formLabel)}>
           House Rent Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="houseRentAllowance"
             data-testid="houseRentAllowance"
             name="houseRentAllowance"
             autoComplete="off"
-            value={toEditPayslip.houseRentAllowance}
+            value={toEditPayslipCopy.houseRentAllowance}
             placeholder="houseRentAllowance"
             onChange={onChangeInputHandler}
           />
@@ -209,14 +213,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('transportAllowance', formLabel)}>
           Transport Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="transportAllowance"
             data-testid="transportAllowance"
             name="transportAllowance"
             autoComplete="off"
-            value={toEditPayslip.transportAllowance}
+            value={toEditPayslipCopy.transportAllowance}
             placeholder="transportAllowance"
             onChange={onChangeInputHandler}
           />
@@ -226,14 +230,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('otherAllowance', formLabel)}>
           Other Allowance:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="otherAllowance"
             data-testid="otherAllowance"
             name="otherAllowance"
             autoComplete="off"
-            value={toEditPayslip.otherAllowance}
+            value={toEditPayslipCopy.otherAllowance}
             placeholder="otherAllowance"
             onChange={onChangeInputHandler}
           />
@@ -243,14 +247,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('absent', formLabel)}>
           Absent:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="absent"
             data-testid="absent"
             name="absent"
             autoComplete="off"
-            value={toEditPayslip.absent}
+            value={toEditPayslipCopy.absent}
             placeholder="absent"
             onChange={onChangeInputHandler}
           />
@@ -260,14 +264,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('lossOfPay', formLabel)}>
           LOP :
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="lossOfPay"
             data-testid="lossOfPay"
             name="lossOfPay"
             autoComplete="off"
-            value={toEditPayslip.lossOfPay}
+            value={toEditPayslipCopy.lossOfPay}
             placeholder="lossOfPay"
             onChange={onChangeInputHandler}
           />
@@ -277,14 +281,14 @@ const EmployeePayslipPersonalDetails = ({
         <CFormLabel {...dynamicFormLabelProps('mealsCard', formLabel)}>
           Meals Card:
         </CFormLabel>
-        <CCol sm={3}>
+        <CCol sm={5}>
           <CFormInput
             type="text"
             id="mealsCard"
             data-testid="mealsCard"
             name="mealsCard"
             autoComplete="off"
-            value={toEditPayslip.mealsCard}
+            value={toEditPayslipCopy.mealsCard}
             placeholder="mealsCard"
             onChange={onChangeInputHandler}
           />

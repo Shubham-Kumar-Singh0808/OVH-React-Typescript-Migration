@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { ReactNode } from 'react'
 
 export type route = {
@@ -147,10 +148,6 @@ const TicketApprovals = React.lazy(
   () => import('./pages/Support/TicketApprovals/TicketApprovals'),
 )
 
-const JobOpenings = React.lazy(
-  () => import('./pages/Dashboard/JobOpenings/JobOpenings'),
-)
-
 const BirthdaysListTable = React.lazy(
   () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
 )
@@ -223,6 +220,14 @@ const EditConfiguration = React.lazy(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
+
+const ViewPIPDetail = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
+    ),
+)
+
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
@@ -356,7 +361,7 @@ const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 const InitiateCycle = React.lazy(
-  () => import('./pages/Settings/InitiateCycle/InitiateCycle'),
+  () => import('./pages/Settings/InitiateCycle/InitiateNewCycle'),
 )
 
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
@@ -390,6 +395,10 @@ const LeadershipEnrollmentForm = React.lazy(
     ),
 )
 
+const PIPList = React.lazy(
+  () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
+)
+
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
 const MileStoneHistory = React.lazy(
   () =>
@@ -405,6 +414,71 @@ const MileStoneDiscussion = React.lazy(
     ),
 )
 
+const EditBooking = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
+)
+const ClearnceCerticates = React.lazy(
+  () =>
+    import(
+      './pages/Performance/PipList/EmployeePIPClearenceCertificate/EmployeePIPClearenceCertificate'
+    ),
+)
+const EditEvent = React.lazy(
+  () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
+)
+
+const AppraisalTemplate = React.lazy(
+  () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
+)
+
+const AddNewAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/AddNewAudit/AddNewAudit'),
+)
+const SQAAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditReport'),
+)
+const EditAudit = React.lazy(
+  () => import('./pages/SQAAuditReport/EditAuditForm/EditAudit'),
+)
+const SQAAuditTimeLine = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAAuditTimeLine/SQAAuditHistory'),
+)
+const SQAAuditViewReport = React.lazy(
+  () => import('./pages/SQAAuditReport/SQAViewReport/SQAViewReport'),
+)
+const processAreaList = React.lazy(
+  () => import('./pages/Settings/ProcessArea/ProcessArea'),
+)
+const Notifications = React.lazy(
+  () => import('./pages/Notifications/Notifications'),
+)
+const JobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/JobOpenings'),
+)
+const AddJobVacancies = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/AddJobOpening/AddJobOpening'),
+)
+
+const VendorList = React.lazy(
+  () => import('./pages/Assets/VendorList/VendorList'),
+)
+const Manufacturer = React.lazy(
+  () => import('./pages/Assets/ManufacturerList/Manufacturer'),
+)
+const AssetWarrantyReport = React.lazy(
+  () => import('./pages/Assets/AssetWarrantyReport/AssetWarrantyReport'),
+)
+const productList = React.lazy(
+  () => import('./pages/Assets/PrductTypeList/ProductTypeList'),
+)
+const ChangeReportees = React.lazy(
+  () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
+)
+const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+const ProductSpecificationList = React.lazy(
+  () =>
+    import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -604,11 +678,11 @@ const routes = [
     name: 'Update Ticket',
     component: UpdateTicketUnderTicketList,
   },
-  {
-    path: '/jobvacancies',
-    name: 'Job Openings',
-    component: JobOpenings,
-  },
+  // {
+  //   path: '/jobvacancies',
+  //   name: 'Job Openings',
+  //   component: JobOpenings,
+  // },
   {
     path: '/birthdaylist',
     name: 'List of Birthdays',
@@ -862,9 +936,24 @@ const routes = [
     component: LeadershipEnrollmentForm,
   },
   {
+    path: '/PIPList',
+    name: 'PIP List',
+    component: PIPList,
+  },
+  {
     path: '/addKra',
     name: 'KRA',
     component: KRA,
+  },
+  {
+    path: '/ViewPIPDetail/:id',
+    name: 'ViewPIPDetail',
+    component: ViewPIPDetail,
+  },
+  {
+    path: '/PIPClearnceCerticates',
+    name: 'ClearnceCerticates',
+    component: ClearnceCerticates,
   },
   {
     path: '/listofAppraisal',
@@ -882,6 +971,102 @@ const routes = [
     name: 'MileStone Discussion',
     component: MileStoneDiscussion,
   },
-]
 
+  {
+    path: '/editEvent/:eventId',
+    name: 'Edit Event',
+    component: EditEvent,
+  },
+  {
+    path: '/MeetingRequestEdit/:id',
+    name: 'Edit Booking',
+    component: EditBooking,
+  },
+  {
+    path: '/appraisalTemplate',
+    name: 'appraisalTemplate',
+    component: AppraisalTemplate,
+  },
+  {
+    path: '/processAreaList',
+    name: 'processAreaList',
+    component: processAreaList,
+  },
+  {
+    path: '/addAuditForm',
+    name: 'Add New Audit',
+    component: AddNewAudit,
+  },
+  {
+    path: '/SQAAudit',
+    name: '/SQA Audit',
+    component: SQAAudit,
+  },
+  {
+    path: '/editAuditForm/:auditId',
+    name: 'Edit Audit Form',
+    component: EditAudit,
+  },
+  {
+    path: '/newProjectAuditTimeline/:auditId',
+    name: 'SQA Audit TimeLine',
+    component: SQAAuditTimeLine,
+  },
+  {
+    path: '/viewProjectAudit/:auditId',
+    name: 'SQA Audit View',
+    component: SQAAuditViewReport,
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: Notifications,
+  },
+  {
+    path: '/jobvacancies',
+    name: 'Jobvacancies',
+    component: JobVacancies,
+  },
+  {
+    path: '/addJobvacancies',
+    name: 'AddJobVacancies',
+    component: AddJobVacancies,
+  },
+  {
+    path: '/vendorList',
+    name: 'Vendor List',
+    component: VendorList,
+  },
+  {
+    path: '/manufacturerList',
+    name: 'manufacturerList',
+    component: Manufacturer,
+  },
+  {
+    path: '/productList',
+    name: 'Product List',
+    component: productList,
+  },
+  {
+    path: '/delegation',
+    name: 'Change Reportees',
+    component: ChangeReportees,
+  },
+  {
+    path: '/assetWarrantyReport',
+    name: 'AssetWarrantyReport',
+    component: AssetWarrantyReport,
+  },
+
+  {
+    path: '/assetList',
+    name: 'Asset List',
+    component: AssetList,
+  },
+  {
+    path: '/productSpecificationList',
+    name: 'Product Specification List',
+    component: ProductSpecificationList,
+  },
+]
 export default routes

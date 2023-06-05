@@ -20,6 +20,7 @@ describe('OInputField Component', () => {
           name={''}
           placeholder={'Test PlaceHolder'}
           dynamicFormLabelProps={jest.fn()}
+          autoComplete={''}
         />,
       )
     })
@@ -43,6 +44,7 @@ describe('OInputField Component', () => {
           name={''}
           placeholder={'sample placeholder'}
           dynamicFormLabelProps={jest.fn()}
+          autoComplete={''}
         />,
       )
     })
@@ -66,6 +68,7 @@ describe('OInputField Component', () => {
           name={'testName'}
           placeholder={placeHolder}
           dynamicFormLabelProps={jest.fn()}
+          autoComplete={''}
         />,
       )
     })
@@ -87,7 +90,7 @@ describe('OInputField Component', () => {
     })
 
     test('should be able to see input field label', () => {
-      expect(screen.getByText('testLabel:')).toBeInTheDocument()
+      expect(screen.getByText('testLabel :')).toBeInTheDocument()
     })
   })
 
@@ -105,6 +108,7 @@ describe('OInputField Component', () => {
           name={'test'}
           placeholder={placeHolder}
           dynamicFormLabelProps={jest.fn()}
+          autoComplete={''}
         />,
       )
     })

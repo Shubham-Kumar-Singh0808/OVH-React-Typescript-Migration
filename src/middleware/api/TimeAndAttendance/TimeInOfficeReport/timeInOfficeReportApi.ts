@@ -1,4 +1,5 @@
 import {
+  exportAttendanceReportProps,
   GetTimeInOfficeEmployeeReportProps,
   GetTimeInOfficeEmployeeReportResponse,
   GetTimeInOfficeManagerReportResponse,
@@ -44,9 +45,28 @@ const getTimeInOfficeManagerReport = async (
   return response.data
 }
 
+const exportAttendanceReport = async (
+  props: exportAttendanceReportProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: timeInOfficeReportApiConfig.exportAttendanceReport,
+    method: AllowedHttpMethods.get,
+    params: {
+      hiveDate: props.hiveDate ?? '',
+      search: props.search ?? '',
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: 'RAYBIZTECH',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const timeInOfficeReportApi = {
   getTimeInOfficeEmployeeReport,
   getTimeInOfficeManagerReport,
+  exportAttendanceReport,
 }
 
 export default timeInOfficeReportApi

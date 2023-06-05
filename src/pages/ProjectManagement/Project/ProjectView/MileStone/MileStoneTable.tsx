@@ -9,6 +9,7 @@ import {
   CRow,
   CCol,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
@@ -79,35 +80,35 @@ const MileStoneTable = (): JSX.Element => {
       <CTable className="milestone-model-table">
         <CTableBody>
           <CTableRow>
-            <CTableDataCell>Project</CTableDataCell>
+            <CTableDataCell>Project:</CTableDataCell>
             <CTableDataCell>{title.project}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Client</CTableDataCell>
+            <CTableDataCell>Client:</CTableDataCell>
             <CTableDataCell>{title.client}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Milestone</CTableDataCell>
+            <CTableDataCell>Milestone:</CTableDataCell>
             <CTableDataCell>{title.title}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Percentage </CTableDataCell>
+            <CTableDataCell>Percentage:</CTableDataCell>
             <CTableDataCell>{title.milestonePercentage}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Effort</CTableDataCell>
+            <CTableDataCell>Effort:</CTableDataCell>
             <CTableDataCell>{title.effort || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Planned End Date</CTableDataCell>
+            <CTableDataCell>Planned End Date:</CTableDataCell>
             <CTableDataCell>{title.planedDate || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Actual End Date</CTableDataCell>
+            <CTableDataCell>Actual End Date:</CTableDataCell>
             <CTableDataCell>{title.actualDate || 'N/A'}</CTableDataCell>
           </CTableRow>
           <CTableRow>
-            <CTableDataCell>Comments </CTableDataCell>
+            <CTableDataCell>Comments:</CTableDataCell>
             <CTableDataCell>{title.comments || 'N/A'}</CTableDataCell>
           </CTableRow>
         </CTableBody>
@@ -194,13 +195,15 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
                   <CTableDataCell>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                    >
-                      <i className="fa fa-times text-white"></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        data-testid="edit-btn"
+                      >
+                        <i className="fa fa-times text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
                       className="btn-ovh me-1 btn-ovh-employee-list"
@@ -290,11 +293,13 @@ const MileStoneTable = (): JSX.Element => {
         >
           <>
             <p>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: subject as string,
-                }}
-              />
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: subject as string,
+                  }}
+                />
+              </span>
             </p>
           </>
         </OModal>

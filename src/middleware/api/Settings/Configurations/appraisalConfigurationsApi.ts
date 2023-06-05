@@ -1,7 +1,5 @@
 import {
-  AppraisalCycleApiProps,
   GetAppraisalCycle,
-  GetAppraisalCycleResponse,
   GetCycle,
 } from '../../../../types/Settings/Configurations/appraisalConfigurationsTypes'
 import {
@@ -13,16 +11,10 @@ import {
   appraisalConfigurationsApiConfig,
 } from '../../apiList'
 
-const getAppraisalCycle = async (
-  props: AppraisalCycleApiProps,
-): Promise<GetAppraisalCycleResponse> => {
+const getAppraisalCycle = async (): Promise<GetAppraisalCycle[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
-    url: appraisalConfigurationsApiConfig.getAppraisalCycle,
+    url: appraisalConfigurationsApiConfig.cycle,
     method: AllowedHttpMethods.get,
-    params: {
-      endIndex: props.endIndex ?? 20,
-      startIndex: props.startIndex ?? 0,
-    },
   })
 
   const response = await useAxios(requestConfig)

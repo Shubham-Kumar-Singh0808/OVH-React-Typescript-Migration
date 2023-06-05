@@ -41,6 +41,10 @@ export type TicketReportSliceState = {
   isLoading: LoadingState
   getTicketDetails: GetTicketDetails
   ticketsDetailsList: GetTicketsDetailsList[]
+  DepartmentName: string
+  DateValue: string
+  FromDate: string | Date
+  ToDate: string | Date
 }
 
 export type TicketReportApiProps = {

@@ -113,13 +113,13 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
       nomineeStatus === String(nomineeSelectionStatus.selectStatus) ||
       nomineeDescription.trim().length === 0
     ) {
-      setAddButtonEnabled(false)
-    } else if (
-      getNomineeRatingNumber(nomineeRating) === nomineeDetails.rating &&
-      (nomineeDescription === nomineeDetails.finalComments ||
-        nomineeDescription.trim() === nomineeDescription) &&
-      nomineeStatus.toUpperCase() === nomineeDetails.nominationStatus
-    ) {
+      console.log(
+        'Hello',
+        nomineeDescription === emptyString,
+        nomineeRating === selectRating,
+        nomineeStatus === String(nomineeSelectionStatus.selectStatus),
+        nomineeDescription.trim().length === 0,
+      )
       setAddButtonEnabled(false)
     } else {
       setAddButtonEnabled(true)
@@ -150,7 +150,7 @@ const NomineeDetails = (props: NomineeListDetailsProps): JSX.Element => {
 
     if (reduxServices.nomineeList.reviewNomineeThunk.fulfilled.match(result)) {
       dispatch(reduxServices.app.actions.addToast(successToast))
-      setAddButtonEnabled(false)
+      setAddButtonEnabled(true)
       dispatch(
         reduxServices.nomineeList.getNominationDetailsThunk(nomineeDetails.id),
       )

@@ -13,6 +13,7 @@ import EditPanDetails from './EditPanDetails'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { Finance } from '../../../../types/Finance/PanDetails/panDetailsTypes'
+import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const PanDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -32,6 +33,9 @@ const PanDetails = (): JSX.Element => {
   const empId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
+  const [isViewingAnotherEmployee] = useSelectedEmployee()
+
   useEffect(() => {
     if (location.pathname === '/myFinance') {
       dispatch(
@@ -83,15 +87,36 @@ const PanDetails = (): JSX.Element => {
       })
   }
   const history = useHistory()
+  const handleClick = () => {
+    history.goBack()
+  }
+
+  const isCheckedVIsible =
+    isChecked && bankDetail.finance?.pfAccountNumber
+      ? isChecked && bankDetail.finance?.pfAccountNumber
+      : 'N/A'
+
+  const backBtnToggle = isViewingAnotherEmployee ? (
+    <CButton
+      color="info"
+      className="btn-ovh me-1"
+      data-testid="back-button"
+      onClick={handleClick}
+    >
+      <i className="fa fa-arrow-left  me-1"></i>Back
+    </CButton>
+  ) : (
+    <></>
+  )
 
   return (
     <>
-      {userAccess?.updateaccess && (
-        <CRow className="justify-content-end">
-          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            ''
-          ) : (
-            <CCol className="text-end" md={4}>
+      <CRow className="justify-content-end">
+        {isEditPanData && bankDetail.finance?.financeId === financeId ? (
+          ''
+        ) : (
+          <CCol className="text-end" md={4}>
+            {userAccess?.updateaccess && (
               <CTooltip content="Edit">
                 <CButton
                   className="btn-ovh me-1"
@@ -104,25 +129,18 @@ const PanDetails = (): JSX.Element => {
                   &nbsp; Edit
                 </CButton>
               </CTooltip>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-                onClick={() => history.push('/financeList')}
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </CCol>
-          )}
-        </CRow>
-      )}
+            )}
+            {backBtnToggle}
+          </CCol>
+        )}
+      </CRow>
       <CCol sm={5}>
         <CRow>
           <CFormLabel
             className="col-sm-4 col-form-label"
             data-testid="pfNumber"
           >
-            <b>P.F. A/C No</b>
+            P.F. A/C No
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :
@@ -150,7 +168,7 @@ const PanDetails = (): JSX.Element => {
             </CCol>
           ) : (
             <CCol sm={5} className="sh-alignment">
-              {bankDetail.finance?.pfAccountNumber || 'N/A'}
+              {isCheckedVIsible}
             </CCol>
           )}
         </CRow>
@@ -161,7 +179,7 @@ const PanDetails = (): JSX.Element => {
             className="col-sm-4 col-form-label"
             data-testid="uanNumber"
           >
-            <b>UAN</b>
+            UAN
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :
@@ -193,7 +211,7 @@ const PanDetails = (): JSX.Element => {
             className="col-sm-4 col-form-label"
             data-testid="panCardNumber"
           >
-            <b>Pan Card No</b>
+            Pan Card No
           </CFormLabel>
           <CCol sm={1} className="sh-alignment">
             :
@@ -219,43 +237,12 @@ const PanDetails = (): JSX.Element => {
           )}
         </CRow>
       </CCol>
-      <CCol sm={5}>
-        <CRow>
-          <CFormLabel
-            className="col-sm-4 col-form-label"
-            data-testid="aadharNumber"
-          >
-            <b>Aadhar Card No</b>
-          </CFormLabel>
-          <CCol sm={1} className="sh-alignment">
-            :
-          </CCol>
-          {isEditPanData && bankDetail.finance?.financeId === financeId ? (
-            <CCol sm={5}>
-              <CFormInput
-                className="eventType-editInput"
-                data-testid="aadharNumber"
-                type="text"
-                id="aadharNumber"
-                size="sm"
-                name="aadharCardNumber"
-                autoComplete="off"
-                value={editPanData.aadharCardNumber}
-                onChange={onChangeInputHandler}
-              />
-            </CCol>
-          ) : (
-            <CCol sm={5} className="sh-alignment">
-              {bankDetail.finance?.aadharCardNumber || 'N/A'}
-            </CCol>
-          )}
-        </CRow>
-      </CCol>
       <EditPanDetails
         isEditPanData={isEditPanData}
         setIsEditPanData={setIsEditPanData}
         financeId={financeId}
         editPanData={editPanData}
+        onChangeInputHandler={onChangeInputHandler}
       />
     </>
   )

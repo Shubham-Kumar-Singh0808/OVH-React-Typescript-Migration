@@ -9,15 +9,20 @@ const SelectProject = ({
   allProjects,
   onSelectProject,
   isProjectAndAttendeesEnable,
+  shouldReset,
 }: {
   allProjects: GetAllProjects[]
   onSelectProject: (value: string) => void
   isProjectAndAttendeesEnable: boolean
+  shouldReset: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [projectAutoCompleteTarget, setProjectAutoCompleteTarget] =
     useState<string>()
+  useEffect(() => {
+    if (shouldReset) setProjectAutoCompleteTarget('')
+  }, [shouldReset])
 
   useEffect(() => {
     if (projectAutoCompleteTarget) {
@@ -47,10 +52,10 @@ const SelectProject = ({
   return (
     <CRow className="mt-1 mb-3">
       <CFormLabel
-        className="col-sm-3 col-form-label text-end"
+        className="col-sm-3 col-form-label text-end pe-18"
         data-testid="pmLabel"
       >
-        Project:
+        Project :
       </CFormLabel>
       <CCol sm={6}>
         <Autocomplete

@@ -1,9 +1,11 @@
 import {
   DownloadFeedbackFormInterface,
+  EditExistingEventDetails,
   EventListApiProps,
   FeedbackFormApiProps,
   GetEventListResponse,
   GetFeedbackFormResponse,
+  UpdateEventDetails,
   UploadFeedbackFormInterface,
 } from '../../../../types/ConferenceRoomBooking/EventList/eventListTypes'
 import {
@@ -96,12 +98,40 @@ const uploadFeedbackForm = async (
   return response.data
 }
 
+const editEvent = async (
+  eventId: number,
+): Promise<EditExistingEventDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.editEvent,
+    method: AllowedHttpMethods.get,
+    params: {
+      id: eventId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateEvent = async (
+  updateEventDetails: UpdateEventDetails,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: eventListApiConfig.updateEvent,
+    method: AllowedHttpMethods.post,
+    data: updateEventDetails,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const eventListApi = {
   getAllEvents,
   cancelEvent,
   getFeedbackFormList,
   downloadFeedbackForm,
   uploadFeedbackForm,
+  editEvent,
+  updateEvent,
 }
 
 export default eventListApi

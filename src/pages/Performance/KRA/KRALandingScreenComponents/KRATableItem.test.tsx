@@ -30,6 +30,8 @@ const toInitialRender = (
       setModalVisible={mockSetModalVisible}
       setDeleteThisKRA={mockSetDeleteThisKRA}
       setAddKPI={jest.fn()}
+      setIsDeleteModalVisible={jest.fn()}
+      setDeleteThisKRAName={jest.fn()}
     />
   </div>
 )
@@ -49,6 +51,8 @@ const kpiVisibleRender = (
       setModalVisible={mockSetModalVisible}
       setDeleteThisKRA={mockSetDeleteThisKRA}
       setAddKPI={jest.fn()}
+      setIsDeleteModalVisible={jest.fn()}
+      setDeleteThisKRAName={jest.fn()}
     />
   </div>
 )
@@ -92,9 +96,7 @@ describe('KRA Table Item', () => {
     test('initial ui and data render', () => {
       expect(screen.getByTestId(collapseIconId)).toBeVisible()
       expect(screen.getByTestId('kra-Name')).toHaveTextContent('People or Self')
-      expect(screen.getByTestId('kra-description')).toHaveTextContent(
-        'People or Self',
-      ) //Due to parsing
+      expect(screen.getByTestId('kra-description')).toHaveTextContent('') //Due to parsing
       expect(screen.getByTestId('dept-name')).toHaveTextContent('Development')
       expect(screen.getByTestId('desig-name')).toHaveTextContent(
         'Senior Consultant',

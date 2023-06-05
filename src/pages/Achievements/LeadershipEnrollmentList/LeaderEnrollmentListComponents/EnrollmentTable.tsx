@@ -45,7 +45,7 @@ const EnrollmentTable = (props: EnrollmentFormProps): JSX.Element => {
         </CTableRow>
       </CTableHead>
       <CTableBody>
-        {listData.map((item, index) => (
+        {listData?.map((item, index) => (
           <CTableRow key={index}>
             <CTableDataCell>{item.employeeId}</CTableDataCell>
             <CTableDataCell>{item.employeeName}</CTableDataCell>
@@ -56,13 +56,13 @@ const EnrollmentTable = (props: EnrollmentFormProps): JSX.Element => {
               <div className="button-events">
                 <CButton
                   color="info"
-                  className="danger btn-ovh me-1"
+                  className="btn-ovh me-1 btn-ovh-employee-list"
                   size="sm"
                   onClick={(e) => {
                     actionButtonHandler(e, index)
                   }}
                   data-testid={`action-btn-${index}`}
-                  title="Edit"
+                  title="View"
                 >
                   <i className="fa fa-eye text-white" aria-hidden="true"></i>
                 </CButton>

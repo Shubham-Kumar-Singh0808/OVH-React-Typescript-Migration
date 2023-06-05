@@ -6,14 +6,22 @@ import ScheduledInterviews from './ScheduledInterviews'
 import { render, screen } from '../../../test/testUtils'
 import { mockTechnologies } from '../../../test/data/employeeTechnologiesData'
 
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ScheduledInterviews />
+  </div>
+)
 describe('Scheduled Interviews Component Testing', () => {
   test('should render scheduled interviews component with out crashing', () => {
-    render(<ScheduledInterviews />)
+    render(toRender)
     expect(screen.getByText('Scheduled Interviews')).toBeInTheDocument()
   })
   describe('should render scheduled interviews component with data', () => {
     test('should render scheduled candidates screen upon All radio button select', () => {
-      render(<ScheduledInterviews />, {
+      render(toRender, {
         preloadedState: {
           authentication: {
             authenticatedUser: {

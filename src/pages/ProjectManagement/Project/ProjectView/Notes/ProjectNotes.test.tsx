@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import ProjectNotes from './ProjectNotes'
 import { render, screen, waitFor } from '../../../../../test/testUtils'
 import { mockProjectNotes } from '../../../../../test/data/projectNotesData'
+import { mockUserAccessToFeaturesData } from '../../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -20,6 +21,9 @@ describe('ProjectNotes Filter Options Component Testing with data', () => {
       preloadedState: {
         projectNotes: {
           projectNotesTimeLine: mockProjectNotes,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

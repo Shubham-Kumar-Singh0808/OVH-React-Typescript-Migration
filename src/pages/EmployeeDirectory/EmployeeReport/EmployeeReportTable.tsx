@@ -62,6 +62,7 @@ const EmployeeReportTable = (props: EmployeeReportTableProps): JSX.Element => {
                       <Link
                         to={`/employeeProfile/${employee.id}`}
                         className="employee-name"
+                        data-testid={`employee-profile-link${index}`}
                       >
                         {employee.fullName}
                       </Link>

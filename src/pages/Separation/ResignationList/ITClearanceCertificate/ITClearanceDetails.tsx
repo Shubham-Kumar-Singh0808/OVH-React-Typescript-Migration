@@ -14,10 +14,11 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const ITClearanceDetails = (): JSX.Element => {
   const [isItCCDetailsEdit, setIsItCCDetailsEdit] = useState<boolean>(false)
-  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>()
+  const [isEditActiveValue, setIsEditActiveValue] = useState<boolean>(false)
   const initialItCCDetails = {} as UpdateClearanceDetails
   const [editItCCDetails, setEditItCCDetails] = useState(initialItCCDetails)
   const dispatch = useAppDispatch()
@@ -35,6 +36,7 @@ const ITClearanceDetails = (): JSX.Element => {
     setIsItCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditItCCDetails(updateClearanceDetails)
+    setIsEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditItCCDetailsHandler = (
@@ -55,6 +57,13 @@ const ITClearanceDetails = (): JSX.Element => {
       })
     }
   }
+
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
 
   const SubmitItClearanceCertificateHandler = async () => {
     const updateItCCDetailsResultAction = await dispatch(
@@ -80,9 +89,10 @@ const ITClearanceDetails = (): JSX.Element => {
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
-          submittedBy: 'HR',
+          submittedBy: 'IT',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -149,7 +159,7 @@ const ITClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{ItClearanceDetails[0]?.employeeId}</p>
+                <p className="mb-0">{ItClearanceDetails[0]?.seperationEmpId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -157,7 +167,9 @@ const ITClearanceDetails = (): JSX.Element => {
                 Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{ItClearanceDetails[0]?.employeeName}</p>
+                <p className="mb-0">
+                  {ItClearanceDetails[0]?.seperationEmpName}
+                </p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -165,7 +177,7 @@ const ITClearanceDetails = (): JSX.Element => {
                 Submitted Employee Id:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{ItClearanceDetails[0]?.seperationEmpId}</p>
+                <p className="mb-0">{ItClearanceDetails[0]?.employeeId}</p>
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
@@ -173,9 +185,7 @@ const ITClearanceDetails = (): JSX.Element => {
                 Submitted Employee Name:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">
-                  {ItClearanceDetails[0]?.seperationEmpName}
-                </p>
+                <p className="mb-0">{ItClearanceDetails[0]?.employeeName}</p>
               </CCol>
             </CRow>
 
@@ -195,7 +205,7 @@ const ITClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditActiveValue as unknown as boolean}
+                    checked={isEditActiveValue}
                     onChange={handleEditItCCDetailsHandler}
                   />
                   <CFormCheck
@@ -234,7 +244,8 @@ const ITClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {ItClearanceDetails[0]?.comments || 'N/A'}
+                    {ItClearanceDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}
@@ -251,7 +262,7 @@ const ITClearanceDetails = (): JSX.Element => {
                       onClick={SubmitItClearanceCertificateHandler}
                       disabled={
                         isEditActiveValue === true &&
-                        editItCCDetails?.comments === ''
+                        editItCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update

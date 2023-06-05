@@ -42,9 +42,16 @@ const EditChangeRequest = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = e.target
-    setEditChangeRequest((prevState) => {
-      return { ...prevState, ...{ [name]: value } }
-    })
+    if (name === 'duration') {
+      const durationValue = value.replace(/\D/gi, '')
+      setEditChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: durationValue } }
+      })
+    } else {
+      setEditChangeRequest((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
   }
   const toastElement = (
     <OToast toastMessage="CR Updated Successfully" toastColor={'success'} />
@@ -56,12 +63,12 @@ const EditChangeRequest = ({
         descripition: editDescription as string,
       },
     }
-    const updatechangeRequestsultAction = await dispatch(
+    const updateChangeRequestResultAction = await dispatch(
       reduxServices.projectChangeRequest.updateChangeRequest(prepareObject),
     )
     if (
       reduxServices.projectChangeRequest.updateChangeRequest.fulfilled.match(
-        updatechangeRequestsultAction,
+        updateChangeRequestResultAction,
       )
     ) {
       setToggle('')
@@ -105,7 +112,13 @@ const EditChangeRequest = ({
         <CRow className="mt-4 mb-4">
           <CFormLabel {...nameProps}>
             Name :
-            <span className={showIsRequired(editChangeRequest?.name)}>*</span>
+            <span
+              className={showIsRequired(
+                editChangeRequest?.name?.replace(/^\s*/, ''),
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -135,12 +148,13 @@ const EditChangeRequest = ({
             <CFormInput
               type="text"
               id="duration"
+              autoComplete="off"
               data-testid="duration-testing"
               name="duration"
               placeholder="Hours"
               value={editChangeRequest?.duration}
               onChange={onChangeHandler}
-              maxLength={10}
+              maxLength={8}
             />
           </CCol>
         </CRow>
@@ -161,11 +175,12 @@ const EditChangeRequest = ({
               placeholder="Purpose"
               data-testid="text-area"
               aria-label="textarea"
+              autoComplete="off"
               value={editDescription}
               maxLength={150}
               onChange={(e) => setEditDescription(e.target.value)}
             ></CFormTextarea>
-            <p>{editChangeRequest.descripition?.length}/150</p>
+            <p>{editDescription?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>

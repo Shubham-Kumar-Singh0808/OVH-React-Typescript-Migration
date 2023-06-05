@@ -74,6 +74,7 @@ const uniqueAttendee = async (
       attendeeId: props.attendeeId,
       attendeeName: props.attendeeName,
       endTime: props.endTime,
+      meetingRequestId: props.meetingRequestId,
       startTime: props.startTime,
     },
   })

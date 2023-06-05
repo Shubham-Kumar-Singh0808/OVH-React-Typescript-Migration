@@ -5,12 +5,19 @@ import userEvent from '@testing-library/user-event'
 import ClientFilterOptions from './ClientFilterOptions'
 import { render, screen, waitFor } from '../../../test/testUtils'
 
+const mockSetSelectedFunction = jest.fn()
+
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <ClientFilterOptions currentPage={1} pageSize={20} />
+    <ClientFilterOptions
+      currentPage={1}
+      pageSize={20}
+      setCurrentPage={mockSetSelectedFunction}
+      setPageSize={mockSetSelectedFunction}
+    />
   </div>
 )
 describe('Client Filter Options Component Testing', () => {

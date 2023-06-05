@@ -5,7 +5,7 @@ import ReactDatePicker from 'react-datepicker'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const BookingListFilterOptions = ({
   location,
@@ -46,25 +46,28 @@ const BookingListFilterOptions = ({
   }, [dispatch, location])
 
   useEffect(() => {
-    if (location || meetingStatus || room || selectDate) {
+    if (location || meetingStatus || room || selectDate || selectDateOptions) {
       dispatch(
         reduxServices.bookingList.getBookingsForSelection({
           location: Number(location),
           meetingStatus,
           room,
-          status: selectDate
-            ? new Date(selectDate).toLocaleDateString(deviceLocale, {
-                year: 'numeric',
-                month: 'numeric',
-                day: '2-digit',
-              })
-            : '' || selectDateOptions,
+          status: selectDate || selectDateOptions,
         }),
       )
       dispatch(reduxServices.bookingList.actions.setCurrentPage(1))
       dispatch(reduxServices.bookingList.actions.setPageSize(20))
     }
-  }, [dispatch, location, meetingStatus, room, selectDate])
+  }, [dispatch, location, meetingStatus, room, selectDate, selectDateOptions])
+
+  const onHandleStartDate = (value: Date) => {
+    setSelectDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.bookingList.actions.setFromDateValue(
+        moment(value).format(dateFormat),
+      ),
+    )
+  }
 
   return (
     <>
@@ -85,6 +88,11 @@ const BookingListFilterOptions = ({
             value={location}
             onChange={(e) => {
               setLocation(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setLocationValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value={''}>Select Location</option>
@@ -110,6 +118,9 @@ const BookingListFilterOptions = ({
             value={room}
             onChange={(e) => {
               setRoom(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setRoomValue(e.target.value),
+              )
             }}
           >
             <option value={''}>Select Room</option>
@@ -133,12 +144,17 @@ const BookingListFilterOptions = ({
             value={meetingStatus}
             onChange={(e) => {
               setMeetingStatus(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setMeetingStatus(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="New">New</option>
-            <option value="true">In Progress</option>
-            <option value="false">Cancelled</option>
-            <option value="onBench">Completed</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Completed">Completed</option>
           </CFormSelect>
         </CCol>
       </CRow>
@@ -156,6 +172,11 @@ const BookingListFilterOptions = ({
             value={selectDateOptions}
             onChange={(e) => {
               setSelectDateOptions(e.target.value)
+              dispatch(
+                reduxServices.bookingList.actions.setSelectCustom(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="Today">Today</option>
@@ -173,24 +194,13 @@ const BookingListFilterOptions = ({
                 id="date"
                 data-testid="date"
                 className="form-control form-control-sm sh-date-picker"
-                peekNextMonth
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
                 name="date"
-                value={
-                  selectDate
-                    ? new Date(selectDate).toLocaleDateString(deviceLocale, {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                      })
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setSelectDate(moment(date).format(commonDateFormat))
-                }
+                value={selectDate}
+                onChange={(date: Date) => onHandleStartDate(date)}
               />
             </CCol>
           </>

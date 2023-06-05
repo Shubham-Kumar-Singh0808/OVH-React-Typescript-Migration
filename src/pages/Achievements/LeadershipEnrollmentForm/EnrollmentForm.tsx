@@ -339,44 +339,46 @@ const EnrollmentForm = (props: EnrollmentFormProps): JSX.Element => {
       ) : (
         <></>
       )}
-      <CRow className="mt-3 mb-3">
-        <CCol sm={12} className="mt-2">
+      <CRow className="align-items-center mt-4 mb-4">
+        <CFormLabel
+          data-testid="emp-agree"
+          className="col-sm-4 col-form-label text-end pe-1"
+        >
           <CFormCheck
             data-testid="acceptance-check"
-            type="checkbox"
-            valid={true}
             required
             checked={enteredAnswers.acceptance !== null}
             onChange={acceptanceChangeHandler}
-          />{' '}
-          <span className="ps-2">
-            <strong data-testid="acceptance-label">
-              I hereby declare that the above furnished information has been
-              accepted by me
-            </strong>
-          </span>
+          />
+        </CFormLabel>
+        <CCol sm={7} className="align-items-center">
+          <strong data-testid="acceptance-label">
+            I hereby declare that the above furnished information has been
+            accepted by me
+          </strong>
         </CCol>
       </CRow>
-      <CRow className="mt-3">
-        <CFormLabel className="col-form-label category-label col-sm-3 col-form-label text-end"></CFormLabel>
-        <CCol sm={4}>
-          <CButton
-            type="submit"
-            color="success"
-            className="btn-ovh me-1"
-            data-testid="submit-btn"
-            disabled={!isSubmitButtonEnabled}
-          >
-            Submit
-          </CButton>
-          <CButton
-            color="warning"
-            data-testid="clear-btn"
-            className="btn-ovh me-1"
-            onClick={clearButtonHandler}
-          >
-            Clear
-          </CButton>
+      <CRow className="mt-4 mb-4">
+        <CCol md={{ span: 6, offset: 4 }}>
+          <>
+            <CButton
+              type="submit"
+              color="success"
+              className="btn-ovh me-1"
+              data-testid="submit-btn"
+              disabled={!isSubmitButtonEnabled}
+            >
+              Submit
+            </CButton>
+            <CButton
+              color="warning"
+              data-testid="clear-btn"
+              className="btn-ovh me-1"
+              onClick={clearButtonHandler}
+            >
+              Clear
+            </CButton>
+          </>
         </CCol>
       </CRow>
     </CForm>

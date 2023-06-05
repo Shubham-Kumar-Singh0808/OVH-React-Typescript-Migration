@@ -31,23 +31,26 @@ const PayrollManagementTable = (props: {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setToEditPayslip: (value: CurrentPayslip) => void
-  isChecked: boolean
-  setIsChecked: (value: boolean) => void
-  isAllChecked: boolean
-  setIsAllChecked: (value: boolean) => void
   userDeleteAccess: boolean
   userEditAccess: boolean
+  editPaySlipHandler: (payslipItem: CurrentPayslip) => void
+  paySlipId: number[]
+  setPaySlipId: React.Dispatch<React.SetStateAction<number[]>>
+  allChecked: boolean
+  setAllChecked: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isViewModalVisible, setIsViewModalVisible] = useState(false)
   const [deletePaySlipId, setDeletePaySlipId] = useState(0)
-  const [selectedPaySlipId, setSelectedPaySlipId] = useState<string | number>()
   const [selectedPaySlipDetails, setSelectedPaySlipDetails] = useState(
     {} as CurrentPayslip,
   )
+  const [deletePayslip, setDeletePayslip] = useState('')
+
   const renderingPayslipData = useTypedSelector(
     reduxServices.payrollManagement.selectors.paySlipList,
   )
+  console.log(renderingPayslipData)
 
   const dispatch = useAppDispatch()
 
@@ -61,7 +64,13 @@ const PayrollManagementTable = (props: {
           year: Number(props.selectYear),
         }),
       )
-  }, [dispatch, props.selectMonth, props.selectYear])
+  }, [
+    dispatch,
+    props.selectMonth,
+    props.selectYear,
+    props.pageSize,
+    props.currentPage,
+  ])
 
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="Payslip Deleted Successfully" />
@@ -84,9 +93,10 @@ const PayrollManagementTable = (props: {
     dispatch(reduxServices.app.actions.addToast(deletedToastElement))
   }
 
-  const deleteButtonHandler = (id: number) => {
+  const deleteButtonHandler = (id: number, name: string) => {
     setIsDeleteModalVisible(true)
     setDeletePaySlipId(id)
+    setDeletePayslip(name)
   }
 
   const handlePageSizeSelectChange = (
@@ -101,41 +111,57 @@ const PayrollManagementTable = (props: {
     reduxServices.payrollManagement.selectors.PaySlipsListSize,
   )
 
-  const editPaySlipHandler = (payslipItem: CurrentPayslip): void => {
-    props.setToEditPayslip(payslipItem)
-  }
-
   const handleModal = (payslipItem: CurrentPayslip) => {
     setIsViewModalVisible(true)
     setSelectedPaySlipDetails(payslipItem)
   }
-
-  const handleCheckbox = (value: boolean, paySlipId: string | number) => {
-    setSelectedPaySlipId(paySlipId)
-    props.setIsChecked(value)
-  }
-
-  const manageCheckboxes = (paySlipId: number) => {
-    if (props.isAllChecked) {
-      return props.isAllChecked
-    } else if (selectedPaySlipId === paySlipId) {
-      return props.isChecked
-    }
-    return false
-  }
-
   const totalNoOfRecords = renderingPayslipData?.length
     ? `Total Records: ${PaySlipsListSize}`
     : `No Records found...`
 
+  const getItemNumber = (index: number) => {
+    return (props.currentPage - 1) * props.pageSize + index + 1
+  }
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newList = renderingPayslipData.map((item) => item.paySlipId)
+    const { checked } = e.target
+    props.setAllChecked(e.target.checked)
+    if (checked) {
+      props.setPaySlipId(newList)
+    } else {
+      props.setPaySlipId([])
+    }
+  }
+
+  const handleSingleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target
+    const value1 = +value
+    if (props.paySlipId?.includes(value1)) {
+      props.setAllChecked(checked)
+      const list = [...props.paySlipId]
+      const index = list.indexOf(value1)
+      if (index !== undefined) {
+        list.splice(index, 1)
+        props.setPaySlipId(list)
+      }
+    } else {
+      const list = [...props.paySlipId] || []
+      list?.push(value1)
+      if (list.length === renderingPayslipData.length)
+        props.setAllChecked(checked)
+      props.setPaySlipId(list)
+    }
+  }
+
   return (
     <>
-      <CCol className="custom-scroll scroll-alignment">
+      <CCol className="custom-scroll scroll-alignment py-4">
         {renderingPayslipData?.length > 0 ? (
           <CTable
             striped
             responsive
-            className="text-start text-left align-middle alignment sh-adjustment"
+            className="text-start text-left align-middle alignment"
           >
             <CTableHead>
               <CTableRow>
@@ -144,8 +170,8 @@ const PayrollManagementTable = (props: {
                   <CFormCheck
                     className="form-check-input form-select-not-allowed"
                     name="deleteCheckbox"
-                    checked={props.isAllChecked}
-                    onChange={(e) => props.setIsAllChecked(e.target.checked)}
+                    checked={props.allChecked}
+                    onChange={handleAllCheck}
                     data-testid="ch-All"
                   />
                 </CTableHeaderCell>
@@ -200,25 +226,27 @@ const PayrollManagementTable = (props: {
             <CTableBody>
               {renderingPayslipData?.length > 0 &&
                 renderingPayslipData?.map((payslipItem, index) => {
+                  console.log(props.paySlipId, payslipItem?.paySlipId)
+
                   return (
-                    <CTableRow key={payslipItem.paySlipId}>
+                    <CTableRow key={index}>
                       <CTableDataCell className="text-middle ms-2">
                         <CFormCheck
-                          className="form-check-input form-select-not-allowed"
-                          name="deleteCheckbox"
-                          checked={manageCheckboxes(payslipItem.paySlipId)}
-                          onChange={(e) =>
-                            handleCheckbox(
-                              e.target.checked,
-                              payslipItem.paySlipId,
-                            )
+                          data-testid={`ch-countries${index}`}
+                          className="mt-1"
+                          checked={
+                            !!props.paySlipId?.includes(payslipItem?.paySlipId)
                           }
+                          value={payslipItem.paySlipId}
+                          onChange={handleSingleCheck}
                         />
                       </CTableDataCell>
-                      <CTableDataCell>{index + 1}</CTableDataCell>
+                      <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
                       <CTableDataCell>{payslipItem.employeeId}</CTableDataCell>
                       <CTableDataCell>{payslipItem.name}</CTableDataCell>
-                      <CTableDataCell>{payslipItem.designation}</CTableDataCell>
+                      <CTableDataCell>
+                        {payslipItem.designation || 'N/A'}
+                      </CTableDataCell>
                       <CTableDataCell>{payslipItem.joiningDate}</CTableDataCell>
                       <CTableDataCell>{payslipItem.accountNo}</CTableDataCell>
                       <CTableDataCell>{payslipItem.grossSalary}</CTableDataCell>
@@ -258,6 +286,7 @@ const PayrollManagementTable = (props: {
                       <CTableDataCell>{payslipItem.arrears}</CTableDataCell>
                       <CTableDataCell>{payslipItem.incentive}</CTableDataCell>
                       <CTableDataCell>{payslipItem.vpayable}</CTableDataCell>
+
                       <CTableDataCell>{payslipItem.netSalary}</CTableDataCell>
                       <CTableDataCell>{payslipItem.remarks}</CTableDataCell>
                       <CTableDataCell>{payslipItem.month}</CTableDataCell>
@@ -270,7 +299,7 @@ const PayrollManagementTable = (props: {
                               className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
                               color="info btn-ovh me-1"
                               onClick={() => {
-                                editPaySlipHandler(payslipItem)
+                                props.editPaySlipHandler(payslipItem)
                               }}
                             >
                               <i className="fa fa-edit" aria-hidden="true"></i>
@@ -285,7 +314,10 @@ const PayrollManagementTable = (props: {
                               color="danger btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() =>
-                                deleteButtonHandler(payslipItem.paySlipId)
+                                deleteButtonHandler(
+                                  payslipItem.paySlipId,
+                                  payslipItem.name,
+                                )
                               }
                             >
                               <i
@@ -359,7 +391,10 @@ const PayrollManagementTable = (props: {
         modalBodyClass="mt-0"
         confirmButtonAction={confirmDeletePayslip}
       >
-        <>Do you really want to delete this </>
+        <>
+          Do you really want to delete this <strong>{deletePayslip}</strong>{' '}
+          record ?{' '}
+        </>
       </OModal>
       <OModal
         alignment="center"
@@ -368,6 +403,7 @@ const PayrollManagementTable = (props: {
         closeButtonClass="d-none"
         modalBodyClass="mt-0"
         modalFooterClass="d-none"
+        modalSize="lg"
       >
         <>
           <ViewPaySlip selectedPaySlipDetails={selectedPaySlipDetails} />

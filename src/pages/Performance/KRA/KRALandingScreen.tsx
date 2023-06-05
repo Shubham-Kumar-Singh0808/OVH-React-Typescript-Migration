@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import KRAFilterOptions from './KRALandingScreenComponents/KRAFilterOptions'
 import KRATable from './KRALandingScreenComponents/KRATable'
 import AddKRA from './AddEditKRA/AddKRA'
 import EditKRA from './AddEditKRA/EditKRA'
 import AddNewKPI from './AddKPI/AddNewKPI'
 import EditKPi from './EditKPI/EditKPi'
+import { selectDepartment, selectDesignation } from './KRAConstants'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -16,11 +18,12 @@ import {
 import { emptyString } from '../../Achievements/AchievementConstants'
 
 const KRALandingScreen = (): JSX.Element => {
+  const [selectedDepartment, setSelectedDepartment] =
+    useState<string>(selectDepartment)
+  const [selectedDesignation, setSelectedDesignation] =
+    useState<string>(selectDesignation)
   const [addKPI, setAddKPI] = useState<KRATableDataItem>({} as KRATableDataItem)
-  // const [editKPI, setEditKPI] = useState<IncomingKPIDataItem>(
-  //   {} as IncomingKPIDataItem,
-  // )
-  // const editKpi = useTypedSelector(reduxServices.KRA.selectors.editKpi)
+  const kraList = useParams<{ kraListPage: string }>()
   const dispatch = useAppDispatch()
   const currentOnScreenPage = useTypedSelector(
     (state) => state.KRA.currentOnScreenPage,
@@ -46,6 +49,14 @@ const KRALandingScreen = (): JSX.Element => {
     pageSize,
   } = usePagination(kraTableSize, pageSizeFromState, pageFromState)
 
+  useEffect(() => {
+    if (kraList) {
+      dispatch(
+        reduxServices.KRA.actions.setCurrentOnScreenPage(KRAPages.kraList),
+      )
+    }
+  }, [kraList])
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -55,7 +66,14 @@ const KRALandingScreen = (): JSX.Element => {
     >
       {currentOnScreenPage === KRAPages.kraList && (
         <>
-          <KRAFilterOptions currentPage={currentPage} pageSize={pageSize} />
+          <KRAFilterOptions
+            currentPage={currentPage}
+            pageSize={pageSize}
+            selectedDepartment={selectedDepartment}
+            selectedDesignation={selectedDesignation}
+            setSelectedDepartment={setSelectedDepartment}
+            setSelectedDesignation={setSelectedDesignation}
+          />
           <KRATable
             paginationRange={paginationRange}
             setPageSize={setPageSize}

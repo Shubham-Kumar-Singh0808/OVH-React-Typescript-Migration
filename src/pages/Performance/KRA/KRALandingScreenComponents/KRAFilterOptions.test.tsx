@@ -12,13 +12,21 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { selectDepartment, selectDesignation } from '../KRAConstants'
 import { emptyString } from '../../../../constant/constantData'
 import { KRAPages } from '../../../../types/Performance/KRA/KRATypes'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
     <div id="overlay-root"></div>
     <div id="root"></div>
-    <KRAFilterOptions currentPage={1} pageSize={20} />
+    <KRAFilterOptions
+      currentPage={1}
+      pageSize={20}
+      selectedDepartment={''}
+      selectedDesignation={''}
+      setSelectedDepartment={jest.fn()}
+      setSelectedDesignation={jest.fn()}
+    />
   </div>
 )
 
@@ -30,7 +38,8 @@ const searchBtnId = 'search-btn-id'
 const deptSelectId = 'dept-sel'
 const desigSelectId = 'desig-sel'
 const searchInputId = 'search-inp'
-
+const selectDept = 'Select Department'
+const selectDesg = 'Select Designation'
 const deptSelectOption = 'Development'
 const desigSelectOption = 'Project Manager'
 const multiSearchValue = 'People'
@@ -46,6 +55,9 @@ describe('KRA Filter Options', () => {
             designations: mockDevelopmentDesignationList,
             currentOnScreenPage: KRAPages.kraList,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
+          },
         },
       })
     })
@@ -59,7 +71,7 @@ describe('KRA Filter Options', () => {
       )
       expect(screen.getByTestId(addKRABtnId)).toBeEnabled()
       expect(screen.getByPlaceholderText('Multiple Search')).toBeVisible()
-      expect(screen.getByTestId(viewBtnId)).toBeDisabled()
+      expect(screen.getByTestId(viewBtnId)).toBeEnabled()
       expect(screen.getByTestId(clearBtnId)).toBeEnabled()
       expect(screen.getByTestId(searchBtnId)).toBeDisabled()
     })
@@ -73,13 +85,13 @@ describe('KRA Filter Options', () => {
       const deptSelect = screen.getByTestId(deptSelectId)
       const desigSelect = screen.getByTestId(desigSelectId)
       const multiSearch = screen.getByTestId(searchInputId)
-      userEvent.selectOptions(deptSelect, deptSelectOption)
-      expect(deptSelect).toHaveValue(deptSelectOption)
+      userEvent.selectOptions(deptSelect, selectDept)
+      expect(deptSelect).toHaveValue(selectDept)
       expect(viewBtn).toBeEnabled()
 
       expect(screen.getAllByTestId('desig-opt')).toHaveLength(43)
-      userEvent.selectOptions(desigSelect, desigSelectOption)
-      expect(desigSelect).toHaveValue(desigSelectOption)
+      userEvent.selectOptions(desigSelect, selectDesg)
+      expect(desigSelect).toHaveValue(selectDesg)
 
       userEvent.type(multiSearch, multiSearchValue)
       expect(multiSearch).toHaveValue(multiSearchValue)

@@ -12,7 +12,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import Autocomplete from 'react-autocomplete'
-import ReactDatePicker from 'react-datepicker'
+import DatePicker from 'react-datepicker'
 import Multiselect from 'multiselect-react-dropdown'
 import { useHistory } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -29,7 +29,7 @@ import {
   GetAllProjects,
 } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { deviceLocale } from '../../../utils/dateFormatUtils'
+import { showIsRequired } from '../../../utils/helper'
 
 const AllocateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -60,12 +60,13 @@ const AllocateEmployee = (): JSX.Element => {
     useState<string>('')
   const [selectProject, setSelectProject] = useState<GetAllProjects>()
   const [allocationValue, setAllocationValue] = useState<number | string>()
-  const [allocationDate, setAllocationDate] = useState<string>()
-  const [allocationEndDate, setAllocationEndDate] = useState<string>()
+  const [allocationDate, setAllocationDate] = useState<Date | string>()
+  const [allocationEndDate, setAllocationEndDate] = useState<Date | string>()
   const [isDateError, setIsDateError] = useState<boolean>(false)
   const [isAllocateButtonEnabled, setIsAllocateButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isEnable, setIsEnable] = useState(false)
-
+  console.log(errorMessageCount)
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -128,7 +129,7 @@ const AllocateEmployee = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'allocation') {
-      let targetValue = value.replace(/\D/g, '')
+      let targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
       if (Number(targetValue) > 100) targetValue = '100'
       setAllocationValue(targetValue)
     }
@@ -192,10 +193,10 @@ const AllocateEmployee = (): JSX.Element => {
       employeeIds: addEmployeeName?.map((currentItem) =>
         currentItem.id.toString(),
       ),
-      endDate: allocationEndDate,
+      endDate: allocationEndDate as string,
       projectId: selectProject?.id as number,
       projectName: selectProject?.projectName as string,
-      startDate: allocationDate,
+      startDate: allocationDate as string,
     }
     dispatch(reduxServices.allocateEmployee.AddNewAllocate(finalObject))
 
@@ -236,6 +237,7 @@ const AllocateEmployee = (): JSX.Element => {
     ) {
       postAllocateEmployee()
     } else {
+      setErrorMessageCount((errorCount) => errorCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -423,13 +425,13 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 Allocation Date:
-                <span className={allocationDate ? TextWhite : TextDanger}>
+                <span className={showIsRequired(allocationDate as string)}>
                   *
                 </span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
+              <DatePicker
                 id="allocation-date"
                 data-testid="allocateEmployeeAllocationDate"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
@@ -439,21 +441,9 @@ const AllocateEmployee = (): JSX.Element => {
                 dropdownMode="select"
                 placeholderText="dd/mm/yyyy"
                 name="allocateEmployeeAllocationDate"
-                value={
-                  allocationDate
-                    ? new Date(allocationDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setAllocationDate(moment(date).format(commonFormatDate))
-                }
+                value={allocationDate as string}
+                onChange={(date: Date) => setAllocationDate(date)}
+                selected={allocationDate as Date}
               />
             </CCol>
           </CRow>
@@ -461,38 +451,25 @@ const AllocateEmployee = (): JSX.Element => {
             <CCol sm={3} md={3} className="text-end">
               <CFormLabel className="mt-1">
                 End Date:
-                <span className={allocationEndDate ? TextWhite : TextDanger}>
+                <span className={showIsRequired(allocationEndDate as string)}>
                   *
                 </span>
               </CFormLabel>
             </CCol>
             <CCol sm={3}>
-              <ReactDatePicker
-                id="end-date:"
+              <DatePicker
+                id="allocation-date"
                 data-testid="allocateEmployeeEndDate"
                 className="form-control form-control-sm sh-date-picker form-control-not-allowed"
                 autoComplete="off"
                 showMonthDropdown
                 showYearDropdown
                 dropdownMode="select"
-                dateFormat="dd/mm/yy"
                 placeholderText="dd/mm/yyyy"
                 name="allocateEmployeeEndDate"
-                value={
-                  allocationEndDate
-                    ? new Date(allocationEndDate).toLocaleDateString(
-                        deviceLocale,
-                        {
-                          year: 'numeric',
-                          month: '2-digit',
-                          day: '2-digit',
-                        },
-                      )
-                    : ''
-                }
-                onChange={(date: Date) =>
-                  setAllocationEndDate(moment(date).format(commonFormatDate))
-                }
+                value={allocationEndDate as string}
+                onChange={(date: Date) => setAllocationEndDate(date)}
+                selected={allocationEndDate as Date}
               />
             </CCol>
             {isDateError && (

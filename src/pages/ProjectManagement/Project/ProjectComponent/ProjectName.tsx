@@ -22,6 +22,7 @@ export const ProjectName = ({
     label={'Project Name'}
     name={'projectName'}
     placeholder={'Project Name'}
+    autoComplete={'off'}
     dynamicFormLabelProps={dynamicFormLabelProps}
   />
 )

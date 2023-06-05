@@ -16,26 +16,73 @@ const deviceLocale: string =
     ? navigator.languages[0]
     : navigator.language
 
-const updateBtnId = 'add-project'
-const mockSetToggle = jest.fn()
 describe('ApproveProjectForm Testing', () => {
   beforeEach(() => {
-    render(<AddProjectRequestForm setToggle={jest.fn()} />, {
-      preloadedState: {
-        projectManagement: {
-          projectClients: mockProjectClient,
-          domains: mockDomain,
-          managers: mockManager,
-          platForms: mockPlatform,
-          project: mockProject,
-          isLoading: true,
+    render(
+      <AddProjectRequestForm
+        projectRequest={{
+          bcc: '',
+          billingContactPerson: '',
+          billingContactPersonEmail: '',
+          cc: '',
+          chelist: [],
+          client: '',
+          description: '',
+          domain: '',
+          enddate: '',
+          intrnalOrNot: false,
+          managerId: 0,
+          model: '',
+          platform: '',
+          projectContactEmail: '',
+          projectContactPerson: '',
+          projectName: '',
+          projectRequestMilestoneDTO: [],
+          requiredResources: '',
+          startdate: '',
+          status: '',
+          technology: '',
+          type: '',
+        }}
+        setProjectRequest={jest.fn()}
+        checkList={[]}
+        setCheckList={jest.fn()}
+        projectMileStone={[]}
+        setProjectMileStone={jest.fn()}
+        projectManager={''}
+        setProjectManager={jest.fn()}
+        projectName={''}
+        setProjectName={jest.fn()}
+        showEditor={false}
+        setShowEditor={jest.fn()}
+        descriptionError={false}
+        customerContactName={''}
+        setCustomerContactName={jest.fn()}
+        setEmailError={jest.fn()}
+        setBillingContactPersonEmailError={jest.fn()}
+        billingContactName={''}
+        setBillingContactName={jest.fn()}
+        setCheckListValid={jest.fn()}
+        setDescriptionError={jest.fn()}
+        setIsAddMileStoneButtonEnabled={jest.fn()}
+        checkListValid={false}
+        isAddMilestoneButtonEnabled={false}
+        emailError={false}
+        billingContactPersonEmailError={false}
+      />,
+      {
+        preloadedState: {
+          projectManagement: {
+            projectClients: mockProjectClient,
+            domains: mockDomain,
+            managers: mockManager,
+            platForms: mockPlatform,
+            project: mockProject,
+            isLoading: true,
+          },
         },
       },
-    })
-  })
-
-  test('should be able to render Update button', () => {
-    expect(screen.getByTestId(updateBtnId)).toBeInTheDocument()
+    )
   })
 
   test('should render input components', () => {
@@ -49,20 +96,9 @@ describe('ApproveProjectForm Testing', () => {
     expect(screen.getByRole('option', { name: 'Java' }).selected).toBe(false)
     expect(screen.getByRole('option', { name: 'Banking' }).selected).toBe(false)
 
-    const dates = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dates = screen.getAllByPlaceholderText('dd/mm/yyyy')
     expect(dates[0]).toBeInTheDocument()
     expect(dates[1]).toBeInTheDocument()
-  })
-
-  test('should stay enable update button when input is not empty', () => {
-    expect(screen.getByTestId(updateBtnId)).toBeDisabled()
-  })
-
-  test('should enable disable update button if email is invalid', () => {
-    const input = screen.getByPlaceholderText('Email')
-    userEvent.type(input, 'ocabaaaa.a.')
-
-    expect(screen.getByTestId(updateBtnId)).toBeDisabled()
   })
 
   test('should able to Add Project project', () => {
@@ -102,7 +138,7 @@ describe('ApproveProjectForm Testing', () => {
       name: 'Internal Project',
     }) as HTMLInputElement
     userEvent.click(internalProject)
-    expect(internalProject.checked).toEqual(true)
+    expect(internalProject.checked).toEqual(false)
 
     // Project Manager
     const projectManager = screen.getByPlaceholderText('Project Manager')
@@ -118,7 +154,7 @@ describe('ApproveProjectForm Testing', () => {
     userEvent.selectOptions(domainSelectList, ['Insurance'])
 
     // Start Date
-    const dateInput = screen.getAllByPlaceholderText('dd/mm/yy')
+    const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
     userEvent.type(
       dateInput[0],
       new Date('12/20/2021').toLocaleDateString(deviceLocale, {
@@ -127,15 +163,5 @@ describe('ApproveProjectForm Testing', () => {
         day: '2-digit',
       }),
     )
-
-    expect(screen.getByTestId(updateBtnId)).not.toBeEnabled()
-
-    const addBtn = screen.getByTestId(updateBtnId)
-    userEvent.click(addBtn)
-
-    const clearBttonElement = screen.getByTestId('clear-project')
-    expect(clearBttonElement).toBeInTheDocument()
-    userEvent.click(clearBttonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })

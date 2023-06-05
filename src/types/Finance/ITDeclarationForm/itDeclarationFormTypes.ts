@@ -1,6 +1,6 @@
 import { LoadingState, ValidationError } from '../../commonTypes'
 
-export type EmployeeDetails = {
+export interface EmployeeDetails {
   activeCyle: string
   designation: string
   employeeId: number
@@ -10,19 +10,26 @@ export type EmployeeDetails = {
 }
 
 export type Investment = {
-  id?: number
+  id: number
   investmentId: string
   customAmount: string
+  description: string | null
+  requiredDocs: string
 }
 
 export type Invest = {
   investmentId: number
   investmentName: string
   maxLimit: number
-  description: string
+  description: string | null
   requiredDocs: string
   sectionId: number
   sectionName: string
+}
+
+export interface ITDeclarationModal {
+  showModal: boolean
+  modalDescription: string
 }
 
 export type Sections = {
@@ -45,7 +52,8 @@ export type FormSectionsDTO = {
   formInvestmentDTO: FormInvestmentDTO[]
 }
 
-export type submitITDeclarationForm = {
+//this type is also used in itDeclarationList. Change With Caution
+export interface SubmitITDeclarationForm {
   designation: string
   employeeId: number
   employeeName: string
@@ -63,13 +71,16 @@ export type ITDeclarationFormSliceState = {
   employeeDetails: EmployeeDetails
   sections: Sections[]
   investments: Invest[]
-  submitITDeclarationForm: submitITDeclarationForm
+  submitITDeclarationForm: SubmitITDeclarationForm
   itDeclarationFormId: number
   itDeclarationFormExist: boolean
   isLoading: LoadingState
   error: ValidationError
   grandTotal: number
   formSectionData: FormSectionsDTO[]
+  isSubmitButtonEnabled: boolean
+  modal: ITDeclarationModal
+  uploadedDocumentId: number
 }
 
 export type itDeclarationFormSectionList = {
@@ -80,4 +91,9 @@ export type itDeclarationFormSectionList = {
   sectionName: string
   sectionLimit: number
   invests: Invest[]
+}
+
+export interface UploadITDocumentDTO {
+  documentId: number
+  document: FormData | string
 }

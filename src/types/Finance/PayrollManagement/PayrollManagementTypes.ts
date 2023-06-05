@@ -133,3 +133,7 @@ export type ReadExcelFile = {
   donation: number
   specificDesignation: null
 }
+
+export type AddPayslipId = {
+  paySlipId: number[]
+}

@@ -93,8 +93,8 @@ describe('Add Configuration Component Testing', () => {
         target: { value: '18 Nov, 2022' },
       }),
     )
-    expect(datePickers[0]).toHaveValue('11/10/2022')
-    expect(datePickers[1]).toHaveValue('11/18/2022')
+    expect(datePickers[0]).toHaveValue('10/11/2022')
+    expect(datePickers[1]).toHaveValue('18/11/2022')
     userEvent.click(screen.getByTestId(clearButton))
     expect(datePickers[0]).toHaveValue('')
     expect(datePickers[1]).toHaveValue('')

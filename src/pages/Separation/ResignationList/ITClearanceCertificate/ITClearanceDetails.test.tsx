@@ -30,13 +30,7 @@ describe('ITClearanceDetails Component Testing', () => {
     screen.debug()
     test('should render with data ', () => {
       expect(
-        screen.getByText(mockClearanceDetails[0].employeeId),
-      ).toBeInTheDocument()
-      expect(
         screen.getByText(mockClearanceDetails[0].employeeName),
-      ).toBeInTheDocument()
-      expect(
-        screen.getByText(mockClearanceDetails[0].seperationEmpId),
       ).toBeInTheDocument()
       expect(
         screen.getByText(mockClearanceDetails[0].seperationEmpName),

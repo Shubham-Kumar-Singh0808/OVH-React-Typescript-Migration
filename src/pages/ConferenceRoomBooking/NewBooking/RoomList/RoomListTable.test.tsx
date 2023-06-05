@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { cleanup } from '@testing-library/react'
+import { cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import RoomListTable from './RoomListTable'
 import { render, screen } from '../../../../test/testUtils'
@@ -8,7 +8,7 @@ import { mockRoomNames } from '../../../../test/data/addRoomListData'
 
 describe('Room List without data', () => {
   beforeEach(() => {
-    render(<RoomListTable userDeleteAccess={true} />)
+    render(<RoomListTable userDeleteAccess={true} selectLocationId={''} />)
   })
 
   test('should render the correct headers', () => {
@@ -28,7 +28,7 @@ describe('Room List without data', () => {
 
 describe('Room List Table with data', () => {
   beforeEach(() => {
-    render(<RoomListTable userDeleteAccess={true} />, {
+    render(<RoomListTable userDeleteAccess={true} selectLocationId={''} />, {
       preloadedState: {
         roomList: {
           meetingRooms: mockRoomNames,
@@ -57,5 +57,22 @@ describe('Room List Table with data', () => {
     expect(
       screen.getByText('Total Records: ' + mockRoomNames.length),
     ).toBeInTheDocument()
+  })
+  test('should render first page data only', () => {
+    waitFor(() => {
+      userEvent.click(screen.getByText('Next >', { exact: true }))
+
+      expect(screen.getByText('« First')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).not.toHaveAttribute('disabled')
+    })
+  })
+
+  test('should disable first and prev in pagination if first page', () => {
+    waitFor(() => {
+      expect(screen.getByText('« First')).toHaveAttribute('disabled')
+      expect(screen.getByText('< Prev')).toHaveAttribute('disabled')
+      expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
+      expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
+    })
   })
 })

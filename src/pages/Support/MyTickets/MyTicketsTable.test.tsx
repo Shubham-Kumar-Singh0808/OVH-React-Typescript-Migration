@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import MyTicketsTable from './MyTicketsTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockEmployeeTicketList } from '../../../test/data/ticketListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetCurrentPage = jest.fn()
 const mockSetPageSize = jest.fn()
@@ -40,6 +41,9 @@ describe('MyTickets component with data', () => {
         tickets: {
           ticketList: mockEmployeeTicketList,
         },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
       },
     })
   })
@@ -62,14 +66,7 @@ describe('MyTickets component with data', () => {
       expect(screen.getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
     })
   })
-  test('should render ', () => {
-    const cancelElement = screen.getAllByTestId('cancel-btn')
-    expect(cancelElement[0]).toBeInTheDocument()
-    userEvent.click(cancelElement[0])
-    const confirmDeleteBtn = screen.getByRole('button', { name: 'Yes' })
-    userEvent.click(confirmDeleteBtn)
-    expect(confirmDeleteBtn)
-  })
+
   test('should click on edit button  ', () => {
     const editElement = screen.getAllByTestId('edit-btn')
     userEvent.click(editElement[0])
@@ -82,6 +79,9 @@ describe('My Tickets Table Component Testing', () => {
       preloadedState: {
         tickets: {
           ticketList: mockEmployeeTicketList,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

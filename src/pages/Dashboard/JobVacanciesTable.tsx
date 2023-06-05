@@ -103,11 +103,13 @@ const JobVacanciesTable = (): JSX.Element => {
         visible={isJobDescriptionModalVisible}
         setVisible={setIsJobDescriptionModalVisible}
       >
-        <div
-          dangerouslySetInnerHTML={{
-            __html: description,
-          }}
-        />
+        <span className="descriptionField">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: description,
+            }}
+          />
+        </span>
       </OModal>
     </>
   )

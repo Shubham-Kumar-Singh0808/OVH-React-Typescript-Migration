@@ -70,7 +70,7 @@ describe('KPI Table', () => {
     })
 
     test('number of rows are rendered', () => {
-      expect(screen.queryAllByRole('row')).toHaveLength(5)
+      expect(screen.queryAllByRole('row')).toHaveLength(4)
     })
 
     test('delete button functionality', () => {
@@ -86,7 +86,7 @@ describe('KPI Table', () => {
       const name = screen.getByTestId('kpi-Name-1')
       const description = screen.getByTestId('kpi-description-2')
       expect(name).toHaveTextContent('Learn new technologies or...')
-      expect(description).toHaveTextContent('<span>This testimonial of...')
+      expect(description).toHaveTextContent('This testimonial of...')
 
       userEvent.click(description)
       const modalCnt = screen.getByTestId(modalContentId)

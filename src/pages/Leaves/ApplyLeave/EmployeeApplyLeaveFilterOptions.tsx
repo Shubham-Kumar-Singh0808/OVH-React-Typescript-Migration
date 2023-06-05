@@ -140,6 +140,21 @@ const EmployeeApplyLeaveFilterOptions = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.employeeApplyLeave.employeeApplyLeave.rejected.match(
+        applyLeaveResultAction,
+      ) &&
+      applyLeaveResultAction.type === 'leaves/employeeApplyLeave/rejected'
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Leave cannot be applied on non working days."
+          />,
+        ),
+      )
     }
   }
 

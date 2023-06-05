@@ -31,14 +31,18 @@ const ProjectNotesTimeLine = (): JSX.Element => {
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    <div className="mb-1">
-                      <img
-                        className="rounded-circle img-responsive"
-                        src={item.postImageData}
-                        width={100}
-                        height={100}
-                      />
-                    </div>
+                    {item.postImageData ? (
+                      <div className="mb-1">
+                        <img
+                          className="img-responsive"
+                          src={item.postImageData}
+                          width={100}
+                          height={100}
+                        />
+                      </div>
+                    ) : (
+                      ''
+                    )}
                     <div className="mb-1">
                       <CFormLabel className="col-form-label p-0">
                         Comments:

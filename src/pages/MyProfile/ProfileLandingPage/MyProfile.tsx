@@ -1,5 +1,5 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import React from 'react'
 import MyProfileTabs from './MyProfileTabs'
 import ProfileDetails from './ProfileDetails'
@@ -10,12 +10,17 @@ import { useTypedSelector } from '../../../stateStore'
 
 const MyProfile = (): JSX.Element => {
   const [isViewingAnotherEmployee, employeeId] = useSelectedEmployee()
+  const history = useHistory()
   const employeeGeneralInformation = useTypedSelector((state) =>
     reduxServices.generalInformation.selectors.selectLoggedInEmployeeData(
       state,
       isViewingAnotherEmployee,
     ),
   )
+
+  const handleClick = () => {
+    history.goBack()
+  }
 
   return (
     <>
@@ -33,11 +38,14 @@ const MyProfile = (): JSX.Element => {
                   <i className="fa fa-pencil-square-o  me-1"></i>Edit
                 </CButton>
               </Link>
-              <Link to={'/employeeList'}>
-                <CButton color="info" className="btn-ovh me-1">
-                  <i className="fa fa-arrow-left  me-1"></i>Back
-                </CButton>
-              </Link>
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={handleClick}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
             </CCol>
           </CRow>
         ) : (

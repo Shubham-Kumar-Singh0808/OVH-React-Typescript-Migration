@@ -13,11 +13,11 @@ describe('EventEndDate Component', () => {
   })
 
   test('should be able to see place holder "dd/mm/yyyy"', () => {
-    expect(screen.getByPlaceholderText('dd/mm/yy')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('DD/MM/YYYY')).toBeInTheDocument()
   })
 
   test('should be able to render EventEndDate label', () => {
-    expect(screen.getByText('End Date:')).toBeInTheDocument()
+    expect(screen.getByText('End Date :')).toBeInTheDocument()
   })
 
   test('should render date picker', () => {
@@ -26,7 +26,7 @@ describe('EventEndDate Component', () => {
   })
 
   test('should be able to select date"', async () => {
-    const datePickers = screen.getAllByPlaceholderText('dd/mm/yy')
+    const datePickers = screen.getAllByPlaceholderText('DD/MM/YYYY')
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>

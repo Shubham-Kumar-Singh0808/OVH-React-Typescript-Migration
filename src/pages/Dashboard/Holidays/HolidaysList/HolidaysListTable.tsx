@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -102,27 +103,31 @@ const HolidaysListTable = ({
           <CTableDataCell>
             {userAccessToHolidays?.updateaccess && (
               <Link to={`/editHoliday/${holiday.id}`}>
-                <CButton
-                  color="info"
-                  className="btn-ovh btn-ovh-employee-list me-1"
-                  data-testid={`holiday-edit-btn${index}`}
-                >
-                  <i className="fa fa-edit" aria-hidden="true"></i>
-                </CButton>
+                <CTooltip content="Edit">
+                  <CButton
+                    color="info"
+                    className="btn-ovh btn-ovh-employee-list me-1"
+                    data-testid={`holiday-edit-btn${index}`}
+                  >
+                    <i className="fa fa-edit" aria-hidden="true"></i>
+                  </CButton>
+                </CTooltip>
               </Link>
             )}
             {userAccessToHolidays?.deleteaccess && (
-              <CButton
-                className="btn-ovh btn-ovh-employee-list"
-                color="danger"
-                size="sm"
-                data-testid={`holiday-delete-btn${index}`}
-                onClick={() =>
-                  handleShowHolidayDeleteModal(holiday.id, holiday.name)
-                }
-              >
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
-              </CButton>
+              <CTooltip content="Delete">
+                <CButton
+                  className="btn-ovh btn-ovh-employee-list"
+                  color="danger"
+                  size="sm"
+                  data-testid={`holiday-delete-btn${index}`}
+                  onClick={() =>
+                    handleShowHolidayDeleteModal(holiday.id, holiday.name)
+                  }
+                >
+                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                </CButton>
+              </CTooltip>
             )}
           </CTableDataCell>
         </CTableRow>

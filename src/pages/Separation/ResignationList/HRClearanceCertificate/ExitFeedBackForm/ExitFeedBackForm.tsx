@@ -32,7 +32,7 @@ const ExitFeedBackForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Employee ID:
           </CFormLabel>
           <CCol sm={3}>
@@ -40,7 +40,7 @@ const ExitFeedBackForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Employee Name:
           </CFormLabel>
           <CCol sm={3}>
@@ -48,7 +48,7 @@ const ExitFeedBackForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             Primary Reason:
           </CFormLabel>
           <CCol sm={3}>
@@ -58,7 +58,7 @@ const ExitFeedBackForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 ps-3 pe-3">
             View of the employee on :
           </CFormLabel>
         </CRow>

@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const HRClearanceCertificateForm = (): JSX.Element => {
   const [hrIsActive, setIsHrActive] = useState<string>('false')
@@ -19,7 +20,14 @@ const HRClearanceCertificateForm = (): JSX.Element => {
     reduxServices.resignationList.selectors.resignationTimeLine,
   )
 
-  const SubmitHRlearanceCertificateHandler = async () => {
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details submitted Successfully."
+      toastColor="success"
+    />
+  )
+
+  const SubmitHRClearanceCertificateHandler = async () => {
     const addTemplateTypeResultAction = await dispatch(
       reduxServices.resignationList.submitClearanceCertificate({
         addedBy: 'HR',
@@ -41,6 +49,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           submittedBy: 'HR',
         }),
       )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
     }
   }
 
@@ -68,7 +77,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           </CCol>
         </CRow>
 
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 mb-3 align-items-center">
           <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
             Due:
           </CFormLabel>
@@ -99,7 +108,7 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow className="mt-1 mb-0 align-items-center">
-          <CFormLabel className="col-sm-3 col-form-label text-end p-1 pe-3">
+          <CFormLabel className="col-sm-3 col-form-label text-end p-1 sh-clearance">
             Comments:
             <span
               className={
@@ -113,7 +122,6 @@ const HRClearanceCertificateForm = (): JSX.Element => {
           </CFormLabel>
           <CCol sm={6} className="w-500">
             <CFormTextarea
-              placeholder="Purpose"
               aria-label="textarea"
               id="textArea"
               name="textArea"
@@ -123,15 +131,18 @@ const HRClearanceCertificateForm = (): JSX.Element => {
             ></CFormTextarea>
           </CCol>
         </CRow>
-        <CRow className="mt-5 mb-4">
+        <CRow className="mb-4 mt-3">
           <CCol md={{ span: 6, offset: 3 }}>
             <>
               <CButton
                 className="btn-ovh me-1"
                 data-testid="confirmBtn"
                 color="success"
-                onClick={SubmitHRlearanceCertificateHandler}
-                disabled={hrIsActive === 'true' && hrTextArea === ''}
+                onClick={SubmitHRClearanceCertificateHandler}
+                disabled={
+                  hrIsActive === 'true' &&
+                  hrTextArea?.replace(/^\s*/, '') === ''
+                }
               >
                 Submit
               </CButton>

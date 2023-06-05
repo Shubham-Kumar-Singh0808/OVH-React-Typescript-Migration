@@ -31,7 +31,9 @@ const ProjectView = (): JSX.Element => {
         {isLoading !== ApiLoadingState.loading ? (
           <>
             <ProjectDetails />
-            <ProjectViewTabs />
+            <div className="mt-5">
+              <ProjectViewTabs />
+            </div>
           </>
         ) : (
           <CCol>

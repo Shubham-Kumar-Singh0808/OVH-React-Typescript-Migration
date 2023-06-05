@@ -3,7 +3,10 @@ import newEventReducer, {
   newEventService,
 } from './newEventSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { LoggedEmployee } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
+import {
+  LoggedEmployee,
+  TrainerDetails,
+} from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 
 describe('New Event  Slice', () => {
   describe('newEventReducer', () => {
@@ -20,6 +23,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {} as TrainerDetails,
       })
     })
 
@@ -36,6 +40,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -52,6 +57,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -68,6 +74,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -84,6 +91,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -100,6 +108,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -116,6 +125,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -132,6 +142,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
     it('Should be able to set isLoading to "loading" if getRoomsByLocation is fullfilled', () => {
@@ -147,6 +158,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -163,6 +175,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -179,6 +192,7 @@ describe('New Event  Slice', () => {
         projectMembers: undefined,
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -195,6 +209,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: [],
+        trainer: {},
       })
     })
 
@@ -211,6 +226,7 @@ describe('New Event  Slice', () => {
         projectMembers: [],
         error: null,
         allBookedDetailsForEvent: undefined,
+        trainer: {},
       })
     })
   })

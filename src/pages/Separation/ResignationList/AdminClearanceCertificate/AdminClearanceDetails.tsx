@@ -14,12 +14,13 @@ import { Link } from 'react-router-dom'
 import { UpdateClearanceDetails } from '../../../../types/Separation/ResignationList/resignationListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AdminClearanceDetails = (): JSX.Element => {
   const [isAdminCCDetailsEdit, setIsAdminCCDetailsEdit] =
     useState<boolean>(false)
   const [isEditAdminActiveValue, setIsAdminEditActiveValue] =
-    useState<boolean>()
+    useState<boolean>(false)
   const initialAdminCCDetails = {} as UpdateClearanceDetails
   const [editAdminCCDetails, setEditAdminCCDetails] = useState(
     initialAdminCCDetails,
@@ -39,6 +40,7 @@ const AdminClearanceDetails = (): JSX.Element => {
     setIsAdminCCDetailsEdit(true)
     setSeparationId(updateClearanceDetails?.seperationId)
     setEditAdminCCDetails(updateClearanceDetails)
+    setIsAdminEditActiveValue(updateClearanceDetails.isDue)
   }
 
   const handleEditAdminCCDetailsHandler = (
@@ -60,6 +62,13 @@ const AdminClearanceDetails = (): JSX.Element => {
     }
   }
 
+  const successToastMessage = (
+    <OToast
+      toastMessage="CC details updated Successfully."
+      toastColor="success"
+    />
+  )
+
   const SubmitAdminClearanceCertificateHandler = async () => {
     const updateItCCDetailsResultAction = await dispatch(
       reduxServices.resignationList.updateCCDetails({
@@ -69,7 +78,7 @@ const AdminClearanceDetails = (): JSX.Element => {
         createdDate: new Date(),
         employeeId: adminClearanceDetails[0]?.employeeId,
         employeeName: adminClearanceDetails[0]?.employeeName,
-        isDue: isEditAdminActiveValue as unknown as boolean,
+        isDue: isEditAdminActiveValue,
         seperationEmpId: adminClearanceDetails[0]?.seperationEmpId,
         seperationEmpName: adminClearanceDetails[0]?.seperationEmpName,
         seperationId: adminClearanceDetails[0]?.seperationId,
@@ -81,6 +90,7 @@ const AdminClearanceDetails = (): JSX.Element => {
       )
     ) {
       setIsAdminCCDetailsEdit(false)
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
       dispatch(
         reduxServices.resignationList.getClearanceDetails({
           separationId: getAllResignationHistory.separationId,
@@ -155,22 +165,6 @@ const AdminClearanceDetails = (): JSX.Element => {
                 Employee ID:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{adminClearanceDetails[0]?.employeeId}</p>
-              </CCol>
-            </CRow>
-            <CRow className="mt-1 mb-0 align-items-center">
-              <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-                Employee Name:
-              </CFormLabel>
-              <CCol sm={3}>
-                <p className="mb-0">{adminClearanceDetails[0]?.employeeName}</p>
-              </CCol>
-            </CRow>
-            <CRow className="mt-1 mb-0 align-items-center">
-              <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-                Submitted Employee Id:
-              </CFormLabel>
-              <CCol sm={3}>
                 <p className="mb-0">
                   {adminClearanceDetails[0]?.seperationEmpId}
                 </p>
@@ -178,7 +172,7 @@ const AdminClearanceDetails = (): JSX.Element => {
             </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
-                Submitted Employee Name:
+                Employee Name:
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
@@ -186,7 +180,22 @@ const AdminClearanceDetails = (): JSX.Element => {
                 </p>
               </CCol>
             </CRow>
-
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+                Submitted Employee Id:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">{adminClearanceDetails[0]?.employeeId}</p>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="col-sm-3 col-form-label text-end p-1">
+                Submitted Employee Name:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">{adminClearanceDetails[0]?.employeeName}</p>
+              </CCol>
+            </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="col-sm-3 col-form-label text-end p-1">
                 Due:
@@ -203,7 +212,7 @@ const AdminClearanceDetails = (): JSX.Element => {
                     value="true"
                     label="Yes"
                     inline
-                    checked={isEditAdminActiveValue as unknown as boolean}
+                    checked={isEditAdminActiveValue}
                     onChange={handleEditAdminCCDetailsHandler}
                   />
                   <CFormCheck
@@ -242,7 +251,8 @@ const AdminClearanceDetails = (): JSX.Element => {
               ) : (
                 <CCol sm={3}>
                   <p className="mb-0">
-                    {adminClearanceDetails[0]?.comments || 'N/A'}
+                    {adminClearanceDetails[0]?.comments?.replace(/^\s*/, '') ||
+                      'N/A'}
                   </p>
                 </CCol>
               )}
@@ -259,7 +269,7 @@ const AdminClearanceDetails = (): JSX.Element => {
                       onClick={SubmitAdminClearanceCertificateHandler}
                       disabled={
                         isEditAdminActiveValue === true &&
-                        editAdminCCDetails?.comments === ''
+                        editAdminCCDetails?.comments?.replace(/^\s*/, '') === ''
                       }
                     >
                       Update

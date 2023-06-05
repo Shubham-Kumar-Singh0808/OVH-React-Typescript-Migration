@@ -6,6 +6,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -165,31 +166,35 @@ const EmployeeSkillsTable: React.FC<EmployeeSkillInfo> = ({
                   {isFieldDisabled && !isViewingAnotherEmployee ? (
                     <CTableDataCell scope="row">
                       {userAccess?.updateaccess && (
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid={`skill-edit-button${index}`}
-                          onClick={() =>
-                            editSkillButtonHandler?.(skillItem.skillId)
-                          }
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            data-testid={`skill-edit-button${index}`}
+                            onClick={() =>
+                              editSkillButtonHandler?.(skillItem.skillId)
+                            }
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                       {userAccess?.deleteaccess && (
-                        <CButton
-                          color="danger"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid={`skill-delete-button${index}`}
-                          onClick={() =>
-                            handleShowDeleteModal(skillItem.skillId)
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger"
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            data-testid={`skill-delete-button${index}`}
+                            onClick={() =>
+                              handleShowDeleteModal(skillItem.skillId)
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                     </CTableDataCell>
                   ) : (

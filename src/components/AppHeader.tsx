@@ -24,7 +24,7 @@ const AppHeader = (): JSX.Element => {
   const history = useHistory()
   const employeeListPath = '/employeeList'
   const [searchAutoCompleteTarget, setSearchAutoCompleteTarget] =
-    useState<string>()
+    useState<string>('')
 
   const employees = useTypedSelector(
     reduxServices.searchEmployee.selectors.allEmployees,
@@ -40,7 +40,7 @@ const AppHeader = (): JSX.Element => {
       setSearchAutoCompleteTarget('')
       dispatch(reduxServices.searchEmployee.actions.setClearEmployeeProfiles())
     }
-  }, [window.location.pathname])
+  }, [window.location.pathname, employeeListPath])
 
   useEffect(() => {
     if (searchAutoCompleteTarget) {

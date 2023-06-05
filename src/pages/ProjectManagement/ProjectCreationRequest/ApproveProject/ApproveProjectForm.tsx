@@ -9,6 +9,7 @@ import {
   CTableHeaderCell,
   CTableRow,
   CTable,
+  CFormInput,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
@@ -16,6 +17,7 @@ import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { useHistory } from 'react-router-dom'
+import validator from 'validator'
 import ProjectMileStone from './ProjectMileStone'
 import OAutoComplete from '../../../../components/ReusableComponent/OAutoComplete'
 import OInputField from '../../../../components/ReusableComponent/OInputField'
@@ -31,7 +33,7 @@ import {
   ApproveProjectRequest,
   ProjectRequestMilestoneDTO,
 } from '../../../../types/ProjectManagement/ProjectCreationRequests/projectCreationRequestsTypes'
-import { isEmail, listComposer, showIsRequired } from '../../../../utils/helper'
+import { listComposer, showIsRequired } from '../../../../utils/helper'
 import { ClientOrganization } from '../../Project/ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
 import { dateFormat } from '../../../../constant/DateFormat'
@@ -49,12 +51,32 @@ const ApproveProjectForm = (): JSX.Element => {
   const [showTotalEffort, setShowTotalEffort] = useState<number>(0)
   const [isAddMilestoneButtonEnabled, setIsAddMileStoneButtonEnabled] =
     useState(false)
+  const [emailError, setEmailError] = useState<boolean>(false)
+  const [billingContactEmailError, setBillingContactEmailError] =
+    useState<boolean>(false)
+
   const selectedApproveProject = useTypedSelector(
     reduxServices.projectCreationRequest.selectors.approveProjectRequests,
   )
   const history = useHistory()
   const dispatch = useAppDispatch()
   const classNameStyle = 'col-sm-3 col-form-label text-end'
+
+  const validateEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailError(false)
+    } else {
+      setEmailError(true)
+    }
+  }
+
+  const validateBillingContactEmail = (email: string) => {
+    if (validator.isEmail(email)) {
+      setBillingContactEmailError(false)
+    } else {
+      setBillingContactEmailError(true)
+    }
+  }
   useEffect(() => {
     if (selectedApproveProject != null) {
       setApproveProject({
@@ -102,12 +124,12 @@ const ApproveProjectForm = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      approveProject.client !== '' &&
-      approveProject.client != null &&
-      approveProject.projectName !== '' &&
-      approveProject.projectName != null &&
-      approveProject.projectContactPerson != null &&
-      approveProject.projectContactPerson !== '' &&
+      approveProject.client?.replace(/^\s*/, '') !== '' &&
+      approveProject.client?.replace(/^\s*/, '') != null &&
+      approveProject.projectName?.replace(/^\s*/, '') !== '' &&
+      approveProject.projectName?.replace(/^\s*/, '') != null &&
+      approveProject.projectContactPerson?.replace(/^\s*/, '') != null &&
+      approveProject.projectContactPerson?.replace(/^\s*/, '') !== '' &&
       approveProject.projectContactEmail != null &&
       approveProject.projectContactEmail !== '' &&
       approveProject.billingContactPerson != null &&
@@ -126,8 +148,8 @@ const ApproveProjectForm = (): JSX.Element => {
       approveProject.domain != null &&
       approveProject.startdate !== '' &&
       approveProject.startdate != null &&
-      !isEmail(approveProject.projectContactEmail) &&
-      !isEmail(approveProject.billingContactPersonEmail)
+      !emailError &&
+      !billingContactEmailError
     ) {
       setUpdateBtn(true)
     } else {
@@ -195,14 +217,14 @@ const ApproveProjectForm = (): JSX.Element => {
   const handleApproveProjectClientSelect = (value: GetOnSelect) => {
     setApproveProject({
       ...approveProject,
-      client: value.name,
+      client: value.name?.replace(/^\s*/, ''),
     })
   }
 
   const handleApproveProjectName = (value: string) => {
     setApproveProject({
       ...approveProject,
-      projectName: value,
+      projectName: value?.replace(/^\s*/, ''),
     })
   }
 
@@ -213,24 +235,10 @@ const ApproveProjectForm = (): JSX.Element => {
     })
   }
 
-  const handleProjectCustomerEmail = (value: string) => {
-    setApproveProject({
-      ...approveProject,
-      projectContactEmail: value,
-    })
-  }
-
   const handleProjectBillingPerson = (value: string) => {
     setApproveProject({
       ...approveProject,
       billingContactPerson: value.replace(/[^a-z\s]$/gi, ''),
-    })
-  }
-
-  const handleProjectBillingPersonEmail = (value: string) => {
-    setApproveProject({
-      ...approveProject,
-      billingContactPersonEmail: value,
     })
   }
 
@@ -362,38 +370,75 @@ const ApproveProjectForm = (): JSX.Element => {
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    if (name === 'projectContactEmail') {
+      const personalEmail = value
+      validateEmail(personalEmail)
+      setApproveProject((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else if (name === 'billingContactPersonEmail') {
+      const billingContactPersonEmail = value
+      validateBillingContactEmail(billingContactPersonEmail)
+      setApproveProject((prevState) => {
+        return { ...prevState, ...{ [name]: billingContactPersonEmail } }
+      })
+    } else {
+      setApproveProject((prevState) => {
+        return { ...prevState, ...{ [name]: value } }
+      })
+    }
+  }
+
   return (
     <CRow className="justify-content-end">
       <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
         <ClientOrganization
           list={clientOrganizationList}
           onSelectHandler={handleApproveProjectClientSelect}
-          value={approveProject.client}
+          value={approveProject.client?.replace(/^\s*/, '')}
         />
         <ProjectName
           onChange={setProjectName}
           onBlur={handleApproveProjectName}
-          value={projectName}
+          value={projectName?.replace(/^\s*/, '')}
         />
         <OInputField
           onChangeHandler={handleProjectCustomerContactName}
-          value={approveProject.projectContactPerson}
+          value={approveProject.projectContactPerson?.replace(/^\s*/, '')}
           isRequired={true}
           label={'Customer Contact Name'}
           name={'customerContactName'}
           placeholder={'Name'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
-        <OInputField
-          onChangeHandler={handleProjectCustomerEmail}
-          value={approveProject.projectContactEmail}
-          isRequired={true}
-          type="email"
-          label={'Customer Email'}
-          name={'customerEmail'}
-          placeholder={'Email'}
-          dynamicFormLabelProps={dynamicFormLabelProps}
-        />
+        <CRow className="mt-4 mb-4">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Customer Email:
+            <span
+              className={
+                approveProject.projectContactEmail && !emailError
+                  ? 'text-white'
+                  : 'text-danger'
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              data-testid="email-address"
+              type="email"
+              name="projectContactEmail"
+              autoComplete="off"
+              placeholder="Email"
+              value={approveProject.projectContactEmail}
+              onChange={handleInputChange}
+            />
+          </CCol>
+        </CRow>
         <OInputField
           onChangeHandler={handleProjectBillingPerson}
           value={approveProject.billingContactPerson}
@@ -402,17 +447,34 @@ const ApproveProjectForm = (): JSX.Element => {
           name={'billingContactPerson'}
           placeholder={'Name'}
           dynamicFormLabelProps={dynamicFormLabelProps}
+          autoComplete={'off'}
         />
-        <OInputField
-          onChangeHandler={handleProjectBillingPersonEmail}
-          value={approveProject.billingContactPersonEmail}
-          isRequired={true}
-          type="email"
-          label={'Billing Contact Email'}
-          name={'billingContactPersonEmail'}
-          placeholder={'Email Id'}
-          dynamicFormLabelProps={dynamicFormLabelProps}
-        />
+        <CRow className="mt-4 mb-4">
+          <CFormLabel className="col-sm-3 col-form-label text-end">
+            Billing Contact Email:
+            <span
+              className={
+                approveProject.billingContactPersonEmail &&
+                !billingContactEmailError
+                  ? 'text-white'
+                  : 'text-danger'
+              }
+            >
+              *
+            </span>
+          </CFormLabel>
+          <CCol sm={3}>
+            <CFormInput
+              data-testid="email-address"
+              type="email"
+              name="billingContactPersonEmail"
+              autoComplete="off"
+              placeholder="Email Id"
+              value={approveProject.billingContactPersonEmail}
+              onChange={handleInputChange}
+            />
+          </CCol>
+        </CRow>
         <CRow className="mb-3">
           <CFormLabel
             {...dynamicFormLabelProps('editprojectstartdate', classNameStyle)}
@@ -459,7 +521,7 @@ const ApproveProjectForm = (): JSX.Element => {
           list={projectManagers}
           onSelect={handleApproveProjectManager}
           shouldReset={false}
-          value={projectManager}
+          value={projectManager?.replace(/^\s*/, '')}
           isRequired={true}
           label={'Project Manager'}
           placeholder={'Project Manager'}
@@ -534,8 +596,8 @@ const ApproveProjectForm = (): JSX.Element => {
             <span></span>
           </CCol>
           {isGreaterThanStart && (
-            <CCol sm={3}>
-              <p style={{ color: 'red' }}>
+            <CCol sm={5} className="pt-2">
+              <p style={{ color: 'red' }} className="mb-0">
                 <b>End date should be greater than Start date</b>
               </p>
             </CCol>
@@ -643,6 +705,7 @@ const ApproveProjectForm = (): JSX.Element => {
               onClick={handleUpdateSubmit}
               disabled={
                 !isUpdateBtnEnable ||
+                isGreaterThanStart ||
                 (approveProject.type === 'FIXEDBID' &&
                   !isAddMilestoneButtonEnabled)
               }

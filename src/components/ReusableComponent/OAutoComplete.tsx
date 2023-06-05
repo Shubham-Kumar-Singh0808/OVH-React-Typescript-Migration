@@ -6,7 +6,6 @@ import {
   GetAutoCompleteList,
   GetOnSelect,
 } from '../../types/ProjectManagement/Project/AddProject/AddProjectTypes'
-import { showIsRequired } from '../../utils/helper'
 
 const OAutoComplete = ({
   dynamicFormLabelProps,
@@ -14,7 +13,6 @@ const OAutoComplete = ({
   onSelect,
   shouldReset,
   value,
-  isRequired,
   label,
   placeholder,
   name,
@@ -39,7 +37,9 @@ const OAutoComplete = ({
   }, [shouldReset])
 
   const onHandleSelect = (selectedName: string) => {
-    setAutoCompleteTarget(selectedName)
+    if (selectedName.trim() !== '') {
+      setAutoCompleteTarget(selectedName)
+    }
     const detail = selectorList.find(
       (listValue) => listValue.name === selectedName,
     )
@@ -49,6 +49,11 @@ const OAutoComplete = ({
       name: detail?.name,
     } as GetOnSelect
     onSelect(user)
+  }
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAutoCompleteTarget(e.target.value)
+    if (e.target.value === '') onSelect({} as GetOnSelect)
   }
 
   return (
@@ -61,11 +66,12 @@ const OAutoComplete = ({
             'col-sm-3 col-form-label text-end',
           )}
         >
-          {label}:
-          {isRequired && (
-            <span className={showIsRequired(autoCompleteTarget as string)}>
-              *
-            </span>
+          {label} :
+          {autoCompleteTarget === undefined ||
+          autoCompleteTarget?.trim() === '' ? (
+            <span className="text-danger">*</span>
+          ) : (
+            <span className="text-white">*</span>
           )}
         </CFormLabel>
         <CCol sm={3}>
@@ -106,7 +112,7 @@ const OAutoComplete = ({
             shouldItemRender={(item, itemValue) =>
               item.name.toLowerCase().indexOf(itemValue.toLowerCase()) > -1
             }
-            onChange={(e) => setAutoCompleteTarget(e.target.value)}
+            onChange={(e) => onChangeHandler(e)}
             onSelect={(selectedVal) => onHandleSelect(selectedVal)}
           />
         </CCol>

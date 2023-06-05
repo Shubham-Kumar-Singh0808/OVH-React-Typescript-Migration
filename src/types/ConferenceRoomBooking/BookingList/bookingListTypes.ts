@@ -1,4 +1,6 @@
 import { LoadingState } from '../../commonTypes'
+import { Author, Availability } from '../NewBooking/newBookingTypes'
+import { TrainerDetails } from '../NewEvent/newEventTypes'
 
 export type MeetingLocations = {
   id: number
@@ -21,6 +23,13 @@ export type BookingListSliceState = {
   isLoading: LoadingState
   currentPage: number
   pageSize: number
+  editMeetingRequest: EditMeetingRequest
+
+  LocationValue: string
+  RoomValue: string
+  MeetingStatus: string
+  SelectCustom: string
+  FromDateValue: string | Date
 }
 
 export type GetBookingsForSelectionProps = {
@@ -101,4 +110,83 @@ export type handleModelProps = {
   roomName: string
   locationName: string
   description: string
+}
+
+export type MeetingEditDTOList = {
+  flag?: string
+  fullName?: string
+  id: number
+  availability: string
+}
+
+export type EditMeetingRequest = {
+  id: number
+  agenda: string
+  roomId: number
+  roomName: string
+  locationName: string
+  fromDate: string
+  toDate: string
+  startTime: string
+  endTime: string
+  projectName: string
+  employeeIds: null
+  authorName: Author
+  employeeNames: []
+  isAuthorisedUser: boolean
+  locationId: number
+  employeeAvailability: null
+  timeFomrat: null
+  disableEdit: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingAttendeesDto: null
+  availability: Availability[]
+  meetingStatus: null
+  conferenceType: string
+  eventTypeName: null
+  eventTypeId: number
+  eventLocation: string
+  eventId: number
+  description: string
+  eventEditAccess: null
+  empDesignations: null
+  employeeDto: null
+  trainerName: TrainerDetails
+  availableDates: string
+}
+
+export type UpdateRoomBooking = {
+  agenda: string
+  authorName: Author
+  availability: null
+  availableDates: null
+  conferenceType: string
+  description: null
+  disableEdit: null
+  empDesignations: null
+  employeeAvailability: null
+  employeeDto: null
+  employeeIds: null
+  employeeNames: []
+  endTime: string
+  eventEditAccess: null
+  eventId: null
+  eventLocation: null
+  eventTypeId: null
+  eventTypeName: null
+  fromDate: string
+  id: number
+  isAuthorisedUser: boolean
+  locationId: string | number
+  locationName: string
+  meetingAttendeesDto: null
+  meetingEditDTOList: MeetingEditDTOList[]
+  meetingStatus: null
+  projectName: string
+  roomId: number
+  roomName: string
+  startTime: string
+  timeFomrat: null
+  toDate: null
+  trainerName: null
 }

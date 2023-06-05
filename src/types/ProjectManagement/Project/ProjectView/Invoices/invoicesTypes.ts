@@ -156,4 +156,98 @@ export type invoicesListSlice = {
   milestoneList: MilestoneList[]
   isLoading: ApiLoadingState
   invoicesOfMilestoneList: InvoicesOfMilestoneList
+  invoiceSummary: InvoiceSummary
+}
+
+export type InvoiceSummary = {
+  id: number
+  projectId: number
+  projectName: string
+  projectType: string
+  clientId: number
+  client: string
+  clientContactPerson: string
+  number: string
+  referenceNumber: string
+  pattern: string
+  notes: null
+  showNotesOnInvoice: boolean
+  subTotal: string
+  amount: string
+  totalAmount: number
+  paymentTerm: string
+  invoiceDate: string
+  dueDate: string
+  invoiceAmountReceviedDate: null
+  invoiceStatus: string
+  remittance: {
+    id: number
+    bankName: string
+    currencyType: string
+    location: string
+    wireTransferInstructions: string
+    client: null
+  }
+  lineitem: Lineitem[]
+  milestoneId: number
+  discountType: null
+  milestoneDTOs: null
+  discountRate: string
+  discount: string
+  taxType: null
+  taxRate: null
+  tax: null
+  country: string
+  mileStoneName: string
+  milestonePercentage: string
+  companyAdress: string
+  currencyType: string
+  numberInWords: string
+  organization: string
+  taxDTO: []
+  genarateType: null
+  eachDay: null
+  invoiceDuration: null
+  invoiceCount: null
+  invoiceRate: null
+  roleAndNameCount: []
+  resourcesName: []
+  countTypeToDisplay: string
+  amountAfterDiscount: number | string
+  percentage: string
+  invoiceAmountSentDate: string
+  poNumber: null
+  statusNotes: string
+  writeoffAmount: string
+  receivedAmount: null
+  totalReceivedAmount: string
+  receivedAmountList: []
+  invoiceUpdatable: boolean
+  invoiceMutable: boolean
+  invoiceStatusList: []
+  isAdjusted: null
+  canBeAdjusted: boolean
+  showCanBeAdjusted: boolean
+  showRestrictAdjusting: boolean
+  showTaxDetailsOnInvoice: null
+  companyAddress: string
+  companyName: string
+  conversionRate: null
+  gstCode: string
+  invoiceNumberFlag: null
+  crid: null
+  crduration: null
+  billingContactPerson: string
+  billingContactPersonEmail: string
+  invoiceNumber: string
+  invoicePattern: string
+  invoiceReferenceNumber: string
+  tdsAmount: null
+  netAmount: null
+  clientCountry: string
+  modifiedMilestoneName: null
+  milestoneTypeFlag: null
+  proformaInvoiceFlag: boolean
+  proformaReferenceNo: null
+  discountDTO: null
 }

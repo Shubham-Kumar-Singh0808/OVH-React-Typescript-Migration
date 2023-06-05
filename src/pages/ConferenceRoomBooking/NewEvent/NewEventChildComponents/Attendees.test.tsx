@@ -24,7 +24,7 @@ describe('Attendees Component', () => {
     })
 
     test('should be able to render Attendees Component Title', () => {
-      expect(screen.getByText('Attendees:')).toBeInTheDocument()
+      expect(screen.getByText('Attendees :')).toBeInTheDocument()
     })
 
     test('should be able to render Attendees Component label', () => {
@@ -36,7 +36,7 @@ describe('Attendees Component', () => {
     })
 
     test('should be able to enter in input field', () => {
-      const input = screen.getByPlaceholderText('Trainer')
+      const input = screen.getByPlaceholderText('Attendee Name')
       expect(input).toHaveValue('')
     })
 
@@ -72,7 +72,7 @@ describe('Attendees Component', () => {
     })
 
     test('Should be able to function autocomplete', () => {
-      const autocomplete = screen.getByPlaceholderText('Trainer')
+      const autocomplete = screen.getByPlaceholderText('Attendee Name')
       autocomplete.click()
       autocomplete.focus()
 
