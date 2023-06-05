@@ -20,6 +20,8 @@ const MileStoneHistory = (): JSX.Element => {
     reduxServices.projectMileStone.selectors.getProjectMileStoneResponse,
   )
 
+  const trimmedValue = getProjectDetail.status.replace(/\s/g, '')
+
   return (
     <>
       {isLoading !== ApiLoadingState.loading ? (
@@ -55,7 +57,7 @@ const MileStoneHistory = (): JSX.Element => {
                 </p>
                 <p className="ng-binding">
                   <span className="text-info">Project Status:</span>
-                  {getProjectDetail.status}
+                  {trimmedValue?.toUpperCase()}
                 </p>
                 <p className="ng-binding">
                   <span className="text-info">Milestone Name:</span>

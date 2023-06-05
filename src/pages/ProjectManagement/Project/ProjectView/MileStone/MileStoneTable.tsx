@@ -117,6 +117,7 @@ const MileStoneTable = (): JSX.Element => {
   )
   const mileStoneHistoryButtonHandler = (id: number) => {
     dispatch(reduxServices.projectMileStone.mileStoneTimeLine(id))
+    dispatch(reduxServices.projectMileStone.getMilestone(id))
   }
 
   const mileStoneDiscussionButtonHandler = (id: number) => {
@@ -214,7 +215,7 @@ const MileStoneTable = (): JSX.Element => {
                       <CButton
                         color="info"
                         className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => mileStoneHistoryButtonHandler(item.id)}
+                        onClick={() => mileStoneHistoryButtonHandler(item?.id)}
                       >
                         <i className="fa fa-bar-chart text-white"></i>
                       </CButton>

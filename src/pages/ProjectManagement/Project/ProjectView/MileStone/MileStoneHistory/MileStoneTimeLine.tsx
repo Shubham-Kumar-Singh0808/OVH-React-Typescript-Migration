@@ -9,6 +9,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React from 'react'
+import parse from 'html-react-parser'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../../../stateStore'
 
@@ -105,7 +106,7 @@ const MileStoneTimeLine = (): JSX.Element => {
                         Comments
                       </CFormLabel>
                       &nbsp;
-                      {item.comments}
+                      {parse(item?.comments)}
                     </div>
                     {item.peopleDTOs.length > 0 ? (
                       <CTable striped responsive align="middle">
