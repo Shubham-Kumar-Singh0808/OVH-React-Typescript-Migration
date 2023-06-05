@@ -266,7 +266,7 @@ const AddMileStoneForm = (): JSX.Element => {
           <CCol sm={3}>
             <CFormInput
               type="text"
-              data-testid="selectSubject"
+              data-testid="select-title"
               id="subjectValue"
               name="subjectValue"
               value={title}
@@ -308,8 +308,8 @@ const AddMileStoneForm = (): JSX.Element => {
               }}
             >
               <option value="">Select</option>
-              {getCRListMilestone.length > 0 &&
-                getCRListMilestone.map((item, index) => {
+              {getCRListMilestone?.length > 0 &&
+                getCRListMilestone?.map((item, index) => {
                   return <option key={index}>{item.name}</option>
                 })}
             </CFormSelect>

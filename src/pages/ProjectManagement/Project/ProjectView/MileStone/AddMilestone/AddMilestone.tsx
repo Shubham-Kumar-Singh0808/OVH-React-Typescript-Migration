@@ -8,7 +8,7 @@ import { reduxServices } from '../../../../../../reducers/reduxServices'
 
 const AddMilestone = () => {
   const dispatch = useAppDispatch()
-  const { projectId } = useParams<{ projectId: string }>()
+
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
