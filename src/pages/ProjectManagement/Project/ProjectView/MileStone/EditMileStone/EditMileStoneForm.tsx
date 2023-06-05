@@ -21,7 +21,11 @@ import EditMileStonePeopleList from './EditMileStonePeopleList'
 import { reduxServices } from '../../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../../stateStore'
 import { ckeditorConfig } from '../../../../../../utils/ckEditorUtils'
-import { AllocatedMilestonePeople } from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
+import {
+  AllocatedMilestonePeople,
+  GetPeopleForMilestone,
+  GetWorkDetails,
+} from '../../../../../../types/ProjectManagement/Project/ProjectView/MileStone/mileStoneTypes'
 
 const EditMileStoneForm = (): JSX.Element => {
   const [title, setTitle] = useState<string>('')
@@ -145,6 +149,54 @@ const EditMileStoneForm = (): JSX.Element => {
     ) {
       history.push(`/viewProject/${getProjectDetail.id}`)
     }
+  }
+
+  const monthWorkingOnChange = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].monthWorkingDays = value
+    // console.log(newMileStone[index].monthWorkingDays, 'test')
+    setPeopleListMilestone(newMileStone)
+    console.log(newMileStone, 'newCheckList')
+  }
+
+  const peopleListHolidays = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].holidays = value
+    setPeopleListMilestone(newMileStone)
+  }
+  const peopleListLeaves = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].leaves = value
+    setPeopleListMilestone(newMileStone)
+  }
+
+  const peopleListTotalDays = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].totalDays = value
+    setPeopleListMilestone(newMileStone)
+  }
+
+  const peopleListHours = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].hours = value
+    setPeopleListMilestone(newMileStone)
+  }
+  const peopleListTotalValue = (value: string, index: number) => {
+    const newMileStone: AllocatedMilestonePeople[] = JSON.parse(
+      JSON.stringify(peopleListMilestone),
+    )
+    newMileStone[index].totalValue = value
+    setPeopleListMilestone(newMileStone)
   }
 
   return (
@@ -394,20 +446,20 @@ const EditMileStoneForm = (): JSX.Element => {
                       </CTableHeaderCell>
                     </CTableRow>
                   </CTableHead>
-                  {/* {peopleListMilestone.length > 0 &&
-                    peopleListMilestone.map((item, index) => {
+                  {peopleListMilestone.length > 0 &&
+                    peopleListMilestone?.map((item, index) => {
                       return (
                         <EditMileStonePeopleList
                           onChangeHandleToDate={onChangeHandleToDate}
                           onChangeHandleFromDate={onChangeHandleFromDate}
                           roleOnChange={roleOnChange}
                           billableOnChange={billableOnChange}
-                          // monthWorkingOnChange={monthWorkingOnChange}
-                          // peopleListHolidays={peopleListHolidays}
-                          // peopleListLeaves={peopleListLeaves}
-                          // peopleListTotalDays={peopleListTotalDays}
-                          // peopleListHours={peopleListHours}
-                          // peopleListTotalValue={peopleListTotalValue}
+                          monthWorkingOnChange={monthWorkingOnChange}
+                          peopleListHolidays={peopleListHolidays}
+                          peopleListLeaves={peopleListLeaves}
+                          peopleListTotalDays={peopleListTotalDays}
+                          peopleListHours={peopleListHours}
+                          peopleListTotalValue={peopleListTotalValue}
                           item={item as AllocatedMilestonePeople}
                           index={index}
                           key={index}
@@ -423,9 +475,13 @@ const EditMileStoneForm = (): JSX.Element => {
                           setHours={setHours}
                           totalHours={totalHours as string}
                           setTotalHours={setTotalHours}
+                          // isDateEnabled={false}
+                          // newCheckListWithoutOnChange={
+                          //   newCheckListWithoutOnChange
+                          // }
                         />
                       )
-                    })} */}
+                    })}
                 </CTable>
               </>
             ) : (

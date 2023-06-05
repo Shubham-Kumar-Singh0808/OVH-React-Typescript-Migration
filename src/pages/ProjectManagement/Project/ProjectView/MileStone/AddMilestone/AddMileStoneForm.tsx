@@ -68,7 +68,6 @@ const AddMileStoneForm = (): JSX.Element => {
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
   )
 
- 
   const history = useHistory()
   useEffect(() => {
     if (plannedEndDate) {

@@ -32,7 +32,7 @@ const EditMileStonePeopleList = ({
   peopleListLeaves,
   peopleListTotalDays,
   peopleListHours,
-  isDateEnabled,
+  // isDateEnabled,
   workDays,
   setWorkDays,
   holiDays,
@@ -46,8 +46,8 @@ const EditMileStonePeopleList = ({
   totalHours,
   setTotalHours,
   peopleListTotalValue,
-  newCheckListWithoutOnChange,
-}: {
+}: // newCheckListWithoutOnChange,
+{
   onChangeHandleFromDate: (date: Date, index: number) => void
   onChangeHandleToDate: (date: Date, index: number) => void
   monthWorkingOnChange: (value: string, index: number) => void
@@ -63,7 +63,7 @@ const EditMileStonePeopleList = ({
   ) => void
   item: AllocatedMilestonePeople
   index: number
-  isDateEnabled: boolean
+  // isDateEnabled: boolean
   workDays: string | undefined
   setWorkDays: React.Dispatch<React.SetStateAction<string | undefined>>
   holiDays: string
@@ -76,7 +76,7 @@ const EditMileStonePeopleList = ({
   setHours: React.Dispatch<React.SetStateAction<string | undefined>>
   totalHours: string
   setTotalHours: React.Dispatch<React.SetStateAction<string | undefined>>
-  newCheckListWithoutOnChange: (object: GetWorkDetails, index: number) => void
+  // newCheckListWithoutOnChange: (object: GetWorkDetails, index: number) => void
 }): JSX.Element => {
   const getPeopleMilestone = useTypedSelector(
     reduxServices.projectMileStone.selectors.getPeopleMilestone,
@@ -153,7 +153,7 @@ const EditMileStonePeopleList = ({
       peopleListTotalDays(totalDays as string, index)
       peopleListHours(hours as string, index)
       peopleListTotalValue(totalHours, index)
-      newCheckListWithoutOnChange(milestoneWorkDetails, index)
+      // newCheckListWithoutOnChange(milestoneWorkDetails, index)
     }
   }, [item.endDate])
 
@@ -193,220 +193,221 @@ const EditMileStonePeopleList = ({
   }
   return (
     <>
-      {getPeopleMilestone.length > 0 ? (
-        <>
-          <CTableBody>
-            <CTableRow>
-              <CTableDataCell scope="row">{item.employeeId}</CTableDataCell>
-              <CTableDataCell scope="row">{item.empName}</CTableDataCell>
-              <CTableDataCell scope="row">
-                <DatePicker
-                  id="editProjectEndDate"
-                  className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="dd/mm/yy"
-                  data-testid="end-date-picker"
-                  dateFormat="dd/mm/yy"
-                  name="editProjectEndDate"
-                  autoComplete="off"
-                  value={item.startDate}
-                  onChange={(date: Date) => onChangeHandleFromDate(date, index)}
-                  disabled={!isDateEnabled}
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <DatePicker
-                  id="editProjectEndDate"
-                  className="form-control form-control-sm sh-date-picker"
-                  peekNextMonth
-                  showMonthDropdown
-                  showYearDropdown
-                  dropdownMode="select"
-                  placeholderText="dd/mm/yy"
-                  data-testid="end-date-picker"
-                  dateFormat="dd/mm/yy"
-                  name="editProjectEndDate"
-                  autoComplete="off"
-                  value={item.endDate}
-                  onChange={(date: Date) => onChangeHandleToDate(date, index)}
-                  disabled={!isDateEnabled}
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? workDays
-                      : item.monthWorkingDays
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                  disabled
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? holiDays
-                      : item.holidays
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                  disabled
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  onChange={(e) => PeopleOnChange(e, index)}
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? leaves
-                      : item.leaves
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  onChange={(e) => totalDaysOnChange(e, index)}
-                  // onChange={(e) => setTotalDays(e.target.value)}
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? totalDays
-                      : item.totalDays
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  // onChange={(e) => setHours(e.target.value)}
-                  onChange={(e) => hoursOnChange(e, index)}
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? hours
-                      : item.hours
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormInput
-                  // onChange={(e) => setTotalHours(e.target.value)}
-                  onChange={(e) => totalHoursOnChange(e, index)}
-                  value={
-                    referenceIndex === milestoneWorkDetails.employeeId
-                      ? totalHours
-                      : item.totalValue
-                  }
-                  className="mt-2"
-                  name="effort"
-                  id="effort"
-                  autoComplete="off"
-                  data-testid="effort-test"
-                />
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormSelect
-                  className="mt-2"
-                  aria-label="Default select example"
-                  size="sm"
-                  id="billable"
-                  data-testid="billable-select"
-                  name="billable"
-                  value={item.role}
-                  onChange={(e) => roleOnChange(e, index)}
-                >
-                  <option value="">Select</option>
-                  <option value="Developer">Developer</option>
-                  <option value="Designer">Designer</option>
-                  <option value="Tester">Tester</option>
-                  <option value="Project Manager">Project Manager</option>
-                  <option value="Business Analyst">Business Analyst</option>
-                </CFormSelect>
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <CFormSelect
-                  className="mt-2"
-                  aria-label="Default select example"
-                  size="sm"
-                  id="billable"
-                  data-testid="billable-select"
-                  name="billable"
-                  value={item.billable}
-                  onChange={(e) => billableOnChange(e, index)}
-                >
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
-                </CFormSelect>
-              </CTableDataCell>
-              <CTableDataCell scope="row">
-                <button
-                  data-original-title="Comments"
-                  ng-click="addCommentPOP(milestone)"
-                  data-placement="top"
-                  className="btn btn-primary pull-right"
-                  type="submit"
-                  onClick={() => handleShowDeleteModal(Number(item.employeeId))}
-                >
-                  <i className="fa fa-comments fa-lg text-white"></i>
-                </button>
-              </CTableDataCell>
-            </CTableRow>
-          </CTableBody>
-          <OModal
-            alignment="center"
-            visible={isDeleteModalVisible}
-            setVisible={setIsDeleteModalVisible}
-            modalHeaderClass="d-none"
-            confirmButtonText="Yes"
-            cancelButtonText="No"
-            modalFooterClass="d-none"
-          >
-            <div>
-              <CRow className="mt-1 mb-0 align-items-center pt-4">
-                <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
-                  <b>Add Comments</b>
-                </CFormLabel>
-                <CCol sm={6} className="w-100">
-                  <CFormTextarea
-                    aria-label="textarea"
-                    id="textArea"
-                    name="textArea"
-                    data-testid="text-area"
-                    value={comments}
-                    onChange={(e) => setComments(e.target.value)}
-                  ></CFormTextarea>
-                </CCol>
-              </CRow>
-            </div>
-          </OModal>
-        </>
-      ) : (
-        ''
-      )}
+      {/* {getPeopleMilestone.length > 0 ? ( */}
+      <>
+        <CTableBody>
+          <CTableRow>
+            <CTableDataCell scope="row">{item.employeeId}</CTableDataCell>
+            <CTableDataCell scope="row">{item.userName}</CTableDataCell>
+            <CTableDataCell scope="row">
+              <DatePicker
+                id="editProjectEndDate"
+                className="form-control form-control-sm sh-date-picker"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                placeholderText="dd/mm/yy"
+                data-testid="end-date-picker"
+                dateFormat="dd/mm/yy"
+                name="editProjectEndDate"
+                autoComplete="off"
+                value={item.startDate}
+                onChange={(date: Date) => onChangeHandleFromDate(date, index)}
+                // disabled={!isDateEnabled}
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <DatePicker
+                id="editProjectEndDate"
+                className="form-control form-control-sm sh-date-picker"
+                peekNextMonth
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+                placeholderText="dd/mm/yy"
+                data-testid="end-date-picker"
+                dateFormat="dd/mm/yy"
+                name="editProjectEndDate"
+                autoComplete="off"
+                value={item.endDate}
+                onChange={(date: Date) => onChangeHandleToDate(date, index)}
+                // disabled={!isDateEnabled}
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? workDays
+                    : item.monthWorkingDays
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+                disabled
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? holiDays
+                    : item.holidays
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+                disabled
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                onChange={(e) => PeopleOnChange(e, index)}
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? leaves
+                    : item.leaves
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                onChange={(e) => totalDaysOnChange(e, index)}
+                // onChange={(e) => setTotalDays(e.target.value)}
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? totalDays
+                    : item.totalDays
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                // onChange={(e) => setHours(e.target.value)}
+                onChange={(e) => hoursOnChange(e, index)}
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? hours
+                    : item.hours
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormInput
+                // onChange={(e) => setTotalHours(e.target.value)}
+                onChange={(e) => totalHoursOnChange(e, index)}
+                value={
+                  referenceIndex === milestoneWorkDetails.employeeId
+                    ? totalHours
+                    : item.totalValue
+                }
+                className="mt-2"
+                name="effort"
+                id="effort"
+                autoComplete="off"
+                data-testid="effort-test"
+              />
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormSelect
+                className="mt-2"
+                aria-label="Default select example"
+                size="sm"
+                id="billable"
+                data-testid="billable-select"
+                name="billable"
+                value={item.role}
+                onChange={(e) => roleOnChange(e, index)}
+              >
+                <option value="">Select</option>
+                <option value="Developer">Developer</option>
+                <option value="Designer">Designer</option>
+                <option value="Tester">Tester</option>
+                <option value="Project Manager">Project Manager</option>
+                <option value="Business Analyst">Business Analyst</option>
+              </CFormSelect>
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <CFormSelect
+                className="mt-2"
+                aria-label="Default select example"
+                size="sm"
+                id="billable"
+                data-testid="billable-select"
+                name="billable"
+                value={item.billable}
+                onChange={(e) => billableOnChange(e, index)}
+              >
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+              </CFormSelect>
+            </CTableDataCell>
+            <CTableDataCell scope="row">
+              <button
+                data-original-title="Comments"
+                ng-click="addCommentPOP(milestone)"
+                data-placement="top"
+                className="btn btn-primary pull-right"
+                type="submit"
+                onClick={() => handleShowDeleteModal(Number(item.employeeId))}
+              >
+                <i className="fa fa-comments fa-lg text-white"></i>
+              </button>
+            </CTableDataCell>
+          </CTableRow>
+        </CTableBody>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalHeaderClass="d-none"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          modalFooterClass="d-none"
+        >
+          <div>
+            <CRow className="mt-1 mb-0 align-items-center pt-4">
+              <CFormLabel className="form-label col-form-label p-1 ps-3 pe-3">
+                <b>Add Comments</b>
+              </CFormLabel>
+              <CCol sm={6} className="w-100">
+                <CFormTextarea
+                  aria-label="textarea"
+                  id="textArea"
+                  name="textArea"
+                  data-testid="text-area"
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value)}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+          </div>
+        </OModal>
+      </>
+
+      {/* // ) : (
+      //   ''
+      // )} */}
     </>
   )
 }

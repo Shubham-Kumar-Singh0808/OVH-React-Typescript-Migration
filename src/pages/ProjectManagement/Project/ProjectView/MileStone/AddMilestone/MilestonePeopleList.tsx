@@ -111,7 +111,7 @@ const MilestonePeopleList = ({
     setLeaves(milestoneWorkDetails?.Leaves)
     setTotalDays(milestoneWorkDetails.totalDays)
     setHours(milestoneWorkDetails?.hours)
-    // newCheckListWithoutOnChange(milestoneWorkDetails, index)
+    newCheckListWithoutOnChange(milestoneWorkDetails, index)
   }, [milestoneWorkDetails])
 
   useEffect(() => {
@@ -190,6 +190,8 @@ const MilestonePeopleList = ({
     peopleListTotalValue(e.target.value, index)
     setTotalHours(e.target.value)
   }
+  console.log(item.leaves)
+  console.log(leaves)
   return (
     <>
       {getPeopleMilestone.length > 0 ? (
