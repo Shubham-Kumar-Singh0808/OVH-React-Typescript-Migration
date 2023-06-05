@@ -97,8 +97,6 @@ const AddAssetList = ({
     setIsError(moment(end).isBefore(start))
   }, [warrantyStartDate, warrantyEndDate])
 
-  // const [notes, setNotes] = useState<string>()
-
   const onHandleDateOfPurchase = (value: Date) => {
     setDateOfPurchase(moment(value).format(dateFormat))
   }

@@ -96,7 +96,6 @@ const ManufacturerListSlice = createSlice({
 
 const ManufacturerListThunk = {
   getManufacturerList,
-  // getAllLookUps,
   addManufacturer,
   deleteManufacturerName,
   updateManufacturerName,

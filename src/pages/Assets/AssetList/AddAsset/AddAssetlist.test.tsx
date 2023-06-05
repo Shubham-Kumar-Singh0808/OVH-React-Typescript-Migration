@@ -60,10 +60,6 @@ describe('Add Asset list  Details without data', () => {
   })
   test('should render with data ', () => {
     expect(screen.getByText('PO Number:')).toBeInTheDocument()
-    // expect(screen.getByText('Vendor Name:')).toBeInTheDocument()
-    // expect(screen.getByText(' Asset Type:')).toBeInTheDocument()
-    // expect(screen.getByText('Product Type:')).toBeInTheDocument()
-    // expect(screen.getByText('Manufacturer Name:')).toBeInTheDocument()
     expect(screen.getByText('Asset Number:')).toBeInTheDocument()
     expect(screen.getByText('License/Asset No:')).toBeInTheDocument()
     expect(screen.getByText('Invoice Number:')).toBeInTheDocument()
@@ -72,9 +68,6 @@ describe('Add Asset list  Details without data', () => {
     expect(screen.getByText('Received Date:')).toBeInTheDocument()
     expect(screen.getByText('Warranty Start Date:')).toBeInTheDocument()
     expect(screen.getByText('Warranty End Date :')).toBeInTheDocument()
-    // expect(screen.getByText('Asset Status:')).toBeInTheDocument()
-    // expect(screen.getByText('Country:')).toBeInTheDocument()
-    // expect(screen.getByText('Notes:')).toBeInTheDocument()
   })
   test('should render on every input of vendor name ', () => {
     const vendorNameInput = screen.getByPlaceholderText('Select Vendor Name')
@@ -123,17 +116,5 @@ describe('Add Asset list  Details without data', () => {
 
     const amount = screen.getByTestId('amount')
     userEvent.type(amount, '4536')
-
-    // const purchasedDate = screen.getByTestId('datePurchase')
-    // userEvent.type(purchasedDate, '04/06/2023')
-
-    // const receivedDate = screen.getByTestId('receivedDate')
-    // userEvent.type(receivedDate, '05/06/2023')
-
-    // const warrantyStartDate = screen.getByTestId('warrantyStartDate')
-    // userEvent.type(warrantyStartDate, '08/06/2023')
-
-    // const warrantyEndDate = screen.getByTestId('warrantyEndDate')
-    // userEvent.type(warrantyEndDate, '16/06/2023')
   })
 })
