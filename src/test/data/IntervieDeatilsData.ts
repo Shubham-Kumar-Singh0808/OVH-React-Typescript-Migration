@@ -1,4 +1,7 @@
-import { TimeLineList } from '../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
+import {
+  EmpScheduleInterviewData,
+  TimeLineList,
+} from '../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
 
 export const mockTimeLineList: TimeLineList = {
   personId: 13813,
@@ -315,7 +318,7 @@ export const mockTimeLineList: TimeLineList = {
       candidateId: null,
       interviewers: 'Jyothikfha Goru',
       interviewersDTOList: null,
-      interviewDate: '02 Jun 2023',
+      interviewDate: '12 Jun 2023',
       interviewTime: null,
       interviewComments: 'wdwqdw',
       interviewRound: '0',
@@ -387,7 +390,7 @@ export const mockTimeLineList: TimeLineList = {
     },
     {
       candidateId: null,
-      interviewers: 'Jyothika Goru',
+      interviewers: 'Jyothikra Goru',
       interviewersDTOList: null,
       interviewDate: '03 Jun 2023',
       interviewTime: null,
@@ -410,7 +413,7 @@ export const mockTimeLineList: TimeLineList = {
       proactiveComments: null,
       communicationComments: null,
       excellenceComments: null,
-      updatedBy: 'Stagging Test',
+      updatedBy: 'Staggssing Test',
       recruiter: null,
       reason: 'ddsddaada',
       ctc: null,
@@ -470,4 +473,42 @@ export const mockTimeLineList: TimeLineList = {
   holdSubStatus: 'Expensive',
   addedDate: '02 Jun 2023',
   reason: 'ddsddaada',
+}
+
+export const mockEmpScheduleInterviewData: EmpScheduleInterviewData = {
+  candidateId: null,
+  interviewers: 'Jyothika Goru',
+  interviewersDTOList: null,
+  interviewDate: '02 Jun 2023',
+  interviewTime: null,
+  interviewComments: 'ss',
+  interviewRound: '2',
+  interviewStatus: null,
+  candidateName: null,
+  interviewMode: null,
+  interviewCycleId: 21862,
+  experiance: null,
+  rating: null,
+  status: 'finished',
+  candiadateEmailId: null,
+  skills: null,
+  mobileNumber: null,
+  cycleDTOs: null,
+  interviewResultStatus: 'OFFERED',
+  description: null,
+  skypeId: null,
+  proactiveComments: null,
+  communicationComments: null,
+  excellenceComments: null,
+  updatedBy: 'Stagging Test',
+  recruiter: null,
+  reason: 'ddsddaada',
+  ctc: null,
+  ectc: null,
+  technology: null,
+  np: null,
+  country: null,
+  jobCode: null,
+  sourceName: null,
+  personId: null,
 }
