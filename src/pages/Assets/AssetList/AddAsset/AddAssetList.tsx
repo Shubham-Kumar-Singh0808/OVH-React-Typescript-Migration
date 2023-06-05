@@ -13,13 +13,11 @@ import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
-import { showIsRequired } from '../../../../utils/helper'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { description } from '../../../../test/constants'
 import OToast from '../../../../components/ReusableComponent/OToast'
 
 // eslint-disable-next-line import/named
@@ -444,7 +442,6 @@ const AddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             License/Asset No:
-            {/* <span className={licenseNumber ? TextWhite : TextDanger}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput

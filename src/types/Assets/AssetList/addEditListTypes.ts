@@ -60,7 +60,7 @@ export type UpdateAssetListSliceState = {
   updatedBy: string
   updatedDate: string
   vendorId: number
-  vendorName: string
+  vendorName: string | number
   warrantyEndDate: string
   warrantyStartDate: string
 }

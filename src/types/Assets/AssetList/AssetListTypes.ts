@@ -117,8 +117,8 @@ export type AllAssetsList = {
   assetType: string
   productSpecification: string
   otherNumber: string
-  warrantyStartDate: string | null
-  warrantyEndDate: string | null
+  warrantyStartDate: string
+  warrantyEndDate: string
   searchByEmpName: string
   departmentId: number
   departmentName: string
@@ -130,7 +130,7 @@ export type AllAssetsList = {
   updatedDate: string
   referenceNumber: string
   amount: string | null
-  countryId: number | null
+  countryId: number | null | string
 }
 
 export type AllAssetData = {

@@ -93,6 +93,9 @@ const AssetList = (): JSX.Element => {
           setToggle={setToggle}
           editAddAssetList={editAddAssetList}
           setEditAddAssetList={setEditAddAssetList}
+          selectDate={selectDate}
+          searchInput={searchInput}
+          searchByEmployee={searchByEmployee}
         />
       )}
     </>

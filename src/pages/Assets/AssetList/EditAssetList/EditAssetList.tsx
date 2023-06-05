@@ -27,18 +27,24 @@ const EditAddAssetList = ({
   setToggle,
   editAddAssetList,
   setEditAddAssetList,
+  selectDate,
+  searchInput,
+  searchByEmployee,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editAddAssetList: AllAssetsList
   setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
+  selectDate: string
+  searchInput: string | undefined
+  searchByEmployee: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   const [emailError, setEmailError] = useState<boolean>(false)
-  const [productType, setProductType] = useState<string>(
+  const [productType, setProductType] = useState<string | number>(
     editAddAssetList.productName,
   )
-  const [manufacturerName, setManufacturerName] = useState<string>(
+  const [manufacturerName, setManufacturerName] = useState<string | number>(
     editAddAssetList.manufacturerName,
   )
   const [datePurchase, setDateOfPurchase] = useState<string>(
@@ -48,10 +54,10 @@ const EditAddAssetList = ({
     editAddAssetList.receivedDate,
   )
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>(
-    editAddAssetList.warrantyStartDate as string,
+    editAddAssetList.warrantyStartDate,
   )
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>(
-    editAddAssetList.warrantyEndDate as string,
+    editAddAssetList.warrantyEndDate,
   )
 
   const [assetStatus, setAssetStatus] = useState<string>(
@@ -67,11 +73,23 @@ const EditAddAssetList = ({
 
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
-  const [vendorName, setVendorName] = useState<string>(
+  const [vendorName, setVendorName] = useState<string | number>(
     editAddAssetList.vendorName,
   )
   const [assetType, setAssetType] = useState<string>(editAddAssetList.assetType)
-
+  console.log(vendorName + 'vendorName')
+  console.log(editAddAssetList.countryId)
+  console.log(country)
+  useEffect(() => {
+    if (editAddAssetList) {
+      setCountry(editAddAssetList.countryId as number)
+      setVendorName(editAddAssetList.vendorId)
+      setManufacturerName(editAddAssetList.manufacturerId)
+      setAssetStatus(editAddAssetList.status)
+      setProductType(editAddAssetList.productId)
+    }
+    dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
+  }, [editAddAssetList])
   const formLabelProps = {
     htmlFor: 'editVendorDetails',
     className: 'col-form-label',
@@ -138,7 +156,7 @@ const EditAddAssetList = ({
   const updateHandler = async () => {
     const prepareObject = {
       amount: editAddAssetList.amount as string,
-      assetNumber: editAddAssetList.assetNumber as string,
+      assetNumber: editAddAssetList.assetNumber,
       assetType: editAddAssetList.assetType as string,
       assetTypeId: editAddAssetList.assetTypeId as number,
       countryId: editAddAssetList.countryId as number,
@@ -160,7 +178,7 @@ const EditAddAssetList = ({
       pSpecification: editAddAssetList.pSpecification,
       poNumber: editAddAssetList.poNumber,
       productId: editAddAssetList.productId,
-      productName: productType,
+      productName: productType as string,
       productSpecification: editAddAssetList.productSpecification,
       productSpecificationId: editAddAssetList.productSpecificationId,
       purchasedDate: datePurchase,
@@ -184,6 +202,21 @@ const EditAddAssetList = ({
       )
     ) {
       setToggle('')
+      // dispatch(
+      //   reduxServices.assetList.getAllAssetListData({
+      //     assetTypeId: Number(assetType) || '',
+      //     dateSelection: selectDate,
+      //     endIndex: 20,
+      //     multipleSearch: searchInput || '',
+      //     productId: Number(productType) || '',
+      //     searchByEmpName: searchByEmployee,
+      //     selectionStatus: asset,
+      //     startIndex: 0,
+      //     status: statusType,
+      //     fromDate: fromDate as string,
+      //     toDate: toDate as string,
+      //   }),
+      // )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -200,8 +233,9 @@ const EditAddAssetList = ({
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
   const countriesList = useTypedSelector(
-    reduxServices.country.selectors.countriesList,
+    reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
+  console.log(countriesList, 'country-test')
 
   const assetTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -272,7 +306,8 @@ const EditAddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
-            Vendor Name: <span className={showIsRequired(vendorName)}>*</span>
+            Vendor Name:{' '}
+            <span className={showIsRequired(vendorName as string)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -316,7 +351,7 @@ const EditAddAssetList = ({
               <option value={''}>Select Product Type</option>
               {assetListTypeList?.assetTypeList?.length > 0 &&
                 assetListTypeList?.assetTypeList?.map((location, index) => (
-                  <option key={index} value={location.id}>
+                  <option key={index} value={location.assetType}>
                     {location.assetType}
                   </option>
                 ))}
@@ -328,7 +363,8 @@ const EditAddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end col-form-label category-label"
           >
-            Product Type: <span className={showIsRequired(productType)}>*</span>
+            Product Type:{' '}
+            <span className={showIsRequired(productType as string)}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -356,7 +392,9 @@ const EditAddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Manufacturer Name:
-            <span className={showIsRequired(manufacturerName)}>*</span>
+            <span className={showIsRequired(manufacturerName as string)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -371,7 +409,7 @@ const EditAddAssetList = ({
             >
               <option value={''}>Select Product Type</option>
               {productTypeList.map((location, index) => (
-                <option key={index} value={location.productId}>
+                <option key={index} value={location.manufacturerId}>
                   {location.manufacturerName}
                 </option>
               ))}
@@ -412,7 +450,7 @@ const EditAddAssetList = ({
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="otherAssetNumber"
+              data-testid="licenseNumber"
               type="text"
               id="otherAssetNumber"
               size="sm"
@@ -587,7 +625,7 @@ const EditAddAssetList = ({
               id="assetStatus"
               name="assetStatus"
               placeholder="Select Status"
-              value={assetStatus}
+              value={assetStatus || editAddAssetList?.status}
               onChange={(e) => setAssetStatus(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
@@ -619,9 +657,9 @@ const EditAddAssetList = ({
               onChange={(e) => setCountry(e.target.value)}
             >
               <option value={''}>Select Country</option>
-              {countriesList.map((location, index) => (
-                <option key={index} value={location.id}>
-                  {location.name}
+              {countriesList?.map((country, index) => (
+                <option key={index} value={country.id}>
+                  {country.name}
                 </option>
               ))}
             </CFormSelect>

@@ -8,6 +8,8 @@ import {
   CTooltip,
 } from '@coreui/react-pro'
 import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
+import { useAppDispatch } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
 
 const ModalLink = ({
   text,
@@ -51,6 +53,7 @@ const AssetListTableBody = ({
   setToggle: React.Dispatch<React.SetStateAction<string>>
   setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
   const specificationModel = (
     <ModalLink
       text={item.pSpecification}
@@ -111,6 +114,8 @@ const AssetListTableBody = ({
   const onClickHandler = () => {
     setToggle('EditAssetList')
     setEditAddAssetList(item)
+    dispatch(reduxServices.addNewProduct.getProductTypeList(item.productId))
+    dispatch(reduxServices.addNewProduct.getAssetTypeList(item.assetTypeId))
   }
 
   return (

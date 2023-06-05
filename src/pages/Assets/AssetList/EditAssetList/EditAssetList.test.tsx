@@ -10,6 +10,7 @@ import {
 } from '../../../../types/Assets/VendorList/vendorListTypes'
 import { AddEditSliceState } from '../../../../types/Assets/AssetList/addEditListTypes'
 import { mockassetData } from '../../../../test/data/AddassetLIstmockData'
+import { mockAllAssetListData } from '../../../../test/data/AssetListData'
 
 const mockSetTogglePage = jest.fn()
 
@@ -18,27 +19,49 @@ describe('Vendor Details without data', () => {
     render(
       <EditAssetList
         setToggle={mockSetTogglePage}
-        editAddAssetList={{
-          amount: '876746',
-          assetNumber: 'RBT46444',
-          assetTypeId: 0,
-          countryId: 1,
-          invoiceNumber: 'tyeytey',
-          manufacturerId: 0,
-          notes: 'geghgdh',
-          otherAssetNumber: '5422yeyhe',
-          pSpecification:
-            'AC1750 Dual Band Gigabit<div>Ceiling Mount Access Point </div>',
-          poNumber: '4748444',
-          productId: 0,
-          purchasedDate: '04/06/2023',
-          receivedDate: '05/06/2023',
-          status: 'working',
-          vendorId: 0,
-          warrantyEndDate: '20/06/2023',
-          warrantyStartDate: '11/06/2023',
-        }}
         setEditAddAssetList={mockSetTogglePage}
+        selectDate={''}
+        searchInput={undefined}
+        searchByEmployee={false}
+        editAddAssetList={{
+          id: 0,
+          poNumber: '',
+          vendorId: 0,
+          productSpecificationId: 0,
+          manufacturerId: 0,
+          productId: 0,
+          pSpecification: '',
+          productName: '',
+          manufacturerName: '',
+          assetNumber: '',
+          otherAssetNumber: '',
+          invoiceNumber: '',
+          purchasedDate: '',
+          receivedDate: '',
+          notes: null,
+          employeeName: '',
+          employeeId: 0,
+          description: '',
+          status: '',
+          assetTypeId: 0,
+          assetType: '',
+          productSpecification: '',
+          otherNumber: '',
+          warrantyStartDate: '',
+          warrantyEndDate: '',
+          searchByEmpName: '',
+          departmentId: 0,
+          departmentName: '',
+          location: '',
+          vendorName: '',
+          createdBy: '',
+          updatedBy: '',
+          createdDate: '',
+          updatedDate: '',
+          referenceNumber: '',
+          amount: null,
+          countryId: null,
+        }}
       />,
       {
         preloadedState: {
@@ -54,7 +77,7 @@ describe('Vendor Details without data', () => {
     )
   })
   test('should be able to render  Vendor Details  Title', () => {
-    expect(screen.getByText('Edit Vendor Details')).toBeInTheDocument()
+    expect(screen.getByText('Edit Asset')).toBeInTheDocument()
   })
   test('should render edit Vendor Details component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
@@ -67,7 +90,7 @@ describe('Vendor Details without data', () => {
     userEvent.click(backBtnElement)
   })
   test('should be able to click update button element', () => {
-    const updateBtnElement = screen.getByTestId('updateBtn')
+    const updateBtnElement = screen.getByTestId('update-btn')
     expect(updateBtnElement).toBeInTheDocument()
     userEvent.click(updateBtnElement)
   })
@@ -86,10 +109,6 @@ describe('Vendor Details without data', () => {
   })
   test('should render with data ', () => {
     expect(screen.getByText('PO Number:')).toBeInTheDocument()
-    // expect(screen.getByText('Vendor Name:')).toBeInTheDocument()
-    // expect(screen.getByText(' Asset Type:')).toBeInTheDocument()
-    // expect(screen.getByText('Product Type:')).toBeInTheDocument()
-    // expect(screen.getByText('Manufacturer Name:')).toBeInTheDocument()
     expect(screen.getByText('Asset Number:')).toBeInTheDocument()
     expect(screen.getByText('License/Asset No:')).toBeInTheDocument()
     expect(screen.getByText('Invoice Number:')).toBeInTheDocument()
@@ -98,9 +117,6 @@ describe('Vendor Details without data', () => {
     expect(screen.getByText('Received Date:')).toBeInTheDocument()
     expect(screen.getByText('Warranty Start Date:')).toBeInTheDocument()
     expect(screen.getByText('Warranty End Date :')).toBeInTheDocument()
-    // expect(screen.getByText('Asset Status:')).toBeInTheDocument()
-    // expect(screen.getByText('Country:')).toBeInTheDocument()
-    // expect(screen.getByText('Notes:')).toBeInTheDocument()
   })
   test('should render on every input of vendor name ', () => {
     const vendorNameInput = screen.getByPlaceholderText('Select Vendor Name')
@@ -149,17 +165,5 @@ describe('Vendor Details without data', () => {
 
     const amount = screen.getByTestId('amount')
     userEvent.type(amount, '4536')
-
-    // const purchasedDate = screen.getByTestId('datePurchase')
-    // userEvent.type(purchasedDate, '04/06/2023')
-
-    // const receivedDate = screen.getByTestId('receivedDate')
-    // userEvent.type(receivedDate, '05/06/2023')
-
-    // const warrantyStartDate = screen.getByTestId('warrantyStartDate')
-    // userEvent.type(warrantyStartDate, '08/06/2023')
-
-    // const warrantyEndDate = screen.getByTestId('warrantyEndDate')
-    // userEvent.type(warrantyEndDate, '16/06/2023')
   })
 })
