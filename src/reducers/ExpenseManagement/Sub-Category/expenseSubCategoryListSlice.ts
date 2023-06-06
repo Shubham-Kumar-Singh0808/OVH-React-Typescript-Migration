@@ -5,7 +5,6 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 import subCategoryListApi from '../../../middleware/api/ExpenseManagement/Sub-Category/subCategoryApi'
 import {
-  AddSubCategoryList,
   CategoryList,
   SubCategoryList,
   SubCategoryListSliceState,
@@ -37,9 +36,21 @@ const getSubCategoryList = createAsyncThunk(
 
 const addSubCategoryList = createAsyncThunk(
   '/ExpenseManagement/addSubCategoryList',
-  async (props: AddSubCategoryList, thunkApi) => {
+  async (
+    {
+      categoryId,
+      subCategoryName,
+    }: {
+      categoryId: number
+      subCategoryName: string
+    },
+    thunkApi,
+  ) => {
     try {
-      return await subCategoryListApi.addSubCategoryList(props)
+      return await subCategoryListApi.addSubCategoryList({
+        categoryId,
+        subCategoryName,
+      })
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -49,9 +60,57 @@ const addSubCategoryList = createAsyncThunk(
 
 const existSubCategoryList = createAsyncThunk(
   '/ExpenseManagement/existSubCategoryList',
-  async (props: AddSubCategoryList, thunkApi) => {
+  async (
+    {
+      categoryId,
+      subCategoryName,
+    }: {
+      categoryId: number
+      subCategoryName: string
+    },
+    thunkApi,
+  ) => {
     try {
-      return await subCategoryListApi.existSubCategoryList(props)
+      return await subCategoryListApi.existSubCategoryList({
+        categoryId,
+        subCategoryName,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const editExpenseSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/editSubCategory',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await subCategoryListApi.editSubCategoryList(categoryId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateExpenseSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/updateCategory',
+  async (data: SubCategoryList, thunkApi) => {
+    try {
+      return await subCategoryListApi.updateSubCategoryList(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteExpenseSubCategoryList = createAsyncThunk(
+  '/ExpenseManagement/deleteCategory',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await subCategoryListApi.deleteSubCategoryList(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -65,7 +124,6 @@ const initialSubCategoryListState: SubCategoryListSliceState = {
   subExpenseCategories: [],
   currentPage: 1,
   pageSize: 20,
-  addSubCategory: {} as AddSubCategoryList,
 }
 
 const subCategoryListSlice = createSlice({
@@ -85,17 +143,27 @@ const subCategoryListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.expenseCategories = action.payload
       })
-      .addCase(getSubCategoryList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.subExpenseCategories = action.payload
-      })
-      .addCase(addSubCategoryList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.addSubCategory = action.payload
-      })
-      .addCase(existSubCategoryList.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          getSubCategoryList.fulfilled,
+          addSubCategoryList.fulfilled,
+          existSubCategoryList.fulfilled,
+          editExpenseSubCategoryList.fulfilled,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.subExpenseCategories = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          editExpenseSubCategoryList.fulfilled,
+          deleteExpenseSubCategoryList.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
 
       .addMatcher(
         isAnyOf(
@@ -103,6 +171,9 @@ const subCategoryListSlice = createSlice({
           getSubCategoryList.pending,
           addSubCategoryList.pending,
           existSubCategoryList.pending,
+          editExpenseSubCategoryList.pending,
+          updateExpenseSubCategoryList.pending,
+          deleteExpenseSubCategoryList.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -114,6 +185,9 @@ const subCategoryListSlice = createSlice({
           getSubCategoryList.rejected,
           addSubCategoryList.rejected,
           existSubCategoryList.rejected,
+          editExpenseSubCategoryList.rejected,
+          updateExpenseSubCategoryList.rejected,
+          deleteExpenseSubCategoryList.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -128,8 +202,8 @@ const categories = (state: RootState): CategoryList[] =>
   state.subCategoryList.expenseCategories
 const subCategories = (state: RootState): SubCategoryList[] =>
   state.subCategoryList.subExpenseCategories
-const addSubCategories = (state: RootState): AddSubCategoryList =>
-  state.subCategoryList.addSubCategory
+const addSubCategories = (state: RootState): SubCategoryList[] =>
+  state.subCategoryList.subExpenseCategories
 const pageFromState = (state: RootState): number =>
   state.subCategoryList.currentPage
 const pageSizeFromState = (state: RootState): number =>
@@ -140,6 +214,9 @@ const subCategoryListThunk = {
   getSubCategoryList,
   addSubCategoryList,
   existSubCategoryList,
+  editExpenseSubCategoryList,
+  updateExpenseSubCategoryList,
+  deleteExpenseSubCategoryList,
 }
 
 const subCategoryListSelectors = {

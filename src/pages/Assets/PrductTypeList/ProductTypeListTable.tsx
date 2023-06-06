@@ -164,7 +164,7 @@ const ProductTypeListTable = ({
                           {ProductType.assetType}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
-                          {ProductType.createdBy || 'N/A'}
+                          {ProductType.updatedBy || ProductType.createdBy}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
                           {userAccessProductList?.updateaccess && (

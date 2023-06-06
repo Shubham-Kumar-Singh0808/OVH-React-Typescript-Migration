@@ -9,14 +9,26 @@ import {
   CFormInput,
   CButton,
   CTooltip,
+  CFormSelect,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { TextDanger } from '../../../constant/ClassName'
 import { SubCategoryList } from '../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
+import OModal from '../../../components/ReusableComponent/OModal'
 
-const ExpenseSubCategoryListTable = (): JSX.Element => {
+const ExpenseSubCategoryListTable = ({
+  userAccess,
+}: {
+  userAccess: UserAccessToFeatures | undefined
+}): JSX.Element => {
   const initialEditExpenseSubCategories = {} as SubCategoryList
   const [editExpenseSubCategoryDetails, setEditExpenseSubCategoryDetails] =
     useState(initialEditExpenseSubCategories)
@@ -27,7 +39,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     useState(0)
   const [isEditSubCategoryButtonEnabled, setIsEditSubCategoryButtonEnabled] =
     useState(false)
-  const [subCategoryName, setSubCategoryName] = useState<string>('')
+  const [expensiveSubCategoryName, setSubCategoryName] = useState<string>('')
   const [isEditSubCategoryNameExist, setIsEditSubCategoryNameExist] =
     useState('')
   const dispatch = useAppDispatch()
@@ -47,6 +59,13 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     reduxServices.subCategory.selectors.pageSizeFromState,
   )
 
+  const editSubCategoryNameExists = (name: string) => {
+    return subExpenseCategoryList?.find((subCategoryName) => {
+      return (
+        subCategoryName.subCategoryName.toLowerCase() === name.toLowerCase()
+      )
+    })
+  }
   //    Configuration for Pagination
   const {
     paginationRange,
@@ -71,6 +90,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
+  //Dispatching the Api's
   useEffect(() => {
     dispatch(reduxServices.subCategory.getCategoryList())
     dispatch(reduxServices.subCategory.getSubCategoryList())
@@ -78,6 +98,120 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     dispatch(reduxServices.subCategory.actions.setPageSize(20))
   }, [dispatch])
 
+  // Button Handlers
+
+  const handleEditCategoryHandler = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'subCategoryName') {
+      const nameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      setEditExpenseSubCategoryDetails((prevState) => {
+        return { ...prevState, ...{ [name]: nameValue } }
+      })
+    } else {
+      setEditExpenseSubCategoryDetails((values) => {
+        return { ...values, ...{ [name]: value } }
+      })
+    }
+    if (editSubCategoryNameExists(value.trim())) {
+      setIsEditSubCategoryNameExist(value.trim())
+    } else {
+      setIsEditSubCategoryNameExist('')
+    }
+  }
+
+  const editExpenseCategoryButtonHandler = (
+    subCategoryItems: SubCategoryList,
+  ): void => {
+    setIsEditExpenseSubCategory(true)
+    setDeleteExpenseSubCategoryId(subCategoryItems.id)
+    setEditExpenseSubCategoryDetails(subCategoryItems)
+  }
+
+  const saveExpenseCategoryButtonHandler = async () => {
+    const saveExpenseSubCategoryResultAction = await dispatch(
+      reduxServices.subCategory.updateExpenseSubCategoryList(
+        editExpenseSubCategoryDetails,
+      ),
+    )
+    if (
+      reduxServices.subCategory.updateExpenseSubCategoryList.fulfilled.match(
+        saveExpenseSubCategoryResultAction,
+      )
+    ) {
+      dispatch(reduxServices.subCategory.getSubCategoryList())
+      setIsEditExpenseSubCategory(false)
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Sub-Category has been modified."
+          />,
+        ),
+      )
+    }
+  }
+
+  const onDeleteBtnClick = (
+    deleteExpenseSubCategoryId: number,
+    subCategoryName: string,
+  ) => {
+    setIsDeleteModalVisible(true)
+    setSubCategoryName(subCategoryName)
+    setDeleteExpenseSubCategoryId(deleteExpenseSubCategoryId)
+  }
+  const handleConfirmDeleteExpenseCategories = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteExpenseSubCategoryResultAction = await dispatch(
+      reduxServices.subCategory.deleteExpenseSubCategoryList(
+        deleteExpenseSubCategoryId,
+      ),
+    )
+    if (
+      reduxServices.subCategory.deleteExpenseSubCategoryList.fulfilled.match(
+        deleteExpenseSubCategoryResultAction,
+      )
+    ) {
+      dispatch(reduxServices.subCategory.getSubCategoryList())
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Sub-Category deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
+
+  useEffect(() => {
+    if (
+      editExpenseSubCategoryDetails?.subCategoryName?.replace(/^\s*/, '') &&
+      editExpenseSubCategoryDetails.categoryName
+    ) {
+      setIsEditSubCategoryButtonEnabled(true)
+    } else {
+      setIsEditSubCategoryButtonEnabled(false)
+    }
+  }, [
+    editExpenseSubCategoryDetails.subCategoryName,
+    editExpenseSubCategoryDetails.categoryName,
+  ])
+
+  const cancelExpenseSubCategoryButtonHandler = () => {
+    setIsEditExpenseSubCategory(false)
+  }
+
+  useEffect(() => {
+    if (window.location.pathname === '/expenseSubCategory') {
+      setCurrentPage(1)
+    }
+  }, [])
+
+  console.log(editExpenseSubCategoryDetails.categoryName)
   return (
     <>
       <CTable className="mt-4 mb-4">
@@ -95,43 +229,64 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {subCategoryItems.categoryName}
-                  </CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {subCategoryItems.subCategoryName}
-                  </CTableDataCell>
-
-                  {/* {isEditExpenseCategory &&
-                  categoryItems.id === deleteExpenseCategoryId ? (
+                  {isEditExpenseSubCategory &&
+                  subCategoryItems.id === deleteExpenseSubCategoryId ? (
+                    <CTableDataCell>
+                      <CFormSelect
+                        className="mb-1"
+                        data-testid="categoryId"
+                        id="categoryNames"
+                        size="sm"
+                        aria-label="Category"
+                        name="categoryName"
+                        value={editExpenseSubCategoryDetails.categoryName}
+                        onChange={handleEditCategoryHandler}
+                      >
+                        {/* <option value={''}>Select Category</option> */}
+                        {expenseCategoryList &&
+                          expenseCategoryList?.length > 0 &&
+                          expenseCategoryList?.map((categoryNames, index) => (
+                            <option key={index} value={categoryNames.id}>
+                              {categoryNames.categoryName}
+                            </option>
+                          ))}
+                      </CFormSelect>
+                    </CTableDataCell>
+                  ) : (
+                    <CTableDataCell className="ng-binding">
+                      {subCategoryItems.categoryName}
+                    </CTableDataCell>
+                  )}
+                  {isEditExpenseSubCategory &&
+                  subCategoryItems.id === deleteExpenseSubCategoryId ? (
                     <CTableDataCell scope="row">
                       <div className="edit-time-control">
                         <CFormInput
                           className="form-leave"
                           type="text"
-                          id="name"
-                          name="categoryName"
-                          value={editExpenseCategoryDetails?.categoryName}
+                          id="subCategoryNames"
+                          name="subCategoryName"
+                          value={editExpenseSubCategoryDetails?.subCategoryName}
                           onChange={handleEditCategoryHandler}
                         />
-                        {isEditCategoryNameExist && (
+                        {isEditSubCategoryNameExist && (
                           <span
                             className={TextDanger}
                             data-testid="nameAlreadyExist"
                           >
-                            <b>Category already exist</b>
+                            <b>Sub-Category already exist</b>
                           </span>
                         )}
                       </div>
                     </CTableDataCell>
                   ) : (
                     <CTableDataCell className="ng-binding">
-                      {categoryItems.categoryName}
+                      {subCategoryItems.subCategoryName}
                     </CTableDataCell>
-                  )} */}
-                  {/* <CTableDataCell scope="row">
-                    {isEditExpenseCategory &&
-                    categoryItems.id === deleteExpenseCategoryId ? (
+                  )}
+                  <CTableDataCell scope="row">
+                    {isEditExpenseSubCategory &&
+                    subCategoryItems.id === deleteExpenseSubCategoryId ? (
                       <>
                         <CButton
                           color="success"
@@ -139,10 +294,10 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                           className="btn-ovh me-1"
                           onClick={saveExpenseCategoryButtonHandler}
                           disabled={
-                            isEditCategoryButtonEnabled
-                              ? isEditCategoryButtonEnabled &&
-                                isEditCategoryNameExist.length > 0
-                              : !isEditCategoryButtonEnabled
+                            isEditSubCategoryButtonEnabled
+                              ? isEditSubCategoryButtonEnabled &&
+                                isEditSubCategoryNameExist.length > 0
+                              : !isEditSubCategoryButtonEnabled
                           }
                         >
                           <i className="fa fa-floppy-o" aria-hidden="true"></i>
@@ -151,7 +306,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                           <CButton
                             color="warning"
                             className="btn-ovh me-1"
-                            onClick={cancelLeaveCategoryButtonHandler}
+                            onClick={cancelExpenseSubCategoryButtonHandler}
                           >
                             <i className="fa fa-times" aria-hidden="true"></i>
                           </CButton>
@@ -166,12 +321,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                               className="btn-ovh-employee-list"
                               onClick={() => {
                                 editExpenseCategoryButtonHandler(
-                                  categoryItems.id,
-                                  categoryItems.categoryName,
-                                  categoryItems.createdBy,
-                                  categoryItems.updatedBy,
-                                  categoryItems.createdDate,
-                                  categoryItems.updatedDate,
+                                  subCategoryItems,
                                 )
                               }}
                             >
@@ -186,8 +336,8 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                               className="btn-ovh-employee-list"
                               onClick={() =>
                                 onDeleteBtnClick(
-                                  categoryItems.id,
-                                  categoryItems.categoryName,
+                                  subCategoryItems.id,
+                                  subCategoryItems.subCategoryName,
                                 )
                               }
                             >
@@ -200,12 +350,59 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                         )}
                       </>
                     )}
-                  </CTableDataCell> */}
+                  </CTableDataCell>
                 </CTableRow>
               )
             })}
         </CTableBody>
       </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <strong>
+            {subExpenseCategoryList?.length
+              ? `Total Records: ${subExpenseCategoryList.length}`
+              : `No Records Found`}
+          </strong>
+        </CCol>
+        <CCol xs={3}>
+          {subExpenseCategoryList.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80, 100]}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {subExpenseCategoryList.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
+      <OModal
+        alignment="center"
+        visible={isDeleteModalVisible}
+        setVisible={setIsDeleteModalVisible}
+        modalTitle="Delete Category"
+        confirmButtonText="Yes"
+        cancelButtonText="No"
+        closeButtonClass="d-none"
+        confirmButtonAction={handleConfirmDeleteExpenseCategories}
+        modalBodyClass="mt-0"
+      >
+        <>
+          Do you really want to delete this{' '}
+          <strong> {expensiveSubCategoryName} </strong>
+          Category?
+        </>
+      </OModal>
     </>
   )
 }

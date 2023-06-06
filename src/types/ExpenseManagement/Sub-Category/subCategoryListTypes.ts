@@ -16,9 +16,9 @@ export type SubCategoryList = {
   categoryName: string
   subCategoryName: string
   createdBy: string
-  updatedBy: string
+  updatedBy: string | null
   createdDate: string
-  updatedDate: string
+  updatedDate: string | null
 }
 
 export type AddSubCategoryList = {
@@ -32,7 +32,6 @@ export type SubCategoryListSliceState = {
   subExpenseCategories: SubCategoryList[]
   currentPage: number
   pageSize: number
-  addSubCategory: AddSubCategoryList
 }
 
 export type SubCategoryListTableProps = {
