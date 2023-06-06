@@ -18,10 +18,11 @@ const GetAllAssets = async (): Promise<GetAllAssetResponse> => {
   return response.data
 }
 
-const saveEmployee = async (): Promise<SaveEmployee> => {
+const saveEmployee = async (data: SaveEmployee): Promise<SaveEmployee> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: changeAssetStatusConfig.saveEmployee,
     method: AllowedHttpMethods.put,
+    data,
   })
 
   const response = await useAxios(requestConfig)

@@ -26,7 +26,7 @@ const saveEmployee = createAsyncThunk(
   'assetManagement/saveEmployee',
   async (props: SaveEmployee, thunkApi) => {
     try {
-      return await GetAllAssetsListApi.saveEmployee()
+      return await GetAllAssetsListApi.saveEmployee(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)

@@ -105,7 +105,7 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         {isTicketPrevValue(pipDetails.oldRemarks)}
                         &nbsp;
                         <span className="descriptionField">
-                          <div
+                          <span
                             dangerouslySetInnerHTML={{
                               __html: pipDetails.remarks,
                             }}
@@ -125,7 +125,7 @@ const EmployeePipTimelineOptions = (): JSX.Element => {
                         {isTicketPrevValue(pipDetails.oldImprovement)}
                         &nbsp;
                         <span className="descriptionField">
-                          <div
+                          <span
                             dangerouslySetInnerHTML={{
                               __html: pipDetails.improvement,
                             }}

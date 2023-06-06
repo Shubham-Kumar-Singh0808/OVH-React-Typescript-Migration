@@ -26,16 +26,18 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditJobView = ({
   setToggle,
-  editJobInfo,
-  setEditJobInfo,
+  editViewJobInfo,
+  setEditViewJobInfo,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
-  editJobInfo: GetAllJobVacanciesList
-  setEditJobInfo: React.Dispatch<React.SetStateAction<GetAllJobVacanciesList>>
+  editViewJobInfo: GetAllJobVacanciesList
+  setEditViewJobInfo: React.Dispatch<
+    React.SetStateAction<GetAllJobVacanciesList>
+  >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
-  const [editDate, setEditDate] = useState<string>(editJobInfo.expiryDate)
+  const [editDate, setEditDate] = useState<string>(editViewJobInfo.expiryDate)
   const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
@@ -44,40 +46,47 @@ const EditJobView = ({
 
   useEffect(() => {
     if (
-      editJobInfo.jobCode &&
-      editJobInfo.minimumExperience &&
-      editJobInfo.noOfRequirements &&
-      editJobInfo.positionVacant &&
-      editJobInfo.status
+      editViewJobInfo.jobCode &&
+      editViewJobInfo.minimumExperience &&
+      editViewJobInfo.noOfRequirements &&
+      editViewJobInfo.positionVacant &&
+      editViewJobInfo.status
     ) {
       setIsUpdateBtnEnabled(true)
     } else {
       setIsUpdateBtnEnabled(false)
     }
-  }, [editJobInfo])
+  }, [editViewJobInfo])
 
   const handleDescription = (description: string) => {
-    setEditJobInfo((prevState) => {
+    setEditViewJobInfo((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
   const datePickerHandler = (value: Date) => {
     setEditDate(moment(value).format(dateFormat))
   }
+
   const onChangeHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditJobInfo((prevState) => {
-      return {
-        ...prevState,
-        ...{
-          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-        },
-      }
-    })
+    if (name === 'noOfRequirements') {
+      const limit = value.replace(/\D/g, '')
+      setEditViewJobInfo((prevState) => {
+        return { ...prevState, ...{ [name]: Number(limit) } }
+      })
+    } else
+      setEditViewJobInfo((prevState) => {
+        return {
+          ...prevState,
+          ...{
+            [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+          },
+        }
+      })
   }
 
   const updateSuccessMessage = (
@@ -90,17 +99,17 @@ const EditJobView = ({
 
   const updateBtnHandler = async () => {
     const prepareObject = {
-      id: editJobInfo.id,
-      jobCode: editJobInfo.jobCode,
-      positionVacant: editJobInfo.positionVacant,
-      minimumExperience: editJobInfo.minimumExperience,
-      description: editJobInfo.description,
-      opendDate: editJobInfo.opendDate,
+      id: editViewJobInfo.id,
+      jobCode: editViewJobInfo.jobCode,
+      positionVacant: editViewJobInfo.positionVacant,
+      minimumExperience: editViewJobInfo.minimumExperience,
+      description: editViewJobInfo.description,
+      opendDate: editViewJobInfo.opendDate,
       expiryDate: editDate,
-      noOfRequirements: editJobInfo.noOfRequirements,
-      offered: editJobInfo.offered,
-      remaining: editJobInfo.remaining,
-      status: editJobInfo.status,
+      noOfRequirements: editViewJobInfo.noOfRequirements,
+      offered: editViewJobInfo.offered,
+      remaining: editViewJobInfo.remaining,
+      status: editViewJobInfo.status,
     }
     const updateAppraisalCycleResultAction = await dispatch(
       reduxServices.jobVacancies.updateJobVacancy(prepareObject),
@@ -150,7 +159,7 @@ const EditJobView = ({
           >
             Job Code:
             <span
-              className={editJobInfo.jobCode ? 'text-white' : 'text-danger'}
+              className={editViewJobInfo.jobCode ? 'text-white' : 'text-danger'}
             >
               *
             </span>
@@ -165,7 +174,7 @@ const EditJobView = ({
               name="jobCode"
               autoComplete="off"
               placeholder="Job Code"
-              value={editJobInfo.jobCode}
+              value={editViewJobInfo.jobCode}
               onChange={onChangeHandler}
             />
           </CCol>
@@ -177,7 +186,9 @@ const EditJobView = ({
           >
             Job Title:
             <span
-              className={editJobInfo.positionVacant ? TextWhite : TextDanger}
+              className={
+                editViewJobInfo.positionVacant ? TextWhite : TextDanger
+              }
             >
               *
             </span>
@@ -192,7 +203,7 @@ const EditJobView = ({
               name="positionVacant"
               autoComplete="off"
               placeholder="Title"
-              value={editJobInfo.positionVacant}
+              value={editViewJobInfo.positionVacant}
               onChange={onChangeHandler}
             />
           </CCol>
@@ -205,7 +216,9 @@ const EditJobView = ({
           >
             No. of Openings:
             <span
-              className={editJobInfo.noOfRequirements ? TextWhite : TextDanger}
+              className={
+                editViewJobInfo.noOfRequirements ? TextWhite : TextDanger
+              }
             >
               *
             </span>
@@ -220,7 +233,7 @@ const EditJobView = ({
               name="noOfRequirements"
               autoComplete="off"
               placeholder="No of Openings"
-              value={editJobInfo.noOfRequirements}
+              value={editViewJobInfo.noOfRequirements}
               maxLength={5}
               onChange={onChangeHandler}
             />
@@ -234,7 +247,9 @@ const EditJobView = ({
           >
             Experience:
             <span
-              className={editJobInfo.minimumExperience ? TextWhite : TextDanger}
+              className={
+                editViewJobInfo.minimumExperience ? TextWhite : TextDanger
+              }
             >
               *
             </span>
@@ -250,7 +265,7 @@ const EditJobView = ({
               autoComplete="off"
               placeholder="Experience"
               maxLength={11}
-              value={editJobInfo.minimumExperience}
+              value={editViewJobInfo.minimumExperience}
               onChange={onChangeHandler}
             />
           </CCol>
@@ -274,7 +289,7 @@ const EditJobView = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editDate}
+              value={editDate || ''}
               minDate={new Date()}
               onChange={(date: Date) => datePickerHandler(date)}
             />
@@ -287,7 +302,7 @@ const EditJobView = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editJobInfo.description}
+                initData={editViewJobInfo.description || ''}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}
@@ -306,7 +321,7 @@ const EditJobView = ({
             className="col-sm-3 col-form-label text-end"
           >
             Status:
-            <span className={editJobInfo.status ? TextWhite : TextDanger}>
+            <span className={editViewJobInfo.status ? TextWhite : TextDanger}>
               *
             </span>
           </CFormLabel>
@@ -317,7 +332,7 @@ const EditJobView = ({
               id="status"
               data-testid="Status"
               name="status"
-              value={editJobInfo.status}
+              value={editViewJobInfo.status}
               onChange={onChangeHandler}
             >
               <option value={''}>Select Status</option>

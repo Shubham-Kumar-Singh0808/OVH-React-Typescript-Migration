@@ -1,3 +1,4 @@
+import { create } from 'domain'
 import {
   CRow,
   CCol,
@@ -13,6 +14,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import Autocomplete from 'react-autocomplete'
+import { useHistory } from 'react-router-dom'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { description } from '../../../../test/constants'
@@ -24,6 +26,7 @@ import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiev
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
+import AddVendorDetails from '../../VendorList/AddVendorDetails/AddVendorDetails'
 
 const ChangeAssetFilterOptions = ({
   setToggle,
@@ -85,22 +88,14 @@ const ChangeAssetFilterOptions = ({
     setStatusDate(moment(value).format(dateFormat))
   }
   const handleText = (description: string) => {
-    setChangeReportStatus((prevState) => {
-      return { ...prevState, ...{ description } }
-    })
+    setDescription(description)
   }
   const dispatch = useAppDispatch()
+  const history = useHistory()
 
-  const allActiveEmployees = useTypedSelector(
-    (state) => state.addAchiever.activeEmployeeList,
-  )
   const getLookUps = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
   )
-  useEffect(() => {
-    dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
-  }, [dispatch])
-
   useEffect(() => {
     dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
   }, [dispatch])
@@ -182,7 +177,10 @@ const ChangeAssetFilterOptions = ({
   const handleIsInternalStatus = (isExpenseVendor: boolean) => {
     setCheckBox(isExpenseVendor)
   }
-
+  const addVendorButtonHandler = () => {
+    setToggle('addVendorDetails')
+  }
+  console.log(description)
   return (
     <>
       <CRow className="mt-4 mb-4">
@@ -236,7 +234,7 @@ const ChangeAssetFilterOptions = ({
             color="info"
             className="btn-ovh me-1"
             data-testid="add-vendorbtn"
-            onClick={() => setToggle('')}
+            onClick={() => setToggle('addVendorDetails')}
           >
             <i className="fa fa-plus"></i>Add Vendor
           </CButton>
@@ -262,7 +260,7 @@ const ChangeAssetFilterOptions = ({
             value={changeReportStatus.referenceNumber}
             onChange={handledInputChange}
           />
-          <span>
+          <span className="text-danger" data-testid="errorMessage">
             <b>
               <strong>Note:</strong> This field is mandatory for assembly part
               (Ex- CPU, Chair){' '}
@@ -499,6 +497,9 @@ const ChangeAssetFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
+      {/* {toggle === 'addVendorDetails' && (
+        <AddVendorDetails setToggle={setToggle} />
+      )} */}
     </>
   )
 }

@@ -126,6 +126,8 @@ import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWa
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { changeStatusService } from './Assets/AssetList/ChangeStatus/ChangeStatusSlice'
+import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -256,4 +258,6 @@ export const reduxServices = {
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
   changeStatus: changeStatusService,
+  productSpecificationList: productSpecificationListService,
+  addNewProduct: addProductService,
 }

@@ -55,7 +55,6 @@ const AddEmployeePipList = ({
   const [addImprovementPlan, setAddImprovementPlan] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeName, setEmployeeName] = useState<string>('')
-
   const dispatch = useAppDispatch()
   const history = useHistory()
 

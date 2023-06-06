@@ -221,7 +221,7 @@ const SQAAuditReportTable = ({
                       <CButton
                         color="success"
                         size="sm"
-                        className="btn-ovh-employee-list me-1"
+                        className="btn-ovh-employee-list me-1 sqa-btn"
                         data-testid="edit-btn"
                         onClick={() =>
                           handleShowRescheduleModal(auditReport.id)
@@ -238,7 +238,7 @@ const SQAAuditReportTable = ({
                       <CTooltip content="View">
                         <CButton
                           color="info"
-                          className="btn-ovh-employee-list me-1 mt-1"
+                          className="btn-ovh-employee-list me-1 sqa-btn"
                           data-testid="edit-btn"
                           onClick={() =>
                             handleClickSQAAuditViewReport(auditReport?.id)
@@ -256,7 +256,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Edit">
                           <CButton
                             color="info"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="edit-btn"
                             onClick={() => editButtonHandler(auditReport.id)}
                             disabled={auditReport.disableEditButton === true}
@@ -274,7 +274,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Cancel">
                           <CButton
                             color="danger"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="cancel-btn"
                             onClick={() =>
                               handleShowCancelModal(
@@ -296,7 +296,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Delete">
                           <CButton
                             color="danger"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="delete-btn"
                             onClick={() =>
                               handleShowDeleteModal(
@@ -318,7 +318,7 @@ const SQAAuditReportTable = ({
                       <CTooltip content="Timeline">
                         <CButton
                           color="info"
-                          className="btn-ovh-employee-list me-1 mt-1"
+                          className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                           data-testid="edit-btn"
                           onClick={() =>
                             handleSQAAuditHistoryClick(auditReport?.id)

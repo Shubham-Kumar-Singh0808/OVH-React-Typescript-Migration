@@ -25,6 +25,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { baseImageExtension } from '../AchievementConstants'
 
 const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -92,13 +93,17 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                   removeSpaces && removeSpaces.length > 30
                     ? `${removeSpaces.substring(0, 30)}...`
                     : removeSpaces
+                const imageUrl = item.profilePicture
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell scope="row">
                       <div>
                         <img
                           className="rounded-circle img-responsive"
-                          src={item.profilePicture}
+                          src={finalImageUrl}
                           alt={item.employeeName}
                           width={35}
                         />

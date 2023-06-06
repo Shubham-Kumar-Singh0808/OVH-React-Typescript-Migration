@@ -52,6 +52,20 @@ export type getAllAssets = {
   amount: string
   countryId: number
 }
+
+// export type SaveEmployeeProps = {
+//   amount: number
+//   assetId: number
+//   date: string | null
+//   description: string
+//   employeeId: number
+//   invoiceNumber: string
+//   location: string
+//   locationForEmpAssets: boolean
+//   referenceNumber: string
+//   status: string
+//   vendorId: number
+// }
 export type GetAllAssetResponse = {
   list: getAllAssets[]
   size: number
