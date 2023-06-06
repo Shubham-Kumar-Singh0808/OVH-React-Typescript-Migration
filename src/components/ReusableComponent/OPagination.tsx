@@ -30,11 +30,13 @@ const OPagination = ({
   const handleFirstPage = () => {
     pageSetter(1)
     persistCurrentPage(1)
+    window.scrollTo(0, 0)
   }
 
   const handleLastPage = () => {
     pageSetter(paginationRange[paginationRange.length - 1])
     persistCurrentPage(paginationRange[paginationRange.length - 1])
+    window.scrollTo(0, 0)
   }
 
   const handleSelectPage = (pageNumber: number) => {

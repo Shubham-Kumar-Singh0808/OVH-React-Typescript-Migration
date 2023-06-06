@@ -22,6 +22,10 @@ const ProductTypeList = (): JSX.Element => {
     reduxServices.ProductTypeList.selectors.listSize,
   )
 
+  const ProductTypeList = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.ProductTypeLists,
+  )
+
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -115,15 +119,17 @@ const ProductTypeList = (): JSX.Element => {
               className="gap-2 d-md-flex justify-content-end mt-3 mb-3"
               data-testid="exportBtn"
             >
-              <CButton
-                color="info"
-                className="text-white"
-                size="sm"
-                onClick={handleExportProductTypeList}
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
+              {ProductTypeList?.list.length > 0 && (
+                <CButton
+                  color="info"
+                  className="text-white"
+                  size="sm"
+                  onClick={handleExportProductTypeList}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+              )}
               {userAccessProductList?.createaccess && (
                 <CButton
                   color="info btn-ovh me-0"

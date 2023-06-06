@@ -39,7 +39,7 @@ describe('ProductTypeList without data', () => {
     expect(screen.getByText('Product Type List')).toBeInTheDocument()
   })
   test('should able to click "click to to export" button', () => {
-    const exportBtn = screen.getByRole('button', { name: 'Click to Export' })
+    const exportBtn = screen.getByTestId('exportBtn')
     fireEvent.click(exportBtn)
     expect(mockHandleExport).toHaveBeenCalledTimes(0)
   })

@@ -79,6 +79,8 @@ const ProductTypeListTable = ({
 
   const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const handleConfirmDeleteProductTypeDetails = async () => {
@@ -99,6 +101,7 @@ const ProductTypeListTable = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.ProductTypeList.DeleteProductType.rejected.match(
         DeleteProductType,
@@ -113,6 +116,7 @@ const ProductTypeListTable = ({
   const editButtonHandler = (ProductType: ProductTypeListType) => {
     setToggle('ProductData')
     setEditProductType(ProductType)
+    window.scrollTo(0, 0)
   }
 
   const getItemNumber = (index: number) => {
@@ -153,7 +157,9 @@ const ProductTypeListTable = ({
                           {ProductType.assetType}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
-                          {ProductType.createdBy || 'N/A'}
+                          {ProductType.updatedBy ||
+                            ProductType.createdBy ||
+                            'N/A'}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
                           {userAccessProductList?.updateaccess && (
