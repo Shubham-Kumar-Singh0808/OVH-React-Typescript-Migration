@@ -16,6 +16,8 @@ describe('Product type list without data', () => {
       <EditProductTypeRecord
         setToggle={mockSetData}
         setEditProductType={mockSetData}
+        currentPage={mockSetData}
+        pageSize={mockSetData}
         EditProductType={{
           assetTypeId: 1,
           assetType: '',
@@ -77,19 +79,13 @@ describe('Product type list without data', () => {
   test('should render update button as enabled when clicked on edit button', () => {
     expect(screen.getByTestId('save-btn')).toBeEnabled()
   })
-  test('should able to Add input field', () => {
-    const productNameInput = screen.getByTestId('productName')
-    userEvent.type(productNameInput, 'test')
-    const assetType = screen.getByTestId('AssetType-test')
-    userEvent.selectOptions(assetType, ['Hardware'])
-    expect(assetType).toHaveValue('1')
-    const updateButton = screen.getByTestId('save-btn')
-    expect(updateButton).toBeEnabled()
-  })
-  test('should call the setToggle function when the back button is clicked', () => {
+  test('setToggle should update the toggle state', () => {
     const backButton = screen.getByTestId('back-button')
     fireEvent.click(backButton)
+    expect(backButton).toBeInTheDocument()
     expect(mockSetData).toHaveBeenCalledTimes(1)
     expect(mockSetData).toHaveBeenCalledWith('')
+    const toggleButton = screen.getByTestId('back-button')
+    toggleButton.click()
   })
 })

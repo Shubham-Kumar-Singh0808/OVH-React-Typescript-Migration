@@ -70,10 +70,13 @@ describe('Product type list without data', () => {
     const addButton = screen.getByTestId('Add-btn')
     expect(addButton).toBeEnabled()
   })
-  test('should call the setToggle function when the back button is clicked', () => {
+  test('setToggle should update the toggle state', () => {
     const backButton = screen.getByTestId('back-Button')
     fireEvent.click(backButton)
+    expect(backButton).toBeInTheDocument()
     expect(mockSetData).toHaveBeenCalledTimes(1)
     expect(mockSetData).toHaveBeenCalledWith('')
+    const toggleButton = screen.getByTestId('back-Button')
+    toggleButton.click()
   })
 })

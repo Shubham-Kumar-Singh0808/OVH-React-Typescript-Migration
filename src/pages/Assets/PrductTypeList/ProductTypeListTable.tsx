@@ -101,7 +101,6 @@ const ProductTypeListTable = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.ProductTypeList.DeleteProductType.rejected.match(
         DeleteProductType,
@@ -116,7 +115,6 @@ const ProductTypeListTable = ({
   const editButtonHandler = (ProductType: ProductTypeListType) => {
     setToggle('ProductData')
     setEditProductType(ProductType)
-    window.scrollTo(0, 0)
   }
 
   const getItemNumber = (index: number) => {

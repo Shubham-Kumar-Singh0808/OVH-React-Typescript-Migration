@@ -18,10 +18,14 @@ const EditProductTypeRecord = ({
   setToggle,
   EditProductType,
   setEditProductType,
+  currentPage,
+  pageSize,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   EditProductType: ProductTypeListType
   setEditProductType: React.Dispatch<React.SetStateAction<ProductTypeListType>>
+  currentPage: number
+  pageSize: number
 }): JSX.Element => {
   const formLabelProps = {
     htmlFor: 'inputNewVendorDetails',
@@ -53,7 +57,7 @@ const EditProductTypeRecord = ({
     })
   }
 
-  const updateSuccessToastMessage = (
+  const updateSuccessToastMessagess = (
     <OToast
       toastMessage="Product type updated successfully.
       "
@@ -82,12 +86,12 @@ const EditProductTypeRecord = ({
       )
     ) {
       setToggle('')
-      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessagess))
       dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.ProductTypeList.getProductTypeList({
-          startIndex: 0,
-          endIndex: 20,
+          endIndex: pageSize * currentPage,
+          startIndex: pageSize * (currentPage - 1),
           productName: '',
         }),
       )

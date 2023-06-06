@@ -22,7 +22,7 @@ const ProductTypeList = (): JSX.Element => {
     reduxServices.ProductTypeList.selectors.listSize,
   )
 
-  const ProductTypeList = useTypedSelector(
+  const ProductTypeListData = useTypedSelector(
     reduxServices.ProductTypeList.selectors.ProductTypeLists,
   )
 
@@ -119,7 +119,7 @@ const ProductTypeList = (): JSX.Element => {
               className="gap-2 d-md-flex justify-content-end mt-3 mb-3"
               data-testid="exportBtn"
             >
-              {ProductTypeList?.list.length > 0 && (
+              {ProductTypeListData?.list.length > 0 && (
                 <CButton
                   color="info"
                   className="text-white"
@@ -191,6 +191,8 @@ const ProductTypeList = (): JSX.Element => {
           setToggle={setToggle}
           EditProductType={EditProductType}
           setEditProductType={setEditProductType}
+          currentPage={currentPage}
+          pageSize={pageSize}
         />
       )}
     </>
