@@ -36,6 +36,7 @@ export type TicketApprovalsSliceState = {
   departmentNameList: DepartmentList[]
   trackerList: TrackerList[]
   departmentCategoryList: DepartmentCategoryList[]
+  mealType: DepartmentCategoryList
   subCategoryList: SubCategoryList[]
   ticketsForApproval: GetAllTicketsForApprovalResponse
   getAllLookUps: GetAllLookUps[]
