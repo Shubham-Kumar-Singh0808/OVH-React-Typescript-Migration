@@ -29,5 +29,4 @@ export type ChangeReporteesProps = {
   setAutoCompleteTarget: React.Dispatch<React.SetStateAction<string>>
   shouldRenderTable: boolean
   setShouldRenderTable: React.Dispatch<React.SetStateAction<boolean>>
-  //setIsActive: React.Dispatch<React.SetStateAction<boolean>>
 }
