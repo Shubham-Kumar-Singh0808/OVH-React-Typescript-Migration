@@ -20,11 +20,13 @@ const OPagination = ({
   const handleNextPage = () => {
     pageSetter(currentPage + 1)
     persistCurrentPage(currentPage + 1)
+    window.scrollTo(0, 0)
   }
 
   const handlePreviousPage = () => {
     pageSetter(currentPage - 1)
     persistCurrentPage(currentPage - 1)
+    window.scrollTo(0, 0)
   }
 
   const handleFirstPage = () => {
@@ -42,6 +44,7 @@ const OPagination = ({
   const handleSelectPage = (pageNumber: number) => {
     pageSetter(pageNumber)
     persistCurrentPage(pageNumber)
+    window.scrollTo(0, 0)
   }
 
   const paginationItems = useMemo(() => {
