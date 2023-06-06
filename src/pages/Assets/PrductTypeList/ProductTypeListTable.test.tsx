@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import configureStore from 'redux-mock-store'
 import ProductTypeListTable from './ProductTypeListTable'
 import {
   cleanup,
@@ -16,8 +15,6 @@ import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFea
 
 const mockSetData = jest.fn()
 const mockSetPageSize = jest.fn()
-const mockStore = configureStore([])
-
 const toRender = (
   <div>
     <div id="backdrop-root"></div>

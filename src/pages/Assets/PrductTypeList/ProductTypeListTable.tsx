@@ -79,8 +79,6 @@ const ProductTypeListTable = ({
 
   const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
-    setCurrentPage(1)
-    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const handleConfirmDeleteProductTypeDetails = async () => {
@@ -101,7 +99,6 @@ const ProductTypeListTable = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.ProductTypeList.DeleteProductType.rejected.match(
         DeleteProductType,
