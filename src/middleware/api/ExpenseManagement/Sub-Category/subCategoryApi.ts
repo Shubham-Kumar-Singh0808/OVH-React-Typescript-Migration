@@ -67,7 +67,7 @@ const existSubCategoryList = async ({
 
 const editSubCategoryList = async (
   subCategoryId: number,
-): Promise<SubCategoryList[]> => {
+): Promise<SubCategoryList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: ExpenseSubCategoryListApiConfig.editSubCategory,
     method: AllowedHttpMethods.get,

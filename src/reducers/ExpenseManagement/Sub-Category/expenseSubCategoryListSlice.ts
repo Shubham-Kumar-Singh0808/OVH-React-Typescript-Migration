@@ -148,22 +148,15 @@ const subCategoryListSlice = createSlice({
           getSubCategoryList.fulfilled,
           addSubCategoryList.fulfilled,
           existSubCategoryList.fulfilled,
-          editExpenseSubCategoryList.fulfilled,
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.subExpenseCategories = action.payload
         },
       )
-      .addMatcher(
-        isAnyOf(
-          editExpenseSubCategoryList.fulfilled,
-          deleteExpenseSubCategoryList.fulfilled,
-        ),
-        (state) => {
-          state.isLoading = ApiLoadingState.loading
-        },
-      )
+      .addMatcher(isAnyOf(deleteExpenseSubCategoryList.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
 
       .addMatcher(
         isAnyOf(
@@ -190,7 +183,7 @@ const subCategoryListSlice = createSlice({
           deleteExpenseSubCategoryList.rejected,
         ),
         (state) => {
-          state.isLoading = ApiLoadingState.loading
+          state.isLoading = ApiLoadingState.failed
         },
       )
   },

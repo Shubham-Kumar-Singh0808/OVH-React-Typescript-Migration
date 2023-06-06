@@ -83,6 +83,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
           addExpenseSubCategoryobject,
         ),
       )
+      SetExpenseCategoryName('')
       setExpenseSubCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
     }
@@ -207,7 +208,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
             value={expenseSubCategoryName}
             onChange={handleCategoryInput}
             onKeyDown={handleEnterKeyword}
-            maxLength={30}
+            maxLength={50}
           />
           {isSubCategoryNameExist && (
             <span className={TextDanger} data-testid="nameAlreadyExist">

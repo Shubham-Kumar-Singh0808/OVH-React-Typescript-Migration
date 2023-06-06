@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -23,6 +23,7 @@ import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfigura
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
+import { currentPageData } from '../../../utils/paginationUtils'
 
 const ExpenseSubCategoryListTable = ({
   userAccess,
@@ -60,9 +61,10 @@ const ExpenseSubCategoryListTable = ({
   )
 
   const editSubCategoryNameExists = (name: string) => {
-    return subExpenseCategoryList?.find((subCategoryName) => {
+    return subExpenseCategoryList?.find((subCategoryNamesExists) => {
       return (
-        subCategoryName.subCategoryName.toLowerCase() === name.toLowerCase()
+        subCategoryNamesExists.subCategoryName.toLowerCase() ===
+        name.toLowerCase()
       )
     })
   }
@@ -74,7 +76,7 @@ const ExpenseSubCategoryListTable = ({
     currentPage,
     pageSize,
   } = usePagination(
-    expenseCategoryList.length,
+    subExpenseCategoryList.length,
     pageSizeFromState,
     pageFromState,
   )
@@ -123,9 +125,15 @@ const ExpenseSubCategoryListTable = ({
     }
   }
 
+  console.log(subExpenseCategoryList.length)
   const editExpenseCategoryButtonHandler = (
     subCategoryItems: SubCategoryList,
   ): void => {
+    dispatch(
+      reduxServices.subCategory.editExpenseSubCategoryList(
+        subCategoryItems?.id,
+      ),
+    )
     setIsEditExpenseSubCategory(true)
     setDeleteExpenseSubCategoryId(subCategoryItems.id)
     setEditExpenseSubCategoryDetails(subCategoryItems)
@@ -211,7 +219,11 @@ const ExpenseSubCategoryListTable = ({
     }
   }, [])
 
-  console.log(editExpenseSubCategoryDetails.categoryName)
+  const currentPageItems = useMemo(
+    () => currentPageData(subExpenseCategoryList, currentPage, pageSize),
+    [subExpenseCategoryList, currentPage, pageSize],
+  )
+
   return (
     <>
       <CTable className="mt-4 mb-4">
@@ -224,8 +236,8 @@ const ExpenseSubCategoryListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {subExpenseCategoryList?.length > 0 &&
-            subExpenseCategoryList?.map((subCategoryItems, index) => {
+          {currentPageItems?.length > 0 &&
+            currentPageItems?.map((subCategoryItems, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -242,11 +254,13 @@ const ExpenseSubCategoryListTable = ({
                         value={editExpenseSubCategoryDetails.categoryName}
                         onChange={handleEditCategoryHandler}
                       >
-                        {/* <option value={''}>Select Category</option> */}
                         {expenseCategoryList &&
                           expenseCategoryList?.length > 0 &&
                           expenseCategoryList?.map((categoryNames, index) => (
-                            <option key={index} value={categoryNames.id}>
+                            <option
+                              key={index}
+                              value={categoryNames.categoryName}
+                            >
                               {categoryNames.categoryName}
                             </option>
                           ))}
@@ -266,6 +280,7 @@ const ExpenseSubCategoryListTable = ({
                           type="text"
                           id="subCategoryNames"
                           name="subCategoryName"
+                          maxLength={50}
                           value={editExpenseSubCategoryDetails?.subCategoryName}
                           onChange={handleEditCategoryHandler}
                         />
@@ -288,20 +303,25 @@ const ExpenseSubCategoryListTable = ({
                     {isEditExpenseSubCategory &&
                     subCategoryItems.id === deleteExpenseSubCategoryId ? (
                       <>
-                        <CButton
-                          color="success"
-                          data-testid={`sh-save-btn${index}`}
-                          className="btn-ovh me-1"
-                          onClick={saveExpenseCategoryButtonHandler}
-                          disabled={
-                            isEditSubCategoryButtonEnabled
-                              ? isEditSubCategoryButtonEnabled &&
-                                isEditSubCategoryNameExist.length > 0
-                              : !isEditSubCategoryButtonEnabled
-                          }
-                        >
-                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Save">
+                          <CButton
+                            color="success"
+                            data-testid={`sh-save-btn${index}`}
+                            className="btn-ovh me-1"
+                            onClick={saveExpenseCategoryButtonHandler}
+                            disabled={
+                              isEditSubCategoryButtonEnabled
+                                ? isEditSubCategoryButtonEnabled &&
+                                  isEditSubCategoryNameExist.length > 0
+                                : !isEditSubCategoryButtonEnabled
+                            }
+                          >
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                         <CTooltip content="Cancel">
                           <CButton
                             color="warning"
