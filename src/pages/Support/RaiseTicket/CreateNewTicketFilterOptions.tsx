@@ -66,10 +66,6 @@ const CreateNewTicketFilterOptions = ({
     reduxServices.ticketApprovals.selectors.departmentCategoryList,
   )
 
-  const mealType = useTypedSelector(
-    reduxServices.ticketApprovals.selectors.mealType,
-  )
-
   useEffect(() => {
     dispatch(reduxServices.ticketApprovals.getDepartmentNameList())
     dispatch(reduxServices.ticketApprovals.getTrackerList())
@@ -198,9 +194,13 @@ const CreateNewTicketFilterOptions = ({
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
+  const Result1 = departmentCategoryList?.filter(
+    (item) => item?.categoryId === categoryId,
+  )
+
   const handleApplyTicket = async () => {
     const payload =
-      categoryId === 42
+      Result1[0]?.mealType === true
         ? {
             categoryId,
             id: deptId as number,
@@ -288,8 +288,6 @@ const CreateNewTicketFilterOptions = ({
       })
     }
   }
-
-  const Result = departmentCategoryList.find((item) => item.mealType)
 
   return (
     <>
@@ -427,7 +425,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {Result?.mealType === true ? (
+        {Result1[0]?.mealType === true ? (
           ''
         ) : (
           <>
@@ -552,7 +550,7 @@ const CreateNewTicketFilterOptions = ({
             ''
           )}
         </CRow>
-        {mealType?.mealType === true ? (
+        {Result1[0]?.mealType === true ? (
           <CRow className="mt-3">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Date :
@@ -602,7 +600,7 @@ const CreateNewTicketFilterOptions = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {mealType?.mealType === true ? (
+        {Result1[0]?.mealType === true ? (
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Add Members:
