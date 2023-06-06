@@ -93,6 +93,7 @@ const EmployeesListUnderManagerTable = ({
             successToastMessage(actionMapping.reportingManager),
           ),
         )
+
         window.scrollTo(0, 0)
       }
     } else if (placeHolder === 'Hr Name') {
