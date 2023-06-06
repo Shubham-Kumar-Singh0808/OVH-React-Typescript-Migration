@@ -40,6 +40,7 @@ const OPagination = ({
   const handleSelectPage = (pageNumber: number) => {
     pageSetter(pageNumber)
     persistCurrentPage(pageNumber)
+    window.scrollTo(0, 0)
   }
 
   const paginationItems = useMemo(() => {
