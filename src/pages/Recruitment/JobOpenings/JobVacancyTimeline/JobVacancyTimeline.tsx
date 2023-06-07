@@ -14,7 +14,6 @@ const JobVacancyTimeline = ({
   const auditList = useTypedSelector(
     reduxServices.jobVacancies.selectors.auditList,
   )
-  console.log(auditList)
   const isPersistValue = (persistType: string) => {
     if (persistType === 'UPDATED') {
       return (
@@ -128,7 +127,6 @@ const JobVacancyTimeline = ({
                         ) : (
                           <></>
                         )}
-
                         {auditHistory.minimumExperience ? (
                           <>
                             <div className="mb-1">
@@ -152,11 +150,15 @@ const JobVacancyTimeline = ({
                               <CFormLabel className="col-form-label p-0">
                                 Job description:
                               </CFormLabel>
-                              {isJobAuditPrevValue(
-                                auditHistory.olddescription,
-                              ) || 'N/A'}
+                              <span className="descriptionField">
+                                {isJobAuditPrevValue(
+                                  auditHistory.olddescription,
+                                ) || 'N/A'}
+                              </span>
                               &nbsp;
-                              {parse(auditHistory.description || 'N/A')}
+                              <span className="descriptionField">
+                                {parse(auditHistory.description || 'N/A')}
+                              </span>
                             </div>
                           </>
                         ) : (
