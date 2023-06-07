@@ -11,7 +11,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -57,7 +57,6 @@ const ProductSpecificationListTable = ({
   const isLoading = useTypedSelector(
     reduxServices.productSpecificationList.selectors.isLoading,
   )
-  console.log(listSize)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -68,12 +67,17 @@ const ProductSpecificationListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
+  }, [dispatch])
 
   const handleShowDeleteModal = (specificationId: number) => {
     setToDeleteVisaId(specificationId)
     setIsDeleteModalVisible(true)
   }
-  const dispatch = useAppDispatch()
+
   const handleConfirmDeleteVisaDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(

@@ -57,10 +57,6 @@ const AddProduct = ({
     )
   }, [dispatch, selectProductId])
 
-  useEffect(() => {
-    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  }, [dispatch])
-
   const clearInputs = () => {
     setSelectAssetId('')
     setShowEditor(false)
@@ -82,8 +78,8 @@ const AddProduct = ({
     const addProductSpecificationAction = await dispatch(
       reduxServices.addNewProduct.addProductSpecifications({
         assetTypeId: selectAssetId,
-        manufacturerId: Number(manufactureType),
         productId: Number(selectProductId),
+        manufacturerId: Number(manufactureType),
         productSpecification,
       }),
     )
@@ -190,7 +186,7 @@ const AddProduct = ({
               <option value={''}>Select Product Type</option>
               {AssetTypeList?.length > 0 &&
                 AssetTypeList?.map((item, index) => (
-                  <option key={index} value={item.assetTypeId}>
+                  <option key={index} value={item.productId}>
                     {item.productName}
                   </option>
                 ))}
@@ -200,7 +196,7 @@ const AddProduct = ({
         <CRow className="mt-3 ">
           <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
             Manufacturer/ Brand Name:{' '}
-            {/* <span className={selectProductId ? TextWhite : TextDanger}>*</span> */}
+            <span className={selectProductId ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -230,6 +226,9 @@ const AddProduct = ({
             className="col-sm-3 col-form-label text-end"
           >
             Product Specification:
+            <span className={productSpecification ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           {showEditor ? (
             <CCol sm={8}>
