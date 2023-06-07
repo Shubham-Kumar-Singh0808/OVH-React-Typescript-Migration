@@ -18,6 +18,8 @@ export type AssetTypeAddList = {
   vendorId: string
   warrantyEndDate: string
   warrantyStartDate: string
+  otherNumber: string
+  productSpecification: string
 }
 
 export type AddEditSliceState = {
