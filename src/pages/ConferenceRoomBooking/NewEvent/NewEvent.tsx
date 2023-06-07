@@ -416,7 +416,6 @@ const NewEvent = (): JSX.Element => {
       )}
     </CRow>
   )
-
   return (
     <OCard
       className="mb-4 myprofile-wrapper"

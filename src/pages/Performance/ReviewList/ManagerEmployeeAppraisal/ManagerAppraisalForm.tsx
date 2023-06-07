@@ -42,6 +42,7 @@ const ManagerAppraisalForm = (): JSX.Element => {
       dispatch(reduxServices.myReview.existingAppraisalForm(appraisalFormId))
     }
   }, [appraisalFormId])
+  console.log(appraisalFormId)
 
   const saveButtonHandler = async () => {
     const saveCommentsResultAction = await dispatch(

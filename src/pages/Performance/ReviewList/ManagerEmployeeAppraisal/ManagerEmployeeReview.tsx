@@ -18,8 +18,6 @@ const ManagerEmployeeReview = (): JSX.Element => {
   const errorMessage = useTypedSelector(
     reduxServices.myReview.selectors.errorMessage,
   )
-  const overallAvgRatingResult =
-    appraisalForm?.overallAvgRating === 'NaN' ? 'N/A' : ''
 
   return (
     <>
@@ -85,7 +83,9 @@ const ManagerEmployeeReview = (): JSX.Element => {
                   <div className="col-sm-2">
                     <label className="ng-binding">
                       <span className="ng-binding">
-                        {overallAvgRatingResult}
+                        {appraisalForm?.overallAvgRating === 'NaN'
+                          ? 'N/A'
+                          : appraisalForm?.overallAvgRating}
                       </span>
                     </label>
                   </div>
