@@ -71,7 +71,10 @@ const JobVacancyTimeline = ({
               const status = auditHistory?.status === 'true' ? 'Open' : 'Close'
               const oldStatus =
                 auditHistory?.oldStatus === 'true' ? 'Open' : 'Close'
-              const oldFilterStatus = isJobAuditPrevValue(oldStatus || 'N/A')
+              const oldFilterStatus =
+                auditHistory.oldStatus === null
+                  ? ''
+                  : isJobAuditPrevValue(oldStatus)
 
               return (
                 <div key={index} className="sh-timeline-card">
@@ -79,7 +82,7 @@ const JobVacancyTimeline = ({
                     className="sh-timeline-timestamp"
                     data-testid="sh-time-stamp"
                   >
-                    {auditHistory?.modifiedDate || 'N/A'}
+                    {auditHistory?.modifiedDate}
                   </div>
                   <div className="sh-timeline-content">
                     <div
@@ -87,64 +90,66 @@ const JobVacancyTimeline = ({
                       data-testid="sh-modifiedBy"
                     >
                       <h4 className="sh-timeline-title">
-                        {auditHistory?.modifiedBy || 'N/A'} -
+                        {auditHistory?.modifiedBy} -
                       </h4>
                       <span className="sh-timeline-status">
-                        {isPersistValue(auditHistory?.persistType || 'N/A')}
+                        {isPersistValue(auditHistory?.persistType)}
                       </span>
                     </div>
                     <div className="sh-timeline-body">
                       <div className="sh-timeline-item mb-1">
-                        {auditHistory.jobCode ? (
+                        {auditHistory.jobCode ||
+                        auditHistory.oldjobCode !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
                                 JobCode:
                               </CFormLabel>
-                              {isJobAuditPrevValue(
-                                auditHistory.oldjobCode || 'N/A',
-                              )}
+                              {isJobAuditPrevValue(auditHistory.oldjobCode)}
                               &nbsp;
-                              {auditHistory.jobCode || 'N/A'}
+                              {auditHistory.jobCode}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
-                        {auditHistory.positionVacant ? (
+                        {auditHistory.positionVacant ||
+                        auditHistory.oldpositionVacant !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
                                 JobTitle:
                               </CFormLabel>
                               {isJobAuditPrevValue(
-                                auditHistory.oldpositionVacant || 'N/A',
+                                auditHistory.oldpositionVacant,
                               )}
                               &nbsp;
-                              {auditHistory.positionVacant || 'N/A'}
+                              {auditHistory.positionVacant}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
-                        {auditHistory.minimumExperience ? (
+                        {auditHistory.minimumExperience ||
+                        auditHistory.oldminimumExperience !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
                                 Experience:
                               </CFormLabel>
                               {isJobAuditPrevValue(
-                                auditHistory.oldminimumExperience || 'N/A',
+                                auditHistory.oldminimumExperience,
                               )}
                               &nbsp;
-                              {auditHistory.minimumExperience || 'N/A'}
+                              {auditHistory.minimumExperience}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
 
-                        {auditHistory.description ? (
+                        {auditHistory.description ||
+                        auditHistory.olddescription !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
@@ -153,36 +158,35 @@ const JobVacancyTimeline = ({
                               <span className="descriptionField">
                                 {isJobAuditPrevValue(
                                   auditHistory.olddescription,
-                                ) || 'N/A'}
+                                )}
                               </span>
                               &nbsp;
                               <span className="descriptionField">
-                                {parse(auditHistory.description || 'N/A')}
+                                {parse(auditHistory.description)}
                               </span>
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
-
-                        {auditHistory.expiryDate ? (
+                        {auditHistory.expiryDate ||
+                        auditHistory.oldexpiryDate !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
                                 Expire Date:
                               </CFormLabel>
-                              {isJobAuditPrevValue(
-                                auditHistory.oldexpiryDate,
-                              ) || 'N/A'}
+                              {isJobAuditPrevValue(auditHistory.oldexpiryDate)}
                               &nbsp;
-                              {auditHistory.expiryDate || 'N/A'}
+                              {auditHistory.expiryDate}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
 
-                        {auditHistory.noOfRequirements ? (
+                        {auditHistory.noOfRequirements ||
+                        auditHistory.oldnoOfRequirements !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
@@ -190,24 +194,24 @@ const JobVacancyTimeline = ({
                               </CFormLabel>
                               {isJobAuditPrevValue(
                                 auditHistory.oldnoOfRequirements,
-                              ) || 'N/A'}
+                              )}
                               &nbsp;
-                              {auditHistory.noOfRequirements || 'N/A'}
+                              {auditHistory.noOfRequirements}
                             </div>
                           </>
                         ) : (
                           <></>
                         )}
 
-                        {auditHistory.oldStatus ? (
+                        {status && auditHistory.status !== null ? (
                           <>
                             <div className="mb-1">
                               <CFormLabel className="col-form-label p-0">
-                                Project Type:
+                                Status:
                               </CFormLabel>
                               {oldFilterStatus}
                               &nbsp;
-                              {status || 'N/A'}
+                              {status}
                             </div>
                           </>
                         ) : (
