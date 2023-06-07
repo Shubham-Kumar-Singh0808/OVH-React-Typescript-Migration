@@ -466,6 +466,12 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const AddVendorList = React.lazy(
+  () =>
+    import(
+      './pages/Assets/AssetList/ChangeAssetStatus/AddVendorUnderChangeAsset'
+    ),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1042,6 +1048,11 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/vendorListFlag=ADDVENDOR',
+    name: 'Add vendorList',
+    component: AddVendorList,
   },
 ]
 export default routes

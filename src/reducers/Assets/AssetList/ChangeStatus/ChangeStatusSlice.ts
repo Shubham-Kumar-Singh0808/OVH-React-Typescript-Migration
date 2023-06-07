@@ -56,7 +56,6 @@ const changeStatusSlice = createSlice({
       })
       .addCase(saveEmployee.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.saveEmployee = action.payload
       })
   },
 })

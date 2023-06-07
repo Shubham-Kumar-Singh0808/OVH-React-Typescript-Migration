@@ -7,6 +7,7 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
+import AddVendorDetails from '../VendorList/AddVendorDetails/AddVendorDetails'
 
 const AssetList = (): JSX.Element => {
   const dispatch = useAppDispatch()

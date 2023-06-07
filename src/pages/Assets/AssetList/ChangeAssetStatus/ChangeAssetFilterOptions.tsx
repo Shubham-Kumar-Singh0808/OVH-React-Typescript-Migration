@@ -14,7 +14,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import Autocomplete from 'react-autocomplete'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { description } from '../../../../test/constants'
@@ -230,14 +230,15 @@ const ChangeAssetFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2}>
-          <CButton
-            color="info"
-            className="btn-ovh me-1"
-            data-testid="add-vendorbtn"
-            onClick={() => setToggle('addVendorDetails')}
-          >
-            <i className="fa fa-plus"></i>Add Vendor
-          </CButton>
+          <Link to={`/vendorListFlag=ADDVENDOR`} className="cursor-pointer">
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="add-vendorbtn"
+            >
+              <i className="fa fa-plus"></i>Add Vendor
+            </CButton>
+          </Link>
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
@@ -334,6 +335,7 @@ const ChangeAssetFilterOptions = ({
           value={employeeName}
           renderMenu={(children) => (
             <div
+              col-sm-3
               className={
                 employeeName && employeeName.length > 0
                   ? 'autocomplete-dropdown-wrap'
@@ -433,10 +435,7 @@ const ChangeAssetFilterOptions = ({
           />
         </CCol>
         <CCol sm={6}>
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+          <CFormLabel {...formLabelProps} className=" col-form-label text-end">
             <CFormCheck
               className="mb-1"
               inline
@@ -446,7 +445,7 @@ const ChangeAssetFilterOptions = ({
               onChange={(event) => handleIsInternalStatus(event.target.checked)}
               checked={checkBox}
             />
-            Update All Locations For Employee
+            &nbsp; Update All Locations For Employee
           </CFormLabel>
         </CCol>
       </CRow>
@@ -497,9 +496,6 @@ const ChangeAssetFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      {/* {toggle === 'addVendorDetails' && (
-        <AddVendorDetails setToggle={setToggle} />
-      )} */}
     </>
   )
 }
