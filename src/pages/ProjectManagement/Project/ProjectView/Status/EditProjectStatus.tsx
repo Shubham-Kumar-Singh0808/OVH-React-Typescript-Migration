@@ -24,14 +24,16 @@ const EditProjectStatus = ({
   statusId,
 }: {
   setToggle: (value: string) => void
-  editCurrentWeekDate: string | undefined
-  editNextWeekDate: string | undefined
+  editCurrentWeekDate: string | Date | undefined
+  editNextWeekDate: string | Date | undefined
   editCurrentWeekStatus: string | undefined
   editNextWeekStatus: string | undefined
   setEditCurrentWeekDate: React.Dispatch<
-    React.SetStateAction<string | undefined>
+    React.SetStateAction<string | Date | undefined>
   >
-  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekDate: React.Dispatch<
+    React.SetStateAction<string | Date | undefined>
+  >
   setEditNextWeekStatus: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
@@ -229,6 +231,7 @@ const EditProjectStatus = ({
               onChange={(date: Date) =>
                 setEditCurrentWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={editCurrentWeekDate as Date}
             />
           </CCol>
         </CRow>
@@ -284,6 +287,7 @@ const EditProjectStatus = ({
               onChange={(date: Date) =>
                 setEditNextWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={editNextWeekDate as Date}
             />
           </CCol>
         </CRow>
