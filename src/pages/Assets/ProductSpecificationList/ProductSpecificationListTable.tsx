@@ -139,14 +139,13 @@ const ProductSpecificationListTable = ({
             {isLoading !== ApiLoadingState?.loading ? (
               productSpecification?.length > 0 &&
               productSpecification?.map((productSpecification, index) => {
-                const removeSpaces = productSpecification?.productSpecification
-                  ?.replace(/\s+/g, ' ')
-                  ?.replace('/(<([^>]+)>)/gi', '')
-                  .trim()
+                const removeSpaces = `${productSpecification?.productSpecification
+                  .replace(/<[^>]+>/g, '')
                   .replace(/&nbsp;/g, '')
+                  .replace(/:/g, '')}`
                 const productSpecificationLimit =
                   removeSpaces && removeSpaces.length > 30
-                    ? `${removeSpaces.substring(0, 30)}...`
+                    ? `${removeSpaces?.substring(0, 30)}...`
                     : removeSpaces
                 return (
                   <CTableRow key={index}>
@@ -186,9 +185,9 @@ const ProductSpecificationListTable = ({
                       {userAccess?.updateaccess && (
                         <CTooltip content="Edit">
                           <CButton
-                            color="info"
+                            color="info btn-ovh me-1"
                             size="sm"
-                            className="btn-ovh-employee-list"
+                            className="btn-ovh-employee-list me-1"
                             onClick={() =>
                               editBtnHandler(
                                 productSpecification.assetTypeId,
@@ -201,13 +200,12 @@ const ProductSpecificationListTable = ({
                           </CButton>
                         </CTooltip>
                       )}
-                      &nbsp; &nbsp; &nbsp;
                       {userAccess?.deleteaccess && (
                         <CTooltip content="Delete">
                           <CButton
-                            color="danger"
+                            color="danger btn-ovh me-1"
                             data-testid={`btn-delete${index}`}
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list"
                             onClick={() =>
                               handleShowDeleteModal(productSpecification.id)
                             }
