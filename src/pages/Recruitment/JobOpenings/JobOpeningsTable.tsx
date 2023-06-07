@@ -117,7 +117,6 @@ const JobOpeningsTable = ({
       setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(deletedToast))
     } else {
-      confirmDeleteLocation()
       setIsDeleteModalVisible(true)
       setDeleteJobTitleId(id)
       setDeleteJobName(locationName)
