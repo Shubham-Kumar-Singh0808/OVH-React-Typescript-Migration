@@ -27,7 +27,7 @@ const AssetHistoryTable = ({
 
   return (
     <>
-      <CTable striped align="middle">
+      <CTable responsive striped align="middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
