@@ -124,6 +124,7 @@ const ProductTypeListTable = ({
   const editButtonHandler = (ProductType: ProductTypeListType) => {
     setToggle('ProductData')
     setEditProductType(ProductType)
+    window.scrollTo(0, 0)
   }
 
   const getItemNumber = (index: number) => {
