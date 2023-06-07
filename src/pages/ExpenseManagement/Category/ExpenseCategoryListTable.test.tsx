@@ -11,7 +11,7 @@ describe('Expense Category List Table without data', () => {
   beforeEach(() => {
     render(<ExpenseCategoryListTable userAccess={undefined} />, {
       preloadedState: {
-        addLocationList: {
+        categoryList: {
           getAllCategory: mockExpenseCategory,
           isLoading: ApiLoadingState.succeeded,
           currentPage: 1,
