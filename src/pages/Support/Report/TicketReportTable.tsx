@@ -84,7 +84,7 @@ const TicketReportTable = ({
       reduxServices.ticketReport.getTicketDetails({
         categoryId,
         dateSelection: selectDate,
-        departmentId: selectDepartment,
+        departmentId: '',
         endIndex: 20,
         filter: 'All',
         from: fromDate,
