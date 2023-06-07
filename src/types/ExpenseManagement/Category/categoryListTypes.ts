@@ -17,9 +17,3 @@ export type CategoryListSliceState = {
   currentPage: number
   pageSize: number
 }
-
-export type CategoryListTableProps = {
-  userAccess: UserAccessToFeatures | undefined
-  updateaccess?: boolean
-  userEditAccess?: boolean
-}

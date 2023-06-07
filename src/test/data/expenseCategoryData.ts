@@ -1,4 +1,6 @@
-export const mockExpenseCategory = [
+import { CategoryList } from '../../types/ExpenseManagement/Category/categoryListTypes'
+
+export const mockExpenseCategory: CategoryList[] = [
   {
     id: 61,
     categoryName: 'test adding exactly btn fyhrfh',

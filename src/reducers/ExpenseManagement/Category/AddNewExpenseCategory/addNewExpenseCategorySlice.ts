@@ -3,10 +3,7 @@ import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
 import addNewCategoryApi from '../../../../middleware/api/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategoryListApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import {
-  AddNewCategorySliceState,
-  EditCategory,
-} from '../../../../types/ExpenseManagement/Category/AddExpenseCategory/addExpenseCategoryTypes'
+import { AddNewCategorySliceState } from '../../../../types/ExpenseManagement/Category/AddExpenseCategory/addExpenseCategoryTypes'
 import { RootState } from '../../../../stateStore'
 import { CategoryList } from '../../../../types/ExpenseManagement/Category/categoryListTypes'
 
@@ -48,7 +45,7 @@ const editExpenseCategory = createAsyncThunk(
 
 const updateExpenseCategory = createAsyncThunk(
   '/ExpenseManagement/updateCategory',
-  async (data: EditCategory, thunkApi) => {
+  async (data: CategoryList, thunkApi) => {
     try {
       return await addNewCategoryApi.updateNewCategory(data)
     } catch (error) {

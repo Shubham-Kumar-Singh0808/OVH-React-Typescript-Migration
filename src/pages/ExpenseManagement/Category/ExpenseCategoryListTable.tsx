@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -14,19 +14,22 @@ import {
 } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { CategoryListTableProps } from '../../../types/ExpenseManagement/Category/categoryListTypes'
+import { CategoryList } from '../../../types/ExpenseManagement/Category/categoryListTypes'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import { EditCategory } from '../../../types/ExpenseManagement/Category/AddExpenseCategory/addExpenseCategoryTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { TextDanger } from '../../../constant/ClassName'
+import { currentPageData } from '../../../utils/paginationUtils'
+import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const ExpenseCategoryListTable = ({
   userAccess,
-}: CategoryListTableProps): JSX.Element => {
-  const initialEditExpenseCategories = {} as EditCategory
+}: {
+  userAccess: UserAccessToFeatures | undefined
+}): JSX.Element => {
+  const initialEditExpenseCategories = {} as CategoryList
   const [editExpenseCategoryDetails, setEditExpenseCategoryDetails] = useState(
     initialEditExpenseCategories,
   )
@@ -108,24 +111,16 @@ const ExpenseCategoryListTable = ({
   }
 
   const editExpenseCategoryButtonHandler = (
-    id: number,
-    categoryName: string,
-    createdBy: string,
-    updatedBy: string | null,
-    createdDate: string,
-    updatedDate: string | null,
-    // eslint-disable-next-line max-params
+    expensiveCategoryItems: CategoryList,
   ): void => {
+    dispatch(
+      reduxServices.addNewCategory.editExpenseCategory(
+        expensiveCategoryItems?.id,
+      ),
+    )
     setIsEditExpenseCategory(true)
-    setDeleteExpenseCategoryId(id)
-    setEditExpenseCategoryDetails({
-      id,
-      categoryName,
-      createdBy,
-      updatedBy,
-      createdDate,
-      updatedDate,
-    })
+    setDeleteExpenseCategoryId(expensiveCategoryItems.id)
+    setEditExpenseCategoryDetails(expensiveCategoryItems)
   }
   const saveExpenseCategoryButtonHandler = async () => {
     const saveExpenseCategoryResultAction = await dispatch(
@@ -201,6 +196,11 @@ const ExpenseCategoryListTable = ({
     dispatch(reduxServices.category.actions.setPageSize(20))
   }, [dispatch])
 
+  const categoryListPageItems = useMemo(
+    () => currentPageData(categoryList, currentPage, pageSize),
+    [categoryList, currentPage, pageSize],
+  )
+
   useEffect(() => {
     if (window.location.pathname === '/expenseCategory') {
       setCurrentPage(1)
@@ -218,8 +218,8 @@ const ExpenseCategoryListTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {categoryList?.length > 0 &&
-            categoryList?.map((categoryItems, index) => {
+          {categoryListPageItems?.length > 0 &&
+            categoryListPageItems?.map((categoryItems, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -286,14 +286,7 @@ const ExpenseCategoryListTable = ({
                               color="info btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() => {
-                                editExpenseCategoryButtonHandler(
-                                  categoryItems.id,
-                                  categoryItems.categoryName,
-                                  categoryItems.createdBy,
-                                  categoryItems.updatedBy,
-                                  categoryItems.createdDate,
-                                  categoryItems.updatedDate,
-                                )
+                                editExpenseCategoryButtonHandler(categoryItems)
                               }}
                             >
                               <i className="fa fa-edit" aria-hidden="true"></i>
@@ -303,6 +296,7 @@ const ExpenseCategoryListTable = ({
                         {userAccess?.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton
+                              data-testid={`btn-categoryDelete${index}`}
                               color="danger btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() =>

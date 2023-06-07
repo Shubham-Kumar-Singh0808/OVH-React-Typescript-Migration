@@ -20,7 +20,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.idle,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -44,7 +44,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.idle,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -56,7 +56,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.idle,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -77,11 +77,10 @@ describe('Features of Expense Category Slice', () => {
     it('Should be able to set isLoading to "succeeded" if get Add Category Data is fulfilled', () => {
       const action = {
         type: addNewCategoryService.addNewExpenseCategory.fulfilled.type,
-        // payload: mockExpenseCategory,
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.success,
         error: null,
         addNewCategory: [],
       })
@@ -94,7 +93,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -107,7 +106,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -120,7 +119,7 @@ describe('Features of Expense Category Slice', () => {
       }
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
+        isLoading: ApiLoadingState.loading,
         error: null,
         addNewCategory: [],
       })
@@ -134,6 +133,66 @@ describe('Features of Expense Category Slice', () => {
       const state = expenseCategoryReducer(initialAddNewCategoryState, action)
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
+        error: null,
+        addNewCategory: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if get Add Category Data is rejected', () => {
+      const action = {
+        type: addNewCategoryService.addNewExpenseCategory.rejected.type,
+      }
+      const state = expenseCategoryReducer(initialAddNewCategoryState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.idle,
+        error: null,
+        addNewCategory: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if get check Duplicate Category Data is rejected', () => {
+      const action = {
+        type: addNewCategoryService.checkDuplicateCategory.rejected.type,
+      }
+      const state = expenseCategoryReducer(initialAddNewCategoryState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        error: null,
+        addNewCategory: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if get Edit Expense Category Data is rejected', () => {
+      const action = {
+        type: addNewCategoryService.editExpenseCategory.rejected.type,
+      }
+      const state = expenseCategoryReducer(initialAddNewCategoryState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        error: null,
+        addNewCategory: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if get Update expense Category Data is rejected', () => {
+      const action = {
+        type: addNewCategoryService.updateExpenseCategory.rejected.type,
+      }
+      const state = expenseCategoryReducer(initialAddNewCategoryState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
+        error: null,
+        addNewCategory: [],
+      })
+    })
+
+    it('Should be able to set isLoading to "failed" if get Delete Expense Category Data is rejected', () => {
+      const action = {
+        type: addNewCategoryService.deleteExpenseCategory.rejected.type,
+      }
+      const state = expenseCategoryReducer(initialAddNewCategoryState, action)
+      expect(state).toEqual({
+        isLoading: ApiLoadingState.failed,
         error: null,
         addNewCategory: [],
       })

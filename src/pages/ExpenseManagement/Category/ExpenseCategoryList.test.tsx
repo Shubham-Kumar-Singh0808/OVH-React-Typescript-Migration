@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import ExpenseCategoryList from './ExpenseCategoryList'
 import { render, screen } from '../../../test/testUtils'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const toRender = (
   <div>
@@ -15,7 +16,11 @@ const toRender = (
 describe('Expense Category Component Testing', () => {
   test('should render Expense Category component without crashing', () => {
     render(toRender, {
-      preloadedState: {},
+      preloadedState: {
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
     })
     const categoryElement = screen.getByRole('heading', { name: 'Category' })
     expect(categoryElement).toBeInTheDocument()

@@ -1,4 +1,4 @@
-import { EditCategory } from '../../../../../types/ExpenseManagement/Category/AddExpenseCategory/addExpenseCategoryTypes'
+import { CategoryList } from '../../../../../types/ExpenseManagement/Category/categoryListTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -7,7 +7,7 @@ import { AllowedHttpMethods, categoryListApiConfig } from '../../../apiList'
 
 const addNewCategory = async (
   categoryName: string,
-): Promise<string | undefined> => {
+): Promise<CategoryList[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoryListApiConfig.addCategory,
     method: AllowedHttpMethods.post,
@@ -21,19 +21,17 @@ const addNewCategory = async (
 
 const checkDuplicateCategory = async (
   categoryName: string,
-): Promise<string | undefined> => {
+): Promise<boolean | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoryListApiConfig.checkForDuplicateCategory,
     method: AllowedHttpMethods.get,
-    data: categoryName,
+    params: { categoryName },
   })
   const response = await useAxios(requestConfig)
   return response.data
 }
 
-const editNewCategory = async (
-  categoryId: number,
-): Promise<number | undefined> => {
+const editNewCategory = async (categoryId: number): Promise<CategoryList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoryListApiConfig.editCategory,
     method: AllowedHttpMethods.get,
@@ -43,7 +41,7 @@ const editNewCategory = async (
   return response.data
 }
 
-const updateNewCategory = async (data: EditCategory): Promise<EditCategory> => {
+const updateNewCategory = async (data: CategoryList): Promise<CategoryList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: categoryListApiConfig.updateCategory,
     method: AllowedHttpMethods.put,
