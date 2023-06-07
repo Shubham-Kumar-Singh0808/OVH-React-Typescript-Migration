@@ -73,18 +73,9 @@ const ProductTypeListTable = ({
   const deletedToastElement = (
     <OToast
       toastColor="success"
-      toastMessage="Prodution Deleted Successfully"
+      toastMessage="Product type deleted successfully"
     />
   )
-  useEffect(() => {
-    dispatch(
-      reduxServices.ProductTypeList.getProductTypeList({
-        endIndex: pageSize * currentPage,
-        startIndex: pageSize * (currentPage - 1),
-        productName: '',
-      }),
-    )
-  }, [currentPage, dispatch, pageSize])
 
   const onHandlerPageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
@@ -164,7 +155,9 @@ const ProductTypeListTable = ({
                           {ProductType.assetType}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
-                          {ProductType.createdBy || 'N/A'}
+                          {ProductType.updatedBy ||
+                            ProductType.createdBy ||
+                            'N/A'}
                         </CTableDataCell>
                         <CTableDataCell scope="col">
                           {userAccessProductList?.updateaccess && (
@@ -185,7 +178,7 @@ const ProductTypeListTable = ({
                           {userAccessProductList?.deleteaccess && (
                             <CTooltip content="Delete">
                               <CButton
-                                data-testid="btn-delete"
+                                data-testid="btn-deletes"
                                 size="sm"
                                 color="danger btn-ovh me-1"
                                 className="btn-ovh-employee-list me-1"
@@ -213,7 +206,7 @@ const ProductTypeListTable = ({
           <CRow>
             <CCol xs={4}>
               <p className="mt-2">
-                <strong>{totalRecordList}</strong>
+                <strong data-testid="record-number">{totalRecordList}</strong>
               </p>
             </CCol>
             <CCol xs={3}>
@@ -222,6 +215,7 @@ const ProductTypeListTable = ({
                   handlePageSizeSelectChange={onHandlerPageSize}
                   options={[20, 40, 60, 80, 100]}
                   selectedPageSize={pageSize}
+                  data-testid="page-size-select"
                 />
               )}
             </CCol>
