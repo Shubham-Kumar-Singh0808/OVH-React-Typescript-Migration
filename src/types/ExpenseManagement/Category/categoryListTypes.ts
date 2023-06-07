@@ -1,4 +1,3 @@
-import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type CategoryList = {

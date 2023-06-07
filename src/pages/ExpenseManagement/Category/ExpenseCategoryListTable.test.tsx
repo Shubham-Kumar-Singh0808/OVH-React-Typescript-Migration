@@ -13,6 +13,7 @@ describe('Expense Category List Table without data', () => {
       preloadedState: {
         addLocationList: {
           getAllCategory: mockExpenseCategory,
+          isLoading: ApiLoadingState.succeeded,
           currentPage: 1,
           pageSize: 20,
           error: null,
@@ -24,16 +25,16 @@ describe('Expense Category List Table without data', () => {
     })
   })
   afterEach(cleanup)
-  //   test('should render expense category list table component with data', () => {
-  //     expect(
-  //       screen.getByText('test adding exactly btn fyhrfh'),
-  //     ).toBeInTheDocument()
-  //     expect(screen.getByText('Jothika Goru')).toBeInTheDocument()
-  //     expect(screen.getByText('Srikath Kotapati')).toBeInTheDocument()
-  //     expect(screen.getByText('test')).toBeInTheDocument()
-  //     expect(screen.getByText('kytsaoduyosdaf')).toBeInTheDocument()
-  //     expect(screen.getByText('Category TEsting')).toBeInTheDocument()
-  //   })
+  test('should render expense category list table component with data', () => {
+    expect(
+      screen.getByText('test adding exactly btn fyhrfh'),
+    ).toBeInTheDocument()
+    expect(screen.getByText('Jothika Goru')).toBeInTheDocument()
+    expect(screen.getByText('Srikath Kotapati')).toBeInTheDocument()
+    expect(screen.getByText('test')).toBeInTheDocument()
+    expect(screen.getByText('kytsaoduyosdaf')).toBeInTheDocument()
+    expect(screen.getByText('Category TEsting')).toBeInTheDocument()
+  })
   //   test('should be able to click delete button element', () => {
   //     const deleteBtnElement = screen.getByTestId('btn-categoryDelete10')
   //     expect(deleteBtnElement).toBeInTheDocument()

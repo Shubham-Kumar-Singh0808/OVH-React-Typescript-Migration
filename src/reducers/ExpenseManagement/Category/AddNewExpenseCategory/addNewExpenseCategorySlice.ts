@@ -70,7 +70,6 @@ const deleteExpenseCategory = createAsyncThunk(
 const initialAddNewCategoryState: AddNewCategorySliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
-  addNewCategory: [],
 }
 
 const addNewCategorySlice = createSlice({
@@ -85,10 +84,9 @@ const addNewCategorySlice = createSlice({
           checkDuplicateCategory.fulfilled,
           editExpenseCategory.fulfilled,
           updateExpenseCategory.fulfilled,
-          deleteExpenseCategory.fulfilled,
         ),
         (state) => {
-          state.isLoading = ApiLoadingState.loading
+          state.isLoading = ApiLoadingState.succeeded
         },
       )
       .addMatcher(
@@ -97,7 +95,6 @@ const addNewCategorySlice = createSlice({
           checkDuplicateCategory.pending,
           editExpenseCategory.pending,
           updateExpenseCategory.pending,
-          deleteExpenseCategory.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -105,11 +102,10 @@ const addNewCategorySlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
-          deleteExpenseCategory.rejected,
+          addNewExpenseCategory.rejected,
           checkDuplicateCategory.rejected,
           editExpenseCategory.rejected,
           updateExpenseCategory.rejected,
-          deleteExpenseCategory.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -117,9 +113,6 @@ const addNewCategorySlice = createSlice({
       )
   },
 })
-
-const checkCategoryNames = (state: RootState): CategoryList[] =>
-  state.addNewCategory.addNewCategory
 
 const addNewCategoryThunk = {
   addNewExpenseCategory,
@@ -129,14 +122,9 @@ const addNewCategoryThunk = {
   deleteExpenseCategory,
 }
 
-const addNewCategorySelectors = {
-  checkCategoryNames,
-}
-
 export const addNewCategoryService = {
   ...addNewCategoryThunk,
   actions: addNewCategorySlice.actions,
-  selectors: addNewCategorySelectors,
 }
 
 export default addNewCategorySlice.reducer
