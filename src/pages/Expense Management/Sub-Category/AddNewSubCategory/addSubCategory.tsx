@@ -151,7 +151,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
 
   return (
     <>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-2 mb-2">
         <CFormLabel
           {...formLabelProps}
           className="col-sm-3 col-form-label text-end"
@@ -185,7 +185,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
           </CFormSelect>
         </CCol>
       </CRow>
-      <CRow className="mt-4 mb-4">
+      <CRow className="mt-3 mb-3">
         <CFormLabel
           {...formLabelProps}
           className="col-sm-3 col-form-label text-end"
