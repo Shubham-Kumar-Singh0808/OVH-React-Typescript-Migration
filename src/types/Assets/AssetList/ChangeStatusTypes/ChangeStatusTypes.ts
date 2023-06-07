@@ -53,18 +53,14 @@ export type getAllAssets = {
   countryId: number
 }
 
-// export type SaveEmployeeProps = {
-//   amount: number
-//   assetId: number
-//   date: string | null
-//   description: string
-//   employeeId: number
-//   invoiceNumber: string
-//   location: string
-//   locationForEmpAssets: boolean
-//   referenceNumber: string
-//   status: string
-//   vendorId: number
+// // This is for managing the page changes
+// export enum ChangeAsset {
+//   addvendor = 'Add Vendor Details',
+//   changeasset = 'Change Asset Status',
+//   // addKra = 'Add KRA',
+//   // editKPI = 'Edit KPI',
+//   // addKPI = 'Add KPI',
+//   // editKra = 'Edit KRA',
 // }
 export type GetAllAssetResponse = {
   list: getAllAssets[]

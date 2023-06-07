@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react'
 import validator from 'validator'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -214,16 +214,16 @@ const AddVendorUnderChangeAsset = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {/* <Link to={`/assetList`} className="cursor-pointer"> */}
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              onClick={handleClick}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-            {/* </Link> */}
+            <Link to={`/assetList`} className="cursor-pointer">
+              <CButton
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="back-button"
+                onClick={handleClick}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
+            </Link>
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">

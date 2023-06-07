@@ -1050,7 +1050,7 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
-    path: '/vendorListFlag=ADDVENDOR',
+    path: '/vendorList?vendorListFlag=ADDVENDOR',
     name: 'Add vendorList',
     component: AddVendorList,
   },
