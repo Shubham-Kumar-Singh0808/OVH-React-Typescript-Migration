@@ -2,6 +2,7 @@ import { CCardFooter, CCol, CImage, CLink, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 const SpecialAward = (): JSX.Element => {
   const achievements = useTypedSelector(
@@ -40,7 +41,7 @@ const SpecialAward = (): JSX.Element => {
                     <h6>
                       <span className="profile-avatar">
                         <CImage
-                          src={specialAward.profilePicture}
+                          src={`${base64Extension}${specialAward?.profilePicture}`}
                           className="employee-profile"
                         />
                       </span>

@@ -53,6 +53,8 @@ const EditAudit = (): JSX.Element => {
   const [editAuditProjectType, setEditAuditProjectType] = useState<string>(
     selectedAuditDetails?.projectType,
   )
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
+  console.log(errorMessageCount)
 
   const formStatusSave = selectedAuditDetails?.formStatus === 'Save'
   const formStatusSubmit = selectedAuditDetails?.formStatus === 'Submit'
@@ -188,7 +190,15 @@ const EditAudit = (): JSX.Element => {
     <OToast toastMessage="Audit Already Exists" toastColor="danger" />
   )
 
+  const failureToastMessage = (
+    <OToast toastMessage="Please enter a vaild time" toastColor="danger" />
+  )
   const handleSubmitAuditForm = async (formAuditStatus: string) => {
+    if (editAuditForm.startTime.split(':') > editAuditForm.endTime.split(':')) {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+      return
+    }
     const startTimeSplit = editAuditForm.startTime.split(':')
     const endTimeSplit = editAuditForm.endTime.split(':')
     const prepareObject = {

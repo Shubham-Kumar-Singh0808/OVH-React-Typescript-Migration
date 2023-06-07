@@ -38,7 +38,6 @@ const EditJobOpening = ({
   const [editToDate, setEditToDate] = useState<string>(editJobInfo.expiryDate)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
-  console.log(editToDate + 'editToDate')
 
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
@@ -73,14 +72,20 @@ const EditJobOpening = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    setEditJobInfo((prevState) => {
-      return {
-        ...prevState,
-        ...{
-          [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
-        },
-      }
-    })
+    if (name === 'noOfRequirements') {
+      const limit = value.replace(/\D/g, '')
+      setEditJobInfo((prevState) => {
+        return { ...prevState, ...{ [name]: Number(limit) } }
+      })
+    } else
+      setEditJobInfo((prevState) => {
+        return {
+          ...prevState,
+          ...{
+            [name]: value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, ''),
+          },
+        }
+      })
   }
   const updateSuccessToastMessage = (
     <OToast
@@ -276,7 +281,7 @@ const EditJobOpening = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editToDate}
+              value={editToDate || ''}
               minDate={new Date()}
               onChange={(date: Date) => onHandleDatePicker(date)}
             />
@@ -289,7 +294,7 @@ const EditJobOpening = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editJobInfo.description}
+                initData={editJobInfo.description || ''}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}

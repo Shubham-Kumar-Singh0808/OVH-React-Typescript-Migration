@@ -19,6 +19,9 @@ const JobOpenings = (): JSX.Element => {
   const initialCycle = {} as GetAllJobVacanciesList
   const [editJobInfo, setEditJobInfo] = useState(initialCycle)
 
+  const initialJobInfo = {} as GetAllJobVacanciesList
+  const [editViewJobInfo, setEditViewJobInfo] = useState(initialJobInfo)
+
   const dispatch = useAppDispatch()
 
   const CurrentPage = useTypedSelector(
@@ -45,8 +48,8 @@ const JobOpenings = (): JSX.Element => {
 
   const prepareObject = dispatch(
     reduxServices.jobVacancies.getAllJobVacancies({
-      startIndex: pageSize * (currentPage - 1),
-      endIndex: pageSize * currentPage,
+      startIndex: 0,
+      endIndex: 20,
       searchJobTitle: searchInput,
       status: selectRadioAction,
     }),
@@ -61,19 +64,30 @@ const JobOpenings = (): JSX.Element => {
         status: selectRadioAction,
       }),
     )
-    dispatch(reduxServices.jobVacancies.getAllTechnology())
   }, [currentPage, dispatch, pageSize, selectRadioAction])
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.jobVacancies.getAllJobVacancies({
-          startIndex: pageSize * (currentPage - 1),
-          endIndex: pageSize * currentPage,
-          searchJobTitle: searchInput,
-          status: selectRadioAction,
-        }),
-      )
+      if (searchInput === '') {
+        dispatch(
+          reduxServices.jobVacancies.getAllJobVacancies({
+            startIndex: 0,
+            endIndex: 20,
+            searchJobTitle: searchInput,
+            status: selectRadioAction,
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.jobVacancies.getAllJobVacancies({
+            startIndex: 0,
+            endIndex: 20,
+            searchJobTitle: searchInput,
+            status: selectRadioAction,
+          }),
+        )
+      }
     }
   }
 
@@ -84,6 +98,7 @@ const JobOpenings = (): JSX.Element => {
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     setSelectRadioAction(e.target.value)
+    setSearchInput('')
     setCurrentPage(1)
     setPageSize(20)
   }
@@ -133,7 +148,7 @@ const JobOpenings = (): JSX.Element => {
               <CInputGroup className="global-search me-0 justify-content-md-end">
                 <CFormInput
                   data-testid="searchField"
-                  placeholder="Multiple Search"
+                  placeholder="Search"
                   aria-label="Multiple Search"
                   aria-describedby="button-addon2"
                   value={searchInput}
@@ -185,7 +200,12 @@ const JobOpenings = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'jobInfo' && <ViewJobInfo setToggle={setToggle} />}
+      {toggle === 'jobInfo' && (
+        <ViewJobInfo
+          setToggle={setToggle}
+          setEditViewJobInfo={setEditViewJobInfo}
+        />
+      )}
       {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
       {toggle === 'editJobOpening' && (
         <EditJobOpening
@@ -197,8 +217,8 @@ const JobOpenings = (): JSX.Element => {
       {toggle === 'editViewJobOpening' && (
         <EditJobView
           setToggle={setToggle}
-          editJobInfo={editJobInfo}
-          setEditJobInfo={setEditJobInfo}
+          editViewJobInfo={editViewJobInfo}
+          setEditViewJobInfo={setEditViewJobInfo}
         />
       )}
     </>

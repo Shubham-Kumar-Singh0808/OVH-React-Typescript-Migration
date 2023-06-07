@@ -23,10 +23,35 @@ const getVendors = createAsyncThunk(
   },
 )
 
+const updateVendorDetails = createAsyncThunk(
+  'vendorList/updateVendorDetails',
+  async (data: VendorDetails, thunkApi) => {
+    try {
+      return await vendorListApi.updateVendorDetails(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteVendorDetails = createAsyncThunk(
+  'vendorList/deleteVendorDetails',
+  async (vendorId: number, thunkApi) => {
+    try {
+      return await vendorListApi.deleteVendorDetails(vendorId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialVendorListState: VendorListSliceState = {
   vendors: [],
   listSize: 0,
   getAllVendorDetails: {} as GetAllVendorDetails,
+  getVendorById: {} as VendorDetails,
   isLoading: ApiLoadingState.idle,
 }
 
@@ -36,29 +61,51 @@ const vendorListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getVendors.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(getVendors.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.vendors = action.payload.list
         state.listSize = action.payload.size
       })
+      .addMatcher(
+        isAnyOf(
+          getVendors.pending,
+          updateVendorDetails.pending,
+          deleteVendorDetails.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getVendors.rejected,
+          updateVendorDetails.rejected,
+          deleteVendorDetails.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 
 const isLoading = (state: RootState): LoadingState => state.vendorList.isLoading
 const vendors = (state: RootState): VendorDetails[] => state.vendorList.vendors
+const getVendorById = (state: RootState): VendorDetails =>
+  state.vendorList.getVendorById
 const listSize = (state: RootState): number => state.vendorList.listSize
 
 const vendorListThunk = {
   getVendors,
+  updateVendorDetails,
+  deleteVendorDetails,
 }
 
 const vendorListSelectors = {
   isLoading,
   vendors,
   listSize,
+  getVendorById,
 }
 
 export const vendorListService = {

@@ -4,8 +4,8 @@ export const mockManufacturerData: ManufacturerDetails[] = [
   {
     createdBy: 'Stagging Test',
     createdDate: '17/05/2023',
-    departmentId: null,
-    departmentName: null,
+    departmentId: 0,
+    departmentName: '',
     manufacturerId: 254,
     manufacturerName: 'Pavani',
     productId: 201,
@@ -16,8 +16,8 @@ export const mockManufacturerData: ManufacturerDetails[] = [
   {
     createdBy: 'Nithin Polam',
     createdDate: '27/03/2019',
-    departmentId: null,
-    departmentName: null,
+    departmentId: 0,
+    departmentName: '',
     manufacturerId: 246,
     manufacturerName: 'somesh2',
     productId: 176,

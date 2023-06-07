@@ -3,6 +3,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   VendorListSliceState,
   GetAllVendorDetails,
+  VendorDetails,
 } from '../../../types/Assets/VendorList/vendorListTypes'
 import {
   mockVendorDetails,
@@ -16,6 +17,7 @@ describe('Vendor List Slice', () => {
       listSize: 0,
       getAllVendorDetails: {} as GetAllVendorDetails,
       isLoading: ApiLoadingState.idle,
+      getVendorById: {} as VendorDetails,
     } as VendorListSliceState
 
     it('Should be able to set isLoading to "loading" if getAllVendors is pending', () => {
@@ -28,6 +30,7 @@ describe('Vendor List Slice', () => {
         listSize: 0,
         getAllVendorDetails: {} as GetAllVendorDetails,
         isLoading: ApiLoadingState.loading,
+        getVendorById: {} as VendorDetails,
       })
     })
 
@@ -42,6 +45,41 @@ describe('Vendor List Slice', () => {
         listSize: mockVendorDetails.size,
         getAllVendorDetails: {} as GetAllVendorDetails,
         isLoading: ApiLoadingState.succeeded,
+        getVendorById: {} as VendorDetails,
+      })
+    })
+
+    describe('update Vendor Details test', () => {
+      it('Should be able to set isLoading to "success" if update Vendor Details is fulfilled', () => {
+        const action = {
+          type: vendorListService.updateVendorDetails.fulfilled.type,
+          payload: mockVendorList,
+        }
+        const state = reducer(initialVendorListState, action)
+        expect(state).toEqual({
+          vendors: [],
+          listSize: 0,
+          getAllVendorDetails: {} as GetAllVendorDetails,
+          isLoading: ApiLoadingState.idle,
+          getVendorById: {} as VendorDetails,
+        })
+      })
+
+      describe('delete Vendor details test', () => {
+        it('Should be able to set isLoading to "failed" if delete Vendor details is rejected', () => {
+          const rejectedAction = {
+            type: vendorListService.deleteVendorDetails.rejected.type,
+            payload: mockVendorList,
+          }
+          const state = reducer(initialVendorListState, rejectedAction)
+          expect(state).toEqual({
+            vendors: [],
+            listSize: 0,
+            getAllVendorDetails: {} as GetAllVendorDetails,
+            isLoading: ApiLoadingState.loading,
+            getVendorById: {} as VendorDetails,
+          })
+        })
       })
     })
   })

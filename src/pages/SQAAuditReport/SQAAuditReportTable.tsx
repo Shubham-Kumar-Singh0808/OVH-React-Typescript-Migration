@@ -173,7 +173,7 @@ const SQAAuditReportTable = ({
 
   return (
     <>
-      <CTable striped className="mt-3">
+      <CTable striped className="mt-3 align-middle alignment">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -208,7 +208,7 @@ const SQAAuditReportTable = ({
                   <CTableDataCell>{auditReport?.projectManager}</CTableDataCell>
                   <CTableDataCell>{auditReport?.auditDate}</CTableDataCell>
                   <CTableDataCell>
-                    {auditReport?.startTime}-{auditReport.endTime}
+                    {auditReport?.startTime} - {auditReport.endTime}
                   </CTableDataCell>
                   <CTableDataCell>{auditReport.auditStatus}</CTableDataCell>
                   <CTableDataCell>{auditReport.pci || 'N/A'}</CTableDataCell>
@@ -217,20 +217,28 @@ const SQAAuditReportTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{auditRescheduleStatus}</CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="success"
-                      className="btn-ovh-employee-list me-1 mt-1"
-                      data-testid="edit-btn"
-                      onClick={() => handleShowRescheduleModal(auditReport.id)}
-                      disabled={auditReport.formStatus !== 'Submit'}
-                    >
-                      <i className="fa fa-calendar" aria-hidden="true"></i>
-                    </CButton>
+                    <CTooltip content="Reschedule">
+                      <CButton
+                        color="success"
+                        size="sm"
+                        className="btn-ovh-employee-list me-1 sqa-btn"
+                        data-testid="edit-btn"
+                        onClick={() =>
+                          handleShowRescheduleModal(auditReport.id)
+                        }
+                        disabled={auditReport.formStatus !== 'Submit'}
+                      >
+                        <i
+                          className="fa fa-calendar text-white"
+                          aria-hidden="true"
+                        ></i>
+                      </CButton>
+                    </CTooltip>
                     <Link to={`/viewProjectAudit/${auditReport.id}`}>
                       <CTooltip content="View">
                         <CButton
                           color="info"
-                          className="btn-ovh-employee-list me-1 mt-1"
+                          className="btn-ovh-employee-list me-1 sqa-btn"
                           data-testid="edit-btn"
                           onClick={() =>
                             handleClickSQAAuditViewReport(auditReport?.id)
@@ -248,7 +256,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Edit">
                           <CButton
                             color="info"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="edit-btn"
                             onClick={() => editButtonHandler(auditReport.id)}
                             disabled={auditReport.disableEditButton === true}
@@ -266,7 +274,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Cancel">
                           <CButton
                             color="danger"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="cancel-btn"
                             onClick={() =>
                               handleShowCancelModal(
@@ -288,7 +296,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Delete">
                           <CButton
                             color="danger"
-                            className="btn-ovh-employee-list me-1 mt-1"
+                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                             data-testid="delete-btn"
                             onClick={() =>
                               handleShowDeleteModal(
@@ -310,7 +318,7 @@ const SQAAuditReportTable = ({
                       <CTooltip content="Timeline">
                         <CButton
                           color="info"
-                          className="btn-ovh-employee-list me-1 mt-1"
+                          className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
                           data-testid="edit-btn"
                           onClick={() =>
                             handleSQAAuditHistoryClick(auditReport?.id)

@@ -1,7 +1,9 @@
 import axios from 'axios'
 import {
+  AddManufacturerListProps,
   GetAllManufacturerName,
   ManufacturerListProps,
+  UpdateProps,
   exportManufacturerListProps,
 } from '../../../../types/Assets/ManufacturerList/ManufacturerType'
 import {
@@ -41,9 +43,54 @@ const exportManufacturerData = async (
   const response = await axios(requestConfig)
   return response.data
 }
+
+const addManufacturer = async (
+  addManufactureList: AddManufacturerListProps,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.addManufacturer,
+    method: AllowedHttpMethods.post,
+    data: addManufactureList,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteManufacturerName = async (
+  manufacturerId: number,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.deleteManufacturerName,
+    method: AllowedHttpMethods.delete,
+    params: {
+      manufacturerId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const updateManufacturerName = async (
+  data: UpdateProps,
+): Promise<UpdateProps> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: ManufacturerApiListConfig.updateManufacturerName,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ManufacturerApi = {
   getManufacturerList,
   exportManufacturerData,
+  // getAllLookUpList,
+  addManufacturer,
+  deleteManufacturerName,
+  updateManufacturerName,
 }
 
 export default ManufacturerApi
