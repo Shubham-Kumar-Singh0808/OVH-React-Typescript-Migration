@@ -299,48 +299,45 @@ const ReviewFormDetailsTable = ({
                               {mgrComment.managerRating}
                             </CTableDataCell>
                           ) : (
-                            // <CTableDataCell>
-                            //   <CFormSelect
-                            //     aria-label="Default select example"
-                            //     key={index}
-                            //     size="sm"
-                            //     name="rating"
-                            //     id="empRating"
-                            //     value={mgrComment.managerRating}
-                            //     onChange={(e) => onChangeSelfRating(e, index)}
-                            //   >
-                            //     <option value={''}>Select Rating</option>
-                            //     <option value="5">5</option>
-                            //     <option value="4">4</option>
-                            //     <option value="3">3</option>
-                            //     <option value="2">2</option>
-                            //     <option value="1">1</option>
-                            //     <option value="0">0</option>
-                            //   </CFormSelect>
-                            // </CTableDataCell>
-                            ''
+                            <CTableDataCell>
+                              <CFormSelect
+                                aria-label="Default select example"
+                                key={index}
+                                size="sm"
+                                name="rating"
+                                id="empRating"
+                                value={mgrComment.managerRating}
+                                onChange={(e) => onChangeSelfRating(e, index)}
+                              >
+                                <option value={''}>Select Rating</option>
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                                <option value="0">0</option>
+                              </CFormSelect>
+                            </CTableDataCell>
                           )}
-                          {mgrComment?.managerComments !== null ||
-                          appraisalForm.appraisalFormStatus !==
-                            'NotSubmittedByYou' ? (
+                          {appraisalForm.appraisalFormStatus !==
+                          'NotSubmittedByYou' ? (
                             <CTableDataCell>
                               {mgrComment.managerComments}
                             </CTableDataCell>
                           ) : (
-                            // <CTableDataCell>
-                            //   <CFormTextarea
-                            //     {...dynamicFormLabelProps(
-                            //       '2',
-                            //       'reviewForm-text-area documentWidth',
-                            //     )}
-                            //     value={mgrComment.managerComments}
-                            //     onChange={(e) => commentOnChange(e, index)}
-                            //   ></CFormTextarea>
-                            //   <p className="mt-1">
-                            //     {mgrComment?.managerComments}/500
-                            //   </p>
-                            // </CTableDataCell>
-                            ''
+                            <CTableDataCell>
+                              <CFormTextarea
+                                {...dynamicFormLabelProps(
+                                  '2',
+                                  'reviewForm-text-area documentWidth',
+                                )}
+                                value={mgrComment.managerComments}
+                                onChange={(e) => commentOnChange(e, index)}
+                              ></CFormTextarea>
+                              <p className="mt-1">
+                                {mgrComment?.managerComments}/500
+                              </p>
+                            </CTableDataCell>
                           )}
                         </>
                       ))}
@@ -382,10 +379,6 @@ const ReviewFormDetailsTable = ({
                   ) : (
                     ''
                   )}
-
-                  {/* ) : (
-                    ''
-                  )} */}
                 </CTableRow>
               )
             })

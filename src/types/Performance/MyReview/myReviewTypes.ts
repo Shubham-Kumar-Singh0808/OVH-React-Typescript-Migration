@@ -284,3 +284,20 @@ export type SaveReviewCommentsProps = {
   appraisalFormId: number
   comments: string
 }
+
+export enum UpdateEmployeeRatingsDataType {
+  Select = 'rating',
+  Comments = 'comments',
+}
+
+export interface UpdateMyReviewSliceActionProps {
+  KRAId: number
+  KPIId: number
+  value: string
+  updateType: UpdateEmployeeRatingsDataType
+}
+
+export interface MyReviewIndexes {
+  KRAId?: number
+  KPIId?: number
+}
