@@ -95,7 +95,7 @@ const ProductSpecificationListTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Product Specification deleted successfully"
           />,
         ),
       )
@@ -231,7 +231,7 @@ const ProductSpecificationListTable = ({
             {listSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
+                options={[20, 40, 60, 80, 100, 120]}
                 selectedPageSize={pageSize}
               />
             )}

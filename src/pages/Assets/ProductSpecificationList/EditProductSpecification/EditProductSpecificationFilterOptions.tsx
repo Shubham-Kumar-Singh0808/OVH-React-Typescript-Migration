@@ -128,6 +128,12 @@ const EditProductSpecificationFilterOptions = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
+  useEffect(() => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }, [])
   const onChangeHandler = (productSpecification: string) => {
     setEditProductSpecification((prevState) => {
       return { ...prevState, ...{ productSpecification } }
