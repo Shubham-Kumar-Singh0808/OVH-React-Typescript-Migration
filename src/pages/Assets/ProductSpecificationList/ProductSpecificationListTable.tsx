@@ -158,63 +158,68 @@ const ProductSpecificationListTable = ({
                     <CTableDataCell>
                       {productSpecification.manufacturerName}
                     </CTableDataCell>
-                    {productSpecificationLimit ? (
+                    <>
                       <CTableDataCell
                         scope="row"
                         className="sh-organization-link"
                       >
-                        <CLink
-                          className="cursor-pointer text-primary centerAlignment-text"
-                          data-testid={`product-specification${index}`}
-                          onClick={() =>
-                            handleModal(
-                              productSpecification.productSpecification,
-                            )
-                          }
-                        >
-                          {parse(productSpecification.productSpecification)}
-                        </CLink>
-                      </CTableDataCell>
-                    ) : (
-                      <CTableDataCell>{`N/A`}</CTableDataCell>
-                    )}
-                    <CTableDataCell>
-                      {productSpecification.createdBy}
-                    </CTableDataCell>
-                    <CTableDataCell data-testid="action-cell">
-                      {userAccess?.updateaccess && (
-                        <CTooltip content="Edit">
-                          <CButton
-                            color="info btn-ovh me-1"
-                            size="sm"
-                            className="btn-ovh-employee-list me-1"
+                        {productSpecificationLimit ? (
+                          <CLink
+                            className="cursor-pointer text-decoration-none"
+                            data-testid={`vendor-address-${index}`}
                             onClick={() =>
-                              editBtnHandler(
-                                productSpecification.assetTypeId,
-                                productSpecification.productId,
-                                productSpecification,
+                              handleModal(
+                                productSpecification.productSpecification,
                               )
                             }
                           >
-                            <i className="text-white fa fa-pencil-square-o"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                      {userAccess?.deleteaccess && (
-                        <CTooltip content="Delete">
-                          <CButton
-                            color="danger btn-ovh me-1"
-                            data-testid={`btn-delete${index}`}
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              handleShowDeleteModal(productSpecification.id)
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                    </CTableDataCell>
+                            {parse(productSpecification.productSpecification)}
+                          </CLink>
+                        ) : (
+                          'N/A'
+                        )}
+                      </CTableDataCell>
+                      <CTableDataCell>
+                        {productSpecification.createdBy}
+                      </CTableDataCell>
+                      <CTableDataCell data-testid="action-cell">
+                        {userAccess?.updateaccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info btn-ovh me-1"
+                              size="sm"
+                              className="btn-ovh-employee-list me-1"
+                              onClick={() =>
+                                editBtnHandler(
+                                  productSpecification.assetTypeId,
+                                  productSpecification.productId,
+                                  productSpecification,
+                                )
+                              }
+                            >
+                              <i className="text-white fa fa-pencil-square-o"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        {userAccess?.deleteaccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              color="danger btn-ovh me-1"
+                              data-testid={`btn-delete${index}`}
+                              className="btn-ovh-employee-list"
+                              onClick={() =>
+                                handleShowDeleteModal(productSpecification.id)
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                      </CTableDataCell>
+                    </>
                   </CTableRow>
                 )
               })
