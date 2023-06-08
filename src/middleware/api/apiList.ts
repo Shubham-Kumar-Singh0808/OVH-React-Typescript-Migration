@@ -117,6 +117,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  ProfileRecruitmentHistoryApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -224,6 +225,10 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
 export const profileHistoryConfig: ProfileHistoryApi = {
   getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
 }
+export const profileRecruitmentHistoryApiConfig: ProfileRecruitmentHistoryApi =
+  {
+    getEmployeeHistory: apiPrefix + '/Employee/getEmployeeHistory',
+  }
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
