@@ -25,13 +25,11 @@ const TicketReportTable = ({
   selectDate,
   toDate,
   fromDate,
-  selectDepartment,
 }: {
   setToggle: (value: string) => void
   selectDate: string
   toDate: string
   fromDate: string
-  selectDepartment: string
 }): JSX.Element => {
   const getTicketReportList = useTypedSelector(
     reduxServices.ticketReport.selectors.ticketsReport,
