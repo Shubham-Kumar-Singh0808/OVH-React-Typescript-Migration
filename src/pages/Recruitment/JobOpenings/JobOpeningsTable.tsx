@@ -310,7 +310,7 @@ const JobOpeningsTable = ({
         setVisible={setIsJobDescriptionModalVisible}
       >
         <span className="descriptionField" data-testid="modal-cnt-add">
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: description.description,
             }}
