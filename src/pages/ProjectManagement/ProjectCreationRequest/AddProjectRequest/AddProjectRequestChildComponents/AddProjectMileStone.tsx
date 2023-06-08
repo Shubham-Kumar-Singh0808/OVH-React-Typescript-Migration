@@ -148,6 +148,10 @@ const AddProjectMileStone = ({
   const onFocusOut = () => {
     if (errorMessage === index) {
       dispatch(reduxServices.app.actions.addToast(errorToast))
+      const inputElement = document.getElementById(`input-${index}`) // Assuming each input has a unique ID
+      if (inputElement) {
+        inputElement.value = '' // Clear the input value
+      }
     }
   }
 
@@ -156,6 +160,7 @@ const AddProjectMileStone = ({
       <CTableBody>
         <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormInput
+            id={`input-${index}`}
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
             value={item.title?.replace(/^\s*/, '')}
