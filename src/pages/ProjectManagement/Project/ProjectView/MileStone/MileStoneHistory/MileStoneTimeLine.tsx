@@ -37,7 +37,7 @@ const MileStoneTimeLine = (): JSX.Element => {
       )
     } else if (persistType === 'CLOSED') {
       return (
-        <CBadge className="rounded-pill" color="warning">
+        <CBadge className="rounded-pill" color="danger">
           CLOSED
         </CBadge>
       )
@@ -76,34 +76,44 @@ const MileStoneTimeLine = (): JSX.Element => {
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    <div className="mb-1">
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Title
+                        Title:
                       </CFormLabel>
                       &nbsp;
                       {item.title}
+                    </div>
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Planned Date
+                        Planned Date:
                       </CFormLabel>
                       &nbsp;
                       {item.planedDate}
+                    </div>
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Actual Date
+                        Actual Date:
                       </CFormLabel>
                       &nbsp;
                       {item.actualDate}
+                    </div>
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Billable
+                        Billable:
                       </CFormLabel>
                       &nbsp;
                       {billable}
+                    </div>
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Percentage
+                        Percentage:
                       </CFormLabel>
                       &nbsp;
                       {item.milestonePercentage}
+                    </div>
+                    <div className="mb-1 milestone-timeline">
                       <CFormLabel className="col-form-label p-0">
-                        Comments
+                        Comments:
                       </CFormLabel>
                       &nbsp;
                       {parse(item?.comments)}

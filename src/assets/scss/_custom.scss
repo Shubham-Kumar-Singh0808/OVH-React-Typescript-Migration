@@ -512,3 +512,13 @@ background-color: #fff !important;
 }
 // custom - 3 
 // Normal - 9
+.milestone-history{
+  display: inline-block;
+  margin-right: 30px;
+}
+.milestone-history strong{
+  margin-right: 2px;
+}
+.milestone-history strong:hover{
+  color:#245269 !important;
+}

@@ -47,20 +47,20 @@ const MileStoneHistory = (): JSX.Element => {
             </CRow>
             <CRow className="col-xs-12 mt10">
               <div className="panel-body">
-                <p className="ng-binding">
-                  <span className="text-info">Project Name:</span>
+                <p className="milestone-history">
+                  <strong className="text-info">Project Name:</strong>
                   {getProjectDetail.projectName}
                 </p>
-                <p className="ng-binding">
-                  <span className="text-info">Project Manager:</span>
+                <p className="milestone-history">
+                  <strong className="text-info">Project Manager:</strong>
                   {getProjectDetail.managerName}
                 </p>
-                <p className="ng-binding">
-                  <span className="text-info">Project Status:</span>
+                <p className="milestone-history">
+                  <strong className="text-info">Project Status:</strong>
                   {trimmedValue?.toUpperCase()}
                 </p>
-                <p className="ng-binding">
-                  <span className="text-info">Milestone Name:</span>
+                <p className="milestone-history">
+                  <strong className="text-info">Milestone Name:</strong>
                   {getMileStone.title}
                 </p>
               </div>
