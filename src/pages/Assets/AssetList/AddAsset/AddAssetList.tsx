@@ -410,6 +410,26 @@ const AddAssetList = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
+            Product Specifications :
+          </CFormLabel>
+          {/* <CCol sm={3}>
+            <CFormInput
+              className="mb-1"
+              data-testid="assetNumber"
+              type="text"
+              id="assetNumber"
+              size="sm"
+              name="assetNumber"
+              autoComplete="off"
+              onChange={(e) => setAssetNumber(e.target.value)}
+            />
+          </CCol> */}
+        </CRow>
+        <CRow className="mt-3 mb-3">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
             Asset Number:
           </CFormLabel>
           <CCol sm={3}>
