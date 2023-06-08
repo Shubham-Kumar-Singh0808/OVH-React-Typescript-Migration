@@ -138,6 +138,46 @@ const ReviewFormDetailsTable = ({
     }
   }
 
+  const managerCommentOnChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    index: number,
+  ) => {
+    const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
+    newKPI[index].managerFeedback = e.target.value
+    setKPIDetails(newKPI)
+    dispatch(
+      reduxServices.myReview.actions.updateKPI({
+        kraId: id,
+        kpi: newKPI[index],
+        kpiId: newKPI[index].id,
+      }),
+    )
+    // if (
+    //   newKPI[index].employeeFeedback.length > 56 &&
+    //   newKPI[index].employeeFeedback === e.target.value
+    // ) {
+    //   setDescriptionError(false)
+    // } else {
+    //   setDescriptionError(true)
+    // }
+  }
+
+  const onChangeManagerSelfRating = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    index: number,
+  ) => {
+    const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
+    newKPI[index].managerRating = e.target.value
+    setKPIDetails(newKPI)
+    dispatch(
+      reduxServices.myReview.actions.updateKPI({
+        kraId: id,
+        kpi: newKPI[index],
+        kpiId: newKPI[index].id,
+      }),
+    )
+  }
+
   const onChangeSelfRating = (
     e: React.ChangeEvent<HTMLSelectElement>,
     index: number,
@@ -153,16 +193,6 @@ const ReviewFormDetailsTable = ({
       }),
     )
   }
-
-  const onChangeManagerSelfRating = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    index: number,
-  ) => {
-    const newKPI: KPI[] = JSON.parse(JSON.stringify(KPIDetails))
-    newKPI[index].employeeRating = e.target.value
-    setKPIDetails(newKPI)
-  }
-  console.log(managerRating)
 
   return (
     <>
@@ -307,7 +337,9 @@ const ReviewFormDetailsTable = ({
                                 name="rating"
                                 id="empRating"
                                 value={mgrComment.managerRating}
-                                onChange={(e) => onChangeSelfRating(e, index)}
+                                onChange={(e) =>
+                                  onChangeManagerSelfRating(e, index)
+                                }
                               >
                                 <option value={''}>Select Rating</option>
                                 <option value="5">5</option>
@@ -332,7 +364,9 @@ const ReviewFormDetailsTable = ({
                                   'reviewForm-text-area documentWidth',
                                 )}
                                 value={mgrComment.managerComments}
-                                onChange={(e) => commentOnChange(e, index)}
+                                onChange={(e) =>
+                                  managerCommentOnChange(e, index)
+                                }
                               ></CFormTextarea>
                               <p className="mt-1">
                                 {mgrComment?.managerComments}/500
@@ -342,43 +376,6 @@ const ReviewFormDetailsTable = ({
                         </>
                       ))}
                   </>
-                  {appraisalForm.appraisalFormStatus === 'NotSubmittedByYou' ? (
-                    <>
-                      <CTableDataCell>
-                        <CFormSelect
-                          aria-label="Default select example"
-                          key={index}
-                          size="sm"
-                          name="rating"
-                          id="empRating"
-                          value={managerRating}
-                          // onChange={(e) => onChangeSelfRating(e, index)}
-                          onChange={(e) => onChangeManagerSelfRating(e, index)}
-                        >
-                          <option value={''}>Select Rating</option>
-                          <option value="5">5</option>
-                          <option value="4">4</option>
-                          <option value="3">3</option>
-                          <option value="2">2</option>
-                          <option value="1">1</option>
-                          <option value="0">0</option>
-                        </CFormSelect>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <CFormTextarea
-                          {...dynamicFormLabelProps(
-                            '2',
-                            'reviewForm-text-area documentWidth',
-                          )}
-                          value={managerComments}
-                          // onChange={(e) => commentOnChange(e, index)}
-                        ></CFormTextarea>
-                        {/* <p className="mt-1">{mgrComment?.managerComments}/500</p> */}
-                      </CTableDataCell>{' '}
-                    </>
-                  ) : (
-                    ''
-                  )}
                 </CTableRow>
               )
             })

@@ -180,8 +180,8 @@ export type KPI = {
   id: number
   manager: null
   managerCommentsDtos: ManagerCommentsDTO[]
-  managerFeedback: null
-  managerRating: null
+  managerFeedback: string
+  managerRating: string
   name: string
   target: string
 }
