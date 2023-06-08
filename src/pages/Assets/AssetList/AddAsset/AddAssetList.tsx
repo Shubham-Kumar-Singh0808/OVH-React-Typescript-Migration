@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
+  CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,
@@ -11,6 +12,7 @@ import {
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import { number } from 'prop-types'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
@@ -19,6 +21,7 @@ import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { CheckedQuestionsOptions } from '../../../../types/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormTypes'
 
 // eslint-disable-next-line import/named
 
@@ -48,6 +51,7 @@ const AddAssetList = ({
   const [isDateError, setIsDateError] = useState(false)
   const [isError, setIsError] = useState(false)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
+  const [isChecked, setIsChecked] = useState<boolean>()
 
   useEffect(() => {
     if (
@@ -213,6 +217,25 @@ const AddAssetList = ({
   const productTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.productTypeList,
   )
+
+  const typeChange = useTypedSelector(
+    reduxServices.addAssetList.selectors.typeChange,
+  )
+
+  // const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setManufacturerName({ ...enteredAnswers, manufacturerName: e.target.value })
+  // }
+
+  useEffect(() => {
+    if (manufacturerName) {
+      dispatch(
+        reduxServices.addAssetList.typeChangeSpecifications({
+          manufacturerId: Number(manufacturerName),
+          productId: Number(productType),
+        }),
+      )
+    }
+  }, [dispatch, manufacturerName])
 
   const handleAddNewAssetList = async () => {
     // const addManuFactureListResultAction = await dispatch(
@@ -414,18 +437,22 @@ const AddAssetList = ({
           >
             Product Specifications :
           </CFormLabel>
-          {/* <CCol sm={3}>
-            <CFormInput
-              className="mb-1"
-              data-testid="assetNumber"
-              type="text"
-              id="assetNumber"
-              size="sm"
-              name="assetNumber"
-              autoComplete="off"
-              onChange={(e) => setAssetNumber(e.target.value)}
-            />
-          </CCol> */}
+          {typeChange.map((item, index) => {
+            return (
+              <CCol sm={1} className="mt-2" key={index}>
+                <CFormCheck
+                  type="radio"
+                  data-testid={`yes-radio`}
+                  hitArea="full"
+                  label={item.productSpecification}
+                  inline
+                  checked={isChecked}
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                  value={item.productSpecification}
+                />
+              </CCol>
+            )
+          })}
         </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel

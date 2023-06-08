@@ -28,6 +28,7 @@ export type AddEditSliceState = {
   typeChangeSpecificationsData: typeChangeSpecificationsList[]
 }
 
+
 export type UpdateAssetListSliceState = {
   amount: string
   assetNumber: string
