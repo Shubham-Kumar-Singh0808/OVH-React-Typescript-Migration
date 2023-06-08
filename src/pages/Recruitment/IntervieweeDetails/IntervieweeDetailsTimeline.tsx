@@ -1,5 +1,5 @@
 import React from 'react'
-import { CFormLabel } from '@coreui/react-pro'
+import { CFormLabel, CLink } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -41,14 +41,14 @@ const IntervieweeDetailsTimeline = () => {
                       className="sh-timeline-header mb-4 clearfix"
                       data-testid="sh-modifiedBy"
                     >
-                      <Link to={''}>
+                      <CLink>
                         <h4 className="sh-timeline-title">
                           {item.interviewers} -
                           <CFormLabel className="col-form-label p-0">
                             {item.interviewRound}
                           </CFormLabel>
                         </h4>
-                      </Link>
+                      </CLink>
                     </div>
 
                     <div className="sh-timeline-body">

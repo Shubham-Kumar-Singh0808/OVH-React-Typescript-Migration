@@ -168,10 +168,10 @@ const IntervieweeDetails = (): JSX.Element => {
               Resume:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.resumePath}</p>
+              {/* <p className="mb-0">{timeLineListSelector?.resumePath}</p> */}
               <CButton
                 size="sm"
-                className="btn btn-primary btn-xs"
+                className="btn btn-primary btn-xs preview-Interview"
                 ng-click="openInNewTab(interviewTimelineDetailsList.resumePath)"
                 disabled={timeLineListSelector?.resumePath === null}
               >
@@ -184,10 +184,10 @@ const IntervieweeDetails = (): JSX.Element => {
               Other Documents:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.otherDocumentPath}</p>
+              {/* <p className="mb-0">{timeLineListSelector?.otherDocumentPath}</p> */}
               <CButton
                 size="sm"
-                className="btn btn-primary btn-xs"
+                className="btn btn-primary btn-xs preview-Interview"
                 ng-click="openInNewTabDoc(interviewTimelineDetailsList.otherDocumentPath)"
                 disabled={timeLineListSelector?.otherDocumentPath === null}
               >
