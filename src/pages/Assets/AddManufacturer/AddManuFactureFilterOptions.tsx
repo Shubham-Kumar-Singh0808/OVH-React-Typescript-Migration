@@ -112,9 +112,13 @@ const AddManuFactureFilterOptions = ({
               value={productType}
               onChange={(e) => setProductType(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
-              {result.productList?.length > 0 &&
-                result?.productList?.map((productItem, index) => (
+              <option value="">Select Product</option>
+              {result?.productList
+                ?.slice()
+                .sort((prod1, prod2) =>
+                  prod1.productName.localeCompare(prod2.productName),
+                )
+                ?.map((productItem, index) => (
                   <option key={index} value={productItem?.productId}>
                     {productItem?.productName}
                   </option>

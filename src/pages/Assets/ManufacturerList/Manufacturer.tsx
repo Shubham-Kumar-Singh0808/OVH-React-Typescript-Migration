@@ -30,19 +30,22 @@ const Manufacturer = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(manufacturerListSize, 20)
+  useEffect(() => {
+    dispatch(
+      reduxServices.ManufacturerList.getManufacturerList({
+        endIndex: pageSize * currentPage,
+        manufacturerName: searchInput,
+        startIndex: pageSize * (currentPage - 1),
+        search: searchInput || '',
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
 
-  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.ManufacturerList.getManufacturerList({
-          endIndex: pageSize * currentPage,
-          manufacturerName: searchInput,
-          startIndex: pageSize * (currentPage - 1),
-          search: '',
-        }),
-      )
+  useEffect(() => {
+    if (window.location.pathname === '/manufacturerList') {
+      setCurrentPage(1)
     }
-  }
+  }, [])
   const handleExportLeaveReportData = async () => {
     const employeeLeaveReportDataDownload =
       await ManufacturerApi.exportManufacturerData({
@@ -52,30 +55,44 @@ const Manufacturer = (): JSX.Element => {
 
     downloadFile(employeeLeaveReportDataDownload, 'manufacturerList.csv')
   }
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.ManufacturerList.getManufacturerList({
+          endIndex: 20,
+          manufacturerName: searchInput,
+          startIndex: 0,
+        }),
+      )
+      setCurrentPage(1)
+      setPageSize(20)
+    }
+  }
 
   const multiSearchBtnHandler = () => {
     dispatch(
       reduxServices.ManufacturerList.getManufacturerList({
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         manufacturerName: searchInput,
-        startIndex: pageSize * (currentPage - 1),
-        search: '',
+        startIndex: 0,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.ManufacturerList.getManufacturerList({
-        startIndex: pageSize * (currentPage - 1),
-        endIndex: pageSize * currentPage,
-        manufacturerName: '',
-      }),
-    )
-  }, [dispatch, currentPage, pageSize])
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.ManufacturerList.getManufacturerList({
+  //       startIndex: pageSize * (currentPage - 1),
+  //       endIndex: pageSize * currentPage,
+  //       manufacturerName: '',
+  //     }),
+  //   )
+  // }, [dispatch, currentPage, pageSize])
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
