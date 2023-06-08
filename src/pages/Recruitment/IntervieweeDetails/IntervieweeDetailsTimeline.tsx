@@ -1,5 +1,5 @@
 import React from 'react'
-import { CFormLabel, CLink } from '@coreui/react-pro'
+import { CBadge, CFormLabel, CLink } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import RatingStarValue from './RatingStarValue'
@@ -28,84 +28,107 @@ const IntervieweeDetailsTimeline = () => {
               )
             return (
               <>
-                <div key={index} className="sh-timeline-card">
-                  <div
-                    className="sh-timeline-timestamp"
-                    data-testid="sh-time-stamp"
-                  >
-                    {item.interviewDate}
-                    <p>{item.interviewTime}</p>
-                  </div>
-
-                  <div className="sh-timeline-content">
+                <div className="sh-timeline-container">
+                  {timeLineListSelector?.cycleDTOs?.map((item, index) => (
                     <div
-                      className="sh-timeline-header mb-4 clearfix"
-                      data-testid="sh-modifiedBy"
+                      key={index}
+                      className="sh-timeline-card"
+                      data-testid="recruitHistory-timelineCard"
                     >
-                      <CLink>
-                        <h4 className="sh-timeline-title">
-                          {item.interviewers} -
-                          <CFormLabel className="col-form-label p-0">
-                            {item.interviewRound}
-                          </CFormLabel>
+                      <div className="sh-timeline-timestamp">
+                        {item?.interviewDate}
+                        <div className="timeline-time">
+                          {item?.interviewTime}
+                        </div>
+                      </div>
+
+                      <div className="sh-timeline-content">
+                        <div className="sh-timeline-header mb-4 clearfix d-flex flex-row flex-wrap">
+                          <div>
+                            <CBadge
+                              color="success"
+                              textColor="white"
+                              className="me-2 p-1 px-2"
+                            >
+                              {timeLineListSelector.cycleDTOs.length - index}
+                            </CBadge>
+                          </div>
+                          <div>
+                            <h4
+                              className="sh-timeline-title text-decoration-hover"
+                              data-testid={`recruitHis-interviewer-${index}`}
+                              style={{
+                                fontWeight: 400,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              {item?.interviewers} -
+                            </h4>
+                          </div>
                           <div>
                             <RatingStarValue rating={item.rating} />
                           </div>
-                        </h4>
-                      </CLink>
+                        </div>
+                        <div className="sh-timeline-body">
+                          <>
+                            {result}
+                            {item.proactiveComments != null ? (
+                              <div className="mb-1">
+                                <CFormLabel className="col-form-label p-0">
+                                  <blockquote className="interview-blockquote bq-open">
+                                    Proactive :
+                                  </blockquote>
+                                </CFormLabel>
+                                &nbsp;
+                                {item.proactiveComments}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                            {item.communicationComments != null ? (
+                              <div className="mb-1">
+                                <CFormLabel className="col-form-label p-0">
+                                  <blockquote className="interview-blockquote bq-open">
+                                    Communication :
+                                  </blockquote>
+                                </CFormLabel>
+                                &nbsp;
+                                {item.communicationComments}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                            {item.excellenceComments != null ? (
+                              <div className="mb-1">
+                                <CFormLabel className="col-form-label p-0">
+                                  <blockquote className="interview-blockquote bq-open">
+                                    Excellence :
+                                  </blockquote>
+                                </CFormLabel>
+                                &nbsp;
+                                {item.excellenceComments}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                            {item.interviewComments != null ? (
+                              <div className="mb-1">
+                                <CFormLabel className="col-form-label p-0">
+                                  <blockquote className="interview-blockquote bq-open">
+                                    Other Comments :
+                                  </blockquote>
+                                </CFormLabel>
+                                &nbsp;
+                                {item.interviewComments}
+                              </div>
+                            ) : (
+                              <></>
+                            )}
+                          </>
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="sh-timeline-body">
-                      <div className="sh-timeline-item mb-1"></div>
-                      <>
-                        {result}
-                        {item.proactiveComments != null ? (
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              <blockquote>Proactive :</blockquote>
-                            </CFormLabel>
-                            &nbsp;
-                            {item.proactiveComments}
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                        {item.communicationComments != null ? (
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              <blockquote>Communication :</blockquote>
-                            </CFormLabel>
-                            &nbsp;
-                            {item.communicationComments}
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                        {item.excellenceComments != null ? (
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              <blockquote>Excellence :</blockquote>
-                            </CFormLabel>
-                            &nbsp;
-                            {item.excellenceComments}
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                        {item.interviewComments != null ? (
-                          <div className="mb-1">
-                            <CFormLabel className="col-form-label p-0">
-                              <blockquote>Other Comments :</blockquote>
-                            </CFormLabel>
-                            &nbsp;
-                            {item.interviewComments}
-                          </div>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </>
             )
