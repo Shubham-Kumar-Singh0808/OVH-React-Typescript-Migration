@@ -199,7 +199,7 @@ const MileStoneTable = (): JSX.Element => {
                     <CTooltip content="Edit">
                       <CButton
                         color="danger"
-                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                        className="btn-ovh btn-ovh-employee-list me-1 mb-1 milestone-actions"
                         data-testid="edit-btn"
                       >
                         <i className="fa fa-times text-white"></i>
@@ -207,14 +207,14 @@ const MileStoneTable = (): JSX.Element => {
                     </CTooltip>
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
                     <Link to={`/milestonehistory/${item.id}`}>
                       <CButton
                         color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                         onClick={() => mileStoneHistoryButtonHandler(item?.id)}
                       >
                         <i className="fa fa-bar-chart text-white"></i>
@@ -223,7 +223,7 @@ const MileStoneTable = (): JSX.Element => {
                     <Link to={`/milestoneNewsFeed/${item.id}`}>
                       <CButton
                         color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
+                        className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                         onClick={() =>
                           mileStoneDiscussionButtonHandler(item.id)
                         }
@@ -233,7 +233,7 @@ const MileStoneTable = (): JSX.Element => {
                     </Link>
                     <CButton
                       color="danger"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>

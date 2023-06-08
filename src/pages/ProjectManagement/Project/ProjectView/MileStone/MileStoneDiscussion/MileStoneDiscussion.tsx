@@ -99,20 +99,20 @@ const MileStoneDiscussion = (): JSX.Element => {
       >
         <CRow className="col-xs-12 mt10">
           <div className="panel-body">
-            <p className="ng-binding">
-              <span className="text-info">Milestone:</span>
+            <p className="milestone-history">
+              <strong className="text-info">Milestone:</strong>
               {getMileStone.title}
             </p>
-            <p className="ng-binding">
-              <span className="text-info">Planned End Date:</span>
+            <p className="milestone-history">
+              <strong className="text-info">Planned End Date:</strong>
               {getMileStone.planedDate}
             </p>
-            <p className="ng-binding">
-              <span className="text-info">Actual End Date:</span>
+            <p className="milestone-history">
+              <strong className="text-info">Actual End Date:</strong>
               {getMileStone.actualDate}
             </p>
-            <p className="ng-binding">
-              <span className="text-info">Milestone Percentage:</span>
+            <p className="milestone-history">
+              <strong className="text-info">Milestone Percentage:</strong>
               {getMileStone.milestonePercentage}%
             </p>
           </div>
@@ -150,6 +150,7 @@ const MileStoneDiscussion = (): JSX.Element => {
             <CButton
               color="info btn-ovh me-1 pull-right"
               disabled={!isPostButtonEnabled}
+              className="milestone-discussion-post"
               onClick={postNotesHandler}
             >
               <i className="fa fa-pencil fa-fw"></i>Post

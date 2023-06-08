@@ -517,8 +517,15 @@ background-color: #fff !important;
   margin-right: 30px;
 }
 .milestone-history strong{
-  margin-right: 2px;
+  margin-right: 4px;
 }
 .milestone-history strong:hover{
   color:#245269 !important;
+}
+.milestone-discussion-post{
+  padding: 5px 10px;
+    font-size: 11px;
+}
+.milestone-actions i.fa{
+  font-size: 12px;
 }
