@@ -13,7 +13,7 @@ import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFor
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 
-const InterviewDetailsRatingForm = () => {
+const InterviewDetailsRatingForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const scheduleInterviewData = useTypedSelector(

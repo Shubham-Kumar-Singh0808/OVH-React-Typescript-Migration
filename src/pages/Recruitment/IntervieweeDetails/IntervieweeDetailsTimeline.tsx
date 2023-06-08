@@ -1,12 +1,11 @@
 import React from 'react'
-import { CBadge, CFormLabel, CLink } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
+import { CBadge, CFormLabel } from '@coreui/react-pro'
 import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
 import RatingStarValue from './RatingStarValue'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
-const IntervieweeDetailsTimeline = () => {
+const IntervieweeDetailsTimeline = (): JSX.Element => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
@@ -15,7 +14,7 @@ const IntervieweeDetailsTimeline = () => {
     <>
       <div className="sh-timeline-container">
         {timeLineListSelector?.cycleDTOs?.length > 0 &&
-          timeLineListSelector?.cycleDTOs?.map((item, index) => {
+          timeLineListSelector?.cycleDTOs?.map((item) => {
             const result =
               item.rating === null &&
               item.proactiveComments === null &&

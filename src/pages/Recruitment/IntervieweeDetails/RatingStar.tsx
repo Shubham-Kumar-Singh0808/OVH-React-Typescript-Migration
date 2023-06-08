@@ -6,7 +6,7 @@ const RatingStar = ({
 }: {
   rating: number | null
   setRating: React.Dispatch<React.SetStateAction<number | null>>
-}) => {
+}): JSX.Element => {
   const handleStarClick = (selectedRating: number) => {
     if (selectedRating === 5) {
       setRating(5)
