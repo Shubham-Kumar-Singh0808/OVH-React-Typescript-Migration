@@ -165,7 +165,7 @@ const JobOpeningsTable = ({
                 ?.replace(/<[^>]+>/g, '')
                 ?.replace(/&nbsp;/g, '')
                 ?.replace(/:/g, '')}`
-              const vendorAddressLimit =
+              const Limit =
                 removeTag && removeTag?.length > 30
                   ? `${removeTag?.substring(0, 30)}...`
                   : removeTag
@@ -187,13 +187,13 @@ const JobOpeningsTable = ({
                     scope="row"
                     className="sh-organization-link sh-comment"
                   >
-                    {vendorAddressLimit ? (
+                    {Limit ? (
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(jobVacancy)}
                       >
-                        {parse(vendorAddressLimit)}
+                        {parse(Limit)}
                       </CLink>
                     ) : (
                       'N/A'
