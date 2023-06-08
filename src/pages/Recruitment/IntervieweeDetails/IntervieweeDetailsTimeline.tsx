@@ -2,6 +2,7 @@ import React from 'react'
 import { CFormLabel, CLink } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import InterviewDetailsRatingForm from './InterviewDetailsRatingForm'
+import RatingStarValue from './RatingStarValue'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
@@ -47,6 +48,9 @@ const IntervieweeDetailsTimeline = () => {
                           <CFormLabel className="col-form-label p-0">
                             {item.interviewRound}
                           </CFormLabel>
+                          <div>
+                            <RatingStarValue rating={item.rating} />
+                          </div>
                         </h4>
                       </CLink>
                     </div>

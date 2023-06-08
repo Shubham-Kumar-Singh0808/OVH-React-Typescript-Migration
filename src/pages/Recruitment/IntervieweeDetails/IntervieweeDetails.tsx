@@ -77,6 +77,24 @@ const IntervieweeDetails = (): JSX.Element => {
     }
   }
 
+  const resumeDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const resumePath = timeLineListSelector.resumePath
+      ? timeLineListSelector.resumePath
+      : undefined
+    window.open(`https://ovh2.raybiztech.com/documents/${resumePath}`, '_blank')
+  }
+  const otherDocumentDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const otherDocumentPath = timeLineListSelector.otherDocumentPath
+      ? timeLineListSelector.otherDocumentPath
+      : undefined
+    window.open(
+      `https://ovh2.raybiztech.com/documents/${otherDocumentPath}`,
+      '_blank',
+    )
+  }
+
   return (
     <>
       <OCard
@@ -168,12 +186,12 @@ const IntervieweeDetails = (): JSX.Element => {
               Resume:
             </CFormLabel>
             <CCol sm={3}>
-              {/* <p className="mb-0">{timeLineListSelector?.resumePath}</p> */}
               <CButton
                 size="sm"
                 className="btn btn-primary btn-xs preview-Interview"
                 ng-click="openInNewTab(interviewTimelineDetailsList.resumePath)"
                 disabled={timeLineListSelector?.resumePath === null}
+                onClick={resumeDownload}
               >
                 PREVIEW
               </CButton>
@@ -184,12 +202,12 @@ const IntervieweeDetails = (): JSX.Element => {
               Other Documents:
             </CFormLabel>
             <CCol sm={3}>
-              {/* <p className="mb-0">{timeLineListSelector?.otherDocumentPath}</p> */}
               <CButton
                 size="sm"
                 className="btn btn-primary btn-xs preview-Interview"
                 ng-click="openInNewTabDoc(interviewTimelineDetailsList.otherDocumentPath)"
                 disabled={timeLineListSelector?.otherDocumentPath === null}
+                onClick={otherDocumentDownload}
               >
                 PREVIEWDOC
               </CButton>
