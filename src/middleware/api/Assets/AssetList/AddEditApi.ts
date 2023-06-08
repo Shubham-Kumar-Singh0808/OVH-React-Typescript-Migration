@@ -1,6 +1,8 @@
 import {
   AssetTypeAddList,
   UpdateAssetListSliceState,
+  typeChangeSpecificationsList,
+  typeChangeSpecificationsProps,
 } from '../../../../types/Assets/AssetList/addEditListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -47,9 +49,24 @@ const checkAssetNumberExixts = async (
   return response.data
 }
 
+const typeChangeSpecifications = async (
+  props: typeChangeSpecificationsProps,
+): Promise<typeChangeSpecificationsList[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: GetAddAssetListConfig.typeChangeSpecifications,
+    method: AllowedHttpMethods.get,
+    params: {
+      manufacturerId: props.manufacturerId,
+      productId: props.productId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const AddAssetApi = {
   getAddAssetList,
   updateAddAsset,
   checkAssetNumberExixts,
+  typeChangeSpecifications,
 }
 export default AddAssetApi

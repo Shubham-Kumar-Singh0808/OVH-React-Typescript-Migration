@@ -18,11 +18,14 @@ export type AssetTypeAddList = {
   vendorId: string
   warrantyEndDate: string
   warrantyStartDate: string
+  otherNumber: string
+  productSpecification: string
 }
 
 export type AddEditSliceState = {
   isLoading: LoadingState
   listSize: number
+  typeChangeSpecificationsData: typeChangeSpecificationsList[]
 }
 
 export type UpdateAssetListSliceState = {
@@ -63,4 +66,27 @@ export type UpdateAssetListSliceState = {
   vendorName: string | number
   warrantyEndDate: string
   warrantyStartDate: string
+}
+
+export type typeChangeSpecificationsProps = {
+  manufacturerId: number
+  productId: number
+}
+
+export type typeChangeSpecificationsList = {
+  id: number
+  productId: number
+  productName: string
+  manufacturerId: number
+  manufacturerName: string
+  productSpecification: string
+  assetTypeId: number
+  assetType: string
+  roleId: null
+  departmentId: null
+  departmentName: null
+  createdBy: string
+  updatedBy: string
+  createdDate: string
+  updatedDate: string
 }

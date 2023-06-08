@@ -4,12 +4,13 @@ import {
   AddEditSliceState,
   AssetTypeAddList,
   UpdateAssetListSliceState,
+  typeChangeSpecificationsList,
+  typeChangeSpecificationsProps,
 } from '../../../types/Assets/AssetList/addEditListTypes'
 import AddAssetApi from '../../../middleware/api/Assets/AssetList/AddEditApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
-import AddAssetList from '../../../pages/Assets/AssetList/AddAsset/AddAssetList'
 
 const getAddAssetList = createAsyncThunk(
   '/assetManagement/addAsset',
@@ -46,9 +47,22 @@ const checkAssetNumberExixts = createAsyncThunk(
   },
 )
 
+const typeChangeSpecifications = createAsyncThunk(
+  'newEventSlice/typeChangeSpecifications',
+  async (props: typeChangeSpecificationsProps, thunkApi) => {
+    try {
+      return await AddAssetApi.typeChangeSpecifications(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialAddAssetListState: AddEditSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
+  typeChangeSpecificationsData: [],
 }
 const AddAssetListSlice = createSlice({
   name: 'AddAssetList',
@@ -58,6 +72,10 @@ const AddAssetListSlice = createSlice({
     builder
       .addCase(getAddAssetList.pending, (state) => {
         state.isLoading = ApiLoadingState.loading
+      })
+      .addCase(typeChangeSpecifications.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.typeChangeSpecificationsData = action.payload
       })
       .addCase(getAddAssetList.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -69,13 +87,19 @@ const AddAssetListThunk = {
   getAddAssetList,
   updateAddAsset,
   checkAssetNumberExixts,
+  typeChangeSpecifications,
 }
 const isLoading = (state: RootState): LoadingState =>
   state.addAssetList.isLoading
-const listSize = (state: RootState): number => state.manufacturerList.listSize
+const listSize = (state: RootState): number => state.addAssetList.listSize
+
+const typeChange = (state: RootState): typeChangeSpecificationsList[] =>
+  state.addAssetList.typeChangeSpecificationsData
+
 export const AddAssetListSelectors = {
   isLoading,
   listSize,
+  typeChange,
 }
 export const AddAssetListService = {
   ...AddAssetListThunk,

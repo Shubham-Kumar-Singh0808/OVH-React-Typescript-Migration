@@ -34,7 +34,7 @@ const AddAssetList = ({
   const [assetType, setAssetType] = useState<string>()
   const [productType, setProductType] = useState<string>()
   const [manufacturerName, setManufacturerName] = useState<string>()
-  const [assetNumber, setAssetNumber] = useState<string>()
+  const [assetNumber, setAssetNumber] = useState<string>('RBT')
   const [licenseNumber, setLicenseNumber] = useState<string>()
   const [invoiceNumber, setInvoiceNumber] = useState<string>()
   const [amount, setAmount] = useState<string>()
@@ -222,8 +222,8 @@ const AddAssetList = ({
     const isAddAssetLIst = await dispatch(
       reduxServices.addAssetList.getAddAssetList({
         amount: amount as string,
-        assetNumber: assetType as string,
-        assetTypeId: assetNumber as string,
+        assetNumber: assetNumber as string,
+        assetTypeId: assetType as string,
         countryId: Number(country),
         invoiceNumber: invoiceNumber as string,
         manufacturerId: manufacturerName as string,
@@ -236,8 +236,10 @@ const AddAssetList = ({
         vendorId: vendorName as string,
         warrantyEndDate: warrantyStartDate as string,
         warrantyStartDate: warrantyEndDate as string,
-        otherAssetNumber: '',
-        pSpecification: '',
+        otherAssetNumber: licenseNumber as string,
+        pSpecification: '@@@',
+        productSpecification: '',
+        otherNumber: '',
       }),
     )
     if (
@@ -398,7 +400,7 @@ const AddAssetList = ({
             >
               <option value={''}>Select Product Type</option>
               {productTypeList.map((location, index) => (
-                <option key={index} value={location.productId}>
+                <option key={index} value={location.manufacturerId}>
                   {location.manufacturerName}
                 </option>
               ))}
@@ -441,6 +443,7 @@ const AddAssetList = ({
               size="sm"
               name="assetNumber"
               autoComplete="off"
+              value={assetNumber}
               onChange={(e) => setAssetNumber(e.target.value)}
             />
           </CCol>
@@ -461,6 +464,7 @@ const AddAssetList = ({
               size="sm"
               name="licenseNumber"
               placeholder="RBT"
+              value={licenseNumber}
               onChange={(e) => setLicenseNumber(e.target.value)}
             />
           </CCol>

@@ -1064,4 +1064,6 @@ export const GetAddAssetListConfig: AddAssetListApi = {
   addAsset: apiPrefix + '/assetManagement/addAsset',
   updateAddAsset: apiPrefix + '/assetManagement/updateAssetDetails',
   checkAssetNumberExixts: apiPrefix + '/assetManagement/checkAssetNumberExixts',
+  typeChangeSpecifications:
+    apiPrefix + '/assetManagement/typeChangeSpecifications',
 }
