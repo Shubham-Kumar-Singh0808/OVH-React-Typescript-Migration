@@ -153,7 +153,9 @@ const JobOpeningsTable = ({
             <CTableHeaderCell scope="col">No.of Vacancies</CTableHeaderCell>
             <CTableHeaderCell scope="col">Positions Closed</CTableHeaderCell>
             <CTableHeaderCell scope="col">Positions Vacant</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell scope="col" style={{ width: '100px' }}>
+              Actions
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -210,10 +212,10 @@ const JobOpeningsTable = ({
                   <CTableDataCell>
                     {jobVacancy?.remaining || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="job-actions">
                     <CTooltip content="View">
                       <CButton
-                        color="info"
+                        color="info btn-ovh me-1"
                         className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="View-btn"
                         onClick={() => viewButtonHandler(jobVacancy?.id)}

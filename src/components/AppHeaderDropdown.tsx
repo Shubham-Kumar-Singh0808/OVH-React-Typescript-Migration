@@ -51,7 +51,6 @@ const AppHeaderDropdown = (): JSX.Element => {
           </Link>
         </CDropdownMenu>
       </CDropdown>
-      &nbsp; &nbsp; &nbsp;
       <CDropdown variant="nav-item" data-testid="logout-button">
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-power-off fa-lg"></i>
