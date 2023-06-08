@@ -24,6 +24,7 @@ const RatingStar = ({
         return (
           <span
             key={star}
+            data-testid="rating-star"
             className={`star ${isSelected ? 'selected' : ''}`}
             onClick={() => handleStarClick(star)}
           >

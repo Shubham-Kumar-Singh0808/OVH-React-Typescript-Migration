@@ -12,6 +12,7 @@ const RatingStarValue = ({
         return (
           <span
             key={star}
+            data-testid="rating-star-value"
             className={`star ${isSelected ? 'selected' : ''} cursor-pointer`}
           >
             ★
