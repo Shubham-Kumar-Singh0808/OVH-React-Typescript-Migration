@@ -864,6 +864,7 @@ export interface CandidateListApi extends ApiBase {
   getAllTechnology: string
   getCountryWiseCandidatesList: string
   deleteCandidate: string
+  getAllJobVacanciesList: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string

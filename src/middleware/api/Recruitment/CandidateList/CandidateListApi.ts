@@ -1,6 +1,7 @@
 import {
   CandidateListTableProps,
   CandidateTotalInfo,
+  GetAllJobVacanciesParams,
   GetAllTechnology,
   country,
   viewHandlerProps,
@@ -73,12 +74,28 @@ const deleteCandidate = async (candidateId: number): Promise<number> => {
   return response.data
 }
 
+const getAllJobVacancies = async (params: GetAllJobVacanciesParams) => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.getAllJobVacanciesList,
+    method: AllowedHttpMethods.get,
+    params: {
+      endIndex: params.endIndex ?? '',
+      startIndex: params.startIndex ?? '',
+      searchJobTitle: params.searchJobTitle ?? '',
+      status: params.status ?? 'open',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
   getTechnology,
   getCountryWiseCandidatesList,
   deleteCandidate,
+  getAllJobVacancies,
 }
 
 export default candidateListApi

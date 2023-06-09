@@ -1,3 +1,4 @@
+import React from 'react'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 export type CandidateListTableProps = {
@@ -69,6 +70,39 @@ export type CandidateTotalInfo = {
   size: number
   list: CandidateLists[]
 }
+
+export enum CandidateListPagesEnum {
+  CandidateListLanding = 'Candidate List',
+  addCandidate = 'Add New Candidate',
+  addTechnology = 'Add New Technology',
+}
+
+export interface CandidateListJobVacancies {
+  id: number
+  jobCode: string
+  positionVacant: string
+  minimumExperience: string
+  description: string | null
+  opendDate: string
+  expiryDate: string | null
+  noOfRequirements: number
+  offered: number
+  remaining: number
+  status: string
+}
+
+export interface IncomingAllJobVacanciesList {
+  size: number
+  list: CandidateListJobVacancies[]
+}
+
+export interface GetAllJobVacanciesParams {
+  endIndex: number | null
+  startIndex: number | null
+  status: string | null
+  searchJobTitle: string | null
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
@@ -77,6 +111,8 @@ export type CandidateListSliceState = {
   allCountryDetails: country
   empCountries: country[]
   getAllTechnology: GetAllTechnology[]
+  visiblePage: CandidateListPagesEnum
+  allJobVacancies: IncomingAllJobVacanciesList
 }
 export type GetAllTechnology = {
   id: number
@@ -97,4 +133,28 @@ export type viewHandlerProps = {
   selectionCountry: number
   selectionTechnology: string
   startIndex: number
+}
+
+export interface CandidateListFilterOptionsProps {
+  selectStatus: string
+  setSelectStatus: React.Dispatch<React.SetStateAction<string>>
+  selectCountry: string
+  setSelectCountry: React.Dispatch<React.SetStateAction<string>>
+  selectTechnology: string
+  setSelectTechnology: React.Dispatch<React.SetStateAction<string>>
+  searchInput: string
+  setSearchInput: React.Dispatch<React.SetStateAction<string>>
+  searchKeyDownButtonHandler: (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => void
+  viewButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+  clearButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+  searchButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export interface AddEditCandidateTemplateProps {
+  firstName: string
+  firstNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  lastName: string
+  lastNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
 }

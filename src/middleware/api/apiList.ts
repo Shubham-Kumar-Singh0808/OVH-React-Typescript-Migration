@@ -1060,6 +1060,7 @@ export const CandidateListApiConfig: CandidateListApi = {
   getCountryWiseCandidatesList:
     apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
   deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
+  getAllJobVacanciesList: apiPrefix + '/jobvacancy/getAllJobVacancies',
 }
 
 export const GetAssetListConfig: AssetListApi = {

@@ -1,3 +1,5 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
@@ -11,7 +13,20 @@ import {
   GetAllTechnology,
   country,
   viewHandlerProps,
+  CandidateListPagesEnum,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
+
+export const initialCandidateListState: CandidateListSliceState = {
+  isLoading: ApiLoadingState.idle,
+  listSize: 0,
+  candidateDetails: {} as CandidateLists,
+  allCandidateDetails: [],
+  allCountryDetails: {} as country,
+  empCountries: [],
+  getAllTechnology: [],
+  visiblePage: CandidateListPagesEnum.CandidateListLanding,
+  allJobVacancies: { size: 0, list: [] },
+}
 
 const searchScheduledCandidate = createAsyncThunk(
   'candidateList/searchScheduledCandidate',
@@ -70,39 +85,64 @@ const deleteCandidate = createAsyncThunk(
   },
 )
 
-export const initialCandidateListState: CandidateListSliceState = {
-  isLoading: ApiLoadingState.idle,
-  listSize: 0,
-  candidateDetails: {} as CandidateLists,
-  allCandidateDetails: [],
-  allCountryDetails: {} as country,
-  empCountries: [],
-  getAllTechnology: [],
-}
+const getAllJobVacanciesThunk = createAsyncThunk(
+  'candidateList/getAllJobVacanciesThunk',
+  async (_, thunkApi) => {
+    try {
+      return await candidateListApi.getAllJobVacancies({
+        startIndex: null,
+        endIndex: null,
+        searchJobTitle: null,
+        status: null,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
 
 const candidateListSlice = createSlice({
   name: 'candidateList',
   initialState: initialCandidateListState,
-  reducers: {},
+  reducers: {
+    changePageHandler: (
+      state,
+      action: PayloadAction<CandidateListPagesEnum>,
+    ) => {
+      state.visiblePage = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchScheduledCandidate.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.allCandidateDetails = action.payload.list
         state.listSize = action.payload.size
       })
+      .addCase(getAllJobVacanciesThunk.fulfilled, (state, action) => {
+        state.allJobVacancies = action.payload
+      })
       .addCase(getCountryWiseCandidatesList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.allCandidateDetails = action.payload.list
       })
       .addCase(getEmpCountries.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.empCountries = action.payload
       })
       .addCase(getTechnology.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.getAllTechnology = action.payload
       })
+      .addMatcher(
+        isAnyOf(
+          searchScheduledCandidate.fulfilled,
+          getAllJobVacanciesThunk.fulfilled,
+          getCountryWiseCandidatesList.fulfilled,
+          getEmpCountries.fulfilled,
+          getTechnology.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(isAnyOf(searchScheduledCandidate.pending), (state) => {
         state.isLoading = ApiLoadingState.loading
       })
@@ -128,6 +168,7 @@ export const candidateListThunk = {
   getTechnology,
   getCountryWiseCandidatesList,
   deleteCandidate,
+  getAllJobVacanciesThunk,
 }
 
 export const candidateListSelectors = {
