@@ -1,6 +1,5 @@
 import React from 'react'
 import { CTableRow, CTableDataCell, CLink } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
 import SubProcessManagerInput from './SubProcessTailorTableComponents/SubProcessManagerInput'
 import SubProcessSQAInput from './SubProcessTailorTableComponents/SubProcessSQAInput'
 import SubProcessSQAReadonly from './SubProcessTailorTableComponents/SubProcessSQAReadonly'
