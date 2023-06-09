@@ -128,6 +128,8 @@ import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import intervieweeDetailsReducer from './reducers/Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
+import candidateListReducer from './reducers/Recruitment/CandidateList/CandidateListSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
 import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
@@ -266,6 +268,8 @@ export const allReducers = {
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
+  intervieweeDetails: intervieweeDetailsReducer,
+  candidateList: candidateListReducer,
   vendorList: vendorListReducer,
   addNewVendor: addNewVendorReducer,
   changeReportees: changeReporteesReducer,
