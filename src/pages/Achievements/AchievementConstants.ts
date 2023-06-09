@@ -143,3 +143,4 @@ export const initialNewAchieverState: NewAchieverInformation = {
 }
 
 export const base64Extension = 'data:image/jpeg;base64,'
+export const baseImageExtension = 'https://ovhqa.raybiztech.com/'

@@ -255,10 +255,18 @@ const ProjectCreationRequestTable = ({
                     {projectRequest?.model?.charAt(0).toUpperCase() +
                       projectRequest?.model?.slice(1).toLowerCase()}
                   </CTableDataCell>
-                  <CTableDataCell>{projectRequest.client}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.managerName}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.startdate}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.enddate}</CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.client || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.managerName || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.startdate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.enddate || 'N/A'}
+                  </CTableDataCell>
                   <CTableDataCell>
                     {projectRequestStatusLabelColor(projectRequest.status)}
                   </CTableDataCell>

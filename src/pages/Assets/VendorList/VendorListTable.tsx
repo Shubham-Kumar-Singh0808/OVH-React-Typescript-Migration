@@ -83,6 +83,13 @@ const VendorListTable = ({
     setToggle('editVendorDetails')
   }
 
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="This Vendor already added in specifications ,So you cannot delete"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
   const handleConfirmDeleteVendor = async () => {
     setDeleteClientModalVisibility(false)
     const deleteClientResultAction = await dispatch(
@@ -101,6 +108,14 @@ const VendorListTable = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deleteSuccessToastElement))
+    } else if (
+      reduxServices.vendorList.deleteVendorDetails.rejected.match(
+        deleteClientResultAction,
+      ) &&
+      deleteClientResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -147,7 +162,7 @@ const VendorListTable = ({
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(vendor)}
                       >
-                        {parse(vendor?.vendorAddress)}
+                        {parse(vendorAddressLimit)}
                       </CLink>
                     ) : (
                       'N/A'
@@ -242,7 +257,7 @@ const VendorListTable = ({
           data-testid="modal-cnt-add"
           style={{ minHeight: '90px' }}
         >
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: vendorAddress.vendorAddress,
             }}

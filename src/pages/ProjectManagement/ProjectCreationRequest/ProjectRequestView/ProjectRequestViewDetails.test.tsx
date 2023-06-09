@@ -20,7 +20,7 @@ describe('ProjectRequestViewDetails Component Testing', () => {
     screen.debug()
     test('should render with data ', () => {
       expect(screen.getByText('Skill assessment app')).toBeInTheDocument()
-      expect(screen.getByText('DEVELOPMENT')).toBeInTheDocument()
+      expect(screen.getByText('Development')).toBeInTheDocument()
       expect(screen.getByText('Approved')).toBeInTheDocument()
     })
   })

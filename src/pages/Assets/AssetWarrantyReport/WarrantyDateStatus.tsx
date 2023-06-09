@@ -5,6 +5,8 @@ import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
+import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
+import { downloadFile } from '../../../utils/helper'
 
 const WarrantyDateStatus = ({
   pageSize,
@@ -53,19 +55,34 @@ const WarrantyDateStatus = ({
     )
   }
 
+  const CurrentMonth = 'Current Month'
+
   const clearButtonHandler = () => {
-    setSelectDate('Current Month')
+    setSelectDate(CurrentMonth)
     setFromDate('')
     setToDate('')
     dispatch(
       reduxServices.assetsWarrantyList.getAssetsWarrantyList({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        dateSelection: 'Current Month',
+        dateSelection: CurrentMonth,
         from: fromDate || '',
         to: toDate || '',
       }),
     )
+  }
+
+  const handleExportEmployeeDesignationData = async () => {
+    const assetsWarrantyReportList =
+      await assetsWarrantyListApi.getExportAssetsWarrantyList({
+        startIndex: 0,
+        endIndex: 20,
+        from: '',
+        to: '',
+        dateSelection: 'Current Month',
+        token: '',
+      })
+    downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
   }
 
   return (
@@ -79,6 +96,7 @@ const WarrantyDateStatus = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
+            className="asset-Warranty"
             id="selectDate"
             data-testid="form-select1"
             name="selectDate"
@@ -108,7 +126,7 @@ const WarrantyDateStatus = ({
             </CCol>
             <CCol sm={2}>
               <DatePicker
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker asset-Warranty"
                 data-testid="date-picker"
                 placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
@@ -132,7 +150,7 @@ const WarrantyDateStatus = ({
             </CCol>
             <CCol sm={2}>
               <DatePicker
-                className="form-control form-control-sm sh-date-picker"
+                className="form-control form-control-sm sh-date-picker asset-Warranty"
                 data-testid="date-picker"
                 placeholderText="dd/mm/yyyy"
                 dateFormat="dd/mm/yy"
@@ -158,9 +176,9 @@ const WarrantyDateStatus = ({
           <></>
         )}
         <CCol sm={2}>
-          <CCol sm={9} md={{ offset: 3 }}>
+          <CCol sm={9}>
             <CButton
-              className="cursor-pointer"
+              className="cursor-pointer asset-Warranty"
               color="success btn-ovh me-1"
               data-testid="view-btn"
               onClick={viewButtonHandler}
@@ -173,7 +191,7 @@ const WarrantyDateStatus = ({
               View
             </CButton>
             <CButton
-              className="cursor-pointer"
+              className="cursor-pointer asset-Warranty"
               disabled={false}
               color="warning btn-ovh me-1"
               data-testid="clear-btn"
@@ -183,6 +201,20 @@ const WarrantyDateStatus = ({
             </CButton>
           </CCol>
         </CCol>
+        <CRow className="justify-content-end export-Warranty">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="info"
+              className="text-white btn-ovh"
+              size="sm"
+              data-testid="export-button"
+              onClick={handleExportEmployeeDesignationData}
+            >
+              <i className="fa fa-plus me-1"></i>
+              Click to Export
+            </CButton>
+          </CCol>
+        </CRow>
       </CRow>
     </>
   )

@@ -38,7 +38,6 @@ const EditJobOpening = ({
   const [editToDate, setEditToDate] = useState<string>(editJobInfo.expiryDate)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
-  console.log(editToDate + 'editToDate')
 
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',

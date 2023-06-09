@@ -22,7 +22,8 @@ describe('Product Type Slice', () => {
         manufacturerList: {} as ManufacturerList,
       })
     })
-    it('Should be able to set isLoading to "loading" if getProductTypeList is rejected', () => {
+
+    it('Should be able to set isLoading to "succeeded" if getProductTypeList is fulfilled', () => {
       const action = {
         type: ProductTypeListService.getProductTypeList.fulfilled.type,
         payload: mockProductTypeList,
@@ -36,7 +37,8 @@ describe('Product Type Slice', () => {
         manufacturerList: {} as ManufacturerList,
       })
     })
-    it('Should be able to set isLoading to "loading" if getProductTypeList is pending', () => {
+
+    it('Should be able to set isLoading to "idle" if getAllLookUpsApi is pending', () => {
       const action = {
         type: ProductTypeListService.getAllLookUpsApi.pending.type,
       }
@@ -49,7 +51,8 @@ describe('Product Type Slice', () => {
         manufacturerList: {} as ManufacturerList,
       })
     })
-    it('Should be able to set isLoading to "loading" if getProductTypeList is rejected', () => {
+
+    it('Should be able to set isLoading to "succeeded" if getAllLookUpsApi is fulfilled', () => {
       const action = {
         type: ProductTypeListService.getAllLookUpsApi.fulfilled.type,
         payload: mockProductTypeListGetLookup,

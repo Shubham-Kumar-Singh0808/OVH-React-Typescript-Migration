@@ -14,7 +14,6 @@ import { dateFormat } from '../../../../../constant/DateFormat'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch } from '../../../../../stateStore'
 import { ProjectRequestMilestoneDTO } from '../../../../../types/ProjectManagement/ProjectCreationRequests/AddProjectRequest/addProjectRequestTypes'
-import { TextDanger } from '../../../../../constant/ClassName'
 
 const AddProjectMileStone = ({
   item,
@@ -157,6 +156,7 @@ const AddProjectMileStone = ({
       <CTableBody>
         <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormInput
+            id={`input-${index}`}
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
             value={item.title?.replace(/^\s*/, '')}

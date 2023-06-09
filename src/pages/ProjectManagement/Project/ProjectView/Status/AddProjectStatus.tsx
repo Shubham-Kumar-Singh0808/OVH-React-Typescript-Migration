@@ -206,6 +206,7 @@ const AddProjectStatus = ({
               onChange={(date: Date) =>
                 setCurrentWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={currentWeekDate as Date}
             />
           </CCol>
         </CRow>
@@ -258,6 +259,7 @@ const AddProjectStatus = ({
               onChange={(date: Date) =>
                 setNextWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={nextWeekDate as Date}
             />
           </CCol>
         </CRow>

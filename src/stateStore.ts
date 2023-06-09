@@ -128,6 +128,8 @@ import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import intervieweeDetailsReducer from './reducers/Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
+import candidateListReducer from './reducers/Recruitment/CandidateList/CandidateListSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
 import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
@@ -136,6 +138,9 @@ import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTyp
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
 import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
+import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
+import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -264,6 +269,8 @@ export const allReducers = {
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
+  intervieweeDetails: intervieweeDetailsReducer,
+  candidateList: candidateListReducer,
   vendorList: vendorListReducer,
   addNewVendor: addNewVendorReducer,
   changeReportees: changeReporteesReducer,
@@ -272,6 +279,9 @@ export const allReducers = {
   assetsWarrantyList: assetsWarrantyListReducer,
   categoryList: categoryListReducer,
   addNewCategory: addNewExpenseCategoryReducer,
+  assetList: assetListReducer,
+  productSpecificationList: productSpecificationListReducer,
+  addProduct: addProductReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

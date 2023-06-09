@@ -668,6 +668,11 @@ export interface ProjectChangeRequestApi extends ApiBase {
 
 export interface ProjectMilestoneApi extends ApiBase {
   mileStonesList: string
+  mileStoneHistory: string
+  getMilestone: string
+  milestoneNewsFeed: string
+  uploadImage: string
+  postMileStone: string
 }
 export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
@@ -846,9 +851,27 @@ export interface ChangeReporteesApi extends ApiBase {
   updateHrAssociatesManager: string
 }
 
+export interface IntervieweeDetailsApi extends ApiBase {
+  timelinedetails: string
+  saveInitialComments: string
+  updateCandidateInterviewStatus: string
+  empScheduleInterviewDetails: string
+  updateInterview: string
+}
+export interface CandidateListApi extends ApiBase {
+  searchScheduledCandidate: string
+  getEmpCountries: string
+  getAllTechnology: string
+  getCountryWiseCandidatesList: string
+  deleteCandidate: string
+}
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
+  getAllLookUps: string
+  addManufacturer: string
+  deleteManufacturerName: string
+  updateManufacturerName: string
 }
 export interface ProductTypeListApi extends ApiBase {
   getProductTypeList: string
@@ -857,6 +880,11 @@ export interface ProductTypeListApi extends ApiBase {
   getAllLookUps: string
   addProduct: string
   updateProduct: string
+}
+export interface AssetListApi extends ApiBase {
+  getAllLookUps: string
+  getAllAssets: string
+  getAssetTypeChange: string
 }
 
 export interface AssetWarrantyReportApi extends ApiBase {
@@ -880,4 +908,14 @@ export interface CategoryListApi extends ApiBase {
   editCategory: string
   updateCategory: string
   deleteCategory: string
+}
+export interface ProductSpecificationListApi extends ApiBase {
+  getAllProductSpecifications: string
+  getassetTypeChangeList: string
+  getAllLookUps: string
+  getProductTypeChangeList: string
+  exportProductSpecificationList: string
+  addProductSpecifications: string
+  deleteProductSpecification: string
+  updateProductSpecification: string
 }

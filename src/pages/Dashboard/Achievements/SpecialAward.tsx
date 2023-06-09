@@ -2,6 +2,7 @@ import { CCardFooter, CCol, CImage, CLink, CRow } from '@coreui/react-pro'
 import React from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
+import { baseImageExtension } from '../../Achievements/AchievementConstants'
 
 const SpecialAward = (): JSX.Element => {
   const achievements = useTypedSelector(
@@ -35,12 +36,16 @@ const SpecialAward = (): JSX.Element => {
           <CRow className="media-body text-center">
             {achievements.specialAwards &&
               achievements.specialAwards?.map((specialAward, index) => {
+                const imageUrl = specialAward.profilePicture
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <CCol sm={3} key={index}>
                     <h6>
                       <span className="profile-avatar">
                         <CImage
-                          src={specialAward.profilePicture}
+                          src={finalImageUrl}
                           className="employee-profile"
                         />
                       </span>
