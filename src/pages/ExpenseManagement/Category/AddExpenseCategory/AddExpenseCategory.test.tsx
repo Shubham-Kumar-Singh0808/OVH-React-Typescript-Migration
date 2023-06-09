@@ -1,124 +1,101 @@
-// // import React from 'react'
-// // import '@testing-library/jest-dom'
-// // import { render } from 'react-dom'
-// // import { cleanup, waitFor, screen } from '@testing-library/react'
-// // import userEvent from '@testing-library/user-event'
-// // import AddExpenseCategory from './AddExpenseCategory'
-// // import { ApiLoadingState } from '../../../../middleware/api/apiList'
-// // import { mockExpenseCategory } from '../../../../test/data/expenseCategoryData'
+import '@testing-library/jest-dom'
+import React from 'react'
+import { cleanup, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import AddExpenseCategory from './AddExpenseCategory'
+import { render, screen } from '../../../../test/testUtils'
+import { mockLocationNames } from '../../../../test/data/addLocationListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
+import { mockExpenseCategory } from '../../../../test/data/expenseCategoryData'
 
-// // const toRender = (
-// //   <div>
-// //     <div id="backdrop-root"></div>
-// //     <div id="overlay-root"></div>
-// //     <div id="root"></div>
-// //     <AddExpenseCategory />
-// //   </div>
-// // )
-// // describe('Add Expense Category without data', () => {
-// //   test('should render Expense Category component without crashing', () => {
-// //     render(toRender, {
-// //       preloadedState: {
-// //         addExpenseCategoryList: {
-// //           addNewCategory: mockExpenseCategory,
-// //           isLoading: ApiLoadingState.succeeded,
-// //         },
-// //       },
-// //     })
-// //     const categoryElement = screen.getByRole('heading', { name: 'Category' })
-// //     expect(categoryElement).toBeInTheDocument()
-// //   })
-// //   afterEach(cleanup)
-// //   test('should able to select values for options for respective select element', () => {
-// //     const expenseCategory = screen.getByTestId('categoryName')
-// //     userEvent.type(expenseCategory, 'testing')
-// //     expect(expenseCategory).toHaveValue('testing')
+describe('Add Location List without data', () => {
+  beforeEach(() => {
+    render(<AddExpenseCategory />, {
+      preloadedState: {
+        addNewCategory: {
+          isLoading: ApiLoadingState.succeeded,
+          error: null,
+          addExpenseCategory: [],
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
+  })
+  afterEach(cleanup)
+  test('should render addTracker List component with out crashing', () => {
+    expect(screen.getByText('Category:')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
+  })
+  test('should render Add button as disabled  initially', () => {
+    expect(screen.getByTestId('save-btn')).toBeDisabled()
+    expect(screen.getByTestId('clear-btn')).toBeEnabled()
+  })
 
-// //     const addBtnElement = screen.getByRole('button', { name: 'Add' })
-// //     expect(addBtnElement).toBeEnabled()
-// //     userEvent.click(addBtnElement)
+  // eslint-disable-next-line require-await
+  test('should render clear inputs', async () => {
+    userEvent.click(screen.getByRole('button', { name: 'Clear' }))
+    const clearInputName = screen.getByPlaceholderText('Category Name')
+    expect(clearInputName).toHaveValue('')
+  })
 
-// //     const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
-// //     expect(clearBtnElement).toBeEnabled()
-// //     userEvent.click(clearBtnElement)
-// //   })
-// //   test('should display error message, when user enters already existing expense category', async () => {
-// //     const inputElement = screen.getByTestId('categoryName')
-// //     userEvent.type(inputElement, 'Category TEsting')
-// //     await waitFor(() => {
-// //       expect(screen.getByText('Category already exist')).toBeInTheDocument()
-// //     })
-// //   })
-// // })
+  test('should able to Add input field', () => {
+    const productNameInput = screen.getByTestId('categoryNames')
+    userEvent.type(productNameInput, 'test')
+    const addButton = screen.getByTestId('save-btn')
+    expect(addButton).toBeEnabled()
+  })
 
-// // describe('Add Expense Category without data', () => {
-// //   beforeEach(() => {
-// //     render(<AddExpenseCategory />, {
-// //       preloadedState: {
-// //         addExpenseCategoryList: {
-// //           addNewCategory: mockExpenseCategory,
-// //         },
-// //       },
-// //     })
-// //   })
-// //   test('should render Add button as disabled  initially', () => {
-// //     expect(screen.getByTestId('save-btn')).toBeDisabled()
-// //   })
-// // })
+  test('should enabled add button when input is not empty', () => {
+    expect(screen.getByTestId('clear-btn')).not.toBeDisabled()
+    expect(screen.getByTestId('save-btn')).toBeDisabled()
+  })
+})
 
-// import React from 'react'
-// import { render, fireEvent } from '@testing-library/react'
-// import AddExpenseCategory from './AddExpenseCategory'
+describe('Add Expense Category with data', () => {
+  beforeEach(() => {
+    render(<AddExpenseCategory />, {
+      preloadedState: {
+        addNewCategory: {
+          addExpenseCategory: mockExpenseCategory,
+        },
+        userAccessToFeatures: {
+          isLoading: ApiLoadingState.succeeded,
+          userAccessToFeatures: mockUserAccessToFeaturesData,
+        },
+      },
+    })
+  })
+  test('should be able to render Add Expense Category List  Title', () => {
+    expect(screen.getByText('Category:')).toBeInTheDocument()
+  })
+  test('should able to select values for options for respective select element', () => {
+    const category = screen.getByTestId('categoryNames')
+    userEvent.type(category, 'testing category')
+    expect(category).toHaveValue('testing category')
 
-// test('category input field updates state', () => {
-//   const { getByTestId } = render(<AddExpenseCategory />)
-//   const categoryInput = getByTestId('categoryName')
+    const addBtnElement = screen.getByRole('button', { name: 'Add' })
+    expect(addBtnElement).toBeEnabled()
+    userEvent.click(addBtnElement)
 
-//   fireEvent.change(categoryInput, { target: { value: 'Groceries' } })
+    const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
+    expect(clearBtnElement).toBeEnabled()
+    userEvent.click(clearBtnElement)
+  })
 
-//   expect(categoryInput).toBe('Groceries')
-// })
+  test('should be able to render AddExpenseCategory Component label', () => {
+    expect(screen.getByTestId('categoryLabel')).toBeTruthy()
+  })
 
-// test('Add button is disabled when category name is empty', () => {
-//   const { getByTestId } = render(<AddExpenseCategory />)
-//   const categoryInput = getByTestId('categoryName')
-//   const addButton = getByTestId('save-btn')
-
-//   expect(addButton.).toBe(true)
-
-//   fireEvent.change(categoryInput, { target: { value: 'Groceries' } })
-
-//   expect(addButton.disabled).toBe(false)
-
-//   fireEvent.change(categoryInput, { target: { value: '' } })
-
-//   expect(addButton.disabled).toBe(true)
-// })
-
-// test('Add button is disabled when category name already exists', () => {
-//   const { getByTestId } = render(<AddExpenseCategory />)
-//   const categoryInput = getByTestId('categoryName')
-//   const addButton = getByTestId('save-btn')
-
-//   fireEvent.change(categoryInput, { target: { value: 'Groceries' } })
-
-//   expect(addButton.disabled).toBe(false)
-
-//   fireEvent.change(categoryInput, { target: { value: 'Groceries' } })
-
-//   expect(addButton.disabled).toBe(true)
-// })
-
-// test('Clear button clears the category name and existing category message', () => {
-//   const { getByTestId } = render(<AddExpenseCategory />)
-//   const categoryInput = getByTestId('categoryName')
-//   const clearButton = getByTestId('clear-btn')
-
-//   fireEvent.change(categoryInput, { target: { value: 'Groceries' } })
-
-//   expect(categoryInput.value).toBe('Groceries')
-
-//   fireEvent.click(clearButton)
-
-//   expect(categoryInput.value).toBe('')
-// })
+  // test('should display error message, when user enters already existing category', async () => {
+  //   const inputElement = screen.getByTestId('categoryNames')
+  //   userEvent.type(inputElement, 'test adding exactly btn fyhrfh')
+  //   await waitFor(() => {
+  //     expect(screen.getByText('Category already exist')).toBeInTheDocument()
+  //   })
+  // })
+})

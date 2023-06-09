@@ -21,6 +21,42 @@ const getCategoryList = createAsyncThunk(
   },
 )
 
+const editExpenseCategory = createAsyncThunk(
+  '/ExpenseManagement/editCategory',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await categoryListApi.editNewCategory(categoryId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateExpenseCategory = createAsyncThunk(
+  '/ExpenseManagement/updateCategory',
+  async (data: CategoryList, thunkApi) => {
+    try {
+      return await categoryListApi.updateNewCategory(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteExpenseCategory = createAsyncThunk(
+  '/ExpenseManagement/deleteCategory',
+  async (categoryId: number, thunkApi) => {
+    try {
+      return await categoryListApi.deleteCategory(categoryId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialCategoryListState: CategoryListSliceState = {
   getAllCategory: [],
   isLoading: ApiLoadingState.idle,
@@ -46,12 +82,32 @@ const categoryListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.getAllCategory = action.payload
       })
-      .addMatcher(isAnyOf(getCategoryList.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addMatcher(isAnyOf(getCategoryList.rejected), (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
+      .addMatcher(
+        isAnyOf(editExpenseCategory.fulfilled, updateExpenseCategory.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCategoryList.pending,
+          editExpenseCategory.pending,
+          updateExpenseCategory.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCategoryList.rejected,
+          editExpenseCategory.rejected,
+          updateExpenseCategory.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
   },
 })
 
@@ -66,6 +122,9 @@ const pageSizeFromState = (state: RootState): number =>
 
 const categoryListThunk = {
   getCategoryList,
+  editExpenseCategory,
+  updateExpenseCategory,
+  deleteExpenseCategory,
 }
 
 const categoryListSelectors = {

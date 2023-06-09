@@ -18,12 +18,12 @@ const AddExpenseCategory = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  const categoryNames = useTypedSelector(
+  const existCategoryNames = useTypedSelector(
     reduxServices.categoryList.selectors.categories,
   )
 
   const categoryNameExists = (name: string) => {
-    return categoryNames?.find((categoryName) => {
+    return existCategoryNames?.find((categoryName) => {
       return categoryName.categoryName.toLowerCase() === name.toLowerCase()
     })
   }
@@ -117,6 +117,7 @@ const AddExpenseCategory = (): JSX.Element => {
         <CFormLabel
           {...formLabelProps}
           className="col-sm-3 col-form-label text-end"
+          data-testid="categoryLabel"
         >
           Category:
           <span className={showIsRequired(categoryName)}>*</span>
@@ -124,9 +125,9 @@ const AddExpenseCategory = (): JSX.Element => {
         <CCol sm={3}>
           <CFormInput
             className="mb-1"
-            data-testid="categoryName"
+            data-testid="categoryNames"
             type="text"
-            id="name"
+            id="categoryName"
             size="sm"
             name="categoryName"
             autoComplete="off"
@@ -137,7 +138,7 @@ const AddExpenseCategory = (): JSX.Element => {
           />
           {isCategoryNameExist && (
             <span className={TextDanger} data-testid="nameAlreadyExist">
-              <b>Category already exist</b>
+              <p>Category already exist</p>
             </span>
           )}
         </CCol>

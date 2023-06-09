@@ -24,11 +24,7 @@ import { TextDanger } from '../../../constant/ClassName'
 import { currentPageData } from '../../../utils/paginationUtils'
 import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
-const ExpenseCategoryListTable = ({
-  userAccess,
-}: {
-  userAccess: UserAccessToFeatures | undefined
-}): JSX.Element => {
+const ExpenseCategoryListTable = (): JSX.Element => {
   const initialEditExpenseCategories = {} as CategoryList
   const [editExpenseCategoryDetails, setEditExpenseCategoryDetails] = useState(
     initialEditExpenseCategories,
@@ -114,7 +110,7 @@ const ExpenseCategoryListTable = ({
     expensiveCategoryItems: CategoryList,
   ): void => {
     dispatch(
-      reduxServices.addNewCategory.editExpenseCategory(
+      reduxServices.categoryList.editExpenseCategory(
         expensiveCategoryItems?.id,
       ),
     )
@@ -124,12 +120,12 @@ const ExpenseCategoryListTable = ({
   }
   const saveExpenseCategoryButtonHandler = async () => {
     const saveExpenseCategoryResultAction = await dispatch(
-      reduxServices.addNewCategory.updateExpenseCategory(
+      reduxServices.categoryList.updateExpenseCategory(
         editExpenseCategoryDetails,
       ),
     )
     if (
-      reduxServices.addNewCategory.updateExpenseCategory.fulfilled.match(
+      reduxServices.categoryList.updateExpenseCategory.fulfilled.match(
         saveExpenseCategoryResultAction,
       )
     ) {
@@ -157,12 +153,10 @@ const ExpenseCategoryListTable = ({
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
     const deleteExpenseCategoryResultAction = await dispatch(
-      reduxServices.addNewCategory.deleteExpenseCategory(
-        deleteExpenseCategoryId,
-      ),
+      reduxServices.categoryList.deleteExpenseCategory(deleteExpenseCategoryId),
     )
     if (
-      reduxServices.addNewCategory.deleteExpenseCategory.fulfilled.match(
+      reduxServices.categoryList.deleteExpenseCategory.fulfilled.match(
         deleteExpenseCategoryResultAction,
       )
     ) {
@@ -228,7 +222,8 @@ const ExpenseCategoryListTable = ({
                     <CTableDataCell scope="row">
                       <div className="edit-time-control">
                         <CFormInput
-                          className="form-leave"
+                          data-testid={`categoryName${index}`}
+                          className="sm"
                           type="text"
                           id="name"
                           name="categoryName"
@@ -238,7 +233,7 @@ const ExpenseCategoryListTable = ({
                         {isEditCategoryNameExist && (
                           <span
                             className={TextDanger}
-                            data-testid="nameAlreadyExist"
+                            data-testid="categoryNameAlreadyExist"
                           >
                             <b>Category already exist</b>
                           </span>
@@ -246,7 +241,10 @@ const ExpenseCategoryListTable = ({
                       </div>
                     </CTableDataCell>
                   ) : (
-                    <CTableDataCell className="ng-binding">
+                    <CTableDataCell
+                      className="ng-binding"
+                      data-testid={`categoryNames${index}`}
+                    >
                       {categoryItems.categoryName}
                     </CTableDataCell>
                   )}
@@ -254,22 +252,28 @@ const ExpenseCategoryListTable = ({
                     {isEditExpenseCategory &&
                     categoryItems.id === deleteExpenseCategoryId ? (
                       <>
-                        <CButton
-                          color="success"
-                          data-testid={`sh-save-btn${index}`}
-                          className="btn-ovh me-1"
-                          onClick={saveExpenseCategoryButtonHandler}
-                          disabled={
-                            isEditCategoryButtonEnabled
-                              ? isEditCategoryButtonEnabled &&
-                                isEditCategoryNameExist.length > 0
-                              : !isEditCategoryButtonEnabled
-                          }
-                        >
-                          <i className="fa fa-floppy-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Save">
+                          <CButton
+                            color="success"
+                            data-testid={`sh-save-btn${index}`}
+                            className="btn-ovh me-1"
+                            onClick={saveExpenseCategoryButtonHandler}
+                            disabled={
+                              isEditCategoryButtonEnabled
+                                ? isEditCategoryButtonEnabled &&
+                                  isEditCategoryNameExist.length > 0
+                                : !isEditCategoryButtonEnabled
+                            }
+                          >
+                            <i
+                              className="fa fa-floppy-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                         <CTooltip content="Cancel">
                           <CButton
+                            data-testId=""
                             color="warning"
                             className="btn-ovh me-1"
                             onClick={cancelLeaveCategoryButtonHandler}
@@ -280,39 +284,36 @@ const ExpenseCategoryListTable = ({
                       </>
                     ) : (
                       <>
-                        {userAccess?.updateaccess && (
-                          <CTooltip content="Edit">
-                            <CButton
-                              color="info btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                              onClick={() => {
-                                editExpenseCategoryButtonHandler(categoryItems)
-                              }}
-                            >
-                              <i className="fa fa-edit" aria-hidden="true"></i>
-                            </CButton>
-                          </CTooltip>
-                        )}
-                        {userAccess?.deleteaccess && (
-                          <CTooltip content="Delete">
-                            <CButton
-                              data-testid={`btn-categoryDelete${index}`}
-                              color="danger btn-ovh me-1"
-                              className="btn-ovh-employee-list"
-                              onClick={() =>
-                                onDeleteBtnClick(
-                                  categoryItems.id,
-                                  categoryItems.categoryName,
-                                )
-                              }
-                            >
-                              <i
-                                className="fa fa-trash-o"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
-                        )}
+                        {/* {userAccess?.updateaccess && (  )} */}
+                        <CTooltip content="Edit">
+                          <CButton
+                            data-testid={`btn-categoryClose${index}`}
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() => {
+                              editExpenseCategoryButtonHandler(categoryItems)
+                            }}
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+
+                        {/* {userAccess?.deleteaccess && ()} */}
+                        <CTooltip content="Delete">
+                          <CButton
+                            data-testid={`btn-categoryDelete${index}`}
+                            color="danger btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              onDeleteBtnClick(
+                                categoryItems.id,
+                                categoryItems.categoryName,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     )}
                   </CTableDataCell>
@@ -323,7 +324,7 @@ const ExpenseCategoryListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <strong>
+          <strong data-testid="records">
             {categoryList?.length
               ? `Total Records: ${categoryList.length}`
               : `No Records Found`}

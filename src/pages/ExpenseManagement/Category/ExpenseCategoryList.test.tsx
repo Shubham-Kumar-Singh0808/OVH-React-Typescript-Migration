@@ -28,13 +28,13 @@ describe('Expense Category Component Testing', () => {
 
   it('renders the AddExpenseCategory component', () => {
     const { getByTestId } = render(<ExpenseCategoryList />)
-    const addExpenseCategoryComponent = getByTestId('categoryName')
+    const addExpenseCategoryComponent = getByTestId('categoryNames')
     expect(addExpenseCategoryComponent).toBeInTheDocument()
   })
 
   it('renders the ExpenseCategoryListTable component', () => {
     const { getByTestId } = render(<ExpenseCategoryList />)
-    const expenseCategoryListTable = getByTestId('categoryName')
+    const expenseCategoryListTable = getByTestId('categoryNames')
     expect(expenseCategoryListTable).toBeInTheDocument()
   })
 })

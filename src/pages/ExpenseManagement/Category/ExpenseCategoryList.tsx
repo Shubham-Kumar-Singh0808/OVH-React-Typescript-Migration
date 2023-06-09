@@ -25,7 +25,7 @@ const ExpenseCategoryList = (): JSX.Element => {
         <AddExpenseCategory data-testid="add-expense-category" />
         <ExpenseCategoryListTable
           data-testid="expense-category-list-table"
-          userAccess={userAccess}
+          //userAccess={userAccess}
         />
       </OCard>
     </>

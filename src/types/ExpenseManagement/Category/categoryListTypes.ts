@@ -1,3 +1,4 @@
+import { UserAccessToFeatures } from '../../Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type CategoryList = {
@@ -15,4 +16,10 @@ export type CategoryListSliceState = {
   error: ValidationError
   currentPage: number
   pageSize: number
+}
+
+export type ExpenseCategoryTableProps = {
+  userAccess: UserAccessToFeatures | undefined
+  updateaccess?: boolean
+  userEditAccess?: boolean
 }
