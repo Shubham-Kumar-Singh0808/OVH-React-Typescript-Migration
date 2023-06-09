@@ -541,3 +541,20 @@ borderLeft: '5px solid #eee';
 }
 // custom - 3 
 // Normal - 9
+.milestone-history{
+  display: inline-block;
+  margin-right: 30px;
+}
+.milestone-history strong{
+  margin-right: 4px;
+}
+.milestone-history strong:hover{
+  color:#245269 !important;
+}
+.milestone-discussion-post{
+  padding: 5px 10px;
+    font-size: 11px;
+}
+.milestone-actions i.fa{
+  font-size: 12px;
+}

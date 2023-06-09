@@ -355,6 +355,20 @@ const PIPList = React.lazy(
   () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
 )
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+const MileStoneHistory = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneHistory/MileStoneHistory'
+    ),
+)
+
+const MileStoneDiscussion = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneDiscussion/MileStoneDiscussion'
+    ),
+)
+
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
 )
@@ -905,6 +919,18 @@ const routes = [
     name: 'KRA',
     component: ReviewList,
   },
+
+  {
+    path: '/milestonehistory/:projectId',
+    name: 'MileStone History',
+    component: MileStoneHistory,
+  },
+  {
+    path: '/milestoneNewsFeed/:id',
+    name: 'MileStone Discussion',
+    component: MileStoneDiscussion,
+  },
+
   {
     path: '/editEvent/:eventId',
     name: 'Edit Event',
