@@ -148,10 +148,6 @@ const AddProjectMileStone = ({
   const onFocusOut = () => {
     if (errorMessage === index) {
       dispatch(reduxServices.app.actions.addToast(errorToast))
-      const inputElement = document.getElementById(`input-${index}`) // Assuming each input has a unique ID
-      // if (inputElement) {
-      //   inputElement.value = '' // Clear the input value
-      // }
     }
   }
 
