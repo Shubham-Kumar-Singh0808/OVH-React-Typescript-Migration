@@ -47,5 +47,10 @@ const TabsLabels: MyProfileTabList[] = [
     tabName: 'Profile History',
     label: 'My Profile-EmployeeHistory',
   },
+  {
+    id: 11,
+    tabName: 'Separation',
+    label: 'Separation',
+  },
 ]
 export default TabsLabels

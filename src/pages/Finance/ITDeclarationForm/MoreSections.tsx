@@ -139,11 +139,21 @@ const MoreSections = ({
       return
     }
     const chosenInvestment = getInvestment(sectionList, index, +e.target.value)
-    newInvestmentCopy[investIndex] = {
-      ...newInvestmentCopy[investIndex],
-      investmentId: String(chosenInvestment!.investmentId),
-      description: chosenInvestment!.description,
-      requiredDocs: chosenInvestment!.requiredDocs,
+    if (chosenInvestment === undefined) {
+      // if changing back to select investment, then initial investment data is passed
+      newInvestmentCopy[investIndex] = {
+        ...newInvestmentCopy[investIndex],
+        investmentId: '',
+        description: null,
+        requiredDocs: '',
+      }
+    } else {
+      newInvestmentCopy[investIndex] = {
+        ...newInvestmentCopy[investIndex],
+        investmentId: String(chosenInvestment!.investmentId),
+        description: chosenInvestment!.description,
+        requiredDocs: chosenInvestment!.requiredDocs,
+      }
     }
     setInvestmentList(newInvestmentCopy)
     dispatch(reduxServices.itDeclarationForm.actions.setGrandTotalFinal())

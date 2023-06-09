@@ -21,6 +21,7 @@ import EmployeeAssets from '../MyAssetsTab/EmployeeAssets'
 import { mapTabsToFeatures } from '../../../utils/helper'
 import { MappedTabs } from '../../../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 import EmployeeReportees from '../ReporteesTab/EmployeeReportees'
+import Separation from '../Separation/Separation'
 
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
@@ -101,6 +102,7 @@ const MyProfileTabs = (): JSX.Element => {
         7: <EmployeeReportees />,
         8: <EmployeeAssets />,
         9: <EmployeeProfileHistory />,
+        11: <Separation />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'
     }

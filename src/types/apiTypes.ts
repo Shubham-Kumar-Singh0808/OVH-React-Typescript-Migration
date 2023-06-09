@@ -891,3 +891,7 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+
+export interface MyProfileSeparationApi extends ApiBase {
+  getEmployeeSeparationForm: string
+}
