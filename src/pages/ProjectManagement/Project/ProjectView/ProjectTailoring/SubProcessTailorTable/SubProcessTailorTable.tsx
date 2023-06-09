@@ -49,7 +49,9 @@ const SubProcessTailorTable = ({
           <CTableHeaderCell scope="col" className="profile-tab-content">
             Justification
           </CTableHeaderCell>
-          {tailorStatus !== ProjectTailoringStatusEnum.initial && (
+          {(tailorStatus === ProjectTailoringStatusEnum.rejected ||
+            tailorStatus === ProjectTailoringStatusEnum.submitted ||
+            tailorStatus === ProjectTailoringStatusEnum.approved) && (
             <>
               <CTableHeaderCell scope="col" className="profile-tab-content">
                 SQA Approved

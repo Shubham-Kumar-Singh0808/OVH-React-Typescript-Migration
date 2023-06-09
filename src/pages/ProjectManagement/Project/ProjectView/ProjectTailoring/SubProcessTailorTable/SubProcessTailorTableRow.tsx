@@ -41,9 +41,6 @@ const SubProcessTailorTableRow = ({
       )[0],
   )
 
-  console.log(isManagerAllowedToEdit(tailorStatus))
-  console.log(useTypedSelector((state) => state.projectTailoring))
-
   return (
     <CTableRow data-testid={`subProcesses-${processHeadId}`}>
       <CTableDataCell>{subProcessIndex + 1}</CTableDataCell>
