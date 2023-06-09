@@ -84,16 +84,6 @@ const Manufacturer = (): JSX.Element => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
-  // useEffect(() => {
-  //   dispatch(
-  //     reduxServices.ManufacturerList.getManufacturerList({
-  //       startIndex: pageSize * (currentPage - 1),
-  //       endIndex: pageSize * currentPage,
-  //       manufacturerName: '',
-  //     }),
-  //   )
-  // }, [dispatch, currentPage, pageSize])
-
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
@@ -118,8 +108,8 @@ const Manufacturer = (): JSX.Element => {
               data-testid="exportBtn"
             >
               <CButton
-                color="info"
-                className="text-white"
+                color="info btn-ovh me-0"
+                className="btn btn-info btn-sm text-white me-3"
                 size="sm"
                 onClick={handleExportLeaveReportData}
               >
