@@ -254,7 +254,7 @@ const IntervieweeDetails = (): JSX.Element => {
               <p className="mb-0">{timeLineListSelector?.reason}</p>
             </CCol>
           </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
+          <CRow className="mt-1 mb-0">
             <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
               Initial Comments:
               <span
@@ -265,7 +265,7 @@ const IntervieweeDetails = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={3}>
+            <CCol sm={3} className="mt-1">
               <CFormTextarea
                 data-testid="text-area"
                 aria-label="textarea"
@@ -277,10 +277,10 @@ const IntervieweeDetails = (): JSX.Element => {
           </CRow>
         </CForm>
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 6, offset: 2 }} className="mt-1">
             <CButton
               data-testid="save-btn"
-              className="btn-ovh me-1 text-white"
+              className="btn-ovh me-1 text-white interview-save"
               color="success"
               onClick={saveBtnHandler}
             >

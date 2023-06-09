@@ -29,11 +29,14 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
               className="sh-timeline-card"
               data-testid="recruitHistory-timelineCard"
             >
-              <div className="sh-timeline-timestamp">
-                {data?.interviewDate}
-                <div className="timeline-time">{data?.interviewTime}</div>
+              <div className="sh-timeline-card-list">
+                <div className="sh-timeline-timestamp mb-0">
+                  {data?.interviewDate}
+                </div>
+                <div className="timeline-time text-center">
+                  {data?.interviewTime}
+                </div>
               </div>
-
               <div className="sh-timeline-content">
                 <div className="sh-timeline-header mb-4 clearfix d-flex flex-row flex-wrap">
                   <div>
