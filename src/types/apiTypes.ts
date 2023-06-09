@@ -846,6 +846,20 @@ export interface ChangeReporteesApi extends ApiBase {
   updateHrAssociatesManager: string
 }
 
+export interface IntervieweeDetailsApi extends ApiBase {
+  timelinedetails: string
+  saveInitialComments: string
+  updateCandidateInterviewStatus: string
+  empScheduleInterviewDetails: string
+  updateInterview: string
+}
+export interface CandidateListApi extends ApiBase {
+  searchScheduledCandidate: string
+  getEmpCountries: string
+  getAllTechnology: string
+  getCountryWiseCandidatesList: string
+  deleteCandidate: string
+}
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
