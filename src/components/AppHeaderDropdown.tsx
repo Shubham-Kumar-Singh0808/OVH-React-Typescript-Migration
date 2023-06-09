@@ -42,7 +42,7 @@ const AppHeaderDropdown = (): JSX.Element => {
         </CDropdownToggle>
         <CDropdownMenu className="py-1 px-2">
           <Link to={'/notifications'} className="dropdown-item text-muted">
-            You have messages
+            You have messages.
           </Link>
           <CDropdownDivider />
           <Link to={'/notifications'} className="dropdown-item">
@@ -51,7 +51,6 @@ const AppHeaderDropdown = (): JSX.Element => {
           </Link>
         </CDropdownMenu>
       </CDropdown>
-      &nbsp; &nbsp; &nbsp;
       <CDropdown variant="nav-item" data-testid="logout-button">
         <CDropdownToggle {...dropdownToggleProps}>
           <i className="fa fa-power-off fa-lg"></i>
