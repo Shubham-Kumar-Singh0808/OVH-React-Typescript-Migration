@@ -96,10 +96,43 @@ export type saveButnprops = {
 }
 
 export type UpdateProps = {
-  candidateId: number
   holdSubStatus: string
-  status: string
   statusComments: string
+  candiadateEmailId: string
+  candidateId: string | number
+  candidateName: string
+  communicationComments: string
+  country: null
+  ctc: null
+  cycleDTOs: null
+  description: null
+  ectc: null
+  excellenceComments: string
+  experiance: null
+  interviewComments: string
+  interviewCycleId: number
+  interviewDate: string
+  interviewMode: string
+  interviewResultStatus: null
+  interviewRound: string
+  interviewStatus: null
+  interviewTime: string
+  interviewers: string
+  interviewersDTOList: null
+  jobCode: null
+  mobileNumber: string
+  np: null
+  personId: null
+  proactiveComments: string
+  rating: 1
+  reason: null
+  recruiter: null
+  skills: string
+  skypeId: null
+  sourceName: null
+  status: string
+  technology: null
+  updatedBy: null
 }
 
 export type EmpScheduleInterviewData = {
