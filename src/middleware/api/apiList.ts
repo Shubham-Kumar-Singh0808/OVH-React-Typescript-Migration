@@ -110,6 +110,8 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  IntervieweeDetailsApi,
+  CandidateListApi,
   VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
@@ -1039,6 +1041,25 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
+}
+
+export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
+  timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
+  saveInitialComments: apiPrefix + '/jobapplicant/jobAdmin/saveInitialComments',
+  updateCandidateInterviewStatus:
+    apiPrefix + '/jobapplicant/jobAdmin/updateCandidateInterviewStatus',
+  empScheduleInterviewDetails:
+    apiPrefix + '/jobapplicant/empScheduleInterviewDetails',
+  updateInterview: apiPrefix + '/jobapplicant/jobAdmin/updateInterview',
+}
+export const CandidateListApiConfig: CandidateListApi = {
+  searchScheduledCandidate:
+    apiPrefix + '/jobapplicant/jobAdmin/searchScheduledCandidate',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getCountryWiseCandidatesList:
+    apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
+  deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
 }
 
 export const GetAssetListConfig: AssetListApi = {
