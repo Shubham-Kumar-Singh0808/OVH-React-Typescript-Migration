@@ -28,16 +28,16 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
             return (
               <>
                 <div className="sh-timeline-container">
-                  {timeLineListSelector?.cycleDTOs?.map((item, index) => (
+                  {timeLineListSelector?.cycleDTOs?.map((data, index) => (
                     <div
                       key={index}
                       className="sh-timeline-card"
                       data-testid="recruitHistory-timelineCard"
                     >
                       <div className="sh-timeline-timestamp">
-                        {item?.interviewDate}
+                        {data?.interviewDate}
                         <div className="timeline-time">
-                          {item?.interviewTime}
+                          {data?.interviewTime}
                         </div>
                       </div>
 
@@ -61,17 +61,17 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                                 cursor: 'pointer',
                               }}
                             >
-                              {item?.interviewers} -
+                              {data?.interviewers} -
                             </h4>
                           </div>
                           <div>
-                            <RatingStarValue rating={item.rating} />
+                            <RatingStarValue rating={data.rating} />
                           </div>
                         </div>
                         <div className="sh-timeline-body">
                           <>
                             {result}
-                            {item.proactiveComments != null ? (
+                            {data.proactiveComments != null ? (
                               <div className="mb-1">
                                 <CFormLabel className="col-form-label p-0">
                                   <blockquote className="interview-blockquote bq-open">
@@ -79,12 +79,12 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                                   </blockquote>
                                 </CFormLabel>
                                 &nbsp;
-                                {item.proactiveComments}
+                                {data.proactiveComments}
                               </div>
                             ) : (
                               <></>
                             )}
-                            {item.communicationComments != null ? (
+                            {data.communicationComments != null ? (
                               <div className="mb-1">
                                 <CFormLabel className="col-form-label p-0">
                                   <blockquote className="interview-blockquote bq-open">
@@ -92,12 +92,12 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                                   </blockquote>
                                 </CFormLabel>
                                 &nbsp;
-                                {item.communicationComments}
+                                {data.communicationComments}
                               </div>
                             ) : (
                               <></>
                             )}
-                            {item.excellenceComments != null ? (
+                            {data.excellenceComments != null ? (
                               <div className="mb-1">
                                 <CFormLabel className="col-form-label p-0">
                                   <blockquote className="interview-blockquote bq-open">
@@ -105,12 +105,12 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                                   </blockquote>
                                 </CFormLabel>
                                 &nbsp;
-                                {item.excellenceComments}
+                                {data.excellenceComments}
                               </div>
                             ) : (
                               <></>
                             )}
-                            {item.interviewComments != null ? (
+                            {data.interviewComments != null ? (
                               <div className="mb-1">
                                 <CFormLabel className="col-form-label p-0">
                                   <blockquote className="interview-blockquote bq-open">
@@ -118,7 +118,7 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                                   </blockquote>
                                 </CFormLabel>
                                 &nbsp;
-                                {item.interviewComments}
+                                {data.interviewComments}
                               </div>
                             ) : (
                               <></>
