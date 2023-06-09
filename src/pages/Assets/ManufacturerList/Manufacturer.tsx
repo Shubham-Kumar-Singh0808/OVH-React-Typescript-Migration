@@ -178,6 +178,8 @@ const Manufacturer = (): JSX.Element => {
           setToggle={setToggle}
           editManufacturerData={editManufacturerData}
           setEditManufacturerData={setEditManufacturerData}
+          // currentPage={currentPage}
+          // pageSize={pageSize}
         />
       )}
     </>
