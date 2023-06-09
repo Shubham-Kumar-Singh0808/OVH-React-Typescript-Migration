@@ -71,7 +71,7 @@ const InitialManagerButtons = ({
       // if manager is saving an already saved document, then we have to use different api for that
       const savedFinalData: OutgoingSaveProjectTailoringDocument = {
         ...finalData,
-        processHeaddto: alreadySavedDocument.processHeaddto,
+        processHeaddto: alreadySavedDocument?.processHeaddto,
         id: +alreadySavedDocument.id,
         rejectComments: null,
       }
@@ -104,7 +104,7 @@ const InitialManagerButtons = ({
     if (typeof alreadySavedDocument !== 'string') {
       submitDocumentHandler({
         ...finalData,
-        processHeaddto: alreadySavedDocument.processHeaddto,
+        processHeaddto: alreadySavedDocument?.processHeaddto,
         id: alreadySavedDocument.id,
       })
     } else {

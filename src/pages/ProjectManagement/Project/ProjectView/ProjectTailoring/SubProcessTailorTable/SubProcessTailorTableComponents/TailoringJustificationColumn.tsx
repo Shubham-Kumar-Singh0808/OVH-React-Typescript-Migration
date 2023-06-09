@@ -23,8 +23,8 @@ const TailoringJustificationColumns = (): JSX.Element => {
 
   return (
     <>
-      {managerUserAccessToFeatures.updateaccess &&
-        !sqaUserAccessToFeatures.viewaccess && (
+      {managerUserAccessToFeatures?.updateaccess &&
+        !sqaUserAccessToFeatures?.viewaccess && (
           // for manager this is shown compulsorly
           <>
             <CTableHeaderCell scope="col" className="profile-tab-content">
@@ -35,8 +35,8 @@ const TailoringJustificationColumns = (): JSX.Element => {
             </CTableHeaderCell>
           </>
         )}
-      {managerUserAccessToFeatures.updateaccess &&
-        sqaUserAccessToFeatures.viewaccess && (
+      {managerUserAccessToFeatures?.updateaccess &&
+        sqaUserAccessToFeatures?.viewaccess && (
           // for admin this is shown compulsorly
           <>
             <CTableHeaderCell scope="col" className="profile-tab-content">
@@ -47,8 +47,8 @@ const TailoringJustificationColumns = (): JSX.Element => {
             </CTableHeaderCell>
           </>
         )}
-      {!managerUserAccessToFeatures.updateaccess &&
-        sqaUserAccessToFeatures.viewaccess &&
+      {!managerUserAccessToFeatures?.updateaccess &&
+        sqaUserAccessToFeatures?.viewaccess &&
         (tailorStatus === ProjectTailoringStatusEnum.approved ||
           tailorStatus === ProjectTailoringStatusEnum.updated ||
           tailorStatus === ProjectTailoringStatusEnum.submitted ||
