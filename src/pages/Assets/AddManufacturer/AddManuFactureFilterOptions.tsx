@@ -35,10 +35,6 @@ const AddManuFactureFilterOptions = ({
   }
 
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  }, [dispatch])
   const handleAddManufactureHandler = async () => {
     const addManuFactureListResultAction = await dispatch(
       reduxServices.ManufacturerList.addManufacturer({
