@@ -14,6 +14,7 @@ const ReporteesAutoComplete = ({
   setShouldRenderTable,
   autoCompleteTarget,
   shouldRenderTable,
+  setIsActive,
 }: ChangeReporteesProps): JSX.Element => {
   const [isDisabled, setIsDisabled] = useState<boolean>(true)
   const [managerId, setManagerId] = useState<number>()
@@ -98,6 +99,7 @@ const ReporteesAutoComplete = ({
         placeHolder={placeHolder}
         onClickHandler={onClickHandler}
         autoCompleteTarget={autoCompleteTarget}
+        setIsActive={setIsActive}
       />
     ) : (
       <EmployeesListUnderManagerTable
@@ -106,6 +108,7 @@ const ReporteesAutoComplete = ({
         placeHolder={placeHolder}
         onClickHandler={onClickHandler}
         autoCompleteTarget={autoCompleteTarget}
+        setIsActive={setIsActive}
       />
     )
 
@@ -113,13 +116,14 @@ const ReporteesAutoComplete = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="mb-3 ms-5">
-            <CCol sm={2}>
-              <CFormLabel data-testid="mLabel">
-                Project Manager:
-                <span className={validationClassName}>*</span>
-              </CFormLabel>
-            </CCol>
+          <CRow className="mb-3">
+            <CFormLabel
+              data-testid="mLabel"
+              className="col-sm-2 col-form-label text-end ms-5"
+            >
+              From Manager:
+              <span className={validationClassName}>*</span>
+            </CFormLabel>
 
             <CCol sm={3}>
               <Autocomplete
