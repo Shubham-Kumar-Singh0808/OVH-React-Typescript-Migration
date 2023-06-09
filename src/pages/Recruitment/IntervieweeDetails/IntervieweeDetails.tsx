@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -18,6 +18,7 @@ import OToast from '../../../components/ReusableComponent/OToast'
 
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false)
 
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
@@ -110,6 +111,14 @@ const IntervieweeDetails = (): JSX.Element => {
     }
   }
 
+  useEffect(() => {
+    if (comment?.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')) {
+      setIsButtonEnabled(true)
+    } else {
+      setIsButtonEnabled(false)
+    }
+  }, [comment])
+
   const resumeDownload = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const resumePath = timeLineListSelector.resumePath
@@ -150,7 +159,7 @@ const IntervieweeDetails = (): JSX.Element => {
           </CCol>
         </CRow>
         <CForm>
-          <CRow className="mt-1 mb-0 align-items-center">
+          <CRow className="mt-1 mb-0 align-items-center interview-name">
             <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
               Name:
             </CFormLabel>
@@ -283,6 +292,7 @@ const IntervieweeDetails = (): JSX.Element => {
               className="btn-ovh me-1 text-white interview-save"
               color="success"
               onClick={saveBtnHandler}
+              disabled={!isButtonEnabled}
             >
               Save
             </CButton>

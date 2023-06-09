@@ -68,15 +68,15 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                   <>
                     {result}
                     {data.proactiveComments != null ? (
-                      <div className="mb-1">
-                        <CFormLabel className="col-form-label p-0">
-                          <blockquote className="interview-blockquote bq-open">
+                      <>
+                        <blockquote className="mb-1 interview-blockquote bq-open">
+                          <CFormLabel className="col-form-label p-0">
                             Proactive :
-                          </blockquote>
-                        </CFormLabel>
-                        &nbsp;
-                        {data.proactiveComments}
-                      </div>
+                          </CFormLabel>
+                          &nbsp;
+                          {data.proactiveComments}
+                        </blockquote>
+                      </>
                     ) : (
                       <></>
                     )}
