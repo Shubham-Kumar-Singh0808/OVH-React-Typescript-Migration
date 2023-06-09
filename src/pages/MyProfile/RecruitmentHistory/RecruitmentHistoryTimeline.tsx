@@ -9,7 +9,7 @@ const RecruitmentHistoryTimeline = ({
 }: {
   timelineData: IncomingRecruitmentHistory
   resumeButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
-}) => {
+}): JSX.Element => {
   return (
     <>
       {timelineData?.cycleDTOs?.length > 0 ? (
