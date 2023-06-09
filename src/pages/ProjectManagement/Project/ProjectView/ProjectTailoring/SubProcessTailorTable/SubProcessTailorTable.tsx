@@ -26,7 +26,10 @@ const SubProcessTailorTable = ({
   )
   return (
     <CTable striped responsive align="middle">
-      <CTableHead className="profile-tab-header">
+      <CTableHead
+        className="profile-tab-header"
+        style={{ backgroundColor: '#1b5d95' }}
+      >
         <CTableRow>
           <CTableHeaderCell scope="col" className="profile-tab-content">
             #
