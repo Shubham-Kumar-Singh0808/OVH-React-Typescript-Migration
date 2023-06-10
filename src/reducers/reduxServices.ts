@@ -128,7 +128,6 @@ import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWa
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
-import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 
 export const reduxServices = {
@@ -262,6 +261,5 @@ export const reduxServices = {
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
   productSpecificationList: productSpecificationListService,
-  addNewProduct: addProductService,
   recruitmentHistory: recruitmentHistoryServices,
 }

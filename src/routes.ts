@@ -434,10 +434,7 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
-const ProductSpecificationList = React.lazy(
-  () =>
-    import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
-)
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1036,11 +1033,6 @@ const routes = [
     path: '/assetList',
     name: 'Asset List',
     component: AssetList,
-  },
-  {
-    path: '/productSpecificationList',
-    name: 'Product Specification List',
-    component: ProductSpecificationList,
   },
 ]
 export default routes

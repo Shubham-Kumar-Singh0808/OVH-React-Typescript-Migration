@@ -138,7 +138,6 @@ import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTyp
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
-import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 
 export const allReducers = {
@@ -278,7 +277,6 @@ export const allReducers = {
   assetsWarrantyList: assetsWarrantyListReducer,
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
-  addProduct: addProductReducer,
   recruitmentHistory: recruitmentHistoryReducer,
   // add your slice reducers here
 }
