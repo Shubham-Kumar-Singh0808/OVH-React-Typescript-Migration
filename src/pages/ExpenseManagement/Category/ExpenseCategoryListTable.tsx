@@ -241,10 +241,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                       </div>
                     </CTableDataCell>
                   ) : (
-                    <CTableDataCell
-                      className="ng-binding"
-                      data-testid={`categoryNames${index}`}
-                    >
+                    <CTableDataCell className="ng-binding">
                       {categoryItems.categoryName}
                     </CTableDataCell>
                   )}
@@ -255,7 +252,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                         <CTooltip content="Save">
                           <CButton
                             color="success"
-                            data-testid={`sh-save-btn${index}`}
+                            data-testid={`save-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveExpenseCategoryButtonHandler}
                             disabled={
@@ -273,7 +270,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                         </CTooltip>
                         <CTooltip content="Cancel">
                           <CButton
-                            data-testId=""
+                            data-testid={`cancel-btn${index}`}
                             color="warning"
                             className="btn-ovh me-1"
                             onClick={cancelLeaveCategoryButtonHandler}
@@ -287,7 +284,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                         {/* {userAccess?.updateaccess && (  )} */}
                         <CTooltip content="Edit">
                           <CButton
-                            data-testid={`btn-categoryClose${index}`}
+                            data-testid={`btn-categoryEdit${index}`}
                             color="info btn-ovh me-1"
                             className="btn-ovh-employee-list"
                             onClick={() => {

@@ -125,7 +125,7 @@ const AddExpenseCategory = (): JSX.Element => {
         <CCol sm={3}>
           <CFormInput
             className="mb-1"
-            data-testid="categoryNames"
+            data-testid="categoryName"
             type="text"
             id="categoryName"
             size="sm"
