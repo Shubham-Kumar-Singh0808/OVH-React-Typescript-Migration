@@ -93,7 +93,7 @@ const ProjectHiveActivityReportOptions = ({
   }
 
   const setProjectMonthToDisplay = useCallback(
-    (dateValue) => {
+    (dateValue: string) => {
       const projectMonthToDisplay =
         dateValue === projectCurrentMonthDate
           ? moment().format('MMMM-YYYY')

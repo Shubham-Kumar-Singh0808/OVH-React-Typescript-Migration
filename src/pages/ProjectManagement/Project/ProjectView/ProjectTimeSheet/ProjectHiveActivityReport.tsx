@@ -27,7 +27,7 @@ const ProjectHiveActivityReport = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
   const setProjectMonthToDisplay = useCallback(
-    (dateValue) => {
+    (dateValue: string) => {
       const projectMonthToDisplay =
         dateValue === currentMonthDate
           ? moment().format('MMMM-YYYY')

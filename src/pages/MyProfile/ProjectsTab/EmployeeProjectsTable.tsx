@@ -146,9 +146,11 @@ const EmployeeProjectsTable = (): JSX.Element => {
                       {data.managerName}
                     </CTableDataCell>
                     <CTableDataCell scope="row">
-                      {data.startdate}
+                      {data.startdate as string}
                     </CTableDataCell>
-                    <CTableDataCell scope="row">{data.enddate}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.enddate as string}
+                    </CTableDataCell>
                     <CTableDataCell scope="row">{health}</CTableDataCell>
                   </CTableRow>
                   {isIconVisible && selectEmpId === data.id ? (

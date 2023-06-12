@@ -59,7 +59,7 @@ const AttendanceReport = (): JSX.Element => {
   } = usePagination(listSize, 20)
 
   const setMonthToDisplay = useCallback(
-    (dateValue) => {
+    (dateValue: number) => {
       const monthToDisplay =
         dateValue === currentMonth
           ? moment().format('MMMM-YYYY')
