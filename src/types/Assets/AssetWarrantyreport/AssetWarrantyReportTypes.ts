@@ -69,10 +69,10 @@ export type AssetsWarrantyListTableProps = {
 }
 
 export type ExportAssetWarrantyListProps = {
-  startIndex: number
-  endIndex: number
   from: string
   to: string
   dateSelection: string
+  startIndex: number
+  endIndex: number
   token: string
 }

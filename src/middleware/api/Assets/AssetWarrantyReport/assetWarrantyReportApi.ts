@@ -17,9 +17,9 @@ const getAssetsWarrantyList = async (
     method: AllowedHttpMethods.post,
     params: {
       dateSelection: props.dateSelection ?? '',
-      endIndex: props.endIndex ?? 20,
+      endIndex: props.endIndex ?? '',
       from: props.from ?? '',
-      startIndex: props.startIndex ?? 0,
+      startIndex: props.startIndex ?? '',
       to: props.to ?? '',
     },
   })
@@ -35,11 +35,11 @@ const getExportAssetsWarrantyList = async (
     url: assetWarrantyReportConfig.downloadExportAssetWarrantyList,
     method: AllowedHttpMethods.get,
     params: {
-      startIndex: props.startIndex,
-      endIndex: props.endIndex,
       from: props.from,
       to: props.to,
       dateSelection: props.dateSelection,
+      startIndex: props.startIndex,
+      endIndex: props.endIndex,
       token: props.token,
     },
     responseType: 'blob',

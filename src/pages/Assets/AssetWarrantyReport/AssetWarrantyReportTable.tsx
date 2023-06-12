@@ -154,15 +154,17 @@ const AssetWarrantyReportTable = (
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <p>
-            <strong>Total Records: {assetListSizeRecords} </strong>
-          </p>
+          <strong>
+            {assetListSizeRecords
+              ? `Total Records: ${assetListSizeRecords}`
+              : `No Records Found...`}
+          </strong>
         </CCol>
         <CCol xs={3}>
           {assetListSizeRecords > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
