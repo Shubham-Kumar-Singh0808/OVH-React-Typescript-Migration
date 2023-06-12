@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import {
-  CButton,
   CCol,
   CRow,
   CTable,
@@ -59,19 +58,6 @@ const AssetListTable = ({
     <>
       {assets?.length > 0 && (
         <>
-          <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              <CButton
-                color="info"
-                className="text-white"
-                size="sm"
-                data-testid="export-button-download"
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
-            </CCol>
-          </CRow>
           <CTable striped responsive className="mt-5 align-middle alignment">
             <CTableHead>
               <CTableRow>

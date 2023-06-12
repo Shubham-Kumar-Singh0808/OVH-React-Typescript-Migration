@@ -9,16 +9,22 @@ const mockSetTogglePage = jest.fn()
 
 describe('Job Openings without data', () => {
   beforeEach(() => {
-    render(<ViewJobInfo setToggle={mockSetTogglePage} />, {
-      preloadedState: {
-        jobVacancies: {
-          isLoading: ApiLoadingState.succeeded,
-          listSize: 0,
-          getAllTechnology: [],
-          getAllJobVacancies: [],
+    render(
+      <ViewJobInfo
+        setToggle={mockSetTogglePage}
+        setEditViewJobInfo={mockSetTogglePage}
+      />,
+      {
+        preloadedState: {
+          jobVacancies: {
+            isLoading: ApiLoadingState.succeeded,
+            listSize: 0,
+            getAllTechnology: [],
+            getAllJobVacancies: [],
+          },
         },
       },
-    })
+    )
   })
   test('should be able to render  Job Openings  Title', () => {
     expect(screen.getByText('Job Info')).toBeInTheDocument()
