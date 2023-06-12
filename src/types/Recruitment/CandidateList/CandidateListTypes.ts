@@ -11,7 +11,7 @@ export type CandidateAppliedForList = {
   jobCode: string
   positionVacant: string
   minimumExperience: string
-  description: string
+  description: string | null
   opendDate: string
   expiryDate: null | string
   noOfRequirements: number
@@ -71,29 +71,9 @@ export type CandidateTotalInfo = {
   list: CandidateLists[]
 }
 
-export enum CandidateListPagesEnum {
-  CandidateListLanding = 'Candidate List',
-  addCandidate = 'Add New Candidate',
-  addTechnology = 'Add New Technology',
-}
-
-export interface CandidateListJobVacancies {
-  id: number
-  jobCode: string
-  positionVacant: string
-  minimumExperience: string
-  description: string | null
-  opendDate: string
-  expiryDate: string | null
-  noOfRequirements: number
-  offered: number
-  remaining: number
-  status: string
-}
-
 export interface IncomingAllJobVacanciesList {
   size: number
-  list: CandidateListJobVacancies[]
+  list: CandidateAppliedForList[]
 }
 
 export interface GetAllJobVacanciesParams {
@@ -103,16 +83,32 @@ export interface GetAllJobVacanciesParams {
   searchJobTitle: string | null
 }
 
+export interface EmployeeListItem {
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
+}
+
+export interface IncomingCompaniesData {
+  companyId: number
+  companyName: string
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
   candidateDetails: CandidateLists
   allCandidateDetails: CandidateLists[]
   allCountryDetails: country
+  allEmployeeDetailsList: EmployeeListItem[]
   empCountries: country[]
   getAllTechnology: GetAllTechnology[]
-  visiblePage: CandidateListPagesEnum
   allJobVacancies: IncomingAllJobVacanciesList
+  allCompaniesData: IncomingCompaniesData[]
 }
 export type GetAllTechnology = {
   id: number
@@ -152,9 +148,112 @@ export interface CandidateListFilterOptionsProps {
   searchButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
+export enum CandidateWhatsAppNotificationsRadio {
+  yes = 'Yes',
+  no = 'No',
+}
+
+export enum CandidateSourceType {
+  internal = 'Internal',
+  external = 'External',
+  Others = 'Others',
+}
+
+export enum CandidateJobTypeEnum {
+  fullTime = 'Full Time',
+  partTime = 'Part Time',
+}
+
 export interface AddEditCandidateTemplateProps {
+  backButtonLink: string
   firstName: string
   firstNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   lastName: string
   lastNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  aadharNumber: string
+  aadharNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  panNumber: string
+  panNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  appliedFor: CandidateAppliedForList
+  appliedForChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  sourceType: string
+  sourceTypeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  experience: string
+  experienceChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  sourceName: string
+  setSourceName: React.Dispatch<React.SetStateAction<string>>
+  emailId: string
+  setEmailId: React.Dispatch<React.SetStateAction<string>>
+  emailIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  linkedInId: string
+  linkedInIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  mobileCode: country
+  mobileCodeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  mobileNumber: string
+  mobileNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  dob: string
+  setDob: React.Dispatch<React.SetStateAction<string>>
+  technology: string
+  technologyChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  ctc: string
+  ctcChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  ectc: string
+  ectcChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  recruiterName: string
+  setRecruiterName: React.Dispatch<React.SetStateAction<string>>
+  skills: string
+  skillsChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  currentEmployer: string
+  setCurrentEmployer: React.Dispatch<React.SetStateAction<string>>
+  currentLocation: string
+  currentLocationChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  noticePeriod: string
+  noticePeriodChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  skypeId: string
+  skypeIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  jobType: string
+  jobTypeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  selectCountry: country
+  countryChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  whatsAppNotifications: string
+  whatsAppNotificationsChangeHandler: (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => void
+  reasonForChange: string
+  reasonForChangeHandler: (value: string) => void
+  uploadedFileHandler: (element: HTMLInputElement) => void
+  showEditor: boolean
+  setFinalButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface AddNewCandidateDTO {
+  notifications: string
+  candidateEmail: string
+  mobile: string
+  countryCode: number
+  candidateFirstName: string
+  candidateLastName: string
+  adhar: string | null
+  pan: string | null
+  appliedFor: CandidateAppliedForList
+  sourceType: string
+  sourceName: string
+  experience: string
+  technology: string
+  linkedin: string | null
+  dob: string
+  recruiter: string | null
+  skills: string
+  ctc: string
+  ectc: string
+  currentEmployer: string | null
+  currentLocation: string
+  np: string
+  jobTypeName: string
+  skypeId: string | null
+  countryId: number
+  reason: string
+  scheduleFlag: 'no'
+  interviewersDTOList: []
+  scheduleTime: string
 }

@@ -1061,6 +1061,12 @@ export const CandidateListApiConfig: CandidateListApi = {
     apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
   deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
   getAllJobVacanciesList: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  checkCandidateEmail: apiPrefix + '/jobapplicant/checkeamil',
+  checkCandidateMobileNumber:
+    apiPrefix + '/jobapplicant/isCandidateMobileNumberExists',
+  getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
+  addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
 }
 
 export const GetAssetListConfig: AssetListApi = {

@@ -8,12 +8,10 @@ import {
   CInputGroup,
   CFormInput,
 } from '@coreui/react-pro'
-import {
-  CandidateListFilterOptionsProps,
-  CandidateListPagesEnum,
-} from '../../../types/Recruitment/CandidateList/CandidateListTypes'
+import { Link } from 'react-router-dom'
+import { CandidateListFilterOptionsProps } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useTypedSelector } from '../../../stateStore'
 
 const CandidateListFilterOptions = ({
   selectStatus,
@@ -29,26 +27,12 @@ const CandidateListFilterOptions = ({
   viewButtonHandler,
   searchButtonHandler,
 }: CandidateListFilterOptionsProps): JSX.Element => {
-  const dispatch = useAppDispatch()
   const getAllEmpCountries = useTypedSelector(
     reduxServices.candidateList.selectors.getAllEmpCountries,
   )
   const getAllTechnology = useTypedSelector(
     reduxServices.candidateList.selectors.getAllTechnology,
   )
-
-  const addCandidateButtonHandler = (
-    e: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.preventDefault()
-    dispatch(reduxServices.candidateList.getAllJobVacanciesThunk())
-    dispatch(reduxServices.candidateList.getEmpCountries())
-    dispatch(
-      reduxServices.candidateList.actions.changePageHandler(
-        CandidateListPagesEnum.addCandidate,
-      ),
-    )
-  }
 
   return (
     <>
@@ -155,11 +139,10 @@ const CandidateListFilterOptions = ({
           </CButton>
         </CCol>
         <CCol xs={3} className="d-md-flex justify-content-md-end">
-          <CButton
-            color="info btn-ovh me-0"
-            onClick={addCandidateButtonHandler}
-          >
-            <i className="fa fa-plus me-1"></i> Add Candidate
+          <CButton color="info btn-ovh me-0">
+            <Link to="/addNewCandidate" style={{ color: 'white' }}>
+              <i className="fa fa-plus me-1"></i> Add Candidate
+            </Link>
           </CButton>
         </CCol>
       </CRow>

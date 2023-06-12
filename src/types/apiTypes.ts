@@ -865,6 +865,11 @@ export interface CandidateListApi extends ApiBase {
   getCountryWiseCandidatesList: string
   deleteCandidate: string
   getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string

@@ -1,8 +1,12 @@
 import {
+  AddNewCandidateDTO,
   CandidateListTableProps,
   CandidateTotalInfo,
+  EmployeeListItem,
   GetAllJobVacanciesParams,
   GetAllTechnology,
+  IncomingAllJobVacanciesList,
+  IncomingCompaniesData,
   country,
   viewHandlerProps,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
@@ -74,7 +78,9 @@ const deleteCandidate = async (candidateId: number): Promise<number> => {
   return response.data
 }
 
-const getAllJobVacancies = async (params: GetAllJobVacanciesParams) => {
+const getAllJobVacancies = async (
+  params: GetAllJobVacanciesParams,
+): Promise<IncomingAllJobVacanciesList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: CandidateListApiConfig.getAllJobVacanciesList,
     method: AllowedHttpMethods.get,
@@ -89,6 +95,62 @@ const getAllJobVacancies = async (params: GetAllJobVacanciesParams) => {
   return response.data
 }
 
+const getAllEmployeeDetails = async (): Promise<EmployeeListItem[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.getAllEmployeeDetails,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const checkCandidateEmail = async (email: string): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.checkCandidateEmail,
+    method: AllowedHttpMethods.get,
+    params: {
+      email,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const checkCandidateMobileNumber = async (
+  candidateMobileNumber: string,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.checkCandidateMobileNumber,
+    method: AllowedHttpMethods.get,
+    params: {
+      candidateMobileNumber,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getAllCompaniesData = async (): Promise<IncomingCompaniesData[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.getAllCompaniesData,
+    method: AllowedHttpMethods.get,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const addNewCandidate = async (
+  finalData: AddNewCandidateDTO,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.addNewCandidate,
+    method: AllowedHttpMethods.post,
+    data: finalData,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
@@ -96,6 +158,11 @@ const candidateListApi = {
   getCountryWiseCandidatesList,
   deleteCandidate,
   getAllJobVacancies,
+  getAllEmployeeDetails,
+  checkCandidateEmail,
+  checkCandidateMobileNumber,
+  getAllCompaniesData,
+  addNewCandidate,
 }
 
 export default candidateListApi
