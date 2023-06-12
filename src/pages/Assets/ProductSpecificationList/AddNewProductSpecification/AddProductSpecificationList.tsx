@@ -1,7 +1,7 @@
 import { CButton, CCol, CFormSelect, CFormLabel, CRow } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
@@ -20,7 +20,6 @@ const AddProduct = ({
   const [productSpecification, setProductSpecification] = useState<string>('')
   const [isButtonEnabled, setIsButtonEnabled] = useState(false)
   const [showEditor, setShowEditor] = useState<boolean>(true)
-
   const dispatch = useAppDispatch()
 
   const getAllLookUps = useTypedSelector(
@@ -108,6 +107,7 @@ const AddProduct = ({
           />,
         ),
       )
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   useEffect(() => {
@@ -122,7 +122,14 @@ const AddProduct = ({
       setIsButtonEnabled(false)
     }
   }, [selectAssetId, selectProductId, manufactureType, productSpecification])
-
+  const sortedProductTypeDetails = useMemo(() => {
+    if (AssetTypeList) {
+      return AssetTypeList.slice().sort((sortNode1, sortNode2) =>
+        sortNode1.productName.localeCompare(sortNode2.productName),
+      )
+    }
+    return []
+  }, [AssetTypeList])
   return (
     <>
       <OCard
@@ -179,18 +186,18 @@ const AddProduct = ({
             <CFormSelect
               aria-label="Default select example"
               size="sm"
-              id="productId"
+              id="selectProductId"
               data-testid="product-type"
-              name="productId"
+              name="selectProductId"
               value={selectProductId}
               onChange={(e) => {
                 setSelectProductId(e.target.value)
               }}
             >
               <option value={''}>Select Product Type</option>
-              {AssetTypeList?.length > 0 &&
-                AssetTypeList?.map((item, index) => (
-                  <option key={index} value={item.assetTypeId}>
+              {sortedProductTypeDetails?.length > 0 &&
+                sortedProductTypeDetails?.map((item, index) => (
+                  <option key={index} value={item.productId}>
                     {item.productName}
                   </option>
                 ))}
@@ -217,7 +224,7 @@ const AddProduct = ({
               <option value={''}>Select Manufacturer</option>
               {ProductTypeList.length > 0 &&
                 ProductTypeList?.map((product, index) => (
-                  <option key={index} value={product.productId}>
+                  <option key={index} value={product.manufacturerId}>
                     {product.manufacturerName}
                   </option>
                 ))}

@@ -42,18 +42,41 @@ const ProductSpecificationList = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  // const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (event.key === 'Enter') {
+  //     dispatch(
+  //       reduxServices.productSpecificationList.getProductSpecificationList({
+  //         endIndex: 20,
+  //         productName: searchInput,
+  //         startIndex: 0,
+  //       }),
+  //     )
+  //   }
+  // }
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.productSpecificationList.getProductSpecificationList({
-          endIndex: 20,
-          productName: searchInput,
-          startIndex: 0,
-        }),
-      )
+      if (searchInput === '') {
+        dispatch(
+          reduxServices.productSpecificationList.getProductSpecificationList({
+            productName: searchInput,
+            startIndex: 0,
+            endIndex: 20,
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.productSpecificationList.getProductSpecificationList({
+            productName: searchInput,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+          }),
+        )
+      }
     }
   }
-
   const multiSearchBtnHandler = () => {
     dispatch(
       reduxServices.productSpecificationList.getProductSpecificationList({
@@ -66,7 +89,7 @@ const ProductSpecificationList = (): JSX.Element => {
   const handleExportData = async () => {
     const productSpecificationListDownload =
       await productSpecificationListApi.exportProductSpecificationData({
-        specificationSearch: '',
+        specificationSearch: searchInput,
         endIndex: 0,
         productName: '',
         startIndex: 0,
@@ -136,7 +159,7 @@ const ProductSpecificationList = (): JSX.Element => {
                   onChange={(e) => {
                     setSearchInput(e.target.value)
                   }}
-                  onKeyDown={handleSearchBtn}
+                  onKeyDown={handleSearchByEnter}
                 />
                 <CButton
                   disabled={!searchInput}
