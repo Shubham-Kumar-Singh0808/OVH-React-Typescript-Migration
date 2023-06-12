@@ -179,7 +179,7 @@ const ChangeAssetFilterOptions = ({
     setCheckBox(isExpenseVendor)
   }
   const addVendorButtonHandler = () => {
-    setToggle('addVendorDetails')
+    dispatch(reduxServices.changeStatus.actions.setToggle('addVendorDetails'))
   }
   return (
     <>
@@ -230,17 +230,17 @@ const ChangeAssetFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2}>
-          <Link to={`/vendorListFlag=ADDVENDOR`} className="cursor-pointer">
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="add-vendorbtn"
-              // onClick={() => setVendorListFlag('')}
-              // onClick={() => setToggle('')}
-            >
-              <i className="fa fa-plus"></i>Add Vendor
-            </CButton>
-          </Link>
+          {/* <Link to={`/vendorListFlag=ADDVENDOR`} className="cursor-pointer"> */}
+          <CButton
+            color="info"
+            className="btn-ovh me-1"
+            data-testid="add-vendorbtn"
+            // onClick={() => setVendorListFlag('')}
+            onClick={addVendorButtonHandler}
+          >
+            <i className="fa fa-plus"></i>Add Vendor
+          </CButton>
+          {/* </Link> */}
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">

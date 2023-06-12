@@ -38,12 +38,17 @@ const initialAllAssetStatusState: ChangeAssetStatusSliceState = {
   saveEmployee: {} as SaveEmployee,
   getAllAssetResponse: {} as GetAllAssetResponse,
   isLoading: ApiLoadingState.idle,
+  toggleValue: '',
 }
 
 const changeStatusSlice = createSlice({
   name: 'vendorList',
   initialState: initialAllAssetStatusState,
-  reducers: {},
+  reducers: {
+    setToggle: (state, action) => {
+      state.toggleValue = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllAssets.pending, (state) => {

@@ -71,4 +71,5 @@ export type ChangeAssetStatusSliceState = {
   saveEmployee: SaveEmployee
   getAllAssetResponse: GetAllAssetResponse
   isLoading: LoadingState
+  toggleValue: ''
 }
