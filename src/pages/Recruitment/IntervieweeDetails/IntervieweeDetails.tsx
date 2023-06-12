@@ -286,7 +286,7 @@ const IntervieweeDetails = (): JSX.Element => {
           </CRow>
         </CForm>
         <CRow>
-          <CCol md={{ span: 6, offset: 2 }} className="mt-1">
+          <CCol md={{ span: 6, offset: 2 }} className="mt-2">
             <CButton
               data-testid="save-btn"
               className="btn-ovh me-1 text-white interview-save"
