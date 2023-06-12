@@ -10,7 +10,7 @@ import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
 const mockOnSelect = jest.fn()
 const mockSetEmpName = jest.fn()
 
-// const selectedEmpName = 'Pradeep Namburu'
+const selectedEmpName = 'Pradeep Namburu'
 
 describe('filter employee name', () => {
   describe('empty values', () => {
@@ -66,7 +66,11 @@ describe('filter employee name', () => {
       )
     })
     afterEach(cleanup)
-
+    test('render label', () => {
+      const empLabel = screen.getByTestId('ach-emp-name')
+      expect(empLabel).toBeInTheDocument()
+      expect(empLabel).toHaveTextContent('Employee:')
+    })
     test('render the input Field', () => {
       const empLabel = screen.getByTestId('ach-emp-name')
       expect(empLabel).toBeInTheDocument()
@@ -75,6 +79,11 @@ describe('filter employee name', () => {
     test('render the input field', () => {
       const input = screen.getByPlaceholderText('Employee')
       expect(input).toHaveValue('')
+    })
+    test('should call onChange', () => {
+      const input = screen.getByTestId('asset-type')
+      fireEvent.change(input, selectedEmpName)
+      // expect(input).toHaveValue('')
     })
   })
 
@@ -168,5 +177,16 @@ describe('filter employee name', () => {
       const vendorName = screen.getByTestId('asset-type')
       userEvent.type(vendorName, 'Sony')
     })
+    const mockSetCheckBox = jest.fn()
+    // it('sets the checkbox state to true when isExpenseVendor is true', () => {
+    //   const mockSetCheckBox = jest.fn()
+    //   const wrapper = shallow(
+    //     <ChangeAssetFilterOptions setCheckBox={mockSetCheckBox} />,
+    //   )
+
+    //   wrapper.instance().handleIsInternalStatus(true)
+
+    //   expect(mockSetCheckBox).toHaveBeenCalledWith(true)
+    // })
   })
 })

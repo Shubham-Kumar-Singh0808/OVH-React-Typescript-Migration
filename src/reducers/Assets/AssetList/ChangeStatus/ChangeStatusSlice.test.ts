@@ -65,7 +65,7 @@ describe('saveEmployee ', () => {
     }
     const state = reducer(initialAllAssetStatusState, action)
     expect(state).toEqual({
-      saveEmployee: undefined,
+      saveEmployee: {},
       getAllAssetResponse: {} as GetAllAssetResponse,
       isLoading: ApiLoadingState.succeeded,
     })

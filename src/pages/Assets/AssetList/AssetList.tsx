@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
 import ChangeAssetStatus from './ChangeAssetStatus/ChangeAssetStatus'
@@ -28,6 +29,9 @@ const AssetList = (): JSX.Element => {
     changeReportStatusTypes,
   )
 
+  // const { changeAsset } = useParams<{ changeAsset: string }>()
+
+  // console.log(changeAsset)
   const listSize = useTypedSelector(reduxServices.assetList.selectors.listSize)
 
   const CurrentPage = useTypedSelector(
@@ -97,3 +101,6 @@ const AssetList = (): JSX.Element => {
 }
 
 export default AssetList
+// function useQuery() {
+//   throw new Error('Function not implemented.')
+// }

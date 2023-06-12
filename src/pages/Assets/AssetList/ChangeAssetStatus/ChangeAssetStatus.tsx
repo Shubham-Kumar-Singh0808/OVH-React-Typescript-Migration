@@ -1,5 +1,6 @@
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { useLocation } from 'react-router-dom'
 import ChangeAssetFilterOptions from './ChangeAssetFilterOptions'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -35,7 +36,17 @@ const ChangeAssetStatus = ({
   const onSelectEmployee = (value: string) => {
     const empId = getEmployeeId(activeEmployee, value)
   }
+  // const location = useLocation()
+  // const queryParams = new URLSearchParams(location.search)
+  // const changeAsset = queryParams.get('changeAsset')
 
+  // useEffect(() => {
+  //   if (changeAsset) {
+  //     setToggle(changeAsset as string)
+  //   } else {
+  //     setToggle('')
+  //   }
+  // }, [changeAsset])
   return (
     <>
       <OCard
