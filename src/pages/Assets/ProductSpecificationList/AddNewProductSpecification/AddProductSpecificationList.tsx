@@ -200,7 +200,7 @@ const AddProduct = ({
         <CRow className="mt-3 ">
           <CFormLabel {...dynamicFormLabelProps('billable', formLabel)}>
             Manufacturer/ Brand Name:{' '}
-            {/* <span className={selectProductId ? TextWhite : TextDanger}>*</span> */}
+            <span className={selectProductId ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -230,6 +230,9 @@ const AddProduct = ({
             className="col-sm-3 col-form-label text-end"
           >
             Product Specification:
+            <span className={productSpecification ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           {showEditor ? (
             <CCol sm={8}>

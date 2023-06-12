@@ -109,16 +109,18 @@ const ProductSpecificationList = (): JSX.Element => {
                   Click to Export
                 </CButton>
                 &nbsp; &nbsp; &nbsp;
-                <CButton
-                  color="info"
-                  className="text-white btn-ovh"
-                  size="sm"
-                  data-testid="add-product"
-                  onClick={() => setToggle('/addAssetType')}
-                >
-                  <i className="fa fa-plus me-1"></i>
-                  Add
-                </CButton>
+                {userAccess?.createaccess && (
+                  <CButton
+                    color="info"
+                    className="text-white btn-ovh"
+                    size="sm"
+                    data-testid="add-product"
+                    onClick={() => setToggle('/addAssetType')}
+                  >
+                    <i className="fa fa-plus me-1"></i>
+                    Add
+                  </CButton>
+                )}
               </div>
             </CCol>
           </CRow>

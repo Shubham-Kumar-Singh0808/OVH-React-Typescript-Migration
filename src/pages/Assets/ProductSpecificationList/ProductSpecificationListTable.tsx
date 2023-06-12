@@ -74,7 +74,7 @@ const ProductSpecificationListTable = ({
     setIsDeleteModalVisible(true)
   }
   const dispatch = useAppDispatch()
-  const handleConfirmDeleteVisaDetails = async () => {
+  const handleConfirmDeleteProductSpecificationDetails = async () => {
     setIsDeleteModalVisible(false)
     const deleteFamilyMemberResultAction = await dispatch(
       reduxServices.addNewProduct.deleteProductSpecification(toDeleteVisaId),
@@ -95,7 +95,7 @@ const ProductSpecificationListTable = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Visa Detail deleted successfully"
+            toastMessage="Product Specification deleted successfully"
           />,
         ),
       )
@@ -182,9 +182,9 @@ const ProductSpecificationListTable = ({
                       {userAccess?.updateaccess && (
                         <CTooltip content="Edit">
                           <CButton
-                            color="info"
+                            color="info btn-ovh me-1"
                             size="sm"
-                            className="btn-ovh-employee-list"
+                            className="btn-ovh-employee-list  me-1"
                             onClick={() =>
                               editBtnHandler(
                                 productSpecification.assetTypeId,
@@ -197,13 +197,13 @@ const ProductSpecificationListTable = ({
                           </CButton>
                         </CTooltip>
                       )}
-                      &nbsp; &nbsp; &nbsp;
                       {userAccess?.deleteaccess && (
                         <CTooltip content="Delete">
                           <CButton
-                            color="danger"
+                            color="danger btn-ovh me-1"
+                            size="sm"
                             data-testid={`btn-delete${index}`}
-                            className="btn-ovh me-2"
+                            className="btn-ovh-employee-list me-1 "
                             onClick={() =>
                               handleShowDeleteModal(productSpecification.id)
                             }
@@ -276,7 +276,7 @@ const ProductSpecificationListTable = ({
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
-        confirmButtonAction={handleConfirmDeleteVisaDetails}
+        confirmButtonAction={handleConfirmDeleteProductSpecificationDetails}
         modalBodyClass="mt-0"
       >
         <>Do you really want to delete this ?</>

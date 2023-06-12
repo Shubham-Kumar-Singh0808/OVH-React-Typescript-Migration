@@ -133,6 +133,12 @@ const EditProductSpecificationFilterOptions = ({
       return { ...prevState, ...{ productSpecification } }
     })
   }
+  useEffect(() => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }, [])
   return (
     <>
       <CRow className="mt-3 ">
