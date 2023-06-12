@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import DatePicker from 'react-datepicker'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { dateFormat } from '../../../constant/DateFormat'
 import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
 import { downloadFile } from '../../../utils/helper'
@@ -43,13 +43,16 @@ const WarrantyDateStatus = ({
   const onHandleToDate = (value: Date) => {
     setToDate(moment(value).format(dateFormat))
   }
+  const assetWarrantyList = useTypedSelector(
+    reduxServices.assetsWarrantyList.selectors.assetsWarrantyList,
+  )
   const viewButtonHandler = () => {
     dispatch(
       reduxServices.assetsWarrantyList.getAssetsWarrantyList({
         dateSelection: selectDate,
-        endIndex: 20,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         from: fromDate || '',
-        startIndex: 0,
         to: toDate || '',
       }),
     )
@@ -77,10 +80,10 @@ const WarrantyDateStatus = ({
       await assetsWarrantyListApi.getExportAssetsWarrantyList({
         startIndex: 0,
         endIndex: 20,
-        from: '',
-        to: '',
-        dateSelection: 'Current Month',
-        token: '',
+        from: (fromDate as string) || 'undefined',
+        to: (toDate as string) || 'undefined',
+        dateSelection: selectDate,
+        token: localStorage.getItem('token') ?? '',
       })
     downloadFile(assetsWarrantyReportList, 'AssetsWarrantyReportListReport.csv')
   }
@@ -91,7 +94,6 @@ const WarrantyDateStatus = ({
         <CCol sm={2} md={1} className="text-end">
           <CFormLabel className="mt-2">Select:</CFormLabel>
         </CCol>
-
         <CCol sm={2}>
           <CFormSelect
             aria-label="Default select example"
@@ -201,20 +203,22 @@ const WarrantyDateStatus = ({
             </CButton>
           </CCol>
         </CCol>
-        <CRow className="justify-content-end export-Warranty">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="text-white btn-ovh"
-              size="sm"
-              data-testid="export-button"
-              onClick={handleExportEmployeeDesignationData}
-            >
-              <i className="fa fa-plus me-1"></i>
-              Click to Export
-            </CButton>
-          </CCol>
-        </CRow>
+        {assetWarrantyList?.length > 0 && (
+          <CRow className="justify-content-end export-Warranty">
+            <CCol className="text-end" md={4}>
+              <CButton
+                color="info"
+                className="text-white btn-ovh"
+                size="sm"
+                data-testid="export-button"
+                onClick={handleExportEmployeeDesignationData}
+              >
+                <i className="fa fa-plus me-1"></i>
+                Click to Export
+              </CButton>
+            </CCol>
+          </CRow>
+        )}
       </CRow>
     </>
   )

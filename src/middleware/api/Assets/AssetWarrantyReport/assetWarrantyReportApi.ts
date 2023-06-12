@@ -40,7 +40,7 @@ const getExportAssetsWarrantyList = async (
       dateSelection: props.dateSelection,
       startIndex: props.startIndex,
       endIndex: props.endIndex,
-      token: props.token,
+      token: localStorage.getItem('token') ?? '',
     },
     responseType: 'blob',
   })

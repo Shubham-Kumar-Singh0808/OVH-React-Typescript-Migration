@@ -77,4 +77,9 @@ describe('Assets Warranty Report Table Component Testing', () => {
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
+  test('should render with number of records  ', () => {
+    expect(
+      screen.getByText('Total Records: ' + mockAssetsWarrantyList.size),
+    ).toBeInTheDocument()
+  })
 })

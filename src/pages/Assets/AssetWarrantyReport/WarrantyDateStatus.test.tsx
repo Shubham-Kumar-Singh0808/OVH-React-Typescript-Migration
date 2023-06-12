@@ -3,6 +3,7 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import WarrantyDateStatus from './WarrantyDateStatus'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
 
 const mockSetSelect = jest.fn()
 const mockSetTogglePage = jest.fn()
@@ -26,7 +27,14 @@ const toRender = (
 )
 describe('Assets Warranty List List Filter Options Component Testing with data', () => {
   beforeEach(() => {
-    render(toRender)
+    render(toRender, {
+      preloadedState: {
+        assetsWarrantyList: {
+          warrantyAssetsDetails: mockAssetsWarrantyList.list,
+          listSize: mockAssetsWarrantyList.size,
+        },
+      },
+    })
   })
   screen.debug()
   // eslint-disable-next-line sonarjs/no-duplicate-string
