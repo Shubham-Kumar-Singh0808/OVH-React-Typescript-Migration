@@ -97,7 +97,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         ''
                       )}
-                      {history.allocation ? (
+                      {history.allocation || history.oldAllocation !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -111,7 +111,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {history.status ? (
+                      {history.status || history.oldStatus !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -126,7 +126,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                         <></>
                       )}
 
-                      {history.startdate ? (
+                      {history.oldStartDate || history.startdate !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -141,7 +141,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                         <></>
                       )}
 
-                      {history.enddate ? (
+                      {history.oldEndDate || history.enddate !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -156,7 +156,8 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                         <></>
                       )}
 
-                      {history.projectName ? (
+                      {history.projectName ||
+                      history.oldProjectName !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -171,7 +172,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                         <></>
                       )}
 
-                      {history.client ? (
+                      {history.client || history.oldClient !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -185,7 +186,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {history.status ? (
+                      {history.status || history.oldStatus !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
@@ -199,7 +200,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
                       ) : (
                         <></>
                       )}
-                      {history.type ? (
+                      {history.type || history.oldType !== null ? (
                         <>
                           <div className="mb-1">
                             <CFormLabel className="col-form-label p-0">
