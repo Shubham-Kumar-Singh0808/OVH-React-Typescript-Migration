@@ -8,6 +8,8 @@ describe('Location List Slice', () => {
     const initialState = {
       meetingLocations: [],
       isLoading: ApiLoadingState.idle,
+      currentPage: 1,
+      pageSize: 20,
     }
 
     it('Should be able to set isLoading to "loading" if getAllMeetingLocationsData  is pending', () => {
@@ -18,6 +20,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         meetingLocations: [],
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -29,6 +33,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         meetingLocations: [],
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -40,6 +46,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.loading,
         meetingLocations: [],
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -51,6 +59,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         meetingLocations: undefined,
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -62,6 +72,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         meetingLocations: undefined,
+        currentPage: 1,
+        pageSize: 20,
       })
     })
 
@@ -73,6 +85,8 @@ describe('Location List Slice', () => {
       expect(state).toEqual({
         isLoading: ApiLoadingState.succeeded,
         meetingLocations: undefined,
+        currentPage: 1,
+        pageSize: 20,
       })
     })
   })
