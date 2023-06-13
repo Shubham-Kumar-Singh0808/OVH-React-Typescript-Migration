@@ -87,7 +87,14 @@ const UpdateTicketEditFields = ({
 
   const onChangeSpentTime = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpentTime((prevState) => {
-      return { ...prevState, ...{ [event.target.name]: event.target.value } }
+      return {
+        ...prevState,
+        ...{
+          [event.target.name]: event.target.value
+            .replace(/\D/g, '')
+            .replace(/^0+/, ''),
+        },
+      }
     })
   }
 
@@ -607,6 +614,7 @@ const UpdateTicketEditFields = ({
               className="cursor-pointer"
               color="success btn-ovh me-1"
               onClick={updateBtnHandler}
+              disabled={dueDateError}
             >
               Update
             </CButton>
