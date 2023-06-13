@@ -37,6 +37,8 @@ import {
 } from '../../../../../constant/constantData'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 interface TypesObject {
   [key: string]: string
@@ -418,7 +420,7 @@ const EditProject = (): JSX.Element => {
     project.billingContactPersonEmail && !billingContactPersonEmailError
       ? 'text-white'
       : 'text-danger'
-  console.log(project.client)
+  console.log(project.description + 'description')
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -728,11 +730,7 @@ const EditProject = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol data-testid="spinner">
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </OCard>
   )
