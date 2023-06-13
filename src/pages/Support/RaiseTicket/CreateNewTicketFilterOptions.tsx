@@ -82,6 +82,21 @@ const CreateNewTicketFilterOptions = ({
       dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
     }
   }, [deptId, categoryId])
+
+  useEffect(() => {
+    setCategoryId(0)
+    setSubCategoryIdValue(0)
+    dispatch(
+      reduxServices.ticketApprovals.getDepartmentCategoryList(deptId as number),
+    )
+  }, [dispatch, deptId])
+
+  useEffect(() => {
+    setSubCategoryIdValue(0)
+    dispatch(
+      reduxServices.ticketApprovals.getSubCategoryList(categoryId as number),
+    )
+  }, [dispatch, categoryId])
   const commonFormatDate = 'l'
 
   const handleDescription = (description: string) => {
@@ -161,32 +176,6 @@ const CreateNewTicketFilterOptions = ({
     if (!file) return
     setUploadFile(file[0])
   }
-  useEffect(() => {
-    if (categoryId === 0) {
-      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
-    }
-  }, [dispatch, categoryId])
-
-  useEffect(() => {
-    if (!deptId) {
-      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
-      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
-      setSubCategoryIdValue(0)
-    }
-  }, [dispatch, deptId])
-
-  useEffect(() => {
-    if (!deptId) {
-      setCategoryId(undefined)
-      setSubCategoryIdValue(undefined)
-    }
-  }, [deptId])
-
-  useEffect(() => {
-    if (!categoryId) {
-      setSubCategoryIdValue(undefined)
-    }
-  }, [categoryId])
 
   const onHandleStartDatePicker = (value: Date) => {
     setSelectMealDate(moment(value).format(dateFormat))
