@@ -180,7 +180,7 @@ const EditChangeRequest = ({
               maxLength={150}
               onChange={(e) => setEditDescription(e.target.value)}
             ></CFormTextarea>
-            <p>{editDescription?.length}/150</p>
+            <p>{editDescription?.trim()?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>
