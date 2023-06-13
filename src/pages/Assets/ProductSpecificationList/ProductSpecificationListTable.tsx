@@ -169,7 +169,7 @@ const ProductSpecificationListTable = ({
                             )
                           }
                         >
-                          {parse(productSpecification.productSpecification)}
+                          {parse(productSpecificationLimit)}
                         </CLink>
                       </CTableDataCell>
                     ) : (

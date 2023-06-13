@@ -45,12 +45,15 @@ const AddProduct = ({
   const formLabel = 'col-sm-3 col-form-label text-end'
 
   useEffect(() => {
+    setSelectProductId('')
+    setManufactureType('')
     dispatch(
       reduxServices.addNewProduct.getAssetTypeList(Number(selectAssetId)),
     )
   }, [dispatch, selectAssetId])
 
   useEffect(() => {
+    setManufactureType('')
     dispatch(
       reduxServices.addNewProduct.getProductTypeList(Number(selectProductId)),
     )

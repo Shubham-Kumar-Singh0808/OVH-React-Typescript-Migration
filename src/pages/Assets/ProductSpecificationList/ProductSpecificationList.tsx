@@ -42,17 +42,6 @@ const ProductSpecificationList = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize])
 
-  // const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     dispatch(
-  //       reduxServices.productSpecificationList.getProductSpecificationList({
-  //         endIndex: 20,
-  //         productName: searchInput,
-  //         startIndex: 0,
-  //       }),
-  //     )
-  //   }
-  // }
   const handleSearchByEnter = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
