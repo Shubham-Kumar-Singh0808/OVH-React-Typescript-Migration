@@ -167,58 +167,55 @@ export enum CandidateJobTypeEnum {
 export interface AddEditCandidateTemplateProps {
   backButtonLink: string
   firstName: string
-  firstNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setFirstName: React.Dispatch<React.SetStateAction<string>>
   lastName: string
-  lastNameChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setLastName: React.Dispatch<React.SetStateAction<string>>
   aadharNumber: string
-  aadharNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setAadharNumber: React.Dispatch<React.SetStateAction<string>>
   panNumber: string
-  panNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setPanNumber: React.Dispatch<React.SetStateAction<string>>
   appliedFor: CandidateAppliedForList
-  appliedForChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setAppliedFor: React.Dispatch<React.SetStateAction<CandidateAppliedForList>>
   sourceType: string
-  sourceTypeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setSourceType: React.Dispatch<React.SetStateAction<string>>
   experience: string
-  experienceChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setExperience: React.Dispatch<React.SetStateAction<string>>
   sourceName: string
   setSourceName: React.Dispatch<React.SetStateAction<string>>
   emailId: string
   setEmailId: React.Dispatch<React.SetStateAction<string>>
-  emailIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
   linkedInId: string
-  linkedInIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setLinkedInId: React.Dispatch<React.SetStateAction<string>>
   mobileCode: country
-  mobileCodeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setMobileCode: React.Dispatch<React.SetStateAction<country>>
   mobileNumber: string
-  mobileNumberChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setMobileNumber: React.Dispatch<React.SetStateAction<string>>
   dob: string
   setDob: React.Dispatch<React.SetStateAction<string>>
   technology: string
-  technologyChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setTechnology: React.Dispatch<React.SetStateAction<string>>
   ctc: string
-  ctcChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setCtc: React.Dispatch<React.SetStateAction<string>>
   ectc: string
-  ectcChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setEctc: React.Dispatch<React.SetStateAction<string>>
   recruiterName: string
   setRecruiterName: React.Dispatch<React.SetStateAction<string>>
   skills: string
-  skillsChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setSkills: React.Dispatch<React.SetStateAction<string>>
   currentEmployer: string
   setCurrentEmployer: React.Dispatch<React.SetStateAction<string>>
   currentLocation: string
-  currentLocationChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setCurrentLocation: React.Dispatch<React.SetStateAction<string>>
   noticePeriod: string
-  noticePeriodChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setNoticePeriod: React.Dispatch<React.SetStateAction<string>>
   skypeId: string
-  skypeIdChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+  setSkypeId: React.Dispatch<React.SetStateAction<string>>
   jobType: string
-  jobTypeChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setJobType: React.Dispatch<React.SetStateAction<string>>
   selectCountry: country
-  countryChangeHandler: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  setSelectCountry: React.Dispatch<React.SetStateAction<country>>
   whatsAppNotifications: string
-  whatsAppNotificationsChangeHandler: (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => void
+  setWhatsAppNotifications: React.Dispatch<React.SetStateAction<string>>
   reasonForChange: string
   reasonForChangeHandler: (value: string) => void
   uploadedFileHandler: (element: HTMLInputElement) => void

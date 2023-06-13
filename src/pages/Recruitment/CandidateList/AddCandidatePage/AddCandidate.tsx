@@ -8,28 +8,18 @@ import {
   country,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
 import {
-  filterCandidateCountryByCountryId,
   initialCandidateCountry,
   initialCandidateAppliedForList,
-  filterCandidateAppliedForById,
   nonRequiredFinalCandidateData,
   getCurrentScheduleTime,
 } from '../CandidateListHelpers'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { regexNumberOnly } from '../../../../constant/constantData'
+import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { interchangeMonthAndDay } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import OCard from '../../../../components/ReusableComponent/OCard'
 
 const AddCandidate = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const allEmpCountriesList = useTypedSelector(
-    (state) => state.candidateList.empCountries,
-  )
-  const allJobVacanciesList = useTypedSelector(
-    (state) => state.candidateList.allJobVacancies?.list,
-  )
-
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
   const [aadharNumber, setAadharNumber] = useState<string>('')
@@ -74,114 +64,6 @@ const AddCandidate = (): JSX.Element => {
     dispatch(reduxServices.candidateList.getEmpCountries())
     dispatch(reduxServices.candidateList.getTechnology())
   }, [])
-
-  const firstNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value?.trim())
-  }
-
-  const lastNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value?.trim())
-  }
-
-  const aadharNumberChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    // only numbers allowed
-    setAadharNumber(e.target.value.replace(regexNumberOnly, ''))
-  }
-
-  const panNumberChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPanNumber(e.target.value)
-  }
-
-  const sourceTypeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSourceType(e.target.value)
-  }
-
-  const experienceChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // only numbers allowed
-    setExperience(e.target.value.replace(regexNumberOnly, ''))
-  }
-
-  const emailChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value.trim())
-  }
-
-  const linkedInIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLinkedInId(e.target.value.trim())
-  }
-
-  const mobileCodeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMobileCode(
-      filterCandidateCountryByCountryId(allEmpCountriesList, +e.target.value),
-    )
-  }
-
-  const mobileNumberChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const finalVal = e.target.value.replace(regexNumberOnly, '').trim()
-    if (finalVal.length <= 10) {
-      setMobileNumber(finalVal)
-    }
-  }
-
-  const technologyChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setTechnology(e.target.value)
-  }
-
-  const ctcChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // allowing only number input
-    setCtc(e.target.value.replace(regexNumberOnly, ''))
-  }
-
-  const ectcChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //allowing only number input
-    setEctc(e.target.value.replace(regexNumberOnly, ''))
-  }
-
-  const skillsChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSkills(e.target.value.trim())
-  }
-
-  const currentLocationChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setCurrentLocation(e.target.value.trim())
-  }
-
-  const noticePeriodChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    // allowing only number input
-    setNoticePeriod(e.target.value.replace(regexNumberOnly, ''))
-  }
-
-  const skypeIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSkypeId(e.target.value.trim())
-  }
-
-  const jobTypeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setJobType(e.target.value)
-  }
-
-  const whatsAppNotificationsChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setWhatsAppNotifications(e.target.value)
-  }
-
-  const countryChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectCountry(
-      filterCandidateCountryByCountryId(allEmpCountriesList, +e.target.value),
-    )
-  }
-
-  const appliedForChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAppliedFor(
-      filterCandidateAppliedForById(allJobVacanciesList, +e.target.value),
-    )
-  }
 
   const reasonForChangeHandler = (value: string) => {
     setReasonForChange(value)
@@ -292,56 +174,55 @@ const AddCandidate = (): JSX.Element => {
       <AddEditCandidateTemplate
         backButtonLink="jobschedulecandidateList"
         firstName={firstName}
-        firstNameChangeHandler={firstNameChangeHandler}
+        setFirstName={setFirstName}
         lastName={lastName}
-        lastNameChangeHandler={lastNameChangeHandler}
+        setLastName={setLastName}
         aadharNumber={aadharNumber}
-        aadharNumberChangeHandler={aadharNumberChangeHandler}
+        setAadharNumber={setAadharNumber}
         panNumber={panNumber}
-        panNumberChangeHandler={panNumberChangeHandler}
+        setPanNumber={setPanNumber}
         appliedFor={appliedFor}
-        appliedForChangeHandler={appliedForChangeHandler}
+        setAppliedFor={setAppliedFor}
         sourceType={sourceType}
-        sourceTypeChangeHandler={sourceTypeChangeHandler}
+        setSourceType={setSourceType}
         experience={experience}
-        experienceChangeHandler={experienceChangeHandler}
+        setExperience={setExperience}
         sourceName={sourceName}
         setSourceName={setSourceName}
         emailId={email}
         setEmailId={setEmail}
-        emailIdChangeHandler={emailChangeHandler}
         linkedInId={linkedInId}
-        linkedInIdChangeHandler={linkedInIdChangeHandler}
+        setLinkedInId={setLinkedInId}
         mobileCode={mobileCode}
-        mobileCodeChangeHandler={mobileCodeChangeHandler}
+        setMobileCode={setMobileCode}
         mobileNumber={mobileNumber}
-        mobileNumberChangeHandler={mobileNumberChangeHandler}
+        setMobileNumber={setMobileNumber}
         dob={dob}
         setDob={setDob}
         technology={technology}
-        technologyChangeHandler={technologyChangeHandler}
+        setTechnology={setTechnology}
         ctc={ctc}
-        ctcChangeHandler={ctcChangeHandler}
+        setCtc={setCtc}
         ectc={ectc}
-        ectcChangeHandler={ectcChangeHandler}
+        setEctc={setEctc}
         recruiterName={recruiterName}
         setRecruiterName={setRecruiterName}
         skills={skills}
-        skillsChangeHandler={skillsChangeHandler}
+        setSkills={setSkills}
         currentEmployer={currentEmployer}
         setCurrentEmployer={setCurrentEmployer}
         currentLocation={currentLocation}
-        currentLocationChangeHandler={currentLocationChangeHandler}
+        setCurrentLocation={setCurrentLocation}
         noticePeriod={noticePeriod}
-        noticePeriodChangeHandler={noticePeriodChangeHandler}
+        setNoticePeriod={setNoticePeriod}
         skypeId={skypeId}
-        skypeIdChangeHandler={skypeIdChangeHandler}
+        setSkypeId={setSkypeId}
         jobType={jobType}
-        jobTypeChangeHandler={jobTypeChangeHandler}
+        setJobType={setJobType}
         selectCountry={selectCountry}
-        countryChangeHandler={countryChangeHandler}
+        setSelectCountry={setSelectCountry}
         whatsAppNotifications={whatsAppNotifications}
-        whatsAppNotificationsChangeHandler={whatsAppNotificationsChangeHandler}
+        setWhatsAppNotifications={setWhatsAppNotifications}
         reasonForChange={reasonForChange}
         reasonForChangeHandler={reasonForChangeHandler}
         uploadedFileHandler={uploadedFileHandler}

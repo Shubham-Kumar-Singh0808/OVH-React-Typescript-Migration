@@ -28,66 +28,68 @@ import {
   candidateJobTypeList,
   get18YearsBackDate,
   getDataInputTestId,
+  filterCandidateAppliedForById,
+  filterCandidateCountryByCountryId,
 } from '../CandidateListHelpers'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
 import { getFormattedDate } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { regexNumberOnly } from '../../../../constant/constantData'
 
 const AddEditCandidateTemplate = ({
   backButtonLink,
   firstName,
-  firstNameChangeHandler,
+  setFirstName,
   lastName,
-  lastNameChangeHandler,
+  setLastName,
   aadharNumber,
-  aadharNumberChangeHandler,
+  setAadharNumber,
   panNumber,
-  panNumberChangeHandler,
+  setPanNumber,
   appliedFor,
-  appliedForChangeHandler,
+  setAppliedFor,
   sourceType,
-  sourceTypeChangeHandler,
+  setSourceType,
   experience,
-  experienceChangeHandler,
+  setExperience,
   sourceName,
   setSourceName,
   emailId,
   setEmailId,
-  emailIdChangeHandler,
   linkedInId,
-  linkedInIdChangeHandler,
+  setLinkedInId,
   mobileCode,
-  mobileCodeChangeHandler,
+  setMobileCode,
   mobileNumber,
-  mobileNumberChangeHandler,
+  setMobileNumber,
   dob,
   setDob,
   technology,
-  technologyChangeHandler,
+  setTechnology,
   ctc,
-  ctcChangeHandler,
+  setCtc,
   ectc,
-  ectcChangeHandler,
+  setEctc,
   recruiterName,
   setRecruiterName,
   skills,
-  skillsChangeHandler,
+  setSkills,
   currentEmployer,
   setCurrentEmployer,
   currentLocation,
-  currentLocationChangeHandler,
+  setCurrentLocation,
   noticePeriod,
-  noticePeriodChangeHandler,
+  setNoticePeriod,
   skypeId,
-  skypeIdChangeHandler,
+  setSkypeId,
   jobType,
-  jobTypeChangeHandler,
+  setJobType,
   whatsAppNotifications,
-  whatsAppNotificationsChangeHandler,
+  setWhatsAppNotifications,
   selectCountry,
-  countryChangeHandler,
+  setSelectCountry,
   reasonForChange,
   reasonForChangeHandler,
   uploadedFileHandler,
@@ -114,6 +116,114 @@ const AddEditCandidateTemplate = ({
   const showAsterixHandler = (inputValue: string): boolean => {
     //returns true if required value is not entered
     return inputValue.trim().length === 0 || inputValue === ''
+  }
+
+  const firstNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFirstName(e.target.value?.trim())
+  }
+
+  const lastNameChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLastName(e.target.value?.trim())
+  }
+
+  const aadharNumberChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    // only numbers allowed
+    setAadharNumber(e.target.value.replace(regexNumberOnly, ''))
+  }
+
+  const panNumberChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPanNumber(e.target.value)
+  }
+
+  const sourceTypeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSourceType(e.target.value)
+  }
+
+  const experienceChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // only numbers allowed
+    setExperience(e.target.value.replace(regexNumberOnly, ''))
+  }
+
+  const emailChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailId(e.target.value.trim())
+  }
+
+  const linkedInIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLinkedInId(e.target.value.trim())
+  }
+
+  const mobileCodeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMobileCode(
+      filterCandidateCountryByCountryId(allEmpCountriesList, +e.target.value),
+    )
+  }
+
+  const mobileNumberChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const finalVal = e.target.value.replace(regexNumberOnly, '').trim()
+    if (finalVal.length <= 10) {
+      setMobileNumber(finalVal)
+    }
+  }
+
+  const technologyChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTechnology(e.target.value)
+  }
+
+  const ctcChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // allowing only number input
+    setCtc(e.target.value.replace(regexNumberOnly, ''))
+  }
+
+  const ectcChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //allowing only number input
+    setEctc(e.target.value.replace(regexNumberOnly, ''))
+  }
+
+  const skillsChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSkills(e.target.value.trim())
+  }
+
+  const currentLocationChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setCurrentLocation(e.target.value.trim())
+  }
+
+  const noticePeriodChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    // allowing only number input
+    setNoticePeriod(e.target.value.replace(regexNumberOnly, ''))
+  }
+
+  const skypeIdChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSkypeId(e.target.value.trim())
+  }
+
+  const jobTypeChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setJobType(e.target.value)
+  }
+
+  const whatsAppNotificationsChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    setWhatsAppNotifications(e.target.value)
+  }
+
+  const countryChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectCountry(
+      filterCandidateCountryByCountryId(allEmpCountriesList, +e.target.value),
+    )
+  }
+
+  const appliedForChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAppliedFor(
+      filterCandidateAppliedForById(allJobVacanciesList, +e.target.value),
+    )
   }
 
   //returns true if required value is not entered
@@ -346,7 +456,7 @@ const AddEditCandidateTemplate = ({
                 placeholder="Email"
                 data-testid={`${getDataInputTestId('email')}`}
                 value={emailId}
-                onChange={emailIdChangeHandler}
+                onChange={emailChangeHandler}
                 onBlur={outFocusEmail}
               />
             </CandidateEntryItem>
