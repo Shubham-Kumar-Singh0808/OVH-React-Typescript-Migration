@@ -82,17 +82,18 @@ const AssetListTable = ({
             </CTableHead>
 
             <CTableBody>
-              {assets?.map((item, index) => {
-                return (
-                  <AssetListTableBody
-                    key={index}
-                    item={item}
-                    index={index}
-                    handleAgendaModal={handleAgendaModal}
-                    getItemNumber={getItemNumber}
-                  />
-                )
-              })}
+              {assets.length > 0 &&
+                assets?.map((item, index) => {
+                  return (
+                    <AssetListTableBody
+                      key={index}
+                      item={item}
+                      index={index}
+                      handleAgendaModal={handleAgendaModal}
+                      getItemNumber={getItemNumber}
+                    />
+                  )
+                })}
             </CTableBody>
           </CTable>
           <CRow>

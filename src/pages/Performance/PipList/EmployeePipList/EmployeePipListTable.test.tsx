@@ -19,11 +19,10 @@ describe('Employee PipList Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
-        selectDate=""
         setToggle={mockSetTogglePage}
-        setSelectDate={mockSetTogglePage}
         setFromDate={mockSetTogglePage}
         setToDate={mockSetTogglePage}
+        selectDay={''}
       />,
       {
         preloadedState: {
@@ -90,11 +89,10 @@ describe('Employee PipList Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
-        selectDate=""
         setToggle={mockSetTogglePage}
-        setSelectDate={mockSetTogglePage}
         setFromDate={mockSetTogglePage}
         setToDate={mockSetTogglePage}
+        selectDay={''}
       />,
       {
         preloadedState: {

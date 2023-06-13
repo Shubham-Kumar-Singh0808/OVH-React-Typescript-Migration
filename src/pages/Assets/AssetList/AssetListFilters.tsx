@@ -142,6 +142,26 @@ const AssetListFilters = ({
     )
   }
 
+  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.assetList.getAllAssetListData({
+          assetTypeId: Number(assetType) || '',
+          dateSelection: selectDate,
+          endIndex: 20,
+          multipleSearch: searchInput || '',
+          productId: Number(productType) || '',
+          searchByEmpName: searchByEmployee,
+          selectionStatus: asset,
+          startIndex: 0,
+          status: statusType,
+          fromDate: fromDate as string,
+          toDate: toDate as string,
+        }),
+      )
+    }
+  }
+
   const ClearBtnHadler = () => {
     setAsset('')
     setAssetType('')
@@ -163,13 +183,9 @@ const AssetListFilters = ({
   const onHandleEndDate = (value: Date) => {
     setToDate(moment(value).format(dateFormat))
   }
-
-  const assets = useTypedSelector(
-    reduxServices.assetList.selectors.allAssetListData,
-  )
   return (
     <>
-      <CRow className="justify-content-end mt-4">
+      <CRow className="justify-content-end mt-20">
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-2">
@@ -190,7 +206,7 @@ const AssetListFilters = ({
               <option value="">Select Assets</option>
               <option value="All">All</option>
               <option value="Assigned">Assigned</option>
-              <option value="Unassigned">Unassigned</option>
+              <option value="Not_Assigned">Unassigned</option>
             </CFormSelect>
           </CCol>
           <CCol sm={2} md={1} className="text-end">
@@ -251,7 +267,7 @@ const AssetListFilters = ({
               value={statusType}
               onChange={(e) => setStatusType(e.target.value)}
             >
-              <option value="Select Status">Select Status</option>
+              <option value="">Select Status</option>
               <option value="Idle">Idle</option>
               <option value="Not Working">Not Working</option>
               <option value="Scrap">Scrap</option>
@@ -343,7 +359,7 @@ const AssetListFilters = ({
             <></>
           )}
 
-          <CCol className="text-end mt-2" sm={3}>
+          <CCol className="text-end" sm={3}>
             <CButton
               color="info"
               className="text-white"
@@ -354,19 +370,7 @@ const AssetListFilters = ({
               Add
             </CButton>
           </CCol>
-          {assets?.length > 0 && (
-            <CCol className="text-end" md={12}>
-              <CButton
-                color="info"
-                className="text-white"
-                size="sm"
-                data-testid="export-button-download"
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
-            </CCol>
-          )}
+
           <CRow className="mt-4 mb-4">
             <CCol sm={9} md={{ offset: 3 }}>
               <CButton
@@ -394,7 +398,7 @@ const AssetListFilters = ({
               </CButton>
             </CCol>
           </CRow>
-          <CRow className="justify-content-end p-0">
+          <CRow className="justify-content-end">
             <CCol sm={3}>
               <label className="search_emp">
                 <CFormCheck
@@ -410,8 +414,8 @@ const AssetListFilters = ({
             </CCol>
           </CRow>
 
-          <CRow className="gap-2 d-md-flex justify-content-md-end p-0">
-            <CCol sm={3} className="p-0" md={3}>
+          <CRow className="gap-2 d-md-flex justify-content-md-end">
+            <CCol sm={3} md={3}>
               <CInputGroup className="global-search me-0">
                 <CFormInput
                   disabled={!isButtonEnabled}
@@ -423,6 +427,7 @@ const AssetListFilters = ({
                   onChange={(e) => {
                     setSearchInput(e.target.value)
                   }}
+                  onKeyDown={handleSearchBtn}
                 />
                 <CButton
                   disabled={!searchInput?.replace(/^\s*/, '')}
@@ -438,7 +443,6 @@ const AssetListFilters = ({
               </CInputGroup>
             </CCol>
           </CRow>
-          {/* )} */}
         </CRow>
       </CRow>
     </>
