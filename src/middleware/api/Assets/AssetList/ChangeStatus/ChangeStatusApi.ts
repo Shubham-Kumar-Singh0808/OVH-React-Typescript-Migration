@@ -24,7 +24,7 @@ const saveEmployee = async (
   const requestConfig = getAuthenticatedRequestConfig({
     url: changeAssetStatusConfig.saveEmployee,
     method: AllowedHttpMethods.put,
-    data: { data },
+    data,
   })
 
   const response = await useAxios(requestConfig)

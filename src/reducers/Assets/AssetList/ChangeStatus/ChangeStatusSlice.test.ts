@@ -61,7 +61,7 @@ describe('saveEmployee ', () => {
   it('Should be able to set to "fullfilled" if saveEmployee is fullfilled', () => {
     const action = {
       type: changeStatusService.saveEmployee.fulfilled.type,
-      //   payload: mockSaveEmployee,
+      payload: mockSaveEmployee,
     }
     const state = reducer(initialAllAssetStatusState, action)
     expect(state).toEqual({

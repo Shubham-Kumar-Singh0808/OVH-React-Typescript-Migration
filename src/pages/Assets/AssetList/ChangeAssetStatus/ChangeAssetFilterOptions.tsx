@@ -103,15 +103,25 @@ const ChangeAssetFilterOptions = ({
 
   useEffect(() => {
     if (
-      changeReportStatus.createdDate &&
-      changeReportStatus.employeeName &&
-      changeReportStatus.description
+      statusDate &&
+      employeeName &&
+      changeReportStatus.location &&
+      description
     ) {
       setIsSaveButtonEnabled(true)
     } else {
       setIsSaveButtonEnabled(false)
     }
-  }, [changeReportStatus])
+  }, [
+    changeReportStatus,
+    statusDate,
+    employeeName,
+    description,
+    // changeReportStatus.createdDate,
+    // changeReportStatus.employeeName,
+    // changeReportStatus.location,
+    // changeReportStatus.description,
+  ])
 
   const updateSuccessToastMessage = (
     <OToast
@@ -124,7 +134,7 @@ const ChangeAssetFilterOptions = ({
       amount: changeReportStatus.amount,
       assetId: changeReportStatus.assetTypeId,
       date: changeReportStatus.createdDate,
-      description: changeReportStatus.description,
+      description,
       employeeId: changeReportStatus.employeeId,
       invoiceNumber: changeReportStatus.invoiceNumber,
       location: changeReportStatus.location,
@@ -324,11 +334,7 @@ const ChangeAssetFilterOptions = ({
           className="col-sm-3 col-form-label text-end"
         >
           Employee:
-          <span
-            className={changeReportStatus.employeeName ? TextWhite : TextDanger}
-          >
-            *
-          </span>
+          <span className={employeeName ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
         <Autocomplete
           inputProps={{
@@ -420,11 +426,11 @@ const ChangeAssetFilterOptions = ({
           className="col-sm-3 col-form-label text-end"
         >
           Location:
-          {/* <span
+          <span
             className={changeReportStatus.location ? TextWhite : TextDanger}
           >
             *
-          </span> */}
+          </span>
         </CFormLabel>
         <CCol sm={3}>
           <CFormInput
