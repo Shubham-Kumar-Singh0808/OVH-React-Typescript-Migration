@@ -16,8 +16,11 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { currentPageData } from '../../../utils/paginationUtils'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeReviewTable = (): JSX.Element => {
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -26,9 +29,17 @@ const EmployeeReviewTable = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
 
+  // useEffect(() => {
+  //   dispatch(reduxServices.employeeReviews.getEmployeeReviews(employeeId))
+  // }, [dispatch, employeeId])
+
   useEffect(() => {
-    dispatch(reduxServices.employeeReviews.getEmployeeReviews(employeeId))
-  }, [dispatch, employeeId])
+    dispatch(
+      reduxServices.employeeReviews.getEmployeeReviews(
+        isViewingAnotherEmployee ? String(selectedEmployeeId) : employeeId,
+      ),
+    )
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
 
   const {
     paginationRange,

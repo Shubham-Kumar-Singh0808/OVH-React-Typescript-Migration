@@ -11,6 +11,7 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 
+type EditCurrentWeekDate = string | Date | undefined
 const EditProjectStatus = ({
   setToggle,
   editCurrentWeekDate,
@@ -24,16 +25,14 @@ const EditProjectStatus = ({
   statusId,
 }: {
   setToggle: (value: string) => void
-  editCurrentWeekDate: string | Date | undefined
-  editNextWeekDate: string | Date | undefined
+  editCurrentWeekDate: EditCurrentWeekDate
+  editNextWeekDate: EditCurrentWeekDate
   editCurrentWeekStatus: string | undefined
   editNextWeekStatus: string | undefined
   setEditCurrentWeekDate: React.Dispatch<
-    React.SetStateAction<string | Date | undefined>
+    React.SetStateAction<EditCurrentWeekDate>
   >
-  setEditNextWeekDate: React.Dispatch<
-    React.SetStateAction<string | Date | undefined>
-  >
+  setEditNextWeekDate: React.Dispatch<React.SetStateAction<EditCurrentWeekDate>>
   setEditNextWeekStatus: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
