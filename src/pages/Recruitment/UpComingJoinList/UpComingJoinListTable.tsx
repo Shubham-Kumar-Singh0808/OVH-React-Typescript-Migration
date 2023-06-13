@@ -83,8 +83,6 @@ const UpComingJoinListTable = ({
                   <CTableDataCell>{joinee.dateOfJoining}</CTableDataCell>
 
                   <CTableDataCell>{joinee.technology}</CTableDataCell>
-                  {/* <CTableDataCell>{joinee.Actions}</CTableDataCell> */}
-
                   <CTableDataCell data-testid="action-cell">
                     <div className="sh-btn-group">
                       <CTooltip content="Edit">

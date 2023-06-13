@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { CRow, CCol, CInputGroup, CFormInput, CButton } from '@coreui/react-pro'
 import UpComingJoinListTable from './UpComingJoinListTable'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -86,7 +87,7 @@ const UpComingJoinList = (): JSX.Element => {
       >
         <CRow className="gap-2 d-md-flex justify-content-md-end">
           <CCol sm={3} md={3}>
-            <CInputGroup className="search_btn_panel mt20 col-sm-4 col-xs-12 pull-right">
+            <CInputGroup className="global-search me-0 justify-content-md-end">
               <CFormInput
                 data-testid="searchField"
                 placeholder="Search by name"
@@ -119,7 +120,7 @@ const UpComingJoinList = (): JSX.Element => {
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="export-btn"
-                // onClick={exportCurrentCycleNomineeList}
+                // onClick={handleExportUpComingJoinList }
               >
                 + Click To Export
               </CButton>
