@@ -115,7 +115,7 @@ const BookingListStatus = ({
           roomBookingStatusLabelColor(bookingItem.meetingStatus)
       }
       {
-        // only the authorised user can see this when the meeting time has reached
+        // only the authorised user can see this when the meeting time has reached and is in "New" or "In Progress"
         compareDateTimeWithCurrent(
           getCombinedDateTime(bookingItem.fromDate, bookingItem.startTime),
         ) &&
