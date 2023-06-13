@@ -1,12 +1,9 @@
-import { error } from 'console'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
 import addNewCategoryApi from '../../../../middleware/api/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategoryListApi'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { AddNewCategorySliceState } from '../../../../types/ExpenseManagement/Category/AddExpenseCategory/addExpenseCategoryTypes'
-import { RootState } from '../../../../stateStore'
-import { CategoryList } from '../../../../types/ExpenseManagement/Category/categoryListTypes'
 
 const addNewExpenseCategory = createAsyncThunk(
   '/ExpenseManagement/addCategory',
@@ -72,22 +69,22 @@ const addNewCategorySlice = createSlice({
   },
 })
 
-const addCategories = (state: RootState): CategoryList[] =>
-  state.addNewCategory.addExpenseCategory
+// const addCategories = (state: RootState): CategoryList[] =>
+//   state.addNewCategory.addExpenseCategory
 
 const addNewCategoryThunk = {
   addNewExpenseCategory,
   checkDuplicateCategory,
 }
 
-const addCategoriesListSelectors = {
-  addCategories,
-}
+// const addCategoriesListSelectors = {
+//   addCategories,
+// }
 
 export const addNewCategoryService = {
   ...addNewCategoryThunk,
   actions: addNewCategorySlice.actions,
-  selectors: addCategoriesListSelectors,
+  //selectors: addCategoriesListSelectors,
 }
 
 export default addNewCategorySlice.reducer
