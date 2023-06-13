@@ -105,7 +105,7 @@ const UpdateTicketEditFields = ({
   }
   const onHandleSelectActiveEmployee = (firstName: string) => {
     const selectedActiveEmployee = activeEmployees.find(
-      (value) => value.empFirstName === firstName,
+      (value) => value.empFirstName + ' ' + value.empLastName === firstName,
     )
     setActiveEmployeesAutoComplete(
       `${selectedActiveEmployee?.empFirstName} ${selectedActiveEmployee?.empLastName}`,
@@ -478,7 +478,9 @@ const UpdateTicketEditFields = ({
                 id: 'employees-autocomplete',
                 placeholder: 'Employee Name',
               }}
-              getItemValue={(item) => item.empFirstName}
+              getItemValue={(item) =>
+                item.empFirstName + ' ' + item.empLastName
+              }
               items={activeEmployees}
               data-testid="employee-input"
               wrapperStyle={{ position: 'relative' }}
