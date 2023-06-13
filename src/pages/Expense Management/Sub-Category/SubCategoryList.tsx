@@ -1,5 +1,5 @@
 import React from 'react'
-import ExpenseSubCategoryListTable from './SubCategoryListTable'
+import ExpenseSubCategoryListTable from './ExpenseSubCategoryListTable'
 import AddExpenseSubCategory from './AddNewSubCategory/addSubCategory'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useTypedSelector } from '../../../stateStore'
@@ -17,7 +17,7 @@ const ExpenseSubCategoryList = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Category"
+        title="Sub-Category"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >

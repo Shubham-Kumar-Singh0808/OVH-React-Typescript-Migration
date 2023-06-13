@@ -5,7 +5,6 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
-  CButton,
   CCol,
   CRow,
   CLink,
@@ -18,8 +17,6 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { AssetsWarrantyListTableProps } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
-import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
-import { downloadFile } from '../../../utils/helper'
 
 const AssetWarrantyReportTable = (
   props: AssetsWarrantyListTableProps,

@@ -246,7 +246,7 @@ const ExpenseSubCategoryListTable = ({
                     <CTableDataCell>
                       <CFormSelect
                         className="mb-1"
-                        data-testid="categoryId"
+                        data-testid={`categoryId${index}`}
                         id="categoryNames"
                         size="sm"
                         aria-label="Category"

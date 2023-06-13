@@ -5,9 +5,9 @@ export type CategoryList = {
   id: number
   categoryName: string
   createdBy: string
-  updatedBy: string
+  updatedBy: string | null
   createdDate: string
-  updatedDate: string
+  updatedDate: string | null
 }
 
 export type SubCategoryList = {

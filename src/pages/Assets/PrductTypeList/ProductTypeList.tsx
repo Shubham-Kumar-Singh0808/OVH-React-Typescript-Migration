@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import ProductTypeListTable from './ProductTypeListTable'
-import AddProductType from './addproductType/AddProductType'
-import EditProductTypeRecord from './addproductType/EditProductType'
+import AddProductType from './AddEditProductType/AddProductType'
+import EditProductTypeRecord from './AddEditProductType/EditProductType'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -22,8 +22,8 @@ const ProductTypeList = (): JSX.Element => {
     reduxServices.ProductTypeList.selectors.listSize,
   )
 
-  const selectCurrentPage = useTypedSelector(
-    reduxServices.app.selectors.selectCurrentPage,
+  const ProductTypeListData = useTypedSelector(
+    reduxServices.ProductTypeList.selectors.ProductTypeLists,
   )
 
   const userAccessToFeatures = useTypedSelector(
@@ -32,30 +32,43 @@ const ProductTypeList = (): JSX.Element => {
   const userAccessProductList = userAccessToFeatures?.find(
     (feature) => feature.name === 'Product Type List',
   )
+
+  const selectCurrentPage = useTypedSelector(
+    reduxServices.app.selectors.selectCurrentPage,
+  )
+  useEffect(() => {
+    if (selectCurrentPage) {
+      setCurrentPage(selectCurrentPage)
+    }
+  }, [selectCurrentPage])
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(TotalListSize, 20)
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.ProductTypeList.getProductTypeList({
+        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (currentPage - 1),
+        productName: searchInput || '',
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
+
+  useEffect(() => {
+    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
+  }, [dispatch])
+
   useEffect(() => {
     if (window.location.pathname === '/productList') {
       setCurrentPage(1)
     }
   }, [])
 
-  useEffect(() => {
-    dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
-  }, [dispatch])
-
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-
-    pageSize,
-  } = usePagination(TotalListSize, 20)
-
-  useEffect(() => {
-    if (selectCurrentPage) {
-      setCurrentPage(selectCurrentPage)
-    }
-  }, [selectCurrentPage])
   const handleExportProductTypeList = async () => {
     const ExportProductList = await ProductTypeAPI.ExportProductListDownloading(
       {
@@ -66,8 +79,8 @@ const ProductTypeList = (): JSX.Element => {
     downloadFile(ExportProductList, 'ExportProductList.csv')
   }
 
-  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter')
+  const handleSearchBtns = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
       dispatch(
         reduxServices.ProductTypeList.getProductTypeList({
           endIndex: 20,
@@ -75,8 +88,11 @@ const ProductTypeList = (): JSX.Element => {
           startIndex: 0,
         }),
       )
+      setCurrentPage(1)
+      setPageSize(20)
+    }
   }
-  const multiSearchBtnHandler = () => {
+  const multiSearchBtnHandlers = () => {
     dispatch(
       reduxServices.ProductTypeList.getProductTypeList({
         endIndex: 20,
@@ -84,6 +100,8 @@ const ProductTypeList = (): JSX.Element => {
         startIndex: 0,
       }),
     )
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   return (
@@ -101,16 +119,18 @@ const ProductTypeList = (): JSX.Element => {
               className="gap-2 d-md-flex justify-content-end mt-3 mb-3"
               data-testid="exportBtn"
             >
-              <CButton
-                color="info"
-                className="text-white"
-                size="sm"
-                onClick={handleExportProductTypeList}
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
-              {userAccessProductList?.updateaccess && (
+              {ProductTypeListData?.list.length > 0 && (
+                <CButton
+                  color="info"
+                  className="text-white"
+                  size="sm"
+                  onClick={handleExportProductTypeList}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+              )}
+              {userAccessProductList?.createaccess && (
                 <CButton
                   color="info btn-ovh me-0"
                   data-testid="add-button"
@@ -135,7 +155,7 @@ const ProductTypeList = (): JSX.Element => {
                   onChange={(e) => {
                     setSearchInput(e.target.value)
                   }}
-                  onKeyDown={handleSearchBtn}
+                  onKeyDown={handleSearchBtns}
                 />
                 <CButton
                   disabled={!searchInput}
@@ -144,7 +164,7 @@ const ProductTypeList = (): JSX.Element => {
                   type="button"
                   color="info"
                   id="button-addon2"
-                  onClick={multiSearchBtnHandler}
+                  onClick={multiSearchBtnHandlers}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>
@@ -171,6 +191,8 @@ const ProductTypeList = (): JSX.Element => {
           setToggle={setToggle}
           EditProductType={EditProductType}
           setEditProductType={setEditProductType}
+          currentPage={currentPage}
+          pageSize={pageSize}
         />
       )}
     </>
