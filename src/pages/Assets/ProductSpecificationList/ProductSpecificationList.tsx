@@ -20,6 +20,10 @@ const ProductSpecificationList = (): JSX.Element => {
   const [editProductSpecification, setEditProductSpecification] =
     useState(productSpecification)
 
+  const productSpecificationList = useTypedSelector(
+    reduxServices.productSpecificationList.selectors.productSpecificationList,
+  )
+
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
@@ -110,16 +114,20 @@ const ProductSpecificationList = (): JSX.Element => {
               className="gap-4 d-md-flex justify-content-end mt-3 mb-3"
             >
               <div className="d-inline ml15 pull-right">
-                <CButton
-                  color="info"
-                  className="text-white btn-ovh"
-                  size="sm"
-                  onClick={handleExportData}
-                  data-testid="employee-export-btn"
-                >
-                  <i className="fa fa-plus me-1"></i>
-                  Click to Export
-                </CButton>
+                {productSpecificationList?.length > 0 ? (
+                  <CButton
+                    color="info"
+                    className="text-white btn-ovh"
+                    size="sm"
+                    onClick={handleExportData}
+                    data-testid="employee-export-btn"
+                  >
+                    <i className="fa fa-plus me-1"></i>
+                    Click to Export
+                  </CButton>
+                ) : (
+                  ''
+                )}
                 &nbsp; &nbsp; &nbsp;
                 {userAccess?.createaccess && (
                   <CButton

@@ -57,7 +57,6 @@ const ProductSpecificationListTable = ({
   const isLoading = useTypedSelector(
     reduxServices.productSpecificationList.selectors.isLoading,
   )
-  console.log(listSize)
 
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -221,10 +220,12 @@ const ProductSpecificationListTable = ({
             )}
           </CTableBody>
         </CTable>
-        <CRow>
+        <CRow className="mt-3">
           <CCol xs={4}>
             <p>
-              <strong>Total Records: {listSize}</strong>
+              <strong>
+                {listSize ? `Total Records: ${listSize}` : `No Records Found`}
+              </strong>
             </p>
           </CCol>
           <CCol xs={3}>
