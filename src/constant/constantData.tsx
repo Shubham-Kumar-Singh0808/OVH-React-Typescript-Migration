@@ -3,8 +3,7 @@ import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee
 export const priceModelList: GetList[] = [
   { id: 1, name: 'FixedBid' },
   { id: 2, name: 'Retainer' },
-  { id: 3, name: 'Support' },
-  { id: 4, name: 'T&M' },
+  { id: 3, name: 'T&M' },
 ]
 export const healthList = [
   {
