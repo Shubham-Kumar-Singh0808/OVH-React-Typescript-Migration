@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { CRow, CCol, CInputGroup, CFormInput, CButton } from '@coreui/react-pro'
+import XLSX from 'xlsx'
 import UpComingJoinListTable from './UpComingJoinListTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -11,24 +11,31 @@ const UpComingJoinList = (): JSX.Element => {
   const comingJoin = useTypedSelector(
     reduxServices.upComingJoinList.selectors.upComingJoinList,
   )
+
+  const listSize = useTypedSelector(
+    reduxServices.upComingJoinList.selectors.listSize,
+  )
   const [searchInput, setSearchInput] = useState<string>('')
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(listSize, 20)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(
       reduxServices.upComingJoinList.getUpConingJoinList({
-        startIndex: 0,
-        endIndex: 20,
-        searchName: '',
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        searchName: searchInput,
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, currentPage])
 
   console.log(comingJoin)
-
-  const listSize = useTypedSelector(
-    reduxServices.upComingJoinList.selectors.listSize,
-  )
 
   const CurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
@@ -40,41 +47,45 @@ const UpComingJoinList = (): JSX.Element => {
     }
   }, [CurrentPage])
 
-  const {
-    paginationRange,
-    setPageSize,
-    setCurrentPage,
-    currentPage,
-    pageSize,
-  } = usePagination(listSize, 20)
+  //   const searchButtonHandlerOnKeyDown = (
+  //     event: React.KeyboardEvent<HTMLInputElement>,
+  //   ) => {
+  //     if (event.key === 'Enter') {
+  //       dispatch(
+  //         reduxServices.upComingJoinList.getUpConingJoinList({
+  //           startIndex: 0,
+  //           endIndex: 20,
+  //           searchName: searchInput,
+  //         }),
+  //       )
+  //       setCurrentPage(1)
+  //       setPageSize(20)
+  //     }
+  //   }
 
-  const searchButtonHandlerOnKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.upComingJoinList.getUpConingJoinList({
-          startIndex: 0,
-          endIndex: 20,
-          searchName: searchInput,
-        }),
+  //   const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //     e.preventDefault()
+  //     dispatch(
+  //       reduxServices.upComingJoinList.getUpConingJoinList({
+  //         startIndex: 0,
+  //         endIndex: 20,
+  //         searchName: searchInput,
+  //       }),
+  //     )
+  //     setCurrentPage(1)
+  //     setPageSize(20)
+  //   }
+
+  const handleExportUpComingJoinList = () => {
+    const contentElement = document.getElementById('transactionalExportId')
+    if (contentElement) {
+      const worksheet = XLSX.utils.table_to_sheet(
+        document.getElementById('transactionalExportId'),
       )
-      setCurrentPage(1)
-      setPageSize(20)
+      const workbook = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'TranscationalList')
+      XLSX.writeFile(workbook, 'TranscationalList.xls')
     }
-  }
-
-  const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    dispatch(
-      reduxServices.upComingJoinList.getUpConingJoinList({
-        startIndex: 0,
-        endIndex: 20,
-        searchName: searchInput,
-      }),
-    )
-    setCurrentPage(1)
-    setPageSize(20)
   }
 
   return (
@@ -85,7 +96,7 @@ const UpComingJoinList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="gap-2 d-md-flex justify-content-md-end">
+        {/* <CRow className="gap-2 d-md-flex justify-content-md-end">
           <CCol sm={3} md={3}>
             <CInputGroup className="global-search me-0 justify-content-md-end">
               <CFormInput
@@ -120,13 +131,13 @@ const UpComingJoinList = (): JSX.Element => {
                 color="info"
                 className="btn-ovh me-1"
                 data-testid="export-btn"
-                // onClick={handleExportUpComingJoinList }
+                onClick={handleExportUpComingJoinList}
               >
                 + Click To Export
               </CButton>
             </CCol>
           </CCol>
-        </CRow>
+        </CRow> */}
 
         <UpComingJoinListTable
           paginationRange={paginationRange}

@@ -9,8 +9,11 @@ import {
   CRow,
   CButton,
   CTooltip,
+  CFormInput,
+  CInputGroup,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useState } from 'react'
+import * as XLSX from 'xlsx'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -25,6 +28,7 @@ const UpComingJoinListTable = ({
   setCurrentPage,
 }: UpComingJoinListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
+  const [searchInput, setSearchInput] = useState<string>('')
 
   const upComingJoinee = useTypedSelector(
     reduxServices.upComingJoinList.selectors.upComingJoinList,
@@ -32,6 +36,7 @@ const UpComingJoinListTable = ({
   const joinListSize = useTypedSelector(
     reduxServices.upComingJoinList.selectors.listSize,
   )
+
   const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
@@ -46,9 +51,93 @@ const UpComingJoinListTable = ({
     ? `Total Records: ${joinListSize}`
     : `No Records found...`
 
+  const searchButtonHandlerOnKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      dispatch(
+        reduxServices.upComingJoinList.getUpConingJoinList({
+          startIndex: 0,
+          endIndex: 20,
+          searchName: searchInput,
+        }),
+      )
+      setCurrentPage(1)
+      setPageSize(20)
+    }
+  }
+
+  const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(
+      reduxServices.upComingJoinList.getUpConingJoinList({
+        startIndex: 0,
+        endIndex: 20,
+        searchName: searchInput,
+      }),
+    )
+    setCurrentPage(1)
+    setPageSize(20)
+  }
+
+  const handleExportUpComingJoinList = () => {
+    const contentElement = document.getElementById('upcomingJoineeListId')
+    if (contentElement) {
+      const worksheet = XLSX.utils.table_to_sheet(
+        document.getElementById('upcomingJoineeListId'),
+      )
+      const workbook = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'UpcomingJoineeList')
+      XLSX.writeFile(workbook, 'UpcomingJoineeList.xls')
+    }
+  }
+
   return (
     <>
-      <CTable striped className="mt-3">
+      <CRow className="gap-2 d-md-flex justify-content-md-end">
+        <CCol sm={3} md={3}>
+          <CInputGroup className="global-search me-0 justify-content-md-end">
+            <CFormInput
+              data-testid="searchField"
+              placeholder="Search by name"
+              aria-label="Multiple Search"
+              aria-describedby="button-addon2"
+              id="searchInput"
+              name="searchInput"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value)
+              }}
+              onKeyDown={searchButtonHandlerOnKeyDown}
+            />
+            <CButton
+              disabled={!searchInput}
+              data-testid="multi-search-btn"
+              className="cursor-pointer"
+              type="button"
+              color="info"
+              id="button-addon2"
+              onClick={searchButtonHandler}
+            >
+              <i className="fa fa-search"></i>
+            </CButton>
+          </CInputGroup>
+
+          <CCol xs={12} md={8} className="px-0 text-end">
+            <CButton
+              size="sm"
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="export-btn"
+              onClick={handleExportUpComingJoinList}
+            >
+              + Click To Export
+            </CButton>
+          </CCol>
+        </CCol>
+      </CRow>
+
+      <CTable striped className="mt-3" id="upcomingJoineeListId">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
