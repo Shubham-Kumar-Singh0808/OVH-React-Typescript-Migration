@@ -387,7 +387,12 @@ const AddNewAudit = (): JSX.Element => {
               Project Name :
               <span
                 className={
-                  projectNameAutoCompleteTarget || addAudit?.projectName
+                  projectNameAutoCompleteTarget
+                    ?.replace(/-_[^a-z0-9\s]/gi, '')
+                    ?.replace(/^\s*/, '') ||
+                  addAudit?.projectName
+                    ?.replace(/-_[^a-z0-9\s]/gi, '')
+                    ?.replace(/^\s*/, '')
                     ? TextWhite
                     : TextDanger
                 }
