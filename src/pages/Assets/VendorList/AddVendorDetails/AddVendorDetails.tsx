@@ -37,9 +37,9 @@ const AddVendorDetails = ({
   const departments = useTypedSelector(
     reduxServices.addNewVendor.selectors.department,
   )
-  useEffect(() => {
-    dispatch(reduxServices.addNewVendor.getDepartment())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(reduxServices.addNewVendor.getDepartment())
+  // }, [dispatch])
   const formLabelProps = {
     htmlFor: 'inputNewVendorDetails',
     className: 'col-form-label category-label',
@@ -494,6 +494,7 @@ const AddVendorDetails = ({
               placeholder="Fax No."
               value={addVendor.vendorFaxNumber}
               onChange={handledInputChange}
+              maxLength={10}
             />
           </CCol>
         </CRow>
