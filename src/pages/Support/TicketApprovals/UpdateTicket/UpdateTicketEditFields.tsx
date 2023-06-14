@@ -131,7 +131,7 @@ const UpdateTicketEditFields = ({
         endDate: ticketDetailsToEdit.endDate,
         assigneeId: ticketDetailsToEdit.assigneeId,
         employeeName: ticketDetailsToEdit.employeeName,
-        percentageDone: '',
+        percentageDone: ticketDetailsToEdit.percentageDone,
         actualTime: ticketDetailsToEdit.actualTime,
         authorName: ticketDetailsToEdit.authorName,
         assigneeName: ticketDetailsToEdit.assigneeName,
