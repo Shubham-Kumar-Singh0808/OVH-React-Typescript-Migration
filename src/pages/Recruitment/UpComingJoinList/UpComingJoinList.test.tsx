@@ -7,7 +7,7 @@ describe('UpComing Join List Component Testing', () => {
   test('should render UpComing Join List component without crashing', () => {
     render(<UpComingJoinList />)
 
-    // Update the assertion based on the expected element or text in the component
+    // Update the upComingJoinee list based on the expected element or text in the component
     expect(screen.getByText('Upcoming Joinees')).toBeInTheDocument()
   })
 })
