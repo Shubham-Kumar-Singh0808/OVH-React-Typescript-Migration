@@ -54,8 +54,8 @@ const ProductSpecificationList = (): JSX.Element => {
         dispatch(
           reduxServices.productSpecificationList.getProductSpecificationList({
             productName: searchInput,
-            startIndex: 0,
-            endIndex: 20,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
           }),
         )
         setCurrentPage(1)
@@ -73,9 +73,9 @@ const ProductSpecificationList = (): JSX.Element => {
   const multiSearchBtnHandler = () => {
     dispatch(
       reduxServices.productSpecificationList.getProductSpecificationList({
-        endIndex: 20,
+        endIndex: pageSize * currentPage,
         productName: searchInput,
-        startIndex: 0,
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
   }
@@ -83,9 +83,9 @@ const ProductSpecificationList = (): JSX.Element => {
     const productSpecificationListDownload =
       await productSpecificationListApi.exportProductSpecificationData({
         specificationSearch: searchInput,
-        endIndex: 0,
-        productName: '',
-        startIndex: 0,
+        endIndex: pageSize * currentPage,
+        productName: searchInput,
+        startIndex: pageSize * (currentPage - 1),
       })
     downloadFile(
       productSpecificationListDownload,

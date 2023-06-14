@@ -98,6 +98,7 @@ const ProductSpecificationListTable = ({
           />,
         ),
       )
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   const editBtnHandler = (
@@ -232,7 +233,7 @@ const ProductSpecificationListTable = ({
             {listSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
+                options={[20, 40, 60, 80, 100]}
                 selectedPageSize={pageSize}
               />
             )}
@@ -273,14 +274,14 @@ const ProductSpecificationListTable = ({
         alignment="center"
         visible={isDeleteModalVisible}
         setVisible={setIsDeleteModalVisible}
-        modalTitle="Visa Details"
+        modalTitle="Product Specification Details"
         confirmButtonText="Yes"
         cancelButtonText="No"
         closeButtonClass="d-none"
         confirmButtonAction={handleConfirmDeleteProductSpecificationDetails}
         modalBodyClass="mt-0"
       >
-        <>Do you really want to delete this ?</>
+        <>Do you really want to delete this Product Specification?</>
       </OModal>
     </>
   )
