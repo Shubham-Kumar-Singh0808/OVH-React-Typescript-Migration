@@ -20,14 +20,16 @@ const VendorList = (): JSX.Element => {
   const initialCycle = {} as VendorDetails
   const [editVendorInfo, setEditVendorInfo] = useState(initialCycle)
   const dispatch = useAppDispatch()
-  const listSize = useTypedSelector(reduxServices.vendorList.selectors.listSize)
+  const vendorListSize = useTypedSelector(
+    reduxServices.vendorList.selectors.listSize,
+  )
 
   const isLoading = useTypedSelector(
     reduxServices.vendorList.selectors.isLoading,
   )
 
-  const selectCurrentPage = useTypedSelector(
-    reduxServices.app.selectors.selectCurrentPage,
+  const vendorListData = useTypedSelector(
+    reduxServices.vendorList.selectors.vendors,
   )
 
   const {
@@ -36,31 +38,28 @@ const VendorList = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(listSize, 20)
+  } = usePagination(vendorListSize, 20)
 
-  useEffect(() => {
-    if (selectCurrentPage) {
-      setCurrentPage(selectCurrentPage)
-    }
-  }, [selectCurrentPage])
-
-  useEffect(() => {
-    dispatch(
-      reduxServices.vendorList.getVendors({
-        startIndex: pageSize * (selectCurrentPage - 1),
-        endIndex: pageSize * selectCurrentPage,
-        vendorName: '',
-      }),
-    )
-    dispatch(reduxServices.addNewVendor.getDepartment())
-  }, [selectCurrentPage, dispatch, pageSize])
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.vendorList.getVendors({
+  //       startIndex: pageSize * (selectCurrentPage - 1),
+  //       endIndex: pageSize * selectCurrentPage,
+  //       vendorName: '',
+  //     }),
+  //   )
+  //   dispatch(reduxServices.addNewVendor.getDepartment())
+  // }, [selectCurrentPage, dispatch, pageSize])
 
   const handleExportVendorListData = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault()
-    const employeeListDownload = await vendorListApi.exportVendorListData({})
-    downloadFile(employeeListDownload, 'VendorList.csv')
+    const vendorListDownload = await vendorListApi.exportVendorListData({
+      vendorNameSearch: searchInput,
+      token: '',
+    })
+    downloadFile(vendorListDownload, 'VendorList.csv')
   }
 
   const searchButtonHandlerOnKeyDown = (

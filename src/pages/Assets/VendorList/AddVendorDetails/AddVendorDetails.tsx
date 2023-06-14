@@ -470,7 +470,7 @@ const AddVendorDetails = ({
               autoComplete="off"
               placeholder="Phone No."
               value={addVendor.vendorPhoneNumber}
-              maxLength={10}
+              maxLength={11}
               onChange={handledInputChange}
             />
           </CCol>

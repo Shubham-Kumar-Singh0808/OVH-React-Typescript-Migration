@@ -34,6 +34,7 @@ export type VendorListApiProps = {
   vendorName?: string
   vendorNameSearch?: string
   searchText?: string
+  token?: string
 }
 
 export type VendorListSliceState = {
