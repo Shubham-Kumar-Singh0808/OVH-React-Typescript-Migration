@@ -47,4 +47,6 @@ export type UpComingJoinListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  searchInput: string
+  setSearchInput: React.Dispatch<React.SetStateAction<string | undefined>>
 }

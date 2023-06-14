@@ -912,4 +912,5 @@ export interface ProductSpecificationListApi extends ApiBase {
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
+  getEmployeeDepartments: string
 }

@@ -12,7 +12,7 @@ import {
   CFormInput,
   CInputGroup,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as XLSX from 'xlsx'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -26,10 +26,10 @@ const UpComingJoinListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  searchInput,
+  setSearchInput,
 }: UpComingJoinListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [searchInput, setSearchInput] = useState<string>('')
-
   const upComingJoinee = useTypedSelector(
     reduxServices.upComingJoinList.selectors.upComingJoinList,
   )
@@ -47,9 +47,15 @@ const UpComingJoinListTable = ({
     return (currentPage - 1) * pageSize + index + 1
   }
 
-  const totalNoOfRecords = upComingJoinee?.length
-    ? `Total Records: ${joinListSize}`
-    : `No Records found...`
+  useEffect(() => {
+    dispatch(
+      reduxServices.upComingJoinList.getUpConingJoinList({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        searchName: searchInput,
+      }),
+    )
+  }, [dispatch, pageSize, currentPage])
 
   const searchButtonHandlerOnKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -79,6 +85,10 @@ const UpComingJoinListTable = ({
     setCurrentPage(1)
     setPageSize(20)
   }
+
+  const totalNoOfRecords = upComingJoinee?.length
+    ? `Total Records: ${joinListSize}`
+    : `No Records found...`
 
   const handleExportUpComingJoinList = () => {
     const contentElement = document.getElementById('upcomingJoineeListId')
@@ -123,20 +133,21 @@ const UpComingJoinListTable = ({
             </CButton>
           </CInputGroup>
 
-          <CCol xs={12} md={8} className="px-0 text-end">
-            <CButton
-              size="sm"
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="export-btn"
-              onClick={handleExportUpComingJoinList}
-            >
-              + Click To Export
-            </CButton>
-          </CCol>
+          {upComingJoinee?.length > 0 && (
+            <CCol xs={12} md={8} className="px-0 text-end">
+              <CButton
+                size="sm"
+                color="info"
+                className="btn-ovh me-1"
+                data-testid="export-btn"
+                onClick={handleExportUpComingJoinList}
+              >
+                + Click To Export
+              </CButton>
+            </CCol>
+          )}
         </CCol>
       </CRow>
-
       <CTable striped className="mt-3" id="upcomingJoineeListId">
         <CTableHead>
           <CTableRow>
