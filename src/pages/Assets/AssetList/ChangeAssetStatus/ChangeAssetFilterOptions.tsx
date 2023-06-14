@@ -112,16 +112,7 @@ const ChangeAssetFilterOptions = ({
     } else {
       setIsSaveButtonEnabled(false)
     }
-  }, [
-    changeReportStatus,
-    statusDate,
-    employeeName,
-    description,
-    // changeReportStatus.createdDate,
-    // changeReportStatus.employeeName,
-    // changeReportStatus.location,
-    // changeReportStatus.description,
-  ])
+  }, [changeReportStatus, statusDate, employeeName, description])
 
   const updateSuccessToastMessage = (
     <OToast
@@ -164,7 +155,8 @@ const ChangeAssetFilterOptions = ({
     setAssetNumber('')
     setVendorName('')
     setAssetReferenceNumber('')
-    setAssetStatus('')
+    //setAssetStatus('')
+    setStatusType('')
     setIsShowEditor(false)
     setDescription('')
     setStatusDate('')

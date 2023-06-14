@@ -9,8 +9,11 @@ import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
 
 const mockOnSelect = jest.fn()
 const mockSetEmpName = jest.fn()
-
 const selectedEmpName = 'Pradeep Namburu'
+const deviceLocale: string =
+  navigator.languages && navigator.languages.length
+    ? navigator.languages[0]
+    : navigator.language
 
 describe('filter employee name', () => {
   describe('empty values', () => {
@@ -85,6 +88,75 @@ describe('filter employee name', () => {
       fireEvent.change(input, selectedEmpName)
       // expect(input).toHaveValue('')
     })
+    // describe('YourComponent', () => {
+    //   test('should select employee on focus out', () => {
+    //     const allEmployees = [
+    //       { empFirstName: 'Thriveni', empLastName: 'Bathula' },
+    //       { empFirstName: 'Thriveni', empLastName: 'Bathula' },
+    //     ]
+
+    //     const onSelectEmployee = jest.fn()
+    //     const { getByTestId } = render(
+    //       <YourComponent
+    //         allEmployees={allEmployees}
+    //         onSelectEmployee={onSelectEmployee}
+    //       />,
+    //     )
+
+    //     const employeeNameInput = getByTestId('employee-name-input')
+
+    //     fireEvent.change(employeeNameInput, { target: { value: 'John Doe' } })
+    //     fireEvent.blur(employeeNameInput)
+
+    //     expect(onSelectEmployee).toHaveBeenCalledWith('John Doe')
+    //   })
+
+    //   test('should update employee name when selected', () => {
+    //     const allEmployees = [
+    //       { empFirstName: 'John', empLastName: 'Doe' },
+    //       { empFirstName: 'Jane', empLastName: 'Smith' },
+    //     ]
+
+    //     const { getByTestId } = render(
+    //       <YourComponent
+    //         allEmployees={allEmployees}
+    //         onSelectEmployee={() => {}}
+    //       />,
+    //     )
+
+    //     const employeeNameInput = getByTestId('employee-name-input')
+
+    //     fireEvent.change(employeeNameInput, { target: { value: 'Jane Smith' } })
+
+    //     expect(employeeNameInput.value).toBe('Jane Smith')
+    //   })
+    // })
+    test('should be able to see place holder "dd/mm/yyyy"', () => {
+      expect(screen.getByPlaceholderText('dd/mm/yyyy')).toBeInTheDocument()
+    })
+    test('should be able to render Status Date label', () => {
+      expect(screen.getByText('Status Date:')).toBeInTheDocument()
+    })
+    test('should render date picker', () => {
+      const dateInput = screen.findByTestId('date-picker')
+      expect(dateInput).toBeTruthy()
+    })
+    test('should be able to click clear button element', () => {
+      const ClearButton = screen.getByTestId('clear-btn')
+      expect(ClearButton).toBeEnabled()
+      userEvent.click(ClearButton)
+    })
+    test('should be able to select date"', () => {
+      const dateInput = screen.getAllByPlaceholderText('dd/mm/yyyy')
+      userEvent.type(
+        dateInput[0],
+        new Date('12/20/2021').toLocaleDateString(deviceLocale, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        }),
+      )
+    })
   })
 
   describe('should reset', () => {
@@ -154,9 +226,9 @@ describe('filter employee name', () => {
       )
     })
     test('should be able to click Save button element', () => {
-      const updateBtnElement = screen.getByTestId('save-btn')
-      expect(updateBtnElement).toBeInTheDocument()
-      userEvent.click(updateBtnElement)
+      const saveBtnElement = screen.getByTestId('save-btn')
+      expect(saveBtnElement).toBeInTheDocument()
+      userEvent.click(saveBtnElement)
     })
     test('should able to render every element', () => {
       const assetnumber = screen.getByTestId('assetnumber')
@@ -177,16 +249,5 @@ describe('filter employee name', () => {
       const vendorName = screen.getByTestId('asset-type')
       userEvent.type(vendorName, 'Sony')
     })
-    const mockSetCheckBox = jest.fn()
-    // it('sets the checkbox state to true when isExpenseVendor is true', () => {
-    //   const mockSetCheckBox = jest.fn()
-    //   const wrapper = shallow(
-    //     <ChangeAssetFilterOptions setCheckBox={mockSetCheckBox} />,
-    //   )
-
-    //   wrapper.instance().handleIsInternalStatus(true)
-
-    //   expect(mockSetCheckBox).toHaveBeenCalledWith(true)
-    // })
   })
 })
