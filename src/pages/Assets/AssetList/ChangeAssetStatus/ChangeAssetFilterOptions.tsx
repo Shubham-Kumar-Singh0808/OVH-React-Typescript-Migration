@@ -1,4 +1,3 @@
-import { create } from 'domain'
 import {
   CRow,
   CCol,
@@ -14,10 +13,8 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
 import Autocomplete from 'react-autocomplete'
-import { Link, useHistory } from 'react-router-dom'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
-import { description } from '../../../../test/constants'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -26,10 +23,9 @@ import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiev
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
-import AddVendorDetails from '../../VendorList/AddVendorDetails/AddVendorDetails'
 
 const ChangeAssetFilterOptions = ({
-  setToggle,
+  setEmpToggle,
   allEmployees,
   onSelectEmployee,
   employeeName,
@@ -37,7 +33,7 @@ const ChangeAssetFilterOptions = ({
   changeReportStatus,
   setChangeReportStatus,
 }: {
-  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEmpToggle: React.Dispatch<React.SetStateAction<string>>
   allEmployees: IncomingActiveEmployee[]
   onSelectEmployee: (value: string) => void
   employeeName: string | undefined
@@ -59,7 +55,6 @@ const ChangeAssetFilterOptions = ({
   const [vendorListFlag, setVendorListFlag] =
     useState<string>('AddVendorDetails')
   const [assetReferenceNumber, setAssetReferenceNumber] = useState<string>('')
-  const [assetStatus, setAssetStatus] = useState<string>('')
   const [statusType, setStatusType] = useState<string>(
     changeReportStatus.status,
   )
@@ -92,7 +87,6 @@ const ChangeAssetFilterOptions = ({
     setDescription(description)
   }
   const dispatch = useAppDispatch()
-  const history = useHistory()
 
   const getLookUps = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
@@ -143,7 +137,7 @@ const ChangeAssetFilterOptions = ({
         saveAssetDetailsResultAction,
       )
     ) {
-      setToggle('')
+      // setToggle('')
 
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
@@ -155,7 +149,6 @@ const ChangeAssetFilterOptions = ({
     setAssetNumber('')
     setVendorName('')
     setAssetReferenceNumber('')
-    //setAssetStatus('')
     setStatusType('')
     setIsShowEditor(false)
     setDescription('')
@@ -181,7 +174,7 @@ const ChangeAssetFilterOptions = ({
     setCheckBox(isExpenseVendor)
   }
   const addVendorButtonHandler = () => {
-    dispatch(reduxServices.changeStatus.actions.setToggle('addVendorDetails'))
+    setEmpToggle('ChangeReportToAddVendor')
   }
   return (
     <>
@@ -232,17 +225,14 @@ const ChangeAssetFilterOptions = ({
           </CFormSelect>
         </CCol>
         <CCol sm={2}>
-          {/* <Link to={`/vendorListFlag=ADDVENDOR`} className="cursor-pointer"> */}
           <CButton
             color="info"
             className="btn-ovh me-1"
             data-testid="add-vendorbtn"
-            // onClick={() => setVendorListFlag('')}
             onClick={addVendorButtonHandler}
           >
             <i className="fa fa-plus"></i>Add Vendor
           </CButton>
-          {/* </Link> */}
         </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
@@ -328,45 +318,48 @@ const ChangeAssetFilterOptions = ({
           Employee:
           <span className={employeeName ? TextWhite : TextDanger}>*</span>
         </CFormLabel>
-        <Autocomplete
-          inputProps={{
-            className: 'form-control form-control-sm',
-            autoComplete: 'on',
-            placeholder: 'Employee',
-            onBlur: onFocusOut,
-          }}
-          items={allEmployees}
-          getItemValue={(item) => item.empFirstName + ' ' + item.empLastName}
-          value={employeeName}
-          renderMenu={(children) => (
-            <div
-              className={
-                employeeName && employeeName.length > 0
-                  ? 'autocomplete-dropdown-wrap'
-                  : 'autocomplete-dropdown-wrap hide'
-              }
-            >
-              {children}
-            </div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              className={
-                isHighlighted
-                  ? 'autocomplete-dropdown-item active'
-                  : 'autocomplete-dropdown-item'
-              }
-              key={item?.employeeId}
-            >
-              {item?.empFirstName + ' ' + item?.empLastName}
-            </div>
-          )}
-          shouldItemRender={(item, value) =>
-            item?.empFirstName?.toLowerCase().indexOf(value?.toLowerCase()) > -1
-          }
-          onChange={(e) => setEmployeeName(e.target.value)}
-          onSelect={(value) => selectEmployeeHandler(value)}
-        />
+        <CCol sm={3}>
+          <Autocomplete
+            inputProps={{
+              className: 'form-control form-control-sm',
+              autoComplete: 'on',
+              placeholder: 'Employee',
+              onBlur: onFocusOut,
+            }}
+            items={allEmployees}
+            getItemValue={(item) => item.empFirstName + ' ' + item.empLastName}
+            value={employeeName}
+            renderMenu={(children) => (
+              <div
+                className={
+                  employeeName && employeeName.length > 0
+                    ? 'autocomplete-dropdown-wrap'
+                    : 'autocomplete-dropdown-wrap hide'
+                }
+              >
+                {children}
+              </div>
+            )}
+            renderItem={(item, isHighlighted) => (
+              <div
+                className={
+                  isHighlighted
+                    ? 'autocomplete-dropdown-item active'
+                    : 'autocomplete-dropdown-item'
+                }
+                key={item?.employeeId}
+              >
+                {item?.empFirstName + ' ' + item?.empLastName}
+              </div>
+            )}
+            shouldItemRender={(item, value) =>
+              item?.empFirstName?.toLowerCase().indexOf(value?.toLowerCase()) >
+              -1
+            }
+            onChange={(e) => setEmployeeName(e.target.value)}
+            onSelect={(value) => selectEmployeeHandler(value)}
+          />
+        </CCol>
       </CRow>
       <CRow className="mt-4 mb-4">
         <CFormLabel
@@ -500,7 +493,6 @@ const ChangeAssetFilterOptions = ({
           </CButton>
         </CCol>
       </CRow>
-      {/* <AddVendorDetails setToggle={setToggle} /> */}
     </>
   )
 }

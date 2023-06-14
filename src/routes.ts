@@ -467,7 +467,7 @@ const ProductSpecificationList = React.lazy(
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
 // const AddVendorList = React.lazy(
-//   () => import('./pages/Assets/VendorList/AddVendorDetails/AddVendorDetails'),
+//   () => import('./pages/Assets/AssetList/ChangeAssetStatus/Testing'),
 // )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
