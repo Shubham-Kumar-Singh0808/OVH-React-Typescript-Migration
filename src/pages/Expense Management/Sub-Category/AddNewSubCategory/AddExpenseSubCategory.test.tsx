@@ -75,6 +75,16 @@ describe('Add Expense Sub Category List with data', () => {
     expect(screen.getByText('Sub-Category:')).toBeInTheDocument()
   })
 
+  test('clear button functionality', () => {
+    const SubCategoryInput = screen.getByTestId('subCategoryName')
+    userEvent.type(SubCategoryInput, 'testing category')
+    expect(SubCategoryInput).toHaveValue('testing category')
+
+    const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
+    expect(clearBtnElement).toBeEnabled()
+    userEvent.click(clearBtnElement)
+  })
+
   // test('should able to select values for options for respective select element', () => {
   //   const category = screen.getByTestId('categoryName')
   //   userEvent.type(category, 'testing category')
@@ -83,16 +93,6 @@ describe('Add Expense Sub Category List with data', () => {
   //   const addBtnElement = screen.getByRole('button', { name: 'Add' })
   //   expect(addBtnElement).toBeEnabled()
   //   userEvent.click(addBtnElement)
-  // })
-
-  // test('should able to clear input field', () => {
-  //   const categoryNameInput = screen.getByTestId('categoryName')
-  //   userEvent.type(categoryNameInput, 'test')
-  //   expect(categoryNameInput).toHaveValue('test')
-
-  //   const clearBtnElement = screen.getByRole('button', { name: 'Clear' })
-  //   expect(clearBtnElement).toBeEnabled()
-  //   userEvent.click(clearBtnElement)
   // })
 
   test('should be able to render Add Expense Sub Category Component label', () => {

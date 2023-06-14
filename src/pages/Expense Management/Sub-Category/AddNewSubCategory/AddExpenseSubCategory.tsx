@@ -169,11 +169,11 @@ const AddExpenseSubCategory = (): JSX.Element => {
         <CCol sm={3}>
           <CFormSelect
             className="mb-1"
-            data-testid="categoryId"
-            id="category"
+            data-testid="categoryName"
+            id="categoryName"
             size="sm"
             aria-label="Category"
-            name="id"
+            name="categoryName"
             onChange={(e) => {
               SetExpenseCategoryName(e.target.value)
             }}
