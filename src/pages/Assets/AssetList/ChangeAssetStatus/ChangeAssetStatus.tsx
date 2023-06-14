@@ -5,7 +5,8 @@ import ChangeAssetAddVendor from './ChangeAssetAddVendor'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const ChangeAssetStatus = ({
   setToggle,
@@ -23,7 +24,7 @@ const ChangeAssetStatus = ({
   const [employeeFilterName, setEmployeeFilterName] = useState<string>(
     changeReportStatus.employeeName,
   )
-
+  const dispatch = useAppDispatch()
   const getEmployeeId = (list: IncomingActiveEmployee[], name: string) => {
     const data = list.find(
       (item) => item.empFirstName + ' ' + item.empLastName === name,
@@ -35,6 +36,10 @@ const ChangeAssetStatus = ({
   }
   const onSelectEmployee = (value: string) => {
     const empId = getEmployeeId(activeEmployee, value)
+    if (empId === -1) {
+      return
+    }
+    dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
   }
   return (
     <>

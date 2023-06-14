@@ -7,7 +7,7 @@ import {
   CFormSelect,
   CFormCheck,
 } from '@coreui/react-pro'
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
@@ -22,7 +22,6 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import { AllAssetsList } from '../../../../types/Assets/AssetList/AssetListTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 
 const ChangeAssetFilterOptions = ({
   setEmpToggle,
@@ -117,7 +116,7 @@ const ChangeAssetFilterOptions = ({
   const handleSaveAssetStatus = async () => {
     const prepareObject = {
       amount: changeReportStatus.amount,
-      assetId: changeReportStatus.assetTypeId,
+      assetId: changeReportStatus.id,
       date: changeReportStatus.createdDate,
       description,
       employeeId: changeReportStatus.employeeId,
