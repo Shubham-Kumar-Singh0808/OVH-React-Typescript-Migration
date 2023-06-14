@@ -181,9 +181,10 @@ const EditProcessArea = ({
         sqaComments: processArea.sqaComments,
       }),
     )
-    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
     dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
     setToggle('')
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
+    dispatch(reduxServices.processArea.getProcessAreas(processArea.categoryId))
   }
   const updateButtonHandler = async () => {
     if (
