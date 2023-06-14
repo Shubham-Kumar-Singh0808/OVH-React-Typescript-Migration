@@ -24,7 +24,6 @@ import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateE
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { dateFormat } from '../../../constant/DateFormat'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const CreateNewTicketFilterOptions = ({
@@ -65,10 +64,6 @@ const CreateNewTicketFilterOptions = ({
 
   const departmentList = useTypedSelector(
     reduxServices.ticketApprovals.selectors.departmentNameList,
-  )
-
-  const isLoading = useTypedSelector(
-    reduxServices.ticketApprovals.selectors.isLoading,
   )
 
   const departmentCategoryList = useTypedSelector(
