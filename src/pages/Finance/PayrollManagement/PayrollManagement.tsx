@@ -271,7 +271,7 @@ const PayrollManagement = (): JSX.Element => {
 
   const note =
     !isNoteVisible && excelData.length === 0 ? (
-      <span className="textColor-shade" ng-show="MsgFlag">
+      <span className="textColor-shade">
         Note: Please upload file either xls or xlsx format.
       </span>
     ) : (
