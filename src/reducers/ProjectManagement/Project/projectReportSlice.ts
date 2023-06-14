@@ -257,16 +257,16 @@ const isProjectLoading = (state: RootState): LoadingState =>
 const isClientProjectLoading = (state: RootState): LoadingState =>
   state.projectReport.isClientProjectLoading
 
-const getSelectValue = (state: RootState): string | undefined =>
+const getSelectValue = (state: RootState): string =>
   state.projectReport.SelectValue
 
-const getStatusValue = (state: RootState): string | undefined =>
+const getStatusValue = (state: RootState): string =>
   state.projectReport.StatusValue
 
-const getPricingModel = (state: RootState): string | undefined =>
+const getPricingModel = (state: RootState): string =>
   state.projectReport.PricingModel
 
-const getProjectHealth = (state: RootState): string | undefined =>
+const getProjectHealth = (state: RootState): string =>
   state.projectReport.ProjectHealth
 
 const getCustomFromValue = (state: RootState): string | Date =>

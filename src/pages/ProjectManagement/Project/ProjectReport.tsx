@@ -2,53 +2,34 @@ import React, { useEffect, useState } from 'react'
 import {
   CRow,
   CCol,
-  CInputGroup,
   CFormLabel,
+  CFormSelect,
   CButton,
   CFormCheck,
   CFormInput,
+  CInputGroup,
 } from '@coreui/react-pro'
-import DatePicker from 'react-datepicker'
-import moment from 'moment'
 import { Link } from 'react-router-dom'
-import { SelectFilter } from './ProjectComponent/SelectFilter'
+import DatePicker from 'react-datepicker'
 import ProjectReportsTable from './ProjectReportTable'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { ProjectReportQueryParams } from '../../../types/ProjectManagement/Project/ProjectTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { dateFormat } from '../../../constant/DateFormat'
+import OCard from '../../../components/ReusableComponent/OCard'
+import { downloadFile, showIsRequired } from '../../../utils/helper'
+import AddProject from '../../../middleware/api/ProjectManagement/Project'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
-import { downloadFile } from '../../../utils/helper'
-import AddProject from '../../../middleware/api/ProjectManagement/Project'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const ProjectReport = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-
-  const employeeId = useTypedSelector(
-    reduxServices.authentication.selectors.selectEmployeeId,
+  const getSelectedValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getSelectValue,
   )
-
-  const listSize = useTypedSelector(
-    reduxServices.projectReport.selectors.listSize,
-  )
-
-  const projectReports = useTypedSelector(
-    reduxServices.projectReport.selectors.projectReports,
-  )
-
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  const getProjectStatus = useTypedSelector(
+    reduxServices.projectReport.selectors.getStatusValue,
   )
   const getPricingModel = useTypedSelector(
     reduxServices.projectReport.selectors.getPricingModel,
-  )
-  const getSelectValue = useTypedSelector(
-    reduxServices.projectReport.selectors.getSelectValue,
-  )
-  const getStatusValue = useTypedSelector(
-    reduxServices.projectReport.selectors.getStatusValue,
   )
   const getProjectHealth = useTypedSelector(
     reduxServices.projectReport.selectors.getProjectHealth,
@@ -59,28 +40,36 @@ const ProjectReport = (): JSX.Element => {
   const getCustomToValue = useTypedSelector(
     reduxServices.projectReport.selectors.getCustomToValue,
   )
-
-  const initValue = {
-    endIndex: 20,
-    firstIndex: 0,
-    health: getProjectHealth as string,
-    projectStatus: getStatusValue as string,
-    type: getPricingModel as string,
-    projectDatePeriod: getSelectValue as string,
-    intrnalOrNot: false,
-    multiSearch: '',
-    startdate: (getCustomFromValue as string) || '',
-    enddate: (getCustomToValue as string) || '',
-  }
-
-  const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
-  const [isViewBtnEnable, setViewBtnEnable] = useState(true)
+  const [Select, setSelect] = useState<string>(getSelectedValue)
+  const [projectStatus, setProjectStatus] = useState<string>(getProjectStatus)
+  const [pricingModel, setPricingModel] = useState<string>(getPricingModel)
+  const [projectHealth, setProjectHealth] = useState<string>(getProjectHealth)
+  const [checked, setChecked] = useState<boolean>(false)
+  const [multiSearch, setMultiSearch] = useState<string>('')
+  const [selectFromDate, setSelectFromDate] = useState<Date | string>(
+    getCustomFromValue,
+  )
+  const [selectToDate, setSelectToDate] = useState<Date | string>(
+    getCustomToValue,
+  )
+  const SelectDateVersion = 'Select Date'
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
-
-  useEffect(() => {
-    dispatch(reduxServices.projectReport.getFetchActiveProjectReports(params))
-  }, [dispatch])
-
+  const dispatch = useAppDispatch()
+  const projectReports = useTypedSelector(
+    reduxServices.projectReport.selectors.projectReports,
+  )
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Projects',
+  )
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+  const listSize = useTypedSelector(
+    reduxServices.projectReport.selectors.listSize,
+  )
   const {
     paginationRange,
     setPageSize,
@@ -88,316 +77,232 @@ const ProjectReport = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
-
-  const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Projects',
-  )
-
-  useEffect(() => {
-    const payload =
-      params.projectDatePeriod === 'Custom'
-        ? {
-            ...params,
-            firstIndex: pageSize * (currentPage - 1),
-            endIndex: pageSize * currentPage,
-            employeeId: Number(employeeId),
-          }
-        : {
-            ...params,
-            firstIndex: pageSize * (currentPage - 1),
-            endIndex: pageSize * currentPage,
-            startdate: '',
-            enddate: '',
-            employeeId: Number(employeeId),
-          }
-
-    dispatch(reduxServices.projectReport.getFetchActiveProjectReports(payload))
-  }, [currentPage, dispatch, pageSize])
-
-  const selectDate = [
-    { label: 'Select Date', name: 'Select Date' },
-    { label: 'Today', name: 'Today' },
-    { label: 'Yesterday', name: 'Yesterday' },
-    { label: 'Week', name: 'This Week' },
-    { label: 'Last Week', name: 'Last Week' },
-    { label: 'Last Month', name: 'Last Month' },
-    { label: 'Current Month', name: 'Current Month' },
-    { label: 'Custom', name: 'Custom' },
-  ]
-
-  const selectStatus = [
-    { label: 'NEW', name: 'New' },
-    { label: 'INPROGRESS', name: 'In Progress' },
-    { label: 'ONHOLD', name: 'On Hold' },
-    { label: 'CLOSED', name: 'Closed' },
-    { label: 'ALL', name: 'All' },
-  ]
-
-  const selectPriceModel = [
-    { label: 'ALL', name: 'All' },
-    { label: 'FIXEDBID', name: 'Fixed  Bid' },
-    { label: 'RETAINER', name: 'Retainer' },
-    { label: 'SUPPORT', name: 'Support' },
-    { label: 'TM', name: 'T&M' },
-  ]
-
-  const selectHealth = [
-    { label: 'All', name: 'All', backgroundColor: '' },
-    {
-      label: 'Gray',
-      name: 'Project not yet started',
-      backgroundColor: 'opt-bg-gray',
-    },
-    { label: 'Green', name: 'Good', backgroundColor: 'opt-bg-green' },
-    { label: 'Orange', name: 'Critical', backgroundColor: 'opt-bg-orange' },
-    { label: 'Red', name: 'Danger', backgroundColor: 'opt-bg-danger' },
-  ]
-
-  const handleSelectDate = (value: string) => {
-    if (value === 'Custom') {
-      setViewBtnEnable(false)
-    } else {
-      setViewBtnEnable(true)
-    }
-
-    setParams({ ...params, projectDatePeriod: value })
-    dispatch(reduxServices.projectReport.actions.setSelectValue(value))
-  }
-
-  const handleStatus = (value: string) => {
-    setParams({ ...params, projectStatus: value })
-    dispatch(reduxServices.projectReport.actions.setStatusValue(value))
-  }
-
-  const handlePriceModel = (value: string) => {
-    setParams({ ...params, type: value })
-    dispatch(reduxServices.projectReport.actions.setPricingModel(value))
-  }
-
-  const handleProjectHealth = (value: string) => {
-    setParams({ ...params, health: value })
-    dispatch(reduxServices.projectReport.actions.setProjectHealth(value))
-  }
-
-  const handleStartDate = (value: Date) => {
-    setParams({ ...params, startdate: moment(value).format(dateFormat) })
-    dispatch(
-      reduxServices.projectReport.actions.setCustomFromValue(
-        moment(value).format(dateFormat),
-      ),
-    )
-  }
-
-  const handleEndDate = (value: Date) => {
-    if (
-      (params.enddate !== '' || params.enddate != null) &&
-      (params.startdate !== '' || params.startdate != null)
-    ) {
-      setViewBtnEnable(true)
-    } else {
-      setViewBtnEnable(false)
-    }
-    setParams({ ...params, enddate: moment(value).format(dateFormat) })
-    dispatch(
-      reduxServices.projectReport.actions.setCustomToValue(
-        moment(value).format(dateFormat),
-      ),
-    )
-  }
-
-  const handleIsInternalStatus = (value: boolean) => {
-    setParams({ ...params, intrnalOrNot: value })
-  }
-
-  const handleMultipleSearch = (value: string) => {
-    setParams({ ...params, multiSearch: value })
-  }
-
-  useEffect(() => {
-    dispatch(reduxServices.projectReport.actions.setPricingModel(params.type))
-    dispatch(
-      reduxServices.projectReport.actions.setSelectValue(
-        params.projectDatePeriod,
-      ),
-    )
-    dispatch(
-      reduxServices.projectReport.actions.setProjectHealth(params.health),
-    )
-    dispatch(
-      reduxServices.projectReport.actions.setStatusValue(params.projectStatus),
-    )
-    dispatch(
-      reduxServices.projectReport.actions.setCustomFromValue(params.startdate),
-    )
-    dispatch(
-      reduxServices.projectReport.actions.setCustomToValue(params.enddate),
-    )
-  }, [dispatch, params, params.enddate, params.startdate])
-
-  const viewHandler = () => {
-    const payload =
-      params.projectDatePeriod === 'Custom'
-        ? {
-            ...params,
-            employeeId: Number(employeeId),
-          }
-        : {
-            ...params,
-            startdate: '',
-            enddate: '',
-            employeeId: Number(employeeId),
-          }
-
-    dispatch(
-      reduxServices.projectReport.getFetchSearchAllocationReport(payload),
-    )
-    if (params.projectStatus === 'CLOSED') {
-      setIsCloseBtnVisible(false)
-    } else {
-      setIsCloseBtnVisible(true)
-    }
-    setCurrentPage(1)
-    setPageSize(20)
-  }
-
-  const clearHandler = () => {
-    setViewBtnEnable(true)
-    setParams({
-      ...initValue,
-      projectDatePeriod: '',
-      multiSearch: '',
-      projectStatus: 'ALL',
-      health: 'All',
-      type: 'All',
-    })
-    const { endIndex, firstIndex } = params
-    dispatch(
-      reduxServices.projectReport.getFetchActiveProjectReports({
-        endIndex,
-        firstIndex,
-        health: 'All',
-        projectStatus: 'ALL',
-        type: 'All',
-      }),
-    )
-  }
+  // const handleExportProjectList = async () => {
+  //   const projectListDownload = await AddProject.exportProjectList({
+  //     employeeId: Number(employeeId),
+  //     projectStatus: params.projectStatus,
+  //     type: params.type,
+  //     health: params.health,
+  //     startdate: params.startdate as string,
+  //     enddate: params.enddate as string,
+  //     multiSearch: params.multiSearch as string,
+  //     projectDatePeriod: params.projectDatePeriod as string,
+  //     intrnalOrNot: params.intrnalOrNot as boolean,
+  //   })
+  //   downloadFile(projectListDownload, 'ProjectList.csv')
+  // }
 
   const handleExportProjectList = async () => {
     const projectListDownload = await AddProject.exportProjectList({
       employeeId: Number(employeeId),
-      projectStatus: params.projectStatus,
-      type: params.type,
-      health: params.health,
-      startdate: params.startdate as string,
-      enddate: params.enddate as string,
-      multiSearch: params.multiSearch as string,
-      projectDatePeriod: params.projectDatePeriod as string,
-      intrnalOrNot: params.intrnalOrNot as boolean,
+      projectStatus,
+      type: 'All',
+      health: 'All',
+      startdate: '',
+      enddate: '',
+      multiSearch: '',
+      projectDatePeriod: Select,
+      intrnalOrNot: false,
     })
+
     downloadFile(projectListDownload, 'ProjectList.csv')
   }
+  const commonFormatDate = 'l'
+  const fromDateValue = selectFromDate
+    ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
 
-  const handleSearchByEnter = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-  ) => {
-    if (event.key === 'Enter') {
-      const payload =
-        params.projectDatePeriod === 'Custom'
-          ? {
-              ...params,
-              employeeId: Number(employeeId),
-            }
-          : {
-              ...params,
-              startdate: '',
-              enddate: '',
-              employeeId: Number(employeeId),
-            }
+  const toDateValue = selectToDate
+    ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  useEffect(() => {
+    dispatch(
+      reduxServices.projectReport.getFetchSearchAllocationReport({
+        employeeId: Number(employeeId),
+        endIndex: pageSize * currentPage,
+        enddate: '',
+        firstIndex: pageSize * (currentPage - 1),
+        health: projectHealth || 'All',
+        intrnalOrNot: false,
+        multiSearch: '',
+        projectDatePeriod: Select || SelectDateVersion,
+        projectStatus: projectStatus || 'ALL',
+        startdate: '',
+        type: pricingModel || 'All',
+      }),
+    )
+  }, [currentPage, dispatch, pageSize])
 
-      if (params.multiSearch === '') {
-        dispatch(
-          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
-        )
-        setCurrentPage(1)
-      } else {
-        dispatch(
-          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
-        )
-      }
-    }
+  const viewBtnHandler = () => {
+    dispatch(
+      reduxServices.projectReport.getFetchSearchAllocationReport({
+        employeeId: Number(employeeId),
+        endIndex: pageSize * currentPage,
+        enddate: toDateValue,
+        firstIndex: pageSize * (currentPage - 1),
+        health: projectHealth || 'All',
+        intrnalOrNot: false,
+        multiSearch: '',
+        projectDatePeriod: Select || SelectDateVersion,
+        projectStatus: projectStatus || 'ALL',
+        startdate: fromDateValue,
+        type: pricingModel || 'All',
+      }),
+    )
   }
-
+  const searchBtnHandler = () => {
+    dispatch(
+      reduxServices.projectReport.getFetchSearchAllocationReport({
+        employeeId: Number(employeeId),
+        endIndex: pageSize * currentPage,
+        enddate: toDateValue,
+        firstIndex: pageSize * (currentPage - 1),
+        health: projectHealth || 'All',
+        intrnalOrNot: false,
+        multiSearch,
+        projectDatePeriod: Select || SelectDateVersion,
+        projectStatus: projectStatus || 'ALL',
+        startdate: fromDateValue,
+        type: pricingModel || 'All',
+      }),
+    )
+  }
   return (
-    <OCard
-      className="mb-4 myprofile-wrapper project-report"
-      title="Project Report"
-      CBodyClassName="ps-0 pe-0"
-      CFooterClassName="d-none"
-    >
-      <>
+    <>
+      <OCard
+        className="mb-4 myprofile-wrapper project-report"
+        title="Project Report"
+        CBodyClassName="ps-0 pe-0"
+        CFooterClassName="d-none"
+      >
         <CRow className="justify-content-end">
           <CRow>
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">Select:</CFormLabel>
             </CCol>
             <CCol sm={2}>
-              <SelectFilter
-                list={selectDate}
-                label="Select"
-                name="selectDate"
-                value={params.projectDatePeriod}
-                onChange={handleSelectDate}
-              />
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="Select"
+                data-testid="form-select1"
+                name="Select"
+                value={Select}
+                onChange={(e) => {
+                  dispatch(
+                    reduxServices.projectReport.actions.setSelectValue(
+                      e.target.value,
+                    ),
+                  )
+                  setSelect(e.target.value)
+                }}
+              >
+                <option value="">Select Date</option>
+                <option value="Today">Today</option>
+                <option value="This Week">This Week</option>
+                <option value="Last Week">Last Week</option>
+                <option value="Last Month">Last Month</option>
+                <option value="Current Month">Current Month</option>
+                <option value="Custom">Custom</option>
+              </CFormSelect>
             </CCol>
-
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">Status:</CFormLabel>
             </CCol>
             <CCol sm={2}>
-              <SelectFilter
-                data-testid="status-filter"
-                list={selectStatus}
-                label="Status"
-                name="status"
-                value={params.projectStatus}
-                onChange={handleStatus}
-              />
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="employeeStatus"
+                data-testid="form-select3"
+                name="employeeStatus"
+                value={projectStatus}
+                onChange={(e) => {
+                  dispatch(
+                    reduxServices.projectReport.actions.setStatusValue(
+                      e.target.value,
+                    ),
+                  )
+                  setProjectStatus(e.target.value)
+                }}
+              >
+                <option value="New">New</option>
+                <option value="INPROGRESS">In Progress</option>
+                <option value="CLOSED">Closed</option>
+                <option value="ALL">All</option>
+              </CFormSelect>
             </CCol>
-
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">Pricing Model:</CFormLabel>
             </CCol>
             <CCol sm={2}>
-              <SelectFilter
-                list={selectPriceModel}
-                label="Price Model"
-                name="priceModel"
-                value={params.type}
-                onChange={handlePriceModel}
-              />
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="employeeStatus"
+                data-testid="form-select3"
+                name="employeeStatus"
+                value={pricingModel}
+                onChange={(e) => {
+                  dispatch(
+                    reduxServices.projectReport.actions.setPricingModel(
+                      e.target.value,
+                    ),
+                  )
+                  setPricingModel(e.target.value)
+                }}
+              >
+                <option value="All">All</option>
+                <option value="FIXEDBID">Fixed Bid</option>
+                <option value="RETAINER">Retainer</option>
+                <option value="SUPPORT">Support</option>
+                <option value="TM">T&amp;M</option>
+              </CFormSelect>
             </CCol>
-
             <CCol sm={2} md={1} className="text-end">
               <CFormLabel className="mt-1">Project Health:</CFormLabel>
             </CCol>
             <CCol sm={2}>
-              <SelectFilter
-                list={selectHealth}
-                label="Project Health"
-                name="projectHealth"
-                value={params.health}
-                onChange={handleProjectHealth}
-              />
+              <CFormSelect
+                aria-label="Default select example"
+                size="sm"
+                id="employeeStatus"
+                data-testid="form-select3"
+                name="employeeStatus"
+                value={projectHealth}
+                onChange={(e) => {
+                  dispatch(
+                    reduxServices.projectReport.actions.setProjectHealth(
+                      e.target.value,
+                    ),
+                  )
+                  setProjectHealth(e.target.value)
+                }}
+              >
+                <option value="All">All</option>
+                <option value="Gray">Project not yet started</option>
+                <option value="Green">Good</option>
+                <option value="Orange">Critical</option>
+                <option value="Red">Danger</option>
+              </CFormSelect>
             </CCol>
           </CRow>
-          {params.projectDatePeriod === 'Custom' && (
+          {Select === 'Custom' && (
             <CRow className="mt-2 mb-2">
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">
                   From:
-                  {(params.startdate == null || params.startdate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
+                  <span className={showIsRequired(selectFromDate as string)}>
+                    *
+                  </span>
                 </CFormLabel>
               </CCol>
               <CCol sm={2}>
@@ -412,17 +317,25 @@ const ProjectReport = (): JSX.Element => {
                   placeholderText="dd/mm/yy"
                   dateFormat="dd/mm/yy"
                   name="startDate"
-                  value={params.startdate}
-                  onChange={(date: Date) => handleStartDate(date)}
+                  value={fromDateValue}
+                  onChange={(date: Date) => {
+                    dispatch(
+                      reduxServices.projectReport.actions.setCustomFromValue(
+                        date,
+                      ),
+                    )
+                    setSelectFromDate(date)
+                  }}
+                  selected={selectFromDate as Date}
                 />
               </CCol>
 
               <CCol sm={2} md={1} className="text-end">
                 <CFormLabel className="mt-1">
                   To:
-                  {(params.enddate == null || params.enddate === '') && (
-                    <span className="text-danger">*</span>
-                  )}
+                  <span className={showIsRequired(selectToDate as string)}>
+                    *
+                  </span>
                 </CFormLabel>
               </CCol>
               <CCol sm={2}>
@@ -437,8 +350,16 @@ const ProjectReport = (): JSX.Element => {
                   placeholderText="dd/mm/yy"
                   dateFormat="dd/mm/yy"
                   name="endDate"
-                  value={params.enddate}
-                  onChange={(date: Date) => handleEndDate(date)}
+                  value={toDateValue}
+                  onChange={(date: Date) => {
+                    dispatch(
+                      reduxServices.projectReport.actions.setCustomToValue(
+                        date,
+                      ),
+                    )
+                    setSelectToDate(date)
+                  }}
+                  selected={selectToDate as Date}
                 />
               </CCol>
             </CRow>
@@ -448,8 +369,8 @@ const ProjectReport = (): JSX.Element => {
               <CButton
                 className="cursor-pointer"
                 color="success btn-ovh me-1"
-                onClick={viewHandler}
-                disabled={!isViewBtnEnable}
+                onClick={viewBtnHandler}
+                // disabled={!isViewBtnEnable}
               >
                 View
               </CButton>
@@ -457,7 +378,7 @@ const ProjectReport = (): JSX.Element => {
                 className="cursor-pointer"
                 color="warning btn-ovh me-1"
                 data-testid="clearButton"
-                onClick={clearHandler}
+                // onClick={clearHandler}
               >
                 Clear
               </CButton>
@@ -491,10 +412,8 @@ const ProjectReport = (): JSX.Element => {
                 data-testid="internalProject"
                 id="internalProject"
                 label="Search For Internal Project"
-                onChange={(event) =>
-                  handleIsInternalStatus(event.target.checked)
-                }
-                checked={params.intrnalOrNot}
+                onChange={(event) => setChecked(event.target.checked)}
+                checked={checked}
               />
             </div>
           </CRow>
@@ -506,9 +425,9 @@ const ProjectReport = (): JSX.Element => {
                   aria-label="Multiple Search"
                   aria-describedby="search-field"
                   data-testid="multi-search-input"
-                  value={params.multiSearch}
-                  onChange={(event) => handleMultipleSearch(event.target.value)}
-                  onKeyUp={handleSearchByEnter}
+                  value={multiSearch}
+                  onChange={(event) => setMultiSearch(event.target.value)}
+                  onKeyUp={searchBtnHandler}
                 />
                 <CButton
                   data-testid="multi-search-btn"
@@ -516,10 +435,8 @@ const ProjectReport = (): JSX.Element => {
                   type="button"
                   color="info"
                   id="search-field"
-                  onClick={viewHandler}
-                  disabled={
-                    params.multiSearch == null || params.multiSearch === ''
-                  }
+                  onClick={searchBtnHandler}
+                  disabled={!multiSearch}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>
@@ -527,7 +444,6 @@ const ProjectReport = (): JSX.Element => {
             </CCol>
           </CRow>
         </CRow>
-
         <CRow className="justify-content-end mt-3">
           <ProjectReportsTable
             paginationRange={paginationRange}
@@ -539,8 +455,8 @@ const ProjectReport = (): JSX.Element => {
             userAccess={userAccess as UserAccessToFeatures}
           />
         </CRow>
-      </>
-    </OCard>
+      </OCard>
+    </>
   )
 }
 
