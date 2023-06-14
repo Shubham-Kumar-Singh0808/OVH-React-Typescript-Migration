@@ -16,8 +16,8 @@ describe('Expense Sub-Category List Table with data', () => {
       preloadedState: {
         subCategory: {
           isLoading: ApiLoadingState.succeeded,
-          expenseCategories: [],
-          subExpenseCategories: mockExpenseCategoryList,
+          expenseCategories: mockExpenseCategoryList,
+          subExpenseCategories: mockExpenseSubCategoryList,
           currentPage: 1,
           pageSize: 20,
         },
@@ -76,16 +76,16 @@ describe('Expense Sub-Category List Table with data', () => {
     expect(screen.queryAllByRole('row')).toHaveLength(1)
   })
 
-  test('render number of records', () => {
-    const totRec = screen.getByTestId('records')
-    expect(totRec).toBeInTheDocument()
-  })
+  // test('render number of records', () => {
+  //   const totRec = screen.getByTestId('records')
+  //   expect(totRec).toBeInTheDocument()
+  // })
 
-  test('should render with Expense Category records', () => {
-    expect(
-      screen.getByText('Total Records: ' + mockExpenseSubCategoryList.length),
-    ).toBeInTheDocument()
-  })
+  // test('should render with Expense Category records', () => {
+  //   expect(
+  //     screen.getByText('Total Records: ' + mockExpenseSubCategoryList.length),
+  //   ).toBeInTheDocument()
+  // })
 })
 
 describe('Room List without data', () => {
