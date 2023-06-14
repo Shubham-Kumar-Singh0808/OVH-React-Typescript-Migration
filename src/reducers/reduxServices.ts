@@ -263,5 +263,5 @@ export const reduxServices = {
   assetsWarrantyList: assetsWarrantyListService,
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
-  subCategory: subCategoryListService,
+  subCategoryList: subCategoryListService,
 }

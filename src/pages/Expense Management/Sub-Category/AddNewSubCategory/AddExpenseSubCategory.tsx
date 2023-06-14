@@ -26,11 +26,11 @@ const AddExpenseSubCategory = (): JSX.Element => {
   }
 
   const expenseCategoryNames = useTypedSelector(
-    reduxServices.subCategory.selectors.categories,
+    reduxServices.subCategoryList.selectors.categories,
   )
 
   const expenseSubCategoryNames = useTypedSelector(
-    reduxServices.subCategory.selectors.subCategories,
+    reduxServices.subCategoryList.selectors.subCategories,
   )
 
   const subCategoryNameExists = (name: string) => {
@@ -70,16 +70,18 @@ const AddExpenseSubCategory = (): JSX.Element => {
       subCategoryName: expenseSubCategoryName,
     }
     const isAddExpenseSubCategory = await dispatch(
-      reduxServices.subCategory.addSubCategoryList(addExpenseSubCategoryobject),
+      reduxServices.subCategoryList.addSubCategoryList(
+        addExpenseSubCategoryobject,
+      ),
     )
     if (
-      reduxServices.subCategory.addSubCategoryList.fulfilled.match(
+      reduxServices.subCategoryList.addSubCategoryList.fulfilled.match(
         isAddExpenseSubCategory,
       )
     ) {
-      dispatch(reduxServices.subCategory.getSubCategoryList())
+      dispatch(reduxServices.subCategoryList.getSubCategoryList())
       dispatch(
-        reduxServices.subCategory.existSubCategoryList(
+        reduxServices.subCategoryList.existSubCategoryList(
           addExpenseSubCategoryobject,
         ),
       )
@@ -123,20 +125,22 @@ const AddExpenseSubCategory = (): JSX.Element => {
         subCategoryName: expenseSubCategoryName,
       }
       const isExpenseSubCategory = await dispatch(
-        reduxServices.subCategory.addSubCategoryList(expenseSubCategoryObject),
+        reduxServices.subCategoryList.addSubCategoryList(
+          expenseSubCategoryObject,
+        ),
       )
       if (
-        reduxServices.subCategory.addSubCategoryList.fulfilled.match(
+        reduxServices.subCategoryList.addSubCategoryList.fulfilled.match(
           isExpenseSubCategory,
         )
       ) {
         dispatch(
-          reduxServices.subCategory.existSubCategoryList(
+          reduxServices.subCategoryList.existSubCategoryList(
             expenseSubCategoryObject,
           ),
         )
         setExpenseSubCategoryName('')
-        dispatch(reduxServices.subCategory.getSubCategoryList())
+        dispatch(reduxServices.subCategoryList.getSubCategoryList())
         dispatch(reduxServices.app.actions.addToast(successToast))
       }
     }
@@ -155,6 +159,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
         <CFormLabel
           {...formLabelProps}
           className="col-sm-3 col-form-label text-end"
+          data-testid="categoryLabel"
         >
           Category:
           <span className={expenseCategoryName ? TextWhite : TextDanger}>

@@ -118,7 +118,7 @@ const deleteExpenseSubCategoryList = createAsyncThunk(
   },
 )
 
-const initialSubCategoryListState: SubCategoryListSliceState = {
+const initialExpenseSubCategoryState: SubCategoryListSliceState = {
   isLoading: ApiLoadingState.idle,
   expenseCategories: [],
   subExpenseCategories: [],
@@ -128,7 +128,7 @@ const initialSubCategoryListState: SubCategoryListSliceState = {
 
 const subCategoryListSlice = createSlice({
   name: 'sub category',
-  initialState: initialSubCategoryListState,
+  initialState: initialExpenseSubCategoryState,
   reducers: {
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload

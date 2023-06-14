@@ -25,11 +25,7 @@ import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { currentPageData } from '../../../utils/paginationUtils'
 
-const ExpenseSubCategoryListTable = ({
-  userAccess,
-}: {
-  userAccess: UserAccessToFeatures | undefined
-}): JSX.Element => {
+const ExpenseSubCategoryListTable = (): JSX.Element => {
   const initialEditExpenseSubCategories = {} as SubCategoryList
   const [editExpenseSubCategoryDetails, setEditExpenseSubCategoryDetails] =
     useState(initialEditExpenseSubCategories)
@@ -47,19 +43,26 @@ const ExpenseSubCategoryListTable = ({
 
   //   list of selectors
   const expenseCategoryList = useTypedSelector(
-    reduxServices.subCategory.selectors.categories,
+    reduxServices.subCategoryList.selectors.categories,
   )
 
   const subExpenseCategoryList = useTypedSelector(
-    reduxServices.subCategory.selectors.subCategories,
+    reduxServices.subCategoryList.selectors.subCategories,
   )
   const pageFromState = useTypedSelector(
-    reduxServices.subCategory.selectors.pageFromState,
+    reduxServices.subCategoryList.selectors.pageFromState,
   )
   const pageSizeFromState = useTypedSelector(
-    reduxServices.subCategory.selectors.pageSizeFromState,
+    reduxServices.subCategoryList.selectors.pageSizeFromState,
   )
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Expense Management',
+  )
   const editSubCategoryNameExists = (name: string) => {
     return subExpenseCategoryList?.find((subCategoryNamesExists) => {
       return (
@@ -94,10 +97,10 @@ const ExpenseSubCategoryListTable = ({
 
   //Dispatching the Api's
   useEffect(() => {
-    dispatch(reduxServices.subCategory.getCategoryList())
-    dispatch(reduxServices.subCategory.getSubCategoryList())
-    dispatch(reduxServices.subCategory.actions.setCurrentPage(1))
-    dispatch(reduxServices.subCategory.actions.setPageSize(20))
+    dispatch(reduxServices.subCategoryList.getCategoryList())
+    dispatch(reduxServices.subCategoryList.getSubCategoryList())
+    dispatch(reduxServices.subCategoryList.actions.setCurrentPage(1))
+    dispatch(reduxServices.subCategoryList.actions.setPageSize(20))
   }, [dispatch])
 
   // Button Handlers
@@ -125,12 +128,11 @@ const ExpenseSubCategoryListTable = ({
     }
   }
 
-  console.log(subExpenseCategoryList.length)
   const editExpenseCategoryButtonHandler = (
     subCategoryItems: SubCategoryList,
   ): void => {
     dispatch(
-      reduxServices.subCategory.editExpenseSubCategoryList(
+      reduxServices.subCategoryList.editExpenseSubCategoryList(
         subCategoryItems?.id,
       ),
     )
@@ -141,16 +143,16 @@ const ExpenseSubCategoryListTable = ({
 
   const saveExpenseCategoryButtonHandler = async () => {
     const saveExpenseSubCategoryResultAction = await dispatch(
-      reduxServices.subCategory.updateExpenseSubCategoryList(
+      reduxServices.subCategoryList.updateExpenseSubCategoryList(
         editExpenseSubCategoryDetails,
       ),
     )
     if (
-      reduxServices.subCategory.updateExpenseSubCategoryList.fulfilled.match(
+      reduxServices.subCategoryList.updateExpenseSubCategoryList.fulfilled.match(
         saveExpenseSubCategoryResultAction,
       )
     ) {
-      dispatch(reduxServices.subCategory.getSubCategoryList())
+      dispatch(reduxServices.subCategoryList.getSubCategoryList())
       setIsEditExpenseSubCategory(false)
       dispatch(
         reduxServices.app.actions.addToast(
@@ -174,16 +176,16 @@ const ExpenseSubCategoryListTable = ({
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
     const deleteExpenseSubCategoryResultAction = await dispatch(
-      reduxServices.subCategory.deleteExpenseSubCategoryList(
+      reduxServices.subCategoryList.deleteExpenseSubCategoryList(
         deleteExpenseSubCategoryId,
       ),
     )
     if (
-      reduxServices.subCategory.deleteExpenseSubCategoryList.fulfilled.match(
+      reduxServices.subCategoryList.deleteExpenseSubCategoryList.fulfilled.match(
         deleteExpenseSubCategoryResultAction,
       )
     ) {
-      dispatch(reduxServices.subCategory.getSubCategoryList())
+      dispatch(reduxServices.subCategoryList.getSubCategoryList())
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -276,6 +278,7 @@ const ExpenseSubCategoryListTable = ({
                     <CTableDataCell scope="row">
                       <div className="edit-time-control">
                         <CFormInput
+                          data-testid={`subCategoryId${index}`}
                           className="form-leave"
                           type="text"
                           id="subCategoryNames"
@@ -324,6 +327,7 @@ const ExpenseSubCategoryListTable = ({
                         </CTooltip>
                         <CTooltip content="Cancel">
                           <CButton
+                            data-testid={`btn-cancel${index}`}
                             color="warning"
                             className="btn-ovh me-1"
                             onClick={cancelExpenseSubCategoryButtonHandler}
@@ -337,6 +341,7 @@ const ExpenseSubCategoryListTable = ({
                         {userAccess?.updateaccess && (
                           <CTooltip content="Edit">
                             <CButton
+                              data-testid={`btn-subCategoryEdit${index}`}
                               color="info btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() => {
@@ -352,6 +357,7 @@ const ExpenseSubCategoryListTable = ({
                         {userAccess?.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton
+                              data-testid={`btn-subCategoryDelete${index}`}
                               color="danger btn-ovh me-1"
                               className="btn-ovh-employee-list"
                               onClick={() =>
@@ -378,7 +384,7 @@ const ExpenseSubCategoryListTable = ({
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <strong>
+          <strong data-testid="subCategoryRecords">
             {subExpenseCategoryList?.length
               ? `Total Records: ${subExpenseCategoryList.length}`
               : `No Records Found`}
