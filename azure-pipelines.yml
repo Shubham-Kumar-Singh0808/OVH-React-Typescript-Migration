@@ -1,0 +1,85 @@
+resources:
+  pipelines:
+  - pipeline: OVH-React-Typescript-Migration-Maven-CI
+    source: OVH-React-Typescript-Migration-Maven-CI
+    trigger:
+      branches:
+        include:
+        - refs/heads/develop
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/develop
+trigger:
+  branches:
+    include:
+    - refs/heads/develop
+jobs:
+- job: Job_1
+  displayName: Build
+  timeoutInMinutes: 120
+  cancelTimeoutInMinutes: 15
+  pool:
+    vmImage: windows-latest
+  steps:
+  - checkout: self
+  - task: NodeTool@0
+    displayName: Use Node 16.4.2
+    inputs:
+      versionSpec: 16.4.2
+  - task: SonarQubePrepare@5
+    displayName: Prepare analysis on SonarQube
+    inputs:
+      SonarQube: 2e7ab97f-a4a0-4580-bdfa-3efaf5fa805f
+      scannerMode: CLI
+      configMode: manual
+      cliProjectKey: OVH-React-Typescript-Migration_OVH-React-Typescript-Migration_AYMWtUw1ZJku4pQQvL7J
+      projectKey: OVH-React-Typescript-Migration_OVH-React-Typescript-Migration_AYMWtUw1ZJku4pQQvL7J
+      cliProjectName: OVH-React-Typescript-Migration
+      projectName: OVH-React-Typescript-Migration
+      cliSources: src
+      extraProperties: "# Additional properties that will be passed to the scanner, \n# Put one key=value per line, example:\n# sonar.exclusions=**/*.bin\nsonar.coverage.exclusions=**/*.test.*,/src/test/**,/src/assets/**/**,/public,/build,/deployScripts,/target,/npm,/node_modules\nsonar.test.exclusions=**/*.test.tsx\nsonar.exclusions=**/src/types/*,*/src/test/*,**/*.test.*,/src/assets/**/**,/public,/build,/deployScripts,/target,/npm,/node_modules\nsonar.typescript.lcov.reportPaths=coverage/lcov.info"
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      verbose: false
+  - task: Npm@1
+    displayName: Run lint
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: run lint
+  - task: CmdLine@2
+    displayName: Command Line Script
+    inputs:
+      script: npx
+  - task: Npm@1
+    displayName: npm gulp install
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: install gulp -g
+  - task: Npm@1
+    displayName: Test
+    timeoutInMinutes: 10000
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: run test:cov
+  - task: SonarQubeAnalyze@5
+    displayName: Run Code Analysis
+  - task: SonarQubePublish@5
+    displayName: Publish Quality Gate Result
+  - task: Npm@1
+    displayName: npm build
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: run build
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+  - task: ArchiveFiles@2
+    displayName: Archive $(Build.BinariesDirectory)
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+...
