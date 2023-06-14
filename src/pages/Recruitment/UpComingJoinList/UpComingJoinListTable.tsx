@@ -132,21 +132,20 @@ const UpComingJoinListTable = ({
               <i className="fa fa-search"></i>
             </CButton>
           </CInputGroup>
-
-          {upComingJoinee?.length > 0 && (
-            <CCol xs={12} md={8} className="px-0 text-end">
-              <CButton
-                size="sm"
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="export-btn1"
-                onClick={handleExportUpComingJoinList}
-              >
-                + Click To Export
-              </CButton>
-            </CCol>
-          )}
         </CCol>
+        {upComingJoinee?.length > 0 && (
+          <CCol sm="auto" className="px-0 text-end">
+            <CButton
+              size="sm"
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="export-btn1"
+              onClick={handleExportUpComingJoinList}
+            >
+              + Click To Export
+            </CButton>
+          </CCol>
+        )}
       </CRow>
       <CTable striped className="mt-3" id="upcomingJoineeListId">
         <CTableHead>
