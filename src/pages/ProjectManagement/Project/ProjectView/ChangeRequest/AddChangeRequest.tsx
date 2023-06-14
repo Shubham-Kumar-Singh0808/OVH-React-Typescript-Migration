@@ -191,7 +191,7 @@ const AddEditChangeRequest = ({
               autoComplete="off"
               onChange={(e) => setChangeRequestDescription(e.target.value)}
             ></CFormTextarea>
-            <p>{changeRequestDescription?.length}/150</p>
+            <p>{changeRequestDescription?.trim()?.length}/150</p>
           </CCol>
         </CRow>
         <CRow>

@@ -105,7 +105,7 @@ const ProjectNotes = (): JSX.Element => {
             value={notesLink}
             onChange={(e) => setNotesLink(e.target.value)}
           ></CFormTextarea>
-          <p className="mt-1">{notesLink?.length}/250</p>
+          <p className="mt-1">{notesLink?.trim()?.length}/250</p>
         </CCol>
       </CRow>
       <CRow className="mt-2 mb-4">
