@@ -17,6 +17,7 @@ const AssetList = (): JSX.Element => {
   const [toDate, setToDate] = useState<string>()
   const [searchInput, setSearchInput] = useState<string>()
   const [searchByEmployee, setSearchByEmployee] = useState<boolean>(false)
+  const [isAssetListTableView, setIsAssetListTableView] = useState(false)
 
   const listSize = useTypedSelector(reduxServices.assetList.selectors.listSize)
 
@@ -60,6 +61,7 @@ const AssetList = (): JSX.Element => {
           currentPage={currentPage}
           pageSize={pageSize}
           setCurrentPage={setCurrentPage}
+          setIsTableView={setIsAssetListTableView}
         />
         <AssetListTable
           paginationRange={paginationRange}
@@ -67,6 +69,7 @@ const AssetList = (): JSX.Element => {
           setCurrentPage={setCurrentPage}
           pageSize={pageSize}
           setPageSize={setPageSize}
+          isAssetListTableView={isAssetListTableView}
         />
       </OCard>
     </>

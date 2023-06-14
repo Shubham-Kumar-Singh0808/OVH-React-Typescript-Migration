@@ -31,6 +31,7 @@ const AssetListFilters = ({
   currentPage,
   pageSize,
   setCurrentPage,
+  setIsTableView,
 }: {
   selectDate: string
   setSelectDate: React.Dispatch<React.SetStateAction<string>>
@@ -45,6 +46,7 @@ const AssetListFilters = ({
   currentPage: number
   pageSize: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setIsTableView: (value: boolean) => void
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -140,6 +142,7 @@ const AssetListFilters = ({
         toDate: toDate as string,
       }),
     )
+    setIsTableView(true)
   }
 
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -172,6 +175,7 @@ const AssetListFilters = ({
     setFromDate('')
     setToDate('')
     setSearchByEmployee(false)
+    setIsTableView(false)
     dispatch(reduxServices.assetList.actions.clearAssetListType([]))
     setCurrentPage(1)
   }

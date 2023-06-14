@@ -23,6 +23,7 @@ const AssetListTable = ({
   setPageSize,
   currentPage,
   setCurrentPage,
+  isAssetListTableView,
 }: AssetListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -56,7 +57,8 @@ const AssetListTable = ({
 
   return (
     <>
-      {assets?.length > 0 && (
+      {/* {assets?.length > 0 && ( */}
+      {isAssetListTableView && (
         <>
           <CTable striped responsive className="mt-5 align-middle alignment">
             <CTableHead>
