@@ -16,9 +16,9 @@ export type UpComingJoineeList = {
   candidateEmail: string
   dateOfBirth: null
   candidateId: number
-  technology: string
+  technology: string | null
   candidateInterviewStatus: string
-  departmentName: string
+  departmentName: string | null
   mobile: string
   sendOfferMessagetoCandidate: null
 }
