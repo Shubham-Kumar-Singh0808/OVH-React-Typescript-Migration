@@ -75,7 +75,7 @@ export const mockExpenseCategory: CategoryList[] = [
   },
   {
     id: 47,
-    categoryName: 'test',
+    categoryName: 'testing',
     createdBy: 'Jyotika Goru',
     updatedBy: null,
     createdDate: '31/10/2023',

@@ -56,6 +56,13 @@ describe('Add Expense Category with data', () => {
         addNewCategory: {
           addExpenseCategory: mockExpenseCategory,
         },
+        categoryList: {
+          getAllCategory: mockExpenseCategory,
+          isLoading: ApiLoadingState.succeeded,
+          currentPage: 1,
+          pageSize: 10,
+          error: null,
+        },
         userAccessToFeatures: {
           isLoading: ApiLoadingState.succeeded,
           userAccessToFeatures: mockUserAccessToFeaturesData,
@@ -89,5 +96,12 @@ describe('Add Expense Category with data', () => {
 
   test('should be able to render AddExpenseCategory Component label', () => {
     expect(screen.getByTestId('categoryLabel')).toBeTruthy()
+  })
+
+  test('showing error on entering existing category which is already exists', () => {
+    const inputOrder = screen.getByTestId('categoryName')
+    userEvent.type(inputOrder, 'testing')
+    expect(inputOrder).toHaveValue('testing')
+    expect(screen.getByText('Category already exist')).toBeInTheDocument()
   })
 })
