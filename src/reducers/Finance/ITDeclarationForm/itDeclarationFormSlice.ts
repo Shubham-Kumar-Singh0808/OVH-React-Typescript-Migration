@@ -252,8 +252,8 @@ const itDeclarationFormSlice = createSlice({
       .addCase(getInvestsBySectionId.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.investments = [
-          ...state.investments,
-          ...Object.values(action.payload as Invest[]),
+          ...state?.investments,
+          ...Object?.values(action.payload as Invest[]),
         ]
       })
       .addCase(uploadITDeclareDocuments.fulfilled, (state) => {
