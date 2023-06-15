@@ -81,6 +81,7 @@ const VendorListTable = ({
   const editButtonHandler = (vendorData: VendorDetails) => {
     setEditVendorInfo(vendorData)
     setToggle('editVendorDetails')
+    window.scrollTo(0, 0)
   }
 
   const deleteFailedToastMessage = (
@@ -144,9 +145,13 @@ const VendorListTable = ({
             <CTableHeaderCell scope="col">Vendor Name</CTableHeaderCell>
             <CTableHeaderCell scope="col">Address</CTableHeaderCell>
             <CTableHeaderCell scope="col">City</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Phone Number</CTableHeaderCell>
+            <CTableHeaderCell scope="col" style={{ padding: '0px' }}>
+              Phone Number
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Last Updated by</CTableHeaderCell>
+            <CTableHeaderCell scope="col" style={{ padding: '0px' }}>
+              Last Updated by
+            </CTableHeaderCell>
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>

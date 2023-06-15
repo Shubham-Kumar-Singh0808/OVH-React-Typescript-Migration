@@ -97,6 +97,7 @@ const EditVendorDetails = ({
     })
   }
 
+  const vendorCityRegexReplace = /[^a-zA-Z\s]/g
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -108,6 +109,41 @@ const EditVendorDetails = ({
       validateEmail(personalEmail)
       setEditVendorInfo((prevState) => {
         return { ...prevState, ...{ [name]: personalEmail } }
+      })
+    } else if (name === 'vendorCity') {
+      const vendorCity = value.trim()
+      const specialCharsRegex = /[!@#$%^&*(),.?":{}|<>]/g
+      if (vendorCity === '') {
+        // Show error message for empty input
+        console.log('Vendor city cannot be empty')
+      } else if (specialCharsRegex.test(vendorCity)) {
+        // Show error message for invalid input
+        console.log('Vendor city contains invalid characters')
+      } else {
+        setEditVendorInfo((prevState) => {
+          return {
+            ...prevState,
+            ...{
+              [name]: vendorCity
+                .replace(vendorCityRegexReplace, '')
+                .replace(/^\s*/, ''),
+            },
+          }
+        })
+      }
+    } else if (name === 'vendorState') {
+      const vendorState = value
+        .replace(vendorCityRegexReplace, '')
+        .replace(/^\s*/, '')
+      setEditVendorInfo((prevState) => {
+        return { ...prevState, ...{ [name]: vendorState } }
+      })
+    } else if (name === 'vendorCountry') {
+      const vendorCountry = value
+        .replace(vendorCityRegexReplace, '')
+        .replace(/^\s*/, '')
+      setEditVendorInfo((prevState) => {
+        return { ...prevState, ...{ [name]: vendorCountry } }
       })
     }
     setEditVendorInfo((prevState) => {
@@ -360,7 +396,7 @@ const EditVendorDetails = ({
             <CFormInput
               className="mb-1"
               data-testid="vendorPincode"
-              type="number"
+              type="text"
               id="pincode"
               size="sm"
               name="vendorPincode"
@@ -430,7 +466,7 @@ const EditVendorDetails = ({
             Phone Number:
             <span
               className={
-                editVendorInfo?.vendorPhoneNumber?.length > 9
+                editVendorInfo?.vendorPhoneNumber?.length > 10
                   ? TextWhite
                   : TextDanger
               }
@@ -442,7 +478,7 @@ const EditVendorDetails = ({
             <CFormInput
               className="mb-1"
               data-testid="vendorPhoneNumber"
-              type="number"
+              type="text"
               id="phoneNumber"
               size="sm"
               name="vendorPhoneNumber"
@@ -465,7 +501,7 @@ const EditVendorDetails = ({
             <CFormInput
               className="mb-1"
               data-testid="vendorFaxNumber"
-              type="number"
+              type="text"
               id="faxNumber"
               size="sm"
               name="vendorFaxNumber"
@@ -498,9 +534,12 @@ const EditVendorDetails = ({
               value={editVendorInfo.departmentId}
               onChange={onChangeInputHandler}
             >
-              {departments &&
-                departments?.length > 0 &&
-                departments?.map((dept, index) => (
+              {departments
+                .slice()
+                .sort((department1, department2) =>
+                  department1.name.localeCompare(department2.name),
+                )
+                ?.map((dept, index) => (
                   <option key={index} value={dept.id}>
                     {dept.name}
                   </option>

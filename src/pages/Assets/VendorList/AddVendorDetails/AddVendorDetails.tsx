@@ -58,6 +58,7 @@ const AddVendorDetails = ({
     }
   }
   const vendorNameRegexReplace = /-_[^a-z0-9\s]/gi
+  const vendorCityRegexReplace = /[^a-zA-Z\s]/g
   const vendorPhoneRegex = /\D/g
 
   const handledInputChange = (
@@ -101,6 +102,27 @@ const AddVendorDetails = ({
       const faxNumber = value.replace(vendorPhoneRegex, '')
       setAddVendor((prevState) => {
         return { ...prevState, ...{ [name]: faxNumber } }
+      })
+    } else if (name === 'vendorCity') {
+      const vendorCity = value
+        .replace(vendorCityRegexReplace, '')
+        .replace(/^\s*/, '')
+      setAddVendor((values) => {
+        return { ...values, ...{ [name]: vendorCity } }
+      })
+    } else if (name === 'vendorState') {
+      const vendorState = value
+        .replace(vendorCityRegexReplace, '')
+        .replace(/^\s*/, '')
+      setAddVendor((values) => {
+        return { ...values, ...{ [name]: vendorState } }
+      })
+    } else if (name === 'vendorCountry') {
+      const vendorCountry = value
+        .replace(vendorCityRegexReplace, '')
+        .replace(/^\s*/, '')
+      setAddVendor((values) => {
+        return { ...values, ...{ [name]: vendorCountry } }
       })
     } else {
       setAddVendor((values) => {
@@ -519,9 +541,12 @@ const AddVendorDetails = ({
               value={addVendor.departmentId}
             >
               <option value={''}>Select Department</option>
-              {departments &&
-                departments?.length > 0 &&
-                departments?.map((dept, index) => (
+              {departments
+                .slice()
+                .sort((department1, department2) =>
+                  department1.name.localeCompare(department2.name),
+                )
+                ?.map((dept, index) => (
                   <option key={index} value={dept.id}>
                     {dept.name}
                   </option>
