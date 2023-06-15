@@ -2,18 +2,8 @@ import React, { useEffect } from 'react'
 import ExpenseCategoryListTable from './ExpenseCategoryListTable'
 import AddExpenseCategory from './AddExpenseCategory/AddExpenseCategory'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
 
 const ExpenseCategoryList = (): JSX.Element => {
-  const userAccessToFeatures = useTypedSelector(
-    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
-  )
-
-  const userAccess = userAccessToFeatures?.find(
-    (feature) => feature.name === 'Expense Management',
-  )
-
   return (
     <>
       <OCard
@@ -23,10 +13,7 @@ const ExpenseCategoryList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <AddExpenseCategory data-testid="add-expense-category" />
-        <ExpenseCategoryListTable
-          data-testid="expense-category-list-table"
-          //userAccess={userAccess}
-        />
+        <ExpenseCategoryListTable data-testid="expense-category-list-table" />
       </OCard>
     </>
   )

@@ -40,6 +40,14 @@ const ExpenseCategoryListTable = (): JSX.Element => {
 
   const dispatch = useAppDispatch()
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Expense Management',
+  )
+
   const categoryList = useTypedSelector(
     reduxServices.categoryList.selectors.categories,
   )
@@ -281,36 +289,40 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                       </>
                     ) : (
                       <>
-                        {/* {userAccess?.updateaccess && (  )} */}
-                        <CTooltip content="Edit">
-                          <CButton
-                            data-testid={`btn-categoryEdit${index}`}
-                            color="info btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() => {
-                              editExpenseCategoryButtonHandler(categoryItems)
-                            }}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-
-                        {/* {userAccess?.deleteaccess && ()} */}
-                        <CTooltip content="Delete">
-                          <CButton
-                            data-testid={`btn-categoryDelete${index}`}
-                            color="danger btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              onDeleteBtnClick(
-                                categoryItems.id,
-                                categoryItems.categoryName,
-                              )
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
+                        {userAccess?.updateaccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              data-testid={`btn-categoryEdit${index}`}
+                              color="info btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() => {
+                                editExpenseCategoryButtonHandler(categoryItems)
+                              }}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        {userAccess?.deleteaccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              data-testid={`btn-categoryDelete${index}`}
+                              color="danger btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() =>
+                                onDeleteBtnClick(
+                                  categoryItems.id,
+                                  categoryItems.categoryName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
                       </>
                     )}
                   </CTableDataCell>
@@ -324,7 +336,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
           <strong data-testid="records">
             {categoryList?.length
               ? `Total Records: ${categoryList.length}`
-              : `No Records Found`}
+              : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>
