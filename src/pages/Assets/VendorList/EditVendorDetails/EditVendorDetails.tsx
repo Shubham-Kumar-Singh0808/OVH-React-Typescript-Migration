@@ -24,10 +24,14 @@ const EditVendorDetails = ({
   setToggle,
   editVendorInfo,
   setEditVendorInfo,
+  currentPage,
+  pageSize,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editVendorInfo: VendorDetails
   setEditVendorInfo: React.Dispatch<React.SetStateAction<VendorDetails>>
+  currentPage: number
+  pageSize: number
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
@@ -155,8 +159,8 @@ const EditVendorDetails = ({
       setToggle('')
       dispatch(
         reduxServices.vendorList.getVendors({
-          startIndex: 0,
-          endIndex: 20,
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
           vendorName: '',
         }),
       )
@@ -494,7 +498,6 @@ const EditVendorDetails = ({
               value={editVendorInfo.departmentId}
               onChange={onChangeInputHandler}
             >
-              <option value={''}>Select Department</option>
               {departments &&
                 departments?.length > 0 &&
                 departments?.map((dept, index) => (

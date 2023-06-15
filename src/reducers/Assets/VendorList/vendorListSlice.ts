@@ -91,6 +91,8 @@ const vendorListSlice = createSlice({
 
 const isLoading = (state: RootState): LoadingState => state.vendorList.isLoading
 const vendors = (state: RootState): VendorDetails[] => state.vendorList.vendors
+const vendorLists = (state: RootState): GetAllVendorDetails =>
+  state.vendorList?.getAllVendorDetails
 const getVendorById = (state: RootState): VendorDetails =>
   state.vendorList.getVendorById
 const listSize = (state: RootState): number => state.vendorList.listSize
@@ -104,6 +106,7 @@ const vendorListThunk = {
 const vendorListSelectors = {
   isLoading,
   vendors,
+  vendorLists,
   listSize,
   getVendorById,
 }

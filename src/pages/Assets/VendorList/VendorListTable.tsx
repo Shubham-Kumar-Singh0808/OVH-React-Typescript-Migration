@@ -108,6 +108,7 @@ const VendorListTable = ({
         }),
       )
       dispatch(reduxServices.app.actions.addToast(deleteSuccessToastElement))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     } else if (
       reduxServices.vendorList.deleteVendorDetails.rejected.match(
         deleteClientResultAction,
@@ -116,8 +117,23 @@ const VendorListTable = ({
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
+      dispatch(
+        reduxServices.vendorList.getVendors({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          vendorName: '',
+        }),
+      )
     }
   }
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const deptAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Department Vendor List',
+  )
 
   return (
     <>
@@ -134,92 +150,97 @@ const VendorListTable = ({
             <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
-        <CTableBody>
-          {vendorList?.length > 0 &&
-            vendorList?.map((vendor, index) => {
-              const removeTag = `${vendor?.vendorAddress
-                .replace(/<[^>]+>/g, '')
-                .replace(/&nbsp;/g, '')
-                .replace(/:/g, '')}`
-              const vendorAddressLimit =
-                removeTag && removeTag.length > 30
-                  ? `${removeTag.substring(0, 30)}...`
-                  : removeTag
+        {deptAccess?.viewaccess && (
+          <CTableBody>
+            {vendorList?.length > 0 &&
+              vendorList?.map((vendor, index) => {
+                const removeTag = `${vendor?.vendorAddress
+                  .replace(/<[^>]+>/g, '')
+                  .replace(/&nbsp;/g, '')
+                  .replace(/:/g, '')}`
+                const vendorAddressLimit =
+                  removeTag && removeTag.length > 30
+                    ? `${removeTag.substring(0, 30)}...`
+                    : removeTag
 
-              return (
-                <CTableRow key={index}>
-                  <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {vendor.vendorName}
-                  </CTableDataCell>
-                  <CTableDataCell
-                    scope="row"
-                    className="sh-organization-link sh-comment"
-                  >
-                    {vendorAddressLimit ? (
-                      <CLink
-                        className="cursor-pointer text-decoration-none"
-                        data-testid={`vendor-address-${index}`}
-                        onClick={() => handleModal(vendor)}
-                      >
-                        {parse(vendorAddressLimit)}
-                      </CLink>
-                    ) : (
-                      'N/A'
-                    )}
-                  </CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {vendor.vendorCity}
-                  </CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {vendor.vendorPhoneNumber}
-                  </CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {vendor.vendorEmailId}
-                  </CTableDataCell>
-                  <CTableDataCell className="ng-binding">
-                    {vendor.createdBy}
-                  </CTableDataCell>
-                  <CTableDataCell scope="row">
-                    <div className="buttons-clients">
-                      {userAccess?.updateaccess && (
-                        <CTooltip content="Edit">
-                          <CButton
-                            color="info btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() => editButtonHandler(vendor)}
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
+                return (
+                  <CTableRow key={index}>
+                    <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
+                    <CTableDataCell className="ng-binding">
+                      {vendor.vendorName}
+                    </CTableDataCell>
+                    <CTableDataCell
+                      scope="row"
+                      className="sh-organization-link sh-comment"
+                    >
+                      {vendorAddressLimit ? (
+                        <CLink
+                          className="cursor-pointer text-decoration-none"
+                          data-testid={`vendor-address-${index}`}
+                          onClick={() => handleModal(vendor)}
+                        >
+                          {parse(vendorAddressLimit)}
+                        </CLink>
+                      ) : (
+                        'N/A'
                       )}
-                      {userAccess?.deleteaccess && (
-                        <CTooltip content="Delete">
-                          <CButton
-                            color="danger btn-ovh me-1"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              onDeleteBtnClick(
-                                vendor.vendorId,
-                                vendor.vendorName,
-                              )
-                            }
-                          >
-                            <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          </CButton>
-                        </CTooltip>
-                      )}
-                    </div>
-                  </CTableDataCell>
-                </CTableRow>
-              )
-            })}
-        </CTableBody>
+                    </CTableDataCell>
+                    <CTableDataCell className="ng-binding">
+                      {vendor.vendorCity}
+                    </CTableDataCell>
+                    <CTableDataCell className="ng-binding">
+                      {vendor.vendorPhoneNumber}
+                    </CTableDataCell>
+                    <CTableDataCell className="ng-binding">
+                      {vendor.vendorEmailId}
+                    </CTableDataCell>
+                    <CTableDataCell className="ng-binding">
+                      {vendor.updatedBy || vendor.createdBy || 'N/A'}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      <div className="buttons-clients">
+                        {userAccess?.updateaccess && (
+                          <CTooltip content="Edit">
+                            <CButton
+                              color="info btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() => editButtonHandler(vendor)}
+                            >
+                              <i className="fa fa-edit" aria-hidden="true"></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                        {userAccess?.deleteaccess && (
+                          <CTooltip content="Delete">
+                            <CButton
+                              color="danger btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() =>
+                                onDeleteBtnClick(
+                                  vendor.vendorId,
+                                  vendor.vendorName,
+                                )
+                              }
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
+                        )}
+                      </div>
+                    </CTableDataCell>
+                  </CTableRow>
+                )
+              })}
+          </CTableBody>
+        )}
       </CTable>
       <CRow>
         <CCol xs={4}>
           <strong>
-            {listSize ? `Total Records: ${listSize}` : `No Records Found`}
+            {listSize ? `Total Records: ${listSize}` : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>

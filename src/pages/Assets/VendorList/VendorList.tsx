@@ -29,6 +29,10 @@ const VendorList = (): JSX.Element => {
   )
 
   const vendorListData = useTypedSelector(
+    reduxServices.vendorList.selectors.vendorLists,
+  )
+
+  const vendorsData = useTypedSelector(
     reduxServices.vendorList.selectors.vendors,
   )
 
@@ -40,21 +44,18 @@ const VendorList = (): JSX.Element => {
     pageSize,
   } = usePagination(vendorListSize, 20)
 
-  // useEffect(() => {
-  //   dispatch(
-  //     reduxServices.vendorList.getVendors({
-  //       startIndex: pageSize * (selectCurrentPage - 1),
-  //       endIndex: pageSize * selectCurrentPage,
-  //       vendorName: '',
-  //     }),
-  //   )
-  //   dispatch(reduxServices.addNewVendor.getDepartment())
-  // }, [selectCurrentPage, dispatch, pageSize])
+  useEffect(() => {
+    dispatch(
+      reduxServices.vendorList.getVendors({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        vendorName: searchInput || '',
+      }),
+    )
+    dispatch(reduxServices.addNewVendor.getDepartment())
+  }, [currentPage, dispatch, pageSize])
 
-  const handleExportVendorListData = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    e.preventDefault()
+  const handleExportVendorListData = async () => {
     const vendorListDownload = await vendorListApi.exportVendorListData({
       vendorNameSearch: searchInput,
       token: '',
@@ -120,22 +121,26 @@ const VendorList = (): JSX.Element => {
               className="gap-4 d-md-flex justify-content-end mt-3 mb-3"
               data-testid="exportBtn"
             >
-              <CButton
-                color="info"
-                className="text-white btn-ovh"
-                size="sm"
-                onClick={handleExportVendorListData}
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
-              <CButton
-                color="info btn-ovh me-0"
-                data-testid="addButton"
-                onClick={() => setToggle('addVendorDetails')}
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
+              {vendorsData?.length > 0 && (
+                <CButton
+                  color="info"
+                  className="text-white btn-ovh"
+                  size="sm"
+                  onClick={handleExportVendorListData}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+              )}
+              {userAccess?.createaccess && (
+                <CButton
+                  color="info btn-ovh me-0"
+                  data-testid="addButton"
+                  onClick={() => setToggle('addVendorDetails')}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              )}
             </CCol>
           </CRow>
           <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -196,6 +201,8 @@ const VendorList = (): JSX.Element => {
           setToggle={setToggle}
           editVendorInfo={editVendorInfo}
           setEditVendorInfo={setEditVendorInfo}
+          currentPage={currentPage}
+          pageSize={pageSize}
         />
       )}
     </>

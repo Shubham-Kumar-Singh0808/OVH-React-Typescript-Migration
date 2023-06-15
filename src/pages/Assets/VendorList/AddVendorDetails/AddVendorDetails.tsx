@@ -194,6 +194,7 @@ const AddVendorDetails = ({
     ) {
       setToggle('')
       dispatch(reduxServices.app.actions.addToast(successToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(
         reduxServices.vendorList.getVendors({
           startIndex: 0,
