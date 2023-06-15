@@ -609,6 +609,7 @@ export interface AchieverListApi extends ApiBase {
   getAchieverList: string
   updateShowOnDashbord: string
   achievementHistoryTimeline: string
+  deleteAchievement: string
 }
 
 export interface ProjectCreationRequestApi extends ApiBase {

@@ -65,10 +65,25 @@ const getAchievementHistoryTimeline = async (
   return response.data
 }
 
+const deleteAchievement = async (
+  achievementId: number,
+): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: AchieverListApiConfig.deleteAchievement,
+    method: AllowedHttpMethods.delete,
+    params: {
+      achievementId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AchieverListApi = {
   getAllAchievements,
   showOnDashBoard,
   getAchievementHistoryTimeline,
+  deleteAchievement,
 }
 
 export default AchieverListApi

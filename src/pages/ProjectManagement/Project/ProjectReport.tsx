@@ -331,14 +331,21 @@ const ProjectReport = (): JSX.Element => {
                   setProjectHealth(e.target.value)
                 }}
               >
-                <option value="All">All</option>
-                <option value="Gray">Project not yet started</option>
-                <option value="Green">Good</option>
-                <option value="Orange">Critical</option>
-                <option value="Red">Danger</option>
-                {/* {selectHealth.map((item, index) => {
-                  return <option key={index}>{item.name}</option>
-                })} */}
+                <option value="All" className="optionWithBackground">
+                  All
+                </option>
+                <option value="Gray" className="label-default">
+                  Project not yet started
+                </option>
+                <option value="Green" className="label-success">
+                  Good
+                </option>
+                <option value="Orange" className="label-warning">
+                  Critical
+                </option>
+                <option value="Red" className="label-danger">
+                  Danger
+                </option>
               </CFormSelect>
             </CCol>
           </CRow>

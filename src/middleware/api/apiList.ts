@@ -782,6 +782,7 @@ export const AchieverListApiConfig: AchieverListApi = {
   getAchieverList: apiPrefix + '/achievement/getAllAchievement',
   updateShowOnDashbord: apiPrefix + '/achievement/showOnDashBoard',
   achievementHistoryTimeline: apiPrefix + '/achievement/getAchievementHistory',
+  deleteAchievement: apiPrefix + '/achievement/deleteAchievement',
 }
 export const addProjectCreationRequestApiConfig: AddProjectCreationRequestApi =
   {

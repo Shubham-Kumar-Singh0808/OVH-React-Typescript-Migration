@@ -13,6 +13,7 @@ import {
   UpdateShowOnDashboardQueryParameters,
 } from '../../../types/Achievements/AchieverList/AchieverListTypes'
 import { ValidationError } from '../../../types/SidebarMenu/sidebarMenuType'
+import { AppDispatch, RootState } from '../../../stateStore'
 
 const sortAchieverListByDatesDescending = (list: AchieverListUserTypes[]) => {
   return list.sort((a, b) => {
@@ -80,6 +81,23 @@ const getAchievementHistoryTimeline = createAsyncThunk(
   },
 )
 
+const deleteAchievement = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('achieverList/deleteAchievement', async (achievementId, thunkApi) => {
+  try {
+    return await AchieverListApi.deleteAchievement(achievementId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 const achieverListSlice = createSlice({
   name: 'achieverList',
   initialState,
@@ -143,6 +161,7 @@ const achieverListThunks = {
   getAllAchieverList,
   updateAchievementDashboardStatus,
   getAchievementHistoryTimeline,
+  deleteAchievement,
 }
 
 export const achieverListService = {

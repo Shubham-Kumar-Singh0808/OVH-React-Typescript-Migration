@@ -26,10 +26,13 @@ import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinn
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { baseImageExtension } from '../AchievementConstants'
+import OToast from '../../../components/ReusableComponent/OToast'
 
 const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   const dispatch = useAppDispatch()
   const achieverListState = useTypedSelector((state) => state.achieverList)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [toDeleteAchievementId, setToDeleteAchievementId] = useState(0)
   const [isDescriptionModelVisible, setDescriptionModel] =
     useState<boolean>(false)
   const [descriptionContent, setDescriptionContent] = useState<string>('')
@@ -62,6 +65,43 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   ) => {
     setPageSize(Number(e.target.value))
     setCurrentPage(1)
+  }
+  const handleShowDeleteModal = (achievementId: number) => {
+    setIsDeleteModalVisible(true)
+    setToDeleteAchievementId(achievementId)
+  }
+
+  const handleConfirmDeleteAchiever = async () => {
+    setIsDeleteModalVisible(false)
+    const deleteAchieverResultAction = await dispatch(
+      reduxServices.achieverList.deleteAchievement(toDeleteAchievementId),
+    )
+    if (
+      reduxServices.achieverList.deleteAchievement.fulfilled.match(
+        deleteAchieverResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.achieverList.getAllAchieverList({
+          achievementTypeId: '',
+          dateSelection: '',
+          endIndex: 20,
+          fromMonth: 0,
+          fromYear: 0,
+          startIndex: 0,
+          toMonth: 0,
+          toYear: 0,
+        }),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Achievement deleted successfully"
+          />,
+        ),
+      )
+    }
   }
 
   return (
@@ -170,6 +210,20 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                               </CButton>
                             </CTooltip>
                           </div>
+                          <CTooltip content="Delete">
+                            <CButton
+                              data-testid="delete-family"
+                              size="sm"
+                              color="danger btn-ovh me-1"
+                              className="btn-ovh-employee-list"
+                              onClick={() => handleShowDeleteModal(item.id)}
+                            >
+                              <i
+                                className="fa fa-trash-o"
+                                aria-hidden="true"
+                              ></i>
+                            </CButton>
+                          </CTooltip>
                         </div>
                       </CTableDataCell>
                     ) : (
@@ -229,6 +283,19 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
               }}
             />
           </span>
+        </OModal>
+        <OModal
+          alignment="center"
+          visible={isDeleteModalVisible}
+          setVisible={setIsDeleteModalVisible}
+          modalTitle="Family Details"
+          confirmButtonText="Yes"
+          cancelButtonText="No"
+          closeButtonClass="d-none"
+          confirmButtonAction={handleConfirmDeleteAchiever}
+          modalBodyClass="mt-0"
+        >
+          <>Do you really want to delete this achievement ?</>
         </OModal>
       </>
     </>
