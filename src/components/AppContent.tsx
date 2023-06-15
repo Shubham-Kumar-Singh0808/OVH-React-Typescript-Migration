@@ -229,6 +229,7 @@ const AppContent = () => {
   useEffect(() => {
     if (
       location.pathname === '/projectreport' ||
+      location.pathname === '/addProject' ||
       location.pathname.split('/')[1] === 'viewProject' ||
       location.pathname.split('/')[1] === 'editproject'
     ) {

@@ -11,6 +11,7 @@ import {
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import ProjectReportsTable from './ProjectReportTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -52,6 +53,8 @@ const ProjectReport = (): JSX.Element => {
   const [selectToDate, setSelectToDate] = useState<Date | string>(
     getCustomToValue,
   )
+  const [dateError, setDateError] = useState<boolean>(false)
+
   const SelectDateVersion = 'Select Date'
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
   const dispatch = useAppDispatch()
@@ -77,20 +80,7 @@ const ProjectReport = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
-  // const handleExportProjectList = async () => {
-  //   const projectListDownload = await AddProject.exportProjectList({
-  //     employeeId: Number(employeeId),
-  //     projectStatus: params.projectStatus,
-  //     type: params.type,
-  //     health: params.health,
-  //     startdate: params.startdate as string,
-  //     enddate: params.enddate as string,
-  //     multiSearch: params.multiSearch as string,
-  //     projectDatePeriod: params.projectDatePeriod as string,
-  //     intrnalOrNot: params.intrnalOrNot as boolean,
-  //   })
-  //   downloadFile(projectListDownload, 'ProjectList.csv')
-  // }
+  const commonFormatDate = 'l'
 
   const handleExportProjectList = async () => {
     const projectListDownload = await AddProject.exportProjectList({
@@ -107,7 +97,7 @@ const ProjectReport = (): JSX.Element => {
 
     downloadFile(projectListDownload, 'ProjectList.csv')
   }
-  const commonFormatDate = 'l'
+
   const fromDateValue = selectFromDate
     ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
@@ -157,6 +147,11 @@ const ProjectReport = (): JSX.Element => {
         type: pricingModel || 'All',
       }),
     )
+    if (projectStatus === 'CLOSED') {
+      setIsCloseBtnVisible(false)
+    } else {
+      setIsCloseBtnVisible(true)
+    }
   }
   const searchBtnHandler = () => {
     dispatch(
@@ -175,6 +170,55 @@ const ProjectReport = (): JSX.Element => {
       }),
     )
   }
+  useEffect(() => {
+    const newFromDate = new Date(
+      moment(selectFromDate?.toString()).format(commonFormatDate),
+    )
+    const newToDate = new Date(
+      moment(selectToDate?.toString()).format(commonFormatDate),
+    )
+    if (
+      selectFromDate &&
+      selectToDate &&
+      newToDate.getTime() < newFromDate.getTime()
+    ) {
+      setDateError(true)
+    } else {
+      setDateError(false)
+    }
+  }, [selectFromDate, selectToDate])
+  const clearBtnHandler = () => {
+    setSelect('')
+    setProjectStatus('INPROGRESS')
+    setPricingModel('All')
+    setProjectHealth('All')
+    dispatch(
+      reduxServices.projectReport.getFetchSearchAllocationReport({
+        employeeId: Number(employeeId),
+        endIndex: pageSize * currentPage,
+        enddate: '',
+        firstIndex: pageSize * (currentPage - 1),
+        health: projectHealth || 'All',
+        intrnalOrNot: false,
+        multiSearch: '',
+        projectDatePeriod: 'Select Date',
+        projectStatus: 'INPROGRESS',
+        startdate: '',
+        type: pricingModel || 'All',
+      }),
+    )
+  }
+  // const selectHealth = [
+  //   { label: 'All', name: 'All', backgroundColor: '' },
+  //   {
+  //     label: 'Gray',
+  //     name: 'Project not yet started',
+  //     backgroundColor: 'opt-bg-gray',
+  //   },
+  //   { label: 'Green', name: 'Good', backgroundColor: 'opt-bg-green' },
+  //   { label: 'Orange', name: 'Critical', backgroundColor: 'opt-bg-orange' },
+  //   { label: 'Red', name: 'Danger', backgroundColor: 'opt-bg-danger' },
+  // ]
   return (
     <>
       <OCard
@@ -205,7 +249,7 @@ const ProjectReport = (): JSX.Element => {
                   setSelect(e.target.value)
                 }}
               >
-                <option value="">Select Date</option>
+                <option value=" ">Select Date</option>
                 <option value="Today">Today</option>
                 <option value="This Week">This Week</option>
                 <option value="Last Week">Last Week</option>
@@ -292,6 +336,9 @@ const ProjectReport = (): JSX.Element => {
                 <option value="Green">Good</option>
                 <option value="Orange">Critical</option>
                 <option value="Red">Danger</option>
+                {/* {selectHealth.map((item, index) => {
+                  return <option key={index}>{item.name}</option>
+                })} */}
               </CFormSelect>
             </CCol>
           </CRow>
@@ -361,6 +408,11 @@ const ProjectReport = (): JSX.Element => {
                   }}
                   selected={selectToDate as Date}
                 />
+                {dateError && (
+                  <span className="text-danger" data-testid="errorMessage">
+                    <b>To date should be greater than From date</b>
+                  </span>
+                )}
               </CCol>
             </CRow>
           )}
@@ -370,7 +422,10 @@ const ProjectReport = (): JSX.Element => {
                 className="cursor-pointer"
                 color="success btn-ovh me-1"
                 onClick={viewBtnHandler}
-                // disabled={!isViewBtnEnable}
+                disabled={
+                  Select === 'Custom' &&
+                  !(selectFromDate !== '' && selectToDate !== '')
+                }
               >
                 View
               </CButton>
@@ -378,7 +433,7 @@ const ProjectReport = (): JSX.Element => {
                 className="cursor-pointer"
                 color="warning btn-ovh me-1"
                 data-testid="clearButton"
-                // onClick={clearHandler}
+                onClick={clearBtnHandler}
               >
                 Clear
               </CButton>
