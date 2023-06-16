@@ -913,6 +913,7 @@ const AddProjectRequestForm = ({
           <CFormInput
             name="CC"
             id="CC"
+            placeholder="Email Id"
             autoComplete="off"
             value={projectRequestMailIdCC}
             onChange={(e) => handleProjectRequestMailIdCC(e)}
@@ -931,6 +932,7 @@ const AddProjectRequestForm = ({
           <CFormInput
             name="BCC"
             autoComplete="off"
+            placeholder="Email Id"
             id="BCC"
             value={projectRequestMailIdBbc}
             onChange={(e) => handleProjectRequestMailIdBbc(e)}

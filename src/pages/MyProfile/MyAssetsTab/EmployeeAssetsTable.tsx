@@ -21,12 +21,14 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeAssetsTable = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [specification, setSpecification] = useState<string>('')
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
 
-  const employeeId = useTypedSelector(
+  const userEmployeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
   const employeeAssets = useTypedSelector(
@@ -38,9 +40,17 @@ const EmployeeAssetsTable = (): JSX.Element => {
   )
 
   const dispatch = useAppDispatch()
+  // useEffect(() => {
+  //   dispatch(reduxServices.employeeAssets.getEmployeeAssets(employeeId))
+  // }, [dispatch, employeeId])
+
   useEffect(() => {
-    dispatch(reduxServices.employeeAssets.getEmployeeAssets(employeeId))
-  }, [dispatch, employeeId])
+    dispatch(
+      reduxServices.employeeAssets.getEmployeeAssets(
+        isViewingAnotherEmployee ? String(selectedEmployeeId) : userEmployeeId,
+      ),
+    )
+  }, [dispatch, userEmployeeId, isViewingAnotherEmployee, selectedEmployeeId])
 
   const handleModal = (productSpecification: string) => {
     setIsModalVisible(true)

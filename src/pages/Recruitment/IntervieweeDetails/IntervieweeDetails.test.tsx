@@ -1,0 +1,50 @@
+import React from 'react'
+import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event'
+import IntervieweeDetails from './IntervieweeDetails'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { render, screen } from '../../../test/testUtils'
+import {
+  CycleDtOs,
+  timeLineDetails,
+  EmpScheduleInterviewData,
+} from '../../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
+import { mockTimeLineList } from '../../../test/data/IntervieDeatilsData'
+
+const mockSetToggle = jest.fn()
+
+describe('Employee Pip Time line Component Testing', () => {
+  describe('should render Employee Pip Time line Component without data', () => {
+    beforeEach(() => {
+      render(<IntervieweeDetails />, {
+        preloadedState: {
+          intervieweeDetails: {
+            isLoading: ApiLoadingState.succeeded,
+            listSize: 0,
+            timeLineList: mockTimeLineList,
+            cycleDtOs: {} as CycleDtOs,
+            CycleDtOsList: [],
+            timeLineDetails: {} as timeLineDetails,
+            scheduleInterviewData: {} as EmpScheduleInterviewData,
+          },
+        },
+      })
+    })
+
+    test('should be able to render Interviewee Details Title', () => {
+      expect(screen.getByText('Interviewee Details')).toBeInTheDocument()
+    })
+    test('should render click on back button', () => {
+      const backButtonElement = screen.getByTestId('back-button')
+      expect(backButtonElement).toBeInTheDocument()
+      userEvent.click(backButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+    test('should render with data ', () => {
+      expect(screen.getByText('NO_SHOW')).toBeInTheDocument()
+      expect(screen.getByText('SKYPE')).toBeInTheDocument()
+      expect(screen.getByText('SDLC ,STLC')).toBeInTheDocument()
+      expect(screen.getByText('93849684986934jgfnjgn95898')).toBeInTheDocument()
+    })
+  })
+})
