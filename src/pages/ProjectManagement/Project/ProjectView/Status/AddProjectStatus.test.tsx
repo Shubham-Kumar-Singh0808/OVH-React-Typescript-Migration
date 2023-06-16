@@ -33,7 +33,7 @@ describe('AddProjectStatus Component Testing with data', () => {
     fireEvent.click(datePickers[0])
 
     await waitFor(() =>
-      fireEvent.change(datePickers[0], {
+      fireEvent?.change(datePickers[0], {
         target: { value: '29 Oct, 2019' },
       }),
     )

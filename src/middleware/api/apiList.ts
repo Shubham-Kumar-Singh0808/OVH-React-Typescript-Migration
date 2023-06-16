@@ -117,6 +117,7 @@ import {
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
 } from '../../types/apiTypes'
@@ -1042,6 +1043,15 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   getWarrantyAssetsList: apiPrefix + '/assetManagement/getWarrantyAssetsList',
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
+}
+export const categoryListApiConfig: CategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  addCategory: apiPrefix + '/ExpenseManagement/addCategory',
+  checkForDuplicateCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateCategory',
+  editCategory: apiPrefix + '/ExpenseManagement/editCategory',
+  updateCategory: apiPrefix + '/ExpenseManagement/updateCategory',
+  deleteCategory: apiPrefix + '/ExpenseManagement/deleteCategory',
 }
 
 export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
