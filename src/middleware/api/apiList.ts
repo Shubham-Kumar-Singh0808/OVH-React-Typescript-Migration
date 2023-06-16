@@ -121,8 +121,7 @@ import {
   ProductSpecificationListApi,
 } from '../../types/apiTypes'
 
-const baseUrl =
-  process.env.REACT_APP_API_BASE || 'https://ovhqaapi.raybiztech.com'
+const baseUrl = process.env.REACT_APP_API_BASE || ''
 const apiPrefix = baseUrl + '/hrm-ws/'
 
 export enum AllowedHttpMethods {
