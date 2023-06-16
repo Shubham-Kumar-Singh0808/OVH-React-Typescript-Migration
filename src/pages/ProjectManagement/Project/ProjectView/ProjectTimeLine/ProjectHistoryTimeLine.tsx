@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import { CBadge, CFormLabel } from '@coreui/react-pro'
 import React from 'react'
 import parse from 'html-react-parser'

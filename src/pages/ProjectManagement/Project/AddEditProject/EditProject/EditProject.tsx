@@ -6,7 +6,6 @@ import {
   CRow,
   CCol,
   CButton,
-  CSpinner,
   CFormCheck,
   CFormLabel,
   CFormSelect,
