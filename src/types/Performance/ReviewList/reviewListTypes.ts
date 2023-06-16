@@ -142,3 +142,10 @@ export type GetSearchResultProps = {
   startIndex: number
   toDate: null
 }
+
+export type Ratings = [
+  {
+    value: number
+    text: string
+  },
+]

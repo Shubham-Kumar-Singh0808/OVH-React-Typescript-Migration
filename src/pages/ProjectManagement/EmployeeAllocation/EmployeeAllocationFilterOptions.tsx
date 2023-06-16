@@ -263,6 +263,9 @@ const EmployeeAllocationFilterOptions = ({
   const ProjectReportViewUserAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Project ReportView',
   )
+  const employeeAllocationReport = useTypedSelector(
+    reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
+  )
 
   return (
     <>
@@ -439,13 +442,15 @@ const EmployeeAllocationFilterOptions = ({
             <></>
           )}
           <CCol className="employee-allocation-export-btn">
-            <CButton
-              color="info btn-ovh me-0"
-              data-testid="export-btn"
-              onClick={handleExportEmployeeAllocation}
-            >
-              <i className="fa fa-plus me-1"></i>Click to Export
-            </CButton>
+            {employeeAllocationReport?.Empsize > 0 && (
+              <CButton
+                color="info btn-ovh me-0"
+                data-testid="export-btn"
+                onClick={handleExportEmployeeAllocation}
+              >
+                <i className="fa fa-plus me-1"></i>Click to Export
+              </CButton>
+            )}
           </CCol>
         </CRow>
       )}
