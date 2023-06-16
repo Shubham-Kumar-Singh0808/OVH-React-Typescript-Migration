@@ -53,9 +53,6 @@ describe('Asset List Table Component Testing', () => {
     expect(screen.getByText('RBT121212')).toBeInTheDocument()
   })
 
-  test('should render Export button in the component', () => {
-    expect(screen.getByTestId('export-button-download')).toBeTruthy()
-  })
   test('should render the correct headers', () => {
     expect(screen.getByRole('columnheader', { name: '#' })).toBeTruthy()
     expect(

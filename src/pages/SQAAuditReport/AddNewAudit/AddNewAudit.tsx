@@ -195,13 +195,11 @@ const AddNewAudit = (): JSX.Element => {
       setShowProjectManagerName('')
       setProjectNameAutoCompleteTarget('')
       setAddAuditeeName([])
-      setAddAuditorName([])
     } else {
       setIsProjectManagerVisible(false)
       setShowProjectManagerName('')
       setProjectNameAutoCompleteTarget('')
       setAddAuditeeName([])
-      setAddAuditorName([])
     }
   }
 
@@ -387,7 +385,12 @@ const AddNewAudit = (): JSX.Element => {
               Project Name :
               <span
                 className={
-                  projectNameAutoCompleteTarget || addAudit?.projectName
+                  projectNameAutoCompleteTarget
+                    ?.replace(/-_[^a-z0-9\s]/gi, '')
+                    ?.replace(/^\s*/, '') ||
+                  addAudit?.projectName
+                    ?.replace(/-_[^a-z0-9\s]/gi, '')
+                    ?.replace(/^\s*/, '')
                     ? TextWhite
                     : TextDanger
                 }
