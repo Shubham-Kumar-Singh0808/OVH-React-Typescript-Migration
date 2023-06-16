@@ -441,6 +441,10 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+
+const CreditCardList = React.lazy(
+  () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1048,6 +1052,11 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/creditCardList',
+    name: 'Credit Card List',
+    component: CreditCardList,
   },
 ]
 export default routes

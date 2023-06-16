@@ -22,7 +22,6 @@ import OToast from '../../../components/ReusableComponent/OToast'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { TextDanger } from '../../../constant/ClassName'
 import { currentPageData } from '../../../utils/paginationUtils'
-import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const ExpenseCategoryListTable = (): JSX.Element => {
   const initialEditExpenseCategories = {} as CategoryList
