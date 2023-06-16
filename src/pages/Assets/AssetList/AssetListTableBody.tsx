@@ -71,13 +71,13 @@ const ActionIcons = ({
           </CButton>
         </CTooltip>
         <br />
-        <CTooltip content="History">
+        <CTooltip content="Change-Status">
           <CButton color="info" size="sm" className="mb-1">
             <i className="text-white fa fa-wrench"></i>
           </CButton>
         </CTooltip>
         <br />
-        <CTooltip content="Change-Status">
+        <CTooltip content="Asset Timeline">
           <CButton
             color="info"
             size="sm"
@@ -122,18 +122,6 @@ const AssetListTableBody = ({
       dataTestId={`description-modal-link2${index}`}
     />
   )
-
-  // const dispatch = useAppDispatch()
-
-  // const timelineButtonHandler = (id: number) => {
-  //   setToggle('assetTimeline')
-  //   dispatch(
-  //     reduxServices.assetList.getAllAssetHistoryData({
-  //       assetId: id,
-  //       searchAssetReference: '',
-  //     }),
-  //   )
-  // }
 
   const locationPopUpModel = (
     <ModalLink

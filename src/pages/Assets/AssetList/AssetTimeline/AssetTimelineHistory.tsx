@@ -52,7 +52,7 @@ const AssetHistory = ({
       CFooterClassName="d-none"
     >
       <CRow className="d-md-flex justify-content-md-end">
-        <CCol className="text-end" md={4}>
+        <CCol className="gap-2 d-md-flex justify-content-end mt-3 mb-3" md={4}>
           <CButton
             color="info"
             className="btn-ovh me-1"
@@ -63,7 +63,7 @@ const AssetHistory = ({
           </CButton>
         </CCol>
       </CRow>
-      <CRow className="gap-2 d-md-flex justify-content-md-end">
+      <CRow className="d-md-flex justify-content-md-end">
         <CCol sm={3} md={3}>
           <CInputGroup className="global-search me-0 justify-content-md-end">
             <CFormInput
