@@ -207,8 +207,8 @@ const ChangeAssetFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="vendorName"
-            data-testid="asset-type"
+            // id="vendorName"
+            data-testid="form-select1"
             name="vendorName"
             value={vendorName}
             onChange={(e) => {
@@ -294,7 +294,7 @@ const ChangeAssetFilterOptions = ({
         </CFormLabel>
         <CCol sm={3}>
           <ReactDatePicker
-            id="createdDate"
+            data-testid="createdDate"
             className="form-control form-control-sm sh-date-picker"
             showMonthDropdown
             showYearDropdown
@@ -437,7 +437,7 @@ const ChangeAssetFilterOptions = ({
               inline
               type="checkbox"
               name="isExpenseVendor"
-              id="expenseVendor"
+              data-testid="expenseVendor"
               onChange={(event) => handleIsInternalStatus(event.target.checked)}
               checked={checkBox}
             />
@@ -459,7 +459,7 @@ const ChangeAssetFilterOptions = ({
               onChange: CKEditorEventHandler<'change'>
             }>
               initData={description}
-              data-testid="vendorAddress"
+              data-testid="change-Description"
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {

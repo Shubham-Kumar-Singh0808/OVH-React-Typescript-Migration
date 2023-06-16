@@ -25,7 +25,7 @@ export const mockAllAssetListData: AllAssetData = {
       notes: null,
       employeeName: 'Someswara Rao',
       employeeId: 1476,
-      description: 'string',
+      description: 'Test',
       status: 'Under Repair',
       assetTypeId: 2,
       assetType: 'Software',

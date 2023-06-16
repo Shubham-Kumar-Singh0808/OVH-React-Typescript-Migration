@@ -4,9 +4,9 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ChangeAssetStatus from './ChangeAssetStatus'
 import { render, screen } from '../../../../test/testUtils'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const mockSetToggle = jest.fn()
-
 describe('Change Asset status Component Testing', () => {
   test('should render Change Asset status component with out crashing', () => {
     render(
@@ -61,7 +61,7 @@ describe('Change Asset status Component Testing', () => {
     expect(mockSetToggle).toHaveBeenCalledTimes(0)
   })
 })
-
+const dispatch = jest.fn()
 describe('onSelectEmployee', () => {
   it('should call getEmployeeId with the selected value', () => {
     const value = 'Thriveni Bathula '
@@ -69,6 +69,10 @@ describe('onSelectEmployee', () => {
     mockGetEmployeeId.mockReturnValueOnce(1)
     const onSelectEmployee = (value: string) => {
       const empId = mockGetEmployeeId(value)
+      if (empId === -1) {
+        return
+      }
+      dispatch(reduxServices.addAchiever.getActiveEmployeeListThunk())
     }
 
     onSelectEmployee(value)

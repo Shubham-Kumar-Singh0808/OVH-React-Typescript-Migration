@@ -4,12 +4,25 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import ChangeAssetFilterOptions from './ChangeAssetFilterOptions'
-import { cleanup, fireEvent, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
+import {
+  GetAllAssetResponse,
+  SaveEmployee,
+} from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockAllAssetListData } from '../../../../test/data/AssetListData'
 
 const mockOnSelect = jest.fn()
 const mockSetEmpName = jest.fn()
 const selectedEmpName = 'Pradeep Namburu'
+const selectStatusType = 'Not Working'
 const deviceLocale: string =
   navigator.languages && navigator.languages.length
     ? navigator.languages[0]
@@ -24,7 +37,7 @@ describe('filter employee name', () => {
           onSelectEmployee={mockOnSelect}
           employeeName={undefined}
           setEmployeeName={mockSetEmpName}
-          setToggle={mockSetEmpName}
+          setEmpToggle={mockSetEmpName}
           changeReportStatus={{
             id: 0,
             poNumber: '',
@@ -66,6 +79,14 @@ describe('filter employee name', () => {
           }}
           setChangeReportStatus={jest.fn()}
         />,
+        {
+          preloadedState: {
+            saveEmployee: {} as SaveEmployee,
+            getAllAssetResponse: mockAllAssetListData,
+            isLoading: ApiLoadingState.succeeded,
+            toggleValue: '',
+          },
+        },
       )
     })
     afterEach(cleanup)
@@ -74,63 +95,23 @@ describe('filter employee name', () => {
       expect(empLabel).toBeInTheDocument()
       expect(empLabel).toHaveTextContent('Employee:')
     })
-    test('render the input Field', () => {
-      const empLabel = screen.getByTestId('ach-emp-name')
-      expect(empLabel).toBeInTheDocument()
-    })
-
     test('render the input field', () => {
       const input = screen.getByPlaceholderText('Employee')
       expect(input).toHaveValue('')
     })
+
     test('should call onChange', () => {
-      const input = screen.getByTestId('asset-type')
+      const input = screen.getByPlaceholderText('Employee')
       fireEvent.change(input, selectedEmpName)
-      // expect(input).toHaveValue('')
+      expect(input).toHaveValue('')
     })
-    // describe('YourComponent', () => {
-    //   test('should select employee on focus out', () => {
-    //     const allEmployees = [
-    //       { empFirstName: 'Thriveni', empLastName: 'Bathula' },
-    //       { empFirstName: 'Thriveni', empLastName: 'Bathula' },
-    //     ]
 
-    //     const onSelectEmployee = jest.fn()
-    //     const { getByTestId } = render(
-    //       <YourComponent
-    //         allEmployees={allEmployees}
-    //         onSelectEmployee={onSelectEmployee}
-    //       />,
-    //     )
+    test('should call onChange of Asset Status', () => {
+      const input = screen.getByTestId('asset-status')
+      fireEvent.change(input, selectStatusType)
+      expect(input).toHaveValue('')
+    })
 
-    //     const employeeNameInput = getByTestId('employee-name-input')
-
-    //     fireEvent.change(employeeNameInput, { target: { value: 'John Doe' } })
-    //     fireEvent.blur(employeeNameInput)
-
-    //     expect(onSelectEmployee).toHaveBeenCalledWith('John Doe')
-    //   })
-
-    //   test('should update employee name when selected', () => {
-    //     const allEmployees = [
-    //       { empFirstName: 'John', empLastName: 'Doe' },
-    //       { empFirstName: 'Jane', empLastName: 'Smith' },
-    //     ]
-
-    //     const { getByTestId } = render(
-    //       <YourComponent
-    //         allEmployees={allEmployees}
-    //         onSelectEmployee={() => {}}
-    //       />,
-    //     )
-
-    //     const employeeNameInput = getByTestId('employee-name-input')
-
-    //     fireEvent.change(employeeNameInput, { target: { value: 'Jane Smith' } })
-
-    //     expect(employeeNameInput.value).toBe('Jane Smith')
-    //   })
-    // })
     test('should be able to see place holder "dd/mm/yyyy"', () => {
       expect(screen.getByPlaceholderText('dd/mm/yyyy')).toBeInTheDocument()
     })
@@ -141,6 +122,7 @@ describe('filter employee name', () => {
       const dateInput = screen.findByTestId('date-picker')
       expect(dateInput).toBeTruthy()
     })
+
     test('should be able to click clear button element', () => {
       const ClearButton = screen.getByTestId('clear-btn')
       expect(ClearButton).toBeEnabled()
@@ -157,6 +139,14 @@ describe('filter employee name', () => {
         }),
       )
     })
+    test('Checkbox changes value', async () => {
+      fireEvent.click(screen.getByTestId('expenseVendor'))
+      const updateAllLocations = screen.getByTestId('expenseVendor')
+      expect(updateAllLocations).toBeTruthy()
+      await waitFor(() => {
+        expect(updateAllLocations).toBeChecked()
+      })
+    })
   })
 
   describe('should reset', () => {
@@ -167,7 +157,7 @@ describe('filter employee name', () => {
           onSelectEmployee={mockOnSelect}
           employeeName={'P'}
           setEmployeeName={mockSetEmpName}
-          setToggle={mockSetEmpName}
+          setEmpToggle={mockSetEmpName}
           changeReportStatus={{
             id: 0,
             poNumber: '',
@@ -209,6 +199,14 @@ describe('filter employee name', () => {
           }}
           setChangeReportStatus={jest.fn()}
         />,
+        {
+          preloadedState: {
+            saveEmployee: {} as SaveEmployee,
+            getAllAssetResponse: mockAllAssetListData,
+            isLoading: ApiLoadingState.succeeded,
+            toggleValue: '',
+          },
+        },
       )
     })
     afterEach(cleanup)
@@ -225,10 +223,15 @@ describe('filter employee name', () => {
         />,
       )
     })
-    test('should be able to click Save button element', () => {
-      const saveBtnElement = screen.getByTestId('save-btn')
-      expect(saveBtnElement).toBeInTheDocument()
-      userEvent.click(saveBtnElement)
+    test('should be able to click add button element', () => {
+      const addBtn = screen.getByRole('button', { name: 'Add Vendor' })
+      userEvent.click(addBtn)
+      expect(addBtn).toBeInTheDocument()
+    })
+    test('should be able to click save button element', () => {
+      const saveBtn = screen.getByRole('button', { name: 'Save' })
+      userEvent.click(saveBtn)
+      expect(saveBtn).toBeInTheDocument()
     })
     test('should able to render every element', () => {
       const assetnumber = screen.getByTestId('assetnumber')
@@ -246,8 +249,22 @@ describe('filter employee name', () => {
       const location = screen.getByTestId('location')
       userEvent.type(location, 'test')
 
-      const vendorName = screen.getByTestId('asset-type')
-      userEvent.type(vendorName, 'Sony')
+      //   const statusDate = screen.findByTestId('createdDate')
+      //  fireEvent.selectedOtp
+
+      const employee = screen.getByTestId('ach-emp-name')
+      userEvent.type(employee, 'Someswara Rao')
+
+      const description = screen.getByTestId('ach-emp-name')
+      userEvent.type(description, 'Test')
+
+      // const saveBtn = screen.getByRole('button', { name: 'Save' })
+      // expect(saveBtn).toBeEnabled()
+      // userEvent.click(saveBtn)
+
+      const saveBtnElement = screen.getByTestId('save-btn')
+      expect(saveBtnElement).toBeInTheDocument()
+      userEvent.click(saveBtnElement)
     })
   })
 })
