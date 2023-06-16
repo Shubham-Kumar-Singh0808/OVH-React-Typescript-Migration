@@ -50,7 +50,7 @@ const getAllAssetHistoryData = createAsyncThunk(
   },
 )
 
-export const initialAssetTypeChangeListState: AssetListSliceState = {
+const initialAssetTypeChangeListState: AssetListSliceState = {
   asset: [],
   isLoading: ApiLoadingState.idle,
   manufacturerList: {} as ManufacturerList,

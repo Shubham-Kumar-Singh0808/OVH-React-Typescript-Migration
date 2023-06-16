@@ -22,6 +22,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetHistoryList: [],
       })
     })
     it('Should set isLoading to "loading" when getAssets is pending testing', () => {
@@ -36,6 +37,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetHistoryList: [],
       })
     })
     it('Should set isLoading to "loading" when getAssets is fullfilled', () => {
@@ -54,6 +56,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: undefined,
         listSize: undefined,
+        assetHistoryList: [],
       })
     })
 
@@ -69,6 +72,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetHistoryList: [],
       })
     })
   })
