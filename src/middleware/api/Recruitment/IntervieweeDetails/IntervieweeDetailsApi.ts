@@ -1,5 +1,8 @@
 import {
   EmpScheduleInterviewData,
+  EmployeeProperties,
+  Reschedule,
+  Schedule,
   TimeLineList,
   UpdateProps,
   saveButnprops,
@@ -80,12 +83,62 @@ const updateInterview = async (
   return response.data
 }
 
+const interviewRoundCount = async (
+  candidateId: number,
+): Promise<EmpScheduleInterviewData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.interviewRoundCount,
+    method: AllowedHttpMethods.get,
+    params: {
+      candidateId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getAllEmployeeDetails = async (): Promise<EmployeeProperties[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.getAllEmployeeDetails,
+    method: AllowedHttpMethods.get,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const reScheduleInterview = async (data: Reschedule): Promise<Reschedule> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.reScheduleInterview,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const scheduleInterview = async (data: Schedule): Promise<Schedule> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.scheduleInterview,
+    method: AllowedHttpMethods.post,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const IntervieweeDetailsApi = {
   timeLineDetails,
   saveInitialComments,
   updateCandidateInterviewStatus,
   empScheduleInterviewDetails,
   updateInterview,
+  getAllEmployeeDetails,
+  interviewRoundCount,
+  reScheduleInterview,
+  scheduleInterview,
 }
 
 export default IntervieweeDetailsApi

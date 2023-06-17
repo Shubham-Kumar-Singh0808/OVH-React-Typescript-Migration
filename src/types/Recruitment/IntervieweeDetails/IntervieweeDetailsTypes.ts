@@ -88,6 +88,7 @@ export type IntervieweeDetailsSliceState = {
   CycleDtOsList: CycleDtOs[]
   timeLineDetails: timeLineDetails
   scheduleInterviewData: EmpScheduleInterviewData
+  employeeProperties: EmployeeProperties[]
 }
 
 export type saveButnprops = {
@@ -171,4 +172,40 @@ export type EmpScheduleInterviewData = {
   jobCode: null
   sourceName: null
   personId: null
+}
+export type EmployeeProperties = {
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
+}
+export type Reschedule = {
+  candidateId: string
+  description: string
+  interviewType: string
+  interviewerId: number
+  scheduleDate: string
+  scheduleTime: string
+  sendMailToCandidate: boolean
+  sendMailToInterviewer: boolean
+  sendMessageToCandidate: boolean
+  sendMessageToInterviewer: boolean
+}
+
+export type Schedule = {
+  candidateId: string
+  contactDetails: string
+  description: string
+  interviewRound: 2
+  interviewType: string
+  interviewerId: number
+  scheduleDate: string
+  scheduleTime: string
+  sendMailToCandidate: boolean
+  sendMailToInterviewer: boolean
+  sendMessageToCandidate: boolean
+  sendMessageToInterviewer: boolean
 }
