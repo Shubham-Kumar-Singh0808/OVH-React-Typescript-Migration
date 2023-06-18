@@ -73,9 +73,7 @@ const CompaniesListTable = ({
                   <CTableDataCell>
                     {data.candidatesCount || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>
-                    {data.employeesCount || 'N/A'}
-                  </CTableDataCell>
+                  <CTableDataCell>{data.employeesCount || '0'}</CTableDataCell>
                 </CTableRow>
               )
             })}
