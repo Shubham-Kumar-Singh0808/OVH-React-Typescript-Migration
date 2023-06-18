@@ -41,7 +41,7 @@ const ProductSpecificationList = (): JSX.Element => {
       reduxServices.productSpecificationList.getProductSpecificationList({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        productName: '',
+        productName: searchInput,
       }),
     )
   }, [currentPage, dispatch, pageSize])

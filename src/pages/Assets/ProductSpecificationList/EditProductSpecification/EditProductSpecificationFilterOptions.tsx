@@ -56,9 +56,21 @@ const EditProductSpecificationFilterOptions = ({
       setIsAddButtonEnabled(false)
     }
   }, [editProductSpecification])
+
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
+
+  // useEffect(() => {
+  //   if (selectedProductType) {
+  //     dispatch(
+  //       reduxServices.addNewProduct.getProductTypeList(
+  //         editProductSpecification.productId,
+  //       ),
+  //     )
+  //   }
+  // }, [dispatch, selectedProductType])
+
   useEffect(() => {
     if (selectedAssetType) {
       dispatch(
@@ -68,6 +80,7 @@ const EditProductSpecificationFilterOptions = ({
       )
     }
     if (selectedProductType) {
+      setSelectedManufacturer('')
       dispatch(
         reduxServices.addNewProduct.getProductTypeList(
           editProductSpecification.productId,
