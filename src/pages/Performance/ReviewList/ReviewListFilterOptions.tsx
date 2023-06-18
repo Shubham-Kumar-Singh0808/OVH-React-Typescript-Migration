@@ -1,12 +1,5 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import {
-  CRow,
-  CCol,
-  CFormLabel,
-  CFormSelect,
-  CButton,
-  CMultiSelect,
-} from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
