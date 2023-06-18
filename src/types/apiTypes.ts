@@ -910,3 +910,8 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+
+export interface CompaniesListApi extends ApiBase {
+  getAllCompanies: string
+  exportCompaniesList: string
+}

@@ -119,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  CompaniesListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1085,3 +1086,7 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+export const CompaniesListApiConfig: CompaniesListApi = {
+  getAllCompanies: apiPrefix + '/jobapplicant/getAllCompanies',
+  exportCompaniesList: apiPrefix + '/jobapplicant/getAllCompanies',
+}
