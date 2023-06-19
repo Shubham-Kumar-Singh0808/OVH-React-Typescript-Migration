@@ -164,7 +164,7 @@ const IntervieweeDetails = (): JSX.Element => {
               Name:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.fullName}</p>
+              <p className="mb-0">{timeLineListSelector.fullName || 'N/A'}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
@@ -172,7 +172,7 @@ const IntervieweeDetails = (): JSX.Element => {
               Candidate added Date:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.addedDate}</p>
+              <p className="mb-0">{timeLineListSelector.addedDate || 'N/A'}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
@@ -180,7 +180,7 @@ const IntervieweeDetails = (): JSX.Element => {
               Applied for:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.appliedFor}</p>
+              <p className="mb-0">{timeLineListSelector.appliedFor || 'N/A'}</p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0 align-items-center">
