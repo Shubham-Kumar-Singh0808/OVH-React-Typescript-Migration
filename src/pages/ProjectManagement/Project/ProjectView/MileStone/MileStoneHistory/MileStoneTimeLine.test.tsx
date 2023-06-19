@@ -27,6 +27,7 @@ describe('MileStoneTimeLine Component Testing', () => {
     })
     test('should render with data ', () => {
       expect(screen.getByText('28-Apr-2023 03:43 PM')).toBeInTheDocument()
+      expect(screen.getByText('Title')).toBeInTheDocument()
     })
     test('should render updated button with data ', () => {
       const createdElement = screen.getAllByTestId('update-btn')
