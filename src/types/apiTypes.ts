@@ -861,6 +861,7 @@ export interface IntervieweeDetailsApi extends ApiBase {
   interviewRoundCount: string
   reScheduleInterview: string
   scheduleInterview: string
+  sendRejectedMessagetoCandidate: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string

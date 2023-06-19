@@ -129,6 +129,22 @@ const scheduleInterview = async (data: Schedule): Promise<Schedule> => {
   const response = await useAxios(requestConfig)
   return response.data
 }
+
+const sendRejectedMessagetoCandidate = async (
+  candidateId: number,
+): Promise<number> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: IntervieweeDetailsApiConfig.sendRejectedMessagetoCandidate,
+    method: AllowedHttpMethods.post,
+    params: {
+      candidateId,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const IntervieweeDetailsApi = {
   timeLineDetails,
   saveInitialComments,
@@ -139,6 +155,7 @@ const IntervieweeDetailsApi = {
   interviewRoundCount,
   reScheduleInterview,
   scheduleInterview,
+  sendRejectedMessagetoCandidate,
 }
 
 export default IntervieweeDetailsApi

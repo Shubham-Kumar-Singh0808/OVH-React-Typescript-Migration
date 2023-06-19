@@ -1055,6 +1055,8 @@ export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
   interviewRoundCount: apiPrefix + '/jobapplicant/interviewRoundCount',
   reScheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/reScheduleInterview',
   scheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/scheduleInterview',
+  sendRejectedMessagetoCandidate:
+    apiPrefix + '/jobapplicant/sendRejectedMessagetoCandidate',
 }
 export const CandidateListApiConfig: CandidateListApi = {
   searchScheduledCandidate:

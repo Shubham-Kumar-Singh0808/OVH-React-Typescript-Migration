@@ -6,17 +6,60 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
 
 const RejectInterview = () => {
-  const [isApproveModalVisibility, setIsApproveModalVisibility] =
+  const [isRejectModalVisibility, setIsRejectModalVisibility] =
     useState<boolean>(false)
   const [checked, setChecked] = useState<boolean>(false)
-  const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [rejectLeaveComment, setRejectComment] = useState<string>('')
+  const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
+  const dispatch = useAppDispatch()
+  const timeLineListSelector = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
   const handleModal = () => {
-    setIsApproveModalVisibility(true)
+    setIsRejectModalVisibility(true)
+  }
+  useEffect(() => {
+    if (rejectLeaveComment?.replace(/^\s*/, '')) {
+      setIsYesButtonEnabled(true)
+    } else {
+      setIsYesButtonEnabled(false)
+    }
+  }, [rejectLeaveComment])
+
+  const confirmRejectBtnHandler = async () => {
+    // setIsDeleteModalVisible(false)
+    const rejectBtnResultAction = await dispatch(
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
+        candidateId: timeLineListSelector.personId,
+        holdSubStatus: '',
+        status: 'REJECTED',
+        statusComments: rejectLeaveComment,
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
+        rejectBtnResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          timeLineListSelector.personId,
+        ),
+      )
+      dispatch(
+        reduxServices.intervieweeDetails.sendRejectedMessagetoCandidate(
+          timeLineListSelector.personId,
+        ),
+      )
+      setIsRejectModalVisibility(false)
+    }
   }
   return (
     <>
@@ -32,13 +75,14 @@ const RejectInterview = () => {
       </CButton>
       <OModal
         alignment="center"
-        visible={isApproveModalVisibility}
-        setVisible={setIsApproveModalVisibility}
+        visible={isRejectModalVisibility}
+        setVisible={setIsRejectModalVisibility}
         confirmButtonText="Yes"
         modalTitle="Do you want to REJECTED this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        // confirmButtonAction={confirmBtnHandler}
+        confirmButtonAction={confirmRejectBtnHandler}
+        isConfirmButtonDisabled={!isYesButtonEnabled}
       >
         <>
           <CRow className="mt-1 mb-1">
@@ -48,7 +92,7 @@ const RejectInterview = () => {
               Comments:
               <span
                 className={
-                  approveLeaveComment?.replace(/^\s*/, '')
+                  rejectLeaveComment?.replace(/^\s*/, '')
                     ? TextWhite
                     : TextDanger
                 }
@@ -62,13 +106,13 @@ const RejectInterview = () => {
                 aria-label="textarea"
                 autoComplete="off"
                 maxLength={150}
-                value={approveLeaveComment}
-                onChange={(e) => setApproveLeaveComment(e.target.value)}
+                value={rejectLeaveComment}
+                onChange={(e) => setRejectComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>
           <CFormCheck
-            type="radio"
+            type="checkbox"
             id="checked"
             name="checked"
             data-testid="checked"

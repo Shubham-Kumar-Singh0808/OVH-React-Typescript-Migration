@@ -126,6 +126,20 @@ const interviewRoundCount = createAsyncThunk(
     }
   },
 )
+
+const sendRejectedMessagetoCandidate = createAsyncThunk(
+  'IntervieweeDetails/sendRejectedMessagetoCandidate',
+  async (candidateId: number, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.sendRejectedMessagetoCandidate(
+        candidateId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -167,6 +181,7 @@ export const intervieweeDetailsThunk = {
   interviewRoundCount,
   reScheduleInterview,
   scheduleInterview,
+  sendRejectedMessagetoCandidate,
 }
 
 const listSize = (state: RootState): number => state.intervieweeDetails.listSize
