@@ -37,12 +37,12 @@ const NoShow = () => {
         noShowResultAction,
       )
     ) {
-      setIsApproveModalVisibility(false)
       dispatch(
         reduxServices.intervieweeDetails.timeLineData(
           timeLineListSelector.personId,
         ),
       )
+      setIsApproveModalVisibility(false)
     }
   }
   return (
