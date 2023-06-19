@@ -870,6 +870,7 @@ export interface CandidateListApi extends ApiBase {
   checkCandidateMobileNumber: string
   getAllCompaniesData: string
   addNewCandidate: string
+  uploadCandidateResume: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string

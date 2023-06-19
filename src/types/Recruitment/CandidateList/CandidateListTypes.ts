@@ -254,3 +254,8 @@ export interface AddNewCandidateDTO {
   interviewersDTOList: []
   scheduleTime: string
 }
+
+export interface UploadCandidateResumeDTO {
+  personId: number
+  file: FormData
+}

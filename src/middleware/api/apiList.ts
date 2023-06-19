@@ -1067,6 +1067,7 @@ export const CandidateListApiConfig: CandidateListApi = {
     apiPrefix + '/jobapplicant/isCandidateMobileNumberExists',
   getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
   addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
+  uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
 }
 
 export const GetAssetListConfig: AssetListApi = {

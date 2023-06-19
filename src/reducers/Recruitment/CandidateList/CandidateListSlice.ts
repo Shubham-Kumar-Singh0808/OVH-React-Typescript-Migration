@@ -12,6 +12,7 @@ import {
   country,
   viewHandlerProps,
   AddNewCandidateDTO,
+  UploadCandidateResumeDTO,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 export const initialCandidateListState: CandidateListSliceState = {
@@ -163,6 +164,18 @@ const addNewCandidateThunk = createAsyncThunk(
   },
 )
 
+const uploadCandidateResumeThunk = createAsyncThunk(
+  'candidateList/uploadCandidateResumeThunk',
+  async (data: UploadCandidateResumeDTO, thunkApi) => {
+    try {
+      return await candidateListApi.uploadCandidateResume(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const candidateListSlice = createSlice({
   name: 'candidateList',
   initialState: initialCandidateListState,
@@ -267,6 +280,7 @@ export const candidateListThunk = {
   checkCandidateMobileNumberThunk,
   getAllCompaniesDataThunk,
   addNewCandidateThunk,
+  uploadCandidateResumeThunk,
 }
 
 export const candidateListSelectors = {

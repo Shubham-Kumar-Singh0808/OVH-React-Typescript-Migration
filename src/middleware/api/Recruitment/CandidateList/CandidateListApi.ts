@@ -7,6 +7,7 @@ import {
   GetAllTechnology,
   IncomingAllJobVacanciesList,
   IncomingCompaniesData,
+  UploadCandidateResumeDTO,
   country,
   viewHandlerProps,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
@@ -151,6 +152,24 @@ const addNewCandidate = async (
   return response.data
 }
 
+const uploadCandidateResume = async (
+  finalData: UploadCandidateResumeDTO,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.uploadCandidateResume,
+    method: AllowedHttpMethods.post,
+    params: {
+      personId: finalData.personId,
+    },
+    data: { file: finalData.file },
+    additionalHeaders: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
@@ -163,6 +182,7 @@ const candidateListApi = {
   checkCandidateMobileNumber,
   getAllCompaniesData,
   addNewCandidate,
+  uploadCandidateResume,
 }
 
 export default candidateListApi

@@ -112,6 +112,7 @@ const AddCandidate = (): JSX.Element => {
 
   const addButtonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    setAddButtonEnabled(false)
     const mobileResult = await dispatch(
       reduxServices.candidateList.checkCandidateMobileNumberThunk(mobileNumber),
     )
@@ -121,7 +122,6 @@ const AddCandidate = (): JSX.Element => {
       ) &&
       mobileResult.payload === false
     ) {
-      console.log(mobileCode)
       const finalData: AddNewCandidateDTO = {
         notifications: whatsAppNotifications,
         candidateEmail: email,
@@ -159,9 +159,21 @@ const AddCandidate = (): JSX.Element => {
       if (
         reduxServices.candidateList.addNewCandidateThunk.fulfilled.match(result)
       ) {
+        const personId = result.payload
+        const file = new FormData()
+        if (uploadedFile !== undefined) {
+          file.append('file', uploadedFile)
+        }
+        await dispatch(
+          reduxServices.candidateList.uploadCandidateResumeThunk({
+            personId,
+            file,
+          }),
+        )
         window.location.href = '/jobschedulecandidateList'
       }
     }
+    setAddButtonEnabled(true)
   }
 
   return (
