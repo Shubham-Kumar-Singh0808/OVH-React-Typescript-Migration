@@ -5,20 +5,47 @@ import {
   CTableHeaderCell,
   CTableBody,
   CTableDataCell,
+  CCol,
+  CRow,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { usePagination } from '../../../../middleware/hooks/usePagination'
+import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../../components/ReusableComponent/OPagination'
+import { currentPageData } from '../../../../utils/paginationUtils'
 
-const AssetHistoryTable = ({
-  currentPage,
-  pageSize,
-}: {
-  currentPage: number
-  pageSize: number
-}): JSX.Element => {
+const AssetHistoryTable = (): JSX.Element => {
   const assetHistory = useTypedSelector(
     reduxServices.assetList.selectors.assetHistory,
+  )
+
+  const pageFromState = useTypedSelector(
+    reduxServices.addLocationList.selectors.pageFromState,
+  )
+  const pageSizeFromState = useTypedSelector(
+    reduxServices.addLocationList.selectors.pageSizeFromState,
+  )
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    currentPage,
+    pageSize,
+  } = usePagination(assetHistory?.length, pageSizeFromState, pageFromState)
+
+  const handlePageSizeSelectChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setPageSize(Number(event.target.value))
+    setCurrentPage(1)
+  }
+
+  const assetPageItems = useMemo(
+    () => currentPageData(assetHistory, currentPage, pageSize),
+    [assetHistory, currentPage, pageSize],
   )
 
   const getItemNumber = (index: number) => {
@@ -47,8 +74,8 @@ const AssetHistoryTable = ({
         </CTableHead>
         <CTableBody>
           <>
-            {assetHistory.length > 0 &&
-              assetHistory.map((historyItems, index) => {
+            {assetPageItems.length > 0 &&
+              assetPageItems.map((historyItems, index) => {
                 return (
                   <>
                     <CTableRow key={index}>
@@ -90,6 +117,36 @@ const AssetHistoryTable = ({
           </>
         </CTableBody>
       </CTable>
+      <CRow>
+        <CCol xs={4}>
+          <strong>
+            {assetHistory?.length
+              ? `Total Records: ${assetHistory?.length}`
+              : `No Records Found`}
+          </strong>
+        </CCol>
+        <CCol xs={3}>
+          {assetHistory?.length > 20 && (
+            <OPageSizeSelect
+              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              options={[20, 40, 60, 80, 100]}
+              selectedPageSize={pageSize}
+            />
+          )}
+        </CCol>
+        {assetHistory?.length > 20 && (
+          <CCol
+            xs={5}
+            className="d-grid gap-1 d-md-flex justify-content-md-end"
+          >
+            <OPagination
+              currentPage={currentPage}
+              pageSetter={setCurrentPage}
+              paginationRange={paginationRange}
+            />
+          </CCol>
+        )}
+      </CRow>
     </>
   )
 }

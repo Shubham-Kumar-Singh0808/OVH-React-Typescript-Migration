@@ -20,6 +20,8 @@ export type AssetListSliceState = {
   allAssetList: AllAssetsList[]
   assetHistoryList: AssetHistoryProps[]
   listSize: number
+  currentPage: number
+  pageSize: number
 }
 
 export type ManufacturerList = {

@@ -3,6 +3,8 @@ import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import AssetHistoryTable from './AssetHistoryTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { AssetHistoryProps } from '../../../../types/Assets/AssetList/AssetListTypes'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const AssetHistory = ({
   //   historyItems,
@@ -14,34 +16,35 @@ const AssetHistory = ({
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
+  const dispatch = useAppDispatch()
+
+  const assetHistory = useTypedSelector(
+    reduxServices.assetList.selectors.assetHistory,
+  )
+
+  console.log(assetHistory)
 
   const searchButtonHandlerOnKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (event.key === 'Enter') {
-      //   dispatch(
-      //     reduxServices.vendorList.getVendors({
-      //       startIndex: 0,
-      //       endIndex: 20,
-      //       vendorName: searchInput,
-      //     }),
-      //   )
-      //   setCurrentPage(1)
-      //   setPageSize(20)
+      dispatch(
+        reduxServices.assetList.getAllAssetHistoryData({
+          assetId: 4102,
+          searchAssetReference: searchInput,
+        }),
+      )
     }
   }
 
   const searchButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    // dispatch(
-    //   reduxServices.vendorList.getVendors({
-    //     startIndex: 0,
-    //     endIndex: 20,
-    //     vendorName: searchInput,
-    //   }),
-    // )
-    // setCurrentPage(1)
-    // setPageSize(20)
+    dispatch(
+      reduxServices.assetList.getAllAssetHistoryData({
+        assetId: 4102,
+        searchAssetReference: searchInput,
+      }),
+    )
   }
 
   return (
@@ -93,7 +96,7 @@ const AssetHistory = ({
           </CInputGroup>
         </CCol>
       </CRow>
-      <AssetHistoryTable currentPage={0} pageSize={0} />
+      <AssetHistoryTable />
     </OCard>
   )
 }

@@ -50,13 +50,15 @@ const getAllAssetHistoryData = createAsyncThunk(
   },
 )
 
-const initialAssetTypeChangeListState: AssetListSliceState = {
+export const initialAssetTypeChangeListState: AssetListSliceState = {
   asset: [],
   isLoading: ApiLoadingState.idle,
   manufacturerList: {} as ManufacturerList,
   allAssetList: [],
   assetHistoryList: [],
   listSize: 0,
+  currentPage: 1,
+  pageSize: 20,
 }
 
 const assetTypeChangeListSlice = createSlice({
@@ -113,6 +115,11 @@ const allAssetListData = (state: RootState): AllAssetsList[] =>
 const assetHistory = (state: RootState): AssetHistoryProps[] =>
   state.assetList.assetHistoryList
 
+const pageFromState = (state: RootState): number =>
+  state.addLocationList.currentPage
+const pageSizeFromState = (state: RootState): number =>
+  state.addLocationList.pageSize
+
 const assetListSelectors = {
   isLoading,
   assetListData,
@@ -120,6 +127,8 @@ const assetListSelectors = {
   listSize,
   allAssetListData,
   assetHistory,
+  pageFromState,
+  pageSizeFromState,
 }
 
 export const assetListService = {
