@@ -1,4 +1,5 @@
 import React from 'react'
+import CreditCardListTable from './CredtCardListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const CreditCardList = (): JSX.Element => {
@@ -9,7 +10,9 @@ const CreditCardList = (): JSX.Element => {
         title="Credit Card List"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
-      ></OCard>
+      >
+        <CreditCardListTable />
+      </OCard>
     </>
   )
 }
