@@ -51,6 +51,9 @@ const Offer = (): JSX.Element => {
       setIsOfferModalVisibility(false)
     }
   }
+  const handleModal = () => {
+    setIsOfferModalVisibility(true)
+  }
   return (
     <>
       <CButton
@@ -58,6 +61,7 @@ const Offer = (): JSX.Element => {
         ng-click="updateInterviewStatusPopup(interviewTimelineDetailsList.personId, 'OFFERED')"
         type="submit"
         className="btn btn-success btn-labeled fa fa-check fa-lg"
+        onClick={handleModal}
       >
         Offer
       </CButton>
