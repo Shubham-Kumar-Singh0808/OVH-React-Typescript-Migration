@@ -177,7 +177,7 @@ const AppraisalConfigurationsTable = ({
       >
         <>
           <span className="descriptionField">
-            <div
+            <p
               dangerouslySetInnerHTML={{
                 __html: descriptionModal.description as string,
               }}
