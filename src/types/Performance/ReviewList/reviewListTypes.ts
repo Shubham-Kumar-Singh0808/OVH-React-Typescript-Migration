@@ -31,7 +31,7 @@ export type ReviewListData = {
 export type Appraisal = {
   appraisalFormStatus: null
   cycleStartDate: string
-  empAvgRating: number
+  empAvgRating: number | null
   empDepartmentName: string
   empDesignationName: string
   empId: number
@@ -41,7 +41,7 @@ export type Appraisal = {
   formStatusvalue: number
   id: number
   manager1Name: string
-  overallAvgRating: number | string
+  overallAvgRating: number | string | null
   pendingWith: string
 }
 
@@ -94,8 +94,6 @@ export type ReviewListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  filterByDepartment: string
-  filterByDesignation: string
   isTableView: boolean
 }
 
@@ -121,6 +119,7 @@ export type ReviewListSliceState = {
   appraisal: Appraisal[]
   designations: Designation[]
   employeeReviewList: ReviewListResponse
+  currentListStatus: string
   listSize: number
   activeCycle: ActiveCycle
   isLoading: LoadingState
