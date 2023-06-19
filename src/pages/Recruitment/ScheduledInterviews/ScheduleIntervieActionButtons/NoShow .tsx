@@ -5,18 +5,19 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const NoShow = () => {
-  const [isApproveModalVisibility, setIsApproveModalVisibility] =
+  const [noShowModalVisibility, setIsNoShowModalVisibility] =
     useState<boolean>(false)
-  const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [noShowComment, setNoShowComment] = useState<string>('')
+  const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const handleModal = () => {
-    setIsApproveModalVisibility(true)
+    setIsNoShowModalVisibility(true)
   }
   const dispatch = useAppDispatch()
   const timeLineListSelector = useTypedSelector(
@@ -29,7 +30,7 @@ const NoShow = () => {
         candidateId: timeLineListSelector.personId,
         holdSubStatus: '',
         status: 'NO_SHOW',
-        statusComments: approveLeaveComment,
+        statusComments: noShowComment,
       }),
     )
     if (
@@ -42,9 +43,17 @@ const NoShow = () => {
           timeLineListSelector.personId,
         ),
       )
-      setIsApproveModalVisibility(false)
+      setIsNoShowModalVisibility(false)
     }
   }
+
+  useEffect(() => {
+    if (noShowComment?.replace(/^\s*/, '')) {
+      setIsYesButtonEnabled(true)
+    } else {
+      setIsYesButtonEnabled(false)
+    }
+  }, [noShowComment])
   return (
     <>
       <CButton
@@ -60,13 +69,14 @@ const NoShow = () => {
       </CButton>
       <OModal
         alignment="center"
-        visible={isApproveModalVisibility}
-        setVisible={setIsApproveModalVisibility}
+        visible={noShowModalVisibility}
+        setVisible={setIsNoShowModalVisibility}
         confirmButtonText="Yes"
         modalTitle="Do you want to No show this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
         confirmButtonAction={confirmBtnHandler}
+        isConfirmButtonDisabled={!isYesButtonEnabled}
       >
         <>
           <CRow className="mt-1 mb-1">
@@ -76,9 +86,7 @@ const NoShow = () => {
               Comments:
               <span
                 className={
-                  approveLeaveComment?.replace(/^\s*/, '')
-                    ? TextWhite
-                    : TextDanger
+                  noShowComment?.replace(/^\s*/, '') ? TextWhite : TextDanger
                 }
               >
                 *
@@ -90,8 +98,8 @@ const NoShow = () => {
                 aria-label="textarea"
                 autoComplete="off"
                 maxLength={150}
-                value={approveLeaveComment}
-                onChange={(e) => setApproveLeaveComment(e.target.value)}
+                value={noShowComment}
+                onChange={(e) => setNoShowComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>
