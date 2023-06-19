@@ -25,37 +25,29 @@ const NoShow = () => {
   const confirmBtnHandler = async () => {
     // setIsDeleteModalVisible(false)
     const noShowResultAction = await dispatch(
-      reduxServices.intervieweeDetails.updateCandidateInterviewStatus(
-        candidateId
-        : 
-        13836
-        holdSubStatus
-        : 
-        ""
-        status
-        : 
-        "NO_SHOW"
-        statusComments
-        : 
-        "testing"
-      ),
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
+        candidateId: 13836,
+        holdSubStatus: '',
+        status: 'NO_SHOW',
+        statusComments: 'testing',
+      }),
     )
     if (
-      reduxServices.personalInformation.deleteEmployeeFamilyMember.fulfilled.match(
-        deleteFamilyMemberResultAction,
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
+        noShowResultAction,
       )
     ) {
       dispatch(
         reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
       )
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Family Details deleted successfully"
-          />,
-        ),
-      )
+      // dispatch(
+      //   reduxServices.app.actions.addToast(
+      //     <OToast
+      //       toastColor="success"
+      //       toastMessage="Family Details deleted successfully"
+      //     />,
+      //   ),
+      // )
     }
   }
   return (
