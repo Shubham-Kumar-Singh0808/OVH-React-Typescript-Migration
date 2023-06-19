@@ -20,7 +20,7 @@ const MileStoneHistory = (): JSX.Element => {
     reduxServices.projectMileStone.selectors.getProjectMileStoneResponse,
   )
 
-  const trimmedValue = getProjectDetail.status.replace(/\s/g, '')
+  const trimmedValue = getProjectDetail.status?.replace(/\s/g, '')
 
   return (
     <>
