@@ -7,7 +7,7 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import parse from 'html-react-parser'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -137,7 +137,11 @@ const IntervieweeDetails = (): JSX.Element => {
       '_blank',
     )
   }
+  const history = useHistory()
 
+  const backBtnHandler = () => {
+    history.goBack()
+  }
   return (
     <>
       <OCard
@@ -148,15 +152,14 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <Link to={`/candidateSearch`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+              onClick={backBtnHandler}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
         </CRow>
         <CForm>
