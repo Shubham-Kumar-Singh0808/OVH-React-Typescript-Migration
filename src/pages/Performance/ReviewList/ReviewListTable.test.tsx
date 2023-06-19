@@ -14,8 +14,6 @@ describe('Review List Table Component Testing without data', () => {
         setCurrentPage={mockSetCurrentPage}
         pageSize={20}
         setPageSize={mockSetPageSize}
-        filterByDepartment={''}
-        filterByDesignation={''}
         isTableView={true}
       />,
     )

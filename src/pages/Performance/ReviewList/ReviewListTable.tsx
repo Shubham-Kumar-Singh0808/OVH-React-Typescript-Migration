@@ -11,18 +11,22 @@ import {
   CBadge,
   CTooltip,
 } from '@coreui/react-pro'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 import { ReviewListTableProps } from '../../../types/Performance/ReviewList/reviewListTypes'
+import { MyReviewFormStatus } from '../../../types/Performance/MyReview/myReviewTypes'
 
 const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   const appraisalReviews = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalReviews,
   )
-
+  const currentListStatus = useTypedSelector(
+    (state) => state.reviewList.currentListStatus,
+  )
   const reviewListSize = useTypedSelector(
     reduxServices.reviewList.selectors.listSize,
   )
@@ -43,26 +47,30 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
   }
 
   const reviewStatusLabelColor = (status: string): JSX.Element => {
-    if (status === 'COMPLETED') {
+    if (status === MyReviewFormStatus.completed.toString()) {
       return (
         <CBadge color="success" className="review-status">
-          {'Completed'}
+          {MyReviewFormStatus.completed}
         </CBadge>
       )
-    } else if (status === 'PENDINGAGREEMENT') {
+    } else if (status === MyReviewFormStatus.pendingagreement.toString()) {
       return (
         <CBadge className="discuss-btn review-status">
           {'Needs Acknowledgement'}
         </CBadge>
       )
-    } else if (status === 'SUBMIT') {
+    } else if (status === MyReviewFormStatus.submitForEmployee.toString()) {
       return (
         <CBadge color="warning" className="review-status">
           {'Review Pending'}
         </CBadge>
       )
     }
-    return <></>
+    return (
+      <CBadge color="danger" className="review-status">
+        {'Not-Submitted'}
+      </CBadge>
+    )
   }
 
   const paginationComponent =
@@ -99,6 +107,10 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
       </CRow>
     )
 
+  const getFinalRatingValue = (rating: number | string | null): string => {
+    return rating ? rating.toString() : 'N/A'
+  }
+
   return (
     <>
       <CTable striped responsive align="middle">
@@ -116,7 +128,9 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
               {"Manager's Avg Rating"}
             </CTableHeaderCell>
             <CTableHeaderCell>Status</CTableHeaderCell>
-            <CTableHeaderCell>Action</CTableHeaderCell>
+            {currentListStatus !== 'SAVE' && (
+              <CTableHeaderCell>Action</CTableHeaderCell>
+            )}
           </CTableRow>
         </CTableHead>
         {appraisalReviews?.size > 0 && (
@@ -132,25 +146,32 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                     <CTableDataCell>{review.empDepartmentName}</CTableDataCell>
                     <CTableDataCell>{review.empDesignationName}</CTableDataCell>
                     <CTableDataCell>{review.cycleStartDate}</CTableDataCell>
-                    <CTableDataCell>{review.empAvgRating}</CTableDataCell>
                     <CTableDataCell>
-                      {review.overallAvgRating === 'NaN'
-                        ? 'N/A'
-                        : review.overallAvgRating}
+                      {getFinalRatingValue(review.empAvgRating)}
+                    </CTableDataCell>
+                    <CTableDataCell>
+                      {getFinalRatingValue(review.overallAvgRating)}
                     </CTableDataCell>
                     <CTableDataCell>
                       {reviewStatusLabelColor(review.formStatus)}
                     </CTableDataCell>
-                    <CTableDataCell>
-                      <CTooltip content="View">
-                        <CButton
-                          className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                          data-testid={`view-reviewForm-btn${index}`}
-                        >
-                          <i className="fa fa-eye" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
-                    </CTableDataCell>
+                    {
+                      //the employee has submitted the form. Only then can the manager see the form
+                      currentListStatus !== 'SAVE' && (
+                        <CTableDataCell>
+                          <Link to={`/managerAppraisal/${review.empId}`}>
+                            <CTooltip content="View">
+                              <CButton
+                                className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                                data-testid={`view-reviewForm-btn${index}`}
+                              >
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </CButton>
+                            </CTooltip>
+                          </Link>
+                        </CTableDataCell>
+                      )
+                    }
                   </CTableRow>
                 )
               })}
