@@ -68,7 +68,11 @@ const CandidateOffer = (): JSX.Element => {
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
   )
-  console.log(addNewJoinee + 'V')
+
+  const result = addNewJoinee?.filter(
+    (item) => item.departmentId === candidateDepartment,
+  )
+  console.log(result + 'V')
   // ------------------------------------------------------------
 
   useEffect(() => {
@@ -146,7 +150,7 @@ const CandidateOffer = (): JSX.Element => {
         comments: candidateComment,
         currentCTC: curruentCTC,
         dateOfJoining: dateOfJoiningDate,
-        departmentName: candidateDepartment as string,
+        departmentName: result[0].departmentName,
         designation,
         employmentType: employeeType,
         jobType,
@@ -166,7 +170,7 @@ const CandidateOffer = (): JSX.Element => {
         comments: candidateComment,
         currentCTC: curruentCTC,
         dateOfJoining: dateOfJoiningDate,
-        departmentName: candidateDepartment as string,
+        departmentName: result[0]?.departmentName || '',
         designation,
         employmentType: employeeType,
         jobType,
