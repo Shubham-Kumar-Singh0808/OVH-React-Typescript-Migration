@@ -125,7 +125,7 @@ export type UpdateProps = {
   np: null
   personId: null
   proactiveComments: string
-  rating: 1
+  rating: number
   reason: null
   recruiter: null
   skills: string
@@ -138,40 +138,40 @@ export type UpdateProps = {
 
 export type EmpScheduleInterviewData = {
   candidateId: string | null
-  interviewers: string
-  interviewersDTOList: null
-  interviewDate: string
-  interviewTime: string | null
+  interviewers?: string
+  interviewersDTOList?: null
+  interviewDate?: string
+  interviewTime?: string | null
   interviewComments: null | string
-  interviewRound: string
-  interviewStatus: null
-  candidateName: string | null
-  interviewMode: string | null
-  interviewCycleId: number
-  experiance: null
-  rating: null | number
-  status: string
-  candiadateEmailId: string | null
-  skills: string | null
-  mobileNumber: string | null
-  cycleDTOs: null
-  interviewResultStatus: null | string
-  description: null
-  skypeId: null
-  proactiveComments: null | string
-  communicationComments: null | string
-  excellenceComments: null | string
-  updatedBy: null | string
-  recruiter: null
-  reason: null | string
-  ctc: null
-  ectc: null
-  technology: null
-  np: null
-  country: null
-  jobCode: null
-  sourceName: null
-  personId: null
+  interviewRound?: string
+  interviewStatus: string
+  candidateName?: string | null
+  interviewMode?: string | null
+  interviewCycleId?: number
+  experiance?: null
+  rating?: null | number
+  status?: string
+  candiadateEmailId?: string | null
+  skills?: string | null
+  mobileNumber?: string | null
+  cycleDTOs?: null
+  interviewResultStatus?: null | string
+  description?: null
+  skypeId?: null
+  proactiveComments?: null | string
+  communicationComments?: null | string
+  excellenceComments?: null | string
+  updatedBy?: null | string
+  recruiter?: null
+  reason?: null | string
+  ctc?: null
+  ectc?: null
+  technology?: null
+  np?: null
+  country?: null
+  jobCode?: null
+  sourceName?: null
+  personId?: null
 }
 export type EmployeeProperties = {
   id: number
