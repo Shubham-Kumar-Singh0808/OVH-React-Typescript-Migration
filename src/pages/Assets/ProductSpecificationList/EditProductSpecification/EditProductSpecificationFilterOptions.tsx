@@ -206,7 +206,7 @@ const EditProductSpecificationFilterOptions = ({
             <option value={''}>Select Manufacturer</option>
             {ProductTypeList.length > 0 &&
               ProductTypeList?.map((product, index) => (
-                <option key={index} value={product?.manufacturerId}>
+                <option key={index} value={product?.productId}>
                   {product.manufacturerName}
                 </option>
               ))}
