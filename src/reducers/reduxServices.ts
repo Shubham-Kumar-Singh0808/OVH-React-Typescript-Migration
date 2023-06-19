@@ -132,6 +132,7 @@ import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
+import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -268,4 +269,5 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
   creditCardList: creditCardListService,
+  subCategoryList: subCategoryListService,
 }

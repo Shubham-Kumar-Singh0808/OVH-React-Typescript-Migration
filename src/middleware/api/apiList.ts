@@ -121,6 +121,7 @@ import {
   AssetListApi,
   ProductSpecificationListApi,
   CreditCardListApi,
+  ExpenseSubCategoryListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1097,6 +1098,22 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
 
+export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
+  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
+  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
+  checkForDuplicateSubCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
+  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
+  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}
+
 export const CreditCardListApiConfig: CreditCardListApi = {
   getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+  editCardDetails: apiPrefix + '/ExpenseManagement/editCardDetials',
+  updateCardDetails: apiPrefix + '/ExpenseManagement/updateCardDetails',
+  deleteCardData: apiPrefix + '/ExpenseManagement/deleteCardData',
+  checkDuplicateCardNumber:
+    apiPrefix + '/ExpenseManagement/checkDuplicateCardNumber',
 }

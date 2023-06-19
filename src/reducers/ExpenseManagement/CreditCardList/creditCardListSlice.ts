@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import creditCardListApi from '../../../middleware/api/ExpenseManagement/CreditCardList/creditCardListApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
@@ -21,6 +21,54 @@ const getCreditCardsList = createAsyncThunk(
   },
 )
 
+const duplicateCardNumberDetails = createAsyncThunk(
+  '/ExpenseManagement/checkDuplicateCardNumber',
+  async (cardNumber: number, thunkApi) => {
+    try {
+      return await creditCardListApi.checkDuplicateCardNumberDetails(cardNumber)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const editCreditCardDetails = createAsyncThunk(
+  '/ExpenseManagement/editCardDetials',
+  async (cardId: number, thunkApi) => {
+    try {
+      return await creditCardListApi.editCreditCardList(cardId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateCreditCardList = createAsyncThunk(
+  '/ExpenseManagement/updateCardDetails',
+  async (data: CreditCardList, thunkApi) => {
+    try {
+      return await creditCardListApi.updateCreditCardDetails(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const deleteCreditCardList = createAsyncThunk(
+  '/ExpenseManagement/deleteCardData',
+  async (cardId: number, thunkApi) => {
+    try {
+      return await creditCardListApi.deleteCreditCardDetails(cardId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialCreditCardListState: CreditCardListSliceState = {
   getCardsList: [],
   isLoading: ApiLoadingState.idle,
@@ -33,17 +81,50 @@ const creditCardListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getCreditCardsList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.getCardsList = action.payload
-      })
-      .addCase(getCreditCardsList.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
-      .addCase(getCreditCardsList.rejected, (state, action) => {
-        state.isLoading = ApiLoadingState.failed
-        state.error = action.payload as ValidationError
-      })
+      .addMatcher(
+        isAnyOf(
+          getCreditCardsList.fulfilled,
+          duplicateCardNumberDetails.fulfilled,
+        ),
+        (state, action) => {
+          state.isLoading = ApiLoadingState.succeeded
+          state.getCardsList = action.payload
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          editCreditCardDetails.fulfilled,
+          updateCreditCardList.fulfilled,
+          deleteCreditCardList.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCreditCardsList.pending,
+          duplicateCardNumberDetails.pending,
+          editCreditCardDetails.pending,
+          updateCreditCardList.pending,
+          deleteCreditCardList.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          getCreditCardsList.rejected,
+          duplicateCardNumberDetails.rejected,
+          editCreditCardDetails.rejected,
+          updateCreditCardList.rejected,
+          deleteCreditCardList.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
   },
 })
 
@@ -54,6 +135,10 @@ const creditCards = (state: RootState): CreditCardList[] =>
 
 const creditCardListThunk = {
   getCreditCardsList,
+  duplicateCardNumberDetails,
+  editCreditCardDetails,
+  updateCreditCardList,
+  deleteCreditCardList,
 }
 
 const creditCardListSelectors = {

@@ -210,7 +210,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable className="mt-4 mb-4">
+      <CTable className="mt-4 mb-4" align="middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
