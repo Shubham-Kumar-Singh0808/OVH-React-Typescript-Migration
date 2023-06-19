@@ -141,6 +141,7 @@ import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import creditCardListReducer from './reducers/ExpenseManagement/CreditCardList/creditCardListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -282,6 +283,7 @@ export const allReducers = {
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
   addProduct: addProductReducer,
+  creditCardList: creditCardListReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

@@ -919,3 +919,7 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+
+export interface CreditCardListApi extends ApiBase {
+  getCardsList: string
+}

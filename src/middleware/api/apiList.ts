@@ -120,6 +120,7 @@ import {
   CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
+  CreditCardListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1095,3 +1096,7 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const CreditCardListApiConfig: CreditCardListApi = {
+  getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+}

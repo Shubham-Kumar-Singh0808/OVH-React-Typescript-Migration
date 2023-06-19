@@ -1,5 +1,5 @@
 import React from 'react'
-import CreditCardListTable from './CredtCardListTable'
+import CreditCardListTable from './CreditCardListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const CreditCardList = (): JSX.Element => {
