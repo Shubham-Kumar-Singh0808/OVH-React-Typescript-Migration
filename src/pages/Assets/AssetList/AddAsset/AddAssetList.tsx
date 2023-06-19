@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   CButton,
   CCol,
@@ -45,14 +45,16 @@ const AddAssetList = ({
   const [receivedDate, setReceivedDate] = useState<string>()
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>()
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>()
+  const [productSpecification, setProductSpecification] = useState<string>()
 
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
   const [isDateError, setIsDateError] = useState(false)
   const [isError, setIsError] = useState(false)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
-  const [isChecked, setIsChecked] = useState<boolean>()
-
+  const [isChecked, setIsChecked] = useState<string>()
+  const [addComment, setAddComment] = useState<string>('')
+  const [isShowComment, setIsShowComment] = useState<boolean>(true)
   useEffect(() => {
     if (
       poNumber &&
@@ -127,6 +129,7 @@ const AddAssetList = ({
     setLicenseNumber('')
     setInvoiceNumber('')
     setAmount('')
+    setProductSpecification('')
     setAssetStatus('')
     setCountry('')
     setAddComment('')
@@ -180,9 +183,6 @@ const AddAssetList = ({
     setIsDateError(moment(end).isBefore(start))
   }, [datePurchase, receivedDate])
 
-  const [addComment, setAddComment] = useState<string>('')
-  const [isShowComment, setIsShowComment] = useState<boolean>(true)
-
   const handleBankAddress = (comments: string) => {
     setAddComment(comments)
   }
@@ -226,6 +226,18 @@ const AddAssetList = ({
   //   setManufacturerName({ ...enteredAnswers, manufacturerName: e.target.value })
   // }
 
+  const handlerChangeProductSpecification = (
+    event:
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target
+    if (name === 'isChecked') {
+      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+      setIsChecked(newValue)
+    }
+  }
+
   useEffect(() => {
     if (manufacturerName) {
       dispatch(
@@ -238,41 +250,54 @@ const AddAssetList = ({
   }, [dispatch, manufacturerName])
 
   const handleAddNewAssetList = async () => {
-    // const addManuFactureListResultAction = await dispatch(
-    //   reduxServices.addAssetList.checkAssetNumberExixts(Number(assetNumber)),
-    // )
-
-    const isAddAssetLIst = await dispatch(
-      reduxServices.addAssetList.getAddAssetList({
-        amount: amount as string,
-        assetNumber: assetNumber as string,
-        assetTypeId: assetType as string,
-        countryId: Number(country),
-        invoiceNumber: invoiceNumber as string,
-        manufacturerId: manufacturerName as string,
-        notes: addComment,
-        poNumber: poNumber as string,
-        productId: productType as string,
-        purchasedDate: datePurchase as string,
-        receivedDate: receivedDate as string,
-        status: assetStatus as string,
-        vendorId: vendorName as string,
-        warrantyEndDate: warrantyStartDate as string,
-        warrantyStartDate: warrantyEndDate as string,
-        otherAssetNumber: licenseNumber as string,
-        pSpecification: '@@@',
-        productSpecification: '',
-        otherNumber: '',
-      }),
+    const addManuFactureListResultAction = await dispatch(
+      reduxServices.addAssetList.checkAssetNumberExixts(Number(assetNumber)),
     )
+    console.log(addManuFactureListResultAction.type)
+    const isAddAssetLIst = {
+      amount: amount as string,
+      assetNumber: assetNumber as string,
+      assetTypeId: assetType as string,
+      countryId: Number(country),
+      invoiceNumber: invoiceNumber as string,
+      manufacturerId: manufacturerName as string,
+      notes: addComment,
+      otherAssetNumber: licenseNumber as string,
+      pSpecification: typeChange[0].productSpecification,
+      poNumber: poNumber as string,
+      productId: productType as string,
+      purchasedDate: datePurchase as string,
+      receivedDate: receivedDate as string,
+      status: assetStatus as string,
+      vendorId: vendorName as string,
+      warrantyEndDate: warrantyStartDate as string,
+      warrantyStartDate: warrantyEndDate as string,
+    }
+
+    const saveAssetDetailsResultAction = await dispatch(
+      reduxServices.addAssetList.getAddAssetList(isAddAssetLIst),
+    )
+
     if (
-      reduxServices.addAssetList.getAddAssetList.fulfilled.match(isAddAssetLIst)
+      reduxServices.addAssetList.getAddAssetList.fulfilled.match(
+        saveAssetDetailsResultAction,
+      )
     ) {
+      //  }
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
-
+  const sortedProductTypeDetails = useMemo(() => {
+    if (assetTypeList) {
+      return assetTypeList
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.productName.localeCompare(sortNode2.productName),
+        )
+    }
+    return []
+  }, [assetTypeList])
   return (
     <>
       <OCard
@@ -335,7 +360,7 @@ const AddAssetList = ({
               placeholder="Select Vendor Name"
               onChange={(e) => setVendorName(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Vendor Name</option>
               {assetListTypeList?.vendorList?.length > 0 &&
                 assetListTypeList?.vendorList?.map((location, index) => (
                   <option key={index} value={location.vendorId}>
@@ -364,11 +389,11 @@ const AddAssetList = ({
               placeholder="Select Asset Type"
               onChange={(e) => setAssetType(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Asset Type</option>
               {assetListTypeList?.assetTypeList?.length > 0 &&
-                assetListTypeList?.assetTypeList?.map((location, index) => (
-                  <option key={index} value={location.id}>
-                    {location.assetType}
+                assetListTypeList?.assetTypeList?.map((item, index) => (
+                  <option key={index} value={item.id}>
+                    {item.assetType}
                   </option>
                 ))}
             </CFormSelect>
@@ -394,7 +419,7 @@ const AddAssetList = ({
               onChange={(e) => setProductType(e.target.value)}
             >
               <option value={''}>Select Product Type</option>
-              {assetTypeList.map((location, index) => (
+              {sortedProductTypeDetails.map((location, index) => (
                 <option key={index} value={location.productId}>
                   {location.productName}
                 </option>
@@ -421,7 +446,7 @@ const AddAssetList = ({
               value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Manufacturer Type</option>
               {productTypeList.map((location, index) => (
                 <option key={index} value={location.manufacturerId}>
                   {location.manufacturerName}
@@ -430,6 +455,7 @@ const AddAssetList = ({
             </CFormSelect>
           </CCol>
         </CRow>
+        {/* {productSpecification === 'manufacturerName' ? ( */}
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
@@ -446,14 +472,19 @@ const AddAssetList = ({
                   hitArea="full"
                   label={item.productSpecification}
                   inline
-                  checked={isChecked}
-                  onChange={(e) => setIsChecked(e.target.checked)}
+                  name="isChecked"
+                  // value={isChecked}
+                  // onChange={(e) => setIsChecked(e.target.checked)}
+                  // onChange={(e) => handlerChangeProductSpecification}
                   value={item.productSpecification}
                 />
               </CCol>
             )
           })}
         </CRow>
+        {/* ) : (
+          <></>
+        )} */}
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
@@ -560,7 +591,7 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="datePurchase"
               value={datePurchase}
-              minDate={new Date()}
+              //minDate={new Date()}
               onChange={(date: Date) => onHandleDateOfPurchase(date)}
             />
           </CCol>
@@ -585,7 +616,7 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="receivedDate"
               value={receivedDate}
-              minDate={new Date()}
+              //minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
             {isDateError && (
@@ -614,7 +645,7 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="warrantyStartDate"
               value={warrantyStartDate}
-              minDate={new Date()}
+              // minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyStartDate(date)}
             />
           </CCol>
@@ -638,7 +669,7 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="warrantyEndDate"
               value={warrantyEndDate}
-              minDate={new Date()}
+              //minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
             {isError && (
@@ -669,7 +700,7 @@ const AddAssetList = ({
               value={assetStatus}
               onChange={(e) => setAssetStatus(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Asset Status</option>
               <option value={'Working'}>Working</option>
               <option value={'Not Working'}>Not Working</option>
               <option value={'Under Repair'}>Under Repair</option>

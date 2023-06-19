@@ -6,6 +6,7 @@ import {
   CFormLabel,
   CFormInput,
   CFormSelect,
+  CFormCheck,
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -74,6 +75,8 @@ const EditAddAssetList = ({
     editAddAssetList.vendorName,
   )
   const [assetType, setAssetType] = useState<string>(editAddAssetList.assetType)
+  const [isChecked, setIsChecked] = useState<boolean>()
+
   console.log(vendorName + 'vendorName')
   console.log(editAddAssetList.countryId)
   console.log(country)
@@ -95,10 +98,12 @@ const EditAddAssetList = ({
   const handleBankAddress = (comments: string) => {
     setAddComment(comments)
   }
-
-  const departments = useTypedSelector(
-    reduxServices.addNewVendor.selectors.department,
+  const typeChange = useTypedSelector(
+    reduxServices.addAssetList.selectors.typeChange,
   )
+  // const departments = useTypedSelector(
+  //   reduxServices.addNewVendor.selectors.department,
+  // )
 
   // const textWhite = 'text-white'
   // const textDanger = 'text-danger'
@@ -302,7 +307,7 @@ const EditAddAssetList = ({
               value={vendorName}
               onChange={(e) => setVendorName(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Vendor Name</option>
               {assetListTypeList?.vendorList?.length > 0 &&
                 assetListTypeList?.vendorList?.map((location, index) => (
                   <option key={index} value={location.vendorId}>
@@ -330,7 +335,7 @@ const EditAddAssetList = ({
               value={assetType}
               onChange={(e) => setAssetType(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Asset Type</option>
               {assetListTypeList?.assetTypeList?.length > 0 &&
                 assetListTypeList?.assetTypeList?.map((location, index) => (
                   <option key={index} value={location.assetType}>
@@ -389,7 +394,7 @@ const EditAddAssetList = ({
               value={manufacturerName}
               onChange={(e) => setManufacturerName(e.target.value)}
             >
-              <option value={''}>Select Product Type</option>
+              <option value={''}>Select Manufacturer Type</option>
               {productTypeList.map((location, index) => (
                 <option key={index} value={location.manufacturerId}>
                   {location.manufacturerName}
@@ -397,6 +402,30 @@ const EditAddAssetList = ({
               ))}
             </CFormSelect>
           </CCol>
+        </CRow>
+        <CRow className="mt-3 mb-3">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Product Specifications :
+          </CFormLabel>
+          {typeChange.map((item, index) => {
+            return (
+              <CCol sm={1} className="mt-2" key={index}>
+                <CFormCheck
+                  type="radio"
+                  data-testid={`yes-radio`}
+                  hitArea="full"
+                  label={item.productSpecification}
+                  inline
+                  checked={isChecked}
+                  onChange={(e) => setIsChecked(e.target.checked)}
+                  value={item.productSpecification}
+                />
+              </CCol>
+            )
+          })}
         </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel
@@ -679,6 +708,7 @@ const EditAddAssetList = ({
               color="warning"
               className="btn-ovh text-white"
               onClick={updateHandler}
+              disabled={!isUpdateButtonEnabled}
             >
               Update
             </CButton>
