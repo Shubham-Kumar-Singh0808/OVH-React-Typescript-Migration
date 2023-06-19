@@ -8,6 +8,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
+import parse from 'html-react-parser'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -260,7 +261,9 @@ const IntervieweeDetails = (): JSX.Element => {
               Reason for change:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.reason}</p>
+              <p className="mb-0">
+                {parse(timeLineListSelector?.reason || 'N/A')}
+              </p>
             </CCol>
           </CRow>
           <CRow className="mt-1 mb-0">
