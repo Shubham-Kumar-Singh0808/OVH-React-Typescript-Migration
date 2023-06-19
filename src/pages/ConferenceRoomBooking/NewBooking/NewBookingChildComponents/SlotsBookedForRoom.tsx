@@ -14,7 +14,7 @@ const SlotsBookedForRoom = (): JSX.Element => {
   const allBookedDetailsForRoom = useTypedSelector(
     reduxServices.newBooking.selectors.slotsBookedForRoom,
   )
-
+  console.log(allBookedDetailsForRoom)
   return (
     <>
       <CCol sm={7} className="sh-slots-col">
@@ -28,13 +28,15 @@ const SlotsBookedForRoom = (): JSX.Element => {
             {allBookedDetailsForRoom.map((currSlot, index) => {
               return (
                 <React.Fragment key={index}>
-                  <CTableDataCell className="pt-4">
-                    <React.Fragment key={index}>
-                      <strong className="panel-time">
-                        {currSlot.startTime} {''} to {''} {currSlot.endTime}
-                      </strong>
-                    </React.Fragment>
-                  </CTableDataCell>
+                  <CTableRow>
+                    <CTableDataCell>
+                      <React.Fragment key={index}>
+                        <strong className="panel-time">
+                          {currSlot.startTime} {''} to {''} {currSlot.endTime}
+                        </strong>
+                      </React.Fragment>
+                    </CTableDataCell>
+                  </CTableRow>
                 </React.Fragment>
               )
             })}

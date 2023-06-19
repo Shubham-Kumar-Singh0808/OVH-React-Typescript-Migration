@@ -7,6 +7,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -180,14 +181,16 @@ const ProjectMembersSelection = ({
           <i className="fa fa-arrow-right text-white" aria-hidden="true"></i>
         </CButton>
         {attendeeResponse?.length > 0 && (
-          <CButton
-            color="danger btn-ovh me-1"
-            className="btn-ovh"
-            data-testid="delete-button"
-            onClick={() => setDeleteListModalVisible(true)}
-          >
-            <i className="fa fa-trash-o text-white" aria-hidden="true"></i>
-          </CButton>
+          <CTooltip content="Delete">
+            <CButton
+              color="danger btn-ovh me-1"
+              className="btn-ovh"
+              data-testid="delete-button"
+              onClick={() => setDeleteListModalVisible(true)}
+            >
+              <i className="fa fa-trash-o text-white" aria-hidden="true"></i>
+            </CButton>
+          </CTooltip>
         )}
         <OModal
           alignment="center"

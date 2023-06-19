@@ -1,5 +1,5 @@
 import { CRow, CCol, CButton } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import EmployeePipTimelineOptions from './EmployeePipTimelineOptions'
 import EmployeeExtendPIP from './EmployeeExtendPIP'
@@ -7,23 +7,29 @@ import EmployeeRemovePIP from './EmployeeRemovePIP'
 import EmployeeUpdatePIP from './EmployeeUpdatePIP'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const EmployeePipTimeline = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
   const { id } = useParams<{ id: string }>()
   const dispatch = useAppDispatch()
+  const viewEmployeePipDetails = useTypedSelector(
+    reduxServices.pipList.selectors.viewEmployeePipDetails,
+  )
 
-  useEffect(() => {
+  const updateButtonHandler = () => {
+    setToggle('employeeUpdatePIP')
     dispatch(reduxServices.pipList.viewPipDetails(id))
-    dispatch(
-      reduxServices.pipList.getPIPHistory({
-        filterName: 'PIP',
-        pipId: Number(id),
-      }),
-    )
-  }, [dispatch])
+  }
+  const extendButtonHandler = () => {
+    setToggle('employeeExtendPIP')
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
 
+  const removeButtonHandler = () => {
+    setToggle('employeeRemovePIP')
+    dispatch(reduxServices.pipList.viewPipDetails(id))
+  }
   return (
     <>
       {toggle === '' && (
@@ -36,30 +42,43 @@ const EmployeePipTimeline = (): JSX.Element => {
           <CRow className="justify-content-end">
             <CCol className="text-end" md={5}>
               <>
-                <CButton
-                  data-testid="update-btn"
-                  className="btn-ovh me-1 text-white"
-                  color="success"
-                  onClick={() => setToggle('employeeUpdatePIP')}
-                >
-                  Update
-                </CButton>
-                <CButton
-                  data-testid="Extend-btn"
-                  color="warning"
-                  className="btn-ovh me-1 text-white"
-                  onClick={() => setToggle('employeeExtendPIP')}
-                >
-                  Extend PIP
-                </CButton>
-                <CButton
-                  data-testid="Remove-btn"
-                  className="btn-ovh me-1 text-white"
-                  color="success"
-                  onClick={() => setToggle('employeeRemovePIP')}
-                >
-                  Remove From PIP
-                </CButton>
+                {viewEmployeePipDetails?.extendDate != null ||
+                viewEmployeePipDetails?.pipflag === false ? (
+                  ''
+                ) : (
+                  <CButton
+                    data-testid="update-btn"
+                    className="btn-ovh me-1 text-white"
+                    color="success"
+                    onClick={updateButtonHandler}
+                  >
+                    Update
+                  </CButton>
+                )}
+                {viewEmployeePipDetails?.pipflag === true ? (
+                  <CButton
+                    data-testid="Extend-btn"
+                    color="warning"
+                    className="btn-ovh me-1 text-white"
+                    onClick={extendButtonHandler}
+                  >
+                    Extend PIP
+                  </CButton>
+                ) : (
+                  ''
+                )}
+                {viewEmployeePipDetails?.pipflag === true ? (
+                  <CButton
+                    data-testid="Remove-btn"
+                    className="btn-ovh me-1 text-white"
+                    color="success"
+                    onClick={removeButtonHandler}
+                  >
+                    Remove From PIP
+                  </CButton>
+                ) : (
+                  ''
+                )}
                 <Link to={`/PIPList`}>
                   <CButton
                     color="info"

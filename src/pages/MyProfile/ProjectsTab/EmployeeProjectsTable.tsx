@@ -1,6 +1,5 @@
 import {
   CCardBody,
-  CSpinner,
   CTable,
   CTableBody,
   CTableDataCell,
@@ -9,12 +8,20 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import EmployeeProjectsEntry from './EmployeeProjectsEntry'
+import EmployeeProjectDetailsTable from './EmployeeProjectDetailsTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeProjectsTable = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isIconVisible, setIsIconVisible] = useState(false)
+  const [selectEmpId, setSelectEmpId] = useState<number>()
+
+  const handleExpandRow = (id: number) => {
+    setIsIconVisible(true)
+    setSelectEmpId(id)
+  }
+
   const dispatch = useAppDispatch()
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
@@ -22,22 +29,38 @@ const EmployeeProjectsTable = (): JSX.Element => {
   const employeeProjects = useTypedSelector(
     reduxServices.employeeProjects.selectors.employeeProjects,
   )
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
+  // useEffect(() => {
+  //   if (employeeId) {
+  //     dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
+  //   }
+  // }, [dispatch, employeeId])
 
   useEffect(() => {
-    setIsLoading(true)
-    if (employeeId) {
-      dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
-    }
-  }, [dispatch, employeeId])
+    dispatch(
+      reduxServices.employeeProjects.getEmployeeProjects(
+        isViewingAnotherEmployee ? String(selectedEmployeeId) : employeeId,
+      ),
+    )
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
 
-  useEffect(() => {
-    if (employeeProjects) setIsLoading(false)
-  }, [employeeProjects])
-
+  const toTitleCase = (str: string) => {
+    return str
+      .toLowerCase()
+      .split(' ')
+      .map((word) => {
+        return word.replace(word[0], word[0].toUpperCase())
+      })
+      .join(' ')
+  }
   return (
     <>
       <CCardBody className="ps-0 pe-0">
-        <CTable className="text-left" striped>
+        <CTable
+          striped
+          responsive
+          className="text-start text-left align-middle alignment"
+        >
           <CTableHead>
             <CTableRow>
               <CTableHeaderCell scope="col"></CTableHeaderCell>
@@ -51,22 +74,95 @@ const EmployeeProjectsTable = (): JSX.Element => {
             </CTableRow>
           </CTableHead>
           <CTableBody color="light">
-            {!isLoading ? (
-              employeeProjects &&
-              employeeProjects.Projs?.map((project, index) => (
-                <EmployeeProjectsEntry
-                  id={index}
-                  project={project}
-                  key={index}
-                />
-              ))
-            ) : (
-              <CTableRow color="default" className="text-center">
-                <CTableDataCell colSpan={8}>
-                  <CSpinner data-testid="employee-loader" />
-                </CTableDataCell>
-              </CTableRow>
-            )}
+            {employeeProjects?.Projs?.map((data, index) => {
+              let health
+              if (data?.health === 'Green') {
+                health = (
+                  <span
+                    data-testid="project-health"
+                    className="profile-tab-label profile-tab-label-success"
+                  >
+                    {data.status}
+                  </span>
+                )
+              }
+              if (data?.health === 'Orange') {
+                health = (
+                  <span
+                    data-testid="project-health"
+                    className="profile-tab-label profile-tab-label-warning"
+                  >
+                    {data.status}
+                  </span>
+                )
+              }
+              if (data?.health === 'Red') {
+                health = (
+                  <span
+                    data-testid="project-health"
+                    className="profile-tab-label profile-tab-label-failed"
+                  >
+                    {data.status}
+                  </span>
+                )
+              }
+              if (data.health === 'Gray' || data.health === null) {
+                health = (
+                  <span
+                    data-testid="project-health"
+                    className="profile-tab-label profile-tab-label-null"
+                  >
+                    {data.status}
+                  </span>
+                )
+              }
+
+              const projectType =
+                data.type === null ? ' ' : toTitleCase(data.type as string)
+              return (
+                <React.Fragment key={index}>
+                  <CTableRow>
+                    <CTableDataCell scope="row">
+                      {isIconVisible && selectEmpId === data.id ? (
+                        <i
+                          data-testid="minus-btn"
+                          className="fa fa-minus-circle cursor-pointer"
+                          onClick={() => setIsIconVisible(false)}
+                        />
+                      ) : (
+                        <i
+                          data-testid="plus-btn"
+                          className="fa fa-plus-circle cursor-pointer"
+                          onClick={() => handleExpandRow(Number(data.id))}
+                        />
+                      )}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.projectName}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">{projectType}</CTableDataCell>
+                    <CTableDataCell scope="row">{data.client}</CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.managerName}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">
+                      {data.startdate}
+                    </CTableDataCell>
+                    <CTableDataCell scope="row">{data.enddate}</CTableDataCell>
+                    <CTableDataCell scope="row">{health}</CTableDataCell>
+                  </CTableRow>
+                  {isIconVisible && selectEmpId === data.id ? (
+                    <CTableDataCell colSpan={10}>
+                      <EmployeeProjectDetailsTable
+                        projectId={data.id as number}
+                      />
+                    </CTableDataCell>
+                  ) : (
+                    <></>
+                  )}
+                </React.Fragment>
+              )
+            })}
           </CTableBody>
         </CTable>
       </CCardBody>

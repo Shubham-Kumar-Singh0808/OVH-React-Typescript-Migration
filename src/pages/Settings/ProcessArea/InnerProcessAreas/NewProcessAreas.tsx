@@ -197,6 +197,8 @@ const NewProcessAreas = ({
                 onChange={handledInputChange}
                 required
               />
+            </CCol>
+            <CCol sm={3}>
               {processNameExists && (
                 <p className={TextDanger} data-testid="nameAlreadyExist">
                   Process Name Already Exists

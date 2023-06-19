@@ -9,6 +9,7 @@ import {
   CCol,
   CRow,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -44,9 +45,11 @@ const ProjectStatusTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setEditCurrentWeekDate: React.Dispatch<
-    React.SetStateAction<string | undefined>
+    React.SetStateAction<string | Date | undefined>
   >
-  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekDate: React.Dispatch<
+    React.SetStateAction<string | Date | undefined>
+  >
   setEditNextWeekStatus: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
@@ -217,34 +220,38 @@ const ProjectStatusTable = ({
                   <CTableDataCell>
                     <>
                       {userAccessToProjectStatus?.updateaccess && (
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid="edit-btn"
-                          onClick={() => {
-                            editProjectStatusButtonHandler(statusReport)
-                          }}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            data-testid="edit-btn"
+                            onClick={() => {
+                              editProjectStatusButtonHandler(statusReport)
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                       {userAccessToProjectStatus?.deleteaccess && (
-                        <CButton
-                          color="danger"
-                          className="btn-ovh me-1 btn-ovh-employee-list"
-                          data-testid="delete-btn"
-                          onClick={() =>
-                            handleShowDeleteModal(
-                              statusReport.id,
-                              statusReport.prevDate,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Delete">
+                          <CButton
+                            color="danger"
+                            className="btn-ovh me-1 btn-ovh-employee-list"
+                            data-testid="delete-btn"
+                            onClick={() =>
+                              handleShowDeleteModal(
+                                statusReport.id,
+                                statusReport.prevDate,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                     </>
                   </CTableDataCell>
@@ -319,12 +326,14 @@ const ProjectStatusTable = ({
       >
         <>
           <h4>Weekly status Report {taskName}</h4>
-          <div
-            className="mt-3"
-            dangerouslySetInnerHTML={{
-              __html: subject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              className="mt-3"
+              dangerouslySetInnerHTML={{
+                __html: subject,
+              }}
+            />
+          </span>
         </>
       </OModal>
       <OModal
@@ -338,12 +347,14 @@ const ProjectStatusTable = ({
       >
         <>
           <h4>Weekly status Report {modalTaskName}</h4>
-          <div
-            className="mt-3"
-            dangerouslySetInnerHTML={{
-              __html: modalSubject,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              className="mt-3"
+              dangerouslySetInnerHTML={{
+                __html: modalSubject,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>

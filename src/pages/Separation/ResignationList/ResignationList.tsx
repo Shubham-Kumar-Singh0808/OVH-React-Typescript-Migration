@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import ResignationListFilterOptions from './ResignationListFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../stateStore'
 
 const ResignationList = (): JSX.Element => {
-  const [Select, setSelect] = useState<string>('')
+  const getSelectedMonthValue = useTypedSelector(
+    reduxServices.resignationList.selectors.getSelectedMonthValue,
+  )
+  const [Select, setSelect] = useState<string>(getSelectedMonthValue)
   return (
     <>
       <OCard

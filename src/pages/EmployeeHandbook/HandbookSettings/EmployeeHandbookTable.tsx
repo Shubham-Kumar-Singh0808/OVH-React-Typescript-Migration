@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -194,38 +195,42 @@ const EmployeeHandbookTable = (
                     </CTableDataCell>
                     <CTableDataCell className="align-items-end">
                       {userAccessToHandbookActions?.updateaccess && (
-                        <CButton
-                          size="sm"
-                          color="info"
-                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                          data-testid={`handbook-edit-btn${index}`}
-                          onClick={() => {
-                            props.editHandbookButtonHandler(
-                              employeeHandbook.id as number,
-                            )
-                          }}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            size="sm"
+                            color="info"
+                            className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                            data-testid={`handbook-edit-btn${index}`}
+                            onClick={() => {
+                              props.editHandbookButtonHandler(
+                                employeeHandbook.id as number,
+                              )
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                       {userAccessToHandbookActions?.deleteaccess && (
-                        <CButton
-                          size="sm"
-                          data-testid={`handbook-delete-btn${index}`}
-                          color="danger"
-                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
-                          onClick={() =>
-                            handleShowDeleteModal(
-                              employeeHandbook.id as number,
-                              employeeHandbook.title,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
+                        <CTooltip content="Delete">
+                          <CButton
+                            size="sm"
+                            data-testid={`handbook-delete-btn${index}`}
+                            color="danger"
+                            className="btn-ovh me-1 btn-sm btn-ovh-employee-list"
+                            onClick={() =>
+                              handleShowDeleteModal(
+                                employeeHandbook.id as number,
+                                employeeHandbook.title,
+                              )
+                            }
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       )}
                     </CTableDataCell>
                   </CTableRow>

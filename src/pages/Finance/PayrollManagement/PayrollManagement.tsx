@@ -1,4 +1,11 @@
-import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
+import {
+  CRow,
+  CCol,
+  CButton,
+  CFormInput,
+  CInputGroup,
+  CTooltip,
+} from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useState } from 'react'
 import DownloadSampleExcelFile from './DownloadSampleExcelFile'
 import PayrollManagementTable from './PayrollManagementTable'
@@ -23,15 +30,20 @@ const PayrollManagement = (): JSX.Element => {
   const [toEditPayslip, setToEditPayslip] = useState<CurrentPayslip>(
     {} as CurrentPayslip,
   )
+
   const [previewBtn, setPreviewBtn] = useState<File | undefined>(undefined)
-  const [isAllDeleteBtn, setIsAllDeleteBtn] = useState(false)
-  const [isChecked, setIsChecked] = useState(false)
-  const [isAllChecked, setIsAllChecked] = useState(false)
-  const [isPercentageEnable, setPercentageEnable] = useState(false)
+
   const [isNoteVisible, setIsNoteVisible] = useState<File | undefined>(
     undefined,
   )
 
+  const [isPercentageEnable, setPercentageEnable] = useState(false)
+
+  const [isDeleteBtnDisable, setIsDeleteBtnDisable] = useState(false)
+  const [allChecked, setAllChecked] = useState<boolean>(false)
+
+  const [paySlipId, setPaySlipId] = useState<number[]>([])
+  console.log(isDeleteBtnDisable)
   useEffect(() => {
     if (selectMonth) {
       setPercentageEnable(true)
@@ -58,8 +70,8 @@ const PayrollManagement = (): JSX.Element => {
     }
     setFileUploadErrorText('')
     setPreviewBtn(file[0])
-    setClearFile(element.value)
     setIsNoteVisible(file[0])
+    setClearFile(element.value)
   }
 
   const dispatch = useAppDispatch()
@@ -75,6 +87,13 @@ const PayrollManagement = (): JSX.Element => {
     setToEditPayslip(payslipItem)
     setToggle('editPaySlip')
   }
+  useEffect(() => {
+    if (allChecked) {
+      setIsDeleteBtnDisable(true)
+    } else {
+      setIsDeleteBtnDisable(false)
+    }
+  }, [allChecked])
 
   const {
     paginationRange,
@@ -131,6 +150,31 @@ const PayrollManagement = (): JSX.Element => {
     />
   )
 
+  const successToastMessage = (
+    <OToast toastMessage="Deleted successfully" toastColor="success" />
+  )
+
+  const allDeleteBtnHandler = async () => {
+    const previewBtnActionResult = await dispatch(
+      reduxServices.payrollManagement.deleteCheckedPayslips(paySlipId),
+    )
+    if (
+      reduxServices.payrollManagement.deleteCheckedPayslips.fulfilled.match(
+        previewBtnActionResult,
+      )
+    ) {
+      dispatch(
+        reduxServices.payrollManagement.getCurrentPayslip({
+          startIndex: pageSize * (currentPage - 1),
+          endIndex: pageSize * currentPage,
+          year: Number(selectYear),
+          month: selectMonth,
+        }),
+      )
+      dispatch(reduxServices.app.actions.addToast(successToastMessage))
+    }
+  }
+
   const previewBtnHandler = async () => {
     setExcelTable(true)
     if (previewBtn) {
@@ -140,6 +184,7 @@ const PayrollManagement = (): JSX.Element => {
       const previewBtnActionResult = await dispatch(
         reduxServices.payrollManagement.readExcelFile(formData),
       )
+
       if (
         (reduxServices.payrollManagement.readExcelFile.fulfilled.match(
           previewBtnActionResult,
@@ -147,27 +192,25 @@ const PayrollManagement = (): JSX.Element => {
         previewBtnActionResult.payload === 200)
       ) {
         setToggle('excelTable')
-        dispatch(reduxServices.app.actions.addToast(failedMessage))
       } else if (
         (reduxServices.payrollManagement.readExcelFile.rejected.match(
           previewBtnActionResult,
-        ) &&
-          previewBtnActionResult.payload === 500) ||
-        previewBtnActionResult.payload === ''
+        ),
+        previewBtnActionResult.payload === 500)
       ) {
         setExcelTable(false)
         dispatch(reduxServices.app.actions.addToast(failedToastMessage))
+      } else if (
+        reduxServices.payrollManagement.readExcelFile.fulfilled.match(
+          previewBtnActionResult,
+        ) &&
+        previewBtnActionResult.type ===
+          'payrollManagement/readExcelFile/fulfilled'
+      ) {
+        dispatch(reduxServices.app.actions.addToast(failedMessage))
       }
     }
   }
-
-  useEffect(() => {
-    if (isChecked || isAllChecked) {
-      setIsAllDeleteBtn(true)
-    } else {
-      setIsAllDeleteBtn(false)
-    }
-  }, [isChecked, isAllChecked])
 
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -175,6 +218,7 @@ const PayrollManagement = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Payroll Management',
   )
+
   const ExcelTable =
     excelTable === false ? (
       <>
@@ -189,13 +233,13 @@ const PayrollManagement = (): JSX.Element => {
             pageSize={pageSize}
             setToggle={setToggle}
             setToEditPayslip={setToEditPayslip}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
-            isAllChecked={isAllChecked}
-            setIsAllChecked={setIsAllChecked}
             userDeleteAccess={userAccess?.deleteaccess as boolean}
             userEditAccess={userAccess?.updateaccess as boolean}
             editPaySlipHandler={editPaySlipHandler}
+            paySlipId={paySlipId}
+            setPaySlipId={setPaySlipId}
+            allChecked={allChecked}
+            setAllChecked={setAllChecked}
           />
         )}
       </>
@@ -235,15 +279,19 @@ const PayrollManagement = (): JSX.Element => {
     )
 
   const Delete = userAccess?.deleteaccess && (
-    <CButton
-      color="danger btn-ovh"
-      type="button"
-      disabled={!isAllDeleteBtn}
-      id="button-delete"
-    >
-      Delete
-    </CButton>
+    <CTooltip content="Delete">
+      <CButton
+        color="danger btn-ovh"
+        type="button"
+        onClick={allDeleteBtnHandler}
+        id="button-delete"
+        // disabled={!isDeleteBtnDisable}
+      >
+        Delete
+      </CButton>
+    </CTooltip>
   )
+
   useEffect(() => {
     if (selectMonth && selectYear)
       dispatch(

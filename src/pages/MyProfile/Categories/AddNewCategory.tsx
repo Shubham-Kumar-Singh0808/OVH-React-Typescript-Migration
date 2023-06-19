@@ -16,6 +16,9 @@ const AddNewCategory = (): JSX.Element => {
   const toastElement = (
     <OToast toastMessage="Category already exists!" toastColor="danger" />
   )
+  const SuccessToastMessage = (
+    <OToast toastMessage="Category Added Successfully" toastColor="success" />
+  )
 
   useEffect(() => {
     if (newCategoryName) {
@@ -24,6 +27,31 @@ const AddNewCategory = (): JSX.Element => {
       setIsAddCategoryBtnEnabled(false)
     }
   }, [newCategoryName])
+
+  const handleEnterKeyword = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isAddCategoryBtnEnabled && event.key === 'Enter') {
+      const toAddCategoryName = newCategoryName
+
+      if (
+        categories.length > 0 &&
+        categories.filter(
+          (category) =>
+            category.categoryType.toLowerCase() ===
+            newCategoryName.toLowerCase(),
+        ).length > 0
+      ) {
+        dispatch(reduxServices.app.actions.addToast(toastElement))
+        setNewCategoryName('')
+        return
+      }
+
+      setNewCategoryName('')
+
+      dispatch(reduxServices.category.createCategory(toAddCategoryName))
+      dispatch(reduxServices.category.getAllCategories())
+      dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
+    }
+  }
 
   const handleAddCategory = () => {
     const toAddCategoryName = newCategoryName
@@ -36,12 +64,14 @@ const AddNewCategory = (): JSX.Element => {
       ).length > 0
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
+      setNewCategoryName('')
       return
     }
 
     setNewCategoryName('')
 
     dispatch(reduxServices.category.createCategory(toAddCategoryName))
+    dispatch(reduxServices.app.actions.addToast(SuccessToastMessage))
   }
 
   const formLabelProps = {
@@ -61,6 +91,7 @@ const AddNewCategory = (): JSX.Element => {
             id="inputNewCategory"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
+            onKeyDown={handleEnterKeyword}
             placeholder={'Category Name'}
           />
         </CCol>

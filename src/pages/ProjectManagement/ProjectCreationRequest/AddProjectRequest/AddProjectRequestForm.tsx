@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import {
   CButton,
   CCol,
@@ -11,7 +12,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import moment from 'moment'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
@@ -41,6 +42,7 @@ import OInputField from '../../../../components/ReusableComponent/OInputField'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextDanger } from '../../../../constant/ClassName'
 
 const AddProjectRequestForm = ({
   projectRequest,
@@ -68,6 +70,10 @@ const AddProjectRequestForm = ({
   isAddMilestoneButtonEnabled,
   emailError,
   billingContactPersonEmailError,
+  emailErrorMsgCC,
+  emailErrorMsgBCC,
+  setEmailErrorMsgCC,
+  setEmailErrorMsgBCC,
 }: {
   projectRequest: AddProjectRequestDetails
   setProjectRequest: React.Dispatch<
@@ -101,6 +107,10 @@ const AddProjectRequestForm = ({
   isAddMilestoneButtonEnabled: boolean
   emailError: boolean
   billingContactPersonEmailError: boolean
+  emailErrorMsgCC: boolean
+  emailErrorMsgBCC: boolean
+  setEmailErrorMsgCC: React.Dispatch<React.SetStateAction<boolean>>
+  setEmailErrorMsgBCC: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isGreaterThanStart, setIsGreaterThanStart] = useState(false)
@@ -109,8 +119,37 @@ const AddProjectRequestForm = ({
 
   const [projectRequestMailIdCC, setProjectRequestMailIdCC] =
     useState<string>('')
+
+  const validateEmailMsgCC = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailErrorMsgCC(false)
+    } else {
+      setEmailErrorMsgCC(true)
+    }
+  }
+
+  const handleProjectRequestMailIdCC = (e: ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value
+    setProjectRequestMailIdCC(email)
+    validateEmailMsgCC(email)
+  }
+
   const [projectRequestMailIdBbc, setProjectRequestMailIdBbc] =
     useState<string>('')
+
+  const validateEmailMsgBCC = (email: string) => {
+    if (validator.isEmail(email)) {
+      setEmailErrorMsgBCC(false)
+    } else {
+      setEmailErrorMsgBCC(true)
+    }
+  }
+
+  const handleProjectRequestMailIdBbc = (e: ChangeEvent<HTMLInputElement>) => {
+    const email = e.target.value
+    setProjectRequestMailIdBbc(email)
+    validateEmailMsgBCC(email)
+  }
 
   const projectRequestMailIds = useTypedSelector(
     reduxServices.addProjectCreationRequest.selectors.projectRequestMailIds,
@@ -129,7 +168,18 @@ const AddProjectRequestForm = ({
     if (checkListItems) setCheckList(checkListItems)
   }, [checkListItems])
 
-  const clientOrganizationList = projectClients
+  const sortedDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {
@@ -269,25 +319,6 @@ const AddProjectRequestForm = ({
     })
   }
 
-  const handleProjectRequestMailIdCC = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectRequest({
-      ...projectRequest,
-      cc: e.target.value,
-    })
-    setProjectRequestMailIdCC(e.target.value)
-  }
-  const handleProjectRequestMailIdBbc = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectRequest({
-      ...projectRequest,
-      bcc: e.target.value,
-    })
-    setProjectRequestMailIdBbc(e.target.value)
-  }
-
   useEffect(() => {
     setProjectRequestMailIdCC(projectRequestMailIds.cc)
   }, [projectRequestMailIds])
@@ -351,15 +382,25 @@ const AddProjectRequestForm = ({
     setCheckList(newMileStone)
   }
 
+  const [errorMessage, setErrorMessage] = useState<number | null>(null)
+
   const titleOnChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-
     index: number,
   ) => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].title = e.target.value
+    const newTitle = e.target.value.trim()
+    const titleExists = newMileStone.some(
+      (milestone, i) => i !== index && milestone.title === newTitle,
+    )
+    if (titleExists) {
+      setErrorMessage(index)
+    } else {
+      newMileStone[index].title = newTitle
+      setErrorMessage(null)
+    }
     setProjectMileStone(newMileStone)
   }
 
@@ -375,13 +416,15 @@ const AddProjectRequestForm = ({
   }
 
   const percentageOnChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     index: number,
   ) => {
     const newMileStone: ProjectRequestMilestoneDTO[] = JSON.parse(
       JSON.stringify(projectMileStone),
     )
-    newMileStone[index].milestonePercentage = e.target.value
+    let targetValue = e.target.value.replace(/\D/g, '').replace(/^0+/, '')
+    if (Number(targetValue) > 100) targetValue = '100'
+    newMileStone[index].milestonePercentage = targetValue
     setProjectMileStone(newMileStone)
   }
 
@@ -525,7 +568,9 @@ const AddProjectRequestForm = ({
         <OInputField
           onChangeHandler={setCustomerContactName}
           onBlurHandler={onHandleAddProjectCustomerContactName}
-          value={customerContactName?.replace(/^\s*/, '')}
+          value={customerContactName
+            ?.replace(/^\s*/, '')
+            ?.replace(/[^a-zA-Z\s]/g, '')}
           isRequired={true}
           label="Customer Contact Name"
           name="projectContactPerson"
@@ -552,7 +597,9 @@ const AddProjectRequestForm = ({
         <OInputField
           onChangeHandler={setBillingContactName}
           onBlurHandler={onHandleAddProjectBillingContactName}
-          value={billingContactName?.replace(/^\s*/, '')}
+          value={billingContactName
+            ?.replace(/[^a-zA-Z\s]/g, '')
+            .replace(/^\s*/, '')}
           isRequired={false}
           label="Billing Contact Name"
           name="billingContactPerson"
@@ -832,6 +879,7 @@ const AddProjectRequestForm = ({
                       setProjectMileStone={setProjectMileStone}
                       projectMileStone={projectMileStone}
                       titleOnChange={titleOnChange}
+                      errorMessage={errorMessage}
                       commentsOnChange={commentOnChange}
                       effortOnChange={effortOnChange}
                       onChangeHandleFromDate={onChangeHandleFromDate}
@@ -865,9 +913,17 @@ const AddProjectRequestForm = ({
           <CFormInput
             name="CC"
             id="CC"
+            placeholder="Email Id"
+            autoComplete="off"
             value={projectRequestMailIdCC}
             onChange={(e) => handleProjectRequestMailIdCC(e)}
           />
+          {emailErrorMsgCC && (
+            <p data-testid="error-msg" className={TextDanger}>
+              Enter a valid Email address.For multiple mail ids use,without
+              space!!
+            </p>
+          )}
         </CCol>
         <CFormLabel className="col-sm-1 col-form-label text-end">
           BCC:
@@ -875,17 +931,27 @@ const AddProjectRequestForm = ({
         <CCol sm={3}>
           <CFormInput
             name="BCC"
+            autoComplete="off"
+            placeholder="Email Id"
             id="BCC"
             value={projectRequestMailIdBbc}
             onChange={(e) => handleProjectRequestMailIdBbc(e)}
           />
+          {emailErrorMsgBCC && (
+            <p data-testid="error-msg" className={TextDanger}>
+              Enter a valid Email address.For multiple mail ids use,without
+              space!!
+            </p>
+          )}
         </CCol>
         <CCol sm={1}>
           <CButton
             className="btn-ovh me-2"
             color="success"
             onClick={updateMailIdHandler}
-            disabled={!isUpdateButtonEnabled}
+            disabled={
+              !isUpdateButtonEnabled || emailErrorMsgBCC || emailErrorMsgCC
+            }
           >
             Update
           </CButton>

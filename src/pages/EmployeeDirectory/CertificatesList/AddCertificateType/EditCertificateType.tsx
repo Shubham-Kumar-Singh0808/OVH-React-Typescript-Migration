@@ -4,6 +4,7 @@ import {
   CFormInput,
   CFormSelect,
   CTableDataCell,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
@@ -154,13 +155,15 @@ const EditCertificateType = ({
         >
           <i className="fa fa-floppy-o" aria-hidden="true"></i>
         </CButton>
-        <CButton
-          color="warning"
-          className="btn-ovh-employee-list me-1"
-          onClick={cancelCertificateTypeButtonHandler}
-        >
-          <i className="fa fa-times" aria-hidden="true"></i>
-        </CButton>
+        <CTooltip content="Cancel">
+          <CButton
+            color="warning"
+            className="btn-ovh-employee-list me-1"
+            onClick={cancelCertificateTypeButtonHandler}
+          >
+            <i className="fa fa-times" aria-hidden="true"></i>
+          </CButton>
+        </CTooltip>
       </CTableDataCell>
     </>
   )

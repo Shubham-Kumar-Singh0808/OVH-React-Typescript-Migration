@@ -50,7 +50,7 @@ const EventAttendees = ({
   }
 
   return (
-    <CRow className="mt-1 mb-3">
+    <CRow className="mt-3 mb-3">
       <CFormLabel
         className="col-sm-3 col-form-label text-end"
         data-testid="attendees"

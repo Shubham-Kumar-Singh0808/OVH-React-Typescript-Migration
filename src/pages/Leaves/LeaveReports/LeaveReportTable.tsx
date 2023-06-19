@@ -32,7 +32,7 @@ const LeaveReportTable = ({
   const isLoading = useTypedSelector(
     reduxServices.leaveReport.selectors.isLoading,
   )
-
+  console.log(pageSize)
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -76,6 +76,10 @@ const LeaveReportTable = ({
             {isLoading !== ApiLoadingState.loading ? (
               getLeaveReports &&
               getLeaveReports?.list?.map((leave, index) => {
+                const formattedValue =
+                  leave.calculatedCreditedLeaves % 1 === 0
+                    ? leave.calculatedCreditedLeaves?.toFixed(2)
+                    : leave.calculatedCreditedLeaves?.toString()
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell>{leave.employeeDTO.id}</CTableDataCell>
@@ -85,9 +89,7 @@ const LeaveReportTable = ({
                     <CTableDataCell>
                       {leave.carryForwardedLeaves}
                     </CTableDataCell>
-                    <CTableDataCell>
-                      {leave.allCreditedLeaves}.00
-                    </CTableDataCell>
+                    <CTableDataCell>{formattedValue}</CTableDataCell>
                     {getLeaveReports?.list[0]?.leaveCategorySummaries?.map(
                       (leaveCategory) => (
                         <CTableDataCell key={index}>

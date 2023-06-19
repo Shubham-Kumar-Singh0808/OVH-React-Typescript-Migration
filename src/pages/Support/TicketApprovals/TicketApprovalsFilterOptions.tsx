@@ -9,9 +9,10 @@ import {
   ticketStatusList,
 } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { GetAllTicketsForApprovalProps } from '../../../types/Support/TicketApprovals/ticketApprovalsTypes'
-import { commonDateFormat, deviceLocale } from '../../../utils/dateFormatUtils'
+import { commonDateFormat } from '../../../utils/dateFormatUtils'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const TicketApprovalsFilterOptions = ({
   setTicketApprovalParams,
@@ -23,6 +24,10 @@ const TicketApprovalsFilterOptions = ({
   setSubCategoryIdValue,
   initialState,
   handleExportTicketApprovalList,
+  ticketFromDate,
+  setTicketFromDate,
+  ticketToDate,
+  setTicketToDate,
 }: {
   setTicketApprovalParams: React.Dispatch<
     React.SetStateAction<GetAllTicketsForApprovalProps>
@@ -35,14 +40,38 @@ const TicketApprovalsFilterOptions = ({
   setSubCategoryIdValue: (value: number) => void
   initialState: GetAllTicketsForApprovalProps
   handleExportTicketApprovalList: (value: GetAllTicketsForApprovalProps) => void
+  ticketFromDate: string | Date
+  setTicketFromDate: (value: string | Date) => void
+  ticketToDate: string | Date
+  setTicketToDate: (value: string | Date) => void
 }): JSX.Element => {
+  const dispatch = useAppDispatch()
+
+  const TicketStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TicketStatusValue,
+  )
+  const ApprovalStatusValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.ApprovalStatusValue,
+  )
+  const DateValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.DateValue,
+  )
+  const TrackerValue = useTypedSelector(
+    reduxServices.ticketApprovals.selectors.TrackerValue,
+  )
   const pendingApproval = 'Pending Approval'
-  const [ticketStatusState, setTicketStatusState] = useState<string>('New')
-  const [approvalStatus, setApprovalStatus] = useState<string>(pendingApproval)
-  const [dateOption, setDateOption] = useState<string>('Today')
-  const [trackerValue, setTrackerValue] = useState<number>()
-  const [ticketFromDate, setTicketFromDate] = useState<string>('')
-  const [ticketToDate, setTicketToDate] = useState<string>('')
+
+  const [ticketStatusState, setTicketStatusState] =
+    useState<string>(TicketStatusValue)
+
+  const [approvalStatus, setApprovalStatus] =
+    useState<string>(ApprovalStatusValue)
+
+  const [dateOption, setDateOption] = useState<string>(DateValue)
+  const [trackerValue, setTrackerValue] = useState<number | string>(
+    Number(TrackerValue),
+  )
+
   const [employeeNameCheckbox, setEmployeeNameCheckbox] =
     useState<boolean>(false)
   const [assigneeNameCheckbox, setAssigneeNameCheckbox] =
@@ -78,18 +107,42 @@ const TicketApprovalsFilterOptions = ({
     reduxServices.ticketApprovals.selectors.ticketsForApproval,
   )
 
+  useEffect(() => {
+    dispatch(
+      reduxServices.ticketApprovals.actions.setTicketStatusValue(
+        ticketStatusState,
+      ),
+    )
+    dispatch(
+      reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+        approvalStatus,
+      ),
+    )
+    dispatch(reduxServices.ticketApprovals.actions.setDateValue(dateOption))
+    dispatch(
+      reduxServices.ticketApprovals.actions.setFormDataValue(ticketFromDate),
+    )
+
+    dispatch(reduxServices.ticketApprovals.actions.setToDateValue(ticketToDate))
+
+    dispatch(
+      reduxServices.ticketApprovals.actions.setTrackerValue(trackerValue),
+    )
+  }, [
+    ticketStatusState,
+    approvalStatus,
+    dateOption,
+    trackerValue,
+    ticketFromDate,
+    ticketToDate,
+  ])
+
   const prepareObject = {
     categoryId,
-    dateSelection: dateOption,
+    dateSelection: dateOption || '',
     departmentId: deptId,
     endIndex: 20,
-    fromDate: ticketFromDate
-      ? new Date(ticketFromDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })
-      : '',
+    fromDate: (ticketFromDate as string) || '',
     multiSearch: searchValue,
     progressStatus: ticketStatusState,
     searchByEmpName: employeeNameCheckbox,
@@ -97,14 +150,8 @@ const TicketApprovalsFilterOptions = ({
     startIndex: 0,
     subCategoryId: subCategoryIdValue,
     ticketStatus: approvalStatus,
-    toDate: ticketToDate
-      ? new Date(ticketToDate).toLocaleDateString(deviceLocale, {
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit',
-        })
-      : '',
-    trackerID: trackerValue,
+    toDate: (ticketToDate as string) || '',
+    trackerID: Number(trackerValue),
   }
 
   const viewButtonHandler = () => {
@@ -133,7 +180,7 @@ const TicketApprovalsFilterOptions = ({
     setTicketStatusState('New')
     setApprovalStatus(pendingApproval)
     setDateOption('Today')
-    setTrackerValue(undefined)
+    setTrackerValue(0)
     setTicketFromDate('')
     setTicketToDate('')
     setEmployeeNameCheckbox(false)
@@ -154,6 +201,24 @@ const TicketApprovalsFilterOptions = ({
   const categoryListToUse =
     employeeRole === 'admin' ? departmentCategoryList : getAllLookUps
 
+  const onHandleToDatePicker = (value: Date) => {
+    setTicketToDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.ticketApprovals.actions.setToDateValue(
+        moment(value).format(dateFormat),
+      ),
+    )
+  }
+
+  const onHandleFromDatePicker = (value: Date) => {
+    setTicketFromDate(moment(value).format(dateFormat))
+    dispatch(
+      reduxServices.ticketApprovals.actions.setFormDataValue(
+        moment(value).format(dateFormat),
+      ),
+    )
+  }
+
   return (
     <>
       <CRow className="mt-4">
@@ -168,6 +233,11 @@ const TicketApprovalsFilterOptions = ({
             value={ticketStatusState}
             onChange={(e) => {
               setTicketStatusState(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setTicketStatusValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {ticketStatusList.map((ticketItem, index) => (
@@ -189,6 +259,11 @@ const TicketApprovalsFilterOptions = ({
             value={approvalStatus}
             onChange={(e) => {
               setApprovalStatus(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setApprovalStatusValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {approvalStatusList.map((approvalItem, index) => (
@@ -295,6 +370,11 @@ const TicketApprovalsFilterOptions = ({
             value={dateOption}
             onChange={(e) => {
               setDateOption(e.target.value)
+              dispatch(
+                reduxServices.ticketApprovals.actions.setDateValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             {dateOptionsList.map((currentOption, index) => (
@@ -317,6 +397,11 @@ const TicketApprovalsFilterOptions = ({
             value={trackerValue}
             onChange={(e) => {
               setTrackerValue(Number(e.target.value))
+              dispatch(
+                reduxServices.ticketApprovals.actions.setTrackerValue(
+                  e.target.value,
+                ),
+              )
             }}
           >
             <option value="">All</option>
@@ -347,21 +432,8 @@ const TicketApprovalsFilterOptions = ({
                   dropdownMode="select"
                   placeholderText="dd/mm/yy"
                   name="ticketsFromDate"
-                  value={
-                    ticketFromDate
-                      ? new Date(ticketFromDate).toLocaleDateString(
-                          deviceLocale,
-                          {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          },
-                        )
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setTicketFromDate(moment(date).format(commonDateFormat))
-                  }
+                  value={ticketFromDate as string}
+                  onChange={(date: Date) => onHandleFromDatePicker(date)}
                 />
               </CRow>
             </CCol>
@@ -384,21 +456,8 @@ const TicketApprovalsFilterOptions = ({
                   dropdownMode="select"
                   placeholderText="dd/mm/yy"
                   name="ticketsToDate"
-                  value={
-                    ticketToDate
-                      ? new Date(ticketToDate).toLocaleDateString(
-                          deviceLocale,
-                          {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          },
-                        )
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setTicketToDate(moment(date).format(commonDateFormat))
-                  }
+                  value={ticketToDate as string}
+                  onChange={(date: Date) => onHandleToDatePicker(date)}
                 />
                 {dateError && (
                   <CCol sm={12} className="mt-1 pt-1">

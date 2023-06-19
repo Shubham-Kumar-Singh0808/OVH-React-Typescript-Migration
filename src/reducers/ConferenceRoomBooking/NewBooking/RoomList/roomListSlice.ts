@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import roomListApi from '../../../../middleware/api/ConferenceRoomBooking/NewBooking/RoomList/roomListApi'
-import { RootState } from '../../../../stateStore'
+import { AppDispatch, RootState } from '../../../../stateStore'
 import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 import {
   AddRoomListSliceState,
+  getAllMeetingLocations,
   getAllMeetingRooms,
 } from '../../../../types/ConferenceRoomBooking/NewBooking/RoomList/roomListTypes'
 
@@ -90,8 +91,38 @@ const updateRoom = createAsyncThunk(
   },
 )
 
+const getRoomsOfLocation = createAsyncThunk<
+  getAllMeetingRooms[] | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('roomList/getRoomsOfLocation', async (locationId, thunkApi) => {
+  try {
+    return await roomListApi.getRoomsOfLocation(locationId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
+const getMeetingLocations = createAsyncThunk(
+  'roomList/getMeetingLocations',
+  async (_, thunkApi) => {
+    try {
+      return await roomListApi.getMeetingLocations()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 const initialAddRoomListState: AddRoomListSliceState = {
   meetingRooms: [],
+  meetingLocations: [],
   isLoading: ApiLoadingState.idle,
   currentPage: 1,
   pageSize: 20,
@@ -115,12 +146,22 @@ const roomListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.meetingRooms = action.payload
       })
+      .addCase(getRoomsOfLocation.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.meetingRooms = action.payload as getAllMeetingRooms[]
+      })
+      .addCase(getMeetingLocations.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.meetingLocations = action.payload
+      })
       .addMatcher(
         isAnyOf(
           getMeetingRooms.fulfilled,
           addRoom.fulfilled,
           deleteRoom.fulfilled,
           updateRoom.fulfilled,
+          getMeetingLocations.fulfilled,
+          getRoomsOfLocation.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -132,6 +173,8 @@ const roomListSlice = createSlice({
           addRoom.pending,
           updateRoom.pending,
           deleteRoom.pending,
+          getRoomsOfLocation.pending,
+          getMeetingLocations.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -143,6 +186,8 @@ const roomListSlice = createSlice({
           addRoom.rejected,
           updateRoom.rejected,
           deleteRoom.rejected,
+          getRoomsOfLocation.rejected,
+          getMeetingLocations.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -153,6 +198,9 @@ const roomListSlice = createSlice({
 
 const roomNames = (state: RootState): getAllMeetingRooms[] =>
   state.roomList.meetingRooms
+
+const locationNames = (state: RootState): getAllMeetingLocations[] =>
+  state.roomList.meetingLocations
 
 const addRoomNames = (state: RootState): getAllMeetingRooms[] =>
   state.roomList.meetingRooms
@@ -168,11 +216,16 @@ const isLoading = (state: RootState): LoadingState => state.roomList.isLoading
 const pageFromState = (state: RootState): number => state.roomList.currentPage
 const pageSizeFromState = (state: RootState): number => state.roomList.pageSize
 
+const roomsOfLocationResponse = (state: RootState): getAllMeetingRooms[] =>
+  state.roomList.meetingRooms
+
 const roomListThunk = {
   getMeetingRooms,
   addRoom,
   deleteRoom,
   updateRoom,
+  getRoomsOfLocation,
+  getMeetingLocations,
 }
 
 const roomListSelectors = {
@@ -183,6 +236,8 @@ const roomListSelectors = {
   updateRoomNames,
   pageSizeFromState,
   pageFromState,
+  roomsOfLocationResponse,
+  locationNames,
 }
 
 export const roomListService = {

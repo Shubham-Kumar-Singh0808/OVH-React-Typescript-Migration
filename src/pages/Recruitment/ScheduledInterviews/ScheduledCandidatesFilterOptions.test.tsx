@@ -7,29 +7,35 @@ import { mockScheduledCandidatesData } from '../../../test/data/scheduledIntervi
 
 const mockSetFilterByTechnology = jest.fn()
 const mockSetSelectTechnology = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ScheduledCandidatesFilterOptions
+      filterByTechnology={''}
+      setFilterByTechnology={mockSetFilterByTechnology}
+      selectTechnology={''}
+      setSelectTechnology={mockSetSelectTechnology}
+    />
+  </div>
+)
 describe('Scheduled Candidates Filter Options Component Testing', () => {
   describe('should render scheduled candidates filter options Component without data', () => {
     beforeEach(() => {
-      render(
-        <ScheduledCandidatesFilterOptions
-          filterByTechnology={''}
-          setFilterByTechnology={mockSetFilterByTechnology}
-          selectTechnology={''}
-          setSelectTechnology={mockSetSelectTechnology}
-        />,
-        {
-          preloadedState: {
-            authentication: {
-              authenticatedUser: {
-                employeeName: 'venkata',
-                employeeId: 1978,
-                userName: 'venkata kolla',
-                role: 'admin',
-              },
+      render(toRender, {
+        preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'venkata',
+              employeeId: 1978,
+              userName: 'venkata kolla',
+              role: 'admin',
             },
           },
         },
-      )
+      })
     })
 
     test('should render labels', () => {
@@ -48,30 +54,22 @@ describe('Scheduled Candidates Filter Options Component Testing', () => {
   })
   describe('should render scheduled candidates filter options Component with data', () => {
     beforeEach(() => {
-      render(
-        <ScheduledCandidatesFilterOptions
-          filterByTechnology={''}
-          setFilterByTechnology={mockSetFilterByTechnology}
-          selectTechnology={''}
-          setSelectTechnology={mockSetSelectTechnology}
-        />,
-        {
-          preloadedState: {
-            authentication: {
-              authenticatedUser: {
-                employeeName: 'venkata',
-                employeeId: 1978,
-                userName: 'venkata kolla',
-                role: 'admin',
-              },
-            },
-            scheduledInterviews: {
-              selectedView: 'All',
-              scheduledCandidates: mockScheduledCandidatesData,
+      render(toRender, {
+        preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'venkata',
+              employeeId: 1978,
+              userName: 'venkata kolla',
+              role: 'admin',
             },
           },
+          scheduledInterviews: {
+            selectedView: 'All',
+            scheduledCandidates: mockScheduledCandidatesData,
+          },
         },
-      )
+      })
     })
     test('should clear data upon clear button click', () => {
       const clearButtonElement = screen.getByRole('button', { name: 'Clear' })

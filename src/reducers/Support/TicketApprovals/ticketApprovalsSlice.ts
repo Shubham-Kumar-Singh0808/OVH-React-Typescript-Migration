@@ -110,6 +110,17 @@ const initialTicketApprovalsSliceState: TicketApprovalsSliceState = {
   selectedTicketId: 0,
   toggleValue: '',
   routePath: '',
+  mealType: {} as DepartmentCategoryList,
+
+  TicketStatusValue: 'New',
+  ApprovalStatusValue: 'Pending Approval',
+  DepartmentNameValue: 'All',
+  CategoryNameValue: 'All',
+  SubCategoryNameValue: 'All',
+  DateValue: 'Today',
+  TrackerValue: 'All',
+  FormDate: '',
+  ToDate: '',
 }
 
 const ticketApprovalsSlice = createSlice({
@@ -130,6 +141,35 @@ const ticketApprovalsSlice = createSlice({
     },
     clearSubCategory: (state) => {
       state.subCategoryList = []
+    },
+    setTicketStatusValue: (state, action) => {
+      state.TicketStatusValue = action.payload
+    },
+    setApprovalStatusValue: (state, action) => {
+      state.ApprovalStatusValue = action.payload
+    },
+    setDepartmentNameValue: (state, action) => {
+      state.DepartmentNameValue = action.payload
+    },
+
+    setCategoryNameValue: (state, action) => {
+      state.CategoryNameValue = action.payload
+    },
+
+    setSubCategoryNameValue: (state, action) => {
+      state.SubCategoryNameValue = action.payload
+    },
+    setDateValue: (state, action) => {
+      state.DateValue = action.payload
+    },
+    setTrackerValue: (state, action) => {
+      state.TrackerValue = action.payload
+    },
+    setFormDataValue: (state, action) => {
+      state.FormDate = action.payload
+    },
+    setToDateValue: (state, action) => {
+      state.ToDate = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -190,6 +230,9 @@ const isLoading = (state: RootState): ApiLoadingState =>
 const departmentNameList = (state: RootState): DepartmentList[] =>
   state.ticketApprovals.departmentNameList
 
+const mealType = (state: RootState): DepartmentCategoryList =>
+  state.ticketApprovals.mealType
+
 const departmentCategoryList = (state: RootState): DepartmentCategoryList[] =>
   state.ticketApprovals.departmentCategoryList
 
@@ -210,6 +253,32 @@ const toggleValue = (state: RootState): string =>
 
 const routePath = (state: RootState): string => state.ticketApprovals.routePath
 
+const TicketStatusValue = (state: RootState): string =>
+  state.ticketApprovals.TicketStatusValue
+
+const ApprovalStatusValue = (state: RootState): string =>
+  state.ticketApprovals.ApprovalStatusValue
+
+const DepartmentNameValue = (state: RootState): string | number =>
+  state.ticketApprovals.DepartmentNameValue
+
+const CategoryNameValue = (state: RootState): string | number =>
+  state.ticketApprovals.CategoryNameValue
+
+const SubCategoryNameValue = (state: RootState): string | number =>
+  state.ticketApprovals.SubCategoryNameValue
+
+const DateValue = (state: RootState): string => state.ticketApprovals.DateValue
+
+const TrackerValue = (state: RootState): string | number =>
+  state.ticketApprovals.TrackerValue
+
+const FormDateValue = (state: RootState): string | Date =>
+  state.ticketApprovals.FormDate
+
+const ToDateValue = (state: RootState): string | Date =>
+  state.ticketApprovals.ToDate
+
 const ticketsForApproval = (
   state: RootState,
 ): GetAllTicketsForApprovalResponse => state.ticketApprovals.ticketsForApproval
@@ -225,6 +294,17 @@ const ticketApprovalsSelectors = {
   selectTicketId,
   toggleValue,
   routePath,
+  mealType,
+
+  TicketStatusValue,
+  ApprovalStatusValue,
+  DepartmentNameValue,
+  CategoryNameValue,
+  SubCategoryNameValue,
+  DateValue,
+  TrackerValue,
+  FormDateValue,
+  ToDateValue,
 }
 
 export const ticketApprovalsService = {

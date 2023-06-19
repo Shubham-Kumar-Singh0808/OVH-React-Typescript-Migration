@@ -9,10 +9,11 @@ import {
   CRow,
   CCol,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import parse from 'html-react-parser'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import OPageSizeSelect from '../../../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../../../components/ReusableComponent/OPagination'
@@ -114,6 +115,20 @@ const MileStoneTable = (): JSX.Element => {
       </CTable>
     </>
   )
+  const mileStoneHistoryButtonHandler = (id: number) => {
+    dispatch(reduxServices.projectMileStone.mileStoneTimeLine(id))
+    dispatch(reduxServices.projectMileStone.getMilestone(id))
+  }
+
+  const mileStoneDiscussionButtonHandler = (id: number) => {
+    dispatch(reduxServices.projectMileStone.getMilestone(id))
+    dispatch(
+      reduxServices.projectMileStone.getMilestoneNewsFeed({
+        milestoneId: id,
+        projectid: String(projectId),
+      }),
+    )
+  }
   return (
     <>
       <CTable striped className="mt-3">
@@ -181,34 +196,44 @@ const MileStoneTable = (): JSX.Element => {
                     <CTableDataCell>{`N/A`}</CTableDataCell>
                   )}
                   <CTableDataCell>
-                    <CButton
-                      color="danger"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="edit-btn"
-                    >
-                      <i className="fa fa-times text-white"></i>
-                    </CButton>
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="danger"
+                        className="btn-ovh btn-ovh-employee-list me-1 mb-1 milestone-actions"
+                        data-testid="edit-btn"
+                      >
+                        <i className="fa fa-times text-white"></i>
+                      </CButton>
+                    </CTooltip>
                     <CButton
                       color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                     >
                       <i className="fa fa-pencil-square-o"></i>
                     </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-comments text-white"></i>
-                    </CButton>
+                    <Link to={`/milestonehistory/${item.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
+                        onClick={() => mileStoneHistoryButtonHandler(item?.id)}
+                      >
+                        <i className="fa fa-bar-chart text-white"></i>
+                      </CButton>
+                    </Link>
+                    <Link to={`/milestoneNewsFeed/${item.id}`}>
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
+                        onClick={() =>
+                          mileStoneDiscussionButtonHandler(item.id)
+                        }
+                      >
+                        <i className="fa fa-comments text-white"></i>
+                      </CButton>
+                    </Link>
                     <CButton
                       color="danger"
-                      className="btn-ovh me-1 btn-ovh-employee-list"
+                      className="btn-ovh me-1 btn-ovh-employee-list mb-1 milestone-actions"
                     >
                       <i className="fa fa-trash-o" aria-hidden="true"></i>
                     </CButton>
@@ -269,11 +294,13 @@ const MileStoneTable = (): JSX.Element => {
         >
           <>
             <p>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: subject as string,
-                }}
-              />
+              <span className="descriptionField">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: subject as string,
+                  }}
+                />
+              </span>
             </p>
           </>
         </OModal>

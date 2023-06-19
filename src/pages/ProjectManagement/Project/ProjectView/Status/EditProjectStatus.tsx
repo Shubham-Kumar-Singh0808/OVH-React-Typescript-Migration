@@ -11,6 +11,7 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 
+type EditCurrentWeekDate = string | Date | undefined
 const EditProjectStatus = ({
   setToggle,
   editCurrentWeekDate,
@@ -24,14 +25,14 @@ const EditProjectStatus = ({
   statusId,
 }: {
   setToggle: (value: string) => void
-  editCurrentWeekDate: string | undefined
-  editNextWeekDate: string | undefined
+  editCurrentWeekDate: EditCurrentWeekDate
+  editNextWeekDate: EditCurrentWeekDate
   editCurrentWeekStatus: string | undefined
   editNextWeekStatus: string | undefined
   setEditCurrentWeekDate: React.Dispatch<
-    React.SetStateAction<string | undefined>
+    React.SetStateAction<EditCurrentWeekDate>
   >
-  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekDate: React.Dispatch<React.SetStateAction<EditCurrentWeekDate>>
   setEditNextWeekStatus: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
@@ -43,6 +44,7 @@ const EditProjectStatus = ({
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [dateError, setDateError] = useState<boolean>(false)
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] = useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const getProjectDetail = useTypedSelector(
     reduxServices.projectViewDetails.selectors.projectDetail,
   )
@@ -138,6 +140,7 @@ const EditProjectStatus = ({
     ) {
       updateProjectStatusHandler()
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -180,6 +183,7 @@ const EditProjectStatus = ({
     editNextWeekStatus,
   ])
   console.log(setShowEditor)
+  console.log(errorMessageCount)
   return (
     <>
       <CRow className="justify-content-end">
@@ -226,6 +230,7 @@ const EditProjectStatus = ({
               onChange={(date: Date) =>
                 setEditCurrentWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={editCurrentWeekDate as Date}
             />
           </CCol>
         </CRow>
@@ -281,6 +286,7 @@ const EditProjectStatus = ({
               onChange={(date: Date) =>
                 setEditNextWeekDate(moment(date).format(commonFormatDate))
               }
+              selected={editNextWeekDate as Date}
             />
           </CCol>
         </CRow>
@@ -288,8 +294,10 @@ const EditProjectStatus = ({
           <CRow className="mt-2">
             <CCol sm={{ span: 6, offset: 3 }}>
               <span className="text-danger" data-testid="errorMessage">
-                Next week date should be greater than current week date and
-                should be after one week from current week date
+                <b>
+                  Next week date should be greater than current week date and
+                  should be after one week from current week date
+                </b>
               </span>
             </CCol>
           </CRow>

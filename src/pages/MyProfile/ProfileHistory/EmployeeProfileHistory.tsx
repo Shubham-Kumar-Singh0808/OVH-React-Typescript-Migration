@@ -1,4 +1,4 @@
-import { CCardHeader, CSpinner } from '@coreui/react-pro'
+import { CCardHeader } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import ProfileHistoryTimeLine from './ProfileHistoryTimeLine'
@@ -7,6 +7,8 @@ import { profileHistoryService } from '../../../reducers/MyProfile/ProfileHistor
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 import { useTypedSelector } from '../../../stateStore'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const EmployeeProfileHistory = (): JSX.Element => {
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
@@ -53,7 +55,7 @@ const EmployeeProfileHistory = (): JSX.Element => {
         </>
       ) : (
         <>
-          <CSpinner />
+          <OLoadingSpinner type={LoadingType.PAGE} />
         </>
       )}
     </>

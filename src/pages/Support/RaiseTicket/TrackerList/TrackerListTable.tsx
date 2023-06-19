@@ -62,6 +62,7 @@ const TrackerListTable = ({
       )
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteSuccessToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
       dispatch(reduxServices.ticketApprovals.getTrackerList())
     } else if (
       (reduxServices.addTrackerLists.deleteTrackerList.rejected.match(
@@ -71,6 +72,7 @@ const TrackerListTable = ({
       deleteTrackerResult.payload === 500
     ) {
       dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 

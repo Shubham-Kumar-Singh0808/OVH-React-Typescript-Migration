@@ -143,11 +143,13 @@ const KRAsDetailsTable = (): JSX.Element => {
         setVisible={setIsModalVisible}
       >
         <p>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: kpiDescription,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: kpiDescription,
+              }}
+            />
+          </span>
         </p>
       </OModal>
     </>

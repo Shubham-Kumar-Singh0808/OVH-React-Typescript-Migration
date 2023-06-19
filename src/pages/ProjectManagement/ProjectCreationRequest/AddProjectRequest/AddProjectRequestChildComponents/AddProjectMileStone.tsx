@@ -30,6 +30,7 @@ const AddProjectMileStone = ({
   percentageOnChange,
   setIsAddMileStoneButtonEnabled,
   isAddMilestoneButtonEnabled,
+  errorMessage,
 }: {
   item: ProjectRequestMilestoneDTO
   index: number
@@ -59,6 +60,7 @@ const AddProjectMileStone = ({
   ) => void
   setIsAddMileStoneButtonEnabled: (value: boolean) => void
   isAddMilestoneButtonEnabled: boolean
+  errorMessage: number | null
 }): JSX.Element => {
   const [error, setError] = useState(false)
   const [isPercentageEnable, setPercentageEnable] = useState(false)
@@ -140,23 +142,34 @@ const AddProjectMileStone = ({
     }
   }, [item.billable])
 
+  const errorToast = (
+    <OToast toastColor="danger" toastMessage="Milestone Title Already Exists" />
+  )
+  const onFocusOut = () => {
+    if (errorMessage === index) {
+      dispatch(reduxServices.app.actions.addToast(errorToast))
+    }
+  }
+
   return (
     <>
       <CTableBody>
         <CTableDataCell className="col-sm-2 ps-2 pe-2">
           <CFormInput
+            id={`input-${index}`}
             onChange={(e) => titleOnChange(e, index)}
             className="mt-2"
             value={item.title?.replace(/^\s*/, '')}
             name="title"
             placeholder="Title"
             data-testid="title-testing"
+            onBlur={onFocusOut}
           />
         </CTableDataCell>
         <CTableDataCell className="col-sm-1 ps-2 pe-2">
           <CFormInput
             onChange={(e) => effortOnChange(e, index)}
-            value={item.effort?.replace(/^\s*/, '')}
+            value={item.effort?.replace(/^\s*/, '').replace(/[\D]/gi, '')}
             className="mt-2"
             name="effort"
             id="effort"
@@ -221,6 +234,8 @@ const AddProjectMileStone = ({
             onChange={(e) => percentageOnChange(e, index)}
             value={item.milestonePercentage}
             name="milestonePercentage"
+            maxLength={3}
+            autoComplete="off"
             data-testid="percentage-test"
             disabled={!isPercentageEnable}
           />

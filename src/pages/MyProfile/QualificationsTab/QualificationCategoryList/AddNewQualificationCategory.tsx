@@ -16,6 +16,7 @@ import { QualificationCategory } from '../../../../types/MyProfile/Qualification
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const AddNewQualificationCategory = (): JSX.Element => {
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const employeeQualificationCategories = useTypedSelector(
     reduxServices.employeeQualificationCategory.selectors
       .qualificationCategories,
@@ -29,7 +30,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
     isAddQualificationCategoryBtnEnabled,
     setIsAddQualificationCategoryBtnEnabled,
   ] = useState(false)
-
+  console.log(errorMessageCount)
   const alreadyExistToastMessage = (
     <OToast
       toastMessage="This qualification details are already added"
@@ -84,6 +85,7 @@ const AddNewQualificationCategory = (): JSX.Element => {
           newQualificationCategory.qualificationName.toLowerCase(),
       ).length > 0
     ) {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(alreadyExistToastMessage))
       return
     }

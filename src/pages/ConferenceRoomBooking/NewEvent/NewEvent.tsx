@@ -24,6 +24,7 @@ import {
 } from './NewEventChildComponents'
 import ProjectMembersSelection from './NewEventChildComponents/ProjectMembersSelection'
 import SlotsBooked from './NewEventChildComponents/SlotsBooked'
+import SelectedAttendees from './NewEventChildComponents/SelectedAttendees'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -110,7 +111,19 @@ const NewEvent = (): JSX.Element => {
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   console.log(attendeesList)
+  const [trainerAutoCompleteTarget, setTrainerAutoCompleteTarget] =
+    useState<string>()
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
 
   useEffect(() => {
     dispatch(reduxServices.eventTypeList.getEventTypes())
@@ -123,7 +136,7 @@ const NewEvent = (): JSX.Element => {
     if (addEvent.locationId)
       dispatch(reduxServices.newEvent.getRoomsByLocation(addEvent.locationId))
   }, [addEvent.locationId])
-
+  console.log(errorMessageCount)
   useEffect(() => {
     if (addEvent.startTime === '' && addEvent.endTime === '') {
       setIsProjectAndAttendeesEnable(true)
@@ -255,6 +268,17 @@ const NewEvent = (): JSX.Element => {
   }
   console.log(addEvent.startTime)
 
+  const failureValidationErrorToastMsg = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
+  const failureToastMsg = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
+
   const handleConfirmBtn = async () => {
     const startTimeSplit = addEvent.startTime.split(':')
     const endTimeSplit = addEvent.endTime.split(':')
@@ -304,6 +328,33 @@ const NewEvent = (): JSX.Element => {
     }
   }
 
+  const validateBookingTimings = () => {
+    if (addEvent.startTime.split(':') < addEvent.endTime.split(':')) {
+      const startTimeSplit = addEvent.startTime.split(':')
+      const endTimeSplit = addEvent.endTime.split(':')
+      const start = new Date(
+        `${addEvent.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${addEvent.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
+        dispatch(
+          reduxServices.app.actions.addToast(failureValidationErrorToastMsg),
+        )
+      } else {
+        handleConfirmBtn()
+      }
+    } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(failureToastMsg))
+    }
+  }
+
   const clearBtnHandler = () => {
     setAddEvent(initEvent)
     const shouldResetFields = {
@@ -312,10 +363,12 @@ const NewEvent = (): JSX.Element => {
       trainer: true,
     } as ShouldResetNewBookingFields
     setResetField(shouldResetFields)
+    setIsAttendeeErrorShow(false)
     setShowEditor(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)
+    setAttendeesList([])
   }
   const commonFormatDate = 'l'
 
@@ -336,6 +389,33 @@ const NewEvent = (): JSX.Element => {
       setDateError(false)
     }
   }, [addEvent.fromDate, addEvent.toDate])
+
+  useEffect(() => {
+    if (
+      trainerAutoCompleteTarget &&
+      addEvent.eventTypeId &&
+      addEvent?.startTime &&
+      addEvent?.endTime &&
+      addEvent?.toDate &&
+      addEvent?.agenda?.replace(/^\s*/, '')
+    ) {
+      setIsConfirmButtonEnabled(true)
+    } else {
+      setIsConfirmButtonEnabled(false)
+    }
+  }, [addEvent])
+  const attendeesResult = (
+    <CRow className="row d-flex justify-content-center">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
 
   return (
     <OCard
@@ -364,6 +444,8 @@ const NewEvent = (): JSX.Element => {
               allEmployeesProfiles={allEmployeesProfiles}
               onSelectTrainer={onSelectTrainer}
               shouldReset={resetFields.trainer as boolean}
+              trainerAutoCompleteTarget={trainerAutoCompleteTarget}
+              setTrainerAutoCompleteTarget={setTrainerAutoCompleteTarget}
             />
             <EventType
               eventTypeList={eventTypeList}
@@ -404,6 +486,7 @@ const NewEvent = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={7}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
@@ -472,11 +555,19 @@ const NewEvent = (): JSX.Element => {
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
                 />
               </>
             ) : (
               <></>
             )}
+            {projectMembers?.length > 0 && addEvent.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
@@ -484,8 +575,8 @@ const NewEvent = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
-                    disabled={dateError}
+                    onClick={validateBookingTimings}
+                    disabled={!isConfirmButtonEnabled || dateError}
                   >
                     Confirm
                   </CButton>

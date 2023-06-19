@@ -10,6 +10,7 @@ import {
   CBadge,
   CFormInput,
   CFormSelect,
+  CTooltip,
 } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useState, useEffect } from 'react'
@@ -384,29 +385,36 @@ const EmployeeAllocationEntryTable = (props: {
                                 aria-hidden="true"
                               ></i>
                             </CButton>
-                            <CButton
-                              color="warning"
-                              data-testid="cancel-btn"
-                              className="btn-ovh me-1 mb-1"
-                              onClick={cancelProjectAllocationButtonHandler}
-                            >
-                              <i className="fa fa-times" aria-hidden="true"></i>
-                            </CButton>
+                            <CTooltip content="Cancel">
+                              <CButton
+                                color="warning"
+                                data-testid="cancel-btn"
+                                className="btn-ovh me-1 mb-1"
+                                onClick={cancelProjectAllocationButtonHandler}
+                              >
+                                <i
+                                  className="fa fa-times"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </>
                         ) : (
                           <>
                             {userAccess?.updateaccess && (
-                              <CButton
-                                color="info btn-ovh me-2"
-                                data-testid="edit-btn"
-                                onClick={() => {
-                                  editProjectAllocationButtonHandler(
-                                    projectReport,
-                                  )
-                                }}
-                              >
-                                <i className="fa fa-pencil-square-o"></i>
-                              </CButton>
+                              <CTooltip content="Edit">
+                                <CButton
+                                  color="info btn-ovh me-2"
+                                  data-testid="edit-btn"
+                                  onClick={() => {
+                                    editProjectAllocationButtonHandler(
+                                      projectReport,
+                                    )
+                                  }}
+                                >
+                                  <i className="fa fa-pencil-square-o"></i>
+                                </CButton>
+                              </CTooltip>
                             )}
                           </>
                         )}

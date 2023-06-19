@@ -13,6 +13,8 @@ describe('Trainer Component', () => {
           allEmployeesProfiles={[]}
           onSelectTrainer={jest.fn()}
           shouldReset={false}
+          trainerAutoCompleteTarget={''}
+          setTrainerAutoCompleteTarget={jest.fn()}
         />,
       )
     })
@@ -38,6 +40,8 @@ describe('Trainer Component', () => {
           allEmployeesProfiles={[]}
           onSelectTrainer={jest.fn()}
           shouldReset={false}
+          trainerAutoCompleteTarget={''}
+          setTrainerAutoCompleteTarget={jest.fn()}
         />,
       )
     })
@@ -68,6 +72,8 @@ describe('Trainer Component', () => {
           allEmployeesProfiles={mockTrainerDataList}
           onSelectTrainer={jest.fn()}
           shouldReset={false}
+          trainerAutoCompleteTarget={''}
+          setTrainerAutoCompleteTarget={jest.fn()}
         />,
       )
     })
@@ -79,7 +85,7 @@ describe('Trainer Component', () => {
 
       fireEvent.change(autocomplete, { target: { value: 'e' } })
 
-      expect(autocomplete).toHaveValue('e')
+      expect(autocomplete).toHaveValue('')
     })
     test('should be able to get a value base on hrValue value', () => {
       const input = screen.getByRole('combobox')

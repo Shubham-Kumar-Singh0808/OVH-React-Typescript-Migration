@@ -12,6 +12,7 @@ import {
   CBadge,
   CFormLabel,
   CFormTextarea,
+  CTooltip,
 } from '@coreui/react-pro'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -73,6 +74,7 @@ const ProjectCreationRequestTable = ({
   ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
+    dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
   }
 
   const getItemNumber = (index: number) => {
@@ -234,7 +236,7 @@ const ProjectCreationRequestTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody color="light">
-          {isLoading !== ApiLoadingState.loading ? (
+          {isLoading !== ApiLoadingState?.loading ? (
             getAllProjectRequestList &&
             getAllProjectRequestList?.map((projectRequest, index) => {
               return (
@@ -250,81 +252,101 @@ const ProjectCreationRequestTable = ({
                       projectRequest.type.slice(1).toLowerCase()}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {projectRequest.model.charAt(0).toUpperCase() +
-                      projectRequest.model.slice(1).toLowerCase()}
+                    {projectRequest?.model?.charAt(0).toUpperCase() +
+                      projectRequest?.model?.slice(1).toLowerCase()}
                   </CTableDataCell>
-                  <CTableDataCell>{projectRequest.client}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.managerName}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.startdate}</CTableDataCell>
-                  <CTableDataCell>{projectRequest.enddate}</CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.client || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.managerName || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.startdate || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {projectRequest.enddate || 'N/A'}
+                  </CTableDataCell>
                   <CTableDataCell>
                     {projectRequestStatusLabelColor(projectRequest.status)}
                   </CTableDataCell>
                   <CTableDataCell>
-                    <CButton
-                      color="info"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="view-btn"
-                      onClick={() =>
-                        handleProjectRequestViewClick(projectRequest.id)
-                      }
-                    >
-                      <i className="fa fa-eye  text-white"></i>
-                    </CButton>
-                    {userAccessCreateAction?.updateaccess && (
+                    <CTooltip content="View">
                       <CButton
-                        color="success"
+                        color="info"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="edit-btn"
+                        data-testid="view-btn"
                         onClick={() =>
-                          handleProjectRequestApproveClick(projectRequest.id)
-                        }
-                        disabled={
-                          projectRequest.status === 'Rejected' ||
-                          projectRequest.status === 'Approved'
+                          handleProjectRequestViewClick(projectRequest.id)
                         }
                       >
-                        <i className="fa fa-check-circle-o"></i>
+                        <i className="fa fa-eye  text-white"></i>
                       </CButton>
+                    </CTooltip>
+                    {userAccessCreateAction?.updateaccess && (
+                      <CTooltip content="Approve Project">
+                        <CButton
+                          color="success"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="edit-btn"
+                          onClick={() =>
+                            handleProjectRequestApproveClick(projectRequest.id)
+                          }
+                          disabled={
+                            projectRequest.status === 'Rejected' ||
+                            projectRequest.status === 'Approved'
+                          }
+                        >
+                          <i className="fa fa-check-circle-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
-                    <CButton
-                      color="info"
-                      className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                      data-testid="history-btn"
-                      onClick={() =>
-                        handleProjectRequestHistoryClick(projectRequest.id)
-                      }
-                    >
-                      <i className="fa fa-bar-chart text-white"></i>
-                    </CButton>
-                    {userRejectAction && (
+                    <CTooltip content="Timeline">
                       <CButton
-                        color="danger"
+                        color="info"
                         className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="reject-btn"
-                        disabled={
-                          projectRequest.status === 'Rejected' ||
-                          projectRequest.status === 'Approved'
+                        data-testid="history-btn"
+                        onClick={() =>
+                          handleProjectRequestHistoryClick(projectRequest.id)
                         }
-                        onClick={() => handleShowRejectModal(projectRequest.id)}
                       >
-                        <i className="fa fa-times text-white"></i>
+                        <i className="fa fa-bar-chart text-white"></i>
                       </CButton>
+                    </CTooltip>
+                    {userRejectAction && (
+                      <CTooltip content="Cancel">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="reject-btn"
+                          disabled={
+                            projectRequest.status === 'Rejected' ||
+                            projectRequest.status === 'Approved'
+                          }
+                          onClick={() =>
+                            handleShowRejectModal(projectRequest.id)
+                          }
+                        >
+                          <i className="fa fa-times text-white"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userDeleteAction && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
-                        data-testid="delete-btn"
-                        onClick={() =>
-                          handleShowDeleteModal(
-                            projectRequest.id,
-                            projectRequest.projectName,
-                          )
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh btn-ovh btn-ovh-employee-list me-1"
+                          data-testid="delete-btn"
+                          onClick={() =>
+                            handleShowDeleteModal(
+                              projectRequest.id,
+                              projectRequest.projectName,
+                            )
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>
@@ -346,7 +368,7 @@ const ProjectCreationRequestTable = ({
             {projectRequestListSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80]}
+                options={[20, 40, 60, 80, 100]}
                 selectedPageSize={pageSize}
               />
             )}

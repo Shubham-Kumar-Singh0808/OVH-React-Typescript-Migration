@@ -24,6 +24,8 @@ const VisaListOptions = ({
   filterByVisaType,
   multiSearchValue,
   setIsAccordionItemShow,
+  setPageSize,
+  setCurrentPage,
 }: VisaListOptionsProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [selectVisaType, setSelectVisaType] = useState<string>('')
@@ -90,6 +92,12 @@ const VisaListOptions = ({
     }
   }
 
+  const onChangeCountryHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectCountry(e.target.value)
+    setCurrentPage(1)
+    setPageSize(20)
+  }
+
   return (
     <>
       <CRow>
@@ -104,9 +112,10 @@ const VisaListOptions = ({
             data-testid="form-select1"
             name="technology"
             value={selectCountry}
-            onChange={(e) => {
-              setSelectCountry(e.target.value)
-            }}
+            // onChange={(e) => {
+            //   setSelectCountry(e.target.value)
+            // }}
+            onChange={onChangeCountryHandler}
           >
             <option value={''}>Select Country</option>
             {countries?.map((country, index) => (

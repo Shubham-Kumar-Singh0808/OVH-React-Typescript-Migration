@@ -87,7 +87,13 @@ const EventTypeList = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(addEventTypeSuccessToast))
     }
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
 
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Add Event',
+  )
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -136,19 +142,21 @@ const EventTypeList = (): JSX.Element => {
             )}
           </CCol>
           <CCol sm={3}>
-            <CButton
-              data-testid="addEventTypeBtn"
-              color="info"
-              className="btn-ovh me-1"
-              onClick={addEventTypeBtnHandler}
-              disabled={
-                isAddBtnEnabled
-                  ? isAddBtnEnabled && isEventNameExists.length > 0
-                  : !isAddBtnEnabled
-              }
-            >
-              <i className="fa fa-plus me-1"></i>Add
-            </CButton>
+            {userAccess?.createaccess && (
+              <CButton
+                data-testid="addEventTypeBtn"
+                color="info"
+                className="btn-ovh me-1"
+                onClick={addEventTypeBtnHandler}
+                disabled={
+                  isAddBtnEnabled
+                    ? isAddBtnEnabled && isEventNameExists.length > 0
+                    : !isAddBtnEnabled
+                }
+              >
+                <i className="fa fa-plus me-1"></i>Add
+              </CButton>
+            )}
           </CCol>
         </CRow>
       </CForm>
@@ -159,6 +167,7 @@ const EventTypeList = (): JSX.Element => {
           setEditEventTypeName={setEditEventTypeName}
           isEditBtnClicked={isEditBtnClicked}
           setIsEditBtnClicked={setIsEditBtnClicked}
+          userAccess={userAccess}
         />
       ) : (
         <>

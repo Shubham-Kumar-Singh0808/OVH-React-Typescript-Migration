@@ -10,6 +10,7 @@ import {
   CRow,
   CLink,
   CBadge,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
@@ -208,26 +209,37 @@ const BookingListTable = ({
                   <CTableDataCell scope="row">
                     {bookingItem.isAuthorisedUser ? (
                       <>
-                        <CButton
-                          color="info"
-                          className="btn-ovh me-2"
-                          onClick={() => editButtonHandler(bookingItem.id)}
-                          disabled={bookingItem?.disableEdit === true}
-                        >
-                          <i className="fa fa-edit" aria-hidden="true"></i>
-                        </CButton>
-
-                        <CButton
-                          color="btn btn-warning"
-                          className="btn-ovh me-2"
-                          onClick={() => handleShowCancelModal(bookingItem.id)}
-                          disabled={bookingItem.disableEdit === true}
-                        >
-                          <i
-                            className="fa fa-times text-white"
-                            aria-hidden="true"
-                          ></i>
-                        </CButton>
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-2"
+                            onClick={() => editButtonHandler(bookingItem.id)}
+                            disabled={
+                              bookingItem?.disableEdit ||
+                              bookingItem.meetingStatus !== 'New'
+                            }
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
+                        <CTooltip content="Cancel">
+                          <CButton
+                            color="btn btn-warning"
+                            className="btn-ovh me-2"
+                            onClick={() =>
+                              handleShowCancelModal(bookingItem.id)
+                            }
+                            disabled={
+                              bookingItem?.disableEdit ||
+                              bookingItem.meetingStatus !== 'New'
+                            }
+                          >
+                            <i
+                              className="fa fa-times text-white"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
                       </>
                     ) : (
                       ''
@@ -311,28 +323,30 @@ const BookingListTable = ({
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Attendees:</span>
             {modalAgenda.employeeDto?.length ? (
-              <CTable align="middle" className="bookingList-model-table">
-                <CTableHead>
-                  <CTableRow>
-                    <CTableHeaderCell className="pt-0">
-                      Name of Employee
-                    </CTableHeaderCell>
-                    <CTableHeaderCell className="pt-0">
-                      Designation
-                    </CTableHeaderCell>
-                  </CTableRow>
-                </CTableHead>
-                <CTableBody>
-                  {modalAgenda?.employeeDto?.map((emp, index) => {
-                    return (
-                      <CTableRow key={index}>
-                        <CTableDataCell>{emp.fullName}</CTableDataCell>
-                        <CTableDataCell>{emp.designation}</CTableDataCell>
-                      </CTableRow>
-                    )
-                  })}
-                </CTableBody>
-              </CTable>
+              <CCol sm={5}>
+                <CTable align="middle" className="bookingList-model-table">
+                  <CTableHead>
+                    <CTableRow>
+                      <CTableHeaderCell className="pt-0 ps-0">
+                        Name of Employee
+                      </CTableHeaderCell>
+                      <CTableHeaderCell className="pt-0">
+                        Designation
+                      </CTableHeaderCell>
+                    </CTableRow>
+                  </CTableHead>
+                  <CTableBody>
+                    {modalAgenda?.employeeDto?.map((emp, index) => {
+                      return (
+                        <CTableRow key={index}>
+                          <CTableDataCell>{emp.fullName}</CTableDataCell>
+                          <CTableDataCell>{emp.designation}</CTableDataCell>
+                        </CTableRow>
+                      )
+                    })}
+                  </CTableBody>
+                </CTable>
+              </CCol>
             ) : (
               <>N/A</>
             )}

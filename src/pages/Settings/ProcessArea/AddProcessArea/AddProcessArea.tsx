@@ -30,6 +30,7 @@ const AddProcessArea = ({
   const [selectActiveStatus, setSelectActiveStatus] = useState<boolean>(true)
   const [selectOrder, setSelectOrder] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [documentNameExist, setDocumentNameExist] = useState('')
 
   useEffect(() => {
     if (
@@ -38,6 +39,16 @@ const AddProcessArea = ({
       responsible &&
       documentLink &&
       selectProcessAreaName &&
+      !selectActiveStatus
+    ) {
+      setIsAddButtonEnabled(true)
+    } else if (
+      selectCategory &&
+      documentName &&
+      responsible &&
+      documentLink &&
+      selectProcessAreaName &&
+      selectActiveStatus &&
       selectOrder
     ) {
       setIsAddButtonEnabled(true)
@@ -51,6 +62,7 @@ const AddProcessArea = ({
     documentLink,
     selectProcessAreaName,
     selectOrder,
+    selectActiveStatus,
   ])
 
   const formLabelProps = {
@@ -75,6 +87,11 @@ const AddProcessArea = ({
       )
   }, [dispatch, selectCategory])
 
+  const trackerNameExists = (name: string) => {
+    return ProcessArea?.find((trackerName) => {
+      return trackerName.name.toLowerCase() === name.toLowerCase()
+    })
+  }
   const handleInputChange = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -91,10 +108,15 @@ const AddProcessArea = ({
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setDocumentLink(newValue)
     } else if (name === 'selectOrder') {
-      const newValue = value.replace(/[\D]/gi, '')
+      const newValue = value.replace(/\D/g, '').replace(/^0+/, '')
       setSelectOrder(newValue)
     } else if (name === 'activeState') {
       setSelectActiveStatus(value === 'true')
+    }
+    if (trackerNameExists(value)) {
+      setDocumentNameExist(value)
+    } else {
+      setDocumentNameExist('')
     }
   }
 
@@ -108,6 +130,19 @@ const AddProcessArea = ({
     setSelectProcessAreaName('')
   }
 
+  const maxObjectProject = ProjectTailoringList[0]?.processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxObjEng = ProjectTailoringList[1]?.processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxObjSupport = ProjectTailoringList[2]?.processSubHeadsDto.reduce(
+    (prev, current) => (prev.order > current.order ? prev : current),
+  )
+  const maxOrderProject = Number(maxObjectProject?.order) + 1
+  const maxOrderEng = Number(maxObjEng?.order) + 1
+  const maxOrderSupport = Number(maxObjSupport?.order) + 1
+
   const addedToastMessage = (
     <OToast
       toastMessage="Process Area saved successfully.
@@ -115,16 +150,32 @@ const AddProcessArea = ({
       toastColor="success"
     />
   )
-  const addedErrorToastMessage = (
+
+  const orderErrorToastMessage = (maxOrder: number) => (
     <OToast
-      toastMessage="Document Name already exists.
-    "
+      toastMessage={`order should be ${maxOrder} or below ${maxOrder}`}
       toastColor="danger"
     />
   )
 
-  const addButtonHandler = async () => {
-    const addProcessNameResultAction = await dispatch(
+  const dispatchFunctions = () => {
+    dispatch(
+      reduxServices.processArea.getOrderCountOfActiveProcesses(
+        Number(selectCategory),
+      ),
+    )
+    dispatch(
+      reduxServices.processArea.incrementOrDecrementOrder({
+        categoryId: Number(selectCategory),
+        documentName,
+        link: documentLink,
+        order: selectOrder,
+        processAreaId: Number(selectProcessAreaName),
+        responsible,
+        status: selectActiveStatus,
+      }),
+    )
+    dispatch(
       reduxServices.processArea.saveProcessArea({
         categoryId: Number(selectCategory),
         documentName,
@@ -135,42 +186,72 @@ const AddProcessArea = ({
         status: selectActiveStatus,
       }),
     )
-    if (
-      reduxServices.processArea.saveProcessArea.fulfilled.match(
-        addProcessNameResultAction,
-      )
-    ) {
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
+    dispatch(reduxServices.app.actions.addToast(addedToastMessage))
+    setToggle('')
+  }
+
+  const addButtonHandler = async () => {
+    if (selectCategory === '1' && Number(selectOrder) > maxOrderProject) {
       dispatch(
         reduxServices.processArea.getOrderCountOfActiveProcesses(
           Number(selectCategory),
         ),
       )
       dispatch(
-        reduxServices.processArea.incrementOrDecrementOrder({
-          categoryId: Number(selectCategory),
-          documentName,
-          link: documentLink,
-          order: selectOrder,
-          processAreaId: Number(selectProcessAreaName),
-          responsible,
-          status: selectActiveStatus,
-        }),
+        reduxServices.app.actions.addToast(
+          orderErrorToastMessage(maxOrderProject),
+        ),
+      )
+    } else if (
+      selectCategory === '1' &&
+      Number(selectOrder) <= maxOrderProject
+    ) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
+    }
+    if (selectCategory === '2' && Number(selectOrder) > maxOrderEng) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
       )
       dispatch(
-        reduxServices.processArea.getProjectTailoringDocument('totalList'),
+        reduxServices.app.actions.addToast(orderErrorToastMessage(maxOrderEng)),
       )
-      dispatch(reduxServices.app.actions.addToast(addedToastMessage))
-      setToggle('')
-      dispatch(reduxServices.app.actions.addToast(undefined))
+    } else if (selectCategory === '2' && Number(selectOrder) <= maxOrderEng) {
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
+    }
+    if (selectCategory === '3' && Number(selectOrder) > maxOrderSupport) {
+      dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          orderErrorToastMessage(maxOrderSupport),
+        ),
+      )
     } else if (
-      reduxServices.processArea.saveProcessArea.rejected.match(
-        addProcessNameResultAction,
-      ) &&
-      addProcessNameResultAction.payload === 409
+      selectCategory === '3' &&
+      Number(selectOrder) <= maxOrderSupport
     ) {
-      dispatch(reduxServices.app.actions.addToast(addedErrorToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
-      setDocumentName('')
+      await dispatch(
+        reduxServices.processArea.getOrderCountOfActiveProcesses(
+          Number(selectCategory),
+        ),
+      )
+      dispatchFunctions()
     }
   }
 
@@ -279,6 +360,13 @@ const AddProcessArea = ({
                 onChange={handleInputChange}
                 required
               />
+            </CCol>
+            <CCol sm={3}>
+              {documentNameExist && (
+                <p className={TextDanger} data-testid="nameAlreadyExist">
+                  Document Name Already Exists
+                </p>
+              )}
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
@@ -390,7 +478,11 @@ const AddProcessArea = ({
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={!isAddButtonEnabled}
+                disabled={
+                  isAddButtonEnabled
+                    ? isAddButtonEnabled && documentNameExist?.length > 0
+                    : !isAddButtonEnabled
+                }
                 onClick={addButtonHandler}
               >
                 Add

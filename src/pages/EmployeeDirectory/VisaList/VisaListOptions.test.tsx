@@ -25,6 +25,8 @@ describe('Visa List Options Component Testing', () => {
         multiSearchValue={''}
         setMultiSearchValue={mockSetMultiSearchValue}
         setIsAccordionItemShow={mockSetIsAccordionItemShow}
+        setCurrentPage={mockSetMultiSearchValue}
+        setPageSize={mockSetMultiSearchValue}
       />,
       {
         preloadedState: {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
@@ -6,7 +6,6 @@ import {
   CRow,
   CCol,
   CButton,
-  CSpinner,
   CFormCheck,
   CFormLabel,
   CFormSelect,
@@ -37,6 +36,8 @@ import {
 } from '../../../../../constant/constantData'
 import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const AddProject = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -120,7 +121,18 @@ const AddProject = (): JSX.Element => {
     } as GetAutoCompleteList
   })
 
-  const clientOrganizationList = projectClients
+  const sortedProjectDetails = useMemo(() => {
+    if (projectClients) {
+      return projectClients
+        .slice()
+        .sort((sortNode1, sortNode2) =>
+          sortNode1.name.localeCompare(sortNode2.name),
+        )
+    }
+    return []
+  }, [projectClients])
+
+  const clientOrganizationList = sortedProjectDetails
     ?.filter((filterClient: ProjectClients) => filterClient.name != null)
     .map((mapClient) => {
       return {
@@ -501,11 +513,7 @@ const AddProject = (): JSX.Element => {
           </CRow>
         </>
       ) : (
-        <CCol data-testid="spinner">
-          <CRow className="category-loading-spinner">
-            <CSpinner />
-          </CRow>
-        </CCol>
+        <OLoadingSpinner type={LoadingType.PAGE} />
       )}
     </OCard>
   )

@@ -41,16 +41,36 @@ const ProjectReport = (): JSX.Element => {
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
   )
+  const getPricingModel = useTypedSelector(
+    reduxServices.projectReport.selectors.getPricingModel,
+  )
+  const getSelectValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getSelectValue,
+  )
+  const getStatusValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getStatusValue,
+  )
+  const getProjectHealth = useTypedSelector(
+    reduxServices.projectReport.selectors.getProjectHealth,
+  )
+  const getCustomFromValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomFromValue,
+  )
+  const getCustomToValue = useTypedSelector(
+    reduxServices.projectReport.selectors.getCustomToValue,
+  )
 
   const initValue = {
     endIndex: 20,
     firstIndex: 0,
-    health: 'All',
-    projectStatus: 'INPROGRESS',
-    type: 'All',
-    projectDatePeriod: '',
+    health: getProjectHealth as string,
+    projectStatus: getStatusValue as string,
+    type: getPricingModel as string,
+    projectDatePeriod: getSelectValue as string,
     intrnalOrNot: false,
     multiSearch: '',
+    startdate: (getCustomFromValue as string) || '',
+    enddate: (getCustomToValue as string) || '',
   }
 
   const [params, setParams] = useState<ProjectReportQueryParams>(initValue)
@@ -141,22 +161,31 @@ const ProjectReport = (): JSX.Element => {
     }
 
     setParams({ ...params, projectDatePeriod: value })
+    dispatch(reduxServices.projectReport.actions.setSelectValue(value))
   }
 
   const handleStatus = (value: string) => {
     setParams({ ...params, projectStatus: value })
+    dispatch(reduxServices.projectReport.actions.setStatusValue(value))
   }
 
   const handlePriceModel = (value: string) => {
     setParams({ ...params, type: value })
+    dispatch(reduxServices.projectReport.actions.setPricingModel(value))
   }
 
   const handleProjectHealth = (value: string) => {
     setParams({ ...params, health: value })
+    dispatch(reduxServices.projectReport.actions.setProjectHealth(value))
   }
 
   const handleStartDate = (value: Date) => {
     setParams({ ...params, startdate: moment(value).format(dateFormat) })
+    dispatch(
+      reduxServices.projectReport.actions.setCustomFromValue(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   const handleEndDate = (value: Date) => {
@@ -169,6 +198,11 @@ const ProjectReport = (): JSX.Element => {
       setViewBtnEnable(false)
     }
     setParams({ ...params, enddate: moment(value).format(dateFormat) })
+    dispatch(
+      reduxServices.projectReport.actions.setCustomToValue(
+        moment(value).format(dateFormat),
+      ),
+    )
   }
 
   const handleIsInternalStatus = (value: boolean) => {
@@ -178,6 +212,27 @@ const ProjectReport = (): JSX.Element => {
   const handleMultipleSearch = (value: string) => {
     setParams({ ...params, multiSearch: value })
   }
+
+  useEffect(() => {
+    dispatch(reduxServices.projectReport.actions.setPricingModel(params.type))
+    dispatch(
+      reduxServices.projectReport.actions.setSelectValue(
+        params.projectDatePeriod,
+      ),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setProjectHealth(params.health),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setStatusValue(params.projectStatus),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setCustomFromValue(params.startdate),
+    )
+    dispatch(
+      reduxServices.projectReport.actions.setCustomToValue(params.enddate),
+    )
+  }, [dispatch, params, params.enddate, params.startdate])
 
   const viewHandler = () => {
     const payload =
@@ -201,6 +256,8 @@ const ProjectReport = (): JSX.Element => {
     } else {
       setIsCloseBtnVisible(true)
     }
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const clearHandler = () => {
@@ -257,9 +314,16 @@ const ProjectReport = (): JSX.Element => {
               employeeId: Number(employeeId),
             }
 
-      dispatch(
-        reduxServices.projectReport.getFetchSearchAllocationReport(payload),
-      )
+      if (params.multiSearch === '') {
+        dispatch(
+          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.projectReport.getFetchSearchAllocationReport(payload),
+        )
+      }
     }
   }
 

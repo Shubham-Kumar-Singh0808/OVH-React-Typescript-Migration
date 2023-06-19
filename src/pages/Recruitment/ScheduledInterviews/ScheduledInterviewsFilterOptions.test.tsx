@@ -13,29 +13,36 @@ import { mockScheduledCandidatesForEmployeeData } from '../../../test/data/sched
 
 const mockSetSelectInterviewStatus = jest.fn()
 const mockSetFilterByInterviewStatus = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ScheduledInterviewsFilterOptions
+      selectInterviewStatus={''}
+      filterByInterviewStatus={''}
+      setFilterByInterviewStatus={mockSetFilterByInterviewStatus}
+      setSelectInterviewStatus={mockSetSelectInterviewStatus}
+    />
+  </div>
+)
+
 describe('Scheduled Interviews Filter Options Component Testing', () => {
   describe('should render scheduled interviews filter options Component without data', () => {
     beforeEach(() => {
-      render(
-        <ScheduledInterviewsFilterOptions
-          selectInterviewStatus={''}
-          filterByInterviewStatus={''}
-          setFilterByInterviewStatus={mockSetFilterByInterviewStatus}
-          setSelectInterviewStatus={mockSetSelectInterviewStatus}
-        />,
-        {
-          preloadedState: {
-            authentication: {
-              authenticatedUser: {
-                employeeName: 'venkata',
-                employeeId: 1978,
-                userName: 'venkata kolla',
-                role: 'admin',
-              },
+      render(toRender, {
+        preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'venkata',
+              employeeId: 1978,
+              userName: 'venkata kolla',
+              role: 'admin',
             },
           },
         },
-      )
+      })
     })
     afterEach(cleanup)
     test('should render labels', () => {
@@ -53,31 +60,23 @@ describe('Scheduled Interviews Filter Options Component Testing', () => {
   })
   describe('should render scheduled interviews filter options Component with data', () => {
     beforeEach(() => {
-      render(
-        <ScheduledInterviewsFilterOptions
-          selectInterviewStatus={'pending'}
-          filterByInterviewStatus={'pending'}
-          setFilterByInterviewStatus={mockSetFilterByInterviewStatus}
-          setSelectInterviewStatus={mockSetSelectInterviewStatus}
-        />,
-        {
-          preloadedState: {
-            authentication: {
-              authenticatedUser: {
-                employeeName: 'venkata',
-                employeeId: 1978,
-                userName: 'venkata kolla',
-                role: 'admin',
-              },
-            },
-            scheduledInterviews: {
-              selectedView: 'Me',
-              scheduledCandidatesForEmployee:
-                mockScheduledCandidatesForEmployeeData,
+      render(toRender, {
+        preloadedState: {
+          authentication: {
+            authenticatedUser: {
+              employeeName: 'venkata',
+              employeeId: 1978,
+              userName: 'venkata kolla',
+              role: 'admin',
             },
           },
+          scheduledInterviews: {
+            selectedView: 'Me',
+            scheduledCandidatesForEmployee:
+              mockScheduledCandidatesForEmployeeData,
+          },
         },
-      )
+      })
     })
     test('should clear data upon clear button click', () => {
       const clearButtonElement = screen.getByRole('button', { name: 'Clear' })

@@ -323,11 +323,13 @@ const ResignationTimeLine = ({
                               Comments:
                             </CFormLabel>
                             &nbsp;
-                            <div
-                              dangerouslySetInnerHTML={{
-                                __html: item?.comments,
-                              }}
-                            />
+                            <span className="descriptionField">
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: item?.comments,
+                                }}
+                              />
+                            </span>
                           </div>
                         ) : (
                           ''

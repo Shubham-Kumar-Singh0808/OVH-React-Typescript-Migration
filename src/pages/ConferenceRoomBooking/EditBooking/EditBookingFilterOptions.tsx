@@ -21,11 +21,12 @@ import {
   MeetingEditDTOList,
 } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { TrainerDetails } from '../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
-import { showIsRequired } from '../../../utils/helper'
+import { convertTime, showIsRequired } from '../../../utils/helper'
 import NewBookingLocation from '../NewBooking/NewBookingChildComponents/NewBookingLocation'
 import NewBookingRoom from '../NewBooking/NewBookingChildComponents/NewBookingRoom'
 import { Attendees, EventFromDate } from '../NewEvent/NewEventChildComponents'
 import OToast from '../../../components/ReusableComponent/OToast'
+import SlotsBookedForRoom from '../NewBooking/NewBookingChildComponents/SlotsBookedForRoom'
 
 const EditBookingFilterOptions = (): JSX.Element => {
   const trainerDetails = {} as TrainerDetails
@@ -36,6 +37,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
   const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
   const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
     useState<string>('')
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isProjectChange, setIsProjectChange] = useState<string>('')
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [isAttendeeErrorShow, setIsAttendeeErrorShow] = useState(false)
@@ -126,6 +128,17 @@ const EditBookingFilterOptions = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
+
+  const failureValidationErrorToastMessage = (
+    <OToast
+      toastMessage="Sorry,You can't book room more than two hours"
+      toastColor="danger"
+    />
+  )
+
+  const failureToastMessage = (
+    <OToast toastMessage="Please Enter vaild time" toastColor="danger" />
+  )
 
   useEffect(() => {
     if (editExistingMeetingRequest != null) {
@@ -291,10 +304,22 @@ const EditBookingFilterOptions = (): JSX.Element => {
     }
   }
   const handleConfirmBtn = async () => {
-    const startTimeSplit = editMeetingRequest.startTime.split(':')
+    const startTimeResult = convertTime(editMeetingRequest.startTime)
+    const endTimeResult = convertTime(editMeetingRequest.endTime)
+
+    console.log(startTimeResult)
+    console.log(endTimeResult)
+
+    const startTimeHourResult = startTimeResult.split(':')[0]
+    const startTimeMinutesResult = startTimeResult.split(':')[1]?.split(' ')[0]
+
+    const endTimeHourResult = endTimeResult.split(':')[0]
+    const endTimeMinutes = endTimeResult.split(':')[1]?.split(' ')[0]
+    console.log(startTimeHourResult)
+    console.log(startTimeMinutesResult)
     const timeCheckResult = await dispatch(
       reduxServices.newEvent.timeCheck(
-        `${editMeetingRequest.fromDate}/${startTimeSplit[0]}/${startTimeSplit[1]}`,
+        `${editMeetingRequest.fromDate}/${startTimeHourResult}/${startTimeMinutesResult}`,
       ),
     )
     const newAttendeesList = attendeeResponse?.map(
@@ -303,7 +328,6 @@ const EditBookingFilterOptions = (): JSX.Element => {
         return { id, availability }
       },
     )
-    console.log(newAttendeesList)
     const prepareObj = {
       agenda: editMeetingRequest?.agenda,
       authorName: loggedEmployee,
@@ -317,7 +341,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       employeeDto: null,
       employeeIds: null,
       employeeNames: editMeetingRequest.employeeNames,
-      endTime: `${editMeetingRequest.fromDate}/${endHour}/${endMinutesDay}`,
+      endTime: `${editMeetingRequest.fromDate}/${endTimeHourResult}/${endTimeMinutes}`,
       eventEditAccess: null,
       eventId: null,
       eventLocation: null,
@@ -334,7 +358,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
       projectName: projectsAutoCompleteTarget,
       roomId: editMeetingRequest.roomId,
       roomName: editMeetingRequest.roomName,
-      startTime: `${editMeetingRequest.fromDate}/${startHour}/${startMinutesDay}`,
+      startTime: `${editMeetingRequest.fromDate}/${startTimeHourResult}/${startTimeMinutesResult}`,
       timeFomrat: null,
       toDate: null,
       trainerName: null,
@@ -357,13 +381,89 @@ const EditBookingFilterOptions = (): JSX.Element => {
             />,
           ),
         )
+      } else if (
+        reduxServices.bookingList.confirmUpdateMeetingRequest.rejected.match(
+          addEventResult,
+        ) &&
+        addEventResult.payload === 409
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="            
+              Sorry, you are late this room is already reserved..!"
+            />,
+          ),
+        )
       }
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Sorry, you missed the selected time..!!"
+          />,
+        ),
+      )
     }
   }
 
   const ClearButtonHandler = () => {
     history.push('/meetingList')
   }
+  console.log(errorMessageCount)
+  const validateBookingTimings = () => {
+    if (
+      editMeetingRequest.startTime.split(':') <
+      editMeetingRequest.endTime.split(':')
+    ) {
+      const startTimeSplit = editMeetingRequest.startTime.split(':')
+      const endTimeSplit = editMeetingRequest.endTime.split(':')
+      const start = new Date(
+        `${editMeetingRequest.fromDate} ${startTimeSplit[0]}:${startTimeSplit[1]}`,
+      )
+      const end = new Date(
+        `${editMeetingRequest.fromDate} ${endTimeSplit[0]}:${endTimeSplit[1]}`,
+      )
+
+      const durationInMs = end.getTime() - start.getTime()
+      const durationInHours = durationInMs / (1000 * 60 * 60)
+      if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
+        dispatch(
+          reduxServices.app.actions.addToast(
+            failureValidationErrorToastMessage,
+          ),
+        )
+      } else {
+        handleConfirmBtn()
+      }
+    } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
+      dispatch(reduxServices.app.actions.addToast(failureToastMessage))
+    }
+  }
+
+  useEffect(() => {
+    if ((editMeetingRequest.roomId, editMeetingRequest.fromDate)) {
+      dispatch(
+        reduxServices.newBooking.getAllBookedDetailsForRoom({
+          date: editMeetingRequest.fromDate,
+          roomid: editMeetingRequest.roomId,
+        }),
+      )
+    }
+  }, [editMeetingRequest.roomId, editMeetingRequest.fromDate])
+
+  const BookingsForSelection = useTypedSelector(
+    reduxServices.bookingList.selectors.bookingsForSelection,
+  )
+
+  const slotBooked = BookingsForSelection?.filter(
+    (item) => item.roomId === editMeetingRequest.roomId,
+  )
 
   return (
     <>
@@ -422,6 +522,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
               </CFormLabel>
               <CCol sm={6}>
                 <CFormTextarea
+                  className="sh-agenda"
                   placeholder="Purpose"
                   data-testid="text-area"
                   aria-label="textarea"
@@ -532,7 +633,7 @@ const EditBookingFilterOptions = (): JSX.Element => {
                     className="btn-ovh me-1"
                     data-testid="confirmBtn"
                     color="success"
-                    onClick={handleConfirmBtn}
+                    onClick={validateBookingTimings}
                   >
                     Update
                   </CButton>
@@ -549,6 +650,13 @@ const EditBookingFilterOptions = (): JSX.Element => {
             </CRow>
           </CForm>
         </CCol>
+        {slotBooked.length > 0 && editMeetingRequest.fromDate ? (
+          <CCol sm={4}>
+            <SlotsBookedForRoom />
+          </CCol>
+        ) : (
+          <></>
+        )}
       </CRow>
     </>
   )

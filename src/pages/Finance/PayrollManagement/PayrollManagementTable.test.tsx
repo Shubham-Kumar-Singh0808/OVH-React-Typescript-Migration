@@ -27,13 +27,11 @@ const toRender = (
       selectYear=""
       setToggle={mockSetTogglePage}
       setToEditPayslip={mockSetTogglePage}
-      isAllChecked={true}
-      isChecked={false}
-      setIsChecked={mockSetTogglePage}
-      setIsAllChecked={mockSetTogglePage}
       userDeleteAccess={true}
       userEditAccess={true}
       editPaySlipHandler={mockSetTogglePage}
+      paySlipId={[]}
+      setPaySlipId={mockSetTogglePage}
     />
     ,
   </div>

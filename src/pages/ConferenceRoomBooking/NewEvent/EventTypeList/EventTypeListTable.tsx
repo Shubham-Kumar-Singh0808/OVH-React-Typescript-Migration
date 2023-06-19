@@ -16,6 +16,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { UserAccessToFeatures } from '../../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 const EventTypeListTable = ({
   onChangeInputHandler,
@@ -23,12 +24,14 @@ const EventTypeListTable = ({
   setEditEventTypeName,
   isEditBtnClicked,
   setIsEditBtnClicked,
+  userAccess,
 }: {
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
   editEventTypeName: string
   setEditEventTypeName: (value: string) => void
   isEditBtnClicked: boolean
   setIsEditBtnClicked: (value: boolean) => void
+  userAccess: UserAccessToFeatures | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -174,38 +177,47 @@ const EventTypeListTable = ({
                         </>
                       ) : (
                         <CTooltip content="Edit">
+                          <>
+                            {userAccess?.updateaccess && (
+                              <CButton
+                                data-testid={`edit-btn${index}`}
+                                size="sm"
+                                className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
+                                color="info btn-ovh me-1"
+                                onClick={() =>
+                                  editBtnHandler(
+                                    currEventType.id,
+                                    currEventType.name,
+                                  )
+                                }
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            )}
+                          </>
+                        </CTooltip>
+                      )}
+                      {userAccess?.deleteaccess && (
+                        <CTooltip content="Delete">
                           <CButton
-                            data-testid={`edit-btn${index}`}
+                            data-testid={`delete-btn${index}`}
                             size="sm"
-                            className="btn btn-info btn-sm btn-ovh-employee-list cursor-pointer"
-                            color="info btn-ovh me-1"
+                            className="btn btn-danger btn-sm btn-ovh-employee-list cursor-pointer"
+                            color="danger btn-ovh me-2"
                             onClick={() =>
-                              editBtnHandler(
+                              deleteBtnHandler(
                                 currEventType.id,
                                 currEventType.name,
                               )
                             }
                           >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
                           </CButton>
                         </CTooltip>
                       )}
-                      <CTooltip content="Delete">
-                        <CButton
-                          data-testid={`delete-btn${index}`}
-                          size="sm"
-                          className="btn btn-danger btn-sm btn-ovh-employee-list cursor-pointer"
-                          color="danger btn-ovh me-2"
-                          onClick={() =>
-                            deleteBtnHandler(
-                              currEventType.id,
-                              currEventType.name,
-                            )
-                          }
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                        </CButton>
-                      </CTooltip>
                     </CTableDataCell>
                   </CTableRow>
                 )

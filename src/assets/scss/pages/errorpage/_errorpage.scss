@@ -1,0 +1,111 @@
+
+//header
+.cls-header {
+    position: relative;
+    background-color: rgba(0,0,0,.2);
+}
+.cls-header {
+    background-color: rgba(255, 255, 255, 1.0) !important;
+    padding: 15px;
+    position: relative;
+}
+.cls-header {
+    background-color: rgba(255, 255, 255, 1.0) !important;
+    padding: 15px;
+    position: relative;
+}
+
+//logo
+.cls-container {
+    background-color: #212124;
+    color: #fff;
+    text-align: center;
+}
+.cls-brand {
+    display: inline-block;
+    padding: 20px 0;
+}
+.cls-brand {
+    display: inline-block;
+    padding: 0 !important;
+}
+.cls-brand {
+    display: inline-block;
+    padding: 0 !important;
+}
+.cls-container a, .cls-container a:focus, .cls-container a:hover {
+    color: #fff;
+}
+.cls-brand .box-inline {
+    display: inline-block;
+}
+.cls-brand a .brand-icon, .cls-brand a .brand-title {
+    opacity: .7;
+    transition: all .5s;
+}
+.cls-brand .brand-icon, .cls-brand .brand-title {
+    display: block;
+    line-height: 50px;
+}
+
+//content
+
+.cls-content {
+    padding: 50px 15px 15px;
+    padding-top: 10vh;
+    position: relative;
+}
+.cls-content .error-code {
+    font-size: 100px;
+    // font-weight: 300;
+    line-height: 1.1;
+}
+.cls-content .text-warning, a.text-warning:active, a.text-warning:focus, a.text-warning:hover {
+    color: #e48701  !important;
+}
+.cls-content .text-warning {
+    color: #8a6d3b;
+}
+.cls-content .pad-btm {
+    padding-bottom: 15px;
+}
+.cls-content .mar-btm {
+    margin-bottom: 15px;
+}
+.cls-content .text-thin {
+    font-weight: 300;
+}
+.cls-content .btn-primary {
+    background-color: #3f8bd1 !important;
+    border-color: #3988cf !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.cls-content .btn-link {
+    border-color: transparent;
+}
+.cls-content .btn {
+    cursor: pointer;
+    background-color: transparent;
+    color: inherit;
+    padding: 6px 12px;
+    border-radius: 2px;
+    border: 1px solid 2px;
+    font-size: 12px;
+    line-height: 1.42857;
+    vertical-align: middle;
+    -webkit-transition: all .15s;
+    transition: all .15s;
+}
+
+.cls-content h3, .cls-content .h3 {
+    font-size: 24px;
+    line-height: 1.1;
+}
+.cls-content .h4{
+    color: inherit;
+    font-size: 18px;
+    line-height: 1.1;
+}

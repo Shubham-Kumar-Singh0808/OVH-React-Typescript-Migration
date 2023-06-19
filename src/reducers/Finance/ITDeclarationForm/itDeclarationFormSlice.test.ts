@@ -2,18 +2,26 @@ import itDeclarationFormReducer, {
   itDeclarationFormService,
 } from './itDeclarationFormSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { EmployeeDetails } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
+import {
+  EmployeeDetails,
+  ITDeclarationFormSliceState,
+} from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import {
   mockEmployeeInformation,
   mockSections,
 } from '../../../test/data/itDeclarationFormData'
 import { mockInvestments } from '../../../test/data/investmentCheckListData'
 
+jest.mock(
+  '../../../middleware/api/Finance/ITDeclarationForm/itDeclarationFormApi.ts',
+)
+
 describe('IT Declaration List Slice', () => {
   describe('IT Declaration List Reducer', () => {
-    const initialITDeclarationListState = {
+    const initialITDeclarationListState: ITDeclarationFormSliceState = {
       isLoading: ApiLoadingState.idle,
       error: null,
+      formSectionData: [],
       employeeDetails: {} as EmployeeDetails,
       sections: [],
       investments: [],
@@ -33,6 +41,12 @@ describe('IT Declaration List Slice', () => {
       itDeclarationFormId: 0,
       itDeclarationFormExist: false,
       grandTotal: 0,
+      modal: {
+        showModal: false,
+        modalDescription: '',
+      },
+      isSubmitButtonEnabled: false,
+      uploadedDocumentId: -1,
     }
     it('Should be able to set isLoading to "loading" if getEmployeeInfo is pending', () => {
       const action = {
@@ -43,27 +57,8 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "success" if `getEmployeeInfo` is fulfilled', () => {
@@ -76,6 +71,7 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.succeeded,
         error: null,
         employeeDetails: mockEmployeeInformation,
@@ -108,27 +104,9 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "loading" if getSectionsHavingInvests is pending', () => {
@@ -140,27 +118,8 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "success" if `getSectionsHavingInvests` is fulfilled', () => {
@@ -173,27 +132,11 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.succeeded,
         error: null,
         employeeDetails: {},
         sections: mockSections,
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "failed" if `getSectionsHavingInvests` is rejected', () => {
@@ -205,27 +148,9 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "loading" if getInvestsBySectionId is pending', () => {
@@ -237,27 +162,8 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "success" if `getInvestsBySectionId` is fulfilled', () => {
@@ -270,27 +176,9 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-        employeeDetails: {},
-        sections: [],
         investments: mockInvestments,
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "failed" if `getInvestsBySectionId` is rejected', () => {
@@ -302,27 +190,9 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "loading" if isITDeclarationFormExist is pending', () => {
@@ -334,27 +204,8 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "success" if `isITDeclarationFormExist` is fulfilled', () => {
@@ -367,27 +218,9 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-        employeeDetails: {},
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
         itDeclarationFormExist: true,
-        grandTotal: 0,
       })
     })
     it('Should be able to set isLoading to "failed" if `isITDeclarationFormExist` is rejected', () => {
@@ -399,27 +232,49 @@ describe('IT Declaration List Slice', () => {
         action,
       )
       expect(state).toEqual({
+        ...initialITDeclarationListState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDetails: {} as EmployeeDetails,
-        sections: [],
-        investments: [],
-        submitITDeclarationForm: {
-          designation: '',
-          employeeId: 0,
-          employeeName: '',
-          fromDate: '',
-          grandTotal: 0,
-          isAgree: false,
-          itDeclarationFormId: null,
-          organisationName: '',
-          panNumber: '',
-          toDate: '',
-          formSectionsDTOs: [],
-        },
-        itDeclarationFormId: 0,
-        itDeclarationFormExist: false,
-        grandTotal: 0,
+      })
+    })
+    it('should set isLoading to "loading" for "uploadITDeclareDocuments" ', () => {
+      const action = {
+        type: itDeclarationFormService.uploadITDeclareDocuments.pending.type,
+      }
+      const state = itDeclarationFormReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        ...initialITDeclarationListState,
+        isLoading: ApiLoadingState.loading,
+      })
+    })
+    it('should set isLoading to "succeeeded" for "uploadITDeclareDocuments" ', () => {
+      const action = {
+        type: itDeclarationFormService.uploadITDeclareDocuments.fulfilled.type,
+      }
+      const state = itDeclarationFormReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        ...initialITDeclarationListState,
+        isLoading: ApiLoadingState.succeeded,
+      })
+    })
+    it('should set isLoading to "failed" for "uploadITDeclareDocuments" ', () => {
+      const action = {
+        type: itDeclarationFormService.uploadITDeclareDocuments.rejected.type,
+      }
+      const state = itDeclarationFormReducer(
+        initialITDeclarationListState,
+        action,
+      )
+      expect(state).toEqual({
+        ...initialITDeclarationListState,
+        isLoading: ApiLoadingState.failed,
+        error: undefined,
       })
     })
   })

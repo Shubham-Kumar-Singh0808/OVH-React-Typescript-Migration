@@ -195,6 +195,8 @@ const AddInitiateCycle = (): JSX.Element => {
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
+  const minDate = new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+
   return (
     <>
       {toggle === 'addCycle' && (
@@ -265,6 +267,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="MM/yyyy"
                   name="selectFromMonth"
                   value={fromMonth}
+                  minDate={minDate}
                   maxDate={disableAfterDate}
                   onChange={onHandleFromMonth}
                 />
@@ -288,6 +291,7 @@ const AddInitiateCycle = (): JSX.Element => {
                   dateFormat="MM/yyyy"
                   name="selectToMonth"
                   value={toMonth}
+                  minDate={minDate}
                   maxDate={disableAfterDate}
                   onChange={onHandleToMonth}
                 />

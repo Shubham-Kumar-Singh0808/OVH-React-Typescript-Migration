@@ -8,6 +8,7 @@ import {
   CButton,
   CRow,
   CCol,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -152,26 +153,30 @@ const ChangeRequestTable = ({
                   <CTableDataCell>{item.descripition}</CTableDataCell>
                   <CTableDataCell>
                     {userAccessChangeRequestEditDelete?.updateaccess && (
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() => {
-                          editChangeRequestButtonHandler(item)
-                        }}
-                      >
-                        <i className="fa fa-pencil-square-o"></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          onClick={() => {
+                            editChangeRequestButtonHandler(item)
+                          }}
+                        >
+                          <i className="fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userAccessChangeRequestEditDelete?.deleteaccess && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        onClick={() =>
-                          handleShowDeleteModal(item.id, item.duration)
-                        }
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          color="danger"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          onClick={() =>
+                            handleShowDeleteModal(item.id, item.duration)
+                          }
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 </CTableRow>

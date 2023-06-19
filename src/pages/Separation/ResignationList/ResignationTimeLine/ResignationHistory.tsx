@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CRow, CCol, CButton } from '@coreui/react-pro'
+import { CRow, CCol, CButton, CTooltip } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import ResignationTimeLine from './ResignationTimeLine'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -50,13 +50,15 @@ const ResignationHistory = (): JSX.Element => {
           <CCol className="text-end" md={4}>
             {getAllResignationHistory.status === 'Resigned' &&
             userAccessEditTimeLine?.updateaccess ? (
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                onClick={editButtonHandler}
-              >
-                <i className="fa fa-edit"></i>Edit
-              </CButton>
+              <CTooltip content="Edit">
+                <CButton
+                  color="info"
+                  className="btn-ovh me-1"
+                  onClick={editButtonHandler}
+                >
+                  <i className="fa fa-pencil-square-o"></i>Edit
+                </CButton>
+              </CTooltip>
             ) : (
               ''
             )}

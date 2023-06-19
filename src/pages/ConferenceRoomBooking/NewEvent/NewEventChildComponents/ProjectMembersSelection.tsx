@@ -8,6 +8,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import SelectedAttendees from './SelectedAttendees'
@@ -30,6 +31,11 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow,
   checkIsAttendeeExists,
   setIsErrorShow,
+  isErrorShow,
+  deleteAttendeeId,
+  deleteAttendeeModalVisible,
+  deleteBtnHandler,
+  setDeleteAttendeeModalVisible,
 }: {
   addEvent: AddEvent
   projectMembers: ProjectMember[]
@@ -39,19 +45,17 @@ const ProjectMembersSelection = ({
   setIsAttendeeErrorShow: (value: boolean) => void
   checkIsAttendeeExists: (attendeeId: number) => boolean
   setIsErrorShow: React.Dispatch<React.SetStateAction<boolean>>
+  isErrorShow: boolean
+  deleteAttendeeId: number
+  deleteAttendeeModalVisible: boolean
+  deleteBtnHandler: (id: number) => void
+  setDeleteAttendeeModalVisible: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
-    useState(false)
   const [deleteListModalVisible, setDeleteListModalVisible] = useState(false)
-  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
-  const [addListModalVisible, setAddListModalVisible] = useState(false)
 
-  const deleteBtnHandler = (id: number) => {
-    setDeleteAttendeeId(id)
-    setDeleteAttendeeModalVisible(true)
-  }
+  const [addListModalVisible, setAddListModalVisible] = useState(false)
 
   const deleteAttendeeSuccessToast = (
     <OToast toastColor="success" toastMessage="Attendee Deleted Successfully" />
@@ -178,31 +182,44 @@ const ProjectMembersSelection = ({
                     })}
                 </CTableBody>
               </CTable>
+              {isErrorShow && (
+                <CRow>
+                  <CCol>
+                    <span className="sh-span-red">
+                      The employee already added to Attendees
+                    </span>
+                  </CCol>
+                </CRow>
+              )}
             </CCol>
-            <CCol sm={2} md={3} className="meeting-bulk-add">
-              <CButton
-                color="info btn-ovh me-1"
-                className="btn-ovh"
-                data-testid="delete-btn"
-                onClick={() => setAddListModalVisible(true)}
-              >
-                <i
-                  className="fa fa-arrow-right text-white"
-                  aria-hidden="true"
-                ></i>
-              </CButton>
-              {attendeesList?.length > 0 && (
+            <CCol sm={2} md={2} className="meeting-bulk-add">
+              <CTooltip content="Delete">
                 <CButton
-                  color="danger btn-ovh me-1"
+                  color="info btn-ovh me-1"
                   className="btn-ovh"
-                  data-testid="delete-button"
-                  onClick={() => setDeleteListModalVisible(true)}
+                  data-testid="delete-btn"
+                  onClick={() => setAddListModalVisible(true)}
                 >
                   <i
-                    className="fa fa-trash-o text-white"
+                    className="fa fa-arrow-right text-white"
                     aria-hidden="true"
                   ></i>
                 </CButton>
+              </CTooltip>
+              {attendeesList?.length > 0 && (
+                <CTooltip content="Delete">
+                  <CButton
+                    color="danger btn-ovh me-1"
+                    className="btn-ovh"
+                    data-testid="delete-button"
+                    onClick={() => setDeleteListModalVisible(true)}
+                  >
+                    <i
+                      className="fa fa-trash-o text-white"
+                      aria-hidden="true"
+                    ></i>
+                  </CButton>
+                </CTooltip>
               )}
             </CCol>
             <SelectedAttendees

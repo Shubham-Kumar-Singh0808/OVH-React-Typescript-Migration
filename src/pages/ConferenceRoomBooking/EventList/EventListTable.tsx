@@ -9,6 +9,7 @@ import {
   CCol,
   CButton,
   CLink,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import parse from 'html-react-parser'
@@ -103,7 +104,9 @@ const EventListTable = (
     <CTable align="middle" className="bookingList-model-table">
       <CTableHead>
         <CTableRow>
-          <CTableHeaderCell className="pt-0">Name of Employee</CTableHeaderCell>
+          <CTableHeaderCell className="pt-0 ps-0">
+            Name of Employee
+          </CTableHeaderCell>
           <CTableHeaderCell className="pt-0">Designation</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
@@ -192,32 +195,38 @@ const EventListTable = (
                 <CTableDataCell scope="row">
                   {userAccessToEditEvent?.updateaccess && (
                     <div className="buttons-events">
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
-                        data-testid={`editEvent-btn${index}`}
-                        onClick={() => editButtonHandler(event.id)}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                      <CButton
-                        color="warning"
-                        className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
-                        data-testid={`cancelEvent-btn${index}`}
-                        disabled={
-                          event.disableEdit || event.meetingStatus !== 'New'
-                        }
-                        onClick={() => handleShowCancelEventModal(event.id)}
-                      >
-                        <i className="fa fa-times" aria-hidden="true"></i>
-                      </CButton>
-                      <Link to={`/trainingFeedBackForm/${event.id}`}>
+                      <CTooltip content="Edit">
                         <CButton
-                          className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                          data-testid={`viewEvent-btn${index}`}
+                          color="info"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                          data-testid={`editEvent-btn${index}`}
+                          onClick={() => editButtonHandler(event.id)}
                         >
-                          <i className="fa fa-eye" aria-hidden="true"></i>
+                          <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
+                      </CTooltip>
+                      <CTooltip content="Cancel">
+                        <CButton
+                          color="warning"
+                          className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                          data-testid={`cancelEvent-btn${index}`}
+                          disabled={
+                            event.disableEdit || event.meetingStatus !== 'New'
+                          }
+                          onClick={() => handleShowCancelEventModal(event.id)}
+                        >
+                          <i className="fa fa-times" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                      <Link to={`/trainingFeedBackForm/${event.id}`}>
+                        <CTooltip content="View">
+                          <CButton
+                            className="btn-ovh me-2 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
+                            data-testid={`viewEvent-btn${index}`}
+                          >
+                            <i className="fa fa-eye" aria-hidden="true"></i>
+                          </CButton>
+                        </CTooltip>
                       </Link>
                     </div>
                   )}
@@ -292,9 +301,12 @@ const EventListTable = (
             <span className="col-sm-2 text-right fw-bold px-3">
               Description :
             </span>
-            {selectedEventDetails.description
-              ? parse(selectedEventDetails.description)
-              : 'N/A'}
+
+            <span className="descriptionField">
+              {(selectedEventDetails.description &&
+                parse(selectedEventDetails.description)) ||
+                'N/A'}
+            </span>
           </div>
           <p className="d-flex">
             <span className="col-sm-2 text-right fw-bold px-3">Trainer :</span>

@@ -22,6 +22,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ResignationList } from '../../../types/Separation/ResignationList/resignationListTypes'
+import { deviceLocale } from '../../../utils/dateFormatUtils'
 
 const ResignationListTable = ({
   paginationRange,
@@ -29,12 +30,22 @@ const ResignationListTable = ({
   setCurrentPage,
   pageSize,
   setPageSize,
+  Select,
+  employeeStatus,
+  selectCurrentPage,
+  selectFromDate,
+  selectToDate,
 }: {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  Select: string
+  employeeStatus: string
+  selectCurrentPage: number
+  selectFromDate: string
+  selectToDate: string
 }): JSX.Element => {
   const [isInitiateModalVisible, setIsInitiateModalVisible] = useState(false)
   const [toInitiateSeparationId, setToInitiateSeparationId] = useState(0)
@@ -168,14 +179,26 @@ const ResignationListTable = ({
     ) {
       dispatch(
         reduxServices.resignationList.getResignationList({
-          dateSelection: '',
-          empStatus: '',
-          endIndex: pageSize * currentPage,
-          from: '',
+          dateSelection: Select || '',
+          empStatus: employeeStatus || '',
+          endIndex: pageSize * selectCurrentPage,
+          from: selectFromDate
+            ? new Date(selectFromDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
           multiplesearch: '',
-          startIndex: pageSize * (currentPage - 1),
-          status: 'ALL',
-          to: '',
+          startIndex: pageSize * (selectCurrentPage - 1),
+          status: status || 'All',
+          to: selectToDate
+            ? new Date(selectToDate).toLocaleDateString(deviceLocale, {
+                year: 'numeric',
+                month: 'numeric',
+                day: '2-digit',
+              })
+            : '',
         }),
       )
       dispatch(

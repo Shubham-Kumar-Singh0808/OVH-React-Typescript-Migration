@@ -61,4 +61,6 @@ export type CertificatesFilterOptionsProps = {
   filterByCertificate: string
   multiSearchValue: string
   setIsAccordionItemShow: (value: boolean) => void
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
 }

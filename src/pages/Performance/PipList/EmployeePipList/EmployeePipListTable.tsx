@@ -42,7 +42,12 @@ const EmployeePipListTable = ({
   const pipListSizeRecords = useTypedSelector(
     reduxServices.pipList.selectors.listSize,
   )
-
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const clearanceCertificateAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'HR Cleranace',
+  )
   const handlePipListPageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -129,7 +134,7 @@ const EmployeePipListTable = ({
                       <Link to={`/ViewPIPDetail/${item.id}`}>
                         <CButton
                           color="info"
-                          className="btn-ovh me-2"
+                          className="btn-ovh-employee-list me-1"
                           data-testid="history-btn"
                           onClick={() => timeLineHandler(item.id as number)}
                         >
@@ -140,18 +145,22 @@ const EmployeePipListTable = ({
                         </CButton>
                       </Link>
                     </CTooltip>
-                    <CTooltip content="Clearence Certificate">
-                      <Link to={`/PIPClearnceCerticates`}>
-                        <CButton
-                          className="btn-ovh me-2"
-                          color="info"
-                          type="button"
-                          onClick={() => clearanceBtnHandler(item.id as number)}
-                        >
-                          <i className="fa fa-user-circle text-white"></i>
-                        </CButton>
-                      </Link>
-                    </CTooltip>
+                    {clearanceCertificateAccess?.viewaccess && (
+                      <CTooltip content="Clearence Certificate">
+                        <Link to={`/PIPClearnceCerticates`}>
+                          <CButton
+                            className="btn-ovh-employee-list me-1"
+                            color="info"
+                            type="button"
+                            onClick={() =>
+                              clearanceBtnHandler(item.id as number)
+                            }
+                          >
+                            <i className="fa fa-user-circle text-white"></i>
+                          </CButton>
+                        </Link>
+                      </CTooltip>
+                    )}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -199,11 +208,13 @@ const EmployeePipListTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: reasonModal.remarks,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: reasonModal.remarks,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>

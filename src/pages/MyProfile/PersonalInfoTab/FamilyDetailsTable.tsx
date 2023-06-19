@@ -6,6 +6,7 @@ import {
   CTableHead,
   CTableHeaderCell,
   CTableRow,
+  CTooltip,
 } from '@coreui/react-pro'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -25,6 +26,7 @@ const FamilyDetailsTable = ({
   const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [toDeleteFamilyId, setToDeleteFamilyId] = useState(0)
+
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
@@ -183,27 +185,32 @@ const FamilyDetailsTable = ({
                 {isFieldDisabled && !isViewingAnotherEmployee ? (
                   <CTableDataCell scope="row">
                     {userAccess?.updateaccess && (
-                      <CButton
-                        color="info"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        data-testid="edit-family"
-                        onClick={() => editButtonHandler?.(family.familyId)}
-                      >
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        ></i>
-                      </CButton>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info"
+                          className="btn-ovh me-1 btn-ovh-employee-list"
+                          data-testid="edit-family"
+                          onClick={() => editButtonHandler?.(family.familyId)}
+                        >
+                          <i
+                            className="fa fa-pencil-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                     {userAccess?.deleteaccess && (
-                      <CButton
-                        color="danger"
-                        className="btn-ovh me-1 btn-ovh-employee-list"
-                        data-testid="delete-family"
-                        onClick={() => handleShowDeleteModal(family.familyId)}
-                      >
-                        <i className="fa fa-trash-o" aria-hidden="true"></i>
-                      </CButton>
+                      <CTooltip content="Delete">
+                        <CButton
+                          data-testid="delete-family"
+                          size="sm"
+                          color="danger btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                          onClick={() => handleShowDeleteModal(family.familyId)}
+                        >
+                          <i className="fa fa-trash-o" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
                     )}
                   </CTableDataCell>
                 ) : (
@@ -224,12 +231,14 @@ const FamilyDetailsTable = ({
             alignment="center"
             visible={isDeleteModalVisible}
             setVisible={setIsDeleteModalVisible}
-            modalHeaderClass="d-none"
+            modalTitle="Family Details"
             confirmButtonText="Yes"
             cancelButtonText="No"
+            closeButtonClass="d-none"
             confirmButtonAction={handleConfirmDeleteFamilyDetails}
+            modalBodyClass="mt-0"
           >
-            {`Do you really want to delete this ?`}
+            <>Do you really want to delete this ?</>
           </OModal>
         </>
       )}

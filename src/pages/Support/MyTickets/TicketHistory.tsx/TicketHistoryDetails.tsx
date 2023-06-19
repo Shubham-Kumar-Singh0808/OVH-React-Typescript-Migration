@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
-import { CRow, CCol, CButton, CSpinner } from '@coreui/react-pro'
+import { CRow, CCol, CButton } from '@coreui/react-pro'
 import { Link, useLocation } from 'react-router-dom'
 import TicketHistoryTimeLine from './TicketHistoryTimeLine'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OLoadingSpinner from '../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../types/Components/loadingScreenTypes'
 
 const TicketHistoryDetails = (): JSX.Element => {
   const location = useLocation()
@@ -67,11 +69,7 @@ const TicketHistoryDetails = (): JSX.Element => {
             <TicketHistoryTimeLine />
           </>
         ) : (
-          <CCol>
-            <CRow className="category-loading-spinner">
-              <CSpinner />
-            </CRow>
-          </CCol>
+          <OLoadingSpinner type={LoadingType.PAGE} />
         )}
       </OCard>
     </>

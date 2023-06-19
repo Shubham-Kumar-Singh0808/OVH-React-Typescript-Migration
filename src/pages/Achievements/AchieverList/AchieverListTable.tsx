@@ -9,6 +9,7 @@ import {
   CTableBody,
   CTableDataCell,
   CButton,
+  CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import AchieverListToggle from './AchieverListToggle'
@@ -24,6 +25,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
+import { baseImageExtension } from '../AchievementConstants'
 
 const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -91,13 +93,17 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                   removeSpaces && removeSpaces.length > 30
                     ? `${removeSpaces.substring(0, 30)}...`
                     : removeSpaces
+                const imageUrl = item.profilePicture
+                const baseUrl = baseImageExtension
+                const url = new URL(imageUrl, baseUrl)
+                const finalImageUrl = url.href
                 return (
                   <CTableRow key={index}>
                     <CTableDataCell scope="row">
                       <div>
                         <img
                           className="rounded-circle img-responsive"
-                          src={item.profilePicture}
+                          src={finalImageUrl}
                           alt={item.employeeName}
                           width={35}
                         />
@@ -143,24 +149,26 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
                         >
                           <AchieverListToggle achieverItem={item} />
                           <div className="button-events">
-                            <CButton
-                              color="info"
-                              className="btn-ovh me-2 btn-ovh-employee-list"
-                              data-testid={`timeline-btn-${index}`}
-                              title="Timeline"
-                              onClick={(
-                                e: React.MouseEvent<HTMLButtonElement>,
-                              ) => {
-                                timelineClickHandler(e, {
-                                  achievementId: item.id,
-                                })
-                              }}
-                            >
-                              <i
-                                className="fa fa-bar-chart text-white"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
+                            <CTooltip content="Timeline">
+                              <CButton
+                                color="info"
+                                className="btn-ovh me-2 btn-ovh-employee-list"
+                                data-testid={`timeline-btn-${index}`}
+                                title="Timeline"
+                                onClick={(
+                                  e: React.MouseEvent<HTMLButtonElement>,
+                                ) => {
+                                  timelineClickHandler(e, {
+                                    achievementId: item.id,
+                                  })
+                                }}
+                              >
+                                <i
+                                  className="fa fa-bar-chart text-white"
+                                  aria-hidden="true"
+                                ></i>
+                              </CButton>
+                            </CTooltip>
                           </div>
                         </div>
                       </CTableDataCell>
@@ -214,12 +222,13 @@ const AchieverListTable = (props: AchieverListTableTypes): JSX.Element => {
           modalHeaderClass="d-none"
         >
           {/* <div data-testid="modal-txt">{descriptionContentTernary}</div> */}
-
-          <div
-            dangerouslySetInnerHTML={{
-              __html: descriptionContent,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: descriptionContent,
+              }}
+            />
+          </span>
         </OModal>
       </>
     </>

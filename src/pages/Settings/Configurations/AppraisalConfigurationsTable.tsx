@@ -176,11 +176,13 @@ const AppraisalConfigurationsTable = ({
         modalHeaderClass="d-none"
       >
         <>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: descriptionModal.description as string,
-            }}
-          />
+          <span className="descriptionField">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: descriptionModal.description as string,
+              }}
+            />
+          </span>
         </>
       </OModal>
     </>

@@ -116,6 +116,19 @@ import { projectStatusService } from './ProjectManagement/Project/ProjectView/St
 import { processAreaService } from './Settings/ProcessArea/ProcessAreaSlice'
 import { addNewAuditService } from './SQAAuditReport/addNewAuditSlice'
 import { sqaAuditReportService } from './SQAAuditReport/sqaAuditReportSlice'
+import { notificationService } from './Notifications/notificationSlice'
+import { jobOpeningsService } from './Recruitment/JobOpenings/jobOpeningsSlice'
+import { intervieweeDetailsService } from './Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
+import { candidateListService } from './Recruitment/CandidateList/CandidateListSlice'
+import { vendorListService } from './Assets/VendorList/vendorListSlice'
+import { addNewVendorService } from './Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
+import { changeReporteesService } from './Settings/ChangeReportees/changeReporteesSlice'
+import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
+import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
+import { assetListService } from './Assets/AssetList/AssetListSlice'
+import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -236,4 +249,17 @@ export const reduxServices = {
   processArea: processAreaService,
   addNewAuditForm: addNewAuditService,
   sqaAuditReport: sqaAuditReportService,
+  notification: notificationService,
+  jobVacancies: jobOpeningsService,
+  vendorList: vendorListService,
+  addNewVendor: addNewVendorService,
+  changeReportees: changeReporteesService,
+  intervieweeDetails: intervieweeDetailsService,
+  candidateList: candidateListService,
+  ManufacturerList: ManufacturerListService,
+  ProductTypeList: ProductTypeListService,
+  assetList: assetListService,
+  assetsWarrantyList: assetsWarrantyListService,
+  productSpecificationList: productSpecificationListService,
+  addNewProduct: addProductService,
 }

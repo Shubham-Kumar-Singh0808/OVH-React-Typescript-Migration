@@ -29,6 +29,7 @@ import {
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 import ProjectMembersSelection from '../NewEvent/NewEventChildComponents/ProjectMembersSelection'
+import SelectedAttendees from '../NewEvent/NewEventChildComponents/SelectedAttendees'
 
 const NewBookingFilterOptions = ({
   setToggle,
@@ -58,7 +59,7 @@ const NewBookingFilterOptions = ({
   } as ShouldResetNewBookingFields
 
   const [resetFields, setResetField] = useState(initResetFields)
-
+  const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
   const [isProjectAndAttendeesEnable, setIsProjectAndAttendeesEnable] =
     useState(true)
   const [newRoomBooking, setNewRoomBooking] = useState(initNewBooking)
@@ -67,6 +68,14 @@ const NewBookingFilterOptions = ({
   const [isErrorShow, setIsErrorShow] = useState(false)
   const [attendeesAutoCompleteTarget, setAttendeesAutoCompleteTarget] =
     useState<string>()
+  const [deleteAttendeeId, setDeleteAttendeeId] = useState<number>()
+  const [deleteAttendeeModalVisible, setDeleteAttendeeModalVisible] =
+    useState(false)
+
+  const deleteBtnHandler = (id: number) => {
+    setDeleteAttendeeId(id)
+    setDeleteAttendeeModalVisible(true)
+  }
   const [isConfirmButtonEnabled, setIsConfirmButtonEnabled] = useState(false)
   const loggedEmployee = useTypedSelector(
     reduxServices.newEvent.selectors.loggedEmployee,
@@ -274,6 +283,7 @@ const NewBookingFilterOptions = ({
         } as ShouldResetNewBookingFields
         setResetField(shouldResetFields)
         setAttendeesAutoCompleteTarget('')
+        setAttendeesList([])
       } else if (
         reduxServices.newBooking.confirmNewMeetingAppointment.rejected.match(
           addBookingResult,
@@ -295,8 +305,8 @@ const NewBookingFilterOptions = ({
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="danger"
-            toastMessage="            
-            Sorry, you missed the selected time..!!"
+            toastMessage="
+              Sorry, you missed the selected time..!!"
           />,
         ),
       )
@@ -318,6 +328,7 @@ const NewBookingFilterOptions = ({
       const durationInMs = end.getTime() - start.getTime()
       const durationInHours = durationInMs / (1000 * 60 * 60)
       if (durationInHours > 2) {
+        setErrorMessageCount((messageCount) => messageCount + 1)
         dispatch(
           reduxServices.app.actions.addToast(
             failureValidationErrorToastMessage,
@@ -327,6 +338,7 @@ const NewBookingFilterOptions = ({
         handleConfirmBtn()
       }
     } else {
+      setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(failureToastMessage))
     }
   }
@@ -351,6 +363,8 @@ const NewBookingFilterOptions = ({
     } as ShouldResetNewBookingFields
     setResetField(shouldResetFields)
     setAttendeesAutoCompleteTarget('')
+    setIsAttendeeErrorShow(false)
+    setAttendeesList([])
   }
 
   useEffect(() => {
@@ -377,6 +391,29 @@ const NewBookingFilterOptions = ({
     }
   }, [newRoomBooking.roomId, newRoomBooking.fromDate])
 
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessLocationList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Location',
+  )
+
+  const userAccessRoomList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Meeting-Rooms',
+  )
+  console.log(errorMessageCount)
+  const attendeesResult = (
+    <CRow className=" d-flex justify-content-center mt-3">
+      {attendeesList?.length > 0 ? (
+        <SelectedAttendees
+          attendeesList={attendeesList}
+          deleteBtnHandler={deleteBtnHandler}
+        />
+      ) : (
+        <></>
+      )}
+    </CRow>
+  )
   return (
     <>
       <CRow>
@@ -388,13 +425,15 @@ const NewBookingFilterOptions = ({
                 locationValue={newRoomBooking.locationId}
               />
               <CCol className="col-sm-3">
-                <CButton
-                  color="info btn-ovh me-1"
-                  data-testid="locationAdd-btn"
-                  onClick={() => setToggle('addLocation')}
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
+                {userAccessLocationList?.createaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    data-testid="locationAdd-btn"
+                    onClick={() => setToggle('addLocation')}
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <CRow className="mt-1 mb-3">
@@ -403,13 +442,15 @@ const NewBookingFilterOptions = ({
                 roomValue={newRoomBooking.roomId}
               />
               <CCol className="col-sm-3">
-                <CButton
-                  color="info btn-ovh me-1"
-                  onClick={() => setToggle('addRoom')}
-                  data-testid="roomAdd-btn"
-                >
-                  <i className="fa fa-plus me-1"></i>Add
-                </CButton>
+                {userAccessRoomList?.createaccess && (
+                  <CButton
+                    color="info btn-ovh me-1"
+                    onClick={() => setToggle('addRoom')}
+                    data-testid="roomAdd-btn"
+                  >
+                    <i className="fa fa-plus me-1"></i>Add
+                  </CButton>
+                )}
               </CCol>
             </CRow>
             <ReservedBy
@@ -439,6 +480,7 @@ const NewBookingFilterOptions = ({
               <CCol sm={6}>
                 <CFormTextarea
                   placeholder="Purpose"
+                  className="sh-agenda"
                   data-testid="text-area"
                   aria-label="textarea"
                   value={newRoomBooking.agenda}
@@ -482,11 +524,19 @@ const NewBookingFilterOptions = ({
                   setIsErrorShow={setIsErrorShow}
                   setIsAttendeeErrorShow={setIsAttendeeErrorShow}
                   checkIsAttendeeExists={checkIsAttendeeExists}
+                  isErrorShow={isErrorShow}
+                  deleteAttendeeId={deleteAttendeeId as number}
+                  deleteAttendeeModalVisible={deleteAttendeeModalVisible}
+                  deleteBtnHandler={deleteBtnHandler}
+                  setDeleteAttendeeModalVisible={setDeleteAttendeeModalVisible}
                 />
               </>
             ) : (
               <></>
             )}
+            {projectMembers?.length > 0 && newRoomBooking.projectName.length > 0
+              ? ''
+              : attendeesResult}
             <CRow className="mt-5 mb-4">
               <CCol md={{ span: 6, offset: 3 }}>
                 <>
