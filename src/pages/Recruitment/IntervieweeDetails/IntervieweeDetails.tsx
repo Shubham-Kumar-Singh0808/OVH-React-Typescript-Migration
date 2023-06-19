@@ -15,6 +15,12 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import OToast from '../../../components/ReusableComponent/OToast'
+import Schedule from '../ScheduledInterviews/ScheduleIntervieActionButtons/Schedule'
+import NoShow from '../ScheduledInterviews/ScheduleIntervieActionButtons/NoShow '
+import RejectInterview from '../ScheduledInterviews/ScheduleIntervieActionButtons/RejectInterview'
+import Offer from '../ScheduledInterviews/ScheduleIntervieActionButtons/Offer'
+import OnHold from '../ScheduledInterviews/ScheduleIntervieActionButtons/OnHold'
+import ReSchedule from '../ScheduledInterviews/ScheduleIntervieActionButtons/ReSchedule'
 
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -138,15 +144,48 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <Link to={`/candidateSearch`}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-            </Link>
+            <CButton
+              ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
+              ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
+              type="submit"
+              className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
+              disabled={timeLineListSelector.pendingInterviewStatus > 0}
+            >
+              Schedule
+            </CButton>
+            <CButton
+              ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
+              ng-click="redirectTo_Re_ScheduleInterview(interviewTimelineDetailsList)"
+              type="submit"
+              className="btn btn-info btn-labeled fa fa-retweet fa-lg"
+              // ng-disabled="interviewTimelineDetailsList.pendingInterviewStatus <= 0
+              // 			||
+              // 			interviewTimelineDetailsList.candidateStatus == 'REPROCESS'"
+              disabled={
+                timeLineListSelector.pendingInterviewStatus <= 0 ||
+                timeLineListSelector.candidateStatus === 'REPROCESS'
+              }
+            >
+              Re-Schedule
+            </CButton>
+            <CButton
+              color="info"
+              className="btn-ovh me-1 btn-ovh-employee-list"
+              data-testid="edit-family"
+            >
+              <i className="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+            </CButton>
+            <OnHold />
+            <Offer />
+            <RejectInterview />
+            <NoShow />
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
         </CRow>
         <CForm>

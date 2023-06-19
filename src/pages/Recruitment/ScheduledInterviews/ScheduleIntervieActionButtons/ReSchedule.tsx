@@ -11,14 +11,14 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import Autocomplete from 'react-autocomplete'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { showIsRequired } from '../../../utils/helper'
-import { deviceLocale } from '../../../utils/dateFormatUtils'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { TextDanger, TextWhite } from '../../../constant/ClassName'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { showIsRequired } from '../../../../utils/helper'
+import { deviceLocale } from '../../../../utils/dateFormatUtils'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 
-const Schedule = () => {
+const ReSchedule = () => {
   const [dateValue, setDateValue] = useState<string | Date>('')
   const [time, setTime] = useState<string>('')
   const [mode, setMode] = useState<string>('')
@@ -110,13 +110,6 @@ const Schedule = () => {
             }}
             selected={dateValue as Date}
           />
-        </CCol>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">
-            Time:
-            <span className={showIsRequired(time as string)}>*</span>
-          </CFormLabel>
-          {/* <CTimePicker label="Time" locale="en-US" time="02:17:35 PM" /> */}
         </CCol>
         <CFormCheck
           type="checkbox"
@@ -250,4 +243,4 @@ const Schedule = () => {
   )
 }
 
-export default Schedule
+export default ReSchedule

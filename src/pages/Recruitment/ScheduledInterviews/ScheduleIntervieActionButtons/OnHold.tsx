@@ -1,23 +1,36 @@
 import {
   CButton,
   CCol,
-  CFormCheck,
   CFormLabel,
+  CFormSelect,
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import React, { useState } from 'react'
-import OModal from '../../../components/ReusableComponent/OModal'
-import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import React, { useEffect, useState } from 'react'
+import OModal from '../../../../components/ReusableComponent/OModal'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
-const RejectInterview = () => {
+const OnHold = () => {
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
-  const [checked, setChecked] = useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [select, setSelect] = useState<string>('')
+  const [isDropDon, setIsDropDon] = useState<boolean>(false)
+
+  const timeLineListSelector = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
+
   const handleModal = () => {
-    setIsApproveModalVisibility(true)
+    setIsDropDon(true)
   }
+  useEffect(() => {
+    if (select) {
+      setIsApproveModalVisibility(true)
+    }
+  })
   return (
     <>
       <CButton
@@ -27,22 +40,43 @@ const RejectInterview = () => {
         data-testid="search-employee-btn"
         className="btn btn-danger btn-labeled fa fa-times fa-lg"
         onClick={handleModal}
+        disabled={timeLineListSelector.candidateStatus === 'HOLD'}
       >
-        Reject
+        On Hold
       </CButton>
+      {isDropDon && (
+        <CCol sm={2}>
+          <CFormSelect
+            aria-label="Default select example"
+            size="sm"
+            id="select"
+            data-testid="form-select-3"
+            name="select"
+            value={select}
+            onChange={(e) => setSelect(e.target.value)}
+          >
+            <option value="">select</option>
+            <option value="Expensive">Expensive</option>
+            <option value="Average Skills">Average Skills</option>
+            <option value="Communication">Communication</option>
+            <option value="Not Interested">Not Interested</option>
+            <option value="Notice Period"> Notice Period</option>
+          </CFormSelect>
+        </CCol>
+      )}
       <OModal
         alignment="center"
         visible={isApproveModalVisibility}
         setVisible={setIsApproveModalVisibility}
         confirmButtonText="Yes"
-        modalTitle="Do you want to REJECTED this candidate?"
+        modalTitle="Do you want to HOLD this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
         // confirmButtonAction={confirmBtnHandler}
       >
         <>
           <CRow className="mt-1 mb-1">
-            <p>Do you want to REJECTED this candidate?</p>
+            <p>Do you want to HOLD this candidate?</p>
             <br></br>
             <CFormLabel className="col-sm-3">
               Comments:
@@ -67,20 +101,10 @@ const RejectInterview = () => {
               ></CFormTextarea>
             </CCol>
           </CRow>
-          <CFormCheck
-            type="radio"
-            id="checked"
-            name="checked"
-            data-testid="checked"
-            checked={checked}
-            onChange={(e) => setChecked(e.target.checked)}
-            inline
-          />
-          <b>Send Message to candidate</b>
         </>
       </OModal>
     </>
   )
 }
 
-export default RejectInterview
+export default OnHold

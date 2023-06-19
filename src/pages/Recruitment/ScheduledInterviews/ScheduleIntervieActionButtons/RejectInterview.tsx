@@ -1,17 +1,19 @@
 import {
   CButton,
   CCol,
+  CFormCheck,
   CFormLabel,
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
 import React, { useState } from 'react'
-import OModal from '../../../components/ReusableComponent/OModal'
-import { TextWhite, TextDanger } from '../../../constant/ClassName'
+import OModal from '../../../../components/ReusableComponent/OModal'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
-const NoShow = () => {
+const RejectInterview = () => {
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
+  const [checked, setChecked] = useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
   const handleModal = () => {
     setIsApproveModalVisibility(true)
@@ -26,21 +28,21 @@ const NoShow = () => {
         className="btn btn-danger btn-labeled fa fa-times fa-lg"
         onClick={handleModal}
       >
-        NoShow
+        Reject
       </CButton>
       <OModal
         alignment="center"
         visible={isApproveModalVisibility}
         setVisible={setIsApproveModalVisibility}
         confirmButtonText="Yes"
-        modalTitle="Do you want to No show this candidate?"
+        modalTitle="Do you want to REJECTED this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
         // confirmButtonAction={confirmBtnHandler}
       >
         <>
           <CRow className="mt-1 mb-1">
-            <p>Do you want to No show this candidate?</p>
+            <p>Do you want to REJECTED this candidate?</p>
             <br></br>
             <CFormLabel className="col-sm-3">
               Comments:
@@ -65,10 +67,20 @@ const NoShow = () => {
               ></CFormTextarea>
             </CCol>
           </CRow>
+          <CFormCheck
+            type="radio"
+            id="checked"
+            name="checked"
+            data-testid="checked"
+            checked={checked}
+            onChange={(e) => setChecked(e.target.checked)}
+            inline
+          />
+          <b>Send Message to candidate</b>
         </>
       </OModal>
     </>
   )
 }
 
-export default NoShow
+export default RejectInterview
