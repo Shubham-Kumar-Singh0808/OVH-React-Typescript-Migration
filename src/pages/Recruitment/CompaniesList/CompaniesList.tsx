@@ -55,7 +55,7 @@ const CompaniesList = (): JSX.Element => {
         startIndex: pageSize * (CurrentPage - 1),
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, CurrentPage])
 
   const clearButtonHandler = () => {
     setSelectTechnology('')
