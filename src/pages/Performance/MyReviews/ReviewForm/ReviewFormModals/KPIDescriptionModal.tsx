@@ -29,7 +29,10 @@ const KPIDescriptionModal = ({ kpi }: { kpi: MyReviewKPI }): JSX.Element => {
         <b>Frequency:</b>
         {kpi.frequency}
       </p>
-      <p className="ng-binding">
+      <p
+        className="ng-binding"
+        data-testid={generateMyReviewTestId('kpiDesModal-target')}
+      >
         <b>Target:</b>
         {kpi.target ? kpi.target : 'N/A'}
       </p>

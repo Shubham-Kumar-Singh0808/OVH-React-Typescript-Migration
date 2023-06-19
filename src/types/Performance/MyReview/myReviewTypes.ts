@@ -1,3 +1,4 @@
+import React from 'react'
 import { LoadingState, ValidationError } from '../../commonTypes'
 
 export type MyReviewTabList = {
@@ -275,6 +276,7 @@ export enum MyReviewFormStatus {
 
 export interface MyReviewButtonsProps {
   saveButtonApiCall: (finalData: IncomingMyReviewAppraisalForm) => Promise<void>
+  submitButtonHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export interface MyReviewModalProps {

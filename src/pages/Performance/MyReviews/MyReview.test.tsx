@@ -82,6 +82,9 @@ describe('Employee Review Form', () => {
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-frequency')),
       ).toHaveTextContent(chosenKpi.frequency)
+      expect(
+        screen.getByTestId(generateMyReviewTestId('kpiDesModal-target')),
+      ).toHaveTextContent(chosenKpi.target ? chosenKpi.target : 'N/A')
     })
 
     test('save functionality', () => {
