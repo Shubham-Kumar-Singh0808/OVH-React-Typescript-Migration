@@ -61,7 +61,11 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                     </h4>
                   </div>
                   <div>
-                    <RatingStarValue rating={data.rating} />
+                    {data.rating === null ? (
+                      <></>
+                    ) : (
+                      <RatingStarValue rating={data.rating} />
+                    )}
                   </div>
                 </div>
                 <div className="sh-timeline-body">
