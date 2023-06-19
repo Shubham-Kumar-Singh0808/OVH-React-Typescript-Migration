@@ -42,7 +42,7 @@ export type Appraisal = {
   id: number
   manager1Name: string
   overallAvgRating: number | string | null
-  pendingWith: string
+  pendingWith: string | null
 }
 
 export type ReviewListResponse = {

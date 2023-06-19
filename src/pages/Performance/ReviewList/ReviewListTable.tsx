@@ -146,13 +146,19 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                     <CTableDataCell>{review.empDepartmentName}</CTableDataCell>
                     <CTableDataCell>{review.empDesignationName}</CTableDataCell>
                     <CTableDataCell>{review.cycleStartDate}</CTableDataCell>
-                    <CTableDataCell>
+                    <CTableDataCell
+                      data-testid={`reviewListTable-empRating-${index}`}
+                    >
                       {getFinalRatingValue(review.empAvgRating)}
                     </CTableDataCell>
-                    <CTableDataCell>
+                    <CTableDataCell
+                      data-testid={`reviewListTable-managerRating-${index}`}
+                    >
                       {getFinalRatingValue(review.overallAvgRating)}
                     </CTableDataCell>
-                    <CTableDataCell>
+                    <CTableDataCell
+                      data-testid={`reviewListTable-formStatus-${index}`}
+                    >
                       {reviewStatusLabelColor(review.formStatus)}
                     </CTableDataCell>
                     {
@@ -163,7 +169,7 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
                             <CTooltip content="View">
                               <CButton
                                 className="btn-ovh me-1 sh-eye-btn-color btn-sm btn-ovh-employee-list cursor-pointer"
-                                data-testid={`view-reviewForm-btn${index}`}
+                                data-testid={`reviewList-viewForm-${index}`}
                               >
                                 <i className="fa fa-eye" aria-hidden="true"></i>
                               </CButton>
