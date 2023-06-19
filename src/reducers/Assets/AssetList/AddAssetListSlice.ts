@@ -35,7 +35,7 @@ const updateAddAsset = createAsyncThunk(
     }
   },
 )
-const checkAssetNumberExixts = createAsyncThunk(
+const checkAssetNumberExist = createAsyncThunk(
   'newEventSlice/checkAssetNumberExixts',
   async (AssetNumber: number, thunkApi) => {
     try {
@@ -86,7 +86,7 @@ const AddAssetListSlice = createSlice({
 const AddAssetListThunk = {
   getAddAssetList,
   updateAddAsset,
-  checkAssetNumberExixts,
+  checkAssetNumberExist,
   typeChangeSpecifications,
 }
 const isLoading = (state: RootState): LoadingState =>

@@ -38,6 +38,7 @@ const AddAssetList = ({
   const [productType, setProductType] = useState<string>()
   const [manufacturerName, setManufacturerName] = useState<string>()
   const [assetNumber, setAssetNumber] = useState<string>('RBT')
+  const [assetNumberExist, setAssetNumberExist] = useState<string>('RBT')
   const [licenseNumber, setLicenseNumber] = useState<string>()
   const [invoiceNumber, setInvoiceNumber] = useState<string>()
   const [amount, setAmount] = useState<string>()
@@ -45,7 +46,7 @@ const AddAssetList = ({
   const [receivedDate, setReceivedDate] = useState<string>()
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>()
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>()
-  const [productSpecification, setProductSpecification] = useState<string>()
+  const [productSpecification, setProductSpecification] = useState<boolean>()
 
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
@@ -129,7 +130,6 @@ const AddAssetList = ({
     setLicenseNumber('')
     setInvoiceNumber('')
     setAmount('')
-    setProductSpecification('')
     setAssetStatus('')
     setCountry('')
     setAddComment('')
@@ -222,10 +222,6 @@ const AddAssetList = ({
     reduxServices.addAssetList.selectors.typeChange,
   )
 
-  // const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setManufacturerName({ ...enteredAnswers, manufacturerName: e.target.value })
-  // }
-
   const handlerChangeProductSpecification = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
@@ -238,6 +234,30 @@ const AddAssetList = ({
     }
   }
 
+  // const handlerAssetNumber = (
+  //   event:
+  //     | React.ChangeEvent<HTMLSelectElement>
+  //     | React.ChangeEvent<HTMLInputElement>,
+  // ) => {
+  //   const { name, value } = event.target
+  //   if (name === 'assetNumber') {
+  //     const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+  //     setAssetNumber(newValue)
+  //   }
+  //   if (AssetNumberExists(value.trim())) {
+  //     setAssetNumber(value.trim())
+  //   } else {
+  //     setAssetNumber('')
+  //   }
+  // }
+
+  useEffect(() => {
+    if (assetType && productType && manufacturerName) {
+      setProductSpecification(true)
+    } else {
+      setProductSpecification(false)
+    }
+  }, [assetType, productType, manufacturerName])
   useEffect(() => {
     if (manufacturerName) {
       dispatch(
@@ -250,10 +270,10 @@ const AddAssetList = ({
   }, [dispatch, manufacturerName])
 
   const handleAddNewAssetList = async () => {
-    const addManuFactureListResultAction = await dispatch(
-      reduxServices.addAssetList.checkAssetNumberExixts(Number(assetNumber)),
-    )
-    console.log(addManuFactureListResultAction.type)
+    // const addManuFactureListResultAction = await dispatch(
+    //   reduxServices.addAssetList.checkAssetNumberExist(Number(assetNumber)),
+    // )
+    // console.log(addManuFactureListResultAction.type)
     const isAddAssetLIst = {
       amount: amount as string,
       assetNumber: assetNumber as string,
@@ -283,7 +303,6 @@ const AddAssetList = ({
         saveAssetDetailsResultAction,
       )
     ) {
-      //  }
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -455,7 +474,7 @@ const AddAssetList = ({
             </CFormSelect>
           </CCol>
         </CRow>
-        {/* {productSpecification === 'manufacturerName' ? ( */}
+
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
@@ -482,9 +501,6 @@ const AddAssetList = ({
             )
           })}
         </CRow>
-        {/* ) : (
-          <></>
-        )} */}
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
@@ -502,7 +518,8 @@ const AddAssetList = ({
               name="assetNumber"
               autoComplete="off"
               value={assetNumber}
-              onChange={(e) => setAssetNumber(e.target.value)}
+              // onChange={(e) => setAssetNumber(e.target.value)}
+              // onChange={}
             />
           </CCol>
         </CRow>
