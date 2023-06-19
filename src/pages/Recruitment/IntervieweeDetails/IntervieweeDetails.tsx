@@ -219,14 +219,32 @@ const IntervieweeDetails = (): JSX.Element => {
               <p className="mb-0">{timeLineListSelector?.candidateStatus}</p>
             </CCol>
           </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Mode of interview:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.modeOfInterview}</p>
-            </CCol>
-          </CRow>
+          {timeLineListSelector?.statusComments === null ? (
+            <></>
+          ) : (
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Status Comments:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">
+                  {timeLineListSelector?.statusComments || 'N/A'}
+                </p>
+              </CCol>
+            </CRow>
+          )}
+          {timeLineListSelector?.modeOfInterview === null ? (
+            <></>
+          ) : (
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Mode of interview:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">{timeLineListSelector?.modeOfInterview}</p>
+              </CCol>
+            </CRow>
+          )}
           <CRow className="mt-1 mb-0 align-items-center">
             <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
               Resume:
@@ -269,41 +287,49 @@ const IntervieweeDetails = (): JSX.Element => {
               </p>
             </CCol>
           </CRow>
-          <CRow className="mt-1 mb-0">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Initial Comments:
-              <span
-                className={
-                  comment?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
-                }
+          {timeLineListSelector.candidateStatus === 'NEW' ? (
+            <CRow className="mt-1 mb-0">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Initial Comments:
+                <span
+                  className={
+                    comment?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
+                  }
+                >
+                  *
+                </span>
+              </CFormLabel>
+              <CCol sm={3} className="mt-1">
+                <CFormTextarea
+                  data-testid="text-area"
+                  aria-label="textarea"
+                  autoComplete="off"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></CFormTextarea>
+              </CCol>
+            </CRow>
+          ) : (
+            <></>
+          )}
+        </CForm>
+        {timeLineListSelector.candidateStatus === 'NEW' ? (
+          <CRow>
+            <CCol md={{ span: 6, offset: 2 }} className="mt-2">
+              <CButton
+                data-testid="save-btn"
+                className="btn-ovh me-1 text-white interview-save"
+                color="success"
+                onClick={saveBtnHandler}
+                disabled={!isButtonEnabled}
               >
-                *
-              </span>
-            </CFormLabel>
-            <CCol sm={3} className="mt-1">
-              <CFormTextarea
-                data-testid="text-area"
-                aria-label="textarea"
-                autoComplete="off"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              ></CFormTextarea>
+                Save
+              </CButton>
             </CCol>
           </CRow>
-        </CForm>
-        <CRow>
-          <CCol md={{ span: 6, offset: 2 }} className="mt-2">
-            <CButton
-              data-testid="save-btn"
-              className="btn-ovh me-1 text-white interview-save"
-              color="success"
-              onClick={saveBtnHandler}
-              disabled={!isButtonEnabled}
-            >
-              Save
-            </CButton>
-          </CCol>
-        </CRow>
+        ) : (
+          <></>
+        )}
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <CButton

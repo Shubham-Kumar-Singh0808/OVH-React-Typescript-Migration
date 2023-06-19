@@ -45,7 +45,7 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                       textColor="white"
                       className="me-2 p-1 px-2"
                     >
-                      {timeLineListSelector.cycleDTOs.length - index}
+                      {timeLineListSelector?.pendingInterviewStatus}
                     </CBadge>
                   </div>
                   <div>
@@ -57,7 +57,7 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                         cursor: 'pointer',
                       }}
                     >
-                      {data?.interviewers} -
+                      {data?.updatedBy} -{' '}
                     </h4>
                   </div>
                   <div>
