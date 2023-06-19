@@ -249,18 +249,8 @@ describe('filter employee name', () => {
       const location = screen.getByTestId('location')
       userEvent.type(location, 'test')
 
-      //   const statusDate = screen.findByTestId('createdDate')
-      //  fireEvent.selectedOtp
-
       const employee = screen.getByTestId('ach-emp-name')
       userEvent.type(employee, 'Someswara Rao')
-
-      const description = screen.getByTestId('ach-emp-name')
-      userEvent.type(description, 'Test')
-
-      // const saveBtn = screen.getByRole('button', { name: 'Save' })
-      // expect(saveBtn).toBeEnabled()
-      // userEvent.click(saveBtn)
 
       const saveBtnElement = screen.getByTestId('save-btn')
       expect(saveBtnElement).toBeInTheDocument()
