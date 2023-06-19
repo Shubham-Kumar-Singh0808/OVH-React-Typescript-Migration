@@ -19,7 +19,7 @@ describe('MileStoneTimeLine Component Testing', () => {
     })
     screen.debug()
     test('should render ', () => {
-      mockMilestoneAudit.forEach((childFeature) => {
+      mockMilestoneAudit?.forEach((childFeature) => {
         const timeStamp = screen.getAllByTestId('sh-time-stamp')
         expect(screen.getByText(childFeature.modifiedDate)).toBeInTheDocument()
         expect(timeStamp).toBeTruthy()
