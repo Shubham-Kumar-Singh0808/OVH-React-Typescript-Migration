@@ -13,7 +13,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 
 const getAssetsWarrantyList = createAsyncThunk(
-  'assetManagement/exportAssetsList',
+  'assetManagement/addNewJoinee',
   async (props: AssetsWarrantyListProps, thunkApi) => {
     try {
       return await assetsWarrantyListApi.getAssetsWarrantyList(props)

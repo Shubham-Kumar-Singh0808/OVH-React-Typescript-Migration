@@ -119,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  CandidateOfferApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1067,6 +1068,7 @@ export const GetAssetListConfig: AssetListApi = {
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
   getAllAssets: apiPrefix + '/assetManagement/getAllAssets',
 }
+
 export const ProductSpecificationListReportApiConfig: ProductSpecificationListApi =
   {
     getAllProductSpecifications:
@@ -1085,3 +1087,10 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const getCandidateOfferConfig: CandidateOfferApi = {
+  getpersontechnology: apiPrefix + '/jobapplicant/getpersontechnology',
+  getCandidateDesignation: apiPrefix + '/kra/designation',
+  getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}
