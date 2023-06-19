@@ -26,10 +26,10 @@ const NoShow = () => {
     // setIsDeleteModalVisible(false)
     const noShowResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
-        candidateId: 13836,
+        candidateId: timeLineListSelector.personId,
         holdSubStatus: '',
         status: 'NO_SHOW',
-        statusComments: 'testing',
+        statusComments: approveLeaveComment,
       }),
     )
     if (
@@ -37,17 +37,12 @@ const NoShow = () => {
         noShowResultAction,
       )
     ) {
+      setIsApproveModalVisibility(false)
       dispatch(
-        reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
+        reduxServices.intervieweeDetails.timeLineData(
+          timeLineListSelector.personId,
+        ),
       )
-      // dispatch(
-      //   reduxServices.app.actions.addToast(
-      //     <OToast
-      //       toastColor="success"
-      //       toastMessage="Family Details deleted successfully"
-      //     />,
-      //   ),
-      // )
     }
   }
   return (

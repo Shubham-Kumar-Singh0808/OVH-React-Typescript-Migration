@@ -483,7 +483,7 @@ export const mockEmpScheduleInterviewData: EmpScheduleInterviewData = {
   interviewTime: null,
   interviewComments: 'ss',
   interviewRound: '2',
-  interviewStatus: null,
+  interviewStatus: '',
   candidateName: null,
   interviewMode: null,
   interviewCycleId: 21862,
