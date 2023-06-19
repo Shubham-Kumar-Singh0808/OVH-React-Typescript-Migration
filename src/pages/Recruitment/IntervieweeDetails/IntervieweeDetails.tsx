@@ -144,30 +144,35 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            <CButton
-              ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
-              ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
-              type="submit"
-              className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
-              disabled={timeLineListSelector.pendingInterviewStatus > 0}
-            >
-              Schedule
-            </CButton>
-            <CButton
-              ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
-              ng-click="redirectTo_Re_ScheduleInterview(interviewTimelineDetailsList)"
-              type="submit"
-              className="btn btn-info btn-labeled fa fa-retweet fa-lg"
-              // ng-disabled="interviewTimelineDetailsList.pendingInterviewStatus <= 0
-              // 			||
-              // 			interviewTimelineDetailsList.candidateStatus == 'REPROCESS'"
-              disabled={
-                timeLineListSelector.pendingInterviewStatus <= 0 ||
-                timeLineListSelector.candidateStatus === 'REPROCESS'
-              }
-            >
-              Re-Schedule
-            </CButton>
+            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+              ''
+            ) : (
+              <CButton
+                ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
+                ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
+                type="submit"
+                className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
+                disabled={timeLineListSelector.pendingInterviewStatus > 0}
+              >
+                Schedule
+              </CButton>
+            )}
+            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+              ''
+            ) : (
+              <CButton
+                ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
+                ng-click="redirectTo_Re_ScheduleInterview(interviewTimelineDetailsList)"
+                type="submit"
+                className="btn btn-info btn-labeled fa fa-retweet fa-lg"
+                disabled={
+                  timeLineListSelector.pendingInterviewStatus <= 0 ||
+                  timeLineListSelector.candidateStatus === 'REPROCESS'
+                }
+              >
+                Re-Schedule
+              </CButton>
+            )}
             <CButton
               color="info"
               className="btn-ovh me-1 btn-ovh-employee-list"
@@ -178,7 +183,12 @@ const IntervieweeDetails = (): JSX.Element => {
             <OnHold />
             <Offer />
             <RejectInterview />
-            <NoShow />
+            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+              ''
+            ) : (
+              <NoShow />
+            )}
+
             <CButton
               color="info"
               className="btn-ovh me-1"

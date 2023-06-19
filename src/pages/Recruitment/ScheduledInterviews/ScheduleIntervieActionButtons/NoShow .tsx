@@ -8,6 +8,8 @@ import {
 import React, { useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
 const NoShow = () => {
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
@@ -16,6 +18,9 @@ const NoShow = () => {
   const handleModal = () => {
     setIsApproveModalVisibility(true)
   }
+  const timeLineListSelector = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
   return (
     <>
       <CButton
@@ -25,6 +30,7 @@ const NoShow = () => {
         data-testid="search-employee-btn"
         className="btn btn-danger btn-labeled fa fa-times fa-lg"
         onClick={handleModal}
+        disabled={timeLineListSelector.candidateStatus === 'NO_SHOW'}
       >
         NoShow
       </CButton>
