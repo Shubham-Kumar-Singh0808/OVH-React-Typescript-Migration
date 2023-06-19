@@ -126,9 +126,9 @@ export const getUpdatedMyReviewKraList = (
 export const checkIfEmployeeSubmitButtonIsEnabled = (
   kraList: IncomingMyReviewKRA[],
 ): boolean => {
-  for (let i = 0; i < kraList.length; i++) {
+  for (const thisKra of kraList) {
     // checking if any other data that is required is missing or not
-    const notSatisfiedKPIs = kraList[i].kpis.filter(
+    const notSatisfiedKPIs = thisKra.kpis.filter(
       (kpi) =>
         kpi.employeeRating === null ||
         kpi.employeeFeedback === null ||
@@ -146,9 +146,9 @@ export const checkIfEmployeeSubmitButtonIsEnabled = (
 export const checkIfManagerSubmitButtonIsEnabled = (
   kraList: IncomingMyReviewKRA[],
 ): boolean => {
-  for (let i = 0; i < kraList.length; i++) {
+  for (const thisKra of kraList) {
     // checking if any other data that is required is missing or not
-    const notSatisfiedKPIs = kraList[i].kpis.filter(
+    const notSatisfiedKPIs = thisKra.kpis.filter(
       (kpi) =>
         kpi.managerRating === null ||
         kpi.managerFeedback === null ||
