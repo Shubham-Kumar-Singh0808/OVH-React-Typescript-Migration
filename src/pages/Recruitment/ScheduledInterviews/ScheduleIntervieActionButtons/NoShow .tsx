@@ -9,7 +9,7 @@ import React, { useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const NoShow = () => {
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
@@ -18,9 +18,46 @@ const NoShow = () => {
   const handleModal = () => {
     setIsApproveModalVisibility(true)
   }
+  const dispatch = useAppDispatch()
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
+  const confirmBtnHandler = async () => {
+    // setIsDeleteModalVisible(false)
+    const noShowResultAction = await dispatch(
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus(
+        candidateId
+        : 
+        13836
+        holdSubStatus
+        : 
+        ""
+        status
+        : 
+        "NO_SHOW"
+        statusComments
+        : 
+        "testing"
+      ),
+    )
+    if (
+      reduxServices.personalInformation.deleteEmployeeFamilyMember.fulfilled.match(
+        deleteFamilyMemberResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.personalInformation.getEmployeeFamilyDetails(employeeId),
+      )
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Family Details deleted successfully"
+          />,
+        ),
+      )
+    }
+  }
   return (
     <>
       <CButton
@@ -42,7 +79,7 @@ const NoShow = () => {
         modalTitle="Do you want to No show this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        // confirmButtonAction={confirmBtnHandler}
+        confirmButtonAction={confirmBtnHandler}
       >
         <>
           <CRow className="mt-1 mb-1">
