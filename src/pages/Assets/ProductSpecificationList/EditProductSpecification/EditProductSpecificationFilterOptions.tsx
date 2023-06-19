@@ -61,16 +61,6 @@ const EditProductSpecificationFilterOptions = ({
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
 
-  // useEffect(() => {
-  //   if (selectedProductType) {
-  //     dispatch(
-  //       reduxServices.addNewProduct.getProductTypeList(
-  //         editProductSpecification.productId,
-  //       ),
-  //     )
-  //   }
-  // }, [dispatch, selectedProductType])
-
   useEffect(() => {
     if (selectedAssetType) {
       dispatch(
