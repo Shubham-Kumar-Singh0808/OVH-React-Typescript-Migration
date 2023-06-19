@@ -46,7 +46,6 @@ const AppraisalTemplateViewActionTable = ({
   const kraLookups = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.kraLookups,
   )
-  console.log(kraLookups)
 
   const activeCycle = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.activeCycleData,
@@ -176,6 +175,8 @@ const AppraisalTemplateViewActionTable = ({
     }
   }
 
+  console.log('# kraLookups ', kraLookups)
+
   console.log(
     '# editAppraisalId.kraLookups ',
     editAppraisalId && editAppraisalId.kraLookups,
@@ -248,13 +249,17 @@ const AppraisalTemplateViewActionTable = ({
               }
               console.log(flag + 'flag')
 
+              //editAppraisalId && editAppraisalId.kraLookups
+              let tmp = editAppraisalId!.kraLookups!.filter((el)=>el.id===cycle.id)
+              console.log('# tmp ', tmp)
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>
                     <CFormCheck
                       className="form-check-input"
                       name="checkType"
-                      checked={flag}
+                      checked={tmp!.length ? true : false} //flag
                       onChange={() => {
                         setCycleChecked((prevState) => {
                           return {
