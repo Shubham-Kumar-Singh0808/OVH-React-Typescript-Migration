@@ -302,14 +302,6 @@ const KRATemplate = (props: KRATemplateProps): JSX.Element => {
           className={`${KRAFormLabelClass} align-self-start`}
         >
           Description:
-          <span
-            data-testid="descrip-asterix"
-            className={
-              enteredDescription?.trim().length === 0 ? TextDanger : TextWhite
-            }
-          >
-            *
-          </span>
         </CFormLabel>
         <CCol sm={8}>
           {showDescription ? (

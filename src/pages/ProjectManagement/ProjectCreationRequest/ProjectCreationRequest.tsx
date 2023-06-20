@@ -90,7 +90,9 @@ const ProjectCreationRequest = (): JSX.Element => {
                     aria-label="Multiple Search"
                     aria-describedby="button-addon2"
                     data-testid="searchField"
-                    value={searchInput}
+                    value={searchInput
+                      ?.replace(/-_[^a-z0-9\s]/gi, '')
+                      ?.replace(/^\s*/, '')}
                     onChange={(e) => {
                       setSearchInput(e.target.value)
                     }}

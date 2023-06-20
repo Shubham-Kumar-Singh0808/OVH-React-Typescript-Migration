@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { CRow, CCol, CButton } from '@coreui/react-pro'
 import ProjectInvoicesTable from './ProjectInvoicesTable'
 import { reduxServices } from '../../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 
 const ProjectInvoices = (): JSX.Element => {
   const { projectId } = useParams<{ projectId: string }>()
@@ -11,14 +11,24 @@ const ProjectInvoices = (): JSX.Element => {
   useEffect(() => {
     dispatch(reduxServices.projectInvoices.getClosedMilestonesAndCRs(projectId))
   }, [])
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Invoices',
+  )
   return (
     <>
       <CRow className="justify-content-end mt-4">
-        <CCol className="text-end" md={4}>
-          <CButton color="info btn-ovh me-1" data-testid="add-btn">
-            <i className="fa fa-plus me-1"></i>Add
-          </CButton>
-        </CCol>
+        {userAccess?.createaccess && (
+          <CCol className="text-end" md={4}>
+            <CButton color="info btn-ovh me-1" data-testid="add-btn">
+              <i className="fa fa-plus me-1"></i>Add
+            </CButton>
+          </CCol>
+        )}
       </CRow>
       <div className="mt-4 mb-3">
         <span>

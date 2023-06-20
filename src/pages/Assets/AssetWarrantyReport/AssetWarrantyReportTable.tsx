@@ -192,7 +192,7 @@ const AssetWarrantyReportTable = (
       >
         <>
           <span className="descriptionField">
-            <div
+            <p
               dangerouslySetInnerHTML={{
                 __html: specification,
               }}

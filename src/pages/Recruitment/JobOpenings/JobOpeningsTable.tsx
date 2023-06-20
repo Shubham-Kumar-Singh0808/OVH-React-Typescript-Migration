@@ -187,7 +187,9 @@ const JobOpeningsTable = ({
                     scope="row"
                     className="sh-organization-link sh-comment"
                   >
-                    {Limit ? (
+                    {Limit === null || Limit === '' || Limit === undefined ? (
+                      'N/A'
+                    ) : (
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid={`vendor-address-${index}`}
@@ -195,8 +197,6 @@ const JobOpeningsTable = ({
                       >
                         {parse(Limit)}
                       </CLink>
-                    ) : (
-                      'N/A'
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
