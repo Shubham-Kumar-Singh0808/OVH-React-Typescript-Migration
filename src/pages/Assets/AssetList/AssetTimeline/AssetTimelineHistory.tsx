@@ -15,14 +15,13 @@ const AssetHistory = ({
   //   index: number
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
+  const [assetId, setAssetId] = useState(0)
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
 
-  const assetHistory = useTypedSelector(
+  const assetHistoryitem = useTypedSelector(
     reduxServices.assetList.selectors.assetHistory,
   )
-
-  console.log(assetHistory)
 
   const searchButtonHandlerOnKeyDown = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -30,7 +29,7 @@ const AssetHistory = ({
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.assetList.getAllAssetHistoryData({
-          assetId: 4102,
+          assetId,
           searchAssetReference: searchInput,
         }),
       )
@@ -41,7 +40,7 @@ const AssetHistory = ({
     e.preventDefault()
     dispatch(
       reduxServices.assetList.getAllAssetHistoryData({
-        assetId: 4102,
+        assetId,
         searchAssetReference: searchInput,
       }),
     )
