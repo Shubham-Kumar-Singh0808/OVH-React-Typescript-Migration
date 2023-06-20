@@ -12,7 +12,7 @@ import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
-const RejectInterview = () => {
+const RejectInterview = (): JSX.Element => {
   const [isRejectModalVisibility, setIsRejectModalVisibility] =
     useState<boolean>(false)
   const [checked, setChecked] = useState<boolean>(false)
