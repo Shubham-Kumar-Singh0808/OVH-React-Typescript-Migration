@@ -196,7 +196,7 @@ export type Reschedule = {
 }
 
 export type Schedule = {
-  candidateId: string
+  candidateId: string | number
   contactDetails?: string
   description: string
   interviewRound: number
