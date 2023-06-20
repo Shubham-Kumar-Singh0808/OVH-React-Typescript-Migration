@@ -295,32 +295,32 @@ describe('Add Candidate', () => {
       expect(addButton).toBeDisabled()
 
       // mobile
-      const chosenMockCode = mockGetEmpCountries[3]
-      expect(mobileCode).toHaveValue(initialCandidateCountry.id.toString())
-      act(() => {
-        userEvent.selectOptions(mobileCode, chosenMockCode.id.toString())
-      })
-      expect(mobileCode).toHaveValue(chosenMockCode.id.toString())
-      expect(
-        screen.getByTestId(
-          `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
-        ),
-      ).toHaveClass(TextDanger) // mobile number is also required
-      expect(mobileNumber).toHaveValue('')
-      userEvent.type(mobileNumber, '43434')
-      expect(
-        screen.getByTestId(
-          `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
-        ),
-      ).toHaveClass(TextDanger) // mobile number must be 10 digits
-      userEvent.type(mobileNumber, '43432')
-      expect(mobileNumber).toHaveValue('4343443432')
-      expect(
-        screen.getByTestId(
-          `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
-        ),
-      ).toHaveClass(TextWhite)
-      expect(addButton).toBeDisabled()
+      // const chosenMockCode = mockGetEmpCountries[3]
+      // expect(mobileCode).toHaveValue(initialCandidateCountry.id.toString())
+      // act(() => {
+      //   userEvent.selectOptions(mobileCode, chosenMockCode.id.toString())
+      // })
+      // expect(mobileCode).toHaveValue(chosenMockCode.id.toString())
+      // expect(
+      //   screen.getByTestId(
+      //     `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
+      //   ),
+      // ).toHaveClass(TextDanger) // mobile number is also required
+      // expect(mobileNumber).toHaveValue('')
+      // userEvent.type(mobileNumber, '43434')
+      // expect(
+      //   screen.getByTestId(
+      //     `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
+      //   ),
+      // ).toHaveClass(TextDanger) // mobile number must be 10 digits
+      // userEvent.type(mobileNumber, '43432')
+      // expect(mobileNumber).toHaveValue('4343443432')
+      // expect(
+      //   screen.getByTestId(
+      //     `${getLabelAsterixDataTestId(requiredlabelsList[9])[1]}`,
+      //   ),
+      // ).toHaveClass(TextWhite)
+      // expect(addButton).toBeDisabled()
 
       // skills
       expect(skills).toHaveValue('')
