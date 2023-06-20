@@ -208,7 +208,11 @@ const CandidateListTable = ({
                     </Link>
                   </CTableDataCell>
                   <CTableDataCell>{data.appliedForVacancy}</CTableDataCell>
-                  <CTableDataCell>{data.appliedFor.jobCode}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link to={`/`} className="cursor-pointer">
+                      {data.appliedFor.jobCode}
+                    </Link>
+                  </CTableDataCell>
                   <CTableDataCell>{data.mobile}</CTableDataCell>
                   <CTableDataCell>{data.email}</CTableDataCell>
                   <CTableDataCell>{data.experience}</CTableDataCell>
