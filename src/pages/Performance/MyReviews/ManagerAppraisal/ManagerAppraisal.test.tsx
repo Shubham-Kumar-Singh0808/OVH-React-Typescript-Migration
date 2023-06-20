@@ -5,6 +5,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockInitialManagerAppraisalForm,
   mockPerformanceRatings,
+  myReviewManagerUserAccessToFeatures,
 } from '../../../../test/data/myReviewData'
 import {
   act,
@@ -39,6 +40,9 @@ describe('Manager Appraisal Render', () => {
             isManagerSubmitButtonEnabled: false,
             myReviewFormStatus: MyReviewFormStatus.saveForEmployee, //will automatically change because of logic
             modal: initialMyReviewModal,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: myReviewManagerUserAccessToFeatures,
           },
         },
       })
@@ -127,34 +131,6 @@ describe('Manager Appraisal Render', () => {
       expect(
         screen.getByText(kpi.employeeFeedback ? kpi.employeeFeedback : ''),
       ).toBeVisible()
-    })
-
-    test('manager can see employee self rating and their rating', () => {
-      const managerRating = screen.getByTestId(
-        generateMyReviewTestId('managerRating'),
-      )
-      const employeeRating = screen.getByTestId(
-        generateMyReviewTestId('employeeRating'),
-      )
-
-      expect(managerRating).toHaveTextContent('N/A')
-      expect(employeeRating).toHaveTextContent(
-        mockInitialManagerAppraisalForm.empAvgRating
-          ? mockInitialManagerAppraisalForm.empAvgRating.toString()
-          : 'N/A',
-      )
-
-      expect(
-        screen.getByTestId(generateMyReviewTestId('employeeRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.employee.fullName} Rating:`,
-      )
-
-      expect(
-        screen.getByTestId(generateMyReviewTestId('managerRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.manager1Name} Rating:`,
-      )
     })
   })
 })

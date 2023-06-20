@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { CFormText, CRow, CCol, CButton } from '@coreui/react-pro'
 import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
@@ -28,6 +28,9 @@ const EmployeeReviewForm = (): JSX.Element => {
   const appraisalForm = useTypedSelector(
     (state) => state.myReview.appraisalForm,
   )
+  // const currentLoggedInEmployee = useTypedSelector(
+  //   (state) => state.authentication.authenticatedUser.employeeId,
+  // )
   const requestDiscussionEmployee = useTypedSelector(
     (state) => state.myReview.appraisalForm.requestDiscussion,
   )
@@ -115,6 +118,15 @@ const EmployeeReviewForm = (): JSX.Element => {
     dispatch(reduxServices.myReview.actions.setDisplayModal(value))
   }
 
+  // checking if the employee who is logged in is the same of whose review is being shown
+  const isItTheSameEmployee = useMemo(() => {
+    const currentLoggedInEmployee = localStorage.getItem('employeeId')
+    if (currentLoggedInEmployee) {
+      return +currentLoggedInEmployee === appraisalForm.employee.id
+    }
+    return false
+  }, [appraisalForm.employee.id])
+
   return (
     <>
       {apiError === null && (
@@ -132,8 +144,7 @@ const EmployeeReviewForm = (): JSX.Element => {
               <div>
                 {
                   // must be visible only to the employee until the employee agrees
-                  appraisalFormStatusEmpManager !==
-                    MyReviewAppraisalFormStatus.NotSubmittedByYou &&
+                  isItTheSameEmployee &&
                     myReviewFormStatus !== MyReviewFormStatus.completed && (
                       <EmployeeDiscussionInput />
                     )

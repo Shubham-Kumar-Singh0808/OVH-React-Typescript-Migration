@@ -1,17 +1,14 @@
 import { CRow } from '@coreui/react-pro'
 import React, { useMemo } from 'react'
-import { generateMyReviewTestId } from './MyReviewHelpers'
+import {
+  generateMyReviewTestId,
+  sortAvgRatingDTOsByLevel,
+} from './MyReviewHelpers'
 import { useTypedSelector } from '../../../stateStore'
 
 // this component is used to display the ratings of employee and manager
 
 const EmployeeManagerRating = (): JSX.Element => {
-  const empAvgRating = useTypedSelector(
-    (state) => state.myReview.appraisalForm.empAvgRating,
-  )
-  const employeeName = useTypedSelector(
-    (state) => state.myReview.appraisalForm.employee.fullName,
-  )
   const managerName = useTypedSelector(
     (state) => state.myReview.appraisalForm.manager1Name,
   )
@@ -29,34 +26,59 @@ const EmployeeManagerRating = (): JSX.Element => {
       : 'N/A'
   }, [managerAvgRatingDTO])
 
+  // all the dtos
   const avgRatingsDTOs = useTypedSelector(
     (state) => state.myReview.appraisalForm.avgRatingsDtos,
   )
 
   return (
-    <CRow className="mt-2">
-      <div className="d-flex flex-row flex-wrap" style={{ gap: '200px' }}>
-        {avgRatingsDTOs.sort((a,b) => a.order - b.order)}
-        <div data-testid={generateMyReviewTestId('employeeRating')}>
-          <span
-            style={{ color: '#2768a3', paddingRight: '8px' }}
-            data-testid={generateMyReviewTestId('employeeRatingName')}
-          >
-            <b>{employeeName}</b> Rating:
-          </span>
-          {empAvgRating}
+    <>
+      <CRow className="mt-2">
+        <div className="d-flex flex-row flex-wrap" style={{ gap: '200px' }}>
+          {sortAvgRatingDTOsByLevel(avgRatingsDTOs).map(
+            (rating, ratingIndex) => (
+              <div
+                key={ratingIndex}
+                data-testid={generateMyReviewTestId(
+                  `avgDTORatingDiv-${ratingIndex}`,
+                )}
+              >
+                <span
+                  style={{ color: '#2768a3', paddingRight: '8px' }}
+                  data-testid={generateMyReviewTestId(
+                    `avgDTORatingRating-${ratingIndex}`,
+                  )}
+                >
+                  <b>{rating.employeeName}</b> Rating:
+                </span>
+                {rating.defaultAvgRating ? rating.defaultAvgRating : 'N/A'}
+              </div>
+            ),
+          )}
         </div>
-        <div data-testid={generateMyReviewTestId('managerRating')}>
-          <span
-            style={{ color: '#2768a3', paddingRight: '8px' }}
-            data-testid={generateMyReviewTestId('managerRatingName')}
-          >
-            <b>{managerName}</b> Rating:
-          </span>
-          {finalManagerRating}
-        </div>
-      </div>
-    </CRow>
+      </CRow>
+      {
+        // shown only when delivery manager involved
+        avgRatingsDTOs.length > 2 && (
+          <CRow>
+            <hr className="mt-4" />
+            <div
+              data-testid={generateMyReviewTestId(`avgDTORatingManagerRating`)}
+            >
+              <span
+                style={{ color: '#2768a3', paddingRight: '8px' }}
+                data-testid={generateMyReviewTestId(
+                  `avgDTORatingManagerRating`,
+                )}
+              >
+                Manager&apos;s Average Rating:
+              </span>
+              {finalManagerRating}
+            </div>
+          </CRow>
+        )
+      }
+    </>
   )
 }
 

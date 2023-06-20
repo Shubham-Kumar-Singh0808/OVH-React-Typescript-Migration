@@ -8,6 +8,36 @@ import {
   PageDetails,
 } from '../../types/Performance/MyReview/myReviewTypes'
 
+export const myReviewManagerUserAccessToFeatures = [
+  {
+    featureId: 39,
+    name: 'Review List',
+    viewaccess: true,
+    createaccess: false,
+    updateaccess: false,
+    deleteaccess: false,
+    childFeatures: null,
+  },
+  {
+    featureId: 230,
+    name: 'Hierarchy Review List',
+    viewaccess: false,
+    createaccess: false,
+    updateaccess: false,
+    deleteaccess: false,
+    childFeatures: null,
+  },
+  {
+    featureId: 231,
+    name: 'Individual Review List',
+    viewaccess: false,
+    createaccess: false,
+    updateaccess: false,
+    deleteaccess: false,
+    childFeatures: null,
+  },
+]
+
 export const mockReviewPageData: PageDetails = {
   id: 27,
   displayOrder: 16,

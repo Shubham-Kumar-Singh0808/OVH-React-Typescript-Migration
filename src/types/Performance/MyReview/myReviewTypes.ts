@@ -272,6 +272,7 @@ export enum MyReviewFormStatus {
   pendingagreement = 'PENDINGAGREEMENT',
   openForDiscussion = 'OPENFORDISCUSSION',
   completed = 'COMPLETED',
+  closed = 'CLOSED',
 }
 
 export interface MyReviewButtonsProps {
