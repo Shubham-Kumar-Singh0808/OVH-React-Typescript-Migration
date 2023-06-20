@@ -12,7 +12,7 @@ export type AddNewJoineeProps = {
   employmentType: string
   jobType: string
   sendOfferMessagetoCandidate: boolean
-  technology: string
+  technology: string | number
 }
 
 export type CandidateOfferSliceState = {

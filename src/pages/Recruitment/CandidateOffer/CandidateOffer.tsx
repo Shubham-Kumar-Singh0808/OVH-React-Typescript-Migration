@@ -44,6 +44,10 @@ const CandidateOffer = (): JSX.Element => {
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
 
+  // const personTechnologySelector = useTypedSelector(
+  //   reduxServices.addNewCandidate.selectors,
+  // )
+
   const designations = useTypedSelector(
     reduxServices.KRA.selectors.designations,
   )
@@ -127,6 +131,11 @@ const CandidateOffer = (): JSX.Element => {
   }, [candidateName, position, curruentCTC, employeeType, jobType])
 
   //   -------------------------------------------------------------
+
+  // useEffect(() => {
+  //   dispatch(reduxServices.addNewCandidate.getPersonTechnologyData(getPersonTechnologyData))
+  // }, [dispatch])
+
   useEffect(() => {
     dispatch(
       reduxServices.addNewCandidate.getPersonTechnologyData(
@@ -135,13 +144,13 @@ const CandidateOffer = (): JSX.Element => {
     )
   }, [dispatch])
 
-  const successToast = (
-    <OToast
-      toastMessage="Product type updated successfully.
-      "
-      toastColor="success"
-    />
-  )
+  // const successToast = (
+  //   <OToast
+  //     toastMessage="Product type updated successfully.
+  //     "
+  //     toastColor="success"
+  //   />
+  // )
 
   //   const handleAddCandidate = async () => {
   //     const addRecord1 = await dispatch(
@@ -208,7 +217,7 @@ const CandidateOffer = (): JSX.Element => {
     const addCandidate = await dispatch(
       reduxServices.addNewCandidate.getAddNewJoineeData({
         appliedForLookUp: position,
-        candidateId: timeLineListSelector?.personId,
+        candidateId: timeLineListSelector.personId,
         candidateName,
         comments: candidateComment,
         currentCTC: curruentCTC,
@@ -218,7 +227,7 @@ const CandidateOffer = (): JSX.Element => {
         employmentType: employeeType,
         jobType,
         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: '',
+        technology: timeLineListSelector?.personId,
       }),
     )
     if (
@@ -265,31 +274,6 @@ const CandidateOffer = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        {/* <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-Button"
-              onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow> */}
-
-        {/* <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="info"
-              className="btn-ovh me-1"
-              data-testid="back-button"
-              //   onClick={() => setToggle('')}
-            >
-              <i className="fa fa-arrow-left  me-1"></i>Back
-            </CButton>
-          </CCol>
-        </CRow> */}
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}

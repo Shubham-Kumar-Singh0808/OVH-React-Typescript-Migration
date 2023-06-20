@@ -10,7 +10,7 @@ import {
 import CandidateOfferApi from '../../../middleware/api/Recruitment/CandidateOffer/candidateOfferApi'
 
 const getAddNewJoineeData = createAsyncThunk(
-  'assetManagement/getAllAssets',
+  'getAddNewJoinee',
   async (props: AddNewJoineeProps, thunkApi) => {
     try {
       return await CandidateOfferApi.getAddNewJoineeData(props)
