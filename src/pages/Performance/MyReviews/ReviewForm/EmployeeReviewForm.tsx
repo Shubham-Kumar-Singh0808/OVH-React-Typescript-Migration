@@ -25,6 +25,9 @@ const EmployeeReviewForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const apiError = useTypedSelector((state) => state.myReview.error)
   const isLoading = useTypedSelector((state) => state.myReview.isLoading)
+  const employeeId = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.employeeId,
+  )
   const appraisalForm = useTypedSelector(
     (state) => state.myReview.appraisalForm,
   )
@@ -120,11 +123,7 @@ const EmployeeReviewForm = (): JSX.Element => {
 
   // checking if the employee who is logged in is the same of whose review is being shown
   const isItTheSameEmployee = useMemo(() => {
-    const currentLoggedInEmployee = localStorage.getItem('employeeId')
-    if (currentLoggedInEmployee) {
-      return +currentLoggedInEmployee === appraisalForm.employee.id
-    }
-    return false
+    return +employeeId === appraisalForm.employee.id
   }, [appraisalForm.employee.id])
 
   return (
