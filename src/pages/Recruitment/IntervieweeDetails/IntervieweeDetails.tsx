@@ -63,6 +63,15 @@ const IntervieweeDetails = (): JSX.Element => {
     }
   }
   // -----------------------------------------------------------
+
+  const noVacanciesToastMessage = (
+    <OToast
+      toastMessage="You can't give offer to the candidate.Because, Vacancies already filled."
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
   const confirmBtnOffHandler = async () => {
     const noShowResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
@@ -84,7 +93,15 @@ const IntervieweeDetails = (): JSX.Element => {
         ),
       )
       setIsOfferApproveModalVisibility(false)
-      history.push(`/addnewjoinee?personId=${timeLineListSelector.personId}`)
+      history.push(`/addnewjoinee/${timeLineListSelector.personId}`)
+    } else if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.rejected.match(
+        noShowResultAction,
+      ) &&
+      noShowResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(noVacanciesToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 

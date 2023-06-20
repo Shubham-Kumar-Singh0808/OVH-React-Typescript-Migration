@@ -27,7 +27,6 @@ const CandidateOffer = (): JSX.Element => {
   const [candidateDepartment, setCandidateDepartment] = useState<
     string | number
   >('')
-  // console.log(candidateDepartment + 'candidateDepartment')
 
   const [candidateName, setSetCandidatename] = useState<string>('')
   const [position, setPosition] = useState<string>('')
@@ -59,7 +58,12 @@ const CandidateOffer = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(reduxServices.KRA.getEmpDepartmentThunk())
-  }, [dispatch])
+    dispatch(
+      reduxServices.addNewCandidate.getPersonTechnologyData(
+        timeLineListSelector?.personId,
+      ),
+    )
+  }, [dispatch, timeLineListSelector?.personId])
 
   dispatch(
     reduxServices.intervieweeDetails.timeLineData(
@@ -74,7 +78,6 @@ const CandidateOffer = (): JSX.Element => {
   const result = addNewJoinee?.filter(
     (item) => item.departmentId === candidateDepartment,
   )
-  // console.log(result + 'V')
 
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
@@ -131,14 +134,6 @@ const CandidateOffer = (): JSX.Element => {
   // useEffect(() => {
   //   dispatch(reduxServices.addNewCandidate.getPersonTechnologyData(getPersonTechnologyData))
   // }, [dispatch])
-
-  useEffect(() => {
-    dispatch(
-      reduxServices.addNewCandidate.getPersonTechnologyData(
-        timeLineListSelector?.personId,
-      ),
-    )
-  }, [dispatch, timeLineListSelector?.personId])
 
   // const successToast = (
   //   <OToast
@@ -223,7 +218,7 @@ const CandidateOffer = (): JSX.Element => {
         employmentType: employeeType,
         jobType,
         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: timeLineListSelector?.personId || '',
+        technology: timeLineListSelector.personId || '',
       }),
     )
     if (
@@ -240,7 +235,7 @@ const CandidateOffer = (): JSX.Element => {
         ),
       )
     } else if (
-      reduxServices.addLocationList.deleteLocation.rejected.match(
+      reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
         addCandidate,
       ) &&
       addCandidate.payload === 500
@@ -545,23 +540,6 @@ const CandidateOffer = (): JSX.Element => {
             )}
           </div>
         </CRow>
-
-        {/* <CRow className="justify-content-end p-0">
-            <CCol sm={3}>
-              <label className="search_emp">
-                <CFormCheck
-                  className="pt-2"
-                  data-testid="ch-searchByEmployee"
-                  id="searchByEmployee"
-                  name="Multiple Search"
-                  checked={searchByEmployee}
-                  onChange={(e) => setSearchByEmployee(e.target.checked)}
-                />
-                <b>Search by Employee Name</b>
-              </label>
-            </CCol>
-          </CRow> */}
-
         <CCol className="col-md-3 offset-md-3">
           <CButton
             data-testid="save-btn"
