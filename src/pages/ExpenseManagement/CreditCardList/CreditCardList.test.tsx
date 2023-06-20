@@ -11,8 +11,8 @@ const toRender = (
   </div>
 )
 
-describe('Expense Category Component Testing', () => {
-  test('should render Expense Category component without crashing', () => {
+describe('Credit Card List Component Testing', () => {
+  test('should render Credit Card List component without data', () => {
     render(toRender, {
       preloadedState: {},
     })

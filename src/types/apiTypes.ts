@@ -931,6 +931,7 @@ export interface ExpenseSubCategoryListApi extends ApiBase {
 
 export interface CreditCardListApi extends ApiBase {
   getCardsList: string
+  addCardDetails: string
   editCardDetails: string
   updateCardDetails: string
   deleteCardData: string

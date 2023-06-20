@@ -1111,6 +1111,7 @@ export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
 
 export const CreditCardListApiConfig: CreditCardListApi = {
   getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+  addCardDetails: apiPrefix + '/ExpenseManagement/addCardDetails',
   editCardDetails: apiPrefix + '/ExpenseManagement/editCardDetials',
   updateCardDetails: apiPrefix + '/ExpenseManagement/updateCardDetails',
   deleteCardData: apiPrefix + '/ExpenseManagement/deleteCardData',
