@@ -31,9 +31,7 @@ import { usePagination } from '../../../../middleware/hooks/usePagination'
 const AppraisalTemplateViewActionTable = ({
   setCycleChecked,
   cycleChecked,
-  selChkBoxesFromApi,
   editAppraisalId,
-  cbFromApi,
 }: AppraisalTemplateCheckBoxProps): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -242,9 +240,7 @@ const AppraisalTemplateViewActionTable = ({
                     <CFormCheck
                       className="form-check-input"
                       name="checkType"
-                      checked={
-                        cycle.checkType as boolean
-                      }
+                      checked={cycle.checkType !== null ? true : false}
                       value={cycle?.id}
                       onChange={()=>handleKraCheck(cycle?.id)}
                     />

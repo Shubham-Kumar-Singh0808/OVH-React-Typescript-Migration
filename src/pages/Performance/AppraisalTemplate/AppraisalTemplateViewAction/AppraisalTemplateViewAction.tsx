@@ -17,8 +17,8 @@ const AppraisalTemplateViewAction = ({
   editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
   const [cycleChecked, setCycleChecked] = useState<KraLookups[]>([])
-  const [checkList, setCheckList] = useState<KraLookups[]>([])
-  const [cbFromApi, setCbFromApi] = useState<KraLookups[]>([])
+  // const [checkList, setCheckList] = useState<KraLookups[]>([])
+  // const [cbFromApi, setCbFromApi] = useState<KraLookups[]>([])
 
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
@@ -31,7 +31,7 @@ const AppraisalTemplateViewAction = ({
 
   useEffect(() => {
     if (activeCycle && activeCycle.kraLookups) {
-      setCbFromApi(activeCycle.kraLookups)
+      setCycleChecked(activeCycle.kraLookups)
     }
   }, [activeCycle])
 
@@ -115,10 +115,10 @@ const AppraisalTemplateViewAction = ({
         <AppraisalTemplateViewActionTable
           cycleChecked={cycleChecked}
           setCycleChecked={setCycleChecked}
-          selChkBoxesFromApi={cbFromApi}
-          checkList={checkList}
+          // selChkBoxesFromApi={cbFromApi}
+          // checkList={checkList}
           editAppraisalId={editAppraisalId}
-          cbFromApi={cbFromApi}
+          // cbFromApi={cbFromApi}
         />
       </OCard>
     </>
