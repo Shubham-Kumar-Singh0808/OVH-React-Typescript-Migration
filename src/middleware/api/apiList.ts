@@ -930,6 +930,15 @@ export const KRAApiConfig: KRAApi = {
 }
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+  getAppraisalForm: apiPrefix + '/appraisal/AppraisalForm',
+  getExistingAppraisalForm: apiPrefix + '/appraisal/existingAppraisalForm',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  employeeAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
+  employeeAppraisalFormForRating:
+    apiPrefix + '/appraisal/employeeAppraisalFormForRating',
+  saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
+  getReviewComments: apiPrefix + '/appraisal/getReviewComments',
+  appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
