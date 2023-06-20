@@ -6,67 +6,154 @@ import {
   CFormSelect,
   CFormTextarea,
   CFormCheck,
+  CFormInput,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import Autocomplete from 'react-autocomplete'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { showIsRequired } from '../../../../utils/helper'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { TextDanger, TextWhite } from '../../../../constant/ClassName'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
-const ReSchedule = () => {
-  const [dateValue, setDateValue] = useState<string | Date>('')
-  const [time, setTime] = useState<string>('')
+const ReSchedule = (): JSX.Element => {
+  const [selectDate, setSelectDate] = useState<string | Date>('')
+
+  const resultTime = new Date().toLocaleTimeString([], {
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+  const startHour = resultTime?.split(':')[0]
+  const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
+  const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
+
   const [mode, setMode] = useState<string>('')
-  const [interviewer, setInterviewer] = useState<string>('')
   const [comments, setComments] = useState<string>('')
-  const [mailToCcandidate, setMailToCcandidate] = useState<boolean>(false)
+  const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
   const [sendMailToInterviewer, setSendMailToInterviewer] =
     useState<boolean>(false)
-  const [sendMessageTocandidate, setSendMessageTocandidate] =
+  const [sendMessageToCandidate, setSendMessageToCandidate] =
     useState<boolean>(false)
   const [sendMessageToInterviewer, setSendMessageToInterviewer] =
     useState<boolean>(false)
-  const [isEnable, setIsEnable] = useState(false)
-  const [projectsAutoCompleteTarget, setProjectsAutoCompleteTarget] =
-    useState<string>('')
+  const [isSaveBtnEnable, setIsSaveBtnEnable] = useState(false)
+  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
 
-  const fromDateValue = dateValue
-    ? new Date(dateValue).toLocaleDateString(deviceLocale, {
+  const selectDateValue = selectDate
+    ? new Date(selectDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
         day: '2-digit',
       })
     : ''
 
-  const allProjectNames = useTypedSelector(
+  const [timePicker, setTimePicker] = useState({
+    hours: startHour,
+    minutes: startMinutesDay,
+    meridian: startMeridianDay,
+  })
+
+  const interviewProfiles = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.employeeProperties,
   )
+
+  const result = interviewProfiles.filter(
+    (item) => item.fullName === autoCompleteTarget,
+  )
   const dispatch = useAppDispatch()
+
+  const timeLineListSelector = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
 
   useEffect(() => {
     dispatch(reduxServices.intervieweeDetails.getAllEmployeeDetails())
   }, [dispatch])
 
-  const autoCompleteOnChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectsAutoCompleteTarget(e.target.value)
-  }
-
-  const onHandleSelectProjectName = (projectName: string) => {
-    setProjectsAutoCompleteTarget(projectName)
-    setIsEnable(true)
-  }
   const formLabelProps = {
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
-  const formLabel = 'col-sm-3 col-form-label text-end'
+
+  const formattedTime = `${timePicker.hours}:${timePicker.minutes} ${timePicker.meridian}`
+
+  const handleSaveScheduleInterview = async () => {
+    const interviewRoundCountResult = await dispatch(
+      reduxServices.intervieweeDetails.interviewRoundCount(
+        timeLineListSelector.personId,
+      ),
+    )
+
+    const SaveInterviewResultAction = await dispatch(
+      reduxServices.intervieweeDetails.scheduleInterview({
+        candidateId: timeLineListSelector.personId,
+        description: comments,
+        interviewRound: Number(interviewRoundCountResult.payload) + 1,
+        interviewType: mode,
+        interviewerId: result[0].id,
+        scheduleDate: selectDateValue,
+        scheduleTime: formattedTime,
+        sendMailToCandidate: false,
+        sendMailToInterviewer: true,
+        sendMessageToCandidate: false,
+        sendMessageToInterviewer: false,
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.scheduleInterview.fulfilled.match(
+        SaveInterviewResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Leave calender settings are done"
+          />,
+        ),
+      )
+    }
+  }
+
+  const itemsLayout = (
+    id: string | number,
+    fullName: string,
+    isHighlighted: boolean,
+  ): JSX.Element => {
+    return (
+      <div
+        data-testid="option"
+        className={
+          isHighlighted
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
+        }
+        key={id}
+      >
+        {fullName}
+      </div>
+    )
+  }
+
+  const onHandleSelectHRAssociate = (projectName: string) => {
+    setAutoCompleteTarget(projectName)
+  }
+
+  const clearBtnHandler = () => {
+    setSelectDate('')
+    setAutoCompleteTarget('')
+    setComments('')
+    setMode('')
+  }
+
+  useEffect(() => {
+    if (selectDate && mode && autoCompleteTarget) {
+      setIsSaveBtnEnable(true)
+    } else {
+      setIsSaveBtnEnable(false)
+    }
+  }, [selectDate, mode, autoCompleteTarget])
 
   return (
     <>
@@ -87,88 +174,166 @@ const ReSchedule = () => {
             </CButton>
           </CCol>
         </CRow>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-1">
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
             Date:
-            <span className={showIsRequired(dateValue as string)}>*</span>
           </CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <ReactDatePicker
-            className="form-control form-control-sm sh-date-picker"
-            data-testid="date-picker"
-            placeholderText="dd/mm/yyyy"
-            name="dateValue"
-            id="dateValue"
-            autoComplete="off"
-            showMonthDropdown
-            showYearDropdown
-            dropdownMode="select"
-            value={fromDateValue}
-            onChange={(date: Date) => {
-              setDateValue(date)
-            }}
-            selected={dateValue as Date}
-          />
-        </CCol>
-        <CFormCheck
-          type="checkbox"
-          id="checked"
-          name="checked"
-          data-testid="checked"
-          checked={mailToCcandidate}
-          onChange={(e) => setMailToCcandidate(e.target.checked)}
-          inline
-        />
-        <b>Send mail to candidate</b>
-        <CFormCheck
-          type="checkbox"
-          id="checked"
-          name="checked"
-          data-testid="checked"
-          checked={sendMailToInterviewer}
-          onChange={(e) => setSendMailToInterviewer(e.target.checked)}
-          inline
-        />
-        <b>Send mail to interviewer</b>
-        <CFormSelect
-          aria-label="Default select example"
-          size="sm"
-          id="mode"
-          data-testid="form-select-3"
-          name="mode"
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-        >
-          <option value="">Select Mode Of Interview</option>
-          <option value="FACE_TO_FACE">In Person</option>
-          <option value="SYSTEM">System</option>
-          <option value="TELEPHONE">Telephone</option>
-          <option value="SKYPE">Skype</option>
-          <option value="Google_Meet">Google Meet</option>
-          <option value="GoToMeeting">GoToMeeting</option>
-          <option value="Microsoft_Teams">Microsoft Teams</option>
-          <option value="Zoom">Zoom</option>
-        </CFormSelect>
-        <CRow className="mt-3">
-          <CFormLabel {...formLabelProps} className={formLabel}>
+          <CCol sm={2}>
+            <ReactDatePicker
+              className="form-control form-control-sm sh-date-picker"
+              data-testid="date-picker"
+              placeholderText="dd/mm/yyyy"
+              name="dateValue"
+              id="dateValue"
+              autoComplete="off"
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              value={selectDateValue}
+              onChange={(date: Date) => {
+                setSelectDate(date)
+              }}
+              selected={selectDate as Date}
+            />
+          </CCol>
+        </CRow>
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Time:
+          </CFormLabel>
+          <CCol sm={2}>
+            <CRow>
+              <CCol sm={6}>
+                <CFormInput
+                  autoComplete="off"
+                  type="text"
+                  id="Name"
+                  name="personName"
+                  data-testid="person-name"
+                  value={timePicker.hours}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      hours: e.target.value,
+                    })
+                  }}
+                  max={12}
+                />
+              </CCol>
+              <CCol sm={6}>
+                <CFormInput
+                  autoComplete="off"
+                  type="text"
+                  id="Name"
+                  name="personName"
+                  data-testid="person-name"
+                  value={timePicker.minutes}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      minutes: e.target.value,
+                    })
+                  }}
+                />
+              </CCol>
+              <CCol sm={6}>
+                <CFormSelect
+                  aria-label="startTimeMeridian"
+                  id="startTimeMeridian"
+                  data-testid="startTimeMeridian"
+                  name="startTimeMeridian"
+                  value={timePicker.meridian}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      meridian: e.target.value,
+                    })
+                  }}
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </CFormSelect>
+              </CCol>
+            </CRow>
+            <CFormCheck
+              type="checkbox"
+              id="checked"
+              name="checked"
+              data-testid="checked"
+              checked={mailToCandidate}
+              onChange={(e) => setMailToCandidate(e.target.checked)}
+              inline
+            />
+            <b>Send mail to candidate</b>
+            <CFormCheck
+              type="checkbox"
+              id="checked"
+              name="checked"
+              data-testid="checked"
+              checked={sendMailToInterviewer}
+              onChange={(e) => setSendMailToInterviewer(e.target.checked)}
+              inline
+            />
+            <b>Send mail to interviewer</b>
+          </CCol>
+        </CRow>
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
+            Mode:
+          </CFormLabel>
+          <CCol sm={2}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="mode"
+              data-testid="form-select-3"
+              name="mode"
+              value={mode}
+              onChange={(e) => setMode(e.target.value)}
+            >
+              <option value="">Select Mode Of Interview</option>
+              <option value="FACE_TO_FACE">In Person</option>
+              <option value="SYSTEM">System</option>
+              <option value="TELEPHONE">Telephone</option>
+              <option value="SKYPE">Skype</option>
+              <option value="Google_Meet">Google Meet</option>
+              <option value="GoToMeeting">GoToMeeting</option>
+              <option value="Microsoft_Teams">Microsoft Teams</option>
+              <option value="Zoom">Zoom</option>
+            </CFormSelect>
+          </CCol>
+        </CRow>
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+          >
             Interviewer:
-            <span className={isEnable ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={2}>
             <Autocomplete
               inputProps={{
-                className: 'form-control form-control-sm',
-                placeholder: 'Project Name',
+                className: 'form-control form-control-sm hr-autocomplete',
+                id: 'hr-autocomplete',
+                placeholder: 'Type name here for auto fill',
               }}
-              getItemValue={(item) => item.projectName}
-              items={allProjectNames ? allProjectNames : []}
+              getItemValue={(item) => item.fullName}
+              data-testid="hrautocomplete"
+              items={interviewProfiles}
               wrapperStyle={{ position: 'relative' }}
               renderMenu={(children) => (
                 <div
                   className={
-                    projectsAutoCompleteTarget &&
-                    projectsAutoCompleteTarget.length > 0
+                    autoCompleteTarget && autoCompleteTarget.length > 0
                       ? 'autocomplete-dropdown-wrap'
                       : 'autocomplete-dropdown-wrap hide'
                   }
@@ -176,68 +341,76 @@ const ReSchedule = () => {
                   {children}
                 </div>
               )}
-              renderItem={(item, isHighlighted) => (
-                <div
-                  data-testid="project-option"
-                  className={
-                    isHighlighted
-                      ? 'autocomplete-dropdown-item active'
-                      : 'autocomplete-dropdown-item '
-                  }
-                  key={item.id}
-                >
-                  {item.projectName}
-                </div>
-              )}
-              value={projectsAutoCompleteTarget}
-              shouldItemRender={(item, itemValue) =>
-                item?.projectName
-                  ?.toLowerCase()
-                  .indexOf(itemValue.toLowerCase()) > -1
+              renderItem={(item, isHighlighted) =>
+                itemsLayout(item.id, item.fullName, isHighlighted)
               }
-              onChange={(e) => autoCompleteOnChangeHandler(e)}
-              onSelect={(selectedVal) => onHandleSelectProjectName(selectedVal)}
+              value={autoCompleteTarget}
+              shouldItemRender={(item, value) =>
+                item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
+              }
+              onChange={(e) => setAutoCompleteTarget(e.target.value)}
+              onSelect={(value) => onHandleSelectHRAssociate(value)}
             />
           </CCol>
         </CRow>
-        <CFormLabel className="col-sm-3">
-          Comments:
-          <span
-            className={comments?.replace(/^\s*/, '') ? TextWhite : TextDanger}
+        <CRow className="mt-4 mb-4">
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
           >
-            *
-          </span>
-        </CFormLabel>
-        <CCol sm={6}>
-          <CFormTextarea
-            data-testid="text-area"
-            aria-label="textarea"
-            autoComplete="off"
-            maxLength={150}
-            value={comments}
-            onChange={(e) => setComments(e.target.value)}
-          ></CFormTextarea>
-        </CCol>
-        <CFormCheck
-          type="checkbox"
-          id="checked"
-          name="checked"
-          data-testid="checked"
-          checked={sendMessageTocandidate}
-          onChange={(e) => setSendMessageTocandidate(e.target.checked)}
-          inline
-        />
-        <b>Send Message to candidate</b>
-        <CFormCheck
-          type="checkbox"
-          id="sendMessageToInterviewer"
-          name="sendMessageToInterviewer"
-          data-testid="checked"
-          checked={sendMessageToInterviewer}
-          onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
-          inline
-        />
-        <b>Send Message to interviewer</b>
+            Comments:
+          </CFormLabel>
+          <CCol sm={2}>
+            <CFormTextarea
+              data-testid="text-area"
+              aria-label="textarea"
+              autoComplete="off"
+              maxLength={150}
+              value={comments}
+              onChange={(e) => setComments(e.target.value)}
+            ></CFormTextarea>
+            <CFormCheck
+              type="checkbox"
+              id="checked"
+              name="checked"
+              data-testid="checked"
+              checked={sendMessageToCandidate}
+              onChange={(e) => setSendMessageToCandidate(e.target.checked)}
+              inline
+            />
+            <b>Send Message to candidate</b>
+            <CFormCheck
+              type="checkbox"
+              id="sendMessageToInterviewer"
+              name="sendMessageToInterviewer"
+              data-testid="checked"
+              checked={sendMessageToInterviewer}
+              onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
+              inline
+            />
+            <b>Send Message to interviewer</b>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              onClick={handleSaveScheduleInterview}
+              disabled={!isSaveBtnEnable}
+            >
+              Save
+            </CButton>
+
+            <CButton
+              color="warning "
+              className="btn-ovh"
+              onClick={clearBtnHandler}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
       </OCard>
     </>
   )

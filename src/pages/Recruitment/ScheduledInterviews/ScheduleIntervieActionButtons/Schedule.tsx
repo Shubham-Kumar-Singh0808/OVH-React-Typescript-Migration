@@ -19,22 +19,6 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const Schedule = (): JSX.Element => {
   const [selectDate, setSelectDate] = useState<string | Date>('')
-  // const [time, setTime] = useState<string>('')
-
-  const convertTo12HourFormat = (timeString: string): string => {
-    const timeArray = timeString.split(':')
-    let hour = parseInt(timeArray[0], 10)
-    const minute = timeArray[1]
-    const meridiem = hour >= 12 ? 'PM' : 'AM'
-    hour = hour % 12 || 12
-    return `${hour}:${minute} ${meridiem}`
-  }
-
-  // const [currentTime, setCurrentTime] = useState<string>(
-  //   convertTo12HourFormat(
-  //     new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-  //   ),
-  // )
 
   const resultTime = new Date().toLocaleTimeString([], {
     hour: 'numeric',
@@ -43,11 +27,6 @@ const Schedule = (): JSX.Element => {
   const startHour = resultTime?.split(':')[0]
   const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
   const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
-
-  console.log(resultTime)
-  console.log(startHour)
-  console.log(startMeridianDay)
-  console.log(startMinutesDay)
 
   const [mode, setMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
@@ -176,6 +155,21 @@ const Schedule = (): JSX.Element => {
     }
   }, [selectDate, mode, autoCompleteTarget])
 
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (Number(value) <= 12) {
+      setTimePicker({
+        ...timePicker,
+        hours: e.target.value,
+      })
+    } else {
+      setTimePicker({
+        ...timePicker,
+        hours: '',
+      })
+    }
+  }
+
   return (
     <>
       <OCard
@@ -238,13 +232,7 @@ const Schedule = (): JSX.Element => {
                   name="personName"
                   data-testid="person-name"
                   value={timePicker.hours}
-                  onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
-                      hours: e.target.value,
-                    })
-                  }}
-                  max={12}
+                  onChange={onChangeHandler}
                 />
               </CCol>
               <CCol sm={6}>
@@ -282,8 +270,6 @@ const Schedule = (): JSX.Element => {
                 </CFormSelect>
               </CCol>
             </CRow>
-            {/* </CCol>
-            </CCol> */}
             <CFormCheck
               type="checkbox"
               id="checked"

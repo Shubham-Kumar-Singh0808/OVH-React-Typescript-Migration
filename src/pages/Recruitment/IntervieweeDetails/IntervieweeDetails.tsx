@@ -7,7 +7,7 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -15,12 +15,10 @@ import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import OToast from '../../../components/ReusableComponent/OToast'
-import Schedule from '../ScheduledInterviews/ScheduleIntervieActionButtons/Schedule'
 import NoShow from '../ScheduledInterviews/ScheduleIntervieActionButtons/NoShow '
 import RejectInterview from '../ScheduledInterviews/ScheduleIntervieActionButtons/RejectInterview'
 import Offer from '../ScheduledInterviews/ScheduleIntervieActionButtons/Offer'
 import OnHold from '../ScheduledInterviews/ScheduleIntervieActionButtons/OnHold'
-import ReSchedule from '../ScheduledInterviews/ScheduleIntervieActionButtons/ReSchedule'
 
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -137,6 +135,10 @@ const IntervieweeDetails = (): JSX.Element => {
     history.push(`/reScheduleInterview/${timeLineListSelector.personId}`)
   }
 
+  const scheduleBtnHandler = () => {
+    history.push(`/scheduleInterview/${timeLineListSelector.personId}`)
+  }
+
   return (
     <>
       <OCard
@@ -150,20 +152,19 @@ const IntervieweeDetails = (): JSX.Element => {
             {timeLineListSelector.candidateStatus === 'OFFERED' ? (
               ''
             ) : (
-              <Link to={`/scheduleInterview/${timeLineListSelector.personId}`}>
-                <CButton
-                  ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
-                  ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
-                  type="submit"
-                  className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
-                  disabled={
-                    timeLineListSelector.pendingInterviewStatus > 0 &&
-                    timeLineListSelector.candidateStatus !== 'REPROCESS'
-                  }
-                >
-                  Schedule
-                </CButton>
-              </Link>
+              <CButton
+                ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
+                ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
+                type="submit"
+                className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
+                disabled={
+                  timeLineListSelector.pendingInterviewStatus > 0 &&
+                  timeLineListSelector.candidateStatus !== 'REPROCESS'
+                }
+                onClick={scheduleBtnHandler}
+              >
+                Schedule
+              </CButton>
             )}
             {timeLineListSelector.candidateStatus === 'OFFERED' ? (
               ''
