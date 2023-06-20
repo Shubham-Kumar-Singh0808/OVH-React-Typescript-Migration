@@ -181,11 +181,11 @@ const ProjectRequestViewDetails = (): JSX.Element => {
             </span>
           </CCol>
         </CRow>
-        <CRow className="mt-1 mb-0 align-items-center">
+        <CRow className="mt-1 mb-0">
           <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
             Description:
           </CFormLabel>
-          <CCol sm={10}>
+          <CCol sm={10} className="pt-1">
             <span className="descriptionField">
               <div
                 dangerouslySetInnerHTML={{

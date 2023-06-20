@@ -117,9 +117,15 @@
 
                         <configuration>
                             <environmentVariables>
+<<<<<<< HEAD
                                 <PUBLIC_URL>https://ovhqa.raybiztech.com</PUBLIC_URL>
                                 <REACT_APP_ROUTER_BASE>/</REACT_APP_ROUTER_BASE>
                                 <REACT_APP_API_BASE>https://ovhqa.raybiztech.com</REACT_APP_API_BASE>
+=======
+                                <PUBLIC_URL>https://ovhqaapi.raybiztech.com</PUBLIC_URL>
+                                <REACT_APP_ROUTER_BASE>/</REACT_APP_ROUTER_BASE>
+                                <REACT_APP_API_BASE>https://ovhqaapi.raybiztech.com</REACT_APP_API_BASE>
+>>>>>>> bbce59f3a69b07e93ed346657e76301b77b5bc95
                                 <REACT_APP_IDLE_TIMEOUT>300000</REACT_APP_IDLE_TIMEOUT>
                                 <REACT_APP_PROMPT_TIMEOUT>60000</REACT_APP_PROMPT_TIMEOUT>
                             </environmentVariables>
@@ -139,9 +145,15 @@
 
                         <configuration>
                             <environmentVariables>
+<<<<<<< HEAD
                                 <PUBLIC_URL>https://ovhqa.raybiztech.com</PUBLIC_URL>
                                 <REACT_APP_ROUTER_BASE>/</REACT_APP_ROUTER_BASE>
                                 <REACT_APP_API_BASE>https://ovhqa.raybiztech.com</REACT_APP_API_BASE>
+=======
+                                <PUBLIC_URL>https://ovhqaapi.raybiztech.com</PUBLIC_URL>
+                                <REACT_APP_ROUTER_BASE>/</REACT_APP_ROUTER_BASE>
+                                <REACT_APP_API_BASE>https://ovhqaapi.raybiztech.com</REACT_APP_API_BASE>
+>>>>>>> bbce59f3a69b07e93ed346657e76301b77b5bc95
                                 <REACT_APP_IDLE_TIMEOUT>300000</REACT_APP_IDLE_TIMEOUT>
                                 <REACT_APP_PROMPT_TIMEOUT>60000</REACT_APP_PROMPT_TIMEOUT>
                             </environmentVariables>

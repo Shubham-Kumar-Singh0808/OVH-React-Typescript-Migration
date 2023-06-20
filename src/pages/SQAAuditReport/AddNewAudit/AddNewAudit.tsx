@@ -195,13 +195,11 @@ const AddNewAudit = (): JSX.Element => {
       setShowProjectManagerName('')
       setProjectNameAutoCompleteTarget('')
       setAddAuditeeName([])
-      setAddAuditorName([])
     } else {
       setIsProjectManagerVisible(false)
       setShowProjectManagerName('')
       setProjectNameAutoCompleteTarget('')
       setAddAuditeeName([])
-      setAddAuditorName([])
     }
   }
 

@@ -110,6 +110,8 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  IntervieweeDetailsApi,
+  CandidateListApi,
   VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
@@ -117,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  UpComingJoinListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -843,6 +846,11 @@ export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
 }
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
+  mileStoneHistory: apiPrefix + '/milestoneaudit/',
+  getMilestone: apiPrefix + '/project-mgmt/getMilestone',
+  milestoneNewsFeed: apiPrefix + '/projectnewsfeed/milestoneNewsFeed/',
+  uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
+  postMileStone: apiPrefix + '/projectnewsfeed/',
 }
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
@@ -922,6 +930,15 @@ export const KRAApiConfig: KRAApi = {
 }
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+  getAppraisalForm: apiPrefix + '/appraisal/AppraisalForm',
+  getExistingAppraisalForm: apiPrefix + '/appraisal/existingAppraisalForm',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  employeeAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
+  employeeAppraisalFormForRating:
+    apiPrefix + '/appraisal/employeeAppraisalFormForRating',
+  saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
+  getReviewComments: apiPrefix + '/appraisal/getReviewComments',
+  appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
@@ -1036,6 +1053,25 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
 
+export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
+  timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
+  saveInitialComments: apiPrefix + '/jobapplicant/jobAdmin/saveInitialComments',
+  updateCandidateInterviewStatus:
+    apiPrefix + '/jobapplicant/jobAdmin/updateCandidateInterviewStatus',
+  empScheduleInterviewDetails:
+    apiPrefix + '/jobapplicant/empScheduleInterviewDetails',
+  updateInterview: apiPrefix + '/jobapplicant/jobAdmin/updateInterview',
+}
+export const CandidateListApiConfig: CandidateListApi = {
+  searchScheduledCandidate:
+    apiPrefix + '/jobapplicant/jobAdmin/searchScheduledCandidate',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getCountryWiseCandidatesList:
+    apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
+  deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
+}
+
 export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
   getAssetTypeChange: apiPrefix + '/assetManagement/getassetTypeChangeList',
@@ -1059,3 +1095,8 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const getUpComingJoinListConfig: UpComingJoinListApi = {
+  getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}
