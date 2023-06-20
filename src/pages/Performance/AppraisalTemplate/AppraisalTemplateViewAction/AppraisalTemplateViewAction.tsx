@@ -10,15 +10,13 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 
 const AppraisalTemplateViewAction = ({
-  recData,
   setToggle,
   editAppraisalId,
 }: {
-  recData: GetDesignationsUnderCycle[]
   setToggle: () => void
   editAppraisalId: GetDesignationsUnderCycle | undefined
 }): JSX.Element => {
-  const [cycleChecked, setCycleChecked] = useState<KraLookups>()
+  const [cycleChecked, setCycleChecked] = useState<KraLookups[]>([])
   const [checkList, setCheckList] = useState<KraLookups[]>([])
   const [cbFromApi, setCbFromApi] = useState<KraLookups[]>([])
 
@@ -26,42 +24,16 @@ const AppraisalTemplateViewAction = ({
     htmlFor: 'inputNewHandbook',
     className: 'col-form-label category-label',
   }
-  useEffect(() => {
-    if (cycleChecked) {
-      const tmpArr: KraLookups[] = []
-      cbFromApi.forEach((item) => {
-        tmpArr.push(item)
-        return ''
-      })
-      let ndx = 9999
-      tmpArr.forEach((el, i) => {
-        if (el.id === cycleChecked.id) {
-          ndx = i
-        }
-        return ''
-      })
-      if (ndx < 9999) {
-        tmpArr.splice(ndx, 1)
-      } else {
-        tmpArr.push(cycleChecked)
-      }
-      setCbFromApi(tmpArr)
-      setCheckList([...checkList, cycleChecked])
-    }
-  }, [cycleChecked])
 
   const activeCycle = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.activeCycleData,
   )
-  console.log(activeCycle)
 
   useEffect(() => {
     if (activeCycle && activeCycle.kraLookups) {
       setCbFromApi(activeCycle.kraLookups)
     }
   }, [activeCycle])
-
-  console.log('# aa editAppraisalId ', editAppraisalId)
 
   return (
     <>
@@ -141,7 +113,7 @@ const AppraisalTemplateViewAction = ({
           </CCol>
         </CRow>
         <AppraisalTemplateViewActionTable
-          cycleChecked={cycleChecked as KraLookups}
+          cycleChecked={cycleChecked}
           setCycleChecked={setCycleChecked}
           selChkBoxesFromApi={cbFromApi}
           checkList={checkList}

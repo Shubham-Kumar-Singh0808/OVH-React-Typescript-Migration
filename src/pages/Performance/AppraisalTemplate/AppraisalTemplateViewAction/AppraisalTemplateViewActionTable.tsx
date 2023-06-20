@@ -23,6 +23,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import {
   AppraisalTemplateCheckBoxProps,
   GetDesignationsUnderCycle,
+  KraLookups,
 } from '../../../../types/Performance/AppraisalTemplate/appraisalTemplateTypes'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
@@ -50,7 +51,6 @@ const AppraisalTemplateViewActionTable = ({
   const activeCycle = useTypedSelector(
     reduxServices.appraisalTemplate.selectors.activeCycleData,
   )
-  console.log(activeCycle)
 
   const handleModal = (name: string) => {
     setIsModalVisible(true)
@@ -153,18 +153,12 @@ const AppraisalTemplateViewActionTable = ({
         name: editAppraisalId?.designation.name,
       },
       id: editAppraisalId?.id,
-      kraLookups: cbFromApi,
+      kraLookups: cycleChecked,
     } as GetDesignationsUnderCycle
 
     const appraisalTemplateResultAction = await dispatch(
       reduxServices.appraisalTemplate.designingmaping(prepareObject),
     )
-
-    console.log(
-      '# appraisalTemplateResultAction ',
-      appraisalTemplateResultAction,
-    )
-
     if (
       reduxServices.appraisalTemplate.designingmaping.fulfilled.match(
         appraisalTemplateResultAction,
@@ -174,13 +168,17 @@ const AppraisalTemplateViewActionTable = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
-
-  console.log('# kraLookups ', kraLookups)
-
-  console.log(
-    '# editAppraisalId.kraLookups ',
-    editAppraisalId && editAppraisalId.kraLookups,
-  )
+  const handleKraCheck = (id: number) => {
+    const kraIndex = cycleChecked.findIndex((kra) => kra.id === id);
+    if (kraIndex !== -1) {
+      const updatedKraLookups = [...cycleChecked]
+      updatedKraLookups[kraIndex] = {
+        ...updatedKraLookups[kraIndex],
+        checkType: !updatedKraLookups[kraIndex].checkType,
+      }
+      setCycleChecked(updatedKraLookups)
+    }
+  }
 
   return (
     <>
@@ -238,50 +236,17 @@ const AppraisalTemplateViewActionTable = ({
                   ? `${cycle.description.substring(0, 30)}...`
                   : cycle.description
 
-              let flag = false
-              const chkFlag = selChkBoxesFromApi?.find(
-                (el) => el.id === cycle.id,
-              )
-              console.log(chkFlag + 'chkFlag')
-
-              if (chkFlag) {
-                flag = true
-              }
-              console.log(flag + 'flag')
-
-              //editAppraisalId && editAppraisalId.kraLookups
-              let tmp = editAppraisalId!.kraLookups!.filter((el)=>el.id===cycle.id)
-              console.log('# tmp ', tmp)
-
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>
                     <CFormCheck
                       className="form-check-input"
                       name="checkType"
-                      checked={tmp!.length ? true : false} //flag
-                      onChange={() => {
-                        setCycleChecked((prevState) => {
-                          return {
-                            ...prevState,
-                            ...{
-                              id: cycle.id,
-                              name: cycle.name,
-                              description: cycle.description,
-                              kpiLookps: cycle.kpiLookps,
-                              count: cycle.count,
-                              checkType: true,
-                              designationName: cycle.designationName,
-                              designationId: cycle.designationId,
-                              departmentName: cycle.departmentName,
-                              departmentId: cycle.departmentId,
-                              designationKraPercentage:
-                                cycle.designationKraPercentage,
-                            },
-                          }
-                        })
-                      }}
-                      value={cycleChecked as unknown as string}
+                      checked={
+                        cycle.checkType as boolean
+                      }
+                      value={cycle?.id}
+                      onChange={()=>handleKraCheck(cycle?.id)}
                     />
                   </CTableDataCell>
                   {kraName ? (

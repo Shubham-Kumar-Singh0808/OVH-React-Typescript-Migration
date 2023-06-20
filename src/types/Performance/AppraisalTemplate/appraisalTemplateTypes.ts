@@ -169,8 +169,8 @@ export type kraDto = {
 }
 
 export type AppraisalTemplateCheckBoxProps = {
-  cycleChecked: KraLookups
-  setCycleChecked: React.Dispatch<React.SetStateAction<KraLookups | undefined>>
+  cycleChecked: KraLookups[]
+  setCycleChecked: React.Dispatch<React.SetStateAction<KraLookups[]>>
   selChkBoxesFromApi: KraLookups[]
   checkList: KraLookups[]
   editAppraisalId: GetDesignationsUnderCycle | undefined
