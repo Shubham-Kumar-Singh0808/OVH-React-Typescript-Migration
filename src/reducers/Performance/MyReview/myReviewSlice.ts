@@ -195,6 +195,20 @@ const myReviewSlice = createSlice({
         showModal: action.payload,
       }
     },
+    setClosedStatus: (state, action: PayloadAction<string>) => {
+      const finalValue = action.payload === '' ? null : action.payload
+      state.appraisalForm = {
+        ...state.appraisalForm,
+        closedStatus: finalValue,
+      }
+    },
+    setClosedSummary: (state, action: PayloadAction<string>) => {
+      const finalSummaryValue = action.payload === '' ? null : action.payload
+      state.appraisalForm = {
+        ...state.appraisalForm,
+        closedSummary: finalSummaryValue,
+      }
+    },
   },
   extraReducers: (builder) => {
     builder

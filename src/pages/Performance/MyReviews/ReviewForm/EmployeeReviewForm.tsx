@@ -7,15 +7,13 @@ import RequestDiscussionTimeline from './ReviewFormEmployeeComponents/RequestDis
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { TextDanger } from '../../../../constant/ClassName'
-import {
-  MyReviewAppraisalFormStatus,
-  MyReviewFormStatus,
-} from '../../../../types/Performance/MyReview/myReviewTypes'
+import { MyReviewFormStatus } from '../../../../types/Performance/MyReview/myReviewTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import {
   checkIfEmployeeSubmitButtonIsEnabled,
   checkIfManagerSubmitButtonIsEnabled,
   generateMyReviewTestId,
+  isRequestDiscussionCommentsVisible,
 } from '../MyReviewHelpers'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
@@ -39,10 +37,6 @@ const EmployeeReviewForm = (): JSX.Element => {
   )
   const myReviewFormStatus = useTypedSelector(
     (state) => state.myReview.myReviewFormStatus,
-  )
-  // used to differentiate between employee and manager
-  const appraisalFormStatusEmpManager = useTypedSelector(
-    (state) => state.myReview.appraisalForm.appraisalFormStatus,
   )
   const myReviewModal = useTypedSelector((state) => state.myReview.modal)
 
@@ -144,7 +138,7 @@ const EmployeeReviewForm = (): JSX.Element => {
                 {
                   // must be visible only to the employee until the employee agrees
                   isItTheSameEmployee &&
-                    myReviewFormStatus !== MyReviewFormStatus.completed && (
+                    isRequestDiscussionCommentsVisible(myReviewFormStatus) && (
                       <EmployeeDiscussionInput />
                     )
                 }

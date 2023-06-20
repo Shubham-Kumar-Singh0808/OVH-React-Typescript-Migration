@@ -222,10 +222,10 @@ export interface IncomingMyReviewAppraisalForm {
   discussionSummary: null
   openForDiscussionFlag: null | string
   iAgreeFlag: null | boolean
-  closedSummary: null
+  closedSummary: null | string
   closedOn: null
   pendingWith: null | string
-  closedStatus: null
+  closedStatus: null | string
   closedBy: null
   empDepartmentName: null | string
   empDesignationName: null | string

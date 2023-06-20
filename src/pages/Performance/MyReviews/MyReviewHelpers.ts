@@ -199,6 +199,16 @@ export const showCloseBtnForManager = (
   )
 }
 
+// comments input visible to employee on following conditions
+export const isRequestDiscussionCommentsVisible = (
+  formStatus: MyReviewFormStatus,
+): boolean => {
+  return (
+    formStatus === MyReviewFormStatus.openForDiscussion ||
+    formStatus === MyReviewFormStatus.pendingagreement
+  )
+}
+
 export const getKpisOfKraByKraIndex = (
   list: IncomingMyReviewAppraisalForm,
   kraIndex: number,
