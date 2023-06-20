@@ -156,6 +156,10 @@ const CandidateListTable = ({
     }
     return <></>
   }
+
+  const handler = (candidateId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+  }
   return (
     <>
       <CTable
@@ -194,7 +198,15 @@ const CandidateListTable = ({
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
-                  <CTableDataCell>{data.fullName}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link
+                      to={`/candidatetimeline/${data.personId}`}
+                      className="cursor-pointer"
+                      onClick={() => handler(data.personId)}
+                    >
+                      {data.fullName}
+                    </Link>
+                  </CTableDataCell>
                   <CTableDataCell>{data.appliedForVacancy}</CTableDataCell>
                   <CTableDataCell>{data.appliedFor.jobCode}</CTableDataCell>
                   <CTableDataCell>{data.mobile}</CTableDataCell>
