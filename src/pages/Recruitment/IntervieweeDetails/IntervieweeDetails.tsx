@@ -142,6 +142,70 @@ const IntervieweeDetails = (): JSX.Element => {
   const backBtnHandler = () => {
     history.goBack()
   }
+
+  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
+    if (interviewStatus === 'NEW') {
+      return (
+        <CButton
+          color="info"
+          className="btn btn-primary btn-xs preview-Interview"
+        >
+          {interviewStatus}
+        </CButton>
+      )
+    } else if (interviewStatus === 'IN_PROCESS') {
+      return (
+        <CButton className="btn btn-primary btn-xs preview-Interview">
+          {'IN PROGRESS'}
+        </CButton>
+      )
+    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
+      return (
+        <CButton
+          className="btn btn-primary btn-xs preview-Interview"
+          color="warning"
+        >
+          {interviewStatus}
+        </CButton>
+      )
+    } else if (
+      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
+    ) {
+      return (
+        <CButton
+          className="btn btn-primary btn-xs preview-Interview"
+          color="danger"
+        >
+          {interviewStatus}
+        </CButton>
+      )
+    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
+      return (
+        <CButton
+          className="btn btn-primary btn-xs preview-Interview"
+          color="success"
+        >
+          {interviewStatus}
+        </CButton>
+      )
+    } else if (interviewStatus === 'RESCHEDULED') {
+      return (
+        <CButton className="btn btn-primary btn-xs preview-Interview">
+          {interviewStatus}
+        </CButton>
+      )
+    } else if (interviewStatus === 'NO_SHOW') {
+      return (
+        <CButton
+          className="btn btn-primary btn-xs preview-Interview"
+          color="danger"
+        >
+          {'NO SHOW'}
+        </CButton>
+      )
+    }
+    return <></>
+  }
   return (
     <>
       <OCard
@@ -216,7 +280,11 @@ const IntervieweeDetails = (): JSX.Element => {
               Status:
             </CFormLabel>
             <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.candidateStatus}</p>
+              <p className="mb-0">
+                {formatInterviewStatusText(
+                  timeLineListSelector?.candidateStatus,
+                )}
+              </p>
             </CCol>
           </CRow>
           {timeLineListSelector?.statusComments === null ? (
