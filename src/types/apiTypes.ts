@@ -873,6 +873,13 @@ export interface CandidateListApi extends ApiBase {
   getAllTechnology: string
   getCountryWiseCandidatesList: string
   deleteCandidate: string
+  getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
+  uploadCandidateResume: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
