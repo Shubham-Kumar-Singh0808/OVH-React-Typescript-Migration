@@ -11,7 +11,7 @@ const MileStoneDiscussionTimeLine = (): JSX.Element => {
   return (
     <>
       <div className="sh-timeline-container">
-        {mileStoneDiscussionTimeLine.map((item, index) => {
+        {mileStoneDiscussionTimeLine?.map((item, index) => {
           return (
             <div key={index} className="sh-timeline-card">
               <div
