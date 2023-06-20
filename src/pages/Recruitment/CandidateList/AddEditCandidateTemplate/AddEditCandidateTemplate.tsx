@@ -610,7 +610,7 @@ const AddEditCandidateTemplate = ({
                     >
                       Select
                     </option>
-                    {allEmpCountriesList.length > 0 &&
+                    {allEmpCountriesList?.length > 0 &&
                       allEmpCountriesList?.map(
                         (countryCode, countryCodeIndex) => (
                           <option
