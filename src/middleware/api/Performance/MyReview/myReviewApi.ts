@@ -126,6 +126,20 @@ const appraisalConfirmation = async (
   return response.data
 }
 
+const closeAppraisalForm = async (
+  finalData: IncomingMyReviewAppraisalForm,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: myReviewApiConfig.closeAppraisalForm,
+    method: AllowedHttpMethods.put,
+    data: {
+      ...finalData,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const myReviewApi = {
   getEmployeePerformanceReview,
   getAppraisalForm,
@@ -136,6 +150,7 @@ const myReviewApi = {
   saveReviewComments,
   getReviewComments,
   appraisalConfirmation,
+  closeAppraisalForm,
 }
 
 export default myReviewApi
