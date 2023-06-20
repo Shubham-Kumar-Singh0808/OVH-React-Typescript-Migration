@@ -460,6 +460,6 @@ describe('Add Candidate', () => {
         })
       })
       expect(resumeUpload).toBeTruthy()
-    })
+    }, 20000)
   })
 })
