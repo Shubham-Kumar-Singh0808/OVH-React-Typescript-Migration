@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import AuditMembersDetails from './AuditMembersDetails'
-import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 import { mockEmployeeNames } from '../../../test/data/allocateEmployeeData'
 
 const toRenderAuditors = (
