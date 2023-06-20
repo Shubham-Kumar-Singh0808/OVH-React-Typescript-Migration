@@ -1,6 +1,5 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { CKEditor } from 'ckeditor4-react'
 import AddCandidate from './AddCandidate'
 import {
   act,
