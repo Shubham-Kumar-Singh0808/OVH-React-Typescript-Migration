@@ -106,6 +106,10 @@ const ReviewListFilterOptions = ({
   }
 
   const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
+    const finalListStatus = selectStatus === undefined ? '' : selectStatus
+    dispatch(
+      reduxServices.reviewList.actions.setCurrentListStatus(finalListStatus),
+    )
     return dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: (selectStatus as string) || '',
@@ -170,6 +174,7 @@ const ReviewListFilterOptions = ({
     setIsChecked(false)
     setReviewRate([])
     dispatch(reduxServices.reviewList.actions.clearReviewList())
+    dispatch(reduxServices.reviewList.actions.setCurrentListStatus(''))
   }
 
   const handleExportReviewList = async () => {
