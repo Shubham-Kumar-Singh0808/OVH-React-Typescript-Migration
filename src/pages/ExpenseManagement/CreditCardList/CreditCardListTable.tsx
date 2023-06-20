@@ -228,7 +228,9 @@ const CreditCardListTable = (): JSX.Element => {
                     </CTableDataCell>
                   ) : (
                     <CTableDataCell className="ng-binding">
-                      XXXX-XXXX-XXXX-{creditCardItems.cardNumber.substring(12)}
+                      {`XXXX-XXXX-XXXX-${creditCardItems.cardNumber.substring(
+                        12,
+                      )}`}
                     </CTableDataCell>
                   )}
                   <CTableDataCell scope="row">
