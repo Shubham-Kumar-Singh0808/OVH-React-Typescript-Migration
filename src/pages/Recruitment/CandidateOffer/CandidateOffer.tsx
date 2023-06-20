@@ -8,9 +8,11 @@ import {
   CFormSelect,
   CFormCheck,
   CFormTextarea,
+  CForm,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
+import { SyntheticEvent } from 'react-draft-wysiwyg'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -25,7 +27,7 @@ const CandidateOffer = (): JSX.Element => {
   const [candidateDepartment, setCandidateDepartment] = useState<
     string | number
   >('')
-  console.log(candidateDepartment + 'candidateDepartment')
+  // console.log(candidateDepartment + 'candidateDepartment')
 
   const [candidateName, setSetCandidatename] = useState<string>('')
   const [position, setPosition] = useState<string>('')
@@ -72,7 +74,41 @@ const CandidateOffer = (): JSX.Element => {
   const result = addNewJoinee?.filter(
     (item) => item.departmentId === candidateDepartment,
   )
-  console.log(result + 'V')
+  // console.log(result + 'V')
+
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
+  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
+    File | undefined
+  >(undefined)
+  const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    let extension = ''
+    if (!file) return
+    if (file && file[0] !== undefined) {
+      extension = file[0].name.split('.').pop() as string
+    }
+    if (file[0] !== undefined && file[0].size > 2048000) {
+      setUploadErrorText('Please upload file lessthan 2MB.')
+      return
+    }
+    if (!acceptedFileTypes.includes(extension)) {
+      setUploadErrorText('Please choose doc or docx or pdf or zip. file')
+      return
+    }
+    setIsUploadBtnEnabled(true)
+    setUploadErrorText('')
+    setUploadFeedbackForm(file[0])
+  }
+
+  useEffect(() => {
+    if (uploadFeedbackForm) {
+      setIsUploadBtnEnabled(true)
+    } else {
+      setIsUploadBtnEnabled(false)
+    }
+  })
   // ------------------------------------------------------------
 
   useEffect(() => {
@@ -140,32 +176,39 @@ const CandidateOffer = (): JSX.Element => {
   //     }
   //   }
 
-  const handleAddCandidate1 = () => {
-    dispatch(
-      reduxServices.addNewCandidate.getAddNewJoineeData({
-        appliedForLookUp: position,
-        // candidateId: timeLineListSelector?.personId,
-        candidateId: '',
-        candidateName,
-        comments: candidateComment,
-        currentCTC: curruentCTC,
-        dateOfJoining: dateOfJoiningDate,
-        departmentName: result[0].departmentName,
-        designation,
-        employmentType: employeeType,
-        jobType,
-        sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: '',
-      }),
-    )
-  }
+  // const handleAddCandidate1 = () => {
+  //   dispatch(
+  //     reduxServices.addNewCandidate.getAddNewJoineeData({
+  //       appliedForLookUp: position,
+  //       // candidateId: timeLineListSelector?.personId,
+  //       candidateId: '',
+  //       candidateName,
+  //       comments: candidateComment,
+  //       currentCTC: curruentCTC,
+  //       dateOfJoining: dateOfJoiningDate,
+  //       departmentName: result[0].departmentName,
+  //       designation,
+  //       employmentType: employeeType,
+  //       jobType,
+  //       sendOfferMessagetoCandidate: sendMessageToCandiDate,
+  //       technology: '',
+  //     }),
+  //   )
+  // }
+
+  const addFailedToastMessage = (
+    <OToast
+      toastMessage="Joinee already added."
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
 
   const handleAddCandidate = async () => {
-    const test = await dispatch(
+    const addCandidate = await dispatch(
       reduxServices.addNewCandidate.getAddNewJoineeData({
         appliedForLookUp: position,
         candidateId: timeLineListSelector?.personId,
-        // candidateId: '',
         candidateName,
         comments: candidateComment,
         currentCTC: curruentCTC,
@@ -179,7 +222,9 @@ const CandidateOffer = (): JSX.Element => {
       }),
     )
     if (
-      reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(test)
+      reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
+        addCandidate,
+      )
     ) {
       //   setApproveLeaveComment('')
       //   setIsApproveModalVisibility(false)
@@ -189,6 +234,14 @@ const CandidateOffer = (): JSX.Element => {
           timeLineListSelector.personId,
         ),
       )
+    } else if (
+      reduxServices.addLocationList.deleteLocation.rejected.match(
+        addCandidate,
+      ) &&
+      addCandidate.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(addFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
@@ -225,7 +278,7 @@ const CandidateOffer = (): JSX.Element => {
           </CCol>
         </CRow> */}
 
-        <CRow className="justify-content-end">
+        {/* <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
             <CButton
               color="info"
@@ -236,7 +289,7 @@ const CandidateOffer = (): JSX.Element => {
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
-        </CRow>
+        </CRow> */}
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}
@@ -326,7 +379,7 @@ const CandidateOffer = (): JSX.Element => {
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
-              data-testid="id"
+              data-testid="designation-id"
               id="id"
               size="sm"
               aria-label="Designation"
@@ -357,7 +410,7 @@ const CandidateOffer = (): JSX.Element => {
           <CCol sm={3}>
             <DatePicker
               className="form-control form-control-sm sh-date-picker"
-              data-testid="date-picker"
+              data-testid="join-select"
               placeholderText="dd/mm/yyyy"
               dateFormat="dd/mm/yy"
               name="dateOfJoiningDate"
@@ -474,7 +527,6 @@ const CandidateOffer = (): JSX.Element => {
             className="col-sm-3 col-form-label text-end"
           >
             Attach File:
-            {/* <span className={showIsRequired(addVendor.departmentId)}>*</span> */}
           </CFormLabel>
           <CCol sm={3}>
             <div className="col-sm-3">
@@ -482,11 +534,13 @@ const CandidateOffer = (): JSX.Element => {
                 className="file"
                 type="file"
                 style={{ width: '200px', marginBottom: '0' }}
-                // onChange={handleFileChange}
+                data-testid="file-upload"
+                onChange={(element: SyntheticEvent) =>
+                  onChangeJoineeFileUploadHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
+                }
               />
-              <br />
-              {/* ngIf: fileSizeMessage == 'ExceedSize' */}
-              {/* ngIf: fileFormatMessage == 'InValid' */}
             </div>
           </CCol>
         </CRow>
@@ -498,12 +552,17 @@ const CandidateOffer = (): JSX.Element => {
               inline
               type="checkbox"
               name="internalProject"
-              data-testid="internalProject"
+              data-testid="msg-candidate"
               id="internalProject"
               label="Send Message to candidate"
               checked={sendMessageToCandiDate}
               onChange={(e) => setSendMessageToCandiDate(e.target.checked)}
             />
+            {uploadErrorText && (
+              <div id="error" className="mt-1">
+                <strong className="text-danger">{uploadErrorText}</strong>
+              </div>
+            )}
           </div>
         </CRow>
 
@@ -529,6 +588,7 @@ const CandidateOffer = (): JSX.Element => {
             color="success"
             className="btn-ovh me-1"
             size="sm"
+            name="Add"
             disabled={!isAddButtonEnabled}
             onClick={handleAddCandidate}
           >
