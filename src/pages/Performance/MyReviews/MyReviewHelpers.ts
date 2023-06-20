@@ -9,6 +9,7 @@ import {
   MyReviewUpdateRoleEnum,
   MyReviewUpdateTypeEnum,
   UpdateMyReviewFieldsDTO,
+  IncomingAppraisalFormAvgRatingDTO,
 } from '../../../types/Performance/MyReview/myReviewTypes'
 
 export const initialMyReviewKRA: IncomingMyReviewKRA = {
@@ -25,6 +26,10 @@ export const initialPerformanceRating: IncomingPerformanceRating = {
   id: -1,
   rating: -1,
 }
+
+export const individualReviewListFeatureId = 231
+export const hierarchyReviewListFeatureId = 230
+export const reviewListFeatureId = 39
 
 export const getKpiKraIndexesFromList = (
   kraList: IncomingMyReviewKRA[],
@@ -170,8 +175,38 @@ export const canEmployeeViewAfterManagerSubmit = (
   return (
     (myReviewFormStatus === MyReviewFormStatus.pendingagreement ||
       myReviewFormStatus === MyReviewFormStatus.openForDiscussion ||
-      myReviewFormStatus === MyReviewFormStatus.completed) &&
+      myReviewFormStatus === MyReviewFormStatus.completed ||
+      myReviewFormStatus === MyReviewFormStatus.closed) &&
     appraisalFormStatus !== MyReviewAppraisalFormStatus.NotSubmittedByYou
+  )
+}
+
+// sorted by the level
+export const sortAvgRatingDTOsByLevel = (
+  dtos: IncomingAppraisalFormAvgRatingDTO[],
+): IncomingAppraisalFormAvgRatingDTO[] => {
+  const newArray = [...dtos]
+  return newArray.sort((a, b) => a.level - b.level)
+}
+
+export const showCloseBtnForManager = (
+  formStatus: MyReviewFormStatus,
+): boolean => {
+  return (
+    formStatus === MyReviewFormStatus.submitForEmployee ||
+    formStatus === MyReviewFormStatus.pending ||
+    formStatus === MyReviewFormStatus.pendingagreement ||
+    formStatus === MyReviewFormStatus.openForDiscussion
+  )
+}
+
+// comments input visible to employee on following conditions
+export const isRequestDiscussionCommentsVisible = (
+  formStatus: MyReviewFormStatus,
+): boolean => {
+  return (
+    formStatus === MyReviewFormStatus.openForDiscussion ||
+    formStatus === MyReviewFormStatus.pendingagreement
   )
 }
 

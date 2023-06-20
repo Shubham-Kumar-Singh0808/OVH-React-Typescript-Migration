@@ -5,6 +5,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockInitialManagerAppraisalForm,
   mockPerformanceRatings,
+  myReviewManagerUserAccessToFeatures,
 } from '../../../../test/data/myReviewData'
 import {
   act,
@@ -39,6 +40,14 @@ describe('Manager Appraisal Render', () => {
             isManagerSubmitButtonEnabled: false,
             myReviewFormStatus: MyReviewFormStatus.saveForEmployee, //will automatically change because of logic
             modal: initialMyReviewModal,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: myReviewManagerUserAccessToFeatures,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeId: 2000, // random but not equal to employee id in the review form
+            },
           },
         },
       })
@@ -129,32 +138,57 @@ describe('Manager Appraisal Render', () => {
       ).toBeVisible()
     })
 
-    test('manager can see employee self rating and their rating', () => {
-      const managerRating = screen.getByTestId(
-        generateMyReviewTestId('managerRating'),
+    test('close button functionality on top right', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
       )
-      const employeeRating = screen.getByTestId(
-        generateMyReviewTestId('employeeRating'),
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      const submitButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerFinalSubmitBtn'),
       )
-
-      expect(managerRating).toHaveTextContent('N/A')
-      expect(employeeRating).toHaveTextContent(
-        mockInitialManagerAppraisalForm.empAvgRating
-          ? mockInitialManagerAppraisalForm.empAvgRating.toString()
-          : 'N/A',
+      const statusInput = screen.getByTestId(
+        generateMyReviewTestId('delManagerStatusInp'),
       )
-
-      expect(
-        screen.getByTestId(generateMyReviewTestId('employeeRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.employee.fullName} Rating:`,
+      const statusSummary = screen.getByTestId(
+        generateMyReviewTestId('delManagerSummaryInp'),
       )
 
-      expect(
-        screen.getByTestId(generateMyReviewTestId('managerRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.manager1Name} Rating:`,
+      expect(submitButton).toBeDisabled()
+
+      expect(statusInput).toHaveValue('')
+      act(() => {
+        userEvent.selectOptions(statusInput, 'Relieved')
+      })
+      expect(statusInput).toHaveValue('Relieved')
+
+      expect(statusSummary).toHaveValue('')
+      act(() => {
+        fireEvent.change(statusSummary, { target: { value: 'test' } })
+      })
+      expect(statusSummary).toHaveValue('test')
+
+      expect(submitButton).toBeEnabled()
+      act(() => {
+        userEvent.click(submitButton)
+      })
+    })
+
+    test('close button modal cancel functionality', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
       )
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      act(() => {
+        userEvent.click(
+          screen.getByTestId(
+            generateMyReviewTestId('delManagerCancelModalBtn'),
+          ),
+        )
+      })
     })
   })
 })

@@ -939,6 +939,7 @@ export const myReviewApiConfig: MyReviewApi = {
   saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
   getReviewComments: apiPrefix + '/appraisal/getReviewComments',
   appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
+  closeAppraisalForm: apiPrefix + 'appraisal/closeAppraisalForm',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
