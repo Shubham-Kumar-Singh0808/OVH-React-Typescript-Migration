@@ -156,7 +156,10 @@ const IntervieweeDetails = (): JSX.Element => {
                   ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
                   type="submit"
                   className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
-                  disabled={timeLineListSelector.pendingInterviewStatus > 0}
+                  disabled={
+                    timeLineListSelector.pendingInterviewStatus > 0 &&
+                    timeLineListSelector.candidateStatus !== 'REPROCESS'
+                  }
                 >
                   Schedule
                 </CButton>

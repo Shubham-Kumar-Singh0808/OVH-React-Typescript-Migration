@@ -37,7 +37,9 @@ const Schedule = (): JSX.Element => {
       new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
     ),
   )
-
+  console.log(
+    new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+  )
   const [mode, setMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
   const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
