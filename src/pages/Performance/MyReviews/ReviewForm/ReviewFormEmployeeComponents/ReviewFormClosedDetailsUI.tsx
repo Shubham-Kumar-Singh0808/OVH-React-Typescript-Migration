@@ -11,7 +11,7 @@ const ReviewFormClosedDetailsUI = ({
   children: React.ReactNode
   childrenColNum?: number
   contentTestId?: string
-}) => {
+}): JSX.Element => {
   return (
     <div className="d-flex flex-row align-items-center mb-2">
       <CCol sm={3}>
