@@ -29,9 +29,14 @@ const EmployeeManagerRating = (): JSX.Element => {
       : 'N/A'
   }, [managerAvgRatingDTO])
 
+  const avgRatingsDTOs = useTypedSelector(
+    (state) => state.myReview.appraisalForm.avgRatingsDtos,
+  )
+
   return (
     <CRow className="mt-2">
       <div className="d-flex flex-row flex-wrap" style={{ gap: '200px' }}>
+        {avgRatingsDTOs.sort((a,b) => a.order - b.order)}
         <div data-testid={generateMyReviewTestId('employeeRating')}>
           <span
             style={{ color: '#2768a3', paddingRight: '8px' }}
