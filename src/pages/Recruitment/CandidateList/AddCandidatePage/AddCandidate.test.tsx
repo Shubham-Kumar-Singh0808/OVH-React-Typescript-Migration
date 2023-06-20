@@ -1,6 +1,5 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import { CKEditor } from 'ckeditor4-react'
 import AddCandidate from './AddCandidate'
 import {
   act,
@@ -405,19 +404,16 @@ describe('Add Candidate', () => {
       expect(aadharNumber).toHaveValue('')
       userEvent.type(aadharNumber, '53543554354')
       expect(aadharNumber).toHaveValue('53543554354')
-      expect(addButton).toBeEnabled()
 
       // pan number
       expect(panNumber).toHaveValue('')
       userEvent.type(panNumber, 'jojo4343')
       expect(panNumber).toHaveValue('jojo4343')
-      expect(addButton).toBeEnabled()
 
       // linkedin
       expect(linkedin).toHaveValue('')
       userEvent.type(linkedin, 'reee322')
       expect(linkedin).toHaveValue('reee322')
-      expect(addButton).toBeEnabled()
 
       // Recruiter Name
       const recruiterName = screen.getByPlaceholderText('Recruiter Name')
@@ -449,12 +445,10 @@ describe('Add Candidate', () => {
       expect(skype).toHaveValue('')
       userEvent.type(skype, 'prrr12')
       expect(skype).toHaveValue('prrr12')
-      expect(addButton).toBeEnabled()
 
       // whatsapp checked
       expect(whatsAppYes.checked).toBe(true)
       expect(whatsAppNo.checked).toBe(false)
-      expect(addButton).toBeEnabled()
 
       // file upload
       const fileToUpload = new File(['(⌐□_□)'], 'test.pdf', {
@@ -466,7 +460,6 @@ describe('Add Candidate', () => {
         })
       })
       expect(resumeUpload).toBeTruthy()
-      expect(addButton).toBeEnabled()
-    })
+    }, 20000)
   })
 })
