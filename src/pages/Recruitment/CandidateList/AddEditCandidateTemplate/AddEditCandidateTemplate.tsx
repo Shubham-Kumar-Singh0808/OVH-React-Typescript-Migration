@@ -606,17 +606,17 @@ const AddEditCandidateTemplate = ({
                   >
                     <option
                       data-testid="addCandOpt-countryOpt"
-                      value={initialCandidateCountry.id}
+                      value={initialCandidateCountry.id.toString()}
                     >
                       Select
                     </option>
-                    {allEmpCountriesList.length > 0 &&
+                    {allEmpCountriesList?.length > 0 &&
                       allEmpCountriesList?.map(
                         (countryCode, countryCodeIndex) => (
                           <option
                             key={countryCodeIndex}
                             data-testid="addCandOpt-countryOpt"
-                            value={countryCode.id}
+                            value={countryCode.id.toString()}
                           >
                             {countryCode.countryCode}
                           </option>
