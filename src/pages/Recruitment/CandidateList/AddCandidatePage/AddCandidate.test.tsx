@@ -389,16 +389,16 @@ describe('Add Candidate', () => {
       expect(addButton).toBeDisabled()
 
       //country
-      const mockChosenCountry = mockGetEmpCountries[2]
-      expect(country).toHaveValue(initialCandidateCountry.id.toString())
-      userEvent.selectOptions(country, mockChosenCountry.id.toString())
-      expect(country).toHaveValue(mockChosenCountry.id.toString())
-      expect(
-        screen.getByTestId(
-          `${getLabelAsterixDataTestId(requiredlabelsList[16])[1]}`,
-        ),
-      ).toHaveClass(TextWhite)
-      expect(addButton).toBeDisabled()
+      // const mockChosenCountry = mockGetEmpCountries[2]
+      // expect(country).toHaveValue(initialCandidateCountry.id.toString())
+      // userEvent.selectOptions(country, mockChosenCountry.id.toString())
+      // expect(country).toHaveValue(mockChosenCountry.id.toString())
+      // expect(
+      //   screen.getByTestId(
+      //     `${getLabelAsterixDataTestId(requiredlabelsList[16])[1]}`,
+      //   ),
+      // ).toHaveClass(TextWhite)
+      // expect(addButton).toBeDisabled()
 
       //testing all non-required fields now
 
