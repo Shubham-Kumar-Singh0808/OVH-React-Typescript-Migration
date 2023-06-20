@@ -57,9 +57,6 @@ const AddExpenseCategory = (): JSX.Element => {
           isAddExpenseCategory,
         )
       ) {
-        dispatch(
-          reduxServices.addNewCategory.checkDuplicateCategory(categoryName),
-        )
         dispatch(reduxServices.categoryList.getCategoryList())
         setCategoryName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
@@ -89,9 +86,6 @@ const AddExpenseCategory = (): JSX.Element => {
         isAddExpenseCategory,
       )
     ) {
-      dispatch(
-        reduxServices.addNewCategory.checkDuplicateCategory(categoryName),
-      )
       dispatch(reduxServices.categoryList.getCategoryList())
       setCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))

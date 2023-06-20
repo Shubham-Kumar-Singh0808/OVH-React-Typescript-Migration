@@ -19,21 +19,8 @@ const addNewCategory = async (
   return response.data
 }
 
-const checkDuplicateCategory = async (
-  categoryName: string,
-): Promise<boolean | undefined> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: categoryListApiConfig.checkForDuplicateCategory,
-    method: AllowedHttpMethods.get,
-    params: { categoryName },
-  })
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const addNewCategoryApi = {
   addNewCategory,
-  checkDuplicateCategory,
 }
 
 export default addNewCategoryApi

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ExpenseCategoryListTable from './ExpenseCategoryListTable'
 import AddExpenseCategory from './AddExpenseCategory/AddExpenseCategory'
 import OCard from '../../../components/ReusableComponent/OCard'
