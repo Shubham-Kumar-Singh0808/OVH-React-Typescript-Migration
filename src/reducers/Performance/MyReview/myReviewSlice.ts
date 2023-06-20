@@ -150,6 +150,18 @@ const appraisalConfirmationThunk = createAsyncThunk(
   },
 )
 
+const closeAppraisalFormThunk = createAsyncThunk(
+  'myReview/closeAppraisalFormThunk',
+  async (finalData: IncomingMyReviewAppraisalForm, thunkApi) => {
+    try {
+      return await myReviewApi.closeAppraisalForm(finalData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -293,6 +305,7 @@ const myReviewThunk = {
   saveReviewCommentsThunk,
   getReviewCommentsThunk,
   appraisalConfirmationThunk,
+  closeAppraisalFormThunk,
 }
 
 const myReviewSelectors = {

@@ -6,19 +6,30 @@ import {
   CModalFooter,
   CButton,
 } from '@coreui/react-pro'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { TextDanger, TextWhite } from '../../../../../constant/ClassName'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import {
+  IncomingMyReviewAppraisalForm,
+  MyReviewFormStatus,
+} from '../../../../../types/Performance/MyReview/myReviewTypes'
+import OToast from '../../../../../components/ReusableComponent/OToast'
+import { generateMyReviewTestId } from '../../MyReviewHelpers'
 
 const CloseAppraisalFormModal = (): JSX.Element => {
   const dispatch = useAppDispatch()
+  const appraisalForm = useTypedSelector(
+    (state) => state.myReview.appraisalForm,
+  )
   const closedStatus = useTypedSelector(
     (state) => state.myReview.appraisalForm.closedStatus,
   )
   const closedSummary = useTypedSelector(
     (state) => state.myReview.appraisalForm.closedSummary,
   )
+  const [isSubmitButtonEnabled, setIsSubmitButtonEnabled] =
+    useState<boolean>(false)
 
   const finalClosedStatus = useMemo(() => {
     return closedStatus === null ? '' : closedStatus
@@ -44,6 +55,45 @@ const CloseAppraisalFormModal = (): JSX.Element => {
     return finalClosedSummary === ''
   }, [finalClosedSummary])
 
+  useEffect(() => {
+    if (closeStatusAsterix || summaryAsterix) {
+      setIsSubmitButtonEnabled(false)
+    } else {
+      setIsSubmitButtonEnabled(true)
+    }
+  }, [closeStatusAsterix, summaryAsterix])
+
+  const submitButtonHandler = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
+    const finalData: IncomingMyReviewAppraisalForm = {
+      ...appraisalForm,
+      formStatus: MyReviewFormStatus.completed,
+    }
+    const result = await dispatch(
+      reduxServices.myReview.closeAppraisalFormThunk(finalData),
+    )
+    if (
+      reduxServices.myReview.closeAppraisalFormThunk.fulfilled.match(result)
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Appraisal Form Closed Successfully"
+          />,
+        ),
+      )
+      window.location.href = '/listofAppraisal'
+    }
+  }
+
+  const cancelButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(reduxServices.myReview.actions.setDisplayModal(false))
+  }
+
   return (
     <>
       <div>
@@ -60,6 +110,7 @@ const CloseAppraisalFormModal = (): JSX.Element => {
             <CFormSelect
               value={finalClosedStatus}
               onChange={statusChangeHandler}
+              data-testid={generateMyReviewTestId('delManagerStatusInp')}
             >
               <option value="">Select</option>
               <option value="Relieved">Relieved</option>
@@ -74,14 +125,26 @@ const CloseAppraisalFormModal = (): JSX.Element => {
           <CFormTextarea
             value={finalClosedSummary}
             onChange={summaryChangeHandler}
+            data-testid={generateMyReviewTestId('delManagerSummaryInp')}
           />
         </div>
       </div>
-      <CModalFooter>
-        <CButton data-testid="modalConfirmBtn" color="warning btn-ovh">
+      <CModalFooter className="mt-2">
+        <CButton
+          data-testid={generateMyReviewTestId('delManagerFinalSubmitBtn')}
+          color="warning btn-ovh"
+          disabled={!isSubmitButtonEnabled}
+          onClick={submitButtonHandler}
+        >
           Submit
         </CButton>
-        <CButton color="success btn-ovh">Cancel</CButton>
+        <CButton
+          color="success btn-ovh"
+          onClick={cancelButtonHandler}
+          data-testid={generateMyReviewTestId('delManagerCancelModalBtn')}
+        >
+          Cancel
+        </CButton>
       </CModalFooter>
     </>
   )

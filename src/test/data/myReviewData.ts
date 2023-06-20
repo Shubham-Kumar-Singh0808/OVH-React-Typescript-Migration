@@ -1,5 +1,6 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import {
+  IncomingAppraisalFormAvgRatingDTO,
   IncomingMyReviewAppraisalCycle,
   IncomingMyReviewAppraisalForm,
   IncomingMyReviewEmployeeDetails,
@@ -7,6 +8,54 @@ import {
   IncomingReviewCommentList,
   PageDetails,
 } from '../../types/Performance/MyReview/myReviewTypes'
+
+export const mockAvgRatingsDTOs: IncomingAppraisalFormAvgRatingDTO[] = [
+  {
+    id: 6180,
+    employeeName: 'Siva Alapati',
+    employeeId: 2047,
+    level: 1,
+    defaultAvgRating: null,
+    adjustedAvgRating: null,
+    finalFeedback: null,
+    defaultAvgRatingName: null,
+    adjustedAvgRatingName: null,
+    iAgree: false,
+    departmentName: 'Testing',
+    designationName: 'Senior Test Engineer',
+    discussionSummary: null,
+  },
+  {
+    id: 6182,
+    employeeName: 'Manager M',
+    employeeId: 1047,
+    level: 1,
+    defaultAvgRating: 3.44,
+    adjustedAvgRating: null,
+    finalFeedback: null,
+    defaultAvgRatingName: null,
+    adjustedAvgRatingName: null,
+    iAgree: false,
+    departmentName: 'Development',
+    designationName: 'Associate Project Manager ',
+    discussionSummary: null,
+  },
+  {
+    id: 6181,
+    employeeName: 'Itadmin A',
+    employeeId: 1991,
+    level: 0,
+    defaultAvgRating: 3.02,
+    adjustedAvgRating: null,
+    finalFeedback: null,
+    defaultAvgRatingName: null,
+    adjustedAvgRatingName: null,
+    iAgree: false,
+    departmentName: 'Networking',
+    designationName: 'Associate IT Support Engineer',
+    discussionSummary: null,
+  },
+]
 
 export const myReviewManagerUserAccessToFeatures = [
   {

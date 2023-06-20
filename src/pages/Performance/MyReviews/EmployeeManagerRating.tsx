@@ -39,9 +39,7 @@ const EmployeeManagerRating = (): JSX.Element => {
             (rating, ratingIndex) => (
               <div
                 key={ratingIndex}
-                data-testid={generateMyReviewTestId(
-                  `avgDTORatingDiv-${ratingIndex}`,
-                )}
+                data-testid={generateMyReviewTestId(`avgDTORatingDiv`)}
               >
                 <span
                   style={{ color: '#2768a3', paddingRight: '8px' }}
@@ -68,7 +66,7 @@ const EmployeeManagerRating = (): JSX.Element => {
               <span
                 style={{ color: '#2768a3', paddingRight: '8px' }}
                 data-testid={generateMyReviewTestId(
-                  `avgDTORatingManagerRating`,
+                  `avgDTORatingManagerRatingLabel`,
                 )}
               >
                 Manager&apos;s Average Rating:

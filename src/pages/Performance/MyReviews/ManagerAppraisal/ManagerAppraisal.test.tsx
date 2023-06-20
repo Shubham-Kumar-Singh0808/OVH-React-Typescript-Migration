@@ -44,6 +44,11 @@ describe('Manager Appraisal Render', () => {
           userAccessToFeatures: {
             userAccessToFeatures: myReviewManagerUserAccessToFeatures,
           },
+          authentication: {
+            authenticatedUser: {
+              employeeId: 2000, // random but not equal to employee id in the review form
+            },
+          },
         },
       })
     })
@@ -131,6 +136,59 @@ describe('Manager Appraisal Render', () => {
       expect(
         screen.getByText(kpi.employeeFeedback ? kpi.employeeFeedback : ''),
       ).toBeVisible()
+    })
+
+    test('close button functionality on top right', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
+      )
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      const submitButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerFinalSubmitBtn'),
+      )
+      const statusInput = screen.getByTestId(
+        generateMyReviewTestId('delManagerStatusInp'),
+      )
+      const statusSummary = screen.getByTestId(
+        generateMyReviewTestId('delManagerSummaryInp'),
+      )
+
+      expect(submitButton).toBeDisabled()
+
+      expect(statusInput).toHaveValue('')
+      act(() => {
+        userEvent.selectOptions(statusInput, 'Relieved')
+      })
+      expect(statusInput).toHaveValue('Relieved')
+
+      expect(statusSummary).toHaveValue('')
+      act(() => {
+        fireEvent.change(statusSummary, { target: { value: 'test' } })
+      })
+      expect(statusSummary).toHaveValue('test')
+
+      expect(submitButton).toBeEnabled()
+      act(() => {
+        userEvent.click(submitButton)
+      })
+    })
+
+    test('close button modal cancel functionality', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
+      )
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      act(() => {
+        userEvent.click(
+          screen.getByTestId(
+            generateMyReviewTestId('delManagerCancelModalBtn'),
+          ),
+        )
+      })
     })
   })
 })

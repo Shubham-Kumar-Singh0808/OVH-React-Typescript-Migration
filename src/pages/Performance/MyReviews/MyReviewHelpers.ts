@@ -175,7 +175,8 @@ export const canEmployeeViewAfterManagerSubmit = (
   return (
     (myReviewFormStatus === MyReviewFormStatus.pendingagreement ||
       myReviewFormStatus === MyReviewFormStatus.openForDiscussion ||
-      myReviewFormStatus === MyReviewFormStatus.completed) &&
+      myReviewFormStatus === MyReviewFormStatus.completed ||
+      myReviewFormStatus === MyReviewFormStatus.closed) &&
     appraisalFormStatus !== MyReviewAppraisalFormStatus.NotSubmittedByYou
   )
 }

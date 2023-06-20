@@ -4,6 +4,8 @@ import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
 import EmployeeDiscussionInput from './ReviewFormEmployeeComponents/EmployeeDiscussionInput'
 import RequestDiscussionTimeline from './ReviewFormEmployeeComponents/RequestDiscussionTimeline'
+import ReviewFormClosedDetails from './ReviewFormEmployeeComponents/ReviewFormClosedDetails'
+import FinalButtonDisplay from './ReviewFormEmployeeComponents/FinalButtonDisplay'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { TextDanger } from '../../../../constant/ClassName'
@@ -94,6 +96,12 @@ const EmployeeReviewForm = (): JSX.Element => {
           MyReviewFormStatus.completed,
         ),
       )
+    } else if (appraisalFormStatus === MyReviewFormStatus.closed.toString()) {
+      dispatch(
+        reduxServices.myReview.actions.setMyReviewFormStatus(
+          MyReviewFormStatus.closed,
+        ),
+      )
     }
   }, [appraisalForm.formStatus])
 
@@ -132,6 +140,12 @@ const EmployeeReviewForm = (): JSX.Element => {
           </CRow>
           <hr />
           {
+            // only visible if it was closed by hr department
+            myReviewFormStatus === MyReviewFormStatus.closed && (
+              <ReviewFormClosedDetails />
+            )
+          }
+          {
             // shown only when discussion request is raised by employee
             requestDiscussionEmployee === true && (
               <div>
@@ -146,19 +160,26 @@ const EmployeeReviewForm = (): JSX.Element => {
               </div>
             )
           }
-          {myReviewFormStatus === MyReviewFormStatus.completed && (
-            <CRow className="justify-content-center">
-              <CCol sm={4}>
-                <CButton
-                  data-testid={generateMyReviewTestId('reviewCompletedBtn')}
-                  className="mt-4 text-white p-2"
-                  style={{ backgroundColor: '#5cb85c' }}
-                >
-                  Review Process Completed
-                </CButton>
-              </CCol>
-            </CRow>
-          )}
+          {
+            // displayed only when closed by hr department
+            myReviewFormStatus === MyReviewFormStatus.closed && (
+              <FinalButtonDisplay
+                buttonColor="danger"
+                buttonText="Review form was closed by HR Department."
+                testId={generateMyReviewTestId('reviewClosedBtn')}
+              />
+            )
+          }
+          {
+            // displayed when acknowledged by employee
+            myReviewFormStatus === MyReviewFormStatus.completed && (
+              <FinalButtonDisplay
+                buttonColor="success"
+                buttonText="Review Process Completed"
+                testId={generateMyReviewTestId('reviewCompletedBtn')}
+              />
+            )
+          }
           <OModal
             visible={myReviewModal?.showModal}
             setVisible={modalVisibleHandler}

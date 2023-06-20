@@ -7,6 +7,7 @@ import {
   hierarchyReviewListFeatureId,
   reviewListFeatureId,
   showCloseBtnForManager,
+  generateMyReviewTestId,
 } from '../../MyReviewHelpers'
 import { MyReviewModalProps } from '../../../../../types/Performance/MyReview/myReviewTypes'
 import CloseAppraisalFormModal from '../ReviewFormModals/CloseAppraisalFormModal'
@@ -56,6 +57,7 @@ const ManagerAppraisalTopButtons = () => {
               <CButton
                 className="btn-ovh"
                 color="danger"
+                data-testid={generateMyReviewTestId('delManagerCloseBtn')}
                 onClick={closeButtonHandler}
               >
                 Close
