@@ -9,8 +9,6 @@ import {
   CFormInput,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-// eslint-disable-next-line import/no-named-as-default
-import TimePicker from 'react-time-picker'
 import ReactDatePicker from 'react-datepicker'
 import Autocomplete from 'react-autocomplete'
 import OCard from '../../../../components/ReusableComponent/OCard'
@@ -32,14 +30,25 @@ const Schedule = (): JSX.Element => {
     return `${hour}:${minute} ${meridiem}`
   }
 
-  const [currentTime, setCurrentTime] = useState<string>(
-    convertTo12HourFormat(
-      new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-    ),
-  )
-  console.log(
-    new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
-  )
+  // const [currentTime, setCurrentTime] = useState<string>(
+  //   convertTo12HourFormat(
+  //     new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
+  //   ),
+  // )
+
+  const resultTime = new Date().toLocaleTimeString([], {
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+  const startHour = resultTime?.split(':')[0]
+  const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
+  const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
+
+  console.log(resultTime)
+  console.log(startHour)
+  console.log(startMeridianDay)
+  console.log(startMinutesDay)
+
   const [mode, setMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
   const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
@@ -59,6 +68,12 @@ const Schedule = (): JSX.Element => {
         day: '2-digit',
       })
     : ''
+
+  const [timePicker, setTimePicker] = useState({
+    hours: startHour,
+    minutes: startMinutesDay,
+    meridian: startMeridianDay,
+  })
 
   const interviewProfiles = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.employeeProperties,
@@ -82,6 +97,8 @@ const Schedule = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
+  const formattedTime = `${timePicker.hours}:${timePicker.minutes} ${timePicker.meridian}`
+
   const handleSaveScheduleInterview = async () => {
     const interviewRoundCountResult = await dispatch(
       reduxServices.intervieweeDetails.interviewRoundCount(
@@ -91,13 +108,13 @@ const Schedule = (): JSX.Element => {
 
     const SaveInterviewResultAction = await dispatch(
       reduxServices.intervieweeDetails.scheduleInterview({
-        candidateId: 13850,
+        candidateId: timeLineListSelector.personId,
         description: comments,
         interviewRound: Number(interviewRoundCountResult.payload) + 1,
         interviewType: mode,
         interviewerId: result[0].id,
         scheduleDate: selectDateValue,
-        scheduleTime: currentTime,
+        scheduleTime: formattedTime,
         sendMailToCandidate: false,
         sendMailToInterviewer: true,
         sendMessageToCandidate: false,
@@ -117,12 +134,6 @@ const Schedule = (): JSX.Element => {
           />,
         ),
       )
-    }
-  }
-
-  const handleTimeChange = (time: string | null) => {
-    if (time) {
-      setCurrentTime(time)
     }
   }
 
@@ -164,8 +175,6 @@ const Schedule = (): JSX.Element => {
       setIsSaveBtnEnable(false)
     }
   }, [selectDate, mode, autoCompleteTarget])
-
-  console.log(currentTime)
 
   return (
     <>
@@ -220,11 +229,61 @@ const Schedule = (): JSX.Element => {
             Time:
           </CFormLabel>
           <CCol sm={2}>
-            <TimePicker
-              onChange={handleTimeChange}
-              value={currentTime}
-              format="h:mm a"
-            />
+            <CRow>
+              <CCol sm={6}>
+                <CFormInput
+                  autoComplete="off"
+                  type="text"
+                  id="Name"
+                  name="personName"
+                  data-testid="person-name"
+                  value={timePicker.hours}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      hours: e.target.value,
+                    })
+                  }}
+                  max={12}
+                />
+              </CCol>
+              <CCol sm={6}>
+                <CFormInput
+                  autoComplete="off"
+                  type="text"
+                  id="Name"
+                  name="personName"
+                  data-testid="person-name"
+                  value={timePicker.minutes}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      minutes: e.target.value,
+                    })
+                  }}
+                />
+              </CCol>
+              <CCol sm={6}>
+                <CFormSelect
+                  aria-label="startTimeMeridian"
+                  id="startTimeMeridian"
+                  data-testid="startTimeMeridian"
+                  name="startTimeMeridian"
+                  value={timePicker.meridian}
+                  onChange={(e) => {
+                    setTimePicker({
+                      ...timePicker,
+                      meridian: e.target.value,
+                    })
+                  }}
+                >
+                  <option value="AM">AM</option>
+                  <option value="PM">PM</option>
+                </CFormSelect>
+              </CCol>
+            </CRow>
+            {/* </CCol>
+            </CCol> */}
             <CFormCheck
               type="checkbox"
               id="checked"
