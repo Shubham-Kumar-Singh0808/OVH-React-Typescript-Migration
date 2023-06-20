@@ -32,3 +32,9 @@ export type CompaniesListProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
 }
+
+export type ExportBtnTypes = {
+  companySearch: string
+  selectionTechnology: string
+  token: string
+}

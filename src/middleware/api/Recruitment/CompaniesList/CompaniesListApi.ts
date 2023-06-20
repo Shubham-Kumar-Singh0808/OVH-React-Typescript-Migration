@@ -1,6 +1,7 @@
 import {
   CompaniesListTableProps,
   CompaniesListTotalInfo,
+  ExportBtnTypes,
 } from '../../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -26,8 +27,27 @@ const getAllCompanies = async (
   return response.data
 }
 
+const exportCompaniesList = async (
+  props: ExportBtnTypes,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CompaniesListApiConfig.exportCompaniesList,
+    method: AllowedHttpMethods.get,
+    params: {
+      companySearch: props.companySearch,
+      selectionTechnology: props.selectionTechnology,
+      token: localStorage.getItem('token') ?? '',
+    },
+    responseType: 'blob',
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const CompaniesListApi = {
   getAllCompanies,
+  exportCompaniesList,
 }
 
 export default CompaniesListApi
