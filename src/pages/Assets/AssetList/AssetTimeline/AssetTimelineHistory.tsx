@@ -2,25 +2,23 @@ import React, { useState } from 'react'
 import { CRow, CCol, CButton, CFormInput, CInputGroup } from '@coreui/react-pro'
 import AssetHistoryTable from './AssetHistoryTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import { AssetHistoryProps } from '../../../../types/Assets/AssetList/AssetListTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const AssetHistory = ({
-  //   historyItems,
-  //   index,
   setToggle,
 }: {
-  //   historyItems: AssetHistoryProps
-  //   index: number
   setToggle: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const [assetId, setAssetId] = useState(0)
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()
 
-  const assetHistoryitem = useTypedSelector(
+  const assetHistory = useTypedSelector(
     reduxServices.assetList.selectors.assetHistory,
+  )
+
+  const result = assetHistory.filter(
+    (item) => item.referenceNumber === searchInput,
   )
 
   const searchButtonHandlerOnKeyDown = (
@@ -29,7 +27,7 @@ const AssetHistory = ({
     if (event.key === 'Enter') {
       dispatch(
         reduxServices.assetList.getAllAssetHistoryData({
-          assetId,
+          assetId: result[0].assetId,
           searchAssetReference: searchInput,
         }),
       )
@@ -40,7 +38,7 @@ const AssetHistory = ({
     e.preventDefault()
     dispatch(
       reduxServices.assetList.getAllAssetHistoryData({
-        assetId,
+        assetId: result[0].assetId,
         searchAssetReference: searchInput,
       }),
     )

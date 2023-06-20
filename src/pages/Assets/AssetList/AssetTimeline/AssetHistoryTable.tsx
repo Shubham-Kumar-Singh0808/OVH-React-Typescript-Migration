@@ -9,7 +9,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useMemo } from 'react'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { usePagination } from '../../../../middleware/hooks/usePagination'
 import OPageSizeSelect from '../../../../components/ReusableComponent/OPageSizeSelect'
