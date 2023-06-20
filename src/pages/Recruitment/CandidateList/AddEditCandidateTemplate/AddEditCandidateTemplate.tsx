@@ -606,7 +606,7 @@ const AddEditCandidateTemplate = ({
                   >
                     <option
                       data-testid="addCandOpt-countryOpt"
-                      value={initialCandidateCountry.id}
+                      value={initialCandidateCountry.id.toString()}
                     >
                       Select
                     </option>
@@ -616,7 +616,7 @@ const AddEditCandidateTemplate = ({
                           <option
                             key={countryCodeIndex}
                             data-testid="addCandOpt-countryOpt"
-                            value={countryCode.id}
+                            value={countryCode.id.toString()}
                           >
                             {countryCode.countryCode}
                           </option>
