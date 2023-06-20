@@ -120,6 +120,7 @@ import {
   CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
+  UpComingJoinListApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -939,6 +940,7 @@ export const myReviewApiConfig: MyReviewApi = {
   saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
   getReviewComments: apiPrefix + '/appraisal/getReviewComments',
   appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
+  closeAppraisalForm: apiPrefix + 'appraisal/closeAppraisalForm',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
@@ -1104,3 +1106,8 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const getUpComingJoinListConfig: UpComingJoinListApi = {
+  getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}

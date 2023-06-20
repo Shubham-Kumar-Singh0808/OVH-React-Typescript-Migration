@@ -150,6 +150,18 @@ const appraisalConfirmationThunk = createAsyncThunk(
   },
 )
 
+const closeAppraisalFormThunk = createAsyncThunk(
+  'myReview/closeAppraisalFormThunk',
+  async (finalData: IncomingMyReviewAppraisalForm, thunkApi) => {
+    try {
+      return await myReviewApi.closeAppraisalForm(finalData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const myReviewSlice = createSlice({
   name: 'myReview',
   initialState: initialMyReviewState,
@@ -193,6 +205,20 @@ const myReviewSlice = createSlice({
       state.modal = {
         ...state.modal,
         showModal: action.payload,
+      }
+    },
+    setClosedStatus: (state, action: PayloadAction<string>) => {
+      const finalValue = action.payload === '' ? null : action.payload
+      state.appraisalForm = {
+        ...state.appraisalForm,
+        closedStatus: finalValue,
+      }
+    },
+    setClosedSummary: (state, action: PayloadAction<string>) => {
+      const finalSummaryValue = action.payload === '' ? null : action.payload
+      state.appraisalForm = {
+        ...state.appraisalForm,
+        closedSummary: finalSummaryValue,
       }
     },
   },
@@ -279,6 +305,7 @@ const myReviewThunk = {
   saveReviewCommentsThunk,
   getReviewCommentsThunk,
   appraisalConfirmationThunk,
+  closeAppraisalFormThunk,
 }
 
 const myReviewSelectors = {

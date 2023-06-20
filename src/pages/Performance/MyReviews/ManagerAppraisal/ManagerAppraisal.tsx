@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { CRow } from '@coreui/react-pro'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import MyReviewTabs from '../MyReviewTabs'
 import OCard from '../../../../components/ReusableComponent/OCard'
-import OBackButton from '../../../../components/ReusableComponent/OBackButton'
 import EmployeeManagerRating from '../EmployeeManagerRating'
+import ManagerAppraisalTopButtons from '../ReviewForm/ReviewFormButtons/ManagerAppraisalTopButtons'
 
 const ManagerAppraisal = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -45,9 +44,7 @@ const ManagerAppraisal = (): JSX.Element => {
     >
       {isMyReviewError === null ? (
         <>
-          <CRow className="justify-content-end">
-            <OBackButton destination="/listofAppraisal" name="Back" />
-          </CRow>
+          <ManagerAppraisalTopButtons />
           <EmployeeManagerRating />
           <MyReviewTabs />
         </>
