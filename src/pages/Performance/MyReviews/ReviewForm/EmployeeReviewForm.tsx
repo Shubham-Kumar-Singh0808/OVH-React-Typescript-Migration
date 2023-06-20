@@ -31,9 +31,6 @@ const EmployeeReviewForm = (): JSX.Element => {
   const appraisalForm = useTypedSelector(
     (state) => state.myReview.appraisalForm,
   )
-  // const currentLoggedInEmployee = useTypedSelector(
-  //   (state) => state.authentication.authenticatedUser.employeeId,
-  // )
   const requestDiscussionEmployee = useTypedSelector(
     (state) => state.myReview.appraisalForm.requestDiscussion,
   )
