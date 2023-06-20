@@ -61,7 +61,7 @@ const CandidateList = (): JSX.Element => {
         searchStr: searchInput,
       }),
     )
-  }, [dispatch, pageSize, CurrentPage])
+  }, [dispatch, pageSize, CurrentPage, searchInput])
 
   const viewButtonHandler = () => {
     dispatch(

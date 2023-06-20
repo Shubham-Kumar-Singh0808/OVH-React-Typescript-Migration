@@ -10,6 +10,7 @@ import {
   CCol,
   CButton,
   CTooltip,
+  CBadge,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import { TableProps } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
@@ -108,6 +109,53 @@ const CandidateListTable = ({
   const timeLineHandler = (personId: number) => {
     dispatch(reduxServices.intervieweeDetails.timeLineData(personId))
   }
+
+  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
+    if (interviewStatus === 'NEW') {
+      return (
+        <CBadge className="rounded-pill" color="info">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'IN_PROCESS') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">{'IN PROGRESS'}</CBadge>
+      )
+    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
+      return (
+        <CBadge className="rounded-pill" color="warning">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (
+      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
+    ) {
+      return (
+        <CBadge className="rounded-pill" color="danger">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
+      return (
+        <CBadge className="rounded-pill" color="success">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'RESCHEDULED') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'NO_SHOW') {
+      return (
+        <CBadge className="rounded-pill" color="danger">
+          {'NO SHOW'}
+        </CBadge>
+      )
+    }
+    return <></>
+  }
   return (
     <>
       <CTable
@@ -159,7 +207,7 @@ const CandidateListTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{data.country.name}</CTableDataCell>
                   <CTableDataCell>
-                    {data.cadidateInterviewStatus}
+                    {formatInterviewStatusText(data.cadidateInterviewStatus)}
                   </CTableDataCell>
                   <CTableDataCell className="actions">
                     <CTooltip content="Edit">
