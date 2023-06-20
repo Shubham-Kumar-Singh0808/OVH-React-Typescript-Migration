@@ -336,6 +336,10 @@ const AddNominee = React.lazy(
 const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
+const MyReviewManagerAppraisal = React.lazy(
+  () =>
+    import('./pages/Performance/MyReviews/ManagerAppraisal/ManagerAppraisal'),
+)
 const PayrollManagement = React.lazy(
   () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
 )
@@ -887,6 +891,11 @@ const routes = [
     path: '/employeeAppraisal',
     name: 'My Review',
     component: MyReview,
+  },
+  {
+    path: '/managerAppraisal/:employeeId',
+    name: 'Manager Appraisal',
+    component: MyReviewManagerAppraisal,
   },
   {
     path: '/leadershiplist',
