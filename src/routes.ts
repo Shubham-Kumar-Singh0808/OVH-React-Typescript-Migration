@@ -1047,7 +1047,7 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
-    path: '/addnewjoinee',
+    path: '/addnewjoinee?personId=personId',
     name: 'CandidateOffer',
     component: personTechnology,
   },
