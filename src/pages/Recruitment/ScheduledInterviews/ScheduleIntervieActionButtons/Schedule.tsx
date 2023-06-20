@@ -17,6 +17,7 @@ import { showIsRequired } from '../../../../utils/helper'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const Schedule = () => {
   const [dateValue, setDateValue] = useState<string | Date>('')
@@ -48,6 +49,10 @@ const Schedule = () => {
   )
   const dispatch = useAppDispatch()
 
+  const timeLineListSelector = useTypedSelector(
+    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
+  )
+
   useEffect(() => {
     dispatch(reduxServices.intervieweeDetails.getAllEmployeeDetails())
   }, [dispatch])
@@ -67,6 +72,38 @@ const Schedule = () => {
     className: 'col-form-label category-label',
   }
   const formLabel = 'col-sm-3 col-form-label text-end'
+
+  const handleSaveScheduleInterview = async () => {
+    const SaveInterviewResultAction = await dispatch(
+      reduxServices.intervieweeDetails.scheduleInterview({
+        candidateId: String(timeLineListSelector.personId),
+        description: comments,
+        interviewRound: 1,
+        interviewType: 'FACE_TO_FACE',
+        interviewerId: 1002,
+        scheduleDate: '19/06/2023',
+        scheduleTime: '11:57 PM',
+        sendMailToCandidate: false,
+        sendMailToInterviewer: true,
+        sendMessageToCandidate: false,
+        sendMessageToInterviewer: false,
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.scheduleInterview.fulfilled.match(
+        SaveInterviewResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="Leave calender settings are done"
+          />,
+        ),
+      )
+    }
+  }
 
   return (
     <>
@@ -245,6 +282,27 @@ const Schedule = () => {
           inline
         />
         <b>Send Message to interviewer</b>
+        <CRow>
+          <CCol md={{ span: 6, offset: 3 }}>
+            <CButton
+              className="btn-ovh me-1"
+              color="success"
+              onClick={handleSaveScheduleInterview}
+              // disabled={isSaveButtonDisable}
+            >
+              Save
+            </CButton>
+
+            <CButton
+              color="warning "
+              className="btn-ovh"
+              // onClick={handleClearDetails}
+              // disabled={!isCancelButtonEnabled}
+            >
+              Cancel
+            </CButton>
+          </CCol>
+        </CRow>
       </OCard>
     </>
   )

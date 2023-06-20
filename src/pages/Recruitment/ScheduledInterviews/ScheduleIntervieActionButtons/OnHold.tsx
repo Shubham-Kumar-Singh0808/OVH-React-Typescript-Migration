@@ -10,14 +10,16 @@ import React, { useEffect, useState } from 'react'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { useTypedSelector } from '../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
 const OnHold = () => {
-  const [isApproveModalVisibility, setIsApproveModalVisibility] =
+  const [isOnHoldModalVisibility, setIsOnHoldModalVisibility] =
     useState<boolean>(false)
-  const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+  const [onHoldComment, setonHoldComment] = useState<string>('')
+  const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const [select, setSelect] = useState<string>('')
   const [isDropDon, setIsDropDon] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
 
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
@@ -26,11 +28,47 @@ const OnHold = () => {
   const handleModal = () => {
     setIsDropDon(true)
   }
-  useEffect(() => {
-    if (select) {
-      setIsApproveModalVisibility(true)
+  // useEffect(() => {
+  //   if (select) {
+  //     setIsOnHoldModalVisibility(true)
+  //   }
+  // })
+
+  const confirmBtnHandler = async () => {
+    // setIsDeleteModalVisible(false)
+    const onHoldResultAction = await dispatch(
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
+        candidateId: timeLineListSelector.personId,
+        holdSubStatus: timeLineListSelector.holdSubStatus,
+        status: 'HOLD',
+        statusComments: onHoldComment,
+      }),
+    )
+    if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
+        onHoldResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          timeLineListSelector.personId,
+        ),
+      )
+      setIsOnHoldModalVisibility(false)
     }
-  })
+  }
+  useEffect(() => {
+    if (onHoldComment) {
+      setIsYesButtonEnabled(true)
+    } else {
+      setIsYesButtonEnabled(false)
+    }
+  }, [onHoldComment])
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelect(e.target.value)
+    setIsOnHoldModalVisibility(true)
+  }
   return (
     <>
       <CButton
@@ -53,7 +91,8 @@ const OnHold = () => {
             data-testid="form-select-3"
             name="select"
             value={select}
-            onChange={(e) => setSelect(e.target.value)}
+            // onChange={(e) => setSelect(e.target.value)}
+            onChange={onChangeHandler}
           >
             <option value="">select</option>
             <option value="Expensive">Expensive</option>
@@ -66,13 +105,14 @@ const OnHold = () => {
       )}
       <OModal
         alignment="center"
-        visible={isApproveModalVisibility}
-        setVisible={setIsApproveModalVisibility}
+        visible={isOnHoldModalVisibility}
+        setVisible={setIsOnHoldModalVisibility}
         confirmButtonText="Yes"
         modalTitle="Do you want to HOLD this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        // confirmButtonAction={confirmBtnHandler}
+        confirmButtonAction={confirmBtnHandler}
+        isConfirmButtonDisabled={!isYesButtonEnabled}
       >
         <>
           <CRow className="mt-1 mb-1">
@@ -82,9 +122,7 @@ const OnHold = () => {
               Comments:
               <span
                 className={
-                  approveLeaveComment?.replace(/^\s*/, '')
-                    ? TextWhite
-                    : TextDanger
+                  onHoldComment?.replace(/^\s*/, '') ? TextWhite : TextDanger
                 }
               >
                 *
@@ -96,8 +134,8 @@ const OnHold = () => {
                 aria-label="textarea"
                 autoComplete="off"
                 maxLength={150}
-                value={approveLeaveComment}
-                onChange={(e) => setApproveLeaveComment(e.target.value)}
+                value={onHoldComment}
+                onChange={(e) => setonHoldComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>
