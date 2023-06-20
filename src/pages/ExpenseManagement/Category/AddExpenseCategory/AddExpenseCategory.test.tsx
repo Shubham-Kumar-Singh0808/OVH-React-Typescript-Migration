@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { cleanup, waitFor } from '@testing-library/react'
+import { cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import AddExpenseCategory from './AddExpenseCategory'
 import { render, screen } from '../../../../test/testUtils'
@@ -8,7 +8,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 import { mockExpenseCategory } from '../../../../test/data/expenseCategoryData'
 
-describe('Add Location List without data', () => {
+describe('Add Expense Category without data', () => {
   beforeEach(() => {
     render(<AddExpenseCategory />, {
       preloadedState: {
@@ -25,7 +25,7 @@ describe('Add Location List without data', () => {
     })
   })
   afterEach(cleanup)
-  test('should render addTracker List component with out crashing', () => {
+  test('should render Add Expense Category List component with out data', () => {
     expect(screen.getByText('Category:')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()
