@@ -67,7 +67,7 @@ const RejectInterview = (): JSX.Element => {
         type="button"
         color="btn btn-danger"
         id="button-addon2"
-        data-testid="search-employee-btn"
+        data-testid="reject-btn"
         className="btn btn-danger btn-labeled fa fa-times fa-lg"
         onClick={handleModal}
       >
