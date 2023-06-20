@@ -149,7 +149,9 @@ const IntervieweeDetails = (): JSX.Element => {
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
               ''
             ) : (
               <CButton
@@ -166,7 +168,9 @@ const IntervieweeDetails = (): JSX.Element => {
                 Schedule
               </CButton>
             )}
-            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
               ''
             ) : (
               // <Link
@@ -194,10 +198,27 @@ const IntervieweeDetails = (): JSX.Element => {
             >
               <i className="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
             </CButton>
-            <OnHold />
-            <Offer />
-            <RejectInterview />
-            {timeLineListSelector.candidateStatus === 'OFFERED' ? (
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <OnHold />
+            )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <Offer />
+            )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <RejectInterview />
+            )}
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
               ''
             ) : (
               <NoShow />

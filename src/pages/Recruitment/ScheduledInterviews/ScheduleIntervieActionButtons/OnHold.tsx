@@ -12,7 +12,7 @@ import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const OnHold = () => {
+const OnHold = (): JSX.Element => {
   const [isOnHoldModalVisibility, setIsOnHoldModalVisibility] =
     useState<boolean>(false)
   const [onHoldComment, setonHoldComment] = useState<string>('')
@@ -28,14 +28,8 @@ const OnHold = () => {
   const handleModal = () => {
     setIsDropDon(true)
   }
-  // useEffect(() => {
-  //   if (select) {
-  //     setIsOnHoldModalVisibility(true)
-  //   }
-  // })
 
   const confirmBtnHandler = async () => {
-    // setIsDeleteModalVisible(false)
     const onHoldResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,

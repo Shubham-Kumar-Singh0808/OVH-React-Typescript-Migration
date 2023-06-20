@@ -27,7 +27,7 @@ const Schedule = (): JSX.Element => {
   const startHour = resultTime?.split(':')[0]
   const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
   const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
-
+  const [contactLink, setContactLink] = useState<string>('')
   const [mode, setMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
   const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
@@ -110,6 +110,21 @@ const Schedule = (): JSX.Element => {
           <OToast
             toastColor="success"
             toastMessage="Leave calender settings are done"
+          />,
+        ),
+      )
+    } else if (
+      reduxServices.intervieweeDetails.scheduleInterview.rejected.match(
+        SaveInterviewResultAction,
+      ) &&
+      SaveInterviewResultAction.payload === 409
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            Candidate already Scheduled"
           />,
         ),
       )
@@ -321,6 +336,30 @@ const Schedule = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
+        {mode === 'FACE_TO_FACE' || mode === 'SYSTEM' ? (
+          ''
+        ) : (
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Contact/Link:
+            </CFormLabel>
+            <CCol sm={2}>
+              <CFormInput
+                autoComplete="off"
+                type="text"
+                id="contactLink"
+                name="contactLink"
+                placeholder="Enter Contact number or Meeting link"
+                data-testid="person-name"
+                value={contactLink}
+                onChange={(e) => setContactLink(e.target.value)}
+              />
+            </CCol>
+          </CRow>
+        )}
         <CRow className="mt-4 mb-4">
           <CFormLabel
             {...formLabelProps}

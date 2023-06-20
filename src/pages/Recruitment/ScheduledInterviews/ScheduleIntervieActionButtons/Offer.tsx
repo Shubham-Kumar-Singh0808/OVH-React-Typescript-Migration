@@ -10,6 +10,7 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector, useAppDispatch } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const Offer = (): JSX.Element => {
   const [offerModalVisibility, setIsOfferModalVisibility] =
@@ -21,7 +22,7 @@ const Offer = (): JSX.Element => {
   )
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (offerComment) {
+    if (offerComment?.replace(/^\s*/, '')) {
       setIsYesButtonEnabled(true)
     } else {
       setIsYesButtonEnabled(false)
@@ -49,11 +50,27 @@ const Offer = (): JSX.Element => {
         ),
       )
       setIsOfferModalVisibility(false)
+    } else if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.rejected.match(
+        noShowResultAction,
+      ) &&
+      noShowResultAction.payload === 500
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            You can't give offer to the candidate.Because, Vacancies already filled."
+          />,
+        ),
+      )
     }
   }
   const handleModal = () => {
     setIsOfferModalVisibility(true)
   }
+
   return (
     <>
       <CButton

@@ -11,7 +11,7 @@ import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 
-const NoShow = () => {
+const NoShow = (): JSX.Element => {
   const [noShowModalVisibility, setIsNoShowModalVisibility] =
     useState<boolean>(false)
   const [noShowComment, setNoShowComment] = useState<string>('')
@@ -24,7 +24,6 @@ const NoShow = () => {
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
   const confirmBtnHandler = async () => {
-    // setIsDeleteModalVisible(false)
     const noShowResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,
