@@ -44,10 +44,6 @@ const CandidateOffer = (): JSX.Element => {
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
 
-  // const personTechnologySelector = useTypedSelector(
-  //   reduxServices.addNewCandidate.selectors,
-  // )
-
   const designations = useTypedSelector(
     reduxServices.KRA.selectors.designations,
   )
@@ -142,7 +138,7 @@ const CandidateOffer = (): JSX.Element => {
         timeLineListSelector?.personId,
       ),
     )
-  }, [dispatch])
+  }, [dispatch, timeLineListSelector?.personId])
 
   // const successToast = (
   //   <OToast
@@ -217,7 +213,7 @@ const CandidateOffer = (): JSX.Element => {
     const addCandidate = await dispatch(
       reduxServices.addNewCandidate.getAddNewJoineeData({
         appliedForLookUp: position,
-        candidateId: timeLineListSelector.personId,
+        candidateId: timeLineListSelector.personId || '',
         candidateName,
         comments: candidateComment,
         currentCTC: curruentCTC,
@@ -227,7 +223,7 @@ const CandidateOffer = (): JSX.Element => {
         employmentType: employeeType,
         jobType,
         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: timeLineListSelector?.personId,
+        technology: timeLineListSelector?.personId || '',
       }),
     )
     if (

@@ -63,67 +63,28 @@ const IntervieweeDetails = (): JSX.Element => {
     }
   }
   // -----------------------------------------------------------
-  const confirmOfferBtnHandler = async () => {
-    const updateCandidateInterviewStatusResult = await dispatch(
+  const confirmBtnOffHandler = async () => {
+    const noShowResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,
         holdSubStatus: '',
         status: 'OFFERED',
         statusComments: offerLeaveComment,
-        candiadateEmailId: '',
-        candidateName: '',
-        communicationComments: '',
-        country: null,
-        ctc: null,
-        cycleDTOs: null,
-        description: null,
-        ectc: null,
-        excellenceComments: '',
-        experiance: null,
-        interviewComments: '',
-        interviewCycleId: 0,
-        interviewDate: '',
-        interviewMode: '',
-        interviewResultStatus: null,
-        interviewRound: '',
-        interviewStatus: null,
-        interviewTime: '',
-        interviewers: '',
-        interviewersDTOList: null,
-        jobCode: null,
-        mobileNumber: '',
-        np: null,
-        personId: null,
-        proactiveComments: '',
-        rating: 1,
-        reason: null,
-        recruiter: null,
-        skills: '',
-        skypeId: null,
-        sourceName: null,
-        technology: null,
-        updatedBy: null,
       }),
     )
-    // if (
-    //   reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
-    //     updateCandidateInterviewStatusResult,
-    //   )
-    // ) {
-    //   history.pushState={`/addnewjoinee/${timeLineListSelector.personId}`}
-
-    //   setOfferLeaveComment('')
-    //   setIsOfferApproveModalVisibility(false)
-    // }
 
     if (
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
-        updateCandidateInterviewStatusResult,
+        noShowResultAction,
       )
     ) {
-      history.push(`/addnewjoinee/${timeLineListSelector.personId}`)
-      setOfferLeaveComment('')
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          timeLineListSelector.personId,
+        ),
+      )
       setIsOfferApproveModalVisibility(false)
+      history.push(`/addnewjoinee?personId=${timeLineListSelector.personId}`)
     }
   }
 
@@ -452,7 +413,7 @@ const IntervieweeDetails = (): JSX.Element => {
         modalTitle="Do you want to OFFERED this candidate?"
         cancelButtonText="No"
         modalHeaderClass="d-none"
-        confirmButtonAction={confirmOfferBtnHandler}
+        confirmButtonAction={confirmBtnOffHandler}
       >
         <>
           <CRow className="mt-1 mb-1">

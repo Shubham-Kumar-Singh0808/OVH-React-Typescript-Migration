@@ -1046,16 +1046,16 @@ const routes = [
     name: 'Product Specification List',
     component: ProductSpecificationList,
   },
-  // {
-  //   path: '/addnewjoinee/:personId',
-  //   name: 'CandidateOffer',
-  //   component: personTechnology,
-  // },
-
   {
-    path: '/upcomingjoinlist',
+    path: '/addnewjoinee',
     name: 'CandidateOffer',
     component: personTechnology,
   },
+
+  // {
+  //   path: '/upcomingjoinlist',
+  //   name: 'CandidateOffer',
+  //   component: personTechnology,
+  // },
 ]
 export default routes
