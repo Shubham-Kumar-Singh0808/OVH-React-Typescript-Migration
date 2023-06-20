@@ -69,8 +69,8 @@ const CandidateList = (): JSX.Element => {
         candidateStatus: selectStatus,
         startIndex: pageSize * (CurrentPage - 1),
         endIndex: pageSize * CurrentPage,
-        selectionCountry: Number(selectCountry),
-        selectionTechnology: selectTechnology,
+        selectionCountry: Number(selectCountry) || '',
+        selectionTechnology: selectTechnology || '',
       }),
     )
     setCurrentPage(1)
@@ -181,7 +181,7 @@ const CandidateList = (): JSX.Element => {
               <option value={''}>Select Status</option>
               {getAllTechnology.length > 0 &&
                 getAllTechnology?.map((technology, index) => (
-                  <option key={index} value={technology.id}>
+                  <option key={index} value={technology.name}>
                     {technology.name}
                   </option>
                 ))}
@@ -204,7 +204,7 @@ const CandidateList = (): JSX.Element => {
                     setSelectCountry(e.target.value)
                   }}
                 >
-                  <option value={''}>Select Reschedule Status</option>
+                  <option value={''}>Select Country</option>
                   {getAllEmpCountries.length > 0 &&
                     getAllEmpCountries?.map((country, index) => (
                       <option key={index} value={country.id}>
