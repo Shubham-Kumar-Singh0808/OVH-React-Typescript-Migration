@@ -13,6 +13,8 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import CompaniesListApi from '../../../middleware/api/Recruitment/CompaniesList/CompaniesListApi'
+import { downloadFile } from '../../../utils/helper'
 
 const CompaniesList = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -120,6 +122,13 @@ const CompaniesList = (): JSX.Element => {
     }
   }
 
+  const handleExportData = async () => {
+    const employeeList = await CompaniesListApi.exportCompaniesList({
+      companySearch: searchInput,
+      selectionTechnology: selectTechnology,
+    })
+    downloadFile(employeeList, 'CompaniesList.csv')
+  }
   return (
     <>
       <OCard
@@ -159,6 +168,7 @@ const CompaniesList = (): JSX.Element => {
               className="text-white"
               size="sm"
               data-testid="export-button-download"
+              onClick={handleExportData}
             >
               <i className="fa fa-plus me-1"></i>
               Click to Export

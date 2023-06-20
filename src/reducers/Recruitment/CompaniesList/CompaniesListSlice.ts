@@ -8,6 +8,7 @@ import {
   CompaniesListResponse,
   CompaniesListSliceState,
   CompaniesListTableProps,
+  ExportBtnTypes,
 } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 
 const getAllCompanies = createAsyncThunk(
@@ -22,6 +23,17 @@ const getAllCompanies = createAsyncThunk(
   },
 )
 
+const exportCompaniesList = createAsyncThunk(
+  'companiesList/exportCompaniesList',
+  async (props: ExportBtnTypes, thunkApi) => {
+    try {
+      return await CompaniesListApi.exportCompaniesList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 export const initialCompaniesListState: CompaniesListSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -55,6 +67,7 @@ const listSize = (state: RootState): number => state.companiesList.listSize
 
 export const companiesListThunk = {
   getAllCompanies,
+  exportCompaniesList,
 }
 
 export const companiesListSelectors = {

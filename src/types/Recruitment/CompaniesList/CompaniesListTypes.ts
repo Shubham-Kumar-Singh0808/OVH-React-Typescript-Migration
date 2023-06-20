@@ -36,5 +36,5 @@ export type CompaniesListProps = {
 export type ExportBtnTypes = {
   companySearch: string
   selectionTechnology: string
-  token: string
+  token?: string
 }

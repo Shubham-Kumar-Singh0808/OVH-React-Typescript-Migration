@@ -10,7 +10,7 @@ import {
 } from '../../../test/data/candidateListData'
 import { CompaniesListResponse } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 
-describe('candidate List without data', () => {
+describe('Companies List without data', () => {
   beforeEach(() => {
     render(<CompaniesList />, {
       preloadedState: {
@@ -24,27 +24,17 @@ describe('candidate List without data', () => {
       },
     })
   })
-  test('should be able to render  Candidate List Title', () => {
-    expect(screen.getByText('Candidate List')).toBeInTheDocument()
+  test('should be able to render  Companies List Title', () => {
+    expect(screen.getByText('Companies List')).toBeInTheDocument()
   })
   test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'Admin  Rbt')
     userEvent.click(screen.getByTestId('multi-search-btn'))
   })
-  test('should select selectStatus Name', () => {
-    const selectStatus = screen.getByTestId('selectStatus')
-    userEvent.selectOptions(selectStatus, ['All'])
-    expect(selectStatus).toHaveValue('ALL')
-  })
   test('should select selectTechnology Name', () => {
     const selectTechnology = screen.getByTestId('selectTechnology')
     userEvent.selectOptions(selectTechnology, ['ReactJs'])
     expect(selectTechnology).toHaveValue('53')
-  })
-  test('should select selectCountry Name', () => {
-    const selectCountry = screen.getByTestId('selectCountry')
-    userEvent.selectOptions(selectCountry, ['AUSTRALIA'])
-    expect(selectCountry).toHaveValue('1')
   })
 })
