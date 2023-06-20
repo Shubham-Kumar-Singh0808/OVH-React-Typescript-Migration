@@ -148,21 +148,21 @@ const IntervieweeDetails = (): JSX.Element => {
       return (
         <CButton
           color="info"
-          className="btn btn-primary btn-xs preview-Interview"
+          className="btn btn-primary btn-xs preview-Interview text-white"
         >
           {interviewStatus}
         </CButton>
       )
     } else if (interviewStatus === 'IN_PROCESS') {
       return (
-        <CButton className="btn btn-primary btn-xs preview-Interview">
+        <CButton className="btn btn-primary btn-xs preview-Interview text-white">
           {'IN PROGRESS'}
         </CButton>
       )
     } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
       return (
         <CButton
-          className="btn btn-primary btn-xs preview-Interview"
+          className="btn btn-primary btn-xs preview-Interview text-white"
           color="warning"
         >
           {interviewStatus}
@@ -173,7 +173,7 @@ const IntervieweeDetails = (): JSX.Element => {
     ) {
       return (
         <CButton
-          className="btn btn-primary btn-xs preview-Interview"
+          className="btn btn-primary btn-xs preview-Interview text-white"
           color="danger"
         >
           {interviewStatus}
@@ -182,7 +182,7 @@ const IntervieweeDetails = (): JSX.Element => {
     } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
       return (
         <CButton
-          className="btn btn-primary btn-xs preview-Interview"
+          className="btn btn-primary btn-xs preview-Interview text-white"
           color="success"
         >
           {interviewStatus}
@@ -190,14 +190,14 @@ const IntervieweeDetails = (): JSX.Element => {
       )
     } else if (interviewStatus === 'RESCHEDULED') {
       return (
-        <CButton className="btn btn-primary btn-xs preview-Interview">
+        <CButton className="btn btn-primary btn-xs preview-Interview text-white">
           {interviewStatus}
         </CButton>
       )
     } else if (interviewStatus === 'NO_SHOW') {
       return (
         <CButton
-          className="btn btn-primary btn-xs preview-Interview"
+          className="btn btn-primary btn-xs preview-Interview text-white"
           color="danger"
         >
           {'NO SHOW'}

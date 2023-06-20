@@ -113,7 +113,7 @@ const CandidateListTable = ({
   const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
     if (interviewStatus === 'NEW') {
       return (
-        <CBadge className="rounded-pill" color="info">
+        <CBadge className="rounded-pill text-white" color="info">
           {interviewStatus}
         </CBadge>
       )
@@ -123,7 +123,7 @@ const CandidateListTable = ({
       )
     } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
       return (
-        <CBadge className="rounded-pill" color="warning">
+        <CBadge className="rounded-pill text-white" color="warning">
           {interviewStatus}
         </CBadge>
       )
@@ -131,13 +131,13 @@ const CandidateListTable = ({
       interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
     ) {
       return (
-        <CBadge className="rounded-pill" color="danger">
+        <CBadge className="rounded-pill text-white" color="danger">
           {interviewStatus}
         </CBadge>
       )
     } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
       return (
-        <CBadge className="rounded-pill" color="success">
+        <CBadge className="rounded-pill text-white" color="success">
           {interviewStatus}
         </CBadge>
       )
@@ -149,7 +149,7 @@ const CandidateListTable = ({
       )
     } else if (interviewStatus === 'NO_SHOW') {
       return (
-        <CBadge className="rounded-pill" color="danger">
+        <CBadge className="rounded-pill text-white" color="danger">
           {'NO SHOW'}
         </CBadge>
       )
