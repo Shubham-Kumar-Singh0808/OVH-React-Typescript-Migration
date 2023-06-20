@@ -768,6 +768,7 @@ export interface MyReviewApi extends ApiBase {
   saveReviewComments: string
   getReviewComments: string
   appraisalConfirmation: string
+  closeAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {
