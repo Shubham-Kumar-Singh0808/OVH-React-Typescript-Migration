@@ -25,68 +25,69 @@ export type PageDetails = {
 
 export interface IncomingMyReviewEmployeeDetails {
   id: number
+  jobTypeName: null
   firstName: null
   lastName: null
+  mobile: null
+  passportExpDate: null
   middleName: null
+  address: null
+  lateComingCount: null
   designation: string
   role: null
+  maritalStatus: null
   manager: null
   designationKrasDTO: null
+  departmentName: string
   employeeSubmitted: null
   managerSubmitted: null
+  curentLocation: null
   acknowledged: null
+  alternativeMobile: null
   fullName: string
-  profilePicPath: string
+  aboutMe: null
   thumbPicture: string
   profilePicGeneratedPath: null
+  profilePicPath: string
   gender: null
   dob: null
-  departmentName: string
   employmentTypeName: null
-  jobTypeName: null
   imageData: null
-  curentLocation: null
   baseLocation: null
   officialBirthday: null
   realBirthday: null
-  maritalStatus: null
   emergencyContactName: null
   emergencyPhone: null
-  emergencyRelationShip: null
   grade: null
-  aboutMe: null
-  homeNumber: null
+  countryCodeEmergency: null
   workNumber: null
   presentAddress: null
-  presentCity: null
-  presentZip: null
+  vendorName: null
   presentLandMark: null
-  permanentAddress: null
   permanentCity: null
   permanentZip: null
   permanentLandMark: null
-  mobile: null
   homeCode: null
   workCode: null
   skillList: null
   userName: null
-  alternativeMobile: null
+  holidaysCount: number
   dateOfJoining: null
   informationList: null
+  presentZip: null
   anniversary: null
+  presentCity: null
   bankInformationList: null
+  emergencyContact: null
   bioAttendanceDtoSet: null
   dates: null
-  absentCount: number
   statusName: null
-  emergencyContact: null
   relievingDate: null
-  observationDTOList: null
   skypeId: null
   percent: null
   passportNumber: null
-  passportExpDate: null
   passportIssuedPlace: null
+  homeNumber: null
   passportIssuedDate: null
   token: null
   underNoticeDate: null
@@ -95,38 +96,37 @@ export interface IncomingMyReviewEmployeeDetails {
   emailId: string
   empManager: string
   bloodgroup: null
-  rbtCvPath: null
-  rbtCvName: null
   timeSlotDTO: null
   technology: null
   hrAssociate: null
-  lateComingCount: null
+  emergencyRelationShip: null
   passportFrontPagePath: null
+  observationDTOList: null
   passportBackPagePath: null
   passportFrontPage: null
-  passportBackPage: null
   projectManager: null
   casualLeaveCount: number
   lopLeaveCount: number
-  holidaysCount: number
   contractExists: null
   contractStartDate: null
   contractEndDate: null
   personalEmail: null
   experience: null
+  rbtCvName: null
   companyExperience: null
   updatedExperience: null
   country: null
   workStatus: null
   comments: null
+  absentCount: number
   vendorId: null
-  vendorName: null
+  passportBackPage: null
   countryCodeWork: null
   countryCodeMobile: null
+  rbtCvPath: null
   countryCodeHome: null
-  countryCodeEmergency: null
   countryCodeAlternative: null
-  address: null
+  permanentAddress: null
 }
 
 export interface IncomingPerformanceRating {
