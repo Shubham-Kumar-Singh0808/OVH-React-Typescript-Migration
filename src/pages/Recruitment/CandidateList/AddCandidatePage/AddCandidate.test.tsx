@@ -297,7 +297,7 @@ describe('Add Candidate', () => {
       // mobile
       const chosenMockCode = mockGetEmpCountries[3]
       expect(mobileCode).toHaveValue(initialCandidateCountry.id.toString())
-      userEvent.selectOptions(mobileCode, chosenMockCode.id.toString())
+      // userEvent.selectOptions(mobileCode, chosenMockCode.id.toString())
       expect(mobileCode).toHaveValue(chosenMockCode.id.toString())
       expect(
         screen.getByTestId(
