@@ -78,6 +78,7 @@ const Offer = (): JSX.Element => {
         ng-click="updateInterviewStatusPopup(interviewTimelineDetailsList.personId, 'OFFERED')"
         type="submit"
         className="btn btn-success btn-labeled fa fa-check fa-lg"
+        data-testid="offer-btn"
         onClick={handleModal}
       >
         Offer
