@@ -84,7 +84,7 @@ const CandidateListFilterOptions = ({
             <option value={''}>Select Status</option>
             {getAllTechnology.length > 0 &&
               getAllTechnology?.map((technology, index) => (
-                <option key={index} value={technology.id}>
+                <option key={index} value={technology.name}>
                   {technology.name}
                 </option>
               ))}
