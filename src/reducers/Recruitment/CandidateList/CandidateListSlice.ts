@@ -20,6 +20,7 @@ import {
 
 export const initialCandidateListState: CandidateListSliceState = {
   isLoading: ApiLoadingState.idle,
+  error: null,
   listSize: 0,
   candidateDetails: {} as CandidateLists,
   allCandidateDetails: [],
@@ -250,6 +251,8 @@ const candidateListSlice = createSlice({
           checkCandidateMobileNumberThunk.fulfilled,
           getAllCompaniesDataThunk.fulfilled,
           addNewCandidateThunk.fulfilled,
+          addTechnologyThunk.fulfilled,
+          deleteTechnologyThunk.fulfilled,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
@@ -266,9 +269,12 @@ const candidateListSlice = createSlice({
           checkCandidateMobileNumberThunk.rejected,
           getAllCompaniesDataThunk.rejected,
           addNewCandidateThunk.rejected,
+          addTechnologyThunk.rejected,
+          deleteTechnologyThunk.rejected,
         ),
-        (state) => {
+        (state, action) => {
           state.isLoading = ApiLoadingState.failed
+          state.error = action.payload as ValidationError
         },
       )
       .addMatcher(
@@ -282,9 +288,12 @@ const candidateListSlice = createSlice({
           checkCandidateMobileNumberThunk.pending,
           getAllCompaniesDataThunk.pending,
           addNewCandidateThunk.pending,
+          addTechnologyThunk.pending,
+          deleteTechnologyThunk.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+          state.error = null
         },
       )
   },

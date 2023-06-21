@@ -170,7 +170,7 @@ const uploadCandidateResume = async (
   return response.data
 }
 
-const addTechnology = async (technology: string) => {
+const addTechnology = async (technology: string): Promise<undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: CandidateListApiConfig.addTechnology,
     method: AllowedHttpMethods.post,

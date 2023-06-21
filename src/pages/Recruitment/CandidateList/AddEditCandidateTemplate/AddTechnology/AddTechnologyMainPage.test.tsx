@@ -78,6 +78,19 @@ describe('Add Technology - Add New Candidate', () => {
       })
     })
 
+    test('cancel delete technology functionality', () => {
+      const techDeleteIndex = 2
+      const deleteButton = screen.getByTestId(
+        `addCandidate-delTechBtn-${techDeleteIndex}`,
+      )
+      act(() => {
+        userEvent.click(deleteButton)
+      })
+      act(() => {
+        userEvent.click(screen.getByText('No'))
+      })
+    })
+
     test('add technology functionality', () => {
       const technologyInput = screen.getByTestId(addTechInputId)
       const addButton = screen.getByTestId(addTechBtnId)

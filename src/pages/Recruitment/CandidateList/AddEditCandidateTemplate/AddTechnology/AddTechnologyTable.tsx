@@ -16,12 +16,14 @@ import useModal from '../../../../../middleware/hooks/useModal'
 import { GetAllTechnology } from '../../../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 import { initialGetAllTechnology } from '../../CandidateListHelpers'
 import { reduxServices } from '../../../../../reducers/reduxServices'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 
 const AddTechnologyTable = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const technologyList = useTypedSelector(
     (state) => state.candidateList.getAllTechnology,
   )
+  const errorStatus = useTypedSelector((state) => state.candidateList.error)
   const [technologyToDelete, setTechnologyToDelete] =
     useState<GetAllTechnology>(initialGetAllTechnology)
   const { showModal, setShowModal, modalDescription, setModalDescription } =
@@ -44,8 +46,28 @@ const AddTechnologyTable = (): JSX.Element => {
     if (
       reduxServices.candidateList.deleteTechnologyThunk.fulfilled.match(result)
     ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast toastColor="success" toastMessage="Technology is deleted" />,
+        ),
+      )
       dispatch(reduxServices.candidateList.getTechnology())
+    } else if (
+      reduxServices.candidateList.deleteTechnologyThunk.rejected.match(
+        result,
+      ) &&
+      errorStatus === 400
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="This Technology is linked with candidate or an employee"
+          />,
+        ),
+      )
     }
+    setShowModal(false)
   }
 
   const closeModalHandler = (value: boolean) => {
