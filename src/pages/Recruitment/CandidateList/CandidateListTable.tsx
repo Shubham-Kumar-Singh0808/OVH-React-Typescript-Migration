@@ -164,7 +164,7 @@ const CandidateListTable = ({
     dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
   }
   const jobInfoHandler = (data: CandidateLists) => {
-    dispatch(reduxServices.jobVacancies.getJobVacancyAudit(data.appliedFor.id))
+    dispatch(reduxServices.jobVacancies.getJobOpeningById(data.appliedFor.id))
   }
   return (
     <>
