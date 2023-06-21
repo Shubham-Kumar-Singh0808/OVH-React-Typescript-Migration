@@ -257,7 +257,7 @@ const VendorListTable = ({
           data-testid="modal-cnt-add"
           style={{ minHeight: '90px' }}
         >
-          <p
+          <div
             dangerouslySetInnerHTML={{
               __html: vendorAddress.vendorAddress,
             }}

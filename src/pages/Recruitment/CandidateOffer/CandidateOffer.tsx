@@ -63,13 +63,12 @@ const CandidateOffer = (): JSX.Element => {
         timeLineListSelector?.personId,
       ),
     )
+    dispatch(
+      reduxServices.intervieweeDetails.timeLineData(
+        timeLineListSelector.personId,
+      ),
+    )
   }, [dispatch, timeLineListSelector?.personId])
-
-  dispatch(
-    reduxServices.intervieweeDetails.timeLineData(
-      timeLineListSelector.personId,
-    ),
-  )
 
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,

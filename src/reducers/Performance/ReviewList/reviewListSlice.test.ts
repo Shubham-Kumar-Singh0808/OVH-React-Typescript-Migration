@@ -10,7 +10,7 @@ import { ReviewListSliceState } from '../../../types/Performance/ReviewList/revi
 
 describe('Review List Slice', () => {
   describe('ReviewList Reducer', () => {
-    const initialReviewState = {
+    const initialReviewState: ReviewListSliceState = {
       isLoading: ApiLoadingState.idle,
       error: null,
       employeeDepartments: [],
@@ -22,7 +22,23 @@ describe('Review List Slice', () => {
         list: [],
         size: 0,
       },
-    } as ReviewListSliceState
+      currentListStatus: '',
+      activeCycle: {
+        id: -1,
+        name: '',
+        description: null,
+        toDate: '',
+        fromDate: '',
+        active: false,
+        appraisalType: '',
+        appraisalDuration: '',
+        level: -1,
+        cycleStartedFlag: false,
+        appraisalStartDate: '',
+        appraisalEndDate: '',
+        servicePeriod: -1,
+      },
+    }
 
     it('Should be able to set isLoading to "loading" if getAppraisalCycles is pending', () => {
       const action = {
@@ -30,17 +46,8 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "success" if getAppraisalCycles is fulfilled', () => {
@@ -50,17 +57,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
         appraisalCycle: mockConfigurationCycle,
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "failed" if getAppraisalCycles is rejected', () => {
@@ -69,17 +68,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "loading" if getEmployeeDepartments is pending', () => {
@@ -88,17 +79,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.loading,
         error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "success" if getEmployeeDepartments is fulfilled', () => {
@@ -108,17 +91,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
         employeeDepartments: mockEmployeeDepartments,
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "failed" if getEmployeeDepartments is rejected', () => {
@@ -127,17 +102,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "loading" if getDesignations is pending', () => {
@@ -146,17 +113,8 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "success" if getDesignations is fulfilled', () => {
@@ -166,17 +124,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
         designations: mockDesignations,
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "failed" if getDesignations is rejected', () => {
@@ -185,17 +135,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "loading" if getReviewList is pending', () => {
@@ -204,17 +146,8 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.loading,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
     it('Should be able to set isLoading to "success" if getReviewList is fulfilled', () => {
@@ -224,17 +157,10 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.succeeded,
-        error: null,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 41,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: mockReviewList.list,
-          size: mockReviewList.size,
-        },
+        employeeReviewList: mockReviewList,
+        listSize: mockReviewList.size,
       })
     })
     it('Should be able to set isLoading to "failed" if getReviewList is rejected', () => {
@@ -243,17 +169,9 @@ describe('Review List Slice', () => {
       }
       const state = reviewListReducer(initialReviewState, action)
       expect(state).toEqual({
+        ...initialReviewState,
         isLoading: ApiLoadingState.failed,
         error: undefined,
-        employeeDepartments: [],
-        appraisal: [],
-        listSize: 0,
-        appraisalCycle: [],
-        designations: [],
-        employeeReviewList: {
-          list: [],
-          size: 0,
-        },
       })
     })
   })
