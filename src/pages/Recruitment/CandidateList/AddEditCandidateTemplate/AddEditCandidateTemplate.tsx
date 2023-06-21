@@ -19,6 +19,7 @@ import {
   AddEditCandidateTemplateProps,
   CandidateSourceType,
   CandidateWhatsAppNotificationsRadio,
+  CurrentAddCandidatePage,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
@@ -357,6 +358,17 @@ const AddEditCandidateTemplate = ({
     reasonForChangeAsterix,
   ])
 
+  const addTechnologyClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
+    dispatch(
+      reduxServices.candidateList.actions.setCurrentAddCandidatePage(
+        CurrentAddCandidatePage.addTechnology,
+      ),
+    )
+  }
+
   return (
     <>
       <CRow className="mt-2 justify-content-end text-end">
@@ -474,13 +486,11 @@ const AddEditCandidateTemplate = ({
                 data-testid={`${getDataInputTestId('sourceType')}`}
               >
                 <option value="">Select Source Type</option>
-                {candidateSourceTypeList.map(
-                  (sourceTypeItem, sourceTypeIndex) => (
-                    <option key={sourceTypeIndex} value={sourceTypeItem}>
-                      {sourceTypeItem}
-                    </option>
-                  ),
-                )}
+                {candidateSourceTypeList.map((sourceType, sourceTypeIndex) => (
+                  <option key={sourceTypeIndex} value={sourceType}>
+                    {sourceType}
+                  </option>
+                ))}
               </CFormSelect>
             </CandidateEntryItem>
           </CCol>
@@ -542,22 +552,23 @@ const AddEditCandidateTemplate = ({
                     <option value="" data-testid="addCandOpt-techOpt">
                       Select
                     </option>
-                    {allTechnologyList.length > 0 &&
-                      allTechnologyList?.map(
-                        (technologyItem, technologyIndex) => (
-                          <option
-                            key={technologyIndex}
-                            data-testid="addCandOpt-techOpt"
-                            value={technologyItem.name}
-                          >
-                            {technologyItem.name}
-                          </option>
-                        ),
-                      )}
+                    {allTechnologyList?.map((technology, technologyIndex) => (
+                      <option
+                        key={technologyIndex}
+                        data-testid="addCandOpt-techOpt"
+                        value={technology.name}
+                      >
+                        {technology.name}
+                      </option>
+                    ))}
                   </CFormSelect>
                 </CCol>
                 <CCol sm={5}>
-                  <CButton className="btn-ovh" color="info">
+                  <CButton
+                    className="btn-ovh"
+                    color="info"
+                    onClick={addTechnologyClickHandler}
+                  >
                     <i className="fa fa-plus me-1"></i>
                     Add
                   </CButton>
@@ -606,22 +617,21 @@ const AddEditCandidateTemplate = ({
                   >
                     <option
                       data-testid="addCandOpt-countryOpt"
-                      value={initialCandidateCountry.id.toString()}
+                      value={initialCandidateCountry.id}
                     >
                       Select
                     </option>
-                    {allEmpCountriesList?.length > 0 &&
-                      allEmpCountriesList?.map(
-                        (countryCode, countryCodeIndex) => (
-                          <option
-                            key={countryCodeIndex}
-                            data-testid="addCandOpt-countryOpt"
-                            value={countryCode.id.toString()}
-                          >
-                            {countryCode.countryCode}
-                          </option>
-                        ),
-                      )}
+                    {allEmpCountriesList?.map(
+                      (countryCode, countryCodeIndex) => (
+                        <option
+                          key={countryCodeIndex}
+                          data-testid="addCandOpt-countryOpt"
+                          value={countryCode.id}
+                        >
+                          {countryCode.countryCode}
+                        </option>
+                      ),
+                    )}
                   </CFormSelect>
                 </CCol>
                 <CCol sm={7}>
@@ -763,12 +773,11 @@ const AddEditCandidateTemplate = ({
                 <option value={initialCandidateCountry.id}>
                   Select Country
                 </option>
-                {allEmpCountriesList.length > 0 &&
-                  allEmpCountriesList?.map((country, countryIndex) => (
-                    <option key={countryIndex} value={country.id}>
-                      {country.name}
-                    </option>
-                  ))}
+                {allEmpCountriesList?.map((country, countryIndex) => (
+                  <option key={countryIndex} value={country.id}>
+                    {country.name}
+                  </option>
+                ))}
               </CFormSelect>
             </CandidateEntryItem>
           </CCol>

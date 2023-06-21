@@ -1,3 +1,5 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
@@ -13,6 +15,7 @@ import {
   viewHandlerProps,
   AddNewCandidateDTO,
   UploadCandidateResumeDTO,
+  CurrentAddCandidatePage,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 export const initialCandidateListState: CandidateListSliceState = {
@@ -26,6 +29,7 @@ export const initialCandidateListState: CandidateListSliceState = {
   getAllTechnology: [],
   allJobVacancies: { size: 0, list: [] },
   allCompaniesData: [],
+  currentAddCandidatePage: CurrentAddCandidatePage.addCandidate,
 }
 
 const searchScheduledCandidate = createAsyncThunk(
@@ -176,10 +180,41 @@ const uploadCandidateResumeThunk = createAsyncThunk(
   },
 )
 
+const addTechnologyThunk = createAsyncThunk(
+  'candidateList/addTechnologyThunk',
+  async (technology: string, thunkApi) => {
+    try {
+      return await candidateListApi.addTechnology(technology)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const deleteTechnologyThunk = createAsyncThunk(
+  'candidateList/deleteTechnologyThunk',
+  async (technologyId: number, thunkApi) => {
+    try {
+      return await candidateListApi.deleteTechnology(technologyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const candidateListSlice = createSlice({
   name: 'candidateList',
   initialState: initialCandidateListState,
-  reducers: {},
+  reducers: {
+    setCurrentAddCandidatePage: (
+      state,
+      action: PayloadAction<CurrentAddCandidatePage>,
+    ) => {
+      state.currentAddCandidatePage = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchScheduledCandidate.fulfilled, (state, action) => {
@@ -281,6 +316,8 @@ export const candidateListThunk = {
   getAllCompaniesDataThunk,
   addNewCandidateThunk,
   uploadCandidateResumeThunk,
+  addTechnologyThunk,
+  deleteTechnologyThunk,
 }
 
 export const candidateListSelectors = {

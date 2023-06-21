@@ -1079,6 +1079,8 @@ export const CandidateListApiConfig: CandidateListApi = {
   getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
   addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
   uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
+  addTechnology: apiPrefix + '/jobapplicant/addtechnology',
+  deleteTechnology: apiPrefix + '/jobapplicant/deleteTechnology',
 }
 
 export const GetAssetListConfig: AssetListApi = {
