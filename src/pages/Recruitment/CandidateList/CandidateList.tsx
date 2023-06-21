@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {
-  CRow,
-  CCol,
-  CFormLabel,
-  CFormSelect,
-  CButton,
-  CFormInput,
-  CInputGroup,
-} from '@coreui/react-pro'
 import CandidateListTable from './CandidateListTable'
+import CandidateListFilterOptions from './CandidateListFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -16,23 +8,14 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const CandidateList = (): JSX.Element => {
   const dispatch = useAppDispatch()
-
   const [selectStatus, setSelectStatus] = useState<string>('')
   const [selectTechnology, setSelectTechnology] = useState<string>('')
   const [searchInput, setSearchInput] = useState<string>('')
-
   const [selectCountry, setSelectCountry] = useState<string>('')
 
-  const getAllEmpCountries = useTypedSelector(
-    reduxServices.candidateList.selectors.getAllEmpCountries,
-  )
-  const getAllTechnology = useTypedSelector(
-    reduxServices.candidateList.selectors.getAllTechnology,
-  )
   const listSize = useTypedSelector(
     reduxServices.candidateList.selectors.listSize,
   )
-
   const CurrentPage = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
@@ -133,6 +116,7 @@ const CandidateList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
+<<<<<<< HEAD
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-1">Status:</CFormLabel>
@@ -269,6 +253,22 @@ const CandidateList = (): JSX.Element => {
             </CInputGroup>
           </CCol>
         </CRow>
+=======
+        <CandidateListFilterOptions
+          selectStatus={selectStatus}
+          setSelectStatus={setSelectStatus}
+          selectCountry={selectCountry}
+          setSelectCountry={setSelectCountry}
+          selectTechnology={selectTechnology}
+          setSelectTechnology={setSelectTechnology}
+          searchInput={searchInput}
+          setSearchInput={setSearchInput}
+          searchKeyDownButtonHandler={searchKeyDownButtonHandler}
+          searchButtonHandler={searchButtonHandler}
+          viewButtonHandler={viewButtonHandler}
+          clearButtonHandler={clearButtonHandler}
+        />
+>>>>>>> develop
         <CandidateListTable
           paginationRange={paginationRange}
           setPageSize={setPageSize}

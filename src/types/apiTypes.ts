@@ -768,6 +768,7 @@ export interface MyReviewApi extends ApiBase {
   saveReviewComments: string
   getReviewComments: string
   appraisalConfirmation: string
+  closeAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {
@@ -872,6 +873,13 @@ export interface CandidateListApi extends ApiBase {
   getAllTechnology: string
   getCountryWiseCandidatesList: string
   deleteCandidate: string
+  getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
+  uploadCandidateResume: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -917,4 +925,8 @@ export interface ProductSpecificationListApi extends ApiBase {
   addProductSpecifications: string
   deleteProductSpecification: string
   updateProductSpecification: string
+}
+export interface UpComingJoinListApi extends ApiBase {
+  getUpcomingJoineeList: string
+  getEmployeeDepartments: string
 }
