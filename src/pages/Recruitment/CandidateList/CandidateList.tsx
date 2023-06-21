@@ -26,8 +26,6 @@ const CandidateList = (): JSX.Element => {
     }
   }, [CurrentPage])
 
-  console.log(selectCountry + '')
-
   const {
     paginationRange,
     setPageSize,
@@ -109,6 +107,12 @@ const CandidateList = (): JSX.Element => {
       }),
     )
   }
+
+  useEffect(() => {
+    if (window.location.pathname === '/jobschedulecandidateList') {
+      setCurrentPage(1)
+    }
+  }, [])
 
   return (
     <>

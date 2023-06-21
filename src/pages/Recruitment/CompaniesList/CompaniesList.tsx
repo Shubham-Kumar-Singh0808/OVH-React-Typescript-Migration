@@ -129,6 +129,12 @@ const CompaniesList = (): JSX.Element => {
     })
     downloadFile(employeeList, 'CompaniesList.csv')
   }
+
+  useEffect(() => {
+    if (window.location.pathname === '/companiesList') {
+      setCurrentPage(1)
+    }
+  }, [])
   return (
     <>
       <OCard
