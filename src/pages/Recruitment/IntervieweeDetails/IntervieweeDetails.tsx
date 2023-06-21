@@ -147,18 +147,17 @@ const IntervieweeDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
+        <CRow className="justify-content-end Schedule-Interview-action-buttons">
+          <CCol className="d-flex justify-content-end" md={12}>
             {timeLineListSelector.candidateStatus === 'OFFERED' ||
             timeLineListSelector.candidateStatus === 'REJECTED' ||
             timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
               ''
             ) : (
               <CButton
-                ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
                 ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
                 type="submit"
-                className="btn btn-primary btn-labeled fa fa-calendar fa-lg"
+                className="btn btn-primary btn-labeled fa fa-calendar fa-lg me-1"
                 disabled={
                   timeLineListSelector.pendingInterviewStatus > 0 &&
                   timeLineListSelector.candidateStatus !== 'REPROCESS'
@@ -173,14 +172,10 @@ const IntervieweeDetails = (): JSX.Element => {
             timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
               ''
             ) : (
-              // <Link
-              //   to={`/reScheduleInterview/${timeLineListSelector.personId}`}
-              // >
               <CButton
-                ng-hide="interviewTimelineDetailsList.candidateStatus === 'OFFERED'"
                 ng-click="redirectTo_Re_ScheduleInterview(interviewTimelineDetailsList)"
                 type="submit"
-                className="btn btn-info btn-labeled fa fa-retweet fa-lg"
+                className="btn btn-info btn-labeled fa fa-retweet fa-lg me-1"
                 disabled={
                   timeLineListSelector.pendingInterviewStatus <= 0 ||
                   timeLineListSelector.candidateStatus === 'REPROCESS'
@@ -189,14 +184,13 @@ const IntervieweeDetails = (): JSX.Element => {
               >
                 Re-Schedule
               </CButton>
-              // </Link>
             )}
             <CButton
               color="info"
-              className="btn-ovh me-1 btn-ovh-employee-list"
+              className="btn btn-primary btn-labeled fa fa-edit fa-lg me-1"
               data-testid="edit-family"
             >
-              <i className="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+              Edit
             </CButton>
             {timeLineListSelector.candidateStatus === 'REJECTED' ||
             timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (

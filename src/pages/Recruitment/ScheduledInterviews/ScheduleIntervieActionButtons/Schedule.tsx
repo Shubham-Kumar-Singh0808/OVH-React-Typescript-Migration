@@ -204,14 +204,14 @@ const Schedule = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Date:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <ReactDatePicker
               className="form-control form-control-sm sh-date-picker"
               data-testid="date-picker"
@@ -230,16 +230,16 @@ const Schedule = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Time:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CRow>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormInput
                   autoComplete="off"
                   type="text"
@@ -250,7 +250,7 @@ const Schedule = (): JSX.Element => {
                   onChange={onChangeHandler}
                 />
               </CCol>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormInput
                   autoComplete="off"
                   type="text"
@@ -266,7 +266,7 @@ const Schedule = (): JSX.Element => {
                   }}
                 />
               </CCol>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormSelect
                   aria-label="startTimeMeridian"
                   id="startTimeMeridian"
@@ -285,36 +285,42 @@ const Schedule = (): JSX.Element => {
                 </CFormSelect>
               </CCol>
             </CRow>
-            <CFormCheck
-              type="checkbox"
-              id="checked"
-              name="checked"
-              data-testid="checked"
-              checked={mailToCandidate}
-              onChange={(e) => setMailToCandidate(e.target.checked)}
-              inline
-            />
-            <b>Send mail to candidate</b>
-            <CFormCheck
-              type="checkbox"
-              id="checked"
-              name="checked"
-              data-testid="checked"
-              checked={sendMailToInterviewer}
-              onChange={(e) => setSendMailToInterviewer(e.target.checked)}
-              inline
-            />
-            <b>Send mail to interviewer</b>
+          </CCol>
+          <CCol sm={4}>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="checked"
+                name="checked"
+                data-testid="checked"
+                checked={mailToCandidate}
+                onChange={(e) => setMailToCandidate(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send mail to candidate</b>
+            </div>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="checked"
+                name="checked"
+                data-testid="checked"
+                checked={sendMailToInterviewer}
+                onChange={(e) => setSendMailToInterviewer(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send mail to interviewer</b>
+            </div>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Mode:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CFormSelect
               aria-label="Default select example"
               size="sm"
@@ -339,14 +345,14 @@ const Schedule = (): JSX.Element => {
         {mode === 'FACE_TO_FACE' || mode === 'SYSTEM' ? (
           ''
         ) : (
-          <CRow className="mt-4 mb-4">
+          <CRow className="mb-3">
             <CFormLabel
               {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
+              className="col-sm-2 col-form-label text-end"
             >
               Contact/Link:
             </CFormLabel>
-            <CCol sm={2}>
+            <CCol sm={3}>
               <CFormInput
                 autoComplete="off"
                 type="text"
@@ -360,14 +366,14 @@ const Schedule = (): JSX.Element => {
             </CCol>
           </CRow>
         )}
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Interviewer:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <Autocomplete
               inputProps={{
                 className: 'form-control form-control-sm hr-autocomplete',
@@ -401,14 +407,14 @@ const Schedule = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Comments:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CFormTextarea
               data-testid="text-area"
               aria-label="textarea"
@@ -440,7 +446,7 @@ const Schedule = (): JSX.Element => {
           </CCol>
         </CRow>
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 6, offset: 2 }}>
             <CButton
               className="btn-ovh me-1"
               color="success"

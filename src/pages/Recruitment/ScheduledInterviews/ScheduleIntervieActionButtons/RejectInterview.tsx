@@ -65,10 +65,9 @@ const RejectInterview = (): JSX.Element => {
     <>
       <CButton
         type="button"
-        color="btn btn-danger"
         id="button-addon2"
         data-testid="reject-btn"
-        className="btn btn-danger btn-labeled fa fa-times fa-lg"
+        className="btn btn-danger btn-labeled fa fa-times fa-lg me-1"
         onClick={handleModal}
       >
         Reject
@@ -100,8 +99,9 @@ const RejectInterview = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={6}>
+            <CCol sm={7}>
               <CFormTextarea
+                className="p-0"
                 data-testid="text-area"
                 aria-label="textarea"
                 autoComplete="off"
@@ -112,6 +112,7 @@ const RejectInterview = (): JSX.Element => {
             </CCol>
           </CRow>
           <CFormCheck
+            className="text"
             type="checkbox"
             id="checked"
             name="checked"
@@ -120,7 +121,7 @@ const RejectInterview = (): JSX.Element => {
             onChange={(e) => setChecked(e.target.checked)}
             inline
           />
-          <b>Send Message to candidate</b>
+          <b className="ms-2">Send Message to candidate</b>
         </>
       </OModal>
     </>

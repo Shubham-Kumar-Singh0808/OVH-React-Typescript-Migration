@@ -57,10 +57,9 @@ const NoShow = (): JSX.Element => {
     <>
       <CButton
         type="button"
-        color="btn btn-danger"
         id="button-addon2"
         data-testid="search-employee-btn"
-        className="btn btn-danger btn-labeled fa fa-times fa-lg"
+        className="btn btn-danger btn-labeled fa fa-times fa-lg me-1"
         onClick={handleModal}
         disabled={timeLineListSelector.candidateStatus === 'NO_SHOW'}
       >
@@ -91,8 +90,9 @@ const NoShow = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={6}>
+            <CCol sm={7}>
               <CFormTextarea
+                className="form-control p-0"
                 data-testid="text-area"
                 aria-label="textarea"
                 autoComplete="off"

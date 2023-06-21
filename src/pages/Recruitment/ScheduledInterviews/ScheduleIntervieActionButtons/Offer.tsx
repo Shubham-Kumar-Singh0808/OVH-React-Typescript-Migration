@@ -74,10 +74,9 @@ const Offer = (): JSX.Element => {
   return (
     <>
       <CButton
-        ng-show="(myservice.Roles | filter:{name:'candidateOffer'}:true)[0].viewaccess"
         ng-click="updateInterviewStatusPopup(interviewTimelineDetailsList.personId, 'OFFERED')"
         type="submit"
-        className="btn btn-success btn-labeled fa fa-check fa-lg"
+        className="btn btn-success btn-labeled fa fa-check fa-lg me-1"
         data-testid="offer-btn"
         onClick={handleModal}
       >
@@ -108,8 +107,9 @@ const Offer = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={6}>
+            <CCol sm={7}>
               <CFormTextarea
+                className="p-0"
                 data-testid="text-area"
                 aria-label="textarea"
                 autoComplete="off"

@@ -67,17 +67,16 @@ const OnHold = (): JSX.Element => {
     <>
       <CButton
         type="button"
-        color="btn btn-danger"
         id="button-addon2"
         data-testid="onHold-btn"
-        className="btn btn-danger btn-labeled fa fa-times fa-lg"
+        className="btn btn-warning btn-labeled fa fa-times fa-lg me-1"
         onClick={handleModal}
         disabled={timeLineListSelector.candidateStatus === 'HOLD'}
       >
         On Hold
       </CButton>
       {isDropDon && (
-        <CCol sm={2}>
+        <CCol sm={2} className="on-hold-dropdown pe-2 ps-2">
           <CFormSelect
             aria-label="Default select example"
             size="sm"
@@ -122,8 +121,9 @@ const OnHold = (): JSX.Element => {
                 *
               </span>
             </CFormLabel>
-            <CCol sm={6}>
+            <CCol sm={7}>
               <CFormTextarea
+                className="p-0"
                 data-testid="text-area"
                 aria-label="textarea"
                 autoComplete="off"
