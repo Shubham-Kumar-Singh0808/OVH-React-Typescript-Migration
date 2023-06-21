@@ -55,6 +55,7 @@ const AddEmployeePipList = ({
   const [addImprovementPlan, setAddImprovementPlan] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [employeeName, setEmployeeName] = useState<string>('')
+
   const dispatch = useAppDispatch()
   const history = useHistory()
 
@@ -98,7 +99,8 @@ const AddEmployeePipList = ({
       addRating &&
       addReasonForPIP &&
       addImprovementPlan &&
-      employeeName
+      employeeName &&
+      Result1[0]?.empFirstName + ' ' + Result1[0]?.empLastName === employeeName
     ) {
       setIsAddButtonEnabled(true)
     } else {
@@ -127,6 +129,10 @@ const AddEmployeePipList = ({
 
   const allEmployeeDetails = useTypedSelector(
     reduxServices.pipList.selectors.employeeData,
+  )
+
+  const Result1 = allEmployeeDetails?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
   )
 
   const sortedFamilyDetails = useMemo(() => {
@@ -250,7 +256,10 @@ const AddEmployeePipList = ({
               Employee Name:
               <span
                 className={
-                  employeeName?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                  Result1[0]?.empFirstName + ' ' + Result1[0]?.empLastName ===
+                  employeeName
+                    ? TextWhite
+                    : TextDanger
                 }
               >
                 *
