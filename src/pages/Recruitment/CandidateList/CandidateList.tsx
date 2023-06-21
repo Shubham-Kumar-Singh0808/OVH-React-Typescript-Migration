@@ -76,8 +76,8 @@ const CandidateList = (): JSX.Element => {
       if (searchInput === '') {
         dispatch(
           reduxServices.candidateList.searchScheduledCandidate({
-            startIndex: pageSize * (CurrentPage - 1),
-            endIndex: pageSize * CurrentPage,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
             searchStr: searchInput,
           }),
         )
@@ -85,8 +85,8 @@ const CandidateList = (): JSX.Element => {
       } else {
         dispatch(
           reduxServices.candidateList.searchScheduledCandidate({
-            startIndex: pageSize * (CurrentPage - 1),
-            endIndex: pageSize * CurrentPage,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
             searchStr: searchInput,
           }),
         )
@@ -101,8 +101,8 @@ const CandidateList = (): JSX.Element => {
     setSearchInput('')
     dispatch(
       reduxServices.candidateList.searchScheduledCandidate({
-        startIndex: pageSize * (CurrentPage - 1),
-        endIndex: pageSize * CurrentPage,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         searchStr: '',
       }),
     )

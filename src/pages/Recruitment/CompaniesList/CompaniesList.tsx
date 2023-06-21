@@ -88,10 +88,10 @@ const CompaniesList = (): JSX.Element => {
   const searchBtnHandler = () => {
     dispatch(
       reduxServices.companiesList.getAllCompanies({
-        endIndex: pageSize * CurrentPage,
+        endIndex: pageSize * currentPage,
         searchCompany: searchInput,
         selectionTechnology: selectTechnology,
-        startIndex: pageSize * (CurrentPage - 1),
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
   }
@@ -102,20 +102,20 @@ const CompaniesList = (): JSX.Element => {
       if (searchInput === '') {
         dispatch(
           reduxServices.companiesList.getAllCompanies({
-            endIndex: pageSize * CurrentPage,
+            endIndex: pageSize * currentPage,
             searchCompany: searchInput,
             selectionTechnology: selectTechnology,
-            startIndex: pageSize * (CurrentPage - 1),
+            startIndex: pageSize * (currentPage - 1),
           }),
         )
         setCurrentPage(1)
       } else {
         dispatch(
           reduxServices.companiesList.getAllCompanies({
-            endIndex: pageSize * CurrentPage,
+            endIndex: pageSize * currentPage,
             searchCompany: searchInput,
             selectionTechnology: selectTechnology,
-            startIndex: pageSize * (CurrentPage - 1),
+            startIndex: pageSize * (currentPage - 1),
           }),
         )
       }
