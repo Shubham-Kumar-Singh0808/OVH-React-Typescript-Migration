@@ -120,12 +120,9 @@ import {
   CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
-<<<<<<< HEAD
   CreditCardListApi,
   ExpenseSubCategoryListApi,
-=======
   UpComingJoinListApi,
->>>>>>> develop
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1120,7 +1117,6 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
 
-<<<<<<< HEAD
 export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
   getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
   getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
@@ -1140,9 +1136,8 @@ export const CreditCardListApiConfig: CreditCardListApi = {
   deleteCardData: apiPrefix + '/ExpenseManagement/deleteCardData',
   checkDuplicateCardNumber:
     apiPrefix + '/ExpenseManagement/checkDuplicateCardNumber',
-=======
+}
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
->>>>>>> develop
 }
