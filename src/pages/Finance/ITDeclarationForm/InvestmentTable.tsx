@@ -49,11 +49,11 @@ const InvestmentTable = ({
   return (
     <>
       <CTableRow>
-        <CTableDataCell scope="row">
+        <CTableDataCell scope="row" width="20px">
           <CCol className="mt-2">{currentSec?.id}</CCol>
         </CTableDataCell>
-        <CTableDataCell scope="row">
-          <CCol sm={12}>
+        <CTableDataCell scope="row" width="330px">
+          <CCol sm={12} className="investatble-form">
             <CFormSelect
               data-testid={`form-select-investment${secIndex}-${isOldEmployee}`}
               size="sm"
@@ -73,8 +73,8 @@ const InvestmentTable = ({
             </CFormSelect>
           </CCol>
         </CTableDataCell>
-        <CTableDataCell scope="row">
-          <CCol sm={12}>
+        <CTableDataCell scope="row" width="230px">
+          <CCol sm={12} className="investatble-form">
             <CFormInput
               autoComplete="off"
               type="text"
