@@ -75,24 +75,21 @@ const assetTypeChangeListSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.assetHistoryList = action.payload
       })
+      .addCase(getAssetTypeChangeList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.asset = action.payload
+      })
+      .addCase(getAllAssetListData.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.allAssetList = action.payload.list
+        state.listSize = action.payload.size
+      })
       .addMatcher(
         isAnyOf(getAssetTypeChangeList.pending, getAllAssetHistoryData.pending),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },
       )
-      .addMatcher(
-        isAnyOf(getAssetTypeChangeList.fulfilled),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.succeeded
-          state.asset = action.payload
-        },
-      )
-      .addMatcher(isAnyOf(getAllAssetListData.fulfilled), (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
-        state.allAssetList = action.payload.list
-        state.listSize = action.payload.size
-      })
   },
 })
 
