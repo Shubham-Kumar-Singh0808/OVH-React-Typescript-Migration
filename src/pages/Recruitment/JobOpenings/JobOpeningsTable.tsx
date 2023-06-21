@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CTable,
   CTableHead,
@@ -57,6 +57,17 @@ const JobOpeningsTable = ({
     setIsJobDescriptionModalVisible(true)
     setDescription(jobDescription)
   }
+
+  useEffect(() => {
+    dispatch(
+      reduxServices.jobVacancies.getAllJobVacancies({
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
+        searchJobTitle: searchInput,
+        status: selectRadioAction,
+      }),
+    )
+  }, [currentPage, dispatch, pageSize, selectRadioAction])
 
   const totalRecords = getJobVacancies?.length
     ? `Total Records: ${TotalListSize}`

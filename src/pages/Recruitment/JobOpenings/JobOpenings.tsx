@@ -57,6 +57,12 @@ const JobOpenings = (): JSX.Element => {
     )
   }, [currentPage, dispatch, pageSize, selectRadioAction])
 
+  useEffect(() => {
+    if (window.location.pathname === '/jobvacancies') {
+      setCurrentPage(1)
+    }
+  }, [])
+
   const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (searchInput === '') {
