@@ -83,6 +83,7 @@ export const getFormattedDate = (enteredDate: string): string => {
     : ''
 }
 
+// this is being used in other components too.....
 export const interchangeMonthAndDay = (enteredDate: string): string => {
   if (enteredDate === '') {
     return ''

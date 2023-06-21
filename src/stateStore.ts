@@ -139,6 +139,7 @@ import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/ass
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -278,6 +279,7 @@ export const allReducers = {
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
   addProduct: addProductReducer,
+  upComingJoinList: upComingJoinListReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
