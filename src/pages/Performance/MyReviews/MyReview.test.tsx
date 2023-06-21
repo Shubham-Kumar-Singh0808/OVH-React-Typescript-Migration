@@ -281,4 +281,52 @@ describe('Employee Review Form', () => {
       ).toBeVisible()
     })
   })
+
+  describe('closed appraisal form', () => {
+    beforeEach(() => {
+      render(<MyReview />, {
+        preloadedState: {
+          myReview: {
+            error: null,
+            isLoading: ApiLoadingState.succeeded,
+            appraisalForm: {
+              ...mockCompletedEmployeeAppraisalForm,
+              formStatus: MyReviewFormStatus.closed,
+              closedSummary: 'Relievved testiing postion',
+              closedOn: '20/06/2023',
+              closedStatus: 'Relieved',
+              closedBy: 'Siva Alapati',
+            },
+            reviewComments: mockReviewComments,
+            myReviewFormStatus: MyReviewFormStatus.saveForEmployee,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeId: mockCompletedEmployeeAppraisalForm.employee.id,
+            },
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    screen.debug()
+
+    test('details rendered', () => {
+      expect(
+        screen.getByTestId(generateMyReviewTestId('reviewClosedBtn')),
+      ).toBeVisible()
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedOn')),
+      ).toHaveValue('20/06/2023')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedStatus')),
+      ).toHaveTextContent('Relieved')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedSummary')),
+      ).toHaveTextContent('Relievved testiing postion')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedBy')),
+      ).toHaveTextContent('Siva Alapati')
+    })
+  })
 })

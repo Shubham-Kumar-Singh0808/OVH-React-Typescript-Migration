@@ -51,11 +51,11 @@ const VendorListTable = ({
     reduxServices.vendorList.selectors.vendors,
   )
 
-  const listSize = useTypedSelector(reduxServices.vendorList.selectors.listSize)
+  const totalListSize = useTypedSelector(
+    reduxServices.vendorList.selectors.listSize,
+  )
 
-  const handlePageSizeSelectChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
@@ -219,19 +219,21 @@ const VendorListTable = ({
       <CRow>
         <CCol xs={4}>
           <strong>
-            {listSize ? `Total Records: ${listSize}` : `No Records Found`}
+            {totalListSize
+              ? `Total Records: ${totalListSize}`
+              : `No Records Found`}
           </strong>
         </CCol>
         <CCol xs={3}>
-          {listSize > 20 && (
+          {totalListSize > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
+              handlePageSizeSelectChange={handlePageSize}
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {listSize > 20 && (
+        {totalListSize > 20 && (
           <CCol
             xs={5}
             className="gap-1 d-grid d-md-flex justify-content-md-end"
@@ -257,7 +259,7 @@ const VendorListTable = ({
           data-testid="modal-cnt-add"
           style={{ minHeight: '90px' }}
         >
-          <p
+          <div
             dangerouslySetInnerHTML={{
               __html: vendorAddress.vendorAddress,
             }}
