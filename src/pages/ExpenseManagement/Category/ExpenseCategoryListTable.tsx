@@ -97,9 +97,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'categoryName') {
-      const nameValue = value
-        .replace(/-_[^a-z0-9\s]/gi, '')
-        .replace(/(\w)\1+/g, '$1')
+      const nameValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setEditExpenseCategoryDetails((prevState) => {
         return { ...prevState, ...{ [name]: nameValue } }
       })
