@@ -4,11 +4,7 @@ import userEvent from '@testing-library/user-event'
 import CompaniesList from './CompaniesList'
 import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  mockGetEmpCountries,
-  mockGetTechnology,
-} from '../../../test/data/candidateListData'
-import { CompaniesListResponse } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
+import { mockCompaniesListTotalInfo } from '../../../test/data/CompaniesData'
 
 describe('Companies List without data', () => {
   beforeEach(() => {
@@ -17,9 +13,8 @@ describe('Companies List without data', () => {
         companiesList: {
           isLoading: ApiLoadingState.succeeded,
           listSize: 0,
-          companiesListResponseDetails: {} as CompaniesListResponse,
-          companiesListData: [],
-          getAllTechnology: mockGetTechnology,
+          companiesListResponseDetails: mockCompaniesListTotalInfo.list,
+          companiesListData: mockCompaniesListTotalInfo.list,
         },
       },
     })
