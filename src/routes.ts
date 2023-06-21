@@ -459,6 +459,9 @@ const CandidatesCount = React.lazy(
 const EmployeesCount = React.lazy(
   () => import('./pages/Recruitment/CompaniesList/EmployeesCount'),
 )
+const JobInfo = React.lazy(
+  () => import('./pages/Recruitment/JobOpenings/JobInformation/JobInformation'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1092,6 +1095,11 @@ const routes = [
     path: '/employeesInfo/:companyName',
     name: 'EmployeesCount',
     component: EmployeesCount,
+  },
+  {
+    path: '/jobinfo/:jobVacancyId',
+    name: 'JobInfo',
+    component: JobInfo,
   },
 ]
 export default routes

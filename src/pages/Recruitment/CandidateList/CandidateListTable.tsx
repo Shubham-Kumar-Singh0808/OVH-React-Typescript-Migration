@@ -13,7 +13,10 @@ import {
   CBadge,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
-import { TableProps } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
+import {
+  CandidateLists,
+  TableProps,
+} from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -160,6 +163,9 @@ const CandidateListTable = ({
   const handler = (candidateId: number) => {
     dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
   }
+  const jobInfoHandler = (data: CandidateLists) => {
+    dispatch(reduxServices.jobVacancies.getJobVacancyAudit(data.appliedFor.id))
+  }
   return (
     <>
       <CTable
@@ -193,6 +199,8 @@ const CandidateListTable = ({
         <CTableBody>
           {getCandidateDetails?.length > 0 &&
             getCandidateDetails?.map((data, index) => {
+              console.log(data.id + '')
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
@@ -209,7 +217,11 @@ const CandidateListTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{data.appliedForVacancy}</CTableDataCell>
                   <CTableDataCell scope="row" className="sh-organization-link">
-                    <Link to={`/`} className="cursor-pointer">
+                    <Link
+                      to={`/jobinfo/${data.appliedFor.id}`}
+                      className="cursor-pointer"
+                      onClick={() => jobInfoHandler(data)}
+                    >
                       {data.appliedFor.jobCode}
                     </Link>
                   </CTableDataCell>
