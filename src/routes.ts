@@ -336,6 +336,10 @@ const AddNominee = React.lazy(
 const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
+const MyReviewManagerAppraisal = React.lazy(
+  () =>
+    import('./pages/Performance/MyReviews/ManagerAppraisal/ManagerAppraisal'),
+)
 const PayrollManagement = React.lazy(
   () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
 )
@@ -447,6 +451,13 @@ const CreditCardList = React.lazy(
 )
 const ExpenseSubCategoryList = React.lazy(
   () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+)
+const AddNewCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
+)
+const UpComingJoinList = React.lazy(
+  () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -895,6 +906,11 @@ const routes = [
     component: MyReview,
   },
   {
+    path: '/managerAppraisal/:employeeId',
+    name: 'Manager Appraisal',
+    component: MyReviewManagerAppraisal,
+  },
+  {
     path: '/leadershiplist',
     name: 'Leadership Enrollment List',
     component: LeadershipEnrollmentList,
@@ -1065,6 +1081,16 @@ const routes = [
     path: '/expenseSubCategory',
     name: 'Expense Sub Category',
     component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/addNewCandidate',
+    name: 'Add New Candidate',
+    component: AddNewCandidate,
+  },
+  {
+    path: '/upcomingjoinlist',
+    name: 'UpComing Join List',
+    component: UpComingJoinList,
   },
 ]
 export default routes

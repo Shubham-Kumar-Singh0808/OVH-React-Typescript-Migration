@@ -143,6 +143,7 @@ import productSpecificationListReducer from './reducers/Assets/ProductSpecificat
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import creditCardListReducer from './reducers/ExpenseManagement/CreditCardList/creditCardListSlice'
 import subCategoryReducer from './reducers/ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
+import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -286,6 +287,7 @@ export const allReducers = {
   addProduct: addProductReducer,
   creditCardList: creditCardListReducer,
   subCategoryList: subCategoryReducer,
+  upComingJoinList: upComingJoinListReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

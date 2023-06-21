@@ -7,16 +7,12 @@ import {
   mockEmployeeNames,
   mockProjectNames,
 } from '../../../test/data/allocateEmployeeData'
-import { mockGetAuditDetails } from '../../../test/data/editAuditFormData'
 
 const backButton = 'editAudit-back-btn'
 const auditTypeInputElement = 'editAuditType-input'
 const projectTypeDevelopment = 'editProjType-dev'
 const projectTypeSupport = 'editProjType-support'
-const projectNameInputElement = 'projectName-input'
 const employeeNames = 'Employees Name'
-const auditorsOptions = 'auditors-option'
-const auditeesOptions = 'auditees-option'
 
 describe('render all inputs without crashing', () => {
   beforeEach(() => {

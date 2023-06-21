@@ -40,7 +40,9 @@ const AuditMembersDetails = ({
           <Multiselect
             className="ovh-multiselect"
             data-testid="edit-auditors-option"
-            options={options?.map((option) => option) || []}
+            options={
+              (options.length > 0 && options?.map((option) => option)) || []
+            }
             displayValue="fullName"
             disable={formStatusSubmit || formStatusPMUpdate}
             placeholder={placeholder?.length ? '' : 'Employees Name'}
