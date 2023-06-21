@@ -19,6 +19,7 @@ import NoShow from '../ScheduledInterviews/ScheduleIntervieActionButtons/NoShow 
 import RejectInterview from '../ScheduledInterviews/ScheduleIntervieActionButtons/RejectInterview'
 import Offer from '../ScheduledInterviews/ScheduleIntervieActionButtons/Offer'
 import OnHold from '../ScheduledInterviews/ScheduleIntervieActionButtons/OnHold'
+import REPROCESS from '../ScheduledInterviews/ScheduleIntervieActionButtons/REPROCESS'
 
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -139,6 +140,10 @@ const IntervieweeDetails = (): JSX.Element => {
     history.push(`/scheduleInterview/${timeLineListSelector.personId}`)
   }
 
+  const backBtnHandler = () => {
+    history.push('/jobschedulecandidateList')
+  }
+
   return (
     <>
       <OCard
@@ -222,9 +227,15 @@ const IntervieweeDetails = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={backBtnHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
+            {timeLineListSelector.candidateStatus === 'REJECTED' ? (
+              <REPROCESS />
+            ) : (
+              ''
+            )}
           </CCol>
         </CRow>
         <CForm>
