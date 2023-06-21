@@ -119,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  UpComingJoinListApi,
   CompaniesListApi,
 } from '../../types/apiTypes'
 
@@ -930,6 +931,16 @@ export const KRAApiConfig: KRAApi = {
 }
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+  getAppraisalForm: apiPrefix + '/appraisal/AppraisalForm',
+  getExistingAppraisalForm: apiPrefix + '/appraisal/existingAppraisalForm',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  employeeAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
+  employeeAppraisalFormForRating:
+    apiPrefix + '/appraisal/employeeAppraisalFormForRating',
+  saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
+  getReviewComments: apiPrefix + '/appraisal/getReviewComments',
+  appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
+  closeAppraisalForm: apiPrefix + 'appraisal/closeAppraisalForm',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
@@ -1061,6 +1072,14 @@ export const CandidateListApiConfig: CandidateListApi = {
   getCountryWiseCandidatesList:
     apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
   deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
+  getAllJobVacanciesList: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  checkCandidateEmail: apiPrefix + '/jobapplicant/checkeamil',
+  checkCandidateMobileNumber:
+    apiPrefix + '/jobapplicant/isCandidateMobileNumberExists',
+  getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
+  addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
+  uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
 }
 
 export const GetAssetListConfig: AssetListApi = {
@@ -1089,4 +1108,9 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
 export const CompaniesListApiConfig: CompaniesListApi = {
   getAllCompanies: apiPrefix + '/jobapplicant/getAllCompanies',
   exportCompaniesList: apiPrefix + '/jobapplicant/getAllCompanies',
+}
+
+export const getUpComingJoinListConfig: UpComingJoinListApi = {
+  getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
 }

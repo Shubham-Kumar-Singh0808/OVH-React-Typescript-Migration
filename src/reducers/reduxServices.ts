@@ -130,6 +130,7 @@ import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { companiesListService } from './Recruitment/CompaniesList/CompaniesListSlice'
+import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -264,4 +265,5 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
   companiesList: companiesListService,
+  upComingJoinList: upComingJoiningListService,
 }
