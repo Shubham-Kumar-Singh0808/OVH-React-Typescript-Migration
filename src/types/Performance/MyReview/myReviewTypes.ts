@@ -222,11 +222,11 @@ export interface IncomingMyReviewAppraisalForm {
   discussionSummary: null
   openForDiscussionFlag: null | string
   iAgreeFlag: null | boolean
-  closedSummary: null
-  closedOn: null
+  closedSummary: null | string
+  closedOn: null | string
   pendingWith: null | string
-  closedStatus: null
-  closedBy: null
+  closedStatus: null | string
+  closedBy: null | string
   empDepartmentName: null | string
   empDesignationName: null | string
   empAvgRating: null | number
@@ -272,6 +272,7 @@ export enum MyReviewFormStatus {
   pendingagreement = 'PENDINGAGREEMENT',
   openForDiscussion = 'OPENFORDISCUSSION',
   completed = 'COMPLETED',
+  closed = 'CLOSED',
 }
 
 export interface MyReviewButtonsProps {

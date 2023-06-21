@@ -106,3 +106,4 @@ export const reviewRatings = [
 ]
 
 export const emptyString = ''
+export const regexNumberOnly = /\D/g

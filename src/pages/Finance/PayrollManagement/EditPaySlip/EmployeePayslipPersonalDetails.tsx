@@ -6,9 +6,11 @@ import { CurrentPayslip } from '../../../../types/Finance/PayrollManagement/Payr
 const EmployeePayslipPersonalDetails = ({
   onChangeInputHandler,
   toEditPayslipCopy,
+  isDesignationReadonly,
 }: {
   toEditPayslipCopy: CurrentPayslip
   onChangeInputHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
+  isDesignationReadonly: boolean
 }): JSX.Element => {
   const dynamicFormLabelProps = (htmlFor: string, className: string) => {
     return {
@@ -61,6 +63,7 @@ const EmployeePayslipPersonalDetails = ({
             data-testid="designation-name"
             name="designation"
             autoComplete="off"
+            readOnly={isDesignationReadonly}
             value={toEditPayslipCopy.designation}
             placeholder="designation"
             onChange={onChangeInputHandler}

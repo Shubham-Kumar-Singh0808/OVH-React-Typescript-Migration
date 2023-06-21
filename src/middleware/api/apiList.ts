@@ -939,6 +939,7 @@ export const myReviewApiConfig: MyReviewApi = {
   saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
   getReviewComments: apiPrefix + '/appraisal/getReviewComments',
   appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
+  closeAppraisalForm: apiPrefix + 'appraisal/closeAppraisalForm',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
@@ -1070,6 +1071,14 @@ export const CandidateListApiConfig: CandidateListApi = {
   getCountryWiseCandidatesList:
     apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
   deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
+  getAllJobVacanciesList: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  checkCandidateEmail: apiPrefix + '/jobapplicant/checkeamil',
+  checkCandidateMobileNumber:
+    apiPrefix + '/jobapplicant/isCandidateMobileNumberExists',
+  getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
+  addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
+  uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
 }
 
 export const GetAssetListConfig: AssetListApi = {
