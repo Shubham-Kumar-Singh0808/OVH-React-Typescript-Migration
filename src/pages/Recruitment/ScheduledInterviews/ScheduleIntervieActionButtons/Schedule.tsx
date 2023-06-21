@@ -90,6 +90,7 @@ const Schedule = (): JSX.Element => {
     const SaveInterviewResultAction = await dispatch(
       reduxServices.intervieweeDetails.scheduleInterview({
         candidateId: timeLineListSelector.personId,
+        contactDetails: contactLink || '',
         description: comments,
         interviewRound: Number(interviewRoundCountResult.payload) + 1,
         interviewType: mode,
@@ -107,14 +108,7 @@ const Schedule = (): JSX.Element => {
         SaveInterviewResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="Leave calender settings are done"
-          />,
-        ),
-      )
+      history.push('/jobschedulecandidateList')
     } else if (
       reduxServices.intervieweeDetails.scheduleInterview.rejected.match(
         SaveInterviewResultAction,
@@ -172,13 +166,19 @@ const Schedule = (): JSX.Element => {
       selectDate &&
       mode &&
       autoCompleteTarget &&
-      (mailToCandidate || sendMailToInterviewer)
+      (mailToCandidate === true || sendMailToInterviewer === true)
     ) {
       setIsSaveBtnEnable(true)
     } else {
       setIsSaveBtnEnable(false)
     }
-  }, [selectDate, mode, autoCompleteTarget])
+  }, [
+    selectDate,
+    mode,
+    autoCompleteTarget,
+    mailToCandidate,
+    sendMailToInterviewer,
+  ])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
