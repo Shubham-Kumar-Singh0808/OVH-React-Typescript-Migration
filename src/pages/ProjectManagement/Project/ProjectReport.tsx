@@ -174,6 +174,7 @@ const ProjectReport = (): JSX.Element => {
     setParams({ ...params, health: value })
     dispatch(reduxServices.projectReport.actions.setProjectHealth(value))
   }
+  console.log('testing')
 
   const handleStartDate = (value: Date) => {
     setParams({ ...params, startdate: moment(value).format(dateFormat) })
