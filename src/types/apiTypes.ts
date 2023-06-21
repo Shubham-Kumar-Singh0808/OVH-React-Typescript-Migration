@@ -760,6 +760,15 @@ export interface KRAApi extends ApiBase {
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+  getAppraisalForm: string
+  getExistingAppraisalForm: string
+  getPerformanceRatings: string
+  employeeAppraisalForm: string
+  employeeAppraisalFormForRating: string
+  saveReviewComments: string
+  getReviewComments: string
+  appraisalConfirmation: string
+  closeAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {
@@ -864,6 +873,13 @@ export interface CandidateListApi extends ApiBase {
   getAllTechnology: string
   getCountryWiseCandidatesList: string
   deleteCandidate: string
+  getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
+  uploadCandidateResume: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -936,4 +952,8 @@ export interface CreditCardListApi extends ApiBase {
   updateCardDetails: string
   deleteCardData: string
   checkDuplicateCardNumber: string
+}
+export interface UpComingJoinListApi extends ApiBase {
+  getUpcomingJoineeList: string
+  getEmployeeDepartments: string
 }

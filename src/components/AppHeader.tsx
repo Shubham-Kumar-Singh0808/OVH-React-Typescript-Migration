@@ -122,33 +122,31 @@ const AppHeader = (): JSX.Element => {
                   </div>
                 )}
                 renderItem={(item) => {
-                  const imageUrl = item.profilePicture
+                  const imageUrl = item?.profilePicPath
                   const baseUrl = baseImageExtension
                   const url = new URL(imageUrl, baseUrl)
                   const finalImageUrl = url.href
                   return (
-                    <>
-                      <div
-                        data-testid="employee-options"
-                        className="autocomplete-dropdown-item"
-                        key={item.id}
-                      >
-                        <CCol className="d-flex justify-content-left employee-wrapper">
-                          <CImage
-                            className="birthday-avatar"
-                            src={finalImageUrl}
-                          />
-                          <div className="p-1">
-                            <p className="m-0 employee-fullname">
-                              {item?.fullName}
-                            </p>
-                            <span className="employee-desg">
-                              {item.designation}
-                            </span>
-                          </div>
-                        </CCol>
-                      </div>
-                    </>
+                    <div
+                      data-testid="employee-options"
+                      className="autocomplete-dropdown-item"
+                      key={item.id}
+                    >
+                      <CCol className="d-flex justify-content-left employee-wrapper">
+                        <CImage
+                          className="birthday-avatar"
+                          src={finalImageUrl}
+                        />
+                        <div className="p-1">
+                          <p className="m-0 employee-fullname">
+                            {item?.fullName}
+                          </p>
+                          <span className="employee-desg">
+                            {item.designation}
+                          </span>
+                        </div>
+                      </CCol>
+                    </div>
                   )
                 }}
                 value={searchAutoCompleteTarget}

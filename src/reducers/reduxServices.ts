@@ -133,6 +133,7 @@ import { productSpecificationListService } from './Assets/ProductSpecificationLi
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
 import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
+import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const reduxServices = {
   app: appService,
@@ -270,4 +271,5 @@ export const reduxServices = {
   addNewProduct: addProductService,
   creditCardList: creditCardListService,
   subCategoryList: subCategoryListService,
+  upComingJoinList: upComingJoiningListService,
 }
