@@ -1,6 +1,6 @@
 import React from 'react'
 import ExpenseSubCategoryListTable from './ExpenseSubCategoryListTable'
-import AddExpenseSubCategory from './AddNewSubCategory/AddExpenseSubCategory'
+import AddExpenseSubCategory from './AddSubCategory/AddExpenseSubCategory'
 import OCard from '../../../components/ReusableComponent/OCard'
 
 const ExpenseSubCategoryList = (): JSX.Element => {

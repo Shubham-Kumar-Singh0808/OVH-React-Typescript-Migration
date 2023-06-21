@@ -2,10 +2,10 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import { cleanup, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import AddExpenseCategory from './AddExpenseSubCategory'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
-import AddExpenseCategory from '../../../Expense Management/Sub-Category/AddNewSubCategory/AddExpenseSubCategory'
 import {
   mockExpenseCategoryList,
   mockExpenseSubCategoryList,
@@ -84,16 +84,6 @@ describe('Add Expense Sub Category List with data', () => {
     expect(clearBtnElement).toBeEnabled()
     userEvent.click(clearBtnElement)
   })
-
-  // test('should able to select values for options for respective select element', () => {
-  //   const category = screen.getByTestId('categoryName')
-  //   userEvent.type(category, 'testing category')
-  //   expect(category).toHaveValue('testing category')
-
-  //   const addBtnElement = screen.getByRole('button', { name: 'Add' })
-  //   expect(addBtnElement).toBeEnabled()
-  //   userEvent.click(addBtnElement)
-  // })
 
   test('should be able to render Add Expense Sub Category Component label', () => {
     expect(screen.getByTestId('categoryLabel')).toBeTruthy()

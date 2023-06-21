@@ -27,13 +27,13 @@ describe('Credit Card List Table without data', () => {
     expect(screen.getAllByRole('columnheader')).toHaveLength(4)
   })
 
-  test('should render the "Category" table ', () => {
+  test('should render the "Credit Card" table ', () => {
     const table = screen.getByRole('table')
     expect(table).toBeTruthy()
   })
 })
 
-describe('Expense Category List Table with data', () => {
+describe('Credit Card List Table with data', () => {
   beforeEach(() => {
     render(<CreditCardListTable />, {
       preloadedState: {
@@ -85,7 +85,7 @@ describe('Expense Category List Table with data', () => {
       const saveButton = screen.getByTestId(`save-credit-card-btn3`)
       await fireEvent.click(saveButton)
       expect(screen.getByTestId(`creditCardName3`)).toHaveValue(
-        'SBI Credit CardtOne CreditOne Credit',
+        'SBI Credit CardtOne Credit',
       )
       expect(screen.getByTestId(`creditCardNumber3`)).toHaveValue(
         '1123465414174123',

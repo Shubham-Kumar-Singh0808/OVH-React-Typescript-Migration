@@ -1,56 +1,17 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import CreditCardList from './CreditCardList'
-import { cleanup, fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockCreditCardListData } from '../../../test/data/creditCardListData'
 
-// const toRender = (
-//   <div>
-//     <div id="backdrop-root"></div>
-//     <div id="overlay-root"></div>
-//     <div id="root"></div>
-//     <CreditCardList />
-//   </div>
-// )
-
-// describe('Credit Card List Component Testing', () => {
-//   test('should render Credit Card List component without data', () => {
-//     beforeEach(() => {
-//       render(toRender, {
-//         preloadedState: {
-//           creditCardList: {
-//             getCardsList: mockCreditCardListData,
-//             isLoading: ApiLoadingState.succeeded,
-//           },
-//           userAccessToFeatures: {
-//             isLoading: ApiLoadingState.succeeded,
-//             userAccessToFeatures: mockUserAccessToFeaturesData,
-//           },
-//         },
-//       })
-//       const categoryElement = screen.getByRole('heading', {
-//         name: 'Credit Card List',
-//       })
-//       expect(categoryElement).toBeInTheDocument()
-//     })
-//     afterEach(cleanup)
-//     // render(toRender, {
-//     //   preloadedState: {
-//     //     creditCardList: {
-//     //       isLoading: ApiLoadingState.succeeded,
-//     //       getCardsList: mockCreditCardListData,
-//     //       error: null,
-//     //     },
-//     //     userAccessToFeatures: {
-//     //       isLoading: ApiLoadingState.succeeded,
-//     //       userAccessToFeatures: mockUserAccessToFeaturesData,
-//     //     },
-//     //   },
-//     // })
-//   })
-// })
 describe('Credit Card List without data', () => {
   beforeEach(() => {
     render(<CreditCardList />, {
@@ -145,15 +106,6 @@ describe('Credit Card List without data', () => {
     userEvent.click(modalCancelBtn)
     expect(modalCancelBtn).toBeInTheDocument()
   })
-  // test('showing error on entering existing credit card which is already exists', () => {
-  //   const inputCardName = screen.getByTestId('cardName')
-  //   userEvent.type(inputCardName, 'Citi Credit Card')
-  //   expect(inputCardName).toHaveValue('Citi Credit Card')
-  //   const inputCard = screen.getByTestId('cardNumber')
-  //   userEvent.type(inputCard, 'XXXX-XXXX-XXXX-1234')
-  //   expect(inputCard).toHaveValue('1234')
-  //   expect(screen.getByText('Card number already exist')).toBeInTheDocument()
-  // })
 })
 
 describe('Add Location List without data', () => {

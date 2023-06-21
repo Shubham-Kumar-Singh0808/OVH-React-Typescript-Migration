@@ -32,21 +32,6 @@ describe('AddProjectStatus Component Testing with data', () => {
     // const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     // fireEvent.click(datePickers[0])
 
-<<<<<<< HEAD
-    await waitFor(() =>
-      fireEvent?.change(datePickers[0], {
-        target: { value: '29 Oct, 2019' },
-      }),
-    )
-    fireEvent.click(datePickers[1])
-    await waitFor(() =>
-      fireEvent.change(datePickers[1], {
-        target: { value: '10 Jan, 2022' },
-      }),
-    )
-    expect(datePickers[0]).toHaveValue('10/29/2019')
-    expect(datePickers[1]).toHaveValue('01/10/2022')
-=======
     // await waitFor(() =>
     //   fireEvent.change(datePickers[0], {
     //     target: { value: '29 Oct, 2019' },
@@ -60,7 +45,6 @@ describe('AddProjectStatus Component Testing with data', () => {
     // )
     // expect(datePickers[0]).toHaveValue('10/29/2019')
     // expect(datePickers[1]).toHaveValue('01/10/2022')
->>>>>>> develop
 
     const Comments = screen.findByTestId('ckEditor-component')
     expect(Comments).toBeTruthy()

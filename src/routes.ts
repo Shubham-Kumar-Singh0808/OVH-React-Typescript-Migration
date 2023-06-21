@@ -450,7 +450,7 @@ const CreditCardList = React.lazy(
   () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
 )
 const ExpenseSubCategoryList = React.lazy(
-  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+  () => import('./pages/ExpenseManagement/SubCategory/SubCategoryList'),
 )
 const AddNewCandidate = React.lazy(
   () =>
