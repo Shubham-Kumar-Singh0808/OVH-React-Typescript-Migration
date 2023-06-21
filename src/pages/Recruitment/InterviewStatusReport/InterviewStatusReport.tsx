@@ -1,41 +1,54 @@
-import React from 'react'
-import { CButton, CCol, CFormLabel, CFormSelect } from '@coreui/react-pro'
+import React, { useEffect } from 'react'
+import { CCardHeader } from '@coreui/react-pro'
+import InterviewStatusReportTable from './InterviewStatusReportTable'
+import InterviewStatusReportFilterOptions from './InterviewStatusReportFilterOptions/InterviewStatusReportFilterOptions'
 import OCard from '../../../components/ReusableComponent/OCard'
+import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { reduxServices } from '../../../reducers/reduxServices'
+import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const InterviewStatusReport = (): JSX.Element => {
+  const dispatch = useAppDispatch()
+  const filterOptions = useTypedSelector(
+    (state) => state.interviewStatusReport.filterOptions,
+  )
+  const interviewStatusReport = useTypedSelector(
+    (state) => state.interviewStatusReport.interviewStatusReportList,
+  )
+  // calling apis as soon as the page loads
+  useEffect(() => {
+    dispatch(reduxServices.interviewStatusReport.getAllEmpCountriesThunk())
+    dispatch(reduxServices.interviewStatusReport.getAllTechnologyThunk())
+  }, [])
+
+  const {
+    paginationRange,
+    setPageSize,
+    setCurrentPage,
+    pageSize,
+    currentPage,
+  } = usePagination(interviewStatusReport.size)
+
+  console.log(useTypedSelector((state) => state.interviewStatusReport))
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
-      title="Candidate List"
+      title="Interview Status Report"
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      <div className="d-flex flex-row align-items-center gap-5">
-        <CCol sm={5}>
-          <div className="d-flex flex-row align-items-center">
-            <CFormLabel>Select: </CFormLabel>
-            <CCol sm={4}>
-              <CFormSelect></CFormSelect>
-            </CCol>
-            <CCol sm={4}>
-              <CFormSelect></CFormSelect>
-            </CCol>
-          </div>
-        </CCol>
-        <div className="d-flex flex-row">
-          <CFormLabel>Technology:</CFormLabel>
-          <CFormSelect></CFormSelect>
-        </div>
-        <div className="d-flex flex-row align-items-center">
-          <CFormLabel>Country</CFormLabel>
-          <div className="d-flex flex-column">
-            <CFormSelect></CFormSelect>
-            <CButton className="btn-ovh mt-1" color="info">
-              View Status Chart
-            </CButton>
-          </div>
-        </div>
-      </div>
+      <InterviewStatusReportFilterOptions setCurrentPage={setCurrentPage} />
+      <CCardHeader className="mt-2">
+        <h4>List Of Candidates</h4>
+      </CCardHeader>
+      <InterviewStatusReportTable
+        paginationRange={paginationRange}
+        setPageSize={setPageSize}
+        setCurrentPage={setCurrentPage}
+        pageSize={pageSize}
+        currentPage={currentPage}
+      />
     </OCard>
   )
 }

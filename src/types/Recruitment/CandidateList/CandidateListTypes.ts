@@ -25,6 +25,7 @@ export type sourceLookUp = {
   displayOrder: null
   sourceLookUpId: number
 }
+// used in other components - used in interview status report
 export type country = {
   id: number
   name: string
@@ -110,6 +111,8 @@ export type CandidateListSliceState = {
   allJobVacancies: IncomingAllJobVacanciesList
   allCompaniesData: IncomingCompaniesData[]
 }
+
+//used in other components - used in interview status report also
 export type GetAllTechnology = {
   id: number
   name: string
