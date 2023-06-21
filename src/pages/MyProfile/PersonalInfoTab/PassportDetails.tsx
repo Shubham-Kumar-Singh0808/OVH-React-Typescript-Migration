@@ -17,6 +17,7 @@ import {
   EmployeeGeneralInformation,
   EmployeePassportDetails,
 } from '../../../types/MyProfile/GeneralTab/generalInformationTypes'
+import { base64Extension } from '../../Achievements/AchievementConstants'
 
 export const PassportDetails = (props: {
   employeeDetails?: EmployeeGeneralInformation
@@ -303,11 +304,11 @@ export const PassportDetails = (props: {
                 )
               }
             />
-            {props.employeeDetails?.passportFrontPagePath && (
+            {props.employeeDetails?.passportFrontPage && (
               <div className="mt-2" data-testId="frontImagePreview">
                 <img
                   className="mt-2 basic-info-img"
-                  src={props.employeeDetails?.passportFrontPagePath}
+                  src={`${base64Extension}${props.employeeDetails?.passportFrontPage}`}
                 />{' '}
               </div>
             )}
@@ -332,11 +333,11 @@ export const PassportDetails = (props: {
                 )
               }
             />
-            {props.employeeDetails?.passportBackPagePath && (
+            {props.employeeDetails?.passportBackPage && (
               <div className="mt-2" data-testId="backImagePreview">
                 <img
                   className="mt-2 basic-info-img"
-                  src={props.employeeDetails?.passportBackPagePath}
+                  src={`${base64Extension}${props.employeeDetails?.passportBackPage}`}
                 />{' '}
               </div>
             )}
