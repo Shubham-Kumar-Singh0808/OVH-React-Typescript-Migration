@@ -183,7 +183,8 @@ export type EmployeeProperties = {
   fullName: string
 }
 export type Reschedule = {
-  candidateId: string
+  candidateId: string | number
+  contactDetails: string
   description: string
   interviewType: string
   interviewerId: number

@@ -11,15 +11,17 @@ import {
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 import Autocomplete from 'react-autocomplete'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { deviceLocale } from '../../../../utils/dateFormatUtils'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const ReSchedule = (): JSX.Element => {
   const [selectDate, setSelectDate] = useState<string | Date>('')
-
+  const history = useHistory()
   const resultTime = new Date().toLocaleTimeString([], {
     hour: 'numeric',
     minute: '2-digit',
@@ -27,7 +29,7 @@ const ReSchedule = (): JSX.Element => {
   const startHour = resultTime?.split(':')[0]
   const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
   const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
-
+  const [contactLink, setContactLink] = useState<string>('')
   const [mode, setMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
   const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
@@ -79,37 +81,39 @@ const ReSchedule = (): JSX.Element => {
   const formattedTime = `${timePicker.hours}:${timePicker.minutes} ${timePicker.meridian}`
 
   const handleSaveScheduleInterview = async () => {
-    const interviewRoundCountResult = await dispatch(
-      reduxServices.intervieweeDetails.interviewRoundCount(
-        timeLineListSelector.personId,
-      ),
-    )
-
     const SaveInterviewResultAction = await dispatch(
-      reduxServices.intervieweeDetails.scheduleInterview({
+      reduxServices.intervieweeDetails.reScheduleInterview({
         candidateId: timeLineListSelector.personId,
+        contactDetails: contactLink || '',
         description: comments,
-        interviewRound: Number(interviewRoundCountResult.payload) + 1,
         interviewType: mode,
         interviewerId: result[0].id,
         scheduleDate: selectDateValue,
         scheduleTime: formattedTime,
-        sendMailToCandidate: false,
-        sendMailToInterviewer: true,
-        sendMessageToCandidate: false,
-        sendMessageToInterviewer: false,
+        sendMailToCandidate: mailToCandidate,
+        sendMailToInterviewer,
+        sendMessageToCandidate,
+        sendMessageToInterviewer,
       }),
     )
     if (
-      reduxServices.intervieweeDetails.scheduleInterview.fulfilled.match(
+      reduxServices.intervieweeDetails.reScheduleInterview.fulfilled.match(
         SaveInterviewResultAction,
       )
+    ) {
+      history.push('/jobschedulecandidateList')
+    } else if (
+      reduxServices.intervieweeDetails.scheduleInterview.rejected.match(
+        SaveInterviewResultAction,
+      ) &&
+      SaveInterviewResultAction.payload === 409
     ) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
-            toastColor="success"
-            toastMessage="Leave calender settings are done"
+            toastColor="danger"
+            toastMessage="            
+            Candidate already Scheduled"
           />,
         ),
       )
@@ -145,15 +149,48 @@ const ReSchedule = (): JSX.Element => {
     setAutoCompleteTarget('')
     setComments('')
     setMode('')
+    setMailToCandidate(false)
+    setSendMailToInterviewer(false)
+    setContactLink('')
   }
 
   useEffect(() => {
-    if (selectDate && mode && autoCompleteTarget) {
+    if (
+      selectDate &&
+      mode &&
+      autoCompleteTarget &&
+      (mailToCandidate === true || sendMailToInterviewer === true)
+    ) {
       setIsSaveBtnEnable(true)
     } else {
       setIsSaveBtnEnable(false)
     }
-  }, [selectDate, mode, autoCompleteTarget])
+  }, [
+    selectDate,
+    mode,
+    autoCompleteTarget,
+    mailToCandidate,
+    sendMailToInterviewer,
+  ])
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (Number(value) <= 12) {
+      setTimePicker({
+        ...timePicker,
+        hours: e.target.value,
+      })
+    } else {
+      setTimePicker({
+        ...timePicker,
+        hours: '',
+      })
+    }
+  }
+
+  const backBtnHandler = () => {
+    history.push(`/candidatetimeline/${timeLineListSelector.personId}`)
+  }
 
   return (
     <>
@@ -169,19 +206,21 @@ const ReSchedule = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
+              onClick={backBtnHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Date:
+            <span className={selectDateValue ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <ReactDatePicker
               className="form-control form-control-sm sh-date-picker"
               data-testid="date-picker"
@@ -200,16 +239,16 @@ const ReSchedule = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Time:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CRow>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormInput
                   autoComplete="off"
                   type="text"
@@ -217,16 +256,10 @@ const ReSchedule = (): JSX.Element => {
                   name="personName"
                   data-testid="person-name"
                   value={timePicker.hours}
-                  onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
-                      hours: e.target.value,
-                    })
-                  }}
-                  max={12}
+                  onChange={onChangeHandler}
                 />
               </CCol>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormInput
                   autoComplete="off"
                   type="text"
@@ -242,7 +275,7 @@ const ReSchedule = (): JSX.Element => {
                   }}
                 />
               </CCol>
-              <CCol sm={6}>
+              <CCol sm={4}>
                 <CFormSelect
                   aria-label="startTimeMeridian"
                   id="startTimeMeridian"
@@ -261,36 +294,43 @@ const ReSchedule = (): JSX.Element => {
                 </CFormSelect>
               </CCol>
             </CRow>
-            <CFormCheck
-              type="checkbox"
-              id="checked"
-              name="checked"
-              data-testid="checked"
-              checked={mailToCandidate}
-              onChange={(e) => setMailToCandidate(e.target.checked)}
-              inline
-            />
-            <b>Send mail to candidate</b>
-            <CFormCheck
-              type="checkbox"
-              id="checked"
-              name="checked"
-              data-testid="checked"
-              checked={sendMailToInterviewer}
-              onChange={(e) => setSendMailToInterviewer(e.target.checked)}
-              inline
-            />
-            <b>Send mail to interviewer</b>
+          </CCol>
+          <CCol sm={4}>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="checked"
+                name="checked"
+                data-testid="checked"
+                checked={mailToCandidate}
+                onChange={(e) => setMailToCandidate(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send mail to candidate</b>
+            </div>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="checked"
+                name="checked"
+                data-testid="checked"
+                checked={sendMailToInterviewer}
+                onChange={(e) => setSendMailToInterviewer(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send mail to interviewer</b>
+            </div>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Mode:
+            <span className={mode ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CFormSelect
               aria-label="Default select example"
               size="sm"
@@ -312,14 +352,42 @@ const ReSchedule = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        {mode === 'FACE_TO_FACE' || mode === 'SYSTEM' || mode === '' ? (
+          ''
+        ) : (
+          <CRow className="mb-3">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-2 col-form-label text-end"
+            >
+              Contact/Link:
+              <span className={contactLink ? TextWhite : TextDanger}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                autoComplete="off"
+                type="text"
+                id="contactLink"
+                name="contactLink"
+                placeholder="Enter Contact number or Meeting link"
+                data-testid="person-name"
+                value={contactLink}
+                onChange={(e) => setContactLink(e.target.value)}
+              />
+            </CCol>
+          </CRow>
+        )}
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Interviewer:
+            <span className={autoCompleteTarget ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <Autocomplete
               inputProps={{
                 className: 'form-control form-control-sm hr-autocomplete',
@@ -353,14 +421,14 @@ const ReSchedule = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mb-3">
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
+            className="col-sm-2 col-form-label text-end"
           >
             Comments:
           </CFormLabel>
-          <CCol sm={2}>
+          <CCol sm={3}>
             <CFormTextarea
               data-testid="text-area"
               aria-label="textarea"
@@ -369,30 +437,36 @@ const ReSchedule = (): JSX.Element => {
               value={comments}
               onChange={(e) => setComments(e.target.value)}
             ></CFormTextarea>
-            <CFormCheck
-              type="checkbox"
-              id="checked"
-              name="checked"
-              data-testid="checked"
-              checked={sendMessageToCandidate}
-              onChange={(e) => setSendMessageToCandidate(e.target.checked)}
-              inline
-            />
-            <b>Send Message to candidate</b>
-            <CFormCheck
-              type="checkbox"
-              id="sendMessageToInterviewer"
-              name="sendMessageToInterviewer"
-              data-testid="checked"
-              checked={sendMessageToInterviewer}
-              onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
-              inline
-            />
-            <b>Send Message to interviewer</b>
+          </CCol>
+          <CCol sm={4}>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="checked"
+                name="checked"
+                data-testid="checked"
+                checked={sendMessageToCandidate}
+                onChange={(e) => setSendMessageToCandidate(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send Message to candidate</b>
+            </div>
+            <div>
+              <CFormCheck
+                type="checkbox"
+                id="sendMessageToInterviewer"
+                name="sendMessageToInterviewer"
+                data-testid="checked"
+                checked={sendMessageToInterviewer}
+                onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
+                inline
+              />
+              <b className="ms-1">Send Message to interviewer</b>
+            </div>
           </CCol>
         </CRow>
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 6, offset: 2 }}>
             <CButton
               className="btn-ovh me-1"
               color="success"
