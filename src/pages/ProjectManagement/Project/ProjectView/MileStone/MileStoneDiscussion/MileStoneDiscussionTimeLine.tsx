@@ -18,7 +18,7 @@ const MileStoneDiscussionTimeLine = (): JSX.Element => {
                 className="sh-timeline-timestamp"
                 data-testid="sh-time-stamp"
               >
-                {item.postDate}
+                {item?.postDate}
               </div>
               <div className="sh-timeline-content">
                 <div
@@ -26,12 +26,12 @@ const MileStoneDiscussionTimeLine = (): JSX.Element => {
                   data-testid="sh-modifiedBy"
                 >
                   <h4 className="sh-timeline-title">
-                    {item.postedBy.fullName}
+                    {item?.postedBy?.fullName}
                   </h4>
                 </div>
                 <div className="sh-timeline-body">
                   <div className="sh-timeline-item mb-1">
-                    {item.postImageData ? (
+                    {item?.postImageData ? (
                       <div className="mb-1">
                         <img
                           className="rounded-circle img-responsive"
