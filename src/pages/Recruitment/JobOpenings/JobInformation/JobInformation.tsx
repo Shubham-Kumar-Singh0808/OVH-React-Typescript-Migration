@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CRow, CFormLabel, CCol, CButton, CTooltip } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import { useHistory } from 'react-router-dom'
@@ -16,6 +16,10 @@ const JobInformation = (): JSX.Element => {
   const JobOpeningById = useTypedSelector(
     reduxServices.jobVacancies.selectors.JobOpeningById,
   )
+  useEffect(() => {
+    setEditViewJobInfo(JobOpeningById)
+  }, [JobOpeningById])
+
   const history = useHistory()
 
   const formLabelProps = {

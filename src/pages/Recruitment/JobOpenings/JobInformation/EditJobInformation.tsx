@@ -38,25 +38,10 @@ const EditJobInformation = ({
   const dispatch = useAppDispatch()
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
   const [editDate, setEditDate] = useState<string>(editViewJobInfo.expiryDate)
-  const [isUpdateBtnEnabled, setIsUpdateBtnEnabled] = useState<boolean>(false)
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
   }
-
-  useEffect(() => {
-    if (
-      editViewJobInfo.jobCode &&
-      editViewJobInfo.minimumExperience &&
-      editViewJobInfo.noOfRequirements &&
-      editViewJobInfo.positionVacant &&
-      editViewJobInfo.status
-    ) {
-      setIsUpdateBtnEnabled(true)
-    } else {
-      setIsUpdateBtnEnabled(false)
-    }
-  }, [editViewJobInfo])
 
   const handleDescription = (description: string) => {
     setEditViewJobInfo((prevState) => {
@@ -91,12 +76,14 @@ const EditJobInformation = ({
 
   const updateSuccessMessage = (
     <OToast
-      toastMessage="Job opening is successfully edited.
+      toastMessage="Job opening is successfully edited..
           "
       toastColor="success"
     />
   )
-
+  const cancelBtnHandler = () => {
+    setToggle('')
+  }
   const updateBtnHandler = async () => {
     const prepareObject = {
       id: editViewJobInfo.id,
@@ -119,7 +106,14 @@ const EditJobInformation = ({
         updateAppraisalCycleResultAction,
       )
     ) {
-      setToggle('')
+      dispatch(
+        reduxServices.jobVacancies.getAllJobVacancies({
+          startIndex: 0,
+          endIndex: 20,
+          searchJobTitle: '',
+          status: '',
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
@@ -136,7 +130,7 @@ const EditJobInformation = ({
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title={'Edit Job Opening'}
+        title={'Edit Job Info'}
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -347,10 +341,17 @@ const EditJobInformation = ({
               data-testid="updateBtn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isUpdateBtnEnabled}
               onClick={updateBtnHandler}
             >
               Update
+            </CButton>
+            <CButton
+              data-testid="cancelBtn"
+              className="btn-ovh me-1 text-white"
+              color="warning"
+              onClick={cancelBtnHandler}
+            >
+              Cancel
             </CButton>
           </CCol>
         </CRow>
