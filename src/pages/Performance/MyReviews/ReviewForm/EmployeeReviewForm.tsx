@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { CFormText, CRow, CCol, CButton } from '@coreui/react-pro'
+import { CFormText, CRow, CCol } from '@coreui/react-pro'
 import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
 import EmployeeDiscussionInput from './ReviewFormEmployeeComponents/EmployeeDiscussionInput'
