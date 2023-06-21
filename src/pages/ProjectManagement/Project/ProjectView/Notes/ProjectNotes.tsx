@@ -60,33 +60,62 @@ const ProjectNotes = (): JSX.Element => {
         },
       }),
     )
-    if (uploadFile) {
-      const formData = new FormData()
-      formData.append('file', uploadFile, uploadFile.name)
-      const uploadPrepareObject = {
-        postid: postNotesResultAction.payload as number,
-        file: formData,
-      }
-      dispatch(
-        reduxServices.projectNotes.uploadProjectNotesImage(uploadPrepareObject),
-      )
-    }
+
     if (
       reduxServices.projectNotes.postProjectNotes.fulfilled.match(
         postNotesResultAction,
       )
     ) {
-      dispatch(
-        reduxServices.app.actions.addToast(
-          <OToast
-            toastColor="success"
-            toastMessage="project Notes created successfully"
-          />,
-        ),
-      )
-      setNotesLink('')
-      setClearFile('')
-      dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
+      if (uploadFile) {
+        const formData = new FormData()
+        formData.append('file', uploadFile, uploadFile.name)
+        const uploadPrepareObject = {
+          postid: postNotesResultAction.payload as number,
+          file: formData,
+        }
+        const uploadResultAction = await dispatch(
+          reduxServices.projectNotes.uploadProjectNotesImage(
+            uploadPrepareObject,
+          ),
+        )
+
+        if (
+          reduxServices.projectNotes.uploadProjectNotesImage.fulfilled.match(
+            uploadResultAction,
+          )
+        ) {
+          // Image upload succeeded, continue with other APIs
+
+          await dispatch(
+            reduxServices.app.actions.addToast(
+              <OToast
+                toastColor="success"
+                toastMessage="Project notes created successfully"
+              />,
+            ),
+          )
+          setNotesLink('')
+          setClearFile('')
+          dispatch(
+            reduxServices.projectNotes.getProjectNotesTimeLine(projectId),
+          )
+        } else {
+          // Image upload failed, handle the error
+          // You can add appropriate error handling code here
+        }
+      } else {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Project notes created successfully"
+            />,
+          ),
+        )
+        setNotesLink('')
+        setClearFile('')
+        dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
+      }
     }
   }
 
