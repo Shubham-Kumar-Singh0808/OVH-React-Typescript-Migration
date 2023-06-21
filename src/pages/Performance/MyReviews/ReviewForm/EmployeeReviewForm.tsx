@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { CFormText, CRow, CCol } from '@coreui/react-pro'
+import { CRow, CCol } from '@coreui/react-pro'
 import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
 import EmployeeDiscussionInput from './ReviewFormEmployeeComponents/EmployeeDiscussionInput'
@@ -135,11 +135,13 @@ const EmployeeReviewForm = (): JSX.Element => {
               <ReviewFormButtons />
             </CCol>
           </CRow>
-          <hr />
           {
             // only visible if it was closed by hr department
             myReviewFormStatus === MyReviewFormStatus.closed && (
-              <ReviewFormClosedDetails />
+              <>
+                <hr />
+                <ReviewFormClosedDetails />
+              </>
             )
           }
           {
@@ -192,7 +194,9 @@ const EmployeeReviewForm = (): JSX.Element => {
       )}
       {apiError === 406 && isLoading === ApiLoadingState.failed && (
         // user is not allowed as he/she is on probationary period - 406 == not acceptable
-        <CFormText className={TextDanger}>Probationay Error</CFormText>
+        <h4 className={TextDanger}>
+          You are in probationary period.So you don&apos;t have access.
+        </h4>
       )}
     </>
   )

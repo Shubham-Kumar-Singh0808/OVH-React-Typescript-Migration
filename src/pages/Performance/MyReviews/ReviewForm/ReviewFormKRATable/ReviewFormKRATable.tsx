@@ -40,7 +40,7 @@ const ReviewFormKRATable = ({
           <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
-      <CTableBody color="secondary">
+      <CTableBody>
         {appraisalForm.kra?.map((kraItem, kraItemIndex) => (
           <ReviewFormKRATableRow
             kra={kraItem}

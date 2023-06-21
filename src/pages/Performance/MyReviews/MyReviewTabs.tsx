@@ -45,14 +45,6 @@ const MyReviewTabs = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (
-      employeeRole !== 'admin' &&
-      employeeRole !== 'HR' &&
-      activeTabsKey === 2
-    ) {
-      setActiveTabsKey(0)
-    }
-
     const changeTabContent = (tabKey: number): JSX.Element => {
       const showTabContent: ShowTabContentType<JSX.Element> = {
         1: <EmployeeReviewForm />,
@@ -63,6 +55,9 @@ const MyReviewTabs = (): JSX.Element => {
 
     setActiveTabsContent(changeTabContent(activeTabsKey))
   }, [activeTabsKey, employeeRole])
+
+  console.log(activeTabsKey)
+  console.log(activeTabsContent)
 
   return (
     <>
