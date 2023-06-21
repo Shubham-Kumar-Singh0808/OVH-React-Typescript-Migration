@@ -8,12 +8,10 @@ import {
   CFormSelect,
   CFormCheck,
   CFormTextarea,
-  CForm,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { SyntheticEvent } from 'react-draft-wysiwyg'
-import { useHistory } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -22,7 +20,6 @@ import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { showIsRequired } from '../../../utils/helper'
 import { dateFormat } from '../../../constant/DateFormat'
 import OToast from '../../../components/ReusableComponent/OToast'
-import CandidateOfferApi from '../../../middleware/api/Recruitment/CandidateOffer/candidateOfferApi'
 
 const CandidateOffer = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -41,7 +38,11 @@ const CandidateOffer = (): JSX.Element => {
   const [sendMessageToCandiDate, setSendMessageToCandiDate] =
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
-
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
+  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
+    File | undefined
+  >(undefined)
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
@@ -84,11 +85,6 @@ const CandidateOffer = (): JSX.Element => {
     (item) => item.departmentId === candidateDepartment,
   )
 
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
-  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
-    File | undefined
-  >(undefined)
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
@@ -119,7 +115,6 @@ const CandidateOffer = (): JSX.Element => {
       setIsUploadBtnEnabled(false)
     }
   })
-  // ------------------------------------------------------------
 
   useEffect(() => {
     if (
