@@ -442,9 +442,18 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+<<<<<<< HEAD
 const InterviewStatusReport = React.lazy(
   () =>
     import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+=======
+const AddNewCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
+)
+const UpComingJoinList = React.lazy(
+  () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
+>>>>>>> develop
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1056,9 +1065,20 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
+<<<<<<< HEAD
     path: '/interviewstatusReport',
     name: 'Interview Status Report',
     component: InterviewStatusReport,
+=======
+    path: '/addNewCandidate',
+    name: 'Add New Candidate',
+    component: AddNewCandidate,
+  },
+  {
+    path: '/upcomingjoinlist',
+    name: 'UpComing Join List',
+    component: UpComingJoinList,
+>>>>>>> develop
   },
 ]
 export default routes
