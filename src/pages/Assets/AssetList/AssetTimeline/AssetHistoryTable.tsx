@@ -119,10 +119,10 @@ const AssetHistoryTable = (): JSX.Element => {
       </CTable>
       <CRow>
         <CCol xs={4}>
-          <strong>
+          <strong data-testid="records">
             {assetHistory?.length
               ? `Total Records: ${assetHistory?.length}`
-              : `No Records Found`}
+              : `No Records Found...`}
           </strong>
         </CCol>
         <CCol xs={3}>
