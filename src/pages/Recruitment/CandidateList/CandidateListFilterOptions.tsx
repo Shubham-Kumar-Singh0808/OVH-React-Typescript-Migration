@@ -107,7 +107,7 @@ const CandidateListFilterOptions = ({
                   setSelectCountry(e.target.value)
                 }}
               >
-                <option value={''}>Select Reschedule Status</option>
+                <option value={''}>Select Country</option>
                 {getAllEmpCountries.length > 0 &&
                   getAllEmpCountries?.map((country, index) => (
                     <option key={index} value={country.id}>

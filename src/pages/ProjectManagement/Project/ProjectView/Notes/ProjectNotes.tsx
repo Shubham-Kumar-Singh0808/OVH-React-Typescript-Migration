@@ -104,7 +104,7 @@ const ProjectNotes = (): JSX.Element => {
           // You can add appropriate error handling code here
         }
       } else {
-        await dispatch(
+        dispatch(
           reduxServices.app.actions.addToast(
             <OToast
               toastColor="success"

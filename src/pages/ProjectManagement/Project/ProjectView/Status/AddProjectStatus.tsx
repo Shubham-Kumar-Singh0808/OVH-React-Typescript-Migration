@@ -169,6 +169,21 @@ const AddProjectStatus = ({
       setIsAddButtonEnabled(false)
     }
   }, [currentWeekDate, currentWeekStatus, nextWeekDate, nextWeekStatus])
+
+  const fromDateValue = nextWeekDate
+    ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
+  const toDateValue = currentWeekDate
+    ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
   return (
     <>
       {!loading ? (
@@ -202,18 +217,7 @@ const AddProjectStatus = ({
                   dateFormat="dd/mm/yy"
                   placeholderText="dd/mm/yyyy"
                   name="fromDate"
-                  value={
-                    currentWeekDate
-                      ? new Date(currentWeekDate).toLocaleDateString(
-                          deviceLocale,
-                          {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          },
-                        )
-                      : ''
-                  }
+                  value={toDateValue}
                   onChange={(date: Date) =>
                     setCurrentWeekDate(moment(date).format(commonFormatDate))
                   }
@@ -257,18 +261,7 @@ const AddProjectStatus = ({
                   dateFormat="dd/mm/yy"
                   placeholderText="dd/mm/yyyy"
                   name="fromDate"
-                  value={
-                    nextWeekDate
-                      ? new Date(nextWeekDate).toLocaleDateString(
-                          deviceLocale,
-                          {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          },
-                        )
-                      : ''
-                  }
+                  value={fromDateValue}
                   onChange={(date: Date) =>
                     setNextWeekDate(moment(date).format(commonFormatDate))
                   }
