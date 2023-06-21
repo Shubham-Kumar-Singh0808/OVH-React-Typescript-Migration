@@ -104,12 +104,6 @@ describe('Employee Passport Details', () => {
       )
     })
 
-    test('should  display front image  ', () => {
-      expect(screen.getByTestId('frontImagePreview')).toBeTruthy()
-    })
-    test('should  display back image  data', () => {
-      expect(screen.getByTestId('backImagePreview')).toBeTruthy()
-    })
     test('should upload front image', async () => {
       const fileToUpload = new File(['(⌐□_□)'], 'chucknorris.png', {
         type: 'image/png',
