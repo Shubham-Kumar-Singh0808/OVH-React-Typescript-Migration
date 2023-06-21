@@ -14,7 +14,10 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { CompaniesListProps } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
+import {
+  CompaniesListProps,
+  CompaniesListResponse,
+} from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 
 const CompaniesListTable = ({
   paginationRange,
@@ -46,7 +49,25 @@ const CompaniesListTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-
+  const candidatesCountHandler = (data: CompaniesListResponse) => {
+    dispatch(
+      reduxServices.companiesList.getAllCandidatesInfo({
+        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (currentPage - 1),
+        companyName: data.companyNmae,
+        selectionTechnology: '',
+      }),
+    )
+  }
+  const employeesCountHandler = (data: CompaniesListResponse) => {
+    dispatch(
+      reduxServices.companiesList.getAllEmployeesInfo({
+        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (currentPage - 1),
+        companyName: data.companyNmae,
+      }),
+    )
+  }
   return (
     <>
       <CTable
@@ -75,6 +96,7 @@ const CompaniesListTable = ({
                     <Link
                       to={`/candidatesInfo/${data.companyNmae}`}
                       className="cursor-pointer"
+                      onClick={() => candidatesCountHandler(data)}
                     >
                       {data.candidatesCount || 'N/A'}
                     </Link>
@@ -83,6 +105,7 @@ const CompaniesListTable = ({
                     <Link
                       to={`/employeesInfo/${data.companyNmae}`}
                       className="cursor-pointer"
+                      onClick={() => employeesCountHandler(data)}
                     >
                       {data.employeesCount || '0'}
                     </Link>

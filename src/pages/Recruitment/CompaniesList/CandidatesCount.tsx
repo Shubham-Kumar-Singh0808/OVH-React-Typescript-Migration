@@ -32,17 +32,6 @@ const CandidatesCount = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.companiesList.getAllCandidatesInfo({
-        endIndex: pageSize * currentPage,
-        startIndex: pageSize * (currentPage - 1),
-        companyName: '',
-        selectionTechnology: '',
-      }),
-    )
-  }, [dispatch, pageSize, currentPage])
-
   return (
     <OCard
       className="mb-4 myprofile-wrapper"

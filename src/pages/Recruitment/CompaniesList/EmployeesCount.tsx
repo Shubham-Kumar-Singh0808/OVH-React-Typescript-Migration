@@ -32,16 +32,6 @@ const EmployeesCount = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.companiesList.getAllEmployeesInfo({
-        endIndex: pageSize * currentPage,
-        startIndex: pageSize * (currentPage - 1),
-        companyName: '',
-      }),
-    )
-  }, [dispatch, pageSize, currentPage])
-
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
