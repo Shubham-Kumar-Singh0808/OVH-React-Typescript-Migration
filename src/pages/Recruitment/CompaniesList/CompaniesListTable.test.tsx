@@ -5,10 +5,9 @@ import CompaniesListTable from './CompaniesListTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
-  country,
-  CandidateLists,
-} from '../../../types/Recruitment/CandidateList/CandidateListTypes'
-import { mockSearchScheduledCandidate } from '../../../test/data/candidateListData'
+  CandidatesInfoList,
+  CompaniesListResponse,
+} from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 
 const mockSetData = jest.fn()
 
@@ -24,14 +23,13 @@ describe('candidate List without data', () => {
       />,
       {
         preloadedState: {
-          candidateList: {
+          companiesList: {
             isLoading: ApiLoadingState.succeeded,
             listSize: 0,
-            candidateDetails: {} as CandidateLists,
-            allCandidateDetails: mockSearchScheduledCandidate.list,
-            allCountryDetails: {} as country,
-            empCountries: [],
-            getAllTechnology: [],
+            companiesListResponseDetails: {} as CompaniesListResponse,
+            companiesListData: [],
+            CandidatesInfoListResponseDetails: {} as CandidatesInfoList,
+            CandidatesInfoListData: [],
           },
         },
       },
@@ -53,11 +51,5 @@ describe('candidate List without data', () => {
       expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
-  })
-
-  test('should render  component with data', () => {
-    expect(screen.getByText('vinesh.merugu@gmail.com')).toBeInTheDocument()
-    expect(screen.getByText('sunnymaish2212@gmail.com')).toBeInTheDocument()
-    expect(screen.getByText('Dell Boomi developer')).toBeInTheDocument()
   })
 })
