@@ -15,7 +15,7 @@ import { reduxServices } from '../../../../../reducers/reduxServices'
 
 // this component renders the buttons that are on top right for managers
 
-const ManagerAppraisalTopButtons = () => {
+const ManagerAppraisalTopButtons = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const individualReviewListFeatures = useTypedSelector((state) =>
     state.userAccessToFeatures.userAccessToFeatures.filter(
