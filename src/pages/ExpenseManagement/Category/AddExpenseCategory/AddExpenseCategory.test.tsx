@@ -8,7 +8,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
 import { mockExpenseCategory } from '../../../../test/data/expenseCategoryData'
 
-describe('Add Expense Category without data', () => {
+describe('Add Expense Category List without data', () => {
   beforeEach(() => {
     render(<AddExpenseCategory />, {
       preloadedState: {
@@ -25,7 +25,7 @@ describe('Add Expense Category without data', () => {
     })
   })
   afterEach(cleanup)
-  test('should render Add Expense Category List component with out data', () => {
+  test('should render addTracker List component with out crashing', () => {
     expect(screen.getByText('Category:')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
     expect(screen.getByRole('button', { name: 'Clear' })).toBeInTheDocument()

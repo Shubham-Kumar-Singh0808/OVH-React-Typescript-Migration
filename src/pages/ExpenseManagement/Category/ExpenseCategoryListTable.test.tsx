@@ -30,7 +30,6 @@ describe('Expense Category List Table with data', () => {
     expect(
       screen.getByText('test adding exactly btn fyhrfh'),
     ).toBeInTheDocument()
-    // expect(screen.getByText('test adding exactly btn')).toBeInTheDocument()
     expect(screen.getByText('test adding exactly enter')).toBeInTheDocument()
     expect(screen.getByText('test adding exactly')).toBeInTheDocument()
     expect(screen.getByText('kytsaoduyosdafbdsfb')).toBeInTheDocument()
@@ -87,7 +86,7 @@ describe('Expense Category List Table with data', () => {
       await fireEvent.click(saveButtonElement)
 
       expect(screen.getByTestId(`categoryName1`)).toHaveValue(
-        'test adding exactly btntesting',
+        'test adding exactly btn2testing2testing2testing2',
       )
     })
   })
@@ -126,7 +125,7 @@ describe('Expense Category List Table with data', () => {
   })
 })
 
-describe('Room List without data', () => {
+describe('Expense Category without data', () => {
   beforeEach(() => {
     render(<ExpenseCategoryListTable />)
   })
