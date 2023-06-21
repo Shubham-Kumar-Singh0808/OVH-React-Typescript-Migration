@@ -96,7 +96,7 @@ const EventListFilterOptions = ({
             )
           }}
         >
-          {selectDateOptions.map((opt, index) => (
+          {selectDateOptions?.map((opt, index) => (
             <option key={index} value={opt.value}>
               {opt.label}
             </option>

@@ -6,17 +6,28 @@ import MyReviewTabs from './MyReviewTabs'
 import EmployeeRatingDetails from './RatingDetailsTab/EmployeeRatingDetails'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
-import { mockReviewPageData } from '../../../test/data/myReviewData'
+import {
+  mockInitialEmployeeAppraisalForm,
+  mockPerformanceRatings,
+  mockReviewPageData,
+} from '../../../test/data/myReviewData'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import { initialMyReviewModal } from '../../../reducers/Performance/MyReview/myReviewSliceConstants'
 
 describe('My Profile Tabs Component Testing', () => {
   test('should render MyReview Tabs component with out crashing', async () => {
     render(<MyReviewTabs />, {
       preloadedState: {
+        myReview: {
+          isLoading: ApiLoadingState.succeeded,
+          pageDetails: mockReviewPageData,
+          error: null,
+          appraisalForm: mockInitialEmployeeAppraisalForm,
+          modal: initialMyReviewModal,
+          performanceRatings: mockPerformanceRatings,
+        },
         authentication: {
           authenticatedUser: { role: 'admin' },
-        },
-        myReview: {
-          pageDetails: mockReviewPageData,
         },
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,

@@ -69,14 +69,14 @@ describe('Expense Sub-Category List Table with data', () => {
   })
 
   test('should validate input data after edit button click', async () => {
-    const editButtonElement = screen.getByTestId(`btn-subCategoryEdit3`)
+    const editButtonElement = screen.getByTestId(`btn-subCategoryEdit4`)
     await fireEvent.click(editButtonElement)
     await waitFor(async () => {
-      userEvent.type(screen.getByTestId(`subCategoryId3`), 'testing2')
-      const saveButtonElement = screen.getByTestId(`sh-save-btn3`)
+      userEvent.type(screen.getByTestId(`subCategoryId4`), 'testing2')
+      const saveButtonElement = screen.getByTestId(`sh-save-btn4`)
       await fireEvent.click(saveButtonElement)
 
-      expect(screen.getByTestId(`subCategoryId3`)).toHaveValue(
+      expect(screen.getByTestId(`subCategoryId4`)).toHaveValue(
         'Meals Cardtestingtesting',
       )
     })
@@ -134,7 +134,7 @@ describe('Expense Sub-Category List Table with data', () => {
   })
 })
 
-describe('Room List without data', () => {
+describe('Expense SUb-Category without data', () => {
   beforeEach(() => {
     render(<ExpenseSubCategoryListTable />)
   })
