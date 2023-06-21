@@ -56,9 +56,6 @@ const MyReviewTabs = (): JSX.Element => {
     setActiveTabsContent(changeTabContent(activeTabsKey))
   }, [activeTabsKey, employeeRole])
 
-  console.log(activeTabsKey)
-  console.log(activeTabsContent)
-
   return (
     <>
       <CNav className="inline-tabs-nav mt-4" variant="tabs" role="tablist">
