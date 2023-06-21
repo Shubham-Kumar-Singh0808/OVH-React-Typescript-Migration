@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import EditAssetList from './EditAssetList'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import {
   GetAllVendorDetails,
   VendorDetails,
@@ -123,22 +123,35 @@ describe('Vendor Details without data', () => {
     userEvent.type(vendorNameInput, '')
     expect(vendorNameInput).toHaveValue('')
   })
-  test('should render on every input of asset type', () => {
-    const AssetNameInput = screen.getByPlaceholderText('Select Asset Type')
-    userEvent.type(AssetNameInput, '')
-    expect(AssetNameInput).toHaveValue('')
-  })
-  test('should render on every input of product type', () => {
-    const roomNameInput = screen.getByPlaceholderText('Select Product Type')
-    userEvent.type(roomNameInput, '')
-    expect(roomNameInput).toHaveValue('')
-  })
-  test('should render on every input of manufacturer Name', () => {
-    const roomNameInput = screen.getByPlaceholderText(
-      'Select Manufacturer Name',
-    )
-    userEvent.type(roomNameInput, '')
-    expect(roomNameInput).toHaveValue('')
+  // test('should render on every input of asset type', () => {
+  //   const AssetNameInput = screen.getByPlaceholderText('Select Asset Type')
+  //   userEvent.type(AssetNameInput, '')
+  //   expect(AssetNameInput).toHaveValue('')
+  // })
+  // test('should render on every input of product type', () => {
+  //   const productNameInput = screen.getByPlaceholderText('Select Product Type')
+  //   userEvent.type(productNameInput, '')
+  //   expect(productNameInput).toHaveValue('')
+  // })
+  // test('should render on every input of manufacturer Name', () => {
+  //   const manufactureNameInput = screen.getByPlaceholderText(
+  //     'Select Manufacturer Name',
+  //   )
+  //   userEvent.type(manufactureNameInput, '')
+  //   expect(manufactureNameInput).toHaveValue('')
+  // })
+  test('should enable add button after selecting form option', () => {
+    const assetTypeSelect = screen.getByTestId('assetType')
+    userEvent.selectOptions(assetTypeSelect, '')
+    expect(assetTypeSelect).toHaveValue('')
+
+    const productTypeSelect = screen.getByTestId('productType')
+    userEvent.selectOptions(productTypeSelect, '')
+    expect(productTypeSelect).toHaveValue('')
+
+    const manufacturerSelect = screen.getByTestId('manufacturer-Name')
+    userEvent.selectOptions(manufacturerSelect, '')
+    expect(manufacturerSelect).toHaveValue('')
   })
   test('should render on every input of Asset status', () => {
     const roomNameInput = screen.getByPlaceholderText('Select Status')
@@ -165,5 +178,53 @@ describe('Vendor Details without data', () => {
 
     const amount = screen.getByTestId('amount')
     userEvent.type(amount, '4536')
+  })
+  // test('should render from date picker', () => {
+  //   const dateofPurchase = screen.findByTestId('datePurchase')
+  //   expect(dateofPurchase).toBeTruthy()
+  // })
+  // test('should render to date picker', () => {
+  //   const receivedDate = screen.findByTestId('receivedDate')
+  //   expect(receivedDate).toBeTruthy()
+  // })
+  // test('should render to Warranty Start date picker', () => {
+  //   const warrantyStartDate = screen.findByTestId('warrantyStartDate')
+  //   expect(warrantyStartDate).toBeTruthy()
+  // })
+  // test('should render to Warranty End Date  picker', () => {
+  //   const warrantyEndDate = screen.findByTestId('receivedDate')
+  //   expect(warrantyEndDate).toBeTruthy()
+  // })
+  test('should render on Date Of Purchase ', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '07 Sep, 2022' },
+      }),
+    )
+  })
+  test('should render on Warranty Start Date', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '18 June, 2023' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '25 July, 2023' },
+      }),
+    )
   })
 })

@@ -36,7 +36,7 @@ const updateAddAsset = async (
 }
 
 const checkAssetNumberExixts = async (
-  AssetNumber: number,
+  AssetNumber: string,
 ): Promise<boolean> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: GetAddAssetListConfig.checkAssetNumberExixts,

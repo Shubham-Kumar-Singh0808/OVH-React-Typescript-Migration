@@ -77,9 +77,9 @@ const EditAddAssetList = ({
   const [assetType, setAssetType] = useState<string>(editAddAssetList.assetType)
   const [isChecked, setIsChecked] = useState<boolean>()
 
-  console.log(vendorName + 'vendorName')
-  console.log(editAddAssetList.countryId)
-  console.log(country)
+  // console.log(vendorName + 'vendorName')
+  // console.log(editAddAssetList.countryId)
+  // console.log(country)
   useEffect(() => {
     if (editAddAssetList) {
       setCountry(editAddAssetList.countryId as number)
@@ -88,7 +88,7 @@ const EditAddAssetList = ({
       setAssetStatus(editAddAssetList.status)
       setProductType(editAddAssetList.productId)
     }
-    dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
+    //dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
   }, [editAddAssetList])
   const formLabelProps = {
     htmlFor: 'editVendorDetails',
@@ -104,9 +104,6 @@ const EditAddAssetList = ({
   // const departments = useTypedSelector(
   //   reduxServices.addNewVendor.selectors.department,
   // )
-
-  // const textWhite = 'text-white'
-  // const textDanger = 'text-danger'
 
   const onChangeInputHandler = (
     event:
@@ -385,7 +382,7 @@ const EditAddAssetList = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="manufacturerName"
+              data-testid="manufacturer-Name"
               aria-label="Default select example"
               size="sm"
               id="manufacturerName"
@@ -415,7 +412,7 @@ const EditAddAssetList = ({
               <CCol sm={1} className="mt-2" key={index}>
                 <CFormCheck
                   type="radio"
-                  data-testid={`yes-radio`}
+                  data-testid="yes-radio"
                   hitArea="full"
                   label={item.productSpecification}
                   inline
@@ -533,6 +530,7 @@ const EditAddAssetList = ({
           <CCol sm={3}>
             <ReactDatePicker
               id="datePurchase"
+              data-testid="datePurchase"
               className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
@@ -558,6 +556,7 @@ const EditAddAssetList = ({
           <CCol sm={3}>
             <ReactDatePicker
               id="receivedDate"
+              data-testid="receivedDate"
               className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown
@@ -582,6 +581,7 @@ const EditAddAssetList = ({
           <CCol sm={3}>
             <ReactDatePicker
               id="warrantyStartDate"
+              data-testid="warrantyStartDate"
               className="form-control form-control-sm sh-date-picker"
               showMonthDropdown
               showYearDropdown

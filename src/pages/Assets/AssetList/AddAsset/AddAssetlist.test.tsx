@@ -3,7 +3,7 @@
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddAssetList from './AddAssetList'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { GetAllVendorDetails } from '../../../../types/Assets/VendorList/vendorListTypes'
 import { AddEditSliceState } from '../../../../types/Assets/AssetList/addEditListTypes'
@@ -100,6 +100,38 @@ describe('Add Asset list  Details without data', () => {
     const roomNameInput = screen.getByPlaceholderText('Select Country')
     userEvent.type(roomNameInput, '')
     expect(roomNameInput).toHaveValue('')
+  })
+  test('should render on Date Of Purchase ', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '30 Aug, 2022' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '07 Sep, 2022' },
+      }),
+    )
+  })
+  test('should render on Warranty Start Date', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '18 June, 2023' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '25 July, 2023' },
+      }),
+    )
   })
   test('should able to render every element', () => {
     const poNumber = screen.getByTestId('poNumber')

@@ -18,8 +18,6 @@ export type AssetTypeAddList = {
   vendorId: string
   warrantyEndDate: string
   warrantyStartDate: string
-  // otherNumber: string
-  // productSpecification: string
 }
 
 export type AddEditSliceState = {
@@ -73,20 +71,22 @@ export type typeChangeSpecificationsProps = {
   productId: number
 }
 
-export type typeChangeSpecificationsList = {
-  id: number
-  productId: number
-  productName: string
-  manufacturerId: number
-  manufacturerName: string
-  productSpecification: string
-  assetTypeId: number
-  assetType: string
-  roleId: null
-  departmentId: null
-  departmentName: null
-  createdBy: string
-  updatedBy: string
-  createdDate: string
-  updatedDate: string
-}
+export type typeChangeSpecificationsList = [
+  {
+    id: number
+    productId: number
+    productName: string
+    manufacturerId: number
+    manufacturerName: string
+    productSpecification: string
+    assetTypeId: number
+    assetType: string
+    roleId: null
+    departmentId: null
+    departmentName: null
+    createdBy: string
+    updatedBy: string
+    createdDate: string
+    updatedDate: string
+  },
+]

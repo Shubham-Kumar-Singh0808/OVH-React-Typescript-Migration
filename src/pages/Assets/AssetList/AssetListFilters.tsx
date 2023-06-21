@@ -354,7 +354,7 @@ const AssetListFilters = ({
               data-testid="Add-export-button"
             >
               <i className="fa fa-plus me-1"></i>
-              Add
+              Export
             </CButton>
           </CCol>
           {assets?.length > 0 && (

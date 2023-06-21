@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import {
   AddEditSliceState,
@@ -37,7 +37,7 @@ const updateAddAsset = createAsyncThunk(
 )
 const checkAssetNumberExist = createAsyncThunk(
   'newEventSlice/checkAssetNumberExixts',
-  async (AssetNumber: number, thunkApi) => {
+  async (AssetNumber: string, thunkApi) => {
     try {
       return await AddAssetApi.checkAssetNumberExixts(AssetNumber)
     } catch (error) {
@@ -70,16 +70,22 @@ const AddAssetListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAddAssetList.pending, (state) => {
-        state.isLoading = ApiLoadingState.loading
-      })
       .addCase(typeChangeSpecifications.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.typeChangeSpecificationsData = action.payload
       })
-      .addCase(getAddAssetList.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(getAddAssetList.pending, checkAssetNumberExist.pending),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
+      .addMatcher(
+        isAnyOf(getAddAssetList.fulfilled, checkAssetNumberExist.fulfilled),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
   },
 })
 

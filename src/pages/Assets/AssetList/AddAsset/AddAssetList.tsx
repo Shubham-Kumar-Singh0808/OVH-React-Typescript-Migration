@@ -21,8 +21,6 @@ import { dateFormat } from '../../../../constant/DateFormat'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
-import { CheckedQuestionsOptions } from '../../../../types/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentFormTypes'
-
 // eslint-disable-next-line import/named
 
 const AddAssetList = ({
@@ -38,22 +36,21 @@ const AddAssetList = ({
   const [productType, setProductType] = useState<string>()
   const [manufacturerName, setManufacturerName] = useState<string>()
   const [assetNumber, setAssetNumber] = useState<string>('RBT')
-  const [assetNumberExist, setAssetNumberExist] = useState<string>('RBT')
   const [licenseNumber, setLicenseNumber] = useState<string>()
   const [invoiceNumber, setInvoiceNumber] = useState<string>()
-  const [amount, setAmount] = useState<string>()
+  const [assetAmount, setAssetAmount] = useState<string>()
   const [datePurchase, setDateOfPurchase] = useState<string>()
   const [receivedDate, setReceivedDate] = useState<string>()
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>()
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>()
   const [productSpecification, setProductSpecification] = useState<boolean>()
-
+  const [isViewProductSpecification, setIsViewProductSpecification] =
+    useState<boolean>(false)
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
   const [isDateError, setIsDateError] = useState(false)
   const [isError, setIsError] = useState(false)
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
-  const [isChecked, setIsChecked] = useState<string>()
   const [addComment, setAddComment] = useState<string>('')
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
   useEffect(() => {
@@ -64,7 +61,7 @@ const AddAssetList = ({
       productType &&
       manufacturerName &&
       invoiceNumber &&
-      amount &&
+      assetAmount &&
       datePurchase &&
       receivedDate &&
       warrantyStartDate &&
@@ -83,7 +80,7 @@ const AddAssetList = ({
     productType,
     manufacturerName,
     invoiceNumber,
-    amount,
+    assetAmount,
     datePurchase,
     receivedDate,
     warrantyStartDate,
@@ -129,7 +126,7 @@ const AddAssetList = ({
     setAssetNumber('')
     setLicenseNumber('')
     setInvoiceNumber('')
-    setAmount('')
+    setAssetAmount('')
     setAssetStatus('')
     setCountry('')
     setAddComment('')
@@ -144,30 +141,22 @@ const AddAssetList = ({
       | React.ChangeEvent<HTMLInputElement>,
   ) => {
     const { name, value } = event.target
-    if (name === 'poNumber') {
+
+    if (name === 'assetNumber') {
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setAssetNumber(newValue)
+    } else if (name === 'poNumber') {
       const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setPoNumber(newValue)
-    } else if (name === 'vendorName') {
-      const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')
-      setVendorName(targetValue)
-    } else if (name === 'assetType') {
-      // Handle 'assetType' input
-    } else if (name === 'productType') {
-      // Handle 'productType' input
-    } else if (name === 'manufacturerName') {
-      // Handle 'manufacturerName' input
-    } else if (name === 'assetNumber') {
-      // Handle 'assetNumber' input
     } else if (name === 'licenseNumber') {
-      // Handle 'licenseNumber' input
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setLicenseNumber(newValue)
     } else if (name === 'invoiceNumber') {
-      // Handle 'invoiceNumber' input
-    } else if (name === 'amount') {
-      // Handle 'amount' input
-    } else if (name === 'assetStatus') {
-      // Handle 'assetStatus' input
-    } else if (name === 'country') {
-      // Handle 'country' input
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
+      setInvoiceNumber(newValue)
+    } else if (name === 'assetAmount') {
+      const newValue = value.replace(/\D/g, '').replace(/^0+/, '')
+      setAssetAmount(newValue)
     }
   }
 
@@ -196,9 +185,11 @@ const AddAssetList = ({
   const successToast = (
     <OToast toastMessage="Asset list Added Successfully" toastColor="success" />
   )
+
   useEffect(() => {
     dispatch(reduxServices.country.getAllCountries())
   }, [dispatch])
+
   useEffect(() => {
     if (assetType) {
       dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(assetType)))
@@ -222,35 +213,6 @@ const AddAssetList = ({
     reduxServices.addAssetList.selectors.typeChange,
   )
 
-  const handlerChangeProductSpecification = (
-    event:
-      | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { name, value } = event.target
-    if (name === 'isChecked') {
-      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
-      setIsChecked(newValue)
-    }
-  }
-
-  // const handlerAssetNumber = (
-  //   event:
-  //     | React.ChangeEvent<HTMLSelectElement>
-  //     | React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   const { name, value } = event.target
-  //   if (name === 'assetNumber') {
-  //     const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
-  //     setAssetNumber(newValue)
-  //   }
-  //   if (AssetNumberExists(value.trim())) {
-  //     setAssetNumber(value.trim())
-  //   } else {
-  //     setAssetNumber('')
-  //   }
-  // }
-
   useEffect(() => {
     if (assetType && productType && manufacturerName) {
       setProductSpecification(true)
@@ -270,12 +232,8 @@ const AddAssetList = ({
   }, [dispatch, manufacturerName])
 
   const handleAddNewAssetList = async () => {
-    // const addManuFactureListResultAction = await dispatch(
-    //   reduxServices.addAssetList.checkAssetNumberExist(Number(assetNumber)),
-    // )
-    // console.log(addManuFactureListResultAction.type)
     const isAddAssetLIst = {
-      amount: amount as string,
+      amount: assetAmount as string,
       assetNumber: assetNumber as string,
       assetTypeId: assetType as string,
       countryId: Number(country),
@@ -297,7 +255,6 @@ const AddAssetList = ({
     const saveAssetDetailsResultAction = await dispatch(
       reduxServices.addAssetList.getAddAssetList(isAddAssetLIst),
     )
-
     if (
       reduxServices.addAssetList.getAddAssetList.fulfilled.match(
         saveAssetDetailsResultAction,
@@ -306,6 +263,33 @@ const AddAssetList = ({
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
+  }
+  const onClickbtn = async () => {
+    if (assetNumber !== '') {
+      const result = await dispatch(
+        reduxServices.addAssetList.checkAssetNumberExist(assetNumber),
+      )
+      if (
+        reduxServices.addAssetList.checkAssetNumberExist.fulfilled.match(
+          result,
+        ) &&
+        result.payload === true
+      ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="danger"
+              toastMessage="Asset Number Id  Already Exists, Please Try another !!!"
+            />,
+          ),
+        )
+        setAssetNumber('')
+      }
+    }
+  }
+  const handleClickconfirmButton = () => {
+    handleAddNewAssetList()
+    onClickbtn()
   }
   const sortedProductTypeDetails = useMemo(() => {
     if (assetTypeList) {
@@ -317,6 +301,7 @@ const AddAssetList = ({
     }
     return []
   }, [assetTypeList])
+
   return (
     <>
       <OCard
@@ -491,6 +476,7 @@ const AddAssetList = ({
                   hitArea="full"
                   label={item.productSpecification}
                   inline
+                  //disabled={!isViewBtnEnabled}
                   name="isChecked"
                   // value={isChecked}
                   // onChange={(e) => setIsChecked(e.target.checked)}
@@ -518,8 +504,8 @@ const AddAssetList = ({
               name="assetNumber"
               autoComplete="off"
               value={assetNumber}
-              // onChange={(e) => setAssetNumber(e.target.value)}
-              // onChange={}
+              onChange={handledInputChange}
+              onClick={onClickbtn}
             />
           </CCol>
         </CRow>
@@ -540,7 +526,7 @@ const AddAssetList = ({
               name="licenseNumber"
               placeholder="RBT"
               value={licenseNumber}
-              onChange={(e) => setLicenseNumber(e.target.value)}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -562,7 +548,8 @@ const AddAssetList = ({
               name="invoiceNumber"
               autoComplete="off"
               placeholder="Invoice Number"
-              onChange={(e) => setInvoiceNumber(e.target.value)}
+              value={invoiceNumber}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -572,19 +559,20 @@ const AddAssetList = ({
             className="col-sm-3 col-form-label text-end"
           >
             Amount:
-            <span className={amount ? TextWhite : TextDanger}>*</span>
+            <span className={assetAmount ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
               className="mb-1"
-              data-testid="amount"
+              data-testid="assetAmount"
               type="text"
-              id="state"
+              id="assetAmount"
               size="sm"
-              name="amount"
+              name="assetAmount"
               autoComplete="off"
               placeholder="Amount"
-              onChange={(e) => setAmount(e.target.value)}
+              value={assetAmount}
+              onChange={handledInputChange}
             />
           </CCol>
         </CRow>
@@ -608,7 +596,6 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="datePurchase"
               value={datePurchase}
-              //minDate={new Date()}
               onChange={(date: Date) => onHandleDateOfPurchase(date)}
             />
           </CCol>
@@ -633,7 +620,6 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="receivedDate"
               value={receivedDate}
-              //minDate={new Date()}
               onChange={(date: Date) => onHandleReceivedDate(date)}
             />
             {isDateError && (
@@ -662,7 +648,6 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="warrantyStartDate"
               value={warrantyStartDate}
-              // minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyStartDate(date)}
             />
           </CCol>
@@ -686,7 +671,6 @@ const AddAssetList = ({
               placeholderText="dd/mm/yyyy"
               name="warrantyEndDate"
               value={warrantyEndDate}
-              //minDate={new Date()}
               onChange={(date: Date) => onHandleWarrantyEndDate(date)}
             />
             {isError && (
@@ -786,7 +770,7 @@ const AddAssetList = ({
               className="btn-ovh me-1 text-white"
               color="success"
               disabled={!isAddButtonEnabled}
-              onClick={handleAddNewAssetList}
+              onClick={handleClickconfirmButton}
             >
               Confirm
             </CButton>
