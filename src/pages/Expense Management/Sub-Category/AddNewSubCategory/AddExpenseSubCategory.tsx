@@ -80,11 +80,6 @@ const AddExpenseSubCategory = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.subCategoryList.getSubCategoryList())
-      dispatch(
-        reduxServices.subCategoryList.existSubCategoryList(
-          addExpenseSubCategoryobject,
-        ),
-      )
       SetExpenseCategoryName('')
       setExpenseSubCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
@@ -134,11 +129,6 @@ const AddExpenseSubCategory = (): JSX.Element => {
           isExpenseSubCategory,
         )
       ) {
-        dispatch(
-          reduxServices.subCategoryList.existSubCategoryList(
-            expenseSubCategoryObject,
-          ),
-        )
         setExpenseSubCategoryName('')
         dispatch(reduxServices.subCategoryList.getSubCategoryList())
         dispatch(reduxServices.app.actions.addToast(successToast))

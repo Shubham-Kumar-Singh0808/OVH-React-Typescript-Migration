@@ -48,23 +48,6 @@ const addSubCategoryList = async ({
   return response.data
 }
 
-const existSubCategoryList = async ({
-  categoryId,
-  subCategoryName,
-}: {
-  categoryId: number
-  subCategoryName: string
-}): Promise<SubCategoryList[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: ExpenseSubCategoryListApiConfig.checkForDuplicateSubCategory,
-    method: AllowedHttpMethods.get,
-    params: { categoryId, subCategoryName },
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const editSubCategoryList = async (
   subCategoryId: number,
 ): Promise<SubCategoryList> => {
@@ -108,7 +91,6 @@ const subCategoryListApi = {
   getCategoryList,
   getSubCategoryList,
   addSubCategoryList,
-  existSubCategoryList,
   editSubCategoryList,
   updateSubCategoryList,
   deleteSubCategoryList,

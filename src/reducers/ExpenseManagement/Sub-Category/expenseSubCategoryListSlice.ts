@@ -58,30 +58,6 @@ const addSubCategoryList = createAsyncThunk(
   },
 )
 
-const existSubCategoryList = createAsyncThunk(
-  '/ExpenseManagement/existSubCategoryList',
-  async (
-    {
-      categoryId,
-      subCategoryName,
-    }: {
-      categoryId: number
-      subCategoryName: string
-    },
-    thunkApi,
-  ) => {
-    try {
-      return await subCategoryListApi.existSubCategoryList({
-        categoryId,
-        subCategoryName,
-      })
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
 const editExpenseSubCategoryList = createAsyncThunk(
   '/ExpenseManagement/editSubCategory',
   async (categoryId: number, thunkApi) => {
@@ -144,11 +120,7 @@ const subCategoryListSlice = createSlice({
         state.expenseCategories = action.payload
       })
       .addMatcher(
-        isAnyOf(
-          getSubCategoryList.fulfilled,
-          addSubCategoryList.fulfilled,
-          existSubCategoryList.fulfilled,
-        ),
+        isAnyOf(getSubCategoryList.fulfilled, addSubCategoryList.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.subExpenseCategories = action.payload
@@ -163,7 +135,6 @@ const subCategoryListSlice = createSlice({
           getCategoryList.pending,
           getSubCategoryList.pending,
           addSubCategoryList.pending,
-          existSubCategoryList.pending,
           editExpenseSubCategoryList.pending,
           updateExpenseSubCategoryList.pending,
           deleteExpenseSubCategoryList.pending,
@@ -177,7 +148,6 @@ const subCategoryListSlice = createSlice({
           getCategoryList.rejected,
           getSubCategoryList.rejected,
           addSubCategoryList.rejected,
-          existSubCategoryList.rejected,
           editExpenseSubCategoryList.rejected,
           updateExpenseSubCategoryList.rejected,
           deleteExpenseSubCategoryList.rejected,
@@ -206,7 +176,6 @@ const subCategoryListThunk = {
   getCategoryList,
   getSubCategoryList,
   addSubCategoryList,
-  existSubCategoryList,
   editExpenseSubCategoryList,
   updateExpenseSubCategoryList,
   deleteExpenseSubCategoryList,

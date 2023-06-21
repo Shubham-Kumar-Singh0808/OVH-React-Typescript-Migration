@@ -19,7 +19,6 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 import { TextDanger } from '../../../constant/ClassName'
 import { SubCategoryList } from '../../../types/ExpenseManagement/Sub-Category/subCategoryListTypes'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { UserAccessToFeatures } from '../../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -112,7 +111,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'subCategoryName') {
-      const nameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const nameValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setEditExpenseSubCategoryDetails((prevState) => {
         return { ...prevState, ...{ [name]: nameValue } }
       })
@@ -166,12 +165,12 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
   }
 
   const onDeleteBtnClick = (
-    deleteExpenseSubCategoryId: number,
+    deleteExpenseSubCategoryIds: number,
     subCategoryName: string,
   ) => {
     setIsDeleteModalVisible(true)
     setSubCategoryName(subCategoryName)
-    setDeleteExpenseSubCategoryId(deleteExpenseSubCategoryId)
+    setDeleteExpenseSubCategoryId(deleteExpenseSubCategoryIds)
   }
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
@@ -258,9 +257,9 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                       >
                         {expenseCategoryList &&
                           expenseCategoryList?.length > 0 &&
-                          expenseCategoryList?.map((categoryNames, index) => (
+                          expenseCategoryList?.map((categoryNames, opt) => (
                             <option
-                              key={index}
+                              key={opt}
                               value={categoryNames.categoryName}
                             >
                               {categoryNames.categoryName}
@@ -312,12 +311,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                             data-testid={`sh-save-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveExpenseCategoryButtonHandler}
-                            disabled={
-                              isEditSubCategoryButtonEnabled
-                                ? isEditSubCategoryButtonEnabled &&
-                                  isEditSubCategoryNameExist.length > 0
-                                : !isEditSubCategoryButtonEnabled
-                            }
+                            disabled={!isEditSubCategoryButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"
