@@ -59,20 +59,6 @@ describe('Features of Expense Sub-Category Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if exist Sub-Categories list is pending', () => {
-      const action = {
-        type: subCategoryListService.existSubCategoryList.pending.type,
-      }
-      const state = subCategoryReducer(initialExpenseSubCategoryState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.loading,
-        expenseCategories: [],
-        subExpenseCategories: [],
-        currentPage: 0,
-        pageSize: 0,
-      })
-    })
-
     it('Should be able to set isLoading to "loading" if edit Sub-Categories list is pending', () => {
       const action = {
         type: subCategoryListService.editExpenseSubCategoryList.pending.type,
@@ -160,21 +146,6 @@ describe('Features of Expense Sub-Category Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "Success" if exist Sub-Categories list is fulfilled', () => {
-      const action = {
-        type: subCategoryListService.existSubCategoryList.fulfilled.type,
-        payload: mockExpenseSubCategoryList,
-      }
-      const state = subCategoryReducer(initialExpenseSubCategoryState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.succeeded,
-        expenseCategories: [],
-        subExpenseCategories: mockExpenseSubCategoryList,
-        currentPage: 0,
-        pageSize: 0,
-      })
-    })
-
     it('Should be able to set isLoading to "Success" if edit Sub-Categories list is fulfilled', () => {
       const action = {
         type: subCategoryListService.editExpenseSubCategoryList.fulfilled.type,
@@ -250,20 +221,6 @@ describe('Features of Expense Sub-Category Slice', () => {
     it('Should be able to set isLoading to "failed" if Add Sub-Categories list is rejected', () => {
       const action = {
         type: subCategoryListService.addSubCategoryList.rejected.type,
-      }
-      const state = subCategoryReducer(initialExpenseSubCategoryState, action)
-      expect(state).toEqual({
-        isLoading: ApiLoadingState.failed,
-        expenseCategories: [],
-        subExpenseCategories: [],
-        currentPage: 0,
-        pageSize: 0,
-      })
-    })
-
-    it('Should be able to set isLoading to "failed" if exist Sub-Categories list is rejected', () => {
-      const action = {
-        type: subCategoryListService.existSubCategoryList.rejected.type,
       }
       const state = subCategoryReducer(initialExpenseSubCategoryState, action)
       expect(state).toEqual({

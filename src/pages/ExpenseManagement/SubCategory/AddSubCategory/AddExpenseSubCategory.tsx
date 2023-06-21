@@ -80,11 +80,6 @@ const AddExpenseSubCategory = (): JSX.Element => {
       )
     ) {
       dispatch(reduxServices.subCategoryList.getSubCategoryList())
-      dispatch(
-        reduxServices.subCategoryList.existSubCategoryList(
-          addExpenseSubCategoryobject,
-        ),
-      )
       SetExpenseCategoryName('')
       setExpenseSubCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
@@ -134,11 +129,6 @@ const AddExpenseSubCategory = (): JSX.Element => {
           isExpenseSubCategory,
         )
       ) {
-        dispatch(
-          reduxServices.subCategoryList.existSubCategoryList(
-            expenseSubCategoryObject,
-          ),
-        )
         setExpenseSubCategoryName('')
         dispatch(reduxServices.subCategoryList.getSubCategoryList())
         dispatch(reduxServices.app.actions.addToast(successToast))
@@ -180,9 +170,14 @@ const AddExpenseSubCategory = (): JSX.Element => {
             value={expenseCategoryName}
           >
             <option value={''}>Select Category</option>
-            {expenseCategoryNames &&
-              expenseCategoryNames?.length > 0 &&
-              expenseCategoryNames?.map((categoryNames, index) => (
+            {expenseCategoryNames
+              .slice()
+              .sort((subCategory1, subCategory2) =>
+                subCategory1.categoryName.localeCompare(
+                  subCategory2.categoryName,
+                ),
+              )
+              ?.map((categoryNames, index) => (
                 <option key={index} value={categoryNames.id}>
                   {categoryNames.categoryName}
                 </option>

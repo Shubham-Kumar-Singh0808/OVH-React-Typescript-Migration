@@ -30,7 +30,6 @@ describe('Expense Category List Table with data', () => {
     expect(
       screen.getByText('test adding exactly btn fyhrfh'),
     ).toBeInTheDocument()
-    // expect(screen.getByText('test adding exactly btn')).toBeInTheDocument()
     expect(screen.getByText('test adding exactly enter')).toBeInTheDocument()
     expect(screen.getByText('test adding exactly')).toBeInTheDocument()
     expect(screen.getByText('kytsaoduyosdafbdsfb')).toBeInTheDocument()

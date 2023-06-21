@@ -59,7 +59,7 @@ const CreditCardListTable = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'cardName') {
-      const cardNameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const cardNameValue = value.replace(/[^a-zA-Z\s]/gi, '')
       setEditCreditCardDetails((prevState) => {
         return { ...prevState, ...{ [name]: cardNameValue } }
       })
@@ -116,12 +116,12 @@ const CreditCardListTable = (): JSX.Element => {
   }
 
   const onDeleteCreditCardBtnClick = (
-    deleteCreditCardId: number,
-    creditCardName: string,
+    deleteCreditCardsId: number,
+    creditCardNames: string,
   ) => {
     setIsDeleteCreditCardModalVisible(true)
-    setCreditCardName(creditCardName)
-    setDeleteCreditCardId(deleteCreditCardId)
+    setCreditCardName(creditCardNames)
+    setDeleteCreditCardId(deleteCreditCardsId)
   }
   const handleConfirmDeleteCreditCard = async () => {
     setIsDeleteCreditCardModalVisible(false)
@@ -243,12 +243,7 @@ const CreditCardListTable = (): JSX.Element => {
                             data-testid={`save-credit-card-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveCreditCardButtonHandler}
-                            disabled={
-                              isEditCreditCardButtonEnabled
-                                ? isEditCreditCardButtonEnabled &&
-                                  isEditCreditCardExist.length > 0
-                                : !isEditCreditCardButtonEnabled
-                            }
+                            disabled={!isEditCreditCardButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"

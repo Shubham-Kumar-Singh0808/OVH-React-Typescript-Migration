@@ -32,19 +32,6 @@ const addCreditCardDetails = async ({
   return response.data
 }
 
-const checkDuplicateCardNumberDetails = async (
-  cardNumber: string,
-): Promise<CreditCardList[]> => {
-  const requestConfig = getAuthenticatedRequestConfig({
-    url: CreditCardListApiConfig.checkDuplicateCardNumber,
-    method: AllowedHttpMethods.get,
-    params: { cardNumber },
-  })
-
-  const response = await useAxios(requestConfig)
-  return response.data
-}
-
 const editCreditCardList = async (cardId: number): Promise<CreditCardList> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: CreditCardListApiConfig.editCardDetails,
@@ -84,7 +71,6 @@ const deleteCreditCardDetails = async (
 const creditCardListApi = {
   getCreditCardsList,
   addCreditCardDetails,
-  checkDuplicateCardNumberDetails,
   editCreditCardList,
   updateCreditCardDetails,
   deleteCreditCardDetails,

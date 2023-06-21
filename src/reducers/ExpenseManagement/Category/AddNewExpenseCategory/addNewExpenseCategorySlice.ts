@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ValidationError } from '../../../../types/commonTypes'
 import addNewCategoryApi from '../../../../middleware/api/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategoryListApi'
@@ -10,18 +10,6 @@ const addNewExpenseCategory = createAsyncThunk(
   async (categoryName: string, thunkApi) => {
     try {
       return await addNewCategoryApi.addNewCategory(categoryName)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
-const checkDuplicateCategory = createAsyncThunk(
-  '/ExpenseManagement/checkForDuplicateCategory',
-  async (categoryName: string, thunkApi) => {
-    try {
-      return await addNewCategoryApi.checkDuplicateCategory(categoryName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -41,50 +29,26 @@ const addNewCategorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        isAnyOf(
-          addNewExpenseCategory.fulfilled,
-          checkDuplicateCategory.fulfilled,
-        ),
-        (state) => {
-          state.isLoading = ApiLoadingState.succeeded
-        },
-      )
-      .addMatcher(
-        isAnyOf(addNewExpenseCategory.pending, checkDuplicateCategory.pending),
-        (state) => {
-          state.isLoading = ApiLoadingState.loading
-        },
-      )
-      .addMatcher(
-        isAnyOf(
-          addNewExpenseCategory.rejected,
-          checkDuplicateCategory.rejected,
-        ),
-        (state, action) => {
-          state.isLoading = ApiLoadingState.failed
-          state.error = action.payload as ValidationError
-        },
-      )
+      .addCase(addNewExpenseCategory.fulfilled, (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
+      .addCase(addNewExpenseCategory.pending, (state) => {
+        state.isLoading = ApiLoadingState.loading
+      })
+      .addCase(addNewExpenseCategory.rejected, (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as ValidationError
+      })
   },
 })
 
-// const addCategories = (state: RootState): CategoryList[] =>
-//   state.addNewCategory.addExpenseCategory
-
 const addNewCategoryThunk = {
   addNewExpenseCategory,
-  checkDuplicateCategory,
 }
-
-// const addCategoriesListSelectors = {
-//   addCategories,
-// }
 
 export const addNewCategoryService = {
   ...addNewCategoryThunk,
   actions: addNewCategorySlice.actions,
-  //selectors: addCategoriesListSelectors,
 }
 
 export default addNewCategorySlice.reducer

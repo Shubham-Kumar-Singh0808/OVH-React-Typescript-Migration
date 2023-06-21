@@ -65,7 +65,7 @@ const CreditCardList = (): JSX.Element => {
     const { name, value } = event.target
     if (name === 'cardName') {
       const newCardNameValue = value
-        .replace(/[^a-zA-Z\s]$/gi, '')
+        .replace(/[^a-zA-Z\s]/gi, '')
         .replace(/^\s*/, '')
       setCardName(newCardNameValue)
     } else if (name === 'cardNumber') {
@@ -119,9 +119,6 @@ const CreditCardList = (): JSX.Element => {
         isAddNewCreditCard,
       )
     ) {
-      dispatch(
-        reduxServices.creditCardList.duplicateCardNumberDetails(cardNumber),
-      )
       dispatch(reduxServices.creditCardList.getCreditCardsList())
       setCardName('')
       setCardNumber('')

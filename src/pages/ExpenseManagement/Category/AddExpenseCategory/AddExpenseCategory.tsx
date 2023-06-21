@@ -23,8 +23,8 @@ const AddExpenseCategory = (): JSX.Element => {
   )
 
   const categoryNameExists = (name: string) => {
-    return existCategoryNames?.find((categoryName) => {
-      return categoryName.categoryName.toLowerCase() === name.toLowerCase()
+    return existCategoryNames?.find((categoriesList) => {
+      return categoriesList.categoryName.toLowerCase() === name.toLowerCase()
     })
   }
 
@@ -57,9 +57,6 @@ const AddExpenseCategory = (): JSX.Element => {
           isAddExpenseCategory,
         )
       ) {
-        dispatch(
-          reduxServices.addNewCategory.checkDuplicateCategory(categoryName),
-        )
         dispatch(reduxServices.categoryList.getCategoryList())
         setCategoryName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
@@ -89,9 +86,6 @@ const AddExpenseCategory = (): JSX.Element => {
         isAddExpenseCategory,
       )
     ) {
-      dispatch(
-        reduxServices.addNewCategory.checkDuplicateCategory(categoryName),
-      )
       dispatch(reduxServices.categoryList.getCategoryList())
       setCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))

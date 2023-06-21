@@ -39,18 +39,6 @@ const addCreditCardsList = createAsyncThunk(
   },
 )
 
-const duplicateCardNumberDetails = createAsyncThunk(
-  '/ExpenseManagement/checkDuplicateCardNumber',
-  async (cardNumber: string, thunkApi) => {
-    try {
-      return await creditCardListApi.checkDuplicateCardNumberDetails(cardNumber)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
-    }
-  },
-)
-
 const editCreditCardDetails = createAsyncThunk(
   '/ExpenseManagement/editCardDetials',
   async (cardId: number, thunkApi) => {
@@ -100,11 +88,7 @@ const creditCardListSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        isAnyOf(
-          getCreditCardsList.fulfilled,
-          duplicateCardNumberDetails.fulfilled,
-          addCreditCardsList.fulfilled,
-        ),
+        isAnyOf(getCreditCardsList.fulfilled, addCreditCardsList.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.getCardsList = action.payload
@@ -123,7 +107,6 @@ const creditCardListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCreditCardsList.pending,
-          duplicateCardNumberDetails.pending,
           editCreditCardDetails.pending,
           updateCreditCardList.pending,
           deleteCreditCardList.pending,
@@ -136,7 +119,6 @@ const creditCardListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCreditCardsList.rejected,
-          duplicateCardNumberDetails.rejected,
           editCreditCardDetails.rejected,
           updateCreditCardList.rejected,
           deleteCreditCardList.rejected,
@@ -157,7 +139,6 @@ const creditCards = (state: RootState): CreditCardList[] =>
 const creditCardListThunk = {
   getCreditCardsList,
   addCreditCardsList,
-  duplicateCardNumberDetails,
   editCreditCardDetails,
   updateCreditCardList,
   deleteCreditCardList,
