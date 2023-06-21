@@ -203,7 +203,7 @@ const Schedule = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Interviewee Details"
+        title="Schedule Interview"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -259,9 +259,9 @@ const Schedule = (): JSX.Element => {
                 <CFormInput
                   autoComplete="off"
                   type="text"
-                  id="Name"
-                  name="personName"
-                  data-testid="person-name"
+                  id="hours"
+                  name="hours"
+                  data-testid="hours"
                   value={timePicker.hours}
                   onChange={onChangeHandler}
                 />
@@ -270,9 +270,9 @@ const Schedule = (): JSX.Element => {
                 <CFormInput
                   autoComplete="off"
                   type="text"
-                  id="Name"
-                  name="personName"
-                  data-testid="person-name"
+                  id="minutes"
+                  name="minutes"
+                  data-testid="minutes"
                   value={timePicker.minutes}
                   onChange={(e) => {
                     setTimePicker({
