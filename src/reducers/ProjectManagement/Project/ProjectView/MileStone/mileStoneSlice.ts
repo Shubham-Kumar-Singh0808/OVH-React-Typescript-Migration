@@ -140,22 +140,22 @@ const mileStoneSlice = createSlice({
 })
 
 const isLoading = (state: RootState): LoadingState =>
-  state.projectMileStone.isLoading
+  state.projectMileStone?.isLoading
 
 const projectMileStone = (state: RootState): MileStoneResponse[] =>
-  state.projectMileStone.mileStonesList.list
+  state.projectMileStone?.mileStonesList?.list
 
 const projectMileStoneSize = (state: RootState): number =>
-  state.projectMileStone.mileStonesList.size
+  state.projectMileStone?.mileStonesList?.size
 
 const projectMileStoneTimeLine = (state: RootState): MileStoneHistory[] =>
-  state.projectMileStone.mileStoneHistory
+  state.projectMileStone?.mileStoneHistory
 
 const getProjectMileStoneResponse = (state: RootState): GetMilestone =>
-  state.projectMileStone.getMilestone
+  state.projectMileStone?.getMilestone
 
 const projectMileStoneNewsFeed = (state: RootState): MilestoneNewsFeed[] =>
-  state.projectMileStone.milestoneNewsFeed
+  state.projectMileStone?.milestoneNewsFeed
 
 const mileStoneThunk = {
   getProjectMileStone,
