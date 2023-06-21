@@ -5,11 +5,9 @@ import CandidatesCountTable from './CandidatesCountTable'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useTypedSelector } from '../../../stateStore'
 
 const CandidatesCount = (): JSX.Element => {
-  const dispatch = useAppDispatch()
-
   const listSize = useTypedSelector(
     reduxServices.companiesList.selectors.listSize,
   )
