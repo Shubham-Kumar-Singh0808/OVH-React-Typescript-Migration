@@ -25,7 +25,15 @@ const ReviewListFilterOptions = ({
   setIsTableView: (value: boolean) => void
   initialReviewList: ReviewListData
 }): JSX.Element => {
-  const [cycle, setCycle] = useState<number | string>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.reviewList.activeCycle())
+  }, [dispatch])
+  const isActiveCycle = useTypedSelector(
+    reduxServices.reviewList.selectors.isActiveCycle,
+  )
+
+  const [cycle, setCycle] = useState<number | string>(isActiveCycle.id)
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
@@ -53,7 +61,6 @@ const ReviewListFilterOptions = ({
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
-  const dispatch = useAppDispatch()
   const selectedItem = departments.filter(
     (item) => item.departmentId === Number(selectDepartment),
   )
@@ -68,6 +75,8 @@ const ReviewListFilterOptions = ({
   const userAccessIndividualReviewListFeature = userAccessToFeatures?.find(
     (feature) => feature.name === 'Individual Review List',
   )
+
+  console.log(cycle)
 
   useEffect(() => {
     if (cycle) {
@@ -198,9 +207,9 @@ const ReviewListFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="configurations"
+            id="cycle"
             data-testid="select-configurations"
-            name="configurations"
+            name="cycle"
             value={cycle}
             onChange={(e) => {
               setCycle(e.target.value)
