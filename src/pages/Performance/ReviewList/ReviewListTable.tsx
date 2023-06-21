@@ -65,40 +65,6 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
     return <></>
   }
 
-  const paginationComponent =
-    reviewListSize > 0 ? (
-      <CRow className="mt-3">
-        <CCol xs={4}>
-          <strong>{`Total Records: ${appraisalReviews?.size} `}</strong>
-        </CCol>
-        <CCol xs={3}>
-          {reviewListSize > 20 && (
-            <OPageSizeSelect
-              handlePageSizeSelectChange={handleReviewListPageSizeSelectChange}
-              options={[20, 40, 60, 80]}
-              selectedPageSize={pageSize}
-            />
-          )}
-        </CCol>
-        {reviewListSize > 20 && (
-          <CCol
-            xs={5}
-            className="d-grid gap-1 d-md-flex justify-content-md-end"
-          >
-            <OPagination
-              currentPage={currentPage}
-              pageSetter={setCurrentPage}
-              paginationRange={paginationRange}
-            />
-          </CCol>
-        )}
-      </CRow>
-    ) : (
-      <CRow className="mt-3 ms-3">
-        <strong>No Records Found... </strong>
-      </CRow>
-    )
-
   return (
     <>
       <CTable striped responsive align="middle">
@@ -157,7 +123,44 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
           </CTableBody>
         )}
       </CTable>
-      {paginationComponent}
+      {appraisalReviews?.size ? (
+        <CRow>
+          <CCol xs={4}>
+            <p>
+              <strong>Total Records: {appraisalReviews?.size}</strong>
+            </p>
+          </CCol>
+          <CCol xs={3}>
+            {appraisalReviews?.size > 20 && (
+              <OPageSizeSelect
+                handlePageSizeSelectChange={
+                  handleReviewListPageSizeSelectChange
+                }
+                options={[20, 40, 60, 80]}
+                selectedPageSize={pageSize}
+              />
+            )}
+          </CCol>
+          {appraisalReviews?.size > 20 && (
+            <CCol
+              xs={5}
+              className="gap-1 d-grid d-md-flex justify-content-md-end"
+            >
+              <OPagination
+                currentPage={currentPage}
+                pageSetter={setCurrentPage}
+                paginationRange={paginationRange}
+              />
+            </CCol>
+          )}
+        </CRow>
+      ) : (
+        <CCol>
+          <CRow className="mt-4 ms-3">
+            <h5>No Records Found... </h5>
+          </CRow>
+        </CCol>
+      )}
     </>
   )
 }
