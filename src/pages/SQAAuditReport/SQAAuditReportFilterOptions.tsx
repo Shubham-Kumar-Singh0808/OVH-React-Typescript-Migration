@@ -42,22 +42,26 @@ const SQAAuditReportFilterOptions = ({
     reduxServices.sqaAuditReport.selectors.getSelectedRescheduleStatusValue,
   )
 
-  const getFromDateValue = useTypedSelector(
-    reduxServices.sqaAuditReport.selectors.getFromDateValue,
-  )
-  const getToDateValue = useTypedSelector(
-    reduxServices.sqaAuditReport.selectors.getToDateValue,
-  )
-
-  const getSelectedMonthValue = useTypedSelector(
-    reduxServices.sqaAuditReport.selectors.getSelectedMonthValue,
-  )
-
   const [status, setStatus] = useState<string>(getSelectedStatusValue)
   const [rescheduleStatus, setRescheduleStatus] = useState<string>(
     getSelectedRescheduleStatusValue,
   )
+  console.log(getSelectedStatusValue)
+  const toDateValue = toDate
+    ? new Date(toDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
 
+  const fromDateValue = fromDate
+    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
   useEffect(() => {
     dispatch(reduxServices.sqaAuditReport.actions.setStatusValue(status))
     dispatch(
@@ -81,21 +85,6 @@ const SQAAuditReportFilterOptions = ({
     pageSize,
   } = usePagination(sqaAuditReportListSize, 20)
 
-  const toDateValue = toDate
-    ? new Date(toDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
-
-  const fromDateValue = fromDate
-    ? new Date(fromDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
-    : ''
   const commonFormatDate = 'l'
   const userAccessToFeatures = useTypedSelector(
     reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
@@ -113,11 +102,11 @@ const SQAAuditReportFilterOptions = ({
         endIndex: pageSize * currentPage,
         multiSearch: '',
         startIndex: pageSize * (currentPage - 1),
-        SQAAuditSelectionDate: getSelectedMonthValue || '',
-        auditRescheduleStatus: getSelectedRescheduleStatusValue || '',
-        auditStatus: getSelectedStatusValue || '',
-        from: (getFromDateValue as string) || '',
-        to: (getToDateValue as string) || '',
+        SQAAuditSelectionDate: selectDate || '',
+        auditRescheduleStatus: rescheduleStatus || '',
+        auditStatus: status || '',
+        from: (fromDateValue as string) || '',
+        to: (toDateValue as string) || '',
       }),
     )
   }, [dispatch, pageSize, currentPage])
