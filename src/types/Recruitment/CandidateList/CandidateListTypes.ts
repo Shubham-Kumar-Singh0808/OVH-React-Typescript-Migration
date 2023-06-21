@@ -1,6 +1,5 @@
 import React from 'react'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { ValidationError } from '../../commonTypes'
 
 export type CandidateListTableProps = {
   endIndex: number
@@ -107,7 +106,6 @@ export enum CurrentAddCandidatePage {
 
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
-  error: ValidationError
   listSize: number
   candidateDetails: CandidateLists
   allCandidateDetails: CandidateLists[]

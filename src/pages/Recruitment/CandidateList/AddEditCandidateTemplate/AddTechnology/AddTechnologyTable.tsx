@@ -23,7 +23,6 @@ const AddTechnologyTable = (): JSX.Element => {
   const technologyList = useTypedSelector(
     (state) => state.candidateList.getAllTechnology,
   )
-  const errorStatus = useTypedSelector((state) => state.candidateList.error)
   const [technologyToDelete, setTechnologyToDelete] =
     useState<GetAllTechnology>(initialGetAllTechnology)
   const { showModal, setShowModal, modalDescription, setModalDescription } =
@@ -52,12 +51,7 @@ const AddTechnologyTable = (): JSX.Element => {
         ),
       )
       dispatch(reduxServices.candidateList.getTechnology())
-    } else if (
-      reduxServices.candidateList.deleteTechnologyThunk.rejected.match(
-        result,
-      ) &&
-      errorStatus === 400
-    ) {
+    } else {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast

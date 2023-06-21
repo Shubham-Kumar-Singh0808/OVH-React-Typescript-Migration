@@ -20,7 +20,6 @@ import {
 
 export const initialCandidateListState: CandidateListSliceState = {
   isLoading: ApiLoadingState.idle,
-  error: null,
   listSize: 0,
   candidateDetails: {} as CandidateLists,
   allCandidateDetails: [],
@@ -274,7 +273,6 @@ const candidateListSlice = createSlice({
         ),
         (state, action) => {
           state.isLoading = ApiLoadingState.failed
-          state.error = action.payload as ValidationError
         },
       )
       .addMatcher(
@@ -293,7 +291,6 @@ const candidateListSlice = createSlice({
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
-          state.error = null
         },
       )
   },
