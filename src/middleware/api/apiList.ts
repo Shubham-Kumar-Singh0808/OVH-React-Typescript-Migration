@@ -1107,7 +1107,9 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
   }
 export const CompaniesListApiConfig: CompaniesListApi = {
   getAllCompanies: apiPrefix + '/jobapplicant/getAllCompanies',
-  exportCompaniesList: apiPrefix + '/jobapplicant/getAllCompanies',
+  exportCompaniesList: apiPrefix + '/jobapplicant/exportCompaniesList',
+  getAllCandidatesInfo: apiPrefix + '/jobapplicant/getAllCandidatesInfo',
+  getAllEmployeesInfo: apiPrefix + '/jobapplicant/getAllEmployeesInfo',
 }
 
 export const getUpComingJoinListConfig: UpComingJoinListApi = {

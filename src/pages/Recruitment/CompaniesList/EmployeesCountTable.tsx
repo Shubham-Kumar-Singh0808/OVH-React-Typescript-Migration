@@ -9,14 +9,13 @@ import {
   CRow,
   CCol,
 } from '@coreui/react-pro'
-import { Link } from 'react-router-dom'
-import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
-import OPagination from '../../../components/ReusableComponent/OPagination'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
+import OPagination from '../../../components/ReusableComponent/OPagination'
 import { CompaniesListProps } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 
-const CompaniesListTable = ({
+const EmployeesCountTable = ({
   paginationRange,
   pageSize,
   setPageSize,
@@ -25,15 +24,15 @@ const CompaniesListTable = ({
 }: CompaniesListProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const companiesListDetails = useTypedSelector(
-    reduxServices.companiesList.selectors.allCompaniesListData,
+  const candidatesInfoListData = useTypedSelector(
+    reduxServices.companiesList.selectors.candidatesInfoListData,
   )
 
   const companiesListSize = useTypedSelector(
     reduxServices.companiesList.selectors.listSize,
   )
 
-  const totalNoOfRecords = companiesListDetails?.length
+  const totalNoOfRecords = candidatesInfoListData?.length
     ? `Total Records: ${companiesListSize}`
     : `No Records found...`
 
@@ -56,36 +55,44 @@ const CompaniesListTable = ({
       >
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Company Name</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Candidates Count</CTableHeaderCell>
-            <CTableHeaderCell scope="col"> Employees Count</CTableHeaderCell>
+            <CTableHeaderCell>#</CTableHeaderCell>
+            <CTableHeaderCell>Company Name</CTableHeaderCell>
+            <CTableHeaderCell>Name</CTableHeaderCell>
+            <CTableHeaderCell>Position Applied for</CTableHeaderCell>
+            <CTableHeaderCell>Job Code</CTableHeaderCell>
+            <CTableHeaderCell>Mobile</CTableHeaderCell>
+            <CTableHeaderCell>Email ID</CTableHeaderCell>
+            <CTableHeaderCell>Experience</CTableHeaderCell>
+            <CTableHeaderCell>Skills</CTableHeaderCell>
+            <CTableHeaderCell>Recruiter</CTableHeaderCell>
+            <CTableHeaderCell>Reference</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {companiesListDetails?.length > 0 &&
-            companiesListDetails?.map((data, index) => {
+          {candidatesInfoListData?.length > 0 &&
+            candidatesInfoListData?.map((data, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
-                  <CTableDataCell>{data.companyNmae || 'N/A'}</CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
-                    <Link
-                      to={`/candidatesInfo/${data.companyNmae}`}
-                      className="cursor-pointer"
-                    >
-                      {data.candidatesCount || 'N/A'}
-                    </Link>
+                  <CTableDataCell>
+                    {data.currentEmployer || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell scope="row" className="sh-organization-link">
-                    <Link
-                      to={`/employeesInfo/${data.companyNmae}`}
-                      className="cursor-pointer"
-                    >
-                      {data.employeesCount || '0'}
-                    </Link>
+                  <CTableDataCell>{data.fullName || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>
+                    {data.appliedFor.positionVacant || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>
+                    {data.appliedFor.jobCode || 'N/A'}
+                  </CTableDataCell>
+                  <CTableDataCell>{data.mobile || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{data.email || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{data.experience || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{data.skills || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{data.recruiter || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>
+                    {data.sourcelookUp.sourceName || 'N/A'}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -124,4 +131,4 @@ const CompaniesListTable = ({
   )
 }
 
-export default CompaniesListTable
+export default EmployeesCountTable

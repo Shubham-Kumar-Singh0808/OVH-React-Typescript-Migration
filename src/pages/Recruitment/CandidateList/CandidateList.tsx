@@ -41,19 +41,19 @@ const CandidateList = (): JSX.Element => {
     dispatch(reduxServices.candidateList.getTechnology())
     dispatch(
       reduxServices.candidateList.searchScheduledCandidate({
-        startIndex: pageSize * (CurrentPage - 1),
-        endIndex: pageSize * CurrentPage,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         searchStr: searchInput,
       }),
     )
-  }, [dispatch, pageSize, CurrentPage, pageSize, CurrentPage, searchInput])
+  }, [dispatch, pageSize, currentPage, searchInput])
 
   const viewButtonHandler = () => {
     dispatch(
       reduxServices.candidateList.getCountryWiseCandidatesList({
         candidateStatus: selectStatus,
-        startIndex: pageSize * (CurrentPage - 1),
-        endIndex: pageSize * CurrentPage,
+        startIndex: pageSize * (currentPage - 1),
+        endIndex: pageSize * currentPage,
         selectionCountry: selectCountry,
         selectionTechnology: selectTechnology || '',
       }),
@@ -65,7 +65,7 @@ const CandidateList = (): JSX.Element => {
   const searchButtonHandler = () => {
     dispatch(
       reduxServices.candidateList.searchScheduledCandidate({
-        startIndex: pageSize * (CurrentPage - 1),
+        startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * CurrentPage,
         searchStr: searchInput,
       }),

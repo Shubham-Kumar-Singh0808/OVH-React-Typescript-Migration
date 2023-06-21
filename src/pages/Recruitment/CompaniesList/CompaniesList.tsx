@@ -51,23 +51,23 @@ const CompaniesList = (): JSX.Element => {
     dispatch(reduxServices.candidateList.getTechnology())
     dispatch(
       reduxServices.companiesList.getAllCompanies({
-        endIndex: pageSize * CurrentPage,
+        endIndex: pageSize * currentPage,
         searchCompany: searchInput,
         selectionTechnology: selectTechnology,
-        startIndex: pageSize * (CurrentPage - 1),
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
-  }, [dispatch, pageSize, CurrentPage])
+  }, [dispatch, pageSize, currentPage])
 
   const clearButtonHandler = () => {
     setSelectTechnology('')
     setSearchInput('')
     dispatch(
       reduxServices.companiesList.getAllCompanies({
-        endIndex: pageSize * CurrentPage,
+        endIndex: pageSize * currentPage,
         searchCompany: '',
         selectionTechnology: '',
-        startIndex: pageSize * (CurrentPage - 1),
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
   }
@@ -75,10 +75,10 @@ const CompaniesList = (): JSX.Element => {
   const viewButtonHandler = () => {
     dispatch(
       reduxServices.companiesList.getAllCompanies({
-        endIndex: pageSize * CurrentPage,
+        endIndex: pageSize * currentPage,
         searchCompany: searchInput,
         selectionTechnology: selectTechnology,
-        startIndex: pageSize * (CurrentPage - 1),
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
     setCurrentPage(1)

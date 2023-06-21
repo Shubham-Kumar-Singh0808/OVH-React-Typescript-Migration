@@ -250,7 +250,7 @@ export interface AddNewCandidateDTO {
   skypeId: string | null
   countryId: number
   reason: string
-  scheduleFlag: 'no'
+  scheduleFlag: string
   interviewersDTOList: []
   scheduleTime: string
 }

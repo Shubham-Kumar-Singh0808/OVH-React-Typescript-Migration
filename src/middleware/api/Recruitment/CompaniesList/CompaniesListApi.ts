@@ -1,7 +1,10 @@
 import {
+  AllCandidatesDetails,
   CompaniesListTableProps,
   CompaniesListTotalInfo,
   ExportBtnTypes,
+  hyperLinkProps,
+  linkProps,
 } from '../../../../types/Recruitment/CompaniesList/CompaniesListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -45,9 +48,46 @@ const exportCompaniesList = async (
   return response.data
 }
 
+const getAllCandidatesInfo = async (
+  props: hyperLinkProps,
+): Promise<AllCandidatesDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CompaniesListApiConfig.getAllCandidatesInfo,
+    method: AllowedHttpMethods.get,
+    params: {
+      companyName: props.companyName,
+      endIndex: props.endIndex,
+      selectionTechnology: props.selectionTechnology,
+      startIndex: props.startIndex,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getAllEmployeesInfo = async (
+  props: linkProps,
+): Promise<AllCandidatesDetails> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CompaniesListApiConfig.getAllEmployeesInfo,
+    method: AllowedHttpMethods.get,
+    params: {
+      companyName: props.companyName,
+      endIndex: props.endIndex,
+      startIndex: props.startIndex,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const CompaniesListApi = {
   getAllCompanies,
   exportCompaniesList,
+  getAllCandidatesInfo,
+  getAllEmployeesInfo,
 }
 
 export default CompaniesListApi
