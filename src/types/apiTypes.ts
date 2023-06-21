@@ -668,6 +668,11 @@ export interface ProjectChangeRequestApi extends ApiBase {
 
 export interface ProjectMilestoneApi extends ApiBase {
   mileStonesList: string
+  mileStoneHistory: string
+  getMilestone: string
+  milestoneNewsFeed: string
+  uploadImage: string
+  postMileStone: string
 }
 export interface ProjectInvoiceApi extends ApiBase {
   getClosedMilestonesAndCRs: string
@@ -755,6 +760,15 @@ export interface KRAApi extends ApiBase {
 
 export interface MyReviewApi extends ApiBase {
   getEmployeePerformanceReview: string
+  getAppraisalForm: string
+  getExistingAppraisalForm: string
+  getPerformanceRatings: string
+  employeeAppraisalForm: string
+  employeeAppraisalFormForRating: string
+  saveReviewComments: string
+  getReviewComments: string
+  appraisalConfirmation: string
+  closeAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {
@@ -846,6 +860,27 @@ export interface ChangeReporteesApi extends ApiBase {
   updateHrAssociatesManager: string
 }
 
+export interface IntervieweeDetailsApi extends ApiBase {
+  timelinedetails: string
+  saveInitialComments: string
+  updateCandidateInterviewStatus: string
+  empScheduleInterviewDetails: string
+  updateInterview: string
+}
+export interface CandidateListApi extends ApiBase {
+  searchScheduledCandidate: string
+  getEmpCountries: string
+  getAllTechnology: string
+  getCountryWiseCandidatesList: string
+  deleteCandidate: string
+  getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
+  uploadCandidateResume: string
+}
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
   getAllManufacturerName: string
@@ -890,4 +925,8 @@ export interface ProductSpecificationListApi extends ApiBase {
   addProductSpecifications: string
   deleteProductSpecification: string
   updateProductSpecification: string
+}
+export interface UpComingJoinListApi extends ApiBase {
+  getUpcomingJoineeList: string
+  getEmployeeDepartments: string
 }

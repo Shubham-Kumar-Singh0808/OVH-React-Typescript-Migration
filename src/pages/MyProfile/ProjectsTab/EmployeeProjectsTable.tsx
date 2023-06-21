@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react'
 import EmployeeProjectDetailsTable from './EmployeeProjectDetailsTable'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useSelectedEmployee } from '../../../middleware/hooks/useSelectedEmployee'
 
 const EmployeeProjectsTable = (): JSX.Element => {
   const [isIconVisible, setIsIconVisible] = useState(false)
@@ -28,12 +29,20 @@ const EmployeeProjectsTable = (): JSX.Element => {
   const employeeProjects = useTypedSelector(
     reduxServices.employeeProjects.selectors.employeeProjects,
   )
+  const [isViewingAnotherEmployee, selectedEmployeeId] = useSelectedEmployee()
+  // useEffect(() => {
+  //   if (employeeId) {
+  //     dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
+  //   }
+  // }, [dispatch, employeeId])
 
   useEffect(() => {
-    if (employeeId) {
-      dispatch(reduxServices.employeeProjects.getEmployeeProjects(employeeId))
-    }
-  }, [dispatch, employeeId])
+    dispatch(
+      reduxServices.employeeProjects.getEmployeeProjects(
+        isViewingAnotherEmployee ? String(selectedEmployeeId) : employeeId,
+      ),
+    )
+  }, [dispatch, employeeId, isViewingAnotherEmployee, selectedEmployeeId])
 
   const toTitleCase = (str: string) => {
     return str
