@@ -23,8 +23,8 @@ const AddExpenseCategory = (): JSX.Element => {
   )
 
   const categoryNameExists = (name: string) => {
-    return existCategoryNames?.find((categoryName) => {
-      return categoryName.categoryName.toLowerCase() === name.toLowerCase()
+    return existCategoryNames?.find((categoriesList) => {
+      return categoriesList.categoryName.toLowerCase() === name.toLowerCase()
     })
   }
 
@@ -144,11 +144,7 @@ const AddExpenseCategory = (): JSX.Element => {
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={
-                isAddButtonEnabled
-                  ? isAddButtonEnabled && isCategoryNameExist.length > 0
-                  : !isAddButtonEnabled
-              }
+              disabled={!isAddButtonEnabled}
               onClick={addCategoryNameButtonHandler}
             >
               Add

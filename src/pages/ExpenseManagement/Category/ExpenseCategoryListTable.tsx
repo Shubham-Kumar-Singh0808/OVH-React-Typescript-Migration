@@ -58,8 +58,8 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   )
 
   const editCategoryNameExists = (name: string) => {
-    return categoryList?.find((categoryName) => {
-      return categoryName.categoryName.toLowerCase() === name.toLowerCase()
+    return categoryList?.find((categories) => {
+      return categories.categoryName.toLowerCase() === name.toLowerCase()
     })
   }
 
@@ -97,7 +97,9 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'categoryName') {
-      const nameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const nameValue = value
+        .replace(/-_[^a-z0-9\s]/gi, '')
+        .replace(/(\w)\1+/g, '$1')
       setEditExpenseCategoryDetails((prevState) => {
         return { ...prevState, ...{ [name]: nameValue } }
       })
@@ -150,12 +152,12 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   }
 
   const onDeleteBtnClick = (
-    deleteExpenseCategoryId: number,
-    categoryName: string,
+    deletesExpenseCategoryId: number,
+    categoryNames: string,
   ) => {
     setIsDeleteModalVisible(true)
-    setCategoryName(categoryName)
-    setDeleteExpenseCategoryId(deleteExpenseCategoryId)
+    setCategoryName(categoryNames)
+    setDeleteExpenseCategoryId(deletesExpenseCategoryId)
   }
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
@@ -262,12 +264,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                             data-testid={`save-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveExpenseCategoryButtonHandler}
-                            disabled={
-                              isEditCategoryButtonEnabled
-                                ? isEditCategoryButtonEnabled &&
-                                  isEditCategoryNameExist.length > 0
-                                : !isEditCategoryButtonEnabled
-                            }
+                            disabled={!isEditCategoryButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"
