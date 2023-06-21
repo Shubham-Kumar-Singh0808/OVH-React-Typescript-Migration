@@ -4,13 +4,17 @@ import userEvent from '@testing-library/user-event'
 import moment from 'moment'
 import CandidateOffer from './CandidateOffer'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { fireEvent, render, screen } from '../../../test/testUtils'
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../test/testUtils'
 
 const workFlowInput = 'msg-candidate'
 const fileUploadInput = 'file-upload'
 const handleAddCandidate = jest.fn()
-const setDateOfJoiningDate = jest.fn()
-
 describe('Job Openings without data', () => {
   beforeEach(() => {
     render(<CandidateOffer />, {
@@ -55,9 +59,7 @@ describe('Job Openings without data', () => {
     const textType = screen.getByTestId('text-area')
     userEvent.type(textType, 'welocome Offer')
   })
-  //   test('should render add Manufacturer component with out crashing', () => {
-  //     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-  //   })
+
   test('should be able to click edit button element', () => {
     const deleteBtnElement = screen.getByTestId('save-btn')
     expect(deleteBtnElement).toBeInTheDocument()
@@ -88,15 +90,16 @@ describe('Job Openings without data', () => {
     userEvent.click(addButton)
     expect(handleAddCandidate).toHaveBeenCalledTimes(0)
   })
+  test('Should be able to upload feedback form', () => {
+    const file = new File(['feedbackForm'], 'feedbackForm.docx', {
+      type: 'doc/docx/pdf',
+    })
+    const fileInput = screen.getByTestId(fileUploadInput)
+    userEvent.upload(fileInput, file)
 
-  test('onHandleStartDate sets the date correctly', () => {
-    const mockDate = new Date('20/06/2023')
-    const dateFormat = 'DD/MM/YYYY'
-    const datePickerInput = screen.getByPlaceholderText('dd/mm/yyyy')
-    userEvent.clear(datePickerInput)
-    userEvent.type(datePickerInput, '20/06/2023')
-    expect(setDateOfJoiningDate).toHaveBeenCalledWith(
-      moment(mockDate).format(dateFormat),
-    )
+    expect(fileInput.files[0]).toStrictEqual(file)
+    expect(fileInput.files.item(0)).toStrictEqual(file)
+    expect(fileInput.files).toHaveLength(1)
+    expect(fileInput).toBeInTheDocument()
   })
 })

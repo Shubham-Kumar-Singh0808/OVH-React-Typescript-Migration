@@ -1111,6 +1111,7 @@ export const getCandidateOfferConfig: CandidateOfferApi = {
   getCandidateDesignation: apiPrefix + '/kra/designation',
   getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
   getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getUploadFileForNewJoinee: apiPrefix + '/jobapplicant/uploadFileForNewJoinee',
 }
 
 export const getUpComingJoinListConfig: UpComingJoinListApi = {

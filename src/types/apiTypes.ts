@@ -931,6 +931,7 @@ export interface CandidateOfferApi extends ApiBase {
   getCandidateDesignation: string
   getAddNewJoinee: string
   getEmpDepartments: string
+  getUploadFileForNewJoinee: string
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string

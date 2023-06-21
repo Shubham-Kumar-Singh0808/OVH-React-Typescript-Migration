@@ -6,6 +6,7 @@ import { RootState } from '../../../stateStore'
 import {
   AddNewJoineeProps,
   CandidateOfferSliceState,
+  uploadFileForNewJoineeProps,
 } from '../../../types/Recruitment/CandidateOffer/CandidateOfferTypes'
 import CandidateOfferApi from '../../../middleware/api/Recruitment/CandidateOffer/candidateOfferApi'
 
@@ -29,6 +30,17 @@ const getPersonTechnologyData = createAsyncThunk(
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+const uploadAddNewJoineeFileThunk = createAsyncThunk(
+  'addNewJoinee/uploadAddNewJoineeFileThunk',
+  async (data: uploadFileForNewJoineeProps, thunkApi) => {
+    try {
+      return await CandidateOfferApi.uploadAddNewJoineeFile(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
     }
   },
 )
@@ -62,6 +74,7 @@ const candidateOfferSlice = createSlice({
 const addCandidateThunk = {
   getAddNewJoineeData,
   getPersonTechnologyData,
+  uploadAddNewJoineeFileThunk,
 }
 
 function isLoading(state: RootState): LoadingState {

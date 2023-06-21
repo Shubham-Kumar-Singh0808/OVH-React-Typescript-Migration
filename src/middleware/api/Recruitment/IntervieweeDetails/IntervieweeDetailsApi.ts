@@ -41,7 +41,7 @@ const saveInitialComments = async (
 
 const updateCandidateInterviewStatus = async (
   data: UpdateProps,
-): Promise<number | string> => {
+): Promise<UpdateProps> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: IntervieweeDetailsApiConfig.updateCandidateInterviewStatus,
     method: AllowedHttpMethods.post,

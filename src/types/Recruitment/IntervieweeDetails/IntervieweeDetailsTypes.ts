@@ -88,6 +88,7 @@ export type IntervieweeDetailsSliceState = {
   CycleDtOsList: CycleDtOs[]
   timeLineDetails: timeLineDetails
   scheduleInterviewData: EmpScheduleInterviewData
+  addNewJoineeTechnology: UpdateProps
 }
 
 export type saveButnprops = {
@@ -122,7 +123,7 @@ export type UpdateProps = {
   jobCode?: null
   mobileNumber?: string
   np?: null
-  personId?: null
+  personId?: number | null
   proactiveComments?: string
   rating?: 1
   reason?: null

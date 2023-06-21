@@ -13,6 +13,7 @@ import {
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { SyntheticEvent } from 'react-draft-wysiwyg'
+import { useHistory } from 'react-router-dom'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -21,12 +22,14 @@ import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { showIsRequired } from '../../../utils/helper'
 import { dateFormat } from '../../../constant/DateFormat'
 import OToast from '../../../components/ReusableComponent/OToast'
+import CandidateOfferApi from '../../../middleware/api/Recruitment/CandidateOffer/candidateOfferApi'
 
 const CandidateOffer = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [candidateDepartment, setCandidateDepartment] = useState<
     string | number
   >('')
+  const [uploadedFile, setUploadedFile] = useState<File>()
 
   const [candidateName, setSetCandidatename] = useState<string>('')
   const [position, setPosition] = useState<string>('')
@@ -63,18 +66,21 @@ const CandidateOffer = (): JSX.Element => {
         timeLineListSelector?.personId,
       ),
     )
+  }, [dispatch, timeLineListSelector?.personId])
+
+  useEffect(() => {
     dispatch(
       reduxServices.intervieweeDetails.timeLineData(
         timeLineListSelector.personId,
       ),
     )
-  }, [dispatch, timeLineListSelector?.personId])
+  }, [dispatch])
 
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
   )
 
-  const result = addNewJoinee?.filter(
+  const selectedDepartment = addNewJoinee.find(
     (item) => item.departmentId === candidateDepartment,
   )
 
@@ -88,6 +94,8 @@ const CandidateOffer = (): JSX.Element => {
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
     let extension = ''
     if (!file) return
+    setUploadedFile(file[0])
+
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
@@ -128,73 +136,6 @@ const CandidateOffer = (): JSX.Element => {
     }
   }, [candidateName, position, curruentCTC, employeeType, jobType])
 
-  //   -------------------------------------------------------------
-
-  // useEffect(() => {
-  //   dispatch(reduxServices.addNewCandidate.getPersonTechnologyData(getPersonTechnologyData))
-  // }, [dispatch])
-
-  // const successToast = (
-  //   <OToast
-  //     toastMessage="Product type updated successfully.
-  //     "
-  //     toastColor="success"
-  //   />
-  // )
-
-  //   const handleAddCandidate = async () => {
-  //     const addRecord1 = await dispatch(
-  //       reduxServices.addNewCandidate.getAddNewJoineeData({
-  //         appliedForLookUp: '',
-  //         candidateId: '',
-  //         candidateName,
-  //         comments: candidateComment,
-  //         currentCTC: curruentCTC,
-  //         dateOfJoining: dateOfJoiningDate,
-  //         departmentName: candidateDepartment as string,
-  //         designation,
-  //         employmentType: employeeType,
-  //         jobType,
-  //         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-  //         technology: '',
-  //       }),
-  //     )
-  //     if (
-  //       reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
-  //         addRecord1,
-  //       )
-  //     ) {
-  //       //   setToggle('')
-  //       dispatch(reduxServices.app.actions.addToast(successToast))
-  //       dispatch(reduxServices.app.actions.addToast(undefined))
-  //       dispatch(
-  //         reduxServices.intervieweeDetails.timeLineData(
-  //           timeLineListSelector.personId,
-  //         ),
-  //       )
-  //     }
-  //   }
-
-  // const handleAddCandidate1 = () => {
-  //   dispatch(
-  //     reduxServices.addNewCandidate.getAddNewJoineeData({
-  //       appliedForLookUp: position,
-  //       // candidateId: timeLineListSelector?.personId,
-  //       candidateId: '',
-  //       candidateName,
-  //       comments: candidateComment,
-  //       currentCTC: curruentCTC,
-  //       dateOfJoining: dateOfJoiningDate,
-  //       departmentName: result[0].departmentName,
-  //       designation,
-  //       employmentType: employeeType,
-  //       jobType,
-  //       sendOfferMessagetoCandidate: sendMessageToCandiDate,
-  //       technology: '',
-  //     }),
-  //   )
-  // }
-
   const addFailedToastMessage = (
     <OToast
       toastMessage="Joinee already added."
@@ -204,6 +145,11 @@ const CandidateOffer = (): JSX.Element => {
   )
 
   const handleAddCandidate = async () => {
+    const technology = await dispatch(
+      reduxServices.addNewCandidate.getPersonTechnologyData(
+        timeLineListSelector?.personId,
+      ),
+    )
     const addCandidate = await dispatch(
       reduxServices.addNewCandidate.getAddNewJoineeData({
         appliedForLookUp: position,
@@ -212,27 +158,32 @@ const CandidateOffer = (): JSX.Element => {
         comments: candidateComment,
         currentCTC: curruentCTC,
         dateOfJoining: dateOfJoiningDate,
-        departmentName: result[0]?.departmentName || '',
+        departmentName: selectedDepartment?.departmentName || '',
         designation,
         employmentType: employeeType,
         jobType,
         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: timeLineListSelector.personId || '',
+        technology: technology.payload || '',
       }),
     )
+
     if (
       reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
         addCandidate,
       )
     ) {
-      //   setApproveLeaveComment('')
-      //   setIsApproveModalVisibility(false)
-
-      dispatch(
-        reduxServices.intervieweeDetails.timeLineData(
-          timeLineListSelector.personId,
-        ),
+      const candidateId = addCandidate.payload
+      const file = new FormData()
+      if (uploadedFile !== undefined) {
+        file.append('file', uploadedFile)
+      }
+      await dispatch(
+        reduxServices.addNewCandidate.uploadAddNewJoineeFileThunk({
+          candidateId,
+          file,
+        }),
       )
+      window.location.href = '/upcomingjoinlist'
     } else if (
       reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
         addCandidate,
@@ -244,11 +195,12 @@ const CandidateOffer = (): JSX.Element => {
     }
   }
 
-  const handleCurruentCTCChange = (e: { target: { value: any } }) => {
-    const input = e.target.value
-    const regex = /^[0-9]*$/ // Regular expression to match only numbers
+  const NUMERIC_REGEX = /^[0-9]*$/
 
-    if (regex.test(input)) {
+  const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value
+
+    if (NUMERIC_REGEX.test(input)) {
       setCurruentCTC(input)
     }
   }

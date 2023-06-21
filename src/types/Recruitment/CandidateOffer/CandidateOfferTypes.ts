@@ -7,7 +7,7 @@ export type AddNewJoineeProps = {
   comments: string
   currentCTC: string
   dateOfJoining: string | undefined | Date
-  departmentName: string
+  departmentName: string | undefined
   designation: string | number
   employmentType: string
   jobType: string
@@ -17,4 +17,9 @@ export type AddNewJoineeProps = {
 
 export type CandidateOfferSliceState = {
   isLoading: LoadingState
+}
+
+export interface uploadFileForNewJoineeProps {
+  candidateId: number
+  file: FormData
 }

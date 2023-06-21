@@ -1,4 +1,7 @@
-import { AddNewJoineeProps } from '../../../../types/Recruitment/CandidateOffer/CandidateOfferTypes'
+import {
+  AddNewJoineeProps,
+  uploadFileForNewJoineeProps,
+} from '../../../../types/Recruitment/CandidateOffer/CandidateOfferTypes'
 import {
   getAuthenticatedRequestConfig,
   useAxios,
@@ -29,8 +32,27 @@ const getPersonTechnology = async (id: number) => {
   return response.data
 }
 
+const uploadAddNewJoineeFile = async (
+  finalData: uploadFileForNewJoineeProps,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: getCandidateOfferConfig.getUploadFileForNewJoinee,
+    method: AllowedHttpMethods.post,
+    params: {
+      candidateId: finalData.candidateId,
+    },
+    data: { file: finalData.file },
+    additionalHeaders: {
+      'Content-Type': 'addNewJoinee/form-data',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const CandidateOfferApi = {
   getAddNewJoineeData,
   getPersonTechnology,
+  uploadAddNewJoineeFile,
 }
 export default CandidateOfferApi
