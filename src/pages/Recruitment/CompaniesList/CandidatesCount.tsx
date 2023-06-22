@@ -8,19 +8,19 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../stateStore'
 
 const CandidatesCount = (): JSX.Element => {
-  const listSize = useTypedSelector(
+  const TotalListSize = useTypedSelector(
     reduxServices.companiesList.selectors.listSize,
   )
 
-  const CurrentPage = useTypedSelector(
+  const CurrentPageValue = useTypedSelector(
     reduxServices.app.selectors.selectCurrentPage,
   )
 
   useEffect(() => {
-    if (CurrentPage) {
-      setCurrentPage(CurrentPage)
+    if (CurrentPageValue) {
+      setCurrentPage(CurrentPageValue)
     }
-  }, [CurrentPage])
+  }, [CurrentPageValue])
 
   const {
     paginationRange,
@@ -28,7 +28,7 @@ const CandidatesCount = (): JSX.Element => {
     setCurrentPage,
     currentPage,
     pageSize,
-  } = usePagination(listSize, 20)
+  } = usePagination(TotalListSize, 20)
 
   return (
     <OCard

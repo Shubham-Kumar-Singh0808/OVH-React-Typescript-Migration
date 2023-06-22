@@ -25,19 +25,19 @@ const CandidatesCountTable = ({
 }: CompaniesListProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const candidatesInfoListData = useTypedSelector(
+  const candidatesInfo = useTypedSelector(
     reduxServices.companiesList.selectors.candidatesInfoListData,
   )
 
-  const companiesListSize = useTypedSelector(
+  const listSizeCount = useTypedSelector(
     reduxServices.companiesList.selectors.listSize,
   )
 
-  const totalNoOfRecords = candidatesInfoListData?.length
-    ? `Total Records: ${companiesListSize}`
+  const totalRecords = candidatesInfo?.length
+    ? `Total Records: ${listSizeCount}`
     : `No Records found...`
 
-  const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const pageSizeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
@@ -46,44 +46,38 @@ const CandidatesCountTable = ({
   const getItemNumber = (index: number) => {
     return (currentPage - 1) * pageSize + index + 1
   }
-  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
-    if (interviewStatus === 'NEW') {
+  const statusText = (status: string): JSX.Element => {
+    if (status === 'NEW') {
       return (
         <CBadge className="rounded-pill text-white" color="info">
-          {interviewStatus}
+          {status}
         </CBadge>
       )
-    } else if (interviewStatus === 'IN_PROCESS') {
+    } else if (status === 'IN_PROCESS') {
       return (
         <CBadge className="rounded-pill sh-badge-light">{'IN PROGRESS'}</CBadge>
       )
-    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
+    } else if (status === ('HOLD' || 'CANCEL')) {
       return (
         <CBadge className="rounded-pill text-white" color="warning">
-          {interviewStatus}
+          {status}
         </CBadge>
       )
-    } else if (
-      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
-    ) {
+    } else if (status === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')) {
       return (
         <CBadge className="rounded-pill text-white" color="danger">
-          {interviewStatus}
+          {status}
         </CBadge>
       )
-    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
+    } else if (status === ('OFFERED' || 'COMPLETED')) {
       return (
         <CBadge className="rounded-pill text-white" color="success">
-          {interviewStatus}
+          {status}
         </CBadge>
       )
-    } else if (interviewStatus === 'RESCHEDULED') {
-      return (
-        <CBadge className="rounded-pill sh-badge-light">
-          {interviewStatus}
-        </CBadge>
-      )
-    } else if (interviewStatus === 'NO_SHOW') {
+    } else if (status === 'RESCHEDULED') {
+      return <CBadge className="rounded-pill sh-badge-light">{status}</CBadge>
+    } else if (status === 'NO_SHOW') {
       return (
         <CBadge className="rounded-pill text-white" color="danger">
           {'NO SHOW'}
@@ -117,34 +111,34 @@ const CandidatesCountTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {candidatesInfoListData?.length > 0 &&
-            candidatesInfoListData?.map((data, index) => {
+          {candidatesInfo?.length > 0 &&
+            candidatesInfo?.map((item, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {data.currentEmployer || 'N/A'}
+                    {item.currentEmployer || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>{data.fullName || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.fullName || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
-                    {data.appliedFor.positionVacant || 'N/A'}
+                    {item.appliedFor.positionVacant || 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell>
-                    {data.appliedFor.jobCode || 'N/A'}
+                    {item.appliedFor.jobCode || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>{data.mobile || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{data.email || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{data.experience || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{data.skills || 'N/A'}</CTableDataCell>
-                  <CTableDataCell>{data.recruiter || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.mobile || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.email || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.experience || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.skills || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.recruiter || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
-                    {data.sourcelookUp.sourceName || 'N/A'}
+                    {item.sourcelookUp.sourceName || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>{data.technology || 'N/A'}</CTableDataCell>
+                  <CTableDataCell>{item.technology || 'N/A'}</CTableDataCell>
                   <CTableDataCell>
-                    {formatInterviewStatusText(data.cadidateInterviewStatus)}
+                    {statusText(item.cadidateInterviewStatus)}
                   </CTableDataCell>
                 </CTableRow>
               )
@@ -154,19 +148,19 @@ const CandidatesCountTable = ({
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{totalNoOfRecords}</strong>
+            <strong>{totalRecords}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
-          {companiesListSize > 20 && (
+          {listSizeCount > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSize}
+              handlePageSizeSelectChange={pageSizeHandler}
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {companiesListSize > 20 && (
+        {listSizeCount > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"

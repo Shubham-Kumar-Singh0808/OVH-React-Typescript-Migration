@@ -10,14 +10,14 @@ import { GetAllJobVacanciesList } from '../../../../types/Recruitment/JobOpening
 
 const JobInformation = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
-  const initialJobInfo = {} as GetAllJobVacanciesList
-  const [editViewJobInfo, setEditViewJobInfo] = useState(initialJobInfo)
+  const initialJobData = {} as GetAllJobVacanciesList
+  const [editViewJobInfoData, setEditViewJobInfoData] = useState(initialJobData)
 
   const JobOpeningById = useTypedSelector(
     reduxServices.jobVacancies.selectors.JobOpeningById,
   )
   useEffect(() => {
-    setEditViewJobInfo(JobOpeningById)
+    setEditViewJobInfoData(JobOpeningById)
   }, [JobOpeningById])
 
   const history = useHistory()
@@ -137,8 +137,8 @@ const JobInformation = (): JSX.Element => {
       {toggle === 'EditJobInformation' && (
         <EditJobInformation
           setToggle={setToggle}
-          editViewJobInfo={editViewJobInfo}
-          setEditViewJobInfo={setEditViewJobInfo}
+          editViewJobInfoData={editViewJobInfoData}
+          setEditViewJobInfoData={setEditViewJobInfoData}
         />
       )}
     </>

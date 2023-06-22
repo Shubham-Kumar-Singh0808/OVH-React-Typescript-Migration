@@ -26,33 +26,36 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditJobInformation = ({
   setToggle,
-  editViewJobInfo,
-  setEditViewJobInfo,
+  editViewJobInfoData,
+  setEditViewJobInfoData,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
-  editViewJobInfo: GetAllJobVacanciesList
-  setEditViewJobInfo: React.Dispatch<
+  editViewJobInfoData: GetAllJobVacanciesList
+  setEditViewJobInfoData: React.Dispatch<
     React.SetStateAction<GetAllJobVacanciesList>
   >
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
-  const [editDate, setEditDate] = useState<string>(editViewJobInfo.expiryDate)
+  const [isShowDescriptionValue, setIsShowDescriptionValue] =
+    useState<boolean>(true)
+  const [editDateValue, setEditDateValue] = useState<string>(
+    editViewJobInfoData.expiryDate,
+  )
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',
     className: 'col-form-label',
   }
 
-  const handleDescription = (description: string) => {
-    setEditViewJobInfo((prevState) => {
+  const descriptionHandler = (description: string) => {
+    setEditViewJobInfoData((prevState) => {
       return { ...prevState, ...{ description } }
     })
   }
-  const datePickerHandler = (value: Date) => {
-    setEditDate(moment(value).format(dateFormat))
+  const datePickerHandlerFunction = (value: Date) => {
+    setEditDateValue(moment(value).format(dateFormat))
   }
 
-  const onChangeHandler = (
+  const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>,
@@ -60,11 +63,11 @@ const EditJobInformation = ({
     const { name, value } = event.target
     if (name === 'noOfRequirements') {
       const limit = value.replace(/\D/g, '')
-      setEditViewJobInfo((prevState) => {
+      setEditViewJobInfoData((prevState) => {
         return { ...prevState, ...{ [name]: Number(limit) } }
       })
     } else
-      setEditViewJobInfo((prevState) => {
+      setEditViewJobInfoData((prevState) => {
         return {
           ...prevState,
           ...{
@@ -74,36 +77,36 @@ const EditJobInformation = ({
       })
   }
 
-  const updateSuccessMessage = (
+  const SuccessUpdateMessage = (
     <OToast
       toastMessage="Job opening is successfully edited..
           "
       toastColor="success"
     />
   )
-  const cancelBtnHandler = () => {
+  const cancelBtnHandlerFtn = () => {
     setToggle('')
   }
-  const updateBtnHandler = async () => {
+  const updateBtnHandlerFtn = async () => {
     const prepareObject = {
-      id: editViewJobInfo.id,
-      jobCode: editViewJobInfo.jobCode,
-      positionVacant: editViewJobInfo.positionVacant,
-      minimumExperience: editViewJobInfo.minimumExperience,
-      description: editViewJobInfo.description,
-      opendDate: editViewJobInfo.opendDate,
-      expiryDate: editDate,
-      noOfRequirements: editViewJobInfo.noOfRequirements,
-      offered: editViewJobInfo.offered,
-      remaining: editViewJobInfo.remaining,
-      status: editViewJobInfo.status,
+      id: editViewJobInfoData.id,
+      jobCode: editViewJobInfoData.jobCode,
+      positionVacant: editViewJobInfoData.positionVacant,
+      minimumExperience: editViewJobInfoData.minimumExperience,
+      description: editViewJobInfoData.description,
+      opendDate: editViewJobInfoData.opendDate,
+      expiryDate: editDateValue,
+      noOfRequirements: editViewJobInfoData.noOfRequirements,
+      offered: editViewJobInfoData.offered,
+      remaining: editViewJobInfoData.remaining,
+      status: editViewJobInfoData.status,
     }
-    const updateAppraisalCycleResultAction = await dispatch(
+    const updateResultAction = await dispatch(
       reduxServices.jobVacancies.updateJobVacancy(prepareObject),
     )
     if (
       reduxServices.jobVacancies.updateJobVacancy.fulfilled.match(
-        updateAppraisalCycleResultAction,
+        updateResultAction,
       )
     ) {
       dispatch(
@@ -114,15 +117,15 @@ const EditJobInformation = ({
           status: '',
         }),
       )
-      dispatch(reduxServices.app.actions.addToast(updateSuccessMessage))
+      dispatch(reduxServices.app.actions.addToast(SuccessUpdateMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
   useEffect(() => {
-    setIsShowDescription(false)
+    setIsShowDescriptionValue(false)
     setTimeout(() => {
-      setIsShowDescription(true)
+      setIsShowDescriptionValue(true)
     }, 100)
   }, [])
 
@@ -153,7 +156,9 @@ const EditJobInformation = ({
           >
             Job Code:
             <span
-              className={editViewJobInfo.jobCode ? 'text-white' : 'text-danger'}
+              className={
+                editViewJobInfoData.jobCode ? 'text-white' : 'text-danger'
+              }
             >
               *
             </span>
@@ -168,8 +173,8 @@ const EditJobInformation = ({
               name="jobCode"
               autoComplete="off"
               placeholder="Job Code"
-              value={editViewJobInfo.jobCode}
-              onChange={onChangeHandler}
+              value={editViewJobInfoData.jobCode}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -181,7 +186,7 @@ const EditJobInformation = ({
             Job Title:
             <span
               className={
-                editViewJobInfo.positionVacant ? TextWhite : TextDanger
+                editViewJobInfoData.positionVacant ? TextWhite : TextDanger
               }
             >
               *
@@ -197,8 +202,8 @@ const EditJobInformation = ({
               name="positionVacant"
               autoComplete="off"
               placeholder="Title"
-              value={editViewJobInfo.positionVacant}
-              onChange={onChangeHandler}
+              value={editViewJobInfoData.positionVacant}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -211,7 +216,7 @@ const EditJobInformation = ({
             No. of Openings:
             <span
               className={
-                editViewJobInfo.noOfRequirements ? TextWhite : TextDanger
+                editViewJobInfoData.noOfRequirements ? TextWhite : TextDanger
               }
             >
               *
@@ -227,9 +232,9 @@ const EditJobInformation = ({
               name="noOfRequirements"
               autoComplete="off"
               placeholder="No of Openings"
-              value={editViewJobInfo.noOfRequirements}
+              value={editViewJobInfoData.noOfRequirements}
               maxLength={5}
-              onChange={onChangeHandler}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -242,7 +247,7 @@ const EditJobInformation = ({
             Experience:
             <span
               className={
-                editViewJobInfo.minimumExperience ? TextWhite : TextDanger
+                editViewJobInfoData.minimumExperience ? TextWhite : TextDanger
               }
             >
               *
@@ -259,8 +264,8 @@ const EditJobInformation = ({
               autoComplete="off"
               placeholder="Experience"
               maxLength={11}
-              value={editViewJobInfo.minimumExperience}
-              onChange={onChangeHandler}
+              value={editViewJobInfoData.minimumExperience}
+              onChange={onChangeInputHandler}
             />
           </CCol>
         </CRow>
@@ -283,25 +288,25 @@ const EditJobInformation = ({
               dateFormat="dd/mm/yy"
               placeholderText="dd/mm/yyyy"
               name="expiryDate"
-              value={editDate || ''}
+              value={editDateValue || ''}
               minDate={new Date()}
-              onChange={(date: Date) => datePickerHandler(date)}
+              onChange={(date: Date) => datePickerHandlerFunction(date)}
             />
           </CCol>
         </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel className={TextLabelProps}>Job Description: </CFormLabel>
-          {isShowDescription ? (
+          {isShowDescriptionValue ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editViewJobInfo.description || ''}
+                initData={editViewJobInfoData.description || ''}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleDescription(editor.getData().trim())
+                  descriptionHandler(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -315,7 +320,9 @@ const EditJobInformation = ({
             className="col-sm-3 col-form-label text-end"
           >
             Status:
-            <span className={editViewJobInfo.status ? TextWhite : TextDanger}>
+            <span
+              className={editViewJobInfoData.status ? TextWhite : TextDanger}
+            >
               *
             </span>
           </CFormLabel>
@@ -326,8 +333,8 @@ const EditJobInformation = ({
               id="status"
               data-testid="Status"
               name="status"
-              value={editViewJobInfo.status}
-              onChange={onChangeHandler}
+              value={editViewJobInfoData.status}
+              onChange={onChangeInputHandler}
             >
               <option value={''}>Select Status</option>
               <option value="open">Open</option>
@@ -341,7 +348,7 @@ const EditJobInformation = ({
               data-testid="updateBtn"
               className="btn-ovh me-1 text-white"
               color="success"
-              onClick={updateBtnHandler}
+              onClick={updateBtnHandlerFtn}
             >
               Update
             </CButton>
@@ -349,7 +356,7 @@ const EditJobInformation = ({
               data-testid="cancelBtn"
               className="btn-ovh me-1 text-white"
               color="warning"
-              onClick={cancelBtnHandler}
+              onClick={cancelBtnHandlerFtn}
             >
               Cancel
             </CButton>
