@@ -87,7 +87,7 @@ const EmployeePipList = ({
   const fromDateValue = fromDate
     ? new Date(fromDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
-        month: 'numeric',
+        month: '2-digit',
         day: '2-digit',
       })
     : ''
@@ -95,7 +95,7 @@ const EmployeePipList = ({
   const toDateValue = toDate
     ? new Date(toDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
-        month: 'numeric',
+        month: '2-digit',
         day: '2-digit',
       })
     : ''

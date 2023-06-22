@@ -120,12 +120,9 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
   }
   return (
     <>
-      <div className="sh-timeline-body">
-        <CRow className="mt-3 mb-3">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+      <div className="sh-timeline-body ms-2">
+        <CRow>
+          <CFormLabel {...formLabelProps} className="col-sm-2 col-form-label">
             Rating:
             <span className={rating ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
@@ -133,11 +130,8 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
             <RatingStar rating={rating} setRating={setRating} />
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+        <CRow>
+          <CFormLabel {...formLabelProps} className="col-sm-2 col-form-label">
             Proactive:
             <span className={proactive ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
@@ -155,11 +149,8 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+        <CRow>
+          <CFormLabel {...formLabelProps} className="col-sm-2 col-form-label">
             Communication:
             <span className={communication ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
@@ -177,11 +168,8 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+        <CRow>
+          <CFormLabel {...formLabelProps} className="col-sm-2 col-form-label">
             Excellence:
             <span className={excellence ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
@@ -199,11 +187,8 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-3 mb-3">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
+        <CRow>
+          <CFormLabel {...formLabelProps} className="col-sm-12 col-form-label">
             Other Comments:
             <span
               className={
@@ -213,7 +198,7 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
               *
             </span>
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={4}>
             <CFormTextarea
               placeholder="Enter Your Comments"
               data-testid="text-area"
@@ -223,11 +208,11 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
               maxLength={250}
               onChange={(e) => setOtherComments(e.target.value)}
             ></CFormTextarea>
-            <p>{otherComments?.length}Left/250Max</p>
+            <p className="mt-1 mb-0"> {otherComments?.length} Left/250Max </p>
           </CCol>
         </CRow>
         <CRow>
-          <CCol md={{ span: 6, offset: 3 }}>
+          <CCol md={{ span: 6 }}>
             <CButton
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"

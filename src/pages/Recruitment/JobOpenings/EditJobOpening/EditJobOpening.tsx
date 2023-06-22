@@ -28,10 +28,14 @@ const EditJobOpening = ({
   setToggle,
   editJobInfo,
   setEditJobInfo,
+  searchInput,
+  selectRadioAction,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editJobInfo: GetAllJobVacanciesList
   setEditJobInfo: React.Dispatch<React.SetStateAction<GetAllJobVacanciesList>>
+  searchInput: string
+  selectRadioAction: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
@@ -118,6 +122,14 @@ const EditJobOpening = ({
       )
     ) {
       setToggle('')
+      dispatch(
+        reduxServices.jobVacancies.getAllJobVacancies({
+          startIndex: 0,
+          endIndex: 20,
+          searchJobTitle: searchInput,
+          status: selectRadioAction,
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
