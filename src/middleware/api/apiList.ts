@@ -119,6 +119,7 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   CompaniesListApi,
 } from '../../types/apiTypes'
@@ -228,6 +229,10 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
 export const profileHistoryConfig: ProfileHistoryApi = {
   getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
 }
+export const profileRecruitmentHistoryApiConfig: ProfileRecruitmentHistoryApi =
+  {
+    getEmployeeHistory: apiPrefix + '/Employee/getEmployeeHistory',
+  }
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
