@@ -40,7 +40,8 @@ const Schedule = (): JSX.Element => {
   const [sendMessageToInterviewer, setSendMessageToInterviewer] =
     useState<boolean>(false)
   const [isSaveBtnEnable, setIsSaveBtnEnable] = useState(false)
-  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
+  const [interviewerAutoCompleteTarget, setScheduleAutoCompleteTarget] =
+    useState<string>('')
 
   const selectDateValue = selectDate
     ? new Date(selectDate).toLocaleDateString(deviceLocale, {
@@ -61,7 +62,7 @@ const Schedule = (): JSX.Element => {
   )
 
   const result = interviewProfiles.filter(
-    (item) => item.fullName === autoCompleteTarget,
+    (item) => item.fullName === interviewerAutoCompleteTarget,
   )
   const dispatch = useAppDispatch()
 
@@ -147,13 +148,13 @@ const Schedule = (): JSX.Element => {
     )
   }
 
-  const onHandleSelectHRAssociate = (projectName: string) => {
-    setAutoCompleteTarget(projectName)
+  const onHandleSelectInterviewer = (projectName: string) => {
+    setScheduleAutoCompleteTarget(projectName)
   }
 
   const clearBtnHandler = () => {
     setSelectDate('')
-    setAutoCompleteTarget('')
+    setScheduleAutoCompleteTarget('')
     setComments('')
     setMode('')
     setMailToCandidate(false)
@@ -165,7 +166,7 @@ const Schedule = (): JSX.Element => {
     if (
       selectDate &&
       mode &&
-      autoCompleteTarget &&
+      interviewerAutoCompleteTarget &&
       (mailToCandidate === true || sendMailToInterviewer === true)
     ) {
       setIsSaveBtnEnable(true)
@@ -175,7 +176,7 @@ const Schedule = (): JSX.Element => {
   }, [
     selectDate,
     mode,
-    autoCompleteTarget,
+    interviewerAutoCompleteTarget,
     mailToCandidate,
     sendMailToInterviewer,
   ])
@@ -400,7 +401,9 @@ const Schedule = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Interviewer:
-            <span className={autoCompleteTarget ? TextWhite : TextDanger}>
+            <span
+              className={interviewerAutoCompleteTarget ? TextWhite : TextDanger}
+            >
               *
             </span>
           </CFormLabel>
@@ -418,7 +421,8 @@ const Schedule = (): JSX.Element => {
               renderMenu={(children) => (
                 <div
                   className={
-                    autoCompleteTarget && autoCompleteTarget.length > 0
+                    interviewerAutoCompleteTarget &&
+                    interviewerAutoCompleteTarget.length > 0
                       ? 'autocomplete-dropdown-wrap'
                       : 'autocomplete-dropdown-wrap hide'
                   }
@@ -429,12 +433,12 @@ const Schedule = (): JSX.Element => {
               renderItem={(item, isHighlighted) =>
                 itemsLayout(item.id, item.fullName, isHighlighted)
               }
-              value={autoCompleteTarget}
+              value={interviewerAutoCompleteTarget}
               shouldItemRender={(item, value) =>
                 item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
               }
-              onChange={(e) => setAutoCompleteTarget(e.target.value)}
-              onSelect={(value) => onHandleSelectHRAssociate(value)}
+              onChange={(e) => setScheduleAutoCompleteTarget(e.target.value)}
+              onSelect={(value) => onHandleSelectInterviewer(value)}
             />
           </CCol>
         </CRow>

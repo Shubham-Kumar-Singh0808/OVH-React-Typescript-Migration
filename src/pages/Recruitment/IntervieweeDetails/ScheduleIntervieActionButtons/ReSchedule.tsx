@@ -150,7 +150,7 @@ const ReSchedule = (): JSX.Element => {
     )
   }
 
-  const onHandleSelectHRAssociate = (projectName: string) => {
+  const onHandleRescheduleInterviewer = (projectName: string) => {
     setRescheduleAutoCompleteTarget(projectName)
   }
 
@@ -441,7 +441,7 @@ const ReSchedule = (): JSX.Element => {
                 item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
               }
               onChange={(e) => setRescheduleAutoCompleteTarget(e.target.value)}
-              onSelect={(value) => onHandleSelectHRAssociate(value)}
+              onSelect={(value) => onHandleRescheduleInterviewer(value)}
             />
           </CCol>
         </CRow>
