@@ -112,6 +112,7 @@ const ProductSpecificationList = (): JSX.Element => {
             <CCol
               lg={12}
               className="gap-4 d-md-flex justify-content-end mt-3 mb-3"
+              data-testid="exportBtn"
             >
               <div className="d-inline ml15 pull-right">
                 {productSpecificationList?.length > 0 ? (
@@ -119,8 +120,8 @@ const ProductSpecificationList = (): JSX.Element => {
                     color="info"
                     className="text-white btn-ovh"
                     size="sm"
+                    name="Click to Export"
                     onClick={handleExportData}
-                    data-testid="employee-export-btn"
                   >
                     <i className="fa fa-plus me-1"></i>
                     Click to Export
