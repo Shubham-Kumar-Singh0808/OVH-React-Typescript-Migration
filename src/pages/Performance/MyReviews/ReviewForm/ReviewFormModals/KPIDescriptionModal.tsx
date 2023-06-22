@@ -6,11 +6,16 @@ import { generateMyReviewTestId } from '../../MyReviewHelpers'
 // when the user clicks the kpi name, this modal is displayed
 
 const KPIDescriptionModal = ({ kpi }: { kpi: MyReviewKPI }): JSX.Element => {
+  const getFinalContent = (value: string | null): string => {
+    return value ? value : 'N/A'
+  }
+
   return (
     <>
       <h4
-        className="text-primary ng-binding"
+        className="text-primary"
         data-testid={generateMyReviewTestId('kpiDesModal-name')}
+        style={{ borderBottom: '1px solid #124b7c', paddingBottom: '15px' }}
       >
         {kpi.name}
       </h4>
@@ -20,21 +25,21 @@ const KPIDescriptionModal = ({ kpi }: { kpi: MyReviewKPI }): JSX.Element => {
         data-testid={generateMyReviewTestId('kpiDesModal-description')}
       >
         <b>Description:</b>
-        {parse(kpi.description)}
+        {parse(getFinalContent(kpi.description))}
       </p>
       <p
         className="ng-binding"
         data-testid={generateMyReviewTestId('kpiDesModal-frequency')}
       >
         <b>Frequency:</b>
-        {kpi.frequency}
+        {getFinalContent(kpi.frequency)}
       </p>
       <p
         className="ng-binding"
         data-testid={generateMyReviewTestId('kpiDesModal-target')}
       >
         <b>Target:</b>
-        {kpi.target ? kpi.target : 'N/A'}
+        {getFinalContent(kpi.target)}
       </p>
     </>
   )

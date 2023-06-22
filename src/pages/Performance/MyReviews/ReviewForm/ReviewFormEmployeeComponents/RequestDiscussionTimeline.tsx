@@ -29,12 +29,38 @@ const RequestDiscussionTimeline = (): JSX.Element => {
                 </label>
                 {review.status}
               </div>
-              <div>
-                <label>
-                  <strong>Comments: &nbsp;</strong>
-                </label>
-                {review.comments}
-              </div>
+              {review.comments !== null && (
+                <div>
+                  <label>
+                    <strong>Comments: &nbsp;</strong>
+                  </label>
+                  {review.comments}
+                </div>
+              )}
+              {review.kpiReviewDtos?.map((kpiDTO, kpiDTOIndex) => (
+                <div
+                  key={kpiDTOIndex}
+                  data-testid={generateMyReviewTestId(
+                    `dtoCommentsDiv-${kpiDTOIndex}-${kpiDTO.oldValue}`,
+                  )}
+                >
+                  {kpiDTO.kpiName !== null && (
+                    <>
+                      <label>
+                        <strong
+                          data-testid={generateMyReviewTestId(
+                            `dtoName-${kpiDTO.kpiName}`,
+                          )}
+                        >
+                          {kpiDTO.kpiName}{' '}
+                        </strong>
+                      </label>{' '}
+                      changed from {kpiDTO.oldValue} <strong>to</strong>{' '}
+                      {kpiDTO.newValue}
+                    </>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
