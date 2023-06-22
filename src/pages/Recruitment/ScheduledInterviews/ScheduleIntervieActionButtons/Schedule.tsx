@@ -180,7 +180,7 @@ const Schedule = (): JSX.Element => {
     sendMailToInterviewer,
   ])
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHourHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     if (Number(value) <= 12) {
       setTimePicker({
@@ -191,6 +191,21 @@ const Schedule = (): JSX.Element => {
       setTimePicker({
         ...timePicker,
         hours: '',
+      })
+    }
+  }
+
+  const onChangeMinutesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (Number(value) <= 60) {
+      setTimePicker({
+        ...timePicker,
+        minutes: e.target.value,
+      })
+    } else {
+      setTimePicker({
+        ...timePicker,
+        minutes: '',
       })
     }
   }
@@ -263,7 +278,7 @@ const Schedule = (): JSX.Element => {
                   name="hours"
                   data-testid="hours"
                   value={timePicker.hours}
-                  onChange={onChangeHandler}
+                  onChange={onChangeHourHandler}
                 />
               </CCol>
               <CCol sm={4}>
@@ -274,12 +289,7 @@ const Schedule = (): JSX.Element => {
                   name="minutes"
                   data-testid="minutes"
                   value={timePicker.minutes}
-                  onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
-                      minutes: e.target.value,
-                    })
-                  }}
+                  onChange={onChangeMinutesHandler}
                 />
               </CCol>
               <CCol sm={4}>
@@ -342,7 +352,7 @@ const Schedule = (): JSX.Element => {
               aria-label="Default select example"
               size="sm"
               id="mode"
-              data-testid="form-select-3"
+              data-testid="select-mode"
               name="mode"
               value={mode}
               onChange={(e) => setMode(e.target.value)}

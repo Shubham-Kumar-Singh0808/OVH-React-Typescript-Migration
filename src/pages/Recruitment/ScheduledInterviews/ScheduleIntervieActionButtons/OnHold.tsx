@@ -63,6 +63,11 @@ const OnHold = (): JSX.Element => {
     setSelect(e.target.value)
     setIsOnHoldModalVisibility(true)
   }
+  useEffect(() => {
+    if (select === '') {
+      setIsOnHoldModalVisibility(false)
+    }
+  }, [select])
   return (
     <>
       <CButton

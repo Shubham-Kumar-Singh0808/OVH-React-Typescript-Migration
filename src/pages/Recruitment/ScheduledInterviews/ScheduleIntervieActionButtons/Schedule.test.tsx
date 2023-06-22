@@ -27,11 +27,15 @@ describe('Schedule component with data', () => {
 
     const startTimeMinutes = screen.getByTestId('minutes')
     userEvent.type(startTimeMinutes, '4')
-    expect(startTimeMinutes).toHaveValue('064')
+    expect(startTimeMinutes).toHaveValue('')
 
     const startTimeMeridian = screen.getByTestId('startTimeMeridian')
     userEvent.selectOptions(startTimeMeridian, ['AM'])
     expect(startTimeMeridian).toHaveValue('AM')
+
+    const selectMode = screen.getByTestId('select-mode')
+    userEvent.selectOptions(selectMode, ['FACE_TO_FACE'])
+    expect(selectMode).toHaveValue('FACE_TO_FACE')
 
     const comments = screen.getByTestId('text-area')
     userEvent.type(comments, 'testing')
