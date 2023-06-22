@@ -52,6 +52,7 @@ describe('Candidates List without data', () => {
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
   })
+
   test('should render  component with data', () => {
     expect(screen.getByText('Kanchumarthi Jagadeesh')).toBeInTheDocument()
     expect(screen.getByText('Test Testing')).toBeInTheDocument()

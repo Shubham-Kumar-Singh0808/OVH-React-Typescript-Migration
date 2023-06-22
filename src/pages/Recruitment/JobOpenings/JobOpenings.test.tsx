@@ -2,8 +2,10 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import JobOpenings from './JobOpenings'
-import { render, screen } from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+
+const mockSetTicketApprovalParams = jest.fn()
 
 describe('Job Openings without data', () => {
   beforeEach(() => {
@@ -25,5 +27,16 @@ describe('Job Openings without data', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'Admin  Rbt')
     userEvent.click(screen.getByTestId('multi-search-btn'))
+  })
+  test('should render search input', () => {
+    const searchField = screen.getByTestId('searchField')
+    userEvent.type(searchField, 'testing')
+    expect(searchField).toHaveValue('testing')
+    fireEvent.keyDown(searchField, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+    })
+    expect(mockSetTicketApprovalParams).toHaveBeenCalledTimes(0)
   })
 })

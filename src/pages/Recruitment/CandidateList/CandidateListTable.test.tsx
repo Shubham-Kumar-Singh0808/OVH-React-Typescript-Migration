@@ -61,4 +61,12 @@ describe('candidate List without data', () => {
     expect(screen.getByText('sunnymaish2212@gmail.com')).toBeInTheDocument()
     expect(screen.getByText('Dell Boomi developer')).toBeInTheDocument()
   })
+  test('should be able to click delete button element', () => {
+    const deleteBtnElement = screen.getByTestId('btn-delete3')
+    expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalConfirmBtn)
+    expect(modalConfirmBtn).toBeInTheDocument()
+  })
 })

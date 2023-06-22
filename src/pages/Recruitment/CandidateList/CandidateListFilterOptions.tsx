@@ -125,6 +125,7 @@ const CandidateListFilterOptions = ({
             className="cursor-pointer"
             color="success btn-ovh me-1"
             onClick={viewButtonHandler}
+            data-testId="view-btn"
           >
             View
           </CButton>
