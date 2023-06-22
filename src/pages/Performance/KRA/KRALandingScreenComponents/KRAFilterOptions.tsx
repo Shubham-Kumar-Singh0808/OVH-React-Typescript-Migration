@@ -140,7 +140,7 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
         ),
       )
     }
-  }, [designationList, selectedDepartment])
+  }, [designationList, empDepartmentsList, selectedDepartment])
 
   const submitFormHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -218,7 +218,8 @@ const KRAFilterOptions = (props: KRAFilterOptionsProps): JSX.Element => {
                 data-testid="add-kra-screen-btn"
                 onClick={addKRAButtonHandler}
               >
-                +Add KRA
+                <i className="fa fa-plus me-1"></i>
+                Add KRA
               </CButton>
             </CCol>
           )}

@@ -167,14 +167,24 @@ const EditProcessArea = ({
         documentName: processArea.documentName,
         link: processArea.link,
         order: requireOrder,
-        processAreaId: Number(processArea.processSubHeadName),
+        processAreaId: Number(processArea.categoryId),
         responsible: processArea.responsible,
         status: isActive,
+        comments: processArea.comments,
+        common: processArea.common,
+        id: processArea.processSubHeadId,
+        processName: processArea.processName,
+        processSubHeadId: processArea.processSubHeadId,
+        processSubHeadName: processArea.processSubHeadName,
+        specificToProject: processArea.specificToProject,
+        sqaApproval: processArea.sqaApproval,
+        sqaComments: processArea.sqaComments,
       }),
     )
-    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
     dispatch(reduxServices.app.actions.addToast(updatedToastMessage))
     setToggle('')
+    dispatch(reduxServices.processArea.getProjectTailoringDocument('totalList'))
+    dispatch(reduxServices.processArea.getProcessAreas(processArea.categoryId))
   }
   const updateButtonHandler = async () => {
     if (
