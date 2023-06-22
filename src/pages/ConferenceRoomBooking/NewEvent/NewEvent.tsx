@@ -38,6 +38,7 @@ import {
 import { showIsRequired } from '../../../utils/helper'
 import OToast from '../../../components/ReusableComponent/OToast'
 import { ShouldResetNewBookingFields } from '../../../types/ConferenceRoomBooking/NewBooking/newBookingTypes'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const NewEvent = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -370,24 +371,16 @@ const NewEvent = (): JSX.Element => {
     }, 100)
     setAttendeesList([])
   }
-  const commonFormatDate = 'l'
-
   useEffect(() => {
-    const newFromDate = new Date(
-      moment(addEvent.fromDate?.toString()).format(commonFormatDate),
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(addEvent.fromDate, dateFormat).format(
+      newDateFormatForIsBefore,
     )
-    const newToDate = new Date(
-      moment(addEvent.toDate?.toString()).format(commonFormatDate),
+    const end = moment(addEvent.toDate, dateFormat).format(
+      newDateFormatForIsBefore,
     )
-    if (
-      addEvent.fromDate &&
-      addEvent.toDate &&
-      newToDate.getTime() < newFromDate.getTime()
-    ) {
-      setDateError(true)
-    } else {
-      setDateError(false)
-    }
+
+    setDateError(moment(end).isBefore(start))
   }, [addEvent.fromDate, addEvent.toDate])
 
   useEffect(() => {
