@@ -438,12 +438,17 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
 const ExpenseSubCategoryList = React.lazy(
   () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+)
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
 )
 const AddNewCandidate = React.lazy(
   () =>
@@ -1065,6 +1070,11 @@ const routes = [
     path: '/expenseSubCategory',
     name: 'Expense Sub Category',
     component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
   },
   {
     path: '/addNewCandidate',

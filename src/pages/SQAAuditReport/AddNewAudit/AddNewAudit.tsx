@@ -461,8 +461,18 @@ const AddNewAudit = (): JSX.Element => {
               </CCol>
             )}
           </CRow>
-          {isProjectManagerVisible ? (
-            <CRow className="mt-4 mb-4">
+          <CRow className="mt-4 mb-4">
+            {showProjectMangerName && (
+              <CFormLabel {...formLabelProps} className={formLabel}>
+                Project Manager :
+                <span
+                  className={showProjectMangerName ? TextWhite : TextDanger}
+                >
+                  *
+                </span>
+              </CFormLabel>
+            )}
+            {isProjectManagerVisible && (
               <CFormLabel {...formLabelProps} className={formLabel}>
                 Project Manager :
                 <span
@@ -473,64 +483,63 @@ const AddNewAudit = (): JSX.Element => {
                   *
                 </span>
               </CFormLabel>
-              {!isProjectManagerVisible ? (
-                <CCol sm={3}>
-                  <span className="fw-bold">{showProjectMangerName}</span>
-                </CCol>
-              ) : (
-                <CCol sm={3}>
-                  <Autocomplete
-                    inputProps={{
-                      className: 'form-control form-control-sm',
-                      placeholder: 'Project Manager',
-                    }}
-                    getItemValue={(item) =>
-                      item?.firstName + ' ' + item?.lastName
-                    }
-                    items={projectManagers ?? []}
-                    wrapperStyle={{ position: 'relative' }}
-                    renderMenu={(children) => (
-                      <div
-                        className={
-                          projectManagerAutoCompleteTarget &&
-                          projectManagerAutoCompleteTarget?.length > 0
-                            ? 'autocomplete-dropdown-wrap'
-                            : 'autocomplete-dropdown-wrap hide'
-                        }
-                      >
-                        {children}
-                      </div>
-                    )}
-                    renderItem={(item, isHighlighted) => (
-                      <div
-                        data-testid="projectManager-option"
-                        className={
-                          isHighlighted
-                            ? 'autocomplete-dropdown-item active'
-                            : 'autocomplete-dropdown-item '
-                        }
-                        key={item.id}
-                      >
-                        {item.firstName}
-                      </div>
-                    )}
-                    value={projectManagerAutoCompleteTarget}
-                    shouldItemRender={(item, itemValue) =>
-                      item?.firstName
-                        ?.toLowerCase()
-                        .indexOf(itemValue?.toLowerCase()) > -1
-                    }
-                    onChange={(e) => projectManagerOnChangeHandler(e)}
-                    onSelect={(selectedVal) =>
-                      onHandleSelectProjectManager(selectedVal)
-                    }
-                  />
-                </CCol>
-              )}
-            </CRow>
-          ) : (
-            <></>
-          )}
+            )}
+            {!isProjectManagerVisible && (
+              <CCol sm={3}>
+                <span className="fw-bold">{showProjectMangerName}</span>
+              </CCol>
+            )}
+            {isProjectManagerVisible && (
+              <CCol sm={3}>
+                <Autocomplete
+                  inputProps={{
+                    className: 'form-control form-control-sm',
+                    placeholder: 'Project Manager',
+                  }}
+                  getItemValue={(item) =>
+                    item?.firstName + ' ' + item?.lastName
+                  }
+                  items={projectManagers ?? []}
+                  wrapperStyle={{ position: 'relative' }}
+                  renderMenu={(children) => (
+                    <div
+                      className={
+                        projectManagerAutoCompleteTarget &&
+                        projectManagerAutoCompleteTarget?.length > 0
+                          ? 'autocomplete-dropdown-wrap'
+                          : 'autocomplete-dropdown-wrap hide'
+                      }
+                    >
+                      {children}
+                    </div>
+                  )}
+                  renderItem={(item, isHighlighted) => (
+                    <div
+                      data-testid="projectManager-option"
+                      className={
+                        isHighlighted
+                          ? 'autocomplete-dropdown-item active'
+                          : 'autocomplete-dropdown-item '
+                      }
+                      key={item.id}
+                    >
+                      {item.firstName}
+                    </div>
+                  )}
+                  value={projectManagerAutoCompleteTarget}
+                  shouldItemRender={(item, itemValue) =>
+                    item?.firstName
+                      ?.toLowerCase()
+                      .indexOf(itemValue?.toLowerCase()) > -1
+                  }
+                  onChange={(e) => projectManagerOnChangeHandler(e)}
+                  onSelect={(selectedVal) =>
+                    onHandleSelectProjectManager(selectedVal)
+                  }
+                />
+              </CCol>
+            )}
+          </CRow>
 
           <CRow className="mt-3 mb-4">
             <CFormLabel className="col-sm-3 col-form-label text-end">

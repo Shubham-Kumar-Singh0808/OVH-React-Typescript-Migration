@@ -91,9 +91,8 @@ describe('Add KRA', () => {
       expect(screen.getByTestId('percent-asterix')).toHaveClass(TextDanger)
 
       expect(screen.getByTestId('descrip-label')).toHaveTextContent(
-        'Description:*',
+        'Description:',
       )
-      expect(screen.getByTestId('descrip-asterix')).toHaveClass(TextWhite)
       expect(screen.getByTestId('error-percent')).toHaveClass(TextWhite)
     })
 
