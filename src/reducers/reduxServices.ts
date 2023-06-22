@@ -131,6 +131,7 @@ import { productSpecificationListService } from './Assets/ProductSpecificationLi
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
+import { expenseFormService } from './ExpenseManagement/ExpenseForm/expenseFormSlice'
 
 export const reduxServices = {
   app: appService,
@@ -266,4 +267,5 @@ export const reduxServices = {
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   upComingJoinList: upComingJoiningListService,
+  expenseForm: expenseFormService,
 }

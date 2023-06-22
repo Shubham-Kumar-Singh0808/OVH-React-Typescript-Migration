@@ -933,3 +933,18 @@ export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
 }
+
+export interface ExpenseFormApi extends ApiBase {
+  getEmployeeList: string
+  getCurrencyList: string
+  getCategoryList: string
+  getEmpDepartments: string
+  getPaymentList: string
+  getCountries: string
+  getSubCategories: string
+  editCategory: string
+  getMatchedProjects: string
+  getVendorList: string
+  getCardsList: string
+  addExpenses: string
+}

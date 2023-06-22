@@ -121,6 +121,7 @@ import {
   ProductSpecificationListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
+  ExpenseFormApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1113,4 +1114,19 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}
+
+export const expenseFormApiConfig: ExpenseFormApi = {
+  getEmployeeList: apiPrefix + '/jobapplicant/getAllProfileEmployeesData',
+  getCurrencyList: apiPrefix + '/ExpenseManagement/getCurrencyList',
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getPaymentList: apiPrefix + '/ExpenseManagement/getPaymentList',
+  getCountries: apiPrefix + '/ExpenseManagement/getCountries',
+  getSubCategories: apiPrefix + '/ExpenseManagement/getSubCategories',
+  editCategory: apiPrefix + '/ExpenseManagement/editCategory',
+  getMatchedProjects: apiPrefix + '/ExpenseManagement/getMatchedProjects',
+  getVendorList: apiPrefix + '/ExpenseManagement/getVendorList',
+  getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+  addExpenses: apiPrefix + '/ExpenseManagement/addExpenses',
 }
