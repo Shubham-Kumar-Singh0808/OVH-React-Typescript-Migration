@@ -121,10 +121,10 @@ const AddProjectRequestForm = ({
     useState<string>('')
 
   const validateEmailMsgCC = (email: string) => {
-    if (validator.isEmail(email)) {
-      setEmailErrorMsgCC(false)
-    } else {
+    if (email.length > 0 && !validator.isEmail(email)) {
       setEmailErrorMsgCC(true)
+    } else {
+      setEmailErrorMsgCC(false)
     }
   }
 
@@ -138,10 +138,10 @@ const AddProjectRequestForm = ({
     useState<string>('')
 
   const validateEmailMsgBCC = (email: string) => {
-    if (validator.isEmail(email)) {
-      setEmailErrorMsgBCC(false)
-    } else {
+    if (email.length > 0 && !validator.isEmail(email)) {
       setEmailErrorMsgBCC(true)
+    } else {
+      setEmailErrorMsgBCC(false)
     }
   }
 

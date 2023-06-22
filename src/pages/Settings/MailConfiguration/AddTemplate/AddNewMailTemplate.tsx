@@ -46,12 +46,11 @@ function AddNewMailTemplate(): JSX.Element {
   const getAssetTypes = useTypedSelector(
     reduxServices.addNewMailTemplate.selectors.assetTypes,
   )
-
   const validateEmail = (email: string) => {
-    if (validator.isEmail(email)) {
-      setEmailError(false)
-    } else {
+    if (email.length > 0 && !validator.isEmail(email)) {
       setEmailError(true)
+    } else {
+      setEmailError(false)
     }
   }
 
