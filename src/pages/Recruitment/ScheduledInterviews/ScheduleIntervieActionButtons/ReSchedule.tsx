@@ -204,7 +204,7 @@ const ReSchedule = (): JSX.Element => {
     <>
       <OCard
         className="mb-4 myprofile-wrapper"
-        title="Interviewee Details"
+        title="Schedule Interview"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -260,9 +260,9 @@ const ReSchedule = (): JSX.Element => {
                 <CFormInput
                   autoComplete="off"
                   type="text"
-                  id="Name"
-                  name="personName"
-                  data-testid="person-name"
+                  id="hours"
+                  name="hours"
+                  data-testid="hours"
                   value={timePicker.hours}
                   onChange={onChangeHandler}
                 />
@@ -271,9 +271,9 @@ const ReSchedule = (): JSX.Element => {
                 <CFormInput
                   autoComplete="off"
                   type="text"
-                  id="Name"
-                  name="personName"
-                  data-testid="person-name"
+                  id="minutes"
+                  name="minutes"
+                  data-testid="minutes"
                   value={timePicker.minutes}
                   onChange={(e) => {
                     setTimePicker({
@@ -309,7 +309,7 @@ const ReSchedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="rescheduleMailToCandidate"
                 checked={rescheduleMailToCandidate}
                 onChange={(e) => setRescheduleMailToCandidate(e.target.checked)}
                 inline
@@ -321,7 +321,7 @@ const ReSchedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="rescheduleSendMailToInterviewer"
                 checked={rescheduleSendMailToInterviewer}
                 onChange={(e) =>
                   setRescheduleSendMailToInterviewer(e.target.checked)
@@ -458,7 +458,7 @@ const ReSchedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="rescheduleSendMessageToCandidate"
                 checked={rescheduleSendMessageToCandidate}
                 onChange={(e) =>
                   setRescheduleSendMessageToCandidate(e.target.checked)
@@ -472,7 +472,7 @@ const ReSchedule = (): JSX.Element => {
                 type="checkbox"
                 id="sendMessageToInterviewer"
                 name="sendMessageToInterviewer"
-                data-testid="checked"
+                data-testid="sendMessageToInterviewer"
                 checked={sendMessageToInterviewer}
                 onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
                 inline

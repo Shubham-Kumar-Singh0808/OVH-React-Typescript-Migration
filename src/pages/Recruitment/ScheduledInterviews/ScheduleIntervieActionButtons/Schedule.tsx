@@ -318,7 +318,7 @@ const Schedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="send-to-Candidate"
                 checked={mailToCandidate}
                 onChange={(e) => setMailToCandidate(e.target.checked)}
                 inline
@@ -330,7 +330,7 @@ const Schedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="send-to-interviewer"
                 checked={sendMailToInterviewer}
                 onChange={(e) => setSendMailToInterviewer(e.target.checked)}
                 inline
@@ -461,7 +461,7 @@ const Schedule = (): JSX.Element => {
                 type="checkbox"
                 id="checked"
                 name="checked"
-                data-testid="checked"
+                data-testid="sendMessageToCandidate"
                 checked={sendMessageToCandidate}
                 onChange={(e) => setSendMessageToCandidate(e.target.checked)}
                 inline
@@ -473,7 +473,7 @@ const Schedule = (): JSX.Element => {
                 type="checkbox"
                 id="sendMessageToInterviewer"
                 name="sendMessageToInterviewer"
-                data-testid="checked"
+                data-testid="sendMessageToInterviewer"
                 checked={sendMessageToInterviewer}
                 onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
                 inline
@@ -487,6 +487,7 @@ const Schedule = (): JSX.Element => {
             <CButton
               className="btn-ovh me-1"
               color="success"
+              data-testid="save-btn"
               onClick={handleSaveScheduleInterview}
               disabled={!isSaveBtnEnable}
             >
@@ -497,6 +498,7 @@ const Schedule = (): JSX.Element => {
               color="warning "
               className="btn-ovh"
               onClick={clearBtnHandler}
+              data-testid="clear-btn"
             >
               Clear
             </CButton>
