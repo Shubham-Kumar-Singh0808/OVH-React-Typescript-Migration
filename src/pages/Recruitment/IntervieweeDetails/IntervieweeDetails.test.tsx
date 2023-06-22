@@ -41,7 +41,7 @@ describe('Employee Pip Time line Component Testing', () => {
       expect(mockSetToggle).toHaveBeenCalledTimes(0)
     })
     test('should render with data ', () => {
-      expect(screen.getByText('NO_SHOW')).toBeInTheDocument()
+      expect(screen.getByText('NO SHOW')).toBeInTheDocument()
       expect(screen.getByText('SKYPE')).toBeInTheDocument()
       expect(screen.getByText('SDLC ,STLC')).toBeInTheDocument()
       expect(screen.getByText('93849684986934jgfnjgn95898')).toBeInTheDocument()

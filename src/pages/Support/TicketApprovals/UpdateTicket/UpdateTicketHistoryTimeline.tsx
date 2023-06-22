@@ -281,9 +281,9 @@ const UpdateTicketHistoryTimeline = (): JSX.Element => {
                               Need Approval From
                             </CFormLabel>
                             {isTicketPrevProp(
-                              currTicketDetail.oldassignee as string,
+                              currTicketDetail.oldapprovedByManager as string,
                             )}
-                            &nbsp; {currTicketDetail.oldapprovedByManager}
+                            &nbsp; {currTicketDetail.approvedByManager}
                           </div>
                         </>
                       ) : (

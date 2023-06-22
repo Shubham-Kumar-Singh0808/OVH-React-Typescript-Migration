@@ -256,7 +256,7 @@ const SQAAuditReportTable = ({
                         <CTooltip content="Edit">
                           <CButton
                             color="info"
-                            className="btn-ovh-employee-list me-1 mt-1 sqa-btn"
+                            className="btn-ovh-employee-list me-1 sqa-btn"
                             data-testid="edit-btn"
                             onClick={() => editButtonHandler(auditReport.id)}
                             disabled={auditReport.disableEditButton === true}

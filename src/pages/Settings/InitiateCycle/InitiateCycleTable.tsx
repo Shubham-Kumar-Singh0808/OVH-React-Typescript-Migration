@@ -180,7 +180,7 @@ const InitiateCycleTable = ({
       >
         <>
           <span className="descriptionField">
-            <div
+            <p
               dangerouslySetInnerHTML={{
                 __html: questionModal,
               }}
