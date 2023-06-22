@@ -671,6 +671,7 @@ const EditAddAssetList = ({
             <CButton
               data-testid="update-btn"
               color="warning"
+              type="button"
               className="btn-ovh text-white"
               onClick={updateHandler}
               disabled={!isUpdateButtonEnabled}
