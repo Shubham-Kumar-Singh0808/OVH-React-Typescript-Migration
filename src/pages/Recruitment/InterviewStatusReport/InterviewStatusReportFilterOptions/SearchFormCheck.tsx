@@ -3,6 +3,7 @@ import React from 'react'
 import { CandidateCheckBoxFilterEnum } from '../../../../types/Recruitment/InterviewStatusReport/InterviewStatusReportTypes'
 import { useAppDispatch } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { getInterviewStatusReportTestId } from '../InterviewStatusReportHelpers'
 
 const SearchFormCheck = ({
   label,
@@ -27,6 +28,7 @@ const SearchFormCheck = ({
       hitArea="full"
       checked={isChecked}
       onChange={checkChangeHandler}
+      data-testid={getInterviewStatusReportTestId(label.toString())}
     />
   )
 }

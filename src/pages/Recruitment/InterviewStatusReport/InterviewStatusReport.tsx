@@ -9,9 +9,6 @@ import { usePagination } from '../../../middleware/hooks/usePagination'
 
 const InterviewStatusReport = (): JSX.Element => {
   const dispatch = useAppDispatch()
-  const filterOptions = useTypedSelector(
-    (state) => state.interviewStatusReport.filterOptions,
-  )
   const interviewStatusReport = useTypedSelector(
     (state) => state.interviewStatusReport.interviewStatusReportList,
   )

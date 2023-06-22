@@ -4,7 +4,10 @@ import SearchFormCheck from './SearchFormCheck'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { CandidateCheckBoxFilterEnum } from '../../../../types/Recruitment/InterviewStatusReport/InterviewStatusReportTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { isOneOfTheCheckBoxChecked } from '../InterviewStatusReportHelpers'
+import {
+  getInterviewStatusReportTestId,
+  isOneOfTheCheckBoxChecked,
+} from '../InterviewStatusReportHelpers'
 
 const SearchFilterOption = ({
   isSearchButtonEnabled,
@@ -94,12 +97,14 @@ const SearchFilterOption = ({
           value={filterOptions.searchByCandidateName}
           readOnly={isSearchInputReadonly}
           onKeyUp={searchInputKeyUpHandler}
+          data-testid={getInterviewStatusReportTestId('searchInput')}
         />
         <CButton
           className="btn-ovh cursor-pointer"
           color="info"
           disabled={!isSearchButtonEnabled}
           onClick={searchButtonHandler}
+          data-testid={getInterviewStatusReportTestId('searchBtn')}
         >
           <i className="fa fa-search"></i>
         </CButton>

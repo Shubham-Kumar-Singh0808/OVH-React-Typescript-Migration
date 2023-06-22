@@ -100,6 +100,13 @@ export const getValueOfCandidateStatusMappings = (
   return DisplayedCandidateStatusEnum.all
 }
 
+export const exchangeMonthAndDayInDate = (date: string) => {
+  const [day, month, year] = date.split('/')
+
+  // Construct the date strings in the "mm/dd/yyyy" format
+  return `${month}/${day}/${year}`
+}
+
 export const getInterviewStatusReportTestId = (value: string) => {
   return `interviewStatusReport-${value}`
 }

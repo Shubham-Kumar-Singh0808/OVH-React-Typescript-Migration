@@ -7,11 +7,9 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   CandidateCheckBoxFilterEnum,
   CandidateDateFilterEnum,
-  ExportInterviewStatusReportParams,
   IncomingInterviewStatusReport,
   InterviewStatusReportSliceState,
   OutgoingStatusReportFilterOptions,
-  ExportInterviewerDetailsParams,
 } from '../../../types/Recruitment/InterviewStatusReport/InterviewStatusReportTypes'
 import interviewStatusReportApi from '../../../middleware/api/Recruitment/InterviewStatusReport/InterviewStatusReportApi'
 import { ValidationError } from '../../../types/commonTypes'
@@ -55,34 +53,6 @@ const getInterviewStatusReportThunk = createAsyncThunk(
   async (finalData: OutgoingStatusReportFilterOptions, thunkApi) => {
     try {
       return await interviewStatusReportApi.getInterviewStatusReport(finalData)
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status)
-    }
-  },
-)
-
-const exportInterviewStatusReportThunk = createAsyncThunk(
-  'interviewStatusReport/exportInterviewStatusReportThunk',
-  async (finalParams: ExportInterviewStatusReportParams, thunkApi) => {
-    try {
-      return await interviewStatusReportApi.exportInterviewStatusReport(
-        finalParams,
-      )
-    } catch (error) {
-      const err = error as AxiosError
-      return thunkApi.rejectWithValue(err.response?.status)
-    }
-  },
-)
-
-const exportInterviewerDetailsThunk = createAsyncThunk(
-  'interviewStatusReport/exportInterviewerDetailsThunk',
-  async (finalParams: ExportInterviewerDetailsParams, thunkApi) => {
-    try {
-      return await interviewStatusReportApi.exportInterviewerDetails(
-        finalParams,
-      )
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status)
@@ -256,8 +226,6 @@ const interviewStatusReportThunks = {
   getAllEmpCountriesThunk,
   getAllTechnologyThunk,
   getInterviewStatusReportThunk,
-  exportInterviewStatusReportThunk,
-  exportInterviewerDetailsThunk,
 }
 
 export const interviewStatusReportServices = {

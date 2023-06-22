@@ -10,6 +10,7 @@ import { interchangeMonthAndDay } from '../../../Finance/ITDeclarationForm/ITDec
 import { openToDateHandler } from '../../../../utils/datePicketUtils'
 import { compareFromAndToDate } from '../../../../constant/constantData'
 import OToast from '../../../../components/ReusableComponent/OToast'
+import { exchangeMonthAndDayInDate } from '../InterviewStatusReportHelpers'
 
 const CustomDateFilterOption = () => {
   const dispatch = useAppDispatch()
@@ -37,7 +38,12 @@ const CustomDateFilterOption = () => {
 
   // used to compare the dates to check if ToDate is more than from date
   useEffect(() => {
-    if (compareFromAndToDate(fromDateValue, toDateValue)) {
+    if (
+      compareFromAndToDate(
+        exchangeMonthAndDayInDate(fromDateValue),
+        exchangeMonthAndDayInDate(toDateValue),
+      )
+    ) {
       dispatch(
         reduxServices.app.actions.addToast(
           <OToast
@@ -81,7 +87,7 @@ const CustomDateFilterOption = () => {
             }
             highlightDates={[{ 'today-date-highlight': [new Date()] }]}
             openToDate={openToDateHandler(
-              interchangeMonthAndDay(fromDateValue),
+              exchangeMonthAndDayInDate(fromDateValue),
             )}
           />
         </div>
@@ -99,8 +105,11 @@ const CustomDateFilterOption = () => {
               dateChangeHandler(date, CandidateDateFilterEnum.toDate)
             }
             maxDate={new Date()}
-            openToDate={openToDateHandler(interchangeMonthAndDay(toDateValue))}
+            // openToDate={openToDateHandler(interchangeMonthAndDay(toDateValue))}
             highlightDates={[{ 'today-date-highlight': [new Date()] }]}
+            openToDate={openToDateHandler(
+              exchangeMonthAndDayInDate(toDateValue),
+            )}
           />
         </div>
       </div>

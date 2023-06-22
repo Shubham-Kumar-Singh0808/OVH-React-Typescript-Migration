@@ -11,6 +11,7 @@ import {
   candidateSelectionStatusList,
   isOneOfTheCheckBoxChecked,
   isDateNotFilledWithCustom,
+  getInterviewStatusReportTestId,
 } from '../InterviewStatusReportHelpers'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -38,7 +39,8 @@ const InterviewStatusReportFilterOptions = ({
   )
 
   // view and clear button disable attribute
-  const [areButtonsEnabled, setAreButtonsEnabled] = useState<boolean>(false)
+  const [IsViewBtnEnabled, setIsViewBtnEnabled] = useState<boolean>(false)
+  const [isClearBtnEnabled, setIsClearBtnEnabled] = useState<boolean>(false)
   const [isSearchButtonEnabled, setIsSearchButtonEnabled] =
     useState<boolean>(false)
 
@@ -90,16 +92,25 @@ const InterviewStatusReportFilterOptions = ({
   //writing condition for enabling and disabling of the view and clear button
   useEffect(() => {
     if (selectionStatusAsterix) {
-      setAreButtonsEnabled(false)
+      setIsViewBtnEnabled(false)
     } else {
       // if option selected is custom
       if (isDateNotFilledWithCustom(filterOptions)) {
-        setAreButtonsEnabled(false)
+        setIsViewBtnEnabled(false)
         return
       }
-      setAreButtonsEnabled(true)
+      setIsViewBtnEnabled(true)
     }
   }, [selectionStatusAsterix, filterOptions])
+
+  // condition for enabling or disabling the clear button
+  useEffect(() => {
+    if (selectionStatusAsterix) {
+      setIsClearBtnEnabled(false)
+    } else {
+      setIsClearBtnEnabled(true)
+    }
+  }, [selectionStatusAsterix])
 
   //condition for enabling and disabling of the search button
   useEffect(() => {
@@ -129,6 +140,9 @@ const InterviewStatusReportFilterOptions = ({
               <CFormSelect
                 value={filterOptions.selectionStatus}
                 onChange={selectionStatusChangeHandler}
+                data-testid={getInterviewStatusReportTestId(
+                  'selectionStatusSel',
+                )}
               >
                 <option value="">Select Date</option>
                 {candidateSelectionStatusList.map((dateItem, dateItemIndex) => (
@@ -142,6 +156,9 @@ const InterviewStatusReportFilterOptions = ({
               <CFormSelect
                 value={filterOptions.candidateStatus}
                 onChange={candidateStateChangeHandler}
+                data-testid={getInterviewStatusReportTestId(
+                  'candidateStatusSel',
+                )}
               >
                 {Object.entries(candidateStatusMapping)?.map(([key, value]) => (
                   <option key={key} value={key}>
@@ -159,6 +176,9 @@ const InterviewStatusReportFilterOptions = ({
               <CFormSelect
                 value={filterOptions.selectionTechnology}
                 onChange={selectionTechnologyChangeHandler}
+                data-testid={getInterviewStatusReportTestId(
+                  'selectionTechnologySel',
+                )}
               >
                 <option value={''}>{initialTechnology.name}</option>
                 {allTechnology?.map(
@@ -181,6 +201,9 @@ const InterviewStatusReportFilterOptions = ({
             <CFormSelect
               value={filterOptions.selectionCountry}
               onChange={selectionCountryChangeHandler}
+              data-testid={getInterviewStatusReportTestId(
+                'selectionCountrySel',
+              )}
             >
               <option value="">{initialCountry.name}</option>
               {allEmpCountries?.map((empCountry, empCountryIndex) => (
@@ -205,8 +228,9 @@ const InterviewStatusReportFilterOptions = ({
         )
       }
       <FilterOptionsButtons
-        areButtonsEnabled={areButtonsEnabled}
+        IsViewBtnEnabled={IsViewBtnEnabled}
         setCurrentPage={setCurrentPage}
+        isClearBtnEnabled={isClearBtnEnabled}
       />
       <SearchFilterOption
         isSearchButtonEnabled={isSearchButtonEnabled}

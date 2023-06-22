@@ -1,59 +1,66 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React from 'react'
+import { AxiosError } from 'axios'
 import { getInterviewStatusReportTestId } from '../InterviewStatusReportHelpers'
-import { reduxServices } from '../../../../reducers/reduxServices'
 import {
   ExportInterviewStatusReportParams,
   ExportInterviewerDetailsParams,
 } from '../../../../types/Recruitment/InterviewStatusReport/InterviewStatusReportTypes'
-import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { useTypedSelector } from '../../../../stateStore'
+import interviewStatusReportApi from '../../../../middleware/api/Recruitment/InterviewStatusReport/InterviewStatusReportApi'
+import { downloadFile } from '../../../../utils/helper'
 
 const ExportButtons = (): JSX.Element => {
-  const dispatch = useAppDispatch()
   const filterOptions = useTypedSelector(
     (state) => state.interviewStatusReport.filterOptions,
   )
 
-  const finalDateValue = (date: string | null): string | undefined => {
-    return date ? date : undefined
+  const finalDateValue = (date: string | null): string => {
+    return date ? date : 'undefined'
   }
 
-  const exportInterviewStatusReportBtnHandler = (
+  const exportInterviewStatusReportBtnHandler = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault()
-    const finalData: ExportInterviewStatusReportParams = {
-      candidateStatus: filterOptions.candidateStatus,
-      selectionStatus: filterOptions.selectionStatus,
-      selectionTechnology: filterOptions.selectionTechnology,
-      fromDate: finalDateValue(filterOptions.fromDate),
-      toDate: finalDateValue(filterOptions.toDate),
-      searchByCandidateName: filterOptions.searchByCandidateName,
-      searchByMultipleFlag: filterOptions.searchByMultipleFlag,
-      searchByRecruiterName: filterOptions.searchByRecruiterName,
-      searchBySourceName: filterOptions.searchBySourceName,
+    try {
+      const finalData: ExportInterviewStatusReportParams = {
+        candidateStatus: filterOptions.candidateStatus,
+        selectionStatus: filterOptions.selectionStatus,
+        selectionTechnology: filterOptions.selectionTechnology,
+        fromDate: finalDateValue(filterOptions.fromDate),
+        toDate: finalDateValue(filterOptions.toDate),
+        searchByCandidateName: filterOptions.searchByCandidateName,
+        searchByMultipleFlag: filterOptions.searchByMultipleFlag,
+        searchByRecruiterName: filterOptions.searchByRecruiterName,
+        searchBySourceName: filterOptions.searchBySourceName,
+      }
+      const responseFile =
+        await interviewStatusReportApi.exportInterviewStatusReport(finalData)
+      downloadFile(responseFile, 'InterviewStatusReport.csv')
+    } catch (error) {
+      const err = error as AxiosError
+      console.log(err.response?.status)
     }
-    dispatch(
-      reduxServices.interviewStatusReport.exportInterviewStatusReportThunk(
-        finalData,
-      ),
-    )
   }
 
-  const exportInterviewerDetailsBtnHandler = (
+  const exportInterviewerDetailsBtnHandler = async (
     e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault()
-    const finalData: ExportInterviewerDetailsParams = {
-      fromDate: finalDateValue(filterOptions.fromDate),
-      toDate: finalDateValue(filterOptions.toDate),
-      selectionStatus: filterOptions.selectionStatus,
+    try {
+      const finalData: ExportInterviewerDetailsParams = {
+        fromDate: finalDateValue(filterOptions.fromDate),
+        toDate: finalDateValue(filterOptions.toDate),
+        selectionStatus: filterOptions.selectionStatus,
+      }
+      const responseFile =
+        await interviewStatusReportApi.exportInterviewerDetails(finalData)
+      downloadFile(responseFile, 'InterviewerDetails.csv')
+    } catch (error) {
+      const err = error as AxiosError
+      console.log(err.response?.status)
     }
-    dispatch(
-      reduxServices.interviewStatusReport.exportInterviewerDetailsThunk(
-        finalData,
-      ),
-    )
   }
 
   return (

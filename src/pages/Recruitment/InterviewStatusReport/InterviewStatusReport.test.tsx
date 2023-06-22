@@ -1,4 +1,5 @@
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import InterviewStatusReport from './InterviewStatusReport'
 import {
   getInterviewStatusReportTestId,
@@ -156,6 +157,12 @@ describe('interview status report', () => {
 
       act(() => {
         fireEvent.click(screen.getByTestId('next-page'))
+      })
+    })
+
+    test('change page size', () => {
+      act(() => {
+        userEvent.selectOptions(screen.getByTestId('paginationTestID'), '40')
       })
     })
 

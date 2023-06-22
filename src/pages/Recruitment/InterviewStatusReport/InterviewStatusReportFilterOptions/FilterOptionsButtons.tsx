@@ -3,12 +3,15 @@ import React from 'react'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { initialStatusReportFilters } from '../../../../reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSliceConstants'
+import { getInterviewStatusReportTestId } from '../InterviewStatusReportHelpers'
 
 const FilterOptionsButtons = ({
-  areButtonsEnabled,
+  IsViewBtnEnabled,
+  isClearBtnEnabled,
   setCurrentPage,
 }: {
-  areButtonsEnabled: boolean
+  IsViewBtnEnabled: boolean
+  isClearBtnEnabled: boolean
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -46,7 +49,8 @@ const FilterOptionsButtons = ({
       <CButton
         color="success"
         className="btn-ovh me-2"
-        disabled={!areButtonsEnabled}
+        data-testid={getInterviewStatusReportTestId('viewBtn')}
+        disabled={!IsViewBtnEnabled}
         onClick={viewButtonHandler}
       >
         View
@@ -54,8 +58,9 @@ const FilterOptionsButtons = ({
       <CButton
         color="warning"
         className="btn-ovh"
+        data-testid={getInterviewStatusReportTestId('clearBtn')}
         onClick={clearButtonHandler}
-        disabled={!areButtonsEnabled}
+        disabled={!isClearBtnEnabled}
       >
         Clear
       </CButton>
