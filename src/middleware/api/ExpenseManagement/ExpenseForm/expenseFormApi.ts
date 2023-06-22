@@ -103,7 +103,7 @@ const getSubCategoryList = async (): Promise<SubCategoryListResponse[]> => {
 
 const projectsList = async (
   searchString: string,
-): Promise<ProjectsListResponse> => {
+): Promise<ProjectsListResponse[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: expenseFormApiConfig.getMatchedProjects,
     method: AllowedHttpMethods.get,
@@ -117,7 +117,7 @@ const projectsList = async (
 
 const vendorsList = async (
   searchStrings: string,
-): Promise<VendorListResponse> => {
+): Promise<VendorListResponse[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: expenseFormApiConfig.getVendorList,
     method: AllowedHttpMethods.get,

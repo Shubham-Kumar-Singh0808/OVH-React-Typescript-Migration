@@ -4,12 +4,17 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import expensesFormApi from '../../../middleware/api/ExpenseManagement/ExpenseForm/expenseFormApi'
 import {
   AddExpenseProps,
+  AuthorizedEmployee,
   CategoryListResponse,
   CountriesListResponse,
+  CreditCardListResponse,
   CurrencyListResponse,
   EmpDepartmentListResponse,
   InitialExpenseFormSliceState,
   PaymentListResponse,
+  ProjectsListResponse,
+  SubCategoryListResponse,
+  VendorListResponse,
 } from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -176,14 +181,7 @@ export const initialExpenseFormState: InitialExpenseFormSliceState = {
 const expenseFormSlice = createSlice({
   name: 'expenseForm',
   initialState: initialExpenseFormState,
-  reducers: {
-    // setCurrentPage: (state, action) => {
-    //   state.currentPage = action.payload
-    // },
-    // setPageSize: (state, action) => {
-    //   state.pageSize = action.payload
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getCategoriesList.fulfilled, (state, action) => {
@@ -218,13 +216,16 @@ const expenseFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.creditCardsList = action.payload
       })
+      .addCase(getProjectsList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.projectsList = action.payload
+      })
+      .addCase(getVendorsList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.vendorsList = action.payload
+      })
       .addMatcher(
-        isAnyOf(
-          editCategories.fulfilled,
-          getProjectsList.fulfilled,
-          getVendorsList.fulfilled,
-          addExpensesList.fulfilled,
-        ),
+        isAnyOf(editCategories.fulfilled, addExpensesList.fulfilled),
         (state) => {
           state.isLoading = ApiLoadingState.succeeded
         },
@@ -282,6 +283,16 @@ const paymentsList = (state: RootState): PaymentListResponse[] =>
   state.expenseForm.paymentList
 const countriesList = (state: RootState): CountriesListResponse[] =>
   state.expenseForm.countriesList
+const employeesList = (state: RootState): AuthorizedEmployee[] =>
+  state.expenseForm.employeesList
+const subCategoryList = (state: RootState): SubCategoryListResponse[] =>
+  state.expenseForm.subCategoriesList
+const allProjectsList = (state: RootState): ProjectsListResponse[] =>
+  state.expenseForm.projectsList
+const allVendorsList = (state: RootState): VendorListResponse[] =>
+  state.expenseForm.vendorsList
+const creditCards = (state: RootState): CreditCardListResponse[] =>
+  state.expenseForm.creditCardsList
 
 const expenseFormThunk = {
   getCategoriesList,
@@ -305,6 +316,11 @@ const expenseFormSelectors = {
   currenciesList,
   paymentsList,
   countriesList,
+  employeesList,
+  subCategoryList,
+  allProjectsList,
+  allVendorsList,
+  creditCards,
 }
 
 export const expenseFormService = {

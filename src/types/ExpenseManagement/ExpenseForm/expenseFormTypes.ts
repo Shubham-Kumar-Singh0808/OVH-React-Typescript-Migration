@@ -10,6 +10,16 @@ export type AuthorizedEmployee = {
   fullName: string
 }
 
+export type EmployeeDetails = {
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
+}
+
 export type CategoryListResponse = {
   id: number
   categoryName: string
