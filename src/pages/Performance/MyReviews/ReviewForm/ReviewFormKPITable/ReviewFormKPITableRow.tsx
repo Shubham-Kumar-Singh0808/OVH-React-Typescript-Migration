@@ -13,6 +13,7 @@ import ReviewReadonlyData from '../ReviewFormComponents/ReviewReadonlyData'
 import {
   canEmployeeViewAfterManagerSubmit,
   generateMyReviewTestId,
+  myReviewTableItemBorderBottom,
 } from '../../MyReviewHelpers'
 import KPIDescriptionModal from '../ReviewFormModals/KPIDescriptionModal'
 import { reduxServices } from '../../../../../reducers/reduxServices'
@@ -43,16 +44,22 @@ const ReviewFormKPITableRow = ({
       confirmBtnAction: undefined,
       modalFooterClass: 'd-none',
       modalHeaderClass: 'd-none',
+      modalSize: 'lg',
     }
     dispatch(reduxServices.myReview.actions.setModal(modalObject))
   }
 
   return (
     <CTableRow data-testid="myReview-kpiRow">
-      <CTableDataCell>{kpiIndex + 1}</CTableDataCell>
+      <CTableDataCell>
+        <div style={{ marginBottom: myReviewTableItemBorderBottom }}>
+          {kpiIndex + 1}
+        </div>
+      </CTableDataCell>
       <CTableDataCell>
         <div
           className="text-info cursor-pointer"
+          style={{ marginBottom: myReviewTableItemBorderBottom }}
           onClick={kpiNameClickHandler}
           data-testid={generateMyReviewTestId(`kpiName-${kpi.id}`)}
         >

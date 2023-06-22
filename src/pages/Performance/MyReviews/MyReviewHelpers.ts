@@ -21,6 +21,8 @@ export const initialMyReviewKRA: IncomingMyReviewKRA = {
   kpis: [],
 }
 
+export const myReviewTableItemBorderBottom = '0.75rem'
+
 export const initialPerformanceRating: IncomingPerformanceRating = {
   label: null,
   id: -1,
@@ -200,6 +202,41 @@ export const showCloseBtnForManager = (
   )
 }
 
+// this function checks if any kpi is left incomplete by EMPLOYEE.
+//Only INCOMPLETE AND NOT FOR "NOT ENTERED" and "COMPLETED"
+export const isAnyKPIIncompleteForEmployee = (
+  list: IncomingMyReviewKRA[],
+): [boolean, string] => {
+  for (const kraItem of list) {
+    const filteredItems = kraItem.kpis.filter(
+      (kpiItem) =>
+        kpiItem.employeeFeedback !== null &&
+        kpiItem.employeeFeedback.length < 50,
+    )
+    if (filteredItems.length > 0) {
+      return [true, filteredItems[0].name]
+    }
+  }
+  return [false, '']
+}
+
+// this function checks if any kpi is left incomplete by MANAGER.
+//Only INCOMPLETE AND NOT FOR "NOT ENTERED" and "COMPLETED"
+export const isAnyKPIIncompleteForManager = (
+  list: IncomingMyReviewKRA[],
+): [boolean, string] => {
+  for (const kraItem of list) {
+    const filteredItems = kraItem.kpis.filter(
+      (kpiItem) =>
+        kpiItem.managerFeedback !== null && kpiItem.managerFeedback.length < 50,
+    )
+    if (filteredItems.length > 0) {
+      return [true, filteredItems[0].name]
+    }
+  }
+  return [false, '']
+}
+
 // comments input visible to employee on following conditions
 export const isRequestDiscussionCommentsVisible = (
   formStatus: MyReviewFormStatus,
@@ -225,11 +262,13 @@ export const sortKPIByAlphabeticalOrder = (
   return sortedList.sort((a, b) => a.name.localeCompare(b.name))
 }
 
+// when testing with kras and kpis this function must be used as we are displaying them in certain order
 export const getKpisOfKraByKraIndex = (
   list: IncomingMyReviewAppraisalForm,
   kraIndex: number,
 ): MyReviewKPI[] => {
-  return list.kra[kraIndex].kpis
+  const { kpis } = sortKRAByAlphabeticalOrder(list.kra)[kraIndex]
+  return sortKPIByAlphabeticalOrder(kpis)
 }
 
 export const generateMyReviewTestId = (data: string): string => {

@@ -122,6 +122,8 @@ const EmployeeReviewForm = (): JSX.Element => {
     return +employeeId === appraisalForm.employee.id
   }, [appraisalForm.employee.id])
 
+  console.log(appraisalForm)
+
   return (
     <>
       {apiError === null && (
@@ -184,6 +186,7 @@ const EmployeeReviewForm = (): JSX.Element => {
             modalFooterClass={myReviewModal?.modalFooterClass}
             modalHeaderClass={myReviewModal?.modalHeaderClass}
             confirmButtonAction={myReviewModal?.confirmBtnAction}
+            modalSize={myReviewModal?.modalSize}
           >
             {myReviewModal?.description}
           </OModal>
