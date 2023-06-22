@@ -1,21 +1,18 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import {
-  CRow,
-  CCol,
-  CFormLabel,
-  CFormSelect,
-  CButton,
-  CMultiSelect,
-} from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import Multiselect from 'multiselect-react-dropdown'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
 import { employeeStatus, reviewRatings } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
-import { ReviewListData } from '../../../types/Performance/ReviewList/reviewListTypes'
+import {
+  Ratings,
+  ReviewListData,
+} from '../../../types/Performance/ReviewList/reviewListTypes'
 import { downloadFile, showIsRequired } from '../../../utils/helper'
 import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
 
@@ -38,6 +35,8 @@ const ReviewListFilterOptions = ({
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [reviewRate, setReviewRate] = useState<Ratings[]>([])
+
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
@@ -173,6 +172,8 @@ const ReviewListFilterOptions = ({
     setSearchValue('')
     setShowExportButton(false)
     setIsChecked(false)
+    setReviewRate([])
+    dispatch(reduxServices.reviewList.actions.clearReviewList())
     dispatch(reduxServices.reviewList.actions.setCurrentListStatus(''))
   }
 
@@ -190,6 +191,14 @@ const ReviewListFilterOptions = ({
       toDate: reviewToDate || null,
     })
     downloadFile(reviewListDownload, 'AppraisalList.csv')
+  }
+
+  const handleMultiSelect = (list: Ratings[]) => {
+    setReviewRate(list)
+  }
+
+  const handleOnRemoveSelectedOption = (selectedList: Ratings[]) => {
+    setReviewRate(selectedList)
   }
 
   return (
@@ -245,8 +254,8 @@ const ReviewListFilterOptions = ({
                     dept1.departmentName.localeCompare(dept2.departmentName),
                   )
                   ?.map((dept, index) => (
-                    <option key={index} value={dept.departmentId}>
-                      {dept.departmentName}
+                    <option key={index} value={dept?.departmentId}>
+                      {dept?.departmentName}
                     </option>
                   ))}
               </CFormSelect>
@@ -392,11 +401,16 @@ const ReviewListFilterOptions = ({
           )}
           <CCol sm={3}>
             <CFormLabel>Ratings:</CFormLabel>
-            <CMultiSelect
-              options={reviewRatings}
-              selectionType="counter"
+            <Multiselect
+              options={reviewRatings?.map((employee) => employee) || []}
+              displayValue="text"
               data-testid="ratings"
-              className="py-1"
+              className="py-1 ovh-multiselect"
+              selectedValues={reviewRate}
+              onSelect={(list: Ratings[]) => handleMultiSelect(list)}
+              onRemove={(selectedList: Ratings[]) =>
+                handleOnRemoveSelectedOption(selectedList)
+              }
             />
           </CCol>
           <CCol sm={3}>
