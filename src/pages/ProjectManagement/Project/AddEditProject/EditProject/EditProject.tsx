@@ -38,6 +38,7 @@ import { ClientOrganization } from '../../ProjectComponent/ClientOrganization'
 import { ProjectName } from '../../ProjectComponent/ProjectName'
 import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
 import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
+import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
 interface TypesObject {
   [key: string]: string
@@ -204,6 +205,9 @@ const EditProject = (): JSX.Element => {
 
   const domainList = useTypedSelector(
     reduxServices.projectManagement.selectors.domains,
+  )
+  const isLoading = useTypedSelector(
+    reduxServices.projectManagement.selectors.isLoading,
   )
 
   const managerList = useTypedSelector(
@@ -419,7 +423,6 @@ const EditProject = (): JSX.Element => {
     project.billingContactPersonEmail && !billingContactPersonEmailError
       ? 'text-white'
       : 'text-danger'
-  console.log(project.description + 'description')
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -427,7 +430,7 @@ const EditProject = (): JSX.Element => {
       CBodyClassName="ps-0 pe-0"
       CFooterClassName="d-none"
     >
-      {Object.keys(project).length > 0 ? (
+      {isLoading !== ApiLoadingState.loading ? (
         <>
           <CRow className="justify-content-end">
             <CRow className="justify-content-end">

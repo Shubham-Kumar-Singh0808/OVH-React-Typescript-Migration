@@ -220,7 +220,7 @@ const IntervieweeDetails = (): JSX.Element => {
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={backBtnHandler}
+              onClick={() => backBtnHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>

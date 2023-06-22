@@ -105,8 +105,8 @@ const SQAAuditReportFilterOptions = ({
         SQAAuditSelectionDate: selectDate || '',
         auditRescheduleStatus: rescheduleStatus || '',
         auditStatus: status || '',
-        from: (fromDateValue as string) || '',
-        to: (toDateValue as string) || '',
+        from: fromDateValue || '',
+        to: toDateValue || '',
       }),
     )
   }, [dispatch, pageSize, currentPage])

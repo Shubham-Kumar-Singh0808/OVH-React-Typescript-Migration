@@ -86,7 +86,7 @@ const ProjectNotes = (): JSX.Element => {
         ) {
           // Image upload succeeded, continue with other APIs
 
-          await dispatch(
+          dispatch(
             reduxServices.app.actions.addToast(
               <OToast
                 toastColor="success"
