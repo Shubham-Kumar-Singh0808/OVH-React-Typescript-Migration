@@ -30,7 +30,6 @@ const Offer = (): JSX.Element => {
   }, [offerComment])
 
   const confirmBtnHandler = async () => {
-    // setIsDeleteModalVisible(false)
     const noShowResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,

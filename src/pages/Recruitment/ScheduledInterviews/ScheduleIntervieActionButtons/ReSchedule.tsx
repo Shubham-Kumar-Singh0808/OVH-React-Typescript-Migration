@@ -20,8 +20,35 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 
 const ReSchedule = (): JSX.Element => {
-  const [selectDate, setSelectDate] = useState<string | Date>('')
+  const [rescheduleSelectDate, setRescheduleSelectDate] = useState<
+    string | Date
+  >('')
   const history = useHistory()
+
+  const [rescheduleContactLink, setRescheduleContactLink] = useState<string>('')
+  const [rescheduleMode, setRescheduleMode] = useState<string>('')
+  const [rescheduleComments, setRescheduleComments] = useState<string>('')
+  const [rescheduleMailToCandidate, setRescheduleMailToCandidate] =
+    useState<boolean>(false)
+  const [rescheduleSendMailToInterviewer, setRescheduleSendMailToInterviewer] =
+    useState<boolean>(false)
+  const [
+    rescheduleSendMessageToCandidate,
+    setRescheduleSendMessageToCandidate,
+  ] = useState<boolean>(false)
+  const [sendMessageToInterviewer, setSendMessageToInterviewer] =
+    useState<boolean>(false)
+  const [isSaveBtnEnable, setIsSaveBtnEnable] = useState(false)
+  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
+
+  const selectDateValue = rescheduleSelectDate
+    ? new Date(rescheduleSelectDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+
   const resultTime = new Date().toLocaleTimeString([], {
     hour: 'numeric',
     minute: '2-digit',
@@ -29,26 +56,6 @@ const ReSchedule = (): JSX.Element => {
   const startHour = resultTime?.split(':')[0]
   const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
   const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
-  const [contactLink, setContactLink] = useState<string>('')
-  const [mode, setMode] = useState<string>('')
-  const [comments, setComments] = useState<string>('')
-  const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
-  const [sendMailToInterviewer, setSendMailToInterviewer] =
-    useState<boolean>(false)
-  const [sendMessageToCandidate, setSendMessageToCandidate] =
-    useState<boolean>(false)
-  const [sendMessageToInterviewer, setSendMessageToInterviewer] =
-    useState<boolean>(false)
-  const [isSaveBtnEnable, setIsSaveBtnEnable] = useState(false)
-  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
-
-  const selectDateValue = selectDate
-    ? new Date(selectDate).toLocaleDateString(deviceLocale, {
-        year: 'numeric',
-        month: 'numeric',
-        day: '2-digit',
-      })
-    : ''
 
   const [timePicker, setTimePicker] = useState({
     hours: startHour,
@@ -84,15 +91,15 @@ const ReSchedule = (): JSX.Element => {
     const SaveInterviewResultAction = await dispatch(
       reduxServices.intervieweeDetails.reScheduleInterview({
         candidateId: timeLineListSelector.personId,
-        contactDetails: contactLink || '',
-        description: comments,
-        interviewType: mode,
+        contactDetails: rescheduleContactLink || '',
+        description: rescheduleComments,
+        interviewType: rescheduleMode,
         interviewerId: result[0].id,
         scheduleDate: selectDateValue,
         scheduleTime: formattedTime,
-        sendMailToCandidate: mailToCandidate,
-        sendMailToInterviewer,
-        sendMessageToCandidate,
+        sendMailToCandidate: rescheduleMailToCandidate,
+        sendMailToInterviewer: rescheduleSendMailToInterviewer,
+        sendMessageToCandidate: rescheduleSendMessageToCandidate,
         sendMessageToInterviewer,
       }),
     )
@@ -145,32 +152,33 @@ const ReSchedule = (): JSX.Element => {
   }
 
   const clearBtnHandler = () => {
-    setSelectDate('')
+    setRescheduleSelectDate('')
     setAutoCompleteTarget('')
-    setComments('')
-    setMode('')
-    setMailToCandidate(false)
-    setSendMailToInterviewer(false)
-    setContactLink('')
+    setRescheduleComments('')
+    setRescheduleMode('')
+    setRescheduleMailToCandidate(false)
+    setRescheduleSendMailToInterviewer(false)
+    setRescheduleContactLink('')
   }
 
   useEffect(() => {
     if (
-      selectDate &&
-      mode &&
+      rescheduleSelectDate &&
+      rescheduleMode &&
       autoCompleteTarget &&
-      (mailToCandidate === true || sendMailToInterviewer === true)
+      (rescheduleMailToCandidate === true ||
+        rescheduleSendMailToInterviewer === true)
     ) {
       setIsSaveBtnEnable(true)
     } else {
       setIsSaveBtnEnable(false)
     }
   }, [
-    selectDate,
-    mode,
+    rescheduleSelectDate,
+    rescheduleMode,
     autoCompleteTarget,
-    mailToCandidate,
-    sendMailToInterviewer,
+    rescheduleMailToCandidate,
+    rescheduleSendMailToInterviewer,
   ])
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,9 +241,9 @@ const ReSchedule = (): JSX.Element => {
               dropdownMode="select"
               value={selectDateValue}
               onChange={(date: Date) => {
-                setSelectDate(date)
+                setRescheduleSelectDate(date)
               }}
-              selected={selectDate as Date}
+              selected={rescheduleSelectDate as Date}
             />
           </CCol>
         </CRow>
@@ -302,8 +310,8 @@ const ReSchedule = (): JSX.Element => {
                 id="checked"
                 name="checked"
                 data-testid="checked"
-                checked={mailToCandidate}
-                onChange={(e) => setMailToCandidate(e.target.checked)}
+                checked={rescheduleMailToCandidate}
+                onChange={(e) => setRescheduleMailToCandidate(e.target.checked)}
                 inline
               />
               <b className="ms-1">Send mail to candidate</b>
@@ -314,8 +322,10 @@ const ReSchedule = (): JSX.Element => {
                 id="checked"
                 name="checked"
                 data-testid="checked"
-                checked={sendMailToInterviewer}
-                onChange={(e) => setSendMailToInterviewer(e.target.checked)}
+                checked={rescheduleSendMailToInterviewer}
+                onChange={(e) =>
+                  setRescheduleSendMailToInterviewer(e.target.checked)
+                }
                 inline
               />
               <b className="ms-1">Send mail to interviewer</b>
@@ -328,7 +338,7 @@ const ReSchedule = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Mode:
-            <span className={mode ? TextWhite : TextDanger}>*</span>
+            <span className={rescheduleMode ? TextWhite : TextDanger}>*</span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -337,8 +347,8 @@ const ReSchedule = (): JSX.Element => {
               id="mode"
               data-testid="form-select-3"
               name="mode"
-              value={mode}
-              onChange={(e) => setMode(e.target.value)}
+              value={rescheduleMode}
+              onChange={(e) => setRescheduleMode(e.target.value)}
             >
               <option value="">Select Mode Of Interview</option>
               <option value="FACE_TO_FACE">In Person</option>
@@ -352,7 +362,9 @@ const ReSchedule = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        {mode === 'FACE_TO_FACE' || mode === 'SYSTEM' || mode === '' ? (
+        {rescheduleMode === 'FACE_TO_FACE' ||
+        rescheduleMode === 'SYSTEM' ||
+        rescheduleMode === '' ? (
           ''
         ) : (
           <CRow className="mb-3">
@@ -361,7 +373,9 @@ const ReSchedule = (): JSX.Element => {
               className="col-sm-2 col-form-label text-end"
             >
               Contact/Link:
-              <span className={contactLink ? TextWhite : TextDanger}>*</span>
+              <span className={rescheduleContactLink ? TextWhite : TextDanger}>
+                *
+              </span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -371,8 +385,8 @@ const ReSchedule = (): JSX.Element => {
                 name="contactLink"
                 placeholder="Enter Contact number or Meeting link"
                 data-testid="person-name"
-                value={contactLink}
-                onChange={(e) => setContactLink(e.target.value)}
+                value={rescheduleContactLink}
+                onChange={(e) => setRescheduleContactLink(e.target.value)}
               />
             </CCol>
           </CRow>
@@ -434,8 +448,8 @@ const ReSchedule = (): JSX.Element => {
               aria-label="textarea"
               autoComplete="off"
               maxLength={150}
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
+              value={rescheduleComments}
+              onChange={(e) => setRescheduleComments(e.target.value)}
             ></CFormTextarea>
           </CCol>
           <CCol sm={4}>
@@ -445,8 +459,10 @@ const ReSchedule = (): JSX.Element => {
                 id="checked"
                 name="checked"
                 data-testid="checked"
-                checked={sendMessageToCandidate}
-                onChange={(e) => setSendMessageToCandidate(e.target.checked)}
+                checked={rescheduleSendMessageToCandidate}
+                onChange={(e) =>
+                  setRescheduleSendMessageToCandidate(e.target.checked)
+                }
                 inline
               />
               <b className="ms-1">Send Message to candidate</b>

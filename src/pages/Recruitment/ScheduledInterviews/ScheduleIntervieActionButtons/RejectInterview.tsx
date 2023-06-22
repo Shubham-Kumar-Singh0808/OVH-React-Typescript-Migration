@@ -34,7 +34,6 @@ const RejectInterview = (): JSX.Element => {
   }, [rejectLeaveComment])
 
   const confirmRejectBtnHandler = async () => {
-    // setIsDeleteModalVisible(false)
     const rejectBtnResultAction = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
         candidateId: timeLineListSelector.personId,

@@ -52,7 +52,7 @@ const OnHold = (): JSX.Element => {
     }
   }
   useEffect(() => {
-    if (onHoldComment) {
+    if (onHoldComment?.replace(/^\s*/, '')) {
       setIsYesButtonEnabled(true)
     } else {
       setIsYesButtonEnabled(false)
@@ -84,7 +84,6 @@ const OnHold = (): JSX.Element => {
             data-testid="form-select-3"
             name="select"
             value={select}
-            // onChange={(e) => setSelect(e.target.value)}
             onChange={onChangeHandler}
           >
             <option value="">select</option>
