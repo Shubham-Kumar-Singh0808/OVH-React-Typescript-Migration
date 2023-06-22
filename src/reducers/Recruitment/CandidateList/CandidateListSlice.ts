@@ -271,7 +271,7 @@ const candidateListSlice = createSlice({
           addTechnologyThunk.rejected,
           deleteTechnologyThunk.rejected,
         ),
-        (state, action) => {
+        (state) => {
           state.isLoading = ApiLoadingState.failed
         },
       )

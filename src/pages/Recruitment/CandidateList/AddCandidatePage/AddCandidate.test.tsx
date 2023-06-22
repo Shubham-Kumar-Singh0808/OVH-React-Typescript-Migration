@@ -20,6 +20,7 @@ import {
 import {
   CandidateJobTypeEnum,
   CandidateSourceType,
+  CurrentAddCandidatePage,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
 import {
   getDataInputTestId,
@@ -76,6 +77,7 @@ describe('Add Candidate', () => {
             allCompaniesData: mockAllCompaniesData,
             allJobVacancies: mockAllVacaniciesListNewCandidate,
             empCountries: mockGetEmpCountries,
+            currentAddCandidatePage: CurrentAddCandidatePage.addCandidate,
           },
         },
       })
@@ -86,12 +88,12 @@ describe('Add Candidate', () => {
     test('all labels are rendered', () => {
       requiredlabelsList.forEach((label) => {
         expect(
-          screen.getByTestId(`${getLabelAsterixDataTestId(label)[0]}`),
+          screen.getByTestId(getLabelAsterixDataTestId(label)[0]),
         ).toHaveTextContent(`${label}:`)
       })
       nonRequiredLabelsList.forEach((nonReqLabel) => {
         expect(
-          screen.getByTestId(`${getLabelAsterixDataTestId(nonReqLabel)[0]}`),
+          screen.getByTestId(getLabelAsterixDataTestId(nonReqLabel)[0]),
         ).toHaveTextContent(`${nonReqLabel}:`)
       })
     })
@@ -112,44 +114,30 @@ describe('Add Candidate', () => {
     })
     test('add button functionality', async () => {
       // all required fields
-      const firstName = screen.getByTestId(`${getDataInputTestId('fName')}`)
-      const lastName = screen.getByTestId(`${getDataInputTestId('lName')}`)
-      const appliedFor = screen.getByTestId(
-        `${getDataInputTestId('appliedFor')}`,
-      )
-      const email = screen.getByTestId(`${getDataInputTestId('email')}`)
-      const sourceType = screen.getByTestId(
-        `${getDataInputTestId('sourceType')}`,
-      )
-      const experience = screen.getByTestId(
-        `${getDataInputTestId('experience')}`,
-      )
-      const technology = screen.getByTestId(
-        `${getDataInputTestId('technology')}`,
-      )
-      const mobileCode = screen.getByTestId(
-        `${getDataInputTestId('mobileCode')}`,
-      )
+      const firstName = screen.getByTestId(getDataInputTestId('fName'))
+      const lastName = screen.getByTestId(getDataInputTestId('lName'))
+      const appliedFor = screen.getByTestId(getDataInputTestId('appliedFor'))
+      const email = screen.getByTestId(getDataInputTestId('email'))
+      const sourceType = screen.getByTestId(getDataInputTestId('sourceType'))
+      const experience = screen.getByTestId(getDataInputTestId('experience'))
+      const technology = screen.getByTestId(getDataInputTestId('technology'))
+      const mobileCode = screen.getByTestId(getDataInputTestId('mobileCode'))
       const mobileNumber = screen.getByTestId(
-        `${getDataInputTestId('mobileNumber')}`,
+        getDataInputTestId('mobileNumber'),
       )
-      const skills = screen.getByTestId(`${getDataInputTestId('skills')}`)
-      const ctc = screen.getByTestId(`${getDataInputTestId('ctc')}`)
-      const ectc = screen.getByTestId(`${getDataInputTestId('ectc')}`)
-      const currentLoc = screen.getByTestId(
-        `${getDataInputTestId('currentLoc')}`,
-      )
-      const noticePeriod = screen.getByTestId(
-        `${getDataInputTestId('noticeP')}`,
-      )
-      const jobType = screen.getByTestId(`${getDataInputTestId('jobType')}`)
-      const country = screen.getByTestId(`${getDataInputTestId('country')}`)
+      const skills = screen.getByTestId(getDataInputTestId('skills'))
+      const ctc = screen.getByTestId(getDataInputTestId('ctc'))
+      const ectc = screen.getByTestId(getDataInputTestId('ectc'))
+      const currentLoc = screen.getByTestId(getDataInputTestId('currentLoc'))
+      const noticePeriod = screen.getByTestId(getDataInputTestId('noticeP'))
+      const jobType = screen.getByTestId(getDataInputTestId('jobType'))
+      const country = screen.getByTestId(getDataInputTestId('country'))
 
       // all non-required fields
-      const aadharNumber = screen.getByTestId(`${getDataInputTestId('aNum')}`)
-      const panNumber = screen.getByTestId(`${getDataInputTestId('pNum')}`)
-      const linkedin = screen.getByTestId(`${getDataInputTestId('linkedin')}`)
-      const skype = screen.getByTestId(`${getDataInputTestId('skype')}`)
+      const aadharNumber = screen.getByTestId(getDataInputTestId('aNum'))
+      const panNumber = screen.getByTestId(getDataInputTestId('pNum'))
+      const linkedin = screen.getByTestId(getDataInputTestId('linkedin'))
+      const skype = screen.getByTestId(getDataInputTestId('skype'))
       const whatsAppYes = screen.getByTestId(
         `${getDataInputTestId('whatsapp')}-yes`,
       ) as HTMLInputElement

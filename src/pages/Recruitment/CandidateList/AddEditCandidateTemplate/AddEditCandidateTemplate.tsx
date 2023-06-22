@@ -486,11 +486,13 @@ const AddEditCandidateTemplate = ({
                 data-testid={`${getDataInputTestId('sourceType')}`}
               >
                 <option value="">Select Source Type</option>
-                {candidateSourceTypeList.map((sourceType, sourceTypeIndex) => (
-                  <option key={sourceTypeIndex} value={sourceType}>
-                    {sourceType}
-                  </option>
-                ))}
+                {candidateSourceTypeList.map(
+                  (sourceTypeItem, sourceTypeIndex) => (
+                    <option key={sourceTypeIndex} value={sourceTypeItem}>
+                      {sourceType}
+                    </option>
+                  ),
+                )}
               </CFormSelect>
             </CandidateEntryItem>
           </CCol>
@@ -552,15 +554,18 @@ const AddEditCandidateTemplate = ({
                     <option value="" data-testid="addCandOpt-techOpt">
                       Select
                     </option>
-                    {allTechnologyList?.map((technology, technologyIndex) => (
-                      <option
-                        key={technologyIndex}
-                        data-testid="addCandOpt-techOpt"
-                        value={technology.name}
-                      >
-                        {technology.name}
-                      </option>
-                    ))}
+                    {allTechnologyList.length > 0 &&
+                      allTechnologyList?.map(
+                        (technologyItem, technologyIndex) => (
+                          <option
+                            key={technologyIndex}
+                            data-testid="addCandOpt-techOpt"
+                            value={technologyItem.name}
+                          >
+                            {technologyItem.name}
+                          </option>
+                        ),
+                      )}
                   </CFormSelect>
                 </CCol>
                 <CCol sm={5}>
@@ -621,17 +626,18 @@ const AddEditCandidateTemplate = ({
                     >
                       Select
                     </option>
-                    {allEmpCountriesList?.map(
-                      (countryCode, countryCodeIndex) => (
-                        <option
-                          key={countryCodeIndex}
-                          data-testid="addCandOpt-countryOpt"
-                          value={countryCode.id}
-                        >
-                          {countryCode.countryCode}
-                        </option>
-                      ),
-                    )}
+                    {allEmpCountriesList.length > 0 &&
+                      allEmpCountriesList?.map(
+                        (countryCode, countryCodeIndex) => (
+                          <option
+                            key={countryCodeIndex}
+                            data-testid="addCandOpt-countryOpt"
+                            value={countryCode.id}
+                          >
+                            {countryCode.countryCode}
+                          </option>
+                        ),
+                      )}
                   </CFormSelect>
                 </CCol>
                 <CCol sm={7}>
@@ -773,11 +779,12 @@ const AddEditCandidateTemplate = ({
                 <option value={initialCandidateCountry.id}>
                   Select Country
                 </option>
-                {allEmpCountriesList?.map((country, countryIndex) => (
-                  <option key={countryIndex} value={country.id}>
-                    {country.name}
-                  </option>
-                ))}
+                {allEmpCountriesList.length > 0 &&
+                  allEmpCountriesList?.map((country, countryIndex) => (
+                    <option key={countryIndex} value={country.id}>
+                      {country.name}
+                    </option>
+                  ))}
               </CFormSelect>
             </CandidateEntryItem>
           </CCol>
