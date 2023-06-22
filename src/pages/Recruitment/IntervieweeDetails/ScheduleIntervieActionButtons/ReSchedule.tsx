@@ -354,7 +354,7 @@ const ReSchedule = (): JSX.Element => {
               aria-label="Default select example"
               size="sm"
               id="mode"
-              data-testid="form-select-3"
+              data-testid="select-mode"
               name="mode"
               value={rescheduleMode}
               onChange={(e) => setRescheduleMode(e.target.value)}
@@ -507,6 +507,7 @@ const ReSchedule = (): JSX.Element => {
               color="warning "
               className="btn-ovh"
               onClick={clearBtnHandler}
+              data-testid="clear-btn"
             >
               Clear
             </CButton>

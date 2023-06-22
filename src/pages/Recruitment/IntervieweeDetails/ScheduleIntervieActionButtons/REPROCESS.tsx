@@ -58,7 +58,7 @@ const REPROCESS = (): JSX.Element => {
       <CButton
         type="button"
         id="button-addon2"
-        data-testid="search-employee-btn"
+        data-testid="reprocess-btn"
         className="btn btn-info btn-labeled fa fa-refresh fa-lg me-1"
         onClick={handleModal}
       >

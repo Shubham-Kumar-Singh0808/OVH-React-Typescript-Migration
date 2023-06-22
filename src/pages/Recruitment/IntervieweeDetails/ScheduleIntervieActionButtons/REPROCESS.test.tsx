@@ -11,7 +11,7 @@ describe('REPROCESS component with data', () => {
     })
   })
   test('should click on REPROCESS button ', () => {
-    const noShowElement = screen.getAllByTestId('onHold-btn')
+    const noShowElement = screen.getAllByTestId('reprocess-btn')
     expect(noShowElement[0]).toBeInTheDocument()
     userEvent.click(noShowElement[0])
 

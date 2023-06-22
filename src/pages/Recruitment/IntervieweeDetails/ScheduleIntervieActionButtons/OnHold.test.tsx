@@ -15,9 +15,9 @@ describe('on Hold component with data', () => {
     expect(noShowElement[0]).toBeInTheDocument()
     userEvent.click(noShowElement[0])
 
-    const comments = screen.getByTestId('text-area')
-    userEvent.type(comments, 'testing')
-    expect(comments).toHaveValue('testing')
+    const selectValue = screen.getByTestId('form-select-3')
+    userEvent.selectOptions(selectValue, ['Communication'])
+    expect(selectValue).toHaveValue('Communication')
 
     const confirmDBtn = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(confirmDBtn)
