@@ -8,6 +8,7 @@ import {
   country,
 } from '../../types/Recruitment/CandidateList/CandidateListTypes'
 
+// used in other components also - interview status reprot
 export const mockGetTechnology: GetAllTechnology[] = [
   {
     id: 1,
@@ -231,6 +232,7 @@ export const mockGetTechnology: GetAllTechnology[] = [
   },
 ]
 
+// used in other components - interview status report
 export const mockGetEmpCountries: country[] = [
   {
     id: 1,

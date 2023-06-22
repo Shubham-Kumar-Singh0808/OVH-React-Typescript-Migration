@@ -53,7 +53,7 @@ describe('InitiateCycle without data', () => {
     expect(screen.getByText('To Month :')).toBeInTheDocument()
   })
   test('should render Initiate Cycle component', () => {
-    expect(screen.getByRole('button', { name: 'Add' })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
   })
 
   test('should render on every input of Initiate Cycle', () => {

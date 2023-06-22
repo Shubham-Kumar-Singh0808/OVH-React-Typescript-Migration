@@ -260,240 +260,254 @@ const EmployeeAllocationFilterOptions = ({
         day: '2-digit',
       })
     : ''
+  const ProjectReportViewUserAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project ReportView',
+  )
+  const employeeAllocationReport = useTypedSelector(
+    reduxServices.employeeAllocationReport.selectors.employeeAllocationReport,
+  )
 
   return (
     <>
-      <CRow className="employeeAllocation-form">
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-2">Select:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="Select"
-            data-testid="form-select1"
-            name="Select"
-            value={Select}
-            onChange={(e) => {
-              setSelect(e.target.value)
-            }}
-          >
-            <option value="Today">Today</option>
-            <option value="Yesterday">Yesterday</option>
-            <option value="This Week">This Week</option>
-            <option value="Last Week">Last Week</option>
-            <option value="Last Month">Last Month</option>
-            <option value="Current Month">Current Month</option>
-            <option value="Custom">Custom</option>
-          </CFormSelect>
-        </CCol>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel>Employee Billing Status:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="billingStatus"
-            data-testid="form-select2"
-            name="billingStatus"
-            value={billingStatus}
-            onChange={(e) => setBillingStatus(e.target.value)}
-          >
-            <option value="All" selected>
-              All
-            </option>
-            <option value="true">Billable</option>
-            <option value="false">Non-Billable</option>
-            <option value="onBench">Bench</option>
-          </CFormSelect>
-        </CCol>
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel>Allocation Status:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="allocationStatus"
-            data-testid="form-select3"
-            name="allocationStatus"
-            value={allocationStatus}
-            onChange={(e) => setAllocationStatus(e.target.value)}
-          >
-            <option value="true">Allocated</option>
-            <option value="false">De-Allocated</option>
-          </CFormSelect>
-        </CCol>
+      {ProjectReportViewUserAccess?.viewaccess && (
+        <CRow className="employeeAllocation-form">
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel className="mt-2">Select:</CFormLabel>
+          </CCol>
+          <CCol sm={2}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="Select"
+              data-testid="form-select1"
+              name="Select"
+              value={Select}
+              onChange={(e) => {
+                setSelect(e.target.value)
+              }}
+            >
+              <option value="Today">Today</option>
+              <option value="Yesterday">Yesterday</option>
+              <option value="This Week">This Week</option>
+              <option value="Last Week">Last Week</option>
+              <option value="Last Month">Last Month</option>
+              <option value="Current Month">Current Month</option>
+              <option value="Custom">Custom</option>
+            </CFormSelect>
+          </CCol>
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel>Employee Billing Status:</CFormLabel>
+          </CCol>
+          <CCol sm={2}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="billingStatus"
+              data-testid="form-select2"
+              name="billingStatus"
+              value={billingStatus}
+              onChange={(e) => setBillingStatus(e.target.value)}
+            >
+              <option value="All" selected>
+                All
+              </option>
+              <option value="true">Billable</option>
+              <option value="false">Non-Billable</option>
+              <option value="onBench">Bench</option>
+            </CFormSelect>
+          </CCol>
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel>Allocation Status:</CFormLabel>
+          </CCol>
+          <CCol sm={2}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="allocationStatus"
+              data-testid="form-select3"
+              name="allocationStatus"
+              value={allocationStatus}
+              onChange={(e) => setAllocationStatus(e.target.value)}
+            >
+              <option value="true">Allocated</option>
+              <option value="false">De-Allocated</option>
+            </CFormSelect>
+          </CCol>
 
-        {!userAccessAllocationFeature?.viewaccess &&
-          !userAccessIndividualAllocationFeature?.viewaccess && (
+          {!userAccessAllocationFeature?.viewaccess &&
+            !userAccessIndividualAllocationFeature?.viewaccess && (
+              <>
+                <CCol sm={2} md={1} className="text-end">
+                  <CFormLabel className="mt-1">Department:</CFormLabel>
+                </CCol>
+
+                <CCol sm={2}>
+                  <Multiselect
+                    className="ovh-multiselect"
+                    data-testid="department-option"
+                    options={
+                      departmentsList?.map((department) => department) || []
+                    }
+                    displayValue="departmentName"
+                    placeholder="Select"
+                    selectedValues={selectDepartment}
+                    onSelect={(list: EmployeeDepartment[]) =>
+                      handleDepartmentMultiSelect(list)
+                    }
+                    onRemove={(selectedList: EmployeeDepartment[]) =>
+                      handleOnRemoveDepartmentSelectedOption(selectedList)
+                    }
+                  />
+                </CCol>
+              </>
+            )}
+          <CCol sm={2} md={1} className="text-end">
+            <CFormLabel className="mt-2">Technology:</CFormLabel>
+          </CCol>
+          <CCol sm={2}>
+            <CFormSelect
+              aria-label="Default select example"
+              size="sm"
+              id="technology"
+              data-testid="technology-select1"
+              name="technology"
+              value={selectTechnology}
+              onChange={(e) => {
+                setSelectTechnology(e.target.value)
+              }}
+            >
+              <option value={''}>Select</option>
+              {sortedTechnologies?.map((certificateItem, index) => (
+                <option key={index} value={certificateItem.name}>
+                  {certificateItem.name}
+                </option>
+              ))}
+            </CFormSelect>
+          </CCol>
+          {Select === 'Custom' ? (
             <>
               <CCol sm={2} md={1} className="text-end">
-                <CFormLabel className="mt-1">Department:</CFormLabel>
+                <CFormLabel className="mt-1">
+                  From:{' '}
+                  <span className={showIsRequired(fromDate as string)}>*</span>
+                </CFormLabel>
               </CCol>
-
               <CCol sm={2}>
-                <Multiselect
-                  className="ovh-multiselect"
-                  data-testid="department-option"
-                  options={
-                    departmentsList?.map((department) => department) || []
-                  }
-                  displayValue="departmentName"
-                  placeholder="Select"
-                  selectedValues={selectDepartment}
-                  onSelect={(list: EmployeeDepartment[]) =>
-                    handleDepartmentMultiSelect(list)
-                  }
-                  onRemove={(selectedList: EmployeeDepartment[]) =>
-                    handleOnRemoveDepartmentSelectedOption(selectedList)
-                  }
+                <DatePicker
+                  className="form-control form-control-sm sh-date-picker"
+                  data-testid="date-picker"
+                  placeholderText="dd/mm/yy"
+                  name="fromDate"
+                  maxDate={new Date()}
+                  autoComplete="off"
+                  id="fromDate"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  value={fromDateValue}
+                  onChange={(date: Date) => setFromDate(date)}
+                  selected={fromDate as Date}
                 />
               </CCol>
+              <CCol sm={2} md={1} className="text-end">
+                <CFormLabel className="mt-1">
+                  To:<span className={showIsRequired(toDate as string)}>*</span>
+                </CFormLabel>
+              </CCol>
+              <CCol sm={2}>
+                <DatePicker
+                  className="form-control form-control-sm sh-date-picker"
+                  data-testid="date-picker"
+                  placeholderText="dd/mm/yy"
+                  name="toDate"
+                  id="toDate"
+                  autoComplete="off"
+                  peekNextMonth
+                  showMonthDropdown
+                  showYearDropdown
+                  dropdownMode="select"
+                  value={toDateValue}
+                  onChange={(date: Date) => setToDate(date)}
+                  selected={toDate as Date}
+                />
+                {dateError && (
+                  <span className="text-danger" data-testid="errorMessage">
+                    To date should be greater than From date
+                  </span>
+                )}
+              </CCol>
             </>
+          ) : (
+            <></>
           )}
-        <CCol sm={2} md={1} className="text-end">
-          <CFormLabel className="mt-2">Technology:</CFormLabel>
-        </CCol>
-        <CCol sm={2}>
-          <CFormSelect
-            aria-label="Default select example"
-            size="sm"
-            id="technology"
-            data-testid="technology-select1"
-            name="technology"
-            value={selectTechnology}
-            onChange={(e) => {
-              setSelectTechnology(e.target.value)
-            }}
-          >
-            <option value={''}>Select</option>
-            {sortedTechnologies?.map((certificateItem, index) => (
-              <option key={index} value={certificateItem.name}>
-                {certificateItem.name}
-              </option>
-            ))}
-          </CFormSelect>
-        </CCol>
-        {Select === 'Custom' ? (
-          <>
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">
-                From:{' '}
-                <span className={showIsRequired(fromDate as string)}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={2}>
-              <DatePicker
-                className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="fromDate"
-                maxDate={new Date()}
-                autoComplete="off"
-                id="fromDate"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                value={fromDateValue}
-                onChange={(date: Date) => setFromDate(date)}
-                selected={fromDate as Date}
-              />
-            </CCol>
-            <CCol sm={2} md={1} className="text-end">
-              <CFormLabel className="mt-1">
-                To:<span className={showIsRequired(toDate as string)}>*</span>
-              </CFormLabel>
-            </CCol>
-            <CCol sm={2}>
-              <DatePicker
-                className="form-control form-control-sm sh-date-picker"
-                data-testid="date-picker"
-                placeholderText="dd/mm/yy"
-                name="toDate"
-                id="toDate"
-                autoComplete="off"
-                peekNextMonth
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
-                value={toDateValue}
-                onChange={(date: Date) => setToDate(date)}
-                selected={toDate as Date}
-              />
-              {dateError && (
-                <span className="text-danger" data-testid="errorMessage">
-                  To date should be greater than From date
-                </span>
-              )}
-            </CCol>
-          </>
-        ) : (
-          <></>
-        )}
-        <CCol className="employee-allocation-export-btn">
-          <CButton
-            color="info btn-ovh me-0"
-            data-testid="export-btn"
-            onClick={handleExportEmployeeAllocation}
-          >
-            <i className="fa fa-plus me-1"></i>Click to Export
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="mt-5 mb-4">
-        <CCol sm={{ span: 6, offset: 3 }}>
-          <CButton
-            className="cursor-pointer"
-            color="success btn-ovh me-1"
-            data-testid="view-btn"
-            onClick={handleViewBtnHandler}
-            disabled={
-              Select === 'Custom' && !(fromDate !== '' && toDate !== '')
-            }
-          >
-            View
-          </CButton>
-          <CButton
-            className="cursor-pointer"
-            disabled={false}
-            data-testid="clear-btn"
-            color="warning btn-ovh me-1"
-            onClick={clearBtnHandler}
-          >
-            Clear
-          </CButton>
-        </CCol>
-      </CRow>
-      <CRow className="gap-2 d-md-flex justify-content-md-end">
-        <CCol sm={3} md={4} lg={5} xl={4} xxl={3}>
-          <CInputGroup className="global-search me-0">
-            <CFormInput
-              placeholder="Multiple Search"
-              aria-label="Multiple Search"
-              data-testid="search-input"
-              aria-describedby="button-addon2"
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value)
-              }}
-            />
+          <CCol className="employee-allocation-export-btn">
+            {employeeAllocationReport?.Empsize > 0 && (
+              <CButton
+                color="info btn-ovh me-0"
+                data-testid="export-btn"
+                onClick={handleExportEmployeeAllocation}
+              >
+                <i className="fa fa-plus me-1"></i>Click to Export
+              </CButton>
+            )}
+          </CCol>
+        </CRow>
+      )}
+      {ProjectReportViewUserAccess?.viewaccess && (
+        <CRow className="mt-5 mb-4">
+          <CCol sm={{ span: 6, offset: 3 }}>
             <CButton
-              data-testid="multi-search-btn"
               className="cursor-pointer"
-              type="button"
-              color="info"
-              id="button-addon2"
-              onClick={handleSearchResult}
+              color="success btn-ovh me-1"
+              data-testid="view-btn"
+              onClick={handleViewBtnHandler}
+              disabled={
+                Select === 'Custom' && !(fromDate !== '' && toDate !== '')
+              }
             >
-              <i className="fa fa-search"></i>
+              View
             </CButton>
-          </CInputGroup>
-        </CCol>
-      </CRow>
+            <CButton
+              className="cursor-pointer"
+              disabled={false}
+              data-testid="clear-btn"
+              color="warning btn-ovh me-1"
+              onClick={clearBtnHandler}
+            >
+              Clear
+            </CButton>
+          </CCol>
+        </CRow>
+      )}
+      {ProjectReportViewUserAccess?.viewaccess && (
+        <CRow className="gap-2 d-md-flex justify-content-md-end">
+          <CCol sm={3} md={4} lg={5} xl={4} xxl={3}>
+            <CInputGroup className="global-search me-0">
+              <CFormInput
+                placeholder="Multiple Search"
+                aria-label="Multiple Search"
+                data-testid="search-input"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={(e) => {
+                  setSearchInput(e.target.value)
+                }}
+              />
+              <CButton
+                data-testid="multi-search-btn"
+                className="cursor-pointer"
+                type="button"
+                color="info"
+                id="button-addon2"
+                onClick={handleSearchResult}
+              >
+                <i className="fa fa-search"></i>
+              </CButton>
+            </CInputGroup>
+          </CCol>
+        </CRow>
+      )}
       <CCol xs={12} className="mt-3 ms-3">
         <CCol xs={12}>
           <EmployeeAllocationReportTable

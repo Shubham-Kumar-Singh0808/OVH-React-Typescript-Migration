@@ -21,6 +21,8 @@ import {
   getKpisOfKraByKraIndex,
   initialPerformanceRating,
   myReviewTestComments,
+  sortKPIByAlphabeticalOrder,
+  sortKRAByAlphabeticalOrder,
 } from '../MyReviewHelpers'
 
 const managerSaveBtnId = generateMyReviewTestId('managerSaveBtn')
@@ -68,20 +70,45 @@ describe('Manager Appraisal Render', () => {
       })
     })
 
+    test('incomplete kpi description save error', () => {
+      const saveBtn = screen.getByTestId(managerSaveBtnId)
+      const kraIndex = 1
+      const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
+      const kpi = getKpisOfKraByKraIndex(
+        mockInitialManagerAppraisalForm,
+        kraIndex,
+      )[0]
+      act(() => {
+        userEvent.click(openKpiBtn)
+      })
+      const kpiComments = screen.getByTestId(
+        generateMyReviewTestId(`${kpi.id}-managerComments`),
+      )
+      act(() => {
+        fireEvent.change(kpiComments, 'lessthan 50 char')
+      })
+      act(() => {
+        userEvent.click(saveBtn)
+      })
+    })
+
     test('submit button functionality', () => {
       const submitBtn = screen.getByTestId(managerSubmitBtnId)
 
       // initial
       expect(submitBtn).toBeDisabled()
-
-      mockInitialManagerAppraisalForm.kra.forEach((kra, kraIndex) => {
+      const sortedKRAs = sortKRAByAlphabeticalOrder(
+        mockInitialManagerAppraisalForm.kra,
+      )
+      sortedKRAs.forEach((kra, kraIndex) => {
         expect(submitBtn).toBeDisabled()
         const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
         act(() => {
           userEvent.click(openKpiBtn)
         })
+        const sortedKPIs = sortKPIByAlphabeticalOrder(kra.kpis)
         // entering the data for each kpi for manager
-        kra.kpis.forEach((kpiItem) => {
+        sortedKPIs.forEach((kpiItem) => {
           const chosenPerformanceRating =
             mockPerformanceRatings[3].rating.toString()
           const managerRating = screen.getByTestId(

@@ -4,6 +4,7 @@ import {
   CandidateSourceType,
   CandidateJobTypeEnum,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
+import { GetAllTechnology } from '../../../types/Recruitment/JobOpenings/jobOpeningsTypes'
 
 export const initialCandidateCountry: country = {
   countryCode: '',
@@ -24,6 +25,11 @@ export const initialCandidateAppliedForList: CandidateAppliedForList = {
   offered: -1,
   remaining: -1,
   status: '',
+}
+
+export const initialGetAllTechnology: GetAllTechnology = {
+  id: -1,
+  name: '',
 }
 
 export const candidateSourceTypeList: CandidateSourceType[] = [
@@ -66,6 +72,17 @@ export const get18YearsBackDate = (): Date => {
     todayDate.getMonth(),
     todayDate.getDate(),
   )
+}
+
+export const isTechnologyInTheList = (
+  technologyList: GetAllTechnology[],
+  technologyName: string,
+): boolean => {
+  const filteredResult = technologyList.find(
+    (technology) =>
+      technology.name.toLowerCase() === technologyName.trim().toLowerCase(),
+  )
+  return filteredResult !== undefined // returns true if it is in the list
 }
 
 export const nonRequiredFinalCandidateData = (data: string): string | null => {

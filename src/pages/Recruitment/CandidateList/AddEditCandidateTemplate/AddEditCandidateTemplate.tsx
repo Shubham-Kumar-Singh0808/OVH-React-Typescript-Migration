@@ -19,6 +19,7 @@ import {
   AddEditCandidateTemplateProps,
   CandidateSourceType,
   CandidateWhatsAppNotificationsRadio,
+  CurrentAddCandidatePage,
 } from '../../../../types/Recruitment/CandidateList/CandidateListTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import {
@@ -357,6 +358,17 @@ const AddEditCandidateTemplate = ({
     reasonForChangeAsterix,
   ])
 
+  const addTechnologyClickHandler = (
+    e: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    e.preventDefault()
+    dispatch(
+      reduxServices.candidateList.actions.setCurrentAddCandidatePage(
+        CurrentAddCandidatePage.addTechnology,
+      ),
+    )
+  }
+
   return (
     <>
       <CRow className="mt-2 justify-content-end text-end">
@@ -477,7 +489,7 @@ const AddEditCandidateTemplate = ({
                 {candidateSourceTypeList.map(
                   (sourceTypeItem, sourceTypeIndex) => (
                     <option key={sourceTypeIndex} value={sourceTypeItem}>
-                      {sourceTypeItem}
+                      {sourceType}
                     </option>
                   ),
                 )}
@@ -557,7 +569,12 @@ const AddEditCandidateTemplate = ({
                   </CFormSelect>
                 </CCol>
                 <CCol sm={5}>
-                  <CButton className="btn-ovh" color="info">
+                  <CButton
+                    className="btn-ovh"
+                    color="info"
+                    onClick={addTechnologyClickHandler}
+                    data-testid={getDataInputTestId('addTechBtn')}
+                  >
                     <i className="fa fa-plus me-1"></i>
                     Add
                   </CButton>
@@ -606,17 +623,17 @@ const AddEditCandidateTemplate = ({
                   >
                     <option
                       data-testid="addCandOpt-countryOpt"
-                      value={initialCandidateCountry.id.toString()}
+                      value={initialCandidateCountry.id}
                     >
                       Select
                     </option>
-                    {allEmpCountriesList?.length > 0 &&
+                    {allEmpCountriesList.length > 0 &&
                       allEmpCountriesList?.map(
                         (countryCode, countryCodeIndex) => (
                           <option
                             key={countryCodeIndex}
                             data-testid="addCandOpt-countryOpt"
-                            value={countryCode.id.toString()}
+                            value={countryCode.id}
                           >
                             {countryCode.countryCode}
                           </option>
