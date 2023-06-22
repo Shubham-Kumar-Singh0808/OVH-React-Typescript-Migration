@@ -39,7 +39,7 @@ const EditJobInformation = ({
   const [isShowDescriptionValue, setIsShowDescriptionValue] =
     useState<boolean>(true)
   const [editDateValue, setEditDateValue] = useState<string>(
-    editViewJobInfoData.expiryDate,
+    editViewJobInfoData?.expiryDate,
   )
   const formLabelProps = {
     htmlFor: 'inputNewCertificateType',

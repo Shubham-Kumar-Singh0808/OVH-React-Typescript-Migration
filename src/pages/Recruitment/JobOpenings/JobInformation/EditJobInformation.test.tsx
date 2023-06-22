@@ -2,7 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
-import EditJobOpening from './EditJobOpening'
+import EditJobInformation from './EditJobInformation'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
@@ -11,9 +11,9 @@ const mockSetTogglePage = jest.fn()
 describe('Job Openings without data', () => {
   beforeEach(() => {
     render(
-      <EditJobOpening
+      <EditJobInformation
         setToggle={mockSetTogglePage}
-        editJobInfo={{
+        editViewJobInfoData={{
           id: 0,
           jobCode: '',
           positionVacant: '',
@@ -26,9 +26,7 @@ describe('Job Openings without data', () => {
           remaining: 0,
           status: '',
         }}
-        setEditJobInfo={mockSetTogglePage}
-        searchInput={''}
-        selectRadioAction={''}
+        setEditViewJobInfoData={mockSetTogglePage}
       />,
       {
         preloadedState: {
@@ -43,7 +41,7 @@ describe('Job Openings without data', () => {
     )
   })
   test('should be able to render  Job Openings  Title', () => {
-    expect(screen.getByText('Edit Job Opening')).toBeInTheDocument()
+    expect(screen.getByText('Edit Job Info')).toBeInTheDocument()
   })
   test('should render add PIP component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
@@ -61,7 +59,7 @@ describe('Job Openings without data', () => {
     userEvent.click(deleteBtnElement)
   })
   test('should render component with out crashing', () => {
-    const backButtonElement = screen.getByTestId('back-button')
+    const backButtonElement = screen.getByTestId('back-btn')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(1)
@@ -80,16 +78,16 @@ describe('Job Openings without data', () => {
     expect(screen.getByText('Experience:')).toBeInTheDocument()
   })
   test('should able to render every element', () => {
-    const pfNumber = screen.getByTestId('positionVacant')
+    const pfNumber = screen.getByTestId('position-Vacant')
     userEvent.type(pfNumber, '123456987')
 
     const uanNumber = screen.getByTestId('Job-Code')
     userEvent.type(uanNumber, '123456789')
 
-    const panCardNumber = screen.getByTestId('noOfRequirements')
+    const panCardNumber = screen.getByTestId('noOf-Requirements')
     userEvent.type(panCardNumber, '123456789')
 
-    const aadharCardNumber = screen.getByTestId('minimumExperience')
+    const aadharCardNumber = screen.getByTestId('minimum-Experience')
     userEvent.type(aadharCardNumber, '636188754099')
   })
 })
