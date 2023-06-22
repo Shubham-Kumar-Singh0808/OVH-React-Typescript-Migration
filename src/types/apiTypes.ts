@@ -883,6 +883,8 @@ export interface CandidateListApi extends ApiBase {
   getAllCompaniesData: string
   addNewCandidate: string
   uploadCandidateResume: string
+  addTechnology: string
+  deleteTechnology: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
