@@ -245,6 +245,7 @@ const IntervieweeDetails = (): JSX.Element => {
                   timeLineListSelector.candidateStatus !== 'REPROCESS'
                 }
                 onClick={scheduleBtnHandler}
+                data-testid="schedule-interview"
               >
                 Schedule
               </CButton>
@@ -263,6 +264,7 @@ const IntervieweeDetails = (): JSX.Element => {
                   timeLineListSelector.candidateStatus === 'REPROCESS'
                 }
                 onClick={reScheduleButtonHandler}
+                data-testid="reschedule-interview"
               >
                 Re-Schedule
               </CButton>
@@ -270,7 +272,7 @@ const IntervieweeDetails = (): JSX.Element => {
             <CButton
               color="info"
               className="btn btn-primary btn-labeled fa fa-edit fa-lg me-1"
-              data-testid="edit-family"
+              data-testid="edit-btn"
             >
               Edit
             </CButton>

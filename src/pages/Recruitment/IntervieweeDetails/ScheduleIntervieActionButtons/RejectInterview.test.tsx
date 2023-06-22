@@ -22,5 +22,7 @@ describe('Reject interview component with data', () => {
     const confirmDBtn = screen.getByRole('button', { name: 'Yes' })
     userEvent.click(confirmDBtn)
     expect(confirmDBtn)
+    const rejectCandidate = screen.getByTestId('checked') as HTMLInputElement
+    expect(rejectCandidate.checked).toBe(false)
   })
 })
