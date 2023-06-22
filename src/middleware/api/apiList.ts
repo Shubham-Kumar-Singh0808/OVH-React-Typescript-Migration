@@ -1115,4 +1115,6 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getUpdateNewJoinee: apiPrefix + '/jobapplicant/updateNewJoinee',
+  getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
 }

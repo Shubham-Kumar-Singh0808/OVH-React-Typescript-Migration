@@ -8,6 +8,7 @@ import {
   UpComingJoineeList,
   UpComingJoineeListProps,
   UpComingJoineeListSliceState,
+  UpdateUpComingJoineeList,
 } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import UpComingJoinListApi from '../../../middleware/api/Recruitment/UpComingJoinList/UpComingJoinListApi'
 
@@ -16,6 +17,18 @@ const getUpConingJoinList = createAsyncThunk(
   async (props: UpComingJoineeListProps, thunkApi) => {
     try {
       return await UpComingJoinListApi.getUpComingJoinList(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const updateNewJoineeThunk = createAsyncThunk(
+  'allAsset/getallassetlist',
+  async (props: UpdateUpComingJoineeList, thunkApi) => {
+    try {
+      return await UpComingJoinListApi.UpdateNewJoinee(props)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -44,11 +57,16 @@ const upComingJoinListSlice = createSlice({
         state.upComingJoineeListDetails = action.payload.list
         state.listSize = action.payload.size
       })
+
+      .addMatcher(isAnyOf(updateNewJoineeThunk.fulfilled), (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      })
   },
 })
 
 const upComingJoinListThunk = {
   getUpConingJoinList,
+  updateNewJoineeThunk,
 }
 
 function isLoading(state: RootState): LoadingState {
@@ -56,6 +74,7 @@ function isLoading(state: RootState): LoadingState {
 }
 const upComingJoinList = (state: RootState): UpComingJoineeList[] =>
   state.upComingJoinList.upComingJoineeListDetails
+
 const listSize = (state: RootState): number => state.upComingJoinList.listSize
 
 export const upComingJoinListSelectors = {

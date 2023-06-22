@@ -14,11 +14,16 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import * as XLSX from 'xlsx'
+import { useHistory } from 'react-router-dom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
-import { UpComingJoinListTableProps } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
+import {
+  UpComingJoinListTableProps,
+  UpComingJoineeList,
+} from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
+import { GetAllTechnology } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 const UpComingJoinListTable = ({
   paginationRange,
@@ -28,6 +33,8 @@ const UpComingJoinListTable = ({
   setCurrentPage,
   searchInput,
   setSearchInput,
+  setEditNewJoineeInfo,
+  setToggle,
 }: UpComingJoinListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const upComingJoinee = useTypedSelector(
@@ -36,6 +43,7 @@ const UpComingJoinListTable = ({
   const joinListSize = useTypedSelector(
     reduxServices.upComingJoinList.selectors.listSize,
   )
+  dispatch(reduxServices.candidateList.getTechnology())
 
   const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(Number(event.target.value))
@@ -102,6 +110,24 @@ const UpComingJoinListTable = ({
     }
   }
 
+  const editButtonHandler = (updateUpComingJoineeData: UpComingJoineeList) => {
+    setEditNewJoineeInfo(updateUpComingJoineeData)
+    setToggle('upcomingjoinlist')
+  }
+  // -------------------------------------------------------------
+  const history = useHistory()
+
+  // const editButtonHandler = async () => {
+  //   const technology = await dispatch(
+  //     reduxServices.candidateList.getTechnology(),
+  //   )
+
+  //   if (reduxServices.candidateList.getTechnology.fulfilled.match(technology)) {
+  //     history.push('/upcomingjoinlist')
+  //   }
+  // }
+
+  // -------------------------------------------------------------------------
   return (
     <>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -164,7 +190,7 @@ const UpComingJoinListTable = ({
 
         <CTableBody>
           {upComingJoinee?.length > 0 &&
-            upComingJoinee.map((joinee, index) => {
+            upComingJoinee?.map((joinee, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
@@ -182,11 +208,26 @@ const UpComingJoinListTable = ({
                   <CTableDataCell>{joinee.dateOfJoining}</CTableDataCell>
 
                   <CTableDataCell>{joinee.technology}</CTableDataCell>
-                  <CTableDataCell data-testid="action-cell">
+                  {/* <CTableDataCell data-testid="action-cell">
                     <div className="sh-btn-group">
                       <CTooltip content="Edit">
                         <CButton color="info" size="sm" className="mb-1">
                           <i className="text-white fa fa-pencil-square-o"></i>
+                        </CButton>
+                      </CTooltip>
+                    </div>
+                  </CTableDataCell> */}
+
+                  <CTableDataCell scope="row">
+                    <div className="buttons-clients">
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list"
+                          onClick={() => editButtonHandler(joinee)}
+                          // onClick={editButtonHandler}
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
                     </div>

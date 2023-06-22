@@ -1,6 +1,7 @@
 import {
   GetUpComingJoineeList,
   UpComingJoineeListProps,
+  UpdateUpComingJoineeList,
 } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -25,8 +26,22 @@ const getUpComingJoinList = async (
   return response.data
 }
 
+const UpdateNewJoinee = async (
+  data: UpdateUpComingJoineeList,
+): Promise<UpdateUpComingJoineeList> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: getUpComingJoinListConfig.getUpdateNewJoinee,
+    method: AllowedHttpMethods.put,
+    data,
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const UpComingJoinListApi = {
   getUpComingJoinList,
+  UpdateNewJoinee,
 }
 
 export default UpComingJoinListApi

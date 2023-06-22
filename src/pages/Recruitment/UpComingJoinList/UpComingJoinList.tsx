@@ -4,9 +4,15 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
+import { UpComingJoineeList } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
+import { EditUpComingJoinee } from '../EditUpComingJoinee/EditUpComingJoinee'
 
 const UpComingJoinList = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>()
+  const [toggle, setToggle] = useState<string>('')
+  const initialCycle = {} as UpComingJoineeList
+
+  const [editNewJoineeInfo, setEditNewJoineeInfo] = useState(initialCycle)
 
   const dispatch = useAppDispatch()
   useEffect(() => {
@@ -37,22 +43,33 @@ const UpComingJoinList = (): JSX.Element => {
 
   return (
     <>
-      <OCard
-        className="mb-4 myprofile-wrapper"
-        title="Upcoming Joinees"
-        CBodyClassName="ps-0 pe-0"
-        CFooterClassName="d-none"
-      >
-        <UpComingJoinListTable
-          searchInput={searchInput as string}
-          setSearchInput={setSearchInput}
-          paginationRange={paginationRange}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pageSize={pageSize}
-          setPageSize={setPageSize}
+      {toggle === '' && (
+        <OCard
+          className="mb-4 myprofile-wrapper"
+          title="Upcoming Joinees"
+          CBodyClassName="ps-0 pe-0"
+          CFooterClassName="d-none"
+        >
+          <UpComingJoinListTable
+            searchInput={searchInput as string}
+            setSearchInput={setSearchInput}
+            paginationRange={paginationRange}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            setToggle={setToggle}
+            setEditNewJoineeInfo={setEditNewJoineeInfo}
+          />
+        </OCard>
+      )}
+      {toggle === 'upcomingjoinlist' && (
+        <EditUpComingJoinee
+          setToggle={setToggle}
+          editNewJoineeInfo={editNewJoineeInfo}
+          setEditNewJoineeInfo={setEditNewJoineeInfo}
         />
-      </OCard>
+      )}
     </>
   )
 }

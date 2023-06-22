@@ -1,4 +1,5 @@
 import { LoadingState } from '../../commonTypes'
+import { GetAllTechnology } from '../CandidateList/CandidateListTypes'
 
 export type UpComingJoineeList = {
   id: number
@@ -21,6 +22,29 @@ export type UpComingJoineeList = {
   departmentName: string | null
   mobile: string
   sendOfferMessagetoCandidate: null
+}
+
+export type UpdateUpComingJoineeList = {
+  appliedForLookUp: string
+  attachedDocumentPath: null
+  candidateEmail: string
+  candidateId: number
+  candidateInterviewStatus: string
+  candidateName: string
+  comments: string
+  currentCTC: string
+  dateOfBirth: null
+  dateOfJoining: string
+  departmentName: string
+  designation: string
+  employmentType: string
+  experience: string
+  id: number
+  jobType: string
+  mobile: string
+  sendOfferMessagetoCandidate: null
+  status: string
+  technology: string
 }
 
 export type GetUpComingJoineeList = {
@@ -49,4 +73,6 @@ export type UpComingJoinListTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   searchInput: string
   setSearchInput: React.Dispatch<React.SetStateAction<string | undefined>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setEditNewJoineeInfo: React.Dispatch<React.SetStateAction<UpComingJoineeList>>
 }
