@@ -98,6 +98,12 @@ export interface IncomingCompaniesData {
   companyName: string
 }
 
+// to differentitate add technology and add candidate page
+export enum CurrentAddCandidatePage {
+  addCandidate = 'Add New Candidate',
+  addTechnology = 'Add New Technology',
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
@@ -109,6 +115,7 @@ export type CandidateListSliceState = {
   getAllTechnology: GetAllTechnology[]
   allJobVacancies: IncomingAllJobVacanciesList
   allCompaniesData: IncomingCompaniesData[]
+  currentAddCandidatePage: CurrentAddCandidatePage
 }
 export type GetAllTechnology = {
   id: number
