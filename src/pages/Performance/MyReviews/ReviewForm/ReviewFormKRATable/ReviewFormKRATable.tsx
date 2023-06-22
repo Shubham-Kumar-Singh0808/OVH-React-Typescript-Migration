@@ -11,7 +11,10 @@ import {
   IncomingMyReviewAppraisalForm,
   IncomingMyReviewKRA,
 } from '../../../../../types/Performance/MyReview/myReviewTypes'
-import { initialMyReviewKRA } from '../../MyReviewHelpers'
+import {
+  initialMyReviewKRA,
+  sortKRAByAlphabeticalOrder,
+} from '../../MyReviewHelpers'
 
 const ReviewFormKRATable = ({
   appraisalForm,
@@ -40,16 +43,18 @@ const ReviewFormKRATable = ({
           <CTableHeaderCell scope="col">No.of KPIs</CTableHeaderCell>
         </CTableRow>
       </CTableHead>
-      <CTableBody color="secondary">
-        {appraisalForm.kra?.map((kraItem, kraItemIndex) => (
-          <ReviewFormKRATableRow
-            kra={kraItem}
-            kraIndex={kraItemIndex}
-            key={kraItemIndex}
-            openedKRA={openedKRA}
-            openedKRAHandler={openedKRAHandler}
-          />
-        ))}
+      <CTableBody>
+        {sortKRAByAlphabeticalOrder(appraisalForm.kra)?.map(
+          (kraItem, kraItemIndex) => (
+            <ReviewFormKRATableRow
+              kra={kraItem}
+              kraIndex={kraItemIndex}
+              key={kraItemIndex}
+              openedKRA={openedKRA}
+              openedKRAHandler={openedKRAHandler}
+            />
+          ),
+        )}
       </CTableBody>
     </CTable>
   )

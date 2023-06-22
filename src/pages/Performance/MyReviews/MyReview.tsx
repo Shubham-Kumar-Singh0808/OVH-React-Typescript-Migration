@@ -10,6 +10,7 @@ import {
   MyReviewAppraisalFormStatus,
   MyReviewFormStatus,
 } from '../../../types/Performance/MyReview/myReviewTypes'
+import { TextDanger } from '../../../constant/ClassName'
 
 const MyReview = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -20,6 +21,7 @@ const MyReview = (): JSX.Element => {
   const myReviewFormStatus = useTypedSelector(
     (state) => state.myReview.myReviewFormStatus,
   )
+  const apiError = useTypedSelector((state) => state.myReview.error)
   // used to differentiate between employees and its managers
   const appraisalFormStatusEmpManager = useTypedSelector(
     (state) => state.myReview.appraisalForm.appraisalFormStatus,
@@ -62,7 +64,13 @@ const MyReview = (): JSX.Element => {
             </>
           )
         }
-        <MyReviewTabs />
+        {apiError === null && <MyReviewTabs />}
+        {apiError === 406 && (
+          // user is not allowed as he/she is on probationary period - 406 == not acceptable
+          <h4 className={TextDanger}>
+            You are in probationary period.So you don&apos;t have access.
+          </h4>
+        )}
       </OCard>
     </>
   )

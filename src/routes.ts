@@ -455,6 +455,10 @@ const ReScheduleInterview = React.lazy(
       './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
     ),
 )
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+)
 const AddNewCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
@@ -1080,6 +1084,11 @@ const routes = [
     path: '/reScheduleInterview/:personId',
     name: 'schedule Interview',
     component: ReScheduleInterview,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
   },
   {
     path: '/addNewCandidate',

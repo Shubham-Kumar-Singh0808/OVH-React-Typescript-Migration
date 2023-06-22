@@ -71,6 +71,7 @@ export const formLabelProps = {
   className: 'col-form-label sections-label',
 }
 
+// used in many other components to prevent duplication
 export const getFormattedDate = (enteredDate: string): string => {
   return enteredDate
     ? moment(

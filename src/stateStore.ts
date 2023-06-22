@@ -141,6 +141,7 @@ import productSpecificationListReducer from './reducers/Assets/ProductSpecificat
 import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
+import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -282,6 +283,7 @@ export const allReducers = {
   recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
   upComingJoinList: upComingJoinListReducer,
+  interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

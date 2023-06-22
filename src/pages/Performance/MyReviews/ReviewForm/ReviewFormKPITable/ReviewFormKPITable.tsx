@@ -9,6 +9,7 @@ import React from 'react'
 import ReviewFormKPITableRow from './ReviewFormKPITableRow'
 import ManagerColumns from './ManagerColumns'
 import { MyReviewKPI } from '../../../../../types/Performance/MyReview/myReviewTypes'
+import { sortKPIByAlphabeticalOrder } from '../../MyReviewHelpers'
 
 const ReviewFormKPITable = ({
   kpis,
@@ -37,7 +38,7 @@ const ReviewFormKPITable = ({
         </CTableRow>
       </CTableHead>
       <CTableBody>
-        {kpis?.map((kpi, kpiIndex) => (
+        {sortKPIByAlphabeticalOrder(kpis)?.map((kpi, kpiIndex) => (
           <ReviewFormKPITableRow
             key={kpiIndex}
             kpi={kpi}
