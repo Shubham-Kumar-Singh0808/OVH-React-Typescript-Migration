@@ -325,6 +325,7 @@ const CreateNewTicketFilterOptions = ({
     ) : (
       ''
     )
+  const placeHolderValue = addEmployeeName?.length ? '' : 'Employees Name'
   const ResultValueMealType =
     Result1[0]?.mealType === true ? (
       <CRow className="mt-4 mb-4">
@@ -337,7 +338,7 @@ const CreateNewTicketFilterOptions = ({
             data-testid="employee-option"
             options={allEmployeeProfiles?.map((employee) => employee) || []}
             displayValue="fullName"
-            placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
+            placeholder={placeHolderValue}
             selectedValues={addEmployeeName}
             onSelect={(list: GetAllEmployeesNames[]) => handleMultiSelect(list)}
             onRemove={(selectedList: GetAllEmployeesNames[]) =>
