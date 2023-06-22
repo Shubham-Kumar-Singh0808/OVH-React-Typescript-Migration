@@ -1,5 +1,6 @@
 import {
   EmpScheduleInterviewData,
+  EmployeeProperties,
   TimeLineList,
 } from '../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
 
@@ -512,3 +513,14 @@ export const mockEmpScheduleInterviewData: EmpScheduleInterviewData = {
   sourceName: null,
   personId: null,
 }
+export const mockEmployeeProperties: EmployeeProperties[] = [
+  {
+    id: 1002,
+    profilePicPath: '../profilepics/1002.jpeg',
+    firstName: 'Chaitanya',
+    lastName: 'Mudunuri',
+    emailId: 'test@raybiztech.com',
+    designation: 'Project Manager',
+    fullName: 'Chaitanya Mudunuri',
+  },
+]
