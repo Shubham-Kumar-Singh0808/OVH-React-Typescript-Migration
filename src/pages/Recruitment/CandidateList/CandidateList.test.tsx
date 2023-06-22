@@ -91,15 +91,15 @@ describe('candidate List without data', () => {
       expect(selectTechnology).toHaveValue('')
     })
   })
-  test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
+
+  test('should render search', () => {
     const searchInput = screen.getByTestId('searchField')
     userEvent.type(searchInput, 'WorldTest')
     fireEvent.click(screen.getByTestId('multi-search-btn'))
-  })
-  test('should render search input', () => {
+
     const searchField = screen.getByTestId('searchField')
     userEvent.type(searchField, 'testing')
-    expect(searchField).toHaveValue('testing')
+    expect(searchField).toHaveValue('WorldTesttesting')
     fireEvent.keyDown(searchField, {
       key: 'Enter',
       code: 'Enter',
