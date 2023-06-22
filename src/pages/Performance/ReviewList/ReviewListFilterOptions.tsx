@@ -17,12 +17,18 @@ import { downloadFile, showIsRequired } from '../../../utils/helper'
 import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
 
 const ReviewListFilterOptions = ({
-  setIsTableView,
+  cycle,
+  setCycle,
+  pageSize,
+  currentPage,
 }: {
-  setIsTableView: (value: boolean) => void
+  cycle: number
   initialReviewList: ReviewListData
+  setCycle: React.Dispatch<React.SetStateAction<string | number>>
+  pageSize: number
+  currentPage: number
 }): JSX.Element => {
-  const [cycle, setCycle] = useState<number | string>()
+  console.log(cycle)
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
@@ -113,7 +119,7 @@ const ReviewListFilterOptions = ({
     return dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: (selectStatus as string) || '',
-        cycleId: cycle === 'Custom' ? -1 : Number(cycle),
+        cycleId: String(cycle) === 'Custom' ? -1 : Number(cycle),
         departmentName: selectedItem[0]?.departmentName || '',
         designationName: selectedDesignationItem[0]?.name || '',
         empStatus: selectEmpstatus,
@@ -140,11 +146,33 @@ const ReviewListFilterOptions = ({
   }
 
   const onViewHandler = () => {
-    setSelectedDepartment(selectDepartment as string)
-    setSelectDesignation(selectDesignation as string)
-    setIsTableView(true)
-    setShowExportButton(true)
-    dispatchApiCall()
+    dispatch(
+      reduxServices.reviewList.getReviewList({
+        appraisalFormStatus: (selectStatus as string) || '',
+        cycleId: String(cycle) === 'Custom' ? -1 : Number(cycle),
+        departmentName: selectedItem[0]?.departmentName || '',
+        designationName: selectedDesignationItem[0]?.name || '',
+        empStatus: selectEmpstatus,
+        employeeID: employeeId,
+        endIndex: pageSize * currentPage,
+        fromDate: reviewFromDate
+          ? new Date(reviewFromDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+            })
+          : '',
+        ratings: [],
+        role: '',
+        searchString: searchValue as string,
+        startIndex: pageSize * (currentPage - 1),
+        toDate: reviewToDate
+          ? new Date(reviewToDate).toLocaleDateString(deviceLocale, {
+              year: 'numeric',
+              month: 'numeric',
+            })
+          : '',
+      }),
+    )
   }
 
   const searchBtnHandler = () => {
@@ -207,7 +235,7 @@ const ReviewListFilterOptions = ({
         <CCol sm={3}>
           <CFormLabel>
             Configurations :
-            <span className={showIsRequired(cycle as string)}>*</span>
+            <span className={showIsRequired(String(cycle))}>*</span>
           </CFormLabel>
           <CFormSelect
             aria-label="Default select example"
@@ -318,7 +346,7 @@ const ReviewListFilterOptions = ({
         ''
       ) : (
         <CRow className="mt-4">
-          {cycle === 'Custom' && (
+          {String(cycle) === 'Custom' && (
             <>
               <CCol sm={3}>
                 <CRow>

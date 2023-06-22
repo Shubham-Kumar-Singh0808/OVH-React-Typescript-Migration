@@ -94,7 +94,7 @@ export type ReviewListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
-  isTableView: boolean
+  isTableView?: boolean
 }
 
 export type ActiveCycle = {

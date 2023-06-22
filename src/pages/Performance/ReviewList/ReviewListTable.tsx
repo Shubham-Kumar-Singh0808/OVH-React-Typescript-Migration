@@ -117,6 +117,10 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
     return rating ? rating.toString() : 'N/A'
   }
 
+  const getItemNumber = (index: number) => {
+    return (currentPage - 1) * pageSize + index + 1
+  }
+
   return (
     <>
       <CTable striped responsive align="middle">
@@ -145,7 +149,7 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
               appraisalReviews.list?.map((review, index) => {
                 return (
                   <CTableRow key={index}>
-                    <CTableDataCell>{index + 1}</CTableDataCell>
+                    <CTableDataCell> {getItemNumber(index)}</CTableDataCell>
                     <CTableDataCell>{review.empId}</CTableDataCell>
                     <CTableDataCell>{review.employeeName}</CTableDataCell>
                     <CTableDataCell>{review.manager1Name}</CTableDataCell>

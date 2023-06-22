@@ -16,6 +16,11 @@ const EmployeeReviewList = (): JSX.Element => {
   const employeeId = useTypedSelector(
     reduxServices.authentication.selectors.selectEmployeeId,
   )
+
+  const isActiveCycle = useTypedSelector(
+    reduxServices.reviewList.selectors.isActiveCycle,
+  )
+  const [cycle, setCycle] = useState<number | string>(isActiveCycle.id)
   const initialReviewList: ReviewListData = {
     appraisalFormStatus: '',
     cycleId: 0,
@@ -31,7 +36,7 @@ const EmployeeReviewList = (): JSX.Element => {
     startIndex: 0,
     toDate: '',
   }
-  const [isTableView, setIsTableView] = useState(false)
+
   const {
     paginationRange,
     setPageSize,
@@ -44,10 +49,13 @@ const EmployeeReviewList = (): JSX.Element => {
     dispatch(reduxServices.reviewList.getEmployeeDepartments())
     dispatch(reduxServices.reviewList.getAppraisalCycles())
     dispatch(reduxServices.reviewList.activeCycle())
+  }, [dispatch])
+
+  useEffect(() => {
     dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: '',
-        cycleId: 75,
+        cycleId: cycle as number,
         departmentName: '',
         designationName: '',
         empStatus: 'Active',
@@ -59,7 +67,7 @@ const EmployeeReviewList = (): JSX.Element => {
         startIndex: pageSize * (currentPage - 1),
       }),
     )
-  }, [dispatch, pageSize, currentPage])
+  }, [pageSize, currentPage])
 
   return (
     <>
@@ -70,13 +78,15 @@ const EmployeeReviewList = (): JSX.Element => {
         CFooterClassName="d-none"
       >
         <ReviewListFilterOptions
-          setIsTableView={setIsTableView}
           initialReviewList={initialReviewList}
+          cycle={cycle as number}
+          setCycle={setCycle}
+          pageSize={pageSize}
+          currentPage={currentPage}
         />
         <CRow className="mt-4 mb-4">
           <CCol>
             <ReviewListTable
-              isTableView={isTableView}
               paginationRange={paginationRange}
               setPageSize={setPageSize}
               setCurrentPage={setCurrentPage}
