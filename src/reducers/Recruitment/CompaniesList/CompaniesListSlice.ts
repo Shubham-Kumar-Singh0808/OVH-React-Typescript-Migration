@@ -77,13 +77,13 @@ const companiesListSlice = createSlice({
     builder
       .addCase(getAllCompanies.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.companiesListData = action.payload.list
-        state.listSize = action.payload.size
+        state.companiesListData = action.payload?.list
+        state.listSize = action.payload?.size
       })
       .addCase(getAllCandidatesInfo.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
-        state.CandidatesInfoListData = action.payload.list
-        state.listSize = action.payload.size
+        state.CandidatesInfoListData = action.payload?.list
+        state.listSize = action.payload?.size
       })
       .addCase(getAllEmployeesInfo.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
