@@ -443,6 +443,10 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+)
 const AddNewCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
@@ -1058,6 +1062,11 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
   },
   {
     path: '/addNewCandidate',
