@@ -935,6 +935,13 @@ export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
 }
+export interface InterviewStatusReportApi extends ApiBase {
+  getAllTechnology: string
+  getAllEmpCountries: string
+  getInterviewStatusReport: string
+  exportInterviewStatusReport: string
+  exportInterviewerDetails: string
+}
 
 export interface CompaniesListApi extends ApiBase {
   getAllCompanies: string

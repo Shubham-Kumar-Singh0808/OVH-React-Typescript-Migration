@@ -132,6 +132,7 @@ import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recru
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { companiesListService } from './Recruitment/CompaniesList/CompaniesListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
+import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -268,4 +269,5 @@ export const reduxServices = {
   addNewProduct: addProductService,
   companiesList: companiesListService,
   upComingJoinList: upComingJoiningListService,
+  interviewStatusReport: interviewStatusReportServices,
 }

@@ -122,6 +122,7 @@ import {
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   CompaniesListApi,
+  InterviewStatusReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1122,4 +1123,15 @@ export const CompaniesListApiConfig: CompaniesListApi = {
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}
+
+export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
+  getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getInterviewStatusReport:
+    apiPrefix + '/jobapplicant/jobAdmin/interviewStatusReport',
+  exportInterviewStatusReport:
+    apiPrefix + '/jobapplicant/exportInterviewStatusReport',
+  exportInterviewerDetails:
+    apiPrefix + '/jobapplicant/exportInterviewerDetails',
 }
