@@ -450,6 +450,10 @@ const AddNewCandidate = React.lazy(
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
+
+const ExpenseForm = React.lazy(
+  () => import('./pages/ExpenseManagement/ExpenseForm/ExpenseForm'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1068,6 +1072,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+  },
+  {
+    path: '/expenseForm',
+    name: 'Expense Form',
+    component: ExpenseForm,
   },
 ]
 export default routes
