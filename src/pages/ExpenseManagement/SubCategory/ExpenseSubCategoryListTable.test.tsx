@@ -77,7 +77,7 @@ describe('Expense Sub-Category List Table with data', () => {
       await fireEvent.click(saveButtonElement)
 
       expect(screen.getByTestId(`subCategoryId3`)).toHaveValue(
-        'Meals Cardtestingtesting',
+        'Meals Card2testing2testing2',
       )
     })
   })

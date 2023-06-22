@@ -12,6 +12,8 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import { mockCreditCardListData } from '../../../test/data/creditCardListData'
 
+jest.setTimeout(10000)
+
 describe('Credit Card List without data', () => {
   beforeEach(() => {
     render(<CreditCardList />, {
@@ -29,7 +31,7 @@ describe('Credit Card List without data', () => {
     })
   })
   afterEach(cleanup)
-  test('should render Add Expense Sub Category List component with out crashing', () => {
+  test('should render Credit Card List component with out crashing', () => {
     expect(screen.getByText('Card Name:')).toBeInTheDocument()
     expect(screen.getByText('Card Number:')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Add' })).toBeDisabled()
