@@ -24,19 +24,21 @@ const EmployeesCountTable = ({
 }: CompaniesListProps): JSX.Element => {
   const dispatch = useAppDispatch()
 
-  const candidatesInfoListData = useTypedSelector(
+  const candidatesInfoListDetails = useTypedSelector(
     reduxServices.companiesList.selectors.candidatesInfoListData,
   )
 
-  const companiesListSize = useTypedSelector(
+  const RecordListSize = useTypedSelector(
     reduxServices.companiesList.selectors.listSize,
   )
 
-  const totalNoOfRecords = candidatesInfoListData?.length
-    ? `Total Records: ${companiesListSize}`
+  const totalList = candidatesInfoListDetails?.length
+    ? `Total Records: ${RecordListSize}`
     : `No Records found...`
 
-  const handlePageSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handlePaginationSize = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     setPageSize(Number(event.target.value))
     setCurrentPage(1)
     dispatch(reduxServices.app.actions.setPersistCurrentPage(1))
@@ -69,8 +71,8 @@ const EmployeesCountTable = ({
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {candidatesInfoListData?.length > 0 &&
-            candidatesInfoListData?.map((data, index) => {
+          {candidatesInfoListDetails?.length > 0 &&
+            candidatesInfoListDetails?.map((data, index) => {
               return (
                 <CTableRow key={index}>
                   <CTableDataCell scope="row">
@@ -102,19 +104,19 @@ const EmployeesCountTable = ({
       <CRow>
         <CCol xs={4}>
           <p className="mt-2">
-            <strong>{totalNoOfRecords}</strong>
+            <strong>{totalList}</strong>
           </p>
         </CCol>
         <CCol xs={3}>
-          {companiesListSize > 20 && (
+          {RecordListSize > 20 && (
             <OPageSizeSelect
-              handlePageSizeSelectChange={handlePageSize}
+              handlePageSizeSelectChange={handlePaginationSize}
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
         </CCol>
-        {companiesListSize > 20 && (
+        {RecordListSize > 20 && (
           <CCol
             xs={5}
             className="d-grid gap-1 d-md-flex justify-content-md-end"

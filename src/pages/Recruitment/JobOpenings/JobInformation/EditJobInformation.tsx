@@ -134,6 +134,7 @@ const EditJobInformation = ({
       <OCard
         className="mb-4 myprofile-wrapper"
         title={'Edit Job Info'}
+        data-testid="title"
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
@@ -142,7 +143,7 @@ const EditJobInformation = ({
             <CButton
               color="info"
               className="btn-ovh me-1"
-              data-testid="back-btn"
+              data-testid="back-button"
               onClick={() => setToggle('')}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back

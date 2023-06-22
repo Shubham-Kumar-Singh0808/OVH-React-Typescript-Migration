@@ -59,7 +59,7 @@ describe('Job Openings without data', () => {
     userEvent.click(deleteBtnElement)
   })
   test('should render component with out crashing', () => {
-    const backButtonElement = screen.getByTestId('back-btn')
+    const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(1)

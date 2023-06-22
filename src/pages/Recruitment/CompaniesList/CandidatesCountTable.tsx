@@ -95,19 +95,21 @@ const CandidatesCountTable = ({
       >
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell>#</CTableHeaderCell>
-            <CTableHeaderCell>Company Name</CTableHeaderCell>
-            <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Position Applied for</CTableHeaderCell>
-            <CTableHeaderCell>Job Code</CTableHeaderCell>
-            <CTableHeaderCell>Mobile</CTableHeaderCell>
-            <CTableHeaderCell>Email ID</CTableHeaderCell>
-            <CTableHeaderCell>Experience</CTableHeaderCell>
-            <CTableHeaderCell>Skills</CTableHeaderCell>
-            <CTableHeaderCell>Recruiter</CTableHeaderCell>
-            <CTableHeaderCell>Reference</CTableHeaderCell>
-            <CTableHeaderCell>Technology</CTableHeaderCell>
-            <CTableHeaderCell>Status</CTableHeaderCell>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Company Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">
+              Position Applied for
+            </CTableHeaderCell>
+            <CTableHeaderCell scope="col">Job Code</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Experience</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Skills</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Recruiter</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Reference</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Technology</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
