@@ -135,11 +135,11 @@ describe('Vendor Details without data', () => {
     userEvent.type(manufactureNameInput, '')
     expect(manufactureNameInput).toHaveValue('')
   })
-  test('should render on every input of Asset status', () => {
-    const roomNameInput = screen.getByPlaceholderText('Select Status')
-    userEvent.selectOptions(roomNameInput, '')
-    expect(roomNameInput).toHaveValue('')
-  })
+  // test('should render on every input of Asset status', () => {
+  //   const roomNameInput = screen.getByPlaceholderText('Select Status')
+  //   userEvent.selectOptions(roomNameInput, '')
+  //   expect(roomNameInput).toHaveValue('')
+  // })
   test('should render on every input of Country', () => {
     const roomNameInput = screen.getByPlaceholderText('Select Country')
     userEvent.selectOptions(roomNameInput, '')
@@ -210,9 +210,27 @@ describe('Vendor Details without data', () => {
       }),
     )
   })
-  test('should able to render every element', () => {
+  test('should able to Update every element', () => {
     const poNumber = screen.getByTestId('poNumber')
     userEvent.type(poNumber, '5467738')
+
+    const vendorNameInput = screen.getByPlaceholderText('Select Vendor Name')
+    userEvent.selectOptions(vendorNameInput, '')
+    expect(vendorNameInput).toHaveValue('')
+
+    const AssetNameInput = screen.getByPlaceholderText('Select Asset Type')
+    userEvent.selectOptions(AssetNameInput, '')
+    expect(AssetNameInput).toHaveValue('')
+
+    const productNameInput = screen.getByPlaceholderText('Select Product Type')
+    userEvent.selectOptions(productNameInput, '')
+    expect(productNameInput).toHaveValue('')
+
+    const manufactureNameInput = screen.getByPlaceholderText(
+      'Select Manufacturer Name',
+    )
+    userEvent.type(manufactureNameInput, '')
+    expect(manufactureNameInput).toHaveValue('')
 
     const assetNumber = screen.getByTestId('assetNumber')
     userEvent.type(assetNumber, 'RBTtest34')
@@ -225,6 +243,13 @@ describe('Vendor Details without data', () => {
 
     const amount = screen.getByTestId('amount')
     userEvent.type(amount, '4536')
+
+    const roomNameInput = screen.getByPlaceholderText('Select Country')
+    userEvent.selectOptions(roomNameInput, 'India')
+    expect(roomNameInput).toHaveValue('')
+
+    const updateButton = screen.getByTestId('update-btn')
+    expect(updateButton).toBeEnabled()
   })
   // test('update button functionality', async () => {
   //   const poNbr = screen.getByTestId('poNumber')

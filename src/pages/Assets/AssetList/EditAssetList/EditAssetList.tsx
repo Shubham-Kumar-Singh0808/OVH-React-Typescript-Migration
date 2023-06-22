@@ -58,9 +58,9 @@ const EditAddAssetList = ({
     editAddAssetList.warrantyEndDate,
   )
 
-  const [assetStatus, setAssetStatus] = useState<string>(
-    editAddAssetList.status,
-  )
+  // const [assetStatus, setAssetStatus] = useState<string>(
+  //   editAddAssetList.status,
+  // )
 
   const [country, setCountry] = useState<string | number>(
     editAddAssetList.countryId as number,
@@ -82,7 +82,7 @@ const EditAddAssetList = ({
       setCountry(editAddAssetList.countryId as number)
       setVendorName(editAddAssetList.vendorId)
       setManufacturerName(editAddAssetList.manufacturerId)
-      setAssetStatus(editAddAssetList.status)
+      // setAssetStatus(editAddAssetList.status)
       setProductType(editAddAssetList.productId)
     }
   }, [editAddAssetList])
@@ -177,7 +177,7 @@ const EditAddAssetList = ({
       receivedDate,
       referenceNumber: editAddAssetList.referenceNumber,
       searchByEmpName: editAddAssetList.searchByEmpName,
-      status: assetStatus,
+      status: '',
       updatedBy: editAddAssetList.updatedBy,
       updatedDate: editAddAssetList.updatedDate,
       vendorId: editAddAssetList.vendorId,
@@ -212,7 +212,6 @@ const EditAddAssetList = ({
   const countriesList = useTypedSelector(
     reduxServices.employeeHandbookSettings.selectors.employeeCountries,
   )
-  console.log(countriesList, 'country-test')
 
   const assetTypeList = useTypedSelector(
     reduxServices.addNewProduct.selectors.assetTypeList,
@@ -613,34 +612,7 @@ const EditAddAssetList = ({
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-          >
-            Asset Status:
-            <span className={showIsRequired(assetStatus)}>*</span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              data-testid="manufacturerName"
-              aria-label="Default select example"
-              size="sm"
-              id="assetStatus"
-              name="assetStatus"
-              placeholder="Select Status"
-              value={assetStatus || editAddAssetList?.status}
-              onChange={(e) => setAssetStatus(e.target.value)}
-            >
-              <option value={''}>Select Product Type</option>
-              <option value={'Working'}>Working</option>
-              <option value={'Not Working'}>Not Working</option>
-              <option value={'Under Repair'}>Under Repair</option>
-              <option value={'Idle'}>Idle</option>
-              <option value={'Scrap'}>Scrap</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
+
         <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
