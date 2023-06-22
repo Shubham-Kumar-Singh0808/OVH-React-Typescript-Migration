@@ -410,9 +410,9 @@ const AppContent = () => {
   useEffect(() => {
     if (
       location.pathname === '/SQAAudit' ||
-      location.pathname.split('/')[1] === '/viewProjectAudit' ||
+      location.pathname.split('/')[1] === 'viewProjectAudit' ||
       location.pathname.split('/')[1] === 'editAuditForm' ||
-      location.pathname.split('/')[1] === '/newProjectAuditTimeline'
+      location.pathname.split('/')[1] === 'newProjectAuditTimeline'
     ) {
       dispatch(
         reduxServices.sqaAuditReport.actions.setMonthValue(getMonthValue),
