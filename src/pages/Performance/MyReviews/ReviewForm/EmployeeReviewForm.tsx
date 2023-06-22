@@ -7,8 +7,6 @@ import RequestDiscussionTimeline from './ReviewFormEmployeeComponents/RequestDis
 import ReviewFormClosedDetails from './ReviewFormEmployeeComponents/ReviewFormClosedDetails'
 import FinalButtonDisplay from './ReviewFormEmployeeComponents/FinalButtonDisplay'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { TextDanger } from '../../../../constant/ClassName'
 import { MyReviewFormStatus } from '../../../../types/Performance/MyReview/myReviewTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import {
@@ -24,7 +22,6 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 const EmployeeReviewForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const apiError = useTypedSelector((state) => state.myReview.error)
-  const isLoading = useTypedSelector((state) => state.myReview.isLoading)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -191,12 +188,6 @@ const EmployeeReviewForm = (): JSX.Element => {
             {myReviewModal?.description}
           </OModal>
         </>
-      )}
-      {apiError === 406 && isLoading === ApiLoadingState.failed && (
-        // user is not allowed as he/she is on probationary period - 406 == not acceptable
-        <h4 className={TextDanger}>
-          You are in probationary period.So you don&apos;t have access.
-        </h4>
       )}
     </>
   )

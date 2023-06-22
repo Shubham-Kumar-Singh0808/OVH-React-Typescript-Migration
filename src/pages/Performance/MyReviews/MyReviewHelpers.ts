@@ -210,6 +210,21 @@ export const isRequestDiscussionCommentsVisible = (
   )
 }
 
+// returns sorted value for kras by name
+export const sortKRAByAlphabeticalOrder = (
+  list: IncomingMyReviewKRA[],
+): IncomingMyReviewKRA[] => {
+  const sortedList = [...list]
+  return sortedList.sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export const sortKPIByAlphabeticalOrder = (
+  list: MyReviewKPI[],
+): MyReviewKPI[] => {
+  const sortedList = [...list]
+  return sortedList.sort((a, b) => a.name.localeCompare(b.name))
+}
+
 export const getKpisOfKraByKraIndex = (
   list: IncomingMyReviewAppraisalForm,
   kraIndex: number,
