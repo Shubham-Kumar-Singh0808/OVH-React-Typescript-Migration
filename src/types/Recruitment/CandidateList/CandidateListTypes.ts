@@ -133,7 +133,7 @@ export type TableProps = {
 export type viewHandlerProps = {
   candidateStatus: string
   endIndex: number
-  selectionCountry: number
+  selectionCountry: number | string
   selectionTechnology: string
   startIndex: number
 }
