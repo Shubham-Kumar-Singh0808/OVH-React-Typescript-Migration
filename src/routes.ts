@@ -1077,11 +1077,5 @@ const routes = [
     name: 'CandidateOffer',
     component: personTechnology,
   },
-
-  // {
-  //   path: '/upcomingjoinlist',
-  //   name: 'CandidateOffer',
-  //   component: personTechnology,
-  // },
 ]
 export default routes

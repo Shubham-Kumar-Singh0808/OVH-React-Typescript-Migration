@@ -38,11 +38,7 @@ const CandidateOffer = (): JSX.Element => {
   const [sendMessageToCandiDate, setSendMessageToCandiDate] =
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
-  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
-    File | undefined
-  >(undefined)
+
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
@@ -85,6 +81,11 @@ const CandidateOffer = (): JSX.Element => {
     (item) => item.departmentId === candidateDepartment,
   )
 
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
+  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
+    File | undefined
+  >(undefined)
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
@@ -153,7 +154,7 @@ const CandidateOffer = (): JSX.Element => {
         comments: candidateComment,
         currentCTC: curruentCTC,
         dateOfJoining: dateOfJoiningDate,
-        departmentName: selectedDepartment?.departmentName || '',
+        departmentName: selectedDepartment?.departmentName,
         designation,
         employmentType: employeeType,
         jobType,
@@ -162,33 +163,87 @@ const CandidateOffer = (): JSX.Element => {
       }),
     )
 
+    if (uploadedFile) {
+      const formData = new FormData()
+      formData.append('file', uploadedFile, uploadedFile.name)
+      const uploadPrepareObject = {
+        candidateId: timeLineListSelector.personId,
+        file: formData,
+      }
+      dispatch(
+        reduxServices.addNewCandidate.uploadAddNewJoineeFileThunk(
+          uploadPrepareObject,
+        ),
+      )
+    }
     if (
       reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
         addCandidate,
       )
     ) {
-      const candidateId = addCandidate.payload
-      const file = new FormData()
-      if (uploadedFile !== undefined) {
-        file.append('file', uploadedFile)
-      }
-      await dispatch(
-        reduxServices.addNewCandidate.uploadAddNewJoineeFileThunk({
-          candidateId,
-          file,
-        }),
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="success"
+            toastMessage="project Notes created successfully"
+          />,
+        ),
       )
-      window.location.href = '/upcomingjoinlist'
-    } else if (
-      reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
-        addCandidate,
-      ) &&
-      addCandidate.payload === 500
-    ) {
-      dispatch(reduxServices.app.actions.addToast(addFailedToastMessage))
-      dispatch(reduxServices.app.actions.addToast(undefined))
+
+      // dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
+
+  // const handleAddCandidate = async () => {
+  //   const technology = await dispatch(
+  //     reduxServices.addNewCandidate.getPersonTechnologyData(
+  //       timeLineListSelector?.personId,
+  //     ),
+  //   )
+  //   const addCandidate = await dispatch(
+  //     reduxServices.addNewCandidate.getAddNewJoineeData({
+  //       appliedForLookUp: position,
+  //       candidateId: timeLineListSelector.personId || '',
+  //       candidateName,
+  //       comments: candidateComment,
+  //       currentCTC: curruentCTC,
+  //       dateOfJoining: dateOfJoiningDate,
+  //       departmentName: selectedDepartment?.departmentName,
+  //       designation,
+  //       employmentType: employeeType,
+  //       jobType,
+  //       sendOfferMessagetoCandidate: sendMessageToCandiDate,
+  //       technology: technology.payload || '',
+  //     }),
+  //   )
+
+  //   if (
+  //     reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
+  //       addCandidate,
+  //     )
+  //   ) {
+  //     const candidateId = addCandidate.payload
+  //     const file = new FormData()
+  //     if (uploadedFile !== undefined) {
+  //       file.append('file', uploadedFile)
+  //     }
+  //     await dispatch(
+  //       reduxServices.addNewCandidate.uploadAddNewJoineeFileThunk({
+  //         candidateId,
+  //         file,
+  //       }),
+  //     )
+  //     window.location.href = '/upcomingjoinlist'
+  //   } else if (
+  //     reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
+  //       addCandidate,
+  //     ) &&
+  //     addCandidate.payload === 500
+  //   ) {
+  //     dispatch(reduxServices.app.actions.addToast(addFailedToastMessage))
+  //     dispatch(reduxServices.app.actions.addToast(undefined))
+  //   }
+  // }
 
   const NUMERIC_REGEX = /^[0-9]*$/
 
@@ -426,7 +481,7 @@ const CandidateOffer = (): JSX.Element => {
             <CFormLabel className="col-sm-3 col-form-label text-end">
               Comments:
             </CFormLabel>
-            <CCol sm={6}>
+            <CCol sm={3}>
               <CFormTextarea
                 data-testid="text-area"
                 aria-label="textarea"
@@ -450,42 +505,42 @@ const CandidateOffer = (): JSX.Element => {
             Attach File:
           </CFormLabel>
           <CCol sm={3}>
-            <div className="col-sm-3">
-              <input
-                className="file"
-                type="file"
-                style={{ width: '200px', marginBottom: '0' }}
-                data-testid="file-upload"
-                onChange={(element: SyntheticEvent) =>
-                  onChangeJoineeFileUploadHandler(
-                    element.currentTarget as HTMLInputElement,
-                  )
-                }
+            <input
+              className="file"
+              type="file"
+              style={{ width: '200px', marginBottom: '0' }}
+              data-testid="file-upload"
+              onChange={(element: SyntheticEvent) =>
+                onChangeJoineeFileUploadHandler(
+                  element.currentTarget as HTMLInputElement,
+                )
+              }
+            />
+          </CCol>
+          <CCol sm={3}>
+            <div className="d-md-flex justify-content-md-start ">
+              <CFormCheck
+                className="ticket-search-checkbox"
+                inline
+                type="checkbox"
+                name="internalProject"
+                data-testid="msg-candidate"
+                id="internalProject"
+                label="Send Message to candidate"
+                checked={sendMessageToCandiDate}
+                onChange={(e) => setSendMessageToCandiDate(e.target.checked)}
               />
             </div>
           </CCol>
-        </CRow>
-
-        <CRow>
-          <div className="d-md-flex justify-content-md-end pull-right">
-            <CFormCheck
-              className="ticket-search-checkbox"
-              inline
-              type="checkbox"
-              name="internalProject"
-              data-testid="msg-candidate"
-              id="internalProject"
-              label="Send Message to candidate"
-              checked={sendMessageToCandiDate}
-              onChange={(e) => setSendMessageToCandiDate(e.target.checked)}
-            />
+          <CCol sm={9} className="offset-md-3">
             {uploadErrorText && (
               <div id="error" className="mt-1">
                 <strong className="text-danger">{uploadErrorText}</strong>
               </div>
             )}
-          </div>
+          </CCol>
         </CRow>
+
         <CCol className="col-md-3 offset-md-3">
           <CButton
             data-testid="save-btn"
