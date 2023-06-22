@@ -165,14 +165,14 @@ export interface AppraisalFormManagerCommentsDTO {
 export interface MyReviewKPI {
   id: number
   name: string
-  description: string
+  description: string | null
   employeeFeedback: null | string
   employeeRating: null | number
   employeeRatingName: null
   manager: null
   managerFeedback: null | string
   managerRating: null | number
-  frequency: string
+  frequency: string | null
   target: string | null
   managerCommentsDtos: AppraisalFormManagerCommentsDTO[] | null
 }
@@ -236,9 +236,16 @@ export interface IncomingMyReviewAppraisalForm {
   kpis: null
 }
 
+export interface ReviewCommentKPIReviewDTOs {
+  id: null
+  kpiName: string | null
+  oldValue: string | null
+  newValue: string | null
+}
+
 export interface IncomingReviewComment {
   id: number
-  comments: string
+  comments: string | null
   status: string
   createdDate: string
   employeeName: string
@@ -246,14 +253,7 @@ export interface IncomingReviewComment {
   kpiName: null
   oldValue: null
   newValue: null
-  kpiReviewDtos: [
-    {
-      id: null
-      kpiName: null
-      oldValue: null
-      newValue: null
-    },
-  ]
+  kpiReviewDtos: ReviewCommentKPIReviewDTOs[]
 }
 
 export interface IncomingReviewCommentList {
@@ -288,6 +288,7 @@ export interface MyReviewModalProps {
   confirmBtnAction?: () => void | Promise<void>
   modalFooterClass?: string
   modalHeaderClass?: string
+  modalSize?: 'sm' | 'lg' | 'xl'
 }
 
 export type MyReviewSliceState = {
