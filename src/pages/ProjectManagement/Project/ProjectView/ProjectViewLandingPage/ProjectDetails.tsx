@@ -70,7 +70,7 @@ const ProjectDetails = (): JSX.Element => {
         </dl>
         <dl className="mb-0">
           <dt>Billing Contact Name</dt>
-          <dd>{getProjectDetail.projectContactPerson}</dd>
+          <dd>{getProjectDetail.billingContactPerson}</dd>
         </dl>
         <dl className="mb-0">
           <dt>Billing Contact Email</dt>

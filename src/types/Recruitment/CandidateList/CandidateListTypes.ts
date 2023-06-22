@@ -99,6 +99,12 @@ export interface IncomingCompaniesData {
   companyName: string
 }
 
+// to differentitate add technology and add candidate page
+export enum CurrentAddCandidatePage {
+  addCandidate = 'Add New Candidate',
+  addTechnology = 'Add New Technology',
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
@@ -110,6 +116,7 @@ export type CandidateListSliceState = {
   getAllTechnology: GetAllTechnology[]
   allJobVacancies: IncomingAllJobVacanciesList
   allCompaniesData: IncomingCompaniesData[]
+  currentAddCandidatePage: CurrentAddCandidatePage
 }
 
 //used in other components - used in interview status report also
@@ -129,7 +136,7 @@ export type TableProps = {
 export type viewHandlerProps = {
   candidateStatus: string
   endIndex: number
-  selectionCountry: number
+  selectionCountry: number | string
   selectionTechnology: string
   startIndex: number
 }

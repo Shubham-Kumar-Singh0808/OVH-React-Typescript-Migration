@@ -148,7 +148,7 @@ const MileStoneTable = (): JSX.Element => {
         </CTableHead>
         <CTableBody color="light">
           {isLoading !== ApiLoadingState.loading ? (
-            mileStoneList.length > 0 &&
+            mileStoneList?.length > 0 &&
             mileStoneList?.map((item, index) => {
               const commentsLimit =
                 item.comments && item.comments.length > 30
