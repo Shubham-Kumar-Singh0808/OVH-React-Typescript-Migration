@@ -125,6 +125,9 @@ export interface PersonalInfoApi extends ApiBase {
 export interface ProfileHistoryApi extends ApiBase {
   getprofileHistory: string
 }
+export interface ProfileRecruitmentHistoryApi extends ApiBase {
+  getEmployeeHistory: string
+}
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
@@ -880,6 +883,8 @@ export interface CandidateListApi extends ApiBase {
   getAllCompaniesData: string
   addNewCandidate: string
   uploadCandidateResume: string
+  addTechnology: string
+  deleteTechnology: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -938,4 +943,11 @@ export interface ProductSpecificationListApi extends ApiBase {
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
+}
+export interface InterviewStatusReportApi extends ApiBase {
+  getAllTechnology: string
+  getAllEmpCountries: string
+  getInterviewStatusReport: string
+  exportInterviewStatusReport: string
+  exportInterviewerDetails: string
 }

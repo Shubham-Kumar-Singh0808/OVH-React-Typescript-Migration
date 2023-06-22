@@ -1004,10 +1004,10 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 163,
     name: 'Project-Invoices',
-    viewaccess: false,
-    createaccess: false,
-    updateaccess: false,
-    deleteaccess: false,
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
   {

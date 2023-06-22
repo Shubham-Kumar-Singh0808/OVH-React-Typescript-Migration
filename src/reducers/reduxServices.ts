@@ -130,8 +130,10 @@ import { categoryListService } from './ExpenseManagement/Category/expenseCategor
 import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
+import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -266,6 +268,8 @@ export const reduxServices = {
   categoryList: categoryListService,
   addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
+  recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   upComingJoinList: upComingJoiningListService,
+  interviewStatusReport: interviewStatusReportServices,
 }

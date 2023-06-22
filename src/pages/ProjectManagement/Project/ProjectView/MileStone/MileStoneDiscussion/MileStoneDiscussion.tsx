@@ -101,19 +101,19 @@ const MileStoneDiscussion = (): JSX.Element => {
           <div className="panel-body">
             <p className="milestone-history">
               <strong className="text-info">Milestone:</strong>
-              {getMileStone.title}
+              {getMileStone?.title}
             </p>
             <p className="milestone-history">
               <strong className="text-info">Planned End Date:</strong>
-              {getMileStone.planedDate}
+              {getMileStone?.planedDate}
             </p>
             <p className="milestone-history">
               <strong className="text-info">Actual End Date:</strong>
-              {getMileStone.actualDate}
+              {getMileStone?.actualDate}
             </p>
             <p className="milestone-history">
               <strong className="text-info">Milestone Percentage:</strong>
-              {getMileStone.milestonePercentage}%
+              {getMileStone?.milestonePercentage}%
             </p>
           </div>
         </CRow>

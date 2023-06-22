@@ -30,7 +30,7 @@ const ProposalsTimeLine = (): JSX.Element => {
                   <div className="sh-timeline-item mb-1">
                     <div className="mb-1">
                       <CFormLabel className="col-form-label p-0">
-                        Comments:
+                        Link:
                       </CFormLabel>
                       &nbsp;
                       <CLink href={item.post} target="_blank">

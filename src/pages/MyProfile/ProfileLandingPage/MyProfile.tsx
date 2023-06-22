@@ -54,7 +54,7 @@ const MyProfile = (): JSX.Element => {
         <ProfileDetails
           employeeGeneralInformation={employeeGeneralInformation}
         />
-        <MyProfileTabs />
+        <MyProfileTabs isViewingAnotherEmployee={isViewingAnotherEmployee} />
       </OCard>
     </>
   )
