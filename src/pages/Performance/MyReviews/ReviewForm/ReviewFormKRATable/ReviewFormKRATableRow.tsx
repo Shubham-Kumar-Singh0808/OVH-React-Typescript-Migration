@@ -23,7 +23,10 @@ const ReviewFormKRATableRow = ({
 }): JSX.Element => {
   return (
     <>
-      <CTableRow data-testid="myReview-kraRow">
+      <CTableRow
+        data-testid="myReview-kraRow"
+        style={{ backgroundColor: '#f9f9f9' }}
+      >
         <CTableDataCell>
           {openedKRA.id === kra.id ? (
             <i
