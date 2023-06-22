@@ -12,7 +12,6 @@ import {
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
-import { number } from 'prop-types'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
@@ -25,8 +24,10 @@ import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddAssetList = ({
   setToggle,
+  RBT,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  RBT: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -189,7 +190,6 @@ const AddAssetList = ({
   useEffect(() => {
     dispatch(reduxServices.country.getAllCountries())
   }, [dispatch])
-
   useEffect(() => {
     if (assetType) {
       dispatch(reduxServices.addNewProduct.getAssetTypeList(Number(assetType)))
@@ -209,7 +209,7 @@ const AddAssetList = ({
     reduxServices.addNewProduct.selectors.productTypeList,
   )
 
-  const typeChange = useTypedSelector(
+  const typeChangeSelector = useTypedSelector(
     reduxServices.addAssetList.selectors.typeChange,
   )
 
@@ -241,7 +241,7 @@ const AddAssetList = ({
       manufacturerId: manufacturerName as string,
       notes: addComment,
       otherAssetNumber: licenseNumber as string,
-      pSpecification: typeChange[0].productSpecification,
+      pSpecification: typeChangeSelector[0]?.productSpecification,
       poNumber: poNumber as string,
       productId: productType as string,
       purchasedDate: datePurchase as string,
@@ -467,25 +467,26 @@ const AddAssetList = ({
           >
             Product Specifications :
           </CFormLabel>
-          {typeChange.map((item, index) => {
-            return (
-              <CCol sm={1} className="mt-2" key={index}>
-                <CFormCheck
-                  type="radio"
-                  data-testid={`yes-radio`}
-                  hitArea="full"
-                  label={item.productSpecification}
-                  inline
-                  //disabled={!isViewBtnEnabled}
-                  name="isChecked"
-                  // value={isChecked}
-                  // onChange={(e) => setIsChecked(e.target.checked)}
-                  // onChange={(e) => handlerChangeProductSpecification}
-                  value={item.productSpecification}
-                />
-              </CCol>
-            )
-          })}
+          {typeChangeSelector?.length > 0 &&
+            typeChangeSelector?.map((item, index) => {
+              return (
+                <CCol sm={1} className="mt-2" key={index}>
+                  <CFormCheck
+                    type="radio"
+                    data-testid={`yes-radio`}
+                    hitArea="full"
+                    label={item?.productSpecification}
+                    inline
+                    //disabled={!isViewBtnEnabled}
+                    name="isChecked"
+                    // value={isChecked}
+                    // onChange={(e) => setIsChecked(e.target.checked)}
+                    // onChange={(e) => handlerChangeProductSpecification}
+                    value={item?.productSpecification}
+                  />
+                </CCol>
+              )
+            })}
         </CRow>
         <CRow className="mt-3 mb-3">
           <CFormLabel
@@ -504,6 +505,7 @@ const AddAssetList = ({
               name="assetNumber"
               autoComplete="off"
               value={assetNumber}
+              readOnly={RBT}
               onChange={handledInputChange}
               onClick={onClickbtn}
             />
@@ -730,11 +732,12 @@ const AddAssetList = ({
               onChange={(e) => setCountry(e.target.value)}
             >
               <option value={''}>Select Country</option>
-              {countriesList.map((location, index) => (
-                <option key={index} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
+              {countriesList.length > 0 &&
+                countriesList?.map((location, index) => (
+                  <option key={index} value={location.id}>
+                    {location.name}
+                  </option>
+                ))}
             </CFormSelect>
           </CCol>
         </CRow>

@@ -1,33 +1,24 @@
 /* eslint-disable react/react-in-jsx-scope */
-// Todd: remove eslint and fix error
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddAssetList from './AddAssetList'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { GetAllVendorDetails } from '../../../../types/Assets/VendorList/vendorListTypes'
-import { AddEditSliceState } from '../../../../types/Assets/AssetList/addEditListTypes'
-import { mockassetData } from '../../../../test/data/AddassetLIstmockData'
+import { mocktypeChangeSpecifications } from '../../../../test/data/AddassetLIstmockData'
 
 const mockSetTogglePage = jest.fn()
 
 describe('Add Asset list  Details without data', () => {
   beforeEach(() => {
-    render(
-      // eslint-disable-next-line react/react-in-jsx-scope
-      <AddAssetList setToggle={mockSetTogglePage} />,
-      {
-        preloadedState: {
-          AddAssetList: {
-            vendors: [],
-            listSize: 0,
-            AddEditSliceState: {} as AddEditSliceState,
-            isLoading: ApiLoadingState.succeeded,
-            getassetById: mockassetData,
-          },
+    render(<AddAssetList setToggle={mockSetTogglePage} RBT={false} />, {
+      preloadedState: {
+        addAssetList: {
+          isLoading: ApiLoadingState.succeeded,
+          listSize: 0,
+          typeChangeSpecificationsData: mocktypeChangeSpecifications,
         },
       },
-    )
+    })
   })
   test('should be able to render Add Asset List Title', () => {
     expect(screen.getByText('Add New Asset')).toBeInTheDocument()
@@ -71,37 +62,34 @@ describe('Add Asset list  Details without data', () => {
   })
   test('should render on every input of vendor name ', () => {
     const vendorNameInput = screen.getByPlaceholderText('Select Vendor Name')
-    userEvent.type(vendorNameInput, '')
+    userEvent.selectOptions(vendorNameInput, '')
     expect(vendorNameInput).toHaveValue('')
   })
-  test('should render on every input of asset type', () => {
-    const AssetNameInput = screen.getByPlaceholderText('Select Asset Type')
-    userEvent.type(AssetNameInput, '')
-    expect(AssetNameInput).toHaveValue('')
-  })
-  test('should render on every input of product type', () => {
-    const roomNameInput = screen.getByPlaceholderText('Select Product Type')
-    userEvent.type(roomNameInput, '')
-    expect(roomNameInput).toHaveValue('')
-  })
-  test('should render on every input of manufacturer Name', () => {
-    const roomNameInput = screen.getByPlaceholderText(
-      'Select Manufacturer Name',
-    )
-    userEvent.type(roomNameInput, '')
-    expect(roomNameInput).toHaveValue('')
+  test('should enable  after selecting form option', () => {
+    const assetTypeSelect = screen.getByTestId('assetType')
+    fireEvent.select(assetTypeSelect, ['Software'])
+    expect(assetTypeSelect).toHaveValue('')
+
+    const productTypeSelect = screen.getByTestId('productType')
+    fireEvent.select(productTypeSelect, ['CSS3 Suite for UI designers'])
+    expect(productTypeSelect).toHaveValue('')
+
+    const manufacturerSelect = screen.getByTestId('manufacturerName')
+    fireEvent.select(manufacturerSelect, ['Adobe'])
+    expect(manufacturerSelect).toHaveValue('')
   })
   test('should render on every input of Asset status', () => {
     const roomNameInput = screen.getByPlaceholderText('Select Status')
-    userEvent.type(roomNameInput, '')
+    userEvent.selectOptions(roomNameInput, '')
     expect(roomNameInput).toHaveValue('')
   })
   test('should render on every input of Country', () => {
     const roomNameInput = screen.getByPlaceholderText('Select Country')
-    userEvent.type(roomNameInput, '')
+    userEvent.selectOptions(roomNameInput, '')
     expect(roomNameInput).toHaveValue('')
   })
   test('should render on Date Of Purchase ', async () => {
+    // eslint-disable-next-line sonarjs/no-duplicate-string
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])
 
@@ -117,7 +105,7 @@ describe('Add Asset list  Details without data', () => {
       }),
     )
   })
-  test('should render on Warranty Start Date', async () => {
+  test('should render on Received  Date', async () => {
     const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
     fireEvent.click(datePickers[0])
 
@@ -130,6 +118,39 @@ describe('Add Asset list  Details without data', () => {
     await waitFor(() =>
       fireEvent.change(datePickers[1], {
         target: { value: '25 July, 2023' },
+      }),
+    )
+  })
+
+  test('should render on Warranty Start Date ', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '16 June, 2022' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '17 Sep, 2022' },
+      }),
+    )
+  })
+  test('should render on Warranty End Date', async () => {
+    const datePickers = screen.getAllByPlaceholderText('dd/mm/yyyy')
+    fireEvent.click(datePickers[0])
+
+    await waitFor(() =>
+      fireEvent.change(datePickers[0], {
+        target: { value: '14 March, 2023' },
+      }),
+    )
+    fireEvent.click(datePickers[1])
+    await waitFor(() =>
+      fireEvent.change(datePickers[1], {
+        target: { value: '29 September, 2023' },
       }),
     )
   })
@@ -146,7 +167,7 @@ describe('Add Asset list  Details without data', () => {
     const invoiceNumber = screen.getByTestId('invoiceNumber')
     userEvent.type(invoiceNumber, '8765430')
 
-    const amount = screen.getByTestId('amount')
+    const amount = screen.getByTestId('assetNumber')
     userEvent.type(amount, '4536')
   })
 })

@@ -87,7 +87,9 @@ const AssetList = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'AddAssetList' && <AddAssetList setToggle={setToggle} />}
+      {toggle === 'AddAssetList' && (
+        <AddAssetList setToggle={setToggle} RBT={false} />
+      )}
       {toggle === 'EditAssetList' && (
         <EditAddAssetList
           setToggle={setToggle}

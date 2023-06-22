@@ -1,4 +1,3 @@
-import { number } from 'prop-types'
 import {
   AssetTypeAddList,
   UpdateAssetListSliceState,
@@ -68,22 +67,20 @@ export const mockupdateAddAsset: UpdateAssetListSliceState[] = [
     warrantyStartDate: '19/06/2023',
   },
 ]
-export const mocktypeChangeSpecifications: typeChangeSpecificationsList = [
-  {
-    id: 69,
-    productId: 30,
-    productName: 'CSS3 Suite for UI designers',
-    manufacturerId: 28,
-    manufacturerName: 'Adobe',
-    productSpecification: 'Adobe Key for CSS3',
-    assetTypeId: 2,
-    assetType: 'Software',
-    roleId: null,
-    departmentId: null,
-    departmentName: null,
-    createdBy: '',
-    updatedBy: '',
-    createdDate: '',
-    updatedDate: '',
-  },
-]
+export const mocktypeChangeSpecifications: typeChangeSpecificationsList = {
+  id: 69,
+  productId: 30,
+  productName: 'CSS3 Suite for UI designers',
+  manufacturerId: 28,
+  manufacturerName: 'Adobe',
+  productSpecification: 'Adobe Key for CSS3',
+  assetTypeId: 2,
+  assetType: 'Software',
+  roleId: null,
+  departmentId: null,
+  departmentName: null,
+  createdBy: '',
+  updatedBy: '',
+  createdDate: '',
+  updatedDate: '',
+}

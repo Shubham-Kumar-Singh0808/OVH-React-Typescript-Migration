@@ -77,9 +77,6 @@ const EditAddAssetList = ({
   const [assetType, setAssetType] = useState<string>(editAddAssetList.assetType)
   const [isChecked, setIsChecked] = useState<boolean>()
 
-  // console.log(vendorName + 'vendorName')
-  // console.log(editAddAssetList.countryId)
-  // console.log(country)
   useEffect(() => {
     if (editAddAssetList) {
       setCountry(editAddAssetList.countryId as number)
@@ -88,7 +85,6 @@ const EditAddAssetList = ({
       setAssetStatus(editAddAssetList.status)
       setProductType(editAddAssetList.productId)
     }
-    //dispatch(reduxServices.employeeHandbookSettings.getEmployeeCountries())
   }, [editAddAssetList])
   const formLabelProps = {
     htmlFor: 'editVendorDetails',
@@ -101,9 +97,6 @@ const EditAddAssetList = ({
   const typeChange = useTypedSelector(
     reduxServices.addAssetList.selectors.typeChange,
   )
-  // const departments = useTypedSelector(
-  //   reduxServices.addNewVendor.selectors.department,
-  // )
 
   const onChangeInputHandler = (
     event:
@@ -382,7 +375,7 @@ const EditAddAssetList = ({
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
-              data-testid="manufacturer-Name"
+              data-testid="manufacturerName"
               aria-label="Default select example"
               size="sm"
               id="manufacturerName"
