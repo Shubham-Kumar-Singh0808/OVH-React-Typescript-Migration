@@ -77,10 +77,6 @@ const ProjectReport = (): JSX.Element => {
   const [isViewBtnEnable, setViewBtnEnable] = useState(true)
   const [isCloseBtnVisible, setIsCloseBtnVisible] = useState(true)
 
-  useEffect(() => {
-    dispatch(reduxServices.projectReport.getFetchActiveProjectReports(params))
-  }, [dispatch])
-
   const {
     paginationRange,
     setPageSize,

@@ -23,6 +23,8 @@ import { deviceLocale } from '../../../utils/dateFormatUtils'
 import { GetAllEmployeesNames } from '../../../types/ProjectManagement/AllocateEmployee/allocateEmployeeTypes'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { dateFormat } from '../../../constant/DateFormat'
+import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 
 const CreateNewTicketFilterOptions = ({
   setToggle,
@@ -44,6 +46,8 @@ const CreateNewTicketFilterOptions = ({
   const [PriorityValue, setPriorityValue] = useState<string>('Normal')
   const [subjectValue, setSubjectValue] = useState<string>()
   const [showEditor, setShowEditor] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(false)
+
   const [isCreateButtonEnabled, setIsCreateButtonEnabled] = useState(false)
   const [uploadFile, setUploadFile] = useState<File | undefined>(undefined)
   const [addEmployeeName, setAddEmployeeName] = useState<
@@ -82,6 +86,21 @@ const CreateNewTicketFilterOptions = ({
       dispatch(reduxServices.ticketApprovals.getSubCategoryList(categoryId))
     }
   }, [deptId, categoryId])
+
+  useEffect(() => {
+    setCategoryId(0)
+    setSubCategoryIdValue(0)
+    dispatch(
+      reduxServices.ticketApprovals.getDepartmentCategoryList(deptId as number),
+    )
+  }, [dispatch, deptId])
+
+  useEffect(() => {
+    setSubCategoryIdValue(0)
+    dispatch(
+      reduxServices.ticketApprovals.getSubCategoryList(categoryId as number),
+    )
+  }, [dispatch, categoryId])
   const commonFormatDate = 'l'
 
   const handleDescription = (description: string) => {
@@ -161,32 +180,6 @@ const CreateNewTicketFilterOptions = ({
     if (!file) return
     setUploadFile(file[0])
   }
-  useEffect(() => {
-    if (categoryId === 0) {
-      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
-    }
-  }, [dispatch, categoryId])
-
-  useEffect(() => {
-    if (!deptId) {
-      dispatch(reduxServices.ticketApprovals.actions.clearCategory())
-      dispatch(reduxServices.ticketApprovals.actions.clearSubCategory())
-      setSubCategoryIdValue(0)
-    }
-  }, [dispatch, deptId])
-
-  useEffect(() => {
-    if (!deptId) {
-      setCategoryId(undefined)
-      setSubCategoryIdValue(undefined)
-    }
-  }, [deptId])
-
-  useEffect(() => {
-    if (!categoryId) {
-      setSubCategoryIdValue(undefined)
-    }
-  }, [categoryId])
 
   const onHandleStartDatePicker = (value: Date) => {
     setSelectMealDate(moment(value).format(dateFormat))
@@ -199,6 +192,7 @@ const CreateNewTicketFilterOptions = ({
   )
 
   const handleApplyTicket = async () => {
+    setLoading(true)
     const payload =
       Result1[0]?.mealType === true
         ? {
@@ -269,6 +263,7 @@ const CreateNewTicketFilterOptions = ({
           />,
         ),
       )
+      setLoading(false)
       setTrackerValue('')
       setDeptId(0)
       setCategoryId(0)
@@ -288,385 +283,393 @@ const CreateNewTicketFilterOptions = ({
       })
     }
   }
-
-  return (
-    <>
-      <CForm>
-        <CRow className="mt-4 mb-4">
+  const startValue = startDate
+    ? new Date(startDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  const endValue = endDate
+    ? new Date(endDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  const ResultValue =
+    Result1[0]?.mealType === true ? (
+      <CRow className="mt-3">
+        <CFormLabel className="col-sm-2 col-form-label text-end">
+          Date :
+          <span className={selectMealDate ? TextWhite : TextDanger}>*</span>
+        </CFormLabel>
+        <CCol sm={3}>
+          <ReactDatePicker
+            id="selectMealDate"
+            className="form-control form-control-sm sh-date-picker"
+            showMonthDropdown
+            showYearDropdown
+            autoComplete="off"
+            dropdownMode="select"
+            dateFormat="dd/mm/yy"
+            placeholderText="dd/mm/yyyy"
+            name="selectMealDate"
+            value={selectMealDate}
+            minDate={new Date()}
+            maxDate={disableAfterDate}
+            onChange={(date: Date) => onHandleStartDatePicker(date)}
+          />
+        </CCol>
+      </CRow>
+    ) : (
+      ''
+    )
+  const ResultValueMealType =
+    Result1[0]?.mealType === true ? (
+      <CRow className="mt-4 mb-4">
+        <CFormLabel className="col-sm-2 col-form-label text-end">
+          Add Members:
+        </CFormLabel>
+        <CCol sm={3}>
+          <Multiselect
+            className="ovh-multiselect"
+            data-testid="employee-option"
+            options={allEmployeeProfiles?.map((employee) => employee) || []}
+            displayValue="fullName"
+            placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
+            selectedValues={addEmployeeName}
+            onSelect={(list: GetAllEmployeesNames[]) => handleMultiSelect(list)}
+            onRemove={(selectedList: GetAllEmployeesNames[]) =>
+              handleOnRemoveSelectedOption(selectedList)
+            }
+          />
+        </CCol>
+      </CRow>
+    ) : (
+      ''
+    )
+  const ResultValueMealDatePicker =
+    Result1[0]?.mealType === true ? (
+      ''
+    ) : (
+      <>
+        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
           <CFormLabel className="col-sm-2 col-form-label text-end">
-            Tracker :
-            <span className={trackerValue ? whiteText : dangerText}>*</span>
+            Start Date :
           </CFormLabel>
           <CCol sm={3}>
-            <CFormSelect
-              aria-label="tracker"
-              id="tracker"
-              data-testid="trackerSelect"
-              name="tracker"
-              value={trackerValue}
-              onChange={(e) => {
-                setTrackerValue(e.target.value)
-              }}
-            >
-              <option value="">Select Tracker</option>
-              {trackerList?.map((trackerItem, trackerItemIndex) => (
-                <option key={trackerItemIndex} value={trackerItem.id}>
-                  {trackerItem.name}
-                </option>
-              ))}
-            </CFormSelect>
-          </CCol>
-          {userViewAccess && (
-            <CCol className="col-sm-3">
-              <CButton
-                color="info btn-ovh me-1"
-                onClick={() => setToggle('addTrackerList')}
-              >
-                <i className="fa fa-plus me-1"></i>Add
-              </CButton>
-            </CCol>
-          )}
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Department :
-            <span className={deptId ? whiteText : dangerText}>*</span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              aria-label="department"
-              id="departmentName"
-              data-testid="departmentName"
-              name="departmentName"
-              value={deptId}
-              onChange={(e) => {
-                setDeptId(Number(e.target.value))
-                setSubCategoryIdValue(0)
-              }}
-            >
-              <option value="">Select Department</option>
-              {departmentList
-                .slice()
-                .sort((department1, department2) =>
-                  department1.name.localeCompare(department2.name),
-                )
-                ?.map((dept, index) => (
-                  <option key={index} value={dept.id}>
-                    {dept.name}
-                  </option>
-                ))}
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Category :
-            <span className={categoryId ? whiteText : dangerText}>*</span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              aria-label="category"
-              id="categoryName"
-              data-testid="categoryNameSelect"
-              name="categoryName"
-              value={categoryId}
-              onChange={(e) => {
-                setCategoryId(Number(e.target.value))
-              }}
-            >
-              <option value="">Select Category</option>
-              {departmentCategoryList
-                .slice()
-                .sort((category1, category2) =>
-                  category1.categoryName.localeCompare(category2.categoryName),
-                )
-                ?.map((category, categoryIndex) => (
-                  <option key={categoryIndex} value={category.categoryId}>
-                    {category.categoryName}
-                  </option>
-                ))}
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Sub-Category :
-            <span className={subCategoryIdValue ? whiteText : dangerText}>
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              aria-label="sub-category"
-              id="subCategoryName"
-              data-testid="subCategoryNameSelect"
-              name="subCategoryName"
-              value={subCategoryIdValue}
-              onChange={(e) => {
-                setSubCategoryIdValue(Number(e.target.value))
-              }}
-            >
-              <option value="">Select Sub-Category</option>
-              {subCategoryList
-                .slice()
-                .sort((subCategory1, subCategory2) =>
-                  subCategory1.subCategoryName.localeCompare(
-                    subCategory2.subCategoryName,
-                  ),
-                )
-                ?.map((subCategory, subCategoryIndex) => (
-                  <option
-                    key={subCategoryIndex}
-                    value={subCategory.subCategoryId}
-                  >
-                    {subCategory.subCategoryName}
-                  </option>
-                ))}
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        {Result1[0]?.mealType === true ? (
-          ''
-        ) : (
-          <>
-            <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-              <CFormLabel className="col-sm-2 col-form-label text-end">
-                Start Date :
-              </CFormLabel>
-              <CCol sm={3}>
-                <ReactDatePicker
-                  id="fromDate"
-                  data-testid="dateOptionSelect"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                  showMonthDropdown
-                  showYearDropdown
-                  minDate={new Date()}
-                  dropdownMode="select"
-                  dateFormat="dd/mm/yy"
-                  autoComplete="off"
-                  placeholderText="dd/mm/yy"
-                  name="fromDate"
-                  value={
-                    startDate
-                      ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setStartDate(moment(date).format(commonFormatDate))
-                  }
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-              <CFormLabel className="col-sm-2 col-form-label text-end">
-                End Date :
-              </CFormLabel>
-              <CCol sm={3}>
-                <ReactDatePicker
-                  id="toDate"
-                  data-testid="dateOptionSelect"
-                  className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                  showMonthDropdown
-                  showYearDropdown
-                  minDate={new Date()}
-                  dropdownMode="select"
-                  autoComplete="off"
-                  dateFormat="dd/mm/yy"
-                  placeholderText="dd/mm/yy"
-                  name="toDate"
-                  value={
-                    endDate
-                      ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: '2-digit',
-                        })
-                      : ''
-                  }
-                  onChange={(date: Date) =>
-                    setEndDate(moment(date).format(commonFormatDate))
-                  }
-                />
-                {dateError && (
-                  <CCol>
-                    <span className="text-danger" data-testid="errorMessage">
-                      Access end date should be greater than access start date
-                    </span>
-                  </CCol>
-                )}
-              </CCol>
-            </CRow>
-          </>
-        )}
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Subject :
-            <span
-              className={
-                subjectValue?.replace(/^\s*/, '') ? whiteText : dangerText
+            <ReactDatePicker
+              id="fromDate"
+              data-testid="dateOptionSelect"
+              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              showMonthDropdown
+              showYearDropdown
+              minDate={new Date()}
+              dropdownMode="select"
+              dateFormat="dd/mm/yy"
+              autoComplete="off"
+              placeholderText="dd/mm/yy"
+              name="fromDate"
+              value={startValue}
+              onChange={(date: Date) =>
+                setStartDate(moment(date).format(commonFormatDate))
               }
-            >
-              *
-            </span>
-          </CFormLabel>
-          <CCol sm={9}>
-            <CFormInput
-              type="text"
-              data-testid="selectSubject"
-              id="subjectValue"
-              name="subjectValue"
-              value={subjectValue}
-              onChange={(e) => {
-                setSubjectValue(e.target.value)
-              }}
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
-          <CFormLabel
-            className="col-sm-2 col-form-label text-end"
-            data-testid="ckEditor-component"
-          >
-            Description :
+        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+          <CFormLabel className="col-sm-2 col-form-label text-end">
+            End Date :
           </CFormLabel>
-          {showEditor ? (
-            <CCol sm={8}>
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={createTicket?.description}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleDescription(editor.getData().trim())
+          <CCol sm={3}>
+            <ReactDatePicker
+              id="toDate"
+              data-testid="dateOptionSelect"
+              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              showMonthDropdown
+              showYearDropdown
+              minDate={new Date()}
+              dropdownMode="select"
+              autoComplete="off"
+              dateFormat="dd/mm/yy"
+              placeholderText="dd/mm/yy"
+              name="toDate"
+              value={endValue}
+              onChange={(date: Date) =>
+                setEndDate(moment(date).format(commonFormatDate))
+              }
+            />
+            {dateError && (
+              <CCol>
+                <span className="text-danger" data-testid="errorMessage">
+                  Access end date should be greater than access start date
+                </span>
+              </CCol>
+            )}
+          </CCol>
+        </CRow>
+      </>
+    )
+  return (
+    <>
+      {!loading ? (
+        <CForm>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Tracker :
+              <span className={trackerValue ? whiteText : dangerText}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="tracker"
+                id="tracker"
+                data-testid="trackerSelect"
+                name="tracker"
+                value={trackerValue}
+                onChange={(e) => {
+                  setTrackerValue(e.target.value)
+                }}
+              >
+                <option value="">Select Tracker</option>
+                {trackerList?.map((trackerItem, trackerItemIndex) => (
+                  <option key={trackerItemIndex} value={trackerItem.id}>
+                    {trackerItem.name}
+                  </option>
+                ))}
+              </CFormSelect>
+            </CCol>
+            {userViewAccess && (
+              <CCol className="col-sm-3">
+                <CButton
+                  color="info btn-ovh me-1"
+                  onClick={() => setToggle('addTrackerList')}
+                >
+                  <i className="fa fa-plus me-1"></i>Add
+                </CButton>
+              </CCol>
+            )}
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Department :
+              <span className={deptId ? whiteText : dangerText}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="department"
+                id="departmentName"
+                data-testid="departmentName"
+                name="departmentName"
+                value={deptId}
+                onChange={(e) => {
+                  setDeptId(Number(e.target.value))
+                  setSubCategoryIdValue(0)
+                }}
+              >
+                <option value="">Select Department</option>
+                {departmentList
+                  .slice()
+                  .sort((department1, department2) =>
+                    department1.name.localeCompare(department2.name),
+                  )
+                  ?.map((dept, index) => (
+                    <option key={index} value={dept.id}>
+                      {dept.name}
+                    </option>
+                  ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Category :
+              <span className={categoryId ? whiteText : dangerText}>*</span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="category"
+                id="categoryName"
+                data-testid="categoryNameSelect"
+                name="categoryName"
+                value={categoryId}
+                onChange={(e) => {
+                  setCategoryId(Number(e.target.value))
+                }}
+              >
+                <option value="">Select Category</option>
+                {departmentCategoryList
+                  .slice()
+                  .sort((category1, category2) =>
+                    category1.categoryName.localeCompare(
+                      category2.categoryName,
+                    ),
+                  )
+                  ?.map((category, categoryIndex) => (
+                    <option key={categoryIndex} value={category.categoryId}>
+                      {category.categoryName}
+                    </option>
+                  ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Sub-Category :
+              <span className={subCategoryIdValue ? whiteText : dangerText}>
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormSelect
+                aria-label="sub-category"
+                id="subCategoryName"
+                data-testid="subCategoryNameSelect"
+                name="subCategoryName"
+                value={subCategoryIdValue}
+                onChange={(e) => {
+                  setSubCategoryIdValue(Number(e.target.value))
+                }}
+              >
+                <option value="">Select Sub-Category</option>
+                {subCategoryList
+                  .slice()
+                  .sort((subCategory1, subCategory2) =>
+                    subCategory1.subCategoryName.localeCompare(
+                      subCategory2.subCategoryName,
+                    ),
+                  )
+                  ?.map((subCategory, subCategoryIndex) => (
+                    <option
+                      key={subCategoryIndex}
+                      value={subCategory.subCategoryId}
+                    >
+                      {subCategory.subCategoryName}
+                    </option>
+                  ))}
+              </CFormSelect>
+            </CCol>
+          </CRow>
+          {ResultValueMealDatePicker}
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Subject :
+              <span
+                className={
+                  subjectValue?.replace(/^\s*/, '') ? whiteText : dangerText
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={9}>
+              <CFormInput
+                type="text"
+                data-testid="selectSubject"
+                id="subjectValue"
+                name="subjectValue"
+                value={subjectValue}
+                onChange={(e) => {
+                  setSubjectValue(e.target.value)
                 }}
               />
             </CCol>
-          ) : (
-            ''
-          )}
-        </CRow>
-        {Result1[0]?.mealType === true ? (
-          <CRow className="mt-3">
-            <CFormLabel className="col-sm-2 col-form-label text-end">
-              Date :
-              <span className={selectMealDate ? TextWhite : TextDanger}>*</span>
-            </CFormLabel>
-            <CCol sm={3}>
-              <ReactDatePicker
-                id="selectMealDate"
-                className="form-control form-control-sm sh-date-picker"
-                showMonthDropdown
-                showYearDropdown
-                autoComplete="off"
-                dropdownMode="select"
-                dateFormat="dd/mm/yy"
-                placeholderText="dd/mm/yyyy"
-                name="selectMealDate"
-                value={selectMealDate}
-                minDate={new Date()}
-                maxDate={disableAfterDate}
-                onChange={(date: Date) => onHandleStartDatePicker(date)}
-              />
-            </CCol>
           </CRow>
-        ) : (
-          ''
-        )}
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Priority :
-          </CFormLabel>
-          <CCol sm={3}>
-            <CFormSelect
-              aria-label="category"
-              id="subCategoryName"
-              data-testid="priority"
-              name="priority"
-              value={PriorityValue}
-              onChange={(e) => {
-                setPriorityValue(e.target.value)
-              }}
+          <CRow className="mt-4 mb-4">
+            <CFormLabel
+              className="col-sm-2 col-form-label text-end"
+              data-testid="ckEditor-component"
             >
-              <option value="Low">Low</option>
-              <option value="Normal">Normal</option>
-              <option value="High">High</option>
-              <option value="Urgent">Urgent</option>
-              <option value="Immediate">Immediate</option>
-            </CFormSelect>
-          </CCol>
-        </CRow>
-        {Result1[0]?.mealType === true ? (
+              Description :
+            </CFormLabel>
+            {showEditor ? (
+              <CCol sm={8}>
+                <CKEditor<{
+                  onChange: CKEditorEventHandler<'change'>
+                }>
+                  initData={createTicket?.description}
+                  config={ckeditorConfig}
+                  debug={true}
+                  onChange={({ editor }) => {
+                    handleDescription(editor.getData().trim())
+                  }}
+                />
+              </CCol>
+            ) : (
+              ''
+            )}
+          </CRow>
+          {ResultValue}
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
-              Add Members:
+              Priority :
             </CFormLabel>
             <CCol sm={3}>
-              <Multiselect
-                className="ovh-multiselect"
-                data-testid="employee-option"
-                options={allEmployeeProfiles?.map((employee) => employee) || []}
-                displayValue="fullName"
-                placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
-                selectedValues={addEmployeeName}
-                onSelect={(list: GetAllEmployeesNames[]) =>
-                  handleMultiSelect(list)
-                }
-                onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                  handleOnRemoveSelectedOption(selectedList)
+              <CFormSelect
+                aria-label="category"
+                id="subCategoryName"
+                data-testid="priority"
+                name="priority"
+                value={PriorityValue}
+                onChange={(e) => {
+                  setPriorityValue(e.target.value)
+                }}
+              >
+                <option value="Low">Low</option>
+                <option value="Normal">Normal</option>
+                <option value="High">High</option>
+                <option value="Urgent">Urgent</option>
+                <option value="Immediate">Immediate</option>
+              </CFormSelect>
+            </CCol>
+          </CRow>
+
+          {ResultValueMealType}
+          <CRow className="mt-4 mb-4">
+            <CFormLabel className="col-sm-2 col-form-label text-end">
+              Files :
+            </CFormLabel>
+            <CCol sm={3}>
+              <input
+                className="sh-updateTicket-file"
+                type="file"
+                data-testid="file-upload"
+                id="fileUpload"
+                onChange={(element: React.SyntheticEvent) =>
+                  onChangeFileEventHandler(
+                    element.currentTarget as HTMLInputElement,
+                  )
                 }
               />
             </CCol>
           </CRow>
-        ) : (
-          ''
-        )}
-        <CRow className="mt-4 mb-4">
-          <CFormLabel className="col-sm-2 col-form-label text-end">
-            Files :
-          </CFormLabel>
-          <CCol sm={3}>
-            <input
-              className="sh-updateTicket-file"
-              type="file"
-              data-testid="file-upload"
-              id="fileUpload"
-              onChange={(element: React.SyntheticEvent) =>
-                onChangeFileEventHandler(
-                  element.currentTarget as HTMLInputElement,
-                )
-              }
-            />
-          </CCol>
-        </CRow>
-        <CRow>
-          <CCol md={{ span: 6, offset: 2 }}>
-            <>
-              <CButton
-                className="btn-ovh me-1"
-                data-testid="create-btn"
-                color="success"
-                onClick={handleApplyTicket}
-                disabled={!isCreateButtonEnabled || dateError}
-              >
-                Create
-              </CButton>
-              <CButton
-                color="warning "
-                data-testid="clear-btn"
-                className="btn-ovh"
-                onClick={clearBtnHandler}
-              >
-                Clear
-              </CButton>
-            </>
-          </CCol>
-        </CRow>
-      </CForm>
+          <CRow>
+            <CCol md={{ span: 6, offset: 2 }}>
+              <>
+                <CButton
+                  className="btn-ovh me-1"
+                  data-testid="create-btn"
+                  color="success"
+                  onClick={handleApplyTicket}
+                  disabled={!isCreateButtonEnabled || dateError}
+                >
+                  Create
+                </CButton>
+                <CButton
+                  color="warning "
+                  data-testid="clear-btn"
+                  className="btn-ovh"
+                  onClick={clearBtnHandler}
+                >
+                  Clear
+                </CButton>
+              </>
+            </CCol>
+          </CRow>
+        </CForm>
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }

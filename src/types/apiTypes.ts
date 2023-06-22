@@ -883,6 +883,8 @@ export interface CandidateListApi extends ApiBase {
   getAllCompaniesData: string
   addNewCandidate: string
   uploadCandidateResume: string
+  addTechnology: string
+  deleteTechnology: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -959,4 +961,11 @@ export interface CreditCardListApi extends ApiBase {
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
+}
+export interface InterviewStatusReportApi extends ApiBase {
+  getAllTechnology: string
+  getAllEmpCountries: string
+  getInterviewStatusReport: string
+  exportInterviewStatusReport: string
+  exportInterviewerDetails: string
 }

@@ -26,6 +26,8 @@ const CandidateList = (): JSX.Element => {
     }
   }, [CurrentPage])
 
+  console.log(selectCountry + '')
+
   const {
     paginationRange,
     setPageSize,
@@ -44,7 +46,7 @@ const CandidateList = (): JSX.Element => {
         searchStr: searchInput,
       }),
     )
-  }, [dispatch])
+  }, [dispatch, pageSize, CurrentPage, searchInput])
 
   const viewButtonHandler = () => {
     dispatch(
@@ -52,8 +54,8 @@ const CandidateList = (): JSX.Element => {
         candidateStatus: selectStatus,
         startIndex: pageSize * (CurrentPage - 1),
         endIndex: pageSize * CurrentPage,
-        selectionCountry: Number(selectCountry),
-        selectionTechnology: selectTechnology,
+        selectionCountry: selectCountry,
+        selectionTechnology: selectTechnology || '',
       }),
     )
     setCurrentPage(1)

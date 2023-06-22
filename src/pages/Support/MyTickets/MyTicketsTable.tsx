@@ -13,7 +13,7 @@ import {
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -43,6 +43,8 @@ const MyTicketsTable = ({
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false)
   const [toCancelTicketId, setToCancelTicketId] = useState(0)
   const [ticketSubject, setTicketSubject] = useState<string>('')
+  const history = useHistory()
+
   const dispatch = useAppDispatch()
   const getAllTickets = useTypedSelector(
     reduxServices.tickets.selectors.allTickets,
@@ -116,6 +118,9 @@ const MyTicketsTable = ({
       )
     }
   }
+  const editBtnHandler = (id: number) => {
+    history.push(`./updateTicket/${id}`)
+  }
 
   return (
     <>
@@ -187,23 +192,22 @@ const MyTicketsTable = ({
                   <CTableDataCell>{ticket.status}</CTableDataCell>
                   <CTableDataCell>
                     <>
-                      <Link to={`/updateTicket/${ticket.id}`}>
-                        {userEditAccess && (
-                          <CTooltip content="Edit">
-                            <CButton
-                              color="info"
-                              className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
-                              disabled={ticket.approvalStatus === 'Cancelled'}
-                              data-testid="edit-btn"
-                            >
-                              <i
-                                className="fa fa-pencil-square-o"
-                                aria-hidden="true"
-                              ></i>
-                            </CButton>
-                          </CTooltip>
-                        )}
-                      </Link>
+                      {userEditAccess && (
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info"
+                            className="btn-ovh me-1 btn-sm btn-ovh-employee-list cursor-pointer"
+                            disabled={ticket.approvalStatus === 'Cancelled'}
+                            data-testid="edit-btn"
+                            onClick={() => editBtnHandler(ticket.id)}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                          </CButton>
+                        </CTooltip>
+                      )}
                       {userAccessToMyTickets?.deleteaccess && (
                         <CTooltip content="Cancel">
                           <CButton
