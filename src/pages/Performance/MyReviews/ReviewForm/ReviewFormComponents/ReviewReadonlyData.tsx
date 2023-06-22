@@ -25,6 +25,7 @@ const ReviewReadonlyData = ({
       confirmBtnAction: undefined,
       modalFooterClass: 'd-none',
       modalHeaderClass: 'd-none',
+      modalSize: undefined,
     }
     dispatch(reduxServices.myReview.actions.setModal(modalObject))
   }

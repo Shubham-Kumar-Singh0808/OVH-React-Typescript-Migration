@@ -7,6 +7,8 @@ import {
   getKpisOfKraByKraIndex,
   initialPerformanceRating,
   myReviewTestComments,
+  sortKPIByAlphabeticalOrder,
+  sortKRAByAlphabeticalOrder,
 } from './MyReviewHelpers'
 import {
   act,
@@ -78,13 +80,35 @@ describe('Employee Review Form', () => {
       ).toHaveTextContent(chosenKpi.name)
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-description')),
-      ).toHaveTextContent(chosenKpi.description)
+      ).toHaveTextContent(chosenKpi.description ?? 'N/A')
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-frequency')),
-      ).toHaveTextContent(chosenKpi.frequency)
+      ).toHaveTextContent(chosenKpi.frequency ?? 'N/A')
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-target')),
       ).toHaveTextContent(chosenKpi.target ? chosenKpi.target : 'N/A')
+    })
+
+    test('incomplete kpi description save error', () => {
+      const saveBtn = screen.getByTestId(employeeInitialSaveBtn)
+      const kraIndex = 1
+      const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
+      const kpi = getKpisOfKraByKraIndex(
+        mockInitialEmployeeAppraisalForm,
+        kraIndex,
+      )[0]
+      act(() => {
+        userEvent.click(openKpiBtn)
+      })
+      const kpiComments = screen.getByTestId(
+        generateMyReviewTestId(`${kpi.id}-empComments`),
+      )
+      act(() => {
+        fireEvent.change(kpiComments, 'less than 50 char')
+      })
+      act(() => {
+        userEvent.click(saveBtn)
+      })
     })
 
     test('save functionality', () => {
@@ -103,15 +127,19 @@ describe('Employee Review Form', () => {
 
     test('submit button functionality', () => {
       const submitBtn = screen.getByTestId(employeeInitialSubmitBtn)
-      mockInitialEmployeeAppraisalForm.kra.forEach((kra, kraIndex) => {
+      const sortedKRAs = sortKRAByAlphabeticalOrder(
+        mockInitialEmployeeAppraisalForm.kra,
+      )
+      sortedKRAs.forEach((kra, kraIndex) => {
         expect(submitBtn).toBeDisabled()
         //opening each kra
         const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
         act(() => {
           userEvent.click(openKpiBtn)
         })
+        const sortedKPIs = sortKPIByAlphabeticalOrder(kra.kpis)
         // entering value for all kpi of each kra
-        kra.kpis.forEach((kpiItem) => {
+        sortedKPIs.forEach((kpiItem) => {
           const ratingTestId = `${kpiItem.id}-empRating`
           const commentsTestId = `${kpiItem.id}-empComments`
           const mockRating = mockPerformanceRatings[2].rating.toString()
