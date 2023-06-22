@@ -4,6 +4,13 @@ import userEvent from '@testing-library/user-event'
 import ReSchedule from './ReSchedule'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 
+const result = new Date().toLocaleTimeString([], {
+  hour: 'numeric',
+  minute: '2-digit',
+})
+
+const startHour = result?.split(':')[0]
+const startMinutesDay = result?.split(':')[1]?.split(' ')[0]
 describe('ReSchedule component with data', () => {
   beforeEach(() => {
     render(<ReSchedule />, {
@@ -21,13 +28,13 @@ describe('ReSchedule component with data', () => {
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
 
-    // const startTimeHours = screen.getByTestId('hours')
-    // userEvent.type(startTimeHours, '')
-    // expect(startTimeHours).toHaveValue('1')
+    const startTimeHours = screen.getByTestId('hours')
+    userEvent.type(startTimeHours, startHour)
+    expect(startTimeHours).toHaveValue('1')
 
-    // const startTimeMinutes = screen.getByTestId('minutes')
-    // userEvent.type(startTimeMinutes, '')
-    // expect(startTimeMinutes).toHaveValue('10')
+    const startTimeMinutes = screen.getByTestId('minutes')
+    userEvent.type(startTimeMinutes, startMinutesDay)
+    expect(startTimeMinutes).toHaveValue('3838')
 
     const startTimeMeridian = screen.getByTestId('startTimeMeridian')
     userEvent.selectOptions(startTimeMeridian, ['AM'])

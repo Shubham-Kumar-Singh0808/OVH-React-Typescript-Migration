@@ -4,6 +4,13 @@ import userEvent from '@testing-library/user-event'
 import Schedule from './Schedule'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 
+const result = new Date().toLocaleTimeString([], {
+  hour: 'numeric',
+  minute: '2-digit',
+})
+
+const startHour = result?.split(':')[0]
+const startMinutesDay = result?.split(':')[1]?.split(' ')[0]
 describe('Schedule component with data', () => {
   beforeEach(() => {
     render(<Schedule />, {
@@ -21,13 +28,13 @@ describe('Schedule component with data', () => {
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
 
-    // const startTimeHours = screen.getByTestId('hours')
-    // userEvent.type(startTimeHours, '')
-    // expect(startTimeHours).toHaveValue('11')
+    const startTimeHours = screen.getByTestId('hours')
+    userEvent.type(startTimeHours, startHour)
+    expect(startTimeHours).toHaveValue(startHour)
 
-    // const startTimeMinutes = screen.getByTestId('minutes')
-    // userEvent.type(startTimeMinutes, '')
-    // expect(startTimeMinutes).toHaveValue('24')
+    const startTimeMinutes = screen.getByTestId('minutes')
+    userEvent.type(startTimeMinutes, startMinutesDay)
+    expect(startTimeMinutes).toHaveValue(startMinutesDay)
 
     const startTimeMeridian = screen.getByTestId('startTimeMeridian')
     userEvent.selectOptions(startTimeMeridian, ['AM'])
