@@ -124,7 +124,9 @@ export interface IncomingEmployeeImageData {
 export type AchieverImageCrop = {
   file: string | undefined
   empId: number
+  imageBase: string | undefined
   onUploadImage: (croppedImageData: string | undefined) => void
+  setimageBase: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 export interface AddAchieverInitialState {

@@ -4,7 +4,6 @@ import Autocomplete from 'react-autocomplete'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
 import { IncomingActiveEmployee } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 import {
-  emptyString,
   entryContainerClass,
   newAchievementLabelClass,
 } from '../../AchievementConstants'
@@ -37,7 +36,9 @@ const FilterEmployeeName = ({
 
     onSelectEmployee(selEmpName)
   }
-
+  const employeeNameResult = allEmployees?.filter(
+    (item) => item.empFirstName + ' ' + item.empLastName === employeeName,
+  )
   return (
     <CRow className={customClass ? customClass : entryContainerClass}>
       <CFormLabel
@@ -47,12 +48,12 @@ const FilterEmployeeName = ({
         Employee Name :
         <span
           className={
-            employeeName === undefined ||
-            employeeName === emptyString ||
-            employeeName.trim().length === 0 ||
+            employeeNameResult[0]?.empFirstName +
+              ' ' +
+              employeeNameResult[0]?.empLastName ===
             employeeName
-              ? TextDanger
-              : TextWhite
+              ? TextWhite
+              : TextDanger
           }
         >
           *

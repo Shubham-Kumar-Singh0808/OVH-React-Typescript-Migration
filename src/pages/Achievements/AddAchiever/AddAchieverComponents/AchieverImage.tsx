@@ -3,7 +3,7 @@ import { Cropper } from 'react-cropper'
 import { AchieverImageCrop } from '../../../../types/Achievements/AddAchiever/AddAchieverTypes'
 
 const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
-  const [imageBase, setimageBase] = useState<string | undefined>()
+  // const [imageBase, setimageBase] = useState<string | undefined>()
   const [isImageUploaded, setisImageUploaded] = useState<boolean>(false)
   const [cropper, setCropper] = useState<Cropper>()
   const [fileError, setFileError] = useState<string>('')
@@ -20,14 +20,14 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
       setFileError(
         'Wrong file format chosen. Please choose either png, jpeg, or jpg.',
       )
-      setimageBase(undefined)
+      props.setimageBase(undefined)
       setisImageUploaded(false)
       setCropper(undefined)
       return
     }
     const reader = new FileReader()
     reader.onload = () => {
-      setimageBase(reader.result as string)
+      props.setimageBase(reader.result as string)
       setisImageUploaded(true)
       setFileError('')
     }
@@ -37,7 +37,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
   const getCropData = useCallback(() => {
     if (typeof cropper !== 'undefined' && typeof cropper !== null) {
       cropper.getCroppedCanvas().toBlob(() => {
-        const prepareFile = imageBase
+        const prepareFile = props.imageBase
         setTimeout(() => {
           onUploadImage(prepareFile)
         }, 500)
@@ -50,7 +50,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
       setTimeout(() => {
         getCropData()
       }, 500)
-  }, [cropper, getCropData, imageBase])
+  }, [cropper, getCropData, props.imageBase])
 
   return (
     <div>
@@ -88,7 +88,7 @@ const AchieverImage = (props: AchieverImageCrop): JSX.Element => {
               className="basic-info-cropper-span"
               aspectRatio={1}
               preview=".basic-info-img-preview"
-              src={imageBase}
+              src={props.imageBase}
               viewMode={1}
               minCropBoxHeight={30}
               minCropBoxWidth={30}

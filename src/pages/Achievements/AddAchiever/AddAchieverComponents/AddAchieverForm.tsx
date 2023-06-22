@@ -87,7 +87,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
 
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeFilterName, setEmployeeFilterName] = useState<string>()
-
+  const [imageBase, setimageBase] = useState<string | undefined>()
   const showDates =
     achievementTypeDetails && achievementTypeDetails.daterequired
 
@@ -207,6 +207,7 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
     setTimeout(() => {
       setShowEditor(true)
     }, 50)
+    setimageBase(undefined)
   }
 
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -440,6 +441,8 @@ const AddAchieverForm = (props: AddAchieverFormProps): JSX.Element => {
               file={`${base64Extension}${selectedEmployee?.imageData}`}
               empId={selectedEmployee?.id}
               onUploadImage={croppedImageDataHandler}
+              imageBase={imageBase}
+              setimageBase={setimageBase}
             />
           </CCol>
         </AchievementEntryContainer>
