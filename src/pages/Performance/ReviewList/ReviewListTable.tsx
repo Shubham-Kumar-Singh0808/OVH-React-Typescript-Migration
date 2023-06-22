@@ -23,10 +23,6 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
     reduxServices.reviewList.selectors.appraisalReviews,
   )
 
-  const reviewListSize = useTypedSelector(
-    reduxServices.reviewList.selectors.listSize,
-  )
-
   const {
     paginationRange,
     pageSize,
