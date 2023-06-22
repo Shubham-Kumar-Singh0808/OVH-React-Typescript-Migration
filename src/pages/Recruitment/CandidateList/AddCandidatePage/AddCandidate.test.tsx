@@ -112,6 +112,22 @@ describe('Add Candidate', () => {
         mockGetTechnology.length + 1,
       )
     })
+    test('add technology button', () => {
+      act(() => {
+        userEvent.click(screen.getByTestId(getDataInputTestId('addTechBtn')))
+      })
+    })
+    test('clear button functionality', () => {
+      const clearButton = screen.getByTestId('addCand-clearBtn')
+      const firstName = screen.getByTestId(getDataInputTestId('fName'))
+      expect(firstName).toHaveValue('')
+      userEvent.type(firstName, 'FirstName')
+      expect(firstName).toHaveValue('FirstName')
+      act(() => {
+        fireEvent.click(clearButton)
+      })
+      expect(firstName).toHaveValue('')
+    })
     test('add button functionality', async () => {
       // all required fields
       const firstName = screen.getByTestId(getDataInputTestId('fName'))

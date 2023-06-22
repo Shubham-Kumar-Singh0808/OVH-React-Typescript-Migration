@@ -263,8 +263,8 @@ const AddCandidate = (): JSX.Element => {
               </CButton>
               <CButton
                 color="warning"
-                data-testid="clear-btn"
                 className="btn-ovh me-1"
+                data-testid="addCand-clearBtn"
                 onClick={clearButtonHandler}
               >
                 Clear

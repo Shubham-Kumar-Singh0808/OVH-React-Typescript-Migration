@@ -573,6 +573,7 @@ const AddEditCandidateTemplate = ({
                     className="btn-ovh"
                     color="info"
                     onClick={addTechnologyClickHandler}
+                    data-testid={getDataInputTestId('addTechBtn')}
                   >
                     <i className="fa fa-plus me-1"></i>
                     Add
