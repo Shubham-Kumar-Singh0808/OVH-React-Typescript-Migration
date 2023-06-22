@@ -1099,8 +1099,33 @@ export const mockManagerSubmittedEmployeeAppraisalForm: IncomingMyReviewAppraisa
   }
 
 export const mockReviewComments: IncomingReviewCommentList = {
-  size: 1,
+  size: 2,
   list: [
+    {
+      id: 104,
+      comments: null,
+      status: 'PENDINGAGREEMENT',
+      createdDate: '22-Jun-2023 14:19:43:IST',
+      employeeName: 'Manager M',
+      appraisalFormId: null,
+      kpiName: null,
+      oldValue: null,
+      newValue: null,
+      kpiReviewDtos: [
+        {
+          id: null,
+          kpiName: 'Self Development - Certifications',
+          oldValue: '3',
+          newValue: '4',
+        },
+        {
+          id: null,
+          kpiName: 'Monthly reviews and constructive feedback',
+          oldValue: '3',
+          newValue: '4',
+        },
+      ],
+    },
     {
       id: 100,
       comments: 'this is request discussion comments here checking it out here',
