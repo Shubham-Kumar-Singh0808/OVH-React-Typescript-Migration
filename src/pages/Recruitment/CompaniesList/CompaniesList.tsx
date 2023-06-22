@@ -135,6 +135,7 @@ const CompaniesList = (): JSX.Element => {
       setCurrentPage(1)
     }
   }, [])
+
   return (
     <>
       <OCard
@@ -185,6 +186,7 @@ const CompaniesList = (): JSX.Element => {
           <CCol sm={{ span: 6, offset: 3 }}>
             <CButton
               className="cursor-pointer"
+              data-testid="view-btn-id"
               color="success btn-ovh me-1"
               onClick={viewButtonHandler}
               disabled={!selectTechnology}
@@ -194,7 +196,7 @@ const CompaniesList = (): JSX.Element => {
             <CButton
               className="cursor-pointer"
               disabled={false}
-              data-testid="clear-btn"
+              data-testid="clear-btn-id"
               color="warning btn-ovh me-1"
               onClick={clearButtonHandler}
             >
