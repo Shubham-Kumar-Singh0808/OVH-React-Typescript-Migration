@@ -213,7 +213,7 @@ const Schedule = (): JSX.Element => {
   const backBtnHandler = () => {
     history.push(`/candidatetimeline/${timeLineListSelector.personId}`)
   }
-
+  const checkMandatoryContactLink = contactLink ? TextWhite : TextDanger
   return (
     <>
       <OCard
@@ -378,7 +378,7 @@ const Schedule = (): JSX.Element => {
               className="col-sm-2 col-form-label text-end"
             >
               Contact/Link:
-              <span className={contactLink ? TextWhite : TextDanger}>*</span>
+              <span className={checkMandatoryContactLink}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -493,7 +493,6 @@ const Schedule = (): JSX.Element => {
             >
               Save
             </CButton>
-
             <CButton
               color="warning "
               className="btn-ovh"

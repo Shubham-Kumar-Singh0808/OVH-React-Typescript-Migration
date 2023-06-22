@@ -14,7 +14,7 @@ import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 const REPROCESS = (): JSX.Element => {
   const [ReprocessModalVisibility, setIsReprocessModalVisibility] =
     useState<boolean>(false)
-  const [noShowComment, setNoShowComment] = useState<string>('')
+  const [reprocessComment, setReprocessComment] = useState<string>('')
   const [isYesButtonEnabled, setIsYesButtonEnabled] = useState(false)
   const handleModal = () => {
     setIsReprocessModalVisibility(true)
@@ -29,7 +29,7 @@ const REPROCESS = (): JSX.Element => {
         candidateId: timeLineListSelector.personId,
         holdSubStatus: '',
         status: 'REPROCESS',
-        statusComments: noShowComment,
+        statusComments: reprocessComment,
       }),
     )
     if (
@@ -47,12 +47,12 @@ const REPROCESS = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (noShowComment?.replace(/^\s*/, '')) {
+    if (reprocessComment?.replace(/^\s*/, '')) {
       setIsYesButtonEnabled(true)
     } else {
       setIsYesButtonEnabled(false)
     }
-  }, [noShowComment])
+  }, [reprocessComment])
   return (
     <>
       <CButton
@@ -83,7 +83,7 @@ const REPROCESS = (): JSX.Element => {
               Comments:
               <span
                 className={
-                  noShowComment?.replace(/^\s*/, '') ? TextWhite : TextDanger
+                  reprocessComment?.replace(/^\s*/, '') ? TextWhite : TextDanger
                 }
               >
                 *
@@ -96,8 +96,8 @@ const REPROCESS = (): JSX.Element => {
                 aria-label="textarea"
                 autoComplete="off"
                 maxLength={150}
-                value={noShowComment}
-                onChange={(e) => setNoShowComment(e.target.value)}
+                value={reprocessComment}
+                onChange={(e) => setReprocessComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>

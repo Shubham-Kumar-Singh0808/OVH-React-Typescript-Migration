@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import React, { useEffect, useState } from 'react'
 import {
   CButton,
@@ -217,6 +218,9 @@ const IntervieweeDetails = (): JSX.Element => {
     }
     return <></>
   }
+  const checkCommentMandatory = comment?.replace(/^\s*/, '')
+    ? 'text-white'
+    : 'text-danger'
   return (
     <>
       <OCard
@@ -457,15 +461,7 @@ const IntervieweeDetails = (): JSX.Element => {
               <CRow className="mt-1 mb-0">
                 <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
                   Initial Comments:
-                  <span
-                    className={
-                      comment?.replace(/^\s*/, '')
-                        ? 'text-white'
-                        : 'text-danger'
-                    }
-                  >
-                    *
-                  </span>
+                  <span className={checkCommentMandatory}>*</span>
                 </CFormLabel>
                 <CCol sm={3} className="mt-1">
                   <CFormTextarea

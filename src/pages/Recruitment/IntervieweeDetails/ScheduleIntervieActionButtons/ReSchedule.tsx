@@ -36,12 +36,15 @@ const ReSchedule = (): JSX.Element => {
     rescheduleSendMessageToCandidate,
     setRescheduleSendMessageToCandidate,
   ] = useState<boolean>(false)
-  const [sendMessageToInterviewer, setSendMessageToInterviewer] =
-    useState<boolean>(false)
+  const [
+    rescheduleSendMessageToInterviewer,
+    setRescheduleSendMessageToInterviewer,
+  ] = useState<boolean>(false)
   const [isSaveBtnEnable, setIsSaveBtnEnable] = useState(false)
-  const [autoCompleteTarget, setAutoCompleteTarget] = useState<string>('')
+  const [rescheduleAutoCompleteTarget, setRescheduleAutoCompleteTarget] =
+    useState<string>('')
 
-  const selectDateValue = rescheduleSelectDate
+  const selectRescheduleDateValue = rescheduleSelectDate
     ? new Date(rescheduleSelectDate).toLocaleDateString(deviceLocale, {
         year: 'numeric',
         month: 'numeric',
@@ -53,14 +56,14 @@ const ReSchedule = (): JSX.Element => {
     hour: 'numeric',
     minute: '2-digit',
   })
-  const startHour = resultTime?.split(':')[0]
-  const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
-  const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
+  const rescheduleStartHour = resultTime?.split(':')[0]
+  const rescheduleStartMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
+  const rescheduleStartMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
 
-  const [timePicker, setTimePicker] = useState({
-    hours: startHour,
-    minutes: startMinutesDay,
-    meridian: startMeridianDay,
+  const [rescheduleTimePicker, setRescheduleTimePicker] = useState({
+    hours: rescheduleStartHour,
+    minutes: rescheduleStartMinutesDay,
+    meridian: rescheduleStartMeridianDay,
   })
 
   const interviewProfiles = useTypedSelector(
@@ -68,7 +71,7 @@ const ReSchedule = (): JSX.Element => {
   )
 
   const result = interviewProfiles.filter(
-    (item) => item.fullName === autoCompleteTarget,
+    (item) => item.fullName === rescheduleAutoCompleteTarget,
   )
   const dispatch = useAppDispatch()
 
@@ -85,7 +88,7 @@ const ReSchedule = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  const formattedTime = `${timePicker.hours}:${timePicker.minutes} ${timePicker.meridian}`
+  const formattedTime = `${rescheduleTimePicker.hours}:${rescheduleTimePicker.minutes} ${rescheduleTimePicker.meridian}`
 
   const handleSaveScheduleInterview = async () => {
     const SaveInterviewResultAction = await dispatch(
@@ -95,12 +98,12 @@ const ReSchedule = (): JSX.Element => {
         description: rescheduleComments,
         interviewType: rescheduleMode,
         interviewerId: result[0].id,
-        scheduleDate: selectDateValue,
+        scheduleDate: selectRescheduleDateValue,
         scheduleTime: formattedTime,
         sendMailToCandidate: rescheduleMailToCandidate,
         sendMailToInterviewer: rescheduleSendMailToInterviewer,
         sendMessageToCandidate: rescheduleSendMessageToCandidate,
-        sendMessageToInterviewer,
+        sendMessageToInterviewer: rescheduleSendMessageToInterviewer,
       }),
     )
     if (
@@ -148,12 +151,12 @@ const ReSchedule = (): JSX.Element => {
   }
 
   const onHandleSelectHRAssociate = (projectName: string) => {
-    setAutoCompleteTarget(projectName)
+    setRescheduleAutoCompleteTarget(projectName)
   }
 
   const clearBtnHandler = () => {
     setRescheduleSelectDate('')
-    setAutoCompleteTarget('')
+    setRescheduleAutoCompleteTarget('')
     setRescheduleComments('')
     setRescheduleMode('')
     setRescheduleMailToCandidate(false)
@@ -165,7 +168,7 @@ const ReSchedule = (): JSX.Element => {
     if (
       rescheduleSelectDate &&
       rescheduleMode &&
-      autoCompleteTarget &&
+      rescheduleAutoCompleteTarget &&
       (rescheduleMailToCandidate === true ||
         rescheduleSendMailToInterviewer === true)
     ) {
@@ -176,7 +179,7 @@ const ReSchedule = (): JSX.Element => {
   }, [
     rescheduleSelectDate,
     rescheduleMode,
-    autoCompleteTarget,
+    rescheduleAutoCompleteTarget,
     rescheduleMailToCandidate,
     rescheduleSendMailToInterviewer,
   ])
@@ -184,13 +187,13 @@ const ReSchedule = (): JSX.Element => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     if (Number(value) <= 12) {
-      setTimePicker({
-        ...timePicker,
+      setRescheduleTimePicker({
+        ...rescheduleTimePicker,
         hours: e.target.value,
       })
     } else {
-      setTimePicker({
-        ...timePicker,
+      setRescheduleTimePicker({
+        ...rescheduleTimePicker,
         hours: '',
       })
     }
@@ -199,7 +202,9 @@ const ReSchedule = (): JSX.Element => {
   const backBtnHandler = () => {
     history.push(`/candidatetimeline/${timeLineListSelector.personId}`)
   }
-
+  const checkMandatoryContactLink = rescheduleContactLink
+    ? TextWhite
+    : TextDanger
   return (
     <>
       <OCard
@@ -226,7 +231,11 @@ const ReSchedule = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Date:
-            <span className={selectDateValue ? TextWhite : TextDanger}>*</span>
+            <span
+              className={selectRescheduleDateValue ? TextWhite : TextDanger}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <ReactDatePicker
@@ -239,7 +248,7 @@ const ReSchedule = (): JSX.Element => {
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              value={selectDateValue}
+              value={selectRescheduleDateValue}
               onChange={(date: Date) => {
                 setRescheduleSelectDate(date)
               }}
@@ -263,7 +272,7 @@ const ReSchedule = (): JSX.Element => {
                   id="hours"
                   name="hours"
                   data-testid="hours"
-                  value={timePicker.hours}
+                  value={rescheduleTimePicker.hours}
                   onChange={onChangeHandler}
                 />
               </CCol>
@@ -274,10 +283,10 @@ const ReSchedule = (): JSX.Element => {
                   id="minutes"
                   name="minutes"
                   data-testid="minutes"
-                  value={timePicker.minutes}
+                  value={rescheduleTimePicker.minutes}
                   onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
+                    setRescheduleTimePicker({
+                      ...rescheduleTimePicker,
                       minutes: e.target.value,
                     })
                   }}
@@ -289,10 +298,10 @@ const ReSchedule = (): JSX.Element => {
                   id="startTimeMeridian"
                   data-testid="startTimeMeridian"
                   name="startTimeMeridian"
-                  value={timePicker.meridian}
+                  value={rescheduleTimePicker.meridian}
                   onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
+                    setRescheduleTimePicker({
+                      ...rescheduleTimePicker,
                       meridian: e.target.value,
                     })
                   }}
@@ -373,9 +382,7 @@ const ReSchedule = (): JSX.Element => {
               className="col-sm-2 col-form-label text-end"
             >
               Contact/Link:
-              <span className={rescheduleContactLink ? TextWhite : TextDanger}>
-                *
-              </span>
+              <span className={checkMandatoryContactLink}>*</span>
             </CFormLabel>
             <CCol sm={3}>
               <CFormInput
@@ -397,7 +404,9 @@ const ReSchedule = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Interviewer:
-            <span className={autoCompleteTarget ? TextWhite : TextDanger}>
+            <span
+              className={rescheduleAutoCompleteTarget ? TextWhite : TextDanger}
+            >
               *
             </span>
           </CFormLabel>
@@ -415,7 +424,8 @@ const ReSchedule = (): JSX.Element => {
               renderMenu={(children) => (
                 <div
                   className={
-                    autoCompleteTarget && autoCompleteTarget.length > 0
+                    rescheduleAutoCompleteTarget &&
+                    rescheduleAutoCompleteTarget.length > 0
                       ? 'autocomplete-dropdown-wrap'
                       : 'autocomplete-dropdown-wrap hide'
                   }
@@ -426,11 +436,11 @@ const ReSchedule = (): JSX.Element => {
               renderItem={(item, isHighlighted) =>
                 itemsLayout(item.id, item.fullName, isHighlighted)
               }
-              value={autoCompleteTarget}
+              value={rescheduleAutoCompleteTarget}
               shouldItemRender={(item, value) =>
                 item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
               }
-              onChange={(e) => setAutoCompleteTarget(e.target.value)}
+              onChange={(e) => setRescheduleAutoCompleteTarget(e.target.value)}
               onSelect={(value) => onHandleSelectHRAssociate(value)}
             />
           </CCol>
@@ -473,8 +483,10 @@ const ReSchedule = (): JSX.Element => {
                 id="sendMessageToInterviewer"
                 name="sendMessageToInterviewer"
                 data-testid="sendMessageToInterviewer"
-                checked={sendMessageToInterviewer}
-                onChange={(e) => setSendMessageToInterviewer(e.target.checked)}
+                checked={rescheduleSendMessageToInterviewer}
+                onChange={(e) =>
+                  setRescheduleSendMessageToInterviewer(e.target.checked)
+                }
                 inline
               />
               <b className="ms-1">Send Message to interviewer</b>
@@ -491,7 +503,6 @@ const ReSchedule = (): JSX.Element => {
             >
               Save
             </CButton>
-
             <CButton
               color="warning "
               className="btn-ovh"
