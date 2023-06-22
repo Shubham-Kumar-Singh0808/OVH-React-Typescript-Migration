@@ -140,6 +140,7 @@ import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCa
 import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import creditCardListReducer from './reducers/ExpenseManagement/CreditCardList/creditCardListSlice'
 import subCategoryReducer from './reducers/ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
@@ -284,6 +285,7 @@ export const allReducers = {
   addNewCategory: addNewExpenseCategoryReducer,
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
+  recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
   creditCardList: creditCardListReducer,
   subCategoryList: subCategoryReducer,

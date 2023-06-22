@@ -130,6 +130,7 @@ import { categoryListService } from './ExpenseManagement/Category/expenseCategor
 import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
 import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
@@ -268,6 +269,7 @@ export const reduxServices = {
   categoryList: categoryListService,
   addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
+  recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   creditCardList: creditCardListService,
   subCategoryList: subCategoryListService,
