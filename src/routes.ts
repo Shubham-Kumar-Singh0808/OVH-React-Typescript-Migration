@@ -441,13 +441,13 @@ const ProductSpecificationList = React.lazy(
 const ScheduleInterview = React.lazy(
   () =>
     import(
-      './pages/Recruitment/ScheduledInterviews/ScheduleIntervieActionButtons/Schedule'
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
     ),
 )
 const ReScheduleInterview = React.lazy(
   () =>
     import(
-      './pages/Recruitment/ScheduledInterviews/ScheduleIntervieActionButtons/ReSchedule'
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
     ),
 )
 /**

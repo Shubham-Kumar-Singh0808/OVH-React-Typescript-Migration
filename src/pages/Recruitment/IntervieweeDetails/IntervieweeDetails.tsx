@@ -9,17 +9,17 @@ import {
 } from '@coreui/react-pro'
 import { useHistory } from 'react-router-dom'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
+import NoShow from './ScheduleIntervieActionButtons/NoShow '
+import Offer from './ScheduleIntervieActionButtons/Offer'
+import OnHold from './ScheduleIntervieActionButtons/OnHold'
+import REPROCESS from './ScheduleIntervieActionButtons/REPROCESS'
+import RejectInterview from './ScheduleIntervieActionButtons/RejectInterview'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
 import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import OToast from '../../../components/ReusableComponent/OToast'
-import NoShow from '../ScheduledInterviews/ScheduleIntervieActionButtons/NoShow '
-import RejectInterview from '../ScheduledInterviews/ScheduleIntervieActionButtons/RejectInterview'
-import Offer from '../ScheduledInterviews/ScheduleIntervieActionButtons/Offer'
-import OnHold from '../ScheduledInterviews/ScheduleIntervieActionButtons/OnHold'
-import REPROCESS from '../ScheduledInterviews/ScheduleIntervieActionButtons/REPROCESS'
 
 const IntervieweeDetails = (): JSX.Element => {
   const dispatch = useAppDispatch()
