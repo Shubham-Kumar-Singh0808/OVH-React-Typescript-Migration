@@ -254,8 +254,8 @@ const ReviewListFilterOptions = ({
                     dept1.departmentName.localeCompare(dept2.departmentName),
                   )
                   ?.map((dept, index) => (
-                    <option key={index} value={dept.departmentId}>
-                      {dept.departmentName}
+                    <option key={index} value={dept?.departmentId}>
+                      {dept?.departmentName}
                     </option>
                   ))}
               </CFormSelect>
