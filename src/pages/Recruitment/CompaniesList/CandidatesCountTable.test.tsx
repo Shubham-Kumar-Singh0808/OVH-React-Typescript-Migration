@@ -3,6 +3,11 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import CandidatesCountTable from './CandidatesCountTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
+import { ApiLoadingState } from '../../../middleware/api/apiList'
+import {
+  mockCompaniesListTotalInfo,
+  mockEmployeeCandidateCount,
+} from '../../../test/data/CompaniesData'
 
 const mockSetData = jest.fn()
 
@@ -16,6 +21,18 @@ describe('Candidates List without data', () => {
         pageSize={0}
         setPageSize={mockSetData}
       />,
+      {
+        preloadedState: {
+          companiesList: {
+            isLoading: ApiLoadingState.succeeded,
+            listSize: 0,
+            companiesListResponseDetails: mockCompaniesListTotalInfo.list,
+            companiesListData: mockCompaniesListTotalInfo.list,
+            CandidatesInfoListResponseDetails: mockEmployeeCandidateCount.list,
+            CandidatesInfoListData: mockEmployeeCandidateCount.list,
+          },
+        },
+      },
     )
   })
   test('should render first page data only', () => {
@@ -34,5 +51,12 @@ describe('Candidates List without data', () => {
       expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
+  })
+  test('should render  component with data', () => {
+    expect(screen.getByText('Kanchumarthi Jagadeesh')).toBeInTheDocument()
+    expect(screen.getByText('Test Testing')).toBeInTheDocument()
+    expect(screen.getByText('React Developerg53535')).toBeInTheDocument()
+    expect(screen.getByText('RJS04')).toBeInTheDocument()
+    expect(screen.getByText('jagadeesh kanc')).toBeInTheDocument()
   })
 })

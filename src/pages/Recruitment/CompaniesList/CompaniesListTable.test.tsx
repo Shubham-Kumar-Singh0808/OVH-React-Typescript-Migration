@@ -4,10 +4,8 @@ import userEvent from '@testing-library/user-event'
 import CompaniesListTable from './CompaniesListTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  CandidatesInfoList,
-  CompaniesListResponse,
-} from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
+import { CandidatesInfoList } from '../../../types/Recruitment/CompaniesList/CompaniesListTypes'
+import { mockCompaniesListTotalInfo } from '../../../test/data/CompaniesData'
 
 const mockSetData = jest.fn()
 
@@ -26,8 +24,8 @@ describe('candidate List without data', () => {
           companiesList: {
             isLoading: ApiLoadingState.succeeded,
             listSize: 0,
-            companiesListResponseDetails: {} as CompaniesListResponse,
-            companiesListData: [],
+            companiesListResponseDetails: mockCompaniesListTotalInfo.list,
+            companiesListData: mockCompaniesListTotalInfo.list,
             CandidatesInfoListResponseDetails: {} as CandidatesInfoList,
             CandidatesInfoListData: [],
           },
@@ -51,5 +49,8 @@ describe('candidate List without data', () => {
       expect(screen.getByText('Next >')).not.toHaveAttribute('disabled')
       expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
     })
+  })
+  test('should render  component with data', () => {
+    expect(screen.getByText('Anantha Cybertech Pvt Ltd')).toBeInTheDocument()
   })
 })
