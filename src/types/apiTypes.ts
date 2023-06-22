@@ -934,4 +934,6 @@ export interface InterviewStatusReportApi extends ApiBase {
   getAllTechnology: string
   getAllEmpCountries: string
   getInterviewStatusReport: string
+  exportInterviewStatusReport: string
+  exportInterviewerDetails: string
 }

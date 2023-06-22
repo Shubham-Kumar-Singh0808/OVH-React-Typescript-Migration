@@ -5,6 +5,8 @@ import {
 import {
   IncomingInterviewStatusReport,
   OutgoingStatusReportFilterOptions,
+  ExportInterviewStatusReportParams,
+  ExportInterviewerDetailsParams,
 } from '../../../../types/Recruitment/InterviewStatusReport/InterviewStatusReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -47,10 +49,42 @@ const getInterviewStatusReport = async (
   return response.data
 }
 
+const exportInterviewStatusReport = async (
+  finalParams: ExportInterviewStatusReportParams,
+) => {
+  const token = localStorage.getItem('token')
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: interviewStatusReportApiConfig.exportInterviewStatusReport,
+    method: AllowedHttpMethods.get,
+    params: {
+      ...finalParams,
+      token: token ?? '',
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const exportInterviewerDetails = async (
+  finalParams: ExportInterviewerDetailsParams,
+) => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: interviewStatusReportApiConfig.exportInterviewerDetails,
+    method: AllowedHttpMethods.get,
+    params: {
+      ...finalParams,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const interviewStatusReportApi = {
   getAllTechnology,
   getAllEmpCountries,
   getInterviewStatusReport,
+  exportInterviewStatusReport,
+  exportInterviewerDetails,
 }
 
 export default interviewStatusReportApi

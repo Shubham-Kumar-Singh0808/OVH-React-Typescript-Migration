@@ -93,3 +93,21 @@ export interface InterviewStatusReportSliceState {
   filterOptions: OutgoingStatusReportFilterOptions
   interviewStatusReportList: IncomingInterviewStatusReport
 }
+
+export interface ExportInterviewStatusReportParams {
+  candidateStatus: string
+  selectionStatus: string
+  selectionTechnology: string
+  fromDate: string | undefined
+  toDate: string | undefined
+  searchByCandidateName: string
+  searchByMultipleFlag: boolean
+  searchByRecruiterName: boolean
+  searchBySourceName: boolean
+}
+
+export interface ExportInterviewerDetailsParams {
+  fromDate: string | undefined
+  toDate: string | undefined
+  selectionStatus: string
+}

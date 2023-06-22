@@ -1116,4 +1116,8 @@ export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
   getInterviewStatusReport:
     apiPrefix + '/jobapplicant/jobAdmin/interviewStatusReport',
+  exportInterviewStatusReport:
+    apiPrefix + '/jobapplicant/exportInterviewStatusReport',
+  exportInterviewerDetails:
+    apiPrefix + '/jobapplicant/exportInterviewerDetails',
 }
