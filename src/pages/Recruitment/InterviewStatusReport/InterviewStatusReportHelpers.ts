@@ -78,7 +78,7 @@ export const isOneOfTheCheckBoxChecked = (
 
 export const isDateNotFilledWithCustom = (
   filterOptions: OutgoingStatusReportFilterOptions,
-) => {
+): boolean => {
   return (
     filterOptions.selectionStatus ===
       OutgoingCandidateSelectionStatusEnum.custom.toString() &&
@@ -100,13 +100,13 @@ export const getValueOfCandidateStatusMappings = (
   return DisplayedCandidateStatusEnum.all
 }
 
-export const exchangeMonthAndDayInDate = (date: string) => {
+export const exchangeMonthAndDayInDate = (date: string): string => {
   const [day, month, year] = date.split('/')
 
   // Construct the date strings in the "mm/dd/yyyy" format
   return `${month}/${day}/${year}`
 }
 
-export const getInterviewStatusReportTestId = (value: string) => {
+export const getInterviewStatusReportTestId = (value: string): string => {
   return `interviewStatusReport-${value}`
 }

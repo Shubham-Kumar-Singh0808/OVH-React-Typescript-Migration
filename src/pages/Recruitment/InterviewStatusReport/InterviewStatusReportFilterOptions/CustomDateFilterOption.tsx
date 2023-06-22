@@ -12,7 +12,7 @@ import { compareFromAndToDate } from '../../../../constant/constantData'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { exchangeMonthAndDayInDate } from '../InterviewStatusReportHelpers'
 
-const CustomDateFilterOption = () => {
+const CustomDateFilterOption = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const filterOptions = useTypedSelector(
     (state) => state.interviewStatusReport.filterOptions,

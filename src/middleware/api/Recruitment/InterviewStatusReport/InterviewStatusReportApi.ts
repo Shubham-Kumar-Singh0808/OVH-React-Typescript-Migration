@@ -51,7 +51,7 @@ const getInterviewStatusReport = async (
 
 const exportInterviewStatusReport = async (
   finalParams: ExportInterviewStatusReportParams,
-) => {
+): Promise<Blob> => {
   const token = localStorage.getItem('token')
   const requestConfig = getAuthenticatedRequestConfig({
     url: interviewStatusReportApiConfig.exportInterviewStatusReport,
@@ -67,7 +67,7 @@ const exportInterviewStatusReport = async (
 
 const exportInterviewerDetails = async (
   finalParams: ExportInterviewerDetailsParams,
-) => {
+): Promise<Blob> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: interviewStatusReportApiConfig.exportInterviewerDetails,
     method: AllowedHttpMethods.get,
