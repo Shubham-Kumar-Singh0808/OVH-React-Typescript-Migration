@@ -8,6 +8,10 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  getInterviewStatusReportTestId,
+  getValueOfCandidateStatusMappings,
+} from './InterviewStatusReportHelpers'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
@@ -67,25 +71,40 @@ const InterviewStatusReportTable = ({
       <CTable responsive striped align="middle" className="mt-2">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell>#</CTableHeaderCell>
-            <CTableHeaderCell>Interview Date</CTableHeaderCell>
-            <CTableHeaderCell>Name</CTableHeaderCell>
-            <CTableHeaderCell>Mobile</CTableHeaderCell>
-            <CTableHeaderCell>Email ID</CTableHeaderCell>
-            <CTableHeaderCell>Technology</CTableHeaderCell>
-            <CTableHeaderCell>Experience</CTableHeaderCell>
-            <CTableHeaderCell>Source</CTableHeaderCell>
-            <CTableHeaderCell>Recruiter</CTableHeaderCell>
-            <CTableHeaderCell>Status</CTableHeaderCell>
-            <CTableHeaderCell>Interview Round</CTableHeaderCell>
-            <CTableHeaderCell>Interviewer Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Interview Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Email ID</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Technology</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Experience</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Source</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Recruiter</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Interview Round</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Interviewer Name</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {interviewStatusReport.list?.map((statusItem, statusItemIndex) => (
-            <CTableRow key={statusItemIndex}>
-              <CTableDataCell>{statusItemIndex + 1}</CTableDataCell>
-              <CTableDataCell>{statusItem.interviewDate}</CTableDataCell>
+            <CTableRow
+              key={statusItemIndex}
+              data-testid={getInterviewStatusReportTestId('tableRow')}
+            >
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableSNo-${statusItemIndex}`,
+                )}
+              >
+                {statusItemIndex + 1}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableIntDate-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.interviewDate}
+              </CTableDataCell>
               <CTableDataCell>
                 <Link
                   to={`/candidatetimeline/${statusItem.candidateId}`}
@@ -94,15 +113,69 @@ const InterviewStatusReportTable = ({
                   {statusItem.candidateName}
                 </Link>
               </CTableDataCell>
-              <CTableDataCell>{statusItem.contactNumber}</CTableDataCell>
-              <CTableDataCell>{statusItem.emailId}</CTableDataCell>
-              <CTableDataCell>{statusItem.technology}</CTableDataCell>
-              <CTableDataCell>{statusItem.experiance}</CTableDataCell>
-              <CTableDataCell>{statusItem.source}</CTableDataCell>
-              <CTableDataCell>{statusItem.recruiter}</CTableDataCell>
-              <CTableDataCell>{statusItem.status}</CTableDataCell>
-              <CTableDataCell>{statusItem.interviewRound}</CTableDataCell>
-              <CTableDataCell>{statusItem.interviewerName}</CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableMobile-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.contactNumber}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableEmail-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.emailId}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableTechnology-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.technology}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableExperience-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.experiance}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableSource-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.source}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableRecruiter-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.recruiter}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableCandStatus-${statusItemIndex}`,
+                )}
+              >
+                {getValueOfCandidateStatusMappings(statusItem.status)}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableIntRound-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.interviewRound}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={getInterviewStatusReportTestId(
+                  `tableIntName-${statusItemIndex}`,
+                )}
+              >
+                {statusItem.interviewerName}
+              </CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>

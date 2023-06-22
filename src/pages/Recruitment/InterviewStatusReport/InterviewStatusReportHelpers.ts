@@ -85,3 +85,21 @@ export const isDateNotFilledWithCustom = (
     (filterOptions.fromDate === null || filterOptions.toDate === null)
   )
 }
+
+// the api candidate status is converted to displayed candidate status
+export const getValueOfCandidateStatusMappings = (
+  keyValue: string,
+): DisplayedCandidateStatusEnum => {
+  const filteredObj = Object.entries(candidateStatusMapping).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([key, _]) => key === keyValue,
+  )
+  if (filteredObj !== undefined) {
+    return filteredObj[1]
+  }
+  return DisplayedCandidateStatusEnum.all
+}
+
+export const getInterviewStatusReportTestId = (value: string) => {
+  return `interviewStatusReport-${value}`
+}

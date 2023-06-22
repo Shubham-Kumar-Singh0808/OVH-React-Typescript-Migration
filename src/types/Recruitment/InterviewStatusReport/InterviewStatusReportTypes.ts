@@ -75,7 +75,7 @@ export interface IncomingStatusReportItem {
   timeLineStatus: null
   recruiter: string
   source: string
-  interviewResultStatus: null
+  interviewResultStatus: null | string
   interviewerName: string
   interviewRound: number
 }
