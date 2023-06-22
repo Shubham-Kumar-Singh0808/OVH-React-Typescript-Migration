@@ -231,7 +231,7 @@ const TicketApprovalsTable = ({
                     {ticketItem.assigneeName ? ticketItem.assigneeName : 'N/A'}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {ticketItem.estimatedTime}
+                    {ticketItem.actualTime}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {ticketItem.approvalStatus}

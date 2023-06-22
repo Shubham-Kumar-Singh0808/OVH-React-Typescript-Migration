@@ -405,7 +405,7 @@ const ResignationListFilterOptions = ({
               <DatePicker
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="fromDate"
                 maxDate={new Date()}
                 autoComplete="off"
@@ -436,7 +436,7 @@ const ResignationListFilterOptions = ({
               <DatePicker
                 className="form-control form-control-sm sh-date-picker"
                 data-testid="date-picker"
-                placeholderText="dd/mm/yy"
+                placeholderText="dd/mm/yyyy"
                 name="toDate"
                 id="toDate"
                 autoComplete="off"
@@ -471,6 +471,11 @@ const ResignationListFilterOptions = ({
             color="success btn-ovh me-1"
             data-testid="view-btn"
             onClick={handleViewButtonHandler}
+            disabled={
+              (Select === 'Custom' &&
+                !(selectFromDate !== '' && selectToDate !== '')) ||
+              dateError
+            }
           >
             View
           </CButton>

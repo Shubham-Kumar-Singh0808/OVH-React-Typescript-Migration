@@ -87,7 +87,14 @@ const UpdateTicketEditFields = ({
 
   const onChangeSpentTime = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSpentTime((prevState) => {
-      return { ...prevState, ...{ [event.target.name]: event.target.value } }
+      return {
+        ...prevState,
+        ...{
+          [event.target.name]: event.target.value
+            .replace(/\D/g, '')
+            .replace(/^0+/, ''),
+        },
+      }
     })
   }
 
@@ -98,7 +105,7 @@ const UpdateTicketEditFields = ({
   }
   const onHandleSelectActiveEmployee = (firstName: string) => {
     const selectedActiveEmployee = activeEmployees.find(
-      (value) => value.empFirstName === firstName,
+      (value) => value.empFirstName + ' ' + value.empLastName === firstName,
     )
     setActiveEmployeesAutoComplete(
       `${selectedActiveEmployee?.empFirstName} ${selectedActiveEmployee?.empLastName}`,
@@ -124,7 +131,7 @@ const UpdateTicketEditFields = ({
         endDate: ticketDetailsToEdit.endDate,
         assigneeId: ticketDetailsToEdit.assigneeId,
         employeeName: ticketDetailsToEdit.employeeName,
-        percentageDone: '',
+        percentageDone: ticketDetailsToEdit.percentageDone,
         actualTime: ticketDetailsToEdit.actualTime,
         authorName: ticketDetailsToEdit.authorName,
         assigneeName: ticketDetailsToEdit.assigneeName,
@@ -340,6 +347,7 @@ const UpdateTicketEditFields = ({
                 onChange: CKEditorEventHandler<'change'>
               }>
                 config={ckeditorConfig}
+                initData={updateTicketDetails.description}
                 debug={true}
                 onChange={({ editor }) => {
                   onChangeDescriptionHandler(editor.getData().trim())
@@ -470,7 +478,9 @@ const UpdateTicketEditFields = ({
                 id: 'employees-autocomplete',
                 placeholder: 'Employee Name',
               }}
-              getItemValue={(item) => item.empFirstName}
+              getItemValue={(item) =>
+                item.empFirstName + ' ' + item.empLastName
+              }
               items={activeEmployees}
               data-testid="employee-input"
               wrapperStyle={{ position: 'relative' }}
@@ -607,6 +617,7 @@ const UpdateTicketEditFields = ({
               className="cursor-pointer"
               color="success btn-ovh me-1"
               onClick={updateBtnHandler}
+              disabled={dueDateError}
             >
               Update
             </CButton>

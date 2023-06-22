@@ -27,6 +27,7 @@ const initialReviewListState: ReviewListSliceState = {
     size: 0,
   },
   activeCycle: {} as ActiveCycle,
+  currentListStatus: '',
 }
 
 const getEmployeeDepartments = createAsyncThunk(
@@ -103,6 +104,9 @@ const reviewListSlice = createSlice({
         list: [],
         size: 0,
       }
+    },
+    setCurrentListStatus: (state, action) => {
+      state.currentListStatus = action.payload
     },
   },
   extraReducers: (builder) => {
