@@ -850,7 +850,7 @@ const AddProjectRequestForm = ({
           </CCol>
         </CRow>
       </CCol>
-      {projectRequest.type === 'FixedBid' && (
+      {projectRequest.type === 'Fixed Bid' && (
         <>
           <label className="sh-title-milestone">
             <b>Milestone:</b>
@@ -860,7 +860,7 @@ const AddProjectRequestForm = ({
               <CTableHead>
                 <CTableRow>
                   <CTableHeaderCell scope="col">Title</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Effort(Hrs)</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Effort(Hrs)1</CTableHeaderCell>
                   <CTableHeaderCell scope="col">From Date</CTableHeaderCell>
                   <CTableHeaderCell scope="col">End Date</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Billable</CTableHeaderCell>
