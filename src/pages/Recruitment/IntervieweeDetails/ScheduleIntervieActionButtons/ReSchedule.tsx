@@ -130,14 +130,14 @@ const ReSchedule = (): JSX.Element => {
     }
   }
 
-  const itemsLayout = (
+  const rescheduleInterviewItemsLayout = (
     id: string | number,
     fullName: string,
     isHighlighted: boolean,
   ): JSX.Element => {
     return (
       <div
-        data-testid="option"
+        data-testid="option-test"
         className={
           isHighlighted
             ? 'autocomplete-dropdown-item active'
@@ -434,7 +434,11 @@ const ReSchedule = (): JSX.Element => {
                 </div>
               )}
               renderItem={(item, isHighlighted) =>
-                itemsLayout(item.id, item.fullName, isHighlighted)
+                rescheduleInterviewItemsLayout(
+                  item.id,
+                  item.fullName,
+                  isHighlighted,
+                )
               }
               value={rescheduleAutoCompleteTarget}
               shouldItemRender={(item, value) =>

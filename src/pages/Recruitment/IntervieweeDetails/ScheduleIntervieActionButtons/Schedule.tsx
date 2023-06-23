@@ -128,7 +128,7 @@ const Schedule = (): JSX.Element => {
     }
   }
 
-  const itemsLayout = (
+  const scheduleInterviewItemsLayout = (
     id: string | number,
     fullName: string,
     isHighlighted: boolean,
@@ -431,7 +431,11 @@ const Schedule = (): JSX.Element => {
                 </div>
               )}
               renderItem={(item, isHighlighted) =>
-                itemsLayout(item.id, item.fullName, isHighlighted)
+                scheduleInterviewItemsLayout(
+                  item.id,
+                  item.fullName,
+                  isHighlighted,
+                )
               }
               value={interviewerAutoCompleteTarget}
               shouldItemRender={(item, value) =>
