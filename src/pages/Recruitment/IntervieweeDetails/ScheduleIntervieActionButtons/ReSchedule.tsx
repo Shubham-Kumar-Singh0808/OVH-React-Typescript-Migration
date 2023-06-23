@@ -150,8 +150,8 @@ const ReSchedule = (): JSX.Element => {
     )
   }
 
-  const onHandleRescheduleInterviewer = (projectName: string) => {
-    setRescheduleAutoCompleteTarget(projectName)
+  const onHandleRescheduleInterviewer = (employeeName: string) => {
+    setRescheduleAutoCompleteTarget(employeeName)
   }
 
   const clearBtnHandler = () => {
@@ -207,6 +207,23 @@ const ReSchedule = (): JSX.Element => {
   const checkMandatoryContactLink = rescheduleContactLink
     ? TextWhite
     : TextDanger
+
+  const onChangeReScheduleInterviewMinutesHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { value } = e.target
+    if (Number(value) <= 60) {
+      setRescheduleTimePicker({
+        ...rescheduleTimePicker,
+        minutes: e.target.value,
+      })
+    } else {
+      setRescheduleTimePicker({
+        ...rescheduleTimePicker,
+        minutes: '',
+      })
+    }
+  }
   return (
     <>
       <OCard
@@ -286,12 +303,7 @@ const ReSchedule = (): JSX.Element => {
                   name="minutes"
                   data-testid="minutes"
                   value={rescheduleTimePicker.minutes}
-                  onChange={(e) => {
-                    setRescheduleTimePicker({
-                      ...rescheduleTimePicker,
-                      minutes: e.target.value,
-                    })
-                  }}
+                  onChange={onChangeReScheduleInterviewMinutesHandler}
                 />
               </CCol>
               <CCol sm={4}>

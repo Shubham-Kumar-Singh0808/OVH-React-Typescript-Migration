@@ -149,8 +149,8 @@ const Schedule = (): JSX.Element => {
     )
   }
 
-  const onHandleSelectInterviewer = (projectName: string) => {
-    setScheduleAutoCompleteTarget(projectName)
+  const onHandleSelectInterviewer = (employeeName: string) => {
+    setScheduleAutoCompleteTarget(employeeName)
   }
 
   const clearBtnHandler = () => {
