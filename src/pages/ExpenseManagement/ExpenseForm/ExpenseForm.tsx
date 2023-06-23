@@ -11,6 +11,8 @@ import {
 } from '@coreui/react-pro'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
+import DatePicker from 'react-datepicker'
+import moment from 'moment'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -29,6 +31,7 @@ import OAutoComplete from '../../../components/ReusableComponent/OAutoComplete'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const ExpenseForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -90,10 +93,13 @@ const ExpenseForm = (): JSX.Element => {
   const [vendorAutoCompleteTarget, setVendorAutoCompleteTarget] =
     useState<string>()
   const [purposeDetails, setPurposeDetails] = useState<string>()
-  const [dateError, setDateError] = useState<boolean>(false)
+  const [expenditureDate, setExpenditureDate] = useState<string>()
   const [country, setCountry] = useState<string>()
   const [currency, setCurrency] = useState<string>()
   const [paymentMode, setPaymentMode] = useState<string>()
+  const [creditCard, setCreditCard] = useState<boolean>(false)
+  const [chequeNumber, setChequeNumber] = useState<string>()
+  const [chequeDate, setChequeDate] = useState<string>()
   const [voucherNumber, setVoucherNumber] = useState<string>()
   const [invoiceNumber, setInvoiceNumber] = useState<string>()
   const [amount, setAmount] = useState<string>()
@@ -178,6 +184,10 @@ const ExpenseForm = (): JSX.Element => {
     }
   }, [employeeAutoCompleteTarget])
 
+  useEffect(() => {
+    dispatch(reduxServices.expenseForm.getCreditCardsDetails())
+  }, [dispatch])
+
   // Project Implementation
   const projectNameExists = (projects: string) => {
     return projectList?.find((projectsList) => {
@@ -242,6 +252,14 @@ const ExpenseForm = (): JSX.Element => {
     }
   }, [vendorAutoCompleteTarget])
 
+  const disableAfterDate = new Date()
+  disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
+
+  const onHandleExpenditureDatePicker = (value: Date) => {
+    setExpenditureDate(moment(value).format(dateFormat))
+    setChequeDate(moment(value).format(dateFormat))
+  }
+
   //OnChange Events for Text Inputs
   const expenseNameRegexReplace = /-_[^a-z0-9\s]/gi
   const expenseFormNumberRegex = /\D/g
@@ -273,6 +291,11 @@ const ExpenseForm = (): JSX.Element => {
         .replace(expenseFormNumberRegex, '')
         .replace(/^\s*/, '')
       setAmount(amountValue)
+    } else if (name === 'chequeNumber') {
+      const chequeValue = value
+        .replace(expenseFormNumberRegex, '')
+        .replace(/^\s*/, '')
+      setChequeNumber(chequeValue)
     }
   }
 
@@ -284,6 +307,9 @@ const ExpenseForm = (): JSX.Element => {
     setIsReimbursableExpense(isReimbursableExpense)
   }
 
+  const handleCreditCard = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCreditCard(event.target.checked)
+  }
   //Dispatching the Api's
   useEffect(() => {
     dispatch(reduxServices.expenseForm.getEmpDepartmentsList())
@@ -299,7 +325,7 @@ const ExpenseForm = (): JSX.Element => {
       dispatch(reduxServices.expenseForm.editCategories(expenseCategory))
     }
   }, [dispatch, expenseCategory])
-
+  console.log(paymentMode)
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -630,6 +656,28 @@ const ExpenseForm = (): JSX.Element => {
         </CCol>
       </CRow>
       <CRow className="mt-3 mb-3">
+        <CFormLabel className={formLabel}>
+          Expenditure Date :
+          <span className={expenditureDate ? TextWhite : TextDanger}>*</span>
+        </CFormLabel>
+        <CCol sm={3}>
+          <DatePicker
+            id="expenditureDate"
+            className="form-control form-control-sm sh-date-picker"
+            showMonthDropdown
+            showYearDropdown
+            autoComplete="off"
+            dropdownMode="select"
+            dateFormat="dd/mm/yy"
+            placeholderText="Expenditure Date"
+            name="expenditureDate"
+            maxDate={disableAfterDate}
+            value={expenditureDate}
+            onChange={(date: Date) => onHandleExpenditureDatePicker(date)}
+          />
+        </CCol>
+      </CRow>
+      <CRow className="mt-3 mb-3">
         <CFormLabel
           {...formLabelProps}
           className="col-sm-3 col-form-label text-end"
@@ -736,6 +784,88 @@ const ExpenseForm = (): JSX.Element => {
           </CFormSelect>
         </CCol>
       </CRow>
+      {paymentMode === '2' ? (
+        <>
+          <CRow className="mt-3 mb-3">
+            <CFormLabel
+              {...formLabelProps}
+              className="col-sm-3 col-form-label text-end"
+            >
+              Cheque Number:
+            </CFormLabel>
+            <CCol sm={3}>
+              <CFormInput
+                className="mb-1"
+                data-testid="voucherNumber"
+                type="text"
+                id="voucherNumber"
+                size="sm"
+                name="chequeNumber"
+                autoComplete="off"
+                placeholder="Cheque Number"
+                value={chequeNumber}
+                maxLength={30}
+                onChange={handledInputChange}
+              />
+            </CCol>
+          </CRow>
+          <CRow className="mt-3 mb-3">
+            <CFormLabel className={formLabel}>Cheque Date:</CFormLabel>
+            <CCol sm={3}>
+              <DatePicker
+                id="chequeDate"
+                className="form-control form-control-sm sh-date-picker"
+                showMonthDropdown
+                showYearDropdown
+                autoComplete="off"
+                dropdownMode="select"
+                dateFormat="dd/mm/yy"
+                placeholderText="Cheque Date"
+                name="chequeDate"
+                maxDate={disableAfterDate}
+                value={chequeDate}
+                onChange={(date: Date) => onHandleExpenditureDatePicker(date)}
+              />
+            </CCol>
+          </CRow>
+        </>
+      ) : (
+        ''
+      )}
+
+      {paymentMode === '3' ? (
+        <>
+          <CFormLabel
+            {...formLabelProps}
+            className="col-sm-3 col-form-label text-end"
+            data-testid="creditCardLabel"
+          >
+            Credit Card List:
+          </CFormLabel>
+          {creditCards.map((item, index) => {
+            return (
+              <>
+                <CFormCheck
+                  key={index}
+                  type="radio"
+                  name="creditCard"
+                  value={item.cardName}
+                  id="creditCardActive"
+                  onChange={handleCreditCard}
+                  inline
+                />
+
+                <span>
+                  <b>Card Name :</b> {item.cardName}
+                </span>
+              </>
+            )
+          })}
+        </>
+      ) : (
+        ''
+      )}
+
       <CRow className="mt-3 mb-3">
         <CFormLabel
           {...formLabelProps}
@@ -840,7 +970,7 @@ const ExpenseForm = (): JSX.Element => {
               onChange: CKEditorEventHandler<'change'>
             }>
               initData={descriptionInfo}
-              data-testid="vendorAddress"
+              data-testid="descriptionInfo"
               config={ckeditorConfig}
               debug={true}
               onChange={({ editor }) => {
