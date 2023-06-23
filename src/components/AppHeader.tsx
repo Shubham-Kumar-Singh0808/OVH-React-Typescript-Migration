@@ -101,7 +101,7 @@ const AppHeader = (): JSX.Element => {
             <CInputGroup className="global-search me-4">
               <Autocomplete
                 inputProps={{
-                  className: 'form-control form-control-sm',
+                  className: 'form-control form-control-sm search-header',
                   id: 'employee-autocomplete',
                   placeholder: 'Search Employee',
                   onKeyDown: handleSearchEmployeeOnEnter,
