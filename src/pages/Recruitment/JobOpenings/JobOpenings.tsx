@@ -19,6 +19,9 @@ const JobOpenings = (): JSX.Element => {
   const initialCycle = {} as GetAllJobVacanciesList
   const [editJobInfo, setEditJobInfo] = useState(initialCycle)
 
+  const initialJobInfo = {} as GetAllJobVacanciesList
+  const [editViewJobInfo, setEditViewJobInfo] = useState(initialJobInfo)
+
   const dispatch = useAppDispatch()
 
   const CurrentPage = useTypedSelector(
@@ -42,15 +45,6 @@ const JobOpenings = (): JSX.Element => {
     currentPage,
     pageSize,
   } = usePagination(listSize, 20)
-
-  const prepareObject = dispatch(
-    reduxServices.jobVacancies.getAllJobVacancies({
-      startIndex: 0,
-      endIndex: 20,
-      searchJobTitle: searchInput,
-      status: selectRadioAction,
-    }),
-  )
 
   useEffect(() => {
     dispatch(
@@ -88,7 +82,16 @@ const JobOpenings = (): JSX.Element => {
     }
   }
 
-  const multiSearchBtnHandler = () => prepareObject
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.jobVacancies.getAllJobVacancies({
+        startIndex: 0,
+        endIndex: 20,
+        searchJobTitle: searchInput,
+        status: selectRadioAction,
+      }),
+    )
+  }
   const onChangeHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -197,20 +200,29 @@ const JobOpenings = (): JSX.Element => {
           />
         </OCard>
       )}
-      {toggle === 'jobInfo' && <ViewJobInfo setToggle={setToggle} />}
+      {toggle === 'jobInfo' && (
+        <ViewJobInfo
+          setToggle={setToggle}
+          setEditViewJobInfo={setEditViewJobInfo}
+        />
+      )}
       {toggle === 'jobTimeline' && <JobVacancyTimeline setToggle={setToggle} />}
       {toggle === 'editJobOpening' && (
         <EditJobOpening
           setToggle={setToggle}
           editJobInfo={editJobInfo}
           setEditJobInfo={setEditJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
       {toggle === 'editViewJobOpening' && (
         <EditJobView
           setToggle={setToggle}
-          editJobInfo={editJobInfo}
-          setEditJobInfo={setEditJobInfo}
+          editViewJobInfo={editViewJobInfo}
+          setEditViewJobInfo={setEditViewJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
     </>

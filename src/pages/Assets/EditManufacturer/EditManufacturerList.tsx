@@ -145,18 +145,15 @@ const EditManufacturerList = ({
                 aria-label="Default select example"
                 size="sm"
                 id="productName"
-                name="productName"
-                value={editManufacturerData?.productName}
+                name="productId"
+                value={editManufacturerData?.productId}
                 onChange={onChangeInputHandler}
               >
                 <option value={''}>Select Product Type</option>
                 {productResult.productList?.length > 0 &&
                   productResult?.productList?.map(
                     (productResultItem, index) => (
-                      <option
-                        key={index}
-                        value={productResultItem?.productName}
-                      >
+                      <option key={index} value={productResultItem?.productId}>
                         {productResultItem?.productName}
                       </option>
                     ),

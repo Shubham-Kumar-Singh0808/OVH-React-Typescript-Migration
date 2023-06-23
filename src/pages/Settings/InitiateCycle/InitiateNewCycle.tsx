@@ -26,6 +26,7 @@ const InitiateCycle = (): JSX.Element => {
   const [cycleChecked, setCycleChecked] = useState<GetQuestion>()
   const [checkList, setCheckList] = useState<GetQuestion[]>([])
   const [cbFromApi, setCbFromApi] = useState<GetQuestion[]>([])
+  const [isBtnEnable, setIsBtnEnable] = useState<boolean>(false)
 
   const activeCycle = useTypedSelector(
     reduxServices.initiateCycle.selectors.activeCycleData,
@@ -121,6 +122,14 @@ const InitiateCycle = (): JSX.Element => {
   const userAccess = userAccessToFeatures?.find(
     (feature) => feature.name === 'Initiate Cycle',
   )
+
+  useEffect(() => {
+    if (cycleChecked) {
+      setIsBtnEnable(true)
+    } else {
+      setIsBtnEnable(false)
+    }
+  }, [cycleChecked])
   const addBtnHandler = async () => {
     const prepareObject = {
       nominationCycleDto: {
@@ -143,6 +152,7 @@ const InitiateCycle = (): JSX.Element => {
       ) &&
       prepareObject.nominationQuestionDto.length !== 0
     ) {
+      setIsBtnEnable(false)
       dispatch(reduxServices.app.actions.addToast(successToast))
       dispatch(reduxServices.initiateCycle.getActiveCycleData())
       dispatch(reduxServices.app.actions.addToast(undefined))
@@ -262,6 +272,7 @@ const InitiateCycle = (): JSX.Element => {
                   className="btn-ovh me-1 text-white"
                   color="success"
                   onClick={addBtnHandler}
+                  disabled={!isBtnEnable}
                 >
                   Add
                 </CButton>

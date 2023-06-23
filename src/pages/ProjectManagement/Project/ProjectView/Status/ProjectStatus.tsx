@@ -10,8 +10,10 @@ import { useTypedSelector, useAppDispatch } from '../../../../../stateStore'
 
 const ProjectStatus = (): JSX.Element => {
   const [toggle, setToggle] = useState('')
-  const [editCurrentWeekDate, setEditCurrentWeekDate] = useState<string>()
-  const [editNextWeekDate, setEditNextWeekDate] = useState<string>()
+  const [editCurrentWeekDate, setEditCurrentWeekDate] = useState<
+    string | Date
+  >()
+  const [editNextWeekDate, setEditNextWeekDate] = useState<string | Date>()
   const [editCurrentWeekStatus, setEditCurrentWeekStatus] = useState<string>()
   const [editNextWeekStatus, setEditNextWeekStatus] = useState<string>()
   const [statusId, setStatusId] = useState<number>()
