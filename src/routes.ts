@@ -446,6 +446,9 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+)
 const ScheduleInterview = React.lazy(
   () =>
     import(
@@ -1081,6 +1084,11 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
   },
   {
     path: '/scheduleInterview/:personId',

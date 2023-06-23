@@ -1688,10 +1688,10 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 302,
     name: 'Sub-Category',
-    viewaccess: false,
-    createaccess: false,
-    updateaccess: false,
-    deleteaccess: false,
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
   {
