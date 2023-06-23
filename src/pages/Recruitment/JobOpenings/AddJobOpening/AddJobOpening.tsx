@@ -77,7 +77,7 @@ const AddJobOpening = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'jobTitle') {
-      const newValue = value.replace(/^\s*/, '').replace(/[^a-z\s]/gi, '')
+      const newValue = value.replace(/-_[^a-z0-9\s]/gi, '').replace(/^\s*/, '')
       setJobTitle(newValue)
     } else if (name === 'noOfOpenings') {
       const targetValue = value.replace(/\D/g, '').replace(/^0+/, '')

@@ -117,7 +117,6 @@ const JobOpeningsTable = ({
       setErrorMessageCount((messageCount) => messageCount + 1)
       dispatch(reduxServices.app.actions.addToast(deletedToast))
     } else {
-      confirmDeleteLocation()
       setIsDeleteModalVisible(true)
       setDeleteJobTitleId(id)
       setDeleteJobName(locationName)
@@ -154,7 +153,9 @@ const JobOpeningsTable = ({
             <CTableHeaderCell scope="col">No.of Vacancies</CTableHeaderCell>
             <CTableHeaderCell scope="col">Positions Closed</CTableHeaderCell>
             <CTableHeaderCell scope="col">Positions Vacant</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell scope="col" style={{ width: '100px' }}>
+              Actions
+            </CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -164,7 +165,7 @@ const JobOpeningsTable = ({
                 ?.replace(/<[^>]+>/g, '')
                 ?.replace(/&nbsp;/g, '')
                 ?.replace(/:/g, '')}`
-              const vendorAddressLimit =
+              const Limit =
                 removeTag && removeTag?.length > 30
                   ? `${removeTag?.substring(0, 30)}...`
                   : removeTag
@@ -186,16 +187,16 @@ const JobOpeningsTable = ({
                     scope="row"
                     className="sh-organization-link sh-comment"
                   >
-                    {vendorAddressLimit ? (
+                    {Limit === null || Limit === '' || Limit === undefined ? (
+                      'N/A'
+                    ) : (
                       <CLink
                         className="cursor-pointer text-decoration-none"
                         data-testid={`vendor-address-${index}`}
                         onClick={() => handleModal(jobVacancy)}
                       >
-                        {parse(vendorAddressLimit)}
+                        {parse(Limit)}
                       </CLink>
-                    ) : (
-                      'N/A'
                     )}
                   </CTableDataCell>
                   <CTableDataCell>
@@ -211,10 +212,10 @@ const JobOpeningsTable = ({
                   <CTableDataCell>
                     {jobVacancy?.remaining || 'N/A'}
                   </CTableDataCell>
-                  <CTableDataCell>
+                  <CTableDataCell className="job-actions">
                     <CTooltip content="View">
                       <CButton
-                        color="info"
+                        color="info btn-ovh me-1"
                         className="btn-ovh-employee-list me-1 mt-1"
                         data-testid="View-btn"
                         onClick={() => viewButtonHandler(jobVacancy?.id)}
@@ -309,7 +310,7 @@ const JobOpeningsTable = ({
         setVisible={setIsJobDescriptionModalVisible}
       >
         <span className="descriptionField" data-testid="modal-cnt-add">
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: description.description,
             }}

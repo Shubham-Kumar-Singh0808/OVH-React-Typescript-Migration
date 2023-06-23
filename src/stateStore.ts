@@ -128,6 +128,8 @@ import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import intervieweeDetailsReducer from './reducers/Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
+import candidateListReducer from './reducers/Recruitment/CandidateList/CandidateListSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
 import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
@@ -137,7 +139,10 @@ import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/ass
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import changeStatusReducer from './reducers/Assets/AssetList/ChangeStatus/ChangeStatusSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
+import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -266,6 +271,8 @@ export const allReducers = {
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
+  intervieweeDetails: intervieweeDetailsReducer,
+  candidateList: candidateListReducer,
   vendorList: vendorListReducer,
   addNewVendor: addNewVendorReducer,
   changeReportees: changeReporteesReducer,
@@ -275,7 +282,10 @@ export const allReducers = {
   assetList: assetListReducer,
   changeStatus: changeStatusReducer,
   productSpecificationList: productSpecificationListReducer,
+  recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
+  upComingJoinList: upComingJoinListReducer,
+  interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

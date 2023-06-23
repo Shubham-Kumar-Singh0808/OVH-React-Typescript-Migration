@@ -576,7 +576,7 @@ const AddVendorDetails = ({
           >
             Expense Vendor:
           </CFormLabel>
-          <CCol sm={3}>
+          <CCol sm={3} className="col-form-label">
             <CFormCheck
               className="mb-1"
               inline

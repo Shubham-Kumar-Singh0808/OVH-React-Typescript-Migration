@@ -55,6 +55,9 @@ const AssetWarrantyReportTable = (
     setCurrentPage,
   } = props
 
+  const totalNoOfRecords = assetWarrantyList?.length
+    ? `Total Records: ${assetListSizeRecords}`
+    : `No Records found...`
   return (
     <>
       <CTable striped className="mt-3">
@@ -155,14 +158,14 @@ const AssetWarrantyReportTable = (
       <CRow>
         <CCol xs={4}>
           <p>
-            <strong>Total Records: {assetListSizeRecords} </strong>
+            <strong>{totalNoOfRecords} </strong>
           </p>
         </CCol>
         <CCol xs={3}>
           {assetListSizeRecords > 20 && (
             <OPageSizeSelect
               handlePageSizeSelectChange={handlePageSizeSelectChange}
-              options={[20, 40, 60, 80]}
+              options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
           )}
@@ -192,7 +195,7 @@ const AssetWarrantyReportTable = (
       >
         <>
           <span className="descriptionField">
-            <div
+            <p
               dangerouslySetInnerHTML={{
                 __html: specification,
               }}

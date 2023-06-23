@@ -152,6 +152,7 @@ const EditPaySlip = ({
             <EmployeePayslipPersonalDetails
               toEditPayslipCopy={toEditPayslipCopy}
               onChangeInputHandler={onChangeInputHandler}
+              isDesignationReadonly={true}
             />
           </CCol>
           <CCol sm={6}>
