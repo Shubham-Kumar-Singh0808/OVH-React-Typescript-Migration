@@ -13,17 +13,25 @@ import {
   initialCandidateAppliedForList,
   nonRequiredFinalCandidateData,
   getCurrentScheduleTime,
+  candidateFeatureId,
 } from '../CandidateListHelpers'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { interchangeMonthAndDay } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import AddTechnologyMainPage from '../AddEditCandidateTemplate/AddTechnology/AddTechnologyMainPage'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddCandidate = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const currentAddCandidatePage = useTypedSelector(
     (state) => state.candidateList.currentAddCandidatePage,
+  )
+  const candidateUserAccessToFeatures = useTypedSelector(
+    (state) =>
+      state.userAccessToFeatures.userAccessToFeatures.filter(
+        (feature) => feature.featureId === candidateFeatureId,
+      )[0],
   )
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -164,6 +172,14 @@ const AddCandidate = (): JSX.Element => {
       if (
         reduxServices.candidateList.addNewCandidateThunk.fulfilled.match(result)
       ) {
+        dispatch(
+          reduxServices.app.actions.addToast(
+            <OToast
+              toastColor="success"
+              toastMessage="Candidate Details Added Successfully"
+            />,
+          ),
+        )
         const personId = result.payload
         const file = new FormData()
         if (uploadedFile !== undefined) {
@@ -177,8 +193,18 @@ const AddCandidate = (): JSX.Element => {
         )
         window.location.href = '/jobschedulecandidateList'
       }
+      setAddButtonEnabled(true)
+    } else {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="Mobile Number Already Exists"
+          />,
+        ),
+      )
+      setMobileNumber('')
     }
-    setAddButtonEnabled(true)
   }
 
   return (
@@ -191,6 +217,7 @@ const AddCandidate = (): JSX.Element => {
       {currentAddCandidatePage === CurrentAddCandidatePage.addCandidate && (
         <>
           <AddEditCandidateTemplate
+            isAddFunctionality={true}
             backButtonLink="jobschedulecandidateList"
             firstName={firstName}
             setFirstName={setFirstName}
@@ -244,23 +271,27 @@ const AddCandidate = (): JSX.Element => {
             setWhatsAppNotifications={setWhatsAppNotifications}
             reasonForChange={reasonForChange}
             reasonForChangeHandler={reasonForChangeHandler}
+            uploadedFile={uploadedFile}
             uploadedFileHandler={uploadedFileHandler}
+            uploadedResumeFileName={null}
             showEditor={showEditor}
             setFinalButtonEnabled={setAddButtonEnabled}
           />
           <CRow>
             <CFormLabel className="col-form-label category-label col-sm-2 col-form-label text-end"></CFormLabel>
             <CCol sm={4}>
-              <CButton
-                type="submit"
-                color="success"
-                className="btn-ovh me-1"
-                data-testid="addCand-addBtn"
-                disabled={!isAddButtonEnabled}
-                onClick={addButtonHandler}
-              >
-                Add
-              </CButton>
+              {candidateUserAccessToFeatures?.createaccess && (
+                <CButton
+                  type="submit"
+                  color="success"
+                  className="btn-ovh me-1"
+                  data-testid="addCand-addBtn"
+                  disabled={!isAddButtonEnabled}
+                  onClick={addButtonHandler}
+                >
+                  Add
+                </CButton>
+              )}
               <CButton
                 color="warning"
                 className="btn-ovh me-1"

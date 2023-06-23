@@ -4,6 +4,7 @@ import {
   CFormCheck,
   CFormInput,
   CFormSelect,
+  CFormText,
   CRow,
 } from '@coreui/react-pro'
 import React, { SyntheticEvent, useEffect, useMemo } from 'react'
@@ -12,6 +13,7 @@ import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
 import { Link } from 'react-router-dom'
 import ReactDatePicker from 'react-datepicker'
 import moment from 'moment'
+import { AxiosError } from 'axios'
 import CandidateEntryItem from './CandidateEntryItem'
 import AutoFillSourceName from './AutofillSourceName'
 import AutoFillCurrentEmployer from './AutoFillCurrentEmployer'
@@ -31,6 +33,7 @@ import {
   getDataInputTestId,
   filterCandidateAppliedForById,
   filterCandidateCountryByCountryId,
+  getFileValidation,
 } from '../CandidateListHelpers'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
 import { commonDateFormat } from '../../../../utils/dateFormatUtils'
@@ -38,6 +41,9 @@ import { getFormattedDate } from '../../../Finance/ITDeclarationForm/ITDeclarati
 import { reduxServices } from '../../../../reducers/reduxServices'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { regexNumberOnly } from '../../../../constant/constantData'
+import { TextDanger } from '../../../../constant/ClassName'
+import candidateListApi from '../../../../middleware/api/Recruitment/CandidateList/CandidateListApi'
+import { downloadFile } from '../../../../utils/helper'
 
 const AddEditCandidateTemplate = ({
   backButtonLink,
@@ -93,9 +99,12 @@ const AddEditCandidateTemplate = ({
   setSelectCountry,
   reasonForChange,
   reasonForChangeHandler,
+  uploadedFile,
   uploadedFileHandler,
+  uploadedResumeFileName,
   showEditor,
   setFinalButtonEnabled,
+  isAddFunctionality,
 }: AddEditCandidateTemplateProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const allJobVacanciesList = useTypedSelector(
@@ -227,6 +236,17 @@ const AddEditCandidateTemplate = ({
     )
   }
 
+  const resumeDownloadButtonHandler = async () => {
+    const fileName = uploadedResumeFileName ?? ''
+    try {
+      const data = await candidateListApi.downloadFile(fileName)
+      downloadFile(data, fileName)
+    } catch (error) {
+      const err = error as AxiosError
+      console.log(err.response?.status)
+    }
+  }
+
   //returns true if required value is not entered
   const firstNameAsterix = useMemo(() => {
     return showAsterixHandler(firstName)
@@ -278,6 +298,10 @@ const AddEditCandidateTemplate = ({
   const jobTypeAsterix = useMemo(() => {
     return showAsterixHandler(jobType)
   }, [jobType])
+  const uploadedFileAsterix = useMemo(() => {
+    // returns non-empty string if any error
+    return getFileValidation(uploadedFile) !== ''
+  }, [uploadedFile])
   const countryAsterix = useMemo(() => {
     return selectCountry.id === initialCandidateCountry.id
   }, [selectCountry])
@@ -291,7 +315,7 @@ const AddEditCandidateTemplate = ({
 
   // once we are out of focus, an api is called to check whether is pre registered or not
   const outFocusEmail = async () => {
-    if (emailId !== '') {
+    if (emailId !== '' && isAddFunctionality) {
       const result = await dispatch(
         reduxServices.candidateList.checkCandidateEmailThunk(emailId),
       )
@@ -331,7 +355,8 @@ const AddEditCandidateTemplate = ({
       noticePeriodAsterix ||
       jobTypeAsterix ||
       countryAsterix ||
-      reasonForChangeAsterix
+      reasonForChangeAsterix ||
+      uploadedFileAsterix
     ) {
       setFinalButtonEnabled(false)
     } else {
@@ -356,6 +381,7 @@ const AddEditCandidateTemplate = ({
     jobTypeAsterix,
     countryAsterix,
     reasonForChangeAsterix,
+    uploadedFileAsterix,
   ])
 
   const addTechnologyClickHandler = (
@@ -489,7 +515,7 @@ const AddEditCandidateTemplate = ({
                 {candidateSourceTypeList.map(
                   (sourceTypeItem, sourceTypeIndex) => (
                     <option key={sourceTypeIndex} value={sourceTypeItem}>
-                      {sourceType}
+                      {sourceTypeItem}
                     </option>
                   ),
                 )}
@@ -545,7 +571,7 @@ const AddEditCandidateTemplate = ({
               showAsterix={technologyAsterix}
             >
               <CRow className="align-items-center">
-                <CCol sm={7}>
+                <CCol sm={isAddFunctionality ? 7 : 12}>
                   <CFormSelect
                     value={technology}
                     onChange={technologyChangeHandler}
@@ -568,17 +594,19 @@ const AddEditCandidateTemplate = ({
                       )}
                   </CFormSelect>
                 </CCol>
-                <CCol sm={5}>
-                  <CButton
-                    className="btn-ovh"
-                    color="info"
-                    onClick={addTechnologyClickHandler}
-                    data-testid={getDataInputTestId('addTechBtn')}
-                  >
-                    <i className="fa fa-plus me-1"></i>
-                    Add
-                  </CButton>
-                </CCol>
+                {isAddFunctionality && (
+                  <CCol sm={5}>
+                    <CButton
+                      className="btn-ovh"
+                      color="info"
+                      onClick={addTechnologyClickHandler}
+                      data-testid={getDataInputTestId('addTechBtn')}
+                    >
+                      <i className="fa fa-plus me-1"></i>
+                      Add
+                    </CButton>
+                  </CCol>
+                )}
               </CRow>
             </CandidateEntryItem>
           </CCol>
@@ -682,7 +710,7 @@ const AddEditCandidateTemplate = ({
             <CandidateEntryItem label="CTC" showAsterix={ctcAsterix}>
               <CFormInput
                 type="text"
-                placeholder="CTC"
+                placeholder="ctc"
                 data-testid={`${getDataInputTestId('ctc')}`}
                 value={ctc}
                 onChange={ctcChangeHandler}
@@ -694,7 +722,7 @@ const AddEditCandidateTemplate = ({
               <CFormInput
                 type="text"
                 data-testid={`${getDataInputTestId('ectc')}`}
-                placeholder="ECTC"
+                placeholder="ectc"
                 value={ectc}
                 onChange={ectcChangeHandler}
               />
@@ -795,11 +823,26 @@ const AddEditCandidateTemplate = ({
             <CandidateEntryItem label="Upload Resume">
               <input
                 type="file"
+                accept=".doc, .docx, .pdf"
                 onChange={(e: SyntheticEvent) => {
                   uploadedFileHandler(e.currentTarget as HTMLInputElement)
                 }}
                 data-testid={getDataInputTestId('resumeUpload')}
               />
+              {uploadedFileAsterix && (
+                <CFormText className={TextDanger}>
+                  {getFileValidation(uploadedFile)}
+                </CFormText>
+              )}
+              {uploadedResumeFileName !== null && (
+                <a
+                  onClick={resumeDownloadButtonHandler}
+                  data-testid="candidate-downloadResume"
+                >
+                  <i className="fa fa-paperclip ng-scope"></i>
+                  Resume
+                </a>
+              )}
             </CandidateEntryItem>
           </CCol>
           <CCol sm={6}>

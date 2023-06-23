@@ -105,6 +105,60 @@ export enum CurrentAddCandidatePage {
   addTechnology = 'Add New Technology',
 }
 
+export interface IncomingEditCandidateData {
+  candidateName: string
+  candidateFirstName: string
+  candidateLastName: string
+  candidateEmail: string
+  experience: string
+  skills: string
+  mobile: string
+  appliedFor: CandidateAppliedForList
+  sourceType: string
+  sourceName: string
+  uploadResume: null | string
+  otherDocs: null
+  status: string
+  candidateId: number | string
+  appliedForLookUp: string
+  vacancyId: number
+  scheduleDate: null
+  scheduleTime: null | string
+  interviewerEmailid: null
+  receipentEmailId: null
+  description: null
+  scheduleFlag: null | string
+  interviewRound: null
+  interviewersDTOList: null | Array<string>
+  interviewerId: null
+  interviewType: null
+  interviewStatus: null
+  dob: string
+  timelineStatus: null
+  technology: string
+  recruiter: null | string
+  ctc: string
+  ectc: string
+  np: string
+  reason: string
+  skypeId: null | string
+  currentEmployer: null | string
+  currentLocation: string
+  sendMailToCandidate: null
+  sendMailToInterviewer: null
+  sendMessageToCandidate: null
+  sendMessageToInterviewer: null
+  jobTypeName: string
+  pan: null | string
+  adhar: null | string
+  linkedin: null | string
+  countryId: number
+  country: country
+  notifications: string
+  contactDetails: null
+  countryCode: number
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
@@ -117,6 +171,7 @@ export type CandidateListSliceState = {
   allJobVacancies: IncomingAllJobVacanciesList
   allCompaniesData: IncomingCompaniesData[]
   currentAddCandidatePage: CurrentAddCandidatePage
+  editCandidateData: IncomingEditCandidateData
 }
 
 //used in other components - used in interview status report also
@@ -228,9 +283,12 @@ export interface AddEditCandidateTemplateProps {
   setWhatsAppNotifications: React.Dispatch<React.SetStateAction<string>>
   reasonForChange: string
   reasonForChangeHandler: (value: string) => void
+  uploadedFile: File | undefined
   uploadedFileHandler: (element: HTMLInputElement) => void
+  uploadedResumeFileName: string | null
   showEditor: boolean
   setFinalButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
+  isAddFunctionality: boolean
 }
 
 export interface AddNewCandidateDTO {
@@ -268,4 +326,14 @@ export interface AddNewCandidateDTO {
 export interface UploadCandidateResumeDTO {
   personId: number
   file: FormData
+}
+
+export interface IsEditNewCandidateEmailExistsParams {
+  candidateId: number
+  mailId: string
+}
+
+export interface IsEditNewCandidateMobileNumExistsParams {
+  candidateId: number
+  mobileNum: number
 }

@@ -1087,6 +1087,13 @@ export const CandidateListApiConfig: CandidateListApi = {
   uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
   addTechnology: apiPrefix + '/jobapplicant/addtechnology',
   deleteTechnology: apiPrefix + '/jobapplicant/deleteTechnology',
+  editCandidateData: apiPrefix + '/jobapplicant/jobAdmin/editCandidate',
+  isEditCandidateMailExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMailExists',
+  isEditCandidateMobileNumberExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMobileNumberExists',
+  editNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/editNewCandidate',
+  downloadFile: apiPrefix + '/jobapplicant/downloadFile',
 }
 
 export const GetAssetListConfig: AssetListApi = {
