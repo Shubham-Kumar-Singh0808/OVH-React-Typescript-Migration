@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/cognitive-complexity */
 import React, { useEffect, useState } from 'react'
 import {
   CButton,
@@ -10,6 +11,11 @@ import {
 import { useHistory } from 'react-router-dom'
 import parse from 'html-react-parser'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
+import NoShow from './ScheduleIntervieActionButtons/NoShow '
+import Offer from './ScheduleIntervieActionButtons/Offer'
+import OnHold from './ScheduleIntervieActionButtons/OnHold'
+import REPROCESS from './ScheduleIntervieActionButtons/REPROCESS'
+import RejectInterview from './ScheduleIntervieActionButtons/RejectInterview'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
@@ -24,14 +30,13 @@ const IntervieweeDetails = (): JSX.Element => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
-
+  const history = useHistory()
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
   const [comment, setComment] = useState<string>(
     timeLineListSelector.initialComments,
   )
-
   const handleModal = () => {
     setIsApproveModalVisibility(true)
   }
@@ -137,10 +142,16 @@ const IntervieweeDetails = (): JSX.Element => {
       '_blank',
     )
   }
-  const history = useHistory()
+  const reScheduleButtonHandler = () => {
+    history.push(`/reScheduleInterview/${timeLineListSelector.personId}`)
+  }
+
+  const scheduleBtnHandler = () => {
+    history.push(`/scheduleInterview/${timeLineListSelector.personId}`)
+  }
 
   const backBtnHandler = () => {
-    history.goBack()
+    history.push('/jobschedulecandidateList')
   }
 
   const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
@@ -206,6 +217,9 @@ const IntervieweeDetails = (): JSX.Element => {
     }
     return <></>
   }
+  const checkCommentMandatory = comment?.replace(/^\s*/, '')
+    ? 'text-white'
+    : 'text-danger'
   return (
     <>
       <OCard
@@ -214,202 +228,281 @@ const IntervieweeDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
+        <CRow className="justify-content-end Schedule-Interview-action-buttons">
+          <CCol className="d-flex justify-content-end" md={12}>
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <CButton
+                ng-click="redirectToScheduleInterview(interviewTimelineDetailsList)"
+                type="submit"
+                className="btn btn-primary btn-labeled fa fa-calendar fa-lg me-1"
+                disabled={
+                  timeLineListSelector.pendingInterviewStatus > 0 &&
+                  timeLineListSelector.candidateStatus !== 'REPROCESS'
+                }
+                onClick={scheduleBtnHandler}
+                data-testid="schedule-interview"
+              >
+                Schedule
+              </CButton>
+            )}
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <CButton
+                ng-click="redirectTo_Re_ScheduleInterview(interviewTimelineDetailsList)"
+                type="submit"
+                className="btn btn-info btn-labeled fa fa-retweet fa-lg me-1"
+                disabled={
+                  timeLineListSelector.pendingInterviewStatus <= 0 ||
+                  timeLineListSelector.candidateStatus === 'REPROCESS'
+                }
+                onClick={reScheduleButtonHandler}
+                data-testid="reschedule-interview"
+              >
+                Re-Schedule
+              </CButton>
+            )}
+            <CButton
+              color="info"
+              className="btn btn-primary btn-labeled fa fa-edit fa-lg me-1"
+              data-testid="edit-btn"
+            >
+              Edit
+            </CButton>
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <OnHold />
+            )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <Offer />
+            )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <RejectInterview />
+            )}
+            {timeLineListSelector.candidateStatus === 'OFFERED' ||
+            timeLineListSelector.candidateStatus === 'REJECTED' ||
+            timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
+              ''
+            ) : (
+              <NoShow />
+            )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ? (
+              <REPROCESS />
+            ) : (
+              ''
+            )}
             <CButton
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
-              onClick={() => backBtnHandler}
+              onClick={backBtnHandler}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
           </CCol>
-        </CRow>
-        <CForm>
-          <CRow className="mt-1 mb-0 align-items-center interview-name">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Name:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.fullName || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Candidate added Date:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.addedDate || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Applied for:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.appliedFor || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Skills:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.skill || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Experience:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector.experience || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Recruiter:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">{timeLineListSelector?.recruiter || 'N/A'}</p>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Status:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">
-                {formatInterviewStatusText(
-                  timeLineListSelector?.candidateStatus,
-                )}
-              </p>
-            </CCol>
-          </CRow>
-          {timeLineListSelector?.statusComments === null ? (
-            <></>
-          ) : (
+          <CForm>
+            <CRow className="mt-1 mb-0 align-items-center interview-name">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Name:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">{timeLineListSelector.fullName || 'N/A'}</p>
+              </CCol>
+            </CRow>
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-                Status Comments:
+                Candidate added Date:
               </CFormLabel>
               <CCol sm={3}>
                 <p className="mb-0">
-                  {timeLineListSelector?.statusComments || 'N/A'}
+                  {timeLineListSelector.addedDate || 'N/A'}
                 </p>
               </CCol>
             </CRow>
-          )}
-          {timeLineListSelector?.modeOfInterview === null ? (
-            <></>
-          ) : (
             <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-                Mode of interview:
+                Applied for:
               </CFormLabel>
               <CCol sm={3}>
-                <p className="mb-0">{timeLineListSelector?.modeOfInterview}</p>
+                <p className="mb-0">
+                  {timeLineListSelector.appliedFor || 'N/A'}
+                </p>
               </CCol>
             </CRow>
-          )}
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Resume:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CButton
-                size="sm"
-                className="btn btn-primary btn-xs preview-Interview"
-                ng-click="openInNewTab(interviewTimelineDetailsList.resumePath)"
-                disabled={timeLineListSelector?.resumePath === null}
-                onClick={resumeDownload}
-              >
-                PREVIEW
-              </CButton>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Other Documents:
-            </CFormLabel>
-            <CCol sm={3}>
-              <CButton
-                size="sm"
-                className="btn btn-primary btn-xs preview-Interview"
-                ng-click="openInNewTabDoc(interviewTimelineDetailsList.otherDocumentPath)"
-                disabled={timeLineListSelector?.otherDocumentPath === null}
-                onClick={otherDocumentDownload}
-              >
-                PREVIEWDOC
-              </CButton>
-            </CCol>
-          </CRow>
-          <CRow className="mt-1 mb-0 align-items-center">
-            <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-              Reason for change:
-            </CFormLabel>
-            <CCol sm={3}>
-              <p className="mb-0">
-                {parse(timeLineListSelector?.reason || 'N/A')}
-              </p>
-            </CCol>
-          </CRow>
-          {timeLineListSelector.candidateStatus === 'NEW' ? (
-            <CRow className="mt-1 mb-0">
+            <CRow className="mt-1 mb-0 align-items-center">
               <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
-                Initial Comments:
-                <span
-                  className={
-                    comment?.replace(/^\s*/, '') ? 'text-white' : 'text-danger'
-                  }
-                >
-                  *
-                </span>
+                Skills:
               </CFormLabel>
-              <CCol sm={3} className="mt-1">
-                <CFormTextarea
-                  data-testid="text-area"
-                  aria-label="textarea"
-                  autoComplete="off"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                ></CFormTextarea>
+              <CCol sm={3}>
+                <p className="mb-0">{timeLineListSelector.skill || 'N/A'}</p>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Experience:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">
+                  {timeLineListSelector.experience || 'N/A'}
+                </p>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Recruiter:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">
+                  {timeLineListSelector?.recruiter || 'N/A'}
+                </p>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Status:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">
+                  {formatInterviewStatusText(
+                    timeLineListSelector?.candidateStatus,
+                  )}
+                </p>
+              </CCol>
+            </CRow>
+            {timeLineListSelector?.statusComments === null ? (
+              <></>
+            ) : (
+              <CRow className="mt-1 mb-0 align-items-center">
+                <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                  Status Comments:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <p className="mb-0">
+                    {timeLineListSelector?.statusComments || 'N/A'}
+                  </p>
+                </CCol>
+              </CRow>
+            )}
+            {timeLineListSelector?.modeOfInterview === null ? (
+              <></>
+            ) : (
+              <CRow className="mt-1 mb-0 align-items-center">
+                <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                  Mode of interview:
+                </CFormLabel>
+                <CCol sm={3}>
+                  <p className="mb-0">
+                    {timeLineListSelector?.modeOfInterview}
+                  </p>
+                </CCol>
+              </CRow>
+            )}
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Resume:
+              </CFormLabel>
+              <CCol sm={3}>
+                <CButton
+                  size="sm"
+                  className="btn btn-primary btn-xs preview-Interview"
+                  ng-click="openInNewTab(interviewTimelineDetailsList.resumePath)"
+                  disabled={timeLineListSelector?.resumePath === null}
+                  onClick={resumeDownload}
+                >
+                  PREVIEW
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Other Documents:
+              </CFormLabel>
+              <CCol sm={3}>
+                <CButton
+                  size="sm"
+                  className="btn btn-primary btn-xs preview-Interview"
+                  ng-click="openInNewTabDoc(interviewTimelineDetailsList.otherDocumentPath)"
+                  disabled={timeLineListSelector?.otherDocumentPath === null}
+                  onClick={otherDocumentDownload}
+                >
+                  PREVIEWDOC
+                </CButton>
+              </CCol>
+            </CRow>
+            <CRow className="mt-1 mb-0 align-items-center">
+              <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                Reason for change:
+              </CFormLabel>
+              <CCol sm={3}>
+                <p className="mb-0">
+                  {parse(timeLineListSelector?.reason || 'N/A')}
+                </p>
+              </CCol>
+            </CRow>
+            {timeLineListSelector.candidateStatus === 'NEW' ? (
+              <CRow className="mt-1 mb-0">
+                <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
+                  Initial Comments:
+                  <span className={checkCommentMandatory}>*</span>
+                </CFormLabel>
+                <CCol sm={3} className="mt-1">
+                  <CFormTextarea
+                    data-testid="text-area"
+                    aria-label="textarea"
+                    autoComplete="off"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                  ></CFormTextarea>
+                </CCol>
+              </CRow>
+            ) : (
+              <></>
+            )}
+          </CForm>
+          {timeLineListSelector.candidateStatus === 'NEW' ? (
+            <CRow>
+              <CCol md={{ span: 6, offset: 2 }} className="mt-2">
+                <CButton
+                  data-testid="save-btn"
+                  className="btn-ovh me-1 text-white interview-save"
+                  color="success"
+                  onClick={saveBtnHandler}
+                  disabled={!isButtonEnabled}
+                >
+                  Save
+                </CButton>
               </CCol>
             </CRow>
           ) : (
             <></>
           )}
-        </CForm>
-        {timeLineListSelector.candidateStatus === 'NEW' ? (
-          <CRow>
-            <CCol md={{ span: 6, offset: 2 }} className="mt-2">
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
               <CButton
-                data-testid="save-btn"
-                className="btn-ovh me-1 text-white interview-save"
                 color="success"
-                onClick={saveBtnHandler}
-                disabled={!isButtonEnabled}
+                className="btn-ovh me-1 text-white"
+                onClick={handleModal}
               >
-                Save
+                <i className="fa fa-plus fa-lg me-1"></i>Add Comments
               </CButton>
             </CCol>
           </CRow>
-        ) : (
-          <></>
-        )}
-        <CRow className="justify-content-end">
-          <CCol className="text-end" md={4}>
-            <CButton
-              color="success"
-              className="btn-ovh me-1 text-white"
-              onClick={handleModal}
-            >
-              <i className="fa fa-plus fa-lg me-1"></i>Add Comments
-            </CButton>
-          </CCol>
+          <IntervieweeDetailsTimeline />
         </CRow>
-        <IntervieweeDetailsTimeline />
       </OCard>
       <OModal
         alignment="center"
