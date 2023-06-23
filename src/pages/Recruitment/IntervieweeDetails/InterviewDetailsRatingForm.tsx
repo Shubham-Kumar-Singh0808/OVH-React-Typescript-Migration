@@ -113,7 +113,7 @@ const InterviewDetailsRatingForm = (): JSX.Element => {
       )
       dispatch(
         reduxServices.intervieweeDetails.empScheduleInterviewDetails(
-          scheduleInterviewData.interviewCycleId,
+          scheduleInterviewData.interviewCycleId as number,
         ),
       )
     }
