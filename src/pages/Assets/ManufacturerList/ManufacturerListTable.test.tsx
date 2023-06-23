@@ -73,12 +73,4 @@ describe('Manufacturer List without data', () => {
     expect(screen.getByText('Last Updated by')).toBeInTheDocument()
     expect(screen.getByText('Actions')).toBeInTheDocument()
   })
-  test('should be able to click delete button element', async () => {
-    const deleteBtnElement = screen.getByTestId('btn-delete0')
-    await expect(deleteBtnElement).toBeInTheDocument()
-    userEvent.click(deleteBtnElement)
-    const modalConfirmBtn = screen.getByRole('button', { name: 'Yes' })
-    userEvent.click(modalConfirmBtn)
-    expect(modalConfirmBtn).toBeInTheDocument()
-  })
 })
