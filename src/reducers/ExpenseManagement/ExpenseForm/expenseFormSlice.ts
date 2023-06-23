@@ -93,9 +93,9 @@ const getEmployeesList = createAsyncThunk(
 
 const getSubCategoriesList = createAsyncThunk(
   '/ExpenseManagement/getSubCategories',
-  async (_, thunkApi) => {
+  async (categoryId: string, thunkApi) => {
     try {
-      return await expensesFormApi.getSubCategoryList()
+      return await expensesFormApi.getSubCategoryList(categoryId)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -105,7 +105,7 @@ const getSubCategoriesList = createAsyncThunk(
 
 const editCategories = createAsyncThunk(
   '/ExpenseManagement/editCategory',
-  async (categoryId: number, thunkApi) => {
+  async (categoryId: string, thunkApi) => {
     try {
       return await expensesFormApi.editCategory(categoryId)
     } catch (error) {

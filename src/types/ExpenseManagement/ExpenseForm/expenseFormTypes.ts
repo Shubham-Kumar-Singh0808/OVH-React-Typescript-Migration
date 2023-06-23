@@ -324,3 +324,19 @@ export type AddExpenseProps = {
   subCategoryId: number
   to: string
 }
+
+export type expenseFormFields = {
+  employee: boolean
+  projects: boolean
+  date: boolean
+}
+
+export type GetAutoCompleteList = {
+  id: number
+  name: string
+}
+
+export type GetOnSelect = {
+  id: number
+  name: string
+}

@@ -4,7 +4,6 @@ import Autocomplete from 'react-autocomplete'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { ProjectsListResponse } from '../../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
-import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { useAppDispatch } from '../../../../stateStore'
 
 const ProjectList = ({

@@ -80,7 +80,7 @@ const getAllEmployeesList = async (
 }
 
 const editCategory = async (
-  categoryId: number,
+  categoryId: string,
 ): Promise<CategoryListResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: expenseFormApiConfig.editCategory,
@@ -91,10 +91,13 @@ const editCategory = async (
   return response.data
 }
 
-const getSubCategoryList = async (): Promise<SubCategoryListResponse[]> => {
+const getSubCategoryList = async (
+  categoryId: string,
+): Promise<SubCategoryListResponse[]> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: expenseFormApiConfig.getSubCategories,
     method: AllowedHttpMethods.get,
+    params: { categoryId },
   })
 
   const response = await useAxios(requestConfig)
