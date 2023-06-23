@@ -437,6 +437,9 @@ const productList = React.lazy(
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
+const ExpenseCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 const ProductSpecificationList = React.lazy(
@@ -1068,7 +1071,11 @@ const routes = [
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
   },
-
+  {
+    path: '/expenseCategory',
+    name: 'Expense Category',
+    component: ExpenseCategoryList,
+  },
   {
     path: '/assetList',
     name: 'Asset List',
