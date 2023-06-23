@@ -5,13 +5,8 @@ import Schedule from './Schedule'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 import { mockEmployeeProperties } from '../../../../test/data/IntervieDeatilsData'
 
-const result = new Date().toLocaleTimeString([], {
-  hour: 'numeric',
-  minute: '2-digit',
-})
+const mockChangeHandler = jest.fn()
 
-const startHour = result?.split(':')[0]
-const startMinutesDay = result?.split(':')[1]?.split(' ')[0]
 describe('Schedule component with data', () => {
   beforeEach(() => {
     render(<Schedule />, {
@@ -33,14 +28,6 @@ describe('Schedule component with data', () => {
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
 
-    // const startTimeHours = screen.getByTestId('hours')
-    // userEvent.type(startTimeHours, startHour)
-    // expect(startTimeHours).toHaveValue(startHour)
-
-    // const startTimeMinutes = screen.getByTestId('minutes')
-    // userEvent.type(startTimeMinutes, startMinutesDay)
-    // expect(startTimeMinutes).toHaveValue(startMinutesDay)
-
     const startTimeMeridian = screen.getByTestId('startTimeMeridian')
     userEvent.selectOptions(startTimeMeridian, ['AM'])
     expect(startTimeMeridian).toHaveValue('AM')
@@ -52,26 +39,6 @@ describe('Schedule component with data', () => {
     const comments = screen.getByTestId('text-area')
     userEvent.type(comments, 'testing')
     expect(comments).toHaveValue('testing')
-
-    const sendtoCandidate = screen.getByTestId(
-      'send-to-Candidate',
-    ) as HTMLInputElement
-    const sendtointerviewer = screen.getByTestId(
-      'send-to-interviewer',
-    ) as HTMLInputElement
-
-    const sendMessageToCandidate = screen.getByTestId(
-      'sendMessageToCandidate',
-    ) as HTMLInputElement
-    const sendMessageToInterviewer = screen.getByTestId(
-      'sendMessageToInterviewer',
-    ) as HTMLInputElement
-
-    expect(sendtoCandidate.checked).toBe(false)
-    expect(sendtointerviewer.checked).toBe(false)
-
-    expect(sendMessageToCandidate.checked).toBe(false)
-    expect(sendMessageToInterviewer.checked).toBe(false)
 
     const employeeNameInput = screen.getByPlaceholderText(
       'Type name here for auto fill',
@@ -87,5 +54,33 @@ describe('Schedule component with data', () => {
     userEvent.selectOptions(selectMode, [''])
     userEvent.type(comments, '')
     userEvent.type(employeeNameInput, '')
+  })
+  test('sendToCandidate checkbox testing', () => {
+    const sendToCandidate = screen.getByTestId(
+      'send-to-Candidate',
+    ) as HTMLInputElement
+    const sendToInterviewer = screen.getByTestId(
+      'send-to-interviewer',
+    ) as HTMLInputElement
+
+    expect(sendToCandidate.checked).toBe(false)
+    expect(sendToInterviewer.checked).toBe(false)
+
+    userEvent.click(sendToInterviewer)
+    expect(mockChangeHandler).toHaveBeenCalledTimes(0)
+  })
+  test('sendMessageToCandidate button testing', () => {
+    const sendMessageToCandidate = screen.getByTestId(
+      'sendMessageToCandidate',
+    ) as HTMLInputElement
+    const sendMessageToInterviewer = screen.getByTestId(
+      'sendMessageToInterviewer',
+    ) as HTMLInputElement
+
+    expect(sendMessageToCandidate.checked).toBe(false)
+    expect(sendMessageToInterviewer.checked).toBe(false)
+
+    userEvent.click(sendMessageToInterviewer)
+    expect(mockChangeHandler).toHaveBeenCalledTimes(0)
   })
 })

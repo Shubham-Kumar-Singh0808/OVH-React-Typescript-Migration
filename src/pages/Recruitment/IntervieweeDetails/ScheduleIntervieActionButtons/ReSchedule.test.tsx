@@ -4,13 +4,7 @@ import userEvent from '@testing-library/user-event'
 import ReSchedule from './ReSchedule'
 import { fireEvent, render, screen, waitFor } from '../../../../test/testUtils'
 
-const result = new Date().toLocaleTimeString([], {
-  hour: 'numeric',
-  minute: '2-digit',
-})
-
-const startHour = result?.split(':')[0]
-const startMinutesDay = result?.split(':')[1]?.split(' ')[0]
+const mockChangeHandler = jest.fn()
 describe('ReSchedule component with data', () => {
   beforeEach(() => {
     render(<ReSchedule />, {
@@ -27,14 +21,6 @@ describe('ReSchedule component with data', () => {
       }),
     )
     expect(datePickers[0]).toHaveValue('10/29/2019')
-
-    // const startTimeHours = screen.getByTestId('hours')
-    // userEvent.type(startTimeHours, startHour)
-    // expect(startTimeHours).toHaveValue('1')
-
-    // const startTimeMinutes = screen.getByTestId('minutes')
-    // userEvent.type(startTimeMinutes, startMinutesDay)
-    // expect(startTimeMinutes).toHaveValue('3838')
 
     const startTimeMeridian = screen.getByTestId('startTimeMeridian')
     userEvent.selectOptions(startTimeMeridian, ['AM'])
@@ -53,26 +39,6 @@ describe('ReSchedule component with data', () => {
     userEvent.type(comments, 'testing')
     expect(comments).toHaveValue('testing')
 
-    const sendtoCandidate = screen.getByTestId(
-      'rescheduleMailToCandidate',
-    ) as HTMLInputElement
-    const sendtointerviewer = screen.getByTestId(
-      'rescheduleSendMailToInterviewer',
-    ) as HTMLInputElement
-
-    const sendMessageToCandidate = screen.getByTestId(
-      'rescheduleSendMessageToCandidate',
-    ) as HTMLInputElement
-    const sendMessageToInterviewer = screen.getByTestId(
-      'sendMessageToInterviewer',
-    ) as HTMLInputElement
-
-    expect(sendtoCandidate.checked).toBe(false)
-    expect(sendtointerviewer.checked).toBe(false)
-
-    expect(sendMessageToCandidate.checked).toBe(false)
-    expect(sendMessageToInterviewer.checked).toBe(false)
-
     const createBtnElement = screen.getByRole('button', { name: 'Save' })
     expect(createBtnElement).toBeDisabled()
     userEvent.click(createBtnElement)
@@ -82,5 +48,33 @@ describe('ReSchedule component with data', () => {
     userEvent.selectOptions(selectMode, [''])
     userEvent.type(comments, '')
     userEvent.type(employeeNameInput, '')
+  })
+  test('rescheduleMailToCandidate checkbox testing', () => {
+    const rescheduleMailToCandidate = screen.getByTestId(
+      'rescheduleMailToCandidate',
+    ) as HTMLInputElement
+    const rescheduleSendMailToInterviewer = screen.getByTestId(
+      'rescheduleSendMailToInterviewer',
+    ) as HTMLInputElement
+
+    expect(rescheduleMailToCandidate.checked).toBe(false)
+    expect(rescheduleSendMailToInterviewer.checked).toBe(false)
+
+    userEvent.click(rescheduleSendMailToInterviewer)
+    expect(mockChangeHandler).toHaveBeenCalledTimes(0)
+  })
+  test('sendMessageToCandidate button testing', () => {
+    const sendMessageToCandidate = screen.getByTestId(
+      'sendMessageToInterviewer',
+    ) as HTMLInputElement
+    const sendMessageToInterviewer = screen.getByTestId(
+      'sendMessageToInterviewer',
+    ) as HTMLInputElement
+
+    expect(sendMessageToCandidate.checked).toBe(false)
+    expect(sendMessageToInterviewer.checked).toBe(false)
+
+    userEvent.click(sendMessageToInterviewer)
+    expect(mockChangeHandler).toHaveBeenCalledTimes(0)
   })
 })
