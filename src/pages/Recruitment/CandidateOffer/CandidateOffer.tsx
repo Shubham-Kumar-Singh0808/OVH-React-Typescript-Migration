@@ -82,7 +82,6 @@ const CandidateOffer = (): JSX.Element => {
   )
 
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
   const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
     File | undefined
   >(undefined)
@@ -104,18 +103,9 @@ const CandidateOffer = (): JSX.Element => {
       setUploadErrorText('Please choose doc or docx or pdf or zip. file')
       return
     }
-    setIsUploadBtnEnabled(true)
     setUploadErrorText('')
     setUploadFeedbackForm(file[0])
   }
-
-  useEffect(() => {
-    if (uploadFeedbackForm) {
-      setIsUploadBtnEnabled(true)
-    } else {
-      setIsUploadBtnEnabled(false)
-    }
-  })
 
   useEffect(() => {
     if (
@@ -131,14 +121,6 @@ const CandidateOffer = (): JSX.Element => {
       setIsAddButtonEnabled(false)
     }
   }, [candidateName, position, curruentCTC, employeeType, jobType])
-
-  const addFailedToastMessage = (
-    <OToast
-      toastMessage="Joinee already added."
-      toastColor="danger"
-      data-testid="failedToast"
-    />
-  )
 
   const handleAddCandidate = async () => {
     const technology = await dispatch(
@@ -185,7 +167,7 @@ const CandidateOffer = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="add new joinee successfully"
+            toastMessage="added new joinee successfully"
           />,
         ),
       )
