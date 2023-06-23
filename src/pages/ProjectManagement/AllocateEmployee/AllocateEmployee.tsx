@@ -31,6 +31,7 @@ import {
 import OToast from '../../../components/ReusableComponent/OToast'
 import { showIsRequired } from '../../../utils/helper'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
+import { dateFormat } from '../../../constant/DateFormat'
 
 const AllocateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -168,6 +169,16 @@ const AllocateEmployee = (): JSX.Element => {
   }, [fromDateValue, toDateValue])
 
   useEffect(() => {
+    const newDateFormatForIsBefore = 'YYYY-MM-DD'
+    const start = moment(fromDateValue, dateFormat).format(
+      newDateFormatForIsBefore,
+    )
+    const end = moment(toDateValue, dateFormat).format(newDateFormatForIsBefore)
+
+    setIsDateError(moment(end).isBefore(start))
+  }, [fromDateValue, toDateValue])
+
+  useEffect(() => {
     if (
       addEmployeeName?.length > 0 &&
       selectProject?.projectName &&
@@ -202,8 +213,6 @@ const AllocateEmployee = (): JSX.Element => {
       toastColor="danger"
     />
   )
-  console.log(toDateValue + 'toDateValue')
-  console.log(fromDateValue + 'fromDateValue')
 
   const postAllocateEmployee = () => {
     const finalObject = {
