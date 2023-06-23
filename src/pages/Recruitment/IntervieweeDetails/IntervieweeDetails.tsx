@@ -228,8 +228,11 @@ const IntervieweeDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end Schedule-Interview-action-buttons">
-          <CCol className="d-flex justify-content-end" md={12}>
+        <CRow className="justify-content-end ">
+          <CCol
+            className="d-flex justify-content-end Schedule-Interview-action-buttons"
+            md={12}
+          >
             {timeLineListSelector.candidateStatus === 'OFFERED' ||
             timeLineListSelector.candidateStatus === 'REJECTED' ||
             timeLineListSelector.candidateStatus === 'DID_NOT_JOIN' ? (
@@ -300,25 +303,20 @@ const IntervieweeDetails = (): JSX.Element => {
             ) : (
               <NoShow />
             )}
+            {timeLineListSelector.candidateStatus === 'REJECTED' ? (
+              <REPROCESS />
+            ) : (
+              ''
+            )}
+            <CButton
+              color="info"
+              className="btn-ovh me-1"
+              data-testid="back-button"
+              onClick={backBtnHandler}
+            >
+              <i className="fa fa-arrow-left  me-1"></i>Back
+            </CButton>
           </CCol>
-
-          <CRow className="justify-content-end">
-            <CCol className="text-end" md={4}>
-              <CButton
-                color="info"
-                className="btn-ovh me-1"
-                data-testid="back-button"
-                onClick={backBtnHandler}
-              >
-                <i className="fa fa-arrow-left  me-1"></i>Back
-              </CButton>
-              {timeLineListSelector.candidateStatus === 'REJECTED' ? (
-                <REPROCESS />
-              ) : (
-                ''
-              )}
-            </CCol>
-          </CRow>
           <CForm>
             <CRow className="mt-1 mb-0 align-items-center interview-name">
               <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">

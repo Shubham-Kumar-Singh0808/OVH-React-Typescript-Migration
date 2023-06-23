@@ -189,7 +189,7 @@ const CandidateOffer = (): JSX.Element => {
           />,
         ),
       )
-
+      window.location.href = '/upcomingjoinlist'
       // dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
