@@ -6,6 +6,7 @@ import {
   CRow,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import OModal from '../../../../components/ReusableComponent/OModal'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -20,6 +21,7 @@ const Offer = (): JSX.Element => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
+  const history = useHistory()
   const dispatch = useAppDispatch()
   useEffect(() => {
     if (offerComment?.replace(/^\s*/, '')) {
@@ -49,6 +51,7 @@ const Offer = (): JSX.Element => {
         ),
       )
       setIsOfferModalVisibility(false)
+      history.push(`/addnewjoinee/${timeLineListSelector.personId}`)
     } else if (
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus.rejected.match(
         noShowResultAction,
