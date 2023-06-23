@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CCol, CFormInput, CInputGroup, CRow } from '@coreui/react-pro'
 import ManufacturerListTable from './ManufacturerListTable'
+import AddManufacturerList from './AddManufacturer/AddManufacturerList'
+import EditManufacturerList from './EditManufacturer/EditManufacturerList'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { downloadFile } from '../../../utils/helper'
-import AddManufacturerList from '../AddManufacturer/AddManufacturerList'
-import EditManufacturerList from '../EditManufacturer/EditManufacturerList'
 import { ManufacturerDetails } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import ManufacturerApi from '../../../middleware/api/Assets/ManufacturerList/ManufacturerListApi'
 
@@ -18,6 +18,9 @@ const Manufacturer = (): JSX.Element => {
 
   const manufacturerListSize = useTypedSelector(
     reduxServices.ManufacturerList.selectors.listSize,
+  )
+  const Manufacturer = useTypedSelector(
+    reduxServices.ManufacturerList.selectors.manufacturerList,
   )
 
   const initialManufacturerList = {} as ManufacturerDetails
@@ -107,15 +110,19 @@ const Manufacturer = (): JSX.Element => {
               className="gap-2 d-md-flex justify-content-end mt-3 mb-3"
               data-testid="exportBtn"
             >
-              <CButton
-                color="info btn-ovh me-0"
-                className="btn btn-info btn-sm text-white me-3"
-                size="sm"
-                onClick={handleExportLeaveReportData}
-              >
-                <i className="fa fa-plus me-1"></i>
-                Click to Export
-              </CButton>
+              {Manufacturer.length > 0 ? (
+                <CButton
+                  color="info btn-ovh me-0"
+                  className="btn btn-info btn-sm text-white me-3"
+                  size="sm"
+                  onClick={handleExportLeaveReportData}
+                >
+                  <i className="fa fa-plus me-1"></i>
+                  Click to Export
+                </CButton>
+              ) : (
+                ''
+              )}
               {userAccess?.createaccess && (
                 <CButton
                   color="info btn-ovh me-0"
@@ -178,8 +185,6 @@ const Manufacturer = (): JSX.Element => {
           setToggle={setToggle}
           editManufacturerData={editManufacturerData}
           setEditManufacturerData={setEditManufacturerData}
-          // currentPage={currentPage}
-          // pageSize={pageSize}
         />
       )}
     </>

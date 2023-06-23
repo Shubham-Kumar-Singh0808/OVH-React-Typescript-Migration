@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import AddManuFactureFilterOptions from './AddManuFactureFilterOptions'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../stateStore'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch } from '../../../../stateStore'
 
 const AddManufacturerList = ({
   setToggle,

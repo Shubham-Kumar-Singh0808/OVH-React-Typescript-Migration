@@ -8,12 +8,12 @@ import {
   CForm,
   CFormInput,
 } from '@coreui/react-pro'
-import OCard from '../../../components/ReusableComponent/OCard'
-import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
-import { ManufacturerDetails } from '../../../types/Assets/ManufacturerList/ManufacturerType'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import { reduxServices } from '../../../reducers/reduxServices'
-import OToast from '../../../components/ReusableComponent/OToast'
+import OCard from '../../../../components/ReusableComponent/OCard'
+import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
+import { ManufacturerDetails } from '../../../../types/Assets/ManufacturerList/ManufacturerType'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const EditManufacturerList = ({
   setToggle,

@@ -3,9 +3,9 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import AddManuFactureFilterOptions from './AddManuFactureFilterOptions'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { fireEvent, render, screen } from '../../../test/testUtils'
-import { mockManufactureGetLookup } from '../../../test/data/EditManufacturerMockData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
+import { mockManufactureGetLookup } from '../../../../test/data/EditManufacturerMockData'
 
 const mockSetTogglePage = jest.fn()
 

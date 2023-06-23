@@ -2,8 +2,8 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddManufacturerList from './AddManufacturerList'
-import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { fireEvent, render, screen } from '../../../test/testUtils'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
 
 describe('Manufracturer List without data', () => {
   beforeEach(() => {

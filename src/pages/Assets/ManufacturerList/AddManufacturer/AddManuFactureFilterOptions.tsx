@@ -8,10 +8,10 @@ import {
   CFormInput,
 } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
-import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import OToast from '../../../components/ReusableComponent/OToast'
+import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const AddManuFactureFilterOptions = ({
   setToggle,
