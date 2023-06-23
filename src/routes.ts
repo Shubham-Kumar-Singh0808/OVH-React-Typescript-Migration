@@ -437,11 +437,29 @@ const productList = React.lazy(
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
+const ExpenseCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+)
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
 )
 const InterviewStatusReport = React.lazy(
   () =>
@@ -1052,7 +1070,11 @@ const routes = [
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
   },
-
+  {
+    path: '/expenseCategory',
+    name: 'Expense Category',
+    component: ExpenseCategoryList,
+  },
   {
     path: '/assetList',
     name: 'Asset List',
@@ -1062,6 +1084,21 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
   },
   {
     path: '/interviewstatusReport',
