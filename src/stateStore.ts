@@ -136,6 +136,8 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
+import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import changeStatusReducer from './reducers/Assets/AssetList/ChangeStatus/ChangeStatusSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
@@ -279,6 +281,8 @@ export const allReducers = {
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
+  categoryList: categoryListReducer,
+  addNewCategory: addNewExpenseCategoryReducer,
   assetList: assetListReducer,
   changeStatus: changeStatusReducer,
   productSpecificationList: productSpecificationListReducer,

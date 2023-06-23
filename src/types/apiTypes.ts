@@ -869,6 +869,11 @@ export interface IntervieweeDetailsApi extends ApiBase {
   updateCandidateInterviewStatus: string
   empScheduleInterviewDetails: string
   updateInterview: string
+  getAllEmployeeDetails: string
+  interviewRoundCount: string
+  reScheduleInterview: string
+  scheduleInterview: string
+  sendRejectedMessagetoCandidate: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string
@@ -925,6 +930,14 @@ export interface VendorListApi extends ApiBase {
 export interface ChangeAssetStatusReportApi extends ApiBase {
   saveEmployee: string
   getAllAssets: string
+}
+export interface CategoryListApi extends ApiBase {
+  getCategoryList: string
+  addCategory: string
+  checkForDuplicateCategory: string
+  editCategory: string
+  updateCategory: string
+  deleteCategory: string
 }
 export interface ProductSpecificationListApi extends ApiBase {
   getAllProductSpecifications: string

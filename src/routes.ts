@@ -437,17 +437,15 @@ const productList = React.lazy(
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
+const ExpenseCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
-<<<<<<< HEAD
-// const AddVendorList = React.lazy(
-//   () => import('./pages/Assets/AssetList/ChangeAssetStatus/Testing'),
-// )
-=======
 const InterviewStatusReport = React.lazy(
   () =>
     import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
@@ -459,7 +457,7 @@ const AddNewCandidate = React.lazy(
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
->>>>>>> develop
+
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1058,7 +1056,11 @@ const routes = [
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
   },
-
+  {
+    path: '/expenseCategory',
+    name: 'Expense Category',
+    component: ExpenseCategoryList,
+  },
   {
     path: '/assetList',
     name: 'Asset List',
@@ -1069,13 +1071,6 @@ const routes = [
     name: 'Product Specification List',
     component: ProductSpecificationList,
   },
-<<<<<<< HEAD
-  // {
-  //   path: '/vendorList?vendorListFlag=ADDVENDOR',
-  //   name: 'Add vendorList',
-  //   component: AddVendorList,
-  // },
-=======
   {
     path: '/interviewstatusReport',
     name: 'Interview Status Report',
@@ -1091,6 +1086,5 @@ const routes = [
     name: 'UpComing Join List',
     component: UpComingJoinList,
   },
->>>>>>> develop
 ]
 export default routes

@@ -126,6 +126,8 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
+import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
+import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { changeStatusService } from './Assets/AssetList/ChangeStatus/ChangeStatusSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
@@ -265,6 +267,8 @@ export const reduxServices = {
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
   changeStatus: changeStatusService,
+  categoryList: categoryListService,
+  addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
