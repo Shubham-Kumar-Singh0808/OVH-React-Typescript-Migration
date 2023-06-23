@@ -5,8 +5,13 @@ import {
   MyReviewFormStatus,
   MyReviewButtonsProps,
 } from '../../../../../types/Performance/MyReview/myReviewTypes'
-import { useTypedSelector } from '../../../../../stateStore'
-import { generateMyReviewTestId } from '../../MyReviewHelpers'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
+import {
+  generateMyReviewTestId,
+  isAnyKPIIncompleteForManager,
+} from '../../MyReviewHelpers'
+import OToast from '../../../../../components/ReusableComponent/OToast'
+import { reduxServices } from '../../../../../reducers/reduxServices'
 
 /* This component is rendered for the manager when he/she is submitting the
   form for the first time...
@@ -16,6 +21,7 @@ const InitialManagerButtons = ({
   saveButtonApiCall,
   submitButtonHandler,
 }: MyReviewButtonsProps): JSX.Element => {
+  const dispatch = useAppDispatch()
   const finalAppraisalForm = useTypedSelector(
     (state) => state.myReview.appraisalForm,
   )
@@ -28,6 +34,20 @@ const InitialManagerButtons = ({
 
   const saveButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    const [isKpiIncomplete, incompleteKpiName] = isAnyKPIIncompleteForManager(
+      finalAppraisalForm.kra,
+    )
+    if (isKpiIncomplete) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage={`Please enter at least 50 characters for this KPI: ${incompleteKpiName}`}
+          />,
+        ),
+      )
+      return
+    }
     const finalData: IncomingMyReviewAppraisalForm = {
       ...finalAppraisalForm,
       formStatus: MyReviewFormStatus.pending.toString(),

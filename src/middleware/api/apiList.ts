@@ -119,8 +119,10 @@ import {
   AssetWarrantyReportApi,
   AssetListApi,
   ProductSpecificationListApi,
+  ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   CandidateOfferApi,
+  InterviewStatusReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -228,6 +230,10 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
 export const profileHistoryConfig: ProfileHistoryApi = {
   getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
 }
+export const profileRecruitmentHistoryApiConfig: ProfileRecruitmentHistoryApi =
+  {
+    getEmployeeHistory: apiPrefix + '/Employee/getEmployeeHistory',
+  }
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
@@ -1063,6 +1069,12 @@ export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
   empScheduleInterviewDetails:
     apiPrefix + '/jobapplicant/empScheduleInterviewDetails',
   updateInterview: apiPrefix + '/jobapplicant/jobAdmin/updateInterview',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  interviewRoundCount: apiPrefix + '/jobapplicant/interviewRoundCount',
+  reScheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/reScheduleInterview',
+  scheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/scheduleInterview',
+  sendRejectedMessagetoCandidate:
+    apiPrefix + '/jobapplicant/sendRejectedMessagetoCandidate',
 }
 export const CandidateListApiConfig: CandidateListApi = {
   searchScheduledCandidate:
@@ -1080,6 +1092,8 @@ export const CandidateListApiConfig: CandidateListApi = {
   getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
   addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
   uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
+  addTechnology: apiPrefix + '/jobapplicant/addtechnology',
+  deleteTechnology: apiPrefix + '/jobapplicant/deleteTechnology',
 }
 
 export const GetAssetListConfig: AssetListApi = {
@@ -1117,4 +1131,14 @@ export const getCandidateOfferConfig: CandidateOfferApi = {
   getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
   getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getUploadFileForNewJoinee: '/jobapplicant/uploadFileForNewJoinee',
+}
+export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
+  getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getInterviewStatusReport:
+    apiPrefix + '/jobapplicant/jobAdmin/interviewStatusReport',
+  exportInterviewStatusReport:
+    apiPrefix + '/jobapplicant/exportInterviewStatusReport',
+  exportInterviewerDetails:
+    apiPrefix + '/jobapplicant/exportInterviewerDetails',
 }

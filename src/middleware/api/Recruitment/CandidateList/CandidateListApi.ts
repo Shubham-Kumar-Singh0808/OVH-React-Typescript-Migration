@@ -170,6 +170,30 @@ const uploadCandidateResume = async (
   return response.data
 }
 
+const addTechnology = async (technology: string): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.addTechnology,
+    method: AllowedHttpMethods.post,
+    params: {
+      technology,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const deleteTechnology = async (technologyId: number): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.deleteTechnology,
+    method: AllowedHttpMethods.get,
+    params: {
+      technologyId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
@@ -183,6 +207,8 @@ const candidateListApi = {
   getAllCompaniesData,
   addNewCandidate,
   uploadCandidateResume,
+  addTechnology,
+  deleteTechnology,
 }
 
 export default candidateListApi

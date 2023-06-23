@@ -438,9 +438,26 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
+)
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
 )
 const AddNewCandidate = React.lazy(
   () =>
@@ -1061,6 +1078,21 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
   },
   {
     path: '/addNewCandidate',

@@ -283,7 +283,134 @@ const CreateNewTicketFilterOptions = ({
       })
     }
   }
-
+  const startValue = startDate
+    ? new Date(startDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  const endValue = endDate
+    ? new Date(endDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: 'numeric',
+        day: '2-digit',
+      })
+    : ''
+  const ResultValue =
+    Result1[0]?.mealType === true ? (
+      <CRow className="mt-3">
+        <CFormLabel className="col-sm-2 col-form-label text-end">
+          Date :
+          <span className={selectMealDate ? TextWhite : TextDanger}>*</span>
+        </CFormLabel>
+        <CCol sm={3}>
+          <ReactDatePicker
+            id="selectMealDate"
+            className="form-control form-control-sm sh-date-picker"
+            showMonthDropdown
+            showYearDropdown
+            autoComplete="off"
+            dropdownMode="select"
+            dateFormat="dd/mm/yy"
+            placeholderText="dd/mm/yyyy"
+            name="selectMealDate"
+            value={selectMealDate}
+            minDate={new Date()}
+            maxDate={disableAfterDate}
+            onChange={(date: Date) => onHandleStartDatePicker(date)}
+          />
+        </CCol>
+      </CRow>
+    ) : (
+      ''
+    )
+  const ResultValueMealType =
+    Result1[0]?.mealType === true ? (
+      <CRow className="mt-4 mb-4">
+        <CFormLabel className="col-sm-2 col-form-label text-end">
+          Add Members:
+        </CFormLabel>
+        <CCol sm={3}>
+          <Multiselect
+            className="ovh-multiselect"
+            data-testid="employee-option"
+            options={allEmployeeProfiles?.map((employee) => employee) || []}
+            displayValue="fullName"
+            placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
+            selectedValues={addEmployeeName}
+            onSelect={(list: GetAllEmployeesNames[]) => handleMultiSelect(list)}
+            onRemove={(selectedList: GetAllEmployeesNames[]) =>
+              handleOnRemoveSelectedOption(selectedList)
+            }
+          />
+        </CCol>
+      </CRow>
+    ) : (
+      ''
+    )
+  const ResultValueMealDatePicker =
+    Result1[0]?.mealType === true ? (
+      ''
+    ) : (
+      <>
+        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+          <CFormLabel className="col-sm-2 col-form-label text-end">
+            Start Date :
+          </CFormLabel>
+          <CCol sm={3}>
+            <ReactDatePicker
+              id="fromDate"
+              data-testid="dateOptionSelect"
+              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              showMonthDropdown
+              showYearDropdown
+              minDate={new Date()}
+              dropdownMode="select"
+              dateFormat="dd/mm/yy"
+              autoComplete="off"
+              placeholderText="dd/mm/yy"
+              name="fromDate"
+              value={startValue}
+              onChange={(date: Date) =>
+                setStartDate(moment(date).format(commonFormatDate))
+              }
+            />
+          </CCol>
+        </CRow>
+        <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
+          <CFormLabel className="col-sm-2 col-form-label text-end">
+            End Date :
+          </CFormLabel>
+          <CCol sm={3}>
+            <ReactDatePicker
+              id="toDate"
+              data-testid="dateOptionSelect"
+              className="form-control form-control-sm sh-date-picker sh-leave-form-control"
+              showMonthDropdown
+              showYearDropdown
+              minDate={new Date()}
+              dropdownMode="select"
+              autoComplete="off"
+              dateFormat="dd/mm/yy"
+              placeholderText="dd/mm/yy"
+              name="toDate"
+              value={endValue}
+              onChange={(date: Date) =>
+                setEndDate(moment(date).format(commonFormatDate))
+              }
+            />
+            {dateError && (
+              <CCol>
+                <span className="text-danger" data-testid="errorMessage">
+                  Access end date should be greater than access start date
+                </span>
+              </CCol>
+            )}
+          </CCol>
+        </CRow>
+      </>
+    )
   return (
     <>
       {!loading ? (
@@ -423,83 +550,7 @@ const CreateNewTicketFilterOptions = ({
               </CFormSelect>
             </CCol>
           </CRow>
-          {Result1[0]?.mealType === true ? (
-            ''
-          ) : (
-            <>
-              <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-                <CFormLabel className="col-sm-2 col-form-label text-end">
-                  Start Date :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <ReactDatePicker
-                    id="fromDate"
-                    data-testid="dateOptionSelect"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    showMonthDropdown
-                    showYearDropdown
-                    minDate={new Date()}
-                    dropdownMode="select"
-                    dateFormat="dd/mm/yy"
-                    autoComplete="off"
-                    placeholderText="dd/mm/yy"
-                    name="fromDate"
-                    value={
-                      startDate
-                        ? new Date(startDate).toLocaleDateString(deviceLocale, {
-                            year: 'numeric',
-                            month: 'numeric',
-                            day: '2-digit',
-                          })
-                        : ''
-                    }
-                    onChange={(date: Date) =>
-                      setStartDate(moment(date).format(commonFormatDate))
-                    }
-                  />
-                </CCol>
-              </CRow>
-              <CRow className="mt-4 mb-4" data-testid="dateOfBirthInput">
-                <CFormLabel className="col-sm-2 col-form-label text-end">
-                  End Date :
-                </CFormLabel>
-                <CCol sm={3}>
-                  <ReactDatePicker
-                    id="toDate"
-                    data-testid="dateOptionSelect"
-                    className="form-control form-control-sm sh-date-picker sh-leave-form-control"
-                    showMonthDropdown
-                    showYearDropdown
-                    minDate={new Date()}
-                    dropdownMode="select"
-                    autoComplete="off"
-                    dateFormat="dd/mm/yy"
-                    placeholderText="dd/mm/yy"
-                    name="toDate"
-                    value={
-                      endDate
-                        ? new Date(endDate).toLocaleDateString(deviceLocale, {
-                            year: 'numeric',
-                            month: 'numeric',
-                            day: '2-digit',
-                          })
-                        : ''
-                    }
-                    onChange={(date: Date) =>
-                      setEndDate(moment(date).format(commonFormatDate))
-                    }
-                  />
-                  {dateError && (
-                    <CCol>
-                      <span className="text-danger" data-testid="errorMessage">
-                        Access end date should be greater than access start date
-                      </span>
-                    </CCol>
-                  )}
-                </CCol>
-              </CRow>
-            </>
-          )}
+          {ResultValueMealDatePicker}
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Subject :
@@ -548,35 +599,7 @@ const CreateNewTicketFilterOptions = ({
               ''
             )}
           </CRow>
-          {Result1[0]?.mealType === true ? (
-            <CRow className="mt-3">
-              <CFormLabel className="col-sm-2 col-form-label text-end">
-                Date :
-                <span className={selectMealDate ? TextWhite : TextDanger}>
-                  *
-                </span>
-              </CFormLabel>
-              <CCol sm={3}>
-                <ReactDatePicker
-                  id="selectMealDate"
-                  className="form-control form-control-sm sh-date-picker"
-                  showMonthDropdown
-                  showYearDropdown
-                  autoComplete="off"
-                  dropdownMode="select"
-                  dateFormat="dd/mm/yy"
-                  placeholderText="dd/mm/yyyy"
-                  name="selectMealDate"
-                  value={selectMealDate}
-                  minDate={new Date()}
-                  maxDate={disableAfterDate}
-                  onChange={(date: Date) => onHandleStartDatePicker(date)}
-                />
-              </CCol>
-            </CRow>
-          ) : (
-            ''
-          )}
+          {ResultValue}
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Priority :
@@ -600,33 +623,8 @@ const CreateNewTicketFilterOptions = ({
               </CFormSelect>
             </CCol>
           </CRow>
-          {Result1[0]?.mealType === true ? (
-            <CRow className="mt-4 mb-4">
-              <CFormLabel className="col-sm-2 col-form-label text-end">
-                Add Members:
-              </CFormLabel>
-              <CCol sm={3}>
-                <Multiselect
-                  className="ovh-multiselect"
-                  data-testid="employee-option"
-                  options={
-                    allEmployeeProfiles?.map((employee) => employee) || []
-                  }
-                  displayValue="fullName"
-                  placeholder={addEmployeeName?.length ? '' : 'Employees Name'}
-                  selectedValues={addEmployeeName}
-                  onSelect={(list: GetAllEmployeesNames[]) =>
-                    handleMultiSelect(list)
-                  }
-                  onRemove={(selectedList: GetAllEmployeesNames[]) =>
-                    handleOnRemoveSelectedOption(selectedList)
-                  }
-                />
-              </CCol>
-            </CRow>
-          ) : (
-            ''
-          )}
+
+          {ResultValueMealType}
           <CRow className="mt-4 mb-4">
             <CFormLabel className="col-sm-2 col-form-label text-end">
               Files :

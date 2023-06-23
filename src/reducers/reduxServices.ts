@@ -128,9 +128,11 @@ import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWa
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
+import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const reduxServices = {
   app: appService,
@@ -263,7 +265,9 @@ export const reduxServices = {
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
   productSpecificationList: productSpecificationListService,
+  recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   addNewCandidate: candidateOfferService,
   upComingJoinList: upComingJoiningListService,
+  interviewStatusReport: interviewStatusReportServices,
 }

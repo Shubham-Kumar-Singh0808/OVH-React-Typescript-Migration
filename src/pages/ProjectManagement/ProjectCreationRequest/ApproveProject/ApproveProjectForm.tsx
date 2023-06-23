@@ -373,6 +373,46 @@ const ApproveProjectForm = (): JSX.Element => {
     ) {
       dispatch(reduxServices.app.actions.addToast(ToastElement))
       history.push('/projectreport')
+      setApproveProject({
+        id: 0,
+        projectName: '',
+        managerId: 0,
+        startdate: '',
+        enddate: '',
+        description: '',
+        requiredResources: '',
+        status: '',
+        managerName: '',
+        client: '',
+        type: '',
+        clientId: '',
+        newClient: '',
+        requestedBy: '',
+        technology: '',
+        address: '',
+        personName: null,
+        email: '',
+        country: '',
+        organization: null,
+        intrnalOrNot: true,
+        cc: '',
+        bcc: '',
+        model: '',
+        checkListExist: true,
+        projectContactPerson: '',
+        projectContactEmail: '',
+        billingContactPerson: '',
+        billingContactPersonEmail: '',
+        projectRequestId: 0,
+        projectRequestMilestoneDTO: [],
+        platform: '',
+        domain: '',
+        health: '',
+      })
+      setMileStone([])
+      setProjectName('')
+      setProjectManager('')
+      setShowTotalEffort(0)
     }
   }
 
