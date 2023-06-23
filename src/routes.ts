@@ -443,6 +443,18 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
+)
 const InterviewStatusReport = React.lazy(
   () =>
     import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
@@ -1066,6 +1078,16 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
   },
   {
     path: '/interviewstatusReport',
