@@ -136,12 +136,15 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
+import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
 import expenseFormReducer from './reducers/ExpenseManagement/ExpenseForm/expenseFormSlice'
+import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -278,12 +281,15 @@ export const allReducers = {
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
+  categoryList: categoryListReducer,
+  addNewCategory: addNewExpenseCategoryReducer,
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
   recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
   upComingJoinList: upComingJoinListReducer,
   expenseForm: expenseFormReducer,
+  interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

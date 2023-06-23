@@ -45,7 +45,7 @@ describe('candidate List without data', () => {
   test('should select selectTechnology Name', () => {
     const selectTechnology = screen.getByTestId('selectTechnology')
     userEvent.selectOptions(selectTechnology, ['ReactJs'])
-    expect(selectTechnology).toHaveValue('53')
+    expect(selectTechnology).toHaveValue('ReactJs')
   })
   test('should select selectCountry Name', () => {
     const selectCountry = screen.getByTestId('selectCountry')

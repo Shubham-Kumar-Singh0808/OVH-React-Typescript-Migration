@@ -1,8 +1,13 @@
 import { CButton } from '@coreui/react-pro'
 import React from 'react'
-import { useTypedSelector } from '../../../../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import { MyReviewButtonsProps } from '../../../../../types/Performance/MyReview/myReviewTypes'
-import { generateMyReviewTestId } from '../../MyReviewHelpers'
+import {
+  generateMyReviewTestId,
+  isAnyKPIIncompleteForEmployee,
+} from '../../MyReviewHelpers'
+import { reduxServices } from '../../../../../reducers/reduxServices'
+import OToast from '../../../../../components/ReusableComponent/OToast'
 
 /* These buttons are shown to the employee when he/she is submitted the form initially */
 
@@ -10,6 +15,7 @@ const InitialEmployeeButtons = ({
   saveButtonApiCall,
   submitButtonHandler,
 }: MyReviewButtonsProps): JSX.Element => {
+  const dispatch = useAppDispatch()
   const isSubmitButtonEnabled = useTypedSelector(
     (state) => state.myReview.isEmployeeSubmitButtonEnabled,
   )
@@ -20,6 +26,20 @@ const InitialEmployeeButtons = ({
   // click action for save button in the myReview Form
   const saveButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    const [isKpiIncomplete, incompleteKpiName] = isAnyKPIIncompleteForEmployee(
+      finalAppraisalForm.kra,
+    )
+    if (isKpiIncomplete) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage={`Please enter at least 50 characters for this KPI: ${incompleteKpiName}`}
+          />,
+        ),
+      )
+      return
+    }
     saveButtonApiCall(finalAppraisalForm)
   }
 
