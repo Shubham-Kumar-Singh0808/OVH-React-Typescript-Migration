@@ -39,4 +39,9 @@ describe('Job Openings without data', () => {
     userEvent.click(backButtonElement)
     expect(mockSetTogglePage).toHaveBeenCalledTimes(0)
   })
+  test('should be able to click edit button element', () => {
+    const deleteBtnElement = screen.getByTestId('edit-button')
+    expect(deleteBtnElement).toBeInTheDocument()
+    userEvent.click(deleteBtnElement)
+  })
 })

@@ -158,7 +158,7 @@ const EditJobInformation = ({
             Job Code:
             <span
               className={
-                editViewJobInfoData.jobCode ? 'text-white' : 'text-danger'
+                editViewJobInfoData?.jobCode ? 'text-white' : 'text-danger'
               }
             >
               *
@@ -174,7 +174,7 @@ const EditJobInformation = ({
               name="jobCode"
               autoComplete="off"
               placeholder="Job Code"
-              value={editViewJobInfoData.jobCode}
+              value={editViewJobInfoData?.jobCode}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -187,7 +187,7 @@ const EditJobInformation = ({
             Job Title:
             <span
               className={
-                editViewJobInfoData.positionVacant ? TextWhite : TextDanger
+                editViewJobInfoData?.positionVacant ? TextWhite : TextDanger
               }
             >
               *
@@ -203,7 +203,7 @@ const EditJobInformation = ({
               name="positionVacant"
               autoComplete="off"
               placeholder="Title"
-              value={editViewJobInfoData.positionVacant}
+              value={editViewJobInfoData?.positionVacant}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -217,7 +217,7 @@ const EditJobInformation = ({
             No. of Openings:
             <span
               className={
-                editViewJobInfoData.noOfRequirements ? TextWhite : TextDanger
+                editViewJobInfoData?.noOfRequirements ? TextWhite : TextDanger
               }
             >
               *
@@ -233,7 +233,7 @@ const EditJobInformation = ({
               name="noOfRequirements"
               autoComplete="off"
               placeholder="No of Openings"
-              value={editViewJobInfoData.noOfRequirements}
+              value={editViewJobInfoData?.noOfRequirements}
               maxLength={5}
               onChange={onChangeInputHandler}
             />
@@ -248,7 +248,7 @@ const EditJobInformation = ({
             Experience:
             <span
               className={
-                editViewJobInfoData.minimumExperience ? TextWhite : TextDanger
+                editViewJobInfoData?.minimumExperience ? TextWhite : TextDanger
               }
             >
               *
@@ -265,7 +265,7 @@ const EditJobInformation = ({
               autoComplete="off"
               placeholder="Experience"
               maxLength={11}
-              value={editViewJobInfoData.minimumExperience}
+              value={editViewJobInfoData?.minimumExperience}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -302,7 +302,7 @@ const EditJobInformation = ({
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={editViewJobInfoData.description || ''}
+                initData={editViewJobInfoData?.description || ''}
                 data-testid="allocateEmployeeComment"
                 config={ckeditorConfig}
                 debug={true}
@@ -322,7 +322,7 @@ const EditJobInformation = ({
           >
             Status:
             <span
-              className={editViewJobInfoData.status ? TextWhite : TextDanger}
+              className={editViewJobInfoData?.status ? TextWhite : TextDanger}
             >
               *
             </span>
@@ -334,7 +334,7 @@ const EditJobInformation = ({
               id="status"
               data-testid="Status"
               name="status"
-              value={editViewJobInfoData.status}
+              value={editViewJobInfoData?.status}
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Status</option>
