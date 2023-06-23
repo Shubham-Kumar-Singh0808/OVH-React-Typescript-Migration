@@ -10,6 +10,8 @@ import { ckeditorConfig } from '../../../../../utils/ckEditorUtils'
 import { reduxServices } from '../../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
 import OToast from '../../../../../components/ReusableComponent/OToast'
+import OLoadingSpinner from '../../../../../components/ReusableComponent/OLoadingSpinner'
+import { LoadingType } from '../../../../../types/Components/loadingScreenTypes'
 
 const AddProjectStatus = ({
   setToggle,
@@ -24,6 +26,8 @@ const AddProjectStatus = ({
   const [dateError, setDateError] = useState<boolean>(false)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [errorMessageCount, setErrorMessageCount] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
+
   const commonFormatDate = 'l'
   const dispatch = useAppDispatch()
   const getProjectDetail = useTypedSelector(
@@ -77,6 +81,7 @@ const AddProjectStatus = ({
         addProjectStatusReportResultAction,
       )
     ) {
+      setLoading(false)
       setToggle('')
       dispatch(dispatch(reduxServices.app.actions.addToast(toastElement)))
       dispatch(
@@ -96,6 +101,7 @@ const AddProjectStatus = ({
   )
 
   const allocateButtonHandler = () => {
+    setLoading(true)
     const tempAllocationDate = new Date(
       moment(currentWeekDate).format(commonFormatDate),
     )
@@ -163,160 +169,165 @@ const AddProjectStatus = ({
       setIsAddButtonEnabled(false)
     }
   }, [currentWeekDate, currentWeekStatus, nextWeekDate, nextWeekStatus])
+
+  const fromDateValue = nextWeekDate
+    ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
+  const toDateValue = currentWeekDate
+    ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      })
+    : ''
   return (
     <>
-      <CRow className="justify-content-end">
-        <CCol className="text-end" md={4}>
-          <CButton
-            color="info"
-            className="btn-ovh me-4 add-project-back-btn"
-            data-testid="back-btn"
-            onClick={() => setToggle('')}
-          >
-            <i className="fa fa-arrow-left  me-1"></i>Back
-          </CButton>
-        </CCol>
-      </CRow>
-      <CForm>
-        <CRow className="mt-2 mb-4">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
-            Current Week Date :
-          </CFormLabel>
-          <CCol sm={3}>
-            <DatePicker
-              id="fromDate"
-              data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker"
-              showMonthDropdown
-              showYearDropdown
-              autoComplete="off"
-              dropdownMode="select"
-              dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yyyy"
-              name="fromDate"
-              value={
-                currentWeekDate
-                  ? new Date(currentWeekDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setCurrentWeekDate(moment(date).format(commonFormatDate))
-              }
-            />
-          </CCol>
-        </CRow>
-        <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
-            Current Week Status:
-          </CFormLabel>
-          <CCol sm={12} data-testid="ckEditor-component">
-            {showEditor ? (
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={currentWeekStatus}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleCurrentWeekStatus(editor.getData().trim())
-                }}
-              />
-            ) : (
-              ''
-            )}
-          </CCol>
-        </CRow>
-        <CRow className="mt-4 mb-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
-            Next Week Date:
-          </CFormLabel>
-          <CCol sm={3}>
-            <DatePicker
-              id="fromDate"
-              data-testid="leaveApplyFromDate"
-              className="form-control form-control-sm sh-date-picker"
-              showMonthDropdown
-              showYearDropdown
-              autoComplete="off"
-              dropdownMode="select"
-              dateFormat="dd/mm/yy"
-              placeholderText="dd/mm/yyyy"
-              name="fromDate"
-              value={
-                nextWeekDate
-                  ? new Date(nextWeekDate).toLocaleDateString(deviceLocale, {
-                      year: 'numeric',
-                      month: '2-digit',
-                      day: '2-digit',
-                    })
-                  : ''
-              }
-              onChange={(date: Date) =>
-                setNextWeekDate(moment(date).format(commonFormatDate))
-              }
-            />
-          </CCol>
-        </CRow>
-        {dateError && (
-          <CRow className="mt-2">
-            <CCol sm={{ span: 9, offset: 3 }}>
-              <span className="text-danger" data-testid="errorMessage">
-                <b>
-                  Next week date should be greater than current week date and
-                  should be after one week from current week date
-                </b>
-              </span>
+      {!loading ? (
+        <>
+          <CRow className="justify-content-end">
+            <CCol className="text-end" md={4}>
+              <CButton
+                color="info"
+                className="btn-ovh me-4 add-project-back-btn"
+                data-testid="back-btn"
+                onClick={() => setToggle('')}
+              >
+                <i className="fa fa-arrow-left  me-1"></i>Back
+              </CButton>
             </CCol>
           </CRow>
-        )}
-        <CRow className="mt-3">
-          <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
-            Next Week Status:{' '}
-          </CFormLabel>
-          <CCol sm={12} data-testid="ckEditor-component">
-            {showEditor ? (
-              <CKEditor<{
-                onChange: CKEditorEventHandler<'change'>
-              }>
-                initData={nextWeekStatus}
-                config={ckeditorConfig}
-                debug={true}
-                onChange={({ editor }) => {
-                  handleNextWeekStatus(editor.getData().trim())
-                }}
-              />
-            ) : (
-              ''
+          <CForm>
+            <CRow className="mt-2 mb-4">
+              <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
+                Current Week Date :
+              </CFormLabel>
+              <CCol sm={3}>
+                <DatePicker
+                  id="fromDate"
+                  data-testid="leaveApplyFromDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  showMonthDropdown
+                  showYearDropdown
+                  autoComplete="off"
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yyyy"
+                  name="fromDate"
+                  value={toDateValue}
+                  onChange={(date: Date) =>
+                    setCurrentWeekDate(moment(date).format(commonFormatDate))
+                  }
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
+                Current Week Status:
+              </CFormLabel>
+              <CCol sm={12} data-testid="ckEditor-component">
+                {showEditor ? (
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={currentWeekStatus}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleCurrentWeekStatus(editor.getData().trim())
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </CCol>
+            </CRow>
+            <CRow className="mt-4 mb-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end mt-1">
+                Next Week Date:
+              </CFormLabel>
+              <CCol sm={3}>
+                <DatePicker
+                  id="fromDate"
+                  data-testid="leaveApplyFromDate"
+                  className="form-control form-control-sm sh-date-picker"
+                  showMonthDropdown
+                  showYearDropdown
+                  autoComplete="off"
+                  dropdownMode="select"
+                  dateFormat="dd/mm/yy"
+                  placeholderText="dd/mm/yyyy"
+                  name="fromDate"
+                  value={fromDateValue}
+                  onChange={(date: Date) =>
+                    setNextWeekDate(moment(date).format(commonFormatDate))
+                  }
+                />
+              </CCol>
+            </CRow>
+            {dateError && (
+              <CRow className="mt-2">
+                <CCol sm={{ span: 9, offset: 3 }}>
+                  <span className="text-danger" data-testid="errorMessage">
+                    <b>
+                      Next week date should be greater than current week date
+                      and should be after one week from current week date
+                    </b>
+                  </span>
+                </CCol>
+              </CRow>
             )}
-          </CCol>
-        </CRow>
-        <CRow className="mt-3">
-          <CCol md={{ span: 6, offset: 3 }}>
-            <>
-              <CButton
-                className="btn-ovh me-1"
-                color="success"
-                onClick={allocateButtonHandler}
-                disabled={!isAddButtonEnabled}
-              >
-                Add
-              </CButton>
-              <CButton
-                color="warning "
-                className="btn-ovh"
-                data-testid="clear-btn"
-                onClick={clearBtnHandler}
-              >
-                Clear
-              </CButton>
-            </>
-          </CCol>
-        </CRow>
-      </CForm>
+            <CRow className="mt-3">
+              <CFormLabel className="col-sm-3 col-form-label text-end mb-3">
+                Next Week Status:{' '}
+              </CFormLabel>
+              <CCol sm={12} data-testid="ckEditor-component">
+                {showEditor ? (
+                  <CKEditor<{
+                    onChange: CKEditorEventHandler<'change'>
+                  }>
+                    initData={nextWeekStatus}
+                    config={ckeditorConfig}
+                    debug={true}
+                    onChange={({ editor }) => {
+                      handleNextWeekStatus(editor.getData().trim())
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </CCol>
+            </CRow>
+            <CRow className="mt-3">
+              <CCol md={{ span: 6, offset: 3 }}>
+                <>
+                  <CButton
+                    className="btn-ovh me-1"
+                    color="success"
+                    onClick={allocateButtonHandler}
+                    disabled={!isAddButtonEnabled}
+                  >
+                    Add
+                  </CButton>
+                  <CButton
+                    color="warning "
+                    className="btn-ovh"
+                    data-testid="clear-btn"
+                    onClick={clearBtnHandler}
+                  >
+                    Clear
+                  </CButton>
+                </>
+              </CCol>
+            </CRow>
+          </CForm>
+        </>
+      ) : (
+        <OLoadingSpinner type={LoadingType.PAGE} />
+      )}
     </>
   )
 }

@@ -45,8 +45,6 @@ const AddAssetList = ({
   const [warrantyStartDate, setWarrantyStartDate] = useState<string>()
   const [warrantyEndDate, setWarrantyEndDate] = useState<string>()
   const [productSpecification, setProductSpecification] = useState<boolean>()
-  const [isViewProductSpecification, setIsViewProductSpecification] =
-    useState<boolean>(false)
   const [assetStatus, setAssetStatus] = useState<string>()
   const [country, setCountry] = useState<string>()
   const [isDateError, setIsDateError] = useState(false)

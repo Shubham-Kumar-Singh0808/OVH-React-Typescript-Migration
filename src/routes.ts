@@ -8,7 +8,6 @@ export type route = {
   path?: string
   routes?: route[]
 }
-
 // examples
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
@@ -137,7 +136,6 @@ const AddClient = React.lazy(
 const CreateNewTicket = React.lazy(
   () => import('./pages/Support/RaiseTicket/CreateNewTicket'),
 )
-
 const ViewClient = React.lazy(
   () =>
     import(
@@ -151,15 +149,12 @@ const TicketApprovals = React.lazy(
 const BirthdaysListTable = React.lazy(
   () => import('./pages/Dashboard/Birthdays/ListOfBirthdays'),
 )
-
 const HolidaysList = React.lazy(
   () => import('./pages/Dashboard/Holidays/HolidaysList/ListOfHolidays'),
 )
-
 const AddHoliday = React.lazy(
   () => import('./pages/Dashboard/Holidays/HolidaysList/AddHoliday/AddHoliday'),
 )
-
 const ProbationaryList = React.lazy(
   () => import('./pages/Dashboard/ProbationaryList/ProbationaryList'),
 )
@@ -167,11 +162,9 @@ const ProbationaryList = React.lazy(
 const UpdateTicket = React.lazy(
   () => import('./pages/Support/TicketApprovals/UpdateTicket/UpdateTicket'),
 )
-
 const UpdateTicketUnderTicketList = React.lazy(
   () => import('./pages/Support/MyTickets/UpdateTicket/UpdateTicket'),
 )
-
 const BookingList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/BookingList/BookingList'),
 )
@@ -181,7 +174,6 @@ const EventTypeList = React.lazy(
       './pages/ConferenceRoomBooking/NewEvent/EventTypeList/EventTypeList'
     ),
 )
-
 const EmployeeAllocationReport = React.lazy(
   () =>
     import(
@@ -191,7 +183,6 @@ const EmployeeAllocationReport = React.lazy(
 const EventsList = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EventList/EventList'),
 )
-
 const FeedbackForms = React.lazy(
   () =>
     import(
@@ -202,94 +193,78 @@ const EditHoliday = React.lazy(
   () =>
     import('./pages/Dashboard/Holidays/HolidaysList/EditHoliday/EditHoliday'),
 )
-
 const NewBookingRoom = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewBooking/NewBooking'),
 )
 const EmployeeAllocation = React.lazy(
   () => import('./pages/ProjectManagement/AllocateEmployee/AllocateEmployee'),
 )
-
 const AppraisalConfigurations = React.lazy(
   () => import('./pages/Settings/Configurations/AppraisalConfigurations'),
 )
-
 const EditConfiguration = React.lazy(
   () =>
     import(
       './pages/Settings/Configurations/EditConfiguration/EditConfiguration'
     ),
 )
-
 const ViewPIPDetail = React.lazy(
   () =>
     import(
       './pages/Performance/PipList/EmployeePipTimeline/EmployeePipTimeline'
     ),
 )
-
 const TicketConfiguration = React.lazy(
   () => import('./pages/Settings/TicketConfiguration/TicketConfiguration'),
 )
 const NewEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/NewEvent/NewEvent'),
 )
-
 const SubmitResignation = React.lazy(
   () => import('./pages/Separation/SubmitViewResignation/SubmitResignation'),
 )
-
 const LeaveApprovals = React.lazy(
   () => import('./pages/Leaves/LeaveApprovals/LeaveApprovals'),
 )
-
 const ITDeclarationForm = React.lazy(
   () => import('./pages/Finance/ITDeclarationForm/ITDeclarationForm'),
 )
-
 const Payslip = React.lazy(() => import('./pages/Finance/Payslips/Payslips'))
 
 const PfPanDetails = React.lazy(
   () => import('./pages/Finance/PanAndBankDetails/PanAndBankDetails'),
 )
-
 const ResignationTimeLine = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/ResignationTimeLine/ResignationHistory'
     ),
 )
-
 const ResignationFeedBackForm = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/HRClearanceCertificate/ExitFeedBackForm/ExitFeedBackForm'
     ),
 )
-
 const ReviewList = React.lazy(
   () => import('./pages/Performance/ReviewList/EmployeeReviewList'),
 )
-
 const ResignationManagerClearanceCertificate = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/ManagerClearenceCertificate/ManagerClearanceCertificate'
     ),
 )
-
 const SeparationViewChart = React.lazy(
   () =>
     import('./pages/Separation/ResignationList/ViewChart/SeparationViewChart'),
 )
-
 const ResignationHRClearanceCertificate = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/HRClearanceCertificate/HRClearanceCertificate'
     ),
 )
-
 const ResignationITClearanceCertificate = React.lazy(
   () =>
     import(
@@ -303,81 +278,68 @@ const ResignationFinanceClearanceCertificate = React.lazy(
       './pages/Separation/ResignationList/FinanaceClearanceCertificate/FinanceClearanceCertificate'
     ),
 )
-
 const ResignationAdminClearanceCertificate = React.lazy(
   () =>
     import(
       './pages/Separation/ResignationList/AdminClearanceCertificate/AdminClearanceCertificate'
     ),
 )
-
 const ResignationList = React.lazy(
   () => import('./pages/Separation/ResignationList/ResignationList'),
 )
-
 const EmployeeAccounts = React.lazy(
   () => import('./pages/Finance/EmployeeAccounts/EmployeeAccounts'),
 )
-
 const ITDeclarationList = React.lazy(
   () => import('./pages/Finance/ITDeclarationList/ITDeclarationList'),
 )
-
 const InvestmentCheckList = React.lazy(
   () => import('./pages/Finance/InvestmentCheckList/InvestmentCheckList'),
 )
-
 const AddInvestmentCycle = React.lazy(
   () => import('./pages/Finance/AddInvestmentCycle/AddInvestmentCycle'),
 )
-
 const AddInvestment = React.lazy(
   () => import('./pages/Finance/AddInvestment/InvestmentList'),
 )
-
 const AddSection = React.lazy(
   () => import('./pages/Finance/AddInvestment/Add Section/SectionsList'),
 )
-
 const ViewProjectDetails = React.lazy(
   () =>
     import(
       './pages/ProjectManagement/Project/ProjectView/ProjectViewLandingPage/ProjectView'
     ),
 )
-
 const ProjectCreationRequest = React.lazy(
   () =>
     import(
       './pages/ProjectManagement/ProjectCreationRequest/ProjectCreationRequest'
     ),
 )
-
 const AddAchiever = React.lazy(
   () => import('./pages/Achievements/AddAchiever/AddAchiever'),
 )
-
 const AchieverList = React.lazy(
   () => import('./pages/Achievements/AchieverList/AchieverList'),
 )
 const InitiateCycle = React.lazy(
   () => import('./pages/Settings/InitiateCycle/InitiateNewCycle'),
 )
-
 const myKRAs = React.lazy(() => import('./pages/Performance/MyKRAs/MyKRAsList'))
-
 const NomineeList = React.lazy(
   () => import('./pages/Achievements/NomineeList/NomineeList'),
 )
-
 const AddNominee = React.lazy(
   () => import('./pages/Achievements/AddNominee/AddNominee'),
 )
-
 const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
-
+const MyReviewManagerAppraisal = React.lazy(
+  () =>
+    import('./pages/Performance/MyReviews/ManagerAppraisal/ManagerAppraisal'),
+)
 const PayrollManagement = React.lazy(
   () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
 )
@@ -387,19 +349,29 @@ const LeadershipEnrollmentList = React.lazy(
       './pages/Achievements/LeadershipEnrollmentList/LeadershipEnrollmentList'
     ),
 )
-
 const LeadershipEnrollmentForm = React.lazy(
   () =>
     import(
       './pages/Achievements/LeadershipEnrollmentForm/LeadershipEnrollmentForm'
     ),
 )
-
 const PIPList = React.lazy(
   () => import('./pages/Performance/PipList/EmployeePipList/PipList'),
 )
-
 const KRA = React.lazy(() => import('./pages/Performance/KRA/KRALandingScreen'))
+const MileStoneHistory = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneHistory/MileStoneHistory'
+    ),
+)
+
+const MileStoneDiscussion = React.lazy(
+  () =>
+    import(
+      './pages/ProjectManagement/Project/ProjectView/MileStone/MileStoneDiscussion/MileStoneDiscussion'
+    ),
+)
 
 const EditBooking = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditBooking/EditBooking'),
@@ -413,11 +385,9 @@ const ClearnceCerticates = React.lazy(
 const EditEvent = React.lazy(
   () => import('./pages/ConferenceRoomBooking/EditEvent/EditEvent'),
 )
-
 const AppraisalTemplate = React.lazy(
   () => import('./pages/Performance/AppraisalTemplate/AppraisalTemplate'),
 )
-
 const AddNewAudit = React.lazy(
   () => import('./pages/SQAAuditReport/AddNewAudit/AddNewAudit'),
 )
@@ -449,6 +419,12 @@ const AddJobVacancies = React.lazy(
 const VendorList = React.lazy(
   () => import('./pages/Assets/VendorList/VendorList'),
 )
+const IntervieweeDetails = React.lazy(
+  () => import('./pages/Recruitment/IntervieweeDetails/IntervieweeDetails'),
+)
+const CandidateList = React.lazy(
+  () => import('./pages/Recruitment/CandidateList/CandidateList'),
+)
 const Manufacturer = React.lazy(
   () => import('./pages/Assets/ManufacturerList/Manufacturer'),
 )
@@ -462,9 +438,21 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+)
+const AddNewCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
+)
+const UpComingJoinList = React.lazy(
+  () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -913,6 +901,11 @@ const routes = [
     component: MyReview,
   },
   {
+    path: '/managerAppraisal/:employeeId',
+    name: 'Manager Appraisal',
+    component: MyReviewManagerAppraisal,
+  },
+  {
     path: '/leadershiplist',
     name: 'Leadership Enrollment List',
     component: LeadershipEnrollmentList,
@@ -947,6 +940,18 @@ const routes = [
     name: 'KRA',
     component: ReviewList,
   },
+
+  {
+    path: '/milestonehistory/:projectId',
+    name: 'MileStone History',
+    component: MileStoneHistory,
+  },
+  {
+    path: '/milestoneNewsFeed/:id',
+    name: 'MileStone Discussion',
+    component: MileStoneDiscussion,
+  },
+
   {
     path: '/editEvent/:eventId',
     name: 'Edit Event',
@@ -1008,6 +1013,21 @@ const routes = [
     component: AddJobVacancies,
   },
   {
+    path: '/candidatetimeline/:personId',
+    name: 'Interviewee Details',
+    component: IntervieweeDetails,
+  },
+  {
+    path: '/jobschedulecandidateList',
+    name: 'Candidate List',
+    component: CandidateList,
+  },
+  {
+    path: '/candidatetimeline/:personId&intervwcycleId',
+    name: 'Interviewee Details',
+    component: IntervieweeDetails,
+  },
+  {
     path: '/vendorList',
     name: 'Vendor List',
     component: VendorList,
@@ -1042,6 +1062,21 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
+  },
+  {
+    path: '/addNewCandidate',
+    name: 'Add New Candidate',
+    component: AddNewCandidate,
+  },
+  {
+    path: '/upcomingjoinlist',
+    name: 'UpComing Join List',
+    component: UpComingJoinList,
   },
 ]
 export default routes

@@ -31,12 +31,7 @@ const EmployeeReviewList = (): JSX.Element => {
     startIndex: 0,
     toDate: '',
   }
-
-  const [filterByDepartment, setFilterByDepartment] = useState<string>()
-  const [filterByDesignation, setFilterByDesignation] = useState<string>()
   const [isTableView, setIsTableView] = useState(false)
-  console.log(setFilterByDepartment)
-  console.log(setFilterByDesignation)
   const {
     paginationRange,
     setPageSize,
@@ -81,8 +76,6 @@ const EmployeeReviewList = (): JSX.Element => {
         <CRow className="mt-4 mb-4">
           <CCol>
             <ReviewListTable
-              filterByDepartment={filterByDepartment as string}
-              filterByDesignation={filterByDesignation as string}
               isTableView={isTableView}
               paginationRange={paginationRange}
               setPageSize={setPageSize}

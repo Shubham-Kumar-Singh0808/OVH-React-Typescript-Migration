@@ -36,7 +36,7 @@ export type CandidateInterviewInformation = {
   country: null
   jobCode: null
   sourceName: string
-  personId: null
+  personId: null | number
 }
 
 export type GetSearchScheduledCandidatesResponse = {

@@ -7,11 +7,7 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
-import {
-  AllAssetsList,
-  AssetTypeChangeList,
-} from '../../../types/Assets/AssetList/AssetListTypes'
-import { AssetTypeAddList } from '../../../types/Assets/AssetList/addEditListTypes'
+import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
 
 const AssetList = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')

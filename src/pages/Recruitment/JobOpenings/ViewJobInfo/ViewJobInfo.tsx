@@ -35,7 +35,7 @@ const ViewJobInfo = ({
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <div className="pull-right">
+        <div className="viewJob-Edit">
           <CTooltip content="Edit">
             <CButton
               className="btn-ovh me-4"
@@ -60,7 +60,7 @@ const ViewJobInfo = ({
         <CRow>
           <CFormLabel
             {...formLabelProps}
-            className="col-sm-3 col-form-label text-end ms-4 pe-2"
+            className="col-sm-3 col-form-label text-end"
           >
             Job Code:
           </CFormLabel>
@@ -110,7 +110,7 @@ const ViewJobInfo = ({
           </CFormLabel>
           <CCol sm={3} className="col-form-label">
             {' '}
-            <span className="descriptionField">
+            <span className="descriptionField view-job-description">
               {(JobOpeningById?.description &&
                 parse(String(JobOpeningById?.description || 'N/A'))) ||
                 'N/A'}
