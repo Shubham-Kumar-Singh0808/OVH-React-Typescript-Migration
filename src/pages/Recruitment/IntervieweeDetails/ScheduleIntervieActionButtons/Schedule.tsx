@@ -30,7 +30,7 @@ const Schedule = (): JSX.Element => {
   const startMinutesDay = resultTime?.split(':')[1]?.split(' ')[0]
   const startMeridianDay = resultTime?.split(':')[1]?.split(' ')[1]
   const [contactLink, setContactLink] = useState<string>('')
-  const [mode, setMode] = useState<string>('')
+  const [scheduleInterviewMode, setScheduleInterviewMode] = useState<string>('')
   const [comments, setComments] = useState<string>('')
   const [mailToCandidate, setMailToCandidate] = useState<boolean>(false)
   const [sendMailToInterviewer, setSendMailToInterviewer] =
@@ -51,11 +51,12 @@ const Schedule = (): JSX.Element => {
       })
     : ''
 
-  const [timePicker, setTimePicker] = useState({
-    hours: startHour,
-    minutes: startMinutesDay,
-    meridian: startMeridianDay,
-  })
+  const [scheduleInterviewTimePicker, setScheduleInterviewTimePicker] =
+    useState({
+      hours: startHour,
+      minutes: startMinutesDay,
+      meridian: startMeridianDay,
+    })
 
   const interviewProfiles = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.employeeProperties,
@@ -79,7 +80,7 @@ const Schedule = (): JSX.Element => {
     className: 'col-form-label category-label',
   }
 
-  const formattedTime = `${timePicker.hours}:${timePicker.minutes} ${timePicker.meridian}`
+  const formattedTime = `${scheduleInterviewTimePicker.hours}:${scheduleInterviewTimePicker.minutes} ${scheduleInterviewTimePicker.meridian}`
 
   const handleSaveScheduleInterview = async () => {
     const interviewRoundCountResult = await dispatch(
@@ -94,7 +95,7 @@ const Schedule = (): JSX.Element => {
         contactDetails: contactLink || '',
         description: comments,
         interviewRound: Number(interviewRoundCountResult.payload) + 1,
-        interviewType: mode,
+        interviewType: scheduleInterviewMode,
         interviewerId: result[0].id,
         scheduleDate: selectDateValue,
         scheduleTime: formattedTime,
@@ -156,7 +157,7 @@ const Schedule = (): JSX.Element => {
     setSelectDate('')
     setScheduleAutoCompleteTarget('')
     setComments('')
-    setMode('')
+    setScheduleInterviewMode('')
     setMailToCandidate(false)
     setSendMailToInterviewer(false)
     setContactLink('')
@@ -165,7 +166,7 @@ const Schedule = (): JSX.Element => {
   useEffect(() => {
     if (
       selectDate &&
-      mode &&
+      scheduleInterviewMode &&
       interviewerAutoCompleteTarget &&
       (mailToCandidate === true || sendMailToInterviewer === true)
     ) {
@@ -175,37 +176,41 @@ const Schedule = (): JSX.Element => {
     }
   }, [
     selectDate,
-    mode,
+    scheduleInterviewMode,
     interviewerAutoCompleteTarget,
     mailToCandidate,
     sendMailToInterviewer,
   ])
 
-  const onChangeHourHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeScheduleInterviewHourHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { value } = e.target
     if (Number(value) <= 12) {
-      setTimePicker({
-        ...timePicker,
+      setScheduleInterviewTimePicker({
+        ...scheduleInterviewTimePicker,
         hours: e.target.value,
       })
     } else {
-      setTimePicker({
-        ...timePicker,
+      setScheduleInterviewTimePicker({
+        ...scheduleInterviewTimePicker,
         hours: '',
       })
     }
   }
 
-  const onChangeMinutesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeScheduleInterviewMinutesHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { value } = e.target
     if (Number(value) <= 60) {
-      setTimePicker({
-        ...timePicker,
+      setScheduleInterviewTimePicker({
+        ...scheduleInterviewTimePicker,
         minutes: e.target.value,
       })
     } else {
-      setTimePicker({
-        ...timePicker,
+      setScheduleInterviewTimePicker({
+        ...scheduleInterviewTimePicker,
         minutes: '',
       })
     }
@@ -278,8 +283,8 @@ const Schedule = (): JSX.Element => {
                   id="hours"
                   name="hours"
                   data-testid="hours"
-                  value={timePicker.hours}
-                  onChange={onChangeHourHandler}
+                  value={scheduleInterviewTimePicker.hours}
+                  onChange={onChangeScheduleInterviewHourHandler}
                 />
               </CCol>
               <CCol sm={4}>
@@ -289,8 +294,8 @@ const Schedule = (): JSX.Element => {
                   id="minutes"
                   name="minutes"
                   data-testid="minutes"
-                  value={timePicker.minutes}
-                  onChange={onChangeMinutesHandler}
+                  value={scheduleInterviewTimePicker.minutes}
+                  onChange={onChangeScheduleInterviewMinutesHandler}
                 />
               </CCol>
               <CCol sm={4}>
@@ -299,10 +304,10 @@ const Schedule = (): JSX.Element => {
                   id="startTimeMeridian"
                   data-testid="startTimeMeridian"
                   name="startTimeMeridian"
-                  value={timePicker.meridian}
+                  value={scheduleInterviewTimePicker.meridian}
                   onChange={(e) => {
-                    setTimePicker({
-                      ...timePicker,
+                    setScheduleInterviewTimePicker({
+                      ...scheduleInterviewTimePicker,
                       meridian: e.target.value,
                     })
                   }}
@@ -346,7 +351,9 @@ const Schedule = (): JSX.Element => {
             className="col-sm-2 col-form-label text-end"
           >
             Mode:
-            <span className={mode ? TextWhite : TextDanger}>*</span>
+            <span className={scheduleInterviewMode ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -355,8 +362,8 @@ const Schedule = (): JSX.Element => {
               id="mode"
               data-testid="select-mode"
               name="mode"
-              value={mode}
-              onChange={(e) => setMode(e.target.value)}
+              value={scheduleInterviewMode}
+              onChange={(e) => setScheduleInterviewMode(e.target.value)}
             >
               <option value="">Select Mode Of Interview</option>
               <option value="FACE_TO_FACE">In Person</option>
@@ -370,7 +377,9 @@ const Schedule = (): JSX.Element => {
             </CFormSelect>
           </CCol>
         </CRow>
-        {mode === 'FACE_TO_FACE' || mode === 'SYSTEM' || mode === '' ? (
+        {scheduleInterviewMode === 'FACE_TO_FACE' ||
+        scheduleInterviewMode === 'SYSTEM' ||
+        scheduleInterviewMode === '' ? (
           ''
         ) : (
           <CRow className="mb-3">

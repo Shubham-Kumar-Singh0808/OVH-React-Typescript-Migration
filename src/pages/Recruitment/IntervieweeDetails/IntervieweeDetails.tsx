@@ -37,7 +37,6 @@ const IntervieweeDetails = (): JSX.Element => {
   const [comment, setComment] = useState<string>(
     timeLineListSelector.initialComments,
   )
-
   const handleModal = () => {
     setIsApproveModalVisibility(true)
   }

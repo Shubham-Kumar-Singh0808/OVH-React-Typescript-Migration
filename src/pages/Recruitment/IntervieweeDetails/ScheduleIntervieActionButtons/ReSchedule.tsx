@@ -184,7 +184,9 @@ const ReSchedule = (): JSX.Element => {
     rescheduleSendMailToInterviewer,
   ])
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeRescheduleInterviewHourHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { value } = e.target
     if (Number(value) <= 12) {
       setRescheduleTimePicker({
@@ -273,7 +275,7 @@ const ReSchedule = (): JSX.Element => {
                   name="hours"
                   data-testid="hours"
                   value={rescheduleTimePicker.hours}
-                  onChange={onChangeHandler}
+                  onChange={onChangeRescheduleInterviewHourHandler}
                 />
               </CCol>
               <CCol sm={4}>
