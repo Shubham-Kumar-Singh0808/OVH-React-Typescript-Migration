@@ -136,7 +136,7 @@ const ChangeAssetFilterOptions = ({
         saveAssetDetailsResultAction,
       )
     ) {
-      // setToggle('')
+      setEmpToggle('')
 
       dispatch(reduxServices.app.actions.addToast(updateSuccessToastMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
@@ -207,7 +207,6 @@ const ChangeAssetFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            // id="vendorName"
             data-testid="form-select1"
             name="vendorName"
             value={vendorName}
