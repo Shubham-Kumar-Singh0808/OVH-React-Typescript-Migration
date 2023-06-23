@@ -266,6 +266,7 @@ const AddMileStoneForm = (): JSX.Element => {
           <CCol sm={3}>
             <CFormInput
               type="text"
+              placeholder="Title"
               data-testid="select-title"
               id="subjectValue"
               name="subjectValue"
@@ -406,6 +407,7 @@ const AddMileStoneForm = (): JSX.Element => {
             data-testid="ckEditor-component"
           >
             Comments:
+            <span className={comments ? whiteText : dangerText}>*</span>
           </CFormLabel>
           {showEditor ? (
             <CCol sm={8}>
