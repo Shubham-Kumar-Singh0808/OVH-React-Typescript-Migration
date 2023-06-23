@@ -185,65 +185,13 @@ const CandidateOffer = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="project Notes created successfully"
+            toastMessage="add new joinee successfully"
           />,
         ),
       )
       window.location.href = '/upcomingjoinlist'
-      // dispatch(reduxServices.projectNotes.getProjectNotesTimeLine(projectId))
     }
   }
-
-  // const handleAddCandidate = async () => {
-  //   const technology = await dispatch(
-  //     reduxServices.addNewCandidate.getPersonTechnologyData(
-  //       timeLineListSelector?.personId,
-  //     ),
-  //   )
-  //   const addCandidate = await dispatch(
-  //     reduxServices.addNewCandidate.getAddNewJoineeData({
-  //       appliedForLookUp: position,
-  //       candidateId: timeLineListSelector.personId || '',
-  //       candidateName,
-  //       comments: candidateComment,
-  //       currentCTC: curruentCTC,
-  //       dateOfJoining: dateOfJoiningDate,
-  //       departmentName: selectedDepartment?.departmentName,
-  //       designation,
-  //       employmentType: employeeType,
-  //       jobType,
-  //       sendOfferMessagetoCandidate: sendMessageToCandiDate,
-  //       technology: technology.payload || '',
-  //     }),
-  //   )
-
-  //   if (
-  //     reduxServices.addNewCandidate.getAddNewJoineeData.fulfilled.match(
-  //       addCandidate,
-  //     )
-  //   ) {
-  //     const candidateId = addCandidate.payload
-  //     const file = new FormData()
-  //     if (uploadedFile !== undefined) {
-  //       file.append('file', uploadedFile)
-  //     }
-  //     await dispatch(
-  //       reduxServices.addNewCandidate.uploadAddNewJoineeFileThunk({
-  //         candidateId,
-  //         file,
-  //       }),
-  //     )
-  //     window.location.href = '/upcomingjoinlist'
-  //   } else if (
-  //     reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
-  //       addCandidate,
-  //     ) &&
-  //     addCandidate.payload === 500
-  //   ) {
-  //     dispatch(reduxServices.app.actions.addToast(addFailedToastMessage))
-  //     dispatch(reduxServices.app.actions.addToast(undefined))
-  //   }
-  // }
 
   const NUMERIC_REGEX = /^[0-9]*$/
 
