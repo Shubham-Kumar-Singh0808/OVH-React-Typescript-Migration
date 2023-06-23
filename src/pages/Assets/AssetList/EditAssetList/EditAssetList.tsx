@@ -26,10 +26,7 @@ const EditAddAssetList = ({
   setToggle,
   editAddAssetList,
   setEditAddAssetList,
-}: // selectDate,
-// searchInput,
-// searchByEmployee,
-{
+}: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editAddAssetList: AllAssetsList
   setEditAddAssetList: React.Dispatch<React.SetStateAction<AllAssetsList>>
@@ -58,10 +55,6 @@ const EditAddAssetList = ({
     editAddAssetList.warrantyEndDate,
   )
 
-  // const [assetStatus, setAssetStatus] = useState<string>(
-  //   editAddAssetList.status,
-  // )
-
   const [country, setCountry] = useState<string | number>(
     editAddAssetList.countryId as number,
   )
@@ -82,7 +75,6 @@ const EditAddAssetList = ({
       setCountry(editAddAssetList.countryId as number)
       setVendorName(editAddAssetList.vendorId)
       setManufacturerName(editAddAssetList.manufacturerId)
-      // setAssetStatus(editAddAssetList.status)
       setProductType(editAddAssetList.productId)
     }
   }, [editAddAssetList])

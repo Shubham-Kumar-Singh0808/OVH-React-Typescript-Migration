@@ -52,6 +52,10 @@ const AddAssetList = ({
   const [isAddButtonEnabled, setAddButtonEnabled] = useState<boolean>(false)
   const [addComment, setAddComment] = useState<string>('')
   const [isShowComment, setIsShowComment] = useState<boolean>(true)
+  const handleBankAddress = (comments: string) => {
+    setAddComment(comments)
+  }
+
   useEffect(() => {
     if (
       poNumber &&
@@ -170,10 +174,6 @@ const AddAssetList = ({
 
     setIsDateError(moment(end).isBefore(start))
   }, [datePurchase, receivedDate])
-
-  const handleBankAddress = (comments: string) => {
-    setAddComment(comments)
-  }
 
   const assetListTypeList = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
