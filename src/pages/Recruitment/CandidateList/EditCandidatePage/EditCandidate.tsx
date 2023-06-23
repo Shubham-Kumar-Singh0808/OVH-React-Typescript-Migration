@@ -87,13 +87,6 @@ const EditCandidate = (): JSX.Element => {
     setEnteredReasonForChange(value)
   }
 
-  const uploadedFileHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    if (file && file !== undefined) {
-      setUploadedFile(file[0])
-    }
-  }
-
   useEffect(() => {
     dispatch(reduxServices.candidateList.getAllEmployeeDetailsThunk())
     dispatch(reduxServices.candidateList.getAllCompaniesDataThunk())
@@ -318,7 +311,7 @@ const EditCandidate = (): JSX.Element => {
         reasonForChange={enteredReasonForChange}
         reasonForChangeHandler={setEnteredReasonForChange}
         uploadedFile={uploadedFile}
-        uploadedFileHandler={uploadedFileHandler}
+        setUploadedFile={setUploadedFile}
         uploadedResumeFileName={candidateData.uploadResume}
         showEditor={showEditor}
         setFinalButtonEnabled={setUpdateBtnEnabled}

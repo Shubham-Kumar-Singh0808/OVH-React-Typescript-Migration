@@ -284,7 +284,7 @@ export interface AddEditCandidateTemplateProps {
   reasonForChange: string
   reasonForChangeHandler: (value: string) => void
   uploadedFile: File | undefined
-  uploadedFileHandler: (element: HTMLInputElement) => void
+  setUploadedFile: React.Dispatch<React.SetStateAction<File | undefined>>
   uploadedResumeFileName: string | null
   showEditor: boolean
   setFinalButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>

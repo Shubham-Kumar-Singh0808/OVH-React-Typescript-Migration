@@ -100,7 +100,7 @@ const AddEditCandidateTemplate = ({
   reasonForChange,
   reasonForChangeHandler,
   uploadedFile,
-  uploadedFileHandler,
+  setUploadedFile,
   uploadedResumeFileName,
   showEditor,
   setFinalButtonEnabled,
@@ -312,6 +312,13 @@ const AddEditCandidateTemplate = ({
   useEffect(() => {
     setSourceName('')
   }, [sourceType])
+
+  const uploadedFileHandler = (element: HTMLInputElement) => {
+    const file = element.files
+    if (file && file !== undefined) {
+      setUploadedFile(file[0])
+    }
+  }
 
   // once we are out of focus, an api is called to check whether is pre registered or not
   const outFocusEmail = async () => {

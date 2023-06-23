@@ -82,13 +82,6 @@ const AddCandidate = (): JSX.Element => {
     setReasonForChange(value)
   }
 
-  const uploadedFileHandler = (element: HTMLInputElement) => {
-    const file = element.files
-    if (file && file !== undefined) {
-      setUploadedFile(file[0])
-    }
-  }
-
   const clearButtonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setShowEditor(false)
@@ -272,7 +265,7 @@ const AddCandidate = (): JSX.Element => {
             reasonForChange={reasonForChange}
             reasonForChangeHandler={reasonForChangeHandler}
             uploadedFile={uploadedFile}
-            uploadedFileHandler={uploadedFileHandler}
+            setUploadedFile={setUploadedFile}
             uploadedResumeFileName={null}
             showEditor={showEditor}
             setFinalButtonEnabled={setAddButtonEnabled}
