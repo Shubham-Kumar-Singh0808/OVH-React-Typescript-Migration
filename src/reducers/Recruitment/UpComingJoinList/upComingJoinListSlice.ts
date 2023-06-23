@@ -25,7 +25,7 @@ const getUpConingJoinList = createAsyncThunk(
 )
 
 const updateNewJoineeThunk = createAsyncThunk(
-  'allAsset/getallassetlist',
+  'jobapplicant/updateNewJoinee',
   async (props: UpdateUpComingJoineeList, thunkApi) => {
     try {
       return await UpComingJoinListApi.UpdateNewJoinee(props)

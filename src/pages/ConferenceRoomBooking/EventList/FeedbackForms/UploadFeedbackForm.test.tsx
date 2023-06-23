@@ -57,7 +57,7 @@ describe('EventList Component Testing', () => {
       target: { files: [fakeFile] },
     })
   })
-  test('Should be able to upload feedback form', () => {
+  test('Should be able to Attach File', () => {
     const file = new File(['feedbackForm'], 'feedbackForm.docx', {
       type: 'doc/docx/pdf',
     })

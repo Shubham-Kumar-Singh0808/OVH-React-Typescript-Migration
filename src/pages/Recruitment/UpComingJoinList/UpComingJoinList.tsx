@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import UpComingJoinListTable from './UpComingJoinListTable'
+import EditUpComingJoinee from '../EditUpComingJoinee/feature/EditUpComingJoinee'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { UpComingJoineeList } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
-import { EditUpComingJoinee } from '../EditUpComingJoinee/EditUpComingJoinee'
+// import { EditUpComingJoinee } from '../EditUpComingJoinee/EditUpComingJoinee'
 
 const UpComingJoinList = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>()
   const [toggle, setToggle] = useState<string>('')
   const initialCycle = {} as UpComingJoineeList
-
   const [editNewJoineeInfo, setEditNewJoineeInfo] = useState(initialCycle)
 
   const dispatch = useAppDispatch()
@@ -68,6 +68,7 @@ const UpComingJoinList = (): JSX.Element => {
           setToggle={setToggle}
           editNewJoineeInfo={editNewJoineeInfo}
           setEditNewJoineeInfo={setEditNewJoineeInfo}
+          searchInput={searchInput}
         />
       )}
     </>

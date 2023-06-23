@@ -17,9 +17,9 @@ export type UpComingJoineeList = {
   candidateEmail: string
   dateOfBirth: null
   candidateId: number
-  technology: string | null
+  technology: string
   candidateInterviewStatus: string
-  departmentName: string | null
+  departmentName: string
   mobile: string
   sendOfferMessagetoCandidate: null
 }
@@ -61,7 +61,7 @@ export type UpComingJoineeListSliceState = {
 
 export type UpComingJoineeListProps = {
   endIndex: number
-  searchName: string
+  searchName: string | undefined
   startIndex: number
 }
 

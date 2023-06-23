@@ -121,6 +121,7 @@ import {
   ProductSpecificationListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
+  CandidateOfferApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1117,4 +1118,12 @@ export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getUpdateNewJoinee: apiPrefix + '/jobapplicant/updateNewJoinee',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
+}
+
+export const getCandidateOfferConfig: CandidateOfferApi = {
+  getpersontechnology: apiPrefix + '/jobapplicant/getpersontechnology',
+  getCandidateDesignation: apiPrefix + '/kra/designation',
+  getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getUploadFileForNewJoinee: '/jobapplicant/uploadFileForNewJoinee',
 }

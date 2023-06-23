@@ -7,7 +7,7 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import parse from 'html-react-parser'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -24,10 +24,15 @@ const IntervieweeDetails = (): JSX.Element => {
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
-
+  // const history = useHistory()
   const [isApproveModalVisibility, setIsApproveModalVisibility] =
     useState<boolean>(false)
   const [approveLeaveComment, setApproveLeaveComment] = useState<string>('')
+
+  const [offerLeaveComment, setOfferLeaveComment] = useState<string>('')
+  const [isOfferApproveModalVisibility, setIsOfferApproveModalVisibility] =
+    useState<boolean>(false)
+
   const [comment, setComment] = useState<string>(
     timeLineListSelector.initialComments,
   )
@@ -35,6 +40,11 @@ const IntervieweeDetails = (): JSX.Element => {
   const handleModal = () => {
     setIsApproveModalVisibility(true)
   }
+
+  const handleOfferModal = () => {
+    setIsOfferApproveModalVisibility(true)
+  }
+
   const deletedToastElement = (
     <OToast toastColor="success" toastMessage="saved successfully" />
   )
@@ -53,7 +63,50 @@ const IntervieweeDetails = (): JSX.Element => {
       dispatch(reduxServices.app.actions.addToast(deletedToastElement))
     }
   }
+  // -----------------------------------------------------------
 
+  const noVacanciesToastMessage = (
+    <OToast
+      toastMessage="You can't give offer to the candidate.Because, Vacancies already filled."
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
+
+  const confirmBtnOffHandler = async () => {
+    const noShowResultAction = await dispatch(
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
+        candidateId: timeLineListSelector.personId,
+        holdSubStatus: '',
+        status: 'OFFERED',
+        statusComments: offerLeaveComment,
+      }),
+    )
+
+    if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.fulfilled.match(
+        noShowResultAction,
+      )
+    ) {
+      dispatch(
+        reduxServices.intervieweeDetails.timeLineData(
+          timeLineListSelector.personId,
+        ),
+      )
+      setIsOfferApproveModalVisibility(false)
+      history.push(`/addnewjoinee/${timeLineListSelector.personId}`)
+    } else if (
+      reduxServices.intervieweeDetails.updateCandidateInterviewStatus.rejected.match(
+        noShowResultAction,
+      ) &&
+      noShowResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(noVacanciesToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
+    }
+  }
+
+  // ---------------------------------------------------------
   const confirmBtnHandler = async () => {
     const updateCandidateInterviewStatusResult = await dispatch(
       reduxServices.intervieweeDetails.updateCandidateInterviewStatus({
@@ -226,6 +279,21 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
+        {/* ------------------------------------------------------------ */}
+        <br />
+        <CRow className="justify-content-end">
+          <CCol className="text-end" md={4}>
+            <CButton
+              color="success"
+              className="btn-ovh me-1 text-white"
+              onClick={handleOfferModal}
+            >
+              <i className="fa fa-plus fa-lg me-1"></i> Offer
+            </CButton>
+          </CCol>
+        </CRow>
+        {/* --------------------------------------------------------------------------- */}
+
         <CForm>
           <CRow className="mt-1 mb-0 align-items-center interview-name">
             <CFormLabel className="text-info col-form-label col-sm-2 text-end p-1 project-creation">
@@ -409,6 +477,7 @@ const IntervieweeDetails = (): JSX.Element => {
             </CButton>
           </CCol>
         </CRow>
+
         <IntervieweeDetailsTimeline />
       </OCard>
       <OModal
@@ -445,6 +514,48 @@ const IntervieweeDetails = (): JSX.Element => {
                 maxLength={150}
                 value={approveLeaveComment}
                 onChange={(e) => setApproveLeaveComment(e.target.value)}
+              ></CFormTextarea>
+            </CCol>
+          </CRow>
+        </>
+      </OModal>
+
+      {/* ------------------------------------------------------------ */}
+
+      <OModal
+        alignment="center"
+        visible={isOfferApproveModalVisibility}
+        setVisible={setIsOfferApproveModalVisibility}
+        confirmButtonText="Yes"
+        modalTitle="Do you want to OFFERED this candidate?"
+        cancelButtonText="No"
+        modalHeaderClass="d-none"
+        confirmButtonAction={confirmBtnOffHandler}
+      >
+        <>
+          <CRow className="mt-1 mb-1">
+            <p>Do you want to OFFERED this candidate?</p>
+            <br></br>
+            <CFormLabel className="col-sm-3">
+              Comments:
+              <span
+                className={
+                  offerLeaveComment?.replace(/^\s*/, '')
+                    ? TextWhite
+                    : TextDanger
+                }
+              >
+                *
+              </span>
+            </CFormLabel>
+            <CCol sm={6}>
+              <CFormTextarea
+                data-testid="text-area"
+                aria-label="textarea"
+                autoComplete="off"
+                maxLength={150}
+                value={offerLeaveComment}
+                onChange={(e) => setOfferLeaveComment(e.target.value)}
               ></CFormTextarea>
             </CCol>
           </CRow>

@@ -931,6 +931,13 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+export interface CandidateOfferApi extends ApiBase {
+  getpersontechnology: string
+  getCandidateDesignation: string
+  getAddNewJoinee: string
+  getEmpDepartments: string
+  getUploadFileForNewJoinee: string
+}
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string

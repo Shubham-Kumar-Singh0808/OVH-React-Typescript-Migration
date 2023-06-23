@@ -130,6 +130,7 @@ import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const reduxServices = {
@@ -265,5 +266,6 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
+  addNewCandidate: candidateOfferService,
   upComingJoinList: upComingJoiningListService,
 }
