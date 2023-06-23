@@ -4,10 +4,7 @@ import userEvent from '@testing-library/user-event'
 import ManufacturerListTable from './ManufacturerListTable'
 import { render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  GetAllManufacturerName,
-  ManufacturerDetails,
-} from '../../../types/Assets/ManufacturerList/ManufacturerType'
+import { GetAllManufacturerName } from '../../../types/Assets/ManufacturerList/ManufacturerType'
 import { mockManufacturerData } from '../../../test/data/ManufacturerListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
