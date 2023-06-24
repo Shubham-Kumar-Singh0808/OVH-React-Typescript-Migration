@@ -890,6 +890,11 @@ export interface CandidateListApi extends ApiBase {
   uploadCandidateResume: string
   addTechnology: string
   deleteTechnology: string
+  editCandidateData: string
+  isEditCandidateMailExists: string
+  isEditCandidateMobileNumberExists: string
+  editNewCandidate: string
+  downloadFile: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
