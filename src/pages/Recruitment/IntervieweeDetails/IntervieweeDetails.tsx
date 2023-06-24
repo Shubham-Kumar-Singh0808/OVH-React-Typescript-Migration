@@ -228,7 +228,7 @@ const IntervieweeDetails = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="justify-content-end ">
+        <CRow className="justify-content-end">
           <CCol
             className="d-flex justify-content-end Schedule-Interview-action-buttons"
             md={12}

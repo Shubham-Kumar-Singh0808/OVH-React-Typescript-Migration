@@ -926,6 +926,15 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   deleteVendorDetails: string
 }
+
+export interface CategoryListApi extends ApiBase {
+  getCategoryList: string
+  addCategory: string
+  checkForDuplicateCategory: string
+  editCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
 export interface ProductSpecificationListApi extends ApiBase {
   getAllProductSpecifications: string
   getassetTypeChangeList: string
@@ -942,6 +951,16 @@ export interface CandidateOfferApi extends ApiBase {
   getAddNewJoinee: string
   getEmpDepartments: string
   getUploadFileForNewJoinee: string
+}
+
+export interface ExpenseSubCategoryListApi extends ApiBase {
+  getCategoryList: string
+  getSubCategoryList: string
+  addSubCategoryList: string
+  editSubCategory: string
+  checkForDuplicateSubCategory: string
+  updateSubCategory: string
+  deleteSubCategory: string
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string

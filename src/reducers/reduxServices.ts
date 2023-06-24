@@ -126,11 +126,14 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
+import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
+import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
+import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
@@ -264,10 +267,13 @@ export const reduxServices = {
   ProductTypeList: ProductTypeListService,
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
+  categoryList: categoryListService,
+  addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   addNewCandidate: candidateOfferService,
+  subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,
   interviewStatusReport: interviewStatusReportServices,
 }
