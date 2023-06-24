@@ -46,6 +46,8 @@ const EditUpComingJoinee = ({
   // const [employeeType, setEmployeeType] = useState<string>('')
   // const [jobType, setJobType] = useState<string>('')
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
+    useState<boolean>(false)
   // const [dateOfJoiningDate, setDateOfJoiningDate] = useState<Date | string>()
   const [candidateComment, setCandidateComment] = useState<string>('')
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<
@@ -105,7 +107,7 @@ const EditUpComingJoinee = ({
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
     let extension = ''
     if (!file) return
-    setUploadedFile(file[0])
+    // setUploadedFile(file[0])
 
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
@@ -148,9 +150,9 @@ const EditUpComingJoinee = ({
       editNewJoineeInfo.dateOfJoining &&
       editNewJoineeInfo.technology
     ) {
-      setIsAddButtonEnabled(true)
+      setIsUpdateButtonEnabled(true)
     } else {
-      setIsAddButtonEnabled(false)
+      setIsUpdateButtonEnabled(false)
     }
   }, [editNewJoineeInfo])
   // --------------------------------------------------------
@@ -633,8 +635,8 @@ const EditUpComingJoinee = ({
                 value={editNewJoineeInfo.comments}
                 placeholder="comments"
                 className="sh-question"
-                // onChange={(e) => setCandidateComment(e.target.value)}
-                // onChange={handleTechnologyChange}
+                onChange={(e) => setCandidateComment(e.target.value)}
+                // onChange={onChangeInputHandler}
               ></CFormTextarea>
               <p>{candidateComment?.length}/250</p>
             </CCol>
@@ -677,7 +679,7 @@ const EditUpComingJoinee = ({
             className="btn-ovh me-1"
             size="sm"
             name="Add"
-            disabled={!isAddButtonEnabled}
+            disabled={!isUpdateButtonEnabled}
             onClick={handleUpdateNewJoinee}
           >
             Update
