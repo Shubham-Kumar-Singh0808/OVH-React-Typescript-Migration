@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   AddNewCandidateDTO,
   CandidateListTableProps,
@@ -7,6 +8,9 @@ import {
   GetAllTechnology,
   IncomingAllJobVacanciesList,
   IncomingCompaniesData,
+  IncomingEditCandidateData,
+  IsEditNewCandidateEmailExistsParams,
+  IsEditNewCandidateMobileNumExistsParams,
   UploadCandidateResumeDTO,
   country,
   viewHandlerProps,
@@ -194,6 +198,78 @@ const deleteTechnology = async (technologyId: number): Promise<undefined> => {
   return response.data
 }
 
+const editCandidateData = async (
+  candidateId: number,
+): Promise<IncomingEditCandidateData> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.editCandidateData,
+    method: AllowedHttpMethods.get,
+    params: {
+      candidateId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isEditNewCandidateEmailExists = async (
+  finalParams: IsEditNewCandidateEmailExistsParams,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.isEditCandidateMailExists,
+    method: AllowedHttpMethods.get,
+    params: {
+      ...finalParams,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const isEditNewCandidateMobileNumExists = async (
+  finalParams: IsEditNewCandidateMobileNumExistsParams,
+): Promise<boolean> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.isEditCandidateMobileNumberExists,
+    method: AllowedHttpMethods.get,
+    params: {
+      ...finalParams,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const editNewCandidate = async (
+  finalData: IncomingEditCandidateData,
+): Promise<undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.editNewCandidate,
+    method: AllowedHttpMethods.post,
+    data: {
+      ...finalData,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const downloadFile = async (fileName: string): Promise<Blob> => {
+  const tenantKey = localStorage.getItem('tenantKey')!
+  const token = localStorage.getItem('token')!
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CandidateListApiConfig.downloadFile,
+    method: AllowedHttpMethods.get,
+    params: {
+      fileName,
+      tenantKey,
+      token,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const candidateListApi = {
   searchScheduledCandidate,
   getEmpCountries,
@@ -209,6 +285,11 @@ const candidateListApi = {
   uploadCandidateResume,
   addTechnology,
   deleteTechnology,
+  editCandidateData,
+  isEditNewCandidateEmailExists,
+  isEditNewCandidateMobileNumExists,
+  editNewCandidate,
+  downloadFile,
 }
 
 export default candidateListApi
