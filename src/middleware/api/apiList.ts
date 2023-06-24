@@ -120,6 +120,7 @@ import {
   CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
+  ExpenseSubCategoryListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   InterviewStatusReportApi,
@@ -1136,6 +1137,16 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
 
+export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
+  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
+  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
+  checkForDuplicateSubCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
+  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
+  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
