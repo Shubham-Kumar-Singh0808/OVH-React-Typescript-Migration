@@ -473,7 +473,7 @@ const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
 const personTechnology = React.lazy(
-  () => import('./pages/Recruitment/CandidateOffer/CandidateOffer'),
+  () => import('./pages/Recruitment/CandidateOffer/AddNewJoinee'),
 )
 
 const EditCandidate = React.lazy(

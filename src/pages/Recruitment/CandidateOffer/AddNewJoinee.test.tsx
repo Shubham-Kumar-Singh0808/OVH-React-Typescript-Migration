@@ -1,16 +1,9 @@
 import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import moment from 'moment'
-import CandidateOffer from './CandidateOffer'
+import CandidateOffer from './AddNewJoinee'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../test/testUtils'
 
 const workFlowInput = 'msg-candidate'
 const fileUploadInput = 'file-upload'
