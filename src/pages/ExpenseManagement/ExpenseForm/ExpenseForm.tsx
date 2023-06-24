@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import Autocomplete from 'react-autocomplete'
@@ -28,7 +29,6 @@ import {
   VendorListResponse,
   expenseFormFields,
 } from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
-import OAutoComplete from '../../../components/ReusableComponent/OAutoComplete'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
@@ -81,13 +81,11 @@ const ExpenseForm = (): JSX.Element => {
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeAutoCompleteTarget, setEmployeeAutoCompleteTarget] =
     useState<string>()
-  const [selectEmployee, setSelectEmployee] = useState<AuthorizedEmployee>()
   const [expenseCategory, setExpenseCategory] = useState<string>()
   const [expenseSubCategory, setExpenseSubCategory] = useState<string>()
-  const [projectAutoCompleteTarget, setProjectAutoCompleteTarget] = useState('')
-  const [selectProject, setSelectProject] = useState<ProjectsListResponse>()
+  const [projectAutoCompleteTarget, setProjectAutoCompleteTarget] =
+    useState<string>()
   const [departmentList, setDepartmentList] = useState<string>()
-  const [selectVendor, setSelectVendor] = useState<VendorListResponse>()
   const [vendorAutoCompleteTarget, setVendorAutoCompleteTarget] =
     useState<string>()
   const [purposeDetails, setPurposeDetails] = useState<string>()
@@ -117,8 +115,8 @@ const ExpenseForm = (): JSX.Element => {
         data-testid="option"
         className={
           isHighlighted
-            ? 'autocomplete-edropdown-item active'
-            : 'autocomplete-edropdown-item '
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
         }
         key={id}
       >
@@ -127,10 +125,47 @@ const ExpenseForm = (): JSX.Element => {
     )
   }
 
-  const onHandleSelectEmployeeName = (
-    //e: React.ChangeEvent<HTMLSelectElement>,
-    employeeName: string,
-  ) => {
+  const projectItemsLayout = (
+    id: string | number,
+    projectName: string,
+    isHighlighted: boolean,
+  ): JSX.Element => {
+    return (
+      <div
+        data-testid="option"
+        className={
+          isHighlighted
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
+        }
+        key={id}
+      >
+        {projectName}
+      </div>
+    )
+  }
+
+  const vendorItemsLayout = (
+    id: string | number,
+    vendorName: string,
+    isHighlighted: boolean,
+  ): JSX.Element => {
+    return (
+      <div
+        data-testid="option"
+        className={
+          isHighlighted
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
+        }
+        key={id}
+      >
+        {vendorName}
+      </div>
+    )
+  }
+
+  const onHandleSelectEmployeeName = (employeeName: string) => {
     setEmployeeAutoCompleteTarget(employeeName)
     setIsEnable(true)
   }
@@ -142,31 +177,6 @@ const ExpenseForm = (): JSX.Element => {
       )
     }
   }, [employeeAutoCompleteTarget])
-
-  useEffect(() => {
-    dispatch(reduxServices.expenseForm.getCreditCardsDetails())
-  }, [dispatch])
-
-  // Project Implementation
-  const projectNameExists = (projects: string) => {
-    return projectList?.find((projectsList) => {
-      return projectsList.projectName.toLowerCase() === projects.toLowerCase()
-    })
-  }
-
-  const onFocusOut = () => {
-    const selectedProject = projectList.find(
-      (value) => value.projectName === projectAutoCompleteTarget,
-    )
-    setSelectProject(selectedProject)
-  }
-
-  const autoCompleteOnChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setProjectAutoCompleteTarget(e.target.value)
-    setSelectProject(undefined)
-  }
 
   const onHandleSelectProjectName = (
     //e: React.ChangeEvent<HTMLSelectElement>,
@@ -183,11 +193,15 @@ const ExpenseForm = (): JSX.Element => {
     }
   }, [projectAutoCompleteTarget])
 
-  const autoCompleteOnVendorChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    setVendorAutoCompleteTarget(e.target.value)
-    setSelectVendor(undefined)
+  useEffect(() => {
+    dispatch(reduxServices.expenseForm.getCreditCardsDetails())
+  }, [dispatch])
+
+  // Project Implementation
+  const projectNameExists = (projects: string) => {
+    return projectList?.find((projectsList) => {
+      return projectsList.projectName.toLowerCase() === projects.toLowerCase()
+    })
   }
 
   const onHandleSelectVendorName = (
@@ -197,12 +211,7 @@ const ExpenseForm = (): JSX.Element => {
     setVendorAutoCompleteTarget(vendorName)
     setIsEnable(true)
   }
-  const onVendorFocusOut = () => {
-    const selectedVendor = allVendors.find(
-      (value) => value.vendorName === vendorAutoCompleteTarget,
-    )
-    setSelectVendor(selectedVendor)
-  }
+
   useEffect(() => {
     if (vendorAutoCompleteTarget) {
       dispatch(
@@ -321,8 +330,8 @@ const ExpenseForm = (): JSX.Element => {
                 className={
                   employeeAutoCompleteTarget &&
                   employeeAutoCompleteTarget.length > 0
-                    ? 'autocomplete-esdropdown-wrap'
-                    : 'autocomplete-esdropdown-wrap hide'
+                    ? 'autocomplete-dropdown-wrap'
+                    : 'autocomplete-dropdown-wrap hide'
                 }
               >
                 {children}
@@ -434,12 +443,13 @@ const ExpenseForm = (): JSX.Element => {
         <CCol sm={3}>
           <Autocomplete
             inputProps={{
-              className: 'form-control form-control-sm',
+              className: 'form-control form-control-sm2',
+              id: 'project-autocomplete',
               placeholder: 'Project Name',
-              onBlur: onFocusOut,
             }}
             getItemValue={(item) => item.projectName}
-            items={projectList ? projectList : []}
+            data-testid="projectautocomplete"
+            items={projectList}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -453,26 +463,16 @@ const ExpenseForm = (): JSX.Element => {
                 {children}
               </div>
             )}
-            renderItem={(item, isHighlighted) => (
-              <div
-                data-testid="project-option"
-                className={
-                  isHighlighted
-                    ? 'autocomplete-dropdown-item active'
-                    : 'autocomplete-dropdown-item '
-                }
-                key={item.id}
-              >
-                {item.projectName}
-              </div>
-            )}
+            renderItem={(item, isHighlighted) =>
+              projectItemsLayout(item.id, item.fullName, isHighlighted)
+            }
             value={projectAutoCompleteTarget}
-            shouldItemRender={(item, itemValue) =>
+            shouldItemRender={(item, projectValue) =>
               item?.projectName
                 ?.toLowerCase()
-                .indexOf(itemValue.toLowerCase()) > -1
+                .indexOf(projectValue.toLowerCase()) > -1
             }
-            onChange={(e) => autoCompleteOnChangeHandler(e)}
+            onChange={(e) => setProjectAutoCompleteTarget(e.target.value)}
             onSelect={(selectedVal) => onHandleSelectProjectName(selectedVal)}
           />
           {/* {isProjectNameExist && ()} */}
@@ -535,12 +535,13 @@ const ExpenseForm = (): JSX.Element => {
         <CCol sm={3}>
           <Autocomplete
             inputProps={{
-              className: 'form-control form-control-sm',
+              className: 'form-control form-control-sm2',
+              id: 'vendor-autocomplete',
               placeholder: 'Vendor Name',
-              onBlur: onVendorFocusOut,
             }}
             getItemValue={(item) => item.vendorName}
-            items={allVendors ? allVendors : []}
+            data-testid="vendorautocomplete"
+            items={allVendors}
             wrapperStyle={{ position: 'relative' }}
             renderMenu={(children) => (
               <div
@@ -554,26 +555,16 @@ const ExpenseForm = (): JSX.Element => {
                 {children}
               </div>
             )}
-            renderItem={(item, isHighlighted) => (
-              <div
-                data-testid="vendor-option"
-                className={
-                  isHighlighted
-                    ? 'autocomplete-dropdown-item active'
-                    : 'autocomplete-dropdown-item '
-                }
-                key={item.id}
-              >
-                {item.vendorName}
-              </div>
-            )}
+            renderItem={(item, isHighlighted) =>
+              vendorItemsLayout(item.id, item.vendorName, isHighlighted)
+            }
             value={vendorAutoCompleteTarget}
             shouldItemRender={(item, vendorValue) =>
               item?.vendorName
                 ?.toLowerCase()
                 .indexOf(vendorValue.toLowerCase()) > -1
             }
-            onChange={(e) => autoCompleteOnVendorChangeHandler(e)}
+            onChange={(e) => setVendorAutoCompleteTarget(e.target.value)}
             onSelect={(selectedVal) => onHandleSelectVendorName(selectedVal)}
           />
           {/* {isProjectNameExist && ()} */}
@@ -942,7 +933,7 @@ const ExpenseForm = (): JSX.Element => {
         )}
       </CRow>
       <CRow>
-        <CCol md={{ span: 6, offset: 2 }}>
+        <CCol md={{ span: 6, offset: 3 }}>
           <CButton
             className="btn-ovh me-1"
             color="success"
