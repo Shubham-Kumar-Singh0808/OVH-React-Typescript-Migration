@@ -425,7 +425,7 @@ const NewBookingFilterOptions = ({
                 locationValue={newRoomBooking.locationId}
               />
               <CCol className="col-sm-3">
-                {userAccessLocationList?.createaccess && (
+                {userAccessLocationList?.viewaccess && (
                   <CButton
                     color="info btn-ovh me-1"
                     data-testid="locationAdd-btn"
@@ -442,7 +442,7 @@ const NewBookingFilterOptions = ({
                 roomValue={newRoomBooking.roomId}
               />
               <CCol className="col-sm-3">
-                {userAccessRoomList?.createaccess && (
+                {userAccessRoomList?.viewaccess && (
                   <CButton
                     color="info btn-ovh me-1"
                     onClick={() => setToggle('addRoom')}
