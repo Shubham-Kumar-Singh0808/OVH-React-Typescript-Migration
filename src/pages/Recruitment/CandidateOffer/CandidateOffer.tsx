@@ -82,9 +82,7 @@ const CandidateOffer = (): JSX.Element => {
   )
 
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
-    File | undefined
-  >(undefined)
+
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
@@ -104,7 +102,6 @@ const CandidateOffer = (): JSX.Element => {
       return
     }
     setUploadErrorText('')
-    setUploadFeedbackForm(file[0])
   }
 
   useEffect(() => {
@@ -175,7 +172,7 @@ const CandidateOffer = (): JSX.Element => {
     }
   }
 
-  const NUMERIC_REGEX = /^[0-9]*$/
+  const NUMERIC_REGEX = /^\d*$/
 
   const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value
