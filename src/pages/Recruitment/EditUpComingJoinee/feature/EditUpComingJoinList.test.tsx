@@ -3,11 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import EditUpComingJoinee from './EditUpComingJoinee'
 import { render, screen } from '../../../../test/testUtils'
-import { mockUpComingJoineeList } from '../../../../test/data/upComingJoineeData'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const mockSetTogglePage = jest.fn()
+const fileUploadInput = 'file-upload'
 
 describe('Vendor Details without data', () => {
   beforeEach(() => {
@@ -53,11 +53,11 @@ describe('Vendor Details without data', () => {
       },
     )
   })
-  test('should be able to render  Job Openings  Title', () => {
+  test('should be able to render  Edit UpComingJoinee  Title', () => {
     expect(screen.getByText('Edit Upcoming Joinee')).toBeInTheDocument()
   })
 
-  test('should render edit Vendor Details component with out crashing', () => {
+  test('should render edit Edit UpComing Joinee component with out crashing', () => {
     expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
   })
   test('should able to click Back Button', () => {
@@ -112,5 +112,30 @@ describe('Vendor Details without data', () => {
 
     const experience = screen.getByTestId('Experience')
     userEvent.type(experience, '3')
+  })
+
+  test('Should display error message when wrong format of file is uploaded', () => {
+    const file = new File(['feedbackFormTest'], 'feedbackFormTest.jpg', {
+      type: 'doc/docx/pdf',
+    })
+    const fileInput = screen.getByTestId(fileUploadInput)
+    userEvent.upload(fileInput, file)
+
+    expect(
+      screen.getByText('Please choose doc or docx or pdf or zip. file'),
+    ).toBeInTheDocument()
+  })
+
+  test('Should be able to Attach File', () => {
+    const file = new File(['file-Upload'], 'file-Upload', {
+      type: 'doc/docx/pdf',
+    })
+    const fileInput = screen.getByTestId(fileUploadInput)
+    userEvent.upload(fileInput, file)
+
+    expect(fileInput.files[0]).toStrictEqual(file)
+    expect(fileInput.files.item(0)).toStrictEqual(file)
+    expect(fileInput.files).toHaveLength(1)
+    expect(fileInput).toBeInTheDocument()
   })
 })

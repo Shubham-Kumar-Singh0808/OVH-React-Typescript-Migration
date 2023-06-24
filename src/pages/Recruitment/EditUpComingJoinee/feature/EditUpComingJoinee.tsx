@@ -12,12 +12,10 @@ import {
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { SyntheticEvent } from 'react-draft-wysiwyg'
-import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -401,7 +399,15 @@ const EditUpComingJoinee = ({
               // onChange={(e) => setCandidateDepartment(e.target.value)}
               onChange={onChangeInputHandler}
             >
-              {addNewJoinee?.length > 0 &&
+              {/* {addNewJoinee?.length > 0 &&
+                addNewJoinee?.map((item, index) => (
+                  <option key={index} value={item.departmentId}>
+                    {item.departmentName}
+                  </option>
+                ))} */}
+
+              {addNewJoinee &&
+                addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
                   <option key={index} value={item.departmentId}>
                     {item.departmentName}
