@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import ExpenseSubCategoryList from './SubCategoryList'
+import ExpenseSubCategoryList from '../../ExpenseManagement/Sub-Category/SubCategoryList'
 import { render, screen } from '../../../test/testUtils'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 

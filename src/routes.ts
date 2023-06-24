@@ -447,7 +447,7 @@ const ProductSpecificationList = React.lazy(
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
 const ExpenseSubCategoryList = React.lazy(
-  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+  () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
 )
 const ScheduleInterview = React.lazy(
   () =>

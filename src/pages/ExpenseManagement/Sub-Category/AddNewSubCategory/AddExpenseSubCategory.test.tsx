@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
-import AddExpenseCategory from '../../../Expense Management/Sub-Category/AddNewSubCategory/AddExpenseSubCategory'
+import AddExpenseCategory from './AddExpenseSubCategory'
 import {
   mockExpenseCategoryList,
   mockExpenseSubCategoryList,
