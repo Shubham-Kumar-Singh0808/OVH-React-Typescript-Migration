@@ -1,7 +1,7 @@
 import React from 'react'
 import { cleanup, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import ExpenseSubCategoryListTable from '../../ExpenseManagement/Sub-Category/ExpenseSubCategoryListTable'
+import ExpenseSubCategoryListTable from './ExpenseSubCategoryListTable'
 import { render, screen } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
