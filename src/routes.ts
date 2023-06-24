@@ -1127,7 +1127,8 @@ const routes = [
     path: '/addnewjoinee/:personId',
     name: 'CandidateOffer',
     component: personTechnology,
-  },{
+  },
+  {
     path: '/editcandidate/:personId',
     name: 'Edit Candidate',
     component: EditCandidate,

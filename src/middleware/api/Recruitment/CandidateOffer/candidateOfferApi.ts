@@ -8,7 +8,9 @@ import {
 } from '../../../../utils/apiUtils'
 import { AllowedHttpMethods, getCandidateOfferConfig } from '../../apiList'
 
-const getAddNewJoineeData = async (props: AddNewJoineeProps) => {
+const getAddNewJoineeData = async (
+  props: AddNewJoineeProps,
+): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: getCandidateOfferConfig.getAddNewJoinee,
     method: AllowedHttpMethods.post,
@@ -19,7 +21,7 @@ const getAddNewJoineeData = async (props: AddNewJoineeProps) => {
   return response.data
 }
 
-const getPersonTechnology = async (id: number) => {
+const getPersonTechnology = async (id: number): Promise<number | undefined> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: getCandidateOfferConfig.getpersontechnology,
     method: AllowedHttpMethods.get,

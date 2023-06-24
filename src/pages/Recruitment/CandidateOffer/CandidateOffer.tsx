@@ -138,7 +138,7 @@ const CandidateOffer = (): JSX.Element => {
         employmentType: employeeType,
         jobType,
         sendOfferMessagetoCandidate: sendMessageToCandiDate,
-        technology: technology.payload || '',
+        technology: (technology.payload as string) || '',
       }),
     )
 
