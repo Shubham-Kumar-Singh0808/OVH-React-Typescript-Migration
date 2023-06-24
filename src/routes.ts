@@ -446,6 +446,9 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+)
 const ScheduleInterview = React.lazy(
   () =>
     import(
@@ -468,6 +471,10 @@ const AddNewCandidate = React.lazy(
 )
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
+)
+const EditCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1083,6 +1090,11 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
+  },
+  {
     path: '/scheduleInterview/:personId',
     name: 'schedule Interview',
     component: ScheduleInterview,
@@ -1106,6 +1118,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+  },
+  {
+    path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
   },
 ]
 export default routes

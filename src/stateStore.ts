@@ -143,6 +143,7 @@ import productSpecificationListReducer from './reducers/Assets/ProductSpecificat
 import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import addAssetListReducer from './reducers/Assets/AssetList/AddAssetListSlice'
+import subCategoryReducer from './reducers/ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
 import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 
@@ -288,6 +289,7 @@ export const allReducers = {
   recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
   addAssetList: addAssetListReducer,
+  subCategoryList: subCategoryReducer,
   upComingJoinList: upComingJoinListReducer,
   interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here

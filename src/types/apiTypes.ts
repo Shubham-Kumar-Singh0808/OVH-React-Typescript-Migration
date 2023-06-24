@@ -890,6 +890,11 @@ export interface CandidateListApi extends ApiBase {
   uploadCandidateResume: string
   addTechnology: string
   deleteTechnology: string
+  editCandidateData: string
+  isEditCandidateMailExists: string
+  isEditCandidateMobileNumberExists: string
+  editNewCandidate: string
+  downloadFile: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -951,6 +956,15 @@ export interface AddAssetListApi extends ApiBase {
   updateAddAsset: string
   checkAssetNumberExixts: string
   typeChangeSpecifications: string
+}
+export interface ExpenseSubCategoryListApi extends ApiBase {
+  getCategoryList: string
+  getSubCategoryList: string
+  addSubCategoryList: string
+  editSubCategory: string
+  checkForDuplicateSubCategory: string
+  updateSubCategory: string
+  deleteSubCategory: string
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string

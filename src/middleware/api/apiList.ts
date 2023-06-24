@@ -121,6 +121,7 @@ import {
   AssetListApi,
   ProductSpecificationListApi,
   AddAssetListApi,
+  ExpenseSubCategoryListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   InterviewStatusReportApi,
@@ -1104,6 +1105,13 @@ export const CandidateListApiConfig: CandidateListApi = {
   uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
   addTechnology: apiPrefix + '/jobapplicant/addtechnology',
   deleteTechnology: apiPrefix + '/jobapplicant/deleteTechnology',
+  editCandidateData: apiPrefix + '/jobapplicant/jobAdmin/editCandidate',
+  isEditCandidateMailExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMailExists',
+  isEditCandidateMobileNumberExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMobileNumberExists',
+  editNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/editNewCandidate',
+  downloadFile: apiPrefix + '/jobapplicant/downloadFile',
 }
 
 export const GetAssetListConfig: AssetListApi = {
@@ -1137,6 +1145,16 @@ export const GetAddAssetListConfig: AddAssetListApi = {
     apiPrefix + '/assetManagement/typeChangeSpecifications',
 }
 
+export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
+  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
+  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
+  checkForDuplicateSubCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
+  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
+  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',

@@ -13,6 +13,8 @@ export const initialCandidateCountry: country = {
   mobileCode: '',
 }
 
+export const candidateFeatureId = 126
+
 export const initialCandidateAppliedForList: CandidateAppliedForList = {
   id: -1,
   jobCode: '',
@@ -26,6 +28,9 @@ export const initialCandidateAppliedForList: CandidateAppliedForList = {
   remaining: -1,
   status: '',
 }
+
+export const emailExistsError = 'Email already exists'
+export const mobileExistsError = 'Mobile Number already exists'
 
 export const initialGetAllTechnology: GetAllTechnology = {
   id: -1,
@@ -85,8 +90,32 @@ export const isTechnologyInTheList = (
   return filteredResult !== undefined // returns true if it is in the list
 }
 
+export const getFinalIncomingCandidateValue = (data: string | null): string => {
+  return data === null ? '' : data
+}
+
 export const nonRequiredFinalCandidateData = (data: string): string | null => {
-  return data === '' ? null : data
+  return data.trim() === '' ? null : data
+}
+
+export const getTrimmedCandidateValue = (data: string): string => {
+  return data.trim()
+}
+
+// returns the error
+export const getFileValidation = (file: File | undefined): string => {
+  const typesAccepted = ['pdf', 'doc', 'docx']
+  if (file === undefined) {
+    return ''
+  }
+  const fileExtension = file.name.split('.').pop() as string
+  if (!typesAccepted.includes(fileExtension)) {
+    return 'Please choose doc or docx or pdf file'
+  }
+  if (file.size > 2048000) {
+    return 'Please upload a file less than 2MB.'
+  }
+  return ''
 }
 
 export const getCurrentScheduleTime = (): string => {
