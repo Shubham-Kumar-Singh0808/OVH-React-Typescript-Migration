@@ -390,7 +390,7 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
-              data-testid="updateDepartmentName"
+              data-testid="departmentName"
               id="department"
               size="sm"
               aria-label="Department"
@@ -429,7 +429,7 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
-              data-testid="updateDesignation-id"
+              data-testid="designation"
               id="id"
               size="sm"
               aria-label="Designation"
@@ -493,7 +493,7 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <DatePicker
               className="form-control form-control-sm sh-date-picker"
-              data-testid="update-join-select"
+              data-testid="dateOfJoiningDate"
               placeholderText="dd/mm/yyyy"
               dateFormat="dd/mm/yy"
               name="dateOfJoiningDate"

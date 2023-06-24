@@ -1,14 +1,14 @@
 /* eslint-disable react/react-in-jsx-scope */
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
+import moment from 'moment'
 import EditUpComingJoinee from './EditUpComingJoinee'
-import { render, screen } from '../../../../test/testUtils'
+import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const mockSetTogglePage = jest.fn()
 const fileUploadInput = 'file-upload'
-
 describe('Vendor Details without data', () => {
   beforeEach(() => {
     render(
@@ -112,6 +112,21 @@ describe('Vendor Details without data', () => {
 
     const experience = screen.getByTestId('Experience')
     userEvent.type(experience, '3')
+
+    const departmentName = screen.getByTestId('departmentName')
+    userEvent.type(departmentName, 'Admin Executive')
+
+    const designation = screen.getByTestId('designation')
+    userEvent.type(designation, 'designation')
+
+    const technology = screen.getByTestId('technology')
+    userEvent.type(technology, 'technology')
+
+    const jobType = screen.getByTestId('jobTypeId')
+    userEvent.type(jobType, 'Part Time')
+
+    const jobStatus = screen.getByTestId('update-joining-Status')
+    userEvent.type(jobStatus, 'OFFERED')
   })
 
   test('Should display error message when wrong format of file is uploaded', () => {
