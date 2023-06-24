@@ -105,6 +105,7 @@ const ExpenseForm = (): JSX.Element => {
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const [isEnable, setIsEnable] = useState(false)
 
+  //Employees AutoComplete
   const employeeItemsLayout = (
     id: string | number,
     fullName: string,
@@ -125,6 +126,20 @@ const ExpenseForm = (): JSX.Element => {
     )
   }
 
+  const onHandleSelectEmployeeName = (employeeName: string) => {
+    setEmployeeAutoCompleteTarget(employeeName)
+    setIsEnable(true)
+  }
+
+  useEffect(() => {
+    if (employeeAutoCompleteTarget) {
+      dispatch(
+        reduxServices.expenseForm.getEmployeesList(employeeAutoCompleteTarget),
+      )
+    }
+  }, [employeeAutoCompleteTarget])
+
+  //Projects AutoComplete Implementation
   const projectItemsLayout = (
     id: string | number,
     projectName: string,
@@ -145,6 +160,19 @@ const ExpenseForm = (): JSX.Element => {
     )
   }
 
+  const onHandleSelectProjectName = (projectName: string) => {
+    setProjectAutoCompleteTarget(projectName)
+    setIsEnable(true)
+  }
+  useEffect(() => {
+    if (projectAutoCompleteTarget) {
+      dispatch(
+        reduxServices.expenseForm.getProjectsList(projectAutoCompleteTarget),
+      )
+    }
+  }, [projectAutoCompleteTarget])
+
+  //Vendor Autocomplete Implementation
   const vendorItemsLayout = (
     id: string | number,
     vendorName: string,
@@ -165,49 +193,7 @@ const ExpenseForm = (): JSX.Element => {
     )
   }
 
-  const onHandleSelectEmployeeName = (employeeName: string) => {
-    setEmployeeAutoCompleteTarget(employeeName)
-    setIsEnable(true)
-  }
-
-  useEffect(() => {
-    if (employeeAutoCompleteTarget) {
-      dispatch(
-        reduxServices.expenseForm.getEmployeesList(employeeAutoCompleteTarget),
-      )
-    }
-  }, [employeeAutoCompleteTarget])
-
-  const onHandleSelectProjectName = (
-    //e: React.ChangeEvent<HTMLSelectElement>,
-    projectName: string,
-  ) => {
-    setProjectAutoCompleteTarget(projectName)
-    setIsEnable(true)
-  }
-  useEffect(() => {
-    if (projectAutoCompleteTarget) {
-      dispatch(
-        reduxServices.expenseForm.getProjectsList(projectAutoCompleteTarget),
-      )
-    }
-  }, [projectAutoCompleteTarget])
-
-  useEffect(() => {
-    dispatch(reduxServices.expenseForm.getCreditCardsDetails())
-  }, [dispatch])
-
-  // Project Implementation
-  const projectNameExists = (projects: string) => {
-    return projectList?.find((projectsList) => {
-      return projectsList.projectName.toLowerCase() === projects.toLowerCase()
-    })
-  }
-
-  const onHandleSelectVendorName = (
-    //e: React.ChangeEvent<HTMLSelectElement>,
-    vendorName: string,
-  ) => {
+  const onHandleSelectVendorName = (vendorName: string) => {
     setVendorAutoCompleteTarget(vendorName)
     setIsEnable(true)
   }
@@ -220,12 +206,23 @@ const ExpenseForm = (): JSX.Element => {
     }
   }, [vendorAutoCompleteTarget])
 
+  useEffect(() => {
+    dispatch(reduxServices.expenseForm.getCreditCardsDetails())
+  }, [dispatch])
+
+  //Date change Handlers
   const disableAfterDate = new Date()
   disableAfterDate.setFullYear(disableAfterDate.getFullYear() + 1)
 
   const onHandleExpenditureDatePicker = (value: Date) => {
     setExpenditureDate(moment(value).format(dateFormat))
     setChequeDate(moment(value).format(dateFormat))
+  }
+  // Project Implementation
+  const projectNameExists = (projects: string) => {
+    return projectList?.find((projectsList) => {
+      return projectsList.projectName.toLowerCase() === projects.toLowerCase()
+    })
   }
 
   //OnChange Events for Text Inputs
@@ -347,20 +344,21 @@ const ExpenseForm = (): JSX.Element => {
             onChange={(e) => setEmployeeAutoCompleteTarget(e.target.value)}
             onSelect={(selectedVal) => onHandleSelectEmployeeName(selectedVal)}
           />
-          {/* {isProjectNameExist && ()} */}
-          <span
-            className={isEnable ? TextWhite : TextDanger}
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              marginTop: '0.25rem',
-            }}
-          >
-            Please select valid employee
-          </span>
+          <CCol>
+            {/* {isProjectNameExist && ()} */}
+            <span
+              className={isEnable ? TextWhite : TextDanger}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                marginTop: '0.25rem',
+              }}
+            >
+              Please select valid employee
+            </span>
+          </CCol>
         </CCol>
-        <CCol></CCol>
       </CRow>
       <CRow className="mt-3 mb-3">
         <CFormLabel
@@ -464,7 +462,7 @@ const ExpenseForm = (): JSX.Element => {
               </div>
             )}
             renderItem={(item, isHighlighted) =>
-              projectItemsLayout(item.id, item.fullName, isHighlighted)
+              projectItemsLayout(item.id, item.projectName, isHighlighted)
             }
             value={projectAutoCompleteTarget}
             shouldItemRender={(item, projectValue) =>
@@ -647,6 +645,7 @@ const ExpenseForm = (): JSX.Element => {
               setCountry(e.target.value)
             }}
             value={country}
+            defaultValue={countriesList.map((item) => item.name[2])}
           >
             <option value={''}>Select Country</option>
             {countriesList
