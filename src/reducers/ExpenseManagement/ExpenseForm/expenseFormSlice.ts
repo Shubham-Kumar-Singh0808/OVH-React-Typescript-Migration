@@ -3,7 +3,9 @@ import { AxiosError } from 'axios'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import expensesFormApi from '../../../middleware/api/ExpenseManagement/ExpenseForm/expenseFormApi'
 import {
-  AddExpenseProps,
+  GetExpenseFormDetailsResponse,
+  AddExpenseParams,
+  AddExpenseResponse,
   AuthorizedEmployee,
   CategoryListResponse,
   CountriesListResponse,
@@ -153,9 +155,21 @@ const getCreditCardsDetails = createAsyncThunk(
 
 const addExpensesList = createAsyncThunk(
   '/ExpenseManagement/addExpenses',
-  async (expensesForm: AddExpenseProps, thunkApi) => {
+  async (expensesForm: AddExpenseResponse, thunkApi) => {
     try {
       return await expensesFormApi.addExpenseFormDetails(expensesForm)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getExpensesList = createAsyncThunk(
+  '/ExpenseManagement/getExpensesList',
+  async (expensesList: AddExpenseParams, thunkApi) => {
+    try {
+      return await expensesFormApi.getExpenseListDetails(expensesList)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -176,6 +190,8 @@ export const initialExpenseFormState: InitialExpenseFormSliceState = {
   projectsList: [],
   vendorsList: [],
   creditCardsList: [],
+  addExpensesList: {} as AddExpenseResponse,
+  expensesList: [],
 }
 
 const expenseFormSlice = createSlice({
@@ -224,6 +240,10 @@ const expenseFormSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.vendorsList = action.payload
       })
+      .addCase(getExpensesList.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.expensesList = action.payload
+      })
       .addMatcher(
         isAnyOf(editCategories.fulfilled, addExpensesList.fulfilled),
         (state) => {
@@ -244,6 +264,7 @@ const expenseFormSlice = createSlice({
           getVendorsList.pending,
           getCreditCardsDetails.pending,
           addExpensesList.pending,
+          getExpensesList.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -263,6 +284,7 @@ const expenseFormSlice = createSlice({
           getVendorsList.rejected,
           getCreditCardsDetails.rejected,
           addExpensesList.rejected,
+          getExpensesList.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -307,6 +329,7 @@ const expenseFormThunk = {
   getVendorsList,
   getCreditCardsDetails,
   addExpensesList,
+  getExpensesList,
 }
 
 const expenseFormSelectors = {

@@ -1148,6 +1148,7 @@ export const expenseFormApiConfig: ExpenseFormApi = {
   getVendorList: apiPrefix + '/ExpenseManagement/getVendorList',
   getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
   addExpenses: apiPrefix + '/ExpenseManagement/addExpenses',
+  getExpensesList: apiPrefix + '/ExpenseManagement/getExpensesList',
 }
 export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
   getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',

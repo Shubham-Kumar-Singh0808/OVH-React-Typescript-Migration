@@ -1,6 +1,7 @@
 import {
-  AddExpenseFormDetailsResponse,
-  AddExpenseProps,
+  GetExpenseFormDetailsResponse,
+  AddExpenseParams,
+  AddExpenseResponse,
   AuthorizedEmployee,
   CategoryListResponse,
   CountriesListResponse,
@@ -143,23 +144,37 @@ const getCreditCardsList = async (): Promise<CreditCardListResponse[]> => {
 }
 
 const addExpenseFormDetails = async (
-  expenseForm: AddExpenseProps,
-): Promise<AddExpenseFormDetailsResponse> => {
+  expenseForm: AddExpenseResponse,
+): Promise<AddExpenseResponse> => {
   const requestConfig = getAuthenticatedRequestConfig({
     url: expenseFormApiConfig.addExpenses,
     method: AllowedHttpMethods.post,
+    data: {
+      expenseForm,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
+const getExpenseListDetails = async (
+  expenseList: AddExpenseParams,
+): Promise<GetExpenseFormDetailsResponse[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: expenseFormApiConfig.getExpensesList,
+    method: AllowedHttpMethods.get,
     params: {
-      categoryId: expenseForm.categoryId,
-      country: expenseForm.country,
-      dateSelection: expenseForm.dateSelection,
-      departmentId: expenseForm.departmentId,
-      endIndex: expenseForm.endIndex,
-      from: expenseForm.from,
-      multipleSearch: expenseForm.multipleSearch,
-      paymentMode: expenseForm.paymentMode,
-      startIndex: expenseForm.startIndex,
-      subCategoryId: expenseForm.subCategoryId,
-      to: expenseForm.to,
+      categoryId: expenseList.categoryId,
+      country: expenseList.country,
+      dateSelection: expenseList.dateSelection,
+      departmentId: expenseList.departmentId,
+      endIndex: expenseList.endIndex,
+      from: expenseList.from,
+      multipleSearch: expenseList.multipleSearch,
+      paymentMode: expenseList.paymentMode,
+      startIndex: expenseList.startIndex,
+      subCategoryId: expenseList.subCategoryId,
+      to: expenseList.to,
     },
   })
   const response = await useAxios(requestConfig)
@@ -179,6 +194,7 @@ const expensesFormApi = {
   vendorsList,
   getCreditCardsList,
   addExpenseFormDetails,
+  getExpenseListDetails,
 }
 
 export default expensesFormApi

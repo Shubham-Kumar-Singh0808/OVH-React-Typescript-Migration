@@ -970,4 +970,5 @@ export interface ExpenseFormApi extends ApiBase {
   getVendorList: string
   getCardsList: string
   addExpenses: string
+  getExpensesList: string
 }

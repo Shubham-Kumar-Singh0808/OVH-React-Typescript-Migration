@@ -18,21 +18,12 @@ import moment from 'moment'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
-import {
-  AddExpenseFormResponse,
-  AuthorizedEmployee,
-  CreditCardListResponse,
-  EmployeeList,
-  GetAutoCompleteList,
-  GetOnSelect,
-  ProjectsListResponse,
-  VendorListResponse,
-  expenseFormFields,
-} from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 import { TextWhite, TextDanger } from '../../../constant/ClassName'
 import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../constant/DateFormat'
+import OToast from '../../../components/ReusableComponent/OToast'
+import { CreditCardListResponse } from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 
 const ExpenseForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -67,17 +58,17 @@ const ExpenseForm = (): JSX.Element => {
   const paymentsList = useTypedSelector(
     reduxServices.expenseForm.selectors.paymentsList,
   )
-
+  const [result, setResult] = useState<CreditCardListResponse[]>()
   const creditCards = useTypedSelector(
     reduxServices.expenseForm.selectors.creditCards,
   )
 
-  const initResetFields = {
-    employee: false,
-    projects: false,
-    date: false,
-  } as expenseFormFields
-
+  useEffect(() => {
+    if (creditCards) {
+      setResult(creditCards)
+    }
+  }, [creditCards])
+  // console.log(result)
   const [showEditor, setShowEditor] = useState<boolean>(true)
   const [employeeAutoCompleteTarget, setEmployeeAutoCompleteTarget] =
     useState<string>()
@@ -224,6 +215,7 @@ const ExpenseForm = (): JSX.Element => {
       return projectsList.projectName.toLowerCase() === projects.toLowerCase()
     })
   }
+  const [testing, setTesting] = useState<string>()
 
   //OnChange Events for Text Inputs
   const expenseNameRegexReplace = /-_[^a-z0-9\s]/gi
@@ -272,9 +264,9 @@ const ExpenseForm = (): JSX.Element => {
     setIsReimbursableExpense(isReimbursableExpense)
   }
 
-  const handleCreditCard = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCreditCard(event.target.checked)
-  }
+  // const handleCreditCard = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setCreditCard(event.target.checked)
+  // }
   //Dispatching the Api's
   useEffect(() => {
     dispatch(reduxServices.expenseForm.getEmpDepartmentsList())
@@ -291,15 +283,109 @@ const ExpenseForm = (): JSX.Element => {
     }
   }, [dispatch, expenseCategory])
 
-  // const clearBtnHandler = () => {
-  //   setSelectDate('')
-  //   setScheduleAutoCompleteTarget('')
-  //   setComments('')
-  //   setScheduleInterviewMode('')
-  //   setMailToCandidate(false)
-  //   setSendMailToInterviewer(false)
-  //   setContactLink('')
+  const successToastMessage = (
+    <OToast
+      toastMessage="Vendor Details Added Successfully"
+      toastColor="success"
+    />
+  )
+
+  // const handleAddExpenseForm = () => {
+  //   const expenseObject = {
+  //     amount: Number(amount) ,
+  //     categoryId: Number(expenseCategory),
+  //     country,
+  //     creditCardDetails: {
+  //       cardId: 18,
+  //       cardName: "sddf@@22",
+  //       cardNumber: "54654654765777",
+  //       createdBy: "Pavani Paska",
+  //       updatedBy: null,
+  //       createdDate: "21/06/2023",
+  //       updatedDate: null
+  //     },
+  //     currencyId: currency,
+  //     deptId: departmentList,
+  //     description: descriptionInfo,
+  //     expenditureDate,
+  //     invoiceNumber,
+  //     isReimbursable: isReimbursableExpense,
+  //     paymentMode,
+  //     project: projectAutoCompleteTarget,
+  //     purpose: purposeDetails,
+  //     subCategoryId: expenseSubCategory,
+  //     toEmployee: employeeAutoCompleteTarget,
+  //     vendor: vendorAutoCompleteTarget,
+  //     voucherNumber,
+  //   }
+  //   const addExpenseFormResult = await dispatch(
+  //     reduxServices.expenseForm.addExpensesList(expenseObject),
+  //   )
+  //   if (
+  //     reduxServices.expenseForm.addExpensesList.fulfilled.match(
+  //       addExpenseFormResult,
+  //     )
+  //   )
+  //     dispatch(reduxServices.app.actions.addToast(successToastMessage))
+  //     dispatch(reduxServices.expenseForm.getCreditCardsDetails())
+  //     dispatch(reduxServices.expenseForm.getEmpDepartmentsList())
+  //     dispatch(reduxServices.expenseForm.getCategoriesList())
+  //     dispatch(reduxServices.expenseForm.getCountriesList())
+  //     dispatch(reduxServices.expenseForm.getPaymentsList())
+  //     dispatch(
+  //       reduxServices.expenseForm.getExpensesList({
+  //         categoryId: 0,
+  //         country: '',
+  //         dateSelection: '',
+  //         departmentId: 0,
+  //         endIndex: 20,
+  //         from: '',
+  //         multipleSearch: '',
+  //         paymentMode: '',
+  //         startIndex: 0,
+  //         subCategoryId: 0,
+  //         to: '',
+  //       }),
+  //       )
   // }
+
+  const clearBtnHandler = () => {
+    setEmployeeAutoCompleteTarget('')
+    setExpenseCategory('')
+    setExpenseSubCategory('')
+    setProjectAutoCompleteTarget('')
+    setDepartmentList('')
+    setVendorAutoCompleteTarget('')
+    setPurposeDetails('')
+    setExpenditureDate('')
+    setCountry('')
+    setCurrency('')
+    setPaymentMode('')
+    setCreditCard(false)
+    setChequeNumber('')
+    setChequeDate('')
+    setVoucherNumber('')
+    setInvoiceNumber('')
+    setAmount('')
+    setIsReimbursableExpense(false)
+    setDescriptionInfo('')
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }
+
+  const handleCreditCard = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const newMileStone: CreditCardListResponse[] = JSON.parse(
+      JSON.stringify(result),
+    )
+    newMileStone[index].cardName = event.target.value
+    setResult(newMileStone)
+  }
+
   return (
     <OCard
       className="mb-4 myprofile-wrapper"
@@ -791,16 +877,19 @@ const ExpenseForm = (): JSX.Element => {
           >
             Credit Card List:
           </CFormLabel>
-          {creditCards.map((item, index) => {
+          {result?.map((item, index) => {
+            console.log(item.cardName)
             return (
               <>
                 <CFormCheck
                   key={index}
                   type="radio"
                   name="creditCard"
+                  id="cardName"
                   value={item.cardName}
-                  id="creditCardActive"
-                  onChange={handleCreditCard}
+                  // checked={item.cardId}
+
+                  onChange={(event) => handleCreditCard(event, index)}
                   inline
                 />
 
@@ -936,8 +1025,8 @@ const ExpenseForm = (): JSX.Element => {
           <CButton
             className="btn-ovh me-1"
             color="success"
-            data-testid="save-btn"
-            //onClick={handleSaveScheduleInterview}
+            data-testid="add-btn"
+            //onClick={handleAddExpenseForm}
             disabled={!isAddButtonEnabled}
           >
             Add
@@ -945,7 +1034,7 @@ const ExpenseForm = (): JSX.Element => {
           <CButton
             color="warning "
             className="btn-ovh"
-            //onClick={clearBtnHandler}
+            onClick={clearBtnHandler}
             data-testid="clear-btn"
           >
             Clear
