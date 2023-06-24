@@ -13,11 +13,15 @@ const TicketConfigurationOptions = ({
   setFilterByCategory,
   setFilterBySubCategory,
   setIsTableView,
+  pageSize,
+  currentPage,
 }: {
   setFilterByDepartment: (value: number | string) => void
   setFilterByCategory: (value: number | string) => void
   setFilterBySubCategory: (value: number | string) => void
   setIsTableView: (value: boolean) => void
+  pageSize: number
+  currentPage: number
 }): JSX.Element => {
   const [selectedDepartment, setSelectedDepartment] = useState<
     number | string
@@ -50,11 +54,20 @@ const TicketConfigurationOptions = ({
   )
 
   const onViewHandler = () => {
-    setFilterByDepartment(selectedDepartment as number)
-    setFilterByCategory(selectedCategory as number)
-    setFilterBySubCategory(selectedSubCategory as number)
+    // setFilterByDepartment(selectedDepartment as number)
+    // setFilterByCategory(selectedCategory as number)
+    // setFilterBySubCategory(selectedSubCategory as number)
     setShowExportButton(true)
     setIsTableView(true)
+    dispatch(
+      reduxServices.ticketConfiguration.getTicketConfigurationSubCategoryList({
+        endIndex: pageSize * currentPage,
+        startIndex: pageSize * (currentPage - 1),
+        categoryId: String(selectedCategory),
+        departmentId: String(selectedDepartment),
+        subCategoryId: String(selectedSubCategory),
+      }),
+    )
   }
 
   useEffect(() => {

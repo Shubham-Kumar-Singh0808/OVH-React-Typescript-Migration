@@ -101,6 +101,8 @@ const TicketConfiguration = (): JSX.Element => {
               setFilterByCategory={setFilterByCategory}
               setFilterBySubCategory={setFilterBySubCategory}
               setIsTableView={setIsTableView}
+              pageSize={pageSize}
+              currentPage={currentPage}
             />
             {isLoading !== ApiLoadingState.loading ? (
               <SubCategoryListTable
