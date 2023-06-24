@@ -126,14 +126,14 @@ const AddProjectRequest = ({
     }
   }, [projectRequest])
 
-  console.log(checkListValid)
-
   const handleClear = () => {
     setProjectManager('')
     setProjectName('')
     setProjectRequest(initProjectRequest)
     setShowEditor(false)
     setShowEditor(false)
+    setEmailErrorMsgCC(false)
+    setEmailErrorMsgBCC(false)
     setTimeout(() => {
       setShowEditor(true)
     }, 100)

@@ -333,7 +333,7 @@ const ProjectReportsTable = ({
     <>
       {isProjectLoading !== ApiLoadingState.loading ? (
         <>
-          <CTable striped responsive className="ps-1 pe-1 align-middle">
+          <CTable striped className="ps-1 pe-1 align-middle">
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell className="text-center"></CTableHeaderCell>

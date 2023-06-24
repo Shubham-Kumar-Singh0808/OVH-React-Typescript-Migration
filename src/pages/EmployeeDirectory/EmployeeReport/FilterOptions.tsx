@@ -147,7 +147,7 @@ const FilterOptions = ({
             value={category}
             onChange={onChangeCategoryHandler}
           >
-            {categoryOptions.map((opt, index) => (
+            {categoryOptions?.map((opt, index) => (
               <option key={index} value={opt.value}>
                 {opt.label}
               </option>

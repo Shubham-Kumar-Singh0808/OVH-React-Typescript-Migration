@@ -183,9 +183,13 @@ const AssetListFilters = ({
   const onHandleEndDate = (value: Date) => {
     setToDate(moment(value).format(dateFormat))
   }
+
+  const assets = useTypedSelector(
+    reduxServices.assetList.selectors.allAssetListData,
+  )
   return (
     <>
-      <CRow className="justify-content-end mt-20">
+      <CRow className="justify-content-end mt-4">
         <CRow>
           <CCol sm={2} md={1} className="text-end">
             <CFormLabel className="mt-2">
@@ -359,7 +363,7 @@ const AssetListFilters = ({
             <></>
           )}
 
-          <CCol className="text-end" sm={3}>
+          <CCol className="text-end mt-2" sm={3}>
             <CButton
               color="info"
               className="text-white"
@@ -370,7 +374,19 @@ const AssetListFilters = ({
               Add
             </CButton>
           </CCol>
-
+          {assets?.length > 0 && (
+            <CCol className="text-end" md={12}>
+              <CButton
+                color="info"
+                className="text-white"
+                size="sm"
+                data-testid="export-button-download"
+              >
+                <i className="fa fa-plus me-1"></i>
+                Click to Export
+              </CButton>
+            </CCol>
+          )}
           <CRow className="mt-4 mb-4">
             <CCol sm={9} md={{ offset: 3 }}>
               <CButton
@@ -398,7 +414,7 @@ const AssetListFilters = ({
               </CButton>
             </CCol>
           </CRow>
-          <CRow className="justify-content-end">
+          <CRow className="justify-content-end p-0">
             <CCol sm={3}>
               <label className="search_emp">
                 <CFormCheck
@@ -414,8 +430,8 @@ const AssetListFilters = ({
             </CCol>
           </CRow>
 
-          <CRow className="gap-2 d-md-flex justify-content-md-end">
-            <CCol sm={3} md={3}>
+          <CRow className="gap-2 d-md-flex justify-content-md-end p-0">
+            <CCol sm={3} className="p-0" md={3}>
               <CInputGroup className="global-search me-0">
                 <CFormInput
                   disabled={!isButtonEnabled}

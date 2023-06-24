@@ -110,14 +110,21 @@ import {
   SQAAuditReportApi,
   NotificationsApi,
   JobOpeningsApi,
+  IntervieweeDetailsApi,
+  CandidateListApi,
   VendorListApi,
   ChangeReporteesApi,
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
+  CategoryListApi,
   AssetListApi,
   AssetTransationListApi,
   ProductSpecificationListApi,
+  ExpenseSubCategoryListApi,
+  ProfileRecruitmentHistoryApi,
+  UpComingJoinListApi,
+  InterviewStatusReportApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -225,6 +232,10 @@ export const qualificationsApiConfig: EmployeeQualificationsApi = {
 export const profileHistoryConfig: ProfileHistoryApi = {
   getprofileHistory: apiPrefix + '/Employee/getEmployeeProfileHistory',
 }
+export const profileRecruitmentHistoryApiConfig: ProfileRecruitmentHistoryApi =
+  {
+    getEmployeeHistory: apiPrefix + '/Employee/getEmployeeHistory',
+  }
 export const employeeCertificationsApiConfig: EmployeeCertificationsApi = {
   getEmployeeCertificates: apiPrefix + '/Employee/certification/',
   getTechnologies: apiPrefix + '/jobapplicant/getAllTechnology',
@@ -844,6 +855,11 @@ export const projectChangeRequestApiConfig: ProjectChangeRequestApi = {
 }
 export const projectMileStoneApiConfig: ProjectMilestoneApi = {
   mileStonesList: apiPrefix + '/project-mgmt/mileStonesList',
+  mileStoneHistory: apiPrefix + '/milestoneaudit/',
+  getMilestone: apiPrefix + '/project-mgmt/getMilestone',
+  milestoneNewsFeed: apiPrefix + '/projectnewsfeed/milestoneNewsFeed/',
+  uploadImage: apiPrefix + '/projectnewsfeed/uploadImage',
+  postMileStone: apiPrefix + '/projectnewsfeed/',
 }
 export const projectInvoicesApiConfig: ProjectInvoiceApi = {
   getClosedMilestonesAndCRs:
@@ -923,6 +939,16 @@ export const KRAApiConfig: KRAApi = {
 }
 export const myReviewApiConfig: MyReviewApi = {
   getEmployeePerformanceReview: apiPrefix + '/handbookItem/get',
+  getAppraisalForm: apiPrefix + '/appraisal/AppraisalForm',
+  getExistingAppraisalForm: apiPrefix + '/appraisal/existingAppraisalForm',
+  getPerformanceRatings: apiPrefix + '/observation-mgnt/getPerformanceRatings',
+  employeeAppraisalForm: apiPrefix + '/appraisal/EmployeeAppraisalForm',
+  employeeAppraisalFormForRating:
+    apiPrefix + '/appraisal/employeeAppraisalFormForRating',
+  saveReviewComments: apiPrefix + '/appraisal/saveReviewComments',
+  getReviewComments: apiPrefix + '/appraisal/getReviewComments',
+  appraisalConfirmation: apiPrefix + '/appraisal/appraisalConfirmation',
+  closeAppraisalForm: apiPrefix + 'appraisal/closeAppraisalForm',
 }
 export const PipListApiConfig: PIPListApi = {
   getAllPIPList: apiPrefix + '/PIPManagement/getAllPIPList',
@@ -1040,6 +1066,57 @@ export const assetTransactionListConfig: AssetTransationListApi = {
   getAssetTransactionList:
     apiPrefix + '/assetManagement/getTransactionalHistory',
 }
+export const categoryListApiConfig: CategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  addCategory: apiPrefix + '/ExpenseManagement/addCategory',
+  checkForDuplicateCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateCategory',
+  editCategory: apiPrefix + '/ExpenseManagement/editCategory',
+  updateCategory: apiPrefix + '/ExpenseManagement/updateCategory',
+  deleteCategory: apiPrefix + '/ExpenseManagement/deleteCategory',
+}
+
+export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
+  timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
+  saveInitialComments: apiPrefix + '/jobapplicant/jobAdmin/saveInitialComments',
+  updateCandidateInterviewStatus:
+    apiPrefix + '/jobapplicant/jobAdmin/updateCandidateInterviewStatus',
+  empScheduleInterviewDetails:
+    apiPrefix + '/jobapplicant/empScheduleInterviewDetails',
+  updateInterview: apiPrefix + '/jobapplicant/jobAdmin/updateInterview',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  interviewRoundCount: apiPrefix + '/jobapplicant/interviewRoundCount',
+  reScheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/reScheduleInterview',
+  scheduleInterview: apiPrefix + '/jobapplicant/jobAdmin/scheduleInterview',
+  sendRejectedMessagetoCandidate:
+    apiPrefix + '/jobapplicant/sendRejectedMessagetoCandidate',
+}
+export const CandidateListApiConfig: CandidateListApi = {
+  searchScheduledCandidate:
+    apiPrefix + '/jobapplicant/jobAdmin/searchScheduledCandidate',
+  getEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getCountryWiseCandidatesList:
+    apiPrefix + '/jobapplicant/jobAdmin/getCountryWiseCandidatesList',
+  deleteCandidate: apiPrefix + '/jobapplicant/jobAdmin/deleteCandidate',
+  getAllJobVacanciesList: apiPrefix + '/jobvacancy/getAllJobVacancies',
+  getAllEmployeeDetails: apiPrefix + '/jobapplicant/getAllEmployeeDetails',
+  checkCandidateEmail: apiPrefix + '/jobapplicant/checkeamil',
+  checkCandidateMobileNumber:
+    apiPrefix + '/jobapplicant/isCandidateMobileNumberExists',
+  getAllCompaniesData: apiPrefix + '/jobapplicant/getAllCompaniesData',
+  addNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/addNewCandidate',
+  uploadCandidateResume: apiPrefix + '/fileUpload/uploadCandidateResume',
+  addTechnology: apiPrefix + '/jobapplicant/addtechnology',
+  deleteTechnology: apiPrefix + '/jobapplicant/deleteTechnology',
+  editCandidateData: apiPrefix + '/jobapplicant/jobAdmin/editCandidate',
+  isEditCandidateMailExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMailExists',
+  isEditCandidateMobileNumberExists:
+    apiPrefix + '/jobapplicant/isEditCandidateMobileNumberExists',
+  editNewCandidate: apiPrefix + '/jobapplicant/jobAdmin/editNewCandidate',
+  downloadFile: apiPrefix + '/jobapplicant/downloadFile',
+}
 
 export const GetAssetListConfig: AssetListApi = {
   getAllLookUps: apiPrefix + '/assetManagement/getAllLookUps',
@@ -1064,3 +1141,29 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
+
+export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
+  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
+  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
+  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
+  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
+  checkForDuplicateSubCategory:
+    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
+  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
+  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}
+export const getUpComingJoinListConfig: UpComingJoinListApi = {
+  getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
+  getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+}
+
+export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
+  getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
+  getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',
+  getInterviewStatusReport:
+    apiPrefix + '/jobapplicant/jobAdmin/interviewStatusReport',
+  exportInterviewStatusReport:
+    apiPrefix + '/jobapplicant/exportInterviewStatusReport',
+  exportInterviewerDetails:
+    apiPrefix + '/jobapplicant/exportInterviewerDetails',
+}

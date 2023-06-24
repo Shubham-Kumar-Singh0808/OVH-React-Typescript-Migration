@@ -39,6 +39,7 @@ import { ProjectName } from '../../Project/ProjectComponent/ProjectName'
 import { dateFormat } from '../../../../constant/DateFormat'
 import { healthList } from '../../../../constant/constantData'
 import { ckeditorConfig } from '../../../../utils/ckEditorUtils'
+import OToast from '../../../../components/ReusableComponent/OToast'
 
 const ApproveProjectForm = (): JSX.Element => {
   const initApproveProject = {} as ApproveProjectRequest
@@ -352,6 +353,10 @@ const ApproveProjectForm = (): JSX.Element => {
     setShowTotalEffort(total)
   }, [mileStone])
 
+  const ToastElement = (
+    <OToast toastColor="success" toastMessage="Project Added Successfully." />
+  )
+
   const handleUpdateSubmit = async () => {
     const payload = {
       ...approveProject,
@@ -366,7 +371,48 @@ const ApproveProjectForm = (): JSX.Element => {
         newProjectResponse,
       )
     ) {
+      dispatch(reduxServices.app.actions.addToast(ToastElement))
       history.push('/projectreport')
+      setApproveProject({
+        id: 0,
+        projectName: '',
+        managerId: 0,
+        startdate: '',
+        enddate: '',
+        description: '',
+        requiredResources: '',
+        status: '',
+        managerName: '',
+        client: '',
+        type: '',
+        clientId: '',
+        newClient: '',
+        requestedBy: '',
+        technology: '',
+        address: '',
+        personName: null,
+        email: '',
+        country: '',
+        organization: null,
+        intrnalOrNot: true,
+        cc: '',
+        bcc: '',
+        model: '',
+        checkListExist: true,
+        projectContactPerson: '',
+        projectContactEmail: '',
+        billingContactPerson: '',
+        billingContactPersonEmail: '',
+        projectRequestId: 0,
+        projectRequestMilestoneDTO: [],
+        platform: '',
+        domain: '',
+        health: '',
+      })
+      setMileStone([])
+      setProjectName('')
+      setProjectManager('')
+      setShowTotalEffort(0)
     }
   }
 

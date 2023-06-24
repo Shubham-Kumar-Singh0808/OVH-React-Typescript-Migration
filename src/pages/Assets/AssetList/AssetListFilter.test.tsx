@@ -84,7 +84,6 @@ describe('Asset List Filter Options Component Testing with data', () => {
   test('should render Export button in the component', () => {
     expect(screen.getByTestId('Add-export-button')).toBeTruthy()
   })
-
   test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
     const searchBtn = screen.getByTestId('ch-searchByEmployee')
     fireEvent.click(searchBtn)
