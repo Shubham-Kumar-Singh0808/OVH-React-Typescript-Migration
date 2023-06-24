@@ -10,6 +10,7 @@ import { mockGetAllPipList } from '../../../../test/data/pipListData'
 
 const mockSetTogglePage = jest.fn()
 const clearButton = 'clear-btn'
+const placeHolder = 'Employee Name'
 
 describe('Employee Accounts Table Component Testing', () => {
   beforeEach(() => {
@@ -84,5 +85,10 @@ describe('Employee Accounts Table Component Testing', () => {
         initData={process.env.JEST_WORKER_ID !== undefined && <p>Test</p>}
       />,
     )
+  })
+  test('should be able to call onSelect', () => {
+    const input = screen.getByPlaceholderText(placeHolder)
+    fireEvent.select(input, { target: { value: 'Ajay Ray' } })
+    expect(input).toHaveValue('Ajay Ray')
   })
 })

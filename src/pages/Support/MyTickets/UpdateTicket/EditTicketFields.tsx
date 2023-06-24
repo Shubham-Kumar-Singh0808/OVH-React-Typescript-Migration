@@ -266,6 +266,7 @@ const UpdateTicketEditFields = ({
                 onChange: CKEditorEventHandler<'change'>
               }>
                 config={ckeditorConfig}
+                initData={editTicketDetails.description}
                 debug={true}
                 onChange={({ editor }) => {
                   onChangeDescriptionHandler(editor.getData().trim())

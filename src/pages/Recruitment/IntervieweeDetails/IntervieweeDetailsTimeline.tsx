@@ -29,11 +29,14 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
               className="sh-timeline-card"
               data-testid="recruitHistory-timelineCard"
             >
-              <div className="sh-timeline-timestamp">
-                {data?.interviewDate}
-                <div className="timeline-time">{data?.interviewTime}</div>
+              <div className="sh-timeline-card-list">
+                <div className="sh-timeline-timestamp mb-0">
+                  {data?.interviewDate}
+                </div>
+                <div className="timeline-time text-center">
+                  {data?.interviewTime}
+                </div>
               </div>
-
               <div className="sh-timeline-content">
                 <div className="sh-timeline-header mb-4 clearfix d-flex flex-row flex-wrap">
                   <div>
@@ -42,7 +45,7 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                       textColor="white"
                       className="me-2 p-1 px-2"
                     >
-                      {timeLineListSelector.cycleDTOs.length - index}
+                      {timeLineListSelector?.pendingInterviewStatus}
                     </CBadge>
                   </div>
                   <div>
@@ -54,26 +57,30 @@ const IntervieweeDetailsTimeline = (): JSX.Element => {
                         cursor: 'pointer',
                       }}
                     >
-                      {data?.interviewers} -
+                      {data?.updatedBy} -{' '}
                     </h4>
                   </div>
                   <div>
-                    <RatingStarValue rating={data.rating} />
+                    {data.rating === null ? (
+                      <></>
+                    ) : (
+                      <RatingStarValue rating={data.rating} />
+                    )}
                   </div>
                 </div>
                 <div className="sh-timeline-body">
                   <>
                     {result}
                     {data.proactiveComments != null ? (
-                      <div className="mb-1">
-                        <CFormLabel className="col-form-label p-0">
-                          <blockquote className="interview-blockquote bq-open">
+                      <>
+                        <blockquote className="interview-blockquote bq-open">
+                          <CFormLabel className="col-form-label p-0">
                             Proactive :
-                          </blockquote>
-                        </CFormLabel>
-                        &nbsp;
-                        {data.proactiveComments}
-                      </div>
+                          </CFormLabel>
+                          &nbsp;
+                          {data.proactiveComments}
+                        </blockquote>
+                      </>
                     ) : (
                       <></>
                     )}
