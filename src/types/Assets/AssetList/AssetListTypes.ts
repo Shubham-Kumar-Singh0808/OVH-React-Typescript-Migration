@@ -18,7 +18,10 @@ export type AssetListSliceState = {
   isLoading: LoadingState
   manufacturerList: ManufacturerList
   allAssetList: AllAssetsList[]
+  assetHistoryList: AssetHistoryProps[]
   listSize: number
+  currentPage: number
+  pageSize: number
 }
 
 export type ManufacturerList = {
@@ -151,10 +154,41 @@ export type AllAssetListProps = {
   toDate: string
 }
 
+export type AssetProps = {
+  assetId: number
+  searchAssetReference: string
+}
+
+export type AssetHistoryProps = {
+  id: number
+  assetNumber: string
+  productName: string
+  pSpecification: string
+  employeeName: string
+  employeeId: null
+  assignedDate: null
+  description: string
+  status: string
+  date: string
+  updatedBy: string
+  location: string
+  referenceNumber: string
+  vendorName: string
+  vendorId: null
+  assetId: number
+  productId: null
+  multipleSearch: null
+  searchByEmpName: null
+  locationForEmpAssets: null
+  invoiceNumber: string
+  amount: string
+}
+
 export type AssetListTableProps = {
   paginationRange: number[]
   currentPage: number
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }

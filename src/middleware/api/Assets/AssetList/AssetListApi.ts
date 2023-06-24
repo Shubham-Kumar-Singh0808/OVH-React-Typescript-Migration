@@ -2,6 +2,8 @@ import {
   AllAssetListProps,
   AssetTypeChangeList,
   AllAssetData,
+  AssetHistoryProps,
+  AssetProps,
 } from '../../../../types/Assets/AssetList/AssetListTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -37,8 +39,25 @@ const getAllAssetListData = async (
   return response.data
 }
 
+const getAssetHistory = async (
+  props: AssetProps,
+): Promise<AssetHistoryProps[]> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: GetAssetListConfig.getAssetHistory,
+    method: AllowedHttpMethods.get,
+    params: {
+      assetId: props.assetId,
+      searchAssetReference: props.searchAssetReference,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const AssetLitApi = {
   getAssetTypeChangeList,
   getAllAssetListData,
+  getAssetHistory,
 }
 export default AssetLitApi
