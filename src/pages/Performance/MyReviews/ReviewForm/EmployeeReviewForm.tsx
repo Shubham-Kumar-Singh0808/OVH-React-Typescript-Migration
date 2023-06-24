@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react'
-import { CFormText, CRow, CCol, CButton } from '@coreui/react-pro'
+import React, { useEffect, useMemo } from 'react'
+import { CRow, CCol } from '@coreui/react-pro'
 import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
 import EmployeeDiscussionInput from './ReviewFormEmployeeComponents/EmployeeDiscussionInput'
 import RequestDiscussionTimeline from './ReviewFormEmployeeComponents/RequestDiscussionTimeline'
+import ReviewFormClosedDetails from './ReviewFormEmployeeComponents/ReviewFormClosedDetails'
+import FinalButtonDisplay from './ReviewFormEmployeeComponents/FinalButtonDisplay'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { TextDanger } from '../../../../constant/ClassName'
-import {
-  MyReviewAppraisalFormStatus,
-  MyReviewFormStatus,
-} from '../../../../types/Performance/MyReview/myReviewTypes'
+import { MyReviewFormStatus } from '../../../../types/Performance/MyReview/myReviewTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import {
   checkIfEmployeeSubmitButtonIsEnabled,
   checkIfManagerSubmitButtonIsEnabled,
   generateMyReviewTestId,
+  isRequestDiscussionCommentsVisible,
 } from '../MyReviewHelpers'
 import OModal from '../../../../components/ReusableComponent/OModal'
 
@@ -24,7 +22,9 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 const EmployeeReviewForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const apiError = useTypedSelector((state) => state.myReview.error)
-  const isLoading = useTypedSelector((state) => state.myReview.isLoading)
+  const employeeId = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.employeeId,
+  )
   const appraisalForm = useTypedSelector(
     (state) => state.myReview.appraisalForm,
   )
@@ -33,10 +33,6 @@ const EmployeeReviewForm = (): JSX.Element => {
   )
   const myReviewFormStatus = useTypedSelector(
     (state) => state.myReview.myReviewFormStatus,
-  )
-  // used to differentiate between employee and manager
-  const appraisalFormStatusEmpManager = useTypedSelector(
-    (state) => state.myReview.appraisalForm.appraisalFormStatus,
   )
   const myReviewModal = useTypedSelector((state) => state.myReview.modal)
 
@@ -94,6 +90,12 @@ const EmployeeReviewForm = (): JSX.Element => {
           MyReviewFormStatus.completed,
         ),
       )
+    } else if (appraisalFormStatus === MyReviewFormStatus.closed.toString()) {
+      dispatch(
+        reduxServices.myReview.actions.setMyReviewFormStatus(
+          MyReviewFormStatus.closed,
+        ),
+      )
     }
   }, [appraisalForm.formStatus])
 
@@ -115,6 +117,13 @@ const EmployeeReviewForm = (): JSX.Element => {
     dispatch(reduxServices.myReview.actions.setDisplayModal(value))
   }
 
+  // checking if the employee who is logged in is the same of whose review is being shown
+  const isItTheSameEmployee = useMemo(() => {
+    return +employeeId === appraisalForm.employee.id
+  }, [appraisalForm.employee.id])
+
+  console.log(appraisalForm)
+
   return (
     <>
       {apiError === null && (
@@ -125,16 +134,23 @@ const EmployeeReviewForm = (): JSX.Element => {
               <ReviewFormButtons />
             </CCol>
           </CRow>
-          <hr />
+          {
+            // only visible if it was closed by hr department
+            myReviewFormStatus === MyReviewFormStatus.closed && (
+              <>
+                <hr />
+                <ReviewFormClosedDetails />
+              </>
+            )
+          }
           {
             // shown only when discussion request is raised by employee
             requestDiscussionEmployee === true && (
               <div>
                 {
                   // must be visible only to the employee until the employee agrees
-                  appraisalFormStatusEmpManager !==
-                    MyReviewAppraisalFormStatus.NotSubmittedByYou &&
-                    myReviewFormStatus !== MyReviewFormStatus.completed && (
+                  isItTheSameEmployee &&
+                    isRequestDiscussionCommentsVisible(myReviewFormStatus) && (
                       <EmployeeDiscussionInput />
                     )
                 }
@@ -142,19 +158,26 @@ const EmployeeReviewForm = (): JSX.Element => {
               </div>
             )
           }
-          {myReviewFormStatus === MyReviewFormStatus.completed && (
-            <CRow className="justify-content-center">
-              <CCol sm={4}>
-                <CButton
-                  data-testid={generateMyReviewTestId('reviewCompletedBtn')}
-                  className="mt-4 text-white p-2"
-                  style={{ backgroundColor: '#5cb85c' }}
-                >
-                  Review Process Completed
-                </CButton>
-              </CCol>
-            </CRow>
-          )}
+          {
+            // displayed only when closed by hr department
+            myReviewFormStatus === MyReviewFormStatus.closed && (
+              <FinalButtonDisplay
+                buttonColor="danger"
+                buttonText="Review form was closed by HR Department."
+                testId={generateMyReviewTestId('reviewClosedBtn')}
+              />
+            )
+          }
+          {
+            // displayed when acknowledged by employee
+            myReviewFormStatus === MyReviewFormStatus.completed && (
+              <FinalButtonDisplay
+                buttonColor="success"
+                buttonText="Review Process Completed"
+                testId={generateMyReviewTestId('reviewCompletedBtn')}
+              />
+            )
+          }
           <OModal
             visible={myReviewModal?.showModal}
             setVisible={modalVisibleHandler}
@@ -163,14 +186,11 @@ const EmployeeReviewForm = (): JSX.Element => {
             modalFooterClass={myReviewModal?.modalFooterClass}
             modalHeaderClass={myReviewModal?.modalHeaderClass}
             confirmButtonAction={myReviewModal?.confirmBtnAction}
+            modalSize={myReviewModal?.modalSize}
           >
             {myReviewModal?.description}
           </OModal>
         </>
-      )}
-      {apiError === 406 && isLoading === ApiLoadingState.failed && (
-        // user is not allowed as he/she is on probationary period - 406 == not acceptable
-        <CFormText className={TextDanger}>Probationay Error</CFormText>
       )}
     </>
   )

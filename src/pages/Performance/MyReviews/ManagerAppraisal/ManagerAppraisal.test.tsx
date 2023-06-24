@@ -5,6 +5,7 @@ import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import {
   mockInitialManagerAppraisalForm,
   mockPerformanceRatings,
+  myReviewManagerUserAccessToFeatures,
 } from '../../../../test/data/myReviewData'
 import {
   act,
@@ -20,6 +21,8 @@ import {
   getKpisOfKraByKraIndex,
   initialPerformanceRating,
   myReviewTestComments,
+  sortKPIByAlphabeticalOrder,
+  sortKRAByAlphabeticalOrder,
 } from '../MyReviewHelpers'
 
 const managerSaveBtnId = generateMyReviewTestId('managerSaveBtn')
@@ -40,6 +43,14 @@ describe('Manager Appraisal Render', () => {
             myReviewFormStatus: MyReviewFormStatus.saveForEmployee, //will automatically change because of logic
             modal: initialMyReviewModal,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: myReviewManagerUserAccessToFeatures,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeId: 2000, // random but not equal to employee id in the review form
+            },
+          },
         },
       })
     })
@@ -59,20 +70,45 @@ describe('Manager Appraisal Render', () => {
       })
     })
 
+    test('incomplete kpi description save error', () => {
+      const saveBtn = screen.getByTestId(managerSaveBtnId)
+      const kraIndex = 1
+      const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
+      const kpi = getKpisOfKraByKraIndex(
+        mockInitialManagerAppraisalForm,
+        kraIndex,
+      )[0]
+      act(() => {
+        userEvent.click(openKpiBtn)
+      })
+      const kpiComments = screen.getByTestId(
+        generateMyReviewTestId(`${kpi.id}-managerComments`),
+      )
+      act(() => {
+        fireEvent.change(kpiComments, 'lessthan 50 char')
+      })
+      act(() => {
+        userEvent.click(saveBtn)
+      })
+    })
+
     test('submit button functionality', () => {
       const submitBtn = screen.getByTestId(managerSubmitBtnId)
 
       // initial
       expect(submitBtn).toBeDisabled()
-
-      mockInitialManagerAppraisalForm.kra.forEach((kra, kraIndex) => {
+      const sortedKRAs = sortKRAByAlphabeticalOrder(
+        mockInitialManagerAppraisalForm.kra,
+      )
+      sortedKRAs.forEach((kra, kraIndex) => {
         expect(submitBtn).toBeDisabled()
         const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
         act(() => {
           userEvent.click(openKpiBtn)
         })
+        const sortedKPIs = sortKPIByAlphabeticalOrder(kra.kpis)
         // entering the data for each kpi for manager
-        kra.kpis.forEach((kpiItem) => {
+        sortedKPIs.forEach((kpiItem) => {
           const chosenPerformanceRating =
             mockPerformanceRatings[3].rating.toString()
           const managerRating = screen.getByTestId(
@@ -129,32 +165,57 @@ describe('Manager Appraisal Render', () => {
       ).toBeVisible()
     })
 
-    test('manager can see employee self rating and their rating', () => {
-      const managerRating = screen.getByTestId(
-        generateMyReviewTestId('managerRating'),
+    test('close button functionality on top right', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
       )
-      const employeeRating = screen.getByTestId(
-        generateMyReviewTestId('employeeRating'),
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      const submitButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerFinalSubmitBtn'),
       )
-
-      expect(managerRating).toHaveTextContent('N/A')
-      expect(employeeRating).toHaveTextContent(
-        mockInitialManagerAppraisalForm.empAvgRating
-          ? mockInitialManagerAppraisalForm.empAvgRating.toString()
-          : 'N/A',
+      const statusInput = screen.getByTestId(
+        generateMyReviewTestId('delManagerStatusInp'),
       )
-
-      expect(
-        screen.getByTestId(generateMyReviewTestId('employeeRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.employee.fullName} Rating:`,
+      const statusSummary = screen.getByTestId(
+        generateMyReviewTestId('delManagerSummaryInp'),
       )
 
-      expect(
-        screen.getByTestId(generateMyReviewTestId('managerRatingName')),
-      ).toHaveTextContent(
-        `${mockInitialManagerAppraisalForm.manager1Name} Rating:`,
+      expect(submitButton).toBeDisabled()
+
+      expect(statusInput).toHaveValue('')
+      act(() => {
+        userEvent.selectOptions(statusInput, 'Relieved')
+      })
+      expect(statusInput).toHaveValue('Relieved')
+
+      expect(statusSummary).toHaveValue('')
+      act(() => {
+        fireEvent.change(statusSummary, { target: { value: 'test' } })
+      })
+      expect(statusSummary).toHaveValue('test')
+
+      expect(submitButton).toBeEnabled()
+      act(() => {
+        userEvent.click(submitButton)
+      })
+    })
+
+    test('close button modal cancel functionality', () => {
+      const closeButton = screen.getByTestId(
+        generateMyReviewTestId('delManagerCloseBtn'),
       )
+      act(() => {
+        userEvent.click(closeButton)
+      })
+      act(() => {
+        userEvent.click(
+          screen.getByTestId(
+            generateMyReviewTestId('delManagerCancelModalBtn'),
+          ),
+        )
+      })
     })
   })
 })

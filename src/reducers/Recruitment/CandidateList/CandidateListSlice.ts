@@ -1,5 +1,8 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
+import { initialEditCandidateData } from './CandidateListSliceConstants'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
@@ -11,7 +14,28 @@ import {
   GetAllTechnology,
   country,
   viewHandlerProps,
+  AddNewCandidateDTO,
+  UploadCandidateResumeDTO,
+  CurrentAddCandidatePage,
+  IsEditNewCandidateEmailExistsParams,
+  IsEditNewCandidateMobileNumExistsParams,
+  IncomingEditCandidateData,
 } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
+
+export const initialCandidateListState: CandidateListSliceState = {
+  isLoading: ApiLoadingState.idle,
+  listSize: 0,
+  candidateDetails: {} as CandidateLists,
+  allCandidateDetails: [],
+  allCountryDetails: {} as country,
+  empCountries: [],
+  allEmployeeDetailsList: [],
+  getAllTechnology: [],
+  allJobVacancies: { size: 0, list: [] },
+  allCompaniesData: [],
+  currentAddCandidatePage: CurrentAddCandidatePage.addCandidate,
+  editCandidateData: initialEditCandidateData,
+}
 
 const searchScheduledCandidate = createAsyncThunk(
   'candidateList/searchScheduledCandidate',
@@ -70,42 +94,275 @@ const deleteCandidate = createAsyncThunk(
   },
 )
 
-export const initialCandidateListState: CandidateListSliceState = {
-  isLoading: ApiLoadingState.idle,
-  listSize: 0,
-  candidateDetails: {} as CandidateLists,
-  allCandidateDetails: [],
-  allCountryDetails: {} as country,
-  empCountries: [],
-  getAllTechnology: [],
-}
+const getAllJobVacanciesThunk = createAsyncThunk(
+  'candidateList/getAllJobVacanciesThunk',
+  async (_, thunkApi) => {
+    try {
+      return await candidateListApi.getAllJobVacancies({
+        startIndex: null,
+        endIndex: null,
+        searchJobTitle: null,
+        status: null,
+      })
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const checkCandidateEmailThunk = createAsyncThunk(
+  'candidateList/checkCandidateEmailThunk',
+  async (email: string, thunkApi) => {
+    try {
+      return await candidateListApi.checkCandidateEmail(email)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const getAllEmployeeDetailsThunk = createAsyncThunk(
+  'candidateList/getAllEmployeeDetailsThunk',
+  async (_, thunkApi) => {
+    try {
+      return await candidateListApi.getAllEmployeeDetails()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const checkCandidateMobileNumberThunk = createAsyncThunk(
+  'candidateList/checkCandidateMobileNumberThunk',
+  async (candidateMobileNumber: string, thunkApi) => {
+    try {
+      return await candidateListApi.checkCandidateMobileNumber(
+        candidateMobileNumber,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const getAllCompaniesDataThunk = createAsyncThunk(
+  'candidateList/getAllCompaniesDataThunk',
+  async (_, thunkApi) => {
+    try {
+      return await candidateListApi.getAllCompaniesData()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addNewCandidateThunk = createAsyncThunk(
+  'candidateList/addNewCandidate',
+  async (finalData: AddNewCandidateDTO, thunkApi) => {
+    try {
+      return await candidateListApi.addNewCandidate(finalData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const uploadCandidateResumeThunk = createAsyncThunk(
+  'candidateList/uploadCandidateResumeThunk',
+  async (data: UploadCandidateResumeDTO, thunkApi) => {
+    try {
+      return await candidateListApi.uploadCandidateResume(data)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const addTechnologyThunk = createAsyncThunk(
+  'candidateList/addTechnologyThunk',
+  async (technology: string, thunkApi) => {
+    try {
+      return await candidateListApi.addTechnology(technology)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const deleteTechnologyThunk = createAsyncThunk(
+  'candidateList/deleteTechnologyThunk',
+  async (technologyId: number, thunkApi) => {
+    try {
+      return await candidateListApi.deleteTechnology(technologyId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const editCandidateDataThunk = createAsyncThunk(
+  'candidateList/editCandidateDataThunk',
+  async (candidateId: number, thunkApi) => {
+    try {
+      return await candidateListApi.editCandidateData(candidateId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const isEditNewCandidateEmailExistsThunk = createAsyncThunk(
+  'candidateList/isEditNewCandidateEmailExistsThunk',
+  async (finalParams: IsEditNewCandidateEmailExistsParams, thunkApi) => {
+    try {
+      return await candidateListApi.isEditNewCandidateEmailExists(finalParams)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const isEditNewCandidateMobileNumExistsThunk = createAsyncThunk(
+  'candidateList/isEditNewCandidateMobileNumExistsThunk',
+  async (finalParams: IsEditNewCandidateMobileNumExistsParams, thunkApi) => {
+    try {
+      return await candidateListApi.isEditNewCandidateMobileNumExists(
+        finalParams,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const editNewCandidateThunk = createAsyncThunk(
+  'candidateList/editNewCandidateThunk',
+  async (finalData: IncomingEditCandidateData, thunkApi) => {
+    try {
+      return await candidateListApi.editNewCandidate(finalData)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
 
 const candidateListSlice = createSlice({
   name: 'candidateList',
   initialState: initialCandidateListState,
-  reducers: {},
+  reducers: {
+    setCurrentAddCandidatePage: (
+      state,
+      action: PayloadAction<CurrentAddCandidatePage>,
+    ) => {
+      state.currentAddCandidatePage = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchScheduledCandidate.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.allCandidateDetails = action.payload.list
         state.listSize = action.payload.size
       })
+      .addCase(getAllJobVacanciesThunk.fulfilled, (state, action) => {
+        state.allJobVacancies = action.payload
+      })
       .addCase(getCountryWiseCandidatesList.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.allCandidateDetails = action.payload.list
       })
       .addCase(getEmpCountries.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.empCountries = action.payload
       })
       .addCase(getTechnology.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.getAllTechnology = action.payload
       })
-      .addMatcher(isAnyOf(searchScheduledCandidate.pending), (state) => {
-        state.isLoading = ApiLoadingState.loading
+      .addCase(getAllEmployeeDetailsThunk.fulfilled, (state, action) => {
+        state.allEmployeeDetailsList = action.payload
       })
+      .addCase(getAllCompaniesDataThunk.fulfilled, (state, action) => {
+        state.allCompaniesData = action.payload
+      })
+      .addCase(editCandidateDataThunk.fulfilled, (state, action) => {
+        state.editCandidateData = action.payload
+      })
+      .addMatcher(
+        isAnyOf(
+          searchScheduledCandidate.fulfilled,
+          getAllJobVacanciesThunk.fulfilled,
+          getCountryWiseCandidatesList.fulfilled,
+          getEmpCountries.fulfilled,
+          getTechnology.fulfilled,
+          getAllEmployeeDetailsThunk.fulfilled,
+          checkCandidateMobileNumberThunk.fulfilled,
+          getAllCompaniesDataThunk.fulfilled,
+          addNewCandidateThunk.fulfilled,
+          addTechnologyThunk.fulfilled,
+          deleteTechnologyThunk.fulfilled,
+          editCandidateDataThunk.fulfilled,
+          isEditNewCandidateEmailExistsThunk.fulfilled,
+          isEditNewCandidateMobileNumExistsThunk.fulfilled,
+          editNewCandidateThunk.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          searchScheduledCandidate.rejected,
+          getAllJobVacanciesThunk.rejected,
+          getCountryWiseCandidatesList.rejected,
+          getEmpCountries.rejected,
+          getTechnology.rejected,
+          getAllEmployeeDetailsThunk.rejected,
+          checkCandidateMobileNumberThunk.rejected,
+          getAllCompaniesDataThunk.rejected,
+          addNewCandidateThunk.rejected,
+          addTechnologyThunk.rejected,
+          deleteTechnologyThunk.rejected,
+          editCandidateDataThunk.rejected,
+          isEditNewCandidateEmailExistsThunk.rejected,
+          isEditNewCandidateMobileNumExistsThunk.rejected,
+          editNewCandidateThunk.rejected,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.failed
+        },
+      )
+      .addMatcher(
+        isAnyOf(
+          searchScheduledCandidate.pending,
+          getAllJobVacanciesThunk.pending,
+          getCountryWiseCandidatesList.pending,
+          getEmpCountries.pending,
+          getTechnology.pending,
+          getAllEmployeeDetailsThunk.pending,
+          checkCandidateMobileNumberThunk.pending,
+          getAllCompaniesDataThunk.pending,
+          addNewCandidateThunk.pending,
+          addTechnologyThunk.pending,
+          deleteTechnologyThunk.pending,
+          editCandidateDataThunk.pending,
+          isEditNewCandidateEmailExistsThunk.pending,
+          isEditNewCandidateMobileNumExistsThunk.pending,
+          editNewCandidateThunk.pending,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.loading
+        },
+      )
   },
 })
 const isLoading = (state: RootState): LoadingState =>
@@ -128,6 +385,19 @@ export const candidateListThunk = {
   getTechnology,
   getCountryWiseCandidatesList,
   deleteCandidate,
+  getAllJobVacanciesThunk,
+  getAllEmployeeDetailsThunk,
+  checkCandidateEmailThunk,
+  checkCandidateMobileNumberThunk,
+  getAllCompaniesDataThunk,
+  addNewCandidateThunk,
+  uploadCandidateResumeThunk,
+  addTechnologyThunk,
+  deleteTechnologyThunk,
+  editCandidateDataThunk,
+  isEditNewCandidateEmailExistsThunk,
+  isEditNewCandidateMobileNumExistsThunk,
+  editNewCandidateThunk,
 }
 
 export const candidateListSelectors = {

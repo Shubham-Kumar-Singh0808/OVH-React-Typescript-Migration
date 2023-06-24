@@ -7,6 +7,8 @@ import {
   getKpisOfKraByKraIndex,
   initialPerformanceRating,
   myReviewTestComments,
+  sortKPIByAlphabeticalOrder,
+  sortKRAByAlphabeticalOrder,
 } from './MyReviewHelpers'
 import {
   act,
@@ -78,13 +80,35 @@ describe('Employee Review Form', () => {
       ).toHaveTextContent(chosenKpi.name)
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-description')),
-      ).toHaveTextContent(chosenKpi.description)
+      ).toHaveTextContent(chosenKpi.description ?? 'N/A')
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-frequency')),
-      ).toHaveTextContent(chosenKpi.frequency)
+      ).toHaveTextContent(chosenKpi.frequency ?? 'N/A')
       expect(
         screen.getByTestId(generateMyReviewTestId('kpiDesModal-target')),
       ).toHaveTextContent(chosenKpi.target ? chosenKpi.target : 'N/A')
+    })
+
+    test('incomplete kpi description save error', () => {
+      const saveBtn = screen.getByTestId(employeeInitialSaveBtn)
+      const kraIndex = 1
+      const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
+      const kpi = getKpisOfKraByKraIndex(
+        mockInitialEmployeeAppraisalForm,
+        kraIndex,
+      )[0]
+      act(() => {
+        userEvent.click(openKpiBtn)
+      })
+      const kpiComments = screen.getByTestId(
+        generateMyReviewTestId(`${kpi.id}-empComments`),
+      )
+      act(() => {
+        fireEvent.change(kpiComments, 'less than 50 char')
+      })
+      act(() => {
+        userEvent.click(saveBtn)
+      })
     })
 
     test('save functionality', () => {
@@ -103,15 +127,19 @@ describe('Employee Review Form', () => {
 
     test('submit button functionality', () => {
       const submitBtn = screen.getByTestId(employeeInitialSubmitBtn)
-      mockInitialEmployeeAppraisalForm.kra.forEach((kra, kraIndex) => {
+      const sortedKRAs = sortKRAByAlphabeticalOrder(
+        mockInitialEmployeeAppraisalForm.kra,
+      )
+      sortedKRAs.forEach((kra, kraIndex) => {
         expect(submitBtn).toBeDisabled()
         //opening each kra
         const openKpiBtn = screen.getByTestId(`myReview-kraOpen-${kraIndex}`)
         act(() => {
           userEvent.click(openKpiBtn)
         })
+        const sortedKPIs = sortKPIByAlphabeticalOrder(kra.kpis)
         // entering value for all kpi of each kra
-        kra.kpis.forEach((kpiItem) => {
+        sortedKPIs.forEach((kpiItem) => {
           const ratingTestId = `${kpiItem.id}-empRating`
           const commentsTestId = `${kpiItem.id}-empComments`
           const mockRating = mockPerformanceRatings[2].rating.toString()
@@ -279,6 +307,54 @@ describe('Employee Review Form', () => {
       expect(
         screen.getByTestId(generateMyReviewTestId('reviewCompletedBtn')),
       ).toBeVisible()
+    })
+  })
+
+  describe('closed appraisal form', () => {
+    beforeEach(() => {
+      render(<MyReview />, {
+        preloadedState: {
+          myReview: {
+            error: null,
+            isLoading: ApiLoadingState.succeeded,
+            appraisalForm: {
+              ...mockCompletedEmployeeAppraisalForm,
+              formStatus: MyReviewFormStatus.closed,
+              closedSummary: 'Relievved testiing postion',
+              closedOn: '20/06/2023',
+              closedStatus: 'Relieved',
+              closedBy: 'Siva Alapati',
+            },
+            reviewComments: mockReviewComments,
+            myReviewFormStatus: MyReviewFormStatus.saveForEmployee,
+          },
+          authentication: {
+            authenticatedUser: {
+              employeeId: mockCompletedEmployeeAppraisalForm.employee.id,
+            },
+          },
+        },
+      })
+    })
+    afterEach(cleanup)
+    screen.debug()
+
+    test('details rendered', () => {
+      expect(
+        screen.getByTestId(generateMyReviewTestId('reviewClosedBtn')),
+      ).toBeVisible()
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedOn')),
+      ).toHaveValue('20/06/2023')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedStatus')),
+      ).toHaveTextContent('Relieved')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedSummary')),
+      ).toHaveTextContent('Relievved testiing postion')
+      expect(
+        screen.getByTestId(generateMyReviewTestId('finalClosedBy')),
+      ).toHaveTextContent('Siva Alapati')
     })
   })
 })

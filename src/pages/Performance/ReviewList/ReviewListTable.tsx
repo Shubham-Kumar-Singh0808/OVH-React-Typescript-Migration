@@ -65,6 +65,12 @@ const ReviewListTable = (props: ReviewListTableProps): JSX.Element => {
           {'Review Pending'}
         </CBadge>
       )
+    } else if (status === MyReviewFormStatus.closed.toString()) {
+      return (
+        <CBadge color="success" className="review-status">
+          {'Closed'}
+        </CBadge>
+      )
     }
     return (
       <CBadge color="danger" className="review-status">

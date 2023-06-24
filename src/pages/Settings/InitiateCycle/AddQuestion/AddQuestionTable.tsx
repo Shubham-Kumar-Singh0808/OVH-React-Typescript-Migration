@@ -193,7 +193,7 @@ const AddQuestionTable = ({
         modalHeaderClass="d-none"
       >
         <span className="descriptionField">
-          <div
+          <p
             dangerouslySetInnerHTML={{
               __html: questionPopUp,
             }}

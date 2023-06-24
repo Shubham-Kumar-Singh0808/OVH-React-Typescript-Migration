@@ -125,6 +125,9 @@ export interface PersonalInfoApi extends ApiBase {
 export interface ProfileHistoryApi extends ApiBase {
   getprofileHistory: string
 }
+export interface ProfileRecruitmentHistoryApi extends ApiBase {
+  getEmployeeHistory: string
+}
 export interface BasicInfoApi extends ApiBase {
   defaultPicByGender: string
   updateEmployeeDetails: string
@@ -767,6 +770,7 @@ export interface MyReviewApi extends ApiBase {
   saveReviewComments: string
   getReviewComments: string
   appraisalConfirmation: string
+  closeAppraisalForm: string
 }
 
 export interface PIPListApi extends ApiBase {
@@ -864,6 +868,11 @@ export interface IntervieweeDetailsApi extends ApiBase {
   updateCandidateInterviewStatus: string
   empScheduleInterviewDetails: string
   updateInterview: string
+  getAllEmployeeDetails: string
+  interviewRoundCount: string
+  reScheduleInterview: string
+  scheduleInterview: string
+  sendRejectedMessagetoCandidate: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string
@@ -871,6 +880,20 @@ export interface CandidateListApi extends ApiBase {
   getAllTechnology: string
   getCountryWiseCandidatesList: string
   deleteCandidate: string
+  getAllJobVacanciesList: string
+  getAllEmployeeDetails: string
+  checkCandidateEmail: string
+  checkCandidateMobileNumber: string
+  getAllCompaniesData: string
+  addNewCandidate: string
+  uploadCandidateResume: string
+  addTechnology: string
+  deleteTechnology: string
+  editCandidateData: string
+  isEditCandidateMailExists: string
+  isEditCandidateMobileNumberExists: string
+  editNewCandidate: string
+  downloadFile: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -907,6 +930,15 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   deleteVendorDetails: string
 }
+
+export interface CategoryListApi extends ApiBase {
+  getCategoryList: string
+  addCategory: string
+  checkForDuplicateCategory: string
+  editCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
 export interface ProductSpecificationListApi extends ApiBase {
   getAllProductSpecifications: string
   getassetTypeChangeList: string
@@ -916,4 +948,25 @@ export interface ProductSpecificationListApi extends ApiBase {
   addProductSpecifications: string
   deleteProductSpecification: string
   updateProductSpecification: string
+}
+
+export interface ExpenseSubCategoryListApi extends ApiBase {
+  getCategoryList: string
+  getSubCategoryList: string
+  addSubCategoryList: string
+  editSubCategory: string
+  checkForDuplicateSubCategory: string
+  updateSubCategory: string
+  deleteSubCategory: string
+}
+export interface UpComingJoinListApi extends ApiBase {
+  getUpcomingJoineeList: string
+  getEmployeeDepartments: string
+}
+export interface InterviewStatusReportApi extends ApiBase {
+  getAllTechnology: string
+  getAllEmpCountries: string
+  getInterviewStatusReport: string
+  exportInterviewStatusReport: string
+  exportInterviewerDetails: string
 }
