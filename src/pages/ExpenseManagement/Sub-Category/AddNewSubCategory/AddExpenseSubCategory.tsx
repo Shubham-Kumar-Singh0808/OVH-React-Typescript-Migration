@@ -170,9 +170,14 @@ const AddExpenseSubCategory = (): JSX.Element => {
             value={expenseCategoryName}
           >
             <option value={''}>Select Category</option>
-            {expenseCategoryNames &&
-              expenseCategoryNames?.length > 0 &&
-              expenseCategoryNames?.map((categoryNames, index) => (
+            {expenseCategoryNames
+              .slice()
+              .sort((categories1, categories2) =>
+                categories1.categoryName.localeCompare(
+                  categories2.categoryName,
+                ),
+              )
+              ?.map((categoryNames, index) => (
                 <option key={index} value={categoryNames.id}>
                   {categoryNames.categoryName}
                 </option>
