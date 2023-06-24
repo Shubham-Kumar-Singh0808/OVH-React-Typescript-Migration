@@ -169,6 +169,21 @@ const CandidateOffer = (): JSX.Element => {
         ),
       )
       window.location.href = '/upcomingjoinlist'
+    } else if (
+      reduxServices.addNewCandidate.getAddNewJoineeData.rejected.match(
+        addCandidate,
+      ) &&
+      addCandidate.payload === 500
+    ) {
+      dispatch(
+        reduxServices.app.actions.addToast(
+          <OToast
+            toastColor="danger"
+            toastMessage="            
+            joinee already added."
+          />,
+        ),
+      )
     }
   }
 
