@@ -63,7 +63,7 @@ const ProcessTailorTableRow = ({
         <CTableDataCell
           data-testid={`processWaivedCount-${thisProcess.processHeadId}`}
         >
-          {processedString(thisProcess.waivedCount)}
+          {thisProcess.waivedCount || '0'}
         </CTableDataCell>
       </CTableRow>
       {currentOpenedSubProcess.processHeadId === thisProcess.processHeadId && (

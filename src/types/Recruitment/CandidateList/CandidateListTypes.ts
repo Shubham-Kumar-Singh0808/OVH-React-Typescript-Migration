@@ -25,6 +25,7 @@ export type sourceLookUp = {
   displayOrder: null
   sourceLookUpId: number
 }
+// used in other components - used in interview status report
 export type country = {
   id: number
   name: string
@@ -98,6 +99,66 @@ export interface IncomingCompaniesData {
   companyName: string
 }
 
+// to differentitate add technology and add candidate page
+export enum CurrentAddCandidatePage {
+  addCandidate = 'Add New Candidate',
+  addTechnology = 'Add New Technology',
+}
+
+export interface IncomingEditCandidateData {
+  candidateName: string
+  candidateFirstName: string
+  candidateLastName: string
+  candidateEmail: string
+  experience: string
+  skills: string
+  mobile: string
+  appliedFor: CandidateAppliedForList
+  sourceType: string
+  sourceName: string
+  uploadResume: null | string
+  otherDocs: null
+  status: string
+  candidateId: number | string
+  appliedForLookUp: string
+  vacancyId: number
+  scheduleDate: null
+  scheduleTime: null | string
+  interviewerEmailid: null
+  receipentEmailId: null
+  description: null
+  scheduleFlag: null | string
+  interviewRound: null
+  interviewersDTOList: null | Array<string>
+  interviewerId: null
+  interviewType: null
+  interviewStatus: null
+  dob: string
+  timelineStatus: null
+  technology: string
+  recruiter: null | string
+  ctc: string
+  ectc: string
+  np: string
+  reason: string
+  skypeId: null | string
+  currentEmployer: null | string
+  currentLocation: string
+  sendMailToCandidate: null
+  sendMailToInterviewer: null
+  sendMessageToCandidate: null
+  sendMessageToInterviewer: null
+  jobTypeName: string
+  pan: null | string
+  adhar: null | string
+  linkedin: null | string
+  countryId: number
+  country: country
+  notifications: string
+  contactDetails: null
+  countryCode: number
+}
+
 export type CandidateListSliceState = {
   isLoading: ApiLoadingState
   listSize: number
@@ -109,7 +170,11 @@ export type CandidateListSliceState = {
   getAllTechnology: GetAllTechnology[]
   allJobVacancies: IncomingAllJobVacanciesList
   allCompaniesData: IncomingCompaniesData[]
+  currentAddCandidatePage: CurrentAddCandidatePage
+  editCandidateData: IncomingEditCandidateData
 }
+
+//used in other components - used in interview status report also
 export type GetAllTechnology = {
   id: number
   name: string
@@ -126,7 +191,7 @@ export type TableProps = {
 export type viewHandlerProps = {
   candidateStatus: string
   endIndex: number
-  selectionCountry: number
+  selectionCountry: number | string
   selectionTechnology: string
   startIndex: number
 }
@@ -218,9 +283,12 @@ export interface AddEditCandidateTemplateProps {
   setWhatsAppNotifications: React.Dispatch<React.SetStateAction<string>>
   reasonForChange: string
   reasonForChangeHandler: (value: string) => void
-  uploadedFileHandler: (element: HTMLInputElement) => void
+  uploadedFile: File | undefined
+  setUploadedFile: React.Dispatch<React.SetStateAction<File | undefined>>
+  uploadedResumeFileName: string | null
   showEditor: boolean
   setFinalButtonEnabled: React.Dispatch<React.SetStateAction<boolean>>
+  isAddFunctionality: boolean
 }
 
 export interface AddNewCandidateDTO {
@@ -258,4 +326,14 @@ export interface AddNewCandidateDTO {
 export interface UploadCandidateResumeDTO {
   personId: number
   file: FormData
+}
+
+export interface IsEditNewCandidateEmailExistsParams {
+  candidateId: number
+  mailId: string
+}
+
+export interface IsEditNewCandidateMobileNumExistsParams {
+  candidateId: number
+  mobileNum: number
 }

@@ -48,6 +48,7 @@ export const initialMyReviewModal: MyReviewModalProps = {
   confirmBtnAction: undefined,
   modalHeaderClass: 'd-none',
   modalFooterClass: undefined,
+  modalSize: undefined,
 }
 
 export const initialMyReviewEmployeeDetials: IncomingMyReviewEmployeeDetails = {
