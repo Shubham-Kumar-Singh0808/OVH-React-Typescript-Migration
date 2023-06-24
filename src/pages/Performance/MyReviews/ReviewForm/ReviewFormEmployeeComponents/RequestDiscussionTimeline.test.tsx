@@ -26,5 +26,26 @@ describe('Request Discussion Timeline', () => {
         screen.getAllByTestId(generateMyReviewTestId('timelineCard')),
       ).toHaveLength(mockReviewComments.size)
     })
+
+    test('manager changes are visibile', () => {
+      const indexVal = 0
+      const managerCommentsDTO = mockReviewComments.list[indexVal].kpiReviewDtos
+      managerCommentsDTO.forEach((dtoComment) => {
+        expect(
+          screen.getByTestId(
+            generateMyReviewTestId(`dtoName-${dtoComment.kpiName}`),
+          ),
+        ).toHaveTextContent(dtoComment.kpiName ? dtoComment.kpiName : 'N/A')
+        expect(
+          screen.getByTestId(
+            generateMyReviewTestId(
+              `dtoCommentsDiv-${indexVal}-${dtoComment.oldValue}`,
+            ),
+          ),
+        ).toHaveTextContent(
+          `changed from ${dtoComment.oldValue} to ${dtoComment.newValue}`,
+        )
+      })
+    })
   })
 })

@@ -16,6 +16,7 @@ import {
   mockAllCompaniesData,
   mockGetEmpCountries,
   mockAllVacaniciesListNewCandidate,
+  mockCandidateUserAccessToFeatures,
 } from '../../../../test/data/candidateListData'
 import {
   CandidateJobTypeEnum,
@@ -79,6 +80,9 @@ describe('Add Candidate', () => {
             empCountries: mockGetEmpCountries,
             currentAddCandidatePage: CurrentAddCandidatePage.addCandidate,
           },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockCandidateUserAccessToFeatures,
+          },
         },
       })
     })
@@ -116,6 +120,22 @@ describe('Add Candidate', () => {
       act(() => {
         userEvent.click(screen.getByTestId(getDataInputTestId('addTechBtn')))
       })
+    })
+    test('file upload error', async () => {
+      const fileUpload = screen.getByTestId(
+        getDataInputTestId('resumeUpload'),
+      ) as HTMLInputElement
+      const fileToUpload = new File(['(⌐□_□)'], 'test.img', {
+        type: 'image/jpeg',
+      })
+      await waitFor(() => {
+        act(() => {
+          userEvent.upload(fileUpload, fileToUpload)
+        })
+      })
+      expect(
+        screen.getByText('Please choose doc or docx or pdf file'),
+      ).toBeVisible()
     })
     test('clear button functionality', () => {
       const clearButton = screen.getByTestId('addCand-clearBtn')

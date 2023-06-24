@@ -107,3 +107,14 @@ export const reviewRatings = [
 
 export const emptyString = ''
 export const regexNumberOnly = /\D/g
+
+//returns true if from date is greater the toDate
+export const compareFromAndToDate = (
+  fromDate: string,
+  toDate: string,
+): boolean => {
+  // date format must be YYYY-MM-DD or mm/dd/yyyy
+  const toD = Date.parse(toDate)
+  const fromD = Date.parse(fromDate)
+  return fromD > toD
+}

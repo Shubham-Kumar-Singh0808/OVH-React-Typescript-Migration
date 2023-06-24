@@ -586,6 +586,35 @@ input.capetalized {
 .milestone-actions i.fa{
   font-size: 12px;
 }
+.Schedule-Interview-action-buttons{
+  position: relative;
+}
+
+.Schedule-Interview-action-buttons .btn-labeled{
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 12px;
+  color: white;
+}
+.Schedule-Interview-action-buttons .btn-labeled:hover{
+  color: white;
+}
+
+
+.Schedule-Interview-action-buttons .btn-labeled::before{
+  background-color: rgba(0,0,0,.05);
+  display: inline-block;
+  margin-left: -12px;
+  margin-right: 6px;
+  padding: 2px 12px;
+}
+.Schedule-Interview-action-buttons .on-hold-dropdown {
+  position: absolute;
+    bottom: -45px;
+}
+.global-search input.form-control.search-header {
+  min-width: 245px;
+}
 
 .sh-timeline-card-list{
   background-color: #fff;

@@ -1,7 +1,10 @@
 import React, { useMemo } from 'react'
 import { CFormSelect } from '@coreui/react-pro'
 import { useTypedSelector } from '../../../../../stateStore'
-import { initialPerformanceRating } from '../../MyReviewHelpers'
+import {
+  initialPerformanceRating,
+  myReviewTableItemBorderBottom,
+} from '../../MyReviewHelpers'
 
 const ReviewRatingInput = ({
   value,
@@ -26,6 +29,7 @@ const ReviewRatingInput = ({
       value={finalSelectedValue.toString()}
       data-testid={testId}
       onChange={changeHandler}
+      style={{ marginBottom: myReviewTableItemBorderBottom }}
     >
       <option value={initialPerformanceRating.rating}>Select Rating</option>
       {performanceRatings?.map((rating, ratingIndex) => (
