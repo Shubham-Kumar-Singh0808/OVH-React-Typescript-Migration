@@ -158,16 +158,49 @@ const userRolesConfigurationsSlice = createSlice({
     builder.addCase(getUserRoleSubFeatureThunk.fulfilled, (state, action) => {
       state.subFeatures = action.payload
     })
-    builder.addMatcher(isAnyOf(getUserRolesThunk.pending), (state) => {
-      state.isLoading = ApiLoadingState.loading
-    })
-    builder.addMatcher(isAnyOf(getUserRolesThunk.fulfilled), (state) => {
-      state.isLoading = ApiLoadingState.succeeded
-    })
-    builder.addMatcher(isAnyOf(getUserRolesThunk.rejected), (state, action) => {
-      state.isLoading = ApiLoadingState.failed
-      state.error = action.payload as ValidationError
-    })
+    builder.addMatcher(
+      isAnyOf(
+        getUserRolesThunk.pending,
+        getFeaturesUnderRoleThunk.pending,
+        getUserRoleSubFeatureThunk.pending,
+        updateAssignPermissionsThunk.pending,
+        deleteUserRoleThunk.pending,
+        isRoleExistsThunk.pending,
+        addRoleThunk.pending,
+      ),
+      (state) => {
+        state.isLoading = ApiLoadingState.loading
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
+        getUserRolesThunk.fulfilled,
+        getFeaturesUnderRoleThunk.fulfilled,
+        getUserRoleSubFeatureThunk.fulfilled,
+        updateAssignPermissionsThunk.fulfilled,
+        deleteUserRoleThunk.fulfilled,
+        isRoleExistsThunk.fulfilled,
+        addRoleThunk.fulfilled,
+      ),
+      (state) => {
+        state.isLoading = ApiLoadingState.succeeded
+      },
+    )
+    builder.addMatcher(
+      isAnyOf(
+        getUserRolesThunk.rejected,
+        getFeaturesUnderRoleThunk.rejected,
+        getUserRoleSubFeatureThunk.rejected,
+        updateAssignPermissionsThunk.rejected,
+        deleteUserRoleThunk.rejected,
+        isRoleExistsThunk.rejected,
+        addRoleThunk.rejected,
+      ),
+      (state, action) => {
+        state.isLoading = ApiLoadingState.failed
+        state.error = action.payload as ValidationError
+      },
+    )
   },
 })
 
