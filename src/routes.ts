@@ -12,7 +12,7 @@ export type route = {
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
   () =>
-    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+    import('./pages/Settings/UserRolesConfiguration/UserRolesConfiguration'),
 )
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
@@ -447,7 +447,7 @@ const ProductSpecificationList = React.lazy(
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
 const ExpenseSubCategoryList = React.lazy(
-  () => import('./pages/Expense Management/Sub-Category/SubCategoryList'),
+  () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
 )
 const ScheduleInterview = React.lazy(
   () =>
@@ -471,6 +471,10 @@ const AddNewCandidate = React.lazy(
 )
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
+)
+const EditCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1114,6 +1118,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+  },
+  {
+    path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
   },
 ]
 export default routes

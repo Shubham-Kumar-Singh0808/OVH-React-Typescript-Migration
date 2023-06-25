@@ -100,6 +100,7 @@ export const getValueOfCandidateStatusMappings = (
   return DisplayedCandidateStatusEnum.all
 }
 
+// used in other components also...
 export const exchangeMonthAndDayInDate = (date: string): string => {
   const [day, month, year] = date.split('/')
 
