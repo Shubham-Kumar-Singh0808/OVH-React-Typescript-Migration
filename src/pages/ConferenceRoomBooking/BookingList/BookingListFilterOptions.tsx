@@ -47,14 +47,19 @@ const BookingListFilterOptions = ({
 
   useEffect(() => {
     if (location || meetingStatus || room || selectDate || selectDateOptions) {
+      const paramsObject = {
+        location: Number(location),
+        meetingStatus,
+        room,
+        status: selectDate || selectDateOptions,
+      }
+      //saving for using in some others places
       dispatch(
-        reduxServices.bookingList.getBookingsForSelection({
-          location: Number(location),
-          meetingStatus,
-          room,
-          status: selectDate || selectDateOptions,
-        }),
+        reduxServices.bookingList.actions.saveBookingFilterOptions(
+          paramsObject,
+        ),
       )
+      dispatch(reduxServices.bookingList.getBookingsForSelection(paramsObject))
       dispatch(reduxServices.bookingList.actions.setCurrentPage(1))
       dispatch(reduxServices.bookingList.actions.setPageSize(20))
     }

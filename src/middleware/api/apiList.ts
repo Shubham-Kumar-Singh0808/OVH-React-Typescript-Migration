@@ -586,9 +586,7 @@ export const bookingListApiConfig: BookingListApi = {
     apiPrefix + '/meetingRequest/confirmupdateMeetingRequest',
   uniqueAttendee:
     apiPrefix + '/meetingRequest/uniqueAttendeeuniqueAttendeeWithId',
-  Completed: apiPrefix + '/meetingRequest/changeMeetingStatus/25301/Completed',
-  InProgress:
-    apiPrefix + '/meetingRequest/changeMeetingStatus/25304/In%20Progress',
+  changeMeetingStatus: apiPrefix + '/meetingRequest/changeMeetingStatus',
 }
 
 export const eventTypeListApiConfig: EventTypeListApi = {
