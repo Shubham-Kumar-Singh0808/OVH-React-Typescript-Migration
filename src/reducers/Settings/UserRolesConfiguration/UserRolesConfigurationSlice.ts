@@ -129,15 +129,6 @@ const userRolesConfigurationsSlice = createSlice({
         displayModal: action.payload,
       }
     },
-    setIsConfirmButtonDisabledModal: (
-      state,
-      action: PayloadAction<boolean>,
-    ) => {
-      state.configurationModal = {
-        ...state.configurationModal,
-        isConfirmButtonDisabled: action.payload,
-      }
-    },
     setConfigurationModal: (
       state,
       action: PayloadAction<UserRoleConfigurationModal>,
