@@ -83,7 +83,7 @@ const vendorListSlice = createSlice({
           deleteVendorDetails.rejected,
         ),
         (state) => {
-          state.isLoading = ApiLoadingState.loading
+          state.isLoading = ApiLoadingState.failed
         },
       )
   },

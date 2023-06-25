@@ -17,8 +17,8 @@ import { VendorDetails } from '../../../types/Assets/VendorList/vendorListTypes'
 const VendorList = (): JSX.Element => {
   const [toggle, setToggle] = useState<string>('')
   const [searchInput, setSearchInput] = useState<string>('')
-  const initialCycle = {} as VendorDetails
-  const [editVendorInfo, setEditVendorInfo] = useState(initialCycle)
+  const initialVendor = {} as VendorDetails
+  const [editVendorInfo, setEditVendorInfo] = useState(initialVendor)
   const dispatch = useAppDispatch()
   const vendorListSize = useTypedSelector(
     reduxServices.vendorList.selectors.listSize,
@@ -26,10 +26,6 @@ const VendorList = (): JSX.Element => {
 
   const isLoading = useTypedSelector(
     reduxServices.vendorList.selectors.isLoading,
-  )
-
-  const vendorListData = useTypedSelector(
-    reduxServices.vendorList.selectors.vendorLists,
   )
 
   const vendorsData = useTypedSelector(

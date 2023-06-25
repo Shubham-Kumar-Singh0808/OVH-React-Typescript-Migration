@@ -64,7 +64,7 @@ const addNewVendorSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.department = action.payload as Department[]
       })
-      .addMatcher(isAnyOf(addNewVendor.fulfilled), (state) => {
+      .addCase(addNewVendor.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
       .addMatcher(

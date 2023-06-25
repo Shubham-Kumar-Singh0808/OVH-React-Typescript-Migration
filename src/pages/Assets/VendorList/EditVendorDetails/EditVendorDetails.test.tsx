@@ -38,6 +38,8 @@ describe('Vendor Details without data', () => {
           vendorState: '',
         }}
         setEditVendorInfo={mockSetTogglePage}
+        currentPage={1}
+        pageSize={20}
       />,
       {
         preloadedState: {

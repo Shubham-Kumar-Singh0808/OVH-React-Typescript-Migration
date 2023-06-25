@@ -34,6 +34,34 @@ describe('Vendor List Slice', () => {
       })
     })
 
+    it('Should be able to set isLoading to "loading" if updateVendorDetails is pending', () => {
+      const action = {
+        type: vendorListService.updateVendorDetails.pending.type,
+      }
+      const state = reducer(initialVendorListState, action)
+      expect(state).toEqual({
+        vendors: [],
+        listSize: 0,
+        getAllVendorDetails: {} as GetAllVendorDetails,
+        isLoading: ApiLoadingState.loading,
+        getVendorById: {} as VendorDetails,
+      })
+    })
+
+    it('Should be able to set isLoading to "loading" if deleteVendorDetails is pending', () => {
+      const action = {
+        type: vendorListService.deleteVendorDetails.pending.type,
+      }
+      const state = reducer(initialVendorListState, action)
+      expect(state).toEqual({
+        vendors: [],
+        listSize: 0,
+        getAllVendorDetails: {} as GetAllVendorDetails,
+        isLoading: ApiLoadingState.loading,
+        getVendorById: {} as VendorDetails,
+      })
+    })
+
     it('Should be able to set isLoading to "success" if getAllVendors is fulfilled', () => {
       const action = {
         type: vendorListService.getVendors.fulfilled.type,
@@ -66,17 +94,44 @@ describe('Vendor List Slice', () => {
       })
 
       describe('delete Vendor details test', () => {
-        it('Should be able to set isLoading to "failed" if delete Vendor details is rejected', () => {
+        it('Should be able to set isLoading to "failed" if get Vendor details is rejected', () => {
           const rejectedAction = {
-            type: vendorListService.deleteVendorDetails.rejected.type,
-            payload: mockVendorList,
+            type: vendorListService.getVendors.rejected.type,
           }
           const state = reducer(initialVendorListState, rejectedAction)
           expect(state).toEqual({
             vendors: [],
             listSize: 0,
             getAllVendorDetails: {} as GetAllVendorDetails,
-            isLoading: ApiLoadingState.loading,
+            isLoading: ApiLoadingState.failed,
+            getVendorById: {} as VendorDetails,
+          })
+        })
+
+        it('Should be able to set isLoading to "failed" if update Vendor details is rejected', () => {
+          const rejectedAction = {
+            type: vendorListService.updateVendorDetails.rejected.type,
+          }
+          const state = reducer(initialVendorListState, rejectedAction)
+          expect(state).toEqual({
+            vendors: [],
+            listSize: 0,
+            getAllVendorDetails: {} as GetAllVendorDetails,
+            isLoading: ApiLoadingState.failed,
+            getVendorById: {} as VendorDetails,
+          })
+        })
+
+        it('Should be able to set isLoading to "failed" if delete Vendor details is rejected', () => {
+          const rejectedAction = {
+            type: vendorListService.deleteVendorDetails.rejected.type,
+          }
+          const state = reducer(initialVendorListState, rejectedAction)
+          expect(state).toEqual({
+            vendors: [],
+            listSize: 0,
+            getAllVendorDetails: {} as GetAllVendorDetails,
+            isLoading: ApiLoadingState.failed,
             getVendorById: {} as VendorDetails,
           })
         })
