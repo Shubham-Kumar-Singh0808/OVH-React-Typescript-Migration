@@ -224,7 +224,7 @@ export const mockUserRoleFeatures: DefaultUserRoleFeature[] = [
   {
     featureId: 204,
     name: 'Hierarchy ProbationaryEndDates',
-    viewaccess: false,
+    viewaccess: true,
     createaccess: false,
     updateaccess: false,
     deleteaccess: false,
