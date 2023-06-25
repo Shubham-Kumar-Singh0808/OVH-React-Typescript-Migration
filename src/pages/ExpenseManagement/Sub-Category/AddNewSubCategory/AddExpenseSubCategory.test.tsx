@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom'
 import React from 'react'
-import { cleanup, waitFor } from '@testing-library/react'
+import { cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import AddExpenseCategory from './AddExpenseSubCategory'
 import { render, screen } from '../../../../test/testUtils'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../../test/data/userAccessToFeaturesData'
-import AddExpenseCategory from '../../../Expense Management/Sub-Category/AddNewSubCategory/AddExpenseSubCategory'
 import {
   mockExpenseCategoryList,
   mockExpenseSubCategoryList,

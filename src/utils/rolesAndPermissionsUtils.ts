@@ -1,101 +1,68 @@
 import {
-  AccessModifier,
-  UserFeaturesUnderRole,
-  UserRoleChildFeatures,
-  UserRoleSubFeatures,
-  UtilsChildFeatures,
-  UtilsFeatures,
-  UtilsRenderPermissionSwitchReturn,
-} from '../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+  DefaultUserRoleFeature,
+  MappedChildFeatureToSubFeatureItem,
+  MappedFeatureItem,
+  UserRoleSubFeature,
+} from '../types/Settings/UserRolesConfiguration/UserRolesConfigurationTypes'
 
-// map features with child features and return a single array
-const mapFeaturesToChildFeatures = (
-  features: UserFeaturesUnderRole[],
-  childFeatures: UserRoleChildFeatures[],
-): unknown => {
-  return childFeatures.map((subFeatureItem) => {
-    const filteredFeature = features.find(
-      (featureItem) => featureItem.featureId === subFeatureItem.featureId,
+const mapChildFeaturesToFeatures = (
+  featuresUnderRole: DefaultUserRoleFeature[],
+  childFeatures: DefaultUserRoleFeature[],
+): MappedChildFeatureToSubFeatureItem[] => {
+  return childFeatures?.map((childFeatureItem) => {
+    const filteredFeature = featuresUnderRole.find(
+      (featureItem) => featureItem.featureId === childFeatureItem.featureId,
     )
-    if (filteredFeature) {
+    if (filteredFeature !== undefined) {
+      // if features exists for that specific role and returning values if checked or not
       return {
-        ...subFeatureItem,
+        ...childFeatureItem,
         viewaccessChecked: filteredFeature.viewaccess ?? false,
         deleteaccessChecked: filteredFeature.deleteaccess ?? false,
         createaccessChecked: filteredFeature.createaccess ?? false,
         updateaccessChecked: filteredFeature.updateaccess ?? false,
       }
     }
-    return { ...subFeatureItem }
+    return { ...childFeatureItem }
   })
 }
 
-// map features with sub features and return a single array
-export const mapFeaturesToSubFeatures = (
-  features: UserFeaturesUnderRole[],
-  subFeatures: UserRoleSubFeatures[],
-): unknown => {
-  return subFeatures.map((item) => {
-    const mappedFeatures = item.features.map((subFeatureItem) => {
-      const filteredFeature = features.find(
-        (featureItem) => featureItem.featureId === subFeatureItem.featureId,
-      )
-      let mappedChildFeatures
-      if (subFeatureItem.childFeatures.length !== 0) {
-        mappedChildFeatures = mapFeaturesToChildFeatures(
-          features,
-          subFeatureItem.childFeatures,
+export const mapFeaturesToSubFeaturesRoleConfiguration = (
+  featuresUnderRole: DefaultUserRoleFeature[],
+  subFeaturesList: UserRoleSubFeature[],
+): MappedFeatureItem[] => {
+  // sub features list is the common list which tells if checkboxes exists for each feature
+  return subFeaturesList?.map((subFeatureListItem) => {
+    const mappedFeatures = subFeatureListItem.features?.map(
+      (subFeatureItem) => {
+        // finding each feature in the features under role
+        const filteredFeature = featuresUnderRole.find(
+          (featureItem) => featureItem.featureId === subFeatureItem.featureId,
         )
-      }
-      if (filteredFeature) {
-        return {
-          ...subFeatureItem,
-          viewaccessChecked: filteredFeature.viewaccess ?? false,
-          deleteaccessChecked: filteredFeature.deleteaccess ?? false,
-          createaccessChecked: filteredFeature.createaccess ?? false,
-          updateaccessChecked: filteredFeature.updateaccess ?? false,
-          childFeatures: mappedChildFeatures,
+        let mappedChildFeature: MappedChildFeatureToSubFeatureItem[] = []
+        if (subFeatureItem.childFeatures.length !== 0) {
+          // if there are child features we map them too
+          mappedChildFeature = mapChildFeaturesToFeatures(
+            featuresUnderRole,
+            subFeatureItem.childFeatures,
+          )
         }
-      }
-      return { ...subFeatureItem }
-    })
-
-    return { ...item, features: mappedFeatures }
+        if (filteredFeature !== undefined) {
+          // if it exists in features under role and checking if user is allowed that permission
+          return {
+            ...subFeatureItem,
+            viewaccessChecked: filteredFeature.viewaccess ?? false,
+            deleteaccessChecked: filteredFeature.deleteaccess ?? false,
+            createaccessChecked: filteredFeature.createaccess ?? false,
+            updateaccessChecked: filteredFeature.updateaccess ?? false,
+            childFeatures: mappedChildFeature,
+          }
+        }
+        // returning with mapped child features
+        return { ...subFeatureItem, childFeatures: mappedChildFeature }
+      },
+    )
+    // returning the complete feature
+    return { ...subFeatureListItem, features: mappedFeatures }
   })
-}
-
-// Todo: remove eslint comment and fix error
-export const renderPermissionSwitch = (
-  params: AccessModifier,
-  changedObject: UtilsChildFeatures | UtilsFeatures,
-  selectedRole: number,
-  // eslint-disable-next-line consistent-return
-): UtilsRenderPermissionSwitchReturn => {
-  const prepareObject = {
-    featureId: changedObject.featureId,
-    roleId: selectedRole,
-    permission: changedObject[params],
-  }
-  switch (params) {
-    case 'viewaccessChecked':
-      return {
-        ...prepareObject,
-        type: 'View',
-      }
-    case 'createaccessChecked':
-      return {
-        ...prepareObject,
-        type: 'Create',
-      }
-    case 'updateaccessChecked':
-      return {
-        ...prepareObject,
-        type: 'Edit',
-      }
-    case 'deleteaccessChecked':
-      return {
-        ...prepareObject,
-        type: 'Delete',
-      }
-  }
 }
