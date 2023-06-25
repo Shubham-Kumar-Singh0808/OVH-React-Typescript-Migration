@@ -85,7 +85,11 @@ const assetTypeChangeListSlice = createSlice({
         state.listSize = action.payload.size
       })
       .addMatcher(
-        isAnyOf(getAssetTypeChangeList.pending, getAllAssetHistoryData.pending),
+        isAnyOf(
+          getAssetTypeChangeList.pending,
+          getAllAssetHistoryData.pending,
+          getAllAssetListData.pending,
+        ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
         },

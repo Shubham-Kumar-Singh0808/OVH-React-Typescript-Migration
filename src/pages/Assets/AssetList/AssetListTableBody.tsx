@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import parse from 'html-react-parser'
 import {
   CButton,
@@ -7,15 +7,9 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import AssetHistory from './AssetTimeline/AssetTimelineHistory'
-import AssetList from './AssetList'
-import {
-  AllAssetsList,
-  AssetHistoryProps,
-  AssetProps,
-} from '../../../types/Assets/AssetList/AssetListTypes'
+import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
 import { reduxServices } from '../../../reducers/reduxServices'
-import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { useAppDispatch } from '../../../stateStore'
 
 const ModalLink = ({
   text,

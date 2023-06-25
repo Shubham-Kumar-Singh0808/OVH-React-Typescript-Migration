@@ -6,10 +6,7 @@ import assetListSliceReducer, {
 } from './AssetListSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { ManufacturerList } from '../../../types/Assets/AssetList/AssetListTypes'
-import {
-  mockAllAssetListData,
-  mockAssetTypeChangeList,
-} from '../../../test/data/AssetListData'
+import { mockAssetTypeChangeList } from '../../../test/data/AssetListData'
 import { mockAssetHistory } from '../../../test/data/assetHistoryData'
 
 describe('Asset List Slice', () => {
@@ -67,7 +64,25 @@ describe('Asset List Slice', () => {
       })
     })
 
-    it('Should set isLoading to "loading" when getAssets is fullfilled', () => {
+    it('Should set isLoading to "loading" when asset History is pending testing', () => {
+      const action = assetListService.getAllAssetListData.pending
+      const state = assetListSliceReducer(
+        initialAssetTypeChangeListState,
+        action,
+      )
+      expect(state).toEqual({
+        asset: [],
+        isLoading: ApiLoadingState.loading,
+        manufacturerList: {} as ManufacturerList,
+        allAssetList: [],
+        listSize: 0,
+        assetHistoryList: [],
+        currentPage: 1,
+        pageSize: 20,
+      })
+    })
+
+    it('Should set isLoading to "loading" when getAssets is fulfilled', () => {
       const action = {
         type: assetListService.getAllAssetListData.fulfilled.type,
         payload: mockAssetTypeChangeList,
