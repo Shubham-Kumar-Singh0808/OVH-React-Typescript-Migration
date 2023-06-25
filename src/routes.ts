@@ -12,7 +12,7 @@ export type route = {
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
   () =>
-    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+    import('./pages/Settings/UserRolesConfiguration/UserRolesConfiguration'),
 )
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
