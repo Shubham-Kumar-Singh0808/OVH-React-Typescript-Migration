@@ -65,18 +65,20 @@ const EditUpComingJoinee = ({
   // const [designation, setDesignation] = useState<string | number>('')
 
   useEffect(() => {
-    if (candidateDepartment) {
+    if (editNewJoineeInfo.departmentName) {
       dispatch(
-        reduxServices.KRA.getDesignationThunk(Number(candidateDepartment)),
+        reduxServices.KRA.getDesignationThunk(
+          Number(editNewJoineeInfo.departmentName),
+        ),
       )
     }
-  }, [dispatch, candidateDepartment])
+  }, [dispatch, editNewJoineeInfo.departmentName])
 
   useEffect(() => {
     dispatch(reduxServices.KRA.getEmpDepartmentThunk())
     dispatch(
       reduxServices.addNewCandidate.getPersonTechnologyData(
-        timeLineListSelector?.personId,
+        editNewJoineeInfo?.candidateId,
       ),
     )
   }, [dispatch, timeLineListSelector?.personId])
@@ -168,7 +170,8 @@ const EditUpComingJoinee = ({
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
     if (name === 'currentCTC' || name === 'experience') {
@@ -253,7 +256,7 @@ const EditUpComingJoinee = ({
   // const onHandleStartDate = (value: Date) => {
   //   setDateOfJoiningDate(moment(value).format(dateFormat))
   // }
-  console.log(editNewJoineeInfo.departmentName)
+  console.log(editNewJoineeInfo)
   return (
     <>
       <OCard
@@ -393,7 +396,7 @@ const EditUpComingJoinee = ({
             <CFormSelect
               className="mb-1"
               data-testid="departmentName"
-              id="department"
+              id="departmentName"
               size="sm"
               aria-label="Department"
               name="departmentName"
@@ -401,15 +404,7 @@ const EditUpComingJoinee = ({
               // onChange={(e) => setCandidateDepartment(e.target.value)}
               onChange={onChangeInputHandler}
             >
-              {/* {addNewJoinee?.length > 0 &&
-                addNewJoinee?.map((item, index) => (
-                  <option key={index} value={item.departmentId}>
-                    {item.departmentName}
-                  </option>
-                ))} */}
-
-              {addNewJoinee &&
-                addNewJoinee?.length > 0 &&
+              {addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
                   <option key={index} value={item.departmentId}>
                     {item.departmentName}
@@ -632,11 +627,13 @@ const EditUpComingJoinee = ({
                 aria-label="textarea"
                 autoComplete="off"
                 maxLength={150}
+                name="comments"
+                id="comments"
                 value={editNewJoineeInfo.comments}
                 placeholder="comments"
                 className="sh-question"
-                onChange={(e) => setCandidateComment(e.target.value)}
-                // onChange={onChangeInputHandler}
+                // onChange={(e) => setCandidateComment(e.target.value)}
+                onChange={onChangeInputHandler}
               ></CFormTextarea>
               <p>{candidateComment?.length}/250</p>
             </CCol>
