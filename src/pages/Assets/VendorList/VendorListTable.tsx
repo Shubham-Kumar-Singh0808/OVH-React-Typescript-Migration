@@ -245,23 +245,15 @@ const VendorListTable = ({
       <CRow>
         <CCol xs={4}>
           <strong>
-<<<<<<< HEAD
-            {listSize ? `Total Records: ${listSize}` : `No Records Found...`}
-=======
             {totalListSize
               ? `Total Records: ${totalListSize}`
               : `No Records Found`}
->>>>>>> develop
           </strong>
         </CCol>
         <CCol xs={3}>
           {totalListSize > 20 && (
             <OPageSizeSelect
-<<<<<<< HEAD
-              handlePageSizeSelectChange={handlePageSizeSelectChange}
-=======
               handlePageSizeSelectChange={handlePageSize}
->>>>>>> develop
               options={[20, 40, 60, 80, 100]}
               selectedPageSize={pageSize}
             />
