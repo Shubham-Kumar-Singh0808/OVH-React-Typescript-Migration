@@ -1,21 +1,18 @@
 /* eslint-disable sonarjs/cognitive-complexity */
-import {
-  CRow,
-  CCol,
-  CFormLabel,
-  CFormSelect,
-  CButton,
-  CMultiSelect,
-} from '@coreui/react-pro'
+import { CRow, CCol, CFormLabel, CFormSelect, CButton } from '@coreui/react-pro'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
+import Multiselect from 'multiselect-react-dropdown'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
 import { employeeStatus, reviewRatings } from '../../../constant/constantData'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { deviceLocale, commonDateFormat } from '../../../utils/dateFormatUtils'
-import { ReviewListData } from '../../../types/Performance/ReviewList/reviewListTypes'
+import {
+  Ratings,
+  ReviewListData,
+} from '../../../types/Performance/ReviewList/reviewListTypes'
 import { downloadFile, showIsRequired } from '../../../utils/helper'
 import { reviewListApi } from '../../../middleware/api/Performance/ReviewList/reviewListApi'
 
@@ -25,7 +22,15 @@ const ReviewListFilterOptions = ({
   setIsTableView: (value: boolean) => void
   initialReviewList: ReviewListData
 }): JSX.Element => {
-  const [cycle, setCycle] = useState<number | string>()
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(reduxServices.reviewList.activeCycle())
+  }, [dispatch])
+  const isActiveCycle = useTypedSelector(
+    reduxServices.reviewList.selectors.isActiveCycle,
+  )
+
+  const [cycle, setCycle] = useState<number | string>(isActiveCycle.id)
   const [selectDepartment, setSelectedDepartment] = useState<number | string>()
   const [selectDesignation, setSelectDesignation] = useState<number | string>()
   const [selectStatus, setSelectStatus] = useState<string>()
@@ -38,6 +43,8 @@ const ReviewListFilterOptions = ({
   const [showExportButton, setShowExportButton] = useState<boolean>(false)
   const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false)
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [reviewRate, setReviewRate] = useState<Ratings[]>([])
+
   const appraisalCycles = useTypedSelector(
     reduxServices.reviewList.selectors.appraisalCycles,
   )
@@ -53,7 +60,6 @@ const ReviewListFilterOptions = ({
     reduxServices.authentication.selectors.selectEmployeeId,
   )
 
-  const dispatch = useAppDispatch()
   const selectedItem = departments.filter(
     (item) => item.departmentId === Number(selectDepartment),
   )
@@ -68,6 +74,8 @@ const ReviewListFilterOptions = ({
   const userAccessIndividualReviewListFeature = userAccessToFeatures?.find(
     (feature) => feature.name === 'Individual Review List',
   )
+
+  console.log(cycle)
 
   useEffect(() => {
     if (cycle) {
@@ -107,6 +115,10 @@ const ReviewListFilterOptions = ({
   }
 
   const dispatchApiCall = (roleValue?: string, searchInput?: string) => {
+    const finalListStatus = selectStatus === undefined ? '' : selectStatus
+    dispatch(
+      reduxServices.reviewList.actions.setCurrentListStatus(finalListStatus),
+    )
     return dispatch(
       reduxServices.reviewList.getReviewList({
         appraisalFormStatus: (selectStatus as string) || '',
@@ -169,6 +181,9 @@ const ReviewListFilterOptions = ({
     setSearchValue('')
     setShowExportButton(false)
     setIsChecked(false)
+    setReviewRate([])
+    dispatch(reduxServices.reviewList.actions.clearReviewList())
+    dispatch(reduxServices.reviewList.actions.setCurrentListStatus(''))
   }
 
   const handleExportReviewList = async () => {
@@ -187,6 +202,14 @@ const ReviewListFilterOptions = ({
     downloadFile(reviewListDownload, 'AppraisalList.csv')
   }
 
+  const handleMultiSelect = (list: Ratings[]) => {
+    setReviewRate(list)
+  }
+
+  const handleOnRemoveSelectedOption = (selectedList: Ratings[]) => {
+    setReviewRate(selectedList)
+  }
+
   return (
     <>
       <CRow className="mt-4">
@@ -198,9 +221,9 @@ const ReviewListFilterOptions = ({
           <CFormSelect
             aria-label="Default select example"
             size="sm"
-            id="configurations"
+            id="cycle"
             data-testid="select-configurations"
-            name="configurations"
+            name="cycle"
             value={cycle}
             onChange={(e) => {
               setCycle(e.target.value)
@@ -240,8 +263,8 @@ const ReviewListFilterOptions = ({
                     dept1.departmentName.localeCompare(dept2.departmentName),
                   )
                   ?.map((dept, index) => (
-                    <option key={index} value={dept.departmentId}>
-                      {dept.departmentName}
+                    <option key={index} value={dept?.departmentId}>
+                      {dept?.departmentName}
                     </option>
                   ))}
               </CFormSelect>
@@ -387,11 +410,16 @@ const ReviewListFilterOptions = ({
           )}
           <CCol sm={3}>
             <CFormLabel>Ratings:</CFormLabel>
-            <CMultiSelect
-              options={reviewRatings}
-              selectionType="counter"
+            <Multiselect
+              options={reviewRatings?.map((employee) => employee) || []}
+              displayValue="text"
               data-testid="ratings"
-              className="py-1"
+              className="py-1 ovh-multiselect"
+              selectedValues={reviewRate}
+              onSelect={(list: Ratings[]) => handleMultiSelect(list)}
+              onRemove={(selectedList: Ratings[]) =>
+                handleOnRemoveSelectedOption(selectedList)
+              }
             />
           </CCol>
           <CCol sm={3}>

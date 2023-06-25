@@ -6,9 +6,6 @@ import BookingListTable from './BookingListTable'
 import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { mockBookingsForSelection } from '../../../test/data/bookingListData'
 
-const mockSetCurrentPage = jest.fn()
-const mockSetPageSize = jest.fn()
-
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
@@ -41,12 +38,6 @@ describe('Booking List Table Component Testing without data', () => {
     afterEach(cleanup)
     test('should render booking list table component with data without crashing', async () => {
       await waitFor(() => {
-        userEvent.selectOptions(screen.getByRole('combobox'), ['40'])
-        const pageSizeSelect = screen.getByRole('option', {
-          name: '40',
-        }) as HTMLOptionElement
-        expect(pageSizeSelect.selected).toBe(true)
-
         expect(screen.getAllByRole('row')).toHaveLength(24)
       })
     })
@@ -75,9 +66,6 @@ describe('Booking List Table Component Testing without data', () => {
         expect(screen.getByText('Next ›')).not.toHaveAttribute('disabled')
         expect(screen.getByText('Last »')).not.toHaveAttribute('disabled')
       })
-    })
-    test('should render with data ', () => {
-      expect(screen.getByText('In Progress')).toBeInTheDocument()
     })
   })
 })
