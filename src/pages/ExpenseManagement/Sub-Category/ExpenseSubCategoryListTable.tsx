@@ -227,7 +227,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
 
   return (
     <>
-      <CTable className="mt-4 mb-4">
+      <CTable className="mt-4 mb-4" align="middle">
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
@@ -255,13 +255,15 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                         value={editExpenseSubCategoryDetails.categoryName}
                         onChange={handleEditCategoryHandler}
                       >
-                        {expenseCategoryList &&
-                          expenseCategoryList?.length > 0 &&
-                          expenseCategoryList?.map((categoryNames, opt) => (
-                            <option
-                              key={opt}
-                              value={categoryNames.categoryName}
-                            >
+                        {expenseCategoryList
+                          .slice()
+                          .sort((category1, category2) =>
+                            category1.categoryName.localeCompare(
+                              category2.categoryName,
+                            ),
+                          )
+                          ?.map((categoryNames, opt) => (
+                            <option key={opt} value={categoryNames.id}>
                               {categoryNames.categoryName}
                             </option>
                           ))}

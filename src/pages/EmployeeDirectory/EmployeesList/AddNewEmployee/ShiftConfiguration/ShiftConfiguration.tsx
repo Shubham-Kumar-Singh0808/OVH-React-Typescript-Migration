@@ -13,7 +13,7 @@ import {
   ToggleShiftProp,
 } from '../../../../../types/EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/shiftConfigurationTypes'
 import { useAppDispatch, useTypedSelector } from '../../../../../stateStore'
-import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { ActionMapping } from '../../../../../types/Settings/UserRolesConfiguration/UserRolesConfigurationTypes'
 import OCard from '../../../../../components/ReusableComponent/OCard'
 import OToast from '../../../../../components/ReusableComponent/OToast'
 import { reduxServices } from '../../../../../reducers/reduxServices'
