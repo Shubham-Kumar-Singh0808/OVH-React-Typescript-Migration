@@ -472,6 +472,10 @@ const AddNewCandidate = React.lazy(
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
+const personTechnology = React.lazy(
+  () => import('./pages/Recruitment/CandidateOffer/AddNewJoinee'),
+)
+
 const EditCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
@@ -1118,6 +1122,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+  },
+  {
+    path: '/addnewjoinee/:personId',
+    name: 'CandidateOffer',
+    component: personTechnology,
   },
   {
     path: '/editcandidate/:personId',

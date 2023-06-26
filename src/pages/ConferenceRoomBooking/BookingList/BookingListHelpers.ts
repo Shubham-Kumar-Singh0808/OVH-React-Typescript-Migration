@@ -30,7 +30,7 @@ export const isMeetingCompletedOrCancelled = (
   )
 }
 
-export const getFutureDateTime = (min: number) => {
+export const getFutureDateTime = (min: number): [string, string] => {
   const currentDate = new Date()
   const futureDate = new Date(currentDate.getTime() + min * 60000) // Adding minutes in milliseconds
 

@@ -41,6 +41,7 @@ export type WarrantyAssetsList = {
 }
 
 export type GetWarrantyAssetsList = {
+  fulfilled(mockAssetsWarrantyList: GetWarrantyAssetsList): unknown
   size: number
   list: WarrantyAssetsList[]
 }
