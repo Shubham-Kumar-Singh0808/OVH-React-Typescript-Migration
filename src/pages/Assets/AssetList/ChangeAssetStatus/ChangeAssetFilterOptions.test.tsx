@@ -12,9 +12,7 @@ import {
   waitFor,
 } from '../../../../test/testUtils'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
-import {
-  SaveEmployee,
-} from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
+import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockAllAssetListData } from '../../../../test/data/AssetListData'
 
