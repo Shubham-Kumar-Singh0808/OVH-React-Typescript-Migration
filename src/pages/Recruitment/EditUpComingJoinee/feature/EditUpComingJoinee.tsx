@@ -6,7 +6,6 @@ import {
   CFormLabel,
   CFormInput,
   CFormSelect,
-  CFormCheck,
   CFormTextarea,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
@@ -40,15 +39,9 @@ const EditUpComingJoinee = ({
   const [editToDate, setEditToDate] = useState<string>(
     editNewJoineeInfo.dateOfJoining,
   )
-  // const [candidateName, setSetCandidatename] = useState<string>('')
-  // const [position, setPosition] = useState<string>('')
-  // const [curruentCTC, setCurruentCTC] = useState<string>('')
-  // const [employeeType, setEmployeeType] = useState<string>('')
-  // const [jobType, setJobType] = useState<string>('')
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
-  // const [dateOfJoiningDate, setDateOfJoiningDate] = useState<Date | string>()
   const [candidateComment, setCandidateComment] = useState<string>('')
   const [selectedTechnologyId, setSelectedTechnologyId] = useState<
     number | null
@@ -62,7 +55,6 @@ const EditUpComingJoinee = ({
   const designations = useTypedSelector(
     reduxServices.KRA.selectors.designations,
   )
-  // const [designation, setDesignation] = useState<string | number>('')
 
   useEffect(() => {
     if (editNewJoineeInfo.departmentName) {
@@ -75,21 +67,20 @@ const EditUpComingJoinee = ({
   }, [dispatch, editNewJoineeInfo.departmentName])
 
   useEffect(() => {
-    dispatch(reduxServices.KRA.getEmpDepartmentThunk())
     dispatch(
-      reduxServices.addNewCandidate.getPersonTechnologyData(
-        editNewJoineeInfo?.candidateId,
+      reduxServices.KRA.getDesignationThunk(
+        Number(editNewJoineeInfo.departmentName),
       ),
     )
   }, [dispatch, timeLineListSelector?.personId])
 
-  useEffect(() => {
-    dispatch(
-      reduxServices.intervieweeDetails.timeLineData(
-        timeLineListSelector.personId,
-      ),
-    )
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.intervieweeDetails.timeLineData(
+  //       timeLineListSelector.personId,
+  //     ),
+  //   )
+  // }, [dispatch])
 
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
@@ -135,9 +126,9 @@ const EditUpComingJoinee = ({
     }
   })
 
-  useEffect(() => {
-    dispatch(reduxServices.candidateList.getTechnology())
-  }, [useEffect])
+  // useEffect(() => {
+  //   dispatch(reduxServices.candidateList.getTechnology())
+  // }, [useEffect])
 
   const addNewJoineeTechno = useTypedSelector(
     reduxServices.candidateList.selectors.getAllTechnology,
@@ -159,11 +150,6 @@ const EditUpComingJoinee = ({
   }, [editNewJoineeInfo])
   // --------------------------------------------------------
 
-  // const handleText = (description: string) => {
-  //   setEditNewJoineeInfo((prevState) => {
-  //     return { ...prevState, ...{ description } }
-  //   })
-  // }
   const onHandleDatePicker = (value: Date) => {
     setEditToDate(moment(value).format(dateFormat))
   }
@@ -243,20 +229,7 @@ const EditUpComingJoinee = ({
     }
   }
 
-  // const NUMERIC_REGEX = /^[0-9]*$/
-
-  // const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const input = e.target.value
-
-  //   if (NUMERIC_REGEX.test(input)) {
-  //     setCurruentCTC(input)
-  //   }
-  // }
-
-  // const onHandleStartDate = (value: Date) => {
-  //   setDateOfJoiningDate(moment(value).format(dateFormat))
-  // }
-  console.log(editNewJoineeInfo)
+  console.log(editNewJoineeInfo.departmentName)
   return (
     <>
       <OCard
@@ -283,7 +256,7 @@ const EditUpComingJoinee = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            position:
+            Position:
             <span
               className={showIsRequired(editNewJoineeInfo.appliedForLookUp)}
             >
@@ -351,7 +324,6 @@ const EditUpComingJoinee = ({
               name="candidateEmail"
               placeholder="email"
               value={editNewJoineeInfo.candidateEmail}
-              // onChange={(e) => setPosition(e.target.value)}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -401,7 +373,6 @@ const EditUpComingJoinee = ({
               aria-label="Department"
               name="departmentName"
               value={editNewJoineeInfo.departmentName}
-              // onChange={(e) => setCandidateDepartment(e.target.value)}
               onChange={onChangeInputHandler}
             >
               {addNewJoinee?.length > 0 &&
@@ -432,10 +403,8 @@ const EditUpComingJoinee = ({
               aria-label="Designation"
               name="designation"
               value={editNewJoineeInfo.designation}
-              // onChange={(e) => setDesignation(e.target.value)}
               onChange={onChangeInputHandler}
             >
-              {/* <option value={''}></option> */}
               {designations?.length > 0 &&
                 designations?.map((location, index) => (
                   <option key={index} value={location.name}>
@@ -465,7 +434,6 @@ const EditUpComingJoinee = ({
               aria-label="technology"
               name="technology"
               value={editNewJoineeInfo.technology}
-              // onChange={(e) => setDesignation(e.target.value)}
               onChange={onChangeInputHandler}
             >
               {addNewJoineeTechno?.length > 0 &&
@@ -500,7 +468,6 @@ const EditUpComingJoinee = ({
               showYearDropdown
               dropdownMode="select"
               value={editToDate || ''}
-              // onChange={(date: Date) => onHandleStartDate(date)}
               onChange={(date: Date) => onHandleDatePicker(date)}
             />
           </CCol>
@@ -526,7 +493,6 @@ const EditUpComingJoinee = ({
               autoComplete="off"
               placeholder="CTC"
               value={editNewJoineeInfo.currentCTC}
-              // onChange={handleCurruentCTCChange}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -578,7 +544,6 @@ const EditUpComingJoinee = ({
               aria-label="JobType"
               name="jobType"
               value={editNewJoineeInfo.jobType}
-              // onChange={(e) => setJobType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Job Type</option>
@@ -605,7 +570,6 @@ const EditUpComingJoinee = ({
               aria-label="JoiningStatus"
               name="status"
               value={editNewJoineeInfo.status}
-              //  onChange={(e) => setJobType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value={'Did Not Join'}>DID NOT JOIN</option>
@@ -632,7 +596,6 @@ const EditUpComingJoinee = ({
                 value={editNewJoineeInfo.comments}
                 placeholder="comments"
                 className="sh-question"
-                // onChange={(e) => setCandidateComment(e.target.value)}
                 onChange={onChangeInputHandler}
               ></CFormTextarea>
               <p>{candidateComment?.length}/250</p>

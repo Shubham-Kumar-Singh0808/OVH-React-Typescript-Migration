@@ -3,8 +3,7 @@ import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee
 export const priceModelList: GetList[] = [
   { id: 1, name: 'Fixed Bid' },
   { id: 2, name: 'Retainer' },
-  { id: 3, name: 'Support' },
-  { id: 4, name: 'T&M' },
+  { id: 3, name: 'T&M' },
 ]
 export const healthList = [
   {
@@ -107,3 +106,14 @@ export const reviewRatings = [
 
 export const emptyString = ''
 export const regexNumberOnly = /\D/g
+
+//returns true if from date is greater the toDate
+export const compareFromAndToDate = (
+  fromDate: string,
+  toDate: string,
+): boolean => {
+  // date format must be YYYY-MM-DD or mm/dd/yyyy
+  const toD = Date.parse(toDate)
+  const fromD = Date.parse(fromDate)
+  return fromD > toD
+}

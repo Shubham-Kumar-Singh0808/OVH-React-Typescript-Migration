@@ -46,5 +46,23 @@ describe('Employee Pip Time line Component Testing', () => {
       expect(screen.getByText('SDLC ,STLC')).toBeInTheDocument()
       expect(screen.getByText('93849684986934jgfnjgn95898')).toBeInTheDocument()
     })
+    test('should render click on schedule button', () => {
+      const scheduleButtonElement = screen.getByTestId('schedule-interview')
+      expect(scheduleButtonElement).toBeInTheDocument()
+      userEvent.click(scheduleButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+    test('should render click on schedule button', () => {
+      const rescheduleButtonElement = screen.getByTestId('reschedule-interview')
+      expect(rescheduleButtonElement).toBeInTheDocument()
+      userEvent.click(rescheduleButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+    test('should render click on edit button', () => {
+      const editButtonElement = screen.getByTestId('edit-btn')
+      expect(editButtonElement).toBeInTheDocument()
+      // userEvent.click(backButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
   })
 })

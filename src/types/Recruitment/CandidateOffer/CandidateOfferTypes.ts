@@ -19,7 +19,7 @@ export type CandidateOfferSliceState = {
   isLoading: LoadingState
 }
 
-export interface uploadFileForNewJoineeProps {
+export type uploadFileForNewJoineeProps = {
   candidateId: number
   file: FormData
 }

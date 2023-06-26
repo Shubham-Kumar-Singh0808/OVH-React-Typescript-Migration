@@ -112,6 +112,12 @@ const UpComingJoinListTable = ({
 
   const editButtonHandler = (updateUpComingJoineeData: UpComingJoineeList) => {
     setEditNewJoineeInfo(updateUpComingJoineeData)
+    dispatch(reduxServices.candidateList.getTechnology())
+    dispatch(
+      reduxServices.KRA.getDesignationThunk(
+        Number(updateUpComingJoineeData.id),
+      ),
+    )
     setToggle('upcomingjoinlist')
   }
 
@@ -192,6 +198,8 @@ const UpComingJoinListTable = ({
         <CTableBody>
           {upComingJoinee?.length > 0 &&
             upComingJoinee?.map((joinee, index) => {
+              console.log(joinee.departmentName + '')
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>

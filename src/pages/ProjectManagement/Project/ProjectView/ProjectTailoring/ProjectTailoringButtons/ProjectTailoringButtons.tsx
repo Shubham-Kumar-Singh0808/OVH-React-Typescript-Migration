@@ -71,6 +71,8 @@ const ProjectTailoringButtons = (): JSX.Element => {
     }
   }
 
+  console.log(tailorStatus)
+
   return (
     <>
       {(tailorStatus === ProjectTailoringStatusEnum.submitted ||
