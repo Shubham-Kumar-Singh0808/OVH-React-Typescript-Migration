@@ -42,7 +42,6 @@ import { addAchieverHandlers } from './addAchieverHandler'
 import { declarationFormHandlers } from './declarationFormHandlers'
 import { myKRAsHandler } from './myKRAsHandler'
 import { reviewListHandlers } from './reviewListHandlers'
-import { expenseCategoryListHandlers } from './expenseCategoryHandler'
 
 export const handlers = [
   ...loginHandlers,
@@ -91,6 +90,5 @@ export const handlers = [
   ...declarationFormHandlers,
   ...myKRAsHandler,
   ...reviewListHandlers,
-  ...expenseCategoryListHandlers,
   // add your handler here
 ]

@@ -117,11 +117,9 @@ import {
   ManufacturerApi,
   ProductTypeListApi,
   AssetWarrantyReportApi,
-  CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
   CreditCardListApi,
-  ExpenseSubCategoryListApi,
   UpComingJoinListApi,
 } from '../../types/apiTypes'
 
@@ -1056,15 +1054,6 @@ export const assetWarrantyReportConfig: AssetWarrantyReportApi = {
   downloadExportAssetWarrantyList:
     apiPrefix + '/assetManagement/exportAssetWarrantyList',
 }
-export const categoryListApiConfig: CategoryListApi = {
-  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
-  addCategory: apiPrefix + '/ExpenseManagement/addCategory',
-  checkForDuplicateCategory:
-    apiPrefix + '/ExpenseManagement/checkForDuplicateCategory',
-  editCategory: apiPrefix + '/ExpenseManagement/editCategory',
-  updateCategory: apiPrefix + '/ExpenseManagement/updateCategory',
-  deleteCategory: apiPrefix + '/ExpenseManagement/deleteCategory',
-}
 
 export const IntervieweeDetailsApiConfig: IntervieweeDetailsApi = {
   timelinedetails: apiPrefix + '/jobapplicant/timelinedetails',
@@ -1116,17 +1105,6 @@ export const ProductSpecificationListReportApiConfig: ProductSpecificationListAp
     deleteProductSpecification:
       apiPrefix + '/assetManagement/deleteProductSpecification',
   }
-
-export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
-  getCategoryList: apiPrefix + '/ExpenseManagement/getCategoryList',
-  getSubCategoryList: apiPrefix + '/ExpenseManagement/getSubCategoryList',
-  addSubCategoryList: apiPrefix + '/ExpenseManagement/addSubCategory',
-  editSubCategory: apiPrefix + '/ExpenseManagement/editSubCategory',
-  checkForDuplicateSubCategory:
-    apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
-  updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
-  deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
-}
 
 export const CreditCardListApiConfig: CreditCardListApi = {
   getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',

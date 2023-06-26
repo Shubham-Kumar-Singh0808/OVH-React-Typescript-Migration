@@ -126,13 +126,10 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
-import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
-import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
-import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 
 export const reduxServices = {
@@ -265,11 +262,8 @@ export const reduxServices = {
   ProductTypeList: ProductTypeListService,
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
-  categoryList: categoryListService,
-  addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
   addNewProduct: addProductService,
   creditCardList: creditCardListService,
-  subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,
 }
