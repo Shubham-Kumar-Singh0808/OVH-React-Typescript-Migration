@@ -23,7 +23,6 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
-import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
@@ -126,9 +125,17 @@ import { changeReporteesService } from './Settings/ChangeReportees/changeReporte
 import { ManufacturerListService } from './Assets/ManufacturerList/ManufacturerSliceList'
 import { assetsWarrantyListService } from './Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
 import { ProductTypeListService } from './Assets/ProductTypeList/ProductTypeSlice'
+import { categoryListService } from './ExpenseManagement/Category/expenseCategoryListSlice'
+import { addNewCategoryService } from './ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
+import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
+import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
+import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
+import { userRolesConfigurationsServices } from './Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -138,7 +145,7 @@ export const reduxServices = {
   employeeList: employeeListService,
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
-  userRolesAndPermissions: userRolesAndPermissionsService,
+  userRolesConfigurations: userRolesConfigurationsServices,
   employeeDesignation: employeeDesignationListService,
   newEmployee: addNewEmployeeService,
   employeeCertifications: employeeCertificateService,
@@ -260,6 +267,13 @@ export const reduxServices = {
   ProductTypeList: ProductTypeListService,
   assetList: assetListService,
   assetsWarrantyList: assetsWarrantyListService,
+  categoryList: categoryListService,
+  addNewCategory: addNewCategoryService,
   productSpecificationList: productSpecificationListService,
+  recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
+  addNewCandidate: candidateOfferService,
+  subCategoryList: subCategoryListService,
+  upComingJoinList: upComingJoiningListService,
+  interviewStatusReport: interviewStatusReportServices,
 }

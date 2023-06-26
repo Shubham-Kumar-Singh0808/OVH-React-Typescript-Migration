@@ -212,6 +212,8 @@ const JobOpenings = (): JSX.Element => {
           setToggle={setToggle}
           editJobInfo={editJobInfo}
           setEditJobInfo={setEditJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
       {toggle === 'editViewJobOpening' && (
@@ -219,6 +221,8 @@ const JobOpenings = (): JSX.Element => {
           setToggle={setToggle}
           editViewJobInfo={editViewJobInfo}
           setEditViewJobInfo={setEditViewJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
     </>

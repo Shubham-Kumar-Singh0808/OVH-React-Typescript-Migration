@@ -1,6 +1,9 @@
 import React from 'react'
 import SubProcessTailorTable from './SubProcessTailorTable'
-import { mockInitialManagerProcessHeadDTOList } from '../../../../../../test/data/projectTailoringData'
+import {
+  mockInitialManagerProcessHeadDTOList,
+  mockUserAccessToFeaturesManagerProjectTailoring,
+} from '../../../../../../test/data/projectTailoringData'
 import { cleanup, render, screen } from '../../../../../../test/testUtils'
 import { ProjectTailoringStatusEnum } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
 
@@ -23,6 +26,10 @@ describe('SubProcess Tailor Table - Project Tailoring', () => {
         preloadedState: {
           projectTailoring: {
             tailorStatus: ProjectTailoringStatusEnum.submitted,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures:
+              mockUserAccessToFeaturesManagerProjectTailoring,
           },
         },
       })

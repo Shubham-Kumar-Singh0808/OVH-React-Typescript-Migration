@@ -1,6 +1,6 @@
-import { UserRole } from '../../types/Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { IncomingUserRole } from '../../types/Settings/UserRolesConfiguration/UserRolesConfigurationTypes'
 
-export const mockUserRoles: UserRole[] = [
+export const mockUserRoles: IncomingUserRole[] = [
   {
     roleId: 1,
     name: 'admin',

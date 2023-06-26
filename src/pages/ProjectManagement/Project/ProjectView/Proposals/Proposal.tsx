@@ -41,13 +41,14 @@ const Proposal = (): JSX.Element => {
       }),
     )
     setProposalLink('')
+    setIsPostButtonEnabled(false)
     dispatch(reduxServices.projectProposals.getProjectTimeLine(projectId))
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value
-    const isValid = isValidUrl(inputValue)
-    setProposalLink(inputValue)
+    const isValid = isValidUrl(inputValue?.replace(/^\s*/, ''))
+    setProposalLink(inputValue?.replace(/^\s*/, ''))
     setIsPostButtonEnabled(isValid)
   }
   return (
@@ -61,7 +62,7 @@ const Proposal = (): JSX.Element => {
             name="proposalLink"
             placeholder="Please Enter Proposal link"
             data-testid="proposal-link"
-            value={proposalLink}
+            value={proposalLink?.replace(/^\s*/, '')}
             onChange={handleInputChange}
           />
         </CCol>
