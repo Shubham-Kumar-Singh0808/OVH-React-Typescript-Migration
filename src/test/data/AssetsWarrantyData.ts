@@ -320,4 +320,7 @@ export const mockAssetsWarrantyList: GetWarrantyAssetsList = {
       countryId: 2,
     },
   ],
+  fulfilled(mockAssetsWarrantyList: GetWarrantyAssetsList): unknown {
+    throw new Error('Function not implemented.')
+  },
 }

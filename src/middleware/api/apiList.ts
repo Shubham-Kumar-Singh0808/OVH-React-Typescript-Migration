@@ -124,6 +124,7 @@ import {
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
   CompaniesListApi,
+  CandidateOfferApi,
   InterviewStatusReportApi,
 } from '../../types/apiTypes'
 
@@ -1157,6 +1158,13 @@ export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
 }
 
+export const getCandidateOfferConfig: CandidateOfferApi = {
+  getpersontechnology: apiPrefix + '/jobapplicant/getpersontechnology',
+  getCandidateDesignation: apiPrefix + '/kra/designation',
+  getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getUploadFileForNewJoinee: '/jobapplicant/uploadFileForNewJoinee',
+}
 export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
   getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',

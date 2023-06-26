@@ -485,6 +485,10 @@ const EmployeesCount = React.lazy(
 const JobInfo = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/JobInformation/JobInformation'),
 )
+const personTechnology = React.lazy(
+  () => import('./pages/Recruitment/CandidateOffer/AddNewJoinee'),
+)
+
 const EditCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
@@ -1151,6 +1155,11 @@ const routes = [
     path: '/jobinfo/:jobVacancyId',
     name: 'JobInfo',
     component: JobInfo,
+  },
+  {
+    path: '/addnewjoinee/:personId',
+    name: 'CandidateOffer',
+    component: personTechnology,
   },
   {
     path: '/editcandidate/:personId',

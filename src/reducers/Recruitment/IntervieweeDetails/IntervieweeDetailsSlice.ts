@@ -148,6 +148,7 @@ export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   CycleDtOsList: [],
   timeLineDetails: {} as timeLineDetails,
   scheduleInterviewData: {} as EmpScheduleInterviewData,
+  addNewJoineeTechnology: {} as UpdateProps,
   employeeProperties: [],
 }
 const IntervieweeDetailsSlice = createSlice({
@@ -163,6 +164,10 @@ const IntervieweeDetailsSlice = createSlice({
       .addCase(empScheduleInterviewDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.scheduleInterviewData = action.payload
+      })
+      .addCase(updateCandidateInterviewStatus.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.addNewJoineeTechnology = action.payload
       })
       .addCase(getAllEmployeeDetails.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
@@ -189,8 +194,8 @@ const listSize = (state: RootState): number => state.intervieweeDetails.listSize
 const isLoading = (state: RootState): LoadingState =>
   state?.intervieweeDetails.isLoading
 
-const timeLineSelector = (state: RootState): timeLineDetails =>
-  state.intervieweeDetails.timeLineDetails
+const addJoineeSelector = (state: RootState): UpdateProps =>
+  state.intervieweeDetails.addNewJoineeTechnology
 
 const cycleDtOsList = (state: RootState): CycleDtOs =>
   state.intervieweeDetails.cycleDtOs
@@ -203,6 +208,9 @@ const TimeLineListSelector = (state: RootState): TimeLineList =>
 
 const scheduleInterviewData = (state: RootState): EmpScheduleInterviewData =>
   state.intervieweeDetails.scheduleInterviewData
+
+const timeLineSelector = (state: RootState): timeLineDetails =>
+  state.intervieweeDetails.timeLineDetails
 
 const employeeProperties = (state: RootState): EmployeeProperties[] =>
   state.intervieweeDetails.employeeProperties
@@ -219,6 +227,7 @@ export const intervieweeDetailsSelectors = {
   TimeLineListSelector,
   scheduleInterviewSelector,
   scheduleInterviewData,
+  addJoineeSelector,
   employeeProperties,
 }
 
