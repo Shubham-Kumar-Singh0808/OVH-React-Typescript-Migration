@@ -8,16 +8,12 @@ import { UsernameChangeHandlerProp } from '../../../../types/Recruitment/UpComin
 
 const UserEmployeeName = ({
   dynamicFormLabelProps,
-  usernameChangeHandler,
+  // usernameChangeHandler,
   onAllowedUserChangeHandler,
   username,
   userEmployeeName,
   setUserEmployeeName,
 }: UsernameChangeHandlerProp): JSX.Element => {
-  const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    usernameChangeHandler(e.target.value)
-  }
-
   const handleOnBlurInput = () => {
     onAllowedUserChangeHandler(userEmployeeName)
   }
@@ -31,6 +27,12 @@ const UserEmployeeName = ({
   }, [getJoineeDetails.candidateName])
 
   console.log('hjdvbgjs')
+
+  const convertedString = username.toLowerCase().replace(/\s/g, '.')
+
+  const [firstName, lastName] = username.split(' ')
+  console.log(firstName)
+  console.log(lastName)
 
   return (
     <>
@@ -52,9 +54,9 @@ const UserEmployeeName = ({
             type="text"
             name="username"
             placeholder="User Name"
-            value={getJoineeDetails.candidateName}
+            value={convertedString}
             onBlur={handleOnBlurInput}
-            onChange={handleUserEmail}
+            onChange={(e) => setUserEmployeeName(e.target.value)}
           />
         </CCol>
       </CRow>
@@ -76,7 +78,7 @@ const UserEmployeeName = ({
             type="text"
             name="email"
             placeholder="Email"
-            value={userEmployeeName}
+            value={convertedString}
             disabled
           />
           <strong>@raybiztech.com</strong>

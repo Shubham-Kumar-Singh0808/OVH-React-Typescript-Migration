@@ -479,7 +479,7 @@ const EditCandidate = React.lazy(
 const AddNewEmployeeUnderJoinee = React.lazy(
   () =>
     import(
-      './pages/Recruitment/UpComingJoinList/AddNewEmployeeUnderJoinee/AddCreateEmployee'
+      './pages/Recruitment/UpComingJoinList/AddNewEmployee/AddCreateEmployee'
     ),
 )
 /**

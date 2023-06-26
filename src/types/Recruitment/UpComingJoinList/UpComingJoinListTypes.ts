@@ -82,7 +82,7 @@ export interface DynamicFormLabelProps {
   dynamicFormLabelProps: (htmlFor: string, className: string) => Label
 }
 export interface UsernameChangeHandlerProp extends DynamicFormLabelProps {
-  usernameChangeHandler: (username: string) => void
+  // usernameChangeHandler: (username: string) => void
   onAllowedUserChangeHandler: (username: string) => void
   username: string
   isUserAllowed: boolean
@@ -91,7 +91,18 @@ export interface UsernameChangeHandlerProp extends DynamicFormLabelProps {
 }
 
 export interface DateOfJoiningChangeHandlerProp extends DynamicFormLabelProps {
-  onDateChangeHandler: (e: Date) => void
+  onDateChangeHandler?: (e: Date) => void
   dateValue: string
   setEmployeeDateOfJoining: React.Dispatch<React.SetStateAction<string | Date>>
+}
+
+export interface EmployeeFullNameChangeHandlerProp
+  extends DynamicFormLabelProps {
+  firstNameChangeHandler: (firstName: string) => void
+  lastNameChangeHandler: (lastName: string) => void
+  middleNameChangeHandler: (middleName: string) => void
+  firstNameValue: string
+  lastNameValue: string
+  middleNameValue: string
+  setUserEmployeeName: React.Dispatch<React.SetStateAction<string>>
 }

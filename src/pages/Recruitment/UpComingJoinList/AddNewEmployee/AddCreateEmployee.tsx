@@ -20,6 +20,7 @@ import moment from 'moment'
 // import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
 import DateOfJoining from './DateOfJoining'
 import UserEmployeeName from './UserEmployeeName'
+import EmployeeFullName from './EmployeeFullName'
 import {
   ShouldResetFields,
   GetAllReportingManagers,
@@ -58,7 +59,6 @@ import ShiftConfiguration from '../../../EmployeeDirectory/EmployeesList/AddNewE
 const AddCreateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
-  console.log('JyoVini')
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
@@ -67,6 +67,7 @@ const AddCreateEmployee = (): JSX.Element => {
   const [employeeDateOfJoining, setEmployeeDateOfJoining] = useState<
     string | Date
   >('')
+  const [employeeFirstName, employeeLastName] = userEmployeeName.split(' ')
   const initResetFields = {
     hrAssociate: false,
     projectManager: false,
@@ -88,18 +89,18 @@ const AddCreateEmployee = (): JSX.Element => {
     dob: '',
     employmentTypeName: '',
     experience: '',
-    firstName: '',
+    firstName: employeeFirstName,
     middleName: '',
     gender: '',
     hrAssociate: hrAssociateValue,
     jobTypeName: '',
-    lastName: '',
+    lastName: employeeLastName,
     manager: managerValue,
     projectManager: managerValue,
     role: '',
     technology: '',
     timeSlotDTO: shiftValue,
-    userName: '',
+    userName: userEmployeeName,
     workStatus: 'Office',
   } as AddEmployee
   const [addEmployee, setAddEmployee] = useState(initEmployee)
@@ -136,12 +137,12 @@ const AddCreateEmployee = (): JSX.Element => {
   const onHandleBirthday = (value: Date) => {
     setAddEmployee({ ...addEmployee, dob: moment(value).format(dateFormat) })
   }
-  const onHandleJoinDate = (value: Date) => {
-    setAddEmployee({
-      ...addEmployee,
-      dateOfJoining: moment(value).format(dateFormat),
-    })
-  }
+  // const onHandleJoinDate = (value: Date) => {
+  //   setAddEmployee({
+  //     ...addEmployee,
+  //     dateOfJoining: moment(value).format(dateFormat),
+  //   })
+  // }
   const onHandleJobType = (value: string) => {
     setAddEmployee({ ...addEmployee, jobTypeName: value })
   }
@@ -166,9 +167,11 @@ const AddCreateEmployee = (): JSX.Element => {
   const onHandleFirstName = (value: string) => {
     setAddEmployee({ ...addEmployee, firstName: value })
   }
-  const onHandleUsername = (value: string) => {
-    setAddEmployee({ ...addEmployee, userName: value })
-  }
+
+  // const onHandleUsername = (value: string) => {
+  //   setAddEmployee({ ...addEmployee, userName: value })
+  // }
+
   const onHandleContractExist = (value: boolean) => {
     setAddEmployee({ ...addEmployee, contractExists: value })
   }
@@ -292,7 +295,7 @@ const AddCreateEmployee = (): JSX.Element => {
         ),
       )
 
-      setAddEmployee({ ...addEmployee, userName: '' })
+      setUserEmployeeName('')
     } else {
       dispatch(
         reduxServices.app.actions.addToast(
@@ -413,7 +416,7 @@ const AddCreateEmployee = (): JSX.Element => {
     setDestinationToggle(false)
     setShiftToggle(false)
   }
-
+  console.log(employeeDateOfJoining)
   return (
     <>
       {shiftToggle && <ShiftConfiguration setToggleShift={handleBackButton} />}
@@ -442,21 +445,22 @@ const AddCreateEmployee = (): JSX.Element => {
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
               <UserEmployeeName
                 dynamicFormLabelProps={dynamicFormLabelProps}
-                usernameChangeHandler={onHandleUsername}
+                // usernameChangeHandler={onHandleUsername}
                 onAllowedUserChangeHandler={onHandleAllowedUser}
                 username={userEmployeeName}
                 isUserAllowed={(isUserExist as boolean) || false}
                 userEmployeeName={userEmployeeName}
                 setUserEmployeeName={setUserEmployeeName}
               />
-              <FullName
+              <EmployeeFullName
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 firstNameChangeHandler={onHandleFirstName}
                 lastNameChangeHandler={onHandleLastName}
                 middleNameChangeHandler={onHandleMiddleName}
-                firstNameValue={addEmployee.firstName || ''}
-                lastNameValue={addEmployee.lastName || ''}
+                firstNameValue={employeeFirstName || ''}
+                lastNameValue={employeeLastName || ''}
                 middleNameValue={addEmployee.middleName || ''}
+                setUserEmployeeName={setUserEmployeeName}
               />
               <OSelectList
                 isRequired={true}
@@ -485,7 +489,7 @@ const AddCreateEmployee = (): JSX.Element => {
               />
               <DateOfJoining
                 dynamicFormLabelProps={dynamicFormLabelProps}
-                onDateChangeHandler={onHandleJoinDate}
+                // onDateChangeHandler={onHandleJoinDate}
                 dateValue={employeeDateOfJoining as string}
                 setEmployeeDateOfJoining={setEmployeeDateOfJoining}
               />
