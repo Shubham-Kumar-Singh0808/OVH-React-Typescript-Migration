@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { CFormText, CRow, CCol } from '@coreui/react-pro'
+import { CRow, CCol } from '@coreui/react-pro'
 import ReviewFormKRATable from './ReviewFormKRATable/ReviewFormKRATable'
 import ReviewFormButtons from './ReviewFormButtons/ReviewFormButtons'
 import EmployeeDiscussionInput from './ReviewFormEmployeeComponents/EmployeeDiscussionInput'
@@ -7,8 +7,6 @@ import RequestDiscussionTimeline from './ReviewFormEmployeeComponents/RequestDis
 import ReviewFormClosedDetails from './ReviewFormEmployeeComponents/ReviewFormClosedDetails'
 import FinalButtonDisplay from './ReviewFormEmployeeComponents/FinalButtonDisplay'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { TextDanger } from '../../../../constant/ClassName'
 import { MyReviewFormStatus } from '../../../../types/Performance/MyReview/myReviewTypes'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import {
@@ -24,7 +22,6 @@ import OModal from '../../../../components/ReusableComponent/OModal'
 const EmployeeReviewForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const apiError = useTypedSelector((state) => state.myReview.error)
-  const isLoading = useTypedSelector((state) => state.myReview.isLoading)
   const employeeId = useTypedSelector(
     (state) => state.authentication.authenticatedUser.employeeId,
   )
@@ -135,11 +132,13 @@ const EmployeeReviewForm = (): JSX.Element => {
               <ReviewFormButtons />
             </CCol>
           </CRow>
-          <hr />
           {
             // only visible if it was closed by hr department
             myReviewFormStatus === MyReviewFormStatus.closed && (
-              <ReviewFormClosedDetails />
+              <>
+                <hr />
+                <ReviewFormClosedDetails />
+              </>
             )
           }
           {
@@ -185,14 +184,11 @@ const EmployeeReviewForm = (): JSX.Element => {
             modalFooterClass={myReviewModal?.modalFooterClass}
             modalHeaderClass={myReviewModal?.modalHeaderClass}
             confirmButtonAction={myReviewModal?.confirmBtnAction}
+            modalSize={myReviewModal?.modalSize}
           >
             {myReviewModal?.description}
           </OModal>
         </>
-      )}
-      {apiError === 406 && isLoading === ApiLoadingState.failed && (
-        // user is not allowed as he/she is on probationary period - 406 == not acceptable
-        <CFormText className={TextDanger}>Probationay Error</CFormText>
       )}
     </>
   )

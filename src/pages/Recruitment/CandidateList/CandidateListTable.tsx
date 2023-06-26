@@ -10,6 +10,7 @@ import {
   CCol,
   CButton,
   CTooltip,
+  CBadge,
 } from '@coreui/react-pro'
 import { Link } from 'react-router-dom'
 import { TableProps } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
@@ -108,6 +109,57 @@ const CandidateListTable = ({
   const timeLineHandler = (personId: number) => {
     dispatch(reduxServices.intervieweeDetails.timeLineData(personId))
   }
+
+  const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {
+    if (interviewStatus === 'NEW') {
+      return (
+        <CBadge className="rounded-pill text-white" color="info">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'IN_PROCESS') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">{'IN PROGRESS'}</CBadge>
+      )
+    } else if (interviewStatus === ('HOLD' || 'CANCEL')) {
+      return (
+        <CBadge className="rounded-pill text-white" color="warning">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (
+      interviewStatus === ('REJECTED' || 'DID_NOT_JOIN' || 'OFFER_CANCELLED')
+    ) {
+      return (
+        <CBadge className="rounded-pill text-white" color="danger">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === ('OFFERED' || 'COMPLETED')) {
+      return (
+        <CBadge className="rounded-pill text-white" color="success">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'RESCHEDULED') {
+      return (
+        <CBadge className="rounded-pill sh-badge-light">
+          {interviewStatus}
+        </CBadge>
+      )
+    } else if (interviewStatus === 'NO_SHOW') {
+      return (
+        <CBadge className="rounded-pill text-white" color="danger">
+          {'NO SHOW'}
+        </CBadge>
+      )
+    }
+    return <></>
+  }
+
+  const handler = (candidateId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+  }
   return (
     <>
       <CTable
@@ -146,9 +198,21 @@ const CandidateListTable = ({
                   <CTableDataCell scope="row">
                     {getItemNumber(index)}
                   </CTableDataCell>
-                  <CTableDataCell>{data.fullName}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link
+                      to={`/candidatetimeline/${data.personId}`}
+                      className="cursor-pointer"
+                      onClick={() => handler(data.personId)}
+                    >
+                      {data.fullName}
+                    </Link>
+                  </CTableDataCell>
                   <CTableDataCell>{data.appliedForVacancy}</CTableDataCell>
-                  <CTableDataCell>{data.appliedFor.jobCode}</CTableDataCell>
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link to={`/`} className="cursor-pointer">
+                      {data.appliedFor.jobCode}
+                    </Link>
+                  </CTableDataCell>
                   <CTableDataCell>{data.mobile}</CTableDataCell>
                   <CTableDataCell>{data.email}</CTableDataCell>
                   <CTableDataCell>{data.experience}</CTableDataCell>
@@ -159,18 +223,20 @@ const CandidateListTable = ({
                   </CTableDataCell>
                   <CTableDataCell>{data.country.name}</CTableDataCell>
                   <CTableDataCell>
-                    {data.cadidateInterviewStatus}
+                    {formatInterviewStatusText(data.cadidateInterviewStatus)}
                   </CTableDataCell>
                   <CTableDataCell className="actions">
-                    <CTooltip content="Edit">
-                      <CButton
-                        color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
-                        data-testid={`btn-edit${index}`}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
+                    <Link to={`/editcandidate/${data.personId}`}>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list me-1"
+                          data-testid={`btn-edit${index}`}
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    </Link>
                     <CTooltip content="Timeline">
                       <Link to={`/candidatetimeline/${data.personId}`}>
                         <CButton

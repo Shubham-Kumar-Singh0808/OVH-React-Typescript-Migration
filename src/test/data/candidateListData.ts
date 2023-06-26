@@ -5,9 +5,12 @@ import {
   GetAllTechnology,
   IncomingAllJobVacanciesList,
   IncomingCompaniesData,
+  IncomingEditCandidateData,
   country,
 } from '../../types/Recruitment/CandidateList/CandidateListTypes'
+import { UserAccessToFeatures } from '../../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
+// used in other components also - interview status reprot
 export const mockGetTechnology: GetAllTechnology[] = [
   {
     id: 1,
@@ -231,6 +234,85 @@ export const mockGetTechnology: GetAllTechnology[] = [
   },
 ]
 
+export const mockEditCandidateData: IncomingEditCandidateData = {
+  candidateName: 'jbsd jbs',
+  candidateFirstName: 'jbsd',
+  candidateLastName: 'jbs',
+  candidateEmail: 'kalyansaatish12@gmail.com',
+  experience: '1',
+  skills: 'fdh',
+  mobile: '2568798452',
+  appliedFor: {
+    id: 116,
+    jobCode: 'pavanitest',
+    positionVacant: 'test',
+    minimumExperience: '3',
+    description: '<p>test</p>',
+    opendDate: '22 May 2023',
+    expiryDate: '23/05/2023',
+    noOfRequirements: 60,
+    offered: 7,
+    remaining: 53,
+    status: 'open',
+  },
+  sourceType: 'External',
+  sourceName: 'Test Testing',
+  uploadResume: 'jbsd 97b6c8a9-69d8-4a45-9ddf-85bc86005433.pdf',
+  otherDocs: null,
+  status: 'OFFERED',
+  candidateId: 13896,
+  appliedForLookUp: 'test',
+  vacancyId: 116,
+  scheduleDate: null,
+  scheduleTime: null,
+  interviewerEmailid: null,
+  receipentEmailId: null,
+  description: null,
+  scheduleFlag: null,
+  interviewRound: null,
+  interviewersDTOList: null,
+  interviewerId: null,
+  interviewType: null,
+  interviewStatus: null,
+  dob: '15/06/2005',
+  timelineStatus: null,
+  technology: 'Testing',
+  recruiter: null,
+  ctc: '3',
+  ectc: '4',
+  np: '3',
+  reason: '<p>asfgvdgvbdfgfdsefdweihiuhi</p>',
+  skypeId: 'skypeIDDDD',
+  currentEmployer: null,
+  currentLocation: 'hyd',
+  sendMailToCandidate: null,
+  sendMailToInterviewer: null,
+  sendMessageToCandidate: null,
+  sendMessageToInterviewer: null,
+  jobTypeName: 'Full Time',
+  pan: 'hihiu88989',
+  adhar: '877979979789',
+  linkedin: 'testing it',
+  countryId: 2,
+  country: { id: 2, name: 'INDIA', mobileCode: '+91', countryCode: 'IND' },
+  notifications: 'Yes',
+  contactDetails: null,
+  countryCode: 2,
+}
+
+export const mockCandidateUserAccessToFeatures: UserAccessToFeatures[] = [
+  {
+    featureId: 126,
+    name: 'Candidate',
+    viewaccess: false,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
+]
+
+// used in other components - interview status report
 export const mockGetEmpCountries: country[] = [
   {
     id: 1,

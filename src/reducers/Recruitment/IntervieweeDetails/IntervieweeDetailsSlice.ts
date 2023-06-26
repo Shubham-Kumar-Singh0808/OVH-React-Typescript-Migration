@@ -7,7 +7,10 @@ import IntervieweeDetailsApi from '../../../middleware/api/Recruitment/Interview
 import {
   CycleDtOs,
   EmpScheduleInterviewData,
+  EmployeeProperties,
   IntervieweeDetailsSliceState,
+  Reschedule,
+  Schedule,
   TimeLineList,
   UpdateProps,
   saveButnprops,
@@ -76,6 +79,67 @@ const updateInterview = createAsyncThunk(
   },
 )
 
+const reScheduleInterview = createAsyncThunk(
+  'IntervieweeDetails/reScheduleInterview',
+  async (props: Reschedule, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.reScheduleInterview(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const scheduleInterview = createAsyncThunk(
+  'IntervieweeDetails/scheduleInterview',
+  async (props: Schedule, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.scheduleInterview(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const getAllEmployeeDetails = createAsyncThunk(
+  'IntervieweeDetails/getAllEmployeeDetails',
+  async (_, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.getAllEmployeeDetails()
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const interviewRoundCount = createAsyncThunk(
+  'IntervieweeDetails/interviewRoundCount',
+  async (candidateId: number, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.interviewRoundCount(candidateId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
+const sendRejectedMessagetoCandidate = createAsyncThunk(
+  'IntervieweeDetails/sendRejectedMessagetoCandidate',
+  async (candidateId: number, thunkApi) => {
+    try {
+      return await IntervieweeDetailsApi.sendRejectedMessagetoCandidate(
+        candidateId,
+      )
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   isLoading: ApiLoadingState.idle,
   listSize: 0,
@@ -84,6 +148,8 @@ export const initialIntervieweeDetailsState: IntervieweeDetailsSliceState = {
   CycleDtOsList: [],
   timeLineDetails: {} as timeLineDetails,
   scheduleInterviewData: {} as EmpScheduleInterviewData,
+  addNewJoineeTechnology: {} as UpdateProps,
+  employeeProperties: [],
 }
 const IntervieweeDetailsSlice = createSlice({
   name: 'IntervieweeDetails',
@@ -99,6 +165,14 @@ const IntervieweeDetailsSlice = createSlice({
         state.isLoading = ApiLoadingState.succeeded
         state.scheduleInterviewData = action.payload
       })
+      .addCase(updateCandidateInterviewStatus.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.addNewJoineeTechnology = action.payload
+      })
+      .addCase(getAllEmployeeDetails.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.employeeProperties = action.payload
+      })
   },
 })
 
@@ -108,6 +182,11 @@ export const intervieweeDetailsThunk = {
   updateCandidateInterviewStatus,
   empScheduleInterviewDetails,
   updateInterview,
+  getAllEmployeeDetails,
+  interviewRoundCount,
+  reScheduleInterview,
+  scheduleInterview,
+  sendRejectedMessagetoCandidate,
 }
 
 const listSize = (state: RootState): number => state.intervieweeDetails.listSize
@@ -115,8 +194,8 @@ const listSize = (state: RootState): number => state.intervieweeDetails.listSize
 const isLoading = (state: RootState): LoadingState =>
   state?.intervieweeDetails.isLoading
 
-const timeLineSelector = (state: RootState): timeLineDetails =>
-  state.intervieweeDetails.timeLineDetails
+const addJoineeSelector = (state: RootState): UpdateProps =>
+  state.intervieweeDetails.addNewJoineeTechnology
 
 const cycleDtOsList = (state: RootState): CycleDtOs =>
   state.intervieweeDetails.cycleDtOs
@@ -130,6 +209,11 @@ const TimeLineListSelector = (state: RootState): TimeLineList =>
 const scheduleInterviewData = (state: RootState): EmpScheduleInterviewData =>
   state.intervieweeDetails.scheduleInterviewData
 
+const timeLineSelector = (state: RootState): timeLineDetails =>
+  state.intervieweeDetails.timeLineDetails
+
+const employeeProperties = (state: RootState): EmployeeProperties[] =>
+  state.intervieweeDetails.employeeProperties
 const scheduleInterviewSelector = (
   state: RootState,
 ): EmpScheduleInterviewData => state.intervieweeDetails.scheduleInterviewData
@@ -143,6 +227,8 @@ export const intervieweeDetailsSelectors = {
   TimeLineListSelector,
   scheduleInterviewSelector,
   scheduleInterviewData,
+  addJoineeSelector,
+  employeeProperties,
 }
 
 export const intervieweeDetailsService = {

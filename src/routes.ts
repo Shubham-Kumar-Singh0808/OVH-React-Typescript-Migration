@@ -12,7 +12,7 @@ export type route = {
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
   () =>
-    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+    import('./pages/Settings/UserRolesConfiguration/UserRolesConfiguration'),
 )
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
@@ -438,13 +438,35 @@ const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+<<<<<<< HEAD
 
 const CreditCardList = React.lazy(
   () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
+=======
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
+)
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
+)
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+>>>>>>> develop
 )
 const AddNewCandidate = React.lazy(
   () =>
@@ -452,6 +474,17 @@ const AddNewCandidate = React.lazy(
 )
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
+<<<<<<< HEAD
+=======
+)
+const personTechnology = React.lazy(
+  () => import('./pages/Recruitment/CandidateOffer/AddNewJoinee'),
+)
+
+const EditCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
+>>>>>>> develop
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1062,9 +1095,30 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
+<<<<<<< HEAD
     path: '/creditCardList',
     name: 'Credit Card List',
     component: CreditCardList,
+=======
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
+>>>>>>> develop
   },
   {
     path: '/addNewCandidate',
@@ -1075,6 +1129,19 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+<<<<<<< HEAD
+=======
+  },
+  {
+    path: '/addnewjoinee/:personId',
+    name: 'CandidateOffer',
+    component: personTechnology,
+  },
+  {
+    path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
+>>>>>>> develop
   },
 ]
 export default routes

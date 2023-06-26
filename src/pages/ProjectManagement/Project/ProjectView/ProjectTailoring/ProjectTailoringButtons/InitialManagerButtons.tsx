@@ -33,6 +33,9 @@ const InitialManagerButtons = ({
   const isManagerSubmitButtonEnabled = useTypedSelector(
     (state) => state.projectTailoring.isManagerSubmitButtonEnabled,
   )
+  const alreadySavedDocument = useTypedSelector(
+    (state) => state.projectTailoring.projectTailoringDocument,
+  )
   const tailorStatus = useTypedSelector(
     (state) => state.projectTailoring.tailorStatus,
   )
@@ -52,6 +55,8 @@ const InitialManagerButtons = ({
     )
   }
 
+  console.log(useTypedSelector((state) => state.projectTailoring))
+
   const saveButtonHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const finalData = getSaveProjectTailoringDocumentInitialManagerFinalData(
@@ -59,11 +64,15 @@ const InitialManagerButtons = ({
       projectId,
       ProjectTailoringStatusEnum.saveForManager,
     )
-    if (tailorStatus === ProjectTailoringStatusEnum.saveForManager) {
+    if (
+      tailorStatus === ProjectTailoringStatusEnum.saveForManager &&
+      typeof alreadySavedDocument !== 'string'
+    ) {
       // if manager is saving an already saved document, then we have to use different api for that
       const savedFinalData: OutgoingSaveProjectTailoringDocument = {
         ...finalData,
-        id: +projectId,
+        processHeaddto: alreadySavedDocument?.processHeaddto,
+        id: +alreadySavedDocument.id,
         rejectComments: null,
       }
       submitDocumentHandler(savedFinalData)
@@ -92,7 +101,16 @@ const InitialManagerButtons = ({
       projectId,
       ProjectTailoringStatusEnum.submitted,
     )
-    submitDocumentHandler(finalData)
+    if (typeof alreadySavedDocument !== 'string') {
+      submitDocumentHandler({
+        ...finalData,
+        processHeaddto: alreadySavedDocument?.processHeaddto,
+        id: alreadySavedDocument.id,
+      })
+    } else {
+      // without saving, directly submitting the document
+      submitDocumentHandler(finalData)
+    }
   }
 
   return (

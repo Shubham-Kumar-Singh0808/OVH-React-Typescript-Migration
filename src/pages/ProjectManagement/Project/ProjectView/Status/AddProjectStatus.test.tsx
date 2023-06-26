@@ -2,12 +2,7 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import AddProjectStatus from './AddProjectStatus'
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../../../test/testUtils'
+import { render, screen } from '../../../../../test/testUtils'
 import { mockProjectStatusList } from '../../../../../test/data/projectStatusTabData'
 
 const mockSetToggle = jest.fn()
