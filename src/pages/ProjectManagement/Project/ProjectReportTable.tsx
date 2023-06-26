@@ -338,6 +338,10 @@ const ProjectReportsTable = ({
     downloadFile(employeeList, 'ProjectInitiationCheckList.csv')
   }
 
+  const userAccessForDownload = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Download Project CheckList',
+  )
+
   return (
     <>
       {isProjectLoading !== ApiLoadingState.loading ? (
@@ -481,19 +485,22 @@ const ProjectReportsTable = ({
                             </CTooltip>
                           </Link>
                         )}
-                        <CTooltip content="Download">
-                          <CButton
-                            data-testid={`btn-download${index}`}
-                            size="sm"
-                            color="btn btn-info sh-btn-alignment"
-                            className="btn-ovh-employee-list"
-                            onClick={() =>
-                              handleDownloadBtn(value.projectRequestId)
-                            }
-                          >
-                            <i className="fa fa-download sh-button"> </i>
-                          </CButton>
-                        </CTooltip>
+                        {userAccessForDownload?.viewaccess && (
+                          <CTooltip content="Download">
+                            <CButton
+                              data-testid={`btn-download${index}`}
+                              size="sm"
+                              color="btn btn-info sh-btn-alignment"
+                              className="btn-ovh-employee-list"
+                              disabled={value.projectRequestId === null}
+                              onClick={() =>
+                                handleDownloadBtn(value.projectRequestId)
+                              }
+                            >
+                              <i className="fa fa-download sh-button"> </i>
+                            </CButton>
+                          </CTooltip>
+                        )}
                         {userAccess.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton

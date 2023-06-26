@@ -23,6 +23,8 @@ import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSele
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OToast from '../../../components/ReusableComponent/OToast'
+import projectDetailsApi from '../../../middleware/api/ProjectManagement/Projects/ProjectView/projectViewApi'
+import { downloadFile } from '../../../utils/helper'
 
 const ProjectCreationRequestTable = ({
   paginationRange,
@@ -68,7 +70,9 @@ const ProjectCreationRequestTable = ({
   const userAccessCreateAction = userAccessToFeatures?.find(
     (feature) => feature.name === 'Project Creation Requests',
   )
-
+  const userAccessForDownload = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Download Project CheckList',
+  )
   const handlePageSizeSelectChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
@@ -215,6 +219,13 @@ const ProjectCreationRequestTable = ({
     }
   }
 
+  const handleDownloadBtn = async (id: number) => {
+    const employeeList = await projectDetailsApi.downloadInitationCheckList({
+      projectRequestId: id,
+    })
+    downloadFile(employeeList, 'ProjectInitiationCheckList.csv')
+  }
+
   return (
     <>
       <CTable
@@ -313,6 +324,20 @@ const ProjectCreationRequestTable = ({
                         <i className="fa fa-bar-chart text-white"></i>
                       </CButton>
                     </CTooltip>
+                    {userAccessForDownload?.viewaccess && (
+                      <CTooltip content="Download">
+                        <CButton
+                          data-testid={`btn-download${index}`}
+                          size="sm"
+                          color="btn btn-info sh-btn-alignment"
+                          className="btn-ovh-employee-list"
+                          disabled={projectRequest.id === null}
+                          onClick={() => handleDownloadBtn(projectRequest.id)}
+                        >
+                          <i className="fa fa-download sh-button"> </i>
+                        </CButton>
+                      </CTooltip>
+                    )}
                     {userRejectAction && (
                       <CTooltip content="Cancel">
                         <CButton
