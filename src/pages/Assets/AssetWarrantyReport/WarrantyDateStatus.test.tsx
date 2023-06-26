@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event'
 import WarrantyDateStatus from './WarrantyDateStatus'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
+import assetsWarrantyListApi from '../../../middleware/api/Assets/AssetWarrantyReport/assetWarrantyReportApi'
 
 const mockSetSelect = jest.fn()
 const mockSetTogglePage = jest.fn()
@@ -75,4 +76,11 @@ describe('Assets Warranty List List Filter Options Component Testing with data',
   test('should render Export button in the component', () => {
     expect(screen.getByTestId('export-button')).toBeTruthy()
   })
+
+  // Mocking the assetsWarrantyListApi.getExportAssetsWarrantyList function
+  jest.mock('path/to/your/api', () => ({
+    assetsWarrantyListApi: {
+      getExportAssetsWarrantyList: jest.fn().mockResolvedValue([]),
+    },
+  }))
 })
