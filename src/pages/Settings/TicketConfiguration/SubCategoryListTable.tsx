@@ -109,7 +109,7 @@ const SubCategoryListTable = (
     ) {
       dispatch(reduxServices.app.actions.addToast(toastElement))
       let tempPageNum = currentPage
-      if (subCategoryList?.list?.length === 1 && currentPage !== 1) {
+      if (subCategoryList.list?.length === 1 && currentPage !== 1) {
         setCurrentPage((prevState) => prevState - 1)
         tempPageNum = currentPage - 1
       }
