@@ -435,8 +435,7 @@ export interface BookingListApi extends ApiBase {
   editMeeting: string
   confirmUpdateMeetingRequest: string
   uniqueAttendee: string
-  Completed: string
-  InProgress: string
+  changeMeetingStatus: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -869,6 +868,11 @@ export interface IntervieweeDetailsApi extends ApiBase {
   updateCandidateInterviewStatus: string
   empScheduleInterviewDetails: string
   updateInterview: string
+  getAllEmployeeDetails: string
+  interviewRoundCount: string
+  reScheduleInterview: string
+  scheduleInterview: string
+  sendRejectedMessagetoCandidate: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string
@@ -885,6 +889,11 @@ export interface CandidateListApi extends ApiBase {
   uploadCandidateResume: string
   addTechnology: string
   deleteTechnology: string
+  editCandidateData: string
+  isEditCandidateMailExists: string
+  isEditCandidateMobileNumberExists: string
+  editNewCandidate: string
+  downloadFile: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -940,6 +949,7 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+
 export interface ExpenseSubCategoryListApi extends ApiBase {
   getCategoryList: string
   getSubCategoryList: string

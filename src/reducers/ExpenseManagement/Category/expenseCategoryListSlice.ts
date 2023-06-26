@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import categoryListApi from '../../../middleware/api/ExpenseManagement/Category/expenseCategoryListApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import {
   CategoryList,
@@ -8,6 +7,7 @@ import {
 } from '../../../types/ExpenseManagement/Category/categoryListTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
+import categoryListApi from '../../../middleware/api/ExpenseManagement/Category/expenseCategoryListApi'
 
 const getCategoryList = createAsyncThunk(
   '/ExpenseManagement/getCategoryList',

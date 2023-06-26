@@ -172,9 +172,15 @@ const AddExpenseSubCategory = (): JSX.Element => {
             <option value={''}>Select Category</option>
             {expenseCategoryNames
               .slice()
+<<<<<<<< HEAD:src/pages/ExpenseManagement/SubCategory/AddSubCategory/AddExpenseSubCategory.tsx
               .sort((subCategory1, subCategory2) =>
                 subCategory1.categoryName.localeCompare(
                   subCategory2.categoryName,
+========
+              .sort((categories1, categories2) =>
+                categories1.categoryName.localeCompare(
+                  categories2.categoryName,
+>>>>>>>> develop:src/pages/ExpenseManagement/Sub-Category/AddNewSubCategory/AddExpenseSubCategory.tsx
                 ),
               )
               ?.map((categoryNames, index) => (

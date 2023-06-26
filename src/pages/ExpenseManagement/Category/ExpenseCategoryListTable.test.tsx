@@ -125,7 +125,7 @@ describe('Expense Category List Table with data', () => {
   })
 })
 
-describe('Room List without data', () => {
+describe('Expense Category without data', () => {
   beforeEach(() => {
     render(<ExpenseCategoryListTable />)
   })

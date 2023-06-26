@@ -58,8 +58,13 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   )
 
   const editCategoryNameExists = (name: string) => {
+<<<<<<< HEAD
     return categoryList?.find((categoriesName) => {
       return categoriesName.categoryName.toLowerCase() === name.toLowerCase()
+=======
+    return categoryList?.find((categories) => {
+      return categories.categoryName.toLowerCase() === name.toLowerCase()
+>>>>>>> develop
     })
   }
 

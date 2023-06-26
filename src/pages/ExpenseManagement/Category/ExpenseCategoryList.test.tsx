@@ -14,7 +14,7 @@ const toRender = (
 )
 
 describe('Expense Category Component Testing', () => {
-  test('should render Expense Category component without crashing', () => {
+  test('should render Expense Category component without data', () => {
     render(toRender, {
       preloadedState: {
         userAccessToFeatures: {

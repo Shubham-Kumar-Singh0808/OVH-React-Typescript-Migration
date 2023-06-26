@@ -85,7 +85,34 @@ describe('Add Expense Sub Category List with data', () => {
     userEvent.click(clearBtnElement)
   })
 
+<<<<<<<< HEAD:src/pages/ExpenseManagement/SubCategory/AddSubCategory/AddExpenseSubCategory.test.tsx
+========
+  test('should able to select values for options for respective select element', () => {
+    const categoryNameElement = screen.getByTestId('categoryName')
+    userEvent.selectOptions(categoryNameElement, ['Ray tech category'])
+    expect(categoryNameElement).toHaveValue('74')
+
+    const category = screen.getByTestId('subCategoryName')
+    userEvent.type(category, 'testings category')
+    expect(category).toHaveValue('testings category')
+
+    const addBtnElement = screen.getByRole('button', { name: 'Add' })
+    expect(addBtnElement).toBeEnabled()
+    userEvent.click(addBtnElement)
+  })
+
+>>>>>>>> develop:src/pages/ExpenseManagement/Sub-Category/AddNewSubCategory/AddExpenseSubCategory.test.tsx
   test('should be able to render Add Expense Sub Category Component label', () => {
     expect(screen.getByTestId('categoryLabel')).toBeTruthy()
+  })
+
+  test('showing error on entering existing Sub-Category which is already exists', () => {
+    const categoryNameElement = screen.getByTestId('categoryName')
+    userEvent.selectOptions(categoryNameElement, ['testting 12121'])
+    expect(categoryNameElement).toHaveValue('25')
+    const inputOrder = screen.getByTestId('subCategoryName')
+    userEvent.type(inputOrder, 'Power chargers')
+    expect(inputOrder).toHaveValue('Power chargers')
+    expect(screen.getByText('Sub Category already exist')).toBeInTheDocument()
   })
 })

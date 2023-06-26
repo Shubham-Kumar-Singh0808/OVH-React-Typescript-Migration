@@ -9,7 +9,7 @@ export const mockExpenseCategoryList: CategoryList[] = [
     categoryName: 'Ray tech category',
     createdBy: 'Srikanth Kotapaati',
     updatedBy: 'Srikanth Kotapaaati',
-    createdDate: '06/06/2023',
+    createdDate: '06/06/2022',
     updatedDate: '08/06/2023',
   },
   {
@@ -95,7 +95,7 @@ export const mockExpenseCategoryList: CategoryList[] = [
   {
     id: 44,
     categoryName: 'Tsfhgfjdkhd',
-    createdBy: 'Srrikanth Kotapati',
+    createdBy: 'Srrikanth Kottapati',
     updatedBy: null,
     createdDate: '02/05/2023',
     updatedDate: null,
@@ -150,7 +150,7 @@ export const mockExpenseCategoryList: CategoryList[] = [
   },
   {
     id: 25,
-    categoryName: 'testing 12121',
+    categoryName: 'testting 12121',
     createdBy: 'Staggiing Test',
     updatedBy: null,
     createdDate: '04/05/2023',
@@ -320,13 +320,23 @@ export const mockExpenseCategoryList: CategoryList[] = [
     id: 1,
     categoryName: 'testing testing',
     createdBy: 'Javed Shaikikh',
-    updatedBy: 'Srikanth Kotapati',
+    updatedBy: 'Srrikanth Kotapati',
     createdDate: '29/01/2019',
     updatedDate: '01/06/2023',
   },
 ]
 
 export const mockExpenseSubCategoryList: SubCategoryList[] = [
+  {
+    id: 98,
+    categoryId: 25,
+    categoryName: 'testting 12121',
+    subCategoryName: 'Power chargeres',
+    createdBy: 'Stagging Test',
+    updatedBy: 'Srikanth Kotapati',
+    createdDate: '03/03/2023',
+    updatedDate: '06/06/2023',
+  },
   {
     id: 97,
     categoryId: 25,

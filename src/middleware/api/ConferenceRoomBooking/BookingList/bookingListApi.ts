@@ -5,6 +5,7 @@ import {
   MeetingLocations,
   RoomsOfLocation,
   UpdateRoomBooking,
+  ChangeBookingStatusParams,
 } from '../../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import { UniqueAttendeeParams } from '../../../../types/ConferenceRoomBooking/NewEvent/newEventTypes'
 import {
@@ -108,6 +109,18 @@ const editUniqueAttendee = async (
   return response.data
 }
 
+const changeMeetingStatus = async (
+  data: ChangeBookingStatusParams,
+): Promise<undefined> => {
+  const finalLink = `${bookingListApiConfig.changeMeetingStatus}/${data.bookingId}/${data.status}`
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: finalLink,
+    method: AllowedHttpMethods.put,
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const bookingListApi = {
   getAllMeetingLocations,
   getRoomsOfLocation,
@@ -116,6 +129,7 @@ const bookingListApi = {
   confirmUpdateMeetingRequest,
   editMeetingRequest,
   editUniqueAttendee,
+  changeMeetingStatus,
 }
 
 export default bookingListApi
