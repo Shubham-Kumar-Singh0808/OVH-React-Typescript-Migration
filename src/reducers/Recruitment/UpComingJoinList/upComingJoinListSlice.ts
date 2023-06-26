@@ -4,6 +4,7 @@ import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'
 import {
+  GetJoineeById,
   GetUpComingJoineeList,
   UpComingJoineeList,
   UpComingJoineeListProps,
@@ -23,11 +24,24 @@ const getUpConingJoinList = createAsyncThunk(
   },
 )
 
+const getJoineeById = createAsyncThunk(
+  'jobapplicant/getJoineeById',
+  async (joineeId: number, thunkApi) => {
+    try {
+      return await UpComingJoinListApi.getJoineeById(joineeId)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
+
 export const initialUpComingJoinListState: UpComingJoineeListSliceState = {
   upComingJoineeListDetails: [],
   listSize: 0,
   isLoading: ApiLoadingState.idle,
   getUpComingJoineeList: {} as GetUpComingJoineeList,
+  getJoineeById: {} as GetJoineeById,
 }
 
 const upComingJoinListSlice = createSlice({
@@ -44,11 +58,16 @@ const upComingJoinListSlice = createSlice({
         state.upComingJoineeListDetails = action.payload.list
         state.listSize = action.payload.size
       })
+      .addMatcher(isAnyOf(getJoineeById.fulfilled), (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.getJoineeById = action.payload
+      })
   },
 })
 
 const upComingJoinListThunk = {
   getUpConingJoinList,
+  getJoineeById,
 }
 
 function isLoading(state: RootState): LoadingState {
@@ -56,12 +75,17 @@ function isLoading(state: RootState): LoadingState {
 }
 const upComingJoinList = (state: RootState): UpComingJoineeList[] =>
   state.upComingJoinList.upComingJoineeListDetails
+
+const getJoineeDetails = (state: RootState): GetJoineeById =>
+  state.upComingJoinList.getJoineeById
+
 const listSize = (state: RootState): number => state.upComingJoinList.listSize
 
 export const upComingJoinListSelectors = {
   isLoading,
   upComingJoinList,
   listSize,
+  getJoineeDetails,
 }
 
 export const upComingJoiningListService = {

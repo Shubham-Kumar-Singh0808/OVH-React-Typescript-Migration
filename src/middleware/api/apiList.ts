@@ -1148,6 +1148,7 @@ export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getJoineeById: apiPrefix + '/jobapplicant/getJoineeById',
 }
 
 export const interviewStatusReportApiConfig: InterviewStatusReportApi = {

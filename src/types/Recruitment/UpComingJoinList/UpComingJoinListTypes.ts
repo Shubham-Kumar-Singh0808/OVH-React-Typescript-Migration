@@ -33,6 +33,7 @@ export type UpComingJoineeListSliceState = {
   getUpComingJoineeList: GetUpComingJoineeList
   listSize: number
   isLoading: LoadingState
+  getJoineeById: GetJoineeById
 }
 
 export type UpComingJoineeListProps = {
@@ -49,4 +50,27 @@ export type UpComingJoinListTableProps = {
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   searchInput: string
   setSearchInput: React.Dispatch<React.SetStateAction<string | undefined>>
+}
+
+export type GetJoineeById = {
+  id: number
+  appliedForLookUp: string
+  candidateName: string
+  designation: string
+  dateOfJoining: string
+  currentCTC: string
+  employmentType: string
+  jobType: string
+  status: string
+  comments: string
+  attachedDocumentPath: string
+  experience: string
+  candidateEmail: string
+  dateOfBirth: string
+  candidateId: string
+  technology: string
+  candidateInterviewStatus: null
+  departmentName: string
+  mobile: string
+  sendOfferMessagetoCandidate: null
 }

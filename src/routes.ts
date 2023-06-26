@@ -476,6 +476,12 @@ const EditCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
+const AddNewEmployeeUnderJoinee = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/UpComingJoinList/AddNewEmployeeUnderJoinee/AddEmployee'
+    ),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1121,6 +1127,11 @@ const routes = [
   },
   {
     path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
+  },
+  {
+    path: '/addNewEmployee/:joineeId',
     name: 'Edit Candidate',
     component: EditCandidate,
   },

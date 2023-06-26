@@ -962,6 +962,7 @@ export interface ExpenseSubCategoryListApi extends ApiBase {
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
+  getJoineeById: string
 }
 export interface InterviewStatusReportApi extends ApiBase {
   getAllTechnology: string

@@ -14,6 +14,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import * as XLSX from 'xlsx'
+import { Link } from 'react-router-dom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -100,6 +101,10 @@ const UpComingJoinListTable = ({
       XLSX.utils.book_append_sheet(workbook, worksheet, 'UpcomingJoineeList')
       XLSX.writeFile(workbook, 'UpcomingJoineeList.xls')
     }
+  }
+
+  const createEmployeeButtonHandler = (id: number) => {
+    dispatch(reduxServices.upComingJoinList.getJoineeById(id))
   }
 
   return (
@@ -189,6 +194,26 @@ const UpComingJoinListTable = ({
                           <i className="text-white fa fa-pencil-square-o"></i>
                         </CButton>
                       </CTooltip>
+
+                      {joinee.candidateInterviewStatus === 'JOINED' ? (
+                        <CTooltip content="Create Employee">
+                          <Link to={`/addNewEmployee/${joinee.id}`}>
+                            <CButton
+                              ng-show="joinee.candidateInterviewStatus=='JOINED'"
+                              type="button"
+                              className="btn btn-success"
+                              data-original-title="Create Employee"
+                              onClick={() =>
+                                createEmployeeButtonHandler(joinee.id)
+                              }
+                            >
+                              <i className="fa fa-plus-square"></i>
+                            </CButton>
+                          </Link>
+                        </CTooltip>
+                      ) : (
+                        ''
+                      )}
                     </div>
                   </CTableDataCell>
                 </CTableRow>

@@ -126,6 +126,8 @@ export interface UsernameEmailChangeHandlerProp extends DynamicFormLabelProps {
   onAllowedUserChangeHandler: (username: string) => void
   username: string
   isUserAllowed: boolean
+  userEmployeeName?: string
+  setUserEmployeeName: React.Dispatch<React.SetStateAction<string>>
 }
 
 export interface InputField extends DynamicFormLabelProps {
