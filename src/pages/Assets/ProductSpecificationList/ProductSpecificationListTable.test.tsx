@@ -4,11 +4,7 @@ import userEvent from '@testing-library/user-event'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
-import {
-  mockProductSpecification,
-  mockProductSpecificationList,
-} from '../../../test/data/ProductSpecificationListData'
+import { mockProductSpecification } from '../../../test/data/ProductSpecificationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
