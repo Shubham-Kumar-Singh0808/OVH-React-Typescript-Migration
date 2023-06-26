@@ -7,6 +7,7 @@ import { GetProductSpecificationListDetails } from '../../../types/Assets/Produc
 import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
 // eslint-disable-next-line import/order
 import userEvent from '@testing-library/user-event'
+import { downloadFile } from '../../../utils/helper'
 
 const mockHandleExport = jest.fn()
 const mockProductSpecificationsParams = jest.fn()
@@ -55,5 +56,23 @@ describe('Product Specification List Component Testing', () => {
       charCode: 13,
     })
     expect(mockProductSpecificationsParams).toHaveBeenCalledTimes(0)
+  })
+  test('should create a link element and trigger a download', () => {
+    const data = new Blob(['CSV file data'], { type: 'text/csv' })
+    const fileName = 'ExportProductSpecificationList.csv'
+    const createElementMock = jest.spyOn(document, 'createElement')
+    const clickMock = jest.fn()
+    const linkElement = {
+      href: '',
+      download: '',
+      click: clickMock,
+    }
+    const createObjectURLMock = jest.fn().mockReturnValue('dummy-object-url')
+    window.URL.createObjectURL = createObjectURLMock
+    downloadFile(data, fileName)
+    expect(createElementMock).toHaveBeenCalledWith('a')
+    expect(linkElement.href).toBe('')
+    expect(linkElement.download).toBe('')
+    expect(createObjectURLMock).toHaveBeenCalledWith(data)
   })
 })
