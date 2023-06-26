@@ -438,7 +438,6 @@ const CandidateOffer = (): JSX.Element => {
             </CCol>
           </CRow>
         </>
-
         <CRow className="mt-3 ">
           <CFormLabel
             {...formLabelProps}
@@ -482,7 +481,6 @@ const CandidateOffer = (): JSX.Element => {
             )}
           </CCol>
         </CRow>
-
         <CCol className="col-md-3 offset-md-3">
           <CButton
             data-testid="save-btn"
