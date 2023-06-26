@@ -9,12 +9,12 @@ import {
   CCol,
   CRow,
   CLink,
-  CBadge,
   CTooltip,
 } from '@coreui/react-pro'
 import parse from 'html-react-parser'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import BookingListStatus from './BookingListStatus'
 import OLoadingSpinner from '../../../components/ReusableComponent/OLoadingSpinner'
 import OModal from '../../../components/ReusableComponent/OModal'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -82,29 +82,6 @@ const BookingListTable = ({
   const handleAgendaModal = (booking: GetBookingsForSelection) => {
     setIsAgendaModalVisible(true)
     setModalAgenda(booking)
-  }
-
-  const roomBookingStatusLabelColor = (bookingStatus: string): JSX.Element => {
-    if (bookingStatus === 'New') {
-      return (
-        <CBadge className="rounded-pill label-default">{bookingStatus}</CBadge>
-      )
-    } else if (bookingStatus === 'Cancelled') {
-      return (
-        <CBadge className="rounded-pill label-danger status-name">
-          {bookingStatus}
-        </CBadge>
-      )
-    } else if (bookingStatus === 'In Progress') {
-      return (
-        <CBadge className="rounded-pill label-success">{bookingStatus}</CBadge>
-      )
-    } else if (bookingStatus === 'Completed') {
-      return (
-        <CBadge className="rounded-pill label-danger">{bookingStatus}</CBadge>
-      )
-    }
-    return <></>
   }
 
   const handleShowCancelModal = (visaId: number) => {
@@ -199,7 +176,7 @@ const BookingListTable = ({
                     {bookingItem.roomName}
                   </CTableDataCell>
                   <CTableDataCell scope="row">
-                    {roomBookingStatusLabelColor(bookingItem.meetingStatus)}
+                    <BookingListStatus bookingItem={bookingItem} />
                   </CTableDataCell>
                   <CTableDataCell scope="row">
                     {bookingItem.authorName.firstName +

@@ -1,3 +1,5 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { AppDispatch, RootState } from '../../../stateStore'
@@ -6,6 +8,7 @@ import { ApiLoadingState } from '../../../middleware/api/apiList'
 import bookingListApi from '../../../middleware/api/ConferenceRoomBooking/BookingList/bookingListApi'
 import {
   BookingListSliceState,
+  ChangeBookingStatusParams,
   EditMeetingRequest,
   GetBookingsForSelection,
   GetBookingsForSelectionProps,
@@ -119,6 +122,18 @@ const confirmUpdateMeetingRequest = createAsyncThunk<
   },
 )
 
+const changeMeetingStatusThunk = createAsyncThunk(
+  'conferenceRoomBooking/changeMeetingStatusThunk',
+  async (finalParams: ChangeBookingStatusParams, thunkApi) => {
+    try {
+      return await bookingListApi.changeMeetingStatus(finalParams)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
 const initialBookingListState: BookingListSliceState = {
   meetingLocation: [],
   roomsOfLocation: [],
@@ -127,7 +142,7 @@ const initialBookingListState: BookingListSliceState = {
   currentPage: 1,
   pageSize: 20,
   editMeetingRequest: {} as EditMeetingRequest,
-
+  currentFilters: { location: -1, status: '', room: '', meetingStatus: '' },
   LocationValue: '1',
   RoomValue: '',
   MeetingStatus: 'New',
@@ -163,35 +178,47 @@ const bookingListSlice = createSlice({
     setFromDateValue: (state, action) => {
       state.FromDateValue = action.payload
     },
+    saveBookingFilterOptions: (
+      state,
+      action: PayloadAction<GetBookingsForSelectionProps>,
+    ) => {
+      state.currentFilters = action.payload
+    },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(getAllMeetingLocations.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.meetingLocation = action.payload
       })
       .addCase(getRoomsOfLocation.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.roomsOfLocation = action.payload as RoomsOfLocation[]
       })
       .addCase(getBookingsForSelection.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.getBookingsForSelection = action.payload
       })
       .addCase(editMeetingRequest.fulfilled, (state, action) => {
-        state.isLoading = ApiLoadingState.succeeded
         state.editMeetingRequest = action.payload as EditMeetingRequest
       })
-      .addCase(editUniqueAttendee.fulfilled, (state) => {
-        state.isLoading = ApiLoadingState.succeeded
-      })
+      .addMatcher(
+        isAnyOf(
+          getAllMeetingLocations.fulfilled,
+          getRoomsOfLocation.fulfilled,
+          getBookingsForSelection.fulfilled,
+          editMeetingRequest.fulfilled,
+          changeMeetingStatusThunk.fulfilled,
+        ),
+        (state) => {
+          state.isLoading = ApiLoadingState.succeeded
+        },
+      )
       .addMatcher(
         isAnyOf(
           getAllMeetingLocations.pending,
           getRoomsOfLocation.pending,
           getBookingsForSelection.pending,
           editMeetingRequest.pending,
+          changeMeetingStatusThunk.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -253,6 +280,7 @@ const bookingListThunk = {
   editMeetingRequest,
   editUniqueAttendee,
   confirmUpdateMeetingRequest,
+  changeMeetingStatusThunk,
 }
 
 export const bookingListService = {

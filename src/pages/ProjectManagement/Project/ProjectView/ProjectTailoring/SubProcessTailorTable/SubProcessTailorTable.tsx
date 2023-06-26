@@ -7,6 +7,7 @@ import {
   CTableRow,
 } from '@coreui/react-pro'
 import SubProcessTailorTableRow from './SubProcessTailorTableRow'
+import TailoringJustificationColumns from './SubProcessTailorTableComponents/TailoringJustificationColumn'
 import {
   ProcessSubHeadDTO,
   ProjectTailoringStatusEnum,
@@ -26,7 +27,10 @@ const SubProcessTailorTable = ({
   )
   return (
     <CTable striped responsive align="middle">
-      <CTableHead className="profile-tab-header">
+      <CTableHead
+        className="profile-tab-header"
+        style={{ backgroundColor: '#1b5d95' }}
+      >
         <CTableRow>
           <CTableHeaderCell scope="col" className="profile-tab-content">
             #
@@ -40,13 +44,11 @@ const SubProcessTailorTable = ({
           <CTableHeaderCell scope="col" className="profile-tab-content">
             Responsible
           </CTableHeaderCell>
-          <CTableHeaderCell scope="col" className="profile-tab-content">
-            Tailoring Needed(Y/N)
-          </CTableHeaderCell>
-          <CTableHeaderCell scope="col" className="profile-tab-content">
-            Justification
-          </CTableHeaderCell>
-          {tailorStatus !== ProjectTailoringStatusEnum.initial && (
+          <TailoringJustificationColumns />
+          {(tailorStatus === ProjectTailoringStatusEnum.rejected ||
+            tailorStatus === ProjectTailoringStatusEnum.submitted ||
+            tailorStatus === ProjectTailoringStatusEnum.updated ||
+            tailorStatus === ProjectTailoringStatusEnum.approved) && (
             <>
               <CTableHeaderCell scope="col" className="profile-tab-content">
                 SQA Approved

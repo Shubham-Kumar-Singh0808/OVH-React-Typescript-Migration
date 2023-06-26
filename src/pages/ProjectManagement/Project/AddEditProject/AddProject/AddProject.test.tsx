@@ -111,7 +111,7 @@ describe('Add Project Testing', () => {
 
     // Pricing Model
     const OSelectListSelector = screen.getByTestId('formaddPricingModel')
-    userEvent.selectOptions(OSelectListSelector, ['Support'])
+    userEvent.selectOptions(OSelectListSelector, ['Retainer'])
 
     // Project Type
     const oTypesSelectList = screen.getByTestId('formaddProjectType')
