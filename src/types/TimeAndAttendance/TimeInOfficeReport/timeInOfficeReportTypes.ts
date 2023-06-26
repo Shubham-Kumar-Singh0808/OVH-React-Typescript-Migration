@@ -41,6 +41,7 @@ export type TimeInOfficeReportSliceState = {
   timeInOfficeManagerReport: GetTimeInOfficeManagerReportResponse
   isLoading: ApiLoadingState
   monthDisplay: string
+  searchResult: SearchResultResponse
 }
 
 export type ManagerTimeInOfficeReportProps = {
@@ -54,4 +55,17 @@ export type ManagerTimeInOfficeReportProps = {
 export type exportAttendanceReportProps = {
   hiveDate: string
   search: string
+}
+
+export type GetTimeInOfficeProps = {
+  date: string
+  endIndex: number
+  loggedInEmployeeId: number
+  search: string
+  startIndex: number
+}
+
+export type SearchResultResponse = {
+  size: number
+  list: GetTimeInOfficeEmployeeReportResponse[]
 }

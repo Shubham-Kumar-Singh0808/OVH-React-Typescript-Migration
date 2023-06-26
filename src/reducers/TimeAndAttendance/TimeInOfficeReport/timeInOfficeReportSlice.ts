@@ -9,6 +9,8 @@ import {
   GetTimeInOfficeEmployeeReportProps,
   GetTimeInOfficeEmployeeReportResponse,
   GetTimeInOfficeManagerReportResponse,
+  GetTimeInOfficeProps,
+  SearchResultResponse,
   SelectedView,
   TimeInOfficeReportSliceState,
 } from '../../../types/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportTypes'
@@ -37,6 +39,17 @@ const getTimeInOfficeManagerReport = createAsyncThunk(
   },
 )
 
+const searchTimeInOffice = createAsyncThunk(
+  'timeInOfficeReport/searchTimeInOffice',
+  async (props: GetTimeInOfficeProps, thunkApi) => {
+    try {
+      return await timeInOfficeReportApi.searchTimeInOffice(props)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+    }
+  },
+)
 const initialTimeInOfficeReportSliceState: TimeInOfficeReportSliceState = {
   selectedDate: moment().subtract(1, 'months').format('M/YYYY'),
   selectedView: 'Me',
@@ -49,6 +62,7 @@ const initialTimeInOfficeReportSliceState: TimeInOfficeReportSliceState = {
   },
   isLoading: ApiLoadingState.idle,
   monthDisplay: moment(new Date()).format('MMMM-YYYY'),
+  searchResult: {} as SearchResultResponse,
 }
 
 const timeInOfficeReportSlice = createSlice({
@@ -70,6 +84,10 @@ const timeInOfficeReportSlice = createSlice({
       .addCase(getTimeInOfficeManagerReport.fulfilled, (state, action) => {
         state.isLoading = ApiLoadingState.succeeded
         state.timeInOfficeManagerReport = action.payload
+      })
+      .addCase(searchTimeInOffice.fulfilled, (state, action) => {
+        state.isLoading = ApiLoadingState.succeeded
+        state.searchResult = action.payload
       })
       .addMatcher(
         isAnyOf(
@@ -112,6 +130,7 @@ const monthDisplay = (state: RootState): string =>
 const timeInOfficeReportThunk = {
   getTimeInOfficeEmployeeReport,
   getTimeInOfficeManagerReport,
+  searchTimeInOffice,
 }
 
 const timeInOfficeReportSelectors = {

@@ -93,6 +93,22 @@ const ReportOptions = ({
     downloadFile(timeInOfficeListDownload, 'timeInOfficeList.csv')
   }
 
+  const employeeId = useTypedSelector(
+    reduxServices.authentication.selectors.selectEmployeeId,
+  )
+
+  const handleSearchBtnHandler = (searchValue: string) => {
+    dispatch(
+      reduxServices.timeInOfficeReport.searchTimeInOffice({
+        date: '',
+        endIndex: 20,
+        loggedInEmployeeId: Number(employeeId),
+        search: searchValue,
+        startIndex: 0,
+      }),
+    )
+  }
+
   return (
     <>
       <CRow className="radio-container">
@@ -245,7 +261,10 @@ const ReportOptions = ({
                   type="button"
                   color="info"
                   id="button-addon2"
-                  onClick={searchButtonHandler}
+                  // onClick={searchButtonHandler}
+                  onClick={() => {
+                    handleSearchBtnHandler(searchInput)
+                  }}
                 >
                   <i className="fa fa-search"></i>
                 </CButton>

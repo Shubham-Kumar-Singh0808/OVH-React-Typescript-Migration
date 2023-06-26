@@ -368,6 +368,7 @@ export const timeInOfficeReportApiConfig: TimeInOfficeReportApi = {
   getTimeInOfficeManagerReport:
     apiPrefix + '/timeInOffice/getTimeInOfficeManagerReport',
   exportAttendanceReport: apiPrefix + '/timeInOffice/exportAttendanceReport',
+  searchTimeInOffice: apiPrefix + '/timeInOffice/searchTimeInOffice',
 }
 
 export const employeeLeaveSettingsApiConfig: EmployeeLeaveSettingsApi = {

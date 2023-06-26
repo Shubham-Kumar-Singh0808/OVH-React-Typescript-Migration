@@ -69,11 +69,11 @@ const HiveActivityReport = (): JSX.Element => {
   const handleSearchHiveActivityReport = (searchValue: string) => {
     dispatch(
       reduxServices.hiveActivityReport.getSearchHiveActivityReport({
-        endIndex: pageSize * currentPage,
+        endIndex: 20,
         date: dateToUse,
         loggedInEmployeeId: Number(employeeId),
         searchText: searchValue,
-        startIndex: pageSize * (currentPage - 1),
+        startIndex: 0,
       }),
     )
   }
@@ -140,6 +140,8 @@ const HiveActivityReport = (): JSX.Element => {
           filterByDate={filterByDate}
           handleExportHiveActivityReport={handleExportHiveActivityReport}
           handleSearchHiveActivityReport={handleSearchHiveActivityReport}
+          setCurrentPage={setCurrentPage}
+          setPageSize={setPageSize}
         />
         {selectedView === 'Me' && <EmployeeHiveActivityReport />}
         {selectedView === 'All' && (

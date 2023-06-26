@@ -21,6 +21,8 @@ const HiveReportOptions = ({
   filterByDate,
   handleExportHiveActivityReport,
   handleSearchHiveActivityReport,
+  setPageSize,
+  setCurrentPage,
 }: {
   startDate: Date | undefined
   setStartDate: React.Dispatch<React.SetStateAction<Date | undefined>>
@@ -28,6 +30,8 @@ const HiveReportOptions = ({
   filterByDate: Date | undefined
   handleExportHiveActivityReport: () => void
   handleSearchHiveActivityReport: (value: string) => void
+  setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [searchInput, setSearchInput] = useState<string>('')
@@ -81,18 +85,26 @@ const HiveReportOptions = ({
       ),
     )
     setStartDate(undefined)
+    setCurrentPage(1)
+    setPageSize(20)
   }
 
   const clearButtonHandler = () => {
     setStartDate(undefined)
   }
 
-  const searchButtonHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearchHiveActivityReport(searchInput)
+  const searchButtonHandler = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === 'Enter') {
+      if (searchInput === '') {
+        handleSearchHiveActivityReport(searchInput)
+        setCurrentPage(1)
+      } else {
+        handleSearchHiveActivityReport(searchInput)
+      }
     }
   }
-
   useEffect(() => {
     if (filterByDate || selectedView || selectedDate) {
       setSearchInput('')

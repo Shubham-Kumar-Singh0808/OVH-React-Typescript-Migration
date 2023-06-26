@@ -3,6 +3,8 @@ import {
   GetTimeInOfficeEmployeeReportProps,
   GetTimeInOfficeEmployeeReportResponse,
   GetTimeInOfficeManagerReportResponse,
+  GetTimeInOfficeProps,
+  SearchResultResponse,
 } from '../../../../types/TimeAndAttendance/TimeInOfficeReport/timeInOfficeReportTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -63,10 +65,30 @@ const exportAttendanceReport = async (
   return response.data
 }
 
+const searchTimeInOffice = async (
+  props: GetTimeInOfficeProps,
+): Promise<SearchResultResponse> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: timeInOfficeReportApiConfig.searchTimeInOffice,
+    method: AllowedHttpMethods.get,
+    params: {
+      date: props.date,
+      endIndex: props.endIndex,
+      loggedInEmployeeId: props.loggedInEmployeeId,
+      search: props.search,
+      startIndex: props.startIndex,
+    },
+  })
+
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const timeInOfficeReportApi = {
   getTimeInOfficeEmployeeReport,
   getTimeInOfficeManagerReport,
   exportAttendanceReport,
+  searchTimeInOffice,
 }
 
 export default timeInOfficeReportApi

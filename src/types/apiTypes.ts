@@ -241,6 +241,7 @@ export interface TimeInOfficeReportApi extends ApiBase {
   getTimeInOfficeEmployeeReport: string
   getTimeInOfficeManagerReport: string
   exportAttendanceReport: string
+  searchTimeInOffice: string
 }
 
 export interface EmployeeLeaveSettingsApi extends ApiBase {
