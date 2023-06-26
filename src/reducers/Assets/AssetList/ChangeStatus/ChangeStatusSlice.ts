@@ -12,7 +12,7 @@ import { LoadingState, ValidationError } from '../../../../types/commonTypes'
 
 const getAllAssets = createAsyncThunk(
   'assetManagement/getAllAssets',
-  async (props: GetAllAssetResponse, thunkApi) => {
+  async (_, thunkApi) => {
     try {
       return await GetAllAssetsListApi.GetAllAssets()
     } catch (error) {

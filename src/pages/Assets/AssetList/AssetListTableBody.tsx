@@ -76,9 +76,9 @@ const AssetListTableBody = ({
       dataTestId={`specification-modal-link${index}`}
     />
   )
-  const changeReportButtonHandler = (item: AllAssetsList) => {
+  const changeReportButtonHandler = (index: AllAssetsList) => {
     setToggle('changeAsset')
-    setChangeReportStatus(item)
+    setChangeReportStatus(index)
   }
 
   const ActionIcons = (icon: AllAssetsList) => {

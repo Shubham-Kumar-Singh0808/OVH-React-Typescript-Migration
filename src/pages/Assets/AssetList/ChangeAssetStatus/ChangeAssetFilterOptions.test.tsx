@@ -13,7 +13,6 @@ import {
 } from '../../../../test/testUtils'
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
 import {
-  GetAllAssetResponse,
   SaveEmployee,
 } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
@@ -28,7 +27,7 @@ const deviceLocale: string =
     ? navigator.languages[0]
     : navigator.language
 
-describe('filter employee name', () => {
+describe('filter the Employee name', () => {
   describe('empty values', () => {
     beforeEach(() => {
       render(

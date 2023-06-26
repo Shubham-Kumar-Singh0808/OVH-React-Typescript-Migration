@@ -84,8 +84,8 @@ const ChangeAssetFilterOptions = ({
   const onHandleStartDatePicker = (value: Date) => {
     setStatusDate(moment(value).format(dateFormat))
   }
-  const handleText = (description: string) => {
-    setDescription(description)
+  const handleText = (Comments: string) => {
+    setDescription(Comments)
   }
   const dispatch = useAppDispatch()
 
