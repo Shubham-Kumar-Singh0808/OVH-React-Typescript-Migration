@@ -18,6 +18,8 @@ import moment from 'moment'
 // } from './AddNewEmployeeChildComponents/index'
 // import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
 // import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
+import UserName from './UserName'
+import DateOfJoining from './DateOfJoining'
 import {
   ShouldResetFields,
   GetAllReportingManagers,
@@ -60,7 +62,10 @@ const AddNewEmployee = (): JSX.Element => {
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
   const [isViewBtnEnabled, setViewBtnEnabled] = useState<boolean>(false)
-
+  const [userEmployeeName, setUserEmployeeName] = useState<string>('')
+  const [employeeDateOfJoining, setEmployeeDateOfJoining] = useState<
+    string | Date
+  >('')
   const initResetFields = {
     hrAssociate: false,
     projectManager: false,
@@ -76,7 +81,7 @@ const AddNewEmployee = (): JSX.Element => {
     contractExists: false,
     contractStartDate: '',
     country: '',
-    dateOfJoining: '',
+    dateOfJoining: employeeDateOfJoining,
     departmentName: '',
     designation: '',
     dob: '',
@@ -434,12 +439,14 @@ const AddNewEmployee = (): JSX.Element => {
               </CButton>
             </CCol>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
-              <UserNameEmail
+              <UserName
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 usernameChangeHandler={onHandleUsername}
                 onAllowedUserChangeHandler={onHandleAllowedUser}
-                username={addEmployee.userName}
+                username={userEmployeeName}
                 isUserAllowed={(isUserExist as boolean) || false}
+                userEmployeeName={userEmployeeName}
+                setUserEmployeeName={setUserEmployeeName}
               />
               <FullName
                 dynamicFormLabelProps={dynamicFormLabelProps}
@@ -475,10 +482,11 @@ const AddNewEmployee = (): JSX.Element => {
                 onDateChangeHandler={onHandleBirthday}
                 dateValue={addEmployee.dob}
               />
-              <JoinedDate
+              <DateOfJoining
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 onDateChangeHandler={onHandleJoinDate}
-                dateValue={addEmployee.dateOfJoining}
+                dateValue={employeeDateOfJoining as string}
+                setEmployeeDateOfJoining={setEmployeeDateOfJoining}
               />
               <Experience
                 dynamicFormLabelProps={dynamicFormLabelProps}

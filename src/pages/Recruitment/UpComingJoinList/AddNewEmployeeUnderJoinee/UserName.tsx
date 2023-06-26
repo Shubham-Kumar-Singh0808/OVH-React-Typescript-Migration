@@ -4,6 +4,7 @@ import { UsernameEmailChangeHandlerProp } from '../../../../types/EmployeeDirect
 import { showIsRequired } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
+import { UsernameChangeHandlerProp } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 
 const UserName = ({
   dynamicFormLabelProps,
@@ -12,13 +13,13 @@ const UserName = ({
   username,
   userEmployeeName,
   setUserEmployeeName,
-}: UsernameEmailChangeHandlerProp): JSX.Element => {
+}: UsernameChangeHandlerProp): JSX.Element => {
   const handleUserEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     usernameChangeHandler(e.target.value)
   }
 
   const handleOnBlurInput = () => {
-    onAllowedUserChangeHandler(username)
+    onAllowedUserChangeHandler(userEmployeeName)
   }
   const getJoineeDetails = useTypedSelector(
     reduxServices.upComingJoinList.selectors.getJoineeDetails,
@@ -28,6 +29,8 @@ const UserName = ({
       setUserEmployeeName(getJoineeDetails.candidateName)
     }
   }, [getJoineeDetails.candidateName])
+  console.log(getJoineeDetails.candidateName + 'hjdvbgjs')
+
   return (
     <>
       <CRow className="mb-3">
@@ -48,7 +51,7 @@ const UserName = ({
             type="text"
             name="username"
             placeholder="User Name"
-            value={username}
+            value={getJoineeDetails.candidateName}
             onBlur={handleOnBlurInput}
             onChange={handleUserEmail}
           />
@@ -72,7 +75,7 @@ const UserName = ({
             type="text"
             name="email"
             placeholder="Email"
-            value={username}
+            value={userEmployeeName}
             disabled
           />
           <strong>@raybiztech.com</strong>

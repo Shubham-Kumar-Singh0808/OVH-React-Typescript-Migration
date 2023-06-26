@@ -74,3 +74,24 @@ export type GetJoineeById = {
   mobile: string
   sendOfferMessagetoCandidate: null
 }
+export type Label = {
+  htmlFor: string
+  className: string
+}
+export interface DynamicFormLabelProps {
+  dynamicFormLabelProps: (htmlFor: string, className: string) => Label
+}
+export interface UsernameChangeHandlerProp extends DynamicFormLabelProps {
+  usernameChangeHandler: (username: string) => void
+  onAllowedUserChangeHandler: (username: string) => void
+  username: string
+  isUserAllowed: boolean
+  userEmployeeName: string
+  setUserEmployeeName: React.Dispatch<React.SetStateAction<string>>
+}
+
+export interface DateOfJoiningChangeHandlerProp extends DynamicFormLabelProps {
+  onDateChangeHandler: (e: Date) => void
+  dateValue: string
+  setEmployeeDateOfJoining: React.Dispatch<React.SetStateAction<string | Date>>
+}
