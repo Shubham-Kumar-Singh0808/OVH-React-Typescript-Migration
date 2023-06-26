@@ -21,6 +21,7 @@ describe('Edit BankAccount without data', () => {
           financeFilePath: null,
           financeFileName: null,
         }}
+        onChangeInputHandler={element}
       />,
     )
   })

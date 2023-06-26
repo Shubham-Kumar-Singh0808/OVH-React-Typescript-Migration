@@ -2009,4 +2009,13 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
     deleteaccess: true,
     childFeatures: null,
   },
+  {
+    featureId: 160,
+    name: 'Product Specification List',
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
 ]
