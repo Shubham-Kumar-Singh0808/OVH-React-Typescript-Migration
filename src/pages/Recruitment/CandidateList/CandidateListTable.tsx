@@ -226,15 +226,17 @@ const CandidateListTable = ({
                     {formatInterviewStatusText(data.cadidateInterviewStatus)}
                   </CTableDataCell>
                   <CTableDataCell className="actions">
-                    <CTooltip content="Edit">
-                      <CButton
-                        color="info btn-ovh me-1"
-                        className="btn-ovh-employee-list me-1"
-                        data-testid={`btn-edit${index}`}
-                      >
-                        <i className="fa fa-edit" aria-hidden="true"></i>
-                      </CButton>
-                    </CTooltip>
+                    <Link to={`/editcandidate/${data.personId}`}>
+                      <CTooltip content="Edit">
+                        <CButton
+                          color="info btn-ovh me-1"
+                          className="btn-ovh-employee-list me-1"
+                          data-testid={`btn-edit${index}`}
+                        >
+                          <i className="fa fa-edit" aria-hidden="true"></i>
+                        </CButton>
+                      </CTooltip>
+                    </Link>
                     <CTooltip content="Timeline">
                       <Link to={`/candidatetimeline/${data.personId}`}>
                         <CButton
