@@ -1,109 +1,106 @@
-import React, { useEffect } from 'react'
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
+import React, { useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import { reduxServices } from '../../../../reducers/reduxServices'
-import { useAppDispatch } from '../../../../stateStore'
-import {
-  AuthorizedEmployee,
-  EmployeeDetails,
-} from '../../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 import { TextWhite, TextDanger } from '../../../../constant/ClassName'
+import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
+import { reduxServices } from '../../../../reducers/reduxServices'
+import { useTypedSelector } from '../../../../stateStore'
 
-const EmployeeList = ({
-  allEmployeesProfiles,
-  onSelectEmployee,
-  shouldReset,
+const Employee = ({
   employeeAutoCompleteTarget,
   setEmployeeAutoCompleteTarget,
 }: {
-  allEmployeesProfiles: AuthorizedEmployee[]
-  onSelectEmployee: (value: EmployeeDetails) => void
-  shouldReset: boolean
-  employeeAutoCompleteTarget: string | undefined
-  setEmployeeAutoCompleteTarget: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >
+  employeeAutoCompleteTarget: string
+  setEmployeeAutoCompleteTarget: React.Dispatch<React.SetStateAction<string>>
 }): JSX.Element => {
-  const dispatch = useAppDispatch()
+  const formLabel = 'col-sm-3 col-form-label text-end'
+  const allEmployees = useTypedSelector(
+    reduxServices.expenseForm.selectors.employeesList,
+  )
+  const [isEnable, setIsEnable] = useState(false)
 
-  useEffect(() => {
-    if (employeeAutoCompleteTarget) {
-      dispatch(
-        reduxServices.expenseForm.getEmployeesList(employeeAutoCompleteTarget),
-      )
-    }
-  }, [employeeAutoCompleteTarget])
-
-  useEffect(() => {
-    if (shouldReset) setEmployeeAutoCompleteTarget('')
-  }, [shouldReset])
-
-  const onHandleSelectEmployer = (fullName: string) => {
-    setEmployeeAutoCompleteTarget(fullName)
-    const employee = allEmployeesProfiles.find(
-      (value) => value.fullName === fullName,
-    )
-
-    onSelectEmployee(employee as EmployeeDetails)
+  const onHandleSelectEmployeeName = (employeeName: string) => {
+    setEmployeeAutoCompleteTarget(employeeName)
+    setIsEnable(true)
   }
-
-  return (
-    <CRow className="mt-1 mb-3">
-      <CFormLabel
-        className="col-sm-3 col-form-label text-end"
-        data-testid="empLabel"
+  const employeeItemsLayout = (
+    id: string | number,
+    fullName: string,
+    isHighlighted: boolean,
+  ): JSX.Element => {
+    return (
+      <div
+        data-testid="option"
+        className={
+          isHighlighted
+            ? 'autocomplete-dropdown-item active'
+            : 'autocomplete-dropdown-item '
+        }
+        key={id}
       >
-        To Employee :
-      </CFormLabel>
-      <CCol sm={6}>
-        <Autocomplete
-          inputProps={{
-            className: 'form-control form-control-sm',
-            id: 'employee-autocomplete',
-            placeholder: 'Employee Name',
-          }}
-          getItemValue={(emp) => emp.fullName}
-          items={allEmployeesProfiles}
-          data-testid="employee-input"
-          wrapperStyle={{ position: 'relative' }}
-          renderMenu={(children) => (
-            <div
-              className={
-                employeeAutoCompleteTarget &&
-                employeeAutoCompleteTarget.length > 0
-                  ? 'autocomplete-dropdown-wrap'
-                  : 'autocomplete-dropdown-wrap hide'
-              }
+        {fullName}
+      </div>
+    )
+  }
+  return (
+    <>
+      <CRow className="mt-2 mb-2">
+        <CFormLabel {...formLabelProps} className={formLabel}>
+          To Employee:
+        </CFormLabel>
+        <CCol sm={3}>
+          <Autocomplete
+            inputProps={{
+              className: 'form-control form-control-sm2',
+              id: 'employee-autocomplete',
+              placeholder: 'Employee Name',
+            }}
+            getItemValue={(item) => item.fullName}
+            data-testid="employeeautocomplete"
+            items={allEmployees}
+            wrapperStyle={{ position: 'relative' }}
+            renderMenu={(children) => (
+              <div
+                className={
+                  employeeAutoCompleteTarget &&
+                  employeeAutoCompleteTarget.length > 0
+                    ? 'autocomplete-dropdown-wrap'
+                    : 'autocomplete-dropdown-wrap hide'
+                }
+              >
+                {children}
+              </div>
+            )}
+            renderItem={(item, isHighlighted) =>
+              employeeItemsLayout(item.id, item.fullName, isHighlighted)
+            }
+            value={employeeAutoCompleteTarget}
+            shouldItemRender={(item, empValue) =>
+              item?.fullName?.toLowerCase().indexOf(empValue.toLowerCase()) > -1
+            }
+            onChange={(e) => setEmployeeAutoCompleteTarget(e.target.value)}
+            onSelect={(selectedVal) => onHandleSelectEmployeeName(selectedVal)}
+          />
+          <CCol>
+            {/* {!employeeResult[0]?.fullName && (
+              <span>please enter valid name</span>
+            )} */}
+            {/* <span
+              className={isEnable ? TextWhite : TextDanger}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                marginTop: '0.25rem',
+              }}
             >
-              {children}
-            </div>
-          )}
-          renderItem={(item, isHighlighted) => (
-            <div
-              data-testid="trainer-option"
-              className={
-                isHighlighted
-                  ? 'autocomplete-dropdown-item active'
-                  : 'autocomplete-dropdown-item '
-              }
-              key={item.id}
-            >
-              {item.fullName}
-            </div>
-          )}
-          value={employeeAutoCompleteTarget}
-          shouldItemRender={(item, value) =>
-            item.fullName.toLowerCase().indexOf(value.toLowerCase()) > -1
-          }
-          onChange={(e) => setEmployeeAutoCompleteTarget(e.target.value)}
-          onSelect={(value) => onHandleSelectEmployer(value)}
-        />
-        <span className={employeeAutoCompleteTarget ? TextWhite : TextDanger}>
-          *
-        </span>
-      </CCol>
-    </CRow>
+              Please select valid employee
+            </span> */}
+          </CCol>
+        </CCol>
+      </CRow>
+    </>
   )
 }
 
-export default EmployeeList
+export default Employee
