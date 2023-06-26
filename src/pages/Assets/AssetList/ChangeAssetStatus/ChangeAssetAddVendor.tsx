@@ -26,14 +26,14 @@ const ChangeAssetVendor = ({
   setEmpToggle: (value: string) => void
 }): JSX.Element => {
   const initialVendorDetails = {} as AddVendor
-  const [addVendor, setAddVendor] = useState({
+  const [addVendorDetails, setAddVendorDetails] = useState({
     ...initialVendorDetails,
   })
-  const [showEditor, setShowEditor] = useState<boolean>(true)
-  const [emailError, setEmailError] = useState<boolean>(false)
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
+  const [showEditorComments, setShowEditorComments] = useState<boolean>(true)
+  const [emailConfigError, setEmailConfigError] = useState<boolean>(false)
+  const [isAddButtonIdEnabled, setIsAddButtonEnabled] = useState(false)
   const dispatch = useAppDispatch()
-  const departments = useTypedSelector(
+  const selectdepartments = useTypedSelector(
     reduxServices.addNewVendor.selectors.department,
   )
   useEffect(() => {
@@ -46,19 +46,19 @@ const ChangeAssetVendor = ({
 
   const textWhite = 'text-white'
   const textDanger = 'text-danger'
-  const vendorEmail =
-    addVendor.vendorEmailId && !emailError ? textWhite : textDanger
+  const vendorEmailText =
+    addVendorDetails.vendorEmailId && !emailConfigError ? textWhite : textDanger
 
-  const validateEmail = (email: string) => {
+  const validateEmailId = (email: string) => {
     if (validator.isEmail(email)) {
-      setEmailError(false)
+      setEmailConfigError(false)
     } else {
-      setEmailError(true)
+      setEmailConfigError(true)
     }
   }
   const vendorNameRegexReplace = /-_[^a-z0-9\s]/gi
   const vendorPhoneRegex = /\D/g
-  const handledInputChange = (
+  const handledInputChangeItems = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
       | React.ChangeEvent<HTMLInputElement>
@@ -66,90 +66,90 @@ const ChangeAssetVendor = ({
   ) => {
     const { name, value } = event.target
     if (name === 'vendorEmailId') {
-      const personalEmail = value
-      validateEmail(personalEmail)
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: personalEmail } }
+      const personalEmailId = value
+      validateEmailId(personalEmailId)
+      setAddVendorDetails((prevState) => {
+        return { ...prevState, ...{ [name]: personalEmailId } }
       })
     } else if (name === 'vendorName') {
-      const vendorName = value
+      const vendorNameText = value
         .replace(vendorNameRegexReplace, '')
         .replace(/^\s*/, '')
-      setAddVendor((values) => {
-        return { ...values, ...{ [name]: vendorName } }
+      setAddVendorDetails((values) => {
+        return { ...values, ...{ [name]: vendorNameText } }
       })
     } else if (name === 'vendorGSTNumber') {
-      const vendorGSTNumber = value
+      const vendorsGSTNumber = value
         .replace(vendorNameRegexReplace, '')
         .replace(/^\s*/, '')
-      setAddVendor((values) => {
-        return { ...values, ...{ [name]: vendorGSTNumber } }
+      setAddVendorDetails((values) => {
+        return { ...values, ...{ [name]: vendorsGSTNumber } }
       })
     } else if (name === 'vendorPincode') {
-      const presentZipValue = value.replace(vendorPhoneRegex, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: presentZipValue } }
+      const presentZipValueCode = value.replace(vendorPhoneRegex, '')
+      setAddVendorDetails((prevState) => {
+        return { ...prevState, ...{ [name]: presentZipValueCode } }
       })
     } else if (name === 'vendorPhoneNumber') {
-      const phoneNumber = value.replace(vendorPhoneRegex, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: phoneNumber } }
+      const phoneNumbers = value.replace(vendorPhoneRegex, '')
+      setAddVendorDetails((prevState) => {
+        return { ...prevState, ...{ [name]: phoneNumbers } }
       })
     } else if (name === 'vendorFaxNumber') {
-      const faxNumber = value.replace(vendorPhoneRegex, '')
-      setAddVendor((prevState) => {
-        return { ...prevState, ...{ [name]: faxNumber } }
+      const faxNumbers = value.replace(vendorPhoneRegex, '')
+      setAddVendorDetails((prevState) => {
+        return { ...prevState, ...{ [name]: faxNumbers } }
       })
     } else {
-      setAddVendor((values) => {
-        const trimFieldValue = value.trimStart()
-        return { ...values, ...{ [name]: trimFieldValue } }
+      setAddVendorDetails((values) => {
+        const trimFieldValues = value.trimStart()
+        return { ...values, ...{ [name]: trimFieldValues } }
       })
     }
   }
-  const handleIsInternalStatus = (isExpenseVendor: boolean) => {
-    setAddVendor({
-      ...addVendor,
+  const handleIsInternalStatusid = (isExpenseVendor: boolean) => {
+    setAddVendorDetails({
+      ...addVendorDetails,
       isExpenseVendor,
     })
   }
 
-  const handleAddress = (vendorAddress: string) => {
-    setAddVendor((prevState) => {
+  const handleAddressText = (vendorAddress: string) => {
+    setAddVendorDetails((prevState) => {
       return { ...prevState, ...{ vendorAddress } }
     })
   }
 
-  const handleBankAddress = (vendorBankDetails: string) => {
-    setAddVendor((prevState) => {
+  const handleBankAddressDetails = (vendorBankDetails: string) => {
+    setAddVendorDetails((prevState) => {
       return { ...prevState, ...{ vendorBankDetails } }
     })
   }
 
   useEffect(() => {
     if (
-      addVendor.departmentId &&
-      addVendor.vendorName &&
-      addVendor.vendorAddress &&
-      addVendor.vendorCity &&
-      addVendor.vendorState &&
-      addVendor.vendorPincode &&
-      addVendor.vendorCountry &&
-      addVendor.vendorEmailId &&
-      addVendor.vendorPhoneNumber &&
-      !emailError
+      addVendorDetails.departmentId &&
+      addVendorDetails.vendorName &&
+      addVendorDetails.vendorAddress &&
+      addVendorDetails.vendorCity &&
+      addVendorDetails.vendorState &&
+      addVendorDetails.vendorPincode &&
+      addVendorDetails.vendorCountry &&
+      addVendorDetails.vendorEmailId &&
+      addVendorDetails.vendorPhoneNumber &&
+      !emailConfigError
     ) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-    if (addVendor.vendorEmailId) {
-      validateEmail(addVendor.vendorEmailId)
+    if (addVendorDetails.vendorEmailId) {
+      validateEmailId(addVendorDetails.vendorEmailId)
     }
-  }, [addVendor, emailError])
+  }, [addVendorDetails, emailConfigError])
 
-  const clearInputs = () => {
-    setAddVendor({
+  const clearVendorInputs = () => {
+    setAddVendorDetails({
       departmentId: '',
       isExpenseVendor: false,
       vendorAddress: '',
@@ -164,9 +164,9 @@ const ChangeAssetVendor = ({
       vendorPincode: '',
       vendorState: '',
     })
-    setShowEditor(false)
+    setShowEditorComments(false)
     setTimeout(() => {
-      setShowEditor(true)
+      setShowEditorComments(true)
     }, 100)
   }
   const successToastMessage = (
@@ -175,9 +175,9 @@ const ChangeAssetVendor = ({
       toastColor="success"
     />
   )
-  const handleAddNewVendor = async () => {
+  const handleAddNewVendorInformation = async () => {
     const prepareObject = {
-      ...addVendor,
+      ...addVendorDetails,
     }
     const addVendorResultAction = await dispatch(
       reduxServices.addNewVendor.addNewVendor(prepareObject),
@@ -229,7 +229,9 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             Name:
-            <span className={showIsRequired(addVendor.vendorName)}>*</span>
+            <span className={showIsRequired(addVendorDetails.vendorName)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -241,8 +243,8 @@ const ChangeAssetVendor = ({
               name="vendorName"
               autoComplete="off"
               placeholder="Name"
-              value={addVendor.vendorName}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorName}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -252,19 +254,21 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             Address:
-            <span className={showIsRequired(addVendor.vendorAddress)}>*</span>
+            <span className={showIsRequired(addVendorDetails.vendorAddress)}>
+              *
+            </span>
           </CFormLabel>
-          {showEditor ? (
+          {showEditorComments ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={addVendor?.vendorAddress}
+                initData={addVendorDetails?.vendorAddress}
                 data-testid="vendorAddress"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleAddress(editor.getData().trim())
+                  handleAddressText(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -279,17 +283,17 @@ const ChangeAssetVendor = ({
           >
             Bank Details:
           </CFormLabel>
-          {showEditor ? (
+          {showEditorComments ? (
             <CCol sm={9}>
               <CKEditor<{
                 onChange: CKEditorEventHandler<'change'>
               }>
-                initData={addVendor?.vendorBankDetails}
+                initData={addVendorDetails?.vendorBankDetails}
                 data-testid="vendorBankDetails"
                 config={ckeditorConfig}
                 debug={true}
                 onChange={({ editor }) => {
-                  handleBankAddress(editor.getData().trim())
+                  handleBankAddressDetails(editor.getData().trim())
                 }}
               />
             </CCol>
@@ -313,8 +317,8 @@ const ChangeAssetVendor = ({
               size="sm"
               name="vendorGSTNumber"
               autoComplete="off"
-              value={addVendor.vendorGSTNumber}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorGSTNumber}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -324,7 +328,9 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             City:
-            <span className={showIsRequired(addVendor.vendorCity)}>*</span>
+            <span className={showIsRequired(addVendorDetails.vendorCity)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -336,8 +342,8 @@ const ChangeAssetVendor = ({
               name="vendorCity"
               autoComplete="off"
               placeholder="City"
-              value={addVendor.vendorCity}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorCity}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -347,7 +353,9 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             State:
-            <span className={showIsRequired(addVendor.vendorState)}>*</span>
+            <span className={showIsRequired(addVendorDetails.vendorState)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -359,8 +367,8 @@ const ChangeAssetVendor = ({
               name="vendorState"
               autoComplete="off"
               placeholder="State"
-              value={addVendor.vendorState}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorState}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -372,7 +380,9 @@ const ChangeAssetVendor = ({
             Pincode:
             <span
               className={
-                addVendor?.vendorPincode?.length > 5 ? TextWhite : TextDanger
+                addVendorDetails?.vendorPincode?.length > 5
+                  ? TextWhite
+                  : TextDanger
               }
             >
               *
@@ -389,8 +399,8 @@ const ChangeAssetVendor = ({
               autoComplete="off"
               placeholder="Pincode"
               maxLength={6}
-              value={addVendor.vendorPincode}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorPincode}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -400,7 +410,9 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             Country:
-            <span className={showIsRequired(addVendor.vendorCountry)}>*</span>
+            <span className={showIsRequired(addVendorDetails.vendorCountry)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -412,8 +424,8 @@ const ChangeAssetVendor = ({
               name="vendorCountry"
               autoComplete="off"
               placeholder="Country"
-              value={addVendor.vendorCountry}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorCountry}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -423,7 +435,7 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             Email ID:
-            <span data-testid="error-msg" className={vendorEmail}>
+            <span data-testid="error-msg" className={vendorEmailText}>
               *
             </span>
           </CFormLabel>
@@ -437,8 +449,8 @@ const ChangeAssetVendor = ({
               name="vendorEmailId"
               autoComplete="off"
               placeholder="Email ID"
-              value={addVendor.vendorEmailId?.replace(/^\s*/, '')}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorEmailId?.replace(/^\s*/, '')}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -450,7 +462,7 @@ const ChangeAssetVendor = ({
             Phone Number:
             <span
               className={
-                addVendor?.vendorPhoneNumber?.length > 9
+                addVendorDetails?.vendorPhoneNumber?.length > 9
                   ? TextWhite
                   : TextDanger
               }
@@ -468,9 +480,9 @@ const ChangeAssetVendor = ({
               name="vendorPhoneNumber"
               autoComplete="off"
               placeholder="Phone No."
-              value={addVendor.vendorPhoneNumber}
+              value={addVendorDetails.vendorPhoneNumber}
               maxLength={10}
-              onChange={handledInputChange}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -491,8 +503,8 @@ const ChangeAssetVendor = ({
               name="vendorFaxNumber"
               autoComplete="off"
               placeholder="Fax No."
-              value={addVendor.vendorFaxNumber}
-              onChange={handledInputChange}
+              value={addVendorDetails.vendorFaxNumber}
+              onChange={handledInputChangeItems}
             />
           </CCol>
         </CRow>
@@ -502,7 +514,9 @@ const ChangeAssetVendor = ({
             className="col-sm-3 col-form-label text-end"
           >
             Department:
-            <span className={showIsRequired(addVendor.departmentId)}>*</span>
+            <span className={showIsRequired(addVendorDetails.departmentId)}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
@@ -512,13 +526,13 @@ const ChangeAssetVendor = ({
               size="sm"
               aria-label="Department"
               name="departmentId"
-              onChange={handledInputChange}
-              value={addVendor.departmentId}
+              onChange={handledInputChangeItems}
+              value={addVendorDetails.departmentId}
             >
               <option value={''}>Select Department</option>
-              {departments &&
-                departments?.length > 0 &&
-                departments?.map((dept, index) => (
+              {selectdepartments &&
+                selectdepartments?.length > 0 &&
+                selectdepartments?.map((dept, index) => (
                   <option key={index} value={dept.id}>
                     {dept.name}
                   </option>
@@ -540,8 +554,10 @@ const ChangeAssetVendor = ({
               type="checkbox"
               name="isExpenseVendor"
               id="expenseVendor"
-              onChange={(event) => handleIsInternalStatus(event.target.checked)}
-              checked={addVendor.isExpenseVendor}
+              onChange={(event) =>
+                handleIsInternalStatusid(event.target.checked)
+              }
+              checked={addVendorDetails.isExpenseVendor}
             />
           </CCol>
         </CRow>
@@ -551,8 +567,8 @@ const ChangeAssetVendor = ({
               data-testid="save-btn"
               className="btn-ovh me-1 text-white"
               color="success"
-              disabled={!isAddButtonEnabled}
-              onClick={handleAddNewVendor}
+              disabled={!isAddButtonIdEnabled}
+              onClick={handleAddNewVendorInformation}
             >
               Add
             </CButton>
@@ -560,7 +576,7 @@ const ChangeAssetVendor = ({
               data-testid="clear-btn"
               color="warning"
               className="btn-ovh text-white"
-              onClick={clearInputs}
+              onClick={clearVendorInputs}
             >
               Clear
             </CButton>

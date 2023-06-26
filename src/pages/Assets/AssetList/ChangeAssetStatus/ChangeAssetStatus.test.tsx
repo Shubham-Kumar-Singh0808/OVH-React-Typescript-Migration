@@ -3,10 +3,12 @@ import '@testing-library/jest-dom'
 import React from 'react'
 import userEvent from '@testing-library/user-event'
 import ChangeAssetStatus from './ChangeAssetStatus'
+import ChangeAssetAddVendor from './ChangeAssetAddVendor'
 import { render, screen } from '../../../../test/testUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
 
 const mockSetToggle = jest.fn()
+const mockSetEmpName = jest.fn()
 describe('Change Asset status Component Testing', () => {
   test('should render Change Asset status component with out crashing', () => {
     render(
@@ -59,6 +61,12 @@ describe('Change Asset status Component Testing', () => {
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
     expect(mockSetToggle).toHaveBeenCalledTimes(0)
+  })
+  describe('Create Add Vendor Component Testing', () => {
+    test('should render create New Ticket component with out crashing', () => {
+      render(<ChangeAssetAddVendor setEmpToggle={mockSetEmpName} />)
+      expect(screen.getByText('Add Vendor Details')).toBeInTheDocument()
+    })
   })
 })
 const dispatch = jest.fn()
