@@ -20,6 +20,10 @@ const ProductSpecificationList = (): JSX.Element => {
   const [editProductSpecification, setEditProductSpecification] =
     useState(productSpecification)
 
+  const productSpecificationList = useTypedSelector(
+    reduxServices.productSpecificationList.selectors.productSpecificationList,
+  )
+
   const dispatch = useAppDispatch()
   const listSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
@@ -37,39 +41,51 @@ const ProductSpecificationList = (): JSX.Element => {
       reduxServices.productSpecificationList.getProductSpecificationList({
         startIndex: pageSize * (currentPage - 1),
         endIndex: pageSize * currentPage,
-        productName: '',
+        productName: searchInput,
       }),
     )
   }, [currentPage, dispatch, pageSize])
 
-  const handleSearchBtn = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchByEnter = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (event.key === 'Enter') {
-      dispatch(
-        reduxServices.productSpecificationList.getProductSpecificationList({
-          endIndex: 20,
-          productName: searchInput,
-          startIndex: 0,
-        }),
-      )
+      if (searchInput === '') {
+        dispatch(
+          reduxServices.productSpecificationList.getProductSpecificationList({
+            productName: searchInput,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+          }),
+        )
+        setCurrentPage(1)
+      } else {
+        dispatch(
+          reduxServices.productSpecificationList.getProductSpecificationList({
+            productName: searchInput,
+            startIndex: pageSize * (currentPage - 1),
+            endIndex: pageSize * currentPage,
+          }),
+        )
+      }
     }
   }
-
   const multiSearchBtnHandler = () => {
     dispatch(
       reduxServices.productSpecificationList.getProductSpecificationList({
-        endIndex: 20,
+        endIndex: pageSize * currentPage,
         productName: searchInput,
-        startIndex: 0,
+        startIndex: pageSize * (currentPage - 1),
       }),
     )
   }
   const handleExportData = async () => {
     const productSpecificationListDownload =
       await productSpecificationListApi.exportProductSpecificationData({
-        specificationSearch: '',
-        endIndex: 0,
-        productName: '',
-        startIndex: 0,
+        specificationSearch: searchInput,
+        endIndex: pageSize * currentPage,
+        productName: searchInput,
+        startIndex: pageSize * (currentPage - 1),
       })
     downloadFile(
       productSpecificationListDownload,
@@ -96,29 +112,36 @@ const ProductSpecificationList = (): JSX.Element => {
             <CCol
               lg={12}
               className="gap-4 d-md-flex justify-content-end mt-3 mb-3"
+              data-testid="exportBtn"
             >
               <div className="d-inline ml15 pull-right">
-                <CButton
-                  color="info"
-                  className="text-white btn-ovh"
-                  size="sm"
-                  onClick={handleExportData}
-                  data-testid="employee-export-btn"
-                >
-                  <i className="fa fa-plus me-1"></i>
-                  Click to Export
-                </CButton>
+                {productSpecificationList?.length > 0 ? (
+                  <CButton
+                    color="info"
+                    className="text-white btn-ovh"
+                    size="sm"
+                    name="Click to Export"
+                    onClick={handleExportData}
+                  >
+                    <i className="fa fa-plus me-1"></i>
+                    Click to Export
+                  </CButton>
+                ) : (
+                  ''
+                )}
                 &nbsp; &nbsp; &nbsp;
-                <CButton
-                  color="info"
-                  className="text-white btn-ovh"
-                  size="sm"
-                  data-testid="add-product"
-                  onClick={() => setToggle('/addAssetType')}
-                >
-                  <i className="fa fa-plus me-1"></i>
-                  Add
-                </CButton>
+                {userAccess?.createaccess && (
+                  <CButton
+                    color="info"
+                    className="text-white btn-ovh"
+                    size="sm"
+                    data-testid="add-product"
+                    onClick={() => setToggle('/addAssetType')}
+                  >
+                    <i className="fa fa-plus me-1"></i>
+                    Add
+                  </CButton>
+                )}
               </div>
             </CCol>
           </CRow>
@@ -134,7 +157,7 @@ const ProductSpecificationList = (): JSX.Element => {
                   onChange={(e) => {
                     setSearchInput(e.target.value)
                   }}
-                  onKeyDown={handleSearchBtn}
+                  onKeyDown={handleSearchByEnter}
                 />
                 <CButton
                   disabled={!searchInput}
@@ -159,7 +182,6 @@ const ProductSpecificationList = (): JSX.Element => {
               setPageSize={setPageSize}
               setEditProductSpecification={setEditProductSpecification}
               setToggle={setToggle}
-              userAccess={userAccess}
             />
           </>
         </OCard>
