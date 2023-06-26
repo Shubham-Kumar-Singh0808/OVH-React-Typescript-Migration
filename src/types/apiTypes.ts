@@ -435,8 +435,7 @@ export interface BookingListApi extends ApiBase {
   editMeeting: string
   confirmUpdateMeetingRequest: string
   uniqueAttendee: string
-  Completed: string
-  InProgress: string
+  changeMeetingStatus: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -869,6 +868,11 @@ export interface IntervieweeDetailsApi extends ApiBase {
   updateCandidateInterviewStatus: string
   empScheduleInterviewDetails: string
   updateInterview: string
+  getAllEmployeeDetails: string
+  interviewRoundCount: string
+  reScheduleInterview: string
+  scheduleInterview: string
+  sendRejectedMessagetoCandidate: string
 }
 export interface CandidateListApi extends ApiBase {
   searchScheduledCandidate: string
@@ -885,6 +889,11 @@ export interface CandidateListApi extends ApiBase {
   uploadCandidateResume: string
   addTechnology: string
   deleteTechnology: string
+  editCandidateData: string
+  isEditCandidateMailExists: string
+  isEditCandidateMobileNumberExists: string
+  editNewCandidate: string
+  downloadFile: string
 }
 export interface ManufacturerApi extends ApiBase {
   exportManufacturerList: string
@@ -921,6 +930,15 @@ export interface VendorListApi extends ApiBase {
   exportVendorData: string
   deleteVendorDetails: string
 }
+
+export interface CategoryListApi extends ApiBase {
+  getCategoryList: string
+  addCategory: string
+  checkForDuplicateCategory: string
+  editCategory: string
+  updateCategory: string
+  deleteCategory: string
+}
 export interface ProductSpecificationListApi extends ApiBase {
   getAllProductSpecifications: string
   getassetTypeChangeList: string
@@ -930,6 +948,16 @@ export interface ProductSpecificationListApi extends ApiBase {
   addProductSpecifications: string
   deleteProductSpecification: string
   updateProductSpecification: string
+}
+
+export interface ExpenseSubCategoryListApi extends ApiBase {
+  getCategoryList: string
+  getSubCategoryList: string
+  addSubCategoryList: string
+  editSubCategory: string
+  checkForDuplicateSubCategory: string
+  updateSubCategory: string
+  deleteSubCategory: string
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string

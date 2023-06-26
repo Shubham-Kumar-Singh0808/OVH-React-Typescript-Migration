@@ -1,4 +1,4 @@
-import { ActionMapping } from '../../../../Settings/UserRolesConfiguration/userRolesAndPermissionsTypes'
+import { ActionMapping } from '../../../../Settings/UserRolesConfiguration/UserRolesConfigurationTypes'
 import { ApiLoadingState } from '../../../../../middleware/api/apiList'
 
 export type EmployeeShiftDetails = {

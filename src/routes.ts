@@ -12,7 +12,7 @@ export type route = {
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
   () =>
-    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+    import('./pages/Settings/UserRolesConfiguration/UserRolesConfiguration'),
 )
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
@@ -437,11 +437,29 @@ const productList = React.lazy(
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
+const ExpenseCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
+)
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
 )
 const InterviewStatusReport = React.lazy(
   () =>
@@ -466,6 +484,10 @@ const EmployeesCount = React.lazy(
 )
 const JobInfo = React.lazy(
   () => import('./pages/Recruitment/JobOpenings/JobInformation/JobInformation'),
+)
+const EditCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1065,7 +1087,11 @@ const routes = [
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
   },
-
+  {
+    path: '/expenseCategory',
+    name: 'Expense Category',
+    component: ExpenseCategoryList,
+  },
   {
     path: '/assetList',
     name: 'Asset List',
@@ -1075,6 +1101,21 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
   },
   {
     path: '/interviewstatusReport',
@@ -1110,6 +1151,11 @@ const routes = [
     path: '/jobinfo/:jobVacancyId',
     name: 'JobInfo',
     component: JobInfo,
+  },
+  {
+    path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
   },
 ]
 export default routes
