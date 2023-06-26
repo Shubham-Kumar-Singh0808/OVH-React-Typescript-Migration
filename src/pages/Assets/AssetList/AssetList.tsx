@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import AssetListTable from './AssetListTable'
 import AssetListFilters from './AssetListFilters'
 import ChangeAssetStatus from './ChangeAssetStatus/ChangeAssetStatus'
@@ -8,7 +7,6 @@ import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { AllAssetsList } from '../../../types/Assets/AssetList/AssetListTypes'
-import AddVendorDetails from '../VendorList/AddVendorDetails/AddVendorDetails'
 
 const AssetList = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -29,9 +27,6 @@ const AssetList = (): JSX.Element => {
     changeReportStatusTypes,
   )
 
-  // const { changeAsset } = useParams<{ changeAsset: string }>()
-
-  // console.log(changeAsset)
   const listSize = useTypedSelector(reduxServices.assetList.selectors.listSize)
 
   const CurrentPage = useTypedSelector(
@@ -101,6 +96,3 @@ const AssetList = (): JSX.Element => {
 }
 
 export default AssetList
-// function useQuery() {
-//   throw new Error('Function not implemented.')
-// }

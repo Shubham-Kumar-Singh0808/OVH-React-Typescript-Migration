@@ -81,7 +81,7 @@ const AssetListTableBody = ({
     setChangeReportStatus(item)
   }
 
-  const ActionIcons = (item: AllAssetsList) => {
+  const ActionIcons = (icon: AllAssetsList) => {
     return (
       <CTableDataCell data-testid="action-cell">
         <div className="sh-btn-group">
@@ -96,7 +96,7 @@ const AssetListTableBody = ({
               color="info"
               size="sm"
               className="mb-1"
-              onClick={() => changeReportButtonHandler(item)}
+              onClick={() => changeReportButtonHandler(icon)}
             >
               <i className=" fa fa-wrench"></i>
             </CButton>
