@@ -75,7 +75,7 @@ const ChangeAssetStatusThunk = {
 const ChangeStatusSelectors = {
   isLoading,
 }
-export const changeStatusService = {
+export const changeAssetStatusService = {
   ...ChangeAssetStatusThunk,
   actions: changeStatusSlice.actions,
   selectors: ChangeStatusSelectors,

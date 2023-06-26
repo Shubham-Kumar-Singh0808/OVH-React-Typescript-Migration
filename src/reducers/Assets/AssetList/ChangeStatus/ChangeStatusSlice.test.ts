@@ -1,4 +1,4 @@
-import reducer, { changeStatusService } from './ChangeStatusSlice'
+import reducer, { changeAssetStatusService } from './ChangeStatusSlice'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 import { mockAllAssetListData } from '../../../../test/data/AssetListData'
 import {
@@ -17,7 +17,7 @@ describe('Change Asset Status Slice', () => {
     } as ChangeAssetStatusSliceState
     it('Should be able to set isLoading to "loading" if `getAllAssets` is pending', () => {
       const action = {
-        type: changeStatusService.getAllAssets.pending.type,
+        type: changeAssetStatusService.getAllAssets.pending.type,
       }
       const state = reducer(initialAllAssetStatusState, action)
       expect(state).toEqual({
@@ -28,7 +28,7 @@ describe('Change Asset Status Slice', () => {
     })
     it('Should be able to set isLoading to "success" if `getAllAssets` is fulfilled', () => {
       const action = {
-        type: changeStatusService.getAllAssets.fulfilled.type,
+        type: changeAssetStatusService.getAllAssets.fulfilled.type,
         payload: mockAllAssetListData.list,
       }
       const state = reducer(initialAllAssetStatusState, action)
@@ -48,7 +48,7 @@ describe('saveEmployee ', () => {
   } as ChangeAssetStatusSliceState
   it('Should be able to set to "loading" if saveEmployee is pending', () => {
     const action = {
-      type: changeStatusService.saveEmployee.pending.type,
+      type: changeAssetStatusService.saveEmployee.pending.type,
     }
     const state = reducer(initialAllAssetStatusState, action)
     expect(state).toEqual({
@@ -60,7 +60,7 @@ describe('saveEmployee ', () => {
 
   it('Should be able to set to "fullfilled" if saveEmployee is fullfilled', () => {
     const action = {
-      type: changeStatusService.saveEmployee.fulfilled.type,
+      type: changeAssetStatusService.saveEmployee.fulfilled.type,
       payload: mockSaveEmployee,
     }
     const state = reducer(initialAllAssetStatusState, action)

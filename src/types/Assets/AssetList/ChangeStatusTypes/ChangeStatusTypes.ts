@@ -53,15 +53,6 @@ export type getAllAssets = {
   countryId: number
 }
 
-// // This is for managing the page changes
-// export enum ChangeAsset {
-//   addvendor = 'Add Vendor Details',
-//   changeasset = 'Change Asset Status',
-//   // addKra = 'Add KRA',
-//   // editKPI = 'Edit KPI',
-//   // addKPI = 'Add KPI',
-//   // editKra = 'Edit KRA',
-// }
 export type GetAllAssetResponse = {
   list: getAllAssets[]
   size: number
