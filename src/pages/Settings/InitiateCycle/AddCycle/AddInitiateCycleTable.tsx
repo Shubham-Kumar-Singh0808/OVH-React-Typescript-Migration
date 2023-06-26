@@ -159,7 +159,7 @@ const AddInitiateCycleTable = ({
         modalFooterClass="d-none"
         modalHeaderClass="d-none"
       >
-        <div
+        <p
           dangerouslySetInnerHTML={{
             __html: cyclePopUp,
           }}

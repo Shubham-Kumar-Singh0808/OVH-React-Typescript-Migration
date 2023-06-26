@@ -1,14 +1,9 @@
 import '@testing-library/jest-dom'
 
 import React from 'react'
-import userEvent from '@testing-library/user-event'
 import ReviewListSearchFilterOptions from './ReviewListSearchFilterOptions'
-import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
+import { render, screen } from '../../../test/testUtils'
 
-const multiSearchButton = 'multi-search-btn'
-const multiSearchInput = 'multi-search-input'
-const searchEmpInput = 'searchByEmployeeName'
-const searchManagerInput = 'searchByManagerName'
 const mockSetSearchValue = jest.fn()
 const toRender = (
   <div>
@@ -22,6 +17,8 @@ const toRender = (
       setSearchValue={mockSetSearchValue}
       searchButtonOnKeyDown={jest.fn()}
       searchBtnHandler={jest.fn()}
+      isChecked={false}
+      setIsChecked={mockSetSearchValue}
     />
   </div>
 )

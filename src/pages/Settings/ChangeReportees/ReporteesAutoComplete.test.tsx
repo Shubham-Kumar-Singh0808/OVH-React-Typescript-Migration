@@ -1,11 +1,8 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import ReporteesAutoComplete from './ReporteesAutoComplete'
-import { screen, render, fireEvent, cleanup } from '../../../test/testUtils'
-import {
-  mockAllHRList,
-  mockAllReportingManagerData,
-} from '../../../test/data/ChangeReporteesData'
+import { screen, render, fireEvent } from '../../../test/testUtils'
+import { mockAllReportingManagerData } from '../../../test/data/ChangeReporteesData'
 
 const placeHolder = 'Manager Name'
 const managerName = 'Ajay Ray'
@@ -21,6 +18,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {
@@ -51,6 +49,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={false}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {
@@ -90,6 +89,7 @@ describe('Testing Reportees AutoComplete Component', () => {
           setAutoCompleteTarget={jest.fn}
           shouldRenderTable={true}
           setShouldRenderTable={jest.fn}
+          setIsActive={jest.fn()}
         />,
         {
           preloadedState: {

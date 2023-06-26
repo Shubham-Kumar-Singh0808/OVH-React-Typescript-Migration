@@ -24,33 +24,38 @@ const TabsLabels: MyProfileTabList[] = [
   },
   {
     id: 5,
+    tabName: 'Recruitment History',
+    label: 'My Profile-History',
+  },
+  {
+    id: 6,
     tabName: 'Reviews',
     label: 'My Profile-Observations',
   },
   {
-    id: 6,
+    id: 7,
     tabName: 'Projects',
     label: 'My Profile-Projects',
   },
   {
-    id: 7,
+    id: 8,
     tabName: 'Reportees',
     label: 'My Profile-Reporties',
   },
   {
-    id: 8,
+    id: 9,
     tabName: 'Assets',
     label: 'My Profile-Infra',
   },
   {
-    id: 9,
+    id: 10,
     tabName: 'Profile History',
     label: 'My Profile-EmployeeHistory',
   },
   {
     id: 11,
-    tabName: 'Separation',
-    label: 'Separation',
+    tabName: 'Seperation',
+    label: 'My Profile-History',
   },
 ]
 export default TabsLabels

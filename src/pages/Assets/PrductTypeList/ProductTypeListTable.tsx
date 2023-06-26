@@ -10,7 +10,7 @@ import {
   CTableRow,
   CTooltip,
 } from '@coreui/react-pro'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OModal from '../../../components/ReusableComponent/OModal'
@@ -115,6 +115,7 @@ const ProductTypeListTable = ({
   const editButtonHandler = (ProductType: ProductTypeListType) => {
     setToggle('ProductData')
     setEditProductType(ProductType)
+    window.scrollTo(0, 0)
   }
 
   const getItemNumber = (index: number) => {

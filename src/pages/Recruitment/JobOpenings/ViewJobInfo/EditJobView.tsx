@@ -28,12 +28,16 @@ const EditJobView = ({
   setToggle,
   editViewJobInfo,
   setEditViewJobInfo,
+  searchInput,
+  selectRadioAction,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   editViewJobInfo: GetAllJobVacanciesList
   setEditViewJobInfo: React.Dispatch<
     React.SetStateAction<GetAllJobVacanciesList>
   >
+  searchInput: string
+  selectRadioAction: string
 }): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isShowDescription, setIsShowDescription] = useState<boolean>(true)
@@ -120,6 +124,14 @@ const EditJobView = ({
       )
     ) {
       setToggle('')
+      dispatch(
+        reduxServices.jobVacancies.getAllJobVacancies({
+          startIndex: 0,
+          endIndex: 20,
+          searchJobTitle: searchInput,
+          status: selectRadioAction,
+        }),
+      )
       dispatch(reduxServices.app.actions.addToast(updateSuccessMessage))
       dispatch(reduxServices.app.actions.addToast(undefined))
     }

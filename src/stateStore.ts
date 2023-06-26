@@ -32,7 +32,6 @@ import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesLis
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import technologyReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
-import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
@@ -128,23 +127,32 @@ import addNewAuditFormReducer from './reducers/SQAAuditReport/addNewAuditSlice'
 import sqaAuditReportReducer from './reducers/SQAAuditReport/sqaAuditReportSlice'
 import notificationReducer from './reducers/Notifications/notificationSlice'
 import jobVacanciesReducer from './reducers/Recruitment/JobOpenings/jobOpeningsSlice'
+import intervieweeDetailsReducer from './reducers/Recruitment/IntervieweeDetails/IntervieweeDetailsSlice'
+import candidateListReducer from './reducers/Recruitment/CandidateList/CandidateListSlice'
 import vendorListReducer from './reducers/Assets/VendorList/vendorListSlice'
 import addNewVendorReducer from './reducers/Assets/VendorList/AddVendorDetails/addVendorDetailsSlice'
 import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeReporteesSlice'
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
+import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
+import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import SeparationReducer from './reducers/MyProfile/Separation/SeparationSlice'
+import subCategoryReducer from './reducers/ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
+import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
+import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
+import userRolesConfigurationReducer from './reducers/Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
   sidebarMenu: sidebarMenuSliceReducer,
-  userRolesAndPermissions: userRolesAndPermissionsReducer,
+  userRolesConfiguration: userRolesConfigurationReducer,
   employeeQualificationsDetails: employeeQualificationsReducer,
   category: categoryReducer,
   personalInfoDetails: personalInfoReducer,
@@ -266,16 +274,24 @@ export const allReducers = {
   sqaAuditReport: sqaAuditReportReducer,
   notification: notificationReducer,
   jobVacancies: jobVacanciesReducer,
+  intervieweeDetails: intervieweeDetailsReducer,
+  candidateList: candidateListReducer,
   vendorList: vendorListReducer,
   addNewVendor: addNewVendorReducer,
   changeReportees: changeReporteesReducer,
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
+  categoryList: categoryListReducer,
+  addNewCategory: addNewExpenseCategoryReducer,
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
+  recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
   Separation: SeparationReducer,
+  subCategoryList: subCategoryReducer,
+  upComingJoinList: upComingJoinListReducer,
+  interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

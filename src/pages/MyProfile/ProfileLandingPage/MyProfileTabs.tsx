@@ -12,6 +12,7 @@ import EmployeeProfileHistory from '../../MyProfile/ProfileHistory/EmployeeProfi
 import GeneralTab from '../GeneralTab/GeneralTab'
 import PersonalInfoTab from '../../../pages/MyProfile/PersonalInfoTab/PersonalInfoTab'
 import QualificationDetails from '../QualificationsTab/QualificationDetails'
+import RecruitmentHistory from '../RecruitmentHistory/RecruitmentHistory'
 import EmployeeReviews from '../ReviewsTab/EmployeeReviews'
 import TabsLabels from '../../../middleware/TabsLabels'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -26,7 +27,11 @@ import Separation from '../Separation/Separation'
 interface ShowTabContentType<TValue> {
   [id: number]: TValue
 }
-const MyProfileTabs = (): JSX.Element => {
+const MyProfileTabs = ({
+  isViewingAnotherEmployee,
+}: {
+  isViewingAnotherEmployee: boolean
+}): JSX.Element => {
   const dispatch = useAppDispatch()
 
   const [activeTabsKey, setActiveTabsKey] = useState(1)
@@ -44,6 +49,7 @@ const MyProfileTabs = (): JSX.Element => {
   )
 
   useEffect(() => {
+    console.log(userAccessToFeatures)
     const filteredTabs = userAccessToFeatures.filter((feature) =>
       TabsLabels.some(
         (tab) =>
@@ -53,6 +59,7 @@ const MyProfileTabs = (): JSX.Element => {
     )
     const mappedTabs = mapTabsToFeatures(TabsLabels, filteredTabs)
     setTabResult(mappedTabs as MappedTabs[])
+    console.log(mappedTabs)
   }, [userAccessToFeatures])
 
   useEffect(() => {
@@ -80,6 +87,8 @@ const MyProfileTabs = (): JSX.Element => {
     }
   }, [dispatch, employeeId])
 
+  console.log(isViewingAnotherEmployee)
+
   useEffect(() => {
     // if (
     //   employeeRole !== 'admin' &&
@@ -97,11 +106,12 @@ const MyProfileTabs = (): JSX.Element => {
         2: <BasicInfoTab />,
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
-        5: <EmployeeReviews />,
-        6: <EmployeeProjects />,
-        7: <EmployeeReportees />,
-        8: <EmployeeAssets />,
-        9: <EmployeeProfileHistory />,
+        5: isViewingAnotherEmployee ? <RecruitmentHistory /> : <></>,
+        6: <EmployeeReviews />,
+        7: <EmployeeProjects />,
+        8: <EmployeeReportees />,
+        9: <EmployeeAssets />,
+        10: <EmployeeProfileHistory />,
         11: <Separation />,
       }
       return showTabContent[tabKey] || 'Tab Content not available'

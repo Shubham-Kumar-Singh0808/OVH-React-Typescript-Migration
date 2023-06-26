@@ -62,6 +62,7 @@ describe('Allocate Employee without data', () => {
           specificDesignation: null,
         }}
         onChangeInputHandler={mockSetTogglePage}
+        isDesignationReadonly={true}
       />,
       {
         preloadedState: {
@@ -93,9 +94,11 @@ describe('Allocate Employee without data', () => {
     expect(screen.getByText('LOP :')).toBeInTheDocument()
     expect(screen.getByText('Meals Card:')).toBeInTheDocument()
   })
-  test('should able to designationInput field', () => {
-    const designationInput = screen.getByTestId('designation-name')
-    userEvent.type(designationInput, 'Associate Software IT Engineer')
+  test('should not able to designationInput field', () => {
+    const designationInput = screen.getByTestId(
+      'designation-name',
+    ) as HTMLInputElement
+    expect(designationInput.readOnly).toBe(true)
   })
 
   test('should able to accountNoInput  field', () => {

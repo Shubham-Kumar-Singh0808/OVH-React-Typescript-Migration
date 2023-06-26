@@ -161,6 +161,14 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
       </div>
     </>
   )
+
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+
+  const userAccess = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Project-Invoices',
+  )
   return (
     <>
       <CTable
@@ -225,14 +233,16 @@ const ProjectInvoicesEntryTable = (): JSX.Element => {
                 <CTableDataCell scope="row">${item.totalAmount}</CTableDataCell>
                 <CTableDataCell scope="row">${item.totalAmount}</CTableDataCell>
                 <CTableDataCell scope="row">
-                  <CTooltip content="Edit">
-                    <CButton
-                      color="info"
-                      className="btn-ovh me-1 mt-1 btn-ovh-employee-list"
-                    >
-                      <i className="fa fa-pencil-square-o"></i>
-                    </CButton>
-                  </CTooltip>
+                  {userAccess?.updateaccess && (
+                    <CTooltip content="Edit">
+                      <CButton
+                        color="info"
+                        className="btn-ovh me-1 mt-1 btn-ovh-employee-list"
+                      >
+                        <i className="fa fa-pencil-square-o"></i>
+                      </CButton>
+                    </CTooltip>
+                  )}
                   <CTooltip content="View">
                     <CButton
                       color="info"

@@ -45,9 +45,11 @@ const ProjectStatusTable = ({
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   setToggle: (value: string) => void
   setEditCurrentWeekDate: React.Dispatch<
-    React.SetStateAction<string | undefined>
+    React.SetStateAction<string | Date | undefined>
   >
-  setEditNextWeekDate: React.Dispatch<React.SetStateAction<string | undefined>>
+  setEditNextWeekDate: React.Dispatch<
+    React.SetStateAction<string | Date | undefined>
+  >
   setEditNextWeekStatus: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
