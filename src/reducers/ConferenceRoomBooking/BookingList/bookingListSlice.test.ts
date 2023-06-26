@@ -1,6 +1,9 @@
 import reducer, { bookingListService } from './bookingListSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { BookingListSliceState } from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
+import {
+  BookingListSliceState,
+  EditMeetingRequest,
+} from '../../../types/ConferenceRoomBooking/BookingList/bookingListTypes'
 import {
   mockBookingsForSelection,
   mockMeetingLocations,
@@ -9,14 +12,21 @@ import {
 
 describe('Booking List Slice', () => {
   describe('Reducer', () => {
-    const initialBookingListState = {
+    const initialBookingListState: BookingListSliceState = {
       meetingLocation: [],
       roomsOfLocation: [],
       getBookingsForSelection: [],
       isLoading: ApiLoadingState.idle,
       currentPage: 1,
       pageSize: 20,
-    } as BookingListSliceState
+      editMeetingRequest: {} as EditMeetingRequest,
+      currentFilters: { location: -1, status: '', room: '', meetingStatus: '' },
+      LocationValue: '1',
+      RoomValue: '',
+      MeetingStatus: 'New',
+      SelectCustom: 'Today',
+      FromDateValue: '',
+    }
 
     it('Should be able to set isLoading to "loading" if `getAllMeetingLocations` is pending', () => {
       const action = {
@@ -24,12 +34,8 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
-        meetingLocation: [],
-        roomsOfLocation: [],
-        getBookingsForSelection: [],
+        ...initialBookingListState,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
     it('Should be able to set isLoading to "loading" if `getRoomsOfLocation` is pending', () => {
@@ -38,12 +44,8 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
-        meetingLocation: [],
-        roomsOfLocation: [],
-        getBookingsForSelection: [],
+        ...initialBookingListState,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
     it('Should be able to set isLoading to "loading" if `getBookingsForSelection` is pending', () => {
@@ -52,12 +54,8 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
-        meetingLocation: [],
-        roomsOfLocation: [],
-        getBookingsForSelection: [],
+        ...initialBookingListState,
         isLoading: ApiLoadingState.loading,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
     it('Should be able to set isLoading to "loading" if `getAllMeetingLocations` is fullfilled', () => {
@@ -67,12 +65,9 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
+        ...initialBookingListState,
         meetingLocation: mockMeetingLocations,
-        roomsOfLocation: [],
-        getBookingsForSelection: [],
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
     it('Should be able to set isLoading to "loading" if `getRoomsOfLocation` is fullfilled', () => {
@@ -82,12 +77,9 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
-        meetingLocation: [],
+        ...initialBookingListState,
         roomsOfLocation: mockRoomsOfLocation,
-        getBookingsForSelection: [],
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
     it('Should be able to set isLoading to "loading" if `getBookingsForSelection` is fullfilled', () => {
@@ -97,12 +89,9 @@ describe('Booking List Slice', () => {
       }
       const state = reducer(initialBookingListState, action)
       expect(state).toEqual({
-        meetingLocation: [],
-        roomsOfLocation: [],
+        ...initialBookingListState,
         getBookingsForSelection: mockBookingsForSelection,
         isLoading: ApiLoadingState.succeeded,
-        currentPage: 1,
-        pageSize: 20,
       })
     })
   })

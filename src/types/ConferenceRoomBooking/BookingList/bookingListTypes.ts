@@ -24,7 +24,7 @@ export type BookingListSliceState = {
   currentPage: number
   pageSize: number
   editMeetingRequest: EditMeetingRequest
-
+  currentFilters: GetBookingsForSelectionProps
   LocationValue: string
   RoomValue: string
   MeetingStatus: string
@@ -37,6 +37,16 @@ export type GetBookingsForSelectionProps = {
   meetingStatus: string
   room: string
   status: string
+}
+
+export interface BookingForSelectionEmployeeDTO {
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
 }
 
 export type GetBookingsForSelection = {
@@ -73,22 +83,12 @@ export type GetBookingsForSelection = {
   conferenceType: string
   eventTypeName: null
   eventTypeId: null
-  eventLocation: string
-  eventId: number
-  description: string
+  eventLocation: string | null
+  eventId: number | null
+  description: string | null
   eventEditAccess: true
   empDesignations: []
-  employeeDto: [
-    {
-      id: number
-      profilePicPath: string
-      firstName: string
-      lastName: string
-      emailId: string
-      designation: string
-      fullName: string
-    },
-  ]
+  employeeDto: BookingForSelectionEmployeeDTO[]
   trainerName: {
     id: number
     profilePicPath: string
@@ -97,7 +97,7 @@ export type GetBookingsForSelection = {
     emailId: string
     designation: string
     fullName: string
-  }
+  } | null
   availableDates: null
 }
 
@@ -189,4 +189,16 @@ export type UpdateRoomBooking = {
   timeFomrat: null
   toDate: null
   trainerName: null
+}
+
+export enum ConferenceBookingStatusEnum {
+  New = 'New',
+  InProgress = 'In Progress',
+  Cancelled = 'Cancelled',
+  Completed = 'Completed',
+}
+
+export interface ChangeBookingStatusParams {
+  bookingId: number
+  status: string
 }
