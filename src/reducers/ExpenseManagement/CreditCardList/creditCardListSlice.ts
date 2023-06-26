@@ -21,11 +21,17 @@ const getCreditCardsList = createAsyncThunk(
   },
 )
 
-const duplicateCardNumberDetails = createAsyncThunk(
-  '/ExpenseManagement/checkDuplicateCardNumber',
-  async (cardNumber: number, thunkApi) => {
+const addCreditCardsList = createAsyncThunk(
+  '/ExpenseManagement/addCardDetails',
+  async (
+    { cardName, cardNumber }: { cardName: string; cardNumber: string },
+    thunkApi,
+  ) => {
     try {
-      return await creditCardListApi.checkDuplicateCardNumberDetails(cardNumber)
+      return await creditCardListApi.addCreditCardDetails({
+        cardName,
+        cardNumber,
+      })
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status as ValidationError)
@@ -82,10 +88,7 @@ const creditCardListSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addMatcher(
-        isAnyOf(
-          getCreditCardsList.fulfilled,
-          duplicateCardNumberDetails.fulfilled,
-        ),
+        isAnyOf(getCreditCardsList.fulfilled, addCreditCardsList.fulfilled),
         (state, action) => {
           state.isLoading = ApiLoadingState.succeeded
           state.getCardsList = action.payload
@@ -104,10 +107,10 @@ const creditCardListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCreditCardsList.pending,
-          duplicateCardNumberDetails.pending,
           editCreditCardDetails.pending,
           updateCreditCardList.pending,
           deleteCreditCardList.pending,
+          addCreditCardsList.pending,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
@@ -116,10 +119,10 @@ const creditCardListSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getCreditCardsList.rejected,
-          duplicateCardNumberDetails.rejected,
           editCreditCardDetails.rejected,
           updateCreditCardList.rejected,
           deleteCreditCardList.rejected,
+          addCreditCardsList.rejected,
         ),
         (state) => {
           state.isLoading = ApiLoadingState.failed
@@ -135,7 +138,7 @@ const creditCards = (state: RootState): CreditCardList[] =>
 
 const creditCardListThunk = {
   getCreditCardsList,
-  duplicateCardNumberDetails,
+  addCreditCardsList,
   editCreditCardDetails,
   updateCreditCardList,
   deleteCreditCardList,

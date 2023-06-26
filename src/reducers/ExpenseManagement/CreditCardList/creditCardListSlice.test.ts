@@ -25,18 +25,6 @@ describe('Credit Cards List Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if get Duplicate Credit Card Data is pending', () => {
-      const action = {
-        type: creditCardListService.duplicateCardNumberDetails.pending.type,
-      }
-      const state = creditCardListReducer(initialCreditCardListState, action)
-      expect(state).toEqual({
-        getCardsList: [],
-        isLoading: ApiLoadingState.loading,
-        error: null,
-      })
-    })
-
     it('Should be able to set isLoading to "loading" if edit Credit Card Data is pending', () => {
       const action = {
         type: creditCardListService.editCreditCardDetails.pending.type,
@@ -86,19 +74,6 @@ describe('Credit Cards List Slice', () => {
       })
     })
 
-    it('Should be able to set isLoading to "loading" if get Duplicate Credit Card Data is fulfilled', () => {
-      const action = {
-        type: creditCardListService.duplicateCardNumberDetails.fulfilled.type,
-        payload: mockCreditCardListData,
-      }
-      const state = creditCardListReducer(initialCreditCardListState, action)
-      expect(state).toEqual({
-        getCardsList: mockCreditCardListData,
-        isLoading: ApiLoadingState.succeeded,
-        error: null,
-      })
-    })
-
     it('Should be able to set isLoading to "loading" if edit Credit Card Data is fulfilled', () => {
       const action = {
         type: creditCardListService.editCreditCardDetails.fulfilled.type,
@@ -138,18 +113,6 @@ describe('Credit Cards List Slice', () => {
     it('Should be able to set isLoading to "failed" if get All Credit Card Data is rejected', () => {
       const action = {
         type: creditCardListService.getCreditCardsList.rejected.type,
-      }
-      const state = creditCardListReducer(initialCreditCardListState, action)
-      expect(state).toEqual({
-        getCardsList: [],
-        isLoading: ApiLoadingState.failed,
-        error: null,
-      })
-    })
-
-    it('Should be able to set isLoading to "loading" if get Duplicate Credit Card Data is rejected', () => {
-      const action = {
-        type: creditCardListService.duplicateCardNumberDetails.rejected.type,
       }
       const state = creditCardListReducer(initialCreditCardListState, action)
       expect(state).toEqual({
