@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CRow, CFormLabel, CCol, CFormInput, CButton } from '@coreui/react-pro'
 import CreditCardListTable from './CreditCardListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { TextDanger } from '../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { showIsRequired } from '../../../utils/helper'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -43,12 +43,12 @@ const CreditCardList = (): JSX.Element => {
 
   // Enabling and disabling the Add buttons
   useEffect(() => {
-    if (cardName && cardNumber) {
+    if (cardName && cardNumber.length > 15) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [cardName, cardNumber])
+  }, [cardName, cardNumber, isCardNumberExist])
 
   const clearCreditCardInputs = () => {
     setCardName('')
@@ -134,6 +134,10 @@ const CreditCardList = (): JSX.Element => {
     />
   )
 
+  const result = isAddButtonEnabled
+    ? isAddButtonEnabled && isCardNumberExist.length > 0
+    : !isAddButtonEnabled
+
   return (
     <>
       <OCard
@@ -175,7 +179,9 @@ const CreditCardList = (): JSX.Element => {
             data-testid="categoryLabel"
           >
             Card Number:
-            <span className={showIsRequired(cardNumber)}>*</span>
+            <span className={cardNumber.length > 15 ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput
@@ -206,11 +212,7 @@ const CreditCardList = (): JSX.Element => {
                 data-testid="save-btn"
                 className="btn-ovh me-1 text-white"
                 color="success"
-                disabled={
-                  isAddButtonEnabled
-                    ? isAddButtonEnabled && isCardNumberExist.length > 0
-                    : !isAddButtonEnabled
-                }
+                disabled={result}
                 onClick={addCreditCardButtonHandler}
               >
                 Add

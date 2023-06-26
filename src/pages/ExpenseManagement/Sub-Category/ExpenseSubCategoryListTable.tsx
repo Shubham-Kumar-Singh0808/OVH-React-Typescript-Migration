@@ -70,6 +70,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
       )
     })
   }
+
   //    Configuration for Pagination
   const {
     paginationRange,
@@ -198,19 +199,17 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      editExpenseSubCategoryDetails?.subCategoryName?.replace(/^\s*/, '') &&
-      editExpenseSubCategoryDetails.categoryName
+      editExpenseSubCategoryDetails?.subCategoryName?.replace(/^\s*/, '') !==
+      isEditSubCategoryNameExist
     ) {
       setIsEditSubCategoryButtonEnabled(true)
     } else {
       setIsEditSubCategoryButtonEnabled(false)
     }
-  }, [
-    editExpenseSubCategoryDetails.subCategoryName,
-    editExpenseSubCategoryDetails.categoryName,
-  ])
+  }, [editExpenseSubCategoryDetails.subCategoryName])
 
   const cancelExpenseSubCategoryButtonHandler = () => {
+    setIsEditSubCategoryNameExist('')
     setIsEditExpenseSubCategory(false)
   }
 
@@ -257,7 +256,6 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                       >
                         {expenseCategoryList
                           .slice()
-<<<<<<<< HEAD:src/pages/ExpenseManagement/SubCategory/ExpenseSubCategoryListTable.tsx
                           .sort((subCategory1, subCategory2) =>
                             subCategory1.categoryName.localeCompare(
                               subCategory2.categoryName,
@@ -268,15 +266,6 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                               key={opt}
                               value={categoryNames.categoryName}
                             >
-========
-                          .sort((category1, category2) =>
-                            category1.categoryName.localeCompare(
-                              category2.categoryName,
-                            ),
-                          )
-                          ?.map((categoryNames, opt) => (
-                            <option key={opt} value={categoryNames.id}>
->>>>>>>> develop:src/pages/ExpenseManagement/Sub-Category/ExpenseSubCategoryListTable.tsx
                               {categoryNames.categoryName}
                             </option>
                           ))}

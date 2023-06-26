@@ -446,14 +446,10 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
-<<<<<<< HEAD
 
 const CreditCardList = React.lazy(
   () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
 )
-const ExpenseSubCategoryList = React.lazy(
-  () => import('./pages/ExpenseManagement/SubCategory/SubCategoryList'),
-=======
 const ExpenseSubCategoryList = React.lazy(
   () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
 )
@@ -468,7 +464,6 @@ const ReScheduleInterview = React.lazy(
     import(
       './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
     ),
->>>>>>> develop
 )
 const InterviewStatusReport = React.lazy(
   () =>
@@ -480,13 +475,10 @@ const AddNewCandidate = React.lazy(
 )
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
-<<<<<<< HEAD
-=======
 )
 const EditCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
->>>>>>> develop
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -1102,21 +1094,16 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
-<<<<<<< HEAD
     path: '/creditCardList',
     name: 'Credit Card List',
     component: CreditCardList,
   },
   {
-=======
->>>>>>> develop
     path: '/expenseSubCategory',
     name: 'Expense Sub Category',
     component: ExpenseSubCategoryList,
   },
   {
-<<<<<<< HEAD
-=======
     path: '/scheduleInterview/:personId',
     name: 'schedule Interview',
     component: ScheduleInterview,
@@ -1127,7 +1114,6 @@ const routes = [
     component: ReScheduleInterview,
   },
   {
->>>>>>> develop
     path: '/interviewstatusReport',
     name: 'Interview Status Report',
     component: InterviewStatusReport,
@@ -1141,14 +1127,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
-<<<<<<< HEAD
-=======
   },
   {
     path: '/editcandidate/:personId',
     name: 'Edit Candidate',
     component: EditCandidate,
->>>>>>> develop
   },
 ]
 export default routes

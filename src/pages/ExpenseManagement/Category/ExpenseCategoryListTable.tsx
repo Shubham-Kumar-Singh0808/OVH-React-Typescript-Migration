@@ -58,13 +58,8 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   )
 
   const editCategoryNameExists = (name: string) => {
-<<<<<<< HEAD
-    return categoryList?.find((categoriesName) => {
-      return categoriesName.categoryName.toLowerCase() === name.toLowerCase()
-=======
     return categoryList?.find((categories) => {
       return categories.categoryName.toLowerCase() === name.toLowerCase()
->>>>>>> develop
     })
   }
 
@@ -185,16 +180,9 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   }
 
   const cancelLeaveCategoryButtonHandler = () => {
+    setIsEditCategoryNameExist('')
     setIsEditExpenseCategory(false)
   }
-
-  useEffect(() => {
-    if (categoryName) {
-      setIsEditCategoryButtonEnabled(true)
-    } else {
-      setIsEditCategoryButtonEnabled(false)
-    }
-  }, [categoryName])
 
   useEffect(() => {
     dispatch(reduxServices.categoryList.getCategoryList())
@@ -212,6 +200,10 @@ const ExpenseCategoryListTable = (): JSX.Element => {
       setCurrentPage(1)
     }
   }, [])
+
+  const categoryResult = isEditCategoryButtonEnabled
+    ? isEditCategoryButtonEnabled && isEditCategoryNameExist.length > 0
+    : !isEditCategoryButtonEnabled
 
   return (
     <>
@@ -267,7 +259,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                             data-testid={`save-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveExpenseCategoryButtonHandler}
-                            disabled={!isEditCategoryButtonEnabled}
+                            disabled={categoryResult}
                           >
                             <i
                               className="fa fa-floppy-o"

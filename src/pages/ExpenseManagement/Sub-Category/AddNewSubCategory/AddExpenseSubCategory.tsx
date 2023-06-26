@@ -42,7 +42,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (expenseCategoryName && expenseSubCategoryName) {
+    if (expenseSubCategoryName !== isSubCategoryNameExist) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
@@ -170,11 +170,8 @@ const AddExpenseSubCategory = (): JSX.Element => {
             value={expenseCategoryName}
           >
             <option value={''}>Select Category</option>
-            {/* {expenseCategoryNames
+            {expenseCategoryNames
               .slice()
-              .sort((subCategory1, subCategory2) =>
-                subCategory1.categoryName.localeCompare(
-                  subCategory2.categoryName,
               .sort((categories1, categories2) =>
                 categories1.categoryName.localeCompare(
                   categories2.categoryName,
@@ -184,7 +181,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
                 <option key={index} value={categoryNames.id}>
                   {categoryNames.categoryName}
                 </option>
-              ))} */}
+              ))}
           </CFormSelect>
         </CCol>
       </CRow>

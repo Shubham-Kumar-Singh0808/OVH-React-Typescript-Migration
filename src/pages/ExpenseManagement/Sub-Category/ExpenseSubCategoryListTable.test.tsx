@@ -76,11 +76,7 @@ describe('Expense Sub-Category List Table with data', () => {
       const saveButtonElement = screen.getByTestId(`sh-save-btn4`)
       await fireEvent.click(saveButtonElement)
 
-<<<<<<<< HEAD:src/pages/ExpenseManagement/SubCategory/ExpenseSubCategoryListTable.test.tsx
-      expect(screen.getByTestId(`subCategoryId3`)).toHaveValue(
-========
       expect(screen.getByTestId(`subCategoryId4`)).toHaveValue(
->>>>>>>> develop:src/pages/ExpenseManagement/Sub-Category/ExpenseSubCategoryListTable.test.tsx
         'Meals Card2testing2testing2',
       )
     })

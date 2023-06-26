@@ -146,23 +146,29 @@ const CreditCardListTable = (): JSX.Element => {
   }
 
   const cancelCreditCardButtonHandler = () => {
+    setIsEditCreditCardExist('')
     setIsEditCreditCardDetails(false)
   }
 
+  console.log(editCreditCardDetails?.cardNumber)
   useEffect(() => {
     if (
-      editCreditCardDetails?.cardName?.replace(/^\s*/, '') &&
-      editCreditCardDetails?.cardNumber
+      editCreditCardDetails?.cardNumber &&
+      editCreditCardDetails.cardNumber.length === 16
     ) {
       setIsEditCreditCardButtonEnabled(true)
     } else {
       setIsEditCreditCardButtonEnabled(false)
     }
-  }, [editCreditCardDetails.cardName, editCreditCardDetails.cardNumber])
+  }, [editCreditCardDetails.cardNumber])
 
   useEffect(() => {
     dispatch(reduxServices.creditCardList.getCreditCardsList())
   }, [dispatch])
+
+  const saveBtnClick = isEditCreditCardButtonEnabled
+    ? isEditCreditCardButtonEnabled && isEditCreditCardExist.length > 0
+    : !isEditCreditCardButtonEnabled
 
   return (
     <>
@@ -243,7 +249,7 @@ const CreditCardListTable = (): JSX.Element => {
                             data-testid={`save-credit-card-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveCreditCardButtonHandler}
-                            disabled={!isEditCreditCardButtonEnabled}
+                            disabled={saveBtnClick}
                           >
                             <i
                               className="fa fa-floppy-o"

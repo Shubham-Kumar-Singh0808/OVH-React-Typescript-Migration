@@ -70,7 +70,7 @@ const AddExpenseCategory = (): JSX.Element => {
   )
 
   useEffect(() => {
-    if (categoryName) {
+    if (categoryName !== isCategoryNameExist) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)

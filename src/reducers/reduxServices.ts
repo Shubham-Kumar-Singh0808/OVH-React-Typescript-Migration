@@ -131,17 +131,11 @@ import { assetListService } from './Assets/AssetList/AssetListSlice'
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
-<<<<<<< HEAD
 import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
 import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
-=======
-import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
-import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
-import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 import { userRolesConfigurationsServices } from './Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
->>>>>>> develop
 
 export const reduxServices = {
   app: appService,
@@ -278,10 +272,7 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
-<<<<<<< HEAD
   creditCardList: creditCardListService,
-=======
->>>>>>> develop
   subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,
   interviewStatusReport: interviewStatusReportServices,
