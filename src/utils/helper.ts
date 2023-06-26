@@ -1,6 +1,9 @@
 import moment from 'moment'
 import { GetList } from '../types/EmployeeDirectory/EmployeesList/AddNewEmployee/addNewEmployeeType'
-import { MyProfileTabList } from '../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
+import {
+  MappedTabs,
+  MyProfileTabList,
+} from '../types/MyProfile/ProfileLandingPage/myProfileTabsTypes'
 import { UserAccessToFeatures } from '../types/Settings/UserRolesConfiguration/userAccessToFeaturesTypes'
 
 export const listComposer = (
@@ -56,20 +59,20 @@ export const deviceLocale: string =
 export const mapTabsToFeatures = (
   TabsLabels: MyProfileTabList[],
   filteredTabs: UserAccessToFeatures[],
-): unknown => {
+): MappedTabs[] => {
   return TabsLabels.map((currTab) => {
     const filteredFeatureTab = filteredTabs.find(
       (currFeatureTab) =>
         currFeatureTab.name === currTab.label &&
         currFeatureTab.viewaccess === true,
     )
-    if (filteredFeatureTab) {
+    if (filteredFeatureTab !== undefined) {
       return {
         ...currTab,
         ...filteredFeatureTab,
       }
     }
-    return {}
+    return { id: -1, tabName: '', label: '' }
   })
 }
 

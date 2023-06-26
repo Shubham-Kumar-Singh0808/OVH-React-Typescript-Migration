@@ -33,7 +33,6 @@ const MyProfileTabs = ({
   isViewingAnotherEmployee: boolean
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-
   const [activeTabsKey, setActiveTabsKey] = useState(1)
   const [activeTabsContent, setActiveTabsContent] = useState<JSX.Element>()
   const [tabResult, setTabResult] = useState<MappedTabs[]>()
@@ -58,8 +57,12 @@ const MyProfileTabs = ({
       ),
     )
     const mappedTabs = mapTabsToFeatures(TabsLabels, filteredTabs)
-    setTabResult(mappedTabs as MappedTabs[])
-    console.log(mappedTabs)
+    if (!isViewingAnotherEmployee) {
+      mappedTabs.splice(4, 1) // recruitment history index in list
+      //after removing recruitment history, size of list is reduced. therefore making splice at 9
+      mappedTabs.splice(9, 1) // separation index in list
+    }
+    setTabResult(mappedTabs)
   }, [userAccessToFeatures])
 
   useEffect(() => {
@@ -87,8 +90,6 @@ const MyProfileTabs = ({
     }
   }, [dispatch, employeeId])
 
-  console.log(isViewingAnotherEmployee)
-
   useEffect(() => {
     // if (
     //   employeeRole !== 'admin' &&
@@ -106,7 +107,7 @@ const MyProfileTabs = ({
         2: <BasicInfoTab />,
         3: <PersonalInfoTab handleActiveTab={handleActiveTab} />,
         4: <QualificationDetails />,
-        5: isViewingAnotherEmployee ? <RecruitmentHistory /> : <></>,
+        5: <RecruitmentHistory />,
         6: <EmployeeReviews />,
         7: <EmployeeProjects />,
         8: <EmployeeReportees />,

@@ -44,7 +44,7 @@ const Separation = (): JSX.Element => {
     <>
       {isLoading === ApiLoadingState.succeeded ? (
         <>
-          {employeeSeparationData.separationComments.length > 0 ? (
+          {employeeSeparationData?.separationComments?.length > 0 ? (
             <>
               <CCardHeader>
                 <h4 className="h4">Separation</h4>

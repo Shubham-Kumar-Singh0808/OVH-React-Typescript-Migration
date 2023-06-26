@@ -54,7 +54,7 @@ const TabsLabels: MyProfileTabList[] = [
   },
   {
     id: 11,
-    tabName: 'Seperation',
+    tabName: 'Separation',
     label: 'My Profile-History',
   },
 ]
