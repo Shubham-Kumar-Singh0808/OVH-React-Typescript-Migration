@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CRow, CFormLabel, CCol, CFormInput, CButton } from '@coreui/react-pro'
 import CreditCardListTable from './CreditCardListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
-import { TextDanger } from '../../../constant/ClassName'
+import { TextDanger, TextWhite } from '../../../constant/ClassName'
 import { showIsRequired } from '../../../utils/helper'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -43,7 +43,7 @@ const CreditCardList = (): JSX.Element => {
 
   // Enabling and disabling the Add buttons
   useEffect(() => {
-    if (cardName && cardNumber) {
+    if (cardName && cardNumber.length > 15) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
@@ -142,7 +142,7 @@ const CreditCardList = (): JSX.Element => {
         CBodyClassName="ps-0 pe-0"
         CFooterClassName="d-none"
       >
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-2 mb-2">
           <CFormLabel
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
@@ -168,14 +168,16 @@ const CreditCardList = (): JSX.Element => {
             />
           </CCol>
         </CRow>
-        <CRow className="mt-4 mb-4">
+        <CRow className="mt-3 mb-3">
           <CFormLabel
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
             data-testid="categoryLabel"
           >
             Card Number:
-            <span className={showIsRequired(cardNumber)}>*</span>
+            <span className={cardNumber.length > 15 ? TextWhite : TextDanger}>
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormInput

@@ -116,12 +116,12 @@ const CreditCardListTable = (): JSX.Element => {
   }
 
   const onDeleteCreditCardBtnClick = (
-    deleteCreditCardId: number,
-    creditCardName: string,
+    deleteCreditCardsId: number,
+    creditCardNames: string,
   ) => {
     setIsDeleteCreditCardModalVisible(true)
-    setCreditCardName(creditCardName)
-    setDeleteCreditCardId(deleteCreditCardId)
+    setCreditCardName(creditCardNames)
+    setDeleteCreditCardId(deleteCreditCardsId)
   }
   const handleConfirmDeleteCreditCard = async () => {
     setIsDeleteCreditCardModalVisible(false)
@@ -228,7 +228,9 @@ const CreditCardListTable = (): JSX.Element => {
                     </CTableDataCell>
                   ) : (
                     <CTableDataCell className="ng-binding">
-                      XXXX-XXXX-XXXX-{creditCardItems.cardNumber.substring(12)}
+                      {`XXXX-XXXX-XXXX-${creditCardItems.cardNumber.substring(
+                        12,
+                      )}`}
                     </CTableDataCell>
                   )}
                   <CTableDataCell scope="row">
@@ -241,12 +243,7 @@ const CreditCardListTable = (): JSX.Element => {
                             data-testid={`save-credit-card-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveCreditCardButtonHandler}
-                            disabled={
-                              isEditCreditCardButtonEnabled
-                                ? isEditCreditCardButtonEnabled &&
-                                  isEditCreditCardExist.length > 0
-                                : !isEditCreditCardButtonEnabled
-                            }
+                            disabled={!isEditCreditCardButtonEnabled}
                           >
                             <i
                               className="fa fa-floppy-o"
