@@ -54,10 +54,6 @@ const AssetWarrantyReportTable = (
     currentPage,
     setCurrentPage,
   } = props
-
-  const totalNoOfRecords = assetWarrantyList?.length
-    ? `Total Records: ${assetListSizeRecords}`
-    : `No Records found...`
   return (
     <>
       <CTable striped className="mt-3">

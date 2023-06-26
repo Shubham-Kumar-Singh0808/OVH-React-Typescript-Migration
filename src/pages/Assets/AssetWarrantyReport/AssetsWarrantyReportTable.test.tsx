@@ -82,4 +82,33 @@ describe('Assets Warranty Report Table Component Testing', () => {
       screen.getByText('Total Records: ' + mockAssetsWarrantyList.size),
     ).toBeInTheDocument()
   })
+
+  describe('Asset List Size Records', () => {
+    it('should render "Total Records: {assetListSizeRecords}" when assetListSizeRecords is provided', () => {
+      const assetListSizeRecords = 10
+      render(
+        <strong>
+          {assetListSizeRecords
+            ? `Total Records: ${assetListSizeRecords}`
+            : `No Records Found...`}
+        </strong>,
+      )
+
+      // Assert
+      const totalRecordsText = screen.getByText(
+        `Total Records: ${assetListSizeRecords}`,
+      )
+      expect(totalRecordsText).toBeInTheDocument()
+    })
+
+    it('should render "No Records Found..." when assetListSizeRecords is not provided', () => {
+      render(
+        <strong>
+          {undefined ? `Total Records: ${undefined}` : `No Records Found...`}
+        </strong>,
+      )
+      const noRecordsText = screen.getByText('No Records Found...')
+      expect(noRecordsText).toBeInTheDocument()
+    })
+  })
 })

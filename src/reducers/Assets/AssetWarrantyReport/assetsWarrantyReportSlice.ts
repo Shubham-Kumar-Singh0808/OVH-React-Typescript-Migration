@@ -65,9 +65,6 @@ const assetsWarrantyListThunk = {
   getExportAssetsWarrantyList,
 }
 
-// function isLoading(state: RootState): LoadingState {
-//   return state.assetsWarrantyList.isLoading
-// }
 const isLoading = (state: RootState): LoadingState =>
   state.assetsWarrantyList.isLoading
 
