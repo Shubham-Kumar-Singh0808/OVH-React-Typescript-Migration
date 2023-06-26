@@ -4,9 +4,12 @@ import { fireEvent, render, screen } from '../../../test/testUtils'
 import '@testing-library/jest-dom'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
+import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
+// eslint-disable-next-line import/order
+import userEvent from '@testing-library/user-event'
 
 const mockHandleExport = jest.fn()
-
+const mockProductSpecificationsParams = jest.fn()
 const toRender = (
   <div>
     <div id="backdrop-root"></div>
@@ -20,7 +23,7 @@ describe('Product Specification List Component Testing', () => {
     render(toRender, {
       preloadedState: {
         productSpecificationList: {
-          productSpecifications: [],
+          productSpecifications: mockProductSpecificationList,
           getProductSpecificationListDetails:
             {} as GetProductSpecificationListDetails,
           isLoading: ApiLoadingState.succeeded,
@@ -39,6 +42,18 @@ describe('Product Specification List Component Testing', () => {
   })
   test('upon providing search text and clicking on search button it should call mockSetMultiSearchValue function', () => {
     const searchBtn = screen.getByTestId('multi-search-btn')
+    userEvent.type(searchBtn, 'Testing Flow')
     fireEvent.click(searchBtn)
+  })
+  test('should render search input', () => {
+    const searchBoxField = screen.getByTestId('searchField')
+    userEvent.type(searchBoxField, 'testing')
+    expect(searchBoxField).toHaveValue('testing')
+    fireEvent.keyDown(searchBoxField, {
+      key: 'Enter',
+      code: 'Enter',
+      charCode: 13,
+    })
+    expect(mockProductSpecificationsParams).toHaveBeenCalledTimes(0)
   })
 })

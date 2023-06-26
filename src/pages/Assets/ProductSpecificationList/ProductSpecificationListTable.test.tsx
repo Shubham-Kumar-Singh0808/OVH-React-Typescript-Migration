@@ -5,7 +5,11 @@ import ProductSpecificationListTable from './ProductSpecificationListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
-import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
+import {
+  mockProductSpecification,
+  mockProductSpecificationList,
+} from '../../../test/data/ProductSpecificationListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
 const handleModal = jest.fn()
@@ -20,20 +24,29 @@ describe('Product Specification without data', () => {
         setPageSize={mockSetData}
         setEditProductSpecification={jest.fn()}
         setToggle={jest.fn()}
-        userAccess={undefined}
       />,
       {
         preloadedState: {
           productSpecificationList: {
-            productSpecifications: mockProductSpecificationList,
-            getProductSpecificationListDetails:
-              {} as GetProductSpecificationListDetails,
             isLoading: ApiLoadingState.succeeded,
-            listSize: 0,
+            productSpecifications: mockProductSpecification.list,
+            getProductSpecificationListDetails: mockProductSpecification.list,
+            listSize: 150,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },
     )
+  })
+  test('Should be able to click Delete Button functionality Element', () => {
+    const dltBtnElement = screen.getByTestId('btn-delete1')
+    expect(dltBtnElement).toBeInTheDocument()
+    userEvent.click(dltBtnElement)
+    const modalPopupConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalPopupConfirmBtn)
+    expect(modalPopupConfirmBtn).toBeInTheDocument()
   })
   test('should render first page data only', () => {
     waitFor(() => {

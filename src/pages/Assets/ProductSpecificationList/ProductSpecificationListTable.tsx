@@ -35,7 +35,6 @@ const ProductSpecificationListTable = ({
   setCurrentPage,
   setEditProductSpecification,
   setToggle,
-  userAccess,
 }: ProductSpecificationListTableProps): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [productSpecificationId, setProductSpecificationsId] =
@@ -50,7 +49,7 @@ const ProductSpecificationListTable = ({
   const productSpecification = useTypedSelector(
     reduxServices.productSpecificationList.selectors.productSpecificationList,
   )
-  const listSize = useTypedSelector(
+  const listOfSize = useTypedSelector(
     reduxServices.productSpecificationList.selectors.listSize,
   )
 
@@ -72,6 +71,13 @@ const ProductSpecificationListTable = ({
     setToDeleteVisaId(specificationId)
     setIsDeleteModalVisible(true)
   }
+  const userAccessToFeatures = useTypedSelector(
+    reduxServices.userAccessToFeatures.selectors.userAccessToFeatures,
+  )
+  const userAccessProductSpecificationList = userAccessToFeatures?.find(
+    (feature) => feature.name === 'Product Specification List',
+  )
+
   const dispatch = useAppDispatch()
   const handleConfirmDeleteProductSpecificationDetails = async () => {
     setIsDeleteModalVisible(false)
@@ -179,7 +185,7 @@ const ProductSpecificationListTable = ({
                       {productSpecification.createdBy}
                     </CTableDataCell>
                     <CTableDataCell data-testid="action-cell">
-                      {userAccess?.updateaccess && (
+                      {userAccessProductSpecificationList?.updateaccess && (
                         <CTooltip content="Edit">
                           <CButton
                             color="info btn-ovh me-1"
@@ -197,12 +203,12 @@ const ProductSpecificationListTable = ({
                           </CButton>
                         </CTooltip>
                       )}
-                      {userAccess?.deleteaccess && (
+                      {userAccessProductSpecificationList?.deleteaccess && (
                         <CTooltip content="Delete">
                           <CButton
+                            data-testid={`btn-delete${index}`}
                             color="danger btn-ovh me-1"
                             size="sm"
-                            data-testid={`btn-delete${index}`}
                             className="btn-ovh-employee-list me-1 "
                             onClick={() =>
                               handleShowDeleteModal(productSpecification.id)
@@ -225,12 +231,14 @@ const ProductSpecificationListTable = ({
           <CCol xs={4}>
             <p>
               <strong>
-                {listSize ? `Total Records: ${listSize}` : `No Records Found`}
+                {listOfSize
+                  ? `Total Records: ${listOfSize}`
+                  : `No Records Found`}
               </strong>
             </p>
           </CCol>
           <CCol xs={3}>
-            {listSize > 20 && (
+            {listOfSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
                 options={[20, 40, 60, 80, 100]}
@@ -238,7 +246,7 @@ const ProductSpecificationListTable = ({
               />
             )}
           </CCol>
-          {listSize > 20 && (
+          {listOfSize > 20 && (
             <CCol
               xs={5}
               className="gap-1 d-grid d-md-flex justify-content-md-end"
