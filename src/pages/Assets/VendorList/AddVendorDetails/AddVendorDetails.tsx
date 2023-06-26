@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react'
 import validator from 'validator'
 // eslint-disable-next-line import/named
 import { CKEditor, CKEditorEventHandler } from 'ckeditor4-react'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
@@ -20,7 +19,6 @@ import { AddVendor } from '../../../../types/Assets/VendorList/AddVendorDetails/
 import { showIsRequired } from '../../../../utils/helper'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger, TextWhite } from '../../../../constant/ClassName'
-import { useSelectedEmployee } from '../../../../middleware/hooks/useSelectedEmployee'
 
 const AddVendorDetails = ({
   setToggle,
@@ -206,43 +204,6 @@ const AddVendorDetails = ({
     }
   }
 
-  const useSelectedEmployee = (): [boolean, string | undefined] => {
-    const { vendorListFlag } = useParams<{ vendorListFlag: string }>()
-
-    let isViewingChangeAssetScreen = true
-
-    if (vendorListFlag) {
-      isViewingChangeAssetScreen = false
-    }
-
-    return [isViewingChangeAssetScreen, vendorListFlag]
-  }
-
-  // const location = useLocation()
-  // useEffect(() => {
-  //   if (location.pathname === '/vendorList') {
-  //     dispatch(
-  //       reduxServices.addNewVendor.addNewVendor({
-  //         key: 'vendorListFlag',
-  //         value: 'vendorListFlag',
-  //       }),
-  //     )
-  //     dispatch(reduxServices.bankDetails.bankNameList())
-  //   } else if (location.pathname === `/employeeFinance/${employeeId}`) {
-  //     dispatch(
-  //       reduxServices.panDetails.bankInformation({
-  //         key: 'loggedInEmpId',
-  //         value: Number(employeeId),
-  //       }),
-  //     )
-  //     dispatch(reduxServices.bankDetails.bankNameList())
-  //   }
-  // }, [dispatch, location.pathname])
-  const history = useHistory()
-  const handleClick = () => {
-    history.goBack()
-  }
-
   return (
     <>
       <OCard
@@ -253,17 +214,14 @@ const AddVendorDetails = ({
       >
         <CRow className="justify-content-end">
           <CCol className="text-end" md={4}>
-            {/* const backBtnToggle = isViewingChangeAssetScreen ? ( */}
             <CButton
               color="info"
               className="btn-ovh me-1"
               data-testid="back-button"
               onClick={() => setToggle('')}
-              // onClick={handleClick}
             >
               <i className="fa fa-arrow-left  me-1"></i>Back
             </CButton>
-            {/* ) : (<></>) */}
           </CCol>
         </CRow>
         <CRow className="mt-4 mb-4">

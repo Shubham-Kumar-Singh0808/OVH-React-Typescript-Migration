@@ -45,15 +45,17 @@ const ChangeAssetFilterOptions = ({
     changeReportStatus.createdDate,
   )
   const [isShowEditor, setIsShowEditor] = useState<boolean>(true)
-  const [assetNumber, setAssetNumber] = useState<string>('')
+  const [assetNumber, setAssetNumber] = useState<string>(
+    changeReportStatus.assetNumber,
+  )
   const [vendorName, setVendorName] = useState<string>(
     changeReportStatus.vendorName,
   )
 
   const [checkBox, setCheckBox] = useState<boolean>(false)
-  const [vendorListFlag, setVendorListFlag] =
-    useState<string>('AddVendorDetails')
-  const [assetReferenceNumber, setAssetReferenceNumber] = useState<string>('')
+  const [assetReferenceNumber, setAssetReferenceNumber] = useState<string>(
+    changeReportStatus.referenceNumber,
+  )
   const [statusType, setStatusType] = useState<string>(
     changeReportStatus.status,
   )
@@ -189,12 +191,12 @@ const ChangeAssetFilterOptions = ({
             className="mb-1"
             data-testid="assetnumber"
             type="text"
-            id="name"
+            id="assetNumber"
             size="sm"
-            name=" asset number"
+            name="assetNumber"
             autoComplete="off"
-            placeholder=" Asset Number"
-            value={changeReportStatus.assetNumber}
+            placeholder="Asset Number"
+            value={assetNumber}
             disabled
           />
         </CCol>
@@ -245,12 +247,12 @@ const ChangeAssetFilterOptions = ({
             className="mb-1"
             data-testid="referenceNumber"
             type="text"
-            id="referenceNumber"
+            id="assetReferenceNumber"
             size="sm"
             name="referenceNumber"
             autoComplete="off"
             placeholder="Asset Reference Number"
-            value={changeReportStatus.referenceNumber}
+            value={assetReferenceNumber}
             onChange={handledInputChange}
           />
           <span className="text-danger" data-testid="errorMessage">

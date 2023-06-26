@@ -59,7 +59,7 @@ const changeStatusSlice = createSlice({
         state.getAllAssetResponse.list = action.payload.list
         state.getAllAssetResponse.size = action.payload.size
       })
-      .addCase(saveEmployee.fulfilled, (state, action) => {
+      .addCase(saveEmployee.fulfilled, (state) => {
         state.isLoading = ApiLoadingState.succeeded
       })
   },
