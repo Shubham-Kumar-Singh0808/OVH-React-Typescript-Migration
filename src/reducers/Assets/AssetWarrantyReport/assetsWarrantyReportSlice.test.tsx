@@ -4,7 +4,6 @@ import assetsWarrantyListSliceReducer, {
 } from './assetsWarrantyReportSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { GetWarrantyAssetsList } from '../../../types/Assets/AssetWarrantyreport/AssetWarrantyReportTypes'
-import { mockAttendanceReport } from '../../../test/data/attendanceReportData'
 import { mockAssetsWarrantyList } from '../../../test/data/AssetsWarrantyData'
 
 describe('AssetWarranty Slice', () => {
@@ -26,15 +25,15 @@ describe('AssetWarranty Slice', () => {
     it('Should set isLoading to "success" when getAssets is fulfilled', () => {
       const action = {
         type: assetsWarrantyListService.getAssetsWarrantyList.fulfilled.type,
-        payload: mockAttendanceReport,
+        payload: mockAssetsWarrantyList,
       }
       const state = assetsWarrantyListSliceReducer(
         initialAssetsWarrantyListState,
         action,
       )
       expect(state).toEqual({
-        warrantyAssetsDetails: undefined,
-        listSize: undefined,
+        warrantyAssetsDetails: mockAssetsWarrantyList.list,
+        listSize: 8,
         isLoading: ApiLoadingState.succeeded,
         getWarrantyAssetsList: {} as GetWarrantyAssetsList,
       })
