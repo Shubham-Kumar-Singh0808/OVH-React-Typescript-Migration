@@ -1,5 +1,3 @@
-/* eslint-disable no-duplicate-imports */
-/* eslint-disable import/no-duplicates */
 import assetListSliceReducer, {
   assetListService,
   initialAssetTypeChangeListState,
@@ -52,7 +50,7 @@ describe('Asset List Slice', () => {
         asset: [],
         isLoading: ApiLoadingState.succeeded,
         manufacturerList: {} as ManufacturerList,
-        allAssetList: undefined,
+        allAssetList: [],
         listSize: undefined,
       })
     })
