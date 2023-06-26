@@ -479,7 +479,7 @@ const EditCandidate = React.lazy(
 const AddNewEmployeeUnderJoinee = React.lazy(
   () =>
     import(
-      './pages/Recruitment/UpComingJoinList/AddNewEmployeeUnderJoinee/AddEmployee'
+      './pages/Recruitment/UpComingJoinList/AddNewEmployeeUnderJoinee/AddCreateEmployee'
     ),
 )
 /**
@@ -1131,9 +1131,9 @@ const routes = [
     component: EditCandidate,
   },
   {
-    path: '/addNewEmployee/:joineeId',
-    name: 'Edit Candidate',
-    component: EditCandidate,
+    path: '/addEmployee/:joineeId',
+    name: 'AddNewEmployeeUnderJoinee',
+    component: AddNewEmployeeUnderJoinee,
   },
 ]
 export default routes

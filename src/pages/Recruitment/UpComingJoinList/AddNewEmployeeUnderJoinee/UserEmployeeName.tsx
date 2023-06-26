@@ -6,7 +6,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
 import { UsernameChangeHandlerProp } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 
-const UserName = ({
+const UserEmployeeName = ({
   dynamicFormLabelProps,
   usernameChangeHandler,
   onAllowedUserChangeHandler,
@@ -29,7 +29,8 @@ const UserName = ({
       setUserEmployeeName(getJoineeDetails.candidateName)
     }
   }, [getJoineeDetails.candidateName])
-  console.log(getJoineeDetails.candidateName + 'hjdvbgjs')
+
+  console.log('hjdvbgjs')
 
   return (
     <>
@@ -85,4 +86,4 @@ const UserName = ({
   )
 }
 
-export default UserName
+export default UserEmployeeName

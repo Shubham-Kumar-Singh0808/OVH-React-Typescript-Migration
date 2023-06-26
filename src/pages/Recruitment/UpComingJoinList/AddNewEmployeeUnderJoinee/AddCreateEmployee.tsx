@@ -18,8 +18,8 @@ import moment from 'moment'
 // } from './AddNewEmployeeChildComponents/index'
 // import EmployeeDesignationList from './DesignationList/EmployeeDesignationList'
 // import ShiftConfiguration from './ShiftConfiguration/ShiftConfiguration'
-import UserName from './UserName'
 import DateOfJoining from './DateOfJoining'
+import UserEmployeeName from './UserEmployeeName'
 import {
   ShouldResetFields,
   GetAllReportingManagers,
@@ -55,9 +55,10 @@ import {
 import EmployeeDesignationList from '../../../EmployeeDirectory/EmployeesList/AddNewEmployee/DesignationList/EmployeeDesignationList'
 import ShiftConfiguration from '../../../EmployeeDirectory/EmployeesList/AddNewEmployee/ShiftConfiguration/ShiftConfiguration'
 
-const AddNewEmployee = (): JSX.Element => {
+const AddCreateEmployee = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const history = useHistory()
+  console.log('JyoVini')
 
   const [shiftToggle, setShiftToggle] = useState<boolean>(false)
   const [destinationToggle, setDestinationToggle] = useState<boolean>(false)
@@ -439,7 +440,7 @@ const AddNewEmployee = (): JSX.Element => {
               </CButton>
             </CCol>
             <CCol xs={12} className="mt-2 mb-2 ps-0 pe-0">
-              <UserName
+              <UserEmployeeName
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 usernameChangeHandler={onHandleUsername}
                 onAllowedUserChangeHandler={onHandleAllowedUser}
@@ -631,4 +632,4 @@ const AddNewEmployee = (): JSX.Element => {
   )
 }
 
-export default AddNewEmployee
+export default AddCreateEmployee

@@ -197,7 +197,7 @@ const UpComingJoinListTable = ({
 
                       {joinee.candidateInterviewStatus === 'JOINED' ? (
                         <CTooltip content="Create Employee">
-                          <Link to={`/addNewEmployee/${joinee.id}`}>
+                          <Link to={`/addEmployee/${joinee.id}`}>
                             <CButton
                               ng-show="joinee.candidateInterviewStatus=='JOINED'"
                               type="button"
