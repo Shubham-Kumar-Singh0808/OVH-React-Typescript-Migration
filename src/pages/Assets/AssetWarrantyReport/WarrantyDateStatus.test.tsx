@@ -76,11 +76,4 @@ describe('Assets Warranty List List Filter Options Component Testing with data',
   test('should render Export button in the component', () => {
     expect(screen.getByTestId('export-button')).toBeTruthy()
   })
-
-  // Mocking the assetsWarrantyListApi.getExportAssetsWarrantyList function
-  jest.mock('path/to/your/api', () => ({
-    assetsWarrantyListApi: {
-      getExportAssetsWarrantyList: jest.fn().mockResolvedValue([]),
-    },
-  }))
 })
