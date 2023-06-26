@@ -1,5 +1,5 @@
 import React from 'react'
-import { CTableRow, CTableDataCell } from '@coreui/react-pro'
+import { CTableRow, CTableDataCell, CLink } from '@coreui/react-pro'
 import SubProcessManagerInput from './SubProcessTailorTableComponents/SubProcessManagerInput'
 import SubProcessSQAInput from './SubProcessTailorTableComponents/SubProcessSQAInput'
 import SubProcessSQAReadonly from './SubProcessTailorTableComponents/SubProcessSQAReadonly'
@@ -40,15 +40,19 @@ const SubProcessTailorTableRow = ({
       )[0],
   )
 
-  console.log(isManagerAllowedToEdit(tailorStatus))
-  console.log(useTypedSelector((state) => state.projectTailoring))
-
   return (
     <CTableRow data-testid={`subProcesses-${processHeadId}`}>
       <CTableDataCell>{subProcessIndex + 1}</CTableDataCell>
       <CTableDataCell>{subProcess.processSubHeadName}</CTableDataCell>
       <CTableDataCell>
-        <a href={`${subProcess.link}`}>{subProcess.documentName}</a>
+        <CLink
+          className="text-decoration-hover"
+          onClick={() => {
+            window.open(`${subProcess.link}`, '_blank')
+          }}
+        >
+          {subProcess.documentName}
+        </CLink>
       </CTableDataCell>
       <CTableDataCell>{subProcess.responsible}</CTableDataCell>
       {/* readonly for tailoing select */}

@@ -221,7 +221,7 @@ const EditEmployee = (): JSX.Element => {
       reduxServices.newEmployee.reportingManagersService.getAllReportingManagers(),
     )
     dispatch(reduxServices.shiftConfiguration.getEmployeeShifts())
-    dispatch(reduxServices.userRolesAndPermissions.getUserRoles())
+    dispatch(reduxServices.userRolesConfigurations.getUserRolesThunk())
     dispatch(reduxServices.newEmployee.employmentService.getAllEmploymentType())
     dispatch(reduxServices.newEmployee.jobTypeService.getAllJobType())
     dispatch(reduxServices.employeeDesignation.getAllEmployeeDesignations())
@@ -277,7 +277,7 @@ const EditEmployee = (): JSX.Element => {
     reduxServices.shiftConfiguration.selectors.employeeShifts,
   )
   const userRoles = useTypedSelector(
-    reduxServices.userRolesAndPermissions.selectors.userRoles,
+    (state) => state.userRolesConfiguration.roles,
   )
   const technologyList = useTypedSelector(
     reduxServices.technology.selectors.technologies,

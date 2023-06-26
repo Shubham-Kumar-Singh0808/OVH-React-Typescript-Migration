@@ -435,8 +435,7 @@ export interface BookingListApi extends ApiBase {
   editMeeting: string
   confirmUpdateMeetingRequest: string
   uniqueAttendee: string
-  Completed: string
-  InProgress: string
+  changeMeetingStatus: string
 }
 export interface EventTypeListApi extends ApiBase {
   getAllEventTypes: string
@@ -949,6 +948,13 @@ export interface ProductSpecificationListApi extends ApiBase {
   addProductSpecifications: string
   deleteProductSpecification: string
   updateProductSpecification: string
+}
+export interface CandidateOfferApi extends ApiBase {
+  getpersontechnology: string
+  getCandidateDesignation: string
+  getAddNewJoinee: string
+  getEmpDepartments: string
+  getUploadFileForNewJoinee: string
 }
 
 export interface ExpenseSubCategoryListApi extends ApiBase {

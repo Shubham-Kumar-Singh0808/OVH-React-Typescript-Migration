@@ -122,8 +122,6 @@ const EmployeeReviewForm = (): JSX.Element => {
     return +employeeId === appraisalForm.employee.id
   }, [appraisalForm.employee.id])
 
-  console.log(appraisalForm)
-
   return (
     <>
       {apiError === null && (
