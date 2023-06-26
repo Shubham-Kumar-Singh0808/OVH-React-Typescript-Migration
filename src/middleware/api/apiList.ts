@@ -842,6 +842,8 @@ export const projectViewApiConfig: ProjectDetailsApi = {
   getProjects: apiPrefix + '/allocation-mgmt/projects',
   getProject: apiPrefix + '/project-mgmt/project',
   updateProjectDetails: apiPrefix + '/project-mgmt/updateAllocateProject',
+  downloadInitationCheckList:
+    apiPrefix + '/project-mgmt/downloadInitationCheckList',
 }
 export const projectTimeLineApiConfig: ProjectTimeLineApi = {
   getProjectHistory: apiPrefix + '/project-mgmt/getProjectHistory',

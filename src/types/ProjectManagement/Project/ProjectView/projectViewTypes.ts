@@ -119,3 +119,9 @@ export type ProjectTabList = {
   id: number
   tabName: string
 }
+
+export type DownloadBtnProps = {
+  projectRequestId: number
+  token?: string
+  tenantKey?: string
+}

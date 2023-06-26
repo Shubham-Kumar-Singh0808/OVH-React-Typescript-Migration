@@ -31,6 +31,8 @@ import {
 } from '../../../types/ProjectManagement/Project/ProjectTypes'
 import { ProjectDetails as ProjectInfo } from '../../../types/MyProfile/ProjectsTab/employeeProjectTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
+import projectDetailsApi from '../../../middleware/api/ProjectManagement/Projects/ProjectView/projectViewApi'
+import { downloadFile } from '../../../utils/helper'
 
 const allocated = 'Allocated'
 const deAllocated = 'De-Allocated'
@@ -329,6 +331,13 @@ const ProjectReportsTable = ({
     ? `Total Records: ${listSize}`
     : `No Records found...`
 
+  const handleDownloadBtn = async (id: number) => {
+    const employeeList = await projectDetailsApi.downloadInitationCheckList({
+      projectRequestId: id,
+    })
+    downloadFile(employeeList, 'ProjectInitiationCheckList.csv')
+  }
+
   return (
     <>
       {isProjectLoading !== ApiLoadingState.loading ? (
@@ -365,6 +374,8 @@ const ProjectReportsTable = ({
             </CTableHead>
             <CTableBody color="light">
               {projectReports?.map((value, index) => {
+                console.log(value.projectRequestId + 'ID')
+
                 return (
                   <React.Fragment key={index}>
                     <CTableRow>
@@ -470,6 +481,19 @@ const ProjectReportsTable = ({
                             </CTooltip>
                           </Link>
                         )}
+                        <CTooltip content="Download">
+                          <CButton
+                            data-testid={`btn-download${index}`}
+                            size="sm"
+                            color="btn btn-info sh-btn-alignment"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              handleDownloadBtn(value.projectRequestId)
+                            }
+                          >
+                            <i className="fa fa-download sh-button"> </i>
+                          </CButton>
+                        </CTooltip>
                         {userAccess.deleteaccess && (
                           <CTooltip content="Delete">
                             <CButton

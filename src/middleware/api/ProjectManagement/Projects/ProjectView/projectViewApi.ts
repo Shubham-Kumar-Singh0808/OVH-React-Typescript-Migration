@@ -1,4 +1,5 @@
 import {
+  DownloadBtnProps,
   ProjectDetail,
   ProjectViewDetails,
   UpdateProjectViewDetails,
@@ -51,10 +52,27 @@ const updateEmployeeAllocationProject = async (
   return response.data
 }
 
+const downloadInitationCheckList = async (
+  prepareObject: DownloadBtnProps,
+): Promise<Blob | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: projectViewApiConfig.downloadInitationCheckList,
+    method: AllowedHttpMethods.get,
+    params: {
+      projectRequestId: prepareObject.projectRequestId,
+      token: localStorage.getItem('token') ?? '',
+      tenantKey: localStorage.getItem('tenantKey') ?? '',
+    },
+    responseType: 'blob',
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
 const projectDetailsApi = {
   getProjectDetails,
   getProject,
   updateEmployeeAllocationProject,
+  downloadInitationCheckList,
 }
 
 export default projectDetailsApi

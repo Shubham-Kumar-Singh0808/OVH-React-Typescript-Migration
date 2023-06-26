@@ -656,6 +656,7 @@ export interface ProjectDetailsApi extends ApiBase {
   getProjects: string
   getProject: string
   updateProjectDetails: string
+  downloadInitationCheckList: string
 }
 
 export interface ProjectTimeLineApi extends ApiBase {
