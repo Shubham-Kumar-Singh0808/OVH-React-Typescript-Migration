@@ -1,15 +1,6 @@
 import * as React from 'react'
-import userEvent from '@testing-library/user-event'
 import EmployeesListUnderManagerTable from './EmployeesListUnderManagerTable'
-import {
-  cleanup,
-  fireEvent,
-  getByRole,
-  getByTestId,
-  render,
-  screen,
-  waitFor,
-} from '../../../test/testUtils'
+import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { mockAllReportingManagerData } from '../../../test/data/ChangeReporteesData'
 
 const updateTestId = 'update-manager'
@@ -26,6 +17,7 @@ describe('FEmployeesListUnderManagerTable component with data', () => {
             placeHolder={'Manager Name'}
             autoCompleteTarget={''}
             onClickHandler={jest.fn()}
+            setIsActive={jest.fn()}
           />
         </div>
       </>,
@@ -107,6 +99,7 @@ describe('Manager update button', () => {
         placeHolder={'Hr Name'}
         autoCompleteTarget={''}
         onClickHandler={jest.fn()}
+        setIsActive={jest.fn()}
       />,
       {
         preloadedState: {
@@ -134,6 +127,7 @@ const toRender = (
       placeHolder={'Hr Name'}
       autoCompleteTarget={''}
       onClickHandler={jest.fn()}
+      setIsActive={jest.fn()}
     />
   </div>
 )

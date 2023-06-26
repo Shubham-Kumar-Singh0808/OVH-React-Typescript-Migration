@@ -46,15 +46,6 @@ const JobOpenings = (): JSX.Element => {
     pageSize,
   } = usePagination(listSize, 20)
 
-  const prepareObject = dispatch(
-    reduxServices.jobVacancies.getAllJobVacancies({
-      startIndex: 0,
-      endIndex: 20,
-      searchJobTitle: searchInput,
-      status: selectRadioAction,
-    }),
-  )
-
   useEffect(() => {
     dispatch(
       reduxServices.jobVacancies.getAllJobVacancies({
@@ -91,7 +82,16 @@ const JobOpenings = (): JSX.Element => {
     }
   }
 
-  const multiSearchBtnHandler = () => prepareObject
+  const multiSearchBtnHandler = () => {
+    dispatch(
+      reduxServices.jobVacancies.getAllJobVacancies({
+        startIndex: 0,
+        endIndex: 20,
+        searchJobTitle: searchInput,
+        status: selectRadioAction,
+      }),
+    )
+  }
   const onChangeHandler = (
     e:
       | React.ChangeEvent<HTMLSelectElement>
@@ -212,6 +212,8 @@ const JobOpenings = (): JSX.Element => {
           setToggle={setToggle}
           editJobInfo={editJobInfo}
           setEditJobInfo={setEditJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
       {toggle === 'editViewJobOpening' && (
@@ -219,6 +221,8 @@ const JobOpenings = (): JSX.Element => {
           setToggle={setToggle}
           editViewJobInfo={editViewJobInfo}
           setEditViewJobInfo={setEditViewJobInfo}
+          searchInput={searchInput}
+          selectRadioAction={selectRadioAction}
         />
       )}
     </>

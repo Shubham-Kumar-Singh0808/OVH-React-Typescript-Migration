@@ -12,7 +12,7 @@ export type route = {
 const Dashboard = React.lazy(() => import('./pages/Dashboard/Dashboard'))
 const UserRolesAndPermissions = React.lazy(
   () =>
-    import('./pages/Settings/UserRolesConfiguration/UserRolesAndPermissions'),
+    import('./pages/Settings/UserRolesConfiguration/UserRolesConfiguration'),
 )
 const MyProfile = React.lazy(
   () => import('./pages/MyProfile/ProfileLandingPage/MyProfile'),
@@ -336,6 +336,10 @@ const AddNominee = React.lazy(
 const MyReview = React.lazy(
   () => import('./pages/Performance/MyReviews/MyReview'),
 )
+const MyReviewManagerAppraisal = React.lazy(
+  () =>
+    import('./pages/Performance/MyReviews/ManagerAppraisal/ManagerAppraisal'),
+)
 const PayrollManagement = React.lazy(
   () => import('./pages/Finance/PayrollManagement/PayrollManagement'),
 )
@@ -433,10 +437,44 @@ const productList = React.lazy(
 const ChangeReportees = React.lazy(
   () => import('./pages/Settings/ChangeReportees/ChangeReportees'),
 )
+const ExpenseCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Category/ExpenseCategoryList'),
+)
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
+
 const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
+)
+const ExpenseSubCategoryList = React.lazy(
+  () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
+)
+const ScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/Schedule'
+    ),
+)
+const ReScheduleInterview = React.lazy(
+  () =>
+    import(
+      './pages/Recruitment/IntervieweeDetails/ScheduleIntervieActionButtons/ReSchedule'
+    ),
+)
+const InterviewStatusReport = React.lazy(
+  () =>
+    import('./pages/Recruitment/InterviewStatusReport/InterviewStatusReport'),
+)
+const AddNewCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/AddCandidatePage/AddCandidate'),
+)
+const UpComingJoinList = React.lazy(
+  () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
+)
+const EditCandidate = React.lazy(
+  () =>
+    import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
@@ -885,6 +923,11 @@ const routes = [
     component: MyReview,
   },
   {
+    path: '/managerAppraisal/:employeeId',
+    name: 'Manager Appraisal',
+    component: MyReviewManagerAppraisal,
+  },
+  {
     path: '/leadershiplist',
     name: 'Leadership Enrollment List',
     component: LeadershipEnrollmentList,
@@ -1031,7 +1074,11 @@ const routes = [
     name: 'AssetWarrantyReport',
     component: AssetWarrantyReport,
   },
-
+  {
+    path: '/expenseCategory',
+    name: 'Expense Category',
+    component: ExpenseCategoryList,
+  },
   {
     path: '/assetList',
     name: 'Asset List',
@@ -1041,6 +1088,41 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/expenseSubCategory',
+    name: 'Expense Sub Category',
+    component: ExpenseSubCategoryList,
+  },
+  {
+    path: '/scheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ScheduleInterview,
+  },
+  {
+    path: '/reScheduleInterview/:personId',
+    name: 'schedule Interview',
+    component: ReScheduleInterview,
+  },
+  {
+    path: '/interviewstatusReport',
+    name: 'Interview Status Report',
+    component: InterviewStatusReport,
+  },
+  {
+    path: '/addNewCandidate',
+    name: 'Add New Candidate',
+    component: AddNewCandidate,
+  },
+  {
+    path: '/upcomingjoinlist',
+    name: 'UpComing Join List',
+    component: UpComingJoinList,
+  },
+  {
+    path: '/editcandidate/:personId',
+    name: 'Edit Candidate',
+    component: EditCandidate,
   },
 ]
 export default routes

@@ -65,7 +65,6 @@ const TicketReport = (): JSX.Element => {
               selectDate={selectDate}
               toDate={toDate}
               fromDate={fromDate}
-              selectDepartment={selectDepartment}
             />
           </CRow>
         </OCard>

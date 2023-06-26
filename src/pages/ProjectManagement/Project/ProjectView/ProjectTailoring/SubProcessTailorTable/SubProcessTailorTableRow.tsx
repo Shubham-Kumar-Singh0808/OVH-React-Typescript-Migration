@@ -3,7 +3,7 @@ import { CTableRow, CTableDataCell, CLink } from '@coreui/react-pro'
 import SubProcessManagerInput from './SubProcessTailorTableComponents/SubProcessManagerInput'
 import SubProcessSQAInput from './SubProcessTailorTableComponents/SubProcessSQAInput'
 import SubProcessSQAReadonly from './SubProcessTailorTableComponents/SubProcessSQAReadonly'
-import SubProcessManagerTailorReadonly from './SubProcessTailorTableComponents/SubProcessManagerTailorReadonly'
+import SubProcessManagerTailorReadonly from './SubProcessTailorTableComponents/SubProcessManagerReadonly'
 import {
   ProcessSubHeadDTO,
   ProjectTailoringStatusEnum,

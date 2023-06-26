@@ -43,8 +43,8 @@ const exportProductSpecificationData = async (
   const response = await useAxios(requestConfig)
   return response.data
 }
-const productSpecificationListApi = {
+const ProductSpecificationListApi = {
   getProductSpecificationList,
   exportProductSpecificationData,
 }
-export default productSpecificationListApi
+export default ProductSpecificationListApi

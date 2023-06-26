@@ -114,6 +114,24 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     ) : (
                       <></>
                     )}
+                    {ticketDetails.description ? (
+                      <>
+                        <div className="mb-1">
+                          <CFormLabel className="col-form-label p-0">
+                            Description
+                          </CFormLabel>
+                          {isTicketPrevValue(
+                            ticketDetails.olddescription as string,
+                          )}
+                          &nbsp;
+                          <span className="descriptionField">
+                            {parse(ticketDetails.description)}
+                          </span>
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     {ticketDetails.status ? (
                       <>
                         <div className="mb-1">
@@ -254,24 +272,6 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                     ) : (
                       <></>
                     )}
-                    {ticketDetails.description ? (
-                      <>
-                        <div className="mb-1">
-                          <CFormLabel className="col-form-label p-0">
-                            Description
-                          </CFormLabel>
-                          {isTicketPrevValue(
-                            ticketDetails.olddescription as string,
-                          )}
-                          &nbsp;
-                          <span className="descriptionField">
-                            {parse(ticketDetails.description)}
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <></>
-                    )}
                     {ticketDetails.approvedByManager ? (
                       <>
                         <div className="mb-1">
@@ -279,9 +279,9 @@ const TicketHistoryTimeLine = (): JSX.Element => {
                             Need Approval From
                           </CFormLabel>
                           {isTicketPrevValue(
-                            ticketDetails.oldassignee as string,
+                            ticketDetails.oldapprovedByManager as string,
                           )}
-                          &nbsp; {ticketDetails.oldapprovedByManager}
+                          &nbsp; {ticketDetails.approvedByManager}
                         </div>
                       </>
                     ) : (
