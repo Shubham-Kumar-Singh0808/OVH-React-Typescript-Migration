@@ -182,7 +182,6 @@ const ProductSpecificationList = (): JSX.Element => {
               setPageSize={setPageSize}
               setEditProductSpecification={setEditProductSpecification}
               setToggle={setToggle}
-              userAccess={userAccess}
             />
           </>
         </OCard>
