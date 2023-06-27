@@ -6,68 +6,61 @@ import ChangeAssetStatus from './ChangeAssetStatus'
 import ChangeAssetAddVendor from './ChangeAssetAddVendor'
 import { render, screen } from '../../../../test/testUtils'
 import { reduxServices } from '../../../../reducers/reduxServices'
+import { mockChangeAssetData } from '../../../../test/data/AssetListData'
+import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import { mockSaveEmployee } from '../../../../test/data/saveEmployeeData'
 
-const mockSetToggle = jest.fn()
 const mockSetEmpName = jest.fn()
+const mockSetData = jest.fn()
+
+const toRender = (
+  <div>
+    <div id="backdrop-root"></div>
+    <div id="overlay-root"></div>
+    <div id="root"></div>
+    <ChangeAssetStatus
+      setToggle={jest.fn()}
+      changeReportStatus={mockChangeAssetData}
+      setChangeReportStatus={jest.fn()}
+    />
+    ,
+  </div>
+)
 describe('Change Asset status Component Testing', () => {
   test('should render Change Asset status component with out crashing', () => {
-    render(
-      <ChangeAssetStatus
-        setToggle={jest.fn()}
-        changeReportStatus={{
-          id: 0,
-          poNumber: '',
-          vendorId: 0,
-          productSpecificationId: 0,
-          manufacturerId: 0,
-          productId: 0,
-          pSpecification: '',
-          productName: '',
-          manufacturerName: '',
-          assetNumber: '',
-          otherAssetNumber: '',
-          invoiceNumber: '',
-          purchasedDate: '',
-          receivedDate: '',
-          notes: null,
-          employeeName: '',
-          employeeId: 0,
-          description: '',
-          status: '',
-          assetTypeId: 0,
-          assetType: '',
-          productSpecification: null,
-          otherNumber: null,
-          warrantyStartDate: null,
-          warrantyEndDate: null,
-          searchByEmpName: null,
-          departmentId: null,
-          departmentName: null,
-          location: '',
-          vendorName: '',
-          createdBy: '',
-          updatedBy: '',
-          createdDate: '',
-          updatedDate: '',
-          referenceNumber: '',
-          amount: 0,
-          countryId: null,
-        }}
-        setChangeReportStatus={jest.fn()}
-      />,
-    )
-  })
-  test('should render Change Asset  Add Vendor Details component with out crashing', () => {
-    const backButtonElement = screen.getByTestId('back-button')
-    expect(backButtonElement).toBeInTheDocument()
-    userEvent.click(backButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(1)
-  })
-  describe('Create Add Vendor Component Testing', () => {
-    test('should render create New Ticket component with out crashing', () => {
-      render(<ChangeAssetAddVendor setEmpToggle={mockSetEmpName} />)
-      expect(screen.getByText('Add Vendor Details')).toBeInTheDocument()
+    render(toRender, {
+      preloadedState: {
+        changeStatus: {
+          saveEmployee: mockSaveEmployee,
+          getAllAssetResponse: mockChangeAssetData,
+          isLoading: ApiLoadingState.succeeded,
+          toggleValue: '',
+        },
+      },
     })
+  })
+
+  describe('Change Asset status Toggle Component Testing', () => {
+    test('setToggle should update the toggle state', () => {
+      render(toRender, {
+        preloadedState: {
+          changeStatus: {
+            saveEmployee: mockSaveEmployee,
+            getAllAssetResponse: mockChangeAssetData,
+            isLoading: ApiLoadingState.succeeded,
+            toggleValue: '',
+          },
+        },
+      })
+      const backButtonElement = screen.getByTestId('back-button')
+      expect(backButtonElement).toBeInTheDocument()
+      userEvent.click(backButtonElement)
+      expect(mockSetData).toHaveBeenCalledTimes(0)
+    })
+  })
+  test('should render create New Ticket component with out crashing', () => {
+    render(<ChangeAssetAddVendor setEmpToggle={mockSetEmpName} />)
+    expect(screen.getByText('Add Vendor Details')).toBeInTheDocument()
   })
 })
 const dispatch = jest.fn()

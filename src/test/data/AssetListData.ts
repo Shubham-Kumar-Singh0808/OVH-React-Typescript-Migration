@@ -3,7 +3,6 @@ import {
   AllAssetsList,
   AssetTypeChangeList,
 } from '../../types/Assets/AssetList/AssetListTypes'
-import { getAllAssets } from '../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 
 export const mockChangeAssetData: AllAssetsList = {
   id: 4059,
