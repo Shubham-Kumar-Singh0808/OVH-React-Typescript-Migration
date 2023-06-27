@@ -4,12 +4,22 @@ import { CKEditor } from 'ckeditor4-react'
 import moment from 'moment'
 import React from 'react'
 import EditUpComingJoinee from './EditUpComingJoinee'
-import { fireEvent, render, screen } from '../../../../test/testUtils'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '../../../../test/testUtils'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 
 const mockSetTogglePage = jest.fn()
 const fileUploadInput = 'file-upload'
+const selectDepartment = 'departmentName'
+const designationTextInput = 'designation'
+const technologyInpitval = 'technology'
+
 describe('Vendor Details without data', () => {
   beforeEach(() => {
     render(
@@ -54,6 +64,21 @@ describe('Vendor Details without data', () => {
       },
     )
   })
+
+  afterEach(cleanup)
+  test('should render Departments filter', () => {
+    const departments = screen.getByTestId(selectDepartment)
+    expect(departments).toBeTruthy()
+  })
+  test('should render designation filter', () => {
+    const departments = screen.getByTestId(designationTextInput)
+    expect(departments).toBeTruthy()
+  })
+  test('should render technology filter', () => {
+    const departments = screen.getByTestId(technologyInpitval)
+    expect(departments).toBeTruthy()
+  })
+
   test('should be able to render  Edit UpComingJoinee  Title', () => {
     expect(screen.getByText('Edit Upcoming Joinee')).toBeInTheDocument()
   })
@@ -153,5 +178,24 @@ describe('Vendor Details without data', () => {
     expect(fileInput.files.item(0)).toStrictEqual(file)
     expect(fileInput.files).toHaveLength(1)
     expect(fileInput).toBeInTheDocument()
+  })
+  describe('onHandleDatePicker', () => {
+    test('should update editToDate with formatted date', () => {
+      const dateFormat = 'YYYY-MM-DD'
+      const setEditToDate = jest.fn()
+
+      const value = new Date('2023-06-27')
+      const fakeObject = {
+        setEditToDate,
+      }
+
+      const onHandleDatePicker = (value: Date) => {
+        fakeObject.setEditToDate(moment(value).format(dateFormat))
+      }
+
+      onHandleDatePicker(value)
+
+      expect(setEditToDate).toHaveBeenCalledWith('2023-06-27')
+    })
   })
 })

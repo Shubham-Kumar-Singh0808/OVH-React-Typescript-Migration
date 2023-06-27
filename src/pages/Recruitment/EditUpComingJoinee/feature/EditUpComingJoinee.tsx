@@ -335,7 +335,6 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.departmentName}
               onChange={onChangeInputHandler}
             >
-              {/* <option value={''}></option> */}
               {addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
                   <option key={index} value={item.departmentId}>

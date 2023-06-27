@@ -121,20 +121,6 @@ const UpComingJoinListTable = ({
     setToggle('upcomingjoinlist')
   }
 
-  // // -------------------------------------------------------------
-  const history = useHistory()
-
-  // const editButtonHandler = async () => {
-  //   const technology = await dispatch(
-  //     reduxServices.candidateList.getTechnology(),
-  //   )
-
-  //   if (reduxServices.candidateList.getTechnology.fulfilled.match(technology)) {
-  //     history.push('/upcomingjoinlist')
-  //   }
-  // }
-
-  // -------------------------------------------------------------------------
   return (
     <>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -217,15 +203,6 @@ const UpComingJoinListTable = ({
                   <CTableDataCell>{joinee.dateOfJoining}</CTableDataCell>
 
                   <CTableDataCell>{joinee.technology}</CTableDataCell>
-                  {/* <CTableDataCell data-testid="action-cell">
-                    <div className="sh-btn-group">
-                      <CTooltip content="Edit">
-                        <CButton color="info" size="sm" className="mb-1">
-                          <i className="text-white fa fa-pencil-square-o"></i>
-                        </CButton>
-                      </CTooltip>
-                    </div>
-                  </CTableDataCell> */}
 
                   <CTableDataCell scope="row">
                     <div className="buttons-clients">
@@ -234,7 +211,6 @@ const UpComingJoinListTable = ({
                           color="info btn-ovh me-1"
                           className="btn-ovh-employee-list"
                           onClick={() => editButtonHandler(joinee)}
-                          // onClick={editButtonHandler}
                         >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>
