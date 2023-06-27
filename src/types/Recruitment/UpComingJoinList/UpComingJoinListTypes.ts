@@ -1,5 +1,4 @@
 import { LoadingState } from '../../commonTypes'
-import { GetAllTechnology } from '../CandidateList/CandidateListTypes'
 
 export type UpComingJoineeList = {
   id: number

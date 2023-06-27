@@ -14,7 +14,6 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import * as XLSX from 'xlsx'
-import { useHistory } from 'react-router-dom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -23,7 +22,6 @@ import {
   UpComingJoinListTableProps,
   UpComingJoineeList,
 } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
-import { GetAllTechnology } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 const UpComingJoinListTable = ({
   paginationRange,

@@ -32,11 +32,10 @@ const EditUpComingJoinee = ({
   searchInput: string | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [uploadedFile, setUploadedFile] = useState<File>()
   const [editToDate, setEditToDate] = useState<string>(
     editNewJoineeInfo.dateOfJoining,
   )
-
+  const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
@@ -67,18 +66,19 @@ const EditUpComingJoinee = ({
     )
   }, [dispatch, timeLineListSelector?.personId])
 
+  useEffect(() => {
+    setCandidateComment(editNewJoineeInfo.comments)
+  }, [editNewJoineeInfo.comments])
+
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
   )
 
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
     let extension = ''
     if (!file) return
-    setUploadedFile(file[0])
-
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
@@ -551,7 +551,7 @@ const EditUpComingJoinee = ({
                 data-testid="update-text-area"
                 aria-label="textarea"
                 autoComplete="off"
-                maxLength={150}
+                maxLength={250}
                 name="comments"
                 id="comments"
                 value={editNewJoineeInfo.comments}
