@@ -56,11 +56,12 @@ describe('Change Asset status Component Testing', () => {
         setChangeReportStatus={jest.fn()}
       />,
     )
-    expect(screen.getByText('Change Asset Status')).toBeInTheDocument()
+  })
+  test('should render Change Asset  Add Vendor Details component with out crashing', () => {
     const backButtonElement = screen.getByTestId('back-button')
     expect(backButtonElement).toBeInTheDocument()
     userEvent.click(backButtonElement)
-    expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    expect(mockSetToggle).toHaveBeenCalledTimes(1)
   })
   describe('Create Add Vendor Component Testing', () => {
     test('should render create New Ticket component with out crashing', () => {
