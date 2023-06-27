@@ -29,6 +29,8 @@ const EditInvestmentCycle = ({
     className: 'col-form-label addCycle-label',
   }
 
+  console.log(editCycle)
+
   const [editCycleCopy, setEditCycleCopy] = useState(editCycle)
   const [cycleStartDate, setCycleStartDate] = useState<string>(
     editCycle.startDate,
@@ -89,7 +91,7 @@ const EditInvestmentCycle = ({
     }
     setIsActiveCycleModalVisible(false)
     const cycleExist = {
-      cycleId: -1,
+      cycleId: editCycleCopy.cycleId,
       cycleName: editCycleCopy.cycleName,
     }
     const isCycleExistsResultAction = await dispatch(

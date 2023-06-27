@@ -58,6 +58,7 @@ const ITDeclarationList = (): JSX.Element => {
   }, [])
 
   useEffect(() => {
+    dispatch(reduxServices.itDeclarationList.actions.clearITDeclarationList())
     dispatch(
       reduxServices.itDeclarationList.getITDeclarationForm({
         startIndex: pageSize * (currentPage - 1),

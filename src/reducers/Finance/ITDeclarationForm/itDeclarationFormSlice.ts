@@ -267,6 +267,7 @@ const itDeclarationFormSlice = createSlice({
         ),
         (state) => {
           state.isLoading = ApiLoadingState.loading
+          state.error = null
         },
       )
       .addMatcher(

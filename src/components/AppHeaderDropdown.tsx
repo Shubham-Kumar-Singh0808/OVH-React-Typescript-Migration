@@ -19,6 +19,7 @@ const AppHeaderDropdown = (): JSX.Element => {
     dispatch(reduxServices.authentication.actions.clearAuthentication())
     dispatch(reduxServices.app.actions.setReRenderMenu(true))
     history.push('/')
+    // window.location.reload()
   }
 
   const dropdownToggleProps = {

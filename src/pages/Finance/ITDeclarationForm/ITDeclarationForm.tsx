@@ -27,6 +27,7 @@ const ITDeclarationForm = (): JSX.Element => {
   const [enteredFromDate, setEnteredFromDate] = useState<string>(emptyString)
   const [enteredToDate, setEnteredToDate] = useState<string>(emptyString)
   const [enteredFile, setEnteredFile] = useState<File | undefined>(undefined)
+  const apiError = useTypedSelector((state) => state.itDeclarationForm.error)
 
   const dispatch = useAppDispatch()
   const history = useHistory()
@@ -160,81 +161,94 @@ const ITDeclarationForm = (): JSX.Element => {
             CBodyClassName="ps-0 pe-0"
             CFooterClassName="d-none"
           >
-            <EmployeeDetails />
-            <IncomeTaxAct />
-            {compareDate(
-              employeeDetails.activeCyle,
-              employeeDetails.joinDate,
-            ) && (
+            {apiError === 406 && (
+              <h5
+                className="text-danger"
+                style={{ marginTop: '20px', fontWeight: 'bold' }}
+              >
+                No Active Cycle Found to add IT Declaration Form
+              </h5>
+            )}
+            {apiError !== 406 && (
               <>
-                <PreviousEmployerAct
-                  enteredOrganization={enteredOrganization}
-                  organizationChangeHandler={organizationChangeHandler}
-                  enteredFromDate={enteredFromDate}
-                  setEnteredFromDate={setEnteredFromDate}
-                  enteredToDate={enteredToDate}
-                  setEnteredToDate={setEnteredToDate}
-                  setEnteredFile={setEnteredFile}
-                  dateToShow={getWordsDate(activeCycle)}
-                />
-                <SectionsFilterOptions
-                  showAsterix={false}
-                  moreSectionButtonText="Add More"
-                  isOldEmployee={false}
-                />
+                <EmployeeDetails />
+                <IncomeTaxAct />
+                {compareDate(
+                  employeeDetails.activeCyle,
+                  employeeDetails.joinDate,
+                ) && (
+                  <>
+                    <PreviousEmployerAct
+                      enteredOrganization={enteredOrganization}
+                      organizationChangeHandler={organizationChangeHandler}
+                      enteredFromDate={enteredFromDate}
+                      setEnteredFromDate={setEnteredFromDate}
+                      enteredToDate={enteredToDate}
+                      setEnteredToDate={setEnteredToDate}
+                      setEnteredFile={setEnteredFile}
+                      dateToShow={getWordsDate(activeCycle)}
+                    />
+                    <SectionsFilterOptions
+                      showAsterix={false}
+                      moreSectionButtonText="Add More"
+                      isOldEmployee={false}
+                    />
+                  </>
+                )}
+
+                <CRow className="mt-3 mb-3">
+                  <CCol sm={12}>
+                    <p className="pull-right">
+                      {grandTotalResult > 0 && (
+                        <b className="txt-grandtotal ">
+                          Grand Total:{' '}
+                          {grandTotalResult.toLocaleString('en-IN')}
+                        </b>
+                      )}
+                    </p>
+                  </CCol>
+                </CRow>
+
+                <CRow className="mt-3 mb-3">
+                  <CCol sm={12} className="mt-2 ps-4 pe-4">
+                    <CFormCheck
+                      name="agree"
+                      data-testid="ch-agree"
+                      onChange={() => setIsAgreeChecked(!isAgreeChecked)}
+                      checked={isAgreeChecked}
+                      label={declareStatement}
+                      inline
+                      hitArea="full"
+                      style={{ fontWeight: 'bold' }}
+                    />
+                  </CCol>
+                </CRow>
+                <CRow className="mt-2 mb-2">
+                  {userAccessToSubmitDeclarationForm?.createaccess && (
+                    <CCol className="col-md-3 offset-md-4">
+                      <CButton
+                        color="success"
+                        className="btn-ovh me-1"
+                        data-testid="decform-final-submit-btn"
+                        size="sm"
+                        onClick={handleSubmitDeclarationForm}
+                        disabled={!isButtonEnabled || !isAgreeChecked}
+                      >
+                        Submit
+                      </CButton>
+                      <CButton
+                        color="warning "
+                        className="btn-ovh"
+                        data-testid="df-clear-btn"
+                        onClick={clearButtonHandler}
+                      >
+                        Clear
+                      </CButton>
+                    </CCol>
+                  )}
+                </CRow>
               </>
             )}
-
-            <CRow className="mt-3 mb-3">
-              <CCol sm={12}>
-                <p className="pull-right">
-                  {grandTotalResult > 0 && (
-                    <b className="txt-grandtotal ">
-                      Grand Total: {grandTotalResult.toLocaleString('en-IN')}
-                    </b>
-                  )}
-                </p>
-              </CCol>
-            </CRow>
-
-            <CRow className="mt-3 mb-3">
-              <CCol sm={12} className="mt-2 ps-4 pe-4">
-                <CFormCheck
-                  name="agree"
-                  data-testid="ch-agree"
-                  onChange={() => setIsAgreeChecked(!isAgreeChecked)}
-                  checked={isAgreeChecked}
-                  label={declareStatement}
-                  inline
-                  hitArea="full"
-                  style={{ fontWeight: 'bold' }}
-                />
-              </CCol>
-            </CRow>
-            <CRow className="mt-2 mb-2">
-              {userAccessToSubmitDeclarationForm?.createaccess && (
-                <CCol className="col-md-3 offset-md-4">
-                  <CButton
-                    color="success"
-                    className="btn-ovh me-1"
-                    data-testid="decform-final-submit-btn"
-                    size="sm"
-                    onClick={handleSubmitDeclarationForm}
-                    disabled={!isButtonEnabled || !isAgreeChecked}
-                  >
-                    Submit
-                  </CButton>
-                  <CButton
-                    color="warning "
-                    className="btn-ovh"
-                    data-testid="df-clear-btn"
-                    onClick={clearButtonHandler}
-                  >
-                    Clear
-                  </CButton>
-                </CCol>
-              )}
-            </CRow>
           </OCard>
           <OModal
             visible={modal?.showModal}

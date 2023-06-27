@@ -34,6 +34,9 @@ const ITDeclarationListTable = (
   const userAccessToEditDeclarationForm = useTypedSelector(
     (state) => state.userAccessToFeatures.userAccessToFeatures,
   )?.find((feature) => feature.name === 'IT Declaration Form')
+  const loggedInEmployeeId = useTypedSelector(
+    (state) => state.authentication.authenticatedUser.employeeId,
+  )
 
   const {
     paginationRange,
@@ -131,7 +134,9 @@ const ITDeclarationListTable = (
                           <i className="fa fa-eye" aria-hidden="true"></i>
                         </CButton>
                       </CTooltip>
-                      {userAccessToEditDeclarationForm?.updateaccess ? (
+                      {userAccessToEditDeclarationForm?.updateaccess &&
+                      // only the employee whose form it is can edit it with user role permission
+                      +loggedInEmployeeId === itDeclaration.employeeId ? (
                         <>
                           <CTooltip content="Edit">
                             <CButton

@@ -515,6 +515,11 @@ const itDeclarationListSlice = createSlice({
         grandTotal: action.payload,
       }
     },
+    clearITDeclarationList: (state) => {
+      // when calling api for it declaration, the old data must be wiped out from frontend
+      state.listSize = 0
+      state.itDeclarationForms = []
+    },
     setUpdateITButtonBoolean: (state, action: PayloadAction<boolean>) => {
       state.isUpdateITFormButtonEnabled = action.payload
     },
