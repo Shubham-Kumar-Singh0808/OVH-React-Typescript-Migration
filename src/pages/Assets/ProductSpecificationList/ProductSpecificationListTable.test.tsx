@@ -18,8 +18,8 @@ describe('Product Specification without data', () => {
         setCurrentPage={mockSetData}
         pageSize={0}
         setPageSize={mockSetData}
-        setEditProductSpecification={jest.fn()}
-        setToggle={jest.fn()}
+        setEditProductSpecification={mockSetData}
+        setToggle={mockSetData}
       />,
       {
         preloadedState: {
