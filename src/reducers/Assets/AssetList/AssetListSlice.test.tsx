@@ -55,7 +55,7 @@ describe('Asset List Slice', () => {
         asset: [],
         isLoading: ApiLoadingState.succeeded,
         manufacturerList: {} as ManufacturerList,
-        allAssetList: [],
+        allAssetList: undefined,
         listSize: undefined,
         assetList: {} as AllAssetsList,
       })
