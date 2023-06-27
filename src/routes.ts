@@ -446,6 +446,10 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+
+const CreditCardList = React.lazy(
+  () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
+)
 const ExpenseSubCategoryList = React.lazy(
   () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
 )
@@ -1092,6 +1096,11 @@ const routes = [
     path: '/productSpecificationList',
     name: 'Product Specification List',
     component: ProductSpecificationList,
+  },
+  {
+    path: '/creditCardList',
+    name: 'Credit Card List',
+    component: CreditCardList,
   },
   {
     path: '/expenseSubCategory',
