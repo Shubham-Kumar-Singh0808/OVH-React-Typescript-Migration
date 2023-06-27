@@ -8,7 +8,7 @@ import {
   CFormTextarea,
   CRow,
 } from '@coreui/react-pro'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import parse from 'html-react-parser'
 import IntervieweeDetailsTimeline from './IntervieweeDetailsTimeline'
 import NoShow from './ScheduleIntervieActionButtons/NoShow '
@@ -150,8 +150,13 @@ const IntervieweeDetails = (): JSX.Element => {
     history.push(`/scheduleInterview/${timeLineListSelector.personId}`)
   }
 
-  const backBtnHandler = () => {
+  const backBtnHandler1 = () => {
     history.push('/jobschedulecandidateList')
+    history.push('/jobschedulecandidateList1')
+  }
+
+  const backBtnHandler = () => {
+    history.goBack()
   }
 
   const formatInterviewStatusText = (interviewStatus: string): JSX.Element => {

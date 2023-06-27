@@ -74,25 +74,6 @@ const EditUpComingJoinee = ({
     reduxServices.KRA.selectors.empDepartments,
   )
 
-  // const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
-  //   const file = element.files
-  //   const acceptedFileTypes = ['pdf', 'doc', 'docx']
-  //   let extension = ''
-  //   if (!file) return
-  //   if (file && file[0] !== undefined) {
-  //     extension = file[0].name.split('.').pop() as string
-  //   }
-  //   if (file[0] !== undefined && file[0].size > 2048000) {
-  //     setUpdateUploadErrorText('Please upload file lessthan 2MB.')
-  //     return
-  //   }
-  //   if (!acceptedFileTypes.includes(extension)) {
-  //     setUpdateUploadErrorText('Please choose doc or docx or pdf or zip. file')
-  //     return
-  //   }
-  //   setUpdateUploadErrorText('')
-  // }
-
   const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx', 'zip']

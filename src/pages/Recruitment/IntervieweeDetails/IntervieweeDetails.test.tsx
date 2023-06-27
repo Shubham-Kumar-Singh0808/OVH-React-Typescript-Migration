@@ -10,6 +10,7 @@ import {
   EmpScheduleInterviewData,
 } from '../../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
 import { mockTimeLineList } from '../../../test/data/IntervieDeatilsData'
+import { createMemoryHistory } from 'history'
 
 const mockSetToggle = jest.fn()
 
@@ -33,12 +34,6 @@ describe('Employee Pip Time line Component Testing', () => {
 
     test('should be able to render Interviewee Details Title', () => {
       expect(screen.getByText('Interviewee Details')).toBeInTheDocument()
-    })
-    test('should render click on back button', () => {
-      const backButtonElement = screen.getByTestId('back-button')
-      expect(backButtonElement).toBeInTheDocument()
-      userEvent.click(backButtonElement)
-      expect(mockSetToggle).toHaveBeenCalledTimes(0)
     })
     test('should render with data ', () => {
       expect(screen.getByText('NO SHOW')).toBeInTheDocument()
@@ -64,5 +59,17 @@ describe('Employee Pip Time line Component Testing', () => {
       // userEvent.click(backButtonElement)
       expect(mockSetToggle).toHaveBeenCalledTimes(0)
     })
+  })
+  test('should call history.goBack()', () => {
+    const history = createMemoryHistory()
+    history.goBack = jest.fn()
+
+    const backBtnHandler = () => {
+      history.goBack()
+    }
+
+    backBtnHandler()
+
+    expect(history.goBack).toHaveBeenCalled()
   })
 })

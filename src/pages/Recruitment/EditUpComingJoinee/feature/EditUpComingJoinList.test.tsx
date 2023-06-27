@@ -4,13 +4,7 @@ import { CKEditor } from 'ckeditor4-react'
 import moment from 'moment'
 import React from 'react'
 import EditUpComingJoinee from './EditUpComingJoinee'
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '../../../../test/testUtils'
+import { cleanup, render, screen } from '../../../../test/testUtils'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
 

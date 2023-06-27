@@ -83,24 +83,49 @@ const CandidateOffer = (): JSX.Element => {
 
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
 
+  // const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
+  //   const file = element.files
+  //   const acceptedFileTypes = ['pdf', 'doc', 'docx']
+  //   let extension = ''
+  //   if (!file) return
+  //   setUploadedFile(file[0])
+
+  //   if (file && file[0] !== undefined) {
+  //     extension = file[0].name.split('.').pop() as string
+  //   }
+  //   if (file[0] !== undefined && file[0].size > 2048000) {
+  //     setUploadErrorText('Please upload file lessthan 2MB.')
+  //     return
+  //   }
+  //   if (!acceptedFileTypes.includes(extension)) {
+  //     setUploadErrorText('Please choose doc or docx or pdf or zip. file')
+  //     return
+  //   }
+  //   setUploadErrorText('')
+  // }
+
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
-    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    const acceptedFileTypes = ['pdf', 'doc', 'docx', 'zip']
     let extension = ''
+
     if (!file) return
     setUploadedFile(file[0])
 
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
+
     if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText('Please upload file lessthan 2MB.')
+      setUploadErrorText('Please upload file less than 2MB.')
       return
     }
+
     if (!acceptedFileTypes.includes(extension)) {
       setUploadErrorText('Please choose doc or docx or pdf or zip. file')
       return
     }
+
     setUploadErrorText('')
   }
 
