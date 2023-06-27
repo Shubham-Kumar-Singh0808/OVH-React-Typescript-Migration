@@ -121,6 +121,7 @@ import {
   AssetListApi,
   ProductSpecificationListApi,
   AddAssetListApi,
+  CreditCardListApi,
   ExpenseSubCategoryListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
@@ -1153,6 +1154,16 @@ export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
     apiPrefix + '/ExpenseManagement/checkForDuplicateSubCategory',
   updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
   deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
+}
+
+export const CreditCardListApiConfig: CreditCardListApi = {
+  getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+  addCardDetails: apiPrefix + '/ExpenseManagement/addCardDetails',
+  editCardDetails: apiPrefix + '/ExpenseManagement/editCardDetials',
+  updateCardDetails: apiPrefix + '/ExpenseManagement/updateCardDetails',
+  deleteCardData: apiPrefix + '/ExpenseManagement/deleteCardData',
+  checkDuplicateCardNumber:
+    apiPrefix + '/ExpenseManagement/checkDuplicateCardNumber',
 }
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',

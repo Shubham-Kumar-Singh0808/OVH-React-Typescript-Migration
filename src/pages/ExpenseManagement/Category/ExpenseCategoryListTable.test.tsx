@@ -80,15 +80,14 @@ describe('Expense Category List Table with data', () => {
   test('should validate input data after edit button click', async () => {
     const editButtonElement = screen.getByTestId(`btn-categoryEdit1`)
     await fireEvent.click(editButtonElement)
-    await waitFor(async () => {
-      userEvent.type(screen.getByTestId(`categoryName1`), 'testing2')
-      const saveButtonElement = screen.getByTestId(`save-btn1`)
-      await fireEvent.click(saveButtonElement)
+    userEvent.type(screen.getByTestId(`categoryName1`), 'testing2')
+    const saveButtonElement = screen.getByTestId(`save-btn1`)
+    expect(saveButtonElement).toBeEnabled()
+    await fireEvent.click(saveButtonElement)
 
-      expect(screen.getByTestId(`categoryName1`)).toHaveValue(
-        'test adding exactly btn2testing2testing2testing2',
-      )
-    })
+    expect(screen.getByTestId(`categoryName1`)).toHaveValue(
+      'test adding exactly btntesting2',
+    )
   })
 
   test('should render first page data only', () => {
