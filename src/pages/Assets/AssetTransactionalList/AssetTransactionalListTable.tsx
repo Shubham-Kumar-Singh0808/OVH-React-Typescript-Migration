@@ -56,17 +56,17 @@ const AssetTransactionalListTable = ({
     setSpecification(assetTransactionSpecification)
   }
 
-  const handleExportEmployeeFinanceData = async () => {
-    const contentElement = document.getElementById('transactionalExportId')
-    if (contentElement) {
-      const worksheet = XLSX.utils.table_to_sheet(
-        document.getElementById('transactionalExportId'),
-      )
-      const workbook = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'TranscationalList')
-      XLSX.writeFile(workbook, 'TranscationalList.xls')
-    }
-  }
+  // const handleExportEmployeeFinanceData = async () => {
+  //   const contentElement = document.getElementById('transactionalExportId')
+  //   if (contentElement) {
+  //     const worksheet = XLSX.utils.table_to_sheet(
+  //       document.getElementById('transactionalExportId'),
+  //     )
+  //     const workbook = XLSX.utils.book_new()
+  //     XLSX.utils.book_append_sheet(workbook, worksheet, 'TranscationalList')
+  //     XLSX.writeFile(workbook, 'TranscationalList.xls')
+  //   }
+  // }
 
   const totalNoOfAssetRecords = assetsResponse?.length
     ? `Total Records: ${assetResponseListSize}`
@@ -86,7 +86,7 @@ const AssetTransactionalListTable = ({
                 color="info"
                 className="text-white"
                 size="sm"
-                onClick={handleExportEmployeeFinanceData}
+                // onClick={handleExportEmployeeFinanceData}
               >
                 <i className="fa fa-plus me-1"></i>
                 Click to Export

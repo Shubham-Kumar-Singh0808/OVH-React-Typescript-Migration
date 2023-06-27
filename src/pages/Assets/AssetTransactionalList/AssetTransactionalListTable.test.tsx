@@ -17,8 +17,8 @@ describe('Asset Transaction List Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
-        isAssetTableView={true}
-      />,
+        isAssetTableView={true} 
+        setToggle={}/>,
       {
         preloadedState: {
           assetTransactionList: {

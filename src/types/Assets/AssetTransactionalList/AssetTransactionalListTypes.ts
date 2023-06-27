@@ -65,4 +65,5 @@ export type AssetTransactionListTableProps = {
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
   isAssetTableView: boolean
+  setToggle: React.Dispatch<React.SetStateAction<string>>
 }
