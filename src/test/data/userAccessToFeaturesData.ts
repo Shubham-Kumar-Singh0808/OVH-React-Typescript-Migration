@@ -1733,10 +1733,10 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 308,
     name: 'Credit Card List',
-    viewaccess: false,
-    createaccess: false,
-    updateaccess: false,
-    deleteaccess: false,
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
     childFeatures: null,
   },
   {
@@ -2003,6 +2003,15 @@ export const mockUserAccessToFeaturesData: UserAccessToFeatures[] = [
   {
     featureId: 158,
     name: 'Product Type List',
+    viewaccess: true,
+    createaccess: true,
+    updateaccess: true,
+    deleteaccess: true,
+    childFeatures: null,
+  },
+  {
+    featureId: 160,
+    name: 'Product Specification List',
     viewaccess: true,
     createaccess: true,
     updateaccess: true,

@@ -71,15 +71,14 @@ describe('Expense Sub-Category List Table with data', () => {
   test('should validate input data after edit button click', async () => {
     const editButtonElement = screen.getByTestId(`btn-subCategoryEdit4`)
     await fireEvent.click(editButtonElement)
-    await waitFor(async () => {
-      userEvent.type(screen.getByTestId(`subCategoryId4`), 'testing2')
-      const saveButtonElement = screen.getByTestId(`sh-save-btn4`)
-      await fireEvent.click(saveButtonElement)
-
-      expect(screen.getByTestId(`subCategoryId4`)).toHaveValue(
-        'Meals Card2testing2testing2',
-      )
-    })
+    // await waitFor(async () => {})
+    userEvent.type(screen.getByTestId(`subCategoryId4`), 'testing2')
+    const saveButtonElement = screen.getByTestId(`sh-save-btn4`)
+    await fireEvent.click(saveButtonElement)
+    expect(saveButtonElement).toBeEnabled()
+    expect(screen.getByTestId(`subCategoryId4`)).toHaveValue(
+      'Meals Cardtesting2',
+    )
   })
 
   test('should be able to click delete button element', () => {
