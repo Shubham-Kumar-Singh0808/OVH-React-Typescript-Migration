@@ -2,6 +2,7 @@
 import userEvent from '@testing-library/user-event'
 import { CKEditor } from 'ckeditor4-react'
 import moment from 'moment'
+import React from 'react'
 import EditUpComingJoinee from './EditUpComingJoinee'
 import { fireEvent, render, screen } from '../../../../test/testUtils'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'

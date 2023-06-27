@@ -32,9 +32,6 @@ const EditUpComingJoinee = ({
   searchInput: string | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [candidateDepartment, setCandidateDepartment] = useState<
-    string | number
-  >('')
   const [uploadedFile, setUploadedFile] = useState<File>()
   const [editToDate, setEditToDate] = useState<string>(
     editNewJoineeInfo.dateOfJoining,
@@ -43,11 +40,7 @@ const EditUpComingJoinee = ({
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
-  const [selectedTechnologyId, setSelectedTechnologyId] = useState<
-    number | null
-  >(null)
-  const [selectedTechnologyName, setSelectedTechnologyName] =
-    useState<string>('')
+
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
@@ -74,33 +67,17 @@ const EditUpComingJoinee = ({
     )
   }, [dispatch, timeLineListSelector?.personId])
 
-  // useEffect(() => {
-  //   dispatch(
-  //     reduxServices.intervieweeDetails.timeLineData(
-  //       timeLineListSelector.personId,
-  //     ),
-  //   )
-  // }, [dispatch])
-
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
   )
 
-  // const selectedDepartment = addNewJoinee.find(
-  //   (item) => item.departmentId === candidateDepartment,
-  // )
-
   const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
-  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
-    File | undefined
-  >(undefined)
   const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
     const acceptedFileTypes = ['pdf', 'doc', 'docx']
     let extension = ''
     if (!file) return
-    // setUploadedFile(file[0])
+    setUploadedFile(file[0])
 
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
@@ -113,22 +90,8 @@ const EditUpComingJoinee = ({
       setUploadErrorText('Please choose doc or docx or pdf or zip. file')
       return
     }
-    setIsUploadBtnEnabled(true)
     setUploadErrorText('')
-    setUploadFeedbackForm(file[0])
   }
-
-  useEffect(() => {
-    if (uploadFeedbackForm) {
-      setIsUploadBtnEnabled(true)
-    } else {
-      setIsUploadBtnEnabled(false)
-    }
-  })
-
-  // useEffect(() => {
-  //   dispatch(reduxServices.candidateList.getTechnology())
-  // }, [useEffect])
 
   const addNewJoineeTechno = useTypedSelector(
     reduxServices.candidateList.selectors.getAllTechnology,
@@ -148,7 +111,6 @@ const EditUpComingJoinee = ({
       setIsUpdateButtonEnabled(false)
     }
   }, [editNewJoineeInfo])
-  // --------------------------------------------------------
 
   const onHandleDatePicker = (value: Date) => {
     setEditToDate(moment(value).format(dateFormat))
@@ -181,8 +143,6 @@ const EditUpComingJoinee = ({
       toastColor="success"
     />
   )
-
-  // ________________________________________________________________
 
   const handleUpdateNewJoinee = async () => {
     const prepareObject = {
@@ -375,6 +335,7 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.departmentName}
               onChange={onChangeInputHandler}
             >
+              {/* <option value={''}></option> */}
               {addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
                   <option key={index} value={item.departmentId}>
@@ -405,6 +366,7 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.designation}
               onChange={onChangeInputHandler}
             >
+              <option value={''}>Select Designation</option>
               {designations?.length > 0 &&
                 designations?.map((location, index) => (
                   <option key={index} value={location.name}>
@@ -436,9 +398,10 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.technology}
               onChange={onChangeInputHandler}
             >
+              <option value={''}></option>
               {addNewJoineeTechno?.length > 0 &&
-                addNewJoineeTechno?.map((item, index) => (
-                  <option key={index} value={item.id}>
+                addNewJoineeTechno?.map((item) => (
+                  <option key={item.id} value={item.name}>
                     {item.name}
                   </option>
                 ))}
@@ -517,7 +480,6 @@ const EditUpComingJoinee = ({
               aria-label="selectEmploymentType"
               name="employmentType"
               value={editNewJoineeInfo.employmentType}
-              // onChange={(e) => setEmployeeType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Type</option>
