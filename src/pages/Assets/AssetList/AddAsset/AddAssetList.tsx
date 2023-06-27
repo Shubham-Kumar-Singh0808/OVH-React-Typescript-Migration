@@ -475,11 +475,7 @@ const AddAssetList = ({
                     hitArea="full"
                     label={item?.productSpecification}
                     inline
-                    //disabled={!isViewBtnEnabled}
                     name="isChecked"
-                    // value={isChecked}
-                    // onChange={(e) => setIsChecked(e.target.checked)}
-                    // onChange={(e) => handlerChangeProductSpecification}
                     value={item?.productSpecification}
                   />
                 </CCol>

@@ -33,10 +33,10 @@ const EditProductSpecificationFilterOptions = ({
   )
   const [selectedProductType, setSelectedProductType] = useState<
     number | string
-  >(editProductSpecification.productName)
+  >(editProductSpecification.productId)
   const [selectedManufacturer, setSelectedManufacturer] = useState<
     number | string
-  >(editProductSpecification?.manufacturerName)
+  >(editProductSpecification?.manufacturerId)
   const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
   const getAllLookUps = useTypedSelector(
     reduxServices.ProductTypeList.selectors.manufacturerData,
@@ -56,9 +56,11 @@ const EditProductSpecificationFilterOptions = ({
       setIsAddButtonEnabled(false)
     }
   }, [editProductSpecification])
+
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
   }, [dispatch])
+
   useEffect(() => {
     if (selectedAssetType) {
       dispatch(
@@ -68,6 +70,7 @@ const EditProductSpecificationFilterOptions = ({
       )
     }
     if (selectedProductType) {
+      setSelectedManufacturer('')
       dispatch(
         reduxServices.addNewProduct.getProductTypeList(
           editProductSpecification.productId,
@@ -133,6 +136,12 @@ const EditProductSpecificationFilterOptions = ({
       return { ...prevState, ...{ productSpecification } }
     })
   }
+  useEffect(() => {
+    setShowEditor(false)
+    setTimeout(() => {
+      setShowEditor(true)
+    }, 100)
+  }, [])
   return (
     <>
       <CRow className="mt-3 ">

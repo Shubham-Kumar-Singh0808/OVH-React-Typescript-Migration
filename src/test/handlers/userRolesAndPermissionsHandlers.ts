@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 import { mockUserRoleFeatures } from '../data/UserRoleFeaturesData'
-import { mockUserRoleSubFeatures } from '../data/UserRoleSubFeaturesData'
+import { mockIncomingSubFeatures } from '../data/userRolesConfigurationData'
 import { mockUserRoles } from '../data/userRolesData'
 import { userRolesConfigurationApiConfig } from '../../middleware/api/apiList'
 
@@ -19,7 +19,7 @@ export const userRolesAndPermissionsHandlers = [
   }),
   // getUserRoleSubFeatures api mock
   rest.get(userRolesConfigurationApiConfig.getSubFeatures, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockUserRoleSubFeatures))
+    return res(ctx.status(200), ctx.json(mockIncomingSubFeatures))
   }),
   // getUserRoleFeaturesUnderRole api mock
   rest.get(

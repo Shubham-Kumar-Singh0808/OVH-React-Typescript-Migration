@@ -23,7 +23,6 @@ import { shiftConfigurationService } from './EmployeeDirectory/EmployeesList/Add
 import { skillService } from './MyProfile/Skills/skillSlice'
 import { userAccessToFeaturesService } from './Settings/UserRolesConfiguration/userAccessToFeaturesSlice'
 import { technologyService } from './EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
-import { userRolesAndPermissionsService } from './Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import { employeeReportService } from './EmployeeDirectory/EmployeeReport/'
 import { employeeDesigationReportService } from './EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import { visaListService } from './EmployeeDirectory/VisaList/visaListSlice'
@@ -133,9 +132,11 @@ import { productSpecificationListService } from './Assets/ProductSpecificationLi
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
 import { AddAssetListService } from './Assets/AssetList/AddAssetListSlice'
+import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
 import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
+import { userRolesConfigurationsServices } from './Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
 
 export const reduxServices = {
   app: appService,
@@ -145,7 +146,7 @@ export const reduxServices = {
   employeeList: employeeListService,
   profileHistory: profileHistoryService,
   personalInformation: personalInfoService,
-  userRolesAndPermissions: userRolesAndPermissionsService,
+  userRolesConfigurations: userRolesConfigurationsServices,
   employeeDesignation: employeeDesignationListService,
   newEmployee: addNewEmployeeService,
   employeeCertifications: employeeCertificateService,
@@ -273,6 +274,7 @@ export const reduxServices = {
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
   addAssetList: AddAssetListService,
+  addNewCandidate: candidateOfferService,
   subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,
   interviewStatusReport: interviewStatusReportServices,

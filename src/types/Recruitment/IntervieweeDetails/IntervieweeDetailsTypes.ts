@@ -88,6 +88,7 @@ export type IntervieweeDetailsSliceState = {
   CycleDtOsList: CycleDtOs[]
   timeLineDetails: timeLineDetails
   scheduleInterviewData: EmpScheduleInterviewData
+  addNewJoineeTechnology: UpdateProps
   employeeProperties: EmployeeProperties[]
 }
 
