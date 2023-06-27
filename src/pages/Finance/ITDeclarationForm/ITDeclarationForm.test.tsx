@@ -196,15 +196,30 @@ describe('IT Declaration Form', () => {
       render(<ITDeclarationForm />, {
         preloadedState: {
           itDeclarationForm: {
-            isLoading: ApiLoadingState.failed,
-            error: 406,
-            employeeDetails: {
-              activeCyle: mockActiveCycleDate,
-              designation: 'Associate Software Engineer',
-              employeeId: 2050,
-              fullName: 'Testing',
-              joinDate: '07/05/2023',
-              pan: '8948354',
+            itDeclarationForm: {
+              isLoading: ApiLoadingState.failed,
+              error: 406,
+              sections: mockSections,
+              investments: mockInvestments,
+              employeeDetails: {
+                activeCyle: mockActiveCycleDate,
+                designation: 'Associate Software Engineer',
+                employeeId: 2050,
+                fullName: 'Testing',
+                joinDate: '07/05/2023',
+                pan: '8948354',
+              },
+              grandTotal: 0,
+              modal: {
+                showModal: false,
+                modalDescription: '',
+              },
+              itDeclarationFormExist: false,
+              isSubmitButtonEnabled: false,
+              submitITDeclarationForm: initialSubmitITDeclarationForm,
+            },
+            userAccessToFeatures: {
+              userAccessToFeatures: mockUserAccessToFeaturesData,
             },
           },
         },

@@ -80,6 +80,11 @@ describe('Employee BirthdaysList Table Component Testing', () => {
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
         },
+        authentication: {
+          authenticatedUser: {
+            employeeId: 1889,
+          },
+        },
       },
     })
   })

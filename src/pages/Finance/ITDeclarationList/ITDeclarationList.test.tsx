@@ -15,7 +15,13 @@ const toRender = (
 describe('IT Declaration List Component Testing', () => {
   test('should render IT Declaration List component without crashing', () => {
     render(toRender, {
-      preloadedState: {},
+      preloadedState: {
+        authentication: {
+          authenticatedUser: {
+            employeeId: 1990,
+          },
+        },
+      },
     })
     expect(screen.getByText('IT Declaration List')).toBeInTheDocument()
   })

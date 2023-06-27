@@ -7,6 +7,7 @@ import {
   Sections,
 } from '../../../types/Finance/ITDeclarationForm/itDeclarationFormTypes'
 import { deviceLocale } from '../../../utils/dateFormatUtils'
+import { exchangeMonthAndDayInDate } from '../../Recruitment/InterviewStatusReport/InterviewStatusReportHelpers'
 
 export const initialInvestment: Investment = {
   id: 1,
@@ -98,9 +99,13 @@ export const interchangeMonthAndDay = (enteredDate: string): string => {
 }
 
 export const compareDate = (cycleDate: string, joinDate: string): boolean => {
-  const cycleDateParse = Date.parse(cycleDate)
-  const joinDateParse = Date.parse(joinDate)
-  return cycleDateParse < joinDateParse
+  // adding this undefined as unless initialized the page should not break
+  if (cycleDate !== undefined && joinDate !== undefined) {
+    const cycleDateParse = Date.parse(exchangeMonthAndDayInDate(cycleDate))
+    const joinDateParse = Date.parse(exchangeMonthAndDayInDate(joinDate))
+    return cycleDateParse < joinDateParse
+  }
+  return false
 }
 
 // used to convert the incoming date to words date of format [month, day, year]
