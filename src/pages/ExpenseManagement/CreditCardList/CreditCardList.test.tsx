@@ -1,6 +1,7 @@
 import React from 'react'
 import userEvent from '@testing-library/user-event'
-import CreditCardList from './CreditCardList'
+import CreditCardList from '../../ExpenseManagement/CreditCardList/CreditCardList'
+import { mockCreditCardListData } from '../../../test/data/creditCardListData'
 import {
   cleanup,
   fireEvent,
@@ -10,7 +11,6 @@ import {
 } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
-import { mockCreditCardListData } from '../../../test/data/creditCardListData'
 
 jest.setTimeout(10000)
 
