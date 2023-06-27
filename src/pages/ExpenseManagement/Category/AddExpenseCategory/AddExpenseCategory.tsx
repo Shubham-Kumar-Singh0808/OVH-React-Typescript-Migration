@@ -61,7 +61,6 @@ const AddExpenseCategory = (): JSX.Element => {
         dispatch(reduxServices.categoryList.getCategoryList())
         setCategoryName('')
         dispatch(reduxServices.app.actions.addToast(successToast))
-        dispatch(reduxServices.app.actions.addToast(undefined))
       }
     }
   }
@@ -90,7 +89,6 @@ const AddExpenseCategory = (): JSX.Element => {
       dispatch(reduxServices.categoryList.getCategoryList())
       setCategoryName('')
       dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
   const clearInputs = () => {

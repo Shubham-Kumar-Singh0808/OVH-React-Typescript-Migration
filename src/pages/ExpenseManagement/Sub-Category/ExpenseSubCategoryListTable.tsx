@@ -182,6 +182,14 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     setSubCategoryName(subCategoryName)
     setDeleteExpenseSubCategoryId(deleteExpenseSubCategoryIds)
   }
+
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="Cannot be deleted as subcategory is mapped with it"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
     const deleteExpenseSubCategoryResultAction = await dispatch(
@@ -203,6 +211,13 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.subCategoryList.deleteExpenseSubCategoryList.rejected.match(
+        deleteExpenseSubCategoryResultAction,
+      ) &&
+      deleteExpenseSubCategoryResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
     }
   }
 
