@@ -13,7 +13,7 @@ describe('Product Specification without data', () => {
   beforeEach(() => {
     render(
       <ProductSpecificationListTable
-        paginationRange={[]}
+        paginationRange={[1, 2, 3]}
         currentPage={0}
         setCurrentPage={mockSetData}
         pageSize={0}
