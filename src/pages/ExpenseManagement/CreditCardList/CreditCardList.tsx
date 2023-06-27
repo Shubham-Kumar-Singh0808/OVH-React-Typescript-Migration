@@ -122,7 +122,6 @@ const CreditCardList = (): JSX.Element => {
       setCardName('')
       setCardNumber('')
       dispatch(reduxServices.app.actions.addToast(successToast))
-      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
