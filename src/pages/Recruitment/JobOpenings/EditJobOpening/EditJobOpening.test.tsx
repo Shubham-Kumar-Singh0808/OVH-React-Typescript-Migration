@@ -27,6 +27,8 @@ describe('Job Openings without data', () => {
           status: '',
         }}
         setEditJobInfo={mockSetTogglePage}
+        searchInput={''}
+        selectRadioAction={''}
       />,
       {
         preloadedState: {
@@ -51,8 +53,8 @@ describe('Job Openings without data', () => {
       name: 'Back',
     })
     expect(addBtnElement).toBeEnabled()
+    userEvent.click(addBtnElement)
   })
-  userEvent.click(addBtnElement)
   test('should be able to click edit button element', () => {
     const deleteBtnElement = screen.getByTestId('updateBtn')
     expect(deleteBtnElement).toBeInTheDocument()
