@@ -92,7 +92,7 @@ export interface UsernameChangeHandlerProp extends DynamicFormLabelProps {
 
 export interface DateOfJoiningChangeHandlerProp extends DynamicFormLabelProps {
   onDateChangeHandler?: (e: Date) => void
-  dateValue: string
+  employeeDateOfJoining: string
   setEmployeeDateOfJoining: React.Dispatch<React.SetStateAction<string | Date>>
 }
 

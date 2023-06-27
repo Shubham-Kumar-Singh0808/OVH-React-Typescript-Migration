@@ -383,8 +383,13 @@ const AddCreateEmployee = (): JSX.Element => {
 
   // POST method
   const handleAddEmployee = async () => {
+    const payload = {
+      ...addEmployee,
+      dateOfJoining: employeeDateOfJoining as string,
+    }
+
     const newEmployeeResponse = await dispatch(
-      reduxServices.newEmployee.addEmployeeService.addNewEmployee(addEmployee),
+      reduxServices.newEmployee.addEmployeeService.addNewEmployee(payload),
     )
     if (
       reduxServices.newEmployee.addEmployeeService.addNewEmployee.fulfilled.match(
@@ -500,7 +505,7 @@ const AddCreateEmployee = (): JSX.Element => {
               <DateOfJoining
                 dynamicFormLabelProps={dynamicFormLabelProps}
                 // onDateChangeHandler={onHandleJoinDate}
-                dateValue={employeeDateOfJoining as string}
+                employeeDateOfJoining={employeeDateOfJoining as string}
                 setEmployeeDateOfJoining={setEmployeeDateOfJoining}
               />
               <Experience

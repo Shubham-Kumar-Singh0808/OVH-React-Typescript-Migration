@@ -10,7 +10,7 @@ import { deviceLocale } from '../../../../utils/dateFormatUtils'
 
 const DateOfJoining = ({
   dynamicFormLabelProps,
-  dateValue,
+  employeeDateOfJoining,
   setEmployeeDateOfJoining,
 }: DateOfJoiningChangeHandlerProp): JSX.Element => {
   const commonFormatDate = 'l'
@@ -22,7 +22,7 @@ const DateOfJoining = ({
       setEmployeeDateOfJoining(getJoineeDetails.dateOfJoining)
     }
   }, [getJoineeDetails.dateOfJoining])
-  console.log(dateValue)
+  console.log(employeeDateOfJoining)
   return (
     <>
       <CRow className="mb-3">
@@ -33,7 +33,7 @@ const DateOfJoining = ({
           )}
         >
           Date of Joining:
-          <span className={showIsRequired(dateValue)}>*</span>
+          <span className={showIsRequired(employeeDateOfJoining)}>*</span>
         </CFormLabel>
         <CCol sm={3}>
           <DatePicker
@@ -47,7 +47,7 @@ const DateOfJoining = ({
             dateFormat="dd/mm/yy"
             placeholderText="dd/mm/yyyy"
             name="joinedDate"
-            value={dateValue}
+            value={employeeDateOfJoining}
             // onChange={(date: Date) => setEmployeeDateOfJoining(date)}
             onChange={(date: Date) =>
               setEmployeeDateOfJoining(moment(date).format(commonFormatDate))
