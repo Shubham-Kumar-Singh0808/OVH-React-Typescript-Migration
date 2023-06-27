@@ -8,7 +8,7 @@ import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFea
 
 describe('My Profile Tabs Component Testing', () => {
   test('should render My Profile Tabs component with out crashing', async () => {
-    render(<MyProfileTabs />, {
+    render(<MyProfileTabs isViewingAnotherEmployee={false} />, {
       preloadedState: {
         authentication: {
           authenticatedUser: { role: 'admin' },

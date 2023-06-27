@@ -30,11 +30,12 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   )
   const [isEditExpenseCategory, setIsEditExpenseCategory] =
     useState<boolean>(false)
+  const [isEditBoxModified, setIsEditBoxModified] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteExpenseCategoryId, setDeleteExpenseCategoryId] = useState(0)
   const [isEditCategoryButtonEnabled, setIsEditCategoryButtonEnabled] =
     useState(false)
-  const [categoryName, setCategoryName] = useState<string>('')
+  const [categoryName, setCategoryName] = useState('')
   const [isEditCategoryNameExist, setIsEditCategoryNameExist] = useState('')
 
   const dispatch = useAppDispatch()
@@ -57,7 +58,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     reduxServices.categoryList.selectors.pageSizeFromState,
   )
 
-  const editCategoryNameExists = (name: string) => {
+  const editCategoryNameExists = (name: string): CategoryList | undefined => {
     return categoryList?.find((categories) => {
       return categories.categoryName.toLowerCase() === name.toLowerCase()
     })
@@ -86,7 +87,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     setCurrentPage(1)
   }
 
-  const getItemNumber = (index: number) => {
+  const getItemNumber = (index: number): number => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
@@ -106,6 +107,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
     }
+    setIsEditBoxModified(true)
     if (editCategoryNameExists(value.trim())) {
       setIsEditCategoryNameExist(value.trim())
     } else {
@@ -126,6 +128,13 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     setEditExpenseCategoryDetails(expensiveCategoryItems)
   }
   const saveExpenseCategoryButtonHandler = async () => {
+    if (
+      !isEditBoxModified ||
+      editExpenseCategoryDetails.categoryName === categoryName
+    ) {
+      setIsEditExpenseCategory(false)
+      return
+    }
     const saveExpenseCategoryResultAction = await dispatch(
       reduxServices.categoryList.updateExpenseCategory(
         editExpenseCategoryDetails,
@@ -142,7 +151,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Category has been modified."
+            toastMessage="Category Updated Successfully"
           />,
         ),
       )
@@ -157,6 +166,14 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     setCategoryName(categoryNames)
     setDeleteExpenseCategoryId(deletesExpenseCategoryId)
   }
+
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="Cannot be deleted as subcategory is mapped with it"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
     const deleteExpenseCategoryResultAction = await dispatch(
@@ -176,20 +193,21 @@ const ExpenseCategoryListTable = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.categoryList.deleteExpenseCategory.rejected.match(
+        deleteExpenseCategoryResultAction,
+      ) &&
+      deleteExpenseCategoryResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
+      dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
 
   const cancelLeaveCategoryButtonHandler = () => {
+    setIsEditCategoryNameExist('')
     setIsEditExpenseCategory(false)
   }
-
-  useEffect(() => {
-    if (categoryName) {
-      setIsEditCategoryButtonEnabled(true)
-    } else {
-      setIsEditCategoryButtonEnabled(false)
-    }
-  }, [categoryName])
 
   useEffect(() => {
     dispatch(reduxServices.categoryList.getCategoryList())
@@ -207,6 +225,10 @@ const ExpenseCategoryListTable = (): JSX.Element => {
       setCurrentPage(1)
     }
   }, [])
+
+  const categoryResult = isEditCategoryButtonEnabled
+    ? isEditCategoryButtonEnabled && isEditCategoryNameExist.length > 0
+    : !isEditCategoryButtonEnabled
 
   return (
     <>
@@ -262,7 +284,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
                             data-testid={`save-btn${index}`}
                             className="btn-ovh me-1"
                             onClick={saveExpenseCategoryButtonHandler}
-                            disabled={!isEditCategoryButtonEnabled}
+                            disabled={categoryResult}
                           >
                             <i
                               className="fa fa-floppy-o"

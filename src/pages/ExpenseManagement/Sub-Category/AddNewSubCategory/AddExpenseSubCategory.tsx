@@ -42,7 +42,7 @@ const AddExpenseSubCategory = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (expenseCategoryName && expenseSubCategoryName) {
+    if (expenseSubCategoryName !== isSubCategoryNameExist) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
