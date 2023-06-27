@@ -35,7 +35,7 @@ const EditUpComingJoinee = ({
   const [editToDate, setEditToDate] = useState<string>(
     editNewJoineeInfo.dateOfJoining,
   )
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
+  const [uploadErrorText, setUpdateUploadErrorText] = useState<string>('')
   const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
@@ -74,23 +74,47 @@ const EditUpComingJoinee = ({
     reduxServices.KRA.selectors.empDepartments,
   )
 
-  const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
+  // const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
+  //   const file = element.files
+  //   const acceptedFileTypes = ['pdf', 'doc', 'docx']
+  //   let extension = ''
+  //   if (!file) return
+  //   if (file && file[0] !== undefined) {
+  //     extension = file[0].name.split('.').pop() as string
+  //   }
+  //   if (file[0] !== undefined && file[0].size > 2048000) {
+  //     setUpdateUploadErrorText('Please upload file lessthan 2MB.')
+  //     return
+  //   }
+  //   if (!acceptedFileTypes.includes(extension)) {
+  //     setUpdateUploadErrorText('Please choose doc or docx or pdf or zip. file')
+  //     return
+  //   }
+  //   setUpdateUploadErrorText('')
+  // }
+
+  const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
-    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    const acceptedFileTypes = ['pdf', 'doc', 'docx', 'zip']
     let extension = ''
+
     if (!file) return
+
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
+
     if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText('Please upload file lessthan 2MB.')
+      setUpdateUploadErrorText('Please upload a file less than 2MB.')
       return
     }
+
     if (!acceptedFileTypes.includes(extension)) {
-      setUploadErrorText('Please choose doc or docx or pdf or zip. file')
+      setUpdateUploadErrorText('Please choose a doc, docx, pdf, or zip file.')
       return
     }
-    setUploadErrorText('')
+
+    setUpdateUploadErrorText('')
   }
 
   const addNewJoineeTechno = useTypedSelector(
@@ -578,7 +602,7 @@ const EditUpComingJoinee = ({
               style={{ width: '200px', marginBottom: '0' }}
               data-testid="file-upload"
               onChange={(element: SyntheticEvent) =>
-                onChangeJoineeFileUploadHandler(
+                onChangeUpdateJoineeFileUploadHandler(
                   element.currentTarget as HTMLInputElement,
                 )
               }

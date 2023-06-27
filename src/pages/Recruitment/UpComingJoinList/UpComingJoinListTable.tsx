@@ -14,6 +14,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import * as XLSX from 'xlsx'
+import { Link } from 'react-router-dom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -119,6 +120,10 @@ const UpComingJoinListTable = ({
     setToggle('upcomingjoinlist')
   }
 
+  const handler = (candidateId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+  }
+
   return (
     <>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -187,8 +192,14 @@ const UpComingJoinListTable = ({
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                  <CTableDataCell>
-                    {joinee.candidateName || 'N/A'}
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link
+                      to={`/candidatetimeline/${joinee.candidateId}`}
+                      className="cursor-pointer"
+                      onClick={() => handler(joinee.candidateId)}
+                    >
+                      {joinee.candidateName}
+                    </Link>
                   </CTableDataCell>
 
                   <CTableDataCell>

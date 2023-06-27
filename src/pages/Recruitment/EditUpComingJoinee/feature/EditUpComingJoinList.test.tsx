@@ -19,6 +19,7 @@ const fileUploadInput = 'file-upload'
 const selectDepartment = 'departmentName'
 const designationTextInput = 'designation'
 const technologyInpitval = 'technology'
+const onChangeInputHandler = jest.fn()
 
 describe('Vendor Details without data', () => {
   beforeEach(() => {
@@ -157,13 +158,13 @@ describe('Vendor Details without data', () => {
 
   test('Should display error message when wrong format of file is uploaded', () => {
     const file = new File(['feedbackFormTest'], 'feedbackFormTest.jpg', {
-      type: 'doc/docx/pdf',
+      type: 'doc/docx/pdf/zip',
     })
     const fileInput = screen.getByTestId(fileUploadInput)
     userEvent.upload(fileInput, file)
 
     expect(
-      screen.getByText('Please choose doc or docx or pdf or zip. file'),
+      screen.getByText('Please choose a doc, docx, pdf, or zip file.'),
     ).toBeInTheDocument()
   })
 
@@ -197,5 +198,17 @@ describe('Vendor Details without data', () => {
 
       expect(setEditToDate).toHaveBeenCalledWith('2023-06-27')
     })
+  })
+
+  test('should call onChangeInputHandler when the value is changed', () => {
+    const selectElement = screen.getByLabelText('Designation')
+    userEvent.selectOptions(selectElement, 'Select Designation')
+
+    expect(onChangeInputHandler).toHaveBeenCalledTimes(0)
+
+    const selectElement1 = screen.getByLabelText('technology')
+    userEvent.selectOptions(selectElement1, '')
+
+    expect(onChangeInputHandler).toHaveBeenCalledTimes(0)
   })
 })
