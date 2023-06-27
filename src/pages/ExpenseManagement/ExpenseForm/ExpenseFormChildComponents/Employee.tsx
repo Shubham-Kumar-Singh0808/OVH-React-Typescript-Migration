@@ -1,7 +1,6 @@
 import { CRow, CFormLabel, CCol } from '@coreui/react-pro'
 import React, { useState } from 'react'
 import Autocomplete from 'react-autocomplete'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
