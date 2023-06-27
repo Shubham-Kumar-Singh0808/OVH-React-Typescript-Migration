@@ -85,7 +85,7 @@ const VendorList = ({
             onSelect={(selectedVal) => onHandleSelectVendorName(selectedVal)}
           />
           {/* {isProjectNameExist && ()} */}
-          <span
+          {/* <span
             className={isEnable ? TextWhite : TextDanger}
             style={{
               position: 'absolute',
@@ -95,7 +95,7 @@ const VendorList = ({
             }}
           >
             Please select valid vendor
-          </span>
+          </span> */}
         </CCol>
         <CCol></CCol>
       </CRow>

@@ -85,7 +85,7 @@ const ProjectList = ({
           onSelect={(selectedVal) => onHandleSelectProjectName(selectedVal)}
         />
         {/* {isProjectNameExist && ()} */}
-        <span
+        {/* <span
           className={isEnable ? TextWhite : TextDanger}
           style={{
             position: 'absolute',
@@ -95,7 +95,7 @@ const ProjectList = ({
           }}
         >
           Please select valid project
-        </span>
+        </span> */}
       </CCol>
       <CCol></CCol>
     </CRow>

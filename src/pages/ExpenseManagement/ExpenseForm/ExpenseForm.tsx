@@ -235,13 +235,27 @@ const ExpenseForm = (): JSX.Element => {
 
   useEffect(() => {
     if (
-      expenseCategory && expenseSubCategory && departmentList && purposeDetails && expenditureDate && currency && amount
+      expenseCategory &&
+      expenseSubCategory &&
+      departmentList &&
+      purposeDetails &&
+      expenditureDate &&
+      currency &&
+      amount
     ) {
       setIsAddButtonEnabled(true)
     } else {
       setIsAddButtonEnabled(false)
     }
-  }, [expenseCategory, expenseSubCategory, departmentList, purposeDetails, expenditureDate, currency, amount])
+  }, [
+    expenseCategory,
+    expenseSubCategory,
+    departmentList,
+    purposeDetails,
+    expenditureDate,
+    currency,
+    amount,
+  ])
 
   const clearBtnHandler = () => {
     setEmployeeAutoCompleteTarget('')
