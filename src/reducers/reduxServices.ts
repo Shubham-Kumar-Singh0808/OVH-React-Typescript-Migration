@@ -132,6 +132,7 @@ import { changeAssetStatusService } from './Assets/AssetList/ChangeStatus/Change
 import { productSpecificationListService } from './Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import { recruitmentHistoryServices } from './MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import { addProductService } from './Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import { creditCardListService } from './ExpenseManagement/CreditCardList/creditCardListSlice'
 import { candidateOfferService } from './Recruitment/CandidateOffer/CandidateOfferSlice'
 import { subCategoryListService } from './ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
@@ -274,6 +275,7 @@ export const reduxServices = {
   productSpecificationList: productSpecificationListService,
   recruitmentHistory: recruitmentHistoryServices,
   addNewProduct: addProductService,
+  creditCardList: creditCardListService,
   addNewCandidate: candidateOfferService,
   subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,

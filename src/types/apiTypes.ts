@@ -970,6 +970,15 @@ export interface ExpenseSubCategoryListApi extends ApiBase {
   updateSubCategory: string
   deleteSubCategory: string
 }
+
+export interface CreditCardListApi extends ApiBase {
+  getCardsList: string
+  addCardDetails: string
+  editCardDetails: string
+  updateCardDetails: string
+  deleteCardData: string
+  checkDuplicateCardNumber: string
+}
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
