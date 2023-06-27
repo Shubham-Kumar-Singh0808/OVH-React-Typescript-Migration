@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { CRow, CFormLabel, CCol, CFormInput, CButton } from '@coreui/react-pro'
 import CreditCardListTable from './CreditCardListTable'
 import OCard from '../../../components/ReusableComponent/OCard'
@@ -100,7 +100,6 @@ const CreditCardList = (): JSX.Element => {
         setCardName('')
         setCardNumber('')
         dispatch(reduxServices.app.actions.addToast(successToast))
-        dispatch(reduxServices.app.actions.addToast(undefined))
       }
     }
   }
@@ -134,9 +133,11 @@ const CreditCardList = (): JSX.Element => {
     />
   )
 
-  const result = isAddButtonEnabled
-    ? isAddButtonEnabled && isCardNumberExist.length > 0
-    : !isAddButtonEnabled
+  const result = useMemo(() => {
+    return isAddButtonEnabled
+      ? isAddButtonEnabled && isCardNumberExist.length > 0
+      : !isAddButtonEnabled
+  }, [isAddButtonEnabled, isCardNumberExist])
 
   return (
     <>

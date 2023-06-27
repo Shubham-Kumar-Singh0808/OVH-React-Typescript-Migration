@@ -35,7 +35,8 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     useState(0)
   const [isEditSubCategoryButtonEnabled, setIsEditSubCategoryButtonEnabled] =
     useState(false)
-  const [expensiveSubCategoryName, setSubCategoryName] = useState<string>('')
+  const [isEditBoxModified, setIsEditBoxModified] = useState(false)
+  const [expensiveSubCategoryName, setSubCategoryName] = useState('')
   const [isEditSubCategoryNameExist, setIsEditSubCategoryNameExist] =
     useState('')
   const dispatch = useAppDispatch()
@@ -121,6 +122,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
     }
+    setIsEditBoxModified(true)
     if (editSubCategoryNameExists(value.trim())) {
       setIsEditSubCategoryNameExist(value.trim())
     } else {
@@ -142,6 +144,13 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
   }
 
   const saveExpenseCategoryButtonHandler = async () => {
+    if (
+      !isEditBoxModified ||
+      editExpenseSubCategoryDetails.subCategoryName === expensiveSubCategoryName
+    ) {
+      setIsEditExpenseSubCategory(false)
+      return
+    }
     const saveExpenseSubCategoryResultAction = await dispatch(
       reduxServices.subCategoryList.updateExpenseSubCategoryList(
         editExpenseSubCategoryDetails,

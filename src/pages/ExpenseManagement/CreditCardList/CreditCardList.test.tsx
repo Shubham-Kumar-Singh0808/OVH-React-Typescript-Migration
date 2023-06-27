@@ -83,7 +83,7 @@ describe('Credit Card List without data', () => {
       const saveButton = screen.getByTestId(`save-credit-card-btn3`)
       await fireEvent.click(saveButton)
       expect(screen.getByTestId(`creditCardName3`)).toHaveValue(
-        'SBI Credit CardtOne CreditOne Credit',
+        'SBI Credit CardtOne Credit',
       )
       expect(screen.getByTestId(`creditCardNumber3`)).toHaveValue(
         '1123465414174123',

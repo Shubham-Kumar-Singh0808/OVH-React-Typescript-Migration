@@ -30,11 +30,12 @@ const ExpenseCategoryListTable = (): JSX.Element => {
   )
   const [isEditExpenseCategory, setIsEditExpenseCategory] =
     useState<boolean>(false)
+  const [isEditBoxModified, setIsEditBoxModified] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [deleteExpenseCategoryId, setDeleteExpenseCategoryId] = useState(0)
   const [isEditCategoryButtonEnabled, setIsEditCategoryButtonEnabled] =
     useState(false)
-  const [categoryName, setCategoryName] = useState<string>('')
+  const [categoryName, setCategoryName] = useState('')
   const [isEditCategoryNameExist, setIsEditCategoryNameExist] = useState('')
 
   const dispatch = useAppDispatch()
@@ -57,7 +58,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     reduxServices.categoryList.selectors.pageSizeFromState,
   )
 
-  const editCategoryNameExists = (name: string) => {
+  const editCategoryNameExists = (name: string): CategoryList | undefined => {
     return categoryList?.find((categories) => {
       return categories.categoryName.toLowerCase() === name.toLowerCase()
     })
@@ -86,7 +87,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     setCurrentPage(1)
   }
 
-  const getItemNumber = (index: number) => {
+  const getItemNumber = (index: number): number => {
     return (currentPage - 1) * pageSize + index + 1
   }
 
@@ -106,6 +107,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
     }
+    setIsEditBoxModified(true)
     if (editCategoryNameExists(value.trim())) {
       setIsEditCategoryNameExist(value.trim())
     } else {
@@ -126,6 +128,13 @@ const ExpenseCategoryListTable = (): JSX.Element => {
     setEditExpenseCategoryDetails(expensiveCategoryItems)
   }
   const saveExpenseCategoryButtonHandler = async () => {
+    if (
+      !isEditBoxModified ||
+      editExpenseCategoryDetails.categoryName === categoryName
+    ) {
+      setIsEditExpenseCategory(false)
+      return
+    }
     const saveExpenseCategoryResultAction = await dispatch(
       reduxServices.categoryList.updateExpenseCategory(
         editExpenseCategoryDetails,
@@ -142,7 +151,7 @@ const ExpenseCategoryListTable = (): JSX.Element => {
         reduxServices.app.actions.addToast(
           <OToast
             toastColor="success"
-            toastMessage="Category has been modified."
+            toastMessage="Category Updated Successfully"
           />,
         ),
       )

@@ -76,21 +76,18 @@ describe('Credit Card List Table with data', () => {
   test('should validate input data after edit button click', async () => {
     const editButton = screen.getByTestId(`btn-creditCardEdit3`)
     await fireEvent.click(editButton)
-    await waitFor(async () => {
-      userEvent.type(screen.getByTestId(`creditCardName3`), 'One Credit')
-      userEvent.type(
-        screen.getByTestId(`creditCardNumber3`),
-        '1234654141741234',
-      )
-      const saveButton = screen.getByTestId(`save-credit-card-btn3`)
-      await fireEvent.click(saveButton)
-      expect(screen.getByTestId(`creditCardName3`)).toHaveValue(
-        'SBI Credit CardtOne Credit',
-      )
-      expect(screen.getByTestId(`creditCardNumber3`)).toHaveValue(
-        '1123465414174123',
-      )
-    })
+    // await waitFor(async () => {})
+    userEvent.type(screen.getByTestId(`creditCardName3`), 'One Credit')
+    userEvent.type(screen.getByTestId(`creditCardNumber3`), '1234654141741234')
+    const saveButton = screen.getByTestId(`save-credit-card-btn3`)
+    expect(saveButton).toBeEnabled()
+    await fireEvent.click(saveButton)
+    expect(screen.getByTestId(`creditCardName3`)).toHaveValue(
+      'SBI Credit CardOne Credit',
+    )
+    expect(screen.getByTestId(`creditCardNumber3`)).toHaveValue(
+      '1234654141741234',
+    )
   })
   test('should be able to click delete button element with Yes button', () => {
     const deleteBtnClick = screen.getByTestId('btn-creditCardDelete3')

@@ -5,6 +5,7 @@ import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
 import OToast from '../../../../components/ReusableComponent/OToast'
 import { TextDanger } from '../../../../constant/ClassName'
+import { CategoryList } from '../../../../types/ExpenseManagement/Category/categoryListTypes'
 
 const AddExpenseCategory = (): JSX.Element => {
   const [categoryName, setCategoryName] = useState('')
@@ -22,7 +23,7 @@ const AddExpenseCategory = (): JSX.Element => {
     reduxServices.categoryList.selectors.categories,
   )
 
-  const categoryNameExists = (name: string) => {
+  const categoryNameExists = (name: string): CategoryList | undefined => {
     return existCategoryNames?.find((categoriesList) => {
       return categoriesList.categoryName.toLowerCase() === name.toLowerCase()
     })

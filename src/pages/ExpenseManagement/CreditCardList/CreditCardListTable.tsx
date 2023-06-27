@@ -24,12 +24,13 @@ const CreditCardListTable = (): JSX.Element => {
   )
   const [isEditCreditCardDetails, setIsEditCreditCardDetails] =
     useState<boolean>(false)
+  const [isEditBoxModified, setIsEditBoxModified] = useState(false)
   const [isDeleteCreditCardModalVisible, setIsDeleteCreditCardModalVisible] =
     useState(false)
   const [deleteCreditCardId, setDeleteCreditCardId] = useState(0)
   const [isEditCreditCardButtonEnabled, setIsEditCreditCardButtonEnabled] =
     useState(false)
-  const [creditCardName, setCreditCardName] = useState<string>('')
+  const [creditCardName, setCreditCardName] = useState('')
   const [isEditCreditCardExist, setIsEditCreditCardExist] = useState('')
   // Dispatch variable to dispatches the API's
   const dispatch = useAppDispatch()
@@ -73,6 +74,7 @@ const CreditCardListTable = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
     }
+    setIsEditBoxModified(true)
     if (editCreditCardExist(value.trim())) {
       setIsEditCreditCardExist(value.trim())
     } else {
@@ -94,6 +96,10 @@ const CreditCardListTable = (): JSX.Element => {
     setEditCreditCardDetails(creditCardDetailsItem)
   }
   const saveCreditCardButtonHandler = async () => {
+    if (!isEditBoxModified) {
+      setIsEditCreditCardDetails(false)
+      return
+    }
     const saveCreditCardResultAction = await dispatch(
       reduxServices.creditCardList.updateCreditCardList(editCreditCardDetails),
     )
