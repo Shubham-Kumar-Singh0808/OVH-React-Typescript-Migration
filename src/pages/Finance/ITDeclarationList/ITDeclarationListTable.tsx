@@ -142,7 +142,7 @@ const ITDeclarationListTable = (
                             <CButton
                               color="info btn-ovh"
                               className="btn-ovh-employee-list"
-                              data-testid={`sc-edit-btn${index}`}
+                              data-testid={`itDecFormEditBtn-${index}`}
                               onClick={(e) =>
                                 editITFormButtonHandler(e, itDeclaration)
                               }

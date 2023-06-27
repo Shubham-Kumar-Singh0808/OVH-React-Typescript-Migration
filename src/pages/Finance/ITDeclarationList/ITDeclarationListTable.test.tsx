@@ -3,7 +3,7 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import ITDeclarationListTable from './ITDeclarationListTable'
 import { initialITForm } from './ITDeclarationListHelpers'
-import { cleanup, render, screen, waitFor } from '../../../test/testUtils'
+import { act, cleanup, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import {
   mockDeclarationList,
@@ -43,6 +43,11 @@ describe('Employee BirthdaysList Table Component Testing', () => {
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
         },
+        authentication: {
+          authenticatedUser: {
+            employeeId: 1880,
+          },
+        },
       },
     })
   })
@@ -81,5 +86,10 @@ describe('Employee BirthdaysList Table Component Testing', () => {
         <ITDeclarationFormViewTable viewDeclarationForm={initialITForm} />,
       ),
     ).toBeTruthy()
+  })
+  test('edit button functionality', () => {
+    act(() => {
+      userEvent.click(screen.getByTestId('itDecFormEditBtn-0'))
+    })
   })
 })
