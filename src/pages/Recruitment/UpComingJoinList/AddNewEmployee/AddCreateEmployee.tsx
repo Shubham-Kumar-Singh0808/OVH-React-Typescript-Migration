@@ -1,6 +1,6 @@
 import { CButton, CCol, CRow } from '@coreui/react-pro'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import moment from 'moment'
 // import {
 //   Birthday,
@@ -388,10 +388,11 @@ const AddCreateEmployee = (): JSX.Element => {
   // End - compose data
 
   // POST method
+  const { joineeId } = useParams<{ joineeId: string }>()
   const handleAddEmployee = async () => {
     const payload = {
       ...addEmployee,
-      candidateId: getJoineeDetails.candidateId,
+      candidateId: joineeId,
       firstName: employeeFirstName,
       lastName: employeeNewLatName,
       userName: userEmployeeName,
@@ -406,6 +407,7 @@ const AddCreateEmployee = (): JSX.Element => {
         newEmployeeResponse,
       )
     ) {
+      dispatch(reduxServices.upComingJoinList.deleteJoinee(Number(joineeId)))
       dispatch(
         reduxServices.app.actions.addToast(
           toastElement('New employee is successfully added'),
