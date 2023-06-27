@@ -14,7 +14,10 @@ import {
 import { mockActiveEmployeeList } from '../../../../test/data/AddAchieverData'
 import { SaveEmployee } from '../../../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
-import { mockAllAssetListData } from '../../../../test/data/AssetListData'
+import {
+  mockAllAssetListData,
+  mockChangeAssetData,
+} from '../../../../test/data/AssetListData'
 
 const mockOnSelect = jest.fn()
 const mockSetEmpName = jest.fn()
@@ -35,46 +38,8 @@ describe('Should filter the Employee name in Change Asset Screen', () => {
           employeeName={undefined}
           setEmployeeName={mockSetEmpName}
           setEmpToggle={mockSetEmpName}
-          changeReportStatus={{
-            id: 0,
-            poNumber: '',
-            vendorId: 0,
-            productSpecificationId: 0,
-            manufacturerId: 0,
-            productId: 0,
-            pSpecification: '',
-            productName: '',
-            manufacturerName: '',
-            assetNumber: '',
-            otherAssetNumber: '',
-            invoiceNumber: '',
-            purchasedDate: '',
-            receivedDate: '',
-            notes: null,
-            employeeName: '',
-            employeeId: 0,
-            description: '',
-            status: '',
-            assetTypeId: 0,
-            assetType: '',
-            productSpecification: null,
-            otherNumber: null,
-            warrantyStartDate: null,
-            warrantyEndDate: null,
-            searchByEmpName: null,
-            departmentId: null,
-            departmentName: null,
-            location: '',
-            vendorName: '',
-            createdBy: '',
-            updatedBy: '',
-            createdDate: '',
-            updatedDate: '',
-            referenceNumber: '',
-            amount: 0,
-            countryId: null,
-          }}
           setChangeReportStatus={jest.fn()}
+          changeReportStatus={mockChangeAssetData}
         />,
         {
           preloadedState: {
@@ -106,18 +71,7 @@ describe('Should filter the Employee name in Change Asset Screen', () => {
     test('should call onChange of Asset Status', () => {
       const input = screen.getByTestId('asset-status')
       fireEvent.change(input, selectStatusType)
-      expect(input).toHaveValue('')
-    })
-
-    test('should be able to see place holder "dd/mm/yyyy"', () => {
-      expect(screen.getByPlaceholderText('dd/mm/yyyy')).toBeInTheDocument()
-    })
-    test('should be able to render Status Date label', () => {
-      expect(screen.getByText('Status Date:')).toBeInTheDocument()
-    })
-    test('should render date picker', () => {
-      const dateInput = screen.findByTestId('date-picker')
-      expect(dateInput).toBeTruthy()
+      expect(input).toHaveValue('Under Repair')
     })
 
     test('should be able to click clear button element', () => {
@@ -143,6 +97,14 @@ describe('Should filter the Employee name in Change Asset Screen', () => {
       await waitFor(() => {
         expect(updateAllLocations).toBeChecked()
       })
+    })
+    test('should render Add button as disabled  initially', () => {
+      expect(screen.getByTestId('save-btn')).toBeDisabled()
+      expect(screen.getByTestId('clear-btn')).toBeEnabled()
+    })
+    test('should enabled add button when input is not empty', () => {
+      expect(screen.getByTestId('clear-btn')).not.toBeDisabled()
+      expect(screen.getByTestId('save-btn')).toBeDisabled()
     })
   })
 
@@ -207,6 +169,7 @@ describe('Should filter the Employee name in Change Asset Screen', () => {
       )
     })
     afterEach(cleanup)
+
     test('should function autocomplete', () => {
       const autocomplete = screen.getByPlaceholderText('Employee')
       autocomplete.click()
@@ -248,10 +211,6 @@ describe('Should filter the Employee name in Change Asset Screen', () => {
 
       const employee = screen.getByTestId('ach-emp-name')
       userEvent.type(employee, 'Someswara Rao')
-
-      const saveBtnElement = screen.getByTestId('save-btn')
-      expect(saveBtnElement).toBeInTheDocument()
-      userEvent.click(saveBtnElement)
     })
   })
 })

@@ -1,8 +1,49 @@
-import { string } from 'prop-types'
 import {
   AllAssetData,
+  AllAssetsList,
   AssetTypeChangeList,
 } from '../../types/Assets/AssetList/AssetListTypes'
+import { getAllAssets } from '../../types/Assets/AssetList/ChangeStatusTypes/ChangeStatusTypes'
+
+export const mockChangeAssetData: AllAssetsList = {
+  id: 4059,
+  poNumber: '121212',
+  vendorId: 61,
+  productSpecificationId: 360,
+  manufacturerId: 246,
+  productId: 183,
+  pSpecification: '<h2>test</h2>',
+  productName: 'WorldTest',
+  manufacturerName: 'somesh2',
+  assetNumber: 'RBT121212',
+  otherAssetNumber: '13123',
+  invoiceNumber: '32132',
+  purchasedDate: '03/05/1988',
+  receivedDate: '03/06/2023',
+  notes: 'testNotes',
+  employeeName: 'Someswara Rao',
+  employeeId: 1476,
+  status: 'Under Repair',
+  assetTypeId: 2,
+  assetType: 'Software',
+  productSpecification: null,
+  otherNumber: null,
+  warrantyStartDate: '01/08/2022',
+  warrantyEndDate: '31/05/2023',
+  searchByEmpName: null,
+  departmentId: null,
+  departmentName: null,
+  location: 'string | null',
+  vendorName: 'Water Cooler vendor',
+  createdBy: 'Stagging Testtt',
+  updatedBy: 'Stagging Test2',
+  createdDate: '13/05/2023',
+  updatedDate: '22/05/2023',
+  referenceNumber: '',
+  amount: 10,
+  countryId: 21,
+  description: ' ',
+}
 
 export const mockAllAssetListData: AllAssetData = {
   size: 7,
