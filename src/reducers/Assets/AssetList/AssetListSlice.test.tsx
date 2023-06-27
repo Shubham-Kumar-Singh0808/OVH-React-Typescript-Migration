@@ -3,7 +3,10 @@ import assetListSliceReducer, {
   initialAssetTypeChangeListState,
 } from './AssetListSlice'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { ManufacturerList } from '../../../types/Assets/AssetList/AssetListTypes'
+import {
+  AllAssetsList,
+  ManufacturerList,
+} from '../../../types/Assets/AssetList/AssetListTypes'
 import { mockAssetTypeChangeList } from '../../../test/data/AssetListData'
 
 describe('Asset List Slice', () => {
@@ -20,6 +23,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetList: {} as AllAssetsList,
       })
     })
     it('Should set isLoading to "loading" when getAssets is pending testing', () => {
@@ -34,6 +38,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetList: {} as AllAssetsList,
       })
     })
     it('Should set isLoading to "loading" when getAssets is fullfilled', () => {
@@ -52,6 +57,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: undefined,
+        assetList: {} as AllAssetsList,
       })
     })
 
@@ -67,6 +73,7 @@ describe('Asset List Slice', () => {
         manufacturerList: {} as ManufacturerList,
         allAssetList: [],
         listSize: 0,
+        assetList: {} as AllAssetsList,
       })
     })
   })
