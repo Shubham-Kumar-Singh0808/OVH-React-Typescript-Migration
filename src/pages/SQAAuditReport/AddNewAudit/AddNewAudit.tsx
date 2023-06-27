@@ -67,6 +67,10 @@ const AddNewAudit = (): JSX.Element => {
   const projectManagers = useTypedSelector(
     reduxServices.projectManagement.selectors.managers,
   )
+  const Result1 = projects?.filter(
+    (item) => item.projectName === projectNameAutoCompleteTarget,
+  )
+
   const allEmployeeProfiles = useTypedSelector(
     reduxServices.allocateEmployee.selectors.employeeNames,
   )
@@ -114,7 +118,8 @@ const AddNewAudit = (): JSX.Element => {
       projectNameAutoCompleteTarget &&
       addAuditorName.length > 0 &&
       addAuditeeName.length > 0 &&
-      !isProjectManagerVisible
+      !isProjectManagerVisible &&
+      Result1[0]?.projectName === projectNameAutoCompleteTarget
     ) {
       setIsButtonEnable(true)
     } else if (
@@ -126,7 +131,8 @@ const AddNewAudit = (): JSX.Element => {
       projectManagerAutoCompleteTarget &&
       addAuditorName.length > 0 &&
       addAuditeeName.length > 0 &&
-      isProjectManagerVisible
+      isProjectManagerVisible &&
+      Result1[0]?.projectName === projectNameAutoCompleteTarget
     ) {
       setIsButtonEnable(true)
     } else {
@@ -381,84 +387,101 @@ const AddNewAudit = (): JSX.Element => {
             </CCol>
           </CRow>
           <CRow className="mt-4 mb-4">
-            <CFormLabel {...formLabelProps} className={formLabel}>
-              Project Name :
-              <span
-                className={
-                  projectNameAutoCompleteTarget
-                    ?.replace(/-_[^a-z0-9\s]/gi, '')
-                    ?.replace(/^\s*/, '') ||
-                  addAudit?.projectName
-                    ?.replace(/-_[^a-z0-9\s]/gi, '')
-                    ?.replace(/^\s*/, '')
-                    ? TextWhite
-                    : TextDanger
-                }
-              >
-                *
-              </span>
-            </CFormLabel>
             {!isProjectManagerVisible && (
-              <CCol sm={3}>
-                <Autocomplete
-                  inputProps={{
-                    className: 'form-control form-control-sm',
-                    placeholder: 'Project Name',
-                    onBlur: selectAuditees,
-                  }}
-                  getItemValue={(item) => item.projectName}
-                  items={projects ? projects : []}
-                  wrapperStyle={{ position: 'relative' }}
-                  renderMenu={(children) => (
-                    <div
-                      className={
-                        projectNameAutoCompleteTarget &&
-                        projectNameAutoCompleteTarget?.length > 0
-                          ? 'autocomplete-dropdown-wrap'
-                          : 'autocomplete-dropdown-wrap hide'
-                      }
-                    >
-                      {children}
-                    </div>
-                  )}
-                  renderItem={(item, isHighlighted) => (
-                    <div
-                      data-testid="project-option"
-                      className={
-                        isHighlighted
-                          ? 'autocomplete-dropdown-item active'
-                          : 'autocomplete-dropdown-item '
-                      }
-                      key={item.id}
-                    >
-                      {item.projectName}
-                    </div>
-                  )}
-                  value={projectNameAutoCompleteTarget}
-                  shouldItemRender={(item, itemValue) =>
-                    item?.projectName
-                      ?.toLowerCase()
-                      .indexOf(itemValue?.toLowerCase()) > -1
-                  }
-                  onChange={(e) => projectsOnChangeHandler(e)}
-                  onSelect={(selectedVal) =>
-                    onHandleSelectProjectName(selectedVal)
-                  }
-                />
-              </CCol>
+              <>
+                <CFormLabel {...formLabelProps} className={formLabel}>
+                  Project Name :
+                  <span
+                    className={
+                      Result1[0]?.projectName === projectNameAutoCompleteTarget
+                        ? TextWhite
+                        : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <Autocomplete
+                    inputProps={{
+                      className: 'form-control form-control-sm',
+                      placeholder: 'Project Name',
+                      onBlur: selectAuditees,
+                    }}
+                    getItemValue={(item) => item.projectName}
+                    items={projects ? projects : []}
+                    wrapperStyle={{ position: 'relative' }}
+                    renderMenu={(children) => (
+                      <div
+                        className={
+                          projectNameAutoCompleteTarget &&
+                          projectNameAutoCompleteTarget?.length > 0
+                            ? 'autocomplete-dropdown-wrap'
+                            : 'autocomplete-dropdown-wrap hide'
+                        }
+                      >
+                        {children}
+                      </div>
+                    )}
+                    renderItem={(item, isHighlighted) => (
+                      <div
+                        data-testid="project-option"
+                        className={
+                          isHighlighted
+                            ? 'autocomplete-dropdown-item active'
+                            : 'autocomplete-dropdown-item '
+                        }
+                        key={item.id}
+                      >
+                        {item.projectName}
+                      </div>
+                    )}
+                    value={projectNameAutoCompleteTarget}
+                    shouldItemRender={(item, itemValue) =>
+                      item?.projectName
+                        ?.toLowerCase()
+                        .indexOf(itemValue?.toLowerCase()) > -1
+                    }
+                    onChange={(e) => projectsOnChangeHandler(e)}
+                    onSelect={(selectedVal) =>
+                      onHandleSelectProjectName(selectedVal)
+                    }
+                  />
+                </CCol>
+              </>
             )}
             {isProjectManagerVisible && (
-              <CCol sm={3}>
-                <CFormInput
-                  data-testid="projectName-input"
-                  autoComplete="off"
-                  type="text"
-                  name="projectName"
-                  placeholder="Project Name"
-                  value={addAudit?.projectName}
-                  onChange={handleInputChange}
-                />
-              </CCol>
+              <>
+                <CFormLabel {...formLabelProps} className={formLabel}>
+                  Project Name :
+                  <span
+                    className={
+                      projectNameAutoCompleteTarget
+                        ?.replace(/-_[^a-z0-9\s]/gi, '')
+                        ?.replace(/^\s*/, '') ||
+                      addAudit?.projectName
+                        ?.replace(/-_[^a-z0-9\s]/gi, '')
+                        ?.replace(/^\s*/, '') ||
+                      Result1[0]?.projectName === projectNameAutoCompleteTarget
+                        ? TextWhite
+                        : TextDanger
+                    }
+                  >
+                    *
+                  </span>
+                </CFormLabel>
+                <CCol sm={3}>
+                  <CFormInput
+                    data-testid="projectName-input"
+                    autoComplete="off"
+                    type="text"
+                    name="projectName"
+                    placeholder="Project Name"
+                    value={addAudit?.projectName}
+                    onChange={handleInputChange}
+                  />
+                </CCol>
+              </>
             )}
           </CRow>
           <CRow className="mt-4 mb-4">
