@@ -22,7 +22,7 @@ const DateOfJoining = ({
       setEmployeeDateOfJoining(getJoineeDetails.dateOfJoining)
     }
   }, [getJoineeDetails.dateOfJoining])
-
+  console.log(dateValue)
   return (
     <>
       <CRow className="mb-3">

@@ -67,7 +67,17 @@ const AddCreateEmployee = (): JSX.Element => {
   const [employeeDateOfJoining, setEmployeeDateOfJoining] = useState<
     string | Date
   >('')
-  const [employeeFirstName, employeeLastName] = userEmployeeName.split(' ')
+  const [newEmployeeFullName, setNewEmployeeFullName] = useState<string>()
+  const getJoineeDetails = useTypedSelector(
+    reduxServices.upComingJoinList.selectors.getJoineeDetails,
+  )
+  useEffect(() => {
+    if (getJoineeDetails.candidateName) {
+      setNewEmployeeFullName(getJoineeDetails.candidateName)
+    }
+  }, [getJoineeDetails.candidateName])
+  const [employeeFirstName, employeeLastName] =
+    String(newEmployeeFullName).split(' ')
   const initResetFields = {
     hrAssociate: false,
     projectManager: false,
@@ -158,15 +168,15 @@ const AddCreateEmployee = (): JSX.Element => {
       contractEndDate: moment(value).format(dateFormat),
     })
   }
-  const onHandleLastName = (value: string) => {
-    setAddEmployee({ ...addEmployee, lastName: value })
-  }
+  // const onHandleLastName = (value: string) => {
+  //   setNewEmployeeFullName({ ...addEmployee, lastName: value })
+  // }
   const onHandleMiddleName = (value: string) => {
     setAddEmployee({ ...addEmployee, middleName: value })
   }
-  const onHandleFirstName = (value: string) => {
-    setAddEmployee({ ...addEmployee, firstName: value })
-  }
+  // const onHandleFirstName = (value: string) => {
+  //   setNewEmployeeFullName({ ...addEmployee, firstName: value })
+  // }
 
   // const onHandleUsername = (value: string) => {
   //   setAddEmployee({ ...addEmployee, userName: value })
@@ -454,13 +464,13 @@ const AddCreateEmployee = (): JSX.Element => {
               />
               <EmployeeFullName
                 dynamicFormLabelProps={dynamicFormLabelProps}
-                firstNameChangeHandler={onHandleFirstName}
-                lastNameChangeHandler={onHandleLastName}
+                // firstNameChangeHandler={onHandleFirstName}
+                // lastNameChangeHandler={onHandleLastName}
                 middleNameChangeHandler={onHandleMiddleName}
                 firstNameValue={employeeFirstName || ''}
                 lastNameValue={employeeLastName || ''}
                 middleNameValue={addEmployee.middleName || ''}
-                setUserEmployeeName={setUserEmployeeName}
+                setNewEmployeeFullName={setNewEmployeeFullName}
               />
               <OSelectList
                 isRequired={true}
@@ -612,7 +622,7 @@ const AddCreateEmployee = (): JSX.Element => {
                   <CButton
                     className="btn-ovh me-1"
                     color="success"
-                    disabled={!isViewBtnEnabled}
+                    // disabled={!isViewBtnEnabled}
                     data-testid="add-new-employee"
                     onClick={handleAddEmployee}
                   >

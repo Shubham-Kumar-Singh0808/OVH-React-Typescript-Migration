@@ -7,13 +7,14 @@ import { EmployeeFullNameChangeHandlerProp } from '../../../../types/Recruitment
 
 const EmployeeFullName = ({
   dynamicFormLabelProps,
-  firstNameChangeHandler,
-  lastNameChangeHandler,
+  // firstNameChangeHandler,
+  // lastNameChangeHandler,
   middleNameChangeHandler,
   firstNameValue,
   lastNameValue,
   middleNameValue,
-  setUserEmployeeName,
+  // setUserEmployeeName,
+  setNewEmployeeFullName,
 }: EmployeeFullNameChangeHandlerProp): JSX.Element => {
   const isFullNameRequired =
     showIsRequired(firstNameValue?.replace(/^\s*/, '')) === TextDanger ||
@@ -43,9 +44,10 @@ const EmployeeFullName = ({
                 placeholder="First Name"
                 className="capetalized"
                 value={firstNameValue}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                  setUserEmployeeName(e.target.value)
-                }
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                //   setUserEmployeeName(e.target.value)
+                // }
+                onChange={(e) => setNewEmployeeFullName(e.target.value)}
               />
             </CCol>
             <CCol sm={3}>
@@ -71,9 +73,10 @@ const EmployeeFullName = ({
                 data-testid="lastnameform"
                 className="capetalized"
                 value={lastNameValue}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                  setUserEmployeeName(e.target.value)
-                }
+                // onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                //   setUserEmployeeName(e.target.value)
+                // }
+                onChange={(e) => setNewEmployeeFullName(e.target.value)}
               />
             </CCol>
           </CRow>

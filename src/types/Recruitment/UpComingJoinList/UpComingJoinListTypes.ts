@@ -98,11 +98,14 @@ export interface DateOfJoiningChangeHandlerProp extends DynamicFormLabelProps {
 
 export interface EmployeeFullNameChangeHandlerProp
   extends DynamicFormLabelProps {
-  firstNameChangeHandler: (firstName: string) => void
-  lastNameChangeHandler: (lastName: string) => void
+  // firstNameChangeHandler: (firstName: string) => void
+  // lastNameChangeHandler: (lastName: string) => void
   middleNameChangeHandler: (middleName: string) => void
   firstNameValue: string
   lastNameValue: string
   middleNameValue: string
-  setUserEmployeeName: React.Dispatch<React.SetStateAction<string>>
+  // setUserEmployeeName: React.Dispatch<React.SetStateAction<string>>
+  setNewEmployeeFullName: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 }
