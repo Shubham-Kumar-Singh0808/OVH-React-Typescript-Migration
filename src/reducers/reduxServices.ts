@@ -136,6 +136,7 @@ import { subCategoryListService } from './ExpenseManagement/Sub-Category/expense
 import { upComingJoiningListService } from './Recruitment/UpComingJoinList/upComingJoinListSlice'
 import { interviewStatusReportServices } from './Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 import { userRolesConfigurationsServices } from './Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
+import { ChecklistServices } from './Checklist/ChecklistSlice'
 
 export const reduxServices = {
   app: appService,
@@ -276,4 +277,5 @@ export const reduxServices = {
   subCategoryList: subCategoryListService,
   upComingJoinList: upComingJoiningListService,
   interviewStatusReport: interviewStatusReportServices,
+  Checklist: ChecklistServices,
 }

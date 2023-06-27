@@ -977,3 +977,6 @@ export interface InterviewStatusReportApi extends ApiBase {
   exportInterviewStatusReport: string
   exportInterviewerDetails: string
 }
+export interface ChecklistApi extends ApiBase {
+  getCheckList: string
+}

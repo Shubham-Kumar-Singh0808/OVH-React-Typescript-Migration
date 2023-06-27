@@ -125,6 +125,7 @@ import {
   UpComingJoinListApi,
   CandidateOfferApi,
   InterviewStatusReportApi,
+  ChecklistApi,
 } from '../../types/apiTypes'
 
 const baseUrl = process.env.REACT_APP_API_BASE || ''
@@ -1167,4 +1168,8 @@ export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
     apiPrefix + '/jobapplicant/exportInterviewStatusReport',
   exportInterviewerDetails:
     apiPrefix + '/jobapplicant/exportInterviewerDetails',
+}
+
+export const CheckListApiConfig: ChecklistApi = {
+  getCheckList: apiPrefix + '/contactInfo/getAll',
 }

@@ -146,6 +146,7 @@ import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upC
 import addNewJoineeReducer from './reducers/Recruitment/CandidateOffer/CandidateOfferSlice'
 import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
 import userRolesConfigurationReducer from './reducers/Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
+import ChecklistReducer from './reducers/Checklist/ChecklistSlice'
 
 export const allReducers = {
   app: appReducer,
@@ -293,6 +294,7 @@ export const allReducers = {
   addNewJoinee: addNewJoineeReducer,
 
   interviewStatusReport: interviewStatusReportReducer,
+  Checklist: ChecklistReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({
