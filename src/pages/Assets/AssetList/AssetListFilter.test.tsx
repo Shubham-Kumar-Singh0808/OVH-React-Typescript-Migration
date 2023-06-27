@@ -26,6 +26,7 @@ const toRender = (
       setSearchByEmployee={jest.fn()}
       setSearchInput={jest.fn()}
       setCurrentPage={jest.fn()}
+      setToggle={mockSetTogglePage}
     />
   </div>
 )
