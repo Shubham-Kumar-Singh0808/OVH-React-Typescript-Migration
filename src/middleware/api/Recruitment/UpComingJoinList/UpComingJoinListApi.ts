@@ -38,9 +38,22 @@ const getJoineeById = async (joineeId: number): Promise<GetJoineeById> => {
   return response.data
 }
 
+const deleteJoinee = async (joineeId: number): Promise<number | undefined> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: getUpComingJoinListConfig.deleteJoinee,
+    method: AllowedHttpMethods.delete,
+    params: {
+      joineeId,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const UpComingJoinListApi = {
   getUpComingJoinList,
   getJoineeById,
+  deleteJoinee,
 }
 
 export default UpComingJoinListApi

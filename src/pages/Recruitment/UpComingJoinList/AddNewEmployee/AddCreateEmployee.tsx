@@ -68,16 +68,22 @@ const AddCreateEmployee = (): JSX.Element => {
     string | Date
   >('')
   const [newEmployeeFullName, setNewEmployeeFullName] = useState<string>()
+  const [newEmployeeLastName, setEmployeeLastName] = useState<string>()
   const getJoineeDetails = useTypedSelector(
     reduxServices.upComingJoinList.selectors.getJoineeDetails,
   )
   useEffect(() => {
     if (getJoineeDetails.candidateName) {
       setNewEmployeeFullName(getJoineeDetails.candidateName)
+      setEmployeeLastName(getJoineeDetails.candidateName)
     }
   }, [getJoineeDetails.candidateName])
   const [employeeFirstName, employeeLastName] =
     String(newEmployeeFullName).split(' ')
+  const [employeeNewFirstName, employeeNewLatName] =
+    String(newEmployeeLastName).split(' ')
+  console.log(employeeNewFirstName)
+  console.log(employeeLastName)
   const initResetFields = {
     hrAssociate: false,
     projectManager: false,
@@ -385,6 +391,10 @@ const AddCreateEmployee = (): JSX.Element => {
   const handleAddEmployee = async () => {
     const payload = {
       ...addEmployee,
+      candidateId: getJoineeDetails.candidateId,
+      firstName: employeeFirstName,
+      lastName: employeeNewLatName,
+      userName: userEmployeeName,
       dateOfJoining: employeeDateOfJoining as string,
     }
 
@@ -473,9 +483,10 @@ const AddCreateEmployee = (): JSX.Element => {
                 // lastNameChangeHandler={onHandleLastName}
                 middleNameChangeHandler={onHandleMiddleName}
                 firstNameValue={employeeFirstName || ''}
-                lastNameValue={employeeLastName || ''}
+                lastNameValue={employeeNewLatName || ''}
                 middleNameValue={addEmployee.middleName || ''}
                 setNewEmployeeFullName={setNewEmployeeFullName}
+                setEmployeeLastName={setEmployeeLastName}
               />
               <OSelectList
                 isRequired={true}

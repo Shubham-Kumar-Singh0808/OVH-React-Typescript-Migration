@@ -963,6 +963,7 @@ export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string
   getEmployeeDepartments: string
   getJoineeById: string
+  deleteJoinee: string
 }
 export interface InterviewStatusReportApi extends ApiBase {
   getAllTechnology: string

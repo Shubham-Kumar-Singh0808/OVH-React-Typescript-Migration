@@ -15,10 +15,14 @@ const EmployeeFullName = ({
   middleNameValue,
   // setUserEmployeeName,
   setNewEmployeeFullName,
+  setEmployeeLastName,
 }: EmployeeFullNameChangeHandlerProp): JSX.Element => {
   const isFullNameRequired =
     showIsRequired(firstNameValue?.replace(/^\s*/, '')) === TextDanger ||
     showIsRequired(lastNameValue?.replace(/^\s*/, '')) === TextDanger
+  const onChangeFirstName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewEmployeeFullName(e.target.value)
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -47,7 +51,7 @@ const EmployeeFullName = ({
                 // onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                 //   setUserEmployeeName(e.target.value)
                 // }
-                onChange={(e) => setNewEmployeeFullName(e.target.value)}
+                onChange={(e) => onChangeFirstName(e)}
               />
             </CCol>
             <CCol sm={3}>
@@ -76,7 +80,7 @@ const EmployeeFullName = ({
                 // onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                 //   setUserEmployeeName(e.target.value)
                 // }
-                onChange={(e) => setNewEmployeeFullName(e.target.value)}
+                onChange={(e) => setEmployeeLastName(e.target.value)}
               />
             </CCol>
           </CRow>

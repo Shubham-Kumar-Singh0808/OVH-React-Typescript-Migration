@@ -108,4 +108,5 @@ export interface EmployeeFullNameChangeHandlerProp
   setNewEmployeeFullName: React.Dispatch<
     React.SetStateAction<string | undefined>
   >
+  setEmployeeLastName: React.Dispatch<React.SetStateAction<string | undefined>>
 }

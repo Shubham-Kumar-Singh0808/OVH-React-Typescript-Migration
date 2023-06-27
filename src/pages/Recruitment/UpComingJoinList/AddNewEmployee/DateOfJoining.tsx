@@ -6,7 +6,7 @@ import { DateOfJoiningChangeHandlerProp } from '../../../../types/Recruitment/Up
 import { showIsRequired } from '../../../../utils/helper'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useTypedSelector } from '../../../../stateStore'
-import { deviceLocale } from '../../../../utils/dateFormatUtils'
+import { dateFormat } from '../../../../constant/DateFormat'
 
 const DateOfJoining = ({
   dynamicFormLabelProps,
@@ -23,6 +23,9 @@ const DateOfJoining = ({
     }
   }, [getJoineeDetails.dateOfJoining])
   console.log(employeeDateOfJoining)
+  const onHandleEndDate = (value: Date) => {
+    setEmployeeDateOfJoining(moment(value).format(dateFormat))
+  }
   return (
     <>
       <CRow className="mb-3">
@@ -49,9 +52,10 @@ const DateOfJoining = ({
             name="joinedDate"
             value={employeeDateOfJoining}
             // onChange={(date: Date) => setEmployeeDateOfJoining(date)}
-            onChange={(date: Date) =>
-              setEmployeeDateOfJoining(moment(date).format(commonFormatDate))
-            }
+            // onChange={(date: Date) =>
+            //   setEmployeeDateOfJoining(moment(date).format(commonFormatDate))
+            // }
+            onChange={(date: Date) => onHandleEndDate(date)}
           />
         </CCol>
       </CRow>

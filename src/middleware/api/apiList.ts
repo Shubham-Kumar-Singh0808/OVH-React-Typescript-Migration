@@ -1149,6 +1149,7 @@ export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
   getJoineeById: apiPrefix + '/jobapplicant/getJoineeById',
+  deleteJoinee: apiPrefix + '/jobapplicant/jobAdmin/deleteJoinee',
 }
 
 export const interviewStatusReportApiConfig: InterviewStatusReportApi = {

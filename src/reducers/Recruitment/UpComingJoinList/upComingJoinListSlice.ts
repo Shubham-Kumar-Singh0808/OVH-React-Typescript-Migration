@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { RootState } from '../../../stateStore'
+import { AppDispatch, RootState } from '../../../stateStore'
 import {
   GetJoineeById,
   GetUpComingJoineeList,
@@ -36,6 +36,23 @@ const getJoineeById = createAsyncThunk(
   },
 )
 
+const deleteJoinee = createAsyncThunk<
+  number | undefined,
+  number,
+  {
+    dispatch: AppDispatch
+    state: RootState
+    rejectValue: ValidationError
+  }
+>('jobapplicant/deleteJoinee', async (joineeId, thunkApi) => {
+  try {
+    return await UpComingJoinListApi.deleteJoinee(joineeId)
+  } catch (error) {
+    const err = error as AxiosError
+    return thunkApi.rejectWithValue(err.response?.status as ValidationError)
+  }
+})
+
 export const initialUpComingJoinListState: UpComingJoineeListSliceState = {
   upComingJoineeListDetails: [],
   listSize: 0,
@@ -68,6 +85,7 @@ const upComingJoinListSlice = createSlice({
 const upComingJoinListThunk = {
   getUpConingJoinList,
   getJoineeById,
+  deleteJoinee,
 }
 
 function isLoading(state: RootState): LoadingState {
