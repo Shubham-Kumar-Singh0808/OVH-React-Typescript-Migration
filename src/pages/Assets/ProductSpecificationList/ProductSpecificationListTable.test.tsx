@@ -4,12 +4,12 @@ import userEvent from '@testing-library/user-event'
 import ProductSpecificationListTable from './ProductSpecificationListTable'
 import { fireEvent, render, screen, waitFor } from '../../../test/testUtils'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
-import { GetProductSpecificationListDetails } from '../../../types/Assets/ProductSpecificationList/ProductSpecificationListTypes'
-import { mockProductSpecificationList } from '../../../test/data/ProductSpecificationListData'
+import { mockProductSpecification } from '../../../test/data/ProductSpecificationListData'
+import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 
 const mockSetData = jest.fn()
 const handleModal = jest.fn()
-describe('Job Openings without data', () => {
+describe('Product Specification without data', () => {
   beforeEach(() => {
     render(
       <ProductSpecificationListTable
@@ -20,20 +20,29 @@ describe('Job Openings without data', () => {
         setPageSize={mockSetData}
         setEditProductSpecification={jest.fn()}
         setToggle={jest.fn()}
-        userAccess={undefined}
       />,
       {
         preloadedState: {
           productSpecificationList: {
-            productSpecifications: mockProductSpecificationList,
-            getProductSpecificationListDetails:
-              {} as GetProductSpecificationListDetails,
             isLoading: ApiLoadingState.succeeded,
-            listSize: 0,
+            productSpecifications: mockProductSpecification.list,
+            getProductSpecificationListDetails: mockProductSpecification.list,
+            listSize: 150,
+          },
+          userAccessToFeatures: {
+            userAccessToFeatures: mockUserAccessToFeaturesData,
           },
         },
       },
     )
+  })
+  test('Should be able to click Delete Button functionality Element', () => {
+    const dltBtnElement = screen.getByTestId('btn-delete1')
+    expect(dltBtnElement).toBeInTheDocument()
+    userEvent.click(dltBtnElement)
+    const modalPopupConfirmBtn = screen.getByRole('button', { name: 'Yes' })
+    userEvent.click(modalPopupConfirmBtn)
+    expect(modalPopupConfirmBtn).toBeInTheDocument()
   })
   test('should render first page data only', () => {
     waitFor(() => {
@@ -58,7 +67,7 @@ describe('Job Openings without data', () => {
     expect(screen.getByText('Pavani')).toBeInTheDocument()
   })
   it('should call handleModal function with the correct argument on link click', () => {
-    const linkElement = screen.getByTestId('product-specification2') // Update with the actual link text or use getByTestId if available
+    const linkElement = screen.getByTestId('product-specification2')
 
     fireEvent.click(linkElement)
 
