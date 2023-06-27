@@ -6,20 +6,19 @@ import {
   CDropdownToggle,
 } from '@coreui/react-pro'
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { reduxServices } from '../reducers/reduxServices'
 import { useAppDispatch } from '../stateStore'
 
 const AppHeaderDropdown = (): JSX.Element => {
-  const history = useHistory()
   const dispatch = useAppDispatch()
 
   const handleLogout = () => {
     localStorage.clear()
     dispatch(reduxServices.authentication.actions.clearAuthentication())
     dispatch(reduxServices.app.actions.setReRenderMenu(true))
-    history.push('/')
-    // window.location.reload()
+    // reloading so that it can redirect to login with 401 and all states are removed
+    window.location.reload()
   }
 
   const dropdownToggleProps = {
