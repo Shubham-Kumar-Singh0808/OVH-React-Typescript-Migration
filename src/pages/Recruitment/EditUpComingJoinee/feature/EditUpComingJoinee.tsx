@@ -58,40 +58,39 @@ const EditUpComingJoinee = ({
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
+  const addNewJoinee = useTypedSelector(
+    reduxServices.KRA.selectors.empDepartments,
+  )
 
   const designations = useTypedSelector(
     reduxServices.KRA.selectors.designations,
   )
   // const [designation, setDesignation] = useState<string | number>('')
-
+  const result = addNewJoinee?.filter(
+    (item) => item?.departmentName === editNewJoineeInfo?.departmentName,
+  )
   useEffect(() => {
-    if (candidateDepartment) {
-      dispatch(
-        reduxServices.KRA.getDesignationThunk(Number(candidateDepartment)),
-      )
+    if (result[0]?.departmentId) {
+      dispatch(reduxServices.KRA.getDesignationThunk(result[0]?.departmentId))
     }
-  }, [dispatch, candidateDepartment])
+  }, [dispatch, result[0]?.departmentId])
 
   useEffect(() => {
     dispatch(reduxServices.KRA.getEmpDepartmentThunk())
-    dispatch(
-      reduxServices.addNewCandidate.getPersonTechnologyData(
-        timeLineListSelector?.personId,
-      ),
-    )
-  }, [dispatch, timeLineListSelector?.personId])
-
-  useEffect(() => {
-    dispatch(
-      reduxServices.intervieweeDetails.timeLineData(
-        timeLineListSelector.personId,
-      ),
-    )
+    // dispatch(
+    //   reduxServices.addNewCandidate.getPersonTechnologyData(
+    //     timeLineListSelector?.personId,
+    //   ),
+    // )
   }, [dispatch])
 
-  const addNewJoinee = useTypedSelector(
-    reduxServices.KRA.selectors.empDepartments,
-  )
+  // useEffect(() => {
+  //   dispatch(
+  //     reduxServices.intervieweeDetails.timeLineData(
+  //       timeLineListSelector.personId,
+  //     ),
+  //   )
+  // }, [dispatch])
 
   // const selectedDepartment = addNewJoinee.find(
   //   (item) => item.departmentId === candidateDepartment,
@@ -253,7 +252,8 @@ const EditUpComingJoinee = ({
   // const onHandleStartDate = (value: Date) => {
   //   setDateOfJoiningDate(moment(value).format(dateFormat))
   // }
-  console.log(editNewJoineeInfo.departmentName)
+  console.log(editNewJoineeInfo)
+  console.log(editNewJoineeInfo.candidateInterviewStatus)
   return (
     <>
       <OCard
@@ -403,7 +403,7 @@ const EditUpComingJoinee = ({
             >
               {addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
-                  <option key={index} value={item.departmentId}>
+                  <option key={index} value={item.departmentName}>
                     {item.departmentName}
                   </option>
                 ))}
@@ -435,7 +435,7 @@ const EditUpComingJoinee = ({
               {/* <option value={''}></option> */}
               {designations?.length > 0 &&
                 designations?.map((location, index) => (
-                  <option key={index} value={location.name}>
+                  <option key={index} value={location.departmentId}>
                     {location.name}
                   </option>
                 ))}
@@ -591,24 +591,30 @@ const EditUpComingJoinee = ({
             className="col-sm-3 col-form-label text-end"
           >
             Joining Status:
-            <span className={showIsRequired(editNewJoineeInfo.status)}>*</span>
+            <span
+              className={showIsRequired(
+                editNewJoineeInfo.candidateInterviewStatus,
+              )}
+            >
+              *
+            </span>
           </CFormLabel>
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
               data-testid="update-joining-Status"
-              id="joiningStatus"
+              id="candidateInterviewStatus"
               size="sm"
               aria-label="JoiningStatus"
-              name="status"
-              value={editNewJoineeInfo.status}
+              name="candidateInterviewStatus"
+              value={editNewJoineeInfo.candidateInterviewStatus}
               //  onChange={(e) => setJobType(e.target.value)}
               onChange={onChangeInputHandler}
             >
-              <option value={'Did Not Join'}>DID NOT JOIN</option>
-              <option value="Offered">OFFERED</option>
-              <option value="Offer Cancelled">OFFER CANCELLED</option>
-              <option value="Joined">JOINED</option>
+              <option value="DID_NOT_JOIN">DID NOT JOIN</option>
+              <option value="OFFERED">OFFERED</option>
+              <option value="OFFER_CANCELLED">OFFER CANCELLED</option>
+              <option value="JOINED">JOINED</option>
             </CFormSelect>
           </CCol>
         </CRow>
