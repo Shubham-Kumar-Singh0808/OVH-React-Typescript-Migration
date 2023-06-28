@@ -60,7 +60,9 @@ const CreditCardListTable = (): JSX.Element => {
   ) => {
     const { name, value } = event.target
     if (name === 'cardName') {
-      const cardNameValue = value.replace(/[^a-zA-Z\s]$/gi, '')
+      const cardNameValue = value
+        .replace(/-_[^a-z0-9\s]/gi, '')
+        .replace(/^\s*/, '')
       setEditCreditCardDetails((prevState) => {
         return { ...prevState, ...{ [name]: cardNameValue } }
       })

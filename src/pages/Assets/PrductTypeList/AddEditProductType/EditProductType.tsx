@@ -59,7 +59,7 @@ const EditProductTypeRecord = ({
 
   const updateSuccessToastMessagess = (
     <OToast
-      toastMessage="Product type updated successfully.
+      toastMessage="Product type updated successfully
       "
       toastColor="success"
     />
