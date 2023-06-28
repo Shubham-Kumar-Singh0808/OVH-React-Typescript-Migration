@@ -21,7 +21,10 @@ import { reduxServices } from '../../../reducers/reduxServices'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../../components/ReusableComponent/OPagination'
 import OModal from '../../../components/ReusableComponent/OModal'
-import { AssetTransactionListTableProps } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
+import {
+  AssetTransactionListTableProps,
+  AssetTransactionalList,
+} from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 
 const AssetTransactionalListTable = ({
   paginationRange,
@@ -30,6 +33,8 @@ const AssetTransactionalListTable = ({
   currentPage,
   setCurrentPage,
   isAssetTableView,
+  setToggle,
+  setEditAssetTransactionInfo,
 }: AssetTransactionListTableProps): JSX.Element => {
   const dispatch = useAppDispatch()
   const [isAssetTransaction, setAssetTransaction] = useState<boolean>(false)
@@ -67,6 +72,11 @@ const AssetTransactionalListTable = ({
   //     XLSX.writeFile(workbook, 'TranscationalList.xls')
   //   }
   // }
+
+  const editButtonHandler = (vendorData: AssetTransactionalList) => {
+    setEditAssetTransactionInfo(vendorData)
+    setToggle('transactionalList')
+  }
 
   const totalNoOfAssetRecords = assetsResponse?.length
     ? `Total Records: ${assetResponseListSize}`
@@ -209,6 +219,18 @@ const AssetTransactionalListTable = ({
                         <CTooltip content="Edit">
                           <CButton color="info" size="sm" className="mb-1">
                             <i className="fa fa-bar-chart text-white"></i>
+                          </CButton>
+                        </CTooltip>
+
+                        <CTooltip content="Edit">
+                          <CButton
+                            color="info btn-ovh me-1"
+                            className="btn-ovh-employee-list"
+                            onClick={() =>
+                              editButtonHandler(assetstransactonData)
+                            }
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
                           </CButton>
                         </CTooltip>
                       </div>

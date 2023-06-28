@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import AssetTransactionalListFilter from './AssetTransactionalListFilter'
 import AssetTransactionalListTable from './AssetTransactionalListTable'
+import AssetTransactionHistory from './AssetTransactionHistory/AssetTransactionHistory'
 import { reduxServices } from '../../../reducers/reduxServices'
 import OCard from '../../../components/ReusableComponent/OCard'
 import { usePagination } from '../../../middleware/hooks/usePagination'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
+import { AssetTransactionalList } from '../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 
-const AssetTransactionalList = (): JSX.Element => {
+const AssetTransactionalListComponent = (): JSX.Element => {
   const dispatch = useAppDispatch()
   useEffect(() => {
     dispatch(reduxServices.ProductTypeList.getAllLookUpsApi())
@@ -20,6 +22,11 @@ const AssetTransactionalList = (): JSX.Element => {
   const [searchByEmployeeName, setSearchByEmployeeName] =
     useState<boolean>(false)
   const [isAssetTableView, setIsAssetTableView] = useState(false)
+  const [toggle, setToggle] = useState<string>('')
+  const initialCycle = {} as AssetTransactionalList
+
+  const [editAssetTransactionInfo, setEditAssetTransactionInfo] =
+    useState(initialCycle)
 
   const assetListSize = useTypedSelector(
     reduxServices.assetTransactionList.selectors.listSize,
@@ -74,10 +81,20 @@ const AssetTransactionalList = (): JSX.Element => {
           pageSize={pageSize}
           setPageSize={setPageSize}
           isAssetTableView={isAssetTableView}
+          setToggle={setToggle}
+          setEditAssetTransactionInfo={setEditAssetTransactionInfo}
         />
       </OCard>
+
+      {toggle === 'transactionalList' && (
+        <AssetTransactionHistory
+          setToggle={setToggle}
+          setEditAssetTransactionInfo={setEditAssetTransactionInfo}
+          editAssetTransactionInfo={editAssetTransactionInfo}
+        />
+      )}
     </>
   )
 }
 
-export default AssetTransactionalList
+export default AssetTransactionalListComponent

@@ -4,11 +4,18 @@ import AssetTransactionHistoryTable from './AssetTransactionHistoryTable'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
+import { AssetTransactionalList } from '../../../../types/Assets/AssetTransactionalList/AssetTransactionalListTypes'
 
 const AssetTransactionHistory = ({
   setToggle,
+  editAssetTransactionInfo,
+  setEditAssetTransactionInfo,
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
+  editAssetTransactionInfo: AssetTransactionalList
+  setEditAssetTransactionInfo: React.Dispatch<
+    React.SetStateAction<AssetTransactionalList>
+  >
 }): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>('')
   const dispatch = useAppDispatch()

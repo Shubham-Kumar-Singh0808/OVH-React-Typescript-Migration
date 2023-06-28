@@ -443,7 +443,10 @@ const ExpenseCategoryList = React.lazy(
 const AssetList = React.lazy(() => import('./pages/Assets/AssetList/AssetList'))
 
 const AssetTransactionalList = React.lazy(
-  () => import('./pages/Assets/AssetTransactionalList/AssetTransactionalList'),
+  () =>
+    import(
+      './pages/Assets/AssetTransactionalList/AssetTransactionalListComponent'
+    ),
 )
 const ProductSpecificationList = React.lazy(
   () =>
