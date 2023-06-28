@@ -37,9 +37,6 @@ const AddVendorDetails = ({
   const departments = useTypedSelector(
     reduxServices.addNewVendor.selectors.department,
   )
-  // useEffect(() => {
-  //   dispatch(reduxServices.addNewVendor.getDepartment())
-  // }, [dispatch])
   const formLabelProps = {
     htmlFor: 'inputNewVendorDetails',
     className: 'col-form-label category-label',
