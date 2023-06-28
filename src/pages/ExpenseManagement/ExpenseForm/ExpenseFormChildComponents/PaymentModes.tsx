@@ -19,8 +19,8 @@ import { dateFormat } from '../../../../constant/DateFormat'
 const PaymentList = ({
   paymentMode,
   setPaymentMode,
-  creditCard,
-  setCreditCard,
+  creditCardResult,
+  setCreditCardResult,
   chequeNumber,
   setChequeNumber,
   chequeDate,
@@ -28,8 +28,10 @@ const PaymentList = ({
 }: {
   paymentMode: string
   setPaymentMode: React.Dispatch<React.SetStateAction<string>>
-  creditCard: boolean
-  setCreditCard: React.Dispatch<React.SetStateAction<boolean>>
+  creditCardResult: CreditCardListResponse[]
+  setCreditCardResult: React.Dispatch<
+    React.SetStateAction<CreditCardListResponse[]>
+  >
   chequeNumber: string
   setChequeNumber: React.Dispatch<React.SetStateAction<string>>
   chequeDate: string
@@ -39,7 +41,8 @@ const PaymentList = ({
   const paymentsList = useTypedSelector(
     reduxServices.expenseForm.selectors.paymentsList,
   )
-  const [result, setResult] = useState<CreditCardListResponse[]>()
+  // const [creditCardResult, setCreditCardResult] =
+  //   useState<CreditCardListResponse[]>()
   const [selectedCreditCard, setSelectedCreditCard] = useState('')
   const [showCreditCardList, setShowCreditCardList] = useState(true)
   const creditCards = useTypedSelector(
@@ -48,7 +51,7 @@ const PaymentList = ({
 
   useEffect(() => {
     if (creditCards) {
-      setResult(creditCards)
+      setCreditCardResult(creditCards)
     }
   }, [creditCards])
 
@@ -82,23 +85,13 @@ const PaymentList = ({
     index: number,
   ) => {
     const newCreditCard: CreditCardListResponse[] = JSON.parse(
-      JSON.stringify(result),
+      JSON.stringify(creditCardResult),
     )
     newCreditCard[index].cardName = event.target.value
-    setResult(newCreditCard)
+    setCreditCardResult(newCreditCard)
     setSelectedCreditCard(event.target.value)
     setShowCreditCardList(false)
   }
-
-  // const handlePaymentModeChange = (
-  //   event: React.ChangeEvent<HTMLSelectElement>,
-  // ) => {
-  //   const newPaymentMode = event.target.value
-  //   setPaymentMode(newPaymentMode)
-  //   if (paymentMode === '3' && newPaymentMode !== '3') {
-  //     setSelectedCreditCard('') // Set selected credit card to null
-  //   }
-  // }
 
   const handlePaymentModeChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
@@ -127,9 +120,6 @@ const PaymentList = ({
             size="sm"
             aria-label="Payment"
             name="paymentMode"
-            // onChange={(e) => {
-            //   setPaymentMode(e.target.value)
-            // }}
             onChange={handlePaymentModeChange}
             value={paymentMode}
           >
@@ -206,59 +196,33 @@ const PaymentList = ({
             Credit Card List:
           </CFormLabel>
           <CRow>
-            {result?.map((item, index) => {
-              return (
-                <>
-                  <CFormCheck
-                    key={index}
-                    type="radio"
-                    name="creditCard"
-                    id={`creditCard_${index}`}
-                    value={item.cardName}
-                    checked={item.cardName === selectedCreditCard}
-                    onChange={(event) => handleCreditCard(event, index)}
-                    inline
-                  />
-                  <div>
-                    <CFormLabel
-                      {...formLabelProps}
-                      className="col-sm-3 col-form-label text-end"
-                    >
-                      Card Name:
-                    </CFormLabel>
-                    {item.cardName}
-                  </div>
-                  {/* <CFormCheck
-                    key={index}
-                    type="radio"
-                    name="creditCard"
-                    id="cardName"
-                    value={item.cardName}
-                    checked={item.cardName === selectedCreditCard}
-                    onChange={(event) => handleCreditCard(event, index)}
-                    inline
-                  /> */}
-                  {/* <CFormLabel
-                  {...formLabelProps}
-                  className="col-sm-3 col-form-label text-end"
-                >
-                  Card Name: {item.cardName}
-                </CFormLabel> */}
-                  {/* <div>
-                    <b>Card Name:</b> {item.cardName}
-                  </div> */}
-                </>
-              )
-            })}
+            {showCreditCardList &&
+              creditCardResult?.map((item, index) => {
+                return (
+                  <>
+                    <CFormCheck
+                      key={index}
+                      type="radio"
+                      name="creditCard"
+                      id={`creditCard_${index}`}
+                      value={item.cardName}
+                      checked={item.cardName === selectedCreditCard}
+                      onChange={(event) => handleCreditCard(event, index)}
+                      inline
+                    />
+                    <div>
+                      <CFormLabel
+                        {...formLabelProps}
+                        className="col-sm-3 col-form-label text-end"
+                      >
+                        Card Name:
+                      </CFormLabel>
+                      {item.cardName}
+                    </div>
+                  </>
+                )
+              })}
           </CRow>
-          {/* {selectedCreditCard && ()} */}
-          {/* <div
-            {...formLabelProps}
-            className="col-sm-3 col-form-label text-end"
-            data-testid="creditCardLabel"
-          >
-            <b>Credit Card Name:</b> {selectedCreditCard}
-          </div> */}
           {selectedCreditCard && (
             <CRow>
               <CFormLabel
@@ -274,66 +238,6 @@ const PaymentList = ({
           )}
         </>
       )}
-      {/* {paymentMode === '3' && showCreditCardList ? (
-        <>
-          <CRow className="mt-3 mb-3">
-            <CFormLabel
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-              data-testid="creditCardLabel"
-            >
-              Credit Card List:
-            </CFormLabel>
-            {showCreditCardList &&
-              result?.map((item, index) => (
-                <div key={index}>
-                  <CFormCheck
-                    type="radio"
-                    name="creditCard"
-                    id={`creditCard_${index}`}
-                    value={item.cardName}
-                    // checked={item.cardId}
-
-                    onChange={(event) => handleCreditCard(event, index)}
-                    inline
-                  />
-                  <CFormLabel
-                    {...formLabelProps}
-                    className="col-sm-3 col-form-label text-end"
-                  >
-                    Credit card Name:
-                  </CFormLabel>
-                  {item.cardName}
-                  {/* {creditCard ? (
-                    <div>
-                      <b>Credit Card Name:</b> {item.cardName}
-                    </div>
-                  ) : null} */}
-      {/* <CFormLabel
-                    {...formLabelProps}
-                    className="col-sm-3 col-form-label text-end"
-                  >
-                    Card Name: {item.cardName}
-                  </CFormLabel> */}
-      {/* <div>
-                    <b>Card Name :</b> {item.cardName}
-                  </div> */}
-      {/* </div>
-              ))}
-          </CRow>
-          {selectedCreditCard && (
-            <div
-              {...formLabelProps}
-              className="col-sm-3 col-form-label text-end"
-              data-testid="creditCardLabel"
-            >
-              <b>Credit Card Name:</b> {selectedCreditCard}
-            </div>
-          )}
-        </>
-      ) : (
-        ''
-      )} */}
     </>
   )
 }

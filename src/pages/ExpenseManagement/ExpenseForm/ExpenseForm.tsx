@@ -29,7 +29,10 @@ import { formLabelProps } from '../../Finance/ITDeclarationForm/ITDeclarationFor
 import { ckeditorConfig } from '../../../utils/ckEditorUtils'
 import { dateFormat } from '../../../constant/DateFormat'
 import OToast from '../../../components/ReusableComponent/OToast'
-import { CreditCardListResponse } from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
+import {
+  CreditCardListResponse,
+  ProjectsListResponse,
+} from '../../../types/ExpenseManagement/ExpenseForm/expenseFormTypes'
 
 const ExpenseForm = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -51,6 +54,8 @@ const ExpenseForm = (): JSX.Element => {
   const [currency, setCurrency] = useState('')
   const [paymentMode, setPaymentMode] = useState('')
   const [creditCard, setCreditCard] = useState<boolean>(false)
+  const [creditCardResult, setCreditCardResult] =
+    useState<CreditCardListResponse[]>()
   const [chequeNumber, setChequeNumber] = useState('')
   const [chequeDate, setChequeDate] = useState('')
   const [voucherNumber, setVoucherNumber] = useState('')
@@ -176,18 +181,19 @@ const ExpenseForm = (): JSX.Element => {
 
   // const handleAddExpenseForm = () => {
   //   const expenseObject = {
-  //     amount: Number(amount) ,
+  //     amount: Number(amount),
   //     categoryId: Number(expenseCategory),
   //     country,
-  //     creditCardDetails: {
-  //       cardId: 18,
-  //       cardName: "sddf@@22",
-  //       cardNumber: "54654654765777",
-  //       createdBy: "Pavani Paska",
-  //       updatedBy: null,
-  //       createdDate: "21/06/2023",
-  //       updatedDate: null
-  //     },
+  //     // creditCardDetails: {
+  //     //   cardId: 18,
+  //     //   cardName: 'sddf@@22',
+  //     //   cardNumber: '54654654765777',
+  //     //   createdBy: 'Pavani Paska',
+  //     //   updatedBy: null,
+  //     //   createdDate: '21/06/2023',
+  //     //   updatedDate: null,
+  //     // },
+  //     creditCardDetails: creditCardResult,
   //     currencyId: currency,
   //     deptId: departmentList,
   //     description: descriptionInfo,
@@ -211,26 +217,26 @@ const ExpenseForm = (): JSX.Element => {
   //     )
   //   )
   //     dispatch(reduxServices.app.actions.addToast(successToastMessage))
-  //     dispatch(reduxServices.expenseForm.getCreditCardsDetails())
-  //     dispatch(reduxServices.expenseForm.getEmpDepartmentsList())
-  //     dispatch(reduxServices.expenseForm.getCategoriesList())
-  //     dispatch(reduxServices.expenseForm.getCountriesList())
-  //     dispatch(reduxServices.expenseForm.getPaymentsList())
-  //     dispatch(
-  //       reduxServices.expenseForm.getExpensesList({
-  //         categoryId: 0,
-  //         country: '',
-  //         dateSelection: '',
-  //         departmentId: 0,
-  //         endIndex: 20,
-  //         from: '',
-  //         multipleSearch: '',
-  //         paymentMode: '',
-  //         startIndex: 0,
-  //         subCategoryId: 0,
-  //         to: '',
-  //       }),
-  //       )
+  //   dispatch(reduxServices.expenseForm.getCreditCardsDetails())
+  //   dispatch(reduxServices.expenseForm.getEmpDepartmentsList())
+  //   dispatch(reduxServices.expenseForm.getCategoriesList())
+  //   dispatch(reduxServices.expenseForm.getCountriesList())
+  //   dispatch(reduxServices.expenseForm.getPaymentsList())
+  //   dispatch(
+  //     reduxServices.expenseForm.getExpensesList({
+  //       categoryId: 0,
+  //       country: '',
+  //       dateSelection: '',
+  //       departmentId: 0,
+  //       endIndex: 20,
+  //       from: '',
+  //       multipleSearch: '',
+  //       paymentMode: '',
+  //       startIndex: 0,
+  //       subCategoryId: 0,
+  //       to: '',
+  //     }),
+  //   )
   // }
 
   useEffect(() => {
@@ -363,16 +369,16 @@ const ExpenseForm = (): JSX.Element => {
         currency={currency}
         setCurrency={setCurrency}
       />
-      <PaymentList
+      {/* <PaymentList
         paymentMode={paymentMode}
         setPaymentMode={setPaymentMode}
-        creditCard={creditCard}
-        setCreditCard={setCreditCard}
+        creditCardResult={creditCardResult}
+        setCreditCardResult={setCreditCardResult}
         chequeNumber={chequeNumber}
         setChequeNumber={setChequeNumber}
         chequeDate={chequeDate}
         setChequeDate={setChequeDate}
-      />
+      /> */}
       <CRow className="mt-3 mb-3">
         <CFormLabel
           {...formLabelProps}
