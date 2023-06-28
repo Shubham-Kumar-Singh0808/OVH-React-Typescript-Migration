@@ -110,7 +110,7 @@ export type AllAssetsList = {
   notes: null | string
   employeeName: string
   employeeId: number
-  description: null
+  description: string
   status: string
   assetTypeId: number
   assetType: string
@@ -128,7 +128,7 @@ export type AllAssetsList = {
   createdDate: string
   updatedDate: string
   referenceNumber: string
-  amount: string | null
+  amount: number
   countryId: number | null
 }
 
@@ -157,4 +157,6 @@ export type AssetListTableProps = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
   setPageSize: React.Dispatch<React.SetStateAction<number>>
+  setToggle: React.Dispatch<React.SetStateAction<string>>
+  setChangeReportStatus: React.Dispatch<React.SetStateAction<AllAssetsList>>
 }

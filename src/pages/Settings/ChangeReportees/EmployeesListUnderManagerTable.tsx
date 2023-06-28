@@ -160,7 +160,7 @@ const EmployeesListUnderManagerTable = ({
         <strong>{records}</strong>
       </CCol>
       {employeeData?.length > 0 && (
-        <CCol>
+        <CCol className="ms-5">
           <ReporteesUpdateAutoComplete
             managersOrHrManagersList={managersOrHrManagersList}
             placeHolder={placeHolder}

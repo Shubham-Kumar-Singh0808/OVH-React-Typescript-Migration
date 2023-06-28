@@ -117,6 +117,7 @@ const ProductSpecificationListTable = ({
     dispatch(reduxServices.addNewProduct.getProductTypeList(productId))
     setToggle('/editProductSpecification')
     setEditProductSpecification(productSpecification)
+    window.scrollTo(0, 0)
   }
 
   return (
@@ -241,7 +242,7 @@ const ProductSpecificationListTable = ({
             {listOfSize > 20 && (
               <OPageSizeSelect
                 handlePageSizeSelectChange={handlePageSizeSelectChange}
-                options={[20, 40, 60, 80, 100]}
+                options={[20, 40, 60, 80, 100, 120]}
                 selectedPageSize={pageSize}
               />
             )}

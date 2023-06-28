@@ -4,9 +4,20 @@ import { CKEditor } from 'ckeditor4-react'
 import moment from 'moment'
 import React from 'react'
 import EditUpComingJoinee from './EditUpComingJoinee'
-import { cleanup, render, screen } from '../../../../test/testUtils'
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from '../../../../test/testUtils'
 import { GetUpComingJoineeList } from '../../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
 import { ApiLoadingState } from '../../../../middleware/api/apiList'
+import {
+  mockDevelopmentDesignationList,
+  mockEmpDepartments,
+} from '../../../../test/data/KRAData'
+import { mockGetTechnology } from '../../../../test/data/candidateListData'
 
 const mockSetTogglePage = jest.fn()
 const fileUploadInput = 'file-upload'
@@ -14,6 +25,7 @@ const selectDepartment = 'departmentName'
 const designationTextInput = 'designation'
 const technologyInpitval = 'technology'
 const onChangeInputHandler = jest.fn()
+const techInputTest = 'testing the add button'
 
 describe('Vendor Details without data', () => {
   beforeEach(() => {
@@ -54,24 +66,31 @@ describe('Vendor Details without data', () => {
               isLoading: ApiLoadingState.idle,
               getUpComingJoineeList: {} as GetUpComingJoineeList,
             },
+            KRA: {
+              empDepartments: mockEmpDepartments,
+              designations: mockDevelopmentDesignationList,
+            },
+
+            technology: {
+              designations: mockGetTechnology,
+            },
           },
         },
       },
     )
   })
-
   afterEach(cleanup)
   test('should render Departments filter', () => {
     const departments = screen.getByTestId(selectDepartment)
     expect(departments).toBeTruthy()
   })
   test('should render designation filter', () => {
-    const departments = screen.getByTestId(designationTextInput)
-    expect(departments).toBeTruthy()
+    const designation = screen.getByTestId(designationTextInput)
+    expect(designation).toBeTruthy()
   })
   test('should render technology filter', () => {
-    const departments = screen.getByTestId(technologyInpitval)
-    expect(departments).toBeTruthy()
+    const technology = screen.getByTestId(technologyInpitval)
+    expect(technology).toBeTruthy()
   })
 
   test('should be able to render  Edit UpComingJoinee  Title', () => {
@@ -174,6 +193,7 @@ describe('Vendor Details without data', () => {
     expect(fileInput.files).toHaveLength(1)
     expect(fileInput).toBeInTheDocument()
   })
+
   describe('onHandleDatePicker', () => {
     test('should update editToDate with formatted date', () => {
       const dateFormat = 'YYYY-MM-DD'

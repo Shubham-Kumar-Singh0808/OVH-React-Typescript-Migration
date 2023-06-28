@@ -931,6 +931,10 @@ export interface VendorListApi extends ApiBase {
   deleteVendorDetails: string
 }
 
+export interface ChangeAssetStatusReportApi extends ApiBase {
+  saveEmployee: string
+  getAllAssets: string
+}
 export interface CategoryListApi extends ApiBase {
   getCategoryList: string
   addCategory: string

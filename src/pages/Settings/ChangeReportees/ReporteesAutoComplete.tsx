@@ -116,7 +116,7 @@ const ReporteesAutoComplete = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="mb-3">
+          <CRow className="mb-3 ms-5">
             <CFormLabel
               data-testid="mLabel"
               className="col-sm-2 col-form-label text-end ms-5"
