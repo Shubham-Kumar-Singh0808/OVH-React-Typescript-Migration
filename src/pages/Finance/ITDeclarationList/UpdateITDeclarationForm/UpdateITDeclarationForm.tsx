@@ -142,6 +142,8 @@ const UpdateITDeclarationForm = (): JSX.Element => {
     const formData = new FormData()
     if (enteredFile) {
       formData.append('file', enteredFile)
+    } else {
+      formData.append('file', '')
     }
     const result = await dispatch(
       reduxServices.itDeclarationList.editITForm(finalData),
@@ -149,7 +151,7 @@ const UpdateITDeclarationForm = (): JSX.Element => {
     const documentUploadResult = await dispatch(
       reduxServices.itDeclarationList.uploadITDeclarationDocument({
         documentId: itDeclarationFormId,
-        document: enteredFile === undefined ? '' : formData,
+        document: formData,
       }),
     )
     if (

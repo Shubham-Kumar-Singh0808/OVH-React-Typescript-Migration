@@ -95,5 +95,5 @@ export type itDeclarationFormSectionList = {
 
 export interface UploadITDocumentDTO {
   documentId: number
-  document: FormData | string
+  document: FormData
 }

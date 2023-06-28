@@ -105,8 +105,10 @@ const ITDeclarationForm = (): JSX.Element => {
 
   const handleSubmitDeclarationForm = async () => {
     const formData = new FormData()
-    if (enteredFile) {
+    if (enteredFile !== undefined) {
       formData.append('file', enteredFile)
+    } else {
+      formData.append('file', '')
     }
     const prepareObject = {
       ...finalITDeclarationData,
@@ -126,7 +128,7 @@ const ITDeclarationForm = (): JSX.Element => {
     const fileUploadResult = await dispatch(
       reduxServices.itDeclarationForm.uploadITDeclareDocuments({
         documentId: Number(addDeclarationFormResultAction.payload),
-        document: enteredFile ? formData : '',
+        document: formData,
       }),
     )
     if (
