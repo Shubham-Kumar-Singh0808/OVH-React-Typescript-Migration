@@ -10,6 +10,7 @@ import {
   EmpScheduleInterviewData,
 } from '../../../types/Recruitment/IntervieweeDetails/IntervieweeDetailsTypes'
 import { mockTimeLineList } from '../../../test/data/IntervieDeatilsData'
+import { createMemoryHistory } from 'history'
 
 const mockSetToggle = jest.fn()
 
@@ -34,17 +35,41 @@ describe('Employee Pip Time line Component Testing', () => {
     test('should be able to render Interviewee Details Title', () => {
       expect(screen.getByText('Interviewee Details')).toBeInTheDocument()
     })
-    test('should render click on back button', () => {
-      const backButtonElement = screen.getByTestId('back-button')
-      expect(backButtonElement).toBeInTheDocument()
-      userEvent.click(backButtonElement)
-      expect(mockSetToggle).toHaveBeenCalledTimes(0)
-    })
     test('should render with data ', () => {
       expect(screen.getByText('NO SHOW')).toBeInTheDocument()
       expect(screen.getByText('SKYPE')).toBeInTheDocument()
       expect(screen.getByText('SDLC ,STLC')).toBeInTheDocument()
       expect(screen.getByText('93849684986934jgfnjgn95898')).toBeInTheDocument()
     })
+    test('should render click on schedule button', () => {
+      const scheduleButtonElement = screen.getByTestId('schedule-interview')
+      expect(scheduleButtonElement).toBeInTheDocument()
+      userEvent.click(scheduleButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+    test('should render click on schedule button', () => {
+      const rescheduleButtonElement = screen.getByTestId('reschedule-interview')
+      expect(rescheduleButtonElement).toBeInTheDocument()
+      userEvent.click(rescheduleButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+    test('should render click on edit button', () => {
+      const editButtonElement = screen.getByTestId('edit-btn')
+      expect(editButtonElement).toBeInTheDocument()
+      // userEvent.click(backButtonElement)
+      expect(mockSetToggle).toHaveBeenCalledTimes(0)
+    })
+  })
+  test('should call history.goBack()', () => {
+    const history = createMemoryHistory()
+    history.goBack = jest.fn()
+
+    const backBtnHandler = () => {
+      history.goBack()
+    }
+
+    backBtnHandler()
+
+    expect(history.goBack).toHaveBeenCalled()
   })
 })

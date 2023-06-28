@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import InitialManagerButtons from './InitialManagerButtons'
 import { act, cleanup, render, screen } from '../../../../../../test/testUtils'
 import { ProjectTailoringStatusEnum } from '../../../../../../types/ProjectManagement/Project/ProjectView/ProjectTailoring/projectTailoringTypes'
+import { mockSQAProjectTailoringDocument } from '../../../../../../test/data/projectTailoringData'
 
 const mockSubmitDocumentHandler = jest.fn()
 const mockGetLatestData = jest.fn()
@@ -14,7 +15,7 @@ const toRender = (
 )
 
 describe('Initial Manager Button - Project Tailoring', () => {
-  describe('saved document save functionality - manager side rendering', () => {
+  describe('saved document - manager side rendering', () => {
     //saving document that was already saved
     beforeEach(() => {
       render(toRender, {
@@ -22,6 +23,7 @@ describe('Initial Manager Button - Project Tailoring', () => {
           projectTailoring: {
             isManagerSubmitButtonEnabled: true,
             tailorStatus: ProjectTailoringStatusEnum.saveForManager,
+            projectTailoringDocument: mockSQAProjectTailoringDocument,
           },
         },
       })
@@ -29,12 +31,21 @@ describe('Initial Manager Button - Project Tailoring', () => {
     afterEach(cleanup)
     screen.debug()
 
-    test('functionality', () => {
+    test('save functionality', () => {
       const saveButtonManager = screen.getByTestId('saveBtn-manager')
       expect(saveButtonManager).toBeEnabled()
 
       act(() => {
         userEvent.click(saveButtonManager)
+      })
+    })
+
+    test('submit button functionality', () => {
+      const submitButtonManager = screen.getByTestId('submitBtn-manager')
+      expect(submitButtonManager).toBeEnabled()
+
+      act(() => {
+        userEvent.click(submitButtonManager)
       })
     })
   })

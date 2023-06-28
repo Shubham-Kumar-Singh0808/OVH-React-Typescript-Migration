@@ -32,7 +32,6 @@ import shiftConfigurationReducer from './reducers/EmployeeDirectory/EmployeesLis
 import sidebarMenuSliceReducer from './reducers/SidebarMenu/sidebarMenuSlice'
 import skillReducer from './reducers/MyProfile/Skills/skillSlice'
 import technologyReducer from './reducers/EmployeeDirectory/EmployeesList/AddNewEmployee/getAllTechnologySlice'
-import userRolesAndPermissionsReducer from './reducers/Settings/UserRolesConfiguration/userRolesAndPermissionsSlice'
 import employeeReportReducer from './reducers/EmployeeDirectory/EmployeeReport/'
 import employeeDesignationReportReducer from './reducers/EmployeeDirectory/EmployeeReport/EmployeeDesignationReport/employeeDesignationReportSlice'
 import visaListReducer from './reducers/EmployeeDirectory/VisaList/visaListSlice'
@@ -136,19 +135,25 @@ import changeReporteesReducer from './reducers/Settings/ChangeReportees/changeRe
 import ManufacturerListReducer from './reducers/Assets/ManufacturerList/ManufacturerSliceList'
 import ProductTypeListReducer from './reducers/Assets/ProductTypeList/ProductTypeSlice'
 import assetsWarrantyListReducer from './reducers/Assets/AssetWarrantyReport/assetsWarrantyReportSlice'
+import categoryListReducer from './reducers/ExpenseManagement/Category/expenseCategoryListSlice'
+import addNewExpenseCategoryReducer from './reducers/ExpenseManagement/Category/AddNewExpenseCategory/addNewExpenseCategorySlice'
 import assetListReducer from './reducers/Assets/AssetList/AssetListSlice'
 import productSpecificationListReducer from './reducers/Assets/ProductSpecificationList/ProductSpecificationListSlice'
 import recruitmentHistoryReducer from './reducers/MyProfile/RecruitmentHistory/recruitmentHistorySlice'
 import addProductReducer from './reducers/Assets/ProductSpecificationList/AddNewProduct/AddProductSpecificationListSlice'
+import creditCardListReducer from './reducers/ExpenseManagement/CreditCardList/creditCardListSlice'
+import subCategoryReducer from './reducers/ExpenseManagement/Sub-Category/expenseSubCategoryListSlice'
 import upComingJoinListReducer from './reducers/Recruitment/UpComingJoinList/upComingJoinListSlice'
 import addNewJoineeReducer from './reducers/Recruitment/CandidateOffer/CandidateOfferSlice'
+import interviewStatusReportReducer from './reducers/Recruitment/InterviewStatusReport/InterviewStatusReportSlice'
+import userRolesConfigurationReducer from './reducers/Settings/UserRolesConfiguration/UserRolesConfigurationSlice'
 
 export const allReducers = {
   app: appReducer,
   authentication: authenticationReducer,
   getLoggedInEmployeeData: employeeGeneralInformationReducer,
   sidebarMenu: sidebarMenuSliceReducer,
-  userRolesAndPermissions: userRolesAndPermissionsReducer,
+  userRolesConfiguration: userRolesConfigurationReducer,
   employeeQualificationsDetails: employeeQualificationsReducer,
   category: categoryReducer,
   personalInfoDetails: personalInfoReducer,
@@ -278,13 +283,18 @@ export const allReducers = {
   manufacturerList: ManufacturerListReducer,
   ProductTypeList: ProductTypeListReducer,
   assetsWarrantyList: assetsWarrantyListReducer,
+  categoryList: categoryListReducer,
+  addNewCategory: addNewExpenseCategoryReducer,
   assetList: assetListReducer,
   productSpecificationList: productSpecificationListReducer,
   recruitmentHistory: recruitmentHistoryReducer,
   addProduct: addProductReducer,
+  creditCardList: creditCardListReducer,
+  subCategoryList: subCategoryReducer,
   upComingJoinList: upComingJoinListReducer,
   addNewJoinee: addNewJoineeReducer,
 
+  interviewStatusReport: interviewStatusReportReducer,
   // add your slice reducers here
 }
 const stateStore = configureStore({

@@ -89,6 +89,7 @@ export type IntervieweeDetailsSliceState = {
   timeLineDetails: timeLineDetails
   scheduleInterviewData: EmpScheduleInterviewData
   addNewJoineeTechnology: UpdateProps
+  employeeProperties: EmployeeProperties[]
 }
 
 export type saveButnprops = {
@@ -123,9 +124,9 @@ export type UpdateProps = {
   jobCode?: null
   mobileNumber?: string
   np?: null
-  personId?: number | null
+  personId?: null
   proactiveComments?: string
-  rating?: 1
+  rating?: number
   reason?: null
   recruiter?: null
   skills?: string
@@ -138,38 +139,75 @@ export type UpdateProps = {
 
 export type EmpScheduleInterviewData = {
   candidateId: string | null
-  interviewers: string
-  interviewersDTOList: null
-  interviewDate: string
-  interviewTime: string | null
+  interviewers?: string
+  interviewersDTOList?: null
+  interviewDate?: string
+  interviewTime?: string | null
   interviewComments: null | string
-  interviewRound: string
-  interviewStatus: null
-  candidateName: string | null
-  interviewMode: string | null
-  interviewCycleId: number
-  experiance: null
-  rating: null | number
-  status: string
-  candiadateEmailId: string | null
-  skills: string | null
-  mobileNumber: string | null
-  cycleDTOs: null
-  interviewResultStatus: null | string
-  description: null
-  skypeId: null
-  proactiveComments: null | string
-  communicationComments: null | string
-  excellenceComments: null | string
-  updatedBy: null | string
-  recruiter: null
-  reason: null | string
-  ctc: null
-  ectc: null
-  technology: null
-  np: null
-  country: null
-  jobCode: null
-  sourceName: null
-  personId: null
+  interviewRound?: string
+  interviewStatus: string
+  candidateName?: string | null
+  interviewMode?: string | null
+  interviewCycleId?: number
+  experiance?: null
+  rating?: null | number
+  status?: string
+  candiadateEmailId?: string | null
+  skills?: string | null
+  mobileNumber?: string | null
+  cycleDTOs?: null
+  interviewResultStatus?: null | string
+  description?: null
+  skypeId?: null
+  proactiveComments?: null | string
+  communicationComments?: null | string
+  excellenceComments?: null | string
+  updatedBy?: null | string
+  recruiter?: null
+  reason?: null | string
+  ctc?: null
+  ectc?: null
+  technology?: null
+  np?: null
+  country?: null
+  jobCode?: null
+  sourceName?: null
+  personId?: null
+}
+export type EmployeeProperties = {
+  id: number
+  profilePicPath: string
+  firstName: string
+  lastName: string
+  emailId: string
+  designation: string
+  fullName: string
+}
+export type Reschedule = {
+  candidateId: string | number
+  contactDetails: string
+  description: string
+  interviewType: string
+  interviewerId: number
+  scheduleDate: string
+  scheduleTime: string
+  sendMailToCandidate: boolean
+  sendMailToInterviewer: boolean
+  sendMessageToCandidate: boolean
+  sendMessageToInterviewer: boolean
+}
+
+export type Schedule = {
+  candidateId: string | number
+  contactDetails?: string
+  description: string
+  interviewRound: number
+  interviewType: string
+  interviewerId: number
+  scheduleDate: string
+  scheduleTime: string
+  sendMailToCandidate: boolean
+  sendMailToInterviewer: boolean
+  sendMessageToCandidate: boolean
+  sendMessageToInterviewer: boolean
 }

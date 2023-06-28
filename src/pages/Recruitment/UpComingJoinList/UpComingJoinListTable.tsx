@@ -14,7 +14,7 @@ import {
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
 import * as XLSX from 'xlsx'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { reduxServices } from '../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../stateStore'
 import OPageSizeSelect from '../../../components/ReusableComponent/OPageSizeSelect'
@@ -23,7 +23,6 @@ import {
   UpComingJoinListTableProps,
   UpComingJoineeList,
 } from '../../../types/Recruitment/UpComingJoinList/UpComingJoinListTypes'
-import { GetAllTechnology } from '../../../types/Recruitment/CandidateList/CandidateListTypes'
 
 const UpComingJoinListTable = ({
   paginationRange,
@@ -112,23 +111,19 @@ const UpComingJoinListTable = ({
 
   const editButtonHandler = (updateUpComingJoineeData: UpComingJoineeList) => {
     setEditNewJoineeInfo(updateUpComingJoineeData)
+    dispatch(reduxServices.candidateList.getTechnology())
+    dispatch(
+      reduxServices.KRA.getDesignationThunk(
+        Number(updateUpComingJoineeData.id),
+      ),
+    )
     setToggle('upcomingjoinlist')
   }
 
-  // // -------------------------------------------------------------
-  const history = useHistory()
+  const handler = (candidateId: number) => {
+    dispatch(reduxServices.intervieweeDetails.timeLineData(candidateId))
+  }
 
-  // const editButtonHandler = async () => {
-  //   const technology = await dispatch(
-  //     reduxServices.candidateList.getTechnology(),
-  //   )
-
-  //   if (reduxServices.candidateList.getTechnology.fulfilled.match(technology)) {
-  //     history.push('/upcomingjoinlist')
-  //   }
-  // }
-
-  // -------------------------------------------------------------------------
   return (
     <>
       <CRow className="gap-2 d-md-flex justify-content-md-end">
@@ -192,11 +187,19 @@ const UpComingJoinListTable = ({
         <CTableBody>
           {upComingJoinee?.length > 0 &&
             upComingJoinee?.map((joinee, index) => {
+              console.log(joinee.departmentName + '')
+
               return (
                 <CTableRow key={index}>
                   <CTableDataCell>{getItemNumber(index)}</CTableDataCell>
-                  <CTableDataCell>
-                    {joinee.candidateName || 'N/A'}
+                  <CTableDataCell scope="row" className="sh-organization-link">
+                    <Link
+                      to={`/candidatetimeline/${joinee.candidateId}`}
+                      className="cursor-pointer"
+                      onClick={() => handler(joinee.candidateId)}
+                    >
+                      {joinee.candidateName}
+                    </Link>
                   </CTableDataCell>
 
                   <CTableDataCell>
@@ -209,15 +212,6 @@ const UpComingJoinListTable = ({
                   <CTableDataCell>{joinee.dateOfJoining}</CTableDataCell>
 
                   <CTableDataCell>{joinee.technology}</CTableDataCell>
-                  {/* <CTableDataCell data-testid="action-cell">
-                    <div className="sh-btn-group">
-                      <CTooltip content="Edit">
-                        <CButton color="info" size="sm" className="mb-1">
-                          <i className="text-white fa fa-pencil-square-o"></i>
-                        </CButton>
-                      </CTooltip>
-                    </div>
-                  </CTableDataCell> */}
 
                   <CTableDataCell scope="row">
                     <div className="buttons-clients">
@@ -226,7 +220,6 @@ const UpComingJoinListTable = ({
                           color="info btn-ovh me-1"
                           className="btn-ovh-employee-list"
                           onClick={() => editButtonHandler(joinee)}
-                          // onClick={editButtonHandler}
                         >
                           <i className="fa fa-edit" aria-hidden="true"></i>
                         </CButton>

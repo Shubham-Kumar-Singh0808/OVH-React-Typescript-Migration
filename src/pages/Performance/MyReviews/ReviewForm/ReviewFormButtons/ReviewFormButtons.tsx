@@ -113,6 +113,7 @@ const ReviewFormButtons = (): JSX.Element => {
         modalFooterClass: undefined,
         description: <ReviewAverageRatingModal averageRating={finalRating} />,
         confirmBtnAction: modalAcceptBtnHandler,
+        modalSize: undefined,
       }
       dispatch(reduxServices.myReview.actions.setModal(modalObject))
     }

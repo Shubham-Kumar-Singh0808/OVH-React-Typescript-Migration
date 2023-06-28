@@ -6,18 +6,15 @@ import {
   CFormLabel,
   CFormInput,
   CFormSelect,
-  CFormCheck,
   CFormTextarea,
 } from '@coreui/react-pro'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import { SyntheticEvent } from 'react-draft-wysiwyg'
-import validator from 'validator'
 import OCard from '../../../../components/ReusableComponent/OCard'
 import { formLabelProps } from '../../../Finance/ITDeclarationForm/ITDeclarationFormHelpers'
 import { reduxServices } from '../../../../reducers/reduxServices'
 import { useAppDispatch, useTypedSelector } from '../../../../stateStore'
-import { TextWhite, TextDanger } from '../../../../constant/ClassName'
 import { showIsRequired } from '../../../../utils/helper'
 import { dateFormat } from '../../../../constant/DateFormat'
 import OToast from '../../../../components/ReusableComponent/OToast'
@@ -35,26 +32,14 @@ const EditUpComingJoinee = ({
   searchInput: string | undefined
 }): JSX.Element => {
   const dispatch = useAppDispatch()
-  const [candidateDepartment, setCandidateDepartment] = useState<
-    string | number
-  >('')
-  const [uploadedFile, setUploadedFile] = useState<File>()
   const [editToDate, setEditToDate] = useState<string>(
     editNewJoineeInfo.dateOfJoining,
   )
-  // const [candidateName, setSetCandidatename] = useState<string>('')
-  // const [position, setPosition] = useState<string>('')
-  // const [curruentCTC, setCurruentCTC] = useState<string>('')
-  // const [employeeType, setEmployeeType] = useState<string>('')
-  // const [jobType, setJobType] = useState<string>('')
-  const [isAddButtonEnabled, setIsAddButtonEnabled] = useState(false)
-  // const [dateOfJoiningDate, setDateOfJoiningDate] = useState<Date | string>()
+  const [uploadErrorText, setUpdateUploadErrorText] = useState<string>('')
+  const [isUpdateButtonEnabled, setIsUpdateButtonEnabled] =
+    useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
-  const [selectedTechnologyId, setSelectedTechnologyId] = useState<
-    number | null
-  >(null)
-  const [selectedTechnologyName, setSelectedTechnologyName] =
-    useState<string>('')
+
   const timeLineListSelector = useTypedSelector(
     reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
   )
@@ -92,49 +77,29 @@ const EditUpComingJoinee = ({
   //   )
   // }, [dispatch])
 
-  // const selectedDepartment = addNewJoinee.find(
-  //   (item) => item.departmentId === candidateDepartment,
-  // )
-
-  const [uploadErrorText, setUploadErrorText] = useState<string>('')
-  const [isUploadBtnEnabled, setIsUploadBtnEnabled] = useState(false)
-  const [uploadFeedbackForm, setUploadFeedbackForm] = useState<
-    File | undefined
-  >(undefined)
-  const onChangeJoineeFileUploadHandler = (element: HTMLInputElement) => {
+  const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
-    const acceptedFileTypes = ['pdf', 'doc', 'docx']
+    const acceptedFileTypes = ['pdf', 'doc', 'docx', 'zip']
     let extension = ''
+
     if (!file) return
-    setUploadedFile(file[0])
 
     if (file && file[0] !== undefined) {
       extension = file[0].name.split('.').pop() as string
     }
+
     if (file[0] !== undefined && file[0].size > 2048000) {
-      setUploadErrorText('Please upload file lessthan 2MB.')
+      setUpdateUploadErrorText('Please upload a file less than 2MB.')
       return
     }
+
     if (!acceptedFileTypes.includes(extension)) {
-      setUploadErrorText('Please choose doc or docx or pdf or zip. file')
+      setUpdateUploadErrorText('Please choose a doc, docx, pdf, or zip file.')
       return
     }
-    setIsUploadBtnEnabled(true)
-    setUploadErrorText('')
-    setUploadFeedbackForm(file[0])
+
+    setUpdateUploadErrorText('')
   }
-
-  useEffect(() => {
-    if (uploadFeedbackForm) {
-      setIsUploadBtnEnabled(true)
-    } else {
-      setIsUploadBtnEnabled(false)
-    }
-  })
-
-  useEffect(() => {
-    dispatch(reduxServices.candidateList.getTechnology())
-  }, [useEffect])
 
   const addNewJoineeTechno = useTypedSelector(
     reduxServices.candidateList.selectors.getAllTechnology,
@@ -149,25 +114,20 @@ const EditUpComingJoinee = ({
       editNewJoineeInfo.dateOfJoining &&
       editNewJoineeInfo.technology
     ) {
-      setIsAddButtonEnabled(true)
+      setIsUpdateButtonEnabled(true)
     } else {
-      setIsAddButtonEnabled(false)
+      setIsUpdateButtonEnabled(false)
     }
   }, [editNewJoineeInfo])
-  // --------------------------------------------------------
 
-  // const handleText = (description: string) => {
-  //   setEditNewJoineeInfo((prevState) => {
-  //     return { ...prevState, ...{ description } }
-  //   })
-  // }
   const onHandleDatePicker = (value: Date) => {
     setEditToDate(moment(value).format(dateFormat))
   }
   const onChangeInputHandler = (
     event:
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLInputElement>,
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
     const { name, value } = event.target
     if (name === 'currentCTC' || name === 'experience') {
@@ -191,8 +151,6 @@ const EditUpComingJoinee = ({
       toastColor="success"
     />
   )
-
-  // ________________________________________________________________
 
   const handleUpdateNewJoinee = async () => {
     const prepareObject = {
@@ -239,6 +197,7 @@ const EditUpComingJoinee = ({
     }
   }
 
+<<<<<<< HEAD
   // const NUMERIC_REGEX = /^[0-9]*$/
 
   // const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -254,6 +213,9 @@ const EditUpComingJoinee = ({
   // }
   console.log(editNewJoineeInfo)
   console.log(editNewJoineeInfo.candidateInterviewStatus)
+=======
+  console.log(editNewJoineeInfo.departmentName)
+>>>>>>> 883a7ac013494187923202aa745596fbe2186aab
   return (
     <>
       <OCard
@@ -280,7 +242,7 @@ const EditUpComingJoinee = ({
             {...formLabelProps}
             className="col-sm-3 col-form-label text-end"
           >
-            position:
+            Position:
             <span
               className={showIsRequired(editNewJoineeInfo.appliedForLookUp)}
             >
@@ -348,7 +310,6 @@ const EditUpComingJoinee = ({
               name="candidateEmail"
               placeholder="email"
               value={editNewJoineeInfo.candidateEmail}
-              // onChange={(e) => setPosition(e.target.value)}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -392,13 +353,12 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
-              data-testid="updateDepartmentName"
-              id="department"
+              data-testid="departmentName"
+              id="departmentName"
               size="sm"
               aria-label="Department"
               name="departmentName"
               value={editNewJoineeInfo.departmentName}
-              // onChange={(e) => setCandidateDepartment(e.target.value)}
               onChange={onChangeInputHandler}
             >
               {addNewJoinee?.length > 0 &&
@@ -423,16 +383,15 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <CFormSelect
               className="mb-1"
-              data-testid="updateDesignation-id"
+              data-testid="designation"
               id="id"
               size="sm"
               aria-label="Designation"
               name="designation"
               value={editNewJoineeInfo.designation}
-              // onChange={(e) => setDesignation(e.target.value)}
               onChange={onChangeInputHandler}
             >
-              {/* <option value={''}></option> */}
+              <option value={''}>Select Designation</option>
               {designations?.length > 0 &&
                 designations?.map((location, index) => (
                   <option key={index} value={location.departmentId}>
@@ -462,12 +421,12 @@ const EditUpComingJoinee = ({
               aria-label="technology"
               name="technology"
               value={editNewJoineeInfo.technology}
-              // onChange={(e) => setDesignation(e.target.value)}
               onChange={onChangeInputHandler}
             >
+              <option value={''}></option>
               {addNewJoineeTechno?.length > 0 &&
-                addNewJoineeTechno?.map((item, index) => (
-                  <option key={index} value={item.id}>
+                addNewJoineeTechno?.map((item) => (
+                  <option key={item.id} value={item.name}>
                     {item.name}
                   </option>
                 ))}
@@ -487,7 +446,7 @@ const EditUpComingJoinee = ({
           <CCol sm={3}>
             <DatePicker
               className="form-control form-control-sm sh-date-picker"
-              data-testid="update-join-select"
+              data-testid="dateOfJoiningDate"
               placeholderText="dd/mm/yyyy"
               dateFormat="dd/mm/yy"
               name="dateOfJoiningDate"
@@ -497,7 +456,6 @@ const EditUpComingJoinee = ({
               showYearDropdown
               dropdownMode="select"
               value={editToDate || ''}
-              // onChange={(date: Date) => onHandleStartDate(date)}
               onChange={(date: Date) => onHandleDatePicker(date)}
             />
           </CCol>
@@ -523,7 +481,6 @@ const EditUpComingJoinee = ({
               autoComplete="off"
               placeholder="CTC"
               value={editNewJoineeInfo.currentCTC}
-              // onChange={handleCurruentCTCChange}
               onChange={onChangeInputHandler}
             />
           </CCol>
@@ -548,7 +505,6 @@ const EditUpComingJoinee = ({
               aria-label="selectEmploymentType"
               name="employmentType"
               value={editNewJoineeInfo.employmentType}
-              // onChange={(e) => setEmployeeType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Type</option>
@@ -575,7 +531,6 @@ const EditUpComingJoinee = ({
               aria-label="JobType"
               name="jobType"
               value={editNewJoineeInfo.jobType}
-              // onChange={(e) => setJobType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value={''}>Select Job Type</option>
@@ -629,12 +584,13 @@ const EditUpComingJoinee = ({
                 data-testid="update-text-area"
                 aria-label="textarea"
                 autoComplete="off"
-                maxLength={150}
+                maxLength={250}
+                name="comments"
+                id="comments"
                 value={editNewJoineeInfo.comments}
                 placeholder="comments"
                 className="sh-question"
-                // onChange={(e) => setCandidateComment(e.target.value)}
-                // onChange={handleTechnologyChange}
+                onChange={onChangeInputHandler}
               ></CFormTextarea>
               <p>{candidateComment?.length}/250</p>
             </CCol>
@@ -655,7 +611,7 @@ const EditUpComingJoinee = ({
               style={{ width: '200px', marginBottom: '0' }}
               data-testid="file-upload"
               onChange={(element: SyntheticEvent) =>
-                onChangeJoineeFileUploadHandler(
+                onChangeUpdateJoineeFileUploadHandler(
                   element.currentTarget as HTMLInputElement,
                 )
               }
@@ -677,7 +633,7 @@ const EditUpComingJoinee = ({
             className="btn-ovh me-1"
             size="sm"
             name="Add"
-            disabled={!isAddButtonEnabled}
+            disabled={!isUpdateButtonEnabled}
             onClick={handleUpdateNewJoinee}
           >
             Update
