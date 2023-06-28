@@ -139,6 +139,7 @@ const initialSQAAuditReportState: sqaAuditReportSliceState = {
   rescheduleStatus: rescheduleStatusValue,
   fromDate: '',
   toDate: '',
+  searchInput: '',
 }
 
 const sqaAuditReportSlice = createSlice({
@@ -168,6 +169,9 @@ const sqaAuditReportSlice = createSlice({
     },
     setToDate: (state, action) => {
       state.toDate = action.payload
+    },
+    setSearchInput: (state, action) => {
+      state.searchInput = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -227,6 +231,9 @@ const getFromDateValue = (state: RootState): string | Date =>
 const getToDateValue = (state: RootState): string | Date =>
   state.sqaAuditReport.toDate
 
+const getSearchInputValue = (state: RootState): string =>
+  state.sqaAuditReport.searchInput
+
 const sqaAuditReportThunk = {
   getSQAAuditReport,
   deleteProjectAuditDetails,
@@ -248,6 +255,7 @@ const myTicketsSelectors = {
   getSelectedRescheduleStatusValue,
   getFromDateValue,
   getToDateValue,
+  getSearchInputValue,
 }
 
 export const sqaAuditReportService = {

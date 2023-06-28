@@ -63,6 +63,7 @@ export type sqaAuditReportSliceState = {
   rescheduleStatus: string
   fromDate: string
   toDate: string
+  searchInput: string
 }
 
 export type GetSQAAuditReportProps = {

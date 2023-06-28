@@ -71,11 +71,19 @@ const SQAAuditReportFilterOptions = ({
     )
   }, [dispatch, status, rescheduleStatus])
 
-  const [searchInput, setSearchInput] = useState<string>('')
+  const getSearchInputValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSearchInputValue,
+  )
+
+  const [searchInput, setSearchInput] = useState<string>(getSearchInputValue)
   const [dateError, setDateError] = useState<boolean>(false)
   const sqaAuditReportListSize = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.sqaAuditReportListSize,
   )
+
+  useEffect(() => {
+    dispatch(reduxServices.sqaAuditReport.actions.setSearchInput(searchInput))
+  }, [dispatch, searchInput])
 
   const {
     paginationRange,
@@ -100,7 +108,7 @@ const SQAAuditReportFilterOptions = ({
     dispatch(
       reduxServices.sqaAuditReport.getSQAAuditReport({
         endIndex: pageSize * currentPage,
-        multiSearch: '',
+        multiSearch: searchInput,
         startIndex: pageSize * (currentPage - 1),
         SQAAuditSelectionDate: selectDate || '',
         auditRescheduleStatus: rescheduleStatus || '',
@@ -438,6 +446,11 @@ const SQAAuditReportFilterOptions = ({
               aria-describedby="button-addon2"
               value={searchInput?.replace(/^\s*/, '')}
               onChange={(e) => {
+                dispatch(
+                  reduxServices.sqaAuditReport.actions.setSearchInput(
+                    e.target.value,
+                  ),
+                )
                 setSearchInput(e.target.value)
               }}
               onKeyDown={searchKeyDownButtonHandler}

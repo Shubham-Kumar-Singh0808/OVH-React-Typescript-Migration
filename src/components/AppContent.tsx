@@ -406,6 +406,9 @@ const AppContent = () => {
   const getToValue = useTypedSelector(
     reduxServices.sqaAuditReport.selectors.getToDateValue,
   )
+  const getSearchInputValue = useTypedSelector(
+    reduxServices.sqaAuditReport.selectors.getSearchInputValue,
+  )
 
   useEffect(() => {
     if (
@@ -423,6 +426,11 @@ const AppContent = () => {
           getSelectedRescheduleStatusValue,
         ),
       )
+      dispatch(
+        reduxServices.sqaAuditReport.actions.setSearchInput(
+          getSearchInputValue,
+        ),
+      )
       dispatch(reduxServices.sqaAuditReport.actions.setFromDate(getFromValue))
       dispatch(reduxServices.sqaAuditReport.actions.setToDate(getToValue))
     } else {
@@ -431,6 +439,7 @@ const AppContent = () => {
       dispatch(reduxServices.sqaAuditReport.actions.setRescheduleStatus(''))
       dispatch(reduxServices.sqaAuditReport.actions.setFromDate(''))
       dispatch(reduxServices.sqaAuditReport.actions.setToDate(''))
+      dispatch(reduxServices.sqaAuditReport.actions.setSearchInput(''))
     }
   }, [
     dispatch,
@@ -440,6 +449,7 @@ const AppContent = () => {
     getSelectedRescheduleStatusValue,
     getFromValue,
     getToValue,
+    getSearchInputValue,
   ])
 
   return (
