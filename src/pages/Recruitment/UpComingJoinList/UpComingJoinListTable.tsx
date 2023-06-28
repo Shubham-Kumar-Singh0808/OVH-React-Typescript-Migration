@@ -112,11 +112,11 @@ const UpComingJoinListTable = ({
   const editButtonHandler = (updateUpComingJoineeData: UpComingJoineeList) => {
     setEditNewJoineeInfo(updateUpComingJoineeData)
     dispatch(reduxServices.candidateList.getTechnology())
-    dispatch(
-      reduxServices.KRA.getDesignationThunk(
-        Number(updateUpComingJoineeData.id),
-      ),
-    )
+    // dispatch(
+    //   reduxServices.KRA.getDesignationThunk(
+    //     Number(updateUpComingJoineeData.id),
+    //   ),
+    // )
     setToggle('upcomingjoinlist')
   }
 

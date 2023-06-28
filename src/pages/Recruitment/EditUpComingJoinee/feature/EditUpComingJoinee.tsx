@@ -40,9 +40,10 @@ const EditUpComingJoinee = ({
     useState<boolean>(false)
   const [candidateComment, setCandidateComment] = useState<string>('')
 
-  const timeLineListSelector = useTypedSelector(
-    reduxServices.intervieweeDetails.selectors.TimeLineListSelector,
-  )
+  useEffect(() => {
+    setCandidateComment(editNewJoineeInfo.comments)
+  }, [editNewJoineeInfo.comments])
+
   const addNewJoinee = useTypedSelector(
     reduxServices.KRA.selectors.empDepartments,
   )
@@ -50,7 +51,6 @@ const EditUpComingJoinee = ({
   const designations = useTypedSelector(
     reduxServices.KRA.selectors.designations,
   )
-  // const [designation, setDesignation] = useState<string | number>('')
   const result = addNewJoinee?.filter(
     (item) => item?.departmentName === editNewJoineeInfo?.departmentName,
   )
@@ -62,20 +62,7 @@ const EditUpComingJoinee = ({
 
   useEffect(() => {
     dispatch(reduxServices.KRA.getEmpDepartmentThunk())
-    // dispatch(
-    //   reduxServices.addNewCandidate.getPersonTechnologyData(
-    //     timeLineListSelector?.personId,
-    //   ),
-    // )
   }, [dispatch])
-
-  // useEffect(() => {
-  //   dispatch(
-  //     reduxServices.intervieweeDetails.timeLineData(
-  //       timeLineListSelector.personId,
-  //     ),
-  //   )
-  // }, [dispatch])
 
   const onChangeUpdateJoineeFileUploadHandler = (element: HTMLInputElement) => {
     const file = element.files
@@ -196,20 +183,6 @@ const EditUpComingJoinee = ({
       dispatch(reduxServices.app.actions.addToast(undefined))
     }
   }
-
-  // const NUMERIC_REGEX = /^[0-9]*$/
-
-  // const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const input = e.target.value
-
-  //   if (NUMERIC_REGEX.test(input)) {
-  //     setCurruentCTC(input)
-  //   }
-  // }
-
-  // const onHandleStartDate = (value: Date) => {
-  //   setDateOfJoiningDate(moment(value).format(dateFormat))
-  // }
   console.log(editNewJoineeInfo)
   console.log(editNewJoineeInfo.candidateInterviewStatus)
   return (
@@ -357,6 +330,7 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.departmentName}
               onChange={onChangeInputHandler}
             >
+              <option value={''}></option>
               {addNewJoinee?.length > 0 &&
                 addNewJoinee?.map((item, index) => (
                   <option key={index} value={item.departmentName}>
@@ -390,9 +364,7 @@ const EditUpComingJoinee = ({
               <option value={''}>Select Designation</option>
               {designations?.length > 0 &&
                 designations?.map((location, index) => (
-                  <option key={index} value={location.departmentId}>
-                    {location.name}
-                  </option>
+                  <option key={index}>{location.name}</option>
                 ))}
             </CFormSelect>
           </CCol>
@@ -559,7 +531,6 @@ const EditUpComingJoinee = ({
               aria-label="JoiningStatus"
               name="candidateInterviewStatus"
               value={editNewJoineeInfo.candidateInterviewStatus}
-              //  onChange={(e) => setJobType(e.target.value)}
               onChange={onChangeInputHandler}
             >
               <option value="DID_NOT_JOIN">DID NOT JOIN</option>
