@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CCol, CFormCheck, CRow } from '@coreui/react-pro'
 import ReporteesAutoComplete from './ReporteesAutoComplete'
 import { reduxServices } from '../../../reducers/reduxServices'
@@ -8,10 +8,17 @@ import { LoadingType } from '../../../types/Components/loadingScreenTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 
 const ChangeReporteeFilterOptions = (): JSX.Element => {
+  const managerNamePlaceholder = 'Manager Name'
   const [isActive, setIsActive] = useState(true)
   const [autoCompleteTarget, setAutoCompleteTarget] = useState('')
   const [ShouldRenderTable, setShouldRenderTable] = useState<boolean>(false)
-  const [placeHolder, setPlaceHolder] = useState<string>('Manager Name')
+  const [placeHolder, setPlaceHolder] = useState<string>(managerNamePlaceholder)
+
+  useEffect(() => {
+    if (isActive) {
+      setPlaceHolder(managerNamePlaceholder)
+    } else setPlaceHolder('Hr Name')
+  }, [isActive])
 
   const dispatch = useAppDispatch()
 
@@ -34,7 +41,7 @@ const ChangeReporteeFilterOptions = (): JSX.Element => {
     const isTrue = value.toLowerCase() === 'reportees'
     setIsActive(isTrue)
     if (isTrue) {
-      setPlaceHolder('Manager Name')
+      setPlaceHolder(managerNamePlaceholder)
     } else setPlaceHolder('Hr Name')
   }
   const reporteesAutoCompleteComponent = isActive ? (
@@ -62,7 +69,7 @@ const ChangeReporteeFilterOptions = (): JSX.Element => {
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="my-4 col-sm-10">
+          <CRow className="my-3 col-sm-10 ms-4">
             <CCol sm={2}>
               <CFormCheck
                 type="radio"

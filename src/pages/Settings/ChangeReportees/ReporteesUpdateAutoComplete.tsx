@@ -62,12 +62,12 @@ const ReporteesUpdateAutoComplete = ({
     <>
       {isLoading !== ApiLoadingState.loading ? (
         <>
-          <CRow className="mb-3 mt-3">
+          <CRow className="mb-3 mt-2 ps-3">
             <CFormLabel
               data-testid="pmLabel"
               className="col-sm-2 col-form-label text-end ms-5"
             >
-              From Manager:
+              To Manager:
               <span className={validationClassName}>*</span>
             </CFormLabel>
             <CCol sm={3}>
