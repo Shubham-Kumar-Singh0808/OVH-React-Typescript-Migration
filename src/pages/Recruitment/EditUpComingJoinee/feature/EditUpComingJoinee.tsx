@@ -533,10 +533,18 @@ const EditUpComingJoinee = ({
               value={editNewJoineeInfo.candidateInterviewStatus}
               onChange={onChangeInputHandler}
             >
-              <option value="DID_NOT_JOIN">DID NOT JOIN</option>
-              <option value="OFFERED">OFFERED</option>
-              <option value="OFFER_CANCELLED">OFFER CANCELLED</option>
-              <option value="JOINED">JOINED</option>
+              <option value="DID_NOT_JOIN" style={{ color: 'red' }}>
+                DID NOT JOIN
+              </option>
+              <option value="OFFERED" style={{ color: 'green' }}>
+                OFFERED
+              </option>
+              <option value="OFFER_CANCELLED" style={{ color: 'red' }}>
+                OFFER CANCELLED
+              </option>
+              <option value="JOINED" style={{ color: 'green' }}>
+                JOINED
+              </option>
             </CFormSelect>
           </CCol>
         </CRow>
