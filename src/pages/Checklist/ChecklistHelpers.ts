@@ -1,3 +1,5 @@
+import { IncomingChecklistItem } from '../../types/Checklist/ChecklistTypes'
+
 export const getDateTimeFromTimestamp = (timestamp: number): string => {
   const dateObj = new Date(timestamp)
   const formattedDate = dateObj.toLocaleDateString('en-US', {
@@ -11,4 +13,19 @@ export const getDateTimeFromTimestamp = (timestamp: number): string => {
     hour12: true,
   })
   return `${formattedDate} ${formattedTime}`
+}
+
+export const initialChecklistItem: IncomingChecklistItem = {
+  id: -1,
+  title: '',
+  description: '',
+  pageName: '',
+  departmentName: '',
+  departmentId: -1,
+  type: '',
+  sectionId: null,
+  sectionName: null,
+  userName: '',
+  createdDate: null,
+  updatedDate: 1,
 }

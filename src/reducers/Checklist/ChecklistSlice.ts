@@ -9,12 +9,14 @@ import {
 } from '../../types/Checklist/ChecklistTypes'
 import ChecklistApi from '../../middleware/api/Checklist/ChecklistApi'
 import { ValidationError } from '../../types/commonTypes'
+import { initialChecklistItem } from '../../pages/Checklist/ChecklistHelpers'
 
 const initialCheckListSlice: CheckListSliceState = {
   isLoading: ApiLoadingState.idle,
   error: null,
   incomingChecklist: { size: 0, list: [] },
   checklistParams: { endIndex: 20, startIndex: 0 },
+  clickedChecklistTitle: initialChecklistItem,
 }
 
 const getCheckListThunk = createAsyncThunk(
@@ -22,6 +24,18 @@ const getCheckListThunk = createAsyncThunk(
   async (finalParams: GetChecklistParams, thunkApi) => {
     try {
       return await ChecklistApi.getChecklist(finalParams)
+    } catch (error) {
+      const err = error as AxiosError
+      return thunkApi.rejectWithValue(err.response?.status)
+    }
+  },
+)
+
+const getChecklistItemThunk = createAsyncThunk(
+  'Checklist/getChecklistItemThunk',
+  async (pageName: string, thunkApi) => {
+    try {
+      return await ChecklistApi.getChecklistItem(pageName)
     } catch (error) {
       const err = error as AxiosError
       return thunkApi.rejectWithValue(err.response?.status)
@@ -41,6 +55,9 @@ const checkListSlice = createSlice({
     builder.addCase(getCheckListThunk.fulfilled, (state, action) => {
       state.incomingChecklist = action.payload
     })
+    builder.addCase(getChecklistItemThunk.fulfilled, (state, action) => {
+      state.clickedChecklistTitle = action.payload
+    })
     builder.addMatcher(isAnyOf(getCheckListThunk.pending), (state) => {
       state.isLoading = ApiLoadingState.loading
       state.error = null
@@ -57,6 +74,7 @@ const checkListSlice = createSlice({
 
 const ChecklistThunks = {
   getCheckListThunk,
+  getChecklistItemThunk,
 }
 
 export const ChecklistServices = {

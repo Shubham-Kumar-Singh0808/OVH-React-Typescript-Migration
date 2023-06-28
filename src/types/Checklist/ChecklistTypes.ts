@@ -30,4 +30,5 @@ export interface CheckListSliceState {
   error: ValidationError
   incomingChecklist: IncomingCheckList
   checklistParams: GetChecklistParams
+  clickedChecklistTitle: IncomingChecklistItem // this is for the clicked checklist item
 }

@@ -1172,4 +1172,5 @@ export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
 
 export const CheckListApiConfig: ChecklistApi = {
   getCheckList: apiPrefix + '/contactInfo/getAll',
+  getChecklistItem: apiPrefix + '/contactInfo/get',
 }

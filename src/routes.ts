@@ -481,6 +481,9 @@ const EditCandidate = React.lazy(
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
 )
 const Checklist = React.lazy(() => import('./pages/Checklist/Checklist'))
+const ChecklistInfo = React.lazy(
+  () => import('./pages/Checklist/ChecklistInfoPage/ChecklistInfo'),
+)
 /**
  * See {@link https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config GitHub}.
  */
@@ -1135,5 +1138,10 @@ const routes = [
     component: EditCandidate,
   },
   { path: '/Checklist', name: 'Checklist', component: Checklist },
+  {
+    path: '/checklistInfo/:pageName',
+    name: 'Checklist Info',
+    component: ChecklistInfo,
+  },
 ]
 export default routes

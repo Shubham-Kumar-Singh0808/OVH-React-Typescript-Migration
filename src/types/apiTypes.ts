@@ -979,4 +979,5 @@ export interface InterviewStatusReportApi extends ApiBase {
 }
 export interface ChecklistApi extends ApiBase {
   getCheckList: string
+  getChecklistItem: string
 }

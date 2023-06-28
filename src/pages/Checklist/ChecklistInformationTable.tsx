@@ -7,14 +7,17 @@ import {
   CTableDataCell,
 } from '@coreui/react-pro'
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getDateTimeFromTimestamp } from './ChecklistHelpers'
 import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../middleware/hooks/usePagination'
 import { reduxServices } from '../../reducers/reduxServices'
+import { IncomingChecklistItem } from '../../types/Checklist/ChecklistTypes'
 
 const ChecklistInformationTable = (): JSX.Element => {
+  const history = useHistory()
   const dispatch = useAppDispatch()
   const incomingChecklist = useTypedSelector(
     (state) => state.Checklist.incomingChecklist,
@@ -43,6 +46,15 @@ const ChecklistInformationTable = (): JSX.Element => {
     )
   }, [currentPage, pageSize])
 
+  const checklistItemTitleClickHandler = (
+    e: React.MouseEvent<HTMLDivElement>,
+    checkListItem: IncomingChecklistItem,
+  ) => {
+    e.preventDefault()
+    // pushing to required url
+    history.push(`/checklistInfo/${checkListItem.pageName}`)
+  }
+
   return (
     <>
       <CTable responsive striped align="middle">
@@ -64,6 +76,9 @@ const ChecklistInformationTable = (): JSX.Element => {
                 <div
                   className="cursor-pointer checklist-title-hover"
                   data-testid={`checkListTitle-${checklistItemIndex}`}
+                  onClick={(e) =>
+                    checklistItemTitleClickHandler(e, checklistItem)
+                  }
                 >
                   <span>
                     <i className="fa fa-eye fa-fw fa-lg"></i>

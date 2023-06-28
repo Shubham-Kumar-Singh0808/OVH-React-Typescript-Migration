@@ -1,6 +1,7 @@
 import {
   IncomingCheckList,
   GetChecklistParams,
+  IncomingChecklistItem,
 } from '../../../types/Checklist/ChecklistTypes'
 import {
   getAuthenticatedRequestConfig,
@@ -22,8 +23,23 @@ const getChecklist = async (
   return response.data
 }
 
+const getChecklistItem = async (
+  pageName: string,
+): Promise<IncomingChecklistItem> => {
+  const requestConfig = getAuthenticatedRequestConfig({
+    url: CheckListApiConfig.getChecklistItem,
+    method: AllowedHttpMethods.get,
+    params: {
+      pageName,
+    },
+  })
+  const response = await useAxios(requestConfig)
+  return response.data
+}
+
 const ChecklistApi = {
   getChecklist,
+  getChecklistItem,
 }
 
 export default ChecklistApi

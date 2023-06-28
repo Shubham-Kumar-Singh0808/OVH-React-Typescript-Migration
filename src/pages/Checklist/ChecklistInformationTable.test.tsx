@@ -73,5 +73,10 @@ describe('CheckList Information Table', () => {
         userEvent.selectOptions(screen.getByTestId('paginationTestID'), '40')
       })
     })
+    test('title click functionality', () => {
+      act(() => {
+        userEvent.click(screen.getByTestId('checkListTitle-0'))
+      })
+    })
   })
 })

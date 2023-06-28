@@ -28,7 +28,11 @@ const Checklist = (): JSX.Element => {
         <div className="d-flex flex-row justify-content-end mb-4">
           <CCol sm={3} className="text-end">
             <Link to="/checklistInfosettings">
-              <CButton className="btn-ovh" color="info">
+              <CButton
+                className="btn-ovh"
+                color="info"
+                data-testid="checkInfoSettingsBtn"
+              >
                 <i className="fa fa-sign-out fa-fw"></i>
                 Checklist Information Settings
               </CButton>
