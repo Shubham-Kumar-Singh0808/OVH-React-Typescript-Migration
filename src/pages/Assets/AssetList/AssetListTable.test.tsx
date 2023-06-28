@@ -19,6 +19,8 @@ describe('Asset List Table Component Testing', () => {
         setCurrentPage={mockSetTogglePage}
         pageSize={0}
         setPageSize={mockSetTogglePage}
+        setToggle={mockSetTogglePage}
+        setChangeReportStatus={mockSetTogglePage}
       />,
       {
         preloadedState: {
