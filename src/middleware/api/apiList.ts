@@ -120,9 +120,11 @@ import {
   CategoryListApi,
   AssetListApi,
   ProductSpecificationListApi,
+  CreditCardListApi,
   ExpenseSubCategoryListApi,
   ProfileRecruitmentHistoryApi,
   UpComingJoinListApi,
+  CandidateOfferApi,
   InterviewStatusReportApi,
 } from '../../types/apiTypes'
 
@@ -1145,11 +1147,28 @@ export const ExpenseSubCategoryListApiConfig: ExpenseSubCategoryListApi = {
   updateSubCategory: apiPrefix + '/ExpenseManagement/updateSubCategory',
   deleteSubCategory: apiPrefix + 'ExpenseManagement/deleteSubCategory',
 }
+
+export const CreditCardListApiConfig: CreditCardListApi = {
+  getCardsList: apiPrefix + '/ExpenseManagement/getCardsList',
+  addCardDetails: apiPrefix + '/ExpenseManagement/addCardDetails',
+  editCardDetails: apiPrefix + '/ExpenseManagement/editCardDetials',
+  updateCardDetails: apiPrefix + '/ExpenseManagement/updateCardDetails',
+  deleteCardData: apiPrefix + '/ExpenseManagement/deleteCardData',
+  checkDuplicateCardNumber:
+    apiPrefix + '/ExpenseManagement/checkDuplicateCardNumber',
+}
 export const getUpComingJoinListConfig: UpComingJoinListApi = {
   getUpcomingJoineeList: apiPrefix + '/jobapplicant/getUpcomingJoineeList',
   getEmployeeDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
 }
 
+export const getCandidateOfferConfig: CandidateOfferApi = {
+  getpersontechnology: apiPrefix + '/jobapplicant/getpersontechnology',
+  getCandidateDesignation: apiPrefix + '/kra/designation',
+  getAddNewJoinee: apiPrefix + '/jobapplicant/addNewJoinee',
+  getEmpDepartments: apiPrefix + '/assetManagement/getEmpDepartments',
+  getUploadFileForNewJoinee: '/jobapplicant/uploadFileForNewJoinee',
+}
 export const interviewStatusReportApiConfig: InterviewStatusReportApi = {
   getAllEmpCountries: apiPrefix + '/jobapplicant/getEmpCountries',
   getAllTechnology: apiPrefix + '/jobapplicant/getAllTechnology',

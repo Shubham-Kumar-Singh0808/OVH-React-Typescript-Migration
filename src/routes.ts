@@ -446,6 +446,10 @@ const ProductSpecificationList = React.lazy(
   () =>
     import('./pages/Assets/ProductSpecificationList/ProductSpecificationList'),
 )
+
+const CreditCardList = React.lazy(
+  () => import('./pages/ExpenseManagement/CreditCardList/CreditCardList'),
+)
 const ExpenseSubCategoryList = React.lazy(
   () => import('./pages/ExpenseManagement/Sub-Category/SubCategoryList'),
 )
@@ -472,6 +476,10 @@ const AddNewCandidate = React.lazy(
 const UpComingJoinList = React.lazy(
   () => import('./pages/Recruitment/UpComingJoinList/UpComingJoinList'),
 )
+const personTechnology = React.lazy(
+  () => import('./pages/Recruitment/CandidateOffer/AddNewJoinee'),
+)
+
 const EditCandidate = React.lazy(
   () =>
     import('./pages/Recruitment/CandidateList/EditCandidatePage/EditCandidate'),
@@ -1090,6 +1098,11 @@ const routes = [
     component: ProductSpecificationList,
   },
   {
+    path: '/creditCardList',
+    name: 'Credit Card List',
+    component: CreditCardList,
+  },
+  {
     path: '/expenseSubCategory',
     name: 'Expense Sub Category',
     component: ExpenseSubCategoryList,
@@ -1118,6 +1131,11 @@ const routes = [
     path: '/upcomingjoinlist',
     name: 'UpComing Join List',
     component: UpComingJoinList,
+  },
+  {
+    path: '/addnewjoinee/:personId',
+    name: 'CandidateOffer',
+    component: personTechnology,
   },
   {
     path: '/editcandidate/:personId',

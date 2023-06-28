@@ -949,6 +949,13 @@ export interface ProductSpecificationListApi extends ApiBase {
   deleteProductSpecification: string
   updateProductSpecification: string
 }
+export interface CandidateOfferApi extends ApiBase {
+  getpersontechnology: string
+  getCandidateDesignation: string
+  getAddNewJoinee: string
+  getEmpDepartments: string
+  getUploadFileForNewJoinee: string
+}
 
 export interface ExpenseSubCategoryListApi extends ApiBase {
   getCategoryList: string
@@ -958,6 +965,15 @@ export interface ExpenseSubCategoryListApi extends ApiBase {
   checkForDuplicateSubCategory: string
   updateSubCategory: string
   deleteSubCategory: string
+}
+
+export interface CreditCardListApi extends ApiBase {
+  getCardsList: string
+  addCardDetails: string
+  editCardDetails: string
+  updateCardDetails: string
+  deleteCardData: string
+  checkDuplicateCardNumber: string
 }
 export interface UpComingJoinListApi extends ApiBase {
   getUpcomingJoineeList: string

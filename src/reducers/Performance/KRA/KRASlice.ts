@@ -7,7 +7,9 @@ import {
   AddKPIData,
   DeleteKPIParams,
   Frequency,
+  IncomingEmployeeDepartment,
   IncomingKPIDataItem,
+  IncomingKRADesignation,
   KRADataQueryBody,
   KRADesignationPercentageQuery,
   KRAInitialState,
@@ -377,10 +379,16 @@ const KRAThunk = {
 
 const frequency = (state: RootState): Frequency[] => state.KRA.frequency
 const editKpi = (state: RootState): IncomingKPIDataItem => state.KRA.editThisKpi
+const empDepartments = (state: RootState): IncomingEmployeeDepartment[] =>
+  state.KRA.empDepartments
+const designations = (state: RootState): IncomingKRADesignation[] =>
+  state.KRA.designations
 
 const kRAsSelectors = {
   frequency,
   editKpi,
+  empDepartments,
+  designations,
 }
 
 export const KRAService = {
