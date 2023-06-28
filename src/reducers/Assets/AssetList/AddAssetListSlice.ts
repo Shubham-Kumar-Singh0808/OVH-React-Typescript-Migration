@@ -7,7 +7,7 @@ import {
   typeChangeSpecificationsList,
   typeChangeSpecificationsProps,
 } from '../../../types/Assets/AssetList/addEditListTypes'
-import AddAssetApi from '../../../middleware/api/Assets/AssetList/AddEditApi'
+import AddAssetApi from '../../../middleware/api/Assets/AssetList/AddEditAssetListApi'
 import { LoadingState, ValidationError } from '../../../types/commonTypes'
 import { ApiLoadingState } from '../../../middleware/api/apiList'
 import { RootState } from '../../../stateStore'

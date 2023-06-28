@@ -141,7 +141,7 @@ const EditAddAssetList = ({
     const prepareObject = {
       amount: editAddAssetList.amount as string,
       assetNumber: editAddAssetList.assetNumber,
-      assetType: editAddAssetList.assetType as string,
+      assetType: editAddAssetList.assetType,
       assetTypeId: editAddAssetList.assetTypeId,
       countryId: editAddAssetList.countryId as number,
       createdBy: editAddAssetList.createdBy,
@@ -625,9 +625,9 @@ const EditAddAssetList = ({
               onChange={(e) => setCountry(e.target.value)}
             >
               <option value={''}>Select Country</option>
-              {countriesList?.map((country, index) => (
-                <option key={index} value={country.id}>
-                  {country.name}
+              {countriesList?.map((countrys, index) => (
+                <option key={index} value={countrys.id}>
+                  {countrys.name}
                 </option>
               ))}
             </CFormSelect>

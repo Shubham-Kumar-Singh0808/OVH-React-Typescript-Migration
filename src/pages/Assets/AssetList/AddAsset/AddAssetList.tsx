@@ -28,6 +28,7 @@ const AddAssetList = ({
 }: {
   setToggle: React.Dispatch<React.SetStateAction<string>>
   RBT: boolean
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 }): JSX.Element => {
   const dispatch = useAppDispatch()
 
@@ -212,7 +213,7 @@ const AddAssetList = ({
   )
 
   useEffect(() => {
-    if (assetType && productType && manufacturerName) {
+    if (assetType && productType && manufacturerName && productSpecification) {
       setProductSpecification(true)
     } else {
       setProductSpecification(false)
@@ -232,7 +233,7 @@ const AddAssetList = ({
   const handleAddNewAssetList = async () => {
     const isAddAssetLIst = {
       amount: assetAmount as string,
-      assetNumber: assetNumber as string,
+      assetNumber,
       assetTypeId: assetType as string,
       countryId: Number(country),
       invoiceNumber: invoiceNumber as string,
