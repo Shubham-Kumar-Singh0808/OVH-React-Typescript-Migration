@@ -34,6 +34,11 @@ describe('Employee BirthdaysList Table Component Testing', () => {
   beforeEach(() => {
     render(toRender, {
       preloadedState: {
+        authentication: {
+          authenticatedUser: {
+            employeeId: 1880,
+          },
+        },
         itDeclarationList: {
           isLoading: ApiLoadingState.succeeded,
           cycles: mockInvestmentCycles,
@@ -42,11 +47,6 @@ describe('Employee BirthdaysList Table Component Testing', () => {
         },
         userAccessToFeatures: {
           userAccessToFeatures: mockUserAccessToFeaturesData,
-        },
-        authentication: {
-          authenticatedUser: {
-            employeeId: 1880,
-          },
         },
       },
     })
