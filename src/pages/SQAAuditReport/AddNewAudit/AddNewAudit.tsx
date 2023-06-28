@@ -131,8 +131,7 @@ const AddNewAudit = (): JSX.Element => {
       projectManagerAutoCompleteTarget &&
       addAuditorName.length > 0 &&
       addAuditeeName.length > 0 &&
-      isProjectManagerVisible &&
-      Result1[0]?.projectName === projectNameAutoCompleteTarget
+      isProjectManagerVisible
     ) {
       setIsButtonEnable(true)
     } else {
