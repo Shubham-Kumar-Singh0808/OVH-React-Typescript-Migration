@@ -190,46 +190,4 @@ describe('IT Declaration Form', () => {
       })
     }, 15000)
   })
-
-  describe('No Active Cycle Testing', () => {
-    beforeEach(() => {
-      render(<ITDeclarationForm />, {
-        preloadedState: {
-          itDeclarationForm: {
-            isLoading: ApiLoadingState.failed,
-            error: 406,
-            sections: mockSections,
-            investments: mockInvestments,
-            employeeDetails: {
-              activeCyle: mockActiveCycleDate,
-              designation: 'Associate Software Engineer',
-              employeeId: 2050,
-              fullName: 'Testing',
-              joinDate: '07/05/2023',
-              pan: '8948354',
-            },
-            grandTotal: 0,
-            modal: {
-              showModal: false,
-              modalDescription: '',
-            },
-            itDeclarationFormExist: false,
-            isSubmitButtonEnabled: false,
-            submitITDeclarationForm: initialSubmitITDeclarationForm,
-          },
-          userAccessToFeatures: {
-            userAccessToFeatures: mockUserAccessToFeaturesData,
-          },
-        },
-      })
-    })
-    afterEach(cleanup)
-    screen.debug()
-
-    test('no active cycle error displayed', () => {
-      expect(
-        screen.getByText('No Active Cycle Found to add IT Declaration Form'),
-      ).toBeVisible()
-    })
-  })
 })

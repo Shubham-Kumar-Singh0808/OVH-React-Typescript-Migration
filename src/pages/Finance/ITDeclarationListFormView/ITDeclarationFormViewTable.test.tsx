@@ -10,7 +10,10 @@ import {
 } from '../../../test/data/itDeclarationListData'
 import { mockUserAccessToFeaturesData } from '../../../test/data/userAccessToFeaturesData'
 import ITDeclarationList from '../ITDeclarationList/ITDeclarationList'
-import { ITForm } from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
+import {
+  ITDeclarationFormToggleType,
+  ITForm,
+} from '../../../types/Finance/ITDeclarationList/itDeclarationListTypes'
 
 const toRender = (
   <div>
@@ -72,18 +75,19 @@ describe('Employee BirthdaysList Table Component Testing', () => {
   beforeEach(() => {
     render(<ITDeclarationFormViewTable viewDeclarationForm={mockITForm} />, {
       preloadedState: {
-        itDeclarationList: {
-          isLoading: ApiLoadingState.succeeded,
-          cycles: mockInvestmentCycles,
-          itDeclarationForms: mockDeclarationList.itforms,
-        },
-        userAccessToFeatures: {
-          userAccessToFeatures: mockUserAccessToFeaturesData,
-        },
         authentication: {
           authenticatedUser: {
             employeeId: 1889,
           },
+        },
+        itDeclarationList: {
+          isLoading: ApiLoadingState.succeeded,
+          cycles: mockInvestmentCycles,
+          itDeclarationForms: mockDeclarationList.itforms,
+          toggle: ITDeclarationFormToggleType.ViewForm,
+        },
+        userAccessToFeatures: {
+          userAccessToFeatures: mockUserAccessToFeaturesData,
         },
       },
     })

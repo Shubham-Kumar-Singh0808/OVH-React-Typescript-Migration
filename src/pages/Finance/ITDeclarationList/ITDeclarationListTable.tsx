@@ -35,7 +35,7 @@ const ITDeclarationListTable = (
     (state) => state.userAccessToFeatures.userAccessToFeatures,
   )?.find((feature) => feature.name === 'IT Declaration Form')
   const loggedInEmployeeId = useTypedSelector(
-    (state) => state.authentication.authenticatedUser.employeeId,
+    reduxServices.authentication.selectors.selectEmployeeId,
   )
 
   const {

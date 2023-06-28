@@ -163,6 +163,7 @@ const ITDeclarationForm = (): JSX.Element => {
           >
             {apiError === 406 && (
               <h5
+                data-testid="noActiveCycleMessage"
                 className="text-danger"
                 style={{ marginTop: '20px', fontWeight: 'bold' }}
               >
