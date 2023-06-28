@@ -197,7 +197,6 @@ const EditUpComingJoinee = ({
     }
   }
 
-<<<<<<< HEAD
   // const NUMERIC_REGEX = /^[0-9]*$/
 
   // const handleCurruentCTCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -213,9 +212,6 @@ const EditUpComingJoinee = ({
   // }
   console.log(editNewJoineeInfo)
   console.log(editNewJoineeInfo.candidateInterviewStatus)
-=======
-  console.log(editNewJoineeInfo.departmentName)
->>>>>>> 883a7ac013494187923202aa745596fbe2186aab
   return (
     <>
       <OCard
