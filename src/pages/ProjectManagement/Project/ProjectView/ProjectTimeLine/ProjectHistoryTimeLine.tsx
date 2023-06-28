@@ -65,7 +65,7 @@ const ProjectHistoryTimeLine = (): JSX.Element => {
             ? 'Allocated'
             : 'De-Allocated'
           const projectOldBillable = history.oldBillable ? 'Yes' : 'No'
-          const projectBillable = history.billable ? 'yes' : 'No'
+          const projectBillable = history.billable ? 'Yes' : 'No'
           return (
             <div key={index} className="sh-timeline-card">
               <div
