@@ -87,8 +87,6 @@ const AddNomineeForm = (props: AddNomineeFormProps): JSX.Element => {
     (state) => state.getLoggedInEmployeeData.generalInformation?.fullName,
   )
 
-  console.log(userFullName)
-
   const descriptionContent = useTypedSelector(
     (state) => state.addNominee.questionsInformation,
   )

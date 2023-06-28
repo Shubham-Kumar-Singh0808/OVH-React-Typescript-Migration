@@ -229,8 +229,8 @@ const EditProductSpecificationFilterOptions = ({
         >
           Product Specification:
         </CFormLabel>
-        <CCol sm={8} data-testid="ckEditor-component">
-          {showEditor ? (
+        {showEditor ? (
+          <CCol sm={8}>
             <CKEditor<{
               onChange: CKEditorEventHandler<'change'>
             }>
@@ -241,10 +241,10 @@ const EditProductSpecificationFilterOptions = ({
                 onChangeHandler(editor.getData().trim())
               }}
             />
-          ) : (
-            ''
-          )}
-        </CCol>
+          </CCol>
+        ) : (
+          ''
+        )}
       </CRow>
       <CRow>
         <CCol md={{ span: 6, offset: 3 }}>
