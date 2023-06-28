@@ -27,6 +27,8 @@ describe('Job Openings without data', () => {
           status: '',
         }}
         setEditJobInfo={mockSetTogglePage}
+        searchInput={''}
+        selectRadioAction={''}
       />,
       {
         preloadedState: {
