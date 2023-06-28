@@ -268,15 +268,7 @@ const PaymentList = ({
                 Selected Credit Card:
               </CFormLabel>
               <CCol sm={3}>
-                <CFormInput
-                  className="mb-1"
-                  type="text"
-                  id="selectedCreditCard"
-                  size="sm"
-                  name="selectedCreditCard"
-                  value={selectedCreditCard}
-                  disabled
-                />
+                <div>{selectedCreditCard}</div>
               </CCol>
             </CRow>
           )}
