@@ -35,7 +35,8 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     useState(0)
   const [isEditSubCategoryButtonEnabled, setIsEditSubCategoryButtonEnabled] =
     useState(false)
-  const [expensiveSubCategoryName, setSubCategoryName] = useState<string>('')
+  const [isEditBoxModified, setIsEditBoxModified] = useState(false)
+  const [expensiveSubCategoryName, setSubCategoryName] = useState('')
   const [isEditSubCategoryNameExist, setIsEditSubCategoryNameExist] =
     useState('')
   const dispatch = useAppDispatch()
@@ -70,6 +71,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
       )
     })
   }
+
   //    Configuration for Pagination
   const {
     paginationRange,
@@ -120,6 +122,7 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
         return { ...values, ...{ [name]: value } }
       })
     }
+    setIsEditBoxModified(true)
     if (editSubCategoryNameExists(value.trim())) {
       setIsEditSubCategoryNameExist(value.trim())
     } else {
@@ -141,6 +144,13 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
   }
 
   const saveExpenseCategoryButtonHandler = async () => {
+    if (
+      !isEditBoxModified ||
+      editExpenseSubCategoryDetails.subCategoryName === expensiveSubCategoryName
+    ) {
+      setIsEditExpenseSubCategory(false)
+      return
+    }
     const saveExpenseSubCategoryResultAction = await dispatch(
       reduxServices.subCategoryList.updateExpenseSubCategoryList(
         editExpenseSubCategoryDetails,
@@ -172,6 +182,14 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
     setSubCategoryName(subCategoryName)
     setDeleteExpenseSubCategoryId(deleteExpenseSubCategoryIds)
   }
+
+  const deleteFailedToastMessage = (
+    <OToast
+      toastMessage="Cannot be deleted as subcategory is mapped with it"
+      toastColor="danger"
+      data-testid="failedToast"
+    />
+  )
   const handleConfirmDeleteExpenseCategories = async () => {
     setIsDeleteModalVisible(false)
     const deleteExpenseSubCategoryResultAction = await dispatch(
@@ -193,24 +211,29 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
           />,
         ),
       )
+    } else if (
+      reduxServices.subCategoryList.deleteExpenseSubCategoryList.rejected.match(
+        deleteExpenseSubCategoryResultAction,
+      ) &&
+      deleteExpenseSubCategoryResultAction.payload === 500
+    ) {
+      dispatch(reduxServices.app.actions.addToast(deleteFailedToastMessage))
     }
   }
 
   useEffect(() => {
     if (
-      editExpenseSubCategoryDetails?.subCategoryName?.replace(/^\s*/, '') &&
-      editExpenseSubCategoryDetails.categoryName
+      editExpenseSubCategoryDetails?.subCategoryName?.replace(/^\s*/, '') !==
+      isEditSubCategoryNameExist
     ) {
       setIsEditSubCategoryButtonEnabled(true)
     } else {
       setIsEditSubCategoryButtonEnabled(false)
     }
-  }, [
-    editExpenseSubCategoryDetails.subCategoryName,
-    editExpenseSubCategoryDetails.categoryName,
-  ])
+  }, [editExpenseSubCategoryDetails.subCategoryName])
 
   const cancelExpenseSubCategoryButtonHandler = () => {
+    setIsEditSubCategoryNameExist('')
     setIsEditExpenseSubCategory(false)
   }
 
@@ -257,13 +280,16 @@ const ExpenseSubCategoryListTable = (): JSX.Element => {
                       >
                         {expenseCategoryList
                           .slice()
-                          .sort((category1, category2) =>
-                            category1.categoryName.localeCompare(
-                              category2.categoryName,
+                          .sort((subCategory1, subCategory2) =>
+                            subCategory1.categoryName.localeCompare(
+                              subCategory2.categoryName,
                             ),
                           )
                           ?.map((categoryNames, opt) => (
-                            <option key={opt} value={categoryNames.id}>
+                            <option
+                              key={opt}
+                              value={categoryNames.categoryName}
+                            >
                               {categoryNames.categoryName}
                             </option>
                           ))}
