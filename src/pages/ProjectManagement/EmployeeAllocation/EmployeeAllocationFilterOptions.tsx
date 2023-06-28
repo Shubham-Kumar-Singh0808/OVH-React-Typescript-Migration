@@ -338,7 +338,7 @@ const EmployeeAllocationFilterOptions = ({
             !userAccessIndividualAllocationFeature?.viewaccess && (
               <>
                 <CCol sm={2} md={1} className="text-end">
-                  <CFormLabel className="mt-1">Department:</CFormLabel>
+                  <CFormLabel className="mt-2">Department:</CFormLabel>
                 </CCol>
 
                 <CCol sm={2}>
