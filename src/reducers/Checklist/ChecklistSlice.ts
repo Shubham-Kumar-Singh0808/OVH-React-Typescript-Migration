@@ -1,3 +1,5 @@
+import type { PayloadAction } from '@reduxjs/toolkit'
+// eslint-disable-next-line no-duplicate-imports
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { ApiLoadingState } from '../../middleware/api/apiList'
@@ -30,7 +32,11 @@ const getCheckListThunk = createAsyncThunk(
 const checkListSlice = createSlice({
   name: 'Checklist',
   initialState: initialCheckListSlice,
-  reducers: {},
+  reducers: {
+    setChecklistParams: (state, action: PayloadAction<GetChecklistParams>) => {
+      state.checklistParams = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCheckListThunk.fulfilled, (state, action) => {
       state.incomingChecklist = action.payload

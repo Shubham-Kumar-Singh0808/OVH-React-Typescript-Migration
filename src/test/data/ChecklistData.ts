@@ -1,0 +1,113 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+import { IncomingCheckList } from '../../types/Checklist/ChecklistTypes'
+
+export const mockChecklist: IncomingCheckList = {
+  size: 21, // making this 21 to test with the pagination
+  list: [
+    {
+      id: 2,
+      title: 'jyo',
+      description:
+        'kakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakakaka',
+      pageName: 'thi',
+      departmentName: 'Accounts',
+      departmentId: 4,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Pavan Gollapalli',
+      createdDate: null,
+      updatedDate: 1687512480000,
+    },
+    {
+      id: 3,
+      title: 'jyo',
+      description:
+        'dgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdg1',
+      pageName: 'sfsd',
+      departmentName: 'Accounts',
+      departmentId: 4,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Kalyan Satish',
+      createdDate: null,
+      updatedDate: 1687428900000,
+    },
+    {
+      id: 4,
+      title: 'vinesh',
+      description:
+        'testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestintestingtestingtestingtestingteshjkguuyh',
+      pageName: 'vinesh',
+      departmentName: 'Accounts',
+      departmentId: 4,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Kalyan Satish',
+      createdDate: null,
+      updatedDate: 1687428600000,
+    },
+    {
+      id: 7,
+      title: 'testingg',
+      description:
+        'longtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtextlongtext',
+      pageName: 'test',
+      departmentName: 'Accounts',
+      departmentId: 4,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Jyothika Goru',
+      createdDate: null,
+      updatedDate: 1687785360000,
+    },
+    {
+      id: 6,
+      title: 'eqwe',
+      description:
+        'rwererrerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr',
+      pageName: 'rwrqwr',
+      departmentName: 'Business Analyst',
+      departmentId: 9,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Stagging Test',
+      createdDate: null,
+      updatedDate: 1687604040000,
+    },
+    {
+      id: 1,
+      title: 'hai',
+      description:
+        '<font color="#202124">contactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfocontactInfo</font><br/>',
+      pageName: 'jaga',
+      departmentName: 'Development',
+      departmentId: 6,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Jyothika Goru',
+      createdDate: null,
+      updatedDate: 1687426860000,
+    },
+    {
+      id: 5,
+      title: 'wqeqed',
+      description:
+        'dgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdgdg1',
+      pageName: 'qwedwq',
+      departmentName: 'HR',
+      departmentId: 3,
+      type: 'HandBook',
+      sectionId: null,
+      sectionName: null,
+      userName: 'Kalyan Satish',
+      createdDate: null,
+      updatedDate: 1687428960000,
+    },
+  ],
+}

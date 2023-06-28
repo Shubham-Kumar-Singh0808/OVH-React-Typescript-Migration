@@ -13,6 +13,7 @@ const Checklist = (): JSX.Element => {
   )
 
   useEffect(() => {
+    // api is called as soon as the params change
     dispatch(reduxServices.Checklist.getCheckListThunk(checkListParams))
   }, [checkListParams])
 

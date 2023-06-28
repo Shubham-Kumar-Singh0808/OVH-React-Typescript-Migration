@@ -6,14 +6,16 @@ import {
   CTableHeaderCell,
   CTableDataCell,
 } from '@coreui/react-pro'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getDateTimeFromTimestamp } from './ChecklistHelpers'
-import { useTypedSelector } from '../../stateStore'
+import { useAppDispatch, useTypedSelector } from '../../stateStore'
 import OPageSizeSelect from '../../components/ReusableComponent/OPageSizeSelect'
 import OPagination from '../../components/ReusableComponent/OPagination'
 import { usePagination } from '../../middleware/hooks/usePagination'
+import { reduxServices } from '../../reducers/reduxServices'
 
 const ChecklistInformationTable = (): JSX.Element => {
+  const dispatch = useAppDispatch()
   const incomingChecklist = useTypedSelector(
     (state) => state.Checklist.incomingChecklist,
   )
@@ -24,42 +26,69 @@ const ChecklistInformationTable = (): JSX.Element => {
     pageSize,
     paginationRange,
     setPageSize,
-  } = usePagination(incomingChecklist.size)
+  } = usePagination(22)
 
   const pageSelectChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPageSize(+e.target.value)
     setCurrentPage(1)
   }
 
+  useEffect(() => {
+    // whenever page size or page changes, we set the params
+    dispatch(
+      reduxServices.Checklist.actions.setChecklistParams({
+        endIndex: currentPage * pageSize,
+        startIndex: (currentPage - 1) * pageSize,
+      }),
+    )
+  }, [currentPage, pageSize])
+
   return (
     <>
       <CTable responsive striped align="middle">
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell>#</CTableHeaderCell>
-            <CTableHeaderCell>Title</CTableHeaderCell>
-            <CTableHeaderCell>Checklist Name</CTableHeaderCell>
-            <CTableHeaderCell>Department</CTableHeaderCell>
-            <CTableHeaderCell>Username</CTableHeaderCell>
-            <CTableHeaderCell>Last Modified Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Title</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Checklist Name</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Department</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Username</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Last Modified Date</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {incomingChecklist.list.map((checklistItem, checklistItemIndex) => (
-            <CTableRow key={checklistItemIndex}>
+            <CTableRow key={checklistItemIndex} data-testid="checkListItemRow">
               <CTableDataCell>{checklistItemIndex + 1}</CTableDataCell>
               <CTableDataCell>
-                <div className="cursor-pointer">
+                <div
+                  className="cursor-pointer checklist-title-hover"
+                  data-testid={`checkListTitle-${checklistItemIndex}`}
+                >
                   <span>
                     <i className="fa fa-eye fa-fw fa-lg"></i>
                   </span>
                   {checklistItem.title}
                 </div>
               </CTableDataCell>
-              <CTableDataCell>{checklistItem.pageName}</CTableDataCell>
-              <CTableDataCell>{checklistItem.departmentName}</CTableDataCell>
-              <CTableDataCell>{checklistItem.userName}</CTableDataCell>
-              <CTableDataCell>
+              <CTableDataCell
+                data-testid={`checkListPageName-${checklistItemIndex}`}
+              >
+                {checklistItem.pageName}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={`checkListDeptName-${checklistItemIndex}`}
+              >
+                {checklistItem.departmentName}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={`checkListUserName-${checklistItemIndex}`}
+              >
+                {checklistItem.userName}
+              </CTableDataCell>
+              <CTableDataCell
+                data-testid={`checkListModDate-${checklistItemIndex}`}
+              >
                 {getDateTimeFromTimestamp(checklistItem.updatedDate)}
               </CTableDataCell>
             </CTableRow>
